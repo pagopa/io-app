@@ -1,5 +1,6 @@
 import { ListItemHeader, ListItemNav } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
+
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { CredentialL3Key } from "../../common/utils/itwMocksUtils";
@@ -23,36 +24,36 @@ export const ItwL3ScreensSection = () => {
     <View>
       <ListItemHeader label="IT Wallet (L3) screens" />
       <ListItemNav
-        value="Driving License L3"
         description="Navigate to the Driving License detail screen"
         onPress={() => handleCredentialPress("mdl")}
+        value="Driving License L3"
       />
       {isItwValid && (
         <ListItemNav
-          value="EU Health Insurance Card L3"
           description="Navigate to the EHIC detail screen"
           onPress={() => handleCredentialPress("ts")}
+          value="EU Health Insurance Card L3"
         />
       )}
       <ListItemNav
-        value="Disability Card L3"
         description="Navigate to the Disability Card detail screen"
         onPress={() => handleCredentialPress("dc")}
+        value="Disability Card L3"
       />
       <ListItemNav
-        value="Education Degree L3"
         description="Navigate to the Education Degree detail screen"
         onPress={() => handleCredentialPress("ed")}
+        value="Education Degree L3"
       />
       <ListItemNav
-        value="Education Enrollment L3"
         description="Navigate to the Education Enrollment detail screen"
         onPress={() => handleCredentialPress("ee")}
+        value="Education Enrollment L3"
       />
       <ListItemNav
-        value="Residency L3"
         description="Navigate to the Residency detail screen"
         onPress={() => handleCredentialPress("res")}
+        value="Residency L3"
       />
     </View>
   );

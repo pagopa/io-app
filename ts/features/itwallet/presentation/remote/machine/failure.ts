@@ -1,8 +1,9 @@
 import {
-  RemotePresentation,
   Errors,
+  RemotePresentation,
   Trust
 } from "@pagopa/io-react-native-wallet";
+
 import { isDefined } from "../../../../../utils/guards.ts";
 import { isFederationError } from "../../../common/utils/itwFailureUtils.ts";
 import { getCredentialTypeByVct } from "../utils/itwRemotePresentationUtils.ts";
@@ -12,6 +13,25 @@ const { CredentialsNotFoundError } = RemotePresentation.Errors;
 const { isRelyingPartyResponseError, RelyingPartyResponseErrorCodes: Codes } =
   Errors;
 
+export enum RemoteFailureType {
+  EID_EXPIRED = "EID_EXPIRED",
+  INVALID_CREDENTIALS_STATUS = "INVALID_CREDENTIALS_STATUS",
+  INVALID_REQUEST_OBJECT = "INVALID_REQUEST_OBJECT",
+  MISSING_CREDENTIALS = "MISSING_CREDENTIALS",
+  RELYING_PARTY_GENERIC = "RELYING_PARTY_GENERIC",
+  RELYING_PARTY_INVALID_AUTH_RESPONSE = "RELYING_PARTY_INVALID_AUTH_RESPONSE",
+  UNEXPECTED = "UNEXPECTED",
+  UNTRUSTED_RP = "UNTRUSTED_RP",
+  WALLET_INACTIVE = "WALLET_INACTIVE"
+}
+
+/**
+ * Type that contains the possible error types thrown when the requested Request Object is invalid.
+ */
+type InvalidRequestObjectError =
+  | RemotePresentation.Errors.DcqlError
+  | RemotePresentation.Errors.InvalidRequestObjectError;
+
 /**
  * Error class used to wrap invalid credential types from the remote machine to the failure screen.
  */
@@ -20,25 +40,6 @@ export class InvalidCredentialsStatusError extends Error {
     super("One or more credential has an invalid status");
   }
 }
-
-export enum RemoteFailureType {
-  WALLET_INACTIVE = "WALLET_INACTIVE",
-  MISSING_CREDENTIALS = "MISSING_CREDENTIALS",
-  EID_EXPIRED = "EID_EXPIRED",
-  RELYING_PARTY_GENERIC = "RELYING_PARTY_GENERIC",
-  RELYING_PARTY_INVALID_AUTH_RESPONSE = "RELYING_PARTY_INVALID_AUTH_RESPONSE",
-  INVALID_REQUEST_OBJECT = "INVALID_REQUEST_OBJECT",
-  INVALID_CREDENTIALS_STATUS = "INVALID_CREDENTIALS_STATUS",
-  UNTRUSTED_RP = "UNTRUSTED_RP",
-  UNEXPECTED = "UNEXPECTED"
-}
-
-/**
- * Type that contains the possible error types thrown when the requested Request Object is invalid.
- */
-type InvalidRequestObjectError =
-  | RemotePresentation.Errors.InvalidRequestObjectError
-  | RemotePresentation.Errors.DcqlError;
 
 /**
  * Guard used to check if the error is of type `InvalidRequestObjectError`
@@ -53,29 +54,29 @@ const isRequestObjectInvalidError = (
  * Type that maps known reasons with the corresponding failure, in order to avoid unknowns as much as possible.
  */
 export type ReasonTypeByFailure = {
-  [RemoteFailureType.WALLET_INACTIVE]: string;
-  [RemoteFailureType.MISSING_CREDENTIALS]: {
-    missingCredentials: Array<string>;
-  };
   [RemoteFailureType.EID_EXPIRED]: string;
-  [RemoteFailureType.RELYING_PARTY_GENERIC]: Errors.RelyingPartyResponseError;
-  [RemoteFailureType.RELYING_PARTY_INVALID_AUTH_RESPONSE]: Errors.RelyingPartyResponseError;
-  [RemoteFailureType.INVALID_REQUEST_OBJECT]: InvalidRequestObjectError;
   [RemoteFailureType.INVALID_CREDENTIALS_STATUS]: {
     invalidCredentials: Array<string>;
   };
-  [RemoteFailureType.UNTRUSTED_RP]: Trust.Errors.FederationError;
+  [RemoteFailureType.INVALID_REQUEST_OBJECT]: InvalidRequestObjectError;
+  [RemoteFailureType.MISSING_CREDENTIALS]: {
+    missingCredentials: Array<string>;
+  };
+  [RemoteFailureType.RELYING_PARTY_GENERIC]: Errors.RelyingPartyResponseError;
+  [RemoteFailureType.RELYING_PARTY_INVALID_AUTH_RESPONSE]: Errors.RelyingPartyResponseError;
   [RemoteFailureType.UNEXPECTED]: unknown;
-};
-
-type TypedRemoteFailures = {
-  [K in RemoteFailureType]: { type: K; reason: ReasonTypeByFailure[K] };
+  [RemoteFailureType.UNTRUSTED_RP]: Trust.Errors.FederationError;
+  [RemoteFailureType.WALLET_INACTIVE]: string;
 };
 
 /**
  * Union type of failures with the reason properly typed.
  */
 export type RemoteFailure = TypedRemoteFailures[keyof TypedRemoteFailures];
+
+type TypedRemoteFailures = {
+  [K in RemoteFailureType]: { reason: ReasonTypeByFailure[K]; type: K; };
+};
 
 /**
  * Maps an event dispatched by the remote presentation machine to a failure object.

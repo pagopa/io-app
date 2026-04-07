@@ -1,20 +1,21 @@
 import { deleteKey } from "@pagopa/io-react-native-crypto";
 import * as Sentry from "@sentry/react-native";
+import { identity, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
-import { identity, pipe } from "fp-ts/lib/function";
 import { all, put, select } from "typed-redux-saga/macro";
+
 import { isIos } from "../../../../utils/platform";
 import { walletRemoveCardsByCategory } from "../../../wallet/store/actions/cards";
+import { updatePropertiesWalletRevoked } from "../../analytics/properties/propertyUpdaters.ts";
 import { itwSetWalletInstanceRemotelyActive } from "../../common/store/actions/preferences.ts";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
-  itwCredentialsSelector,
-  itwCredentialsEidSelector
+  itwCredentialsEidSelector,
+  itwCredentialsSelector
 } from "../../credentials/store/selectors";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../store/actions";
-import { updatePropertiesWalletRevoked } from "../../analytics/properties/propertyUpdaters.ts";
 
 const getKeyTag = (credential: O.Option<StoredCredential>) =>
   pipe(

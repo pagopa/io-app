@@ -1,24 +1,25 @@
 import { Alert, VSpacer } from "@pagopa/io-app-design-system";
 import { NavigatorScreenParams } from "@react-navigation/native";
+import I18n from "i18next";
 import { createRef } from "react";
 import { View } from "react-native";
-import I18n from "i18next";
+
 import { StatusEnum as InitiativeStatusEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { IdPayConfigurationParamsList } from "../../configuration/navigation/params";
 import { IdPayConfigurationRoutes } from "../../configuration/navigation/routes";
 
-type StatusWithAlert = Exclude<
-  InitiativeStatusEnum,
-  | InitiativeStatusEnum.REFUNDABLE
-  | InitiativeStatusEnum.UNSUBSCRIBED
-  | InitiativeStatusEnum.SUSPENDED
->;
-
 type Props = {
   initiativeId: string;
   status: InitiativeStatusEnum;
 };
+
+type StatusWithAlert = Exclude<
+  InitiativeStatusEnum,
+  | InitiativeStatusEnum.REFUNDABLE
+  | InitiativeStatusEnum.SUSPENDED
+  | InitiativeStatusEnum.UNSUBSCRIBED
+>;
 
 const IdPayMissingConfigurationAlert = (props: Props) => {
   const navigation = useIONavigation();
@@ -58,15 +59,15 @@ const IdPayMissingConfigurationAlert = (props: Props) => {
   return (
     <>
       <Alert
-        ref={viewRef}
-        testID="missing-configuration-alert"
-        content={I18n.t(
-          `idpay.initiative.details.initiativeDetailsScreen.configured.errorAlerts.${status}.content`
-        )}
         action={I18n.t(
           `idpay.initiative.details.initiativeDetailsScreen.configured.errorAlerts.${status}.action`
         )}
+        content={I18n.t(
+          `idpay.initiative.details.initiativeDetailsScreen.configured.errorAlerts.${status}.content`
+        )}
         onPress={handleNavigation}
+        ref={viewRef}
+        testID="missing-configuration-alert"
         variant="error"
       />
       <VSpacer size={16} />

@@ -1,5 +1,5 @@
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { PureComponent } from "react";
 import {
   AccessibilityInfo,
@@ -11,25 +11,26 @@ import {
 } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import { connect } from "react-redux";
+
 import DebugInfoOverlay from "./components/debug/DebugInfoOverlay";
 import PagoPATestIndicatorOverlay from "./components/PagoPATestIndicatorOverlay";
 import { LightModalRoot } from "./components/ui/LightModal";
 import { configurePushNotifications } from "./features/pushNotifications/utils/configurePushNotification";
+import { useAppThemeConfiguration } from "./hooks/useAppThemeConfiguration";
+import { setLocale } from "./i18n";
 import { IONavigationContainer } from "./navigation/AppStackNavigator";
 import RootModal from "./screens/modal/RootModal";
 import { applicationChangeState } from "./store/actions/application";
 import { setDebugCurrentRouteName } from "./store/actions/debug";
 import { navigateBack } from "./store/actions/navigation";
 import { setScreenReaderEnabled } from "./store/actions/preferences";
+import { Store } from "./store/actions/types";
 import { isDebugModeEnabledSelector } from "./store/reducers/debug";
 import {
   isPagoPATestEnabledSelector,
   preferredLanguageSelector
 } from "./store/reducers/persistedPreferences";
 import { GlobalState } from "./store/reducers/types";
-import { Store } from "./store/actions/types";
-import { useAppThemeConfiguration } from "./hooks/useAppThemeConfiguration";
-import { setLocale } from "./i18n";
 
 type Props = ReturnType<typeof mapStateToProps> &
   typeof mapDispatchToProps & { store: Store };
@@ -43,21 +44,13 @@ type Props = ReturnType<typeof mapStateToProps> &
  * - the root for displaying light modals
  */
 class RootContainer extends PureComponent<Props> {
-  private subscription: NativeEventSubscription | undefined;
   private accessibilitySubscription: EmitterSubscription | undefined;
+  private subscription: NativeEventSubscription | undefined;
   constructor(props: Props) {
     super(props);
     /* Configure the application to receive push notifications */
     configurePushNotifications(props.store);
   }
-
-  private handleApplicationActivity = (activity: AppStateStatus) =>
-    this.props.applicationChangeState(activity);
-
-  private handleScreenReaderEnabled = (isScreenReaderEnabled: boolean) =>
-    this.props.setScreenReaderEnabled({
-      screenReaderEnabled: isScreenReaderEnabled
-    });
 
   public componentDidMount() {
     // boot: send the status of the application
@@ -81,25 +74,13 @@ class RootContainer extends PureComponent<Props> {
     SplashScreen.hide();
   }
 
-  /**
-   * If preferred language is set in the Persisted Store it sets the app global Locale
-   * otherwise it continues using the default locale set from the SO
-   */
-  private updateLocale = () =>
-    pipe(
-      this.props.preferredLanguage,
-      O.map(l => {
-        setLocale(l);
-      })
-    );
+  public componentDidUpdate() {
+    this.updateLocale();
+  }
 
   public componentWillUnmount() {
     this.subscription?.remove();
     this.accessibilitySubscription?.remove();
-  }
-
-  public componentDidUpdate() {
-    this.updateLocale();
   }
 
   public render() {
@@ -112,9 +93,9 @@ class RootContainer extends PureComponent<Props> {
     return (
       <>
         <StatusBar
-          translucent
-          barStyle={"dark-content"}
           backgroundColor={"transparent"}
+          barStyle={"dark-content"}
+          translucent
         />
         <IONavigationContainer />
 
@@ -137,6 +118,26 @@ class RootContainer extends PureComponent<Props> {
       </>
     );
   }
+
+  private handleApplicationActivity = (activity: AppStateStatus) =>
+    this.props.applicationChangeState(activity);
+
+  private handleScreenReaderEnabled = (isScreenReaderEnabled: boolean) =>
+    this.props.setScreenReaderEnabled({
+      screenReaderEnabled: isScreenReaderEnabled
+    });
+
+  /**
+   * If preferred language is set in the Persisted Store it sets the app global Locale
+   * otherwise it continues using the default locale set from the SO
+   */
+  private updateLocale = () =>
+    pipe(
+      this.props.preferredLanguage,
+      O.map(l => {
+        setLocale(l);
+      })
+    );
 }
 
 const mapStateToProps = (state: GlobalState) => ({

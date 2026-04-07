@@ -1,4 +1,5 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
+
 import { ItwAuthLevel, StoredCredential } from "../../utils/itwTypesUtils.ts";
 
 export const itwSetReviewPending = createStandardAction(
@@ -46,14 +47,14 @@ export const itwDisableItwActivation = createStandardAction(
 )();
 
 export type ItwPreferencesActions =
-  | ActionType<typeof itwSetReviewPending>
+  | ActionType<typeof itwClearCredentialUpgradeFailed>
+  | ActionType<typeof itwClearSimplifiedActivationRequirements>
+  | ActionType<typeof itwDisableItwActivation>
+  | ActionType<typeof itwFreezeSimplifiedActivationRequirements>
   | ActionType<typeof itwSetAuthLevel>
   | ActionType<typeof itwSetClaimValuesHidden>
-  | ActionType<typeof itwSetWalletInstanceRemotelyActive>
-  | ActionType<typeof itwSetFiscalCodeWhitelisted>
-  | ActionType<typeof itwFreezeSimplifiedActivationRequirements>
-  | ActionType<typeof itwClearSimplifiedActivationRequirements>
-  | ActionType<typeof itwSetPidReissuingSurveyHidden>
   | ActionType<typeof itwSetCredentialUpgradeFailed>
-  | ActionType<typeof itwClearCredentialUpgradeFailed>
-  | ActionType<typeof itwDisableItwActivation>;
+  | ActionType<typeof itwSetFiscalCodeWhitelisted>
+  | ActionType<typeof itwSetPidReissuingSurveyHidden>
+  | ActionType<typeof itwSetReviewPending>
+  | ActionType<typeof itwSetWalletInstanceRemotelyActive>;

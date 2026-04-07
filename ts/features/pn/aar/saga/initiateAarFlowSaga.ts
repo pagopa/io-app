@@ -1,12 +1,13 @@
 import { StackActions } from "@react-navigation/native";
 import { call, put, select } from "typed-redux-saga/macro";
+
 import NavigationService from "../../../../navigation/NavigationService";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import PN_ROUTES from "../../navigation/routes";
-import { terminateAarFlow, initiateAarFlow } from "../store/actions";
+import { initiateAarFlow, terminateAarFlow } from "../store/actions";
 import {
-  currentAARFlowStateType,
-  currentAarFlowIunSelector
+  currentAarFlowIunSelector,
+  currentAARFlowStateType
 } from "../store/selectors";
 import { sendAARFlowStates } from "../utils/stateUtils";
 

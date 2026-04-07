@@ -13,7 +13,8 @@ import { ItwProximityParamsList } from "../presentation/proximity/navigation/Itw
 import { ItwCredentialTrustmarkScreenNavigationParams } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ITW_ROUTES } from "./routes";
 
-export type ItwParamsList = {
+export type ItwParamsList = ItwPlaygroundParamsList & ItwProximityParamsList &
+  {
   [ITW_ROUTES.ONBOARDING]: undefined;
   [ITW_ROUTES.L3_ONBOARDING]: ItwCardOnboardingL3NavigationParams | undefined;
   [ITW_ROUTES.L2_ONBOARDING]: undefined;
@@ -80,5 +81,4 @@ export type ItwParamsList = {
   [ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN]: undefined;
   [ITW_ROUTES.WALLET_REVOCATION_SCREEN]: undefined;
   [ITW_ROUTES.SETTINGS]: undefined;
-} & ItwProximityParamsList &
-  ItwPlaygroundParamsList;
+};

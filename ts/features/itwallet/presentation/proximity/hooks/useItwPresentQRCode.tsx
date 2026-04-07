@@ -1,9 +1,13 @@
-import { useCallback } from "react";
-import { useFocusEffect } from "@react-navigation/native";
 import { Body, IOVisualCostants, VStack } from "@pagopa/io-app-design-system";
-import { Dimensions, View } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
+import { useCallback } from "react";
+import { Dimensions, View } from "react-native";
+
+import { MaxBrightness } from "../../../../../utils/brightness";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { ItwRetryableQRCode } from "../../../common/components/ItwRetryableQRCode";
+import { trackItwProximityQrCodeLoadingRetry } from "../analytics";
 import { ItwProximityMachineContext } from "../machine/provider";
 import {
   selectIsLoading,
@@ -11,9 +15,6 @@ import {
   selectQRCodeString,
   selectShouldPresentQRCodeBottomSheet
 } from "../machine/selectors";
-import { ItwRetryableQRCode } from "../../../common/components/ItwRetryableQRCode";
-import { trackItwProximityQrCodeLoadingRetry } from "../analytics";
-import { MaxBrightness } from "../../../../../utils/brightness";
 
 const QR_WIDTH =
   Dimensions.get("window").width - IOVisualCostants.appMarginDefault * 2;
@@ -48,19 +49,19 @@ export const useItwPresentQRCode = () => {
           )}
         </Body>
         <ItwRetryableQRCode
-          value={qrCodeString}
-          size={QR_WIDTH}
           correctionLevel="Q"
-          shouldRetry={isQRCodeGenerationError}
-          retryIcon="warningFilled"
+          isRetrying={isLoading}
+          onRetry={handleRetry}
           retryDescription={I18n.t(
             "features.itWallet.presentation.proximity.mdl.bottomSheet.error.message"
           )}
+          retryIcon="warningFilled"
           retryLabel={I18n.t(
             "features.itWallet.presentation.proximity.mdl.bottomSheet.error.action"
           )}
-          isRetrying={isLoading}
-          onRetry={handleRetry}
+          shouldRetry={isQRCodeGenerationError}
+          size={QR_WIDTH}
+          value={qrCodeString}
         />
         {/* Dummy View used to add space */}
         <View />

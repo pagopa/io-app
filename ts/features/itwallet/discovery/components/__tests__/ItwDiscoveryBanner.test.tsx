@@ -1,5 +1,6 @@
 import { fireEvent } from "@testing-library/react-native";
 import configureMockStore from "redux-mock-store";
+
 import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
@@ -24,10 +25,10 @@ jest.mock("@react-navigation/native", () => {
 });
 
 type BannerScenario = {
-  name: string;
+  hasMdl: boolean;
   isWalletActive: boolean;
   isWalletEmpty: boolean;
-  hasMdl: boolean;
+  name: string;
 };
 
 const allScenarios: Array<BannerScenario> = [

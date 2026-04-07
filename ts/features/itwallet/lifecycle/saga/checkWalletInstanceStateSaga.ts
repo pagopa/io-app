@@ -1,6 +1,7 @@
+import { Errors } from "@pagopa/io-react-native-wallet";
 import * as O from "fp-ts/lib/Option";
 import { call, put, select } from "typed-redux-saga/macro";
-import { Errors } from "@pagopa/io-react-native-wallet";
+
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { assert } from "../../../../utils/assert";
 import { getNetworkError } from "../../../../utils/errors";
@@ -14,14 +15,57 @@ import { getWalletInstanceStatus } from "../../common/utils/itwAttestationUtils"
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwUpdateWalletInstanceStatus } from "../../walletInstance/store/actions";
-import { itwLifecycleIsOperationalOrValid } from "../store/selectors";
 import {
   trackItwStatusWalletAttestationFailure,
   trackItwWalletBadState,
   trackItwWalletInstanceRevocation
 } from "../analytics";
+import { itwLifecycleIsOperationalOrValid } from "../store/selectors";
 import { checkIntegrityServiceReadySaga } from "./checkIntegrityServiceReadySaga";
 import { handleWalletInstanceResetSaga } from "./handleWalletInstanceResetSaga";
+
+/**
+ * Saga responsible for checking wallet instance inconsistency.
+ * If an eID is present but the integrity key tag is missing,
+ * the wallet instance is reset.
+ */
+export function* checkWalletInstanceInconsistencySaga(): Generator<
+  ReduxSagaEffect,
+  boolean
+> {
+  const eid = yield* select(itwCredentialsEidSelector);
+  const integrityKeyTag = yield* select(itwIntegrityKeyTagSelector);
+
+  if (O.isSome(eid) && O.isNone(integrityKeyTag)) {
+    yield* call(handleWalletInstanceResetSaga);
+    trackItwWalletBadState();
+    return false;
+  }
+
+  return true;
+}
+
+/**
+ * Saga responsible to check whether the wallet instance has not been revoked
+ * or deleted. When this happens, the wallet is reset on the users's device.
+ */
+export function* checkWalletInstanceStateSaga(): Generator<
+  ReduxSagaEffect,
+  void
+> {
+  // Before any check we need to ensure the integrity service is ready
+  if (yield* call(checkIntegrityServiceReadySaga)) {
+    const isItwOperationalOrValid = yield* select(
+      itwLifecycleIsOperationalOrValid
+    );
+    const integrityKeyTag = yield* select(itwIntegrityKeyTagSelector);
+
+    // Only operational or valid wallet instances can be revoked.
+    if (isItwOperationalOrValid && O.isSome(integrityKeyTag)) {
+      yield* call(getStatusOrResetWalletInstance, integrityKeyTag.value);
+    }
+  }
+}
 
 export function* getStatusOrResetWalletInstance(integrityKeyTag: string) {
   const sessionToken = yield* select(sessionTokenSelector);
@@ -59,47 +103,4 @@ export function* getStatusOrResetWalletInstance(integrityKeyTag: string) {
       yield* put(itwUpdateWalletInstanceStatus.failure(getNetworkError(e)));
     }
   }
-}
-
-/**
- * Saga responsible to check whether the wallet instance has not been revoked
- * or deleted. When this happens, the wallet is reset on the users's device.
- */
-export function* checkWalletInstanceStateSaga(): Generator<
-  ReduxSagaEffect,
-  void
-> {
-  // Before any check we need to ensure the integrity service is ready
-  if (yield* call(checkIntegrityServiceReadySaga)) {
-    const isItwOperationalOrValid = yield* select(
-      itwLifecycleIsOperationalOrValid
-    );
-    const integrityKeyTag = yield* select(itwIntegrityKeyTagSelector);
-
-    // Only operational or valid wallet instances can be revoked.
-    if (isItwOperationalOrValid && O.isSome(integrityKeyTag)) {
-      yield* call(getStatusOrResetWalletInstance, integrityKeyTag.value);
-    }
-  }
-}
-
-/**
- * Saga responsible for checking wallet instance inconsistency.
- * If an eID is present but the integrity key tag is missing,
- * the wallet instance is reset.
- */
-export function* checkWalletInstanceInconsistencySaga(): Generator<
-  ReduxSagaEffect,
-  boolean
-> {
-  const eid = yield* select(itwCredentialsEidSelector);
-  const integrityKeyTag = yield* select(itwIntegrityKeyTagSelector);
-
-  if (O.isSome(eid) && O.isNone(integrityKeyTag)) {
-    yield* call(handleWalletInstanceResetSaga);
-    trackItwWalletBadState();
-    return false;
-  }
-
-  return true;
 }

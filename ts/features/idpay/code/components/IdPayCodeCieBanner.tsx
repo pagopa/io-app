@@ -1,18 +1,18 @@
-import { useRef, useEffect } from "react";
-import { VSpacer, Banner } from "@pagopa/io-app-design-system";
+import { Banner, VSpacer } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-
-import { View } from "react-native";
 import I18n from "i18next";
+import { useEffect, useRef } from "react";
+import { View } from "react-native";
+
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { isIdPayCiePaymentCodeEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { isLoadingDiscountInitiativeInstrumentsSelector } from "../../configuration/store";
 import { idpayInitiativeInstrumentsGet } from "../../configuration/store/actions";
-import { showIdPayCodeBannerSelector } from "../store/selectors";
 import { IdPayCodeParamsList } from "../navigation/params";
 import { IdPayCodeRoutes } from "../navigation/routes";
-import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
-import { isLoadingDiscountInitiativeInstrumentsSelector } from "../../configuration/store";
 import { idPayCodeCieBannerClose } from "../store/actions";
-import { isIdPayCiePaymentCodeEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { showIdPayCodeBannerSelector } from "../store/selectors";
 
 type IdPayCodeCIEBannerParams = {
   initiativeId: string;
@@ -59,23 +59,23 @@ const IdPayCodeCieBanner = ({ initiativeId }: IdPayCodeCIEBannerParams) => {
     return (
       <>
         <Banner
-          color="turquoise"
-          pictogramName="cie"
-          title={I18n.t(
-            "idpay.initiative.discountDetails.IDPayCode.banner.title"
-          )}
-          content={I18n.t(
-            "idpay.initiative.discountDetails.IDPayCode.banner.body"
-          )}
           action={I18n.t(
             "idpay.initiative.discountDetails.IDPayCode.banner.action"
           )}
-          onPress={handleNavigateToOnboardingStart}
-          onClose={handleOnCloseBanner}
+          color="turquoise"
+          content={I18n.t(
+            "idpay.initiative.discountDetails.IDPayCode.banner.body"
+          )}
           labelClose={I18n.t(
             "idpay.initiative.discountDetails.IDPayCode.banner.close"
           )}
+          onClose={handleOnCloseBanner}
+          onPress={handleNavigateToOnboardingStart}
+          pictogramName="cie"
           ref={bannerViewRef}
+          title={I18n.t(
+            "idpay.initiative.discountDetails.IDPayCode.banner.title"
+          )}
         />
         <VSpacer size={24} />
       </>

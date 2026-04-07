@@ -1,17 +1,17 @@
 import { ComponentProps } from "react";
-
 import { Action, Store } from "redux";
 import configureMockStore from "redux-mock-store";
-import { MessageDetailsHeader } from "../MessageDetailsHeader";
+
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
-import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { reproduceSequence } from "../../../../../utils/tests";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { loadServiceDetail } from "../../../../services/details/store/actions/details";
 import { service_1 } from "../../../__mocks__/messages";
-import { reproduceSequence } from "../../../../../utils/tests";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
+import { MessageDetailsHeader } from "../MessageDetailsHeader";
 
 const defaultProps: ComponentProps<typeof MessageDetailsHeader> = {
   createdAt: new Date("2021-10-18T16:00:30.541Z"),

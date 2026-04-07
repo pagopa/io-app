@@ -1,17 +1,18 @@
 import { Divider, ListItemHeader } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
+import { useMemo, useState } from "react";
 import { View } from "react-native";
 import { Fragment } from "react/jsx-runtime";
-import { useMemo, useState } from "react";
-import I18n from "i18next";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
-import {
-  parseClaims,
-  WellKnownClaim
-} from "../../../common/utils/itwClaimsUtils";
+
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { ItwCredentialClaim } from "../../../common/components/ItwCredentialClaim";
 import { ItwEidLifecycleAlert } from "../../../common/components/ItwEidLifecycleAlert";
 import { ItwIssuanceMetadata } from "../../../common/components/ItwIssuanceMetadata";
+import {
+  parseClaims,
+  WellKnownClaim
+} from "../../../common/utils/itwClaimsUtils";
+import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 
 type Props = {
   credential: StoredCredential;
@@ -48,12 +49,12 @@ export const ItwPresentationPidDetail = ({ credential }: Props) => {
     <View>
       <ItwEidLifecycleAlert navigation={navigation} />
       {claims.length > 0 && (
-        <ListItemHeader label={listItemHeaderLabel} endElement={endElement} />
+        <ListItemHeader endElement={endElement} label={listItemHeaderLabel} />
       )}
       {claims.map((claim, index) => (
         <Fragment key={claim.id}>
           {index !== 0 && <Divider />}
-          <ItwCredentialClaim claim={claim} isPreview hidden={claimsHidden} />
+          <ItwCredentialClaim claim={claim} hidden={claimsHidden} isPreview />
         </Fragment>
       ))}
       {claims.length > 0 && <Divider />}

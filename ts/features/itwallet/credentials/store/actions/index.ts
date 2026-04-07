@@ -1,4 +1,5 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
+
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 
 /**
@@ -29,6 +30,6 @@ export const itwCredentialsRemoveByType = createStandardAction(
 )<string>();
 
 export type ItwCredentialsActions =
-  | ActionType<typeof itwCredentialsStore>
   | ActionType<typeof itwCredentialsRemove>
-  | ActionType<typeof itwCredentialsRemoveByType>;
+  | ActionType<typeof itwCredentialsRemoveByType>
+  | ActionType<typeof itwCredentialsStore>;

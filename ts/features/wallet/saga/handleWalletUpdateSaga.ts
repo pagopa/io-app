@@ -1,4 +1,5 @@
 import { put } from "typed-redux-saga/macro";
+
 import { getCdcStatusWallet } from "../../bonus/cdc/wallet/store/actions";
 import { cgnDetails } from "../../bonus/cgn/store/actions/details";
 import { idPayWalletGet } from "../../idpay/wallet/store/actions";

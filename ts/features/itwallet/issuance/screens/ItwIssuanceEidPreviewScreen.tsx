@@ -11,22 +11,17 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useCallback, useLayoutEffect } from "react";
+
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { identificationRequest } from "../../../identification/store/actions";
-import {
-  trackCredentialPreview,
-  trackItwExit,
-  trackItwRequestSuccess,
-  trackSaveCredentialToWallet
-} from "../analytics";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { isItwCredential } from "../../common/utils/itwCredentialUtils";
@@ -37,6 +32,12 @@ import {
   selectEidOption,
   selectIdentification
 } from "../../machine/eid/selectors";
+import {
+  trackCredentialPreview,
+  trackItwExit,
+  trackItwRequestSuccess,
+  trackSaveCredentialToWallet
+} from "../analytics";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
 
 export const ItwIssuanceEidPreviewScreen = () => {
@@ -133,13 +134,13 @@ const ContentView = ({ eid }: ContentViewProps) => {
       headerShown: true,
       header: () => (
         <HeaderSecondLevel
-          title=""
-          type="singleAction"
           firstAction={{
             icon: "closeLarge",
             onPress: dismissDialog.show,
             accessibilityLabel: I18n.t("global.buttons.close")
           }}
+          title=""
+          type="singleAction"
         />
       )
     });
@@ -174,8 +175,8 @@ const ContentView = ({ eid }: ContentViewProps) => {
           <HStack space={8} style={{ alignItems: "center" }}>
             {!isL3 && (
               <Icon
-                name="legalValue"
                 color={theme["interactiveElem-default"]}
+                name="legalValue"
               />
             )}
             <H2>

@@ -1,15 +1,16 @@
-import { useEffect, useLayoutEffect } from "react";
 import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
-import { Alert } from "react-native";
 import I18n from "i18next";
+import { useEffect, useLayoutEffect } from "react";
+import { Alert } from "react-native";
+
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { useIOSelector } from "../../../../store/hooks";
-import { walletPaymentWebViewPayloadSelector } from "../store/selectors";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
-import * as analytics from "../analytics";
-import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+import { useIOSelector } from "../../../../store/hooks";
 import PaymentWebView from "../../common/components/PaymentWebView";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+import * as analytics from "../analytics";
+import { walletPaymentWebViewPayloadSelector } from "../store/selectors";
+import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 
 const WalletPaymentWebViewScreen = () => {
   const payload = useIOSelector(walletPaymentWebViewPayloadSelector);
@@ -70,13 +71,13 @@ const WalletPaymentWebViewScreen = () => {
     navigation.setOptions({
       header: () => (
         <HeaderSecondLevel
-          title=""
-          type="singleAction"
           firstAction={{
             icon: "closeLarge",
             accessibilityLabel: I18n.t("global.buttons.close"),
             onPress: promptUserToClose
           }}
+          title=""
+          type="singleAction"
         />
       )
     });
@@ -86,8 +87,8 @@ const WalletPaymentWebViewScreen = () => {
     <PaymentWebView<WalletPaymentOutcomeEnum>
       cancelOutcome={WalletPaymentOutcomeEnum.IN_APP_BROWSER_CLOSED_BY_USER}
       errorOutcome={WalletPaymentOutcomeEnum.GENERIC_ERROR}
-      onError={payload.onError}
       onCancel={promptUserToClose}
+      onError={payload.onError}
       onSuccess={payload.onSuccess}
       url={payload.url}
     />

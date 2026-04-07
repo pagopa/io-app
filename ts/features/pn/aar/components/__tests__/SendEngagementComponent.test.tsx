@@ -1,12 +1,13 @@
+import { fireEvent } from "@testing-library/react-native";
 import * as O from "fp-ts/lib/Option";
 import { createStore } from "redux";
-import { fireEvent } from "@testing-library/react-native";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
+import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import PN_ROUTES from "../../../navigation/routes";
 import { SendEngagementComponent } from "../SendEngagementComponent";
-import { GlobalState } from "../../../../../store/reducers/types";
 
 const testPrivacyUrl = "https://a.privacy.url";
 const testTOSUrl = "https://a.tos.url";

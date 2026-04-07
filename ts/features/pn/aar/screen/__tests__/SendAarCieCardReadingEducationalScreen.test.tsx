@@ -1,6 +1,7 @@
 import { act, fireEvent, waitFor } from "@testing-library/react-native";
 import _ from "lodash";
 import { createStore } from "redux";
+
 import * as USE_HARDWARE_BACK_BUTTON from "../../../../../hooks/useHardwareBackButton";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
@@ -248,6 +249,12 @@ describe("SendAarCieCardReadingEducationalScreen", () => {
 
       if (shouldNavigate) {
         switch (currentAarState.type) {
+          case sendAARFlowStates.androidNFCActivation:
+            expect(mockReplace).toHaveBeenCalledTimes(1);
+            expect(mockReplace).toHaveBeenCalledWith(
+              PN_ROUTES.SEND_AAR_NFC_ACTIVATION
+            );
+            break;
           case sendAARFlowStates.cieCanInsertion:
             expect(mockReplace).toHaveBeenCalledTimes(1);
             expect(mockReplace).toHaveBeenCalledWith(
@@ -255,12 +262,6 @@ describe("SendAarCieCardReadingEducationalScreen", () => {
               {
                 animationTypeForReplace: "pop"
               }
-            );
-            break;
-          case sendAARFlowStates.androidNFCActivation:
-            expect(mockReplace).toHaveBeenCalledTimes(1);
-            expect(mockReplace).toHaveBeenCalledWith(
-              PN_ROUTES.SEND_AAR_NFC_ACTIVATION
             );
             break;
           case sendAARFlowStates.cieScanning:
@@ -290,11 +291,11 @@ function renderComponent() {
   return renderScreenWithNavigationStoreContext<GlobalState>(
     ({ navigation, route }: SendAarCieCardReadingEducationalScreenProps) => (
       <SendAarCieCardReadingEducationalScreen
-        route={route}
         navigation={{
           ..._.mapValues(navigation, () => mockShouldNeverCall),
           replace: mockReplace
         }}
+        route={route}
       />
     ),
     PN_ROUTES.SEND_AAR_CIE_CARD_READING_EDUCATIONAL,

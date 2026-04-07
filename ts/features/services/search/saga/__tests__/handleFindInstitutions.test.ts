@@ -2,13 +2,14 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
+
 import { InstitutionsResource } from "../../../../../../definitions/services/InstitutionsResource";
 import { OrganizationFiscalCode } from "../../../../../../definitions/services/OrganizationFiscalCode";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { ServicesClient } from "../../../common/api/__mocks__/servicesClient";
 import {
-  SearchPaginatedInstitutionsGetPayload,
-  searchPaginatedInstitutionsGet
+  searchPaginatedInstitutionsGet,
+  SearchPaginatedInstitutionsGetPayload
 } from "../../store/actions";
 import { handleFindInstitutions } from "../handleFindInstitutions";
 

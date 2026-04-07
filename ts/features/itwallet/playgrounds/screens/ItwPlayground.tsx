@@ -7,6 +7,7 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useState } from "react";
 import { ScrollView } from "react-native";
+
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useScreenEndMargin } from "../../../../hooks/useScreenEndMargin";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
@@ -40,14 +41,14 @@ const ItwPlayground = () => {
   return (
     <VStack space={16} style={{ flex: 1 }}>
       <TabNavigation
-        tabAlignment="start"
-        selectedIndex={page}
         onItemPress={setPage}
+        selectedIndex={page}
+        tabAlignment="start"
       >
-        <TabItem label="Environment" accessibilityLabel="Environment" />
-        <TabItem label="Issuance" accessibilityLabel="Issuance" />
-        <TabItem label="Screens" accessibilityLabel="Screens" />
-        <TabItem label="Components" accessibilityLabel="Components" />
+        <TabItem accessibilityLabel="Environment" label="Environment" />
+        <TabItem accessibilityLabel="Issuance" label="Issuance" />
+        <TabItem accessibilityLabel="Screens" label="Screens" />
+        <TabItem accessibilityLabel="Components" label="Components" />
       </TabNavigation>
       <ScrollView
         contentContainerStyle={{

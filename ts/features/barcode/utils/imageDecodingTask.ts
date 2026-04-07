@@ -1,21 +1,22 @@
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as A from "fp-ts/lib/Array";
-import * as O from "fp-ts/lib/Option";
-import * as TE from "fp-ts/lib/TaskEither";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { Eq } from "fp-ts/lib/string";
+import * as TE from "fp-ts/lib/TaskEither";
 import { QRCodeDetectOptions, CodeType as RNQRCodeType } from "rn-qr-generator";
+
 import { GlobalState } from "../../../store/reducers/types";
-import { IOBarcode, IOBarcodeFormat, IOBarcodeType } from "../types/IOBarcode";
 import { decodeMultipleIOBarcodes } from "../types/decoders";
 import { BarcodeFailure } from "../types/failure";
+import { IOBarcode, IOBarcodeFormat, IOBarcodeType } from "../types/IOBarcode";
 import { barcodeDetectionTask } from "./barcodeDetectionTask";
 
 /**
  * Maps internal formats to external library formats
  * Necessary to work with the library {@link rn-qr-generator}
  */
-const IOBarcodeFormats: { [K in IOBarcodeFormat]: RNQRCodeType } = {
+const IOBarcodeFormats: Record<IOBarcodeFormat, RNQRCodeType> = {
   DATA_MATRIX: "DataMatrix",
   QR_CODE: "QRCode"
 };

@@ -1,8 +1,8 @@
-import { TimeToLiveSeconds } from "../../../../definitions/backend/TimeToLiveSeconds";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
-import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
 import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
+import { OrganizationFiscalCode } from "../../../../definitions/backend/OrganizationFiscalCode";
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { TimeToLiveSeconds } from "../../../../definitions/backend/TimeToLiveSeconds";
+import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
 import {
   NextPageMessagesSuccessPayload,
   PreviousPageMessagesSuccessPayload,

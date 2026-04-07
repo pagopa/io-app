@@ -1,9 +1,10 @@
-import { getType } from "typesafe-actions";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { getType } from "typesafe-actions";
+
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
-import { itwFetchCredentialsCatalogue } from "../actions";
 import { DigitalCredentialsCatalogue } from "../../../common/utils/itwCredentialsCatalogueUtils";
+import { itwFetchCredentialsCatalogue } from "../actions";
 
 export type ItwCredentialsCatalogueState = {
   catalogue: pot.Pot<DigitalCredentialsCatalogue, NetworkError>;
@@ -18,6 +19,11 @@ const reducer = (
   action: Action
 ): ItwCredentialsCatalogueState => {
   switch (action.type) {
+    case getType(itwFetchCredentialsCatalogue.failure):
+      return {
+        ...state,
+        catalogue: pot.toError(state.catalogue, action.payload)
+      };
     case getType(itwFetchCredentialsCatalogue.request):
       return {
         ...state,
@@ -27,11 +33,6 @@ const reducer = (
       return {
         ...state,
         catalogue: pot.some(action.payload)
-      };
-    case getType(itwFetchCredentialsCatalogue.failure):
-      return {
-        ...state,
-        catalogue: pot.toError(state.catalogue, action.payload)
       };
 
     default:

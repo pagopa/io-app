@@ -4,21 +4,13 @@ import { Input } from "./input";
 
 export type Context = {
   /**
-   * The wallet instance attestation obtained during the PID upgrade
+   * The index of the current credential being processed
    */
-  walletInstanceAttestation: string;
-  /**
-   * The upgrade PID credential
-   */
-  pid: StoredCredential;
+  credentialIndex: number;
   /**
    * Credentials that must be upgraded to L3
    */
   credentials: ReadonlyArray<StoredCredential>;
-  /**
-   * The index of the current credential being processed
-   */
-  credentialIndex: number;
   /**
    * Credentials that failed the upgrade process
    */
@@ -29,6 +21,14 @@ export type Context = {
    * - "reissuance": reissuing the eID on Documenti su IO, reissuing also owned credentials.
    */
   issuanceMode: EidIssuanceMode;
+  /**
+   * The upgrade PID credential
+   */
+  pid: StoredCredential;
+  /**
+   * The wallet instance attestation obtained during the PID upgrade
+   */
+  walletInstanceAttestation: string;
 };
 
 export const getInitialContext = (input: Input): Context => ({

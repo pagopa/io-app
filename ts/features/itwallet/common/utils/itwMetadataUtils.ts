@@ -1,7 +1,8 @@
 import { pipe } from "fp-ts/function";
 import * as O from "fp-ts/Option";
-import { StoredCredential } from "./itwTypesUtils.ts";
+
 import { DigitalCredentialMetadata } from "./itwCredentialsCatalogueUtils.ts";
+import { StoredCredential } from "./itwTypesUtils.ts";
 
 export const getItwAuthSource = (credential: DigitalCredentialMetadata) =>
   pipe(

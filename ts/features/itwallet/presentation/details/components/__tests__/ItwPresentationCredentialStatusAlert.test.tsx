@@ -1,5 +1,6 @@
 import MockDate from "mockdate";
 import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
@@ -13,13 +14,13 @@ import { ItwCredentialIssuanceMachineProvider } from "../../../../machine/creden
 import { ITW_ROUTES } from "../../../../navigation/routes";
 import {
   CredentialAlertType,
-  ItwPresentationCredentialStatusAlert,
-  deriveCredentialAlertType
+  deriveCredentialAlertType,
+  ItwPresentationCredentialStatusAlert
 } from "../ItwPresentationCredentialStatusAlert";
 
 type TestCaseParams = [
   ItwCredentialStatus,
-  Record<string, { title: string; description: string }> | undefined
+  Record<string, { description: string; title: string; }> | undefined
 ];
 
 const mockMessage = {

@@ -6,17 +6,17 @@ import { TrustmarkFailure } from "./failure";
 
 export type Context = {
   /**
-   * The credential type to get the trustmark for
+   * The number of attempts made by the user to get the trustmark
    */
-  credentialType: string;
-  /**
-   * The wallet instance attestation to be used to get the trustmark
-   */
-  walletInstanceAttestation?: WalletInstanceAttestations;
+  attempts?: number;
   /**
    * The credential to get the trustmark for
    */
   credential?: StoredCredential;
+  /**
+   * The credential type to get the trustmark for
+   */
+  credentialType: string;
   /**
    * The expiration date of the trustmark
    */
@@ -26,19 +26,19 @@ export type Context = {
    */
   expirationSeconds?: number;
   /**
-   * The trustmark url
-   */
-  trustmarkUrl?: string;
-  /**
    * The failure of the trustmark machine
    */
   failure?: TrustmarkFailure;
   /**
-   * The number of attempts made by the user to get the trustmark
-   */
-  attempts?: number;
-  /**
    * Time after which the user can attempt again to get the trustmark
    */
   nextAttemptAt?: Date;
+  /**
+   * The trustmark url
+   */
+  trustmarkUrl?: string;
+  /**
+   * The wallet instance attestation to be used to get the trustmark
+   */
+  walletInstanceAttestation?: WalletInstanceAttestations;
 };

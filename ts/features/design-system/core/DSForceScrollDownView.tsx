@@ -48,10 +48,10 @@ export const DSForceScrollDownView = () => {
 
   return (
     <ForceScrollDownView
-      footerActions={footerActions}
       contentContainerStyle={{
         paddingTop: IOVisualCostants.appMarginDefault
       }}
+      footerActions={footerActions}
     >
       <ContentWrapper>
         <VStack space={24}>
@@ -69,18 +69,18 @@ export const DSForceScrollDownView = () => {
           </VStack>
           <VStack space={16} style={{ alignItems: "flex-start" }}>
             <IOButton
-              variant="outline"
               label="Change button configuration"
               onPress={() => {
                 setFooterActions(alternativeFooterActions);
               }}
+              variant="outline"
             />
             <IOButton
-              variant="link"
               label="Reset button configuration"
               onPress={() => {
                 setFooterActions(defaultFooterActions);
               }}
+              variant="link"
             />
           </VStack>
           <VStack space={8}>

@@ -1,16 +1,17 @@
 import { createStore } from "redux";
-import { appReducer } from "../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { MessageDetailsStickyFooter } from "../MessageDetailsStickyFooter";
-import { PaymentData } from "../../../types";
-import { CTA, CTAS } from "../../../../../types/LocalizedCTAs";
-import * as detailsById from "../../../store/reducers/detailsById";
-import * as payments from "../../../store/reducers/payments";
+
+import { OrganizationFiscalCode } from "../../../../../../definitions/backend/OrganizationFiscalCode";
 import { PaymentAmount } from "../../../../../../definitions/backend/PaymentAmount";
 import { PaymentNoticeNumber } from "../../../../../../definitions/backend/PaymentNoticeNumber";
-import { OrganizationFiscalCode } from "../../../../../../definitions/backend/OrganizationFiscalCode";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { CTA, CTAS } from "../../../../../types/LocalizedCTAs";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import * as detailsById from "../../../store/reducers/detailsById";
+import * as payments from "../../../store/reducers/payments";
+import { PaymentData } from "../../../types";
+import { MessageDetailsStickyFooter } from "../MessageDetailsStickyFooter";
 
 const cta1: CTA = {
   text: "CTA 1",
@@ -124,9 +125,9 @@ const renderComponent = (ctas?: CTAS) => {
   return renderScreenWithNavigationStoreContext(
     () => (
       <MessageDetailsStickyFooter
-        messageId={"01HRW6GJBD594Z0K9B4D6KAERC"}
         ctas={ctas}
         firstCTAIsPNOptInMessage={false}
+        messageId={"01HRW6GJBD594Z0K9B4D6KAERC"}
         secondCTAIsPNOptInMessage={false}
         serviceId={"01J5XCQMBNF0484AJV2TST03FE" as ServiceId}
       />

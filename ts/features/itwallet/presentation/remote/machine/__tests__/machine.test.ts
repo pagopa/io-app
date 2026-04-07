@@ -1,6 +1,10 @@
 import _ from "lodash";
-import { StateFrom, createActor, fromPromise, waitFor } from "xstate";
-import { ItwRemoteMachine, itwRemoteMachine } from "../machine.ts";
+import { createActor, fromPromise, StateFrom, waitFor } from "xstate";
+
+import {
+  RequestObject,
+  WalletInstanceAttestations
+} from "../../../../common/utils/itwTypesUtils.ts";
 import {
   EnrichedPresentationDetails,
   ItwRemoteRequestPayload,
@@ -17,11 +21,8 @@ import {
   SendAuthorizationResponseOutput
 } from "../actors.ts";
 import { Context, InitialContext } from "../context.ts";
-import {
-  RequestObject,
-  WalletInstanceAttestations
-} from "../../../../common/utils/itwTypesUtils.ts";
 import { RemoteFailureType } from "../failure.ts";
+import { ItwRemoteMachine, itwRemoteMachine } from "../machine.ts";
 
 const T_FLOW_TYPE = "cross-device";
 const T_CLIENT_ID = "clientId";

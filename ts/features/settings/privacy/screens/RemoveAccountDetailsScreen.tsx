@@ -7,8 +7,8 @@ import {
   RadioGroup,
   RadioItem,
   TextInput,
-  VSpacer,
-  useIOToast
+  useIOToast,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import { StackActions } from "@react-navigation/native";
 import I18n from "i18next";
@@ -18,6 +18,7 @@ import {
   SafeAreaView,
   useSafeAreaInsets
 } from "react-native-safe-area-context";
+
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { shufflePinPadOnPayment } from "../../../../config";
 import NavigationService from "../../../../navigation/NavigationService";
@@ -29,8 +30,8 @@ import { withKeyboard } from "../../../../utils/keyboard";
 import { isCgnEnrolledSelector } from "../../../bonus/cgn/store/reducers/details";
 import { identificationRequest } from "../../../identification/store/actions";
 import {
-  RemoveAccountMotivationEnum,
-  removeAccountMotivation
+  removeAccountMotivation,
+  RemoveAccountMotivationEnum
 } from "../../common/store/actions";
 import { resetDeleteUserDataProcessing } from "../../common/store/actions/userDataProcessing";
 import {
@@ -39,9 +40,9 @@ import {
 } from "../../common/store/selectors/userDataProcessing";
 
 type FooterButtonProps = {
+  buttonRef?: React.RefObject<View>;
   isLoading: boolean;
   onPress: () => void;
-  buttonRef?: React.RefObject<View>;
 };
 
 const FooterButton = memo(
@@ -50,22 +51,22 @@ const FooterButton = memo(
 
     return withKeyboard(
       <View
+        ref={buttonRef}
         style={{
           marginBottom:
             bottom === 0 ? IOVisualCostants.appMarginDefault : bottom
         }}
-        ref={buttonRef}
       >
         <ContentWrapper>
           <VSpacer size={16} />
           <IOButton
-            testID="remove-account-button"
-            fullWidth
-            variant="solid"
             color="danger"
-            loading={isLoading}
+            fullWidth
             label={I18n.t("profile.main.privacy.removeAccount.details.cta")}
+            loading={isLoading}
             onPress={onPress}
+            testID="remove-account-button"
+            variant="solid"
           />
         </ContentWrapper>
       </View>,
@@ -217,21 +218,21 @@ const RemoveAccountDetails = () => {
         <>
           <VSpacer />
           <TextInput
-            placeholder={I18n.t(
-              "profile.main.privacy.removeAccount.details.labelOpenAnswer"
-            )}
             accessibilityLabel={I18n.t(
               "profile.main.privacy.removeAccount.details.labelOpenAnswer"
             )}
-            value={otherMotivation}
-            onChangeText={setOtherMotivation}
             autoFocus
+            onBlur={() => setAccessibilityFocus(buttonRef)}
+            onChangeText={setOtherMotivation}
+            placeholder={I18n.t(
+              "profile.main.privacy.removeAccount.details.labelOpenAnswer"
+            )}
             textInputProps={{
               inputMode: "text",
               returnKeyType: "done",
               keyboardType: "default"
             }}
-            onBlur={() => setAccessibilityFocus(buttonRef)}
+            value={otherMotivation}
           />
         </>
       );
@@ -265,11 +266,11 @@ const RemoveAccountDetails = () => {
   return (
     <>
       <IOScrollViewWithLargeHeader
+        description={I18n.t("profile.main.privacy.removeAccount.details.body")}
+        ignoreAccessibilityCheck
         title={{
           label: I18n.t("profile.main.privacy.removeAccount.details.title")
         }}
-        description={I18n.t("profile.main.privacy.removeAccount.details.body")}
-        ignoreAccessibilityCheck
       >
         <SafeAreaView style={{ flex: 1 }}>
           <VSpacer />
@@ -279,10 +280,10 @@ const RemoveAccountDetails = () => {
             </H6>
             <VSpacer />
             <RadioGroup<RemoveAccountMotivationEnum>
-              type="radioListItem"
-              onPress={handleSetSelectedMotivation}
               items={motivationItems}
+              onPress={handleSetSelectedMotivation}
               selectedItem={selectedMotivation}
+              type="radioListItem"
             />
             {otherMotivationInput}
           </ContentWrapper>

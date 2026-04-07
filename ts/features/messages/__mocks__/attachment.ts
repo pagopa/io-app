@@ -1,4 +1,5 @@
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+
 import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 import { ATTACHMENT_CATEGORY } from "../types/attachmentCategory";
 

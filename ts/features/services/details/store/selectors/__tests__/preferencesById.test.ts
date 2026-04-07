@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createStore } from "redux";
+
 import {
   isErrorServicePreferenceSelector,
   isLoadingServicePreferenceSelector,
@@ -9,7 +10,7 @@ import {
 import { ServiceId } from "../../../../../../../definitions/backend/ServiceId";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
-import { NetworkError, getNetworkError } from "../../../../../../utils/errors";
+import { getNetworkError, NetworkError } from "../../../../../../utils/errors";
 import {
   ServicePreference,
   ServicePreferenceResponse,

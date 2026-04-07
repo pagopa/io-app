@@ -1,7 +1,8 @@
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { SagaIterator } from "redux-saga";
 import { fork, select } from "typed-redux-saga/macro";
+
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import {
   idPayApiBaseUrl,
@@ -10,20 +11,20 @@ import {
   idPayApiVersion,
   idPayTestToken
 } from "../../../../config";
+import { isIdPayCiePaymentCodeEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import {
   isPagoPATestEnabledSelector,
   preferredLanguageSelector
 } from "../../../../store/reducers/persistedPreferences";
 import { fromLocaleToPreferredLanguage } from "../../../../utils/locale";
+import { watchIDPayBarcodeSaga } from "../../barcode/saga";
 import { watchIdPayCodeSaga } from "../../code/saga";
-import { watchIDPayWalletSaga } from "../../wallet/saga";
-import { createIDPayClient } from "../api/client";
+import { watchIDPayInitiativeConfigurationSaga } from "../../configuration/saga";
 import { watchIDPayInitiativeDetailsSaga } from "../../details/saga";
 import { watchIDPayTimelineSaga } from "../../timeline/saga";
-import { watchIDPayInitiativeConfigurationSaga } from "../../configuration/saga";
-import { watchIDPayBarcodeSaga } from "../../barcode/saga";
 import { watchIdPayUnsubscriptionSaga } from "../../unsubscription/saga";
-import { isIdPayCiePaymentCodeEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { watchIDPayWalletSaga } from "../../wallet/saga";
+import { createIDPayClient } from "../api/client";
 
 export function* watchIDPaySaga(bpdToken: string): SagaIterator {
   const isPagoPATestEnabled = yield* select(isPagoPATestEnabledSelector);

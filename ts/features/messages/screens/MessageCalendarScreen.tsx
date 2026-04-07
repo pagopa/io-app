@@ -8,10 +8,11 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
+import I18n from "i18next";
 import { useCallback, useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
 import { Calendar } from "react-native-calendar-events";
-import I18n from "i18next";
+
 import { CalendarList } from "../../../components/CalendarList";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
@@ -36,9 +37,9 @@ const MessageCalendarHeaderComponent = () => {
 
   return (
     <ModalBSHeader
-      title={I18n.t("messages.cta.reminderCalendarSelect")}
-      onClose={onClose}
       closeAccessibilityLabel={I18n.t("global.buttons.close")}
+      onClose={onClose}
+      title={I18n.t("messages.cta.reminderCalendarSelect")}
     />
   );
 };
@@ -100,13 +101,13 @@ export const MessageCalendarScreen = () => {
       <>
         <MessageCalendarHeaderComponent />
         <OperationResultScreenContent
-          pictogram={"umbrella"}
-          title={I18n.t("messages.cta.errors.fetchCalendars")}
           action={{
             label: I18n.t("global.buttons.retry"),
             accessibilityLabel: I18n.t("global.buttons.retry"),
             onPress: fetchCalendars
           }}
+          pictogram={"umbrella"}
+          title={I18n.t("messages.cta.errors.fetchCalendars")}
         />
       </>
     );

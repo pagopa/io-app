@@ -1,11 +1,12 @@
-import { DeepPartial } from "redux";
 import * as O from "fp-ts/lib/Option";
+import { DeepPartial } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
+
 import { GlobalState } from "../../../../../store/reducers/types";
-import { CredentialType } from "../../../common/utils/itwMocksUtils";
-import { handleWalletCredentialsRehydration } from "../handleWalletCredentialsRehydration";
 import { walletAddCards } from "../../../../wallet/store/actions/cards";
+import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+import { handleWalletCredentialsRehydration } from "../handleWalletCredentialsRehydration";
 
 describe("ITW handleWalletCredentialsRehydration saga", () => {
   const expirationClaim = { value: "2100-09-04", name: "exp" };

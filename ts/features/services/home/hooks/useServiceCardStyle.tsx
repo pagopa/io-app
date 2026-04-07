@@ -4,7 +4,7 @@ import {
   useIOTheme,
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
-import { ViewStyle, ColorValue } from "react-native";
+import { ColorValue, ViewStyle } from "react-native";
 
 type ServiceCardStyleProps = {
   default: {

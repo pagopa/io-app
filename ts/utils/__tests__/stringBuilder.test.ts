@@ -1,10 +1,11 @@
 import { entries } from "lodash";
+
+import { Locales, setLocale } from "../../i18n";
 import {
   formatIntegerNumber,
   formatNumberAmount,
   formatNumberWithNoDigits
 } from "../stringBuilder";
-import { setLocale, Locales } from "../../i18n";
 
 const valuesEN = {
   "10.00": 10,

@@ -1,12 +1,13 @@
 import { ContentWrapper } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
+import I18n from "i18next";
 import { useCallback, useState } from "react";
 import Animated, {
   LinearTransition,
   useAnimatedRef
 } from "react-native-reanimated";
-import I18n from "i18next";
+
 import {
   IOScrollView,
   IOScrollViewActions
@@ -112,8 +113,8 @@ const PaymentsHomeScreen = () => {
   const AnimatedPaymentsHomeScreenContent = useCallback(
     () => (
       <Animated.View
-        style={{ flex: 1 }}
         layout={LinearTransition.duration(200)}
+        style={{ flex: 1 }}
       >
         <PaymentsHomeScreenContent />
       </Animated.View>
@@ -124,11 +125,11 @@ const PaymentsHomeScreen = () => {
   if (isTransactionsEmpty) {
     return (
       <IOScrollView
-        includeContentMargins={false}
         animatedRef={scrollViewContentRef}
         contentContainerStyle={{
           flexGrow: 1
         }}
+        includeContentMargins={false}
         refreshControlProps={{
           refreshing: isRefreshing,
           onRefresh: handleRefreshPaymentsHome
@@ -150,13 +151,6 @@ const PaymentsHomeScreen = () => {
 
   return (
     <IOScrollView
-      includeContentMargins={false}
-      excludeSafeAreaMargins={true}
-      animatedRef={scrollViewContentRef}
-      refreshControlProps={{
-        refreshing: isRefreshing,
-        onRefresh: handleRefreshPaymentsHome
-      }}
       actions={
         !isLoadingFirstTime
           ? {
@@ -165,6 +159,13 @@ const PaymentsHomeScreen = () => {
             }
           : undefined
       }
+      animatedRef={scrollViewContentRef}
+      excludeSafeAreaMargins={true}
+      includeContentMargins={false}
+      refreshControlProps={{
+        refreshing: isRefreshing,
+        onRefresh: handleRefreshPaymentsHome
+      }}
     >
       <PaymentsAlertStatus />
       <AnimatedPaymentsHomeScreenContent />

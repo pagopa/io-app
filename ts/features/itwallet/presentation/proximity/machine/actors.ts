@@ -1,6 +1,7 @@
+import { ISO18013_5 } from "@pagopa/io-react-native-iso18013";
 import { constUndefined } from "fp-ts/lib/function";
-import { fromCallback, fromPromise } from "xstate";
 import { Platform } from "react-native";
+import BluetoothStateManager from "react-native-bluetooth-state-manager";
 import {
   checkMultiple,
   Permission,
@@ -8,27 +9,28 @@ import {
   requestMultiple,
   RESULTS
 } from "react-native-permissions";
-import BluetoothStateManager from "react-native-bluetooth-state-manager";
-import { ISO18013_5 } from "@pagopa/io-react-native-iso18013";
+import { fromCallback, fromPromise } from "xstate";
+
+import type { EventsPayload } from "../utils/itwProximityTypeUtils";
+
+import { useIOStore } from "../../../../../store/hooks";
+import { assert } from "../../../../../utils/assert";
+import { Env } from "../../../common/utils/environment";
+import { CredentialFormat } from "../../../common/utils/itwTypesUtils";
+import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors";
+import {
+  trackItwProximityBluetoothBlock,
+  trackItwProximityBluetoothBlockAction
+} from "../analytics";
+import { itwCredentialsByTypeSelector } from "../store/selectors";
 import {
   generateAcceptedFields,
   getDocuments,
   getProximityDetails,
   promiseWithTimeout
 } from "../utils/itwProximityPresentationUtils";
-import { assert } from "../../../../../utils/assert";
-import {
-  trackItwProximityBluetoothBlock,
-  trackItwProximityBluetoothBlockAction
-} from "../analytics";
-import type { EventsPayload } from "../utils/itwProximityTypeUtils";
-import { useIOStore } from "../../../../../store/hooks";
-import { itwCredentialsByTypeSelector } from "../store/selectors";
-import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors";
-import { CredentialFormat } from "../../../common/utils/itwTypesUtils";
-import { Env } from "../../../common/utils/environment";
-import { ProximityEvents } from "./events";
 import { Context } from "./context";
+import { ProximityEvents } from "./events";
 
 const PERMISSIONS_TO_CHECK: Array<Permission> =
   Platform.OS === "android"
@@ -47,25 +49,25 @@ export type CheckPermissionsInput = {
   isSilent?: boolean;
 };
 
-export type StartProximityFlowInput = {
-  isRestarting?: boolean;
-} | void;
+export type CloseActorOutput = Awaited<ReturnType<typeof ISO18013_5.close>>;
 
 export type GetQrCodeStringActorOutput = Awaited<
   ReturnType<typeof ISO18013_5.getQrCodeString>
 >;
-
-export type SendErrorResponseActorOutput = Awaited<
-  ReturnType<typeof ISO18013_5.sendErrorResponse>
->;
-
-export type CloseActorOutput = Awaited<ReturnType<typeof ISO18013_5.close>>;
 
 export type SendDocumentsActorInput = Pick<Context, "verifierRequest">;
 
 export type SendDocumentsActorOutput = Awaited<
   ReturnType<typeof ISO18013_5.sendResponse>
 >;
+
+export type SendErrorResponseActorOutput = Awaited<
+  ReturnType<typeof ISO18013_5.sendErrorResponse>
+>;
+
+export type StartProximityFlowInput = void | {
+  isRestarting?: boolean;
+};
 
 export const createProximityActorsImplementation = (
   env: Env,

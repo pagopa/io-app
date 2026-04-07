@@ -1,19 +1,20 @@
-import { memo } from "react";
-import { View } from "react-native";
 import {
   ClaimsSelector,
   ListItemHeader,
-  VStack,
-  useIOTheme
+  useIOTheme,
+  VStack
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+import { memo } from "react";
+import { View } from "react-native";
+
 import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils";
-import { ProximityDetails } from "../utils/itwProximityTypeUtils";
+import { useClaimsDetailsBottomSheet } from "../../common/hooks/useClaimsDetailsBottomSheet";
 import {
   claimsSelectorHeaderGradientsByCredentialType,
   mapClaimsToClaimsSelectorItems
 } from "../../common/utils/itwClaimSelector";
-import { useClaimsDetailsBottomSheet } from "../../common/hooks/useClaimsDetailsBottomSheet";
+import { ProximityDetails } from "../utils/itwProximityTypeUtils";
 
 type ItwProximityPresentationDetailsProps = {
   data: ProximityDetails;
@@ -28,26 +29,26 @@ const ItwProximityPresentationDetails = ({
   return (
     <View>
       <ListItemHeader
-        label={I18n.t(
-          "features.itWallet.presentation.proximity.selectiveDisclosure.requiredClaims"
-        )}
-        iconName="security"
-        iconColor={theme["icon-decorative"]}
         description={I18n.t(
           "features.itWallet.presentation.proximity.selectiveDisclosure.purpose"
+        )}
+        iconColor={theme["icon-decorative"]}
+        iconName="security"
+        label={I18n.t(
+          "features.itWallet.presentation.proximity.selectiveDisclosure.requiredClaims"
         )}
       />
       <VStack space={24}>
         {data.map(({ claimsToDisplay, credentialType }) => (
           <ClaimsSelector
-            key={credentialType}
-            title={getCredentialNameFromType(credentialType)}
-            items={mapClaimsToClaimsSelectorItems(claimsToDisplay, present)}
             defaultExpanded
-            selectionEnabled={false}
             headerGradientColors={
               claimsSelectorHeaderGradientsByCredentialType[credentialType]
             }
+            items={mapClaimsToClaimsSelectorItems(claimsToDisplay, present)}
+            key={credentialType}
+            selectionEnabled={false}
+            title={getCredentialNameFromType(credentialType)}
           />
         ))}
         {bottomSheet}

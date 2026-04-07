@@ -1,11 +1,12 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+
 import {
   aarAdresseeDenominationSelector,
   currentAARFlowData,
+  currentAarFlowIunSelector,
   currentAARFlowStateAssistanceErrorCode,
   currentAARFlowStateErrorDebugInfoSelector,
   currentAARFlowStateType,
-  currentAarFlowIunSelector,
   thirdPartySenderDenominationSelector
 } from "..";
 import { GlobalState } from "../../../../../../store/reducers/types";
@@ -120,11 +121,11 @@ describe(" currentAARFlowData and currentAARFlowStateType", () => {
 });
 describe("currentAARFlowStateAssistanceErrorCode", () => {
   const testCases: Array<{
-    description: string;
-    traceId?: string;
-    errors?: Array<{ code: string }>;
     aarFlowType?: string;
+    description: string;
+    errors?: Array<{ code: string }>;
     expected: string | undefined;
+    traceId?: string;
   }> = [
     {
       description: "should return traceId if present, regardless of errors",

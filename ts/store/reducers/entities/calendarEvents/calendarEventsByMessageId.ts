@@ -8,13 +8,11 @@ import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 
 export type CalendarEvent = {
-  messageId: string;
   eventId: string;
+  messageId: string;
 };
 
-export type CalendarEventsByMessageIdState = {
-  [key: string]: CalendarEvent | undefined;
-};
+export type CalendarEventsByMessageIdState = Record<string, CalendarEvent | undefined>;
 
 export const INITIAL_STATE: CalendarEventsByMessageIdState = {};
 

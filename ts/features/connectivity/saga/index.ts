@@ -1,30 +1,20 @@
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
 import { call, fork, put, select } from "typed-redux-saga/macro";
-import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { fetchNetInfoState } from "../utils";
-import { startTimer } from "../../../utils/timer";
-import { setConnectionStatus } from "../store/actions";
-import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
+
+import { apiUrlPrefix } from "../../../config";
 import { updateMixpanelSuperProperties } from "../../../mixpanelConfig/superProperties";
 import { GlobalState } from "../../../store/reducers/types";
+import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
+import { startTimer } from "../../../utils/timer";
 import { ConnectivityClient, createConnectivityClient } from "../api/client";
-import { apiUrlPrefix } from "../../../config";
+import { setConnectionStatus } from "../store/actions";
+import { fetchNetInfoState } from "../utils";
 // import { appCurrentStateSelector } from "../../../store/reducers/appState";
 
 const CONNECTIVITY_STATUS_LOAD_INTERVAL = (30 * 1000) as Millisecond;
 const CONNECTIVITY_STATUS_FAILURE_INTERVAL = (10 * 1000) as Millisecond;
 // const CONNECTIVITY_STATUS_BACKGROUND_INTERVAL = 1000 as Millisecond;
-
-function* checkBackendConnectionStatus(
-  client: ConnectivityClient
-): Generator<ReduxSagaEffect, boolean, unknown> {
-  try {
-    const response = yield* call(client.getPing, {});
-    return E.isRight(response) && response.right.status === 204;
-  } catch (e) {
-    return false;
-  }
-}
 
 /**
  * this saga requests and checks the connection status
@@ -82,4 +72,15 @@ export function* connectionStatusSaga(
 export default function* root(): IterableIterator<ReduxSagaEffect> {
   const client = yield* call(createConnectivityClient, apiUrlPrefix);
   yield* fork(connectionStatusSaga, client);
+}
+
+function* checkBackendConnectionStatus(
+  client: ConnectivityClient
+): Generator<ReduxSagaEffect, boolean, unknown> {
+  try {
+    const response = yield* call(client.getPing, {});
+    return E.isRight(response) && response.right.status === 204;
+  } catch (e) {
+    return false;
+  }
 }

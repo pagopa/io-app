@@ -1,19 +1,20 @@
 import { ListItemTransaction } from "@pagopa/io-app-design-system";
 import { AmountInEuroCents } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { toInteger } from "lodash";
+
+import { getAccessibleAmountText } from "../../../../utils/accessibility";
 import {
   centsToAmount,
   formatNumberAmount
 } from "../../../../utils/stringBuilder";
-import { getAccessibleAmountText } from "../../../../utils/accessibility";
 
 type Props = {
-  paymentNoticeNumber: string;
-  organizationFiscalCode: string;
   amountInEuroCents: AmountInEuroCents;
   onPress: () => void;
+  organizationFiscalCode: string;
+  paymentNoticeNumber: string;
 };
 
 const PaymentNoticeListItem = ({
@@ -33,15 +34,15 @@ const PaymentNoticeListItem = ({
 
   return (
     <ListItemTransaction
-      title={paymentNoticeNumber}
+      onPress={onPress}
+      showChevron
       subtitle={organizationFiscalCode}
+      title={paymentNoticeNumber}
       transaction={{
         amount: amountString,
         amountAccessibilityLabel:
           getAccessibleAmountText(amountString) ?? amountString
       }}
-      onPress={onPress}
-      showChevron
     />
   );
 };

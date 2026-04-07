@@ -1,16 +1,17 @@
-import { constUndefined } from "fp-ts/lib/function";
 import { fireEvent } from "@testing-library/react-native";
+import { constUndefined } from "fp-ts/lib/function";
 import { createStore } from "redux";
-import { appReducer } from "../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { PreconditionsFooter } from "../PreconditionsFooter";
-import { MESSAGES_ROUTES } from "../../../navigation/routes";
+
 import { TagEnum } from "../../../../../../definitions/backend/MessageCategoryBase";
-import * as messagePrecondition from "../../../store/reducers/messagePrecondition";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import * as urlUtils from "../../../../../utils/url";
 import * as analytics from "../../../analytics";
-import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
+import { MESSAGES_ROUTES } from "../../../navigation/routes";
+import * as messagePrecondition from "../../../store/reducers/messagePrecondition";
+import { PreconditionsFooter } from "../PreconditionsFooter";
 
 describe("PreconditionsFooter", () => {
   afterEach(() => {
@@ -127,8 +128,8 @@ const renderComponent = (
     () => (
       <PreconditionsFooter
         onDismiss={onDismiss}
-        onNavigation={onNavigation}
         onFooterHeightAvailable={_height => undefined}
+        onNavigation={onNavigation}
       />
     ),
     MESSAGES_ROUTES.MESSAGES_HOME,

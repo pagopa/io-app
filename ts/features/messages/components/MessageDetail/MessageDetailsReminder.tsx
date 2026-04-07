@@ -1,5 +1,6 @@
 import { Alert, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+
 import { MessageDetailsReminderExpiring } from "./MessageDetailsReminderExpiring";
 
 export type MessageDetailsReminderProps = {
@@ -28,8 +29,6 @@ export const MessageDetailsReminder = ({
         />
       ) : (
         <Alert
-          testID="due-date-alert"
-          variant="warning"
           content={I18n.t("features.messages.badge.dueDate", {
             date: new Intl.DateTimeFormat("it", {
               day: "2-digit",
@@ -40,6 +39,8 @@ export const MessageDetailsReminder = ({
               minute: "2-digit"
             }).format(dueDate)
           })}
+          testID="due-date-alert"
+          variant="warning"
         />
       )}
       <VSpacer size={16} />

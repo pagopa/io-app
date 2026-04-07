@@ -1,16 +1,17 @@
 import { createStore } from "redux";
-import { appReducer } from "../../../../store/reducers";
-import { applicationChangeState } from "../../../../store/actions/application";
-import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import PN_ROUTES from "../../navigation/routes";
-import { MessagePayments } from "../MessagePayments";
-import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
-import { GlobalState } from "../../../../store/reducers/types";
-import { remoteError, remoteReady } from "../../../../common/model/RemoteValue";
+
 import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
+import { remoteError, remoteReady } from "../../../../common/model/RemoteValue";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
+import { GlobalState } from "../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { toSpecificMessagePaymentError } from "../../../messages/types/paymentErrors";
+import PN_ROUTES from "../../navigation/routes";
+import { MessagePayments } from "../MessagePayments";
 
 const globalMessageId = "01HTFFDYS8VQ779EA4M5WB9YWA";
 const globalMaxVisiblePaymentCount = 5;
@@ -582,9 +583,9 @@ const renderComponent = (
         messageId={messageId}
         payments={payments}
         presentPaymentsBottomSheetRef={mockPresentPaymentsBottomSheetRef}
-        serviceId={"01J5X3DFDZJ9AJ6CW89WY8QS4N" as ServiceId}
         sendOpeningSource={"message"}
         sendUserType={"recipient"}
+        serviceId={"01J5X3DFDZJ9AJ6CW89WY8QS4N" as ServiceId}
       />
     ),
     PN_ROUTES.MESSAGE_DETAILS,

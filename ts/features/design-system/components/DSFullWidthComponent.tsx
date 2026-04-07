@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
+
 import customVariables from "../../../theme/variables";
 
 type Props = {

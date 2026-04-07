@@ -10,13 +10,13 @@ import { ItwPreferencesActions } from "./preferences";
 import { ItwSecurePreferencesActions } from "./securePreferences";
 
 export type ItwActions =
+  | ItwBannersActions
+  | ItwCredentialsActions
+  | ItwCredentialsCatalogueActions
   | ItwEnvironmentActions
   | ItwIdentificationActions
   | ItwIssuanceActions
   | ItwLifecycleActions
-  | ItwCredentialsActions
-  | ItwWalletInstanceActions
   | ItwPreferencesActions
   | ItwSecurePreferencesActions
-  | ItwCredentialsCatalogueActions
-  | ItwBannersActions;
+  | ItwWalletInstanceActions;

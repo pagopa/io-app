@@ -1,8 +1,9 @@
-import { call, put } from "typed-redux-saga/macro";
 import { SagaReturnType } from "@redux-saga/core/effects";
-import { zendeskRequestTicketNumber } from "../../store/actions";
+import { call, put } from "typed-redux-saga/macro";
+
 import { getError } from "../../../../utils/errors";
 import { hasOpenedTickets } from "../../../../utils/supportAssistance";
+import { zendeskRequestTicketNumber } from "../../store/actions";
 
 // retrieve the number of ticket opened by the user from the Zendesk SDK
 export function* handleHasOpenedTickets() {

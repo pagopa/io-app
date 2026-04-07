@@ -1,13 +1,14 @@
-import { applyMiddleware, createStore } from "redux";
-import createSagaMiddleware from "redux-saga";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { CgnMerchantSearchScreen } from "../merchants/CgnMerchantSearchScreen";
-import CGN_ROUTES from "../../navigation/routes";
-import { appReducer } from "../../../../../store/reducers";
+import { applyMiddleware, createStore } from "redux";
+import createSagaMiddleware from "redux-saga";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import CGN_ROUTES from "../../navigation/routes";
 import { watchBonusCgnSaga } from "../../saga";
+import { CgnMerchantSearchScreen } from "../merchants/CgnMerchantSearchScreen";
 
 const mockFetch: typeof fetch = async (url, options) => {
   if (url === "/api/v1/cgn/operator-search/count") {

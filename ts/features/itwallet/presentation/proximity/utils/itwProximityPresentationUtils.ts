@@ -1,16 +1,17 @@
-import {
-  parseClaims,
-  WellKnownClaim
-} from "../../../common/utils/itwClaimsUtils";
-import { assert } from "../../../../../utils/assert";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
-import { WIA_KEYTAG } from "../../../common/utils/itwCryptoContextUtils";
 import type {
   AcceptedFields,
   ProximityDetails,
   RequestedDocument,
   VerifierRequest
 } from "./itwProximityTypeUtils";
+
+import { assert } from "../../../../../utils/assert";
+import {
+  parseClaims,
+  WellKnownClaim
+} from "../../../common/utils/itwClaimsUtils";
+import { WIA_KEYTAG } from "../../../common/utils/itwCryptoContextUtils";
+import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { TimeoutError, UntrustedRpError } from "./itwProximityErrors";
 
 const WIA_DOC_TYPE = "org.iso.18013.5.1.IT.WalletAttestation";

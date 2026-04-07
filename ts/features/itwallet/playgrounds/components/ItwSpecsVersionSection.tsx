@@ -6,15 +6,16 @@ import {
   VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
-import { Alert, View } from "react-native";
 import { type ItwVersion } from "@pagopa/io-react-native-wallet";
 import I18n from "i18next";
+import { Alert, View } from "react-native";
+
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { itwSetSpecsVersion } from "../../common/store/actions/environment";
 import {
   selectItwEnv,
   selectItwSpecsVersion
 } from "../../common/store/selectors/environment";
-import { itwSetSpecsVersion } from "../../common/store/actions/environment";
 import { itwLifecycleWalletReset } from "../../lifecycle/store/actions";
 
 const itwVersions: ReadonlyArray<ItwVersion> = ["1.0.0", "1.3.3"];
@@ -63,9 +64,9 @@ export const ItwSpecsVersionSection = () => {
         <HStack space={24}>
           {itwVersions.map(version => (
             <RadioButtonLabel
+              checked={version === itwVersion}
               key={version}
               label={`v${version}`}
-              checked={version === itwVersion}
               onValueChange={() => setItwSpecsVersionWithAlert(version)}
             />
           ))}

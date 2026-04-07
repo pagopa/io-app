@@ -1,11 +1,12 @@
-import { useMemo } from "react";
 import {
   IOColors,
   useIOTheme,
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import { BottomTabNavigationOptions } from "@react-navigation/bottom-tabs";
+import { useMemo } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import variables from "../theme/variables";
 
 export const useBottomTabNavigatorStyle = () => {

@@ -1,5 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { useCallback } from "react";
+
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { PnParamsList } from "../../navigation/params";
@@ -12,14 +13,14 @@ import {
   sendAARFlowStates
 } from "../utils/stateUtils";
 
-type SendAarFlowManager = {
-  terminateFlow: () => void;
-  goToNextState: () => void;
-  currentFlowData: AARFlowState;
-};
-
 export type SendAarFlowHandlerType = {
   qrCode: string;
+};
+
+type SendAarFlowManager = {
+  currentFlowData: AARFlowState;
+  goToNextState: () => void;
+  terminateFlow: () => void;
 };
 
 export const useSendAarFlowManager = (): SendAarFlowManager => {

@@ -1,36 +1,37 @@
 import { useCallback, useEffect, useMemo } from "react";
+
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import {
+  AppParamsList,
+  IOStackNavigationProp,
+  useIONavigation
+} from "../../../../navigation/params/AppParamsList";
 import {
   useIODispatch,
   useIOSelector,
   useIOStore
 } from "../../../../store/hooks";
 import {
-  serviceDetailsByIdPotSelector,
-  serviceDetailsByIdSelector
-} from "../../../services/details/store/selectors";
-import { loadServiceDetail } from "../../../services/details/store/actions/details";
-import { isStrictNone } from "../../../../utils/pot";
-import {
-  AppParamsList,
-  IOStackNavigationProp,
-  useIONavigation
-} from "../../../../navigation/params/AppParamsList";
-import { FIMS_ROUTES } from "../navigation";
-import { removeFIMSPrefixFromUrl } from "../../singleSignOn/utils";
-import { isTestEnv } from "../../../../utils/environment";
-import {
   fimsServiceConfiguration,
   fimsServiceIdInCookieDisabledListSelector
 } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../store/reducers/types";
+import { isTestEnv } from "../../../../utils/environment";
+import { isStrictNone } from "../../../../utils/pot";
+import { loadServiceDetail } from "../../../services/details/store/actions/details";
+import {
+  serviceDetailsByIdPotSelector,
+  serviceDetailsByIdSelector
+} from "../../../services/details/store/selectors";
+import { removeFIMSPrefixFromUrl } from "../../singleSignOn/utils";
+import { FIMS_ROUTES } from "../navigation";
 
 export type FIMSServiceData = {
+  ephemeralSessionOniOS: boolean;
   organizationFiscalCode?: string;
   organizationName?: string;
   serviceId: ServiceId;
   serviceName?: string;
-  ephemeralSessionOniOS: boolean;
 };
 
 export const useAutoFetchingServiceByIdPot = (serviceId: ServiceId) => {

@@ -1,5 +1,6 @@
 import { createStore } from "redux";
 import { createActor } from "xstate";
+
 import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";

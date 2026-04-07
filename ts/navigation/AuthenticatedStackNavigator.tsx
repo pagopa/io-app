@@ -3,6 +3,7 @@ import {
   TransitionPresets
 } from "@react-navigation/stack";
 import { Platform } from "react-native";
+
 import WorkunitGenericFailure from "../components/error/WorkunitGenericFailure";
 import { BarcodeScanScreen } from "../features/barcode/screens/BarcodeScanScreen";
 import { CdcNavigator } from "../features/bonus/cdc/common/navigation/navigator.tsx";
@@ -95,39 +96,39 @@ const AuthenticatedStackNavigator = () => {
       }}
     >
       <Stack.Screen
+        component={MainTabNavigator}
         name={ROUTES.MAIN}
         options={{ headerShown: false }}
-        component={MainTabNavigator}
       />
 
       <Stack.Screen
+        component={OnboardingNavigator}
         name={ROUTES.ONBOARDING}
         options={hideHeaderOptions}
-        component={OnboardingNavigator}
       />
 
       <Stack.Screen
+        component={CheckEmailNavigator}
         name={ROUTES.CHECK_EMAIL}
         options={hideHeaderOptions}
-        component={CheckEmailNavigator}
       />
 
       <Stack.Screen
+        component={UnsupportedDeviceScreen}
         name={ROUTES.UNSUPPORTED_DEVICE}
         options={hideHeaderOptions}
-        component={UnsupportedDeviceScreen}
       />
 
       <Stack.Screen
+        component={MessagesStackNavigator}
         name={MESSAGES_ROUTES.MESSAGES_NAVIGATOR}
         options={hideHeaderOptions}
-        component={MessagesStackNavigator}
       />
       {/* This screen is outside the MessagesNavigator to change gesture and transion behaviour. */}
 
       <Stack.Screen
-        name={NOTIFICATIONS_ROUTES.SYSTEM_NOTIFICATION_PERMISSIONS}
         component={SystemNotificationPermissionsScreen}
+        name={NOTIFICATIONS_ROUTES.SYSTEM_NOTIFICATION_PERMISSIONS}
         options={{
           gestureEnabled: true,
           headerShown: true,
@@ -135,13 +136,13 @@ const AuthenticatedStackNavigator = () => {
         }}
       />
       <Stack.Screen
-        name={NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT}
         component={PushNotificationEngagementScreen}
+        name={NOTIFICATIONS_ROUTES.PUSH_NOTIFICATION_ENGAGEMENT}
         options={TransitionPresets.ModalSlideFromBottomIOS}
       />
       <Stack.Screen
-        name={MESSAGES_ROUTES.MESSAGES_SEARCH}
         component={MessagesSearchScreen}
+        name={MESSAGES_ROUTES.MESSAGES_SEARCH}
         options={{
           ...hideHeaderOptions,
           gestureEnabled: false,
@@ -154,14 +155,14 @@ const AuthenticatedStackNavigator = () => {
         }}
       />
       <Stack.Screen
+        component={ServicesNavigator}
         name={SERVICES_ROUTES.SERVICES_NAVIGATOR}
         options={{ ...hideHeaderOptions, gestureEnabled: isGestureEnabled }}
-        component={ServicesNavigator}
       />
       {/* This screen is outside the ServicesNavigator to change gesture and transion behaviour. */}
       <Stack.Screen
-        name={SERVICES_ROUTES.SEARCH}
         component={SearchScreen}
+        name={SERVICES_ROUTES.SEARCH}
         options={{
           ...hideHeaderOptions,
           gestureEnabled: false,
@@ -175,18 +176,18 @@ const AuthenticatedStackNavigator = () => {
       />
 
       <Stack.Screen
+        component={SettingsStackNavigator}
         name={SETTINGS_ROUTES.PROFILE_NAVIGATOR}
         options={{
           ...hideHeaderOptions,
           ...TransitionPresets.SlideFromRightIOS,
           gestureEnabled: isGestureEnabled
         }}
-        component={SettingsStackNavigator}
       />
 
       <Stack.Screen
-        name={ROUTES.BARCODE_SCAN}
         component={BarcodeScanScreen}
+        name={ROUTES.BARCODE_SCAN}
         options={{
           headerShown: false,
           ...TransitionPresets.ModalSlideFromBottomIOS,
@@ -196,45 +197,45 @@ const AuthenticatedStackNavigator = () => {
 
       {cgnEnabled && (
         <Stack.Screen
+          component={CgnActivationNavigator}
           name={CGN_ROUTES.ACTIVATION.MAIN}
           options={hideHeaderOptions}
-          component={CgnActivationNavigator}
         />
       )}
 
       {cgnEnabled && (
         <Stack.Screen
+          component={CgnDetailsNavigator}
           name={CGN_ROUTES.DETAILS.MAIN}
           options={{ ...hideHeaderOptions, gestureEnabled: isGestureEnabled }}
-          component={CgnDetailsNavigator}
         />
       )}
 
       {cgnEnabled && (
         <Stack.Screen
+          component={CgnEYCAActivationNavigator}
           name={CGN_ROUTES.EYCA.ACTIVATION.MAIN}
           options={hideHeaderOptions}
-          component={CgnEYCAActivationNavigator}
         />
       )}
 
       {cdcEnabled && (
         <Stack.Screen
+          component={CdcNavigator}
           name={CDC_ROUTES.CDC_MAIN}
           options={hideHeaderOptions}
-          component={CdcNavigator}
         />
       )}
 
       <Stack.Screen
+        component={WorkunitGenericFailure}
         name={ROUTES.WORKUNIT_GENERIC_FAILURE}
         options={hideHeaderOptions}
-        component={WorkunitGenericFailure}
       />
       <Stack.Screen
+        component={PageNotFound}
         name={ROUTES.PAGE_NOT_FOUND}
         options={hideHeaderOptions}
-        component={PageNotFound}
       />
 
       <Stack.Group
@@ -245,45 +246,45 @@ const AuthenticatedStackNavigator = () => {
         }}
       >
         <Stack.Screen
-          name={ZENDESK_ROUTES.MAIN}
           component={ZendeskStackNavigator}
+          name={ZENDESK_ROUTES.MAIN}
         />
       </Stack.Group>
 
       <Stack.Screen
+        component={FimsNavigator}
         name={FIMS_ROUTES.MAIN}
         options={hideHeaderOptions}
-        component={FimsNavigator}
       />
       {isFciEnabled && (
         <Stack.Screen
+          component={FciStackNavigator}
           name={FCI_ROUTES.MAIN}
           options={hideHeaderOptions}
-          component={FciStackNavigator}
         />
       )}
 
       <Stack.Screen
-        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN}
         component={IdPayOnboardingNavigator}
+        name={IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN}
         options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
       />
       <Stack.Screen
-        name={IDPayDetailsRoutes.IDPAY_DETAILS_MAIN}
         component={IDpayDetailsNavigator}
+        name={IDPayDetailsRoutes.IDPAY_DETAILS_MAIN}
         options={{
           gestureEnabled: isGestureEnabled,
           ...hideHeaderOptions
         }}
       />
       <Stack.Screen
-        name={IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR}
         component={IdPayConfigurationNavigator}
+        name={IdPayConfigurationRoutes.IDPAY_CONFIGURATION_NAVIGATOR}
         options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
       />
       <Stack.Screen
-        name={IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN}
         component={IdPayUnsubscriptionNavigator}
+        name={IdPayUnsubscriptionRoutes.IDPAY_UNSUBSCRIPTION_MAIN}
         options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
       />
       {/*
@@ -291,8 +292,8 @@ const AuthenticatedStackNavigator = () => {
         FIXME IOBP-383: Using react-navigation 6.x we can achive this using a Stack.Group inside the IDPayPaymentNavigator
       */}
       <Stack.Screen
-        name={IdPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN}
         component={IDPayPaymentCodeScanScreen}
+        name={IdPayPaymentRoutes.IDPAY_PAYMENT_CODE_SCAN}
         options={{
           ...hideHeaderOptions,
           ...TransitionPresets.ModalSlideFromBottomIOS,
@@ -300,56 +301,56 @@ const AuthenticatedStackNavigator = () => {
         }}
       />
       <Stack.Screen
-        name={IdPayPaymentRoutes.IDPAY_PAYMENT_MAIN}
         component={IdPayPaymentNavigator}
+        name={IdPayPaymentRoutes.IDPAY_PAYMENT_MAIN}
         options={{ gestureEnabled: false, ...hideHeaderOptions }}
       />
       <Stack.Screen
+        component={IdPayCodeNavigator}
         name={IdPayCodeRoutes.IDPAY_CODE_MAIN}
         options={hideHeaderOptions}
-        component={IdPayCodeNavigator}
       />
       <Stack.Screen
+        component={IdPayBarcodeNavigator}
         name={IdPayBarcodeRoutes.IDPAY_BARCODE_MAIN}
         options={{
           gestureEnabled: isGestureEnabled,
           ...hideHeaderOptions
         }}
-        component={IdPayBarcodeNavigator}
       />
 
       <Stack.Screen
-        name={PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR}
         component={PaymentsOnboardingNavigator}
+        name={PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR}
         options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
       />
       <Stack.Screen
-        name={PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR}
         component={PaymentsCheckoutNavigator}
+        name={PaymentsCheckoutRoutes.PAYMENT_CHECKOUT_NAVIGATOR}
         options={{
           gestureEnabled: isGestureEnabled,
           ...hideHeaderOptions
         }}
       />
       <Stack.Screen
-        name={PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_NAVIGATOR}
         component={PaymentsMethodDetailsNavigator}
+        name={PaymentsMethodDetailsRoutes.PAYMENT_METHOD_DETAILS_NAVIGATOR}
         options={{
           gestureEnabled: isGestureEnabled,
           ...hideHeaderOptions
         }}
       />
       <Stack.Screen
-        name={PaymentsReceiptRoutes.PAYMENT_RECEIPT_NAVIGATOR}
         component={PaymentsReceiptNavigator}
+        name={PaymentsReceiptRoutes.PAYMENT_RECEIPT_NAVIGATOR}
         options={{
           gestureEnabled: isGestureEnabled,
           ...hideHeaderOptions
         }}
       />
       <Stack.Screen
-        name={PaymentsBarcodeRoutes.PAYMENT_BARCODE_NAVIGATOR}
         component={WalletBarcodeNavigator}
+        name={PaymentsBarcodeRoutes.PAYMENT_BARCODE_NAVIGATOR}
         options={{
           ...TransitionPresets.ModalSlideFromBottomIOS,
           gestureEnabled: isGestureEnabled,
@@ -357,13 +358,13 @@ const AuthenticatedStackNavigator = () => {
         }}
       />
       <Stack.Screen
-        name={ITW_ROUTES.MAIN}
         component={ItwStackNavigator}
+        name={ITW_ROUTES.MAIN}
         options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
       />
       <Stack.Screen
-        name={ITW_REMOTE_ROUTES.MAIN}
         component={ItwRemoteStackNavigator}
+        name={ITW_REMOTE_ROUTES.MAIN}
         options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
       />
     </Stack.Navigator>

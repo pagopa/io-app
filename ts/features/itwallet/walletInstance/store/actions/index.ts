@@ -1,13 +1,14 @@
 import {
   ActionType,
-  createStandardAction,
-  createAsyncAction
+  createAsyncAction,
+  createStandardAction
 } from "typesafe-actions";
+
+import { NetworkError } from "../../../../../utils/errors";
 import {
   WalletInstanceAttestations,
   WalletInstanceStatus
 } from "../../../common/utils/itwTypesUtils";
-import { NetworkError } from "../../../../../utils/errors";
 
 /**
  * This action stores the Wallet Instance Attestation
@@ -35,6 +36,6 @@ export const itwSetWalletInstanceRenewalError = createStandardAction(
 )<boolean>();
 
 export type ItwWalletInstanceActions =
-  | ActionType<typeof itwWalletInstanceAttestationStore>
+  | ActionType<typeof itwSetWalletInstanceRenewalError>
   | ActionType<typeof itwUpdateWalletInstanceStatus>
-  | ActionType<typeof itwSetWalletInstanceRenewalError>;
+  | ActionType<typeof itwWalletInstanceAttestationStore>;

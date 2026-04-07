@@ -2,6 +2,7 @@ import { Body } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 import { createStore } from "redux";
+
 import { Config } from "../../../../../../definitions/content/Config";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";

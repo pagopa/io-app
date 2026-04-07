@@ -1,5 +1,6 @@
 import I18n from "i18next";
 import { Alert } from "react-native";
+
 import { useHardwareBackButtonWhenFocused } from "../../../../hooks/useHardwareBackButton";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import {
@@ -9,15 +10,15 @@ import {
 import { ItwScreenFlowContext } from "../../analytics/utils/types";
 
 type ItwDismissalDialogProps = {
-  handleDismiss?: () => void;
+  customLabels?: {
+    body?: string;
+    cancelLabel?: string;
+    confirmLabel?: string;
+    title?: string;
+  };
   dismissalContext?: ItwScreenFlowContext;
   enabled?: boolean;
-  customLabels?: {
-    title?: string;
-    body?: string;
-    confirmLabel?: string;
-    cancelLabel?: string;
-  };
+  handleDismiss?: () => void;
 };
 
 /**

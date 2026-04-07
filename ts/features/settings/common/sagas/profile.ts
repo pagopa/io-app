@@ -3,12 +3,13 @@
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import * as S from "fp-ts/lib/string";
+import I18n from "i18next";
 import { call, put, select, take, takeLatest } from "typed-redux-saga/macro";
 import { ActionType, getType, isActionOf } from "typesafe-actions";
-import I18n from "i18next";
+
 import { AppVersion } from "../../../../../definitions/backend/AppVersion";
 import { ExtendedProfile } from "../../../../../definitions/backend/ExtendedProfile";
 import { InitializedProfile } from "../../../../../definitions/backend/InitializedProfile";
@@ -16,31 +17,14 @@ import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/
 import { UpdateProfile412ErrorTypesEnum } from "../../../../../definitions/backend/UpdateProfile412ErrorTypes";
 import { UserDataProcessingChoiceEnum } from "../../../../../definitions/backend/UserDataProcessingChoice";
 import { BackendClient } from "../../../../api/backend";
-import { cgnDetails } from "../../../bonus/cgn/store/actions/details";
-import { cgnDetailSelector } from "../../../bonus/cgn/store/reducers/details";
-import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { mixpanelTrack } from "../../../../mixpanel";
-import { trackProfileLoadSuccess } from "../analytics";
 import {
   differentProfileLoggedIn,
   setProfileHashedFiscalCode
 } from "../../../../store/actions/crossSessions";
 import { navigateToRemoveAccountSuccess } from "../../../../store/actions/navigation";
-import {
-  clearCache,
-  loadBonusBeforeRemoveAccount,
-  profileLoadFailure,
-  profileLoadRequest,
-  profileLoadSuccess,
-  profileUpsert,
-  removeAccountMotivation,
-  startEmailValidation
-} from "../store/actions";
-import { upsertUserDataProcessing } from "../store/actions/userDataProcessing";
 import { isCGNEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isDifferentFiscalCodeSelector } from "../../../../store/reducers/crossSessions";
-import { profileSelector } from "../store/selectors";
-import { ProfileError } from "../store/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";
 import { getAppVersion } from "../../../../utils/appVersion";
@@ -52,7 +36,24 @@ import {
   getLocalePrimaryWithFallback
 } from "../../../../utils/locale";
 import { readablePrivacyReport } from "../../../../utils/reporters";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
+import { cgnDetails } from "../../../bonus/cgn/store/actions/details";
+import { cgnDetailSelector } from "../../../bonus/cgn/store/reducers/details";
 import { tosConfigSelector } from "../../../tos/store/selectors";
+import { trackProfileLoadSuccess } from "../analytics";
+import {
+  clearCache,
+  loadBonusBeforeRemoveAccount,
+  profileLoadFailure,
+  profileLoadRequest,
+  profileLoadSuccess,
+  profileUpsert,
+  removeAccountMotivation,
+  startEmailValidation
+} from "../store/actions";
+import { upsertUserDataProcessing } from "../store/actions/userDataProcessing";
+import { profileSelector } from "../store/selectors";
+import { ProfileError } from "../store/types";
 
 // A saga to load the Profile.
 export function* loadProfile(
@@ -235,7 +236,7 @@ function* createOrUpdateProfileSaga(
 const profileChangePredicates: ReadonlyArray<
   [
     (value: InitializedProfile, newValue: InitializedProfile) => boolean,
-    (value: InitializedProfile) => void | undefined
+    (value: InitializedProfile) => undefined | void
   ]
 > = [
   [
@@ -255,185 +256,6 @@ const profileChangePredicates: ReadonlyArray<
       })
   ]
 ];
-
-// execute a list of predicates to detect interesting scenario and execute action when profile changes
-function* handleProfileChangesSaga(
-  action: ActionType<(typeof profileUpsert)["success"]>
-) {
-  const { value, newValue } = action.payload;
-
-  for (const item of profileChangePredicates) {
-    if (item[0](value, newValue)) {
-      yield* call(item[1], newValue);
-    }
-  }
-}
-
-// This function listens for Profile upsert requests and calls the needed saga.
-export function* watchProfileUpsertRequestsSaga(
-  createOrUpdateProfile: ReturnType<
-    typeof BackendClient
-  >["createOrUpdateProfile"]
-): Iterator<ReduxSagaEffect> {
-  yield* takeLatest(
-    getType(profileUpsert.request),
-    createOrUpdateProfileSaga,
-    createOrUpdateProfile
-  );
-
-  yield* takeLatest(getType(profileUpsert.success), handleProfileChangesSaga);
-}
-
-// This function listens for Profile refresh requests and calls the needed saga.
-export function* watchProfileRefreshRequestsSaga(
-  getProfile: ReturnType<typeof BackendClient>["getProfile"]
-): Iterator<ReduxSagaEffect> {
-  yield* takeLatest(getType(profileLoadRequest), loadProfile, getProfile);
-}
-
-// make a request to start the email validation process that sends to the user
-// an email with a link to validate it
-function* startEmailValidationProcessSaga(
-  startEmailValidationProcess: ReturnType<
-    typeof BackendClient
-  >["startEmailValidationProcess"]
-): Generator<
-  ReduxSagaEffect,
-  void,
-  SagaCallReturnType<typeof startEmailValidationProcess>
-> {
-  try {
-    const response = (yield* call(
-      withRefreshApiCall,
-      startEmailValidationProcess({})
-    )) as unknown as SagaCallReturnType<typeof startEmailValidationProcess>;
-    // we got an error, throw it
-    if (E.isLeft(response)) {
-      throw Error(readablePrivacyReport(response.left));
-    }
-    if (response.right.status === 202) {
-      yield* put(startEmailValidation.success());
-      return;
-    }
-    throw response
-      ? Error(`response status ${response.right.status}`)
-      : Error(I18n.t("profile.errors.load"));
-  } catch (e) {
-    yield* put(startEmailValidation.failure(convertUnknownToError(e)));
-  }
-}
-
-function* handleLoadBonusBeforeRemoveAccount() {
-  const cgnActive: ReturnType<typeof cgnDetailSelector> =
-    yield* select(cgnDetailSelector);
-
-  const isCgnEnabled: ReturnType<typeof isCGNEnabledSelector> =
-    yield* select(isCGNEnabledSelector);
-
-  if (pot.isNone(cgnActive) && isCgnEnabled) {
-    // Load the cgn data and wait for a response
-    yield* put(cgnDetails.request());
-
-    yield* take([cgnDetails.success, cgnDetails.failure]);
-  }
-}
-
-// watch for action of removing account
-function* handleRemoveAccount() {
-  // dispatch an action to request account deletion
-  yield* put(
-    upsertUserDataProcessing.request(UserDataProcessingChoiceEnum.DELETE)
-  );
-  // wait for response (success/failure)
-  const upsertUserDataProcessingResponse = yield* take<
-    ActionType<
-      | typeof upsertUserDataProcessing.success
-      | typeof upsertUserDataProcessing.failure
-    >
-  >([upsertUserDataProcessing.success, upsertUserDataProcessing.failure]);
-
-  // if success go to remove account success screen
-  if (
-    isActionOf(
-      upsertUserDataProcessing.success,
-      upsertUserDataProcessingResponse
-    )
-  ) {
-    yield* call(navigateToRemoveAccountSuccess);
-  }
-}
-
-/**
- * check if the current logged profile fiscal code is the same of the previous stored one
- * @param profileLoadSuccessAction
- */
-function* checkStoreHashedFiscalCode(
-  profileLoadSuccessAction: ActionType<typeof profileLoadSuccess>
-) {
-  const checkIsDifferentFiscalCode: boolean | undefined = yield* select(
-    isDifferentFiscalCodeSelector,
-    profileLoadSuccessAction.payload.fiscal_code
-  );
-  // the current logged user has a different fiscal code from the stored hashed one or there isn't a stored one
-  if (
-    checkIsDifferentFiscalCode === true ||
-    checkIsDifferentFiscalCode === undefined
-  ) {
-    // delete current store pin
-    yield* call(deletePin);
-    yield* put(clearCache());
-    yield* put(
-      differentProfileLoggedIn({
-        isNewInstall: checkIsDifferentFiscalCode === undefined
-      })
-    );
-  }
-  yield* put(
-    setProfileHashedFiscalCode(profileLoadSuccessAction.payload.fiscal_code)
-  );
-}
-
-// make some check after the profile is loaded successfully
-function* checkLoadedProfile(
-  profileLoadSuccessAction: ActionType<typeof profileLoadSuccess>
-) {
-  const state = (yield* select()) as GlobalState;
-  void trackProfileLoadSuccess(state);
-
-  yield* call(checkStoreHashedFiscalCode, profileLoadSuccessAction);
-  // If the tos has never been accepted or is not part of the upsert payload, do not run check that could upsert profile
-  if (!profileLoadSuccessAction.payload.accepted_tos_version) {
-    return;
-  }
-  // This saga will upsert the `last_app_version` value in the
-  // profile only if it actually changed from the one stored in
-  // the backend.
-  yield* call(upsertAppVersionSaga);
-}
-
-// watch for some actions about profile
-export function* watchProfile(
-  startEmailValidationProcess: ReturnType<
-    typeof BackendClient
-  >["startEmailValidationProcess"]
-): Iterator<ReduxSagaEffect> {
-  // user requests to send again the email validation to profile email
-  yield* takeLatest(
-    getType(startEmailValidation.request),
-    startEmailValidationProcessSaga,
-    startEmailValidationProcess
-  );
-  // check the loaded profile
-  yield* takeLatest(getType(profileLoadSuccess), checkLoadedProfile);
-
-  // Start watching for request bonus before remove profile
-  yield* takeLatest(
-    loadBonusBeforeRemoveAccount,
-    handleLoadBonusBeforeRemoveAccount
-  );
-  // Start watching for request of remove profile
-  yield* takeLatest(removeAccountMotivation, handleRemoveAccount);
-}
 
 /**
  * Upsert the user's latest app version, only if it's different
@@ -486,6 +308,185 @@ export function* upsertAppVersionSaga() {
   // other possible upsert requests that would cause a race
   // condition with the profile version number.
   yield* take([profileUpsert.success, profileUpsert.failure]);
+}
+
+// watch for some actions about profile
+export function* watchProfile(
+  startEmailValidationProcess: ReturnType<
+    typeof BackendClient
+  >["startEmailValidationProcess"]
+): Iterator<ReduxSagaEffect> {
+  // user requests to send again the email validation to profile email
+  yield* takeLatest(
+    getType(startEmailValidation.request),
+    startEmailValidationProcessSaga,
+    startEmailValidationProcess
+  );
+  // check the loaded profile
+  yield* takeLatest(getType(profileLoadSuccess), checkLoadedProfile);
+
+  // Start watching for request bonus before remove profile
+  yield* takeLatest(
+    loadBonusBeforeRemoveAccount,
+    handleLoadBonusBeforeRemoveAccount
+  );
+  // Start watching for request of remove profile
+  yield* takeLatest(removeAccountMotivation, handleRemoveAccount);
+}
+
+// This function listens for Profile refresh requests and calls the needed saga.
+export function* watchProfileRefreshRequestsSaga(
+  getProfile: ReturnType<typeof BackendClient>["getProfile"]
+): Iterator<ReduxSagaEffect> {
+  yield* takeLatest(getType(profileLoadRequest), loadProfile, getProfile);
+}
+
+// This function listens for Profile upsert requests and calls the needed saga.
+export function* watchProfileUpsertRequestsSaga(
+  createOrUpdateProfile: ReturnType<
+    typeof BackendClient
+  >["createOrUpdateProfile"]
+): Iterator<ReduxSagaEffect> {
+  yield* takeLatest(
+    getType(profileUpsert.request),
+    createOrUpdateProfileSaga,
+    createOrUpdateProfile
+  );
+
+  yield* takeLatest(getType(profileUpsert.success), handleProfileChangesSaga);
+}
+
+// make some check after the profile is loaded successfully
+function* checkLoadedProfile(
+  profileLoadSuccessAction: ActionType<typeof profileLoadSuccess>
+) {
+  const state = (yield* select()) as GlobalState;
+  void trackProfileLoadSuccess(state);
+
+  yield* call(checkStoreHashedFiscalCode, profileLoadSuccessAction);
+  // If the tos has never been accepted or is not part of the upsert payload, do not run check that could upsert profile
+  if (!profileLoadSuccessAction.payload.accepted_tos_version) {
+    return;
+  }
+  // This saga will upsert the `last_app_version` value in the
+  // profile only if it actually changed from the one stored in
+  // the backend.
+  yield* call(upsertAppVersionSaga);
+}
+
+/**
+ * check if the current logged profile fiscal code is the same of the previous stored one
+ * @param profileLoadSuccessAction
+ */
+function* checkStoreHashedFiscalCode(
+  profileLoadSuccessAction: ActionType<typeof profileLoadSuccess>
+) {
+  const checkIsDifferentFiscalCode: boolean | undefined = yield* select(
+    isDifferentFiscalCodeSelector,
+    profileLoadSuccessAction.payload.fiscal_code
+  );
+  // the current logged user has a different fiscal code from the stored hashed one or there isn't a stored one
+  if (
+    checkIsDifferentFiscalCode === true ||
+    checkIsDifferentFiscalCode === undefined
+  ) {
+    // delete current store pin
+    yield* call(deletePin);
+    yield* put(clearCache());
+    yield* put(
+      differentProfileLoggedIn({
+        isNewInstall: checkIsDifferentFiscalCode === undefined
+      })
+    );
+  }
+  yield* put(
+    setProfileHashedFiscalCode(profileLoadSuccessAction.payload.fiscal_code)
+  );
+}
+
+function* handleLoadBonusBeforeRemoveAccount() {
+  const cgnActive: ReturnType<typeof cgnDetailSelector> =
+    yield* select(cgnDetailSelector);
+
+  const isCgnEnabled: ReturnType<typeof isCGNEnabledSelector> =
+    yield* select(isCGNEnabledSelector);
+
+  if (pot.isNone(cgnActive) && isCgnEnabled) {
+    // Load the cgn data and wait for a response
+    yield* put(cgnDetails.request());
+
+    yield* take([cgnDetails.success, cgnDetails.failure]);
+  }
+}
+
+// execute a list of predicates to detect interesting scenario and execute action when profile changes
+function* handleProfileChangesSaga(
+  action: ActionType<(typeof profileUpsert)["success"]>
+) {
+  const { value, newValue } = action.payload;
+
+  for (const item of profileChangePredicates) {
+    if (item[0](value, newValue)) {
+      yield* call(item[1], newValue);
+    }
+  }
+}
+
+// watch for action of removing account
+function* handleRemoveAccount() {
+  // dispatch an action to request account deletion
+  yield* put(
+    upsertUserDataProcessing.request(UserDataProcessingChoiceEnum.DELETE)
+  );
+  // wait for response (success/failure)
+  const upsertUserDataProcessingResponse = yield* take<
+    ActionType<
+      | typeof upsertUserDataProcessing.failure
+      | typeof upsertUserDataProcessing.success
+    >
+  >([upsertUserDataProcessing.success, upsertUserDataProcessing.failure]);
+
+  // if success go to remove account success screen
+  if (
+    isActionOf(
+      upsertUserDataProcessing.success,
+      upsertUserDataProcessingResponse
+    )
+  ) {
+    yield* call(navigateToRemoveAccountSuccess);
+  }
+}
+
+// make a request to start the email validation process that sends to the user
+// an email with a link to validate it
+function* startEmailValidationProcessSaga(
+  startEmailValidationProcess: ReturnType<
+    typeof BackendClient
+  >["startEmailValidationProcess"]
+): Generator<
+  ReduxSagaEffect,
+  void,
+  SagaCallReturnType<typeof startEmailValidationProcess>
+> {
+  try {
+    const response = (yield* call(
+      withRefreshApiCall,
+      startEmailValidationProcess({})
+    )) as unknown as SagaCallReturnType<typeof startEmailValidationProcess>;
+    // we got an error, throw it
+    if (E.isLeft(response)) {
+      throw Error(readablePrivacyReport(response.left));
+    }
+    if (response.right.status === 202) {
+      yield* put(startEmailValidation.success());
+      return;
+    }
+    throw response
+      ? Error(`response status ${response.right.status}`)
+      : Error(I18n.t("profile.errors.load"));
+  } catch (e) {
+    yield* put(startEmailValidation.failure(convertUnknownToError(e)));
+  }
 }
 
 // to ensure right code encapsulation we export functions/variables just for tests purposes

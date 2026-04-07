@@ -3,6 +3,7 @@ import * as O from "fp-ts/lib/Option";
 import { testSaga } from "redux-saga-test-plan";
 import { Effect } from "redux-saga/effects";
 import { call, take } from "typed-redux-saga/macro";
+
 import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
@@ -10,6 +11,7 @@ import { ThirdPartyMessage } from "../../../../../definitions/backend/ThirdParty
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
 import { isPnRemoteEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { getServiceDetails } from "../../../services/common/saga/getServiceDetails";
 import { trackMessageDataLoadFailure } from "../../analytics";
 import {
   cancelGetMessageDataAction,
@@ -27,7 +29,6 @@ import { thirdPartyFromIdSelector } from "../../store/reducers/thirdPartyById";
 import { UIMessage, UIMessageDetails } from "../../types";
 import { ThirdPartyMessageUnion } from "../../types/thirdPartyById";
 import { handleLoadMessageData, testable } from "../handleLoadMessageData";
-import { getServiceDetails } from "../../../services/common/saga/getServiceDetails";
 
 const fimsCTAFrontMatter =
   '---\nit:\n cta_1:\n  text: "Visualizza i documenti"\n  action: "iosso://https://relyingParty.url"\nen:\n cta_1:\n  text: "View documents"\n  action: "iosso://https://relyingParty.url"\n---';
@@ -1332,7 +1333,7 @@ describe("handleLoadMessageData", () => {
       .race({
         polling: call(testable!.loadMessageData, action.payload),
         cancelAction: take(cancelGetMessageDataAction)
-      } as unknown as { [key: string]: Effect })
+      } as unknown as Record<string, Effect>)
       .next({ polling: successPayload }) // Simulate loadMessageData completing first
       .isDone();
   });
@@ -1350,7 +1351,7 @@ describe("handleLoadMessageData", () => {
       .race({
         polling: call(testable!.loadMessageData, action.payload),
         cancelAction: take(cancelGetMessageDataAction)
-      } as unknown as { [key: string]: Effect })
+      } as unknown as Record<string, Effect>)
       .next({ cancelAction }) // Simulate cancel action arriving first
       .isDone();
   });

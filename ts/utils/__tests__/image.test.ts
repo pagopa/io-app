@@ -1,5 +1,6 @@
 import MockDate from "mockdate";
 import { ImageURISource, Platform } from "react-native";
+
 import { toAndroidCacheTimestamp } from "../dates";
 import { addCacheTimestampToUri } from "../image";
 

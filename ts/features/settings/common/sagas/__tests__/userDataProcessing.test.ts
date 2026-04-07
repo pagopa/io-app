@@ -1,9 +1,11 @@
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { ActionType } from "typesafe-actions";
+
 import { UserDataProcessing } from "../../../../../../definitions/backend/UserDataProcessing";
 import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../../../../../definitions/backend/UserDataProcessingStatus";
+import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import {
   deleteUserDataProcessing,
   loadUserDataProcessing,
@@ -14,7 +16,6 @@ import {
   loadUserDataProcessingSaga,
   upsertUserDataProcessingSaga
 } from "../userDataProcessing";
-import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 
 describe("loadUserDataProcessingSaga", () => {
   const getUserDataProcessingRequest = jest.fn();

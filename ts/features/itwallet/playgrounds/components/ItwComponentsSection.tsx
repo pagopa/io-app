@@ -9,6 +9,7 @@ import { Canvas } from "@shopify/react-native-skia";
 import I18n from "i18next";
 import { useState } from "react";
 import { Alert, useWindowDimensions, View } from "react-native";
+
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { DSComponentViewerBox } from "../../../design-system/components/DSComponentViewerBox";
 import { ItwBrandedBox } from "../../common/components/ItwBrandedBox";
@@ -47,9 +48,9 @@ const ItwWalletBrandSection = () => {
               style={{ width: width - marginHorizontal * 2, height: 50 }}
             >
               <ItwBrandedSkiaGradient
-                width={width - marginHorizontal * 2}
                 height={50}
                 variant={variant as any}
+                width={width - marginHorizontal * 2}
               />
             </Canvas>
           </DSComponentViewerBox>
@@ -87,8 +88,8 @@ const ItwWalletIdStatusSection = () => (
       </DSComponentViewerBox>
       <DSComponentViewerBox name={"jwtExpiring"}>
         <ItwWalletIdStatus
-          pidStatus="jwtExpiring"
           pidExpiration="2026-11-12T14:11:48.000Z"
+          pidStatus="jwtExpiring"
         />
       </DSComponentViewerBox>
       <DSComponentViewerBox name={"jwtExpired"}>
@@ -110,26 +111,26 @@ const ItwEngagementBannerSection = () => (
     <VStack space={8}>
       <DSComponentViewerBox name={"default"}>
         <ItwEngagementBanner
-          title={"Porta su IO i tuoi documenti digitali"}
+          action={"Aggiungi un documento"}
           description={
             "Con piena validità ufficiale, digitali e sempre a portata di mano!"
           }
-          action={"Aggiungi un documento"}
-          onPress={() => Alert.alert("✅ Engagement Banner pressed")}
-          onDismiss={() => Alert.alert("❌ Engagement Banner dismissed")}
           dismissable={true}
+          onDismiss={() => Alert.alert("❌ Engagement Banner dismissed")}
+          onPress={() => Alert.alert("✅ Engagement Banner pressed")}
+          title={"Porta su IO i tuoi documenti digitali"}
         />
       </DSComponentViewerBox>
       <DSComponentViewerBox name={"link"}>
         <ItwEngagementBanner
-          title={"Dimostra chi sei col tuo dispositivo"}
+          action={"Inizia"}
           description={
             "Usa la tua Patente digitale anche come documento di riconoscimento, in modo facile e sicuro!"
           }
-          action={"Inizia"}
-          onPress={() => Alert.alert("✅ Engagement Banner pressed")}
-          onDismiss={() => Alert.alert("❌ Engagement Banner dismissed")}
           dismissable={true}
+          onDismiss={() => Alert.alert("❌ Engagement Banner dismissed")}
+          onPress={() => Alert.alert("✅ Engagement Banner pressed")}
+          title={"Dimostra chi sei col tuo dispositivo"}
         />
       </DSComponentViewerBox>
     </VStack>
@@ -155,16 +156,16 @@ const ItwSkeumorphicCredentialSection = () => {
       <ListItemHeader label="Skeumorphic credential card" />
       <ListItemSwitch
         label="Hide claim values"
-        value={valuesHidden}
         onSwitchValueChange={() => {
           setValuesHidden(!valuesHidden);
         }}
+        value={valuesHidden}
       />
       <VStack space={16}>
         {L2Credentials.map(l2Credential => (
           <ItwSkeumorphicCredentialItem
-            key={l2Credential.credentialType}
             credential={l2Credential}
+            key={l2Credential.credentialType}
             valuesHidden={valuesHidden}
           />
         ))}
@@ -199,15 +200,15 @@ const ItwSkeumorphicCredentialItem = ({
       <FlipGestureDetector isFlipped={isFlipped} setIsFlipped={setFlipped}>
         <ItwSkeumorphicCard
           credential={credential}
-          status={status}
           isFlipped={isFlipped}
           onPress={handleOnPress}
+          status={status}
           valuesHidden={valuesHidden}
         />
       </FlipGestureDetector>
       <ItwPresentationCredentialCardFlipButton
-        isFlipped={isFlipped}
         handleOnPress={() => setFlipped(_ => !_)}
+        isFlipped={isFlipped}
       />
     </VStack>
   );
@@ -244,11 +245,11 @@ export const ItwClaimsListSection = () => {
       }}
     >
       <ListItemHeader
+        iconColor={theme["icon-default"]}
+        iconName="security"
         label={I18n.t(
           "features.itWallet.issuance.credentialAuth.requiredClaims"
         )}
-        iconName="security"
-        iconColor={theme["icon-default"]}
       />
       <ItwRequestedClaimsList items={mock} />
     </View>

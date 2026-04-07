@@ -11,6 +11,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { View } from "react-native";
+
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
@@ -36,18 +37,18 @@ import {
 } from "../../analytics";
 import { useContinueWithBottomSheet } from "../hooks/useContinueWithBottomSheet";
 
-export type ItwIdentificationNavigationParams = {
-  eidReissuing?: boolean;
-  level?: EidIssuanceLevel;
-  credentialType?: string;
-  animationEnabled?: boolean;
-};
-
 export type ItwIdentificationModeSelectionScreenProps =
   IOStackNavigationRouteProps<
     ItwParamsList,
     "ITW_IDENTIFICATION_MODE_SELECTION"
   >;
+
+export type ItwIdentificationNavigationParams = {
+  animationEnabled?: boolean;
+  credentialType?: string;
+  eidReissuing?: boolean;
+  level?: EidIssuanceLevel;
+};
 
 const i18nNs = "features.itWallet.identification.modeSelection" as const;
 
@@ -170,13 +171,13 @@ export const ItwIdentificationModeSelectionScreen = ({
 
   return (
     <IOScrollViewWithLargeHeader
+      description={description}
+      goBack={params.eidReissuing ? dismissalDialog.show : undefined}
+      headerActionsProp={{ showHelp: true }}
       title={{
         section,
         label: title
       }}
-      description={description}
-      headerActionsProp={{ showHelp: true }}
-      goBack={params.eidReissuing ? dismissalDialog.show : undefined}
     >
       <ContentWrapper>
         <VSpacer size={8} />
@@ -186,7 +187,6 @@ export const ItwIdentificationModeSelectionScreen = ({
               {(!isCiePinDisabled || !isCieIdDisabled) && (
                 <VStack space={8}>
                   <ListItemHeader
-                    label={I18n.t(`${i18nNs}.frequency.every12Months`)}
                     endElement={{
                       type: "badge",
                       componentProps: {
@@ -196,6 +196,7 @@ export const ItwIdentificationModeSelectionScreen = ({
                         testID: "CiePinReissuanceBadgeTestID"
                       }
                     }}
+                    label={I18n.t(`${i18nNs}.frequency.every12Months`)}
                   />
                   <VStack space={16}>
                     {!isCiePinDisabled && <CiePinMethodModule />}
@@ -222,11 +223,11 @@ export const ItwIdentificationModeSelectionScreen = ({
           {isL3 && !params.eidReissuing && (
             <View style={{ flexDirection: "row", justifyContent: "center" }}>
               <IOButton
-                variant="link"
-                textAlign="center"
                 label={I18n.t(`${i18nNs}.noCieCta`)}
                 onPress={handleNoCiePress}
                 testID={"noCieButtonTestID"}
+                textAlign="center"
+                variant="link"
               />
             </View>
           )}
@@ -269,11 +270,7 @@ const CiePinMethodModule = () => {
   return (
     <>
       <ModuleNavigationAlt
-        title={I18n.t(`${i18nNs}.mode.ciePin.title`)}
-        subtitle={I18n.t(
-          `${i18nNs}.mode.ciePin.subtitle.${isL3 ? "l3" : "default"}`
-        )}
-        testID="CiePinMethodModuleTestID"
+        badge={badgeProps}
         icon="cieCard"
         onPress={() => {
           if (isL3) {
@@ -286,7 +283,11 @@ const CiePinMethodModule = () => {
             handleOnPress();
           }
         }}
-        badge={badgeProps}
+        subtitle={I18n.t(
+          `${i18nNs}.mode.ciePin.subtitle.${isL3 ? "l3" : "default"}`
+        )}
+        testID="CiePinMethodModuleTestID"
+        title={I18n.t(`${i18nNs}.mode.ciePin.title`)}
       />
       {isL3 && ciePinBottomSheet.bottomSheet}
     </>
@@ -325,9 +326,6 @@ const SpidMethodModule = () => {
   return (
     <>
       <ModuleNavigationAlt
-        title={title}
-        subtitle={subtitle}
-        testID="SpidMethodModuleTestID"
         icon="spid"
         onPress={() => {
           if (isL3) {
@@ -340,6 +338,9 @@ const SpidMethodModule = () => {
             handleOnPress();
           }
         }}
+        subtitle={subtitle}
+        testID="SpidMethodModuleTestID"
+        title={title}
       />
       {isL3 && spidBottomSheet.bottomSheet}
     </>
@@ -378,10 +379,7 @@ const CieIdMethodModule = () => {
   return (
     <>
       <ModuleNavigationAlt
-        title={title}
-        subtitle={subtitle}
         icon={"cie"}
-        testID="CieIDMethodModuleTestID"
         onPress={() => {
           if (isL3) {
             trackItWalletIDMethodSelected({
@@ -393,6 +391,9 @@ const CieIdMethodModule = () => {
             handleOnPress();
           }
         }}
+        subtitle={subtitle}
+        testID="CieIDMethodModuleTestID"
+        title={title}
       />
       {isL3 && cieIdBottomSheet.bottomSheet}
     </>

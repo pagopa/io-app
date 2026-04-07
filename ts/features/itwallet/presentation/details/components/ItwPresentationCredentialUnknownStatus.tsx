@@ -1,4 +1,5 @@
 import I18n from "i18next";
+
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
@@ -26,20 +27,20 @@ export const ItwPresentationCredentialUnknownStatus = ({
 
   return (
     <OperationResultScreenContent
-      pictogram="updateOS"
-      title={I18n.t(
-        "features.itWallet.presentation.statusAssertionUnknown.title",
-        { credentialName }
-      )}
-      subtitle={I18n.t(
-        "features.itWallet.presentation.statusAssertionUnknown.content"
-      )}
       action={{
         label: I18n.t(
           "features.itWallet.presentation.statusAssertionUnknown.primaryAction"
         ),
         onPress: () => navigation.goBack()
       }}
+      pictogram="updateOS"
+      subtitle={I18n.t(
+        "features.itWallet.presentation.statusAssertionUnknown.content"
+      )}
+      title={I18n.t(
+        "features.itWallet.presentation.statusAssertionUnknown.title",
+        { credentialName }
+      )}
     />
   );
 };

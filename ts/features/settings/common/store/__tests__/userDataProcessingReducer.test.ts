@@ -1,19 +1,19 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 
+import { UserDataProcessing } from "../../../../../../definitions/backend/UserDataProcessing";
 import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/backend/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../../../../../definitions/backend/UserDataProcessingStatus";
-import { UserDataProcessing } from "../../../../../../definitions/backend/UserDataProcessing";
-import userDataProcessingReducer, {
-  INITIAL_STATE,
-  UserDataProcessingState
-} from "../reducers/userDataProcessing";
+import { clearCache } from "../actions";
 import {
   loadUserDataProcessing,
   resetDeleteUserDataProcessing,
   resetUserDataProcessingRequest,
   upsertUserDataProcessing
 } from "../actions/userDataProcessing";
-import { clearCache } from "../actions";
+import userDataProcessingReducer, {
+  INITIAL_STATE,
+  UserDataProcessingState
+} from "../reducers/userDataProcessing";
 
 describe("userDataProcessingReducer", () => {
   const fakeDownload: UserDataProcessing = {

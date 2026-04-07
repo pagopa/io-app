@@ -8,16 +8,16 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import _ from "lodash";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Alert, View } from "react-native";
+
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { availableTranslations, Locales, setLocale } from "../../../../i18n";
 import { preferredLanguageSaveSuccess } from "../../../../store/actions/persistedPreferences";
-
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { preferredLanguageSelector } from "../../../../store/reducers/persistedPreferences";
 import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
@@ -111,8 +111,8 @@ const LanguagesPreferencesScreen = () => {
     () =>
       [
         ...new Set<Locales>([
-          "it",
           "en",
+          "it",
           ...[...availableTranslations].sort((a, b) => a.localeCompare(b))
         ])
       ].map(locale => ({
@@ -218,16 +218,16 @@ const LanguagesPreferencesScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
+      canGoback={true}
+      contextualHelpMarkdown={contextualHelpMarkdown}
+      description={I18n.t(
+        "profile.preferences.list.preferred_language.subtitle"
+      )}
+      headerActionsProp={{ showHelp: true }}
       includeContentMargins
       title={{
         label: I18n.t("profile.preferences.list.preferred_language.title")
       }}
-      description={I18n.t(
-        "profile.preferences.list.preferred_language.subtitle"
-      )}
-      canGoback={true}
-      headerActionsProp={{ showHelp: true }}
-      contextualHelpMarkdown={contextualHelpMarkdown}
     >
       <VStack space={24}>
         <View>
@@ -246,10 +246,10 @@ const LanguagesPreferencesScreen = () => {
           <VSpacer size={8} />
 
           <RadioGroup<AppLocaleId>
-            type="radioListItem"
             items={appLocaleOptions}
-            selectedItem={selectedAppLocale}
             onPress={onAppLanguageSelected}
+            selectedItem={selectedAppLocale}
+            type="radioListItem"
           />
         </View>
 
@@ -269,10 +269,10 @@ const LanguagesPreferencesScreen = () => {
           <VSpacer size={8} />
 
           <RadioGroup<string>
-            type="radioListItem"
             items={renderedItem}
-            selectedItem={selectedItem}
             onPress={onLanguageSelected}
+            selectedItem={selectedItem}
+            type="radioListItem"
           />
         </View>
       </VStack>

@@ -12,6 +12,12 @@ export enum ProximityFailureType {
 }
 
 /**
+ * Union type of failures with the reason properly typed.
+ */
+export type ProximityFailure =
+  TypedProximityFailures[keyof TypedProximityFailures];
+
+/**
  * Type that maps known reasons with the corresponding failure, in order to avoid unknowns as much as possible.
  */
 export type ReasonTypeByFailure = {
@@ -22,14 +28,8 @@ export type ReasonTypeByFailure = {
 };
 
 type TypedProximityFailures = {
-  [K in ProximityFailureType]: { type: K; reason: ReasonTypeByFailure[K] };
+  [K in ProximityFailureType]: { reason: ReasonTypeByFailure[K]; type: K; };
 };
-
-/**
- * Union type of failures with the reason properly typed.
- */
-export type ProximityFailure =
-  TypedProximityFailures[keyof TypedProximityFailures];
 
 /**
  * Maps an event dispatched by the proximity presentation machine to a failure object.

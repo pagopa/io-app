@@ -1,11 +1,12 @@
 import { IOToast } from "@pagopa/io-app-design-system";
-import { ActionArgs, assign } from "xstate";
 import I18n from "i18next";
+import { ActionArgs, assign } from "xstate";
+
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
-import { checkCurrentSession } from "../../../authentication/common/store/actions";
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
+import { checkCurrentSession } from "../../../authentication/common/store/actions";
 import {
   trackSaveCredentialSuccess,
   trackStartAddNewCredential,
@@ -13,18 +14,18 @@ import {
   trackWalletDataShare,
   trackWalletDataShareAccepted
 } from "../../analytics";
-import { getMixPanelCredential } from "../../analytics/utils";
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
+import { getMixPanelCredential } from "../../analytics/utils";
+import { itwClearCredentialUpgradeFailed } from "../../common/store/actions/preferences";
 import {
   itwCredentialsRemoveByType,
   itwCredentialsStore
 } from "../../credentials/store/actions";
-import { itwClearCredentialUpgradeFailed } from "../../common/store/actions/preferences";
+import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
-import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 

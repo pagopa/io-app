@@ -1,36 +1,37 @@
-import { useEffect, useState } from "react";
-import { ScrollView, View } from "react-native";
 import {
-  VSpacer,
+  Body,
   ContentWrapper,
+  H1,
+  IOButton,
   IOStyles,
   useIOToast,
-  H1,
-  Body,
-  IOButton
+  VSpacer
 } from "@pagopa/io-app-design-system";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 import I18n from "i18next";
+import { useEffect, useState } from "react";
+import { ScrollView, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import { PushNotificationsContentTypeEnum } from "../../../../definitions/backend/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../../definitions/backend/ReminderStatus";
+import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
+import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
-import { OnboardingParamsList } from "../../onboarding/navigation/params/OnboardingParamsList";
-import { profileUpsert } from "../../settings/common/store/actions";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
-import {
-  profileHasErrorSelector,
-  profileIsUpdatingSelector
-} from "../../settings/common/store/selectors";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { getFlowType } from "../../../utils/analytics";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
+import { OnboardingParamsList } from "../../onboarding/navigation/params/OnboardingParamsList";
 import {
   trackNotificationPreferenceConfiguration,
   trackNotificationScreen,
   trackNotificationsPreferencesPreviewStatus,
   trackNotificationsPreferencesReminderStatus
 } from "../../settings/common/analytics";
-import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
-import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
+import { profileUpsert } from "../../settings/common/store/actions";
+import {
+  profileHasErrorSelector,
+  profileIsUpdatingSelector
+} from "../../settings/common/store/selectors";
 import { ProfileNotificationSettings } from "../components/ProfileNotificationsSettings";
 
 export type OnboardingNotificationsPreferencesScreenNavigationParams = {
@@ -140,10 +141,10 @@ export const OnboardingNotificationsPreferencesScreen = (props: Props) => {
       >
         <IOButton
           fullWidth
-          variant="solid"
-          loading={isUpdating}
           label={I18n.t("onboarding.notifications.continue")}
+          loading={isUpdating}
           onPress={upsertPreferences}
+          variant="solid"
         />
       </View>
     </>

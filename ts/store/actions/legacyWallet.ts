@@ -1,14 +1,15 @@
-import { ActionType, createAsyncAction } from "typesafe-actions";
 import { RptId } from "@pagopa/io-pagopa-commons/lib/pagopa";
-import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
+import { ActionType, createAsyncAction } from "typesafe-actions";
+
 import { Detail_v2Enum as PaymentProblemErrorEnum } from "../../../definitions/backend/PaymentProblemJson";
+import { PaymentRequestsGetResponse } from "../../../definitions/backend/PaymentRequestsGetResponse";
 
 export type PaymentStartOrigin =
-  | "message"
-  | "qrcode_scan"
-  | "poste_datamatrix_scan"
+  | "donation"
   | "manual_insertion"
-  | "donation";
+  | "message"
+  | "poste_datamatrix_scan"
+  | "qrcode_scan";
 //
 // verifica
 //

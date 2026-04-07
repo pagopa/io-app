@@ -1,18 +1,19 @@
 /* eslint-disable functional/no-let */
-import { createStore } from "redux";
+import { isCieIdAvailable, openCieIdApp } from "@pagopa/io-react-native-cieid";
 import { fireEvent, waitFor } from "@testing-library/react-native";
-import { createActor } from "xstate";
 import _ from "lodash";
 import { Linking } from "react-native";
-import { isCieIdAvailable, openCieIdApp } from "@pagopa/io-react-native-cieid";
+import { createStore } from "redux";
+import { createActor } from "xstate";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import { itwEidIssuanceMachine } from "../../../../machine/eid/machine";
+import { ItwEidIssuanceMachineContext } from "../../../../machine/eid/provider";
 import { ITW_ROUTES } from "../../../../navigation/routes";
 import ItwCieIdLoginScreen from "../../../cieId/screens/ItwCieIdLoginScreen";
-import { ItwEidIssuanceMachineContext } from "../../../../machine/eid/provider";
 
 jest.mock("@pagopa/io-react-native-cieid", () => ({
   isCieIdAvailable: jest.fn(),

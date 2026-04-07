@@ -1,7 +1,9 @@
 import { act, renderHook, waitFor } from "@testing-library/react-native";
 import RNFS from "react-native-fs";
+
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import NavigationService from "../../../../navigation/NavigationService";
 import { isAarAttachmentTtlError } from "../../../pn/aar/utils/aarErrorMappings";
 import {
   trackPNAttachmentDownloadFailure,
@@ -22,12 +24,11 @@ import {
 import {
   Download,
   downloadedMessageAttachmentSelector,
-  requestedDownloadErrorSelector,
   isDownloadingMessageAttachmentSelector,
-  isRequestedAttachmentDownloadSelector
+  isRequestedAttachmentDownloadSelector,
+  requestedDownloadErrorSelector
 } from "../../store/reducers/downloads";
 import { useAttachmentDownload } from "../useAttachmentDownload";
-import NavigationService from "../../../../navigation/NavigationService";
 
 // ---- Mocks ----
 
@@ -190,10 +191,10 @@ describe("useAttachmentDownload", () => {
 
     it.each<{
       desc: string;
-      download: { path: string } | undefined;
+      download: undefined | { path: string };
+      expectedSkipMixpanel: boolean;
       sendOpeningSource: SendOpeningSource;
       sendUserType: SendUserType;
-      expectedSkipMixpanel: boolean;
     }>([
       {
         desc: "download exists but file not on disk (non-send)",
@@ -380,8 +381,8 @@ describe("useAttachmentDownload", () => {
 
   describe("useEffect - download failure", () => {
     it.each<{
-      isTtlError: boolean;
       expectedToast: string;
+      isTtlError: boolean;
     }>([
       {
         isTtlError: false,
@@ -456,7 +457,7 @@ const baseAttachment: ThirdPartyAttachment = {
 } as unknown as ThirdPartyAttachment;
 
 const setupSelectors = (overrides?: {
-  download?: { path: string } | undefined;
+  download?: undefined | { path: string };
   downloadError?: Error | undefined;
   isFetching?: boolean;
   isRequested?: boolean;

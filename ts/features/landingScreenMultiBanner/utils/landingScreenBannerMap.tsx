@@ -1,4 +1,5 @@
 import { ReactElement } from "react";
+
 import { GlobalState } from "../../../store/reducers/types";
 import { LoginExpirationBanner } from "../../authentication/activeSessionLogin/components/LoginExpirationBanner";
 import { showSessionExpirationBannerRenderableSelector } from "../../authentication/activeSessionLogin/store/selectors";
@@ -8,24 +9,22 @@ import {
   itwShouldRenderInboxDiscoveryBannerSelector
 } from "../../itwallet/common/store/selectors";
 import { ItwDiscoveryBanner } from "../../itwallet/discovery/components/ItwDiscoveryBanner";
+import OsDismissionBanner from "../../osDismission/components/OsDismissionBanner";
+import { isOsDismissionBannerRenderableSelector } from "../../osDismission/store/selectors";
 import { PNActivationReminderBanner } from "../../pn/reminderBanner/components/PNActivationReminderBanner";
 import { isPnActivationReminderBannerRenderableSelector } from "../../pn/reminderBanner/reducer/bannerDismiss";
 import { PushNotificationsBanner } from "../../pushNotifications/components/PushNotificationsBanner";
 import { isPushNotificationsBannerRenderableSelector } from "../../pushNotifications/store/selectors";
-import OsDismissionBanner from "../../osDismission/components/OsDismissionBanner";
-import { isOsDismissionBannerRenderableSelector } from "../../osDismission/store/selectors";
 
-type ComponentWithCloseHandler = (closeHandler: () => void) => ReactElement;
+export type BannerMapById = Record<LandingScreenBannerId, ComponentAndLogic>;
+export type LandingScreenBannerId =
+  keyof typeof LANDING_SCREEN_BANNERS_ENABLED_MAP;
+
 type ComponentAndLogic = {
   component: ComponentWithCloseHandler;
   isRenderableSelector: (state: GlobalState) => boolean;
 };
-
-export type BannerMapById = {
-  [key in LandingScreenBannerId]: ComponentAndLogic;
-};
-export type LandingScreenBannerId =
-  keyof typeof LANDING_SCREEN_BANNERS_ENABLED_MAP;
+type ComponentWithCloseHandler = (closeHandler: () => void) => ReactElement;
 
 export const LANDING_SCREEN_BANNERS_ENABLED_MAP = {
   OS_DISMISSION_REMINDER: true,
@@ -53,8 +52,8 @@ export const landingScreenBannerMap: BannerMapById = {
     component: closeHandler => (
       <ItwDiscoveryBanner
         flow="messages_inbox"
-        style={{ marginHorizontal: 24, marginVertical: 16 }}
         onDismiss={closeHandler}
+        style={{ marginHorizontal: 24, marginVertical: 16 }}
       />
     ),
     isRenderableSelector: itwShouldRenderInboxDiscoveryBannerSelector

@@ -3,26 +3,27 @@ import {
   CredentialIssuance,
   ItwVersion
 } from "@pagopa/io-react-native-wallet";
+
 import { WIA_KEYTAG } from "./itwCryptoContextUtils";
-import { IssuerConfiguration } from "./itwTypesUtils";
 import { getIoWallet } from "./itwIoWallet";
+import { IssuerConfiguration } from "./itwTypesUtils";
 
 export type InitMrtdPoPChallengeParams = {
-  itwVersion: ItwVersion;
-  issuerConf: IssuerConfiguration;
-  walletInstanceAttestation: string;
   authRedirectUrl: string;
+  issuerConf: IssuerConfiguration;
+  itwVersion: ItwVersion;
+  walletInstanceAttestation: string;
 };
 
 export type ValidateMrtdPoPChallengeParams = {
-  itwVersion: ItwVersion;
+  ias: CredentialIssuance.MRTDPoP.IasPayload;
   issuerConf: IssuerConfiguration;
-  walletInstanceAttestation: string;
-  validationUrl: string;
+  itwVersion: ItwVersion;
+  mrtd: CredentialIssuance.MRTDPoP.MrtdPayload;
   mrtd_auth_session: string;
   mrtd_pop_nonce: string;
-  mrtd: CredentialIssuance.MRTDPoP.MrtdPayload;
-  ias: CredentialIssuance.MRTDPoP.IasPayload;
+  validationUrl: string;
+  walletInstanceAttestation: string;
 };
 
 export const initMrtdPoPChallenge = async ({

@@ -5,6 +5,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useIOSelector } from "../../../../store/hooks";
 import { pnPrivacyUrlsSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
@@ -60,30 +61,30 @@ export const SendEngagementComponent = ({
       </H3>
       <VSpacer size={24} />
       <FeatureInfo
-        pictogramProps={{ name: "emailDotNotif", pictogramStyle: "default" }}
         body={
           <IOMarkdownLite
             content={I18n.t("features.pn.aar.serviceActivation.feature1")}
           />
         }
+        pictogramProps={{ name: "emailDotNotif", pictogramStyle: "default" }}
       />
       <VSpacer size={24} />
       <FeatureInfo
-        pictogramProps={{ name: "savingMoney", pictogramStyle: "default" }}
         body={
           <IOMarkdownLite
             content={I18n.t("features.pn.aar.serviceActivation.feature2")}
           />
         }
+        pictogramProps={{ name: "savingMoney", pictogramStyle: "default" }}
       />
       <VSpacer size={24} />
       <FeatureInfo
-        pictogramProps={{ name: "cardFavourite", pictogramStyle: "default" }}
         body={
           <IOMarkdownLite
             content={I18n.t("features.pn.aar.serviceActivation.feature3")}
           />
         }
+        pictogramProps={{ name: "cardFavourite", pictogramStyle: "default" }}
       />
       <VSpacer size={32} />
       <IOMarkdownLite

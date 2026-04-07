@@ -1,5 +1,6 @@
 import { Alert, Body, IOButton, VStack } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+
 import { useIODispatch, useIOSelector } from "../../../../store/hooks.ts";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet.tsx";
 import { itwResetEnv } from "../store/actions/environment.ts";
@@ -27,7 +28,6 @@ export const ItwEnvironmentAlert = () => {
           )}
         </Body>
         <IOButton
-          variant="solid"
           label={I18n.t(
             "features.itWallet.playgrounds.environment.bottom_sheet.action"
           )}
@@ -35,6 +35,7 @@ export const ItwEnvironmentAlert = () => {
             dispatch(itwResetEnv());
             infoModal.dismiss();
           }}
+          variant="solid"
         />
       </VStack>
     )
@@ -47,15 +48,15 @@ export const ItwEnvironmentAlert = () => {
   return (
     <>
       <Alert
-        testID="itwEnvironmentAlertTestID"
-        variant="warning"
-        content={I18n.t(
-          "features.itWallet.playgrounds.environment.banner.content"
-        )}
         action={I18n.t(
           "features.itWallet.playgrounds.environment.banner.action"
         )}
+        content={I18n.t(
+          "features.itWallet.playgrounds.environment.banner.content"
+        )}
         onPress={infoModal.present}
+        testID="itwEnvironmentAlertTestID"
+        variant="warning"
       />
       {infoModal.bottomSheet}
     </>

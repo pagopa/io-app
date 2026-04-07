@@ -3,6 +3,7 @@ import { constTrue, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/Option";
 import I18n from "i18next";
 import { useCallback, useEffect } from "react";
+
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
@@ -34,6 +35,9 @@ export type FimsFlowHandlerScreenRouteParams = {
   /* The Relying Party's url that starts the FIMS flow,
    * without the iosso:// protocol prefix */
   ctaUrl: string;
+  /* This indicates if the in-app browser on iOS must
+   * share the cookies. If true, a native popup will appear to the user. */
+  ephemeralSessionOniOS: boolean;
   /* A Relying Party is always associated with a service.
    * This is the fiscal code of the service organization */
   organizationFiscalCode: string | undefined;
@@ -49,9 +53,6 @@ export type FimsFlowHandlerScreenRouteParams = {
   /* This is the entry point from which the FIMS's flow
    * has been starded (e.g., the screen's route name) */
   source: string;
-  /* This indicates if the in-app browser on iOS must
-   * share the cookies. If true, a native popup will appear to the user. */
-  ephemeralSessionOniOS: boolean;
 };
 
 type FimsFlowHandlerScreenRouteProps = IOStackNavigationRouteProps<
@@ -161,8 +162,8 @@ export const FimsFlowHandlerScreen = (
     return (
       <LoadingScreenContent
         headerVisible
-        title={I18n.t(`FIMS.loadingScreen.${loadingState}.title`)}
         subtitle={subtitle}
+        title={I18n.t(`FIMS.loadingScreen.${loadingState}.title`)}
       />
     );
   }

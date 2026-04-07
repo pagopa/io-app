@@ -10,8 +10,8 @@ import {
   NavigationContainerProps
 } from "@react-navigation/native";
 import { PropsWithChildren, ReactElement, useEffect, useRef } from "react";
-
 import { Linking, View } from "react-native";
+
 import { ReactNavigationInstrumentation } from "../App";
 import { useStoredExperimentalDesign } from "../common/context/DSExperimentalContext";
 import { useStoredFontPreference } from "../common/context/DSTypefaceContext";
@@ -33,7 +33,7 @@ import { setDebugCurrentRouteName } from "../store/actions/debug";
 import { useIODispatch, useIOSelector, useIOStore } from "../store/hooks";
 import { trackScreen } from "../store/middlewares/navigation";
 import { isCGNEnabledAfterLoadSelector } from "../store/reducers/backendStatus/remoteConfig";
-import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
+import { isStartupLoaded, StartupStatusEnum } from "../store/reducers/startup";
 import {
   IONavigationDarkTheme,
   IONavigationLightTheme
@@ -45,13 +45,13 @@ import {
   IO_UNIVERSAL_LINK_PREFIX
 } from "../utils/navigation";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
+import { linkingSubscription } from "./linkingSubscription";
 import NavigationService, {
   navigationRef,
   setMainNavigatorReady
 } from "./NavigationService";
 import NotAuthenticatedStackNavigator from "./NotAuthenticatedStackNavigator";
 import OfflineStackNavigator from "./OfflineStackNavigator";
-import { linkingSubscription } from "./linkingSubscription";
 import { AppParamsList } from "./params/AppParamsList";
 import ROUTES from "./routes";
 
@@ -181,12 +181,8 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
 
   return (
     <NavigationContainer
-      theme={
-        themeType === "light" ? IONavigationLightTheme : IONavigationDarkTheme
-      }
-      ref={navigationRef}
-      linking={linking}
       fallback={<LoadingSpinnerOverlay isLoading={true} />}
+      linking={linking}
       onReady={() => {
         if (props.routingInstrumentation) {
           props.routingInstrumentation.registerNavigationContainer(
@@ -208,11 +204,15 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
         }
         routeNameRef.current = currentRouteName;
       }}
+      ref={navigationRef}
+      theme={
+        themeType === "light" ? IONavigationLightTheme : IONavigationDarkTheme
+      }
     >
       <FocusAwareStatusBar
+        animated
         backgroundColor={IOColors[theme["appBackground-primary"]]}
         barStyle={themeType === "dark" ? "light-content" : "dark-content"}
-        animated
       />
       {props.children}
     </NavigationContainer>

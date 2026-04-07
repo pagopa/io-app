@@ -1,5 +1,6 @@
 import { type ItwVersion } from "@pagopa/io-react-native-wallet";
 import * as Sentry from "@sentry/react-native";
+
 import { createItWalletFetch } from "../../api/client";
 import { Env } from "./environment";
 import { getIoWallet } from "./itwIoWallet";

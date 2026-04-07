@@ -9,43 +9,43 @@ import { RemoteFailure } from "./failure";
 
 export type Context = {
   /**
-   * The remote request payload for the remote presentation
-   */
-  payload: ItwRemoteRequestPayload | undefined;
-  /**
    * The failure of the remote presentation machine
    */
   failure?: RemoteFailure;
   /**
-   * Relying party Entity Configuration metadata
+   * The type of flow for the remote presentation, which can be either "same-device" or "cross-device".
    */
-  rpConf: RelyingPartyConfiguration | undefined;
+  flowType: ItwRemoteFlowType | undefined;
   /**
-   * The Encoded Request Object fetched from the Relying Party in the authorization request
+   * The remote request payload for the remote presentation
    */
-  requestObjectEncodedJwt: string | undefined;
-  /**
-   * The Request Object fetched from the Relying Party with the presentation details
-   */
-  requestObject: RequestObject | undefined;
+  payload: ItwRemoteRequestPayload | undefined;
   /**
    * Details of the presentation requested by the Relying Party
    * It includes the requested claims and credentials
    */
   presentationDetails: EnrichedPresentationDetails | undefined;
   /**
-   * Optional credentials selected by the user, identified by their presentation ID
-   */
-  selectedOptionalCredentials: Set<string>;
-  /**
-   * The type of flow for the remote presentation, which can be either "same-device" or "cross-device".
-   */
-  flowType: ItwRemoteFlowType | undefined;
-  /**
    * The URI to redirect the user to access the Relying Party's service
    * It is not required in cross-device presentation
    */
   redirectUri?: string;
+  /**
+   * The Request Object fetched from the Relying Party with the presentation details
+   */
+  requestObject: RequestObject | undefined;
+  /**
+   * The Encoded Request Object fetched from the Relying Party in the authorization request
+   */
+  requestObjectEncodedJwt: string | undefined;
+  /**
+   * Relying party Entity Configuration metadata
+   */
+  rpConf: RelyingPartyConfiguration | undefined;
+  /**
+   * Optional credentials selected by the user, identified by their presentation ID
+   */
+  selectedOptionalCredentials: Set<string>;
 };
 
 export const InitialContext: Context = {

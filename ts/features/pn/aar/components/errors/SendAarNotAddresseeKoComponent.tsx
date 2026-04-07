@@ -1,13 +1,14 @@
 import I18n from "i18next";
+
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { useIOSelector } from "../../../../../store/hooks";
 import { sendAARDelegateUrlSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { openWebUrl } from "../../../../../utils/url";
-import { useSendAarFlowManager } from "../../hooks/useSendAarFlowManager";
 import {
   trackSendAARAccessDeniedDelegateInfo,
   trackSendAARAccessDeniedDismissed
 } from "../../analytics";
+import { useSendAarFlowManager } from "../../hooks/useSendAarFlowManager";
 
 export const SendAarNotAddresseeKoComponent = () => {
   const { terminateFlow } = useSendAarFlowManager();
@@ -24,11 +25,6 @@ export const SendAarNotAddresseeKoComponent = () => {
 
   return (
     <OperationResultScreenContent
-      testID="SEND_AAR_NOT_ADDRESSEE"
-      isHeaderVisible
-      pictogram="accessDenied"
-      title={I18n.t("features.pn.aar.flow.ko.notAddresseeFinal.title")}
-      subtitle={I18n.t("features.pn.aar.flow.ko.notAddresseeFinal.body")}
       action={{
         label: I18n.t(
           "features.pn.aar.flow.ko.notAddresseeFinal.primaryAction"
@@ -37,6 +33,8 @@ export const SendAarNotAddresseeKoComponent = () => {
         icon: "instruction",
         testID: "primary_button"
       }}
+      isHeaderVisible
+      pictogram="accessDenied"
       secondaryAction={{
         label: I18n.t(
           "features.pn.aar.flow.ko.notAddresseeFinal.secondaryAction"
@@ -44,6 +42,9 @@ export const SendAarNotAddresseeKoComponent = () => {
         onPress: handleSecondaryAction,
         testID: "secondary_button"
       }}
+      subtitle={I18n.t("features.pn.aar.flow.ko.notAddresseeFinal.body")}
+      testID="SEND_AAR_NOT_ADDRESSEE"
+      title={I18n.t("features.pn.aar.flow.ko.notAddresseeFinal.title")}
     />
   );
 };

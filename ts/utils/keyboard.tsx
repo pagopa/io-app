@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { KeyboardAvoidingView, Platform } from "react-native";
+
 import customVariables from "../theme/variables";
 
 /**

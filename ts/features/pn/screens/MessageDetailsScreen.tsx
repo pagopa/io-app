@@ -2,6 +2,7 @@ import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { RefObject, useCallback, useEffect, useMemo, useRef } from "react";
+
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useHardwareBackButtonWhenFocused } from "../../../hooks/useHardwareBackButton";
@@ -49,9 +50,9 @@ import {
 } from "../utils";
 
 export type MessageDetailsScreenRouteParams = {
+  firstTimeOpening: boolean | undefined;
   messageId: string;
   serviceId: ServiceId;
-  firstTimeOpening: boolean | undefined;
 } & (
   | {
       sendOpeningSource: Extract<SendOpeningSource, "aar">;
@@ -224,10 +225,10 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
   if (sendMessageOrUndefined == null) {
     return (
       <OperationResultScreenContent
-        pictogram="umbrella"
-        title={I18n.t("features.pn.details.loadError.title")}
-        subtitle={I18n.t("features.pn.details.loadError.body")}
         isHeaderVisible={isAarMessage}
+        pictogram="umbrella"
+        subtitle={I18n.t("features.pn.details.loadError.body")}
+        title={I18n.t("features.pn.details.loadError.title")}
       />
     );
   }
@@ -237,10 +238,10 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
       <MessageDetails
         message={sendMessageOrUndefined}
         messageId={messageId}
-        serviceId={serviceId}
         payments={payments}
         sendOpeningSource={sendOpeningSource}
         sendUserType={sendUserType}
+        serviceId={serviceId}
       />
       {isAarMessage && (
         <SendAARMessageDetailBottomSheetComponent

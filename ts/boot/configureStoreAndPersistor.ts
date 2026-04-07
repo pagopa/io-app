@@ -10,6 +10,7 @@ import {
   Reducer,
   StoreEnhancer
 } from "redux";
+import { createLogger } from "redux-logger";
 import {
   createMigrate,
   MigrationManifest,
@@ -19,8 +20,9 @@ import {
   persistReducer,
   persistStore
 } from "redux-persist";
-import { createLogger } from "redux-logger";
 import createSagaMiddleware from "redux-saga";
+
+import { SpidIdps } from "../../definitions/content/SpidIdps";
 import {
   isReady,
   remoteReady,
@@ -32,6 +34,11 @@ import {
   initialLollipopState,
   LollipopState
 } from "../features/lollipop/store/reducers/lollipop";
+import {
+  NOTIFICATIONS_STORE_VERSION,
+  NotificationsState
+} from "../features/pushNotifications/store/reducers";
+import { generateInitialState } from "../features/pushNotifications/store/reducers/installation";
 import rootSaga from "../sagas";
 import { Action, Store } from "../store/actions/types";
 import { analytics } from "../store/middlewares";
@@ -45,17 +52,11 @@ import {
   INSTALLATION_INITIAL_STATE,
   InstallationState
 } from "../store/reducers/installation";
-import {
-  NOTIFICATIONS_STORE_VERSION,
-  NotificationsState
-} from "../features/pushNotifications/store/reducers";
-import { generateInitialState } from "../features/pushNotifications/store/reducers/installation";
+import { PersistedPreferencesState } from "../store/reducers/persistedPreferences";
 import { GlobalState, PersistedGlobalState } from "../store/reducers/types";
 import { DateISO8601Transform } from "../store/transforms/dateISO8601Tranform";
 import { PotTransform } from "../store/transforms/potTransform";
 import { isDevEnv, isTestEnv } from "../utils/environment";
-import { PersistedPreferencesState } from "../store/reducers/persistedPreferences";
-import { SpidIdps } from "../../definitions/content/SpidIdps";
 import { fromGeneratedToLocalSpidIdp } from "../utils/idps";
 import { configureReactotron } from "./configureReactotron";
 
@@ -676,8 +677,8 @@ export const RTron = isDevEnv ? configureReactotron() : undefined;
 const sagaMiddleware = createSagaMiddleware();
 
 function configureStoreAndPersistor(): {
-  store: Store;
   persistor: Persistor;
+  store: Store;
 } {
   const composeEnhancers =
     // eslint-disable-next-line no-underscore-dangle

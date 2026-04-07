@@ -1,17 +1,18 @@
 import { default as configureMockStore } from "redux-mock-store";
 import { ActionArgs } from "xstate";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
+import { useIOStore } from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
-import { createCredentialUpgradeActionsImplementation } from "../actions";
-import { Context } from "../context";
-import { CredentialUpgradeEvents } from "../events";
-import { useIOStore } from "../../../../../store/hooks";
 import {
   itwCredentialsRemoveByType,
   itwCredentialsStore
 } from "../../../credentials/store/actions";
+import { createCredentialUpgradeActionsImplementation } from "../actions";
+import { Context } from "../context";
+import { CredentialUpgradeEvents } from "../events";
 
 describe("itwCredentialUpgradeMachine actions", () => {
   describe("storeCredential", () => {

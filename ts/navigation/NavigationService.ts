@@ -3,8 +3,8 @@ import {
   NavigationContainerRef
 } from "@react-navigation/native";
 import { Route } from "@react-navigation/routers";
-
 import { createRef, RefObject } from "react";
+
 import { mixpanelTrack } from "../mixpanel";
 import { AppParamsList } from "./params/AppParamsList";
 
@@ -48,8 +48,8 @@ export type NavigationParams<T extends keyof AppParamsList> = T extends unknown
     // which means it's either undefined or a union with undefined
     undefined extends AppParamsList[T]
     ?
-        | [screen: T] // if the params are optional, we don't have to provide it
         | [screen: T, params: AppParamsList[T]]
+        | [screen: T] // if the params are optional, we don't have to provide it
     : [screen: T, params: AppParamsList[T]]
   : never;
 

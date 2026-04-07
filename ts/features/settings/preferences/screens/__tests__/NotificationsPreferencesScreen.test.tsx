@@ -1,15 +1,16 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import _ from "lodash";
 import { createStore } from "redux";
+
+import { InitializedProfile } from "../../../../../../definitions/backend/InitializedProfile";
 import { PushNotificationsContentTypeEnum } from "../../../../../../definitions/backend/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../../../../definitions/backend/ReminderStatus";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { NotificationsPreferencesScreen } from "../NotificationsPreferencesScreen";
-import { InitializedProfile } from "../../../../../../definitions/backend/InitializedProfile";
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
+import { NotificationsPreferencesScreen } from "../NotificationsPreferencesScreen";
 
 describe("NotificationsPreferencesScreen", () => {
   it("given an undefined 'reminder_status' then the switch should be off", () => {

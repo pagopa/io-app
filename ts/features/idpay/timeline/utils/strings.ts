@@ -1,7 +1,8 @@
 import { format } from "date-fns";
 import { sequenceS } from "fp-ts/lib/Apply";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+
 import { RefundDetailDTO } from "../../../../../definitions/idpay/RefundDetailDTO";
 
 const getRefundPeriodDateString = (refund: RefundDetailDTO) =>

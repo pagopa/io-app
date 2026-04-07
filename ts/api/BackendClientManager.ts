@@ -1,4 +1,5 @@
 import { Nullable } from "@pagopa/io-app-design-system";
+
 import { isDevEnv } from "./../utils/environment";
 /* eslint-disable functional/immutable-data */
 import { BackendClient } from "./backend";

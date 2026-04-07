@@ -1,14 +1,15 @@
 import { SagaIterator } from "redux-saga";
 import { call, fork, select, takeEvery } from "typed-redux-saga/macro";
+
+import { BackendClient } from "../../../../api/backend";
 import { apiUrlPrefix } from "../../../../config";
+import { watchServicesDetailsSaga } from "../../details/saga";
+import { loadServicePreference } from "../../details/store/actions/preference";
+import { watchFavouriteServicesSaga } from "../../favouriteServices/saga";
 import { watchHomeSaga } from "../../home/saga";
 import { watchInstitutionSaga } from "../../institution/saga";
 import { watchSearchSaga } from "../../search/saga";
 import { createServicesClient } from "../api/servicesClient";
-import { watchServicesDetailsSaga } from "../../details/saga";
-import { watchFavouriteServicesSaga } from "../../favouriteServices/saga";
-import { BackendClient } from "../../../../api/backend";
-import { loadServicePreference } from "../../details/store/actions/preference";
 import { isFavouriteServicesEnabledSelector } from "../store/selectors/remoteConfig";
 import { specialServicePreferencesSaga } from "./specialServicePreferencesSaga";
 

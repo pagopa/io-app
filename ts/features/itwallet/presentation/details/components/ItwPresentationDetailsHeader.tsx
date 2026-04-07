@@ -5,6 +5,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { memo, useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
+
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar.tsx";
 import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils.ts";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
@@ -45,13 +46,13 @@ const ItwPresentationDetailsHeader = ({
       <View style={[styles.header, { backgroundColor }]}>
         <ContentWrapper>
           <Text
+            accessibilityRole="header"
             style={[
               isExperimental
                 ? styles.headerLabelExperimental
                 : styles.headerLabel,
               { color: textColor }
             ]}
-            accessibilityRole="header"
           >
             {getCredentialNameFromType(credential.credentialType)}
           </Text>

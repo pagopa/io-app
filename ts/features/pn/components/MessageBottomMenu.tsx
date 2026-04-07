@@ -3,9 +3,10 @@ import {
   IOVisualCostants,
   useIOTheme
 } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
-import I18n from "i18next";
+
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { NotificationStatusHistory } from "../../../../definitions/pn/NotificationStatusHistory";
 import {
@@ -17,8 +18,8 @@ import {
   SendOpeningSource,
   SendUserType
 } from "../../pushNotifications/analytics";
-import { TimelineListItem } from "./TimelineListItem";
 import { NeedHelp } from "./NeedHelp";
+import { TimelineListItem } from "./TimelineListItem";
 
 const styles = StyleSheet.create({
   container: {

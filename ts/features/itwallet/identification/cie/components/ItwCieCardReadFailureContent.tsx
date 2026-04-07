@@ -1,9 +1,22 @@
+import { useFocusEffect } from "@react-navigation/native";
 import { constNull } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useCallback } from "react";
 import { Linking } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
+
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
+import {
+  CieCardReadContent,
+  CieCardReadContentProps
+} from "../../../../common/components/cie/CieCardReadContent.tsx";
+import { ItwFlow } from "../../../analytics/utils/types.ts";
+import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
+import { type IdentificationContext } from "../../../machine/eid/context.ts";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import {
+  isL3FeaturesEnabledSelector,
+  selectIdentification
+} from "../../../machine/eid/selectors";
 import {
   trackItWalletCardReadingClose,
   trackItWalletCieCardReadingFailure,
@@ -17,20 +30,8 @@ import {
   trackItWalletSecondErrorPin
 } from "../../analytics";
 import { CieCardReadingFailureReason } from "../../analytics/types";
-import { ItwFlow } from "../../../analytics/utils/types.ts";
-import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
-import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
-import { type IdentificationContext } from "../../../machine/eid/context.ts";
-import {
-  isL3FeaturesEnabledSelector,
-  selectIdentification
-} from "../../../machine/eid/selectors";
 import { CieManagerFailure, CieManagerState } from "../hooks/useCieManager";
 import { isNfcError } from "../utils/error";
-import {
-  CieCardReadContent,
-  CieCardReadContentProps
-} from "../../../../common/components/cie/CieCardReadContent.tsx";
 
 type ItwCieCardReadFailureContentProps = Extract<
   CieManagerState,
@@ -104,44 +105,52 @@ export const ItwCieCardReadFailureContent = ({
 
   if (isNfcError(failure)) {
     switch (failure.name) {
+      case "CERTIFICATE_EXPIRED":
+      case "CERTIFICATE_REVOKED":
+        return (
+          <CieCardReadContent
+            pictogram="attention"
+            primaryAction={closeAction}
+            subtitle={I18n.t(
+              `features.itWallet.identification.cie.failure.expired.subtitle`
+            )}
+            title={I18n.t(
+              `features.itWallet.identification.cie.failure.expired.title`
+            )}
+          />
+        );
       case "NOT_A_CIE":
         return (
           <CieCardReadContent
-            title={I18n.t(
-              `features.itWallet.identification.cie.failure.wrongCard.title`
-            )}
-            subtitle={I18n.t(
-              `features.itWallet.identification.cie.failure.wrongCard.subtitle`
-            )}
             pictogram="cardQuestion"
             primaryAction={retryAction}
             secondaryAction={closeAction}
+            subtitle={I18n.t(
+              `features.itWallet.identification.cie.failure.wrongCard.subtitle`
+            )}
+            title={I18n.t(
+              `features.itWallet.identification.cie.failure.wrongCard.title`
+            )}
           />
         );
       case "TAG_LOST":
         return (
           <CieCardReadContent
-            title={I18n.t(
-              `features.itWallet.identification.cie.failure.tagLost.title`
-            )}
-            subtitle={I18n.t(
-              `features.itWallet.identification.cie.failure.tagLost.subtitle`
-            )}
             pictogram="empty"
             primaryAction={retryAction}
             secondaryAction={closeDialogAction}
+            subtitle={I18n.t(
+              `features.itWallet.identification.cie.failure.tagLost.subtitle`
+            )}
+            title={I18n.t(
+              `features.itWallet.identification.cie.failure.tagLost.title`
+            )}
           />
         );
       case "WRONG_PIN":
         if (failure.attemptsLeft > 1) {
           return (
             <CieCardReadContent
-              title={I18n.t(
-                `features.itWallet.identification.cie.failure.wrongPin1.title`
-              )}
-              subtitle={I18n.t(
-                `features.itWallet.identification.cie.failure.wrongPin1.subtitle`
-              )}
               pictogram="attention"
               primaryAction={closeAction}
               secondaryAction={{
@@ -150,17 +159,17 @@ export const ItwCieCardReadFailureContent = ({
                 ),
                 onPress: handlePinForgot
               }}
+              subtitle={I18n.t(
+                `features.itWallet.identification.cie.failure.wrongPin1.subtitle`
+              )}
+              title={I18n.t(
+                `features.itWallet.identification.cie.failure.wrongPin1.title`
+              )}
             />
           );
         } else {
           return (
             <CieCardReadContent
-              title={I18n.t(
-                `features.itWallet.identification.cie.failure.wrongPin2.title`
-              )}
-              subtitle={I18n.t(
-                `features.itWallet.identification.cie.failure.wrongPin2.subtitle`
-              )}
               pictogram="attention"
               primaryAction={closeDialogAction}
               secondaryAction={{
@@ -169,18 +178,18 @@ export const ItwCieCardReadFailureContent = ({
                 ),
                 onPress: handlePinForgot
               }}
+              subtitle={I18n.t(
+                `features.itWallet.identification.cie.failure.wrongPin2.subtitle`
+              )}
+              title={I18n.t(
+                `features.itWallet.identification.cie.failure.wrongPin2.title`
+              )}
             />
           );
         }
       case "CARD_BLOCKED":
         return (
           <CieCardReadContent
-            title={I18n.t(
-              `features.itWallet.identification.cie.failure.locked.title`
-            )}
-            subtitle={I18n.t(
-              `features.itWallet.identification.cie.failure.locked.subtitle`
-            )}
             pictogram="fatalError"
             primaryAction={closeAction}
             secondaryAction={{
@@ -189,20 +198,12 @@ export const ItwCieCardReadFailureContent = ({
               ),
               onPress: handlePukForgot
             }}
-          />
-        );
-      case "CERTIFICATE_EXPIRED":
-      case "CERTIFICATE_REVOKED":
-        return (
-          <CieCardReadContent
-            title={I18n.t(
-              `features.itWallet.identification.cie.failure.expired.title`
-            )}
             subtitle={I18n.t(
-              `features.itWallet.identification.cie.failure.expired.subtitle`
+              `features.itWallet.identification.cie.failure.locked.subtitle`
             )}
-            pictogram="attention"
-            primaryAction={closeAction}
+            title={I18n.t(
+              `features.itWallet.identification.cie.failure.locked.title`
+            )}
           />
         );
     }
@@ -210,24 +211,24 @@ export const ItwCieCardReadFailureContent = ({
 
   return (
     <CieCardReadContent
-      title={I18n.t(
-        `features.itWallet.identification.cie.failure.generic.title`
-      )}
-      subtitle={I18n.t(
-        `features.itWallet.identification.cie.failure.generic.subtitle`
-      )}
       pictogram="umbrella"
       primaryAction={retryAction}
       secondaryAction={closeAction}
+      subtitle={I18n.t(
+        `features.itWallet.identification.cie.failure.generic.subtitle`
+      )}
+      title={I18n.t(
+        `features.itWallet.identification.cie.failure.generic.title`
+      )}
     />
   );
 };
 
 type TrackErrorParams = {
   failure: CieManagerFailure;
+  identification?: IdentificationContext;
   isL3: boolean;
   readProgress?: number;
-  identification?: IdentificationContext;
 };
 
 const trackError = ({
@@ -243,19 +244,23 @@ const trackError = ({
 
   if (isNfcError(failure)) {
     switch (failure.name) {
-      case "TAG_LOST":
-        trackItWalletErrorCardReading({
+      case "APDU_ERROR":
+      case "AUTHENTICATION_ERROR":
+      case "GENERIC_ERROR":
+      case "NO_INTERNET_CONNECTION":
+        trackItWalletCieCardReadingFailure({
+          reason: CieCardReadingFailureReason[failure.name],
           itw_flow,
           cie_reading_progress: progress,
           ITW_ID_method: identification?.mode
         });
         return;
-      case "WRONG_PIN":
-        if (failure.attemptsLeft > 1) {
-          trackItWalletErrorPin(itw_flow, progress);
-        } else {
-          trackItWalletSecondErrorPin(itw_flow, progress);
-        }
+      case "CANCELLED_BY_USER":
+        trackItWalletCardReadingClose({
+          cie_reading_progress: progress,
+          itw_flow,
+          ITW_ID_method: identification?.mode
+        });
         return;
       case "CARD_BLOCKED":
         trackItWalletLastErrorPin(itw_flow, progress);
@@ -284,24 +289,20 @@ const trackError = ({
           ITW_ID_method: identification?.mode
         });
         return;
-      case "GENERIC_ERROR":
-      case "APDU_ERROR":
-      case "NO_INTERNET_CONNECTION":
-      case "AUTHENTICATION_ERROR":
-        trackItWalletCieCardReadingFailure({
-          reason: CieCardReadingFailureReason[failure.name],
+      case "TAG_LOST":
+        trackItWalletErrorCardReading({
           itw_flow,
           cie_reading_progress: progress,
           ITW_ID_method: identification?.mode
         });
         return;
 
-      case "CANCELLED_BY_USER":
-        trackItWalletCardReadingClose({
-          cie_reading_progress: progress,
-          itw_flow,
-          ITW_ID_method: identification?.mode
-        });
+      case "WRONG_PIN":
+        if (failure.attemptsLeft > 1) {
+          trackItWalletErrorPin(itw_flow, progress);
+        } else {
+          trackItWalletSecondErrorPin(itw_flow, progress);
+        }
         return;
     }
   }

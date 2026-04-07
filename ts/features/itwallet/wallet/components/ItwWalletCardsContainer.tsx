@@ -3,6 +3,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { View } from "react-native";
+
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -89,9 +90,9 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
       return (
         <>
           <ItwWalletIdStatus
-            pidStatus={eidStatus}
-            pidExpiration={eidExpiration}
             onPress={handleNavigateToItwId}
+            pidExpiration={eidExpiration}
+            pidStatus={eidStatus}
           />
           <VSpacer size={16} />
         </>
@@ -99,10 +100,6 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
     }
     return (
       <ListItemHeader
-        testID={"walletCardsCategoryItwHeaderTestID"}
-        iconName={"legalValue"}
-        iconColor={iconColor}
-        label={I18n.t("features.wallet.cards.categories.itw")}
         endElement={{
           type: "buttonLink",
           componentProps: {
@@ -116,6 +113,10 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
             testID: "walletCardsCategoryItwActiveBadgeTestID"
           }
         }}
+        iconColor={iconColor}
+        iconName={"legalValue"}
+        label={I18n.t("features.wallet.cards.categories.itw")}
+        testID={"walletCardsCategoryItwHeaderTestID"}
       />
     );
   }, [
@@ -130,10 +131,10 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   return (
     <>
       <WalletCardsCategoryContainer
-        key={`cards_category_itw`}
-        testID={`itwWalletCardsContainerTestID`}
         cards={cards}
         header={sectionHeader}
+        key={`cards_category_itw`}
+        testID={`itwWalletCardsContainerTestID`}
         topElement={
           <VStack space={16}>
             {shouldRenderUpgradeBanner && <ItwDiscoveryBanner flow="wallet" />}

@@ -1,4 +1,5 @@
 import I18n from "i18next";
+
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import { ItwProximityMachineContext } from "../machine/provider";
 import {
@@ -41,6 +42,6 @@ export const ItwProximityLoadingStepScreen = () => {
   const { subtitle, title } = getLoadingStepScreenContentProps();
 
   return (
-    <LoadingScreenContent testID="loader" title={title} subtitle={subtitle} />
+    <LoadingScreenContent subtitle={subtitle} testID="loader" title={title} />
   );
 };

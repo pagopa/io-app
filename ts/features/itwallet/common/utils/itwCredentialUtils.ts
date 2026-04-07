@@ -1,9 +1,10 @@
 import { IOColors, Tag, useIOTheme } from "@pagopa/io-app-design-system";
+import { Mdoc, SdJwt } from "@pagopa/io-react-native-wallet";
+import { isBefore } from "date-fns";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { SdJwt, Mdoc } from "@pagopa/io-react-native-wallet";
 import I18n from "i18next";
-import { isBefore } from "date-fns";
+
 import { CredentialType } from "./itwMocksUtils";
 import {
   CredentialFormat,
@@ -33,9 +34,9 @@ export const newCredentials = [
   CredentialType.RESIDENCY
 ] as const;
 
-export type NewCredential = (typeof newCredentials)[number];
-
 export type L2Credential = (typeof l2Credentials)[number];
+
+export type NewCredential = (typeof newCredentials)[number];
 
 // Credentials that will be available in the future
 export const upcomingCredentials = [] as ReadonlyArray<string>;
@@ -87,9 +88,7 @@ export const getCredentialNameFromType = (
     O.getOrElse(() => withDefault)
   );
 
-export const useBorderColorByStatus: () => {
-  [key in ItwCredentialStatus]: string;
-} = () => {
+export const useBorderColorByStatus: () => Record<ItwCredentialStatus, string> = () => {
   const theme = useIOTheme();
 
   return {
@@ -103,7 +102,7 @@ export const useBorderColorByStatus: () => {
   };
 };
 
-export const tagPropsByStatus: { [key in ItwCredentialStatus]?: Tag } = {
+export const tagPropsByStatus: Partial<Record<ItwCredentialStatus, Tag>> = {
   invalid: {
     variant: "error",
     text: I18n.t("features.itWallet.card.status.invalid")
@@ -151,16 +150,16 @@ export const extractVerification = ({
   format,
   credential,
   parsedCredential
-}: Pick<StoredCredential, "format" | "credential" | "parsedCredential">):
+}: Pick<StoredCredential, "credential" | "format" | "parsedCredential">):
   | StoredVerification
   | undefined => {
   try {
     const verification = (() => {
       switch (format) {
-        case CredentialFormat.SD_JWT:
-          return SdJwt.getVerification(credential);
         case CredentialFormat.MDOC:
           return Mdoc.getVerificationFromParsedCredential(parsedCredential);
+        case CredentialFormat.SD_JWT:
+          return SdJwt.getVerification(credential);
         default:
           return undefined;
       }

@@ -1,15 +1,16 @@
 import {
   Banner,
+  bannerBackgroundColours,
   BannerErrorState,
   FeatureInfo,
   H4,
-  VStack,
-  bannerBackgroundColours,
-  useIOTheme
+  useIOTheme,
+  VStack
 } from "@pagopa/io-app-design-system";
 import { Alert } from "react-native";
-import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
+
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 
 const onLinkPress = () => {
   Alert.alert("Alert", "Action triggered");
@@ -53,16 +54,16 @@ const renderBannerErrorState = () => (
   <VStack space={componentMargin}>
     <DSComponentViewerBox name="BannerErrorState, default icon">
       <BannerErrorState
-        label="Il caricamento delle ricevute è fallito."
         actionText={"Riprova"}
+        label="Il caricamento delle ricevute è fallito."
         onPress={onLinkPress}
       />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="BannerErrorState, custom icon">
       <BannerErrorState
+        actionText={"Riprova"}
         icon="errorFilled"
         label="Il caricamento delle ricevute è fallito."
-        actionText={"Riprova"}
         onPress={onLinkPress}
       />
     </DSComponentViewerBox>
@@ -74,55 +75,55 @@ const renderFeatureInfo = () => (
     <DSComponentViewerBox name="FeatureInfo · with Icon">
       <VStack space={componentInnerMargin}>
         <FeatureInfo
-          iconName="info"
           body={
             "Dopo questo passaggio non sarà più possibile annullare il pagamento"
           }
+          iconName="info"
         />
         <FeatureInfo
-          iconName="gallery"
           body={
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua"
           }
+          iconName="gallery"
         />
         <FeatureInfo
-          iconName="security"
           action={{
             label:
               "Si applicano i Termini e condizioni d’uso e l’Informativa Privacy di Paytipper",
             onPress: onLinkPress
           }}
+          iconName="security"
         />
       </VStack>
     </DSComponentViewerBox>
     <DSComponentViewerBox name="FeatureInfo · with Pictogram">
       <VStack space={componentInnerMargin}>
         <FeatureInfo
-          pictogramProps={{
-            name: "followMessage"
-          }}
           body={
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua. sed do eiusmod tempor ut labore et dolore magna aliqua"
           }
+          pictogramProps={{
+            name: "followMessage"
+          }}
         />
         <FeatureInfo
-          pictogramProps={{
-            name: "manual"
-          }}
           body={
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua"
           }
+          pictogramProps={{
+            name: "manual"
+          }}
         />
         <FeatureInfo
-          pictogramProps={{
-            name: "followMessage"
+          action={{
+            label: "Scopri di più",
+            onPress: onLinkPress
           }}
           body={
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua. sed do eiusmod tempor ut labore et dolore magna aliqua"
           }
-          action={{
-            label: "Scopri di più",
-            onPress: onLinkPress
+          pictogramProps={{
+            name: "followMessage"
           }}
         />
       </VStack>
@@ -133,49 +134,49 @@ const renderFeatureInfo = () => (
 const renderBanner = () => (
   <VStack space={componentMargin}>
     {bannerBackgroundColours.map(color => (
-      <VStack space={componentMargin} key={`${color}-block`}>
+      <VStack key={`${color}-block`} space={componentMargin}>
         <DSComponentViewerBox name={`Banner · ${color} variant`}>
           <VStack space={componentInnerMargin}>
             <Banner
-              color={color}
-              title="Banner title"
-              pictogramName="charity"
               action="Action text"
+              color={color}
               onPress={onLinkPress}
-            />
-            <Banner
-              color={color}
-              content={
-                "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
-              }
               pictogramName="charity"
-            />
-            <Banner
-              color={color}
-              content={
-                "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
-              }
-              pictogramName="charity"
-              action="Dona anche tu"
-              onPress={onLinkPress}
-            />
-            <Banner
-              color={color}
               title="Banner title"
+            />
+            <Banner
+              color={color}
               content={
                 "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
               }
               pictogramName="charity"
             />
             <Banner
+              action="Dona anche tu"
               color={color}
-              title="Banner title"
+              content={
+                "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
+              }
+              onPress={onLinkPress}
+              pictogramName="charity"
+            />
+            <Banner
+              color={color}
               content={
                 "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
               }
               pictogramName="charity"
+              title="Banner title"
+            />
+            <Banner
               action="Dona anche tu"
+              color={color}
+              content={
+                "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
+              }
               onPress={onLinkPress}
+              pictogramName="charity"
+              title="Banner title"
             />
           </VStack>
         </DSComponentViewerBox>
@@ -183,24 +184,24 @@ const renderBanner = () => (
           <VStack space={componentInnerMargin}>
             <Banner
               color={color}
-              title="Banner title"
               content={
                 "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
               }
-              pictogramName="charity"
-              onClose={onClose}
               labelClose="Nascondi questo banner"
+              onClose={onClose}
+              pictogramName="charity"
+              title="Banner title"
             />
             <Banner
+              action="Dona anche tu"
               color={color}
               content={
                 "Fai una donazione alle organizzazioni umanitarie che assistono le vittime civile della crisi in Ucraina"
               }
-              action="Dona anche tu"
+              labelClose="Nascondi questo banner"
+              onClose={onClose}
               onPress={onLinkPress}
               pictogramName="charity"
-              onClose={onClose}
-              labelClose="Nascondi questo banner"
             />
           </VStack>
         </DSComponentViewerBox>

@@ -5,15 +5,17 @@ import {
   IOThemeContextProvider,
   ToastProvider
 } from "@pagopa/io-app-design-system";
+import { ErrorEvent, TransactionEvent } from "@sentry/core";
+import * as Sentry from "@sentry/react-native";
+import { JSX } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-import * as Sentry from "@sentry/react-native";
-import { ErrorEvent, TransactionEvent } from "@sentry/core";
-import { JSX } from "react";
-import RootContainer from "./RootContainer";
+
 import { persistor, store } from "./boot/configureStoreAndPersistor";
+import { IOAlertVisibleContextProvider } from "./components/StatusMessages/IOAlertVisibleContext";
+import { StatusMessages } from "./components/StatusMessages/StatusMessages";
 import { LightModalProvider } from "./components/ui/LightModal";
 import {
   apiLoginUrlPrefix,
@@ -27,12 +29,11 @@ import {
   walletApiBaseUrl,
   walletApiUatBaseUrl
 } from "./config";
-import { isDevEnv } from "./utils/environment";
-import { StatusMessages } from "./components/StatusMessages/StatusMessages";
 import { AppFeedbackProvider } from "./features/appReviews/components/AppFeedbackProvider";
-import { TourProvider } from "./features/tour/components/TourProvider";
-import { IOAlertVisibleContextProvider } from "./components/StatusMessages/IOAlertVisibleContext";
 import { getEnv } from "./features/itwallet/common/utils/environment";
+import { TourProvider } from "./features/tour/components/TourProvider";
+import RootContainer from "./RootContainer";
+import { isDevEnv } from "./utils/environment";
 
 export type ReactNavigationInstrumentation = ReturnType<
   typeof Sentry.reactNavigationIntegration
@@ -58,7 +59,7 @@ const removeUserFromEvent = <T extends ErrorEvent | TransactionEvent>(
  */
 const removeHttpClientError = <T extends ErrorEvent | TransactionEvent>(
   event: T
-): T | null => {
+): null | T => {
   // Modify or drop the event here
   if (
     event.exception?.values?.[0]?.value?.match(/HTTPClientError/) ||
@@ -77,7 +78,7 @@ const removeHttpClientError = <T extends ErrorEvent | TransactionEvent>(
  */
 const beforeSendHandler = <T extends ErrorEvent | TransactionEvent>(
   event: T
-): T | null => {
+): null | T => {
   const safeEvent = removeUserFromEvent(event);
   const eventExcludeHttp500 = removeHttpClientError(safeEvent);
   const isSendRequired = event.tags?.isRequired;
@@ -145,9 +146,9 @@ Sentry.init({
   sampleRate: 1
 });
 
+export type AppDispatch = typeof store.dispatch;
 // Infer the `RootState` and `AppDispatch` types from the store itself export
 export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
 
 /**
  * Main component of the application

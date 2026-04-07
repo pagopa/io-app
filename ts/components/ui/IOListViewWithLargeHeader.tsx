@@ -8,6 +8,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import I18n from "i18next";
 import {
   ComponentProps,
   createRef,
@@ -16,9 +17,8 @@ import {
   useCallback,
   useState
 } from "react";
-
 import { LayoutChangeEvent, View } from "react-native";
-import I18n from "i18next";
+
 import { useHeaderProps } from "../../hooks/useHeaderProps";
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { IOListView } from "./IOListView";
@@ -104,20 +104,29 @@ export const IOListViewWithLargeHeader = forwardRef(
 
     return (
       <IOListView<T>
+        actions={actions}
+        data={data}
+        excludeEndContentMargin={excludeEndContentMargin}
+        headerConfig={headerProps}
+        includeContentMargins={includeContentMargins}
+        ItemSeparatorComponent={Divider}
+        keyExtractor={keyExtractor}
+        ListEmptyComponent={ListEmptyComponent}
+        ListFooterComponent={ListFooterComponent}
         ListHeaderComponent={
           <>
             <View onLayout={getTitleHeight}>
               {title.section && (
-                <BodySmall weight="Semibold" color={theme["textBody-tertiary"]}>
+                <BodySmall color={theme["textBody-tertiary"]} weight="Semibold">
                   {title.section}
                 </BodySmall>
               )}
               <H2
-                color={theme["textHeading-default"]}
-                testID={title?.testID}
-                ref={ref ?? titleRef}
                 accessibilityLabel={title.accessibilityLabel ?? title.label}
                 accessibilityRole="header"
+                color={theme["textHeading-default"]}
+                ref={ref ?? titleRef}
+                testID={title?.testID}
               >
                 {title.label}
               </H2>
@@ -144,19 +153,10 @@ export const IOListViewWithLargeHeader = forwardRef(
           </>
         }
         loading={loading}
-        skeleton={skeleton}
-        ListFooterComponent={ListFooterComponent}
-        ListEmptyComponent={ListEmptyComponent}
-        ItemSeparatorComponent={Divider}
         refreshControlProps={refreshControlProps}
         renderItem={renderItem}
-        data={data}
-        keyExtractor={keyExtractor}
-        actions={actions}
-        headerConfig={headerProps}
+        skeleton={skeleton}
         snapOffset={titleHeight}
-        includeContentMargins={includeContentMargins}
-        excludeEndContentMargin={excludeEndContentMargin}
         testID={testID}
       />
     );

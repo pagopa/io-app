@@ -1,21 +1,22 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
-import { EmptyList } from "../EmptyList";
-import { MessageListCategory } from "../../../types/messageListCategory";
-import { MESSAGES_ROUTES } from "../../../navigation/routes";
-import { appReducer } from "../../../../../store/reducers";
+import { createStore } from "redux";
+
+import { pageSize } from "../../../../../config";
 import { applicationChangeState } from "../../../../../store/actions/application";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { MESSAGES_ROUTES } from "../../../navigation/routes";
+import { reloadAllMessages } from "../../../store/actions";
 import {
   MessagePage,
   MessagePagePot
 } from "../../../store/reducers/allPaginated";
 import { UIMessage } from "../../../types";
-import { reloadAllMessages } from "../../../store/actions";
-import { pageSize } from "../../../../../config";
-import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
+import { MessageListCategory } from "../../../types/messageListCategory";
+import { EmptyList } from "../EmptyList";
 
 const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({

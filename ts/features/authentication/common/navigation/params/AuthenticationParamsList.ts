@@ -1,13 +1,13 @@
-import { CieIdNotInstalledProps } from "../../../login/cie/components/CieIdNotInstalled";
-import { UrlNotCompliant } from "../../../login/cie/screens/CieIdAuthUrlError";
 import { AuthErrorScreenProps } from "../../../login/authError/screens/AuthErrorScreen";
+import { CieIdNotInstalledProps } from "../../../login/cie/components/CieIdNotInstalled";
 import { CieCardReaderScreenNavigationParams } from "../../../login/cie/screens/CieCardReaderScreen";
 import { CieConsentDataUsageScreenNavigationParams } from "../../../login/cie/screens/CieConsentDataUsageScreen";
+import { UrlNotCompliant } from "../../../login/cie/screens/CieIdAuthUrlError";
 import { CieWrongCiePinScreenNavigationParams } from "../../../login/cie/screens/CieWrongCiePinScreen";
+import { CieIdLoginProps } from "../../../login/cie/shared/utils";
 import { ChosenIdentifier } from "../../../login/optIn/screens/OptInScreen";
 import { UnlockAccessProps } from "../../../login/unlockAccess/components/UnlockAccessComponent";
 import { AUTHENTICATION_ROUTES } from "../routes";
-import { CieIdLoginProps } from "../../../login/cie/shared/utils";
 
 export type AuthenticationParamsList = {
   [AUTHENTICATION_ROUTES.LANDING]: undefined;

@@ -1,7 +1,8 @@
 import { createActor, fromPromise, waitFor } from "xstate";
-import { itwCredentialUpgradeMachine } from "../machine";
+
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
-import { UpgradeCredentialParams, UpgradeCredentialOutput } from "../actors";
+import { UpgradeCredentialOutput, UpgradeCredentialParams } from "../actors";
+import { itwCredentialUpgradeMachine } from "../machine";
 
 const makeCredential = (
   overrides: Partial<StoredCredential> = {}

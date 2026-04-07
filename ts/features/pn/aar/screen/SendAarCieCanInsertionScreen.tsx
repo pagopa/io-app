@@ -6,6 +6,7 @@ import i18n from "i18next";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Keyboard, KeyboardAvoidingView, Platform, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useHardwareBackButtonWhenFocused } from "../../../../hooks/useHardwareBackButton";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
@@ -37,15 +38,15 @@ export const SendAarCieCanInsertionScreen = ({
 
   useEffect(() => {
     switch (currentAarState.type) {
-      case sendAARFlowStates.cieScanningAdvisory: {
-        navigation.replace(PN_ROUTES.SEND_AAR_CIE_CARD_READING_EDUCATIONAL, {
-          animationTypeForReplace: "push"
-        });
-        break;
-      }
       case sendAARFlowStates.cieCanAdvisory: {
         navigation.replace(PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL, {
           animationTypeForReplace: "pop"
+        });
+        break;
+      }
+      case sendAARFlowStates.cieScanningAdvisory: {
+        navigation.replace(PN_ROUTES.SEND_AAR_CIE_CARD_READING_EDUCATIONAL, {
+          animationTypeForReplace: "push"
         });
         break;
       }
@@ -105,23 +106,17 @@ export const SendAarCieCanInsertionScreen = ({
   });
 
   return (
-    <SafeAreaView style={{ flex: 1 }} edges={["bottom"]}>
+    <SafeAreaView edges={["bottom"]} style={{ flex: 1 }}>
       <KeyboardAvoidingView
         behavior={Platform.select({
           ios: "padding",
           android: undefined
         })}
-        style={{ flex: 1 }}
         keyboardVerticalOffset={headerHeight}
+        style={{ flex: 1 }}
       >
         <IOScrollViewWithLargeHeader
-          title={{
-            label: i18n.t("features.pn.aar.flow.cieCanInsertion.title")
-          }}
-          description={i18n.t(
-            "features.pn.aar.flow.cieCanInsertion.description"
-          )}
-          headerActionsProp={{ showHelp: true }}
+          alwaysBounceVertical={false}
           contextualHelp={{
             title: i18n.t(
               "features.pn.aar.flow.delegated.cieContextualHelp.title"
@@ -130,25 +125,31 @@ export const SendAarCieCanInsertionScreen = ({
               "features.pn.aar.flow.delegated.cieContextualHelp.body"
             )
           }}
+          description={i18n.t(
+            "features.pn.aar.flow.cieCanInsertion.description"
+          )}
           goBack={handleGoBack}
+          headerActionsProp={{ showHelp: true }}
           includeContentMargins
-          alwaysBounceVertical={false}
+          title={{
+            label: i18n.t("features.pn.aar.flow.cieCanInsertion.title")
+          }}
         >
           <VSpacer size={8} />
           <OTPInput
-            ref={canPadViewRef}
-            secret
-            length={CIE_CAN_LENGTH}
-            onValueChange={handleCanChange}
-            value={can}
-            autoFocus={isFocused}
-            accessibilityLabel={i18n.t(
-              "authentication.cie.pin.accessibility.label"
-            )}
             accessibilityHint={i18n.t(
               "authentication.cie.pin.accessibility.hint"
             )}
+            accessibilityLabel={i18n.t(
+              "authentication.cie.pin.accessibility.label"
+            )}
+            autoFocus={isFocused}
             key={isFocused ? "focused" : "unfocused"}
+            length={CIE_CAN_LENGTH}
+            onValueChange={handleCanChange}
+            ref={canPadViewRef}
+            secret
+            value={can}
           />
         </IOScrollViewWithLargeHeader>
       </KeyboardAvoidingView>

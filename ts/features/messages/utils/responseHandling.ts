@@ -2,6 +2,7 @@ import { IResponseType } from "@pagopa/ts-commons/lib/requests";
 import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { ValidationError } from "io-ts";
+
 import { Action } from "../../../store/actions/types";
 import { readablePrivacyReport } from "../../../utils/reporters";
 
@@ -9,10 +10,10 @@ export type ResponseType<T> =
   | IResponseType<200, T>
   | IResponseType<
       400 | 401 | 403 | 404 | 429 | 500,
-      { title?: string } | undefined
+      undefined | { title?: string }
     >;
 
-const checkIsError = (e: Error | Array<ValidationError>): e is Error =>
+const checkIsError = (e: Array<ValidationError> | Error): e is Error =>
   e instanceof Error;
 /**
  * Discern between Either.Right/Left, and status codes.

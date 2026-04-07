@@ -2,6 +2,7 @@ import { Errors } from "@pagopa/io-react-native-wallet";
 import { differenceInCalendarDays } from "date-fns";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+
 import { getCredentialExpireDate } from "./itwClaimsUtils";
 import { ItwCredentialStatus, StoredCredential } from "./itwTypesUtils";
 

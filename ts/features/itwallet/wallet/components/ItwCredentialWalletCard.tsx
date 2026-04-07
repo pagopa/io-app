@@ -1,11 +1,11 @@
+import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { withWalletCardBaseComponent } from "../../../wallet/components/WalletCardBaseComponent";
 import { WalletCardPressableBase } from "../../../wallet/components/WalletCardPressableBase";
 import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
-import { ITW_ROUTES } from "../../navigation/routes";
-import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard";
 import { itwShouldUpgradeCredentialSelector } from "../../common/store/selectors";
+import { ITW_ROUTES } from "../../navigation/routes";
 
 export type ItwCredentialWalletCardProps = ItwCredentialCard & {
   isPreview?: false; // Cards in wallet cannot be in preview mode

@@ -1,6 +1,7 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { StateFrom } from "xstate";
+
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import { IdentificationContext } from "./context";
@@ -64,8 +65,8 @@ export const selectUpgradeFailedCredentials = (snapshot: MachineSnapshot) =>
         [] as ReadonlyArray<
           StoredCredential & {
             failure?: {
-              type: string;
               reason: unknown;
+              type: string;
             };
           }
         >

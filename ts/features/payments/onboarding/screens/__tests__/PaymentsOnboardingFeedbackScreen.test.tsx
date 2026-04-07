@@ -2,6 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 import configureMockStore from "redux-mock-store";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import * as hooks from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";

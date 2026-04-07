@@ -1,50 +1,51 @@
 import { getType } from "typesafe-actions";
-import {
-  SuccessGetMessageDataActionType,
-  getMessageDataAction,
-  reloadAllMessages,
-  resetGetMessageDataAction
-} from "../actions";
+
+import { startApplicationInitialization } from "../../../../store/actions/application";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
-import { startApplicationInitialization } from "../../../../store/actions/application";
+import {
+  getMessageDataAction,
+  reloadAllMessages,
+  resetGetMessageDataAction,
+  SuccessGetMessageDataActionType
+} from "../actions";
+
+export type MessageGetStatus =
+  | BlockedOrErrorState
+  | IdleState
+  | LoadingOrRetryState
+  | SuccessState;
 
 export type MessageGetStatusFailurePhaseType =
+  | "messageDetails"
   | "none"
   | "paginatedMessage"
-  | "serviceDetails"
-  | "messageDetails"
   | "preconditions"
-  | "thirdPartyMessageDetails"
-  | "readStatusUpdate";
+  | "readStatusUpdate"
+  | "serviceDetails"
+  | "thirdPartyMessageDetails";
+
+type BlockedOrErrorState = {
+  failurePhase: MessageGetStatusFailurePhaseType;
+  status: "blocked" | "error";
+};
 
 type IdleState = {
   status: "idle";
 };
 
-type BlockedOrErrorState = {
-  status: "blocked" | "error";
-  failurePhase: MessageGetStatusFailurePhaseType;
-};
-
 type LoadingOrRetryState = {
-  status: "loading" | "retry";
   data: {
-    messageId: string;
     fromPushNotification: boolean;
+    messageId: string;
   };
+  status: "loading" | "retry";
 };
 
 type SuccessState = {
   status: "success";
   successData: SuccessGetMessageDataActionType;
 };
-
-export type MessageGetStatus =
-  | IdleState
-  | BlockedOrErrorState
-  | LoadingOrRetryState
-  | SuccessState;
 
 export const INITIAL_STATE: MessageGetStatus = {
   status: "idle"
@@ -55,6 +56,13 @@ export const messageGetStatusReducer = (
   action: Action
 ): MessageGetStatus => {
   switch (action.type) {
+    case getType(getMessageDataAction.failure):
+      return {
+        status: action.payload.blockedFromPushNotificationOpt
+          ? "blocked"
+          : "error",
+        failurePhase: action.payload.phase
+      };
     case getType(getMessageDataAction.request):
       return {
         status: "loading",
@@ -63,6 +71,14 @@ export const messageGetStatusReducer = (
           fromPushNotification: action.payload.fromPushNotification
         }
       };
+    case getType(getMessageDataAction.success):
+      return {
+        status: "success",
+        successData: action.payload
+      };
+    case getType(reloadAllMessages.request):
+    case getType(resetGetMessageDataAction):
+      return INITIAL_STATE;
     case getType(startApplicationInitialization):
       const fastLoginSessionExpired =
         !!(action.payload && action.payload.handleSessionExpiration) &&
@@ -73,21 +89,6 @@ export const messageGetStatusReducer = (
             status: "retry"
           }
         : state;
-    case getType(getMessageDataAction.failure):
-      return {
-        status: action.payload.blockedFromPushNotificationOpt
-          ? "blocked"
-          : "error",
-        failurePhase: action.payload.phase
-      };
-    case getType(getMessageDataAction.success):
-      return {
-        status: "success",
-        successData: action.payload
-      };
-    case getType(resetGetMessageDataAction):
-    case getType(reloadAllMessages.request):
-      return INITIAL_STATE;
   }
   return state;
 };

@@ -1,17 +1,17 @@
-type Primitive = string | number | boolean | null | undefined;
+type Primitive = boolean | null | number | string | undefined;
 
-type TruncatableValue =
-  | Primitive
-  | TruncatableObject
-  | TruncatableArray
-  | TruncatableSet;
+type TruncatableArray = Array<TruncatableValue>;
 
 interface TruncatableObject {
   [key: string]: TruncatableValue;
 }
 
-type TruncatableArray = Array<TruncatableValue>;
 type TruncatableSet = Set<TruncatableValue>;
+type TruncatableValue =
+  | Primitive
+  | TruncatableArray
+  | TruncatableObject
+  | TruncatableSet;
 
 /**
  * Truncates all string values in an object or array structure to a specified maximum length.

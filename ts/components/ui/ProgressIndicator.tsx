@@ -10,5 +10,5 @@ export const ProgressIndicator = (props: ProgressIndicator) => {
   const theme = useIOTheme();
   const blueColor = theme["interactiveElem-default"];
 
-  return <ProgressLoader progress={props.progress} color={blueColor} />;
+  return <ProgressLoader color={blueColor} progress={props.progress} />;
 };

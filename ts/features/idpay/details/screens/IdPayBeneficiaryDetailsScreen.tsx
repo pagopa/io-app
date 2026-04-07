@@ -2,8 +2,10 @@ import { VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
@@ -17,7 +19,6 @@ import {
   idPayBeneficiaryDetailsGet,
   idPayOnboardingStatusGet
 } from "../store/actions";
-import { IOScrollView } from "../../../../components/ui/IOScrollView";
 
 export type IdPayBeneficiaryDetailsScreenParams = {
   initiativeId: string;

@@ -2,42 +2,7 @@ import { CieUtils } from "@pagopa/io-react-native-cie";
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
-import { useIOStore } from "../../../../store/hooks";
-import { assert } from "../../../../utils/assert";
-import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
-import * as cieUtils from "../../../authentication/login/cie/utils/cie";
-import { trackItwRequest } from "../../analytics";
-import {
-  trackWalletInstanceRenewalFailure,
-  trackWalletInstanceRenewalSuccess
-} from "../../issuance/analytics";
-import { Env } from "../../common/utils/environment";
-import {
-  getAttestation,
-  getIntegrityHardwareKeyTag,
-  registerWalletInstance
-} from "../../common/utils/itwAttestationUtils";
-import { isAssertionGenerationError } from "../../common/utils/itwFailureUtils";
-import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
-import { revokeCurrentWalletInstance } from "../../common/utils/itwRevocationUtils";
-import { pollForStoreValue } from "../../common/utils/itwStoreUtils";
-import {
-  StoredCredential,
-  WalletInstanceAttestations
-} from "../../common/utils/itwTypesUtils";
-import * as mrtdUtils from "../../common/utils/mrtd";
-import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
-import {
-  itwIntegrityKeyTagSelector,
-  itwIntegrityServiceStatusSelector
-} from "../../issuance/store/selectors";
-import { itwSetWalletInstanceRenewalError } from "../../walletInstance/store/actions";
-import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
-import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
-import { getIoWallet } from "../../common/utils/itwIoWallet";
-import { createCredentialUpgradeActionsImplementation } from "../upgrade/actions";
-import { createCredentialUpgradeActorsImplementation } from "../upgrade/actors";
-import { itwCredentialUpgradeMachine } from "../upgrade/machine";
+
 import type {
   AuthenticationContext,
   CieContext,
@@ -46,17 +11,45 @@ import type {
   MrtdPoPContext
 } from "./context";
 
-export type RequestEidActorParams = {
-  identification: IdentificationContext | undefined;
-  walletInstanceAttestation: string | undefined;
-  authenticationContext: AuthenticationContext | undefined;
-  level: EidIssuanceLevel | undefined;
-};
+import { useIOStore } from "../../../../store/hooks";
+import { assert } from "../../../../utils/assert";
+import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
+import * as cieUtils from "../../../authentication/login/cie/utils/cie";
+import { trackItwRequest } from "../../analytics";
+import { Env } from "../../common/utils/environment";
+import {
+  getAttestation,
+  getIntegrityHardwareKeyTag,
+  registerWalletInstance
+} from "../../common/utils/itwAttestationUtils";
+import { isAssertionGenerationError } from "../../common/utils/itwFailureUtils";
+import { getIoWallet } from "../../common/utils/itwIoWallet";
+import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
+import { revokeCurrentWalletInstance } from "../../common/utils/itwRevocationUtils";
+import { pollForStoreValue } from "../../common/utils/itwStoreUtils";
+import {
+  StoredCredential,
+  WalletInstanceAttestations
+} from "../../common/utils/itwTypesUtils";
+import * as mrtdUtils from "../../common/utils/mrtd";
+import {
+  trackWalletInstanceRenewalFailure,
+  trackWalletInstanceRenewalSuccess
+} from "../../issuance/analytics";
+import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
+import {
+  itwIntegrityKeyTagSelector,
+  itwIntegrityServiceStatusSelector
+} from "../../issuance/store/selectors";
+import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
+import { itwSetWalletInstanceRenewalError } from "../../walletInstance/store/actions";
+import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
+import { createCredentialUpgradeActionsImplementation } from "../upgrade/actions";
+import { createCredentialUpgradeActorsImplementation } from "../upgrade/actors";
+import { itwCredentialUpgradeMachine } from "../upgrade/machine";
 
-export type StartAuthFlowActorParams = {
-  walletInstanceAttestation: string | undefined;
-  identification: IdentificationContext | undefined;
-  withMRTDPoP: boolean;
+export type GetWalletAttestationActorParams = {
+  integrityKeyTag: string | undefined;
 };
 
 export type InitMrtdPoPChallengeActorParams = {
@@ -64,14 +57,23 @@ export type InitMrtdPoPChallengeActorParams = {
   walletInstanceAttestation: string | undefined;
 };
 
-export type ValidateMrtdPoPChallengeActorParams = {
+export type RequestEidActorParams = {
   authenticationContext: AuthenticationContext | undefined;
+  identification: IdentificationContext | undefined;
+  level: EidIssuanceLevel | undefined;
   walletInstanceAttestation: string | undefined;
-  mrtdContext: MrtdPoPContext | undefined;
 };
 
-export type GetWalletAttestationActorParams = {
-  integrityKeyTag: string | undefined;
+export type StartAuthFlowActorParams = {
+  identification: IdentificationContext | undefined;
+  walletInstanceAttestation: string | undefined;
+  withMRTDPoP: boolean;
+};
+
+export type ValidateMrtdPoPChallengeActorParams = {
+  authenticationContext: AuthenticationContext | undefined;
+  mrtdContext: MrtdPoPContext | undefined;
+  walletInstanceAttestation: string | undefined;
 };
 
 /**

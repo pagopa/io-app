@@ -1,28 +1,22 @@
 import {
   Banner,
   ContentWrapper,
-  VSpacer,
-  useIOToast
+  useIOToast,
+  VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { ReactElement, useCallback, useEffect, useState } from "react";
 import I18n from "i18next";
+import { ReactElement, useCallback, useEffect, useState } from "react";
+
 import { ServicesPreferencesModeEnum } from "../../../../definitions/backend/ServicesPreferencesMode";
 import LoadingSpinnerOverlay from "../../../components/LoadingSpinnerOverlay";
+import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
 import {
   IOStackNavigationRouteProps,
   useIONavigation
 } from "../../../navigation/params/AppParamsList";
-import { OnboardingParamsList } from "../navigation/params/OnboardingParamsList";
 import ROUTES from "../../../navigation/routes";
-import { servicesOptinCompleted } from "../store/actions";
-import { profileUpsert } from "../../settings/common/store/actions";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
-import {
-  profileSelector,
-  profileServicePreferencesModeSelector
-} from "../../settings/common/store/selectors";
-import { isServicesPreferenceModeSet } from "../../settings/common/store/utils/guards";
 import { getFlowType } from "../../../utils/analytics";
 import { emptyContextualHelp } from "../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
@@ -31,9 +25,16 @@ import {
   trackServiceConfiguration,
   trackServiceConfigurationScreen
 } from "../../settings/common/analytics";
-import { useManualConfigBottomSheet } from "../../settings/preferences/shared/hooks/useManualConfigBottomSheet";
+import { profileUpsert } from "../../settings/common/store/actions";
+import {
+  profileSelector,
+  profileServicePreferencesModeSelector
+} from "../../settings/common/store/selectors";
+import { isServicesPreferenceModeSet } from "../../settings/common/store/utils/guards";
 import ServicesContactComponent from "../../settings/preferences/shared/components/ServicesContactComponent";
-import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
+import { useManualConfigBottomSheet } from "../../settings/preferences/shared/hooks/useManualConfigBottomSheet";
+import { OnboardingParamsList } from "../navigation/params/OnboardingParamsList";
+import { servicesOptinCompleted } from "../store/actions";
 
 export type OnboardingServicesPreferenceScreenNavigationParams = {
   isFirstOnboarding: boolean;
@@ -174,13 +175,6 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
       <IOScrollViewWithLargeHeader
-        title={{
-          label: I18n.t("services.optIn.preferences.title")
-        }}
-        canGoback={false}
-        description={I18n.t("services.optIn.preferences.body")}
-        headerActionsProp={{ showHelp: true }}
-        contextualHelp={emptyContextualHelp}
         actions={{
           type: "SingleButton",
           primary: {
@@ -189,6 +183,13 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
             accessibilityLabel: I18n.t("global.buttons.confirm"),
             disabled: !isServicesPreferenceModeSet(modeSelected)
           }
+        }}
+        canGoback={false}
+        contextualHelp={emptyContextualHelp}
+        description={I18n.t("services.optIn.preferences.body")}
+        headerActionsProp={{ showHelp: true }}
+        title={{
+          label: I18n.t("services.optIn.preferences.title")
         }}
       >
         <ContentWrapper>
@@ -200,8 +201,8 @@ const OnboardingServicesPreferenceScreen = (props: Props): ReactElement => {
           <VSpacer size={16} />
           <Banner
             color="neutral"
-            pictogramName="settings"
             content={I18n.t("services.optIn.preferences.banner")}
+            pictogramName="settings"
           />
         </ContentWrapper>
         {manualConfigBottomSheet}

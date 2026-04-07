@@ -1,10 +1,11 @@
 import { memo } from "react";
+
+import { useIOSelector } from "../../../../../store/hooks";
+import { itwShouldRenderWalletUpgradeMDLDetailsBannerSelector } from "../../../common/store/selectors";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
-import { itwShouldRenderWalletUpgradeMDLDetailsBannerSelector } from "../../../common/store/selectors";
-import { useIOSelector } from "../../../../../store/hooks";
-import { ItwPresentationNewCredentialValidityAlert } from "./ItwPresentationNewCredentialValidityAlert";
 import { ItwPresentationFiscalCode } from "./ItwPresentationFiscalCode.tsx";
+import { ItwPresentationNewCredentialValidityAlert } from "./ItwPresentationNewCredentialValidityAlert";
 import { ItwPresentationWalletUpgradeMDLDetailsBanner } from "./ItwPresentationWalletUpgradeMDLDetailsBanner";
 
 type Props = {
@@ -21,6 +22,12 @@ const ItwPresentationAdditionalInfoSection = ({ credential }: Props) => {
   );
 
   switch (credential.credentialType) {
+    case CredentialType.DRIVING_LICENSE:
+      return (
+        shouldRenderWalletUpgradeMdlBanner && (
+          <ItwPresentationWalletUpgradeMDLDetailsBanner />
+        )
+      );
     case CredentialType.EDUCATION_DEGREE:
     case CredentialType.EDUCATION_ENROLLMENT:
     case CredentialType.RESIDENCY:
@@ -31,12 +38,6 @@ const ItwPresentationAdditionalInfoSection = ({ credential }: Props) => {
       );
     case CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD:
       return <ItwPresentationFiscalCode />;
-    case CredentialType.DRIVING_LICENSE:
-      return (
-        shouldRenderWalletUpgradeMdlBanner && (
-          <ItwPresentationWalletUpgradeMDLDetailsBanner />
-        )
-      );
     default:
       return null;
   }

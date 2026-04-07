@@ -1,14 +1,15 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import * as O from "fp-ts/lib/Option";
 import { testSaga } from "redux-saga-test-plan";
+
+import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { KeyInfo } from "../../../lollipop/utils/crypto";
+import { lollipopRequestInit } from "../../../lollipop/utils/fetch";
+import { messageId_1 } from "../../__mocks__/messages";
 import {
   handleRequestInit,
   testableHandleRequestInitFactory
 } from "../handleRequestInit";
-import { lollipopRequestInit } from "../../../lollipop/utils/fetch";
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
-import { messageId_1 } from "../../__mocks__/messages";
-import { KeyInfo } from "../../../lollipop/utils/crypto";
 
 const apiUrlPrefix = "https://base.url";
 jest.mock("../../../../config", () => ({

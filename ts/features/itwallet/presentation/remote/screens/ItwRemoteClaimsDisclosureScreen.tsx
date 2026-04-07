@@ -7,6 +7,7 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { useIODispatch } from "../../../../../store/hooks.ts";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
@@ -138,16 +139,16 @@ const ContentView = () => {
           </VStack>
           <ItwRemotePresentationDetails />
           <FeatureInfo
-            iconName="fornitori"
             body={I18n.t(
               "features.itWallet.presentation.selectiveDisclosure.disclaimer.0"
             )}
+            iconName="fornitori"
           />
           <FeatureInfo
-            iconName="trashcan"
             body={I18n.t(
               "features.itWallet.presentation.selectiveDisclosure.disclaimer.1"
             )}
+            iconName="trashcan"
           />
           <IOMarkdownLite
             content={I18n.t(

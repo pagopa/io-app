@@ -2,12 +2,13 @@ import { SdJwt } from "@pagopa/io-react-native-wallet";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { MigrationManifest, PersistedState } from "redux-persist";
+
 import { extractVerification } from "../../../common/utils/itwCredentialUtils";
 import { IssuerConfiguration } from "../../../common/utils/itwTypesUtils";
 
-type MigrationState = PersistedState & Record<string, any>;
-
 type AnyRecord = Record<string, any>;
+
+type MigrationState = PersistedState & Record<string, any>;
 
 export const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 8;
 
@@ -72,11 +73,11 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
     const { eid, credentials, ...other } = state;
 
     const credentialsByType = credentials.reduce(
-      (acc: { [type: string]: AnyRecord }, c: O.Option<AnyRecord>) => ({
+      (acc: Record<string, AnyRecord>, c: O.Option<AnyRecord>) => ({
         ...acc,
         ...mapCredential(c)
       }),
-      {} as { [type: string]: AnyRecord }
+      {} as Record<string, AnyRecord>
     );
 
     return {

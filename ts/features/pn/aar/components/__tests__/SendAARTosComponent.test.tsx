@@ -1,5 +1,6 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import * as HOOKS from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
@@ -7,11 +8,11 @@ import * as REMOTE_CONFIG from "../../../../../store/reducers/backendStatus/remo
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import PN_ROUTES from "../../../navigation/routes";
+import * as ANALYTICS from "../../analytics";
 import * as FLOW_MANAGER from "../../hooks/useSendAarFlowManager";
 import * as SELECTORS from "../../store/selectors";
 import { sendAARFlowStates } from "../../utils/stateUtils";
 import { SendAARTosComponent } from "../SendAARTosComponent";
-import * as ANALYTICS from "../../analytics";
 
 const qrCodeMock = "TEST";
 const mockPrivacyUrls = {

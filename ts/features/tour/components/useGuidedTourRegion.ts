@@ -1,13 +1,14 @@
 import { useEffect } from "react";
+
 import { TourItemMeasurement } from "../types";
 import { useTourContext } from "./TourProvider";
 
 type UseGuidedTourRegionConfig = {
+  description: string;
   groupId: string;
   index: number;
-  title: string;
-  description: string;
   region: () => TourItemMeasurement | undefined;
+  title: string;
 };
 
 /**

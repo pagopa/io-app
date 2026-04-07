@@ -10,24 +10,25 @@ import { CommonActions, useNavigation } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
+import I18n from "i18next";
 import { MutableRefObject } from "react";
 import { StyleSheet, View } from "react-native";
-import I18n from "i18next";
+
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { useIOSelector } from "../../../store/hooks";
 import { MessagePaymentItem } from "../../messages/components/MessageDetail/MessagePaymentItem";
 import { MESSAGES_ROUTES } from "../../messages/navigation/routes";
 import { getBadgeTextByPaymentNoticeStatus } from "../../messages/utils/strings";
+import {
+  SendOpeningSource,
+  SendUserType
+} from "../../pushNotifications/analytics";
 import { trackPNShowAllPayments } from "../analytics";
 import PN_ROUTES from "../navigation/routes";
 import { paymentsButtonStateSelector } from "../store/reducers/payments";
 import { canShowMorePaymentsLink } from "../utils";
 import { getRptIdStringFromPayment } from "../utils/rptId";
-import {
-  SendOpeningSource,
-  SendUserType
-} from "../../pushNotifications/analytics";
 
 const styles = StyleSheet.create({
   morePaymentsSkeletonContainer: {
@@ -40,15 +41,15 @@ const styles = StyleSheet.create({
 });
 
 export type MessagePaymentsProps = {
-  messageId: string;
-  isCancelled: boolean;
-  payments: ReadonlyArray<NotificationPaymentInfo> | undefined;
   completedPaymentNoticeCodes: ReadonlyArray<string> | undefined;
+  isCancelled: boolean;
   maxVisiblePaymentCount: number;
+  messageId: string;
+  payments: ReadonlyArray<NotificationPaymentInfo> | undefined;
   presentPaymentsBottomSheetRef: MutableRefObject<(() => void) | undefined>;
-  serviceId: ServiceId;
   sendOpeningSource: SendOpeningSource;
   sendUserType: SendUserType;
+  serviceId: ServiceId;
 };
 
 const readonlyArrayHasNoData = <T,>(maybeArray: ReadonlyArray<T> | undefined) =>
@@ -134,9 +135,9 @@ export const MessagePayments = ({
     return (
       <>
         <ListItemHeader
-          label={I18n.t("features.pn.details.paymentSection.title")}
-          iconName={"productPagoPA"}
           iconColor={pagoPAIconColor}
+          iconName={"productPagoPA"}
+          label={I18n.t("features.pn.details.paymentSection.title")}
         />
         {completedPaymentNoticeCodes &&
           completedPaymentNoticeCodes.map(
@@ -144,8 +145,7 @@ export const MessagePayments = ({
               <View key={`MPN_${index}`}>
                 <VSpacer size={8} />
                 <ModulePaymentNotice
-                  title={I18n.t("features.pn.details.noticeCode")}
-                  subtitle={completedPaymentNoticeCode}
+                  badgeText={getBadgeTextByPaymentNoticeStatus("paid")}
                   onPress={() =>
                     navigation.dispatch(
                       generateNavigationToPaidPaymentScreenAction(
@@ -157,8 +157,9 @@ export const MessagePayments = ({
                   paymentNotice={{
                     status: "paid"
                   }}
-                  badgeText={getBadgeTextByPaymentNoticeStatus("paid")}
+                  subtitle={completedPaymentNoticeCode}
                   testID={"PnCancelledPaymentModulePaymentNotice"}
+                  title={I18n.t("features.pn.details.noticeCode")}
                 />
               </View>
             )
@@ -175,9 +176,9 @@ export const MessagePayments = ({
   return (
     <>
       <ListItemHeader
-        label={I18n.t("features.pn.details.paymentSection.title")}
-        iconName={"productPagoPA"}
         iconColor={pagoPAIconColor}
+        iconName={"productPagoPA"}
+        label={I18n.t("features.pn.details.paymentSection.title")}
       />
       {payments && (
         <>
@@ -185,16 +186,16 @@ export const MessagePayments = ({
             const rptId = getRptIdStringFromPayment(payment);
             return (
               <MessagePaymentItem
-                noSpaceOnTop={index === 0}
                 index={index}
                 isPNPayment
                 key={`PM_${index}`}
                 messageId={messageId}
-                rptId={rptId}
+                noSpaceOnTop={index === 0}
                 noticeNumber={payment.noticeCode}
-                serviceId={serviceId}
+                rptId={rptId}
                 sendOpeningSource={sendOpeningSource}
                 sendUserType={sendUserType}
+                serviceId={serviceId}
               />
             );
           })}
@@ -204,22 +205,22 @@ export const MessagePayments = ({
               {paymentsButtonStatus === "visibleLoading" && (
                 <View style={styles.morePaymentsSkeletonContainer}>
                   <IOSkeleton
-                    shape="rectangle"
-                    width={172}
                     height={16}
                     radius={8}
+                    shape="rectangle"
+                    width={172}
                   />
                 </View>
               )}
               {paymentsButtonStatus === "visibleEnabled" && (
                 <View style={styles.morePaymentsLinkContainer}>
                   <IOButton
-                    variant="link"
                     label={morePaymentsLabel}
                     onPress={() => {
                       trackPNShowAllPayments();
                       presentPaymentsBottomSheetRef.current?.();
                     }}
+                    variant="link"
                   />
                 </View>
               )}

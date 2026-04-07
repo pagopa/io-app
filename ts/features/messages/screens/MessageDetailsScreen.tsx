@@ -1,16 +1,33 @@
-import { useCallback, useEffect, useMemo, useRef } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
 import { ContentWrapper, Icon, VSpacer } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useFocusEffect } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
+import { useCallback, useEffect, useMemo, useRef } from "react";
+import { ScrollView, StyleSheet, View } from "react-native";
+
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { MessagesParamsList } from "../navigation/params";
-import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
+import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
+import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
+import {
+  trackPNOptInMessageCTADisplaySuccess,
+  trackPNOptInMessageOpened
+} from "../../pn/analytics";
+import { extractPNOptInMessageInfoIfAvailable } from "../../pn/utils";
+import { serviceMetadataByIdSelector } from "../../services/details/store/selectors";
+import { MessageDetailsAttachments } from "../components/MessageDetail/MessageDetailsAttachments";
+import { MessageDetailsBody } from "../components/MessageDetail/MessageDetailsBody";
+import { MessageDetailsFooter } from "../components/MessageDetail/MessageDetailsFooter";
+import { MessageDetailsHeader } from "../components/MessageDetail/MessageDetailsHeader";
+import { MessageDetailsPayment } from "../components/MessageDetail/MessageDetailsPayment";
+import { MessageDetailsReminder } from "../components/MessageDetail/MessageDetailsReminder";
+import { MessageDetailsScrollViewAdditionalSpace } from "../components/MessageDetail/MessageDetailsScrollViewAdditionalSpace";
+import { MessageDetailsStickyFooter } from "../components/MessageDetail/MessageDetailsStickyFooter";
+import { RemoteContentBanner } from "../components/MessageDetail/RemoteContentBanner";
+import { MessagesParamsList } from "../navigation/params";
 import {
   cancelPaymentStatusTracking,
   cancelPreviousAttachmentDownload,
@@ -19,31 +36,15 @@ import {
   startPaymentStatusTracking,
   updatePaymentForMessage
 } from "../store/actions";
+import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
 import { getPaginatedMessageById } from "../store/reducers/paginatedById";
+import { userSelectedPaymentRptIdSelector } from "../store/reducers/payments";
 import {
   hasAttachmentsSelector,
   messageMarkdownSelector,
   messageTitleSelector
 } from "../store/reducers/thirdPartyById";
-import { MessageDetailsAttachments } from "../components/MessageDetail/MessageDetailsAttachments";
-import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
-import { MessageDetailsHeader } from "../components/MessageDetail/MessageDetailsHeader";
-import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
 import { getMessageCTAs } from "../utils/ctas";
-import { MessageDetailsReminder } from "../components/MessageDetail/MessageDetailsReminder";
-import { MessageDetailsFooter } from "../components/MessageDetail/MessageDetailsFooter";
-import { MessageDetailsPayment } from "../components/MessageDetail/MessageDetailsPayment";
-import { userSelectedPaymentRptIdSelector } from "../store/reducers/payments";
-import { MessageDetailsStickyFooter } from "../components/MessageDetail/MessageDetailsStickyFooter";
-import { MessageDetailsScrollViewAdditionalSpace } from "../components/MessageDetail/MessageDetailsScrollViewAdditionalSpace";
-import { serviceMetadataByIdSelector } from "../../services/details/store/selectors";
-import { extractPNOptInMessageInfoIfAvailable } from "../../pn/utils";
-import {
-  trackPNOptInMessageCTADisplaySuccess,
-  trackPNOptInMessageOpened
-} from "../../pn/analytics";
-import { RemoteContentBanner } from "../components/MessageDetail/RemoteContentBanner";
-import { MessageDetailsBody } from "../components/MessageDetail/MessageDetailsBody";
 
 const styles = StyleSheet.create({
   scrollContentContainer: {
@@ -155,8 +156,8 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
     return (
       <OperationResultScreenContent
         pictogram={"umbrella"}
-        title={I18n.t("global.genericError")}
         subtitle={I18n.t("messageDetails.submitBugText")}
+        title={I18n.t("global.genericError")}
       />
     );
   }
@@ -169,19 +170,19 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
         <View style={styles.container}>
           <ContentWrapper>
             <MessageDetailsHeader
+              createdAt={message.createdAt}
               messageId={messageId}
               serviceId={serviceId}
               subject={subject}
-              createdAt={message.createdAt}
             >
               {hasAttachments && (
                 <Icon
-                  name="attachment"
                   accessibilityLabel={I18n.t(
                     "messageDetails.accessibilityAttachmentIcon"
                   )}
-                  testID="attachment-tag"
+                  name="attachment"
                   size={16}
+                  testID="attachment-tag"
                 />
               )}
             </MessageDetailsHeader>
@@ -203,9 +204,9 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
             <VSpacer size={16} />
             <MessageDetailsAttachments
               messageId={messageId}
-              serviceId={serviceId}
               sendOpeningSource={"not_set"}
               sendUserType={"not_set"}
+              serviceId={serviceId}
             />
             {hasRemoteContent && <RemoteContentBanner />}
           </ContentWrapper>
@@ -224,9 +225,9 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
         />
       </ScrollView>
       <MessageDetailsStickyFooter
+        ctas={maybeCTAs}
         firstCTAIsPNOptInMessage={pnOptInMessageInfo.cta1LinksToPNService}
         messageId={messageId}
-        ctas={maybeCTAs}
         secondCTAIsPNOptInMessage={pnOptInMessageInfo.cta2LinksToPNService}
         serviceId={serviceId}
       />

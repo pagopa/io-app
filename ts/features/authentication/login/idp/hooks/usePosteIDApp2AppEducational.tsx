@@ -1,16 +1,17 @@
 import { Body, FeatureInfo, VSpacer } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import I18n from "i18next";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { View } from "react-native";
-import I18n from "i18next";
+
 import IOMarkdown from "../../../../../components/IOMarkdown";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { SpidIdp } from "../../../../../utils/idps";
 import { StandardLoginRequestInfo } from "../store/types";
 
 type Props = {
-  selectedIdp?: SpidIdp;
   requestState: StandardLoginRequestInfo["requestState"];
+  selectedIdp?: SpidIdp;
 };
 
 export const usePosteIDApp2AppEducational = ({
@@ -26,7 +27,6 @@ export const usePosteIDApp2AppEducational = ({
         </Body>
         <VSpacer size={24} />
         <FeatureInfo
-          iconName="logout"
           body={
             <IOMarkdown
               content={I18n.t(
@@ -34,10 +34,10 @@ export const usePosteIDApp2AppEducational = ({
               )}
             />
           }
+          iconName="logout"
         />
         <VSpacer size={24} />
         <FeatureInfo
-          iconName="fingerprint"
           body={
             <IOMarkdown
               content={I18n.t(
@@ -45,10 +45,10 @@ export const usePosteIDApp2AppEducational = ({
               )}
             />
           }
+          iconName="fingerprint"
         />
         <VSpacer size={24} />
         <FeatureInfo
-          iconName="change"
           body={
             <IOMarkdown
               content={I18n.t(
@@ -56,6 +56,7 @@ export const usePosteIDApp2AppEducational = ({
               )}
             />
           }
+          iconName="change"
         />
         <VSpacer size={24} />
       </View>

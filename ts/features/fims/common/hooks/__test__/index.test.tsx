@@ -1,7 +1,8 @@
-import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import { ComponentType } from "react";
 import { createStore } from "redux";
+
 import {
   FIMSServiceData,
   testable,
@@ -11,19 +12,19 @@ import {
   useFIMSRemoteServiceConfiguration
 } from "..";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
-import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { appReducer } from "../../../../../store/reducers";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { loadServiceDetail } from "../../../../services/details/store/actions/details";
-import { FIMS_ROUTES } from "../../navigation";
 import { FimsServiceConfiguration } from "../../../../../../definitions/content/FimsServiceConfiguration";
+import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../../navigation/params/AppParamsList";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
+import { loadServiceDetail } from "../../../../services/details/store/actions/details";
+import { FIMS_ROUTES } from "../../navigation";
 
 const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({

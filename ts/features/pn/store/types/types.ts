@@ -2,6 +2,6 @@ import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPa
 import { IOReceivedNotification } from "../../../../../definitions/pn/IOReceivedNotification";
 
 export type PNMessage = IOReceivedNotification & {
-  created_at: Date;
   attachments?: ReadonlyArray<ThirdPartyAttachment>;
+  created_at: Date;
 };

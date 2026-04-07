@@ -3,6 +3,7 @@ import i18n from "i18next";
 import { useCallback, useEffect, useMemo } from "react";
 import { Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import { useIODispatch } from "../../../../store/hooks";
 import { isDefined } from "../../../../utils/guards";
 import {
@@ -23,15 +24,15 @@ import { RecipientInfo, sendAARFlowStates } from "../utils/stateUtils";
 import { useAarGenericErrorBottomSheet } from "./errors/hooks/useAarGenericErrorBottomSheet";
 import { SendAarZendeskSecondLevelTag } from "./errors/hooks/useAarStartSendZendeskSupport";
 
-type ScreenContentProps = Omit<CieCardReadContentProps, "progress">;
-
 export type SendAARCieCardReadingComponentProps = {
+  can: string;
   iun: string;
   mandateId: string;
   recipientInfo: RecipientInfo;
-  can: string;
   verificationCode: string;
 };
+
+type ScreenContentProps = Omit<CieCardReadContentProps, "progress">;
 
 export const SendAARCieCardReadingComponent = ({
   can,
@@ -110,9 +111,7 @@ export const SendAARCieCardReadingComponent = ({
     );
   }, [can, dispatch, iun, mandateId, recipientInfo, verificationCode]);
 
-  const contentMap: {
-    [K in ReadStatus]: ScreenContentProps;
-  } = useMemo(() => {
+  const contentMap: Record<ReadStatus, ScreenContentProps> = useMemo(() => {
     const generateErrorContent = (): ScreenContentProps => {
       switch (errorName) {
         case "TAG_LOST":
@@ -228,8 +227,8 @@ export const SendAARCieCardReadingComponent = ({
       ]}
     >
       <CieCardReadContent
-        progress={progress}
         hiddenProgressBar={isError}
+        progress={progress}
         {...contentMap[readState.status]}
       />
       {bottomSheet}

@@ -1,70 +1,71 @@
-import { fromPromise } from "xstate";
-import * as O from "fp-ts/lib/Option";
 import { ItwVersion, RemotePresentation } from "@pagopa/io-react-native-wallet";
-import {
-  DcqlQuery,
-  EnrichedPresentationDetails,
-  ItwRemoteRequestPayload,
-  RelyingPartyConfiguration
-} from "../utils/itwRemoteTypeUtils";
+import * as O from "fp-ts/lib/Option";
+import { fromPromise } from "xstate";
+
+import { useIOStore } from "../../../../../store/hooks";
+import { assert } from "../../../../../utils/assert";
+import { IO_UNIVERSAL_LINK_PREFIX } from "../../../../../utils/navigation";
+import { sessionTokenSelector } from "../../../../authentication/common/store/selectors";
+import { Env } from "../../../common/utils/environment";
+import { getAttestation } from "../../../common/utils/itwAttestationUtils";
+import { WIA_KEYTAG } from "../../../common/utils/itwCryptoContextUtils";
+import { getIoWallet } from "../../../common/utils/itwIoWallet";
+import { pollForStoreValue } from "../../../common/utils/itwStoreUtils";
 import {
   CredentialFormat,
   RequestObject,
   StoredCredential,
   WalletInstanceAttestations
 } from "../../../common/utils/itwTypesUtils";
-import { Env } from "../../../common/utils/environment";
-import { getAttestation } from "../../../common/utils/itwAttestationUtils";
-import { useIOStore } from "../../../../../store/hooks";
-import {
-  enrichPresentationDetails,
-  getInvalidCredentials
-} from "../utils/itwRemotePresentationUtils";
-import { assert } from "../../../../../utils/assert";
-import { IO_UNIVERSAL_LINK_PREFIX } from "../../../../../utils/navigation";
+import { itwCredentialsAllSelector } from "../../../credentials/store/selectors";
 import {
   itwIntegrityKeyTagSelector,
   itwIntegrityServiceStatusSelector
 } from "../../../issuance/store/selectors";
-import { sessionTokenSelector } from "../../../../authentication/common/store/selectors";
 import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors";
-import { WIA_KEYTAG } from "../../../common/utils/itwCryptoContextUtils";
-import { getIoWallet } from "../../../common/utils/itwIoWallet";
-import { pollForStoreValue } from "../../../common/utils/itwStoreUtils";
-import { itwCredentialsAllSelector } from "../../../credentials/store/selectors";
+import {
+  enrichPresentationDetails,
+  getInvalidCredentials
+} from "../utils/itwRemotePresentationUtils";
+import {
+  DcqlQuery,
+  EnrichedPresentationDetails,
+  ItwRemoteRequestPayload,
+  RelyingPartyConfiguration
+} from "../utils/itwRemoteTypeUtils";
 import { InvalidCredentialsStatusError } from "./failure";
-
-type CredentialsSdJwt = Array<RemotePresentation.Credential4Dcql>;
 
 export type EvaluateRelyingPartyTrustInput = Partial<{
   qrCodePayload: ItwRemoteRequestPayload;
 }>;
+
 export type EvaluateRelyingPartyTrustOutput = {
   rpConf: RelyingPartyConfiguration;
+};
+export type GetPresentationDetailsInput = Partial<{
+  qrCodePayload: ItwRemoteRequestPayload;
+  requestObjectEncodedJwt: string;
+  rpConf: RelyingPartyConfiguration;
+}>;
+export type GetPresentationDetailsOutput = {
+  presentationDetails: EnrichedPresentationDetails;
+  requestObject: RequestObject;
 };
 export type GetRequestObjectInput = Partial<{
   qrCodePayload: ItwRemoteRequestPayload;
 }>;
 export type GetRequestObjectOutput = string;
-export type GetPresentationDetailsInput = Partial<{
-  rpConf: RelyingPartyConfiguration;
-  qrCodePayload: ItwRemoteRequestPayload;
-  requestObjectEncodedJwt: string;
-}>;
-export type GetPresentationDetailsOutput = {
-  requestObject: RequestObject;
-  presentationDetails: EnrichedPresentationDetails;
-};
-
 export type SendAuthorizationResponseInput = {
   optionalCredentials: Set<string>;
-  requestObject?: RequestObject;
   presentationDetails?: EnrichedPresentationDetails;
+  requestObject?: RequestObject;
   rpConf?: RelyingPartyConfiguration;
 };
+
 export type SendAuthorizationResponseOutput = {
   redirectUri?: string; // Optional in cross-device presentation
 };
+type CredentialsSdJwt = Array<RemotePresentation.Credential4Dcql>;
 
 export const createRemoteActorsImplementation = (
   env: Env,
@@ -274,5 +275,5 @@ export const createRemoteActorsImplementation = (
 };
 
 const prepareCredentialsForDcqlEvaluation = (
-  credentials: Array<Pick<StoredCredential, "keyTag" | "credential">>
+  credentials: Array<Pick<StoredCredential, "credential" | "keyTag">>
 ): CredentialsSdJwt => credentials.map(c => [c.keyTag, c.credential]);

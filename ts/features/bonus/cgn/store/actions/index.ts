@@ -1,20 +1,20 @@
 import { CgnActivationActions } from "./activation";
+import { CgnBucketActions } from "./bucket";
+import { CgnCategoriesActions } from "./categories";
 import { CgnDetailsActions } from "./details";
 import { CgnEycaActivationActions } from "./eyca/activation";
 import { CgnEycaStatusActions } from "./eyca/details";
 import { CgnMerchantsAction } from "./merchants";
 import { CgnOtpActions } from "./otp";
-import { CgnBucketActions } from "./bucket";
 import { CgnUnsubscribeActions } from "./unsubscribe";
-import { CgnCategoriesActions } from "./categories";
 
 export type CgnActions =
   | CgnActivationActions
+  | CgnBucketActions
+  | CgnCategoriesActions
   | CgnDetailsActions
   | CgnEycaActivationActions
   | CgnEycaStatusActions
   | CgnMerchantsAction
   | CgnOtpActions
-  | CgnBucketActions
-  | CgnUnsubscribeActions
-  | CgnCategoriesActions;
+  | CgnUnsubscribeActions;

@@ -3,6 +3,12 @@ import * as O from "fp-ts/Option";
 import { SagaIterator } from "redux-saga";
 import { call, fork, put, select, takeLatest } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+
+import {
+  syncItwAnalyticsProperties,
+  updateNfcInfoTrackingProperties,
+  watchItwAnalyticsSaga
+} from "../../analytics/saga";
 import { watchItwCredentialsSaga } from "../../credentials/saga";
 import { checkCredentialsStatusAssertion } from "../../credentials/saga/checkCredentialsStatusAssertion";
 import { handleWalletCredentialsRehydration } from "../../credentials/saga/handleWalletCredentialsRehydration";
@@ -18,11 +24,6 @@ import {
 } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
 import { checkFiscalCodeEnabledSaga } from "../../trialSystem/saga/checkFiscalCodeIsEnabledSaga.ts";
 import {
-  watchItwAnalyticsSaga,
-  syncItwAnalyticsProperties,
-  updateNfcInfoTrackingProperties
-} from "../../analytics/saga";
-import {
   itwFreezeSimplifiedActivationRequirements,
   itwSetAuthLevel,
   itwSetFiscalCodeWhitelisted
@@ -30,6 +31,25 @@ import {
 import { isItwCredential } from "../utils/itwCredentialUtils.ts";
 import { watchItwEnvironment } from "./environment";
 import { watchItwOfflineAccess } from "./offlineAccess.ts";
+
+/**
+ * Watcher for ITW sagas that do not require internet connection or a valid session
+ */
+export function* watchItwOfflineSaga(): SagaIterator {
+  yield* fork(watchItwCredentialsSaga);
+  yield* fork(handleWalletCredentialsRehydration);
+  // Check if the device has the NFC Feature
+  yield* fork(checkHasNfcFeatureSaga);
+  // Handle environment changes
+  yield* fork(watchItwEnvironment);
+  // Handle offline access counter increment and reset
+  yield* fork(watchItwOfflineAccess);
+  // Sync ITW analytics properties
+  yield* fork(syncItwAnalyticsProperties);
+
+  // TODO remove this fork when NFC antenna info tracking is not needed anymore
+  yield* fork(updateNfcInfoTrackingProperties);
+}
 
 export function* watchItwSaga(): SagaIterator {
   yield* takeLatest(
@@ -61,25 +81,6 @@ export function* watchItwSaga(): SagaIterator {
   yield* call(checkWalletInstanceStateSaga);
   yield* call(checkCurrentWalletInstanceStateSaga);
   yield* call(checkCredentialsStatusAssertion);
-}
-
-/**
- * Watcher for ITW sagas that do not require internet connection or a valid session
- */
-export function* watchItwOfflineSaga(): SagaIterator {
-  yield* fork(watchItwCredentialsSaga);
-  yield* fork(handleWalletCredentialsRehydration);
-  // Check if the device has the NFC Feature
-  yield* fork(checkHasNfcFeatureSaga);
-  // Handle environment changes
-  yield* fork(watchItwEnvironment);
-  // Handle offline access counter increment and reset
-  yield* fork(watchItwOfflineAccess);
-  // Sync ITW analytics properties
-  yield* fork(syncItwAnalyticsProperties);
-
-  // TODO remove this fork when NFC antenna info tracking is not needed anymore
-  yield* fork(updateNfcInfoTrackingProperties);
 }
 
 /**

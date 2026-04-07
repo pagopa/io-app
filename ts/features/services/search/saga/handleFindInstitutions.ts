@@ -2,6 +2,7 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
 import { call, delay, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";

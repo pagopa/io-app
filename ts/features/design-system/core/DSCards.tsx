@@ -9,6 +9,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useState } from "react";
 import { Alert, Pressable, ScrollView } from "react-native";
+
 import { CgnCard } from "../../bonus/cgn/components/CgnCard";
 import { IdPayCard } from "../../idpay/wallet/components/IdPayCard";
 import { ItwCredentialCard } from "../../itwallet/common/components/ItwCredentialCard";
@@ -37,9 +38,9 @@ import {
   FeaturedServicesCarouselProps,
   FeaturedServicesCarouselSkeleton
 } from "../../services/home/components/FeaturedServicesCarousel";
-import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DesignSystemSection } from "../components/DesignSystemSection";
+import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 
 const onPress = () => {
   Alert.alert("Alert", "Action triggered");
@@ -172,35 +173,35 @@ const PaymentCards = () => (
       <VStack space={componentMargin}>
         <DSComponentViewerBox name="PaymentCard">
           <ScrollView
+            contentContainerStyle={{
+              paddingHorizontal: IOVisualCostants.appMarginDefault
+            }}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
             style={{
               aspectRatio: 16 / 9,
               marginHorizontal: -IOVisualCostants.appMarginDefault
             }}
-            contentContainerStyle={{
-              paddingHorizontal: IOVisualCostants.appMarginDefault
-            }}
           >
             <HStack space={cardHorizontalScrollGap}>
               <PaymentCard
                 brand="MASTERCARD"
-                hpan="9900"
                 expireDate={validDate}
+                hpan="9900"
               />
               <PaymentCard
-                holderEmail="anna_v********@**hoo.it"
                 expireDate={validDate}
+                holderEmail="anna_v********@**hoo.it"
               />
               <PaymentCard
                 brand="MASTERCARD"
-                hpan="9900"
                 expireDate={expiredDate}
+                hpan="9900"
                 isExpired={true}
               />
               <PaymentCard
-                holderEmail="anna_v********@**hoo.it"
                 expireDate={expiredDate}
+                holderEmail="anna_v********@**hoo.it"
                 isExpired={true}
               />
               <PaymentCard isLoading />
@@ -213,11 +214,11 @@ const PaymentCards = () => (
       <VStack space={componentMargin}>
         <DSComponentViewerBox name="Credit card · Active and expired">
           <HStack space={cardHorizontalScrollGapSmall}>
-            <PaymentCardSmall hpan="9900" brand="maestro" onPress={onPress} />
+            <PaymentCardSmall brand="maestro" hpan="9900" onPress={onPress} />
             <PaymentCardSmall
-              hpan="9900"
               brand="maestro"
               expireDate={new Date(2021, 10)}
+              hpan="9900"
               isExpired
             />
           </HStack>
@@ -225,8 +226,8 @@ const PaymentCards = () => (
         <DSComponentViewerBox name="PagoBANCOMAT · Active and without bankName">
           <HStack space={cardHorizontalScrollGapSmall}>
             <PaymentCardSmall
-              brand="pagoBancomat"
               bankName="Intesa San Paolo"
+              brand="pagoBancomat"
               onPress={onPress}
             />
             <PaymentCardSmall />
@@ -239,8 +240,8 @@ const PaymentCards = () => (
               onPress={onPress}
             />
             <PaymentCardSmall
-              holderEmail="anna_v********@**hoo.it"
               expireDate={new Date(2021, 10)}
+              holderEmail="anna_v********@**hoo.it"
               isExpired={true}
             />
           </HStack>
@@ -268,9 +269,9 @@ const PaymentCards = () => (
               onPress={onPress}
             />
             <PaymentCardSmall
+              expireDate={new Date(2021, 10)}
               holderName="Anna Verdi"
               holderPhone="+39 340 *** **62"
-              expireDate={new Date(2021, 10)}
               isExpired
             />
           </HStack>
@@ -290,12 +291,12 @@ const BonusCards = () => (
   <VStack space={blockMargin}>
     <DesignSystemSection title="IdPayCard">
       <IdPayCard
-        name="18 app"
         amount={9999}
         avatarSource={{
           uri: "https://vtlogo.com/wp-content/uploads/2021/08/18app-vector-logo.png"
         }}
         expireDate={new Date()}
+        name="18 app"
       />
     </DesignSystemSection>
     <DesignSystemSection title="CgnCard">
@@ -350,38 +351,38 @@ const ItwCards = () => (
         </DSComponentViewerBox>
         <DSComponentViewerBox name="Invalid">
           <ItwCredentialCard
-            credentialType={CredentialType.DRIVING_LICENSE}
             credentialStatus="invalid"
+            credentialType={CredentialType.DRIVING_LICENSE}
           />
         </DSComponentViewerBox>
         <DSComponentViewerBox name="Expired">
           <ItwCredentialCard
-            credentialType={CredentialType.DRIVING_LICENSE}
             credentialStatus="expired"
+            credentialType={CredentialType.DRIVING_LICENSE}
           />
         </DSComponentViewerBox>
         <DSComponentViewerBox name="Expiring">
           <ItwCredentialCard
-            credentialType={CredentialType.DRIVING_LICENSE}
             credentialStatus="expiring"
+            credentialType={CredentialType.DRIVING_LICENSE}
           />
         </DSComponentViewerBox>
         <DSComponentViewerBox name="Expired Digital Credential">
           <ItwCredentialCard
-            credentialType={CredentialType.DRIVING_LICENSE}
             credentialStatus="jwtExpired"
+            credentialType={CredentialType.DRIVING_LICENSE}
           />
         </DSComponentViewerBox>
         <DSComponentViewerBox name="Expiring Digital Credential">
           <ItwCredentialCard
-            credentialType={CredentialType.DRIVING_LICENSE}
             credentialStatus="jwtExpiring"
+            credentialType={CredentialType.DRIVING_LICENSE}
           />
         </DSComponentViewerBox>
         <DSComponentViewerBox name="Unknown Status">
           <ItwCredentialCard
-            credentialType={CredentialType.DRIVING_LICENSE}
             credentialStatus="unknown"
+            credentialType={CredentialType.DRIVING_LICENSE}
           />
         </DSComponentViewerBox>
       </VStack>
@@ -406,20 +407,20 @@ const ItwCards = () => (
         </DSComponentViewerBox>
         <DSComponentViewerBox name="Expired">
           <ItwCredentialCard
-            credentialType={CredentialType.EUROPEAN_DISABILITY_CARD}
             credentialStatus="expired"
+            credentialType={CredentialType.EUROPEAN_DISABILITY_CARD}
           />
         </DSComponentViewerBox>
         <DSComponentViewerBox name="Expiring">
           <ItwCredentialCard
-            credentialType={CredentialType.EUROPEAN_DISABILITY_CARD}
             credentialStatus="expiring"
+            credentialType={CredentialType.EUROPEAN_DISABILITY_CARD}
           />
         </DSComponentViewerBox>
         <DSComponentViewerBox name="Unknown Status">
           <ItwCredentialCard
-            credentialType={CredentialType.EUROPEAN_DISABILITY_CARD}
             credentialStatus="unknown"
+            credentialType={CredentialType.EUROPEAN_DISABILITY_CARD}
           />
         </DSComponentViewerBox>
       </VStack>
@@ -444,20 +445,20 @@ const ItwCards = () => (
         </DSComponentViewerBox>
         <DSComponentViewerBox name="Expired">
           <ItwCredentialCard
-            credentialType={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
             credentialStatus="expired"
+            credentialType={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
           />
         </DSComponentViewerBox>
         <DSComponentViewerBox name="Expiring">
           <ItwCredentialCard
-            credentialType={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
             credentialStatus="expiring"
+            credentialType={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
           />
         </DSComponentViewerBox>
         <DSComponentViewerBox name="Unknown Status">
           <ItwCredentialCard
-            credentialType={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
             credentialStatus="unknown"
+            credentialType={CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD}
           />
         </DSComponentViewerBox>
       </VStack>
@@ -497,9 +498,9 @@ const ItwSkeumorphicCardPreview = (props: ItwSkeumorphicCardProps) => {
   const [isFlipped, setIsFlipped] = useState(false);
   return (
     <Pressable
-      onPress={() => setIsFlipped(!isFlipped)}
-      accessibilityRole="button"
       accessibilityLabel="Flip card"
+      accessibilityRole="button"
+      onPress={() => setIsFlipped(!isFlipped)}
     >
       <ItwSkeumorphicCard {...props} isFlipped={isFlipped} />
     </Pressable>
@@ -512,16 +513,16 @@ export const DSCards = () => {
   const [page, setPage] = useState(0);
 
   return (
-    <DesignSystemScreen title={"Cards"} noMargin={true}>
+    <DesignSystemScreen noMargin={true} title={"Cards"}>
       <TabNavigation
-        tabAlignment="start"
-        selectedIndex={page}
         onItemPress={setPage}
+        selectedIndex={page}
+        tabAlignment="start"
       >
-        <TabItem label="Payments" accessibilityLabel="Payments" />
-        <TabItem label="Bonus" accessibilityLabel="Bonus" />
-        <TabItem label="Services" accessibilityLabel="Services" />
-        <TabItem label="Documenti" accessibilityLabel="Documenti" />
+        <TabItem accessibilityLabel="Payments" label="Payments" />
+        <TabItem accessibilityLabel="Bonus" label="Bonus" />
+        <TabItem accessibilityLabel="Services" label="Services" />
+        <TabItem accessibilityLabel="Documenti" label="Documenti" />
       </TabNavigation>
       <VSpacer size={24} />
       <ContentWrapper>

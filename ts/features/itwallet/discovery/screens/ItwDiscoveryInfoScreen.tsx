@@ -9,9 +9,9 @@ import { ItwDiscoveryInfoLegacyComponent } from "../components/ItwDiscoveryInfoL
 import { ItwNfcNotSupportedComponent } from "../components/ItwNfcNotSupportedComponent.tsx";
 
 export type ItwDiscoveryInfoScreenNavigationParams = {
-  level?: EidIssuanceLevel;
   animationEnabled?: boolean;
   credentialType?: string;
+  level?: EidIssuanceLevel;
 };
 
 export type ItwDiscoveryInfoScreenProps = IOStackNavigationRouteProps<

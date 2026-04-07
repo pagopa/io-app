@@ -1,4 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+
 import { PaymentInfoResponse } from "../../../../../../definitions/backend/PaymentInfoResponse";
 import { Detail_v2Enum } from "../../../../../../definitions/backend/PaymentProblemJson";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
@@ -13,10 +14,10 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { CTA } from "../../../../../types/LocalizedCTAs";
 import * as analytics from "../../../analytics";
 import {
+  MessagePaymentError,
   toGenericMessagePaymentError,
   toSpecificMessagePaymentError,
-  toTimeoutMessagePaymentError,
-  MessagePaymentError
+  toTimeoutMessagePaymentError
 } from "../../../types/paymentErrors";
 import {
   computeAndTrackCTAPressAnalytics,

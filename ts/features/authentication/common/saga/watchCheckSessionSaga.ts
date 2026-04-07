@@ -5,17 +5,18 @@ import * as O from "fp-ts/lib/Option";
 import { SagaIterator } from "redux-saga";
 import { call, put, select, takeLatest } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
+
 import { GetSessionStateT } from "../../../../../definitions/session_manager/requestTypes";
 import { BackendClient } from "../../../../api/backend";
+import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";
+import { isTestEnv } from "../../../../utils/environment";
+import { convertUnknownToError } from "../../../../utils/errors";
+import { getOnlyNotAlreadyExistentValues } from "../../../zendesk/utils";
+import { handleSessionExpiredSaga } from "../../fastLogin/saga/utils";
 import {
   checkCurrentSession,
   sessionInformationLoadSuccess
 } from "../store/actions";
-import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";
-import { isTestEnv } from "../../../../utils/environment";
-import { convertUnknownToError } from "../../../../utils/errors";
-import { handleSessionExpiredSaga } from "../../fastLogin/saga/utils";
-import { getOnlyNotAlreadyExistentValues } from "../../../zendesk/utils";
 import { sessionInfoSelector } from "../store/selectors";
 
 export function* checkSession(

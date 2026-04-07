@@ -1,80 +1,27 @@
 import { call, race, select, take, takeLatest } from "typed-redux-saga/macro";
+
 import { apiUrlPrefix } from "../../../../config";
+import { isAarInAppDelegationRemoteEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isTestEnv } from "../../../../utils/environment";
 import { KeyInfo } from "../../../lollipop/utils/crypto";
-import { SendAARClient, createSendAARClientWithLollipop } from "../api/client";
+import { createSendAARClientWithLollipop, SendAARClient } from "../api/client";
 import {
+  initiateAarFlow,
   setAarFlowState,
   terminateAarFlow,
-  initiateAarFlow,
-  testAarCreateMandate,
-  testAarAcceptMandate
+  testAarAcceptMandate,
+  testAarCreateMandate
 } from "../store/actions";
-import { isAarInAppDelegationRemoteEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { sendAARFlowStates } from "../utils/stateUtils";
-import { initiateAarFlowSaga } from "./initiateAarFlowSaga";
+import { createAarMandateSaga } from "./createAarMandateSaga";
 import { fetchAarDataSaga } from "./fetchNotificationDataSaga";
 import { fetchAARQrCodeSaga } from "./fetchQrCodeSaga";
-import { validateMandateSaga } from "./validateMandateSaga";
+import { initiateAarFlowSaga } from "./initiateAarFlowSaga";
 import {
   testAarAcceptMandateSaga,
   testAarCreateMandateSaga
 } from "./testSendNisMrtdSaga";
-import { createAarMandateSaga } from "./createAarMandateSaga";
-
-function* aarFlowMasterSaga(
-  sendAARClient: SendAARClient,
-  sessionToken: string,
-  action: ReturnType<typeof setAarFlowState>
-) {
-  const nextState = action.payload;
-
-  switch (nextState.type) {
-    case sendAARFlowStates.fetchingQRData:
-      yield* call(
-        fetchAARQrCodeSaga,
-        sendAARClient.aarQRCodeCheck,
-        sessionToken,
-        action
-      );
-      break;
-    case sendAARFlowStates.fetchingNotificationData:
-      yield* call(
-        fetchAarDataSaga,
-        sendAARClient.getAARNotification,
-        sessionToken,
-        action
-      );
-      break;
-    case sendAARFlowStates.creatingMandate:
-      yield* call(
-        createAarMandateSaga,
-        sendAARClient.createAARMandate,
-        sessionToken,
-        action
-      );
-      break;
-    case sendAARFlowStates.validatingMandate:
-      yield* call(
-        validateMandateSaga,
-        sendAARClient.acceptAARMandate,
-        sessionToken,
-        action
-      );
-      break;
-  }
-}
-
-function* raceWithTerminateFlow(
-  sendAARClient: SendAARClient,
-  sessionToken: string,
-  action: ReturnType<typeof setAarFlowState>
-) {
-  yield* race({
-    task: call(aarFlowMasterSaga, sendAARClient, sessionToken, action),
-    cancel: take(terminateAarFlow)
-  });
-}
+import { validateMandateSaga } from "./validateMandateSaga";
 
 export function* watchAarFlowSaga(sessionToken: string, keyInfo: KeyInfo) {
   const sendAARClient = yield* call(
@@ -107,6 +54,60 @@ export function* watchAarFlowSaga(sessionToken: string, keyInfo: KeyInfo) {
       sessionToken
     );
   }
+}
+
+function* aarFlowMasterSaga(
+  sendAARClient: SendAARClient,
+  sessionToken: string,
+  action: ReturnType<typeof setAarFlowState>
+) {
+  const nextState = action.payload;
+
+  switch (nextState.type) {
+    case sendAARFlowStates.creatingMandate:
+      yield* call(
+        createAarMandateSaga,
+        sendAARClient.createAARMandate,
+        sessionToken,
+        action
+      );
+      break;
+    case sendAARFlowStates.fetchingNotificationData:
+      yield* call(
+        fetchAarDataSaga,
+        sendAARClient.getAARNotification,
+        sessionToken,
+        action
+      );
+      break;
+    case sendAARFlowStates.fetchingQRData:
+      yield* call(
+        fetchAARQrCodeSaga,
+        sendAARClient.aarQRCodeCheck,
+        sessionToken,
+        action
+      );
+      break;
+    case sendAARFlowStates.validatingMandate:
+      yield* call(
+        validateMandateSaga,
+        sendAARClient.acceptAARMandate,
+        sessionToken,
+        action
+      );
+      break;
+  }
+}
+
+function* raceWithTerminateFlow(
+  sendAARClient: SendAARClient,
+  sessionToken: string,
+  action: ReturnType<typeof setAarFlowState>
+) {
+  yield* race({
+    task: call(aarFlowMasterSaga, sendAARClient, sessionToken, action),
+    cancel: take(terminateAarFlow)
+  });
 }
 export const testable = isTestEnv
   ? {

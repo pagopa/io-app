@@ -1,17 +1,18 @@
 import { Body, FeatureInfo, VSpacer } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import I18n from "i18next";
 import { useCallback, useMemo, useRef } from "react";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import I18n from "i18next";
+
 import IOMarkdown from "../../../../../../components/IOMarkdown";
+import { useIOSelector } from "../../../../../../store/hooks";
+import { generateDynamicUrlSelector } from "../../../../../../store/reducers/backendStatus/remoteConfig";
+import { IO_SUPPLIERS_URL_BODY } from "../../../../../../urls";
 import { setAccessibilityFocus } from "../../../../../../utils/accessibility";
 import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../../../utils/url";
 import { TrackingInfo } from "../../../../common/analytics/mixpanel/mixpanelAnalytics";
-import { useIOSelector } from "../../../../../../store/hooks";
-import { generateDynamicUrlSelector } from "../../../../../../store/reducers/backendStatus/remoteConfig";
-import { IO_SUPPLIERS_URL_BODY } from "../../../../../../urls";
 
 export type FeatureProps = {
   trackAction: (info: TrackingInfo) => void;
@@ -25,7 +26,6 @@ const MarkdownBody = () => {
 
   return (
     <View
-      accessible
       // Necessary because `IOMarkdown` does not handle accessibility properly at the moment
       accessibilityLabel={
         I18n.t("profile.main.privacy.shareData.whyBottomSheet.body").replace(
@@ -33,11 +33,12 @@ const MarkdownBody = () => {
           ""
         ) // It removes all '*' characters associated with Markdown syntax.
       }
+      accessible
     >
       <VSpacer size={16} />
       <View
-        accessible={false}
         accessibilityElementsHidden
+        accessible={false}
         importantForAccessibility="no-hide-descendants"
       >
         <IOMarkdown
@@ -86,12 +87,12 @@ const AnalyticsFeatureInfo = ({ trackAction }: FeatureProps) => {
   return (
     <>
       <FeatureInfo
-        iconName="analytics"
-        body={analyticsBody}
         action={{
           label: I18n.t("profile.main.privacy.shareData.screen.why.cta"),
           onPress: handleOnPress
         }}
+        body={analyticsBody}
+        iconName="analytics"
       />
       {bottomSheet}
     </>
@@ -106,7 +107,10 @@ const SecurityFeatureInfo = ({ trackAction }: FeatureProps) => {
 
   return (
     <FeatureInfo
-      iconName="locked"
+      action={{
+        label: I18n.t("profile.main.privacy.shareData.screen.security.cta"),
+        onPress: handleOnPress
+      }}
       body={
         <Body>
           {I18n.t(
@@ -122,10 +126,7 @@ const SecurityFeatureInfo = ({ trackAction }: FeatureProps) => {
           )}
         </Body>
       }
-      action={{
-        label: I18n.t("profile.main.privacy.shareData.screen.security.cta"),
-        onPress: handleOnPress
-      }}
+      iconName="locked"
     />
   );
 };
@@ -141,7 +142,10 @@ const GDPRFeatureInfo = ({ trackAction }: FeatureProps) => {
 
   return (
     <FeatureInfo
-      iconName="security"
+      action={{
+        label: I18n.t("profile.main.privacy.shareData.screen.gdpr.cta"),
+        onPress: handleOnPress
+      }}
       body={
         <Body>
           {I18n.t("profile.main.privacy.shareData.screen.gdpr.description.one")}
@@ -152,10 +156,7 @@ const GDPRFeatureInfo = ({ trackAction }: FeatureProps) => {
           </Body>
         </Body>
       }
-      action={{
-        label: I18n.t("profile.main.privacy.shareData.screen.gdpr.cta"),
-        onPress: handleOnPress
-      }}
+      iconName="security"
     />
   );
 };

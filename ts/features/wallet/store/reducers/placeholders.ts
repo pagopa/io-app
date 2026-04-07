@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
+
 import { Action } from "../../../../store/actions/types";
 import { WalletCard, WalletCardCategory } from "../../types";
 import { walletAddCards, walletRemoveCards } from "../actions/cards";
@@ -9,11 +10,11 @@ import {
   walletToggleLoadingState
 } from "../actions/placeholders";
 
-export type WalletPlaceholders = { [key: string]: WalletCardCategory };
+export type WalletPlaceholders = Record<string, WalletCardCategory>;
 
 export type WalletPlaceholdersState = {
-  items: WalletPlaceholders;
   isLoading: boolean;
+  items: WalletPlaceholders;
 };
 
 const INITIAL_STATE: WalletPlaceholdersState = {
@@ -26,12 +27,6 @@ const reducer = (
   action: Action
 ): WalletPlaceholdersState => {
   switch (action.type) {
-    case getType(walletToggleLoadingState):
-      return {
-        ...state,
-        isLoading: action.payload
-      };
-
     case getType(walletAddCards):
       return {
         ...state,
@@ -52,6 +47,12 @@ const reducer = (
       return {
         ...state,
         items: action.payload.reduce(cardPlaceholderReducerFn, {})
+      };
+
+    case getType(walletToggleLoadingState):
+      return {
+        ...state,
+        isLoading: action.payload
       };
   }
   return state;

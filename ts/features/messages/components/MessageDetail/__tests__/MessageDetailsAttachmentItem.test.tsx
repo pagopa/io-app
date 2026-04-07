@@ -1,16 +1,17 @@
 import { createStore } from "redux";
+
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import { downloadAttachment } from "../../../store/actions";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { MessageDetailsAttachmentItem } from "../MessageDetailsAttachmentItem";
-import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
-import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import {
   SendOpeningSource,
   SendUserType
 } from "../../../../pushNotifications/analytics";
+import { MESSAGES_ROUTES } from "../../../navigation/routes";
+import { downloadAttachment } from "../../../store/actions";
+import { MessageDetailsAttachmentItem } from "../MessageDetailsAttachmentItem";
 
 const messageId = "01HNWXJG52YS359GWSYSRK2BWC";
 const serviceId = "01HNWXKWAGWPHV7VGMQ21EZPSA" as ServiceId;
@@ -104,9 +105,9 @@ const renderScreen = (
         bottomSpacer={bottomSpacer}
         disabled={disabled}
         messageId={messageId}
-        serviceId={serviceId}
         sendOpeningSource={sendOpeningSource}
         sendUserType={sendUserType}
+        serviceId={serviceId}
       />
     ),
     MESSAGES_ROUTES.MESSAGE_DETAIL,

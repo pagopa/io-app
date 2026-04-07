@@ -19,6 +19,7 @@ import { useCallback, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Pdf, { PdfRef } from "react-native-pdf";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import { ExistingSignatureFieldAttrs } from "../../../../definitions/fci/ExistingSignatureFieldAttrs";
 import { SignatureFieldToBeCreatedAttrs } from "../../../../definitions/fci/SignatureFieldToBeCreatedAttrs";
 import { ButtonBlockProps } from "../../../components/ui/utils/buttons";
@@ -109,11 +110,9 @@ const DocumentWithSignature = (props: Props) => {
        * onPageChanged, which is called to report that the first page
        * has loaded */
       <Pdf
-        ref={pdfRef}
-        source={{
-          uri: document
-        }}
-        page={page}
+        enablePaging
+        // TODO: add test for errors https://pagopa.atlassian.net/browse/SFEQS-1606
+        onError={props.onError}
         onLoadComplete={(numberOfPages, _) => {
           setTotalPages(numberOfPages);
         }}
@@ -123,10 +122,12 @@ const DocumentWithSignature = (props: Props) => {
           }
           setCurrentPage(internalPage);
         }}
-        // TODO: add test for errors https://pagopa.atlassian.net/browse/SFEQS-1606
-        onError={props.onError}
         onPressLink={constNull}
-        enablePaging
+        page={page}
+        ref={pdfRef}
+        source={{
+          uri: document
+        }}
         style={styles.pdf}
       />
     ),
@@ -197,19 +198,19 @@ const DocumentWithSignature = (props: Props) => {
 
   return (
     <SafeAreaView
+      edges={["top", "left", "right"]}
       style={{
         flex: 1,
         backgroundColor: IOColors[theme["appBackground-primary"]]
       }}
       testID={"FciDocumentsScreenTestID"}
-      edges={["top", "left", "right"]}
     >
       <ContentWrapper style={{ alignItems: "center", flexDirection: "row" }}>
         <HSpacer />
         <H5 style={styles.headerTitle}>{I18n.t("messagePDFPreview.title")}</H5>
         <IconButton
-          color="neutral"
           accessibilityLabel={I18n.t("global.buttons.close")}
+          color="neutral"
           icon="closeLarge"
           onPress={props.onClose}
           testID="FciDocumentWithSignatureTopRightButtonTestID"
@@ -217,7 +218,13 @@ const DocumentWithSignature = (props: Props) => {
       </ContentWrapper>
       <VSpacer />
       <DocumentsNavigationBar
+        disabled={false}
+        iconLeftDisabled={currentPage === 1}
+        iconRightDisabled={currentPage === totalPages}
         indicatorPosition={"right"}
+        onNext={onNext}
+        onPrevious={onPrevious}
+        testID={"FciDocumentsNavBarTestID"}
         titleLeft={I18n.t("features.fci.documentsBar.titleLeft", {
           currentDoc: currentDoc + 1,
           totalDocs: documents.length
@@ -226,12 +233,6 @@ const DocumentWithSignature = (props: Props) => {
           currentPage,
           totalPages
         })}
-        iconLeftDisabled={currentPage === 1}
-        iconRightDisabled={currentPage === totalPages}
-        onPrevious={onPrevious}
-        onNext={onNext}
-        disabled={false}
-        testID={"FciDocumentsNavBarTestID"}
       />
       <View
         style={{
@@ -245,11 +246,11 @@ const DocumentWithSignature = (props: Props) => {
         <RenderMask />
       </View>
       <FooterActions
-        onMeasure={handleFooterActionsMeasurements}
         actions={{
           type: "SingleButton",
           primary: continueButtonProps
         }}
+        onMeasure={handleFooterActionsMeasurements}
       />
     </SafeAreaView>
   );

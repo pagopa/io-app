@@ -11,17 +11,18 @@ import * as E from "fp-ts/lib/Either";
 import { identity, pipe } from "fp-ts/lib/function";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
-import { fimsTokenSelector } from "../../../authentication/common/store/selectors";
+
+import { Consent } from "../../../../../definitions/fims_sso/Consent";
+import { OIDCError } from "../../../../../definitions/fims_sso/OIDCError";
 import { oidcProviderDomainSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { preferredLanguageSelector } from "../../../../store/reducers/persistedPreferences";
+import { fimsTokenSelector } from "../../../authentication/common/store/selectors";
+import { preferredLanguageToString } from "../../common/utils";
 import {
   fimsGetConsentsListAction,
   fimsSignAndRetrieveInAppBrowserUrlAction
 } from "../store/actions";
-import { Consent } from "../../../../../definitions/fims_sso/Consent";
-import { OIDCError } from "../../../../../definitions/fims_sso/OIDCError";
 import { FimsErrorStateType } from "../store/reducers";
-import { preferredLanguageSelector } from "../../../../store/reducers/persistedPreferences";
-import { preferredLanguageToString } from "../../common/utils";
 import {
   computeAndTrackAuthenticationError,
   deallocateFimsAndRenewFastLoginSession,

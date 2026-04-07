@@ -1,6 +1,7 @@
+import * as Sentry from "@sentry/react-native";
 import * as Keychain from "react-native-keychain";
 import { Storage } from "redux-persist";
-import * as Sentry from "@sentry/react-native";
+
 import { setGenericPasswordWithDefaultAccessibleOption } from "../../utils/keychain";
 
 /**
@@ -20,8 +21,8 @@ export let removeKeychainError: string | undefined;
 
 type SentryExceptionType =
   | "KEY_CHAIN_GET_GENERIC_PASSWORD_FAILURE"
-  | "KEY_CHAIN_SET_GENERIC_PASSWORD_FAILURE"
-  | "KEY_CHAIN_REMOVE_GENERIC_PASSWORD_FAILURE";
+  | "KEY_CHAIN_REMOVE_GENERIC_PASSWORD_FAILURE"
+  | "KEY_CHAIN_SET_GENERIC_PASSWORD_FAILURE";
 
 const trackExceptionOnSentry = (type: SentryExceptionType, err: unknown) => {
   const { code, message } = err as { code?: string; message?: string };

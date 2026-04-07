@@ -1,15 +1,20 @@
 import { generate } from "@pagopa/io-react-native-crypto";
+import { type CryptoContext } from "@pagopa/io-react-native-jwt";
 import {
   createCryptoContextFor,
   type ItwVersion
 } from "@pagopa/io-react-native-wallet";
 import { v4 as uuidv4 } from "uuid";
-import { type CryptoContext } from "@pagopa/io-react-native-jwt";
+
+import { Env } from "./environment";
+import { extractVerification } from "./itwCredentialUtils";
 import {
   DPOP_KEYTAG,
   regenerateCryptoKey,
   WIA_KEYTAG
 } from "./itwCryptoContextUtils";
+import { enrichErrorWithMetadata } from "./itwFailureUtils";
+import { getIoWallet } from "./itwIoWallet";
 import {
   CredentialAccessToken,
   CredentialFormat,
@@ -17,17 +22,13 @@ import {
   RequestObject,
   StoredCredential
 } from "./itwTypesUtils";
-import { extractVerification } from "./itwCredentialUtils";
-import { Env } from "./environment";
-import { enrichErrorWithMetadata } from "./itwFailureUtils";
-import { getIoWallet } from "./itwIoWallet";
 
 export type RequestCredentialParams = {
+  credentialType: string;
   env: Env;
   itwVersion: ItwVersion;
-  credentialType: string;
-  walletInstanceAttestation: string;
   skipMdocIssuance: boolean;
+  walletInstanceAttestation: string;
 };
 
 /**
@@ -96,15 +97,15 @@ export const requestCredential = async ({
 };
 
 export type ObtainCredentialParams = {
-  env: Env;
-  itwVersion: ItwVersion;
-  credentialType: string;
-  walletInstanceAttestation: string;
-  requestedCredential: RequestObject;
-  pid: StoredCredential;
   clientId: string;
   codeVerifier: string;
+  credentialType: string;
+  env: Env;
   issuerConf: IssuerConfiguration;
+  itwVersion: ItwVersion;
+  pid: StoredCredential;
+  requestedCredential: RequestObject;
+  walletInstanceAttestation: string;
 };
 
 /**
@@ -222,14 +223,14 @@ const getCredentialConfigurationIds = (
 };
 
 type RequestAndParseCredentialParams = {
-  issuerConf: IssuerConfiguration;
-  credentialType: string;
   accessToken: CredentialAccessToken;
   authDetails: CredentialAccessToken["authorization_details"][number];
   clientId: string;
-  env: Env;
-  itwVersion: ItwVersion;
+  credentialType: string;
   dPopCryptoContext: CryptoContext;
+  env: Env;
+  issuerConf: IssuerConfiguration;
+  itwVersion: ItwVersion;
 };
 
 const requestAndParseCredential = async ({

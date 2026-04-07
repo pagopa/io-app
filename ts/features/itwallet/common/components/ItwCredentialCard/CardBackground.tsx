@@ -16,12 +16,13 @@ import Animated, {
   useSharedValue,
   withTiming
 } from "react-native-reanimated";
+
 import { CredentialType } from "../../utils/itwMocksUtils";
 import { CardColorScheme } from "./types";
 
 type ItwCredentialCardBackgroundProps = {
-  credentialType: string;
   colorScheme: CardColorScheme;
+  credentialType: string;
 };
 
 export const CardBackground = ({
@@ -49,16 +50,16 @@ export const CardBackground = ({
 
   return (
     <View
-      style={[
-        StyleSheet.absoluteFillObject,
-        { backgroundColor: IOColors.white }
-      ]}
       onLayout={event => {
         setSize({
           width: event.nativeEvent.layout.width,
           height: event.nativeEvent.layout.height
         });
       }}
+      style={[
+        StyleSheet.absoluteFillObject,
+        { backgroundColor: IOColors.white }
+      ]}
     >
       <Animated.View
         style={[
@@ -70,11 +71,11 @@ export const CardBackground = ({
       <Canvas style={{ flex: 1 }}>
         {image ? (
           <Image
-            image={image}
             fit="fill"
-            width={size.width}
             height={size.height}
+            image={image}
             opacity={colorScheme === "default" ? 1 : 0.4}
+            width={size.width}
           >
             {colorScheme === "greyscale" && (
               <BlendColor color="white" mode="color" />
@@ -82,21 +83,21 @@ export const CardBackground = ({
           </Image>
         ) : (
           <RoundedRect
-            x={0}
-            y={0}
-            width={size.width}
             height={size.height}
             r={16}
+            width={size.width}
+            x={0}
+            y={0}
           >
             <LinearGradient
-              start={vec(0, 0)}
-              end={vec(size.width, size.height)}
               colors={
                 credentialGradientColors[credentialType] ?? [
                   IOColors["grey-100"],
                   IOColors["grey-200"]
                 ]
               }
+              end={vec(size.width, size.height)}
+              start={vec(0, 0)}
             />
           </RoundedRect>
         )}
@@ -105,17 +106,13 @@ export const CardBackground = ({
   );
 };
 
-const credentialCardBackgrounds: {
-  [type: string]: string;
-} = {
+const credentialCardBackgrounds: Record<string, string> = {
   [CredentialType.EUROPEAN_DISABILITY_CARD]: require("../../../../../../img/features/itWallet/cards/dc.png"),
   [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: require("../../../../../../img/features/itWallet/cards/ts.png"),
   [CredentialType.DRIVING_LICENSE]: require("../../../../../../img/features/itWallet/cards/mdl.png")
 };
 
-export const credentialGradientColors: {
-  [type: string]: Array<string>;
-} = {
+export const credentialGradientColors: Record<string, Array<string>> = {
   [CredentialType.EDUCATION_DEGREE]: ["#F2F1CE", "#ECECEC"],
   [CredentialType.EDUCATION_ENROLLMENT]: ["#E0F2CE", "#ECECEC"],
   [CredentialType.RESIDENCY]: ["#F2E4CE", "#ECECEC"]

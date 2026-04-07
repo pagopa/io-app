@@ -1,23 +1,23 @@
 import { useEffect } from "react";
 
-import { RemoteFailure, RemoteFailureType } from "../machine/failure";
-import {
-  trackItwRemoteIdentityNeedsVerification,
-  trackItwRemoteMandatoryCredentialMissing,
-  trackItwRemoteInvalidMandatoryCredential,
-  trackItwRemoteRPGenericFailure,
-  trackItwRemoteRPInvalidAuthResponse,
-  trackItwRemoteRequestObjectFailure,
-  trackItwRemoteUnexpectedFailure,
-  trackItwRemoteUntrustedRP,
-  trackItwUpgradeL3Mandatory
-} from "../analytics";
-import { ItwL3UpgradeTrigger } from "../analytics/utils/types";
-import { getOrderedCredential } from "../analytics/utils";
 import {
   serializeFailureReason,
   shouldSerializeReason
 } from "../../../common/utils/itwStoreUtils";
+import {
+  trackItwRemoteIdentityNeedsVerification,
+  trackItwRemoteInvalidMandatoryCredential,
+  trackItwRemoteMandatoryCredentialMissing,
+  trackItwRemoteRequestObjectFailure,
+  trackItwRemoteRPGenericFailure,
+  trackItwRemoteRPInvalidAuthResponse,
+  trackItwRemoteUnexpectedFailure,
+  trackItwRemoteUntrustedRP,
+  trackItwUpgradeL3Mandatory
+} from "../analytics";
+import { getOrderedCredential } from "../analytics/utils";
+import { ItwL3UpgradeTrigger } from "../analytics/utils/types";
+import { RemoteFailure, RemoteFailureType } from "../machine/failure";
 
 type Params = {
   failure: RemoteFailure;
@@ -35,14 +35,17 @@ export const useItwRemoteEventsTracking = ({ failure }: Params) => {
   useEffect(() => {
     const serializedFailure = serializeFailureReason(failure);
     switch (failure.type) {
-      case RemoteFailureType.WALLET_INACTIVE:
-        return trackItwUpgradeL3Mandatory(ItwL3UpgradeTrigger.REMOTE_QR_CODE);
-
       case RemoteFailureType.EID_EXPIRED:
         return trackItwRemoteIdentityNeedsVerification();
 
-      case RemoteFailureType.UNTRUSTED_RP:
-        return trackItwRemoteUntrustedRP();
+      case RemoteFailureType.INVALID_CREDENTIALS_STATUS: {
+        const { invalidCredentials } = failure.reason;
+        const { credential, count } = extractTrackingData(invalidCredentials);
+        return trackItwRemoteInvalidMandatoryCredential({
+          not_valid_credential: credential,
+          not_valid_credential_number: count
+        });
+      }
 
       case RemoteFailureType.INVALID_REQUEST_OBJECT:
         return trackItwRemoteRequestObjectFailure(serializedFailure);
@@ -56,15 +59,6 @@ export const useItwRemoteEventsTracking = ({ failure }: Params) => {
         });
       }
 
-      case RemoteFailureType.INVALID_CREDENTIALS_STATUS: {
-        const { invalidCredentials } = failure.reason;
-        const { credential, count } = extractTrackingData(invalidCredentials);
-        return trackItwRemoteInvalidMandatoryCredential({
-          not_valid_credential: credential,
-          not_valid_credential_number: count
-        });
-      }
-
       case RemoteFailureType.RELYING_PARTY_GENERIC:
         return trackItwRemoteRPGenericFailure(serializedFailure);
 
@@ -75,6 +69,12 @@ export const useItwRemoteEventsTracking = ({ failure }: Params) => {
         return trackItwRemoteUnexpectedFailure(
           shouldSerializeReason(failure) ? serializedFailure : failure
         );
+
+      case RemoteFailureType.UNTRUSTED_RP:
+        return trackItwRemoteUntrustedRP();
+
+      case RemoteFailureType.WALLET_INACTIVE:
+        return trackItwUpgradeL3Mandatory(ItwL3UpgradeTrigger.REMOTE_QR_CODE);
     }
   }, [failure]);
 };

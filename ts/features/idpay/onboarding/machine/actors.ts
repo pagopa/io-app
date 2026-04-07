@@ -1,9 +1,10 @@
 /* eslint-disable no-underscore-dangle */
-import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
-import { pipe } from "fp-ts/lib/function";
-import { fromPromise } from "xstate";
 import { TransientError } from "@pagopa/ts-commons/lib/tasks";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import { fromPromise } from "xstate";
+
 import { PreferredLanguage } from "../../../../../definitions/backend/PreferredLanguage";
 import { InitiativeDataDTO } from "../../../../../definitions/idpay/InitiativeDataDTO";
 import { CodeEnum as OnboardingErrorCodeEnum } from "../../../../../definitions/idpay/OnboardingErrorDTO";
@@ -113,11 +114,11 @@ export const createActorsImplementation = (
                   failure => Promise.reject(failure)
                 )
               );
+            case 401:
+              return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
             case 404:
               // Initiative not yet started by the citizen
               return Promise.resolve(O.none);
-            case 401:
-              return Promise.reject(OnboardingFailureEnum.SESSION_EXPIRED);
             case 429:
               return Promise.reject(
                 OnboardingFailureEnum.ONBOARDING_TOO_MANY_REQUESTS
@@ -254,17 +255,17 @@ const mapOnboardingStatusToFailure = (
   status: OnboardingStatusEnum
 ): OnboardingFailure | undefined => {
   switch (status) {
-    case OnboardingStatusEnum.ONBOARDING_OK:
-    case OnboardingStatusEnum.SUSPENDED:
-      return OnboardingFailureEnum.ONBOARDING_ALREADY_ONBOARDED;
     case OnboardingStatusEnum.ELIGIBLE_KO:
       return OnboardingFailureEnum.NOT_ELIGIBLE;
     case OnboardingStatusEnum.ON_EVALUATION:
       return OnboardingFailureEnum.ONBOARDING_ON_EVALUATION;
-    case OnboardingStatusEnum.UNSUBSCRIBED:
-      return OnboardingFailureEnum.ONBOARDING_USER_UNSUBSCRIBED;
     case OnboardingStatusEnum.ONBOARDING_KO:
       return OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR;
+    case OnboardingStatusEnum.ONBOARDING_OK:
+    case OnboardingStatusEnum.SUSPENDED:
+      return OnboardingFailureEnum.ONBOARDING_ALREADY_ONBOARDED;
+    case OnboardingStatusEnum.UNSUBSCRIBED:
+      return OnboardingFailureEnum.ONBOARDING_USER_UNSUBSCRIBED;
     default:
       return undefined;
   }
@@ -279,30 +280,30 @@ const mapErrorCodeToFailure = (
   code: OnboardingErrorCodeEnum
 ): OnboardingFailure => {
   switch (code) {
+    case OnboardingErrorCodeEnum.ONBOARDING_ALREADY_ONBOARDED:
+      return OnboardingFailureEnum.ONBOARDING_ALREADY_ONBOARDED;
+    case OnboardingErrorCodeEnum.ONBOARDING_BUDGET_EXHAUSTED:
+      return OnboardingFailureEnum.ONBOARDING_BUDGET_EXHAUSTED;
+    case OnboardingErrorCodeEnum.ONBOARDING_FAMILY_UNIT_ALREADY_JOINED:
+      return OnboardingFailureEnum.ONBOARDING_FAMILY_UNIT_ALREADY_JOINED;
+    case OnboardingErrorCodeEnum.ONBOARDING_INITIATIVE_ENDED:
+      return OnboardingFailureEnum.ONBOARDING_INITIATIVE_ENDED;
     case OnboardingErrorCodeEnum.ONBOARDING_INITIATIVE_NOT_FOUND:
       return OnboardingFailureEnum.ONBOARDING_INITIATIVE_NOT_FOUND;
+    case OnboardingErrorCodeEnum.ONBOARDING_INITIATIVE_NOT_STARTED:
+      return OnboardingFailureEnum.ONBOARDING_INITIATIVE_NOT_STARTED;
+    case OnboardingErrorCodeEnum.ONBOARDING_ON_EVALUATION:
+      return OnboardingFailureEnum.ONBOARDING_ON_EVALUATION;
+    case OnboardingErrorCodeEnum.ONBOARDING_TOO_MANY_REQUESTS:
+      return OnboardingFailureEnum.ONBOARDING_TOO_MANY_REQUESTS;
     case OnboardingErrorCodeEnum.ONBOARDING_UNSATISFIED_REQUIREMENTS:
       return OnboardingFailureEnum.ONBOARDING_UNSATISFIED_REQUIREMENTS;
     case OnboardingErrorCodeEnum.ONBOARDING_USER_NOT_IN_WHITELIST:
       return OnboardingFailureEnum.ONBOARDING_USER_NOT_IN_WHITELIST;
-    case OnboardingErrorCodeEnum.ONBOARDING_INITIATIVE_NOT_STARTED:
-      return OnboardingFailureEnum.ONBOARDING_INITIATIVE_NOT_STARTED;
-    case OnboardingErrorCodeEnum.ONBOARDING_INITIATIVE_ENDED:
-      return OnboardingFailureEnum.ONBOARDING_INITIATIVE_ENDED;
-    case OnboardingErrorCodeEnum.ONBOARDING_BUDGET_EXHAUSTED:
-      return OnboardingFailureEnum.ONBOARDING_BUDGET_EXHAUSTED;
     case OnboardingErrorCodeEnum.ONBOARDING_USER_UNSUBSCRIBED:
       return OnboardingFailureEnum.ONBOARDING_USER_UNSUBSCRIBED;
-    case OnboardingErrorCodeEnum.ONBOARDING_FAMILY_UNIT_ALREADY_JOINED:
-      return OnboardingFailureEnum.ONBOARDING_FAMILY_UNIT_ALREADY_JOINED;
     case OnboardingErrorCodeEnum.ONBOARDING_WAITING_LIST:
       return OnboardingFailureEnum.ONBOARDING_WAITING_LIST;
-    case OnboardingErrorCodeEnum.ONBOARDING_TOO_MANY_REQUESTS:
-      return OnboardingFailureEnum.ONBOARDING_TOO_MANY_REQUESTS;
-    case OnboardingErrorCodeEnum.ONBOARDING_ALREADY_ONBOARDED:
-      return OnboardingFailureEnum.ONBOARDING_ALREADY_ONBOARDED;
-    case OnboardingErrorCodeEnum.ONBOARDING_ON_EVALUATION:
-      return OnboardingFailureEnum.ONBOARDING_ON_EVALUATION;
     default:
       return OnboardingFailureEnum.ONBOARDING_GENERIC_ERROR;
   }

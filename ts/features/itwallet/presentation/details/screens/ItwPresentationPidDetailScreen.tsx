@@ -5,8 +5,8 @@ import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { useCallback } from "react";
 import { useWindowDimensions, View } from "react-native";
+
 import { useIOSelector } from "../../../../../store/hooks";
-import { trackCredentialDetail } from "../analytics";
 import { mapPIDStatusToMixpanel } from "../../../analytics/utils";
 import {
   ItwBrandedSkiaGradient,
@@ -21,6 +21,7 @@ import {
   itwCredentialsEidSelector,
   itwCredentialsEidStatusSelector
 } from "../../../credentials/store/selectors";
+import { trackCredentialDetail } from "../analytics";
 import { ItwPresentationDetailsScreenBase } from "../components/ItwPresentationDetailsScreenBase";
 import { ItwPresentationPidDetail } from "../components/ItwPresentationPidDetail";
 import { ItwPresentationPidDetailFooter } from "../components/ItwPresentationPidDetailFooter";
@@ -51,7 +52,7 @@ export const ItwPresentationPidDetailScreen = () => {
 
       {/* Page content */}
       <ContentWrapper>
-        <VStack style={{ paddingVertical: 16 }} space={16}>
+        <VStack space={16} style={{ paddingVertical: 16 }}>
           <ItwPresentationPidDetail credential={credential} />
           <ItwPresentationPidDetailFooter credential={credential} />
           <View style={{ alignItems: "center" }}>
@@ -81,9 +82,9 @@ const PidStatusGradient = () => {
   return (
     <Canvas style={{ width, height: 3 }}>
       <ItwBrandedSkiaGradient
-        width={width}
         height={3}
         variant={borderVariantByPidStatus[pidStatus || "valid"]}
+        width={width}
       />
     </Canvas>
   );

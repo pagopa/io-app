@@ -5,6 +5,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { PropsWithChildren } from "react";
 import { StatusBar } from "react-native";
+
 import { useStatusAlertProps } from "../../hooks/useStatusAlertProps";
 
 type StatusMessagesProps = PropsWithChildren;
@@ -26,7 +27,6 @@ export const StatusMessages = ({ children }: StatusMessagesProps) => {
     <AlertEdgeToEdgeWrapper alertProps={statusAlert?.alertProps}>
       {statusAlert && (
         <StatusBar
-          barStyle="dark-content"
           backgroundColor={
             IOColors[
               mapStatusBarVariantStates[
@@ -34,6 +34,7 @@ export const StatusMessages = ({ children }: StatusMessagesProps) => {
               ]
             ]
           }
+          barStyle="dark-content"
         />
       )}
       {children}

@@ -12,13 +12,16 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
 import { useEffect, useMemo, useState } from "react";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import I18n from "i18next";
+
 import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { cgnMerchantsModalSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
+import { getListItemAccessibilityLabelCount } from "../../../../../utils/accessibility";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { CgnMerchantListSkeleton } from "../../components/merchants/CgnMerchantListSkeleton";
 import { CgnDetailsParamsList } from "../../navigation/params";
@@ -26,8 +29,6 @@ import CGN_ROUTES from "../../navigation/routes";
 import { cgnCategories } from "../../store/actions/categories";
 import { cgnCategoriesListSelector } from "../../store/reducers/categories";
 import { getCategorySpecs } from "../../utils/filters";
-import { getListItemAccessibilityLabelCount } from "../../../../../utils/accessibility";
-import { cgnMerchantsModalSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 
 export const CgnMerchantCategoriesListScreen = () => {
   const theme = useIOTheme();
@@ -102,7 +103,18 @@ export const CgnMerchantCategoriesListScreen = () => {
 
           return (
             <ListItemNav
+              accessibilityLabel={accessibilityLabel}
+              icon={s.icon}
+              iconColor={theme["icon-decorative"]}
               key={category.productCategory}
+              onPress={() => {
+                navigation.navigate(
+                  CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY,
+                  {
+                    category: s.type
+                  }
+                );
+              }}
               value={
                 countAvailable ? (
                   <View
@@ -123,17 +135,6 @@ export const CgnMerchantCategoriesListScreen = () => {
                   I18n.t(s.nameKey)
                 )
               }
-              accessibilityLabel={accessibilityLabel}
-              onPress={() => {
-                navigation.navigate(
-                  CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY,
-                  {
-                    category: s.type
-                  }
-                );
-              }}
-              iconColor={theme["icon-decorative"]}
-              icon={s.icon}
             />
           );
         }
@@ -158,19 +159,19 @@ export const CgnMerchantCategoriesListScreen = () => {
       <>
         <Divider />
         <ListItemAction
-          onPress={present}
           accessibilityLabel={I18n.t(
             "bonus.cgn.merchantsList.categoriesList.bottomSheet.cta"
           )}
           label={I18n.t(
             "bonus.cgn.merchantsList.categoriesList.bottomSheet.cta"
           )}
+          onPress={present}
           variant="primary"
         />
         {bottomSheet}
       </>
     ) : undefined,
     ListEmptyComponent: undefined,
-    skeleton: <CgnMerchantListSkeleton hasIcons count={10} />
+    skeleton: <CgnMerchantListSkeleton count={10} hasIcons />
   };
 };

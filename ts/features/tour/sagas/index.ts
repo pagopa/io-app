@@ -1,11 +1,16 @@
 import { put, select, takeEvery } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
+
 import { completeTourAction, nextTourStepAction } from "../store/actions";
 import {
   activeGroupIdSelector,
   activeStepIndexSelector,
   tourItemsForActiveGroupSelector
 } from "../store/selectors";
+
+export function* watchTourSaga() {
+  yield* takeEvery(getType(nextTourStepAction), handleNextStep);
+}
 
 function* handleNextStep() {
   const groupId = yield* select(activeGroupIdSelector);
@@ -15,8 +20,4 @@ function* handleNextStep() {
   if (groupId && stepIndex >= items.length) {
     yield* put(completeTourAction({ groupId }));
   }
-}
-
-export function* watchTourSaga() {
-  yield* takeEvery(getType(nextTourStepAction), handleNextStep);
 }

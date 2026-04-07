@@ -1,5 +1,6 @@
 import configureMockStore from "redux-mock-store";
 import { createActor } from "xstate";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";

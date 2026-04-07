@@ -1,12 +1,13 @@
 import { ActionArgs, DoneActorEvent } from "xstate";
+
 import { useIOStore } from "../../../../store/hooks";
 import {
   itwCredentialsRemoveByType,
   itwCredentialsStore
 } from "../../credentials/store/actions";
+import { UpgradeCredentialOutput } from "./actors";
 import { Context } from "./context";
 import { CredentialUpgradeEvents } from "./events";
-import { UpgradeCredentialOutput } from "./actors";
 
 export const createCredentialUpgradeActionsImplementation = (
   store: ReturnType<typeof useIOStore>

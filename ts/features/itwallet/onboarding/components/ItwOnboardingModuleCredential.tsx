@@ -1,22 +1,23 @@
 import { Badge, IOIcons, ModuleCredential } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { memo, useMemo } from "react";
-import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
+
 import { useIOSelector } from "../../../../store/hooks";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
+import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
+import { CredentialType } from "../../common/utils/itwMocksUtils";
 
 type Props = {
-  type: string;
-  onPress: (type: string) => void;
-  showIcon?: boolean;
   isActive?: boolean;
-  isDisabled?: boolean;
   isCredentialIssuancePending?: boolean;
+  isDisabled?: boolean;
+  isNew?: boolean;
   isRequested?: boolean;
   isSelectedCredential?: boolean;
   isUpcoming?: boolean;
-  isNew?: boolean;
+  onPress: (type: string) => void;
+  showIcon?: boolean;
+  type: string;
 };
 
 const credentialIconByType: Record<string, IOIcons> = {
@@ -61,10 +62,10 @@ const newBadge: Badge = {
 const getBadge = (args: {
   isActive?: boolean;
   isDisabled?: boolean;
+  isL3Enabled: boolean;
+  isNew?: boolean;
   isRequested?: boolean;
   isUpcoming?: boolean;
-  isNew?: boolean;
-  isL3Enabled: boolean;
 }): Badge | undefined => {
   const { isActive, isDisabled, isRequested, isUpcoming, isNew, isL3Enabled } =
     args;

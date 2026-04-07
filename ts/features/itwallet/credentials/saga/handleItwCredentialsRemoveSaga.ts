@@ -1,6 +1,7 @@
 import { deleteKey } from "@pagopa/io-react-native-crypto";
 import * as Sentry from "@sentry/react-native";
-import { call, put, select, all } from "typed-redux-saga/macro";
+import { all, call, put, select } from "typed-redux-saga/macro";
+
 import { walletRemoveCards } from "../../../wallet/store/actions/cards";
 import {
   itwCredentialsRemove,

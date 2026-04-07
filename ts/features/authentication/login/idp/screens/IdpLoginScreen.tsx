@@ -1,6 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
+import _isEqual from "lodash/isEqual";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { Linking, StyleSheet, View } from "react-native";
 import { WebView } from "react-native-webview";
@@ -9,53 +11,52 @@ import {
   WebViewHttpErrorEvent,
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
-import _isEqual from "lodash/isEqual";
-import I18n from "i18next";
+
 import { IdpData } from "../../../../../../definitions/content/IdpData";
-import { IdpSuccessfulAuthentication } from "../../../common/components/IdpSuccessfulAuthentication";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { LoadingIndicator } from "../../../../../components/ui/LoadingIndicator";
 import { apiUrlPrefix } from "../../../../../config";
-import { useLollipopLoginSource } from "../../../../lollipop/hooks/useLollipopLoginSource";
 import {
   HeaderSecondLevelHookProps,
   useHeaderSecondLevel
 } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import {
-  idpLoginUrlChanged,
-  loginFailure,
-  loginSuccess
-} from "../../../common/store/actions";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import {
-  loggedInAuthSelector,
-  loggedOutWithIdpAuthSelector,
-  selectedIdentityProviderSelector
-} from "../../../common/store/selectors";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { idpContextualHelpDataFromIdSelector } from "../../../../../store/reducers/content";
 import { trackSpidLoginError } from "../../../../../utils/analytics";
 import { emptyContextualHelp } from "../../../../../utils/contextualHelp";
 import {
-  getIdpLoginUri,
-  getIntentFallbackUrl,
-  onLoginUriChanged
-} from "../../../common/utils/login";
-import { getSpidErrorCodeDescription } from "../utils/spidErrorCode";
-import {
   assistanceToolRemoteConfig,
   handleSendAssistanceLog
 } from "../../../../../utils/supportAssistance";
 import { getUrlBasepath } from "../../../../../utils/url";
-import { standardLoginRequestInfoSelector } from "../store/selectors";
-import { setStandardLoginRequestState } from "../store/actions";
-import { ErrorType as SpidLoginErrorType } from "../store/types";
+import { useLollipopLoginSource } from "../../../../lollipop/hooks/useLollipopLoginSource";
+import { trackSpidLoginIntent } from "../../../activeSessionLogin/screens/analytics";
+import { remoteApiLoginUrlPrefixSelector } from "../../../activeSessionLogin/store/selectors";
+import { IdpSuccessfulAuthentication } from "../../../common/components/IdpSuccessfulAuthentication";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import {
+  idpLoginUrlChanged,
+  loginFailure,
+  loginSuccess
+} from "../../../common/store/actions";
+import {
+  loggedInAuthSelector,
+  loggedOutWithIdpAuthSelector,
+  selectedIdentityProviderSelector
+} from "../../../common/store/selectors";
+import {
+  getIdpLoginUri,
+  getIntentFallbackUrl,
+  onLoginUriChanged
+} from "../../../common/utils/login";
 import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
 import { usePosteIDApp2AppEducational } from "../hooks/usePosteIDApp2AppEducational";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
-import { remoteApiLoginUrlPrefixSelector } from "../../../activeSessionLogin/store/selectors";
-import { trackSpidLoginIntent } from "../../../activeSessionLogin/screens/analytics";
+import { setStandardLoginRequestState } from "../store/actions";
+import { standardLoginRequestInfoSelector } from "../store/selectors";
+import { ErrorType as SpidLoginErrorType } from "../store/types";
+import { getSpidErrorCodeDescription } from "../utils/spidErrorCode";
 
 const styles = StyleSheet.create({
   refreshIndicatorContainer: {
@@ -322,18 +323,18 @@ const IdpLoginScreen = () => {
   const content = useMemo(
     () => (
       <WebView
-        testID="webview-idp-login-screen"
-        cacheEnabled={false}
         androidCameraAccessDisabled
         androidMicrophoneAccessDisabled
+        cacheEnabled={false}
         javaScriptEnabled
-        textZoom={100}
-        originWhitelist={originSchemasWhiteList}
-        source={webviewSource}
         onError={handleLoadingError}
         onHttpError={handleLoadingError}
         onNavigationStateChange={handleNavigationStateChange}
         onShouldStartLoadWithRequest={handleShouldStartLoading}
+        originWhitelist={originSchemasWhiteList}
+        source={webviewSource}
+        testID="webview-idp-login-screen"
+        textZoom={100}
       />
     ),
     [

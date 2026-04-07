@@ -1,10 +1,11 @@
+import type { VerifierRequest } from "../itwProximityTypeUtils";
+
+import { StoredCredential } from "../../../../common/utils/itwTypesUtils";
 import { UntrustedRpError } from "../itwProximityErrors";
 import {
   generateAcceptedFields,
   getProximityDetails
 } from "../itwProximityPresentationUtils";
-import type { VerifierRequest } from "../itwProximityTypeUtils";
-import { StoredCredential } from "../../../../common/utils/itwTypesUtils";
 
 const mockDocType = "org.iso.18013.5.1.mDL";
 const mockCredential: StoredCredential = {

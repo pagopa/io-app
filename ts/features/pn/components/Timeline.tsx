@@ -1,6 +1,26 @@
+import { Caption, H6, IOColors, VSpacer } from "@pagopa/io-app-design-system";
 import { PropsWithChildren } from "react";
 import { StyleSheet, View } from "react-native";
-import { Caption, H6, IOColors, VSpacer } from "@pagopa/io-app-design-system";
+
+export type TimelineItemProps = {
+  day: string;
+  description: string;
+  month: string;
+  status: TimelineStatus;
+  time: string;
+};
+
+export type TimelineProps = {
+  data: ReadonlyArray<TimelineItemProps>;
+  footerHeight: number;
+};
+
+export type TimelineStatus =
+  | "cancelled"
+  | "default"
+  | "effective"
+  | "unreachable"
+  | "viewed";
 
 type ColorStates = {
   background: string;
@@ -9,26 +29,6 @@ type ColorStates = {
 type Position = {
   isFirst: boolean;
   isLast: boolean;
-};
-
-export type TimelineStatus =
-  | "default"
-  | "viewed"
-  | "unreachable"
-  | "effective"
-  | "cancelled";
-
-export type TimelineItemProps = {
-  day: string;
-  description: string;
-  month: string;
-  time: string;
-  status: TimelineStatus;
-};
-
-export type TimelineProps = {
-  data: ReadonlyArray<TimelineItemProps>;
-  footerHeight: number;
 };
 
 const styles = StyleSheet.create({
@@ -144,7 +144,7 @@ const TimelineItem = ({
   month,
   time,
   ...rest
-}: TimelineItemProps & Position) => (
+}: Position & TimelineItemProps) => (
   <View accessible={true} style={styles.item}>
     <TimelineOppositeContent day={day} month={month} />
     <TimelineSeparator {...rest}>

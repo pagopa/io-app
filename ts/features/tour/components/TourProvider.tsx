@@ -13,6 +13,7 @@ import Animated, {
   useAnimatedRef,
   useSharedValue
 } from "react-native-reanimated";
+
 import { useIODispatch } from "../../../store/hooks";
 import {
   registerTourItemAction,
@@ -21,57 +22,29 @@ import {
 import { TourItemMeasurement } from "../types";
 import { TourOverlay } from "./TourOverlay";
 
-type TourItemConfig = {
-  ref?: AnimatedRef<Animated.View>;
-  regionProvider?: () => TourItemMeasurement | undefined;
-  title: string;
-  description: string;
-};
-
 type ScrollRef = {
+  headerHeight: number;
   scrollViewRef: AnimatedRef<Animated.ScrollView>;
   scrollY: SharedValue<number>;
-  headerHeight: number;
 };
 
 type TourContextValue = {
-  registerItem: (
+  cutoutH: SharedValue<number>;
+  cutoutW: SharedValue<number>;
+  /** Shared values driving the cutout and tooltip position. */
+  cutoutX: SharedValue<number>;
+  cutoutY: SharedValue<number>;
+  getConfig: (
     groupId: string,
-    index: number,
-    viewRef: AnimatedRef<Animated.View>,
-    config: { title: string; description: string }
-  ) => void;
-  unregisterItem: (groupId: string, index: number) => void;
-  registerRegion: (
-    groupId: string,
-    index: number,
-    regionProvider: () => TourItemMeasurement | undefined,
-    config: { title: string; description: string }
-  ) => void;
-  unregisterRegion: (groupId: string, index: number) => void;
+    index: number
+  ) => undefined | { description: string; title: string; };
   getMeasurement: (
     groupId: string,
     index: number
   ) => TourItemMeasurement | undefined;
-  getConfig: (
-    groupId: string,
-    index: number
-  ) => { title: string; description: string } | undefined;
+  getScrollRef: (groupId: string) => ScrollRef | undefined;
   /** Returns true if the item is region-based (no ref tracking needed). */
   isRegionItem: (groupId: string, index: number) => boolean;
-  registerScrollRef: (
-    groupId: string,
-    ref: AnimatedRef<Animated.ScrollView>,
-    scrollY: SharedValue<number>,
-    headerHeight: number
-  ) => void;
-  unregisterScrollRef: (groupId: string) => void;
-  getScrollRef: (groupId: string) => ScrollRef | undefined;
-  /** Shared values driving the cutout and tooltip position. */
-  cutoutX: SharedValue<number>;
-  cutoutY: SharedValue<number>;
-  cutoutW: SharedValue<number>;
-  cutoutH: SharedValue<number>;
   /**
    * When true, the active GuidedTour component continuously tracks its
    * position via useFrameCallback. Set to false during step transitions.
@@ -79,6 +52,34 @@ type TourContextValue = {
   isTracking: SharedValue<boolean>;
   /** Animated ref for the overlay container, used for coordinate conversion. */
   overlayAnimatedRef: AnimatedRef<Animated.View>;
+  registerItem: (
+    groupId: string,
+    index: number,
+    viewRef: AnimatedRef<Animated.View>,
+    config: { description: string; title: string; }
+  ) => void;
+  registerRegion: (
+    groupId: string,
+    index: number,
+    regionProvider: () => TourItemMeasurement | undefined,
+    config: { description: string; title: string; }
+  ) => void;
+  registerScrollRef: (
+    groupId: string,
+    ref: AnimatedRef<Animated.ScrollView>,
+    scrollY: SharedValue<number>,
+    headerHeight: number
+  ) => void;
+  unregisterItem: (groupId: string, index: number) => void;
+  unregisterRegion: (groupId: string, index: number) => void;
+  unregisterScrollRef: (groupId: string) => void;
+};
+
+type TourItemConfig = {
+  description: string;
+  ref?: AnimatedRef<Animated.View>;
+  regionProvider?: () => TourItemMeasurement | undefined;
+  title: string;
 };
 
 const TourContext = createContext<TourContextValue | undefined>(undefined);
@@ -110,7 +111,7 @@ export const TourProvider = ({ children }: PropsWithChildren) => {
       groupId: string,
       index: number,
       viewRef: AnimatedRef<Animated.View>,
-      config: { title: string; description: string }
+      config: { description: string; title: string; }
     ) => {
       dispatch(registerTourItemAction({ groupId, index }));
       itemsRef.current.set(makeKey(groupId, index), {
@@ -135,7 +136,7 @@ export const TourProvider = ({ children }: PropsWithChildren) => {
       groupId: string,
       index: number,
       regionProvider: () => TourItemMeasurement | undefined,
-      config: { title: string; description: string }
+      config: { description: string; title: string; }
     ) => {
       dispatch(registerTourItemAction({ groupId, index }));
       itemsRef.current.set(makeKey(groupId, index), {

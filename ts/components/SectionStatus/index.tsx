@@ -1,3 +1,5 @@
+import { Alert } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import {
   ComponentProps,
   RefObject,
@@ -5,11 +7,11 @@ import {
   useEffect,
   useRef
 } from "react";
-
 import { View } from "react-native";
-import { Alert } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
+
 import { LevelEnum } from "../../../definitions/content/SectionStatus";
+import { useIONavigation } from "../../navigation/params/AppParamsList";
+import { useIOSelector } from "../../store/hooks";
 import {
   isSectionVisibleSelector,
   levelForSectionSelector,
@@ -19,12 +21,10 @@ import {
 } from "../../store/reducers/backendStatus/sectionStatus";
 import { getFullLocale } from "../../utils/locale";
 import { openWebUrl } from "../../utils/url";
-import { useIOSelector } from "../../store/hooks";
-import { useIONavigation } from "../../navigation/params/AppParamsList";
 
 type Props = {
+  onSectionRef?: (ref: RefObject<null | View>) => void;
   sectionKey: SectionStatusKey;
-  onSectionRef?: (ref: RefObject<View | null>) => void;
 };
 
 const statusVariantMap: Record<
@@ -85,13 +85,13 @@ const SectionStatusComponent = ({ sectionKey, onSectionRef }: Props) => {
 
   return (
     <Alert
-      testID={testId}
-      fullWidth
-      content={content}
-      variant={variant}
       action={action}
+      content={content}
+      fullWidth
       onPress={onPressCallback}
       ref={viewRef}
+      testID={testId}
+      variant={variant}
     />
   );
 };

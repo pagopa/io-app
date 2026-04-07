@@ -1,33 +1,34 @@
 import { generate } from "@pagopa/io-react-native-crypto";
+import { type CryptoContext } from "@pagopa/io-react-native-jwt";
 import {
   AuthorizationDetail,
   createCryptoContextFor,
   ItwVersion
 } from "@pagopa/io-react-native-wallet";
-import { type CryptoContext } from "@pagopa/io-react-native-jwt";
 import { v4 as uuidv4 } from "uuid";
+
 import { type IdentificationContext } from "../../machine/eid/context";
-import {
-  CredentialAccessToken,
-  IssuerConfiguration,
-  StoredCredential
-} from "./itwTypesUtils";
+import { Env } from "./environment";
+import { extractVerification } from "./itwCredentialUtils";
 import {
   DPOP_KEYTAG,
   regenerateCryptoKey,
   WIA_KEYTAG
 } from "./itwCryptoContextUtils";
-import { extractVerification } from "./itwCredentialUtils";
-import { Env } from "./environment";
 import { getIoWallet } from "./itwIoWallet";
+import {
+  CredentialAccessToken,
+  IssuerConfiguration,
+  StoredCredential
+} from "./itwTypesUtils";
 
 const CREDENTIAL_TYPE = "PersonIdentificationData";
 
 type StartAuthFlowParams = {
   env: Env;
+  identification: IdentificationContext;
   itwVersion: ItwVersion;
   walletAttestation: string;
-  identification: IdentificationContext;
   withMRTDPoP: boolean;
 };
 
@@ -94,12 +95,12 @@ const startAuthFlow = async ({
 
 export type CompleteAuthFlowParams = {
   callbackUrl: string;
-  itwVersion: ItwVersion;
-  issuerConf: IssuerConfiguration;
   clientId: string;
   codeVerifier: string;
-  walletAttestation: string;
+  issuerConf: IssuerConfiguration;
+  itwVersion: ItwVersion;
   redirectUri: string;
+  walletAttestation: string;
 };
 
 export type CompleteAuthFlowResult = Awaited<
@@ -148,12 +149,12 @@ const completeAuthFlow = async ({
 };
 
 export type PidIssuanceParams = {
-  itwVersion: ItwVersion;
-  issuerConf: IssuerConfiguration;
   accessToken: CredentialAccessToken;
   clientId: string;
-  dPoPContext: CryptoContext;
   credentialDefinition: AuthorizationDetail;
+  dPoPContext: CryptoContext;
+  issuerConf: IssuerConfiguration;
+  itwVersion: ItwVersion;
 };
 
 /**
@@ -216,7 +217,7 @@ const getPid = async ({
   };
 };
 
-export { startAuthFlow, completeAuthFlow, getPid };
+export { completeAuthFlow, getPid, startAuthFlow };
 
 /**
  * This function extracts the first credential identifier from the access token. The token might contain
@@ -268,7 +269,7 @@ const CIE_HINT_PROD =
 /**
  * Object of the SPID IDP IDs and the corresponding production hint URLs.
  */
-const SPID_IDP_HINTS: { [key: string]: string } = {
+const SPID_IDP_HINTS: Record<string, string> = {
   arubaid: "https://loginspid.aruba.it",
   ehtid: "https://id.eht.eu",
   infocamereid: "https://loginspid.infocamere.it",

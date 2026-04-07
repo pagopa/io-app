@@ -1,13 +1,13 @@
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { buildEventProperties } from "../../../../../utils/analytics";
 import {
-  trackLoginCiePinScreen,
-  trackLoginCiePinInfo,
   trackLoginCieCardReaderScreen,
+  trackLoginCieCardReadingError,
   trackLoginCieCardReadingSuccess,
   trackLoginCieConsentDataUsageScreen,
-  trackLoginCieCardReadingError,
-  trackLoginCieDataSharingError
+  trackLoginCieDataSharingError,
+  trackLoginCiePinInfo,
+  trackLoginCiePinScreen
 } from "../cieAnalytics";
 
 jest.mock("../../../../../mixpanel", () => ({

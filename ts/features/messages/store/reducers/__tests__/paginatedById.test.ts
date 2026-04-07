@@ -1,5 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import reducer from "../paginatedById";
+
+import { successReloadMessagesPayload } from "../../../__mocks__/messages";
+import { UIMessage } from "../../../types";
 import {
   loadMessageById,
   loadNextPageMessages,
@@ -7,8 +9,7 @@ import {
   reloadAllMessages,
   upsertMessageStatusAttributes
 } from "../../actions";
-import { successReloadMessagesPayload } from "../../../__mocks__/messages";
-import { UIMessage } from "../../../types";
+import reducer from "../paginatedById";
 
 describe("paginatedById reducer", () => {
   describe("given an empty initial state", () => {

@@ -1,5 +1,5 @@
-import { isEphemeralAARThirdPartyMessage } from "../thirdPartyById";
 import { ThirdPartyMessageUnion } from "../../types/thirdPartyById";
+import { isEphemeralAARThirdPartyMessage } from "../thirdPartyById";
 
 describe("isEphemeralAARThirdPartyMessage", () => {
   it("should return true if the message is an ephemeral AAR third party message", () => {

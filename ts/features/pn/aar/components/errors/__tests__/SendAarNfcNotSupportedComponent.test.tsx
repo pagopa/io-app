@@ -1,18 +1,19 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
+
+import * as IO_NAV from "../../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
-import PN_ROUTES from "../../../../navigation/routes";
-import { SendAarNfcNotSupportedComponent } from "../SendAarNfcNotSupportedComponent";
-import * as FLOW_MANAGER from "../../../hooks/useSendAarFlowManager";
-import * as IO_NAV from "../../../../../../navigation/params/AppParamsList";
 import * as URL_UTILS from "../../../../../../utils/url";
+import PN_ROUTES from "../../../../navigation/routes";
 import {
   trackSendAarNotificationOpeningNfcNotSupported,
   trackSendAarNotificationOpeningNfcNotSupportedClosure,
   trackSendAarNotificationOpeningNfcNotSupportedInfo
 } from "../../../analytics";
+import * as FLOW_MANAGER from "../../../hooks/useSendAarFlowManager";
+import { SendAarNfcNotSupportedComponent } from "../SendAarNfcNotSupportedComponent";
 
 const terminateFlowMock = jest.fn();
 const setOptionsMock = jest.fn();

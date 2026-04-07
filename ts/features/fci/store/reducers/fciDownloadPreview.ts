@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
+
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";
@@ -22,15 +23,15 @@ const fciDownloadPreviewReducer = (
   action: Action
 ): FciDownloadPreviewState => {
   switch (action.type) {
+    case getType(fciClearStateRequest):
+    case getType(fciDownloadPreview.cancel):
+      return initialState;
+    case getType(fciDownloadPreview.failure):
+      return pot.toError(state, action.payload);
     case getType(fciDownloadPreview.request):
       return pot.toLoading(state);
     case getType(fciDownloadPreview.success):
       return pot.some(action.payload);
-    case getType(fciDownloadPreview.failure):
-      return pot.toError(state, action.payload);
-    case getType(fciDownloadPreview.cancel):
-    case getType(fciClearStateRequest):
-      return initialState;
   }
   return state;
 };

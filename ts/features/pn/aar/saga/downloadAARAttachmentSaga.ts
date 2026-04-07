@@ -3,7 +3,9 @@ import { isLeft } from "fp-ts/lib/Either";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import { call, cancelled, delay, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
 import { apiUrlPrefix, fetchTimeout } from "../../../../config";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";
@@ -24,7 +26,6 @@ import {
 } from "../analytics";
 import { createSendAARClientWithLollipop } from "../api/client";
 import { isAarAttachmentTtlError } from "../utils/aarErrorMappings";
-import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
 import { SendAARFailurePhase } from "../utils/stateUtils";
 class SendServerError extends Error {
   public readonly aarProblemJson: AARProblemJson;
@@ -112,35 +113,6 @@ export function* downloadAARAttachmentSaga(
   }
 }
 
-function* getAttachmentPrevalidatedUrl(
-  bearerToken: string,
-  keyInfo: KeyInfo,
-  attachmentUrl: string,
-  useUATEnvironment: boolean,
-  mandateId: string | undefined,
-  action: ActionType<typeof downloadAttachment.request>
-): Generator<ReduxSagaEffect, string> {
-  while (true) {
-    const attachmentMetadataRetryAfterOrUrl = yield* call(
-      getAttachmentMetadata,
-      bearerToken,
-      keyInfo,
-      attachmentUrl,
-      useUATEnvironment,
-      mandateId,
-      action
-    );
-    if (typeof attachmentMetadataRetryAfterOrUrl === "string") {
-      return attachmentMetadataRetryAfterOrUrl;
-    }
-    const retryAfterMilliseconds = yield* call(
-      restrainRetryAfterIntervalInMilliseconds,
-      attachmentMetadataRetryAfterOrUrl
-    );
-    yield* delay(retryAfterMilliseconds);
-  }
-}
-
 function* getAttachmentMetadata(
   bearerToken: string,
   keyInfo: KeyInfo,
@@ -148,7 +120,7 @@ function* getAttachmentMetadata(
   useUATEnvironment: boolean,
   mandateId: string | undefined,
   action: ActionType<typeof downloadAttachment.request>
-): Generator<ReduxSagaEffect, string | number> {
+): Generator<ReduxSagaEffect, number | string> {
   const sendAARClient = createSendAARClientWithLollipop(apiUrlPrefix, keyInfo);
   const getAttachmentMetadataFactory = sendAARClient.getNotificationAttachment;
 
@@ -198,6 +170,35 @@ function* getAttachmentMetadata(
   throw Error(
     `Both 'retryAfter' and 'url' fields are missing or invalid (${retryAfter}) (${url})`
   );
+}
+
+function* getAttachmentPrevalidatedUrl(
+  bearerToken: string,
+  keyInfo: KeyInfo,
+  attachmentUrl: string,
+  useUATEnvironment: boolean,
+  mandateId: string | undefined,
+  action: ActionType<typeof downloadAttachment.request>
+): Generator<ReduxSagaEffect, string> {
+  while (true) {
+    const attachmentMetadataRetryAfterOrUrl = yield* call(
+      getAttachmentMetadata,
+      bearerToken,
+      keyInfo,
+      attachmentUrl,
+      useUATEnvironment,
+      mandateId,
+      action
+    );
+    if (typeof attachmentMetadataRetryAfterOrUrl === "string") {
+      return attachmentMetadataRetryAfterOrUrl;
+    }
+    const retryAfterMilliseconds = yield* call(
+      restrainRetryAfterIntervalInMilliseconds,
+      attachmentMetadataRetryAfterOrUrl
+    );
+    yield* delay(retryAfterMilliseconds);
+  }
 }
 
 const encodeAttachmentUrl = (inputAttachmentUrl: string): string => {

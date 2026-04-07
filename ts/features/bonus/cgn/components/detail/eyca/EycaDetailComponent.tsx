@@ -1,20 +1,20 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-
-import { JSX, useEffect } from "react";
-import { connect } from "react-redux";
 import {
   Alert,
   ListItemHeader,
   LoadingSpinner
 } from "@pagopa/io-app-design-system";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
+import { JSX, useEffect } from "react";
 import { View } from "react-native";
+import { connect } from "react-redux";
+
 import { CardPending } from "../../../../../../../definitions/cgn/CardPending";
 import { EycaCard } from "../../../../../../../definitions/cgn/EycaCard";
+import { isLoading } from "../../../../../../common/model/RemoteValue";
 import { Dispatch } from "../../../../../../store/actions/types";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { isLoading } from "../../../../../../common/model/RemoteValue";
 import {
   cgnEycaActivation,
   cgnEycaActivationStatusRequest
@@ -30,8 +30,8 @@ import {
 import { useEycaInformationBottomSheet } from "./EycaInformationComponent";
 import EycaStatusDetailsComponent from "./EycaStatusDetailsComponent";
 
-type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
+type Props = ReturnType<typeof mapDispatchToProps> &
+  ReturnType<typeof mapStateToProps>;
 
 const EycaDetailComponent = (props: Props) => {
   const { present, bottomSheet } = useEycaInformationBottomSheet();
@@ -46,19 +46,19 @@ const EycaDetailComponent = (props: Props) => {
 
   const errorComponent = (
     <Alert
+      action={I18n.t("global.buttons.retry")}
       content={I18n.t("bonus.cgn.detail.status.eycaError")}
+      onPress={props.requestEycaActivation}
       testID="eyca-error-component"
       variant="error"
-      onPress={props.requestEycaActivation}
-      action={I18n.t("global.buttons.retry")}
     />
   );
 
   const renderComponentEycaStatus = (eyca: EycaCard): JSX.Element | null => {
     switch (eyca.status) {
       case "ACTIVATED":
-      case "REVOKED":
       case "EXPIRED":
+      case "REVOKED":
         return <EycaStatusDetailsComponent eycaCard={eyca} />;
       case "PENDING":
         return pipe(
@@ -71,9 +71,9 @@ const EycaDetailComponent = (props: Props) => {
                 errorComponent
               ) : (
                 <Alert
+                  content={I18n.t("bonus.cgn.detail.status.eycaPending")}
                   testID="eyca-pending-component"
                   variant="info"
-                  content={I18n.t("bonus.cgn.detail.status.eycaPending")}
                 />
               )
           )
@@ -89,7 +89,6 @@ const EycaDetailComponent = (props: Props) => {
       ) : (
         <>
           <ListItemHeader
-            label={I18n.t("bonus.cgn.detail.status.eyca")}
             endElement={{
               type: "iconButton",
               componentProps: {
@@ -98,6 +97,7 @@ const EycaDetailComponent = (props: Props) => {
                 accessibilityLabel: "Apri bottom sheet"
               }
             }}
+            label={I18n.t("bonus.cgn.detail.status.eyca")}
           />
           {pipe(
             props.eyca,

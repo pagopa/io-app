@@ -1,5 +1,6 @@
 import { OTPInput } from "@pagopa/io-app-design-system";
 import { useEffect, useState } from "react";
+
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import CieLoginConfigScreenContent from "../components/CieLoginConfigScreenContent";
 
@@ -11,10 +12,10 @@ type PinViewProps = {
 };
 const PinView = (props: PinViewProps) => (
   <OTPInput
-    secret
-    value={props.pin}
     length={PIN_LENGTH}
     onValueChange={props.setPin}
+    secret
+    value={props.pin}
   />
 );
 
@@ -37,10 +38,10 @@ const CieLoginConfigScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
+      includeContentMargins
+      testID="CieLoginConfigScreen"
       // eslint-disable-next-line i18next/no-literal-string
       title={{ label: "CIE Login Settings" }}
-      testID="CieLoginConfigScreen"
-      includeContentMargins
     >
       {locked ? (
         <PinView pin={pin} setPin={setPin} />

@@ -1,25 +1,26 @@
-import { testSaga } from "redux-saga-test-plan";
-import * as E from "fp-ts/lib/Either";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import * as E from "fp-ts/lib/Either";
+import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
+
+import { resetMixpanelSaga } from "../../../../sagas/mixpanel";
+import { startApplicationInitialization } from "../../../../store/actions/application";
+import * as error from "../../../../utils/errors";
+import { getKeyInfo } from "../../../lollipop/saga";
+import { KeyInfo } from "../../../lollipop/utils/crypto";
+import * as messagesAnalytics from "../../../messages/analytics";
+import * as analytics from "../../common/analytics";
+import { sessionCorrupted } from "../../common/store/actions";
+import { sessionTokenSelector } from "../../common/store/selectors";
 import {
   logoutUserAfterActiveSessionLoginSaga,
   watchForceLogoutActiveSessionLogin
 } from "../saga/forceLogoutActiveSessionLoginSaga";
 import {
-  setLoggedOutUserWithDifferentCF,
   logoutBeforeSessionCorrupted,
-  setFinalizeLoggedOutUserWithDifferentCF
+  setFinalizeLoggedOutUserWithDifferentCF,
+  setLoggedOutUserWithDifferentCF
 } from "../store/actions";
-import { sessionCorrupted } from "../../common/store/actions";
-import { sessionTokenSelector } from "../../common/store/selectors";
-import { startApplicationInitialization } from "../../../../store/actions/application";
-import { resetMixpanelSaga } from "../../../../sagas/mixpanel";
-import { getKeyInfo } from "../../../lollipop/saga";
-import { KeyInfo } from "../../../lollipop/utils/crypto";
-import * as error from "../../../../utils/errors";
-import * as analytics from "../../common/analytics";
-import * as messagesAnalytics from "../../../messages/analytics";
 
 const sessionToken = "mock-session-token";
 

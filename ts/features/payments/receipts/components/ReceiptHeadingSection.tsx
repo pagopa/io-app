@@ -5,6 +5,7 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
+
 import { CartItem } from "../../../../../definitions/pagopa/biz-events/CartItem";
 import { NoticeDetailResponse } from "../../../../../definitions/pagopa/biz-events/NoticeDetailResponse";
 import { Psp } from "../../../../types/pagopa";
@@ -16,9 +17,9 @@ import ReceiptFeeAmountSection from "./ReceiptFeeAmountSection";
 import { ReceiptTotalAmount } from "./ReceiptTotalAmount";
 
 type Props = {
-  transaction?: NoticeDetailResponse;
-  psp?: Psp;
   isLoading: boolean;
+  psp?: Psp;
+  transaction?: NoticeDetailResponse;
 };
 
 export const ReceiptHeadingSection = ({ transaction, isLoading }: Props) => {

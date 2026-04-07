@@ -1,17 +1,17 @@
 import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/ThirdPartyMessageWithContent";
 
-type ThirdPartyKind = typeof thirdPartyKind;
-type StandardThirdPartyMessage = {
-  kind: ThirdPartyKind["TPM"];
-} & ThirdPartyMessageWithContent;
-export type EphemeralAARThirdPartyMessage = {
+export type EphemeralAARThirdPartyMessage = ThirdPartyMessageWithContent & {
   kind: ThirdPartyKind["AAR"];
   mandateId?: string;
-} & ThirdPartyMessageWithContent;
-
+};
 export type ThirdPartyMessageUnion =
-  | StandardThirdPartyMessage
-  | EphemeralAARThirdPartyMessage;
+  | EphemeralAARThirdPartyMessage
+  | StandardThirdPartyMessage;
+type StandardThirdPartyMessage = ThirdPartyMessageWithContent & {
+  kind: ThirdPartyKind["TPM"];
+};
+
+type ThirdPartyKind = typeof thirdPartyKind;
 export const thirdPartyKind = {
   TPM: "TPM",
   AAR: "AAR"

@@ -7,10 +7,12 @@ import Animated, {
   FadeOut,
   LinearTransition
 } from "react-native-reanimated";
+
 import { mixpanelTrack } from "../../../../mixpanel";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { buildEventProperties } from "../../../../utils/analytics";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../../../utils/hooks/usePrevious";
 import {
   trackIDPayOnboardingEmailActivationError,
@@ -24,7 +26,6 @@ import {
   profileSelector
 } from "../../../settings/common/store/selectors";
 import { SERVICES_ROUTES } from "../../common/navigation/routes";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 export const EmailNotificationBanner = () => {
   const dispatch = useIODispatch();
@@ -39,7 +40,7 @@ export const EmailNotificationBanner = () => {
   const canShowBanner =
     isIdPayEnabled && isIdPayOnboardingSucceeded && !isEmailChannelEnabled;
 
-  const mixPanelTracking = (type: "TAP_BANNER" | "CLOSE_BANNER") =>
+  const mixPanelTracking = (type: "CLOSE_BANNER" | "TAP_BANNER") =>
     mixpanelTrack(
       type,
       buildEventProperties("UX", "action", {
@@ -109,16 +110,16 @@ export const EmailNotificationBanner = () => {
     >
       <VSpacer size={16} />
       <Banner
-        labelClose={I18n.t("global.buttons.close")}
-        onClose={handleOnCloseBanner}
+        action={I18n.t("idpay.onboarding.preferences.enableEmailBanner.cta")}
         color="turquoise"
-        pictogramName="emailDotNotif"
-        title={I18n.t("idpay.onboarding.preferences.enableEmailBanner.title")}
         content={I18n.t(
           "idpay.onboarding.preferences.enableEmailBanner.content"
         )}
-        action={I18n.t("idpay.onboarding.preferences.enableEmailBanner.cta")}
+        labelClose={I18n.t("global.buttons.close")}
+        onClose={handleOnCloseBanner}
         onPress={handleOnEnableEmailChannel}
+        pictogramName="emailDotNotif"
+        title={I18n.t("idpay.onboarding.preferences.enableEmailBanner.title")}
       />
     </Animated.View>
   );

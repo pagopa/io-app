@@ -1,22 +1,17 @@
-import configureMockStore from "redux-mock-store";
 import { fireEvent } from "@testing-library/react-native";
+import configureMockStore from "redux-mock-store";
 
+import * as appParamsList from "../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-
+import { CredentialType } from "../../../common/utils/itwMocksUtils";
+import * as credentialsSelectors from "../../../credentials/store/selectors/index";
 import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
-
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwCardOnboardingL2Screen } from "../ItwCardOnboardingL2Screen";
-
-import * as credentialsSelectors from "../../../credentials/store/selectors/index";
-
-import * as appParamsList from "../../../../../navigation/params/AppParamsList";
-
-import { CredentialType } from "../../../common/utils/itwMocksUtils";
 
 describe("ItwCardOnboardingL2Screen", () => {
   const replaceMock = jest.fn();

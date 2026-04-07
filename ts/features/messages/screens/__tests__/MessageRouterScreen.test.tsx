@@ -1,13 +1,14 @@
-import { AnyAction, Dispatch, createStore } from "redux";
+import { AnyAction, createStore, Dispatch } from "redux";
+
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { applicationChangeState } from "../../../../store/actions/application";
+import * as IOHooks from "../../../../store/hooks";
 import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { MessageRouterScreen } from "../MessageRouterScreen";
-import { getMessageDataAction } from "../../store/actions";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import * as IOHooks from "../../../../store/hooks";
-import { MessageGetStatus } from "../../store/reducers/messageGetStatus";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
+import { getMessageDataAction } from "../../store/actions";
+import { MessageGetStatus } from "../../store/reducers/messageGetStatus";
+import { MessageRouterScreen } from "../MessageRouterScreen";
 
 describe("MessageRouterScreen", () => {
   it("should match snapshot before starting to retrieve message data", () => {
@@ -125,11 +126,6 @@ const globalStateFromStatus = (
 ) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   switch (status) {
-    case "loading":
-      return appReducer(
-        globalState,
-        getMessageDataAction.request({ messageId, fromPushNotification })
-      );
     case "blocked":
       return appReducer(
         globalState,
@@ -142,6 +138,11 @@ const globalStateFromStatus = (
       return appReducer(
         globalState,
         getMessageDataAction.failure({ phase: "messageDetails" })
+      );
+    case "loading":
+      return appReducer(
+        globalState,
+        getMessageDataAction.request({ messageId, fromPushNotification })
       );
     case "success":
       return appReducer(

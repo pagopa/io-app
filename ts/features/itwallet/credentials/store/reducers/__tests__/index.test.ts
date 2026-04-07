@@ -1,15 +1,15 @@
 import { applicationChangeState } from "../../../../../../store/actions/application";
+import { Action } from "../../../../../../store/actions/types";
 import { appReducer } from "../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { reproduceSequence } from "../../../../../../utils/tests";
 import { CredentialType } from "../../../../common/utils/itwMocksUtils";
 import {
   ParsedStatusAssertion,
   StoredCredential
 } from "../../../../common/utils/itwTypesUtils";
-import { itwCredentialsRemove, itwCredentialsStore } from "../../actions";
-import { Action } from "../../../../../../store/actions/types";
-import { GlobalState } from "../../../../../../store/reducers/types";
 import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
-import { reproduceSequence } from "../../../../../../utils/tests";
+import { itwCredentialsRemove, itwCredentialsStore } from "../../actions";
 
 const mockedEid: StoredCredential = {
   credential: "",

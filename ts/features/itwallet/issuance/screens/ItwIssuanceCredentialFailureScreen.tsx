@@ -1,9 +1,10 @@
 import { Errors } from "@pagopa/io-react-native-wallet";
 import { sequenceS } from "fp-ts/lib/Apply";
-import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { Linking } from "react-native";
+
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -17,21 +18,21 @@ import { useItwFailureSupportModal } from "../../common/hooks/useItwFailureSuppo
 import { ZendeskSubcategoryValue } from "../../common/hooks/useItwZendeskSupport";
 import { getClaimsFullLocale } from "../../common/utils/itwClaimsUtils";
 import { StatusAssertionError } from "../../common/utils/itwCredentialStatusAssertionUtils.ts";
+import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils.ts";
 import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
 import { IssuerConfiguration } from "../../common/utils/itwTypesUtils";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import {
   CredentialIssuanceFailure,
   CredentialIssuanceFailureType
 } from "../../machine/credential/failure";
+import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
   selectCredentialTypeOption,
   selectFailureOption,
   selectIssuerConfigurationOption
 } from "../../machine/credential/selectors";
-import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import { useCredentialEventsTracking } from "../hooks/useCredentialEventsTracking";
-import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils.ts";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 
 const ASSERTION_FAILED_FAQ_URL =
   "https://assistenza.ioapp.it/hc/it/articles/43824826487953-Provo-ad-aggiungere-un-documento-al-Portafoglio-ma-ricevo-un-errore-dal-mio-dispositivo-Apple";
@@ -110,24 +111,19 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const getOperationResultScreenContentProps =
     (): OperationResultScreenContentProps => {
       switch (failure.type) {
-        case CredentialIssuanceFailureType.UNEXPECTED:
-        case CredentialIssuanceFailureType.ISSUER_GENERIC:
-        case CredentialIssuanceFailureType.WALLET_PROVIDER_GENERIC: {
-          const closeAction = {
-            label: I18n.t(
-              "features.itWallet.issuance.notEntitledCredentialError.primaryAction"
-            ),
-            onPress: closeIssuance
-          };
+        case CredentialIssuanceFailureType.HARDWARE_KEY_INVALID:
           return {
-            title: I18n.t("features.itWallet.issuance.genericError.title"),
-            subtitle: I18n.t("features.itWallet.issuance.genericError.body"),
-            pictogram: "umbrella",
-            ...(supportModal.hasContactMethods
-              ? { action: supportModalAction, secondaryAction: closeAction }
-              : { action: closeAction, secondaryAction: supportModalAction })
+            title: I18n.t("features.itWallet.hardwareKeyInvalid.error.title"),
+            subtitle: I18n.t("features.itWallet.hardwareKeyInvalid.error.body"),
+            pictogram: "fatalError",
+            action: {
+              label: I18n.t(
+                "features.itWallet.hardwareKeyInvalid.error.primaryAction"
+              ),
+              onPress: () => Linking.openURL(ASSERTION_FAILED_FAQ_URL)
+            },
+            secondaryAction: supportModalAction
           };
-        }
         // Dynamic errors extracted from the entity configuration, with fallback
         case CredentialIssuanceFailureType.INVALID_STATUS: {
           const closeAction = {
@@ -144,6 +140,24 @@ const ContentView = ({ failure }: ContentViewProps) => {
               invalidStatusDetails.message?.description ??
               defaultInvalidStatusMessage.description,
             pictogram: "accessDenied",
+            ...(supportModal.hasContactMethods
+              ? { action: supportModalAction, secondaryAction: closeAction }
+              : { action: closeAction, secondaryAction: supportModalAction })
+          };
+        }
+        case CredentialIssuanceFailureType.ISSUER_GENERIC:
+        case CredentialIssuanceFailureType.UNEXPECTED:
+        case CredentialIssuanceFailureType.WALLET_PROVIDER_GENERIC: {
+          const closeAction = {
+            label: I18n.t(
+              "features.itWallet.issuance.notEntitledCredentialError.primaryAction"
+            ),
+            onPress: closeIssuance
+          };
+          return {
+            title: I18n.t("features.itWallet.issuance.genericError.title"),
+            subtitle: I18n.t("features.itWallet.issuance.genericError.body"),
+            pictogram: "umbrella",
             ...(supportModal.hasContactMethods
               ? { action: supportModalAction, secondaryAction: closeAction }
               : { action: closeAction, secondaryAction: supportModalAction })
@@ -179,19 +193,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
             }
           };
         }
-        case CredentialIssuanceFailureType.HARDWARE_KEY_INVALID:
-          return {
-            title: I18n.t("features.itWallet.hardwareKeyInvalid.error.title"),
-            subtitle: I18n.t("features.itWallet.hardwareKeyInvalid.error.body"),
-            pictogram: "fatalError",
-            action: {
-              label: I18n.t(
-                "features.itWallet.hardwareKeyInvalid.error.primaryAction"
-              ),
-              onPress: () => Linking.openURL(ASSERTION_FAILED_FAQ_URL)
-            },
-            secondaryAction: supportModalAction
-          };
       }
     };
 

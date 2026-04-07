@@ -5,6 +5,7 @@
 import { ContentWrapper, H2 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { useState } from "react";
+
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../store/hooks";
@@ -53,8 +54,8 @@ const TosScreen = () => {
     <LoadingSpinnerOverlay isLoading={isLoading}>
       <ContentWrapper>
         <H2
-          accessible={true}
           accessibilityRole="header"
+          accessible={true}
           testID="screen-content-header-title"
         >
           {I18n.t("profile.main.privacy.privacyPolicy.title")}
@@ -64,8 +65,8 @@ const TosScreen = () => {
         flow={flow}
         handleLoadEnd={handleLoadEnd}
         handleReload={handleReload}
-        webViewSource={{ uri: privacyUrl }}
         shouldRenderFooter={false}
+        webViewSource={{ uri: privacyUrl }}
       />
     </LoadingSpinnerOverlay>
   );

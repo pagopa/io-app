@@ -1,10 +1,11 @@
 import { createSelector } from "reselect";
-import { makeSelectAllCredentials } from "../../../../credentials/store/selectors";
+
 import {
   CredentialFormat,
   MdocSupportedCredentialConfiguration,
   StoredCredential
 } from "../../../../common/utils/itwTypesUtils";
+import { makeSelectAllCredentials } from "../../../../credentials/store/selectors";
 
 /**
  * Returns the credentials object from the itw credentials state.

@@ -1,15 +1,15 @@
 import {
-  ActivityIndicator as RNActivityIndicator,
-  ActivityIndicatorProps
+  ActivityIndicatorProps,
+  ActivityIndicator as RNActivityIndicator
 } from "react-native";
 
 import variables from "../../theme/variables";
 
 const ActivityIndicator = (props: ActivityIndicatorProps) => (
   <RNActivityIndicator
-    size={props.size ?? "large"}
     accessibilityLabel={props.accessibilityLabel}
     color={props.color || variables.brandPrimary}
+    size={props.size ?? "large"}
     testID={props.testID ?? "rn-activity-indicator"}
   />
 );

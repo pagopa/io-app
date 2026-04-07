@@ -1,13 +1,13 @@
-import { createClient } from "../../../../../../definitions/session_manager/client";
 import { LollipopMethodEnum } from "../../../../../../definitions/lollipop/LollipopMethod";
+import { createClient } from "../../../../../../definitions/session_manager/client";
 import { defaultRetryingFetch } from "../../../../../utils/fetch";
 import { LollipopConfig } from "../../../../lollipop";
 import { KeyInfo } from "../../../../lollipop/utils/crypto";
 import { lollipopFetch } from "../../../../lollipop/utils/fetch";
 import {
   createFastLoginClient,
-  performFastLogin,
   createNonceClient,
+  performFastLogin,
   performGetNonce
 } from "../index";
 

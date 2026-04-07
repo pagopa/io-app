@@ -1,9 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+
 import { PathTraversalSafePathParam } from "../../../../../definitions/backend/PathTraversalSafePathParam";
 import { ServicePreference } from "../../../../../definitions/backend/ServicePreference";
 import { BackendClient } from "../../../../api/backend";
@@ -64,26 +65,6 @@ const calculateUpdatingPreference = (
       .settings_version as ServicePreference["settings_version"]
   };
 };
-
-export function* trackPNPushNotificationSettings(
-  action: ActionType<typeof upsertServicePreference.request>
-) {
-  const serviceMetadataInfo = yield* select(
-    serviceMetadataInfoSelector,
-    action.payload.id
-  );
-
-  pipe(
-    serviceMetadataInfo,
-    O.fromNullable,
-    O.chainNullableK(metadata => metadata.serviceKind),
-    O.filter(serviceKind => serviceKind === "pn"),
-    O.fold(
-      () => undefined,
-      _ => trackPNPushSettings(action.payload.push)
-    )
-  );
-}
 
 /**
  * saga to handle the update of service preferences after a user specific action
@@ -192,4 +173,24 @@ export function* handleUpsertServicePreference(
       })
     );
   }
+}
+
+export function* trackPNPushNotificationSettings(
+  action: ActionType<typeof upsertServicePreference.request>
+) {
+  const serviceMetadataInfo = yield* select(
+    serviceMetadataInfoSelector,
+    action.payload.id
+  );
+
+  pipe(
+    serviceMetadataInfo,
+    O.fromNullable,
+    O.chainNullableK(metadata => metadata.serviceKind),
+    O.filter(serviceKind => serviceKind === "pn"),
+    O.fold(
+      () => undefined,
+      _ => trackPNPushSettings(action.payload.push)
+    )
+  );
 }

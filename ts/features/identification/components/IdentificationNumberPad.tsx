@@ -5,9 +5,10 @@ import {
   NumberPad,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { ComponentProps, useCallback, useState } from "react";
 import { View } from "react-native";
-import I18n from "i18next";
+
 import { isDevEnv } from "../../../utils/environment";
 
 const PIN_LENGTH = 6;
@@ -16,20 +17,20 @@ const CODE_INPUT_SUCCESS_CALLBACK_CALL_TIMEOUT = 250;
 
 type BiometricConfigType =
   | {
-      biometricType: BiometricsValidType;
       biometricAccessibilityLabel: string;
+      biometricType: BiometricsValidType;
       onBiometricPress: () => Promise<void>;
     }
   | {
-      biometricType?: undefined;
       biometricAccessibilityLabel?: undefined;
+      biometricType?: undefined;
       onBiometricPress?: undefined;
     };
 type IdentificationNumberPadProps = {
+  biometricsConfig: BiometricConfigType;
+  numberPadVariant: ComponentProps<typeof NumberPad>["variant"];
   pin: string;
   pinValidation: (success: boolean) => void;
-  numberPadVariant: ComponentProps<typeof NumberPad>["variant"];
-  biometricsConfig: BiometricConfigType;
 };
 
 export const IdentificationNumberPad = (
@@ -73,13 +74,13 @@ export const IdentificationNumberPad = (
 
   return (
     <>
-      <View testID="code-input" style={{ alignItems: "center" }}>
+      <View style={{ alignItems: "center" }} testID="code-input">
         <CodeInput
-          value={value}
           length={PIN_LENGTH}
-          variant={numberPadVariant}
-          onValueChange={onCodeInputValueChange}
           onValidate={onPinValidated}
+          onValueChange={onCodeInputValueChange}
+          value={value}
+          variant={numberPadVariant}
         />
       </View>
       {isDevEnv && (
@@ -94,13 +95,13 @@ export const IdentificationNumberPad = (
           }}
         >
           <IconButton
+            accessibilityLabel={I18n.t("identification.insertDevPin")}
+            color="contrast"
             icon="unlocked"
             iconSize={16}
-            color="contrast"
             onPress={() => {
               setValue(pin);
             }}
-            accessibilityLabel={I18n.t("identification.insertDevPin")}
           />
         </View>
       )}

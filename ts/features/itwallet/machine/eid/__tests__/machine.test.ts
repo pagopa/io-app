@@ -7,13 +7,16 @@ import {
   StateFrom,
   waitFor as waitForActor
 } from "xstate";
+
 import { idps } from "../../../../../utils/idps";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import {
   StoredCredential,
   WalletInstanceAttestations
 } from "../../../common/utils/itwTypesUtils";
+import { CieWarningType } from "../../../identification/cie/utils/types";
 import { ItwTags } from "../../tags";
+import { itwCredentialUpgradeMachine } from "../../upgrade/machine";
 import {
   GetWalletAttestationActorParams,
   InitMrtdPoPChallengeActorParams,
@@ -29,8 +32,6 @@ import {
   MrtdPoPContext
 } from "../context";
 import { ItwEidIssuanceMachine, itwEidIssuanceMachine } from "../machine";
-import { itwCredentialUpgradeMachine } from "../../upgrade/machine";
-import { CieWarningType } from "../../../identification/cie/utils/types";
 
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 

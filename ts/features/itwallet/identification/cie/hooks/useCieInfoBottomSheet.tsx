@@ -3,23 +3,24 @@ import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useMemo } from "react";
 import { Alert, StyleSheet, View } from "react-native";
+
 import { AnimatedImage } from "../../../../../components/AnimatedImage";
 import IOMarkdown from "../../../../../components/IOMarkdown";
 import { renderActionButtons } from "../../../../../components/ui/IOScrollView";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { trackItwKoStateAction } from "../../../analytics";
+import { ItwFlow } from "../../../analytics/utils/types";
+import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 import {
   trackItwCieInfoBottomSheet,
   trackItwPinInfoBottomSheet,
   trackItwUserWithoutL3Requirements
 } from "../../analytics";
-import { trackItwKoStateAction } from "../../../analytics";
-import { ItwFlow } from "../../../analytics/utils/types";
-import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
-import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 import { CieWarningType } from "../utils/types";
 
-type Props = { type: CieWarningType; showSecondaryAction?: boolean };
+type Props = { showSecondaryAction?: boolean; type: CieWarningType; };
 
 const trackBottomSheetView = (
   type: CieWarningType,

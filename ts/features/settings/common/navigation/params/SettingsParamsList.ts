@@ -1,8 +1,9 @@
 import { NavigatorScreenParams } from "@react-navigation/native";
+
+import { AuthenticationParamsList } from "../../../../authentication/common/navigation/params/AuthenticationParamsList";
 import { EmailInsertScreenNavigationParams } from "../../../userData/shared/screens/EmailInsertScreen";
 import { SendEmailValidationScreenProp } from "../../../userData/shared/screens/EmailValidationSendEmailScreen";
 import { SETTINGS_ROUTES } from "../routes";
-import { AuthenticationParamsList } from "../../../../authentication/common/navigation/params/AuthenticationParamsList";
 
 export type SettingsParamsList = {
   [SETTINGS_ROUTES.PROFILE_PRIVACY_MAIN]: undefined;

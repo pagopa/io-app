@@ -7,15 +7,16 @@ import {
   StyleSheet,
   View
 } from "react-native";
+
 import { IOScrollViewActions } from "../../../../../components/ui/IOScrollView";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 
 type Props = {
-  title: string;
-  description: string;
-  imageSrc: ImageSourcePropType;
   actions?: IOScrollViewActions;
+  description: string;
   goBack?: () => void;
+  imageSrc: ImageSourcePropType;
+  title: string;
 };
 
 export const ItwCiePreparationScreenContent = ({
@@ -27,11 +28,11 @@ export const ItwCiePreparationScreenContent = ({
   goBack
 }: PropsWithChildren<Props>) => (
   <IOScrollViewWithLargeHeader
-    title={{ label: title }}
-    description={description}
-    headerActionsProp={{ showHelp: true }}
     actions={actions}
+    description={description}
     goBack={goBack}
+    headerActionsProp={{ showHelp: true }}
+    title={{ label: title }}
   >
     <ContentWrapper>
       <VStack space={16}>
@@ -39,8 +40,8 @@ export const ItwCiePreparationScreenContent = ({
         <View style={styles.imageContainer}>
           <Image
             accessibilityIgnoresInvertColors
-            source={imageSrc}
             resizeMode="contain"
+            source={imageSrc}
             style={styles.image}
           />
         </View>

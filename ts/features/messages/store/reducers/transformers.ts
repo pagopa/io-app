@@ -4,7 +4,6 @@ import { MessageCategory } from "../../../../../definitions/backend/MessageCateg
 import { TagEnum } from "../../../../../definitions/backend/MessageCategoryBase";
 import { MessageStatusAttributes } from "../../../../../definitions/backend/MessageStatusAttributes";
 import { PublicMessage } from "../../../../../definitions/backend/PublicMessage";
-
 import {
   EUCovidCertificate,
   PaymentData,
@@ -19,7 +18,7 @@ import {
  * @param messageFromApi
  */
 export const toUIMessage = (
-  messageFromApi: PublicMessage | CreatedMessageWithContentAndAttachments
+  messageFromApi: CreatedMessageWithContentAndAttachments | PublicMessage
 ): UIMessage => {
   const enriched = messageFromApi as EnrichedMessage;
   const category: MessageCategory = enriched.category || {

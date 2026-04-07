@@ -8,23 +8,23 @@ import {
   ITW_TECH_EVENTS
 } from "./enum";
 import {
-  TrackItwBannerProperties,
+  CredentialStatusAssertionFailure,
+  ItwCopyListItem,
+  ItwCredentialDetails,
+  ItwCredentialInfoDetails,
+  ItwDismissalAction,
   ItwFlow,
-  ItwWalletDataShare,
+  ItwIdMethod,
   ItwScreenFlowContext,
-  TrackQualtricsSurvey,
-  NewCredential,
+  ItwWalletDataShare,
   KoState,
   MixPanelCredential,
+  NewCredential,
   TrackITWalletIDMethodSelected,
-  ItwCredentialInfoDetails,
-  ItwCopyListItem,
-  ItwDismissalAction,
-  ItwIdMethod,
-  CredentialStatusAssertionFailure,
-  ItwCredentialDetails,
-  TrackSaveCredentialSuccess,
-  TrackItwDeactivation
+  TrackItwBannerProperties,
+  TrackItwDeactivation,
+  TrackQualtricsSurvey,
+  TrackSaveCredentialSuccess
 } from "./utils/types";
 
 // Screen view events

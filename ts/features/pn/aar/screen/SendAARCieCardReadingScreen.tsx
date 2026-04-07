@@ -1,10 +1,12 @@
 import i18n from "i18next";
 import { useEffect } from "react";
+
+import type { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
+import type { PnParamsList } from "../../navigation/params";
+
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useHardwareBackButtonWhenFocused } from "../../../../hooks/useHardwareBackButton";
-import type { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import type { PnParamsList } from "../../navigation/params";
 import PN_ROUTES from "../../navigation/routes";
 import {
   SendAARCieCardReadingComponent,
@@ -13,13 +15,13 @@ import {
 import { currentAARFlowData } from "../store/selectors";
 import { sendAARFlowStates } from "../utils/stateUtils";
 
-export type SendAARCieCardReadingScreenRouteParams =
-  Readonly<SendAARCieCardReadingComponentProps>;
-
 export type SendAARCieCardReadingScreenProps = IOStackNavigationRouteProps<
   PnParamsList,
   typeof PN_ROUTES.SEND_AAR_CIE_CARD_READING
 >;
+
+export type SendAARCieCardReadingScreenRouteParams =
+  Readonly<SendAARCieCardReadingComponentProps>;
 
 export const SendAARCieCardReadingScreen = ({
   route,
@@ -63,8 +65,8 @@ export const SendAARCieCardReadingScreen = ({
   switch (currentFlow.type) {
     case sendAARFlowStates.cieScanning:
       return <SendAARCieCardReadingComponent {...route.params} />;
-    case sendAARFlowStates.validatingMandate:
     case sendAARFlowStates.fetchingNotificationData:
+    case sendAARFlowStates.validatingMandate:
       return (
         <LoadingScreenContent
           testID="LoadingScreenContent"

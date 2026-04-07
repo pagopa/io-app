@@ -1,6 +1,7 @@
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { identity } from "lodash";
+
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import * as appVersion from "../../../../utils/appVersion";
 import { GlobalState } from "../../types";
@@ -15,6 +16,7 @@ import {
   isIOMarkdownEnabledForMessagesAndServicesSelector,
   isPnAppVersionSupportedSelector,
   isPremiumMessagesOptInOutEnabledSelector,
+  isSendLollipopPlaygroundEnabledSelector,
   landingScreenBannerOrderSelector,
   pnAARQRCodeRegexSelector,
   pnMessagingServiceIdSelector,
@@ -24,8 +26,7 @@ import {
   sendCustomServiceCenterUrlSelector,
   sendEstimateTimelinesUrlSelector,
   sendShowAbstractSelector,
-  sendVisitTheWebsiteUrlSelector,
-  isSendLollipopPlaygroundEnabledSelector
+  sendVisitTheWebsiteUrlSelector
 } from "../remoteConfig";
 
 describe("remoteConfig", () => {

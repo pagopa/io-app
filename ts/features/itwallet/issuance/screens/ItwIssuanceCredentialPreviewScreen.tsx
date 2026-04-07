@@ -8,21 +8,16 @@ import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { useCallback, useMemo } from "react";
 import I18n from "i18next";
+import { useCallback, useMemo } from "react";
+
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { identificationRequest } from "../../../identification/store/actions";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import {
-  trackCredentialPreview,
-  trackIssuanceCredentialScrollToBottom,
-  trackItwExit,
-  trackSaveCredentialToWallet
-} from "../analytics";
+import { identificationRequest } from "../../../identification/store/actions";
 import { getMixPanelCredential } from "../../analytics/utils";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
@@ -31,13 +26,19 @@ import {
   isMultiLevelCredential,
   StoredCredential
 } from "../../common/utils/itwTypesUtils";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
   selectCredentialOption,
   selectCredentialTypeOption
 } from "../../machine/credential/selectors";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
-import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import { ITW_ROUTES } from "../../navigation/routes";
+import {
+  trackCredentialPreview,
+  trackIssuanceCredentialScrollToBottom,
+  trackItwExit,
+  trackSaveCredentialToWallet
+} from "../analytics";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
 
 export const ItwIssuanceCredentialPreviewScreen = () => {
@@ -72,8 +73,8 @@ export const ItwIssuanceCredentialPreviewScreen = () => {
 };
 
 type ContentViewProps = {
-  credentialType: string;
   credential: StoredCredential;
+  credentialType: string;
 };
 
 /**
@@ -145,7 +146,6 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
   return (
     <ForceScrollDownView
       contentContainerStyle={{ flexGrow: 1 }}
-      onThresholdCrossed={trackScrollToBottom}
       footerActions={{
         actions: {
           type: "TwoButtons",
@@ -165,6 +165,7 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
           }
         }
       }}
+      onThresholdCrossed={trackScrollToBottom}
     >
       <ContentWrapper style={{ flexGrow: 1 }}>
         <H2>

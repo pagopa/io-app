@@ -1,17 +1,18 @@
 import {
-  type ItwVersion,
-  createCryptoContextFor
+  createCryptoContextFor,
+  type ItwVersion
 } from "@pagopa/io-react-native-wallet";
 import * as Sentry from "@sentry/react-native";
+
 import { createItWalletFetch } from "../../api/client";
+import { Env } from "./environment.ts";
 import { regenerateCryptoKey, WIA_KEYTAG } from "./itwCryptoContextUtils";
 import {
   generateIntegrityHardwareKeyTag,
   getIntegrityContext
 } from "./itwIntegrityUtils";
-import { WalletInstanceAttestations } from "./itwTypesUtils.ts";
-import { Env } from "./environment.ts";
 import { getIoWallet } from "./itwIoWallet.ts";
+import { WalletInstanceAttestations } from "./itwTypesUtils.ts";
 
 /**
  * Getter for the integrity hardware keytag to be used for an {@link IntegrityContext}.

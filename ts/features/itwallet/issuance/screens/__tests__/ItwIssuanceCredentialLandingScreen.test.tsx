@@ -1,14 +1,15 @@
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import configureMockStore from "redux-mock-store";
+
+import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import ROUTES from "../../../../../navigation/routes";
-import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import * as preferencesSelectors from "../../../common/store/selectors/preferences";
 import * as credentialsSelectors from "../../../credentials/store/selectors";
+import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwIssuanceCredentialLandingScreen } from "../ItwIssuanceCredentialLandingScreen";
 
@@ -217,9 +218,9 @@ describe("ItwIssuanceCredentialLandingScreen", () => {
 
 type MockSelectorOptions = {
   credentialStatus?: string;
-  pidStatus?: string;
   isItwValid?: boolean;
   isWhitelisted?: boolean;
+  pidStatus?: string;
 };
 
 const mockSelectors = ({

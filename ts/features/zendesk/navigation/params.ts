@@ -1,9 +1,9 @@
 import { ZendeskAskPermissionsNavigationParams } from "../screens/ZendeskAskPermissions";
+import { ZendeskAskSeeReportsPermissionsNavigationParams } from "../screens/ZendeskAskSeeReportsPermissions";
 import { ZendeskChooseCategoryNavigationParams } from "../screens/ZendeskChooseCategory";
 import { ZendeskChooseSubCategoryNavigationParams } from "../screens/ZendeskChooseSubCategory";
-import { ZendeskSupportHelpCenterNavigationParams } from "../screens/ZendeskSupportHelpCenter";
-import { ZendeskAskSeeReportsPermissionsNavigationParams } from "../screens/ZendeskAskSeeReportsPermissions";
 import { ZendeskSeeReportsRoutersNavigationParams } from "../screens/ZendeskSeeReportsRouters";
+import { ZendeskSupportHelpCenterNavigationParams } from "../screens/ZendeskSupportHelpCenter";
 import ZENDESK_ROUTES from "./routes";
 
 export type ZendeskParamsList = {

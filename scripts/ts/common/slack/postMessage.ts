@@ -1,5 +1,5 @@
-import { URL } from "url";
 import fetch from "node-fetch";
+import { URL } from "url";
 
 const endpoint = "https://slack.com/api/chat.postMessage";
 const slackToken = process.env.IO_APP_SLACK_HELPER_BOT_TOKEN;

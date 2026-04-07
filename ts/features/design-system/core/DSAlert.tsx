@@ -1,8 +1,8 @@
-import { Alert, H4, VStack, useIOTheme } from "@pagopa/io-app-design-system";
-import { DSFullWidthComponent } from "../components/DSFullWidthComponent";
+import { Alert, H4, useIOTheme, VStack } from "@pagopa/io-app-design-system";
 
 /* Types */
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { DSFullWidthComponent } from "../components/DSFullWidthComponent";
 
 const componentInnerMargin = 8;
 const sectionTitleMargin = 16;
@@ -38,20 +38,20 @@ export const DSAlert = () => {
 const renderContentOnly = () => (
   <VStack space={componentInnerMargin}>
     <Alert
+      content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
       variant="error"
-      content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
     />
     <Alert
+      content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
       variant="warning"
-      content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
     />
     <Alert
+      content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
       variant="info"
-      content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
     />
     <Alert
-      variant="success"
       content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
+      variant="success"
     />
   </VStack>
 );
@@ -59,36 +59,36 @@ const renderContentOnly = () => (
 const renderContentPlusAction = () => (
   <VStack space={componentInnerMargin}>
     <Alert
+      action="Alert action"
+      content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
+      onPress={() => {
+        alert("Action triggered");
+      }}
       variant="error"
+    />
+    <Alert
       action="Alert action"
+      content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
       onPress={() => {
         alert("Action triggered");
       }}
-      content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
-    />
-    <Alert
       variant="warning"
+    />
+    <Alert
       action="Alert action"
+      content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
       onPress={() => {
         alert("Action triggered");
       }}
-      content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
-    />
-    <Alert
       variant="info"
-      action="Alert action"
-      onPress={() => {
-        alert("Action triggered");
-      }}
-      content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
     />
     <Alert
-      variant="success"
       action="Alert action"
+      content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
       onPress={() => {
         alert("Action triggered");
       }}
-      content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
+      variant="success"
     />
   </VStack>
 );
@@ -97,33 +97,33 @@ const renderFullWidth = () => (
   <DSFullWidthComponent>
     <VStack space={componentInnerMargin}>
       <Alert
+        content="Ut enim ad minim veniam, quis ullamco labo nisi ut aliquid ad minim veniam"
         fullWidth
         variant="error"
-        content="Ut enim ad minim veniam, quis ullamco labo nisi ut aliquid ad minim veniam"
       />
       <Alert
+        content="Ut enim ad minim veniam, quis ullamco labo nisi ut aliquid ad minim veniam"
         fullWidth
         variant="warning"
-        content="Ut enim ad minim veniam, quis ullamco labo nisi ut aliquid ad minim veniam"
       />
       <Alert
+        content="Ut enim ad minim veniam, quis ullamco labo nisi ut aliquid ad minim veniam"
         fullWidth
         variant="info"
-        content="Ut enim ad minim veniam, quis ullamco labo nisi ut aliquid ad minim veniam"
       />
       <Alert
+        content="Ut enim ad minim veniam, quis ullamco labo nisi ut aliquid ad minim veniam"
         fullWidth
         variant="success"
-        content="Ut enim ad minim veniam, quis ullamco labo nisi ut aliquid ad minim veniam"
       />
       <Alert
-        fullWidth
-        variant="info"
         action="Alert action"
+        content="Ut enim ad minim veniam, quis ullamco labo nisi ut aliquid ad minim veniam"
+        fullWidth
         onPress={() => {
           alert("Action triggered");
         }}
-        content="Ut enim ad minim veniam, quis ullamco labo nisi ut aliquid ad minim veniam"
+        variant="info"
       />
     </VStack>
   </DSFullWidthComponent>

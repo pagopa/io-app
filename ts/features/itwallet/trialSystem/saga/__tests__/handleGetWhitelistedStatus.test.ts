@@ -1,9 +1,10 @@
-import { testSaga } from "redux-saga-test-plan";
 import * as E from "fp-ts/Either";
-import { handleGetWhitelistedStatus } from "../handleGetWhitelistedStatus";
-import { itwSetFiscalCodeWhitelisted } from "../../../common/store/actions/preferences";
+import { testSaga } from "redux-saga-test-plan";
+
 import { mockItWalletClient } from "../../../api/__mocks__/client.ts";
 import { ItWalletClient } from "../../../api/client.ts";
+import { itwSetFiscalCodeWhitelisted } from "../../../common/store/actions/preferences";
+import { handleGetWhitelistedStatus } from "../handleGetWhitelistedStatus";
 
 describe("handleGetWhitelistedStatus Saga", () => {
   it("should dispatch itwSetFiscalCodeWhitelisted(true) on success response with whitelisted true", () => {

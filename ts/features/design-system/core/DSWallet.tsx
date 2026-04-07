@@ -4,6 +4,7 @@ import {
   VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
+
 import { CredentialType } from "../../itwallet/common/utils/itwMocksUtils";
 import { WalletCardsCategoryContainer } from "../../wallet/components/WalletCardsCategoryContainer";
 import { WalletCard, WalletCardCategory } from "../../wallet/types";
@@ -98,7 +99,7 @@ export const DSWallet = () => {
       ...acc,
       [card.category]: [...(acc[card.category] || []), card]
     }),
-    {} as { [category in WalletCardCategory]: ReadonlyArray<WalletCard> }
+    {} as Record<WalletCardCategory, ReadonlyArray<WalletCard>>
   );
 
   const blockMargin = 48;
@@ -111,9 +112,9 @@ export const DSWallet = () => {
             cards={cardsByCategory.itw}
             header={
               <ListItemHeader
-                label="Documenti"
-                iconName="legalValue"
                 iconColor="blueIO-500"
+                iconName="legalValue"
+                label="Documenti"
               />
             }
           />
@@ -128,8 +129,8 @@ export const DSWallet = () => {
               <>
                 <Banner
                   color="turquoise"
-                  pictogramName="idea"
                   content="Categories can have a top element!"
+                  pictogramName="idea"
                 />
                 <VSpacer size={16} />
               </>

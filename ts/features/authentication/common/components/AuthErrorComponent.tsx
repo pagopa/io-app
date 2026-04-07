@@ -1,15 +1,19 @@
-import { useMemo } from "react";
 import I18n from "i18next";
+import { useMemo } from "react";
+
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
+import { DifferentCFErrorScreen } from "../../activeSessionLogin/screens/DifferentCFErrorScreen";
 import UnlockAccessComponent, {
   UnlockAccessProps
 } from "../../login/unlockAccess/components/UnlockAccessComponent";
-import { DifferentCFErrorScreen } from "../../activeSessionLogin/screens/DifferentCFErrorScreen";
 
 export enum AUTH_ERRORS {
+  CIEID_IOS_INVALID_OPERATION_MESSAGE = "Operazione_non_valida",
+  CIEID_IOS_OPERATION_CANCELED_MESSAGE = "Operazione_annullata_dall'utente",
+  CIEID_OPERATION_CANCEL = "CIEID_OPERATION_CANCEL",
   ERROR_19 = "19",
   ERROR_20 = "20",
   ERROR_21 = "21",
@@ -19,19 +23,16 @@ export enum AUTH_ERRORS {
   ERROR_1001 = "1001", // This error is tracked as generic error
   ERROR_1002 = "1002", // This error is tracked as generic error
   ERROR_1004 = "1004", // active session login - different fiscal code
-  MISSING_SAML_RESPONSE = "Missing SAMLResponse in ACS",
+  GENERIC_ERROR = "GENERIC_ERROR",
   MISSING_IDP_ISSUER = "Error: Missing idpIssuer inside configuration", // This error is tracked as generic error
-  CIEID_IOS_OPERATION_CANCELED_MESSAGE = "Operazione_annullata_dall'utente",
-  CIEID_IOS_INVALID_OPERATION_MESSAGE = "Operazione_non_valida",
-  CIEID_OPERATION_CANCEL = "CIEID_OPERATION_CANCEL",
-  GENERIC_ERROR = "GENERIC_ERROR"
+  MISSING_SAML_RESPONSE = "Missing SAMLResponse in ACS"
 }
 
-export type AuthErrorComponentProps = {
+export type AuthErrorComponentProps = UnlockAccessProps & {
   errorCodeOrMessage?: string;
-  onRetry: () => void;
   onCancel: () => void;
-} & UnlockAccessProps;
+  onRetry: () => void;
+};
 
 const AuthErrorComponent = ({
   errorCodeOrMessage = AUTH_ERRORS.GENERIC_ERROR,
@@ -65,9 +66,7 @@ const AuthErrorComponent = ({
     [onCancel, onRetry]
   );
 
-  const errorsObject: {
-    [key: string]: OperationResultScreenContentProps;
-  } = useMemo(
+  const errorsObject: Record<string, OperationResultScreenContentProps> = useMemo(
     () => ({
       [AUTH_ERRORS.ERROR_19]: {
         pictogram: "passcode",

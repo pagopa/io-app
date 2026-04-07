@@ -1,17 +1,18 @@
 import { assign, fromCallback, fromPromise, setup, stateIn } from "xstate";
-import { InitialContext, Context } from "./context";
-import { ProximityEvents } from "./events";
-import { ItwPresentationTags } from "./tags";
+
 import {
-  SendErrorResponseActorOutput,
-  SendDocumentsActorInput,
-  SendDocumentsActorOutput,
-  StartProximityFlowInput,
   CheckPermissionsInput,
   CloseActorOutput,
-  GetQrCodeStringActorOutput
+  GetQrCodeStringActorOutput,
+  SendDocumentsActorInput,
+  SendDocumentsActorOutput,
+  SendErrorResponseActorOutput,
+  StartProximityFlowInput
 } from "./actors";
+import { Context, InitialContext } from "./context";
+import { ProximityEvents } from "./events";
 import { mapEventToFailure } from "./failure";
+import { ItwPresentationTags } from "./tags";
 
 const notImplemented = () => {
   throw new Error("Not implemented");

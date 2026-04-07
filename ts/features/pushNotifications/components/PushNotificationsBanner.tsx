@@ -5,9 +5,10 @@ import {
   IOVisualCostants
 } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
+import I18n from "i18next";
 import { useCallback, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
-import I18n from "i18next";
+
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import {
@@ -74,15 +75,15 @@ export const PushNotificationsBanner = ({ closeHandler }: Props) => {
   return (
     <View style={styles.margins} testID="pushnotif-bannerContainer">
       <Banner
+        action={I18n.t("features.messages.pushNotifications.banner.CTA")}
+        color="turquoise"
+        content={I18n.t("features.messages.pushNotifications.banner.body")}
+        labelClose={I18n.t("global.buttons.close")}
+        onClose={onClose}
+        onPress={onPress}
+        pictogramName="notification"
         testID="pushNotificationsBanner"
         title={I18n.t("features.messages.pushNotifications.banner.title")}
-        content={I18n.t("features.messages.pushNotifications.banner.body")}
-        action={I18n.t("features.messages.pushNotifications.banner.CTA")}
-        pictogramName="notification"
-        color="turquoise"
-        onClose={onClose}
-        labelClose={I18n.t("global.buttons.close")}
-        onPress={onPress}
       />
       {discardModal.bottomSheet}
     </View>

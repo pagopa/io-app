@@ -7,7 +7,7 @@ import {
   defaultRequestPayload
 } from "../../__mocks__/messages";
 import { reloadAllMessages } from "../../store/actions";
-import { ResponseType, handleResponse } from "../responseHandling";
+import { handleResponse, ResponseType } from "../responseHandling";
 describe("`handleResponse` function", () => {
   describe("given a failure", () => {
     const failure: E.Either<

@@ -1,10 +1,11 @@
 import { ContentWrapper } from "@pagopa/io-app-design-system";
 import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
-import { pipe } from "fp-ts/lib/function";
 import { useCallback, useState } from "react";
 import { ScrollView } from "react-native";
+
 import { ProblemJson } from "../../../../definitions/lollipop/ProblemJson";
 import { SignMessageResponse } from "../../../../definitions/lollipop/SignMessageResponse";
 import { apiUrlPrefix } from "../../../config";
@@ -130,7 +131,6 @@ const LollipopPlayground = () => {
     <ScrollView>
       <ContentWrapper>
         <LollipopPlaygroundContent
-          onSignButtonPress={body => onSignButtonPress(body, state.doSignBody)}
           onCheckBoxPress={v => {
             setState({
               ...state,
@@ -140,6 +140,7 @@ const LollipopPlayground = () => {
           onClearButtonPress={() => {
             setState(INITIAL_STATE);
           }}
+          onSignButtonPress={body => onSignButtonPress(body, state.doSignBody)}
           playgroundState={state}
         />
       </ContentWrapper>

@@ -1,16 +1,17 @@
-import { pipe } from "fp-ts/lib/function";
-import * as E from "fp-ts/lib/Either";
 import { RptIdFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
 import { Dispatch } from "redux";
-import NavigationService from "../../../navigation/NavigationService";
-import ROUTES from "../../../navigation/routes";
-import { PaymentData, UIMessage, UIMessageDetails } from "../types";
-import { NetworkError, getNetworkError } from "../../../utils/errors";
-import { addUserSelectedPaymentRptId } from "../store/actions";
-import { Action } from "../../../store/actions/types";
-import { startPaymentFlowWithRptIdWorkaround } from "../../payments/checkout/tempWorkaround/pagoPaPaymentWorkaround";
+
 import { RemoteContentDetails } from "../../../../definitions/backend/RemoteContentDetails";
 import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/ThirdPartyMessageWithContent";
+import NavigationService from "../../../navigation/NavigationService";
+import ROUTES from "../../../navigation/routes";
+import { Action } from "../../../store/actions/types";
+import { getNetworkError, NetworkError } from "../../../utils/errors";
+import { startPaymentFlowWithRptIdWorkaround } from "../../payments/checkout/tempWorkaround/pagoPaPaymentWorkaround";
+import { addUserSelectedPaymentRptId } from "../store/actions";
+import { PaymentData, UIMessage, UIMessageDetails } from "../types";
 
 export const gapBetweenItemsInAGrid = 8;
 

@@ -1,93 +1,36 @@
-import { select, call, all, put } from "typed-redux-saga/macro";
+import { Errors } from "@pagopa/io-react-native-wallet";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Errors } from "@pagopa/io-react-native-wallet";
-import { itwCredentialsSelector } from "../store/selectors";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { all, call, put, select } from "typed-redux-saga/macro";
+
+import { ReduxSagaEffect } from "../../../../types/utils";
+import { trackItwStatusCredentialAssertionFailure } from "../../analytics";
+import { syncItwAnalyticsProperties } from "../../analytics/saga";
+import { getMixPanelCredential } from "../../analytics/utils";
 import {
-  shouldRequestStatusAssertion,
+  itwUnverifiedCredentialsCounterReset,
+  itwUnverifiedCredentialsCounterUp
+} from "../../common/store/actions/securePreferences";
+import {
+  selectItwEnv,
+  selectItwSpecsVersion
+} from "../../common/store/selectors/environment";
+import { itwUnverifiedCredentialsCounterLimitReached } from "../../common/store/selectors/securePreferences";
+import { getEnv } from "../../common/utils/environment";
+import {
   getCredentialStatusAssertion,
+  shouldRequestStatusAssertion,
   StatusAssertionError
 } from "../../common/utils/itwCredentialStatusAssertionUtils";
-import { ReduxSagaEffect } from "../../../../types/utils";
+import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsValidSelector
 } from "../../lifecycle/store/selectors";
 import { itwCredentialsStore } from "../store/actions";
-import {
-  selectItwEnv,
-  selectItwSpecsVersion
-} from "../../common/store/selectors/environment";
-import { getEnv } from "../../common/utils/environment";
-import { syncItwAnalyticsProperties } from "../../analytics/saga";
-import { getMixPanelCredential } from "../../analytics/utils";
-import { trackItwStatusCredentialAssertionFailure } from "../../analytics";
-import { itwUnverifiedCredentialsCounterLimitReached } from "../../common/store/selectors/securePreferences";
-import {
-  itwUnverifiedCredentialsCounterReset,
-  itwUnverifiedCredentialsCounterUp
-} from "../../common/store/actions/securePreferences";
+import { itwCredentialsSelector } from "../store/selectors";
 
 const { isIssuerResponseError, IssuerResponseErrorCodes: Codes } = Errors;
-
-export function* updateCredentialStatusAssertionSaga(
-  credential: StoredCredential
-): Generator<ReduxSagaEffect, StoredCredential> {
-  const env = yield* select(selectItwEnv);
-  const itwVersion = yield* select(selectItwSpecsVersion);
-  const isItwL3 = yield* select(itwLifecycleIsITWalletValidSelector);
-  const mixpanelCredential = getMixPanelCredential(
-    credential.credentialType,
-    isItwL3
-  );
-  try {
-    const { parsedStatusAssertion, statusAssertion } = yield* call(
-      getCredentialStatusAssertion,
-      credential,
-      getEnv(env),
-      itwVersion
-    );
-    return {
-      ...credential,
-      storedStatusAssertion: {
-        credentialStatus: "valid",
-        statusAssertion,
-        parsedStatusAssertion
-      }
-    };
-  } catch (e) {
-    if (isIssuerResponseError(e, Codes.CredentialInvalidStatus)) {
-      const errorCode = pipe(
-        StatusAssertionError.decode(e.reason),
-        O.fromEither,
-        O.map(x => x.error),
-        O.toUndefined
-      );
-
-      trackItwStatusCredentialAssertionFailure({
-        credential: mixpanelCredential,
-        credential_status: errorCode || "invalid"
-      });
-
-      return {
-        ...credential,
-        storedStatusAssertion: { credentialStatus: "invalid", errorCode }
-      };
-    }
-    // We do not have enough information on the status, the error was unexpected
-    trackItwStatusCredentialAssertionFailure({
-      credential: mixpanelCredential,
-      credential_status: "unknown",
-      reason: e instanceof Error ? e.message : e
-    });
-
-    return {
-      ...credential,
-      storedStatusAssertion: { credentialStatus: "unknown" }
-    };
-  }
-}
 
 /**
  * This saga is responsible to check the status assertion for each credential in the wallet.
@@ -145,4 +88,62 @@ export function* checkCredentialsStatusAssertion() {
   }
 
   yield* call(syncItwAnalyticsProperties);
+}
+
+export function* updateCredentialStatusAssertionSaga(
+  credential: StoredCredential
+): Generator<ReduxSagaEffect, StoredCredential> {
+  const env = yield* select(selectItwEnv);
+  const itwVersion = yield* select(selectItwSpecsVersion);
+  const isItwL3 = yield* select(itwLifecycleIsITWalletValidSelector);
+  const mixpanelCredential = getMixPanelCredential(
+    credential.credentialType,
+    isItwL3
+  );
+  try {
+    const { parsedStatusAssertion, statusAssertion } = yield* call(
+      getCredentialStatusAssertion,
+      credential,
+      getEnv(env),
+      itwVersion
+    );
+    return {
+      ...credential,
+      storedStatusAssertion: {
+        credentialStatus: "valid",
+        statusAssertion,
+        parsedStatusAssertion
+      }
+    };
+  } catch (e) {
+    if (isIssuerResponseError(e, Codes.CredentialInvalidStatus)) {
+      const errorCode = pipe(
+        StatusAssertionError.decode(e.reason),
+        O.fromEither,
+        O.map(x => x.error),
+        O.toUndefined
+      );
+
+      trackItwStatusCredentialAssertionFailure({
+        credential: mixpanelCredential,
+        credential_status: errorCode || "invalid"
+      });
+
+      return {
+        ...credential,
+        storedStatusAssertion: { credentialStatus: "invalid", errorCode }
+      };
+    }
+    // We do not have enough information on the status, the error was unexpected
+    trackItwStatusCredentialAssertionFailure({
+      credential: mixpanelCredential,
+      credential_status: "unknown",
+      reason: e instanceof Error ? e.message : e
+    });
+
+    return {
+      ...credential,
+      storedStatusAssertion: { credentialStatus: "unknown" }
+    };
+  }
 }

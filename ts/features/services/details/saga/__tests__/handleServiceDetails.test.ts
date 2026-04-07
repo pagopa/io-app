@@ -1,15 +1,16 @@
-import * as E from "fp-ts/lib/Either";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
+import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
+
 import { OrganizationName } from "../../../../../../definitions/backend/OrganizationName";
-import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
-import { StandardServiceCategoryEnum } from "../../../../../../definitions/services/StandardServiceCategory";
 import { ScopeTypeEnum } from "../../../../../../definitions/services/ScopeType";
+import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
 import { ServiceId } from "../../../../../../definitions/services/ServiceId";
-import { loadServiceDetail } from "../../store/actions/details";
-import { handleServiceDetails } from "../handleServiceDetails";
+import { StandardServiceCategoryEnum } from "../../../../../../definitions/services/StandardServiceCategory";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { ServicesClient } from "../../../common/api/__mocks__/servicesClient";
+import { loadServiceDetail } from "../../store/actions/details";
+import { handleServiceDetails } from "../handleServiceDetails";
 
 const mockedServiceId = "A01" as ServiceId;
 

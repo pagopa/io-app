@@ -1,8 +1,9 @@
 import { createMigrate, PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
+
 import { Action } from "../../../../../store/actions/types";
-import { isDevEnv } from "../../../../../utils/environment";
 import createSecureStorage from "../../../../../store/storages/secureStorage";
+import { isDevEnv } from "../../../../../utils/environment";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import { itwCredentialsRemove, itwCredentialsStore } from "../actions";
@@ -11,11 +12,11 @@ import {
   itwCredentialsStateMigrations
 } from "./migrations";
 
-type CredentialsRecord = { [credentialKey: string]: StoredCredential };
-
 export type ItwCredentialsState = {
   credentials: CredentialsRecord;
 };
+
+type CredentialsRecord = Record<string, StoredCredential>;
 
 export const itwCredentialsInitialState: ItwCredentialsState = {
   credentials: {}
@@ -26,21 +27,6 @@ const reducer = (
   action: Action
 ): ItwCredentialsState => {
   switch (action.type) {
-    case getType(itwCredentialsStore): {
-      const addedCredentials = action.payload.reduce(
-        (acc, c) => ({ ...acc, [c.credentialId]: c }),
-        {} as CredentialsRecord
-      );
-
-      return {
-        ...state,
-        credentials: {
-          ...state.credentials,
-          ...addedCredentials
-        }
-      };
-    }
-
     case getType(itwCredentialsRemove): {
       const idsToRemove = new Set(action.payload.map(c => c.credentialId));
 
@@ -54,6 +40,21 @@ const reducer = (
       return {
         ...state,
         credentials: otherCredentials
+      };
+    }
+
+    case getType(itwCredentialsStore): {
+      const addedCredentials = action.payload.reduce(
+        (acc, c) => ({ ...acc, [c.credentialId]: c }),
+        {} as CredentialsRecord
+      );
+
+      return {
+        ...state,
+        credentials: {
+          ...state.credentials,
+          ...addedCredentials
+        }
       };
     }
 

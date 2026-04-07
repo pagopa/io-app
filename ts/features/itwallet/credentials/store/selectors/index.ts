@@ -2,6 +2,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import _, { partition } from "lodash";
 import { createSelector } from "reselect";
+
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
   getFamilyNameFromCredential,
@@ -19,9 +20,7 @@ import {
   StoredCredential
 } from "../../../common/utils/itwTypesUtils";
 
-type CredentialsByType = {
-  [K: string]: Record<CredentialFormat, StoredCredential>;
-};
+type CredentialsByType = Record<string, Record<CredentialFormat, StoredCredential>>;
 
 /**
  * The Wallet might contain older credentials in `vc+sd-jwt` format.

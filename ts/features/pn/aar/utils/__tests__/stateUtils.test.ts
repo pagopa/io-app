@@ -131,9 +131,9 @@ describe("stateUtils", () => {
     it("should handle all the possible states", () => {
       sendAarMockStates.forEach(state => {
         switch (state.type) {
-          case sendAARFlowStates.notAddresseeFinal:
-          case sendAARFlowStates.fetchingNotificationData:
           case sendAARFlowStates.displayingNotificationData:
+          case sendAARFlowStates.fetchingNotificationData:
+          case sendAARFlowStates.notAddresseeFinal:
             expect(maybeIunFromAarFlowState(state)).toBe(state.iun);
             break;
           case sendAARFlowStates.ko:

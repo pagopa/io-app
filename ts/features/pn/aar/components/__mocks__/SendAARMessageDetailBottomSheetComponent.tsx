@@ -1,4 +1,5 @@
 import { View } from "react-native";
+
 import { SendAARMessageDetailBottomSheetComponentProps } from "../SendAARMessageDetailBottomSheetComponent";
 
 export const SendAARMessageDetailBottomSheetComponent = ({

@@ -1,14 +1,15 @@
 import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+
 import { BackendClient } from "../../../../api/backend";
-import { loadServicePreference } from "../store/actions/preference";
-import { ServicePreferenceResponseFailure } from "../types/ServicePreferenceResponse";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { tryLoadSENDPreferences } from "../../../pn/store/sagas/watchPnSaga";
+import { loadServicePreference } from "../store/actions/preference";
+import { ServicePreferenceResponseFailure } from "../types/ServicePreferenceResponse";
 
 export const mapKinds: Record<
   number,
@@ -18,6 +19,10 @@ export const mapKinds: Record<
   404: "notFound",
   429: "tooManyRequests"
 };
+
+export function* fetchServicePreferencesForStartup() {
+  yield* call(tryLoadSENDPreferences);
+}
 
 /**
  * saga to handle the load of service preferences for a specific service
@@ -96,8 +101,4 @@ export function* handleGetServicePreference(
       })
     );
   }
-}
-
-export function* fetchServicePreferencesForStartup() {
-  yield* call(tryLoadSENDPreferences);
 }

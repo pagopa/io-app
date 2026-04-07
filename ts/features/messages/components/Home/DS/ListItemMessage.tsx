@@ -14,6 +14,7 @@ import {
   useListItemAnimation,
   WithTestID
 } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { ComponentProps } from "react";
 import {
   ColorValue,
@@ -24,7 +25,7 @@ import {
 } from "react-native";
 import Animated from "react-native-reanimated";
 import Svg, { Circle } from "react-native-svg";
-import I18n from "i18next";
+
 import { AvatarDouble } from "./AvatarDouble";
 
 export const ListItemMessageStandardHeight = 95;
@@ -57,13 +58,11 @@ const styles = StyleSheet.create({
   textContainer: { flex: 1, marginLeft: 8 }
 });
 
-type ListItemMessageTag = {
-  text: string;
-  variant: Extract<Tag["variant"], "legalMessage" | "success">;
-};
-
-export type ListItemMessageProps = WithTestID<{
-  tag?: ListItemMessageTag;
+export type ListItemMessageProps = Pick<
+    ComponentProps<typeof Pressable>,
+    "accessibilityLabel" | "accessibilityRole" | "onLongPress" | "onPress"
+  > &
+  WithTestID<{
   avatarDouble?: boolean;
   formattedDate: string;
   isRead: boolean;
@@ -72,11 +71,13 @@ export type ListItemMessageProps = WithTestID<{
   selected?: boolean;
   serviceLogos?: ImageSourcePropType;
   serviceName: string;
-}> &
-  Pick<
-    ComponentProps<typeof Pressable>,
-    "onPress" | "onLongPress" | "accessibilityLabel" | "accessibilityRole"
-  >;
+  tag?: ListItemMessageTag;
+}>;
+
+type ListItemMessageTag = {
+  text: string;
+  variant: Extract<Tag["variant"], "legalMessage" | "success">;
+};
 
 type UnreadBadgeProps = {
   color: ColorValue;
@@ -84,8 +85,8 @@ type UnreadBadgeProps = {
 };
 
 const UnreadBadge = ({ color, width = 14 }: UnreadBadgeProps) => (
-  <Svg width={width} height={width}>
-    <Circle cx={"50%"} cy={"50%"} r={width / 2} fill={color} />
+  <Svg height={width} width={width}>
+    <Circle cx={"50%"} cy={"50%"} fill={color} r={width / 2} />
   </Svg>
 );
 
@@ -120,21 +121,21 @@ export const ListItemMessage = ({
 
   return (
     <Pressable
-      onPress={onPress}
-      testID={testID}
+      accessibilityLabel={accessibilityLabel}
+      accessibilityRole={accessibilityRole || "button"}
       accessible={true}
       onLongPress={onLongPress}
+      onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
       onTouchEnd={onPressOut}
-      accessibilityRole={accessibilityRole || "button"}
-      accessibilityLabel={accessibilityLabel}
       style={{
         backgroundColor: selected ? selectedBgColor : undefined,
         minHeight: tag
           ? ListItemMessageEnhancedHeight
           : ListItemMessageStandardHeight
       }}
+      testID={testID}
     >
       <Animated.View
         style={[
@@ -180,16 +181,16 @@ export const ListItemMessage = ({
                 react and react-native (on react-native, 'flex: 1' does
                 something similar to 'flex-grow') */}
                 <H6
-                  numberOfLines={1}
                   color={theme["textBody-default"]}
+                  numberOfLines={1}
                   style={{ flexGrow: 1, flexShrink: 1 }}
                 >
                   {organizationName}
                 </H6>
                 <BodySmall
                   color={theme["textBody-tertiary"]}
-                  weight="Regular"
                   style={{ marginLeft: 8 }}
+                  weight="Regular"
                 >
                   {formattedDate}
                 </BodySmall>
@@ -213,10 +214,10 @@ export const ListItemMessage = ({
                     <Tag text={tag.text} variant={tag.variant} />
                     {tag.variant === "legalMessage" && (
                       <Tag
-                        variant="attachment"
                         iconAccessibilityLabel={I18n.t(
                           "features.pn.details.attachmentsSection.title"
                         )}
+                        variant="attachment"
                       />
                     )}
                   </HStack>

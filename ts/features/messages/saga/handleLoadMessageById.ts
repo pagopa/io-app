@@ -1,21 +1,22 @@
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { convertUnknownToError } from "../../../utils/errors";
-import { loadMessageById } from "../store/actions";
-import { toUIMessage } from "../store/reducers/transformers";
+
 import { CreatedMessageWithContentAndAttachments } from "../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
-import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
+import { backendClientManager } from "../../../api/BackendClientManager";
+import { apiUrlPrefix } from "../../../config";
 import { SagaCallReturnType } from "../../../types/utils";
-import { errorToReason, unknownToReason } from "../utils";
+import { convertUnknownToError } from "../../../utils/errors";
+import { sessionTokenSelector } from "../../authentication/common/store/selectors";
+import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import {
   trackLoadMessageByIdFailure,
   trackUndefinedBearerToken,
   UndefinedBearerTokenPhase
 } from "../analytics";
+import { loadMessageById } from "../store/actions";
+import { toUIMessage } from "../store/reducers/transformers";
+import { errorToReason, unknownToReason } from "../utils";
 import { handleResponse } from "../utils/responseHandling";
-import { backendClientManager } from "../../../api/BackendClientManager";
-import { apiUrlPrefix } from "../../../config";
-import { sessionTokenSelector } from "../../authentication/common/store/selectors";
 
 export function* handleLoadMessageById(
   action: ActionType<typeof loadMessageById.request>

@@ -1,5 +1,6 @@
 import { H4, IconButton, IOVisualCostants } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import I18n from "i18next";
 import {
   createRef,
   FunctionComponent,
@@ -8,7 +9,7 @@ import {
   useEffect
 } from "react";
 import { StyleSheet, View } from "react-native";
-import I18n from "i18next";
+
 import { setAccessibilityFocus } from "../../utils/accessibility";
 
 const styles = StyleSheet.create({
@@ -23,8 +24,8 @@ const styles = StyleSheet.create({
 });
 
 type Props = {
-  title: string | ReactNode;
   onClose: () => void;
+  title: ReactNode | string;
 };
 
 export const BottomSheetHeader: FunctionComponent<Props> = ({
@@ -38,24 +39,24 @@ export const BottomSheetHeader: FunctionComponent<Props> = ({
   }, [headerRef]);
 
   return (
-    <View style={styles.bottomSheetHeader} ref={headerRef}>
+    <View ref={headerRef} style={styles.bottomSheetHeader}>
       {isValidElement(title) ? (
         title
       ) : (
         <View
-          style={{ flex: 1 }}
-          accessible={true}
-          accessibilityRole={"header"}
           accessibilityLabel={typeof title === "string" ? title : undefined}
+          accessibilityRole={"header"}
+          accessible={true}
+          style={{ flex: 1 }}
         >
           <H4>{title}</H4>
         </View>
       )}
       <IconButton
-        color="neutral"
-        onPress={onClose}
-        icon="closeMedium"
         accessibilityLabel={I18n.t("global.buttons.close")}
+        color="neutral"
+        icon="closeMedium"
+        onPress={onClose}
       />
     </View>
   );

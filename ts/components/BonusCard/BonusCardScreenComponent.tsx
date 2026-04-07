@@ -7,6 +7,7 @@ import {
 import { ReactNode } from "react";
 import { ColorSchemeName } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
+
 import { useDetectSmallScreen } from "../../hooks/useDetectSmallScreen";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { SupportRequestParams } from "../../hooks/useStartSupportRequest";
@@ -22,22 +23,22 @@ export type BonusCardColorSchemeValues = {
   text: IOColors;
 };
 
+export type BonusScreenComponentProps = BaseProps &
+  Exclude<BonusCard, "cardSpecificColors"> &
+  SupportRequestParams;
+
+type BaseProps = {
+  actions?: IOScrollViewActions;
+  cardColors?: CardThemeColors;
+  children?: ReactNode;
+  headerAction?: HeaderActionProps;
+  title?: string;
+};
+
 type CardThemeColors = Record<
   NonNullable<ColorSchemeName>,
   BonusCardColorSchemeValues
 >;
-
-type BaseProps = {
-  title?: string;
-  headerAction?: HeaderActionProps;
-  children?: ReactNode;
-  actions?: IOScrollViewActions;
-  cardColors?: CardThemeColors;
-};
-
-export type BonusScreenComponentProps = BaseProps &
-  SupportRequestParams &
-  Exclude<BonusCard, "cardSpecificColors">;
 
 export const defaultBonusCardColors: CardThemeColors = {
   light: {
@@ -90,13 +91,13 @@ const BonusCardScreenComponent = ({
 
   return (
     <IOScrollView
-      animatedRef={animatedScrollViewRef}
       actions={actions}
+      animatedRef={animatedScrollViewRef}
       includeContentMargins={false}
     >
       <BonusCard
-        hideLogo={isDeviceScreenSmall}
         cardColorSchemeValues={cardColorSchemeValues}
+        hideLogo={isDeviceScreenSmall}
         {...cardProps}
       />
       {children}

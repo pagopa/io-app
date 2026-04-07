@@ -1,10 +1,11 @@
 import { expectSaga } from "redux-saga-test-plan";
-import { watchItwEnvironment } from "../environment";
+
 import {
   itwResetEnv,
   itwSetEnv,
   itwSetSpecsVersion
 } from "../../store/actions/environment";
+import { watchItwEnvironment } from "../environment";
 
 describe("watchItwEnvironment", () => {
   it("should change IT-Wallet specs to 1.0 when resetting the env", async () => {

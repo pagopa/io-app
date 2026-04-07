@@ -2,6 +2,7 @@ import { act, fireEvent } from "@testing-library/react-native";
 import _ from "lodash";
 import { Alert } from "react-native";
 import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -264,11 +265,11 @@ function renderComponent() {
   return renderScreenWithNavigationStoreContext<GlobalState>(
     ({ navigation, route }: SendAarCanEducationalScreenProps) => (
       <SendAarCanEducationalScreen
-        route={route}
         navigation={{
           ..._.mapValues(navigation, () => mockShouldNeverCall),
           replace: mockReplace
         }}
+        route={route}
       />
     ),
     PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL,

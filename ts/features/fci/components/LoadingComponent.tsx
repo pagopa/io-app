@@ -6,12 +6,13 @@ import {
   WithTestID
 } from "@pagopa/io-app-design-system";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import { LoadingIndicator } from "../../../components/ui/LoadingIndicator";
 
 type Props = WithTestID<
   Readonly<{
-    captionTitle?: string;
     captionSubtitle?: string;
+    captionTitle?: string;
   }>
 >;
 

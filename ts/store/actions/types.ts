@@ -7,9 +7,10 @@ import {
   Store as ReduxStore,
   StoreEnhancer as ReduxStoreEnhancer
 } from "redux";
+
 import { VersionInfoActions } from "../../common/versionInfo/store/actions/versionInfo";
-import { AppFeedbackActions } from "../../features/appReviews/store/actions";
 import { AppearanceSettingsActions } from "../../features/appearanceSettings/store/actions";
+import { AppFeedbackActions } from "../../features/appReviews/store/actions";
 import { LoginInfoActions } from "../../features/authentication/activeSessionLogin/store/actions";
 import { AuthenticationActions } from "../../features/authentication/common/store/actions";
 import { FastLoginActions } from "../../features/authentication/fastLogin/store/actions";
@@ -70,70 +71,66 @@ import { SearchActions } from "./search";
 import { StartupActions } from "./startup";
 
 export type Action =
+  | AARFlowStateActions
   | AnalyticsActions
+  | AppearanceSettingsActions
+  | AppFeedbackActions
   | ApplicationActions
   | AuthenticationActions
   | BackendStatusActions
+  | BackgroundLinkingActions
+  | BonusActions
+  | CalendarEventsActions
+  | CdcActions
   | CieAuthenticationActions
+  | CieLoginConfigActions
+  | ConnectivityActions
+  | ContentActions
+  | CrossSessionsActions
+  | DebugActions
+  | FastLoginActions
+  | FciActions
+  | FimsActions
+  | IdentificationActions
+  | IdPayActions
+  | IngressScreenActions
+  | InstallationActions
+  | ItwActions
+  | LandingScreenBannerActions
   | LoginInfoActions
-  | VersionInfoActions
+  | LollipopActions
   | MessagesActions
   | MixpanelActions
-  | NotificationsActions
-  | NotificationPermissionsActions
-  | PendingMessageActions
-  | UserBehaviourActions
-  | ProfileNotificationPermissionsActions
-  | PinSetActions
-  | OnboardingActions
-  | PreferencesActions
-  | PersistedPreferencesActions
-  | ProfileActions
-  | ServicesActions
-  | ContentActions
-  | IdentificationActions
-  | InstallationActions
-  | DebugActions
-  | CalendarEventsActions
-  | SearchActions
-  | OrganizationsActions
-  | UserDataProcessingActions
-  | ProfileEmailValidationAction
-  | BonusActions
-  | CrossSessionsActions
-  | ZendeskSupportActions
-  | PnActions
-  | StartupActions
-  | FciActions
-  | IdPayActions
-  | LollipopActions
-  | FastLoginActions
-  | WhatsNewActions
-  | PaymentsFeatureActions
-  | WalletActions
-  | CieLoginConfigActions
-  | FimsActions
-  | ItwActions
-  | AppearanceSettingsActions
-  | IngressScreenActions
   | MixpanelFeatureActions
-  | LandingScreenBannerActions
-  | SpidConfigActions
-  | AppFeedbackActions
-  | UtmLinkActions
-  | ConnectivityActions
-  | AARFlowStateActions
-  | SENDLollipopLambdaActions
-  | BackgroundLinkingActions
+  | NotificationPermissionsActions
+  | NotificationsActions
+  | OnboardingActions
+  | OrganizationsActions
+  | PaymentsFeatureActions
+  | PendingMessageActions
+  | PersistedPreferencesActions
+  | PinSetActions
+  | PnActions
+  | PreferencesActions
+  | ProfileActions
+  | ProfileEmailValidationAction
+  | ProfileNotificationPermissionsActions
+  | SearchActions
   | SENDLoginEngagementActions
-  | CdcActions
-  | TourActions;
+  | SENDLollipopLambdaActions
+  | ServicesActions
+  | SpidConfigActions
+  | StartupActions
+  | TourActions
+  | UserBehaviourActions
+  | UserDataProcessingActions
+  | UtmLinkActions
+  | VersionInfoActions
+  | WalletActions
+  | WhatsNewActions
+  | ZendeskSupportActions;
 
 export type Dispatch = DispatchAPI<Action>;
-
-export type Store = ReduxStore<GlobalState, Action>;
-
-export type StoreEnhancer = ReduxStoreEnhancer<GlobalState>;
 
 export type MiddlewareAPI = ReduxMiddlewareAPI<Dispatch, GlobalState>;
 
@@ -141,3 +138,7 @@ export type MiddlewareAPI = ReduxMiddlewareAPI<Dispatch, GlobalState>;
 export type ReduxProps = Readonly<{
   dispatch: Dispatch;
 }>;
+
+export type Store = ReduxStore<GlobalState, Action>;
+
+export type StoreEnhancer = ReduxStoreEnhancer<GlobalState>;

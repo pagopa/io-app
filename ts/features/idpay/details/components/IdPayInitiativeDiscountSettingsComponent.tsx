@@ -4,16 +4,17 @@ import {
   ListItemNav
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/core";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { View } from "react-native";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
+import { View } from "react-native";
+
 import { InitiativeDTO } from "../../../../../definitions/idpay/InitiativeDTO";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
-import { IdPayConfigurationParamsList } from "../../configuration/navigation/params";
-import { IdPayConfigurationRoutes } from "../../configuration/navigation/routes";
 import { useIOSelector } from "../../../../store/hooks";
 import { isIdPayCiePaymentCodeEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { IdPayConfigurationParamsList } from "../../configuration/navigation/params";
+import { IdPayConfigurationRoutes } from "../../configuration/navigation/routes";
 
 type Props = {
   initiative: InitiativeDTO;
@@ -52,16 +53,16 @@ const IdPayInitiativeDiscountSettingsComponent = (props: Props) => {
     O.fold(
       () => (
         <ListItemNav
-          value={I18n.t(
-            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
-          )}
           accessibilityLabel={I18n.t(
             "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
           )}
           description={
-            <IOSkeleton shape="rectangle" width={100} height={21} radius={4} />
+            <IOSkeleton height={21} radius={4} shape="rectangle" width={100} />
           }
           onPress={() => null}
+          value={I18n.t(
+            "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
+          )}
         />
       ),
       ({ nInstr }) => {
@@ -73,15 +74,15 @@ const IdPayInitiativeDiscountSettingsComponent = (props: Props) => {
         );
         return (
           <ListItemNav
-            value={I18n.t(
-              "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
-            )}
-            description={methodCountString}
-            onPress={() => navigateToInstrumentsConfiguration(initiative)}
             accessibilityLabel={`${I18n.t(
               "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
             )}
          ${methodCountString}`}
+            description={methodCountString}
+            onPress={() => navigateToInstrumentsConfiguration(initiative)}
+            value={I18n.t(
+              "idpay.initiative.details.initiativeDetailsScreen.configured.settings.associatedPaymentMethods"
+            )}
           />
         );
       }

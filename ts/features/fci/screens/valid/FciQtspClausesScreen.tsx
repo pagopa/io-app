@@ -7,12 +7,15 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
 import { ComponentProps, useEffect, useState } from "react";
 import { FlatList } from "react-native";
+
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { loadServicePreference } from "../../../services/details/store/actions/preference";
 import { servicePreferencePotByIdSelector } from "../../../services/details/store/selectors";
 import { isServicePreferenceResponseSuccess } from "../../../services/details/types/ServicePreferenceResponse";
@@ -41,8 +44,6 @@ import {
   fciQtspPrivacyTextSelector,
   fciQtspPrivacyUrlSelector
 } from "../../store/reducers/fciQtspClauses";
-import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 const FciQtspClausesScreen = () => {
   const dispatch = useIODispatch();
@@ -111,8 +112,7 @@ const FciQtspClausesScreen = () => {
   if (fciPollFilledDocumentError && !isPollFilledDocumentReady) {
     return (
       <SignatureStatusComponent
-        title={I18n.t("features.fci.errors.generic.default.title")}
-        subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
+        assistance={true}
         onPress={() => {
           trackFciPollingFailureAction(
             "custom_1",
@@ -120,15 +120,16 @@ const FciQtspClausesScreen = () => {
           );
           dispatch(fciEndRequest());
         }}
-        pictogram={"umbrella"}
-        assistance={true}
-        testID="PollingErrorComponentTestID"
         onPressAssistance={() =>
           trackFciPollingFailureAction(
             "custom_2",
             I18n.t("features.fci.errors.buttons.assistance")
           )
         }
+        pictogram={"umbrella"}
+        subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
+        testID="PollingErrorComponentTestID"
+        title={I18n.t("features.fci.errors.generic.default.title")}
       />
     );
   } else if (!isPollFilledDocumentReady) {
@@ -140,10 +141,21 @@ const FciQtspClausesScreen = () => {
       contentContainerStyle={{
         paddingHorizontal: IOVisualCostants.appMarginDefault
       }}
-      scrollEnabled={false}
       data={qtspClausesSelector}
-      keyExtractor={(_, index) => `${index}`}
       ItemSeparatorComponent={() => <Divider />}
+      keyboardShouldPersistTaps={"handled"}
+      keyExtractor={(_, index) => `${index}`}
+      ListFooterComponent={
+        <>
+          <Divider />
+          <VSpacer size={24} />
+          <LinkedText
+            onPress={openUrl}
+            replacementUrl={qtspPrivacyUrlSelector}
+            text={qtspPrivacyTextSelector}
+          />
+        </>
+      }
       renderItem={({ item }) => (
         <QtspClauseListItem
           clause={item}
@@ -153,18 +165,7 @@ const FciQtspClausesScreen = () => {
           onLinkPress={openUrl}
         />
       )}
-      ListFooterComponent={
-        <>
-          <Divider />
-          <VSpacer size={24} />
-          <LinkedText
-            text={qtspPrivacyTextSelector}
-            replacementUrl={qtspPrivacyUrlSelector}
-            onPress={openUrl}
-          />
-        </>
-      }
-      keyboardShouldPersistTaps={"handled"}
+      scrollEnabled={false}
       testID={"FciQtspClausesListTestID"}
     />
   );
@@ -191,14 +192,14 @@ const FciQtspClausesScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
+      actions={actions}
+      contextualHelp={emptyContextualHelp}
+      description={I18n.t("features.fci.qtspTos.subTitle")}
+      headerActionsProp={{ showHelp: true }}
       testID={"FciQtspClausesTestID"}
       title={{
         label: I18n.t("features.fci.qtspTos.title")
       }}
-      description={I18n.t("features.fci.qtspTos.subTitle")}
-      actions={actions}
-      contextualHelp={emptyContextualHelp}
-      headerActionsProp={{ showHelp: true }}
     >
       {renderClausesFields()}
       {fciAbortSignature}

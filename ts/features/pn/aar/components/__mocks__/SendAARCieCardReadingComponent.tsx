@@ -1,4 +1,5 @@
 import { Text, View } from "react-native";
+
 import { SendAARCieCardReadingComponentProps } from "../SendAARCieCardReadingComponent";
 
 export const SendAARCieCardReadingComponent = ({

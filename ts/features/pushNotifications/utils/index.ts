@@ -1,17 +1,18 @@
-import { captureException, captureMessage } from "@sentry/react-native";
-import { v4 as uuid } from "uuid";
-import { PermissionsAndroid } from "react-native";
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
-import PushNotification from "react-native-push-notification";
+import { captureException, captureMessage } from "@sentry/react-native";
+import { PermissionsAndroid } from "react-native";
 import NotificationsUtils from "react-native-notifications-utils";
+import PushNotification from "react-native-push-notification";
+import { v4 as uuid } from "uuid";
+
 import { isIos } from "../../../utils/platform";
 
 export enum AuthorizationStatus {
-  NotDetermined = 0,
-  StatusDenied = 1,
   Authorized = 2,
+  Ephemeral = 4, // This is a state that may be returned by iOS (as a number) but it is not mapped in the iOS library
+  NotDetermined = 0,
   Provisional = 3,
-  Ephemeral = 4 // This is a state that may be returned by iOS (as a number) but it is not mapped in the iOS library
+  StatusDenied = 1
 }
 
 export const checkNotificationPermissions = () =>

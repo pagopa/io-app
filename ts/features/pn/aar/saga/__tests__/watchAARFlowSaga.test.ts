@@ -1,25 +1,26 @@
 import { testSaga } from "redux-saga-test-plan";
-import { Effect, call } from "redux-saga/effects";
+import { call, Effect } from "redux-saga/effects";
 import { take } from "typed-redux-saga/macro";
+
 import { apiUrlPrefix } from "../../../../../config";
+import { isAarInAppDelegationRemoteEnabledSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { KeyInfo } from "../../../../lollipop/utils/crypto";
 import {
-  SendAARClient,
-  createSendAARClientWithLollipop
+  createSendAARClientWithLollipop,
+  SendAARClient
 } from "../../api/client";
 import {
+  initiateAarFlow,
   setAarFlowState,
-  terminateAarFlow,
-  initiateAarFlow
+  terminateAarFlow
 } from "../../store/actions";
 import { sendAARFlowStates } from "../../utils/stateUtils";
-import { initiateAarFlowSaga } from "../initiateAarFlowSaga";
+import { createAarMandateSaga } from "../createAarMandateSaga";
 import { fetchAarDataSaga } from "../fetchNotificationDataSaga";
 import { fetchAARQrCodeSaga } from "../fetchQrCodeSaga";
-import { testable, watchAarFlowSaga } from "../watchAARFlowSaga";
+import { initiateAarFlowSaga } from "../initiateAarFlowSaga";
 import { validateMandateSaga } from "../validateMandateSaga";
-import { isAarInAppDelegationRemoteEnabledSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
-import { createAarMandateSaga } from "../createAarMandateSaga";
+import { testable, watchAarFlowSaga } from "../watchAARFlowSaga";
 const { aarFlowMasterSaga, raceWithTerminateFlow } = testable as NonNullable<
   typeof testable
 >;
@@ -188,7 +189,7 @@ describe("watchAarFlowSaga", () => {
             action
           ),
           cancel: take(terminateAarFlow)
-        } as unknown as { [key: string]: Effect });
+        } as unknown as Record<string, Effect>);
 
       saga.next("task").isDone();
       saga.next("cancel").isDone();

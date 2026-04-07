@@ -2,6 +2,7 @@ import { ListItemAction } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { memo, ReactNode, useMemo } from "react";
 import { View } from "react-native";
+
 import { useOfflineToastGuard } from "../../../../../hooks/useOfflineToastGuard.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks";
@@ -12,12 +13,12 @@ import { getCredentialDocumentNumber } from "../../../trustmark/utils";
 import { useItwRemoveCredentialWithConfirm } from "../hooks/useItwRemoveCredentialWithConfirm";
 import { useItwStartCredentialSupportRequest } from "../hooks/useItwStartCredentialSupportRequest.tsx";
 
-type ItwPresentationDetailFooterProps = {
-  credential: StoredCredential;
-};
-
 type IPatenteListItemActionProps = {
   docNumber?: string;
+};
+
+type ItwPresentationDetailFooterProps = {
+  credential: StoredCredential;
 };
 
 const ItwPresentationDetailsFooter = ({
@@ -37,28 +38,28 @@ const ItwPresentationDetailsFooter = ({
     <View>
       {credentialActions}
       <ListItemAction
-        testID="requestAssistanceActionTestID"
-        variant="primary"
+        accessibilityLabel={I18n.t(
+          "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
+        )}
         icon="message"
         label={I18n.t(
           "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
         )}
-        accessibilityLabel={I18n.t(
-          "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
-        )}
         onPress={useNotAvailableToastGuard(startAndTrackSupportRequest)}
+        testID="requestAssistanceActionTestID"
+        variant="primary"
       />
       <ListItemAction
-        testID="removeCredentialActionTestID"
-        variant="danger"
+        accessibilityLabel={I18n.t(
+          "features.itWallet.presentation.credentialDetails.actions.removeFromWallet"
+        )}
         icon="trashcan"
         label={I18n.t(
           "features.itWallet.presentation.credentialDetails.actions.removeFromWallet"
         )}
-        accessibilityLabel={I18n.t(
-          "features.itWallet.presentation.credentialDetails.actions.removeFromWallet"
-        )}
         onPress={confirmAndRemoveCredential}
+        testID="removeCredentialActionTestID"
+        variant="danger"
       />
     </View>
   );
@@ -73,7 +74,7 @@ const getCredentialActions = (credential: StoredCredential): ReactNode => {
 
   return {
     mDL: [
-      <IPatenteListItemAction key="iPatenteActionMdl" docNumber={docNumber} />
+      <IPatenteListItemAction docNumber={docNumber} key="iPatenteActionMdl" />
     ],
     EuropeanHealthInsuranceCard: [],
     EuropeanDisabilityCard: []
@@ -105,11 +106,11 @@ const IPatenteListItemAction = ({ docNumber }: IPatenteListItemActionProps) => {
 
   return (
     <ListItemAction
-      testID="openIPatenteActionTestID"
-      variant="primary"
       icon="externalLink"
       label={label}
       onPress={startFimsAuthenticationFlow}
+      testID="openIPatenteActionTestID"
+      variant="primary"
     />
   );
 };

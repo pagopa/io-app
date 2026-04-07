@@ -1,3 +1,4 @@
+import { CredentialType } from "../../../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../../../common/utils/itwTypesUtils";
 import {
   enrichPresentationDetails,
@@ -5,10 +6,9 @@ import {
   groupCredentialsByPurpose
 } from "../itwRemotePresentationUtils";
 import {
-  PresentationDetails,
-  type EnrichedPresentationDetails
+  type EnrichedPresentationDetails,
+  PresentationDetails
 } from "../itwRemoteTypeUtils";
-import { CredentialType } from "../../../../common/utils/itwMocksUtils";
 
 type Expected = ReturnType<typeof groupCredentialsByPurpose>;
 

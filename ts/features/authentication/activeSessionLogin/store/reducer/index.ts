@@ -1,45 +1,46 @@
-import { getType } from "typesafe-actions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PersistConfig, persistReducer } from "redux-persist";
+import { getType } from "typesafe-actions";
+
 import { Action } from "../../../../../store/actions/types";
+import { isTestEnv } from "../../../../../utils/environment";
+import { SpidIdp } from "../../../../../utils/idps";
+import {
+  logoutFailure,
+  logoutSuccess,
+  sessionCorrupted
+} from "../../../common/store/actions";
+import { SpidLevel } from "../../../login/cie/utils";
+import { StandardLoginRequestInfo } from "../../../login/idp/store/types";
 import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess,
   closeSessionExpirationBanner,
   consolidateActiveSessionLoginData,
+  setActiveSessionLoginBlockingScreenHasBeenVisualized,
   setActiveSessionLoginLocalFlag,
+  setCieIDSelectedSecurityLevelActiveSessionLogin,
   setFastLoginOptSessionLogin,
   setFinishedActiveSessionLoginFlow,
   setIdpSelectedActiveSessionLogin,
   setLoggedOutUserWithDifferentCF,
-  setStartActiveSessionLogin,
-  setActiveSessionLoginBlockingScreenHasBeenVisualized,
-  setCieIDSelectedSecurityLevelActiveSessionLogin
+  setStartActiveSessionLogin
 } from "../actions";
-import { SpidIdp } from "../../../../../utils/idps";
-import { StandardLoginRequestInfo } from "../../../login/idp/store/types";
-import { SpidLevel } from "../../../login/cie/utils";
-import { isTestEnv } from "../../../../../utils/environment";
-import {
-  sessionCorrupted,
-  logoutSuccess,
-  logoutFailure
-} from "../../../common/store/actions";
 
 export type ActiveSessionLoginState = {
   activeSessionLoginLocalFlag: boolean;
-  isActiveSessionLogin: boolean;
-  isUserLoggedIn: boolean;
-  loginInfo?: {
-    idp?: SpidIdp;
-    token?: string;
-    fastLoginOptIn?: boolean;
-    spidLoginInfo?: StandardLoginRequestInfo;
-    cieIDSelectedSecurityLevel?: SpidLevel;
-  };
   engagement: {
     hasBlockingScreenBeenVisualized: boolean;
     showSessionExpirationBanner: boolean;
+  };
+  isActiveSessionLogin: boolean;
+  isUserLoggedIn: boolean;
+  loginInfo?: {
+    cieIDSelectedSecurityLevel?: SpidLevel;
+    fastLoginOptIn?: boolean;
+    idp?: SpidIdp;
+    spidLoginInfo?: StandardLoginRequestInfo;
+    token?: string;
   };
 };
 
@@ -58,18 +59,18 @@ const activeSessionLoginReducer = (
   action: Action
 ): ActiveSessionLoginState => {
   switch (action.type) {
-    case getType(setActiveSessionLoginLocalFlag):
+    case getType(activeSessionLoginFailure):
       return {
         ...state,
-        activeSessionLoginLocalFlag: action.payload,
-        engagement: { ...activeSessionLoginInitialState.engagement }
+        isUserLoggedIn: false
       };
-    case getType(setActiveSessionLoginBlockingScreenHasBeenVisualized):
+    case getType(activeSessionLoginSuccess):
       return {
         ...state,
-        engagement: {
-          ...state.engagement,
-          hasBlockingScreenBeenVisualized: true
+        isUserLoggedIn: true,
+        loginInfo: {
+          ...state.loginInfo,
+          token: action.payload
         }
       };
     case getType(closeSessionExpirationBanner):
@@ -81,17 +82,33 @@ const activeSessionLoginReducer = (
           showSessionExpirationBanner: false
         }
       };
-    case getType(setStartActiveSessionLogin):
+    case getType(consolidateActiveSessionLoginData):
+    case getType(logoutFailure):
+    case getType(logoutSuccess):
+    case getType(sessionCorrupted):
+    case getType(setLoggedOutUserWithDifferentCF):
+      return activeSessionLoginInitialState;
+    case getType(setActiveSessionLoginBlockingScreenHasBeenVisualized):
       return {
         ...state,
-        isActiveSessionLogin: true
+        engagement: {
+          ...state.engagement,
+          hasBlockingScreenBeenVisualized: true
+        }
       };
-    case getType(setIdpSelectedActiveSessionLogin):
+
+    case getType(setActiveSessionLoginLocalFlag):
+      return {
+        ...state,
+        activeSessionLoginLocalFlag: action.payload,
+        engagement: { ...activeSessionLoginInitialState.engagement }
+      };
+    case getType(setCieIDSelectedSecurityLevelActiveSessionLogin):
       return {
         ...state,
         loginInfo: {
           ...state.loginInfo,
-          idp: action.payload
+          cieIDSelectedSecurityLevel: action.payload
         }
       };
     case getType(setFastLoginOptSessionLogin):
@@ -102,29 +119,6 @@ const activeSessionLoginReducer = (
           fastLoginOptIn: action.payload
         }
       };
-    case getType(setCieIDSelectedSecurityLevelActiveSessionLogin):
-      return {
-        ...state,
-        loginInfo: {
-          ...state.loginInfo,
-          cieIDSelectedSecurityLevel: action.payload
-        }
-      };
-    case getType(activeSessionLoginSuccess):
-      return {
-        ...state,
-        isUserLoggedIn: true,
-        loginInfo: {
-          ...state.loginInfo,
-          token: action.payload
-        }
-      };
-    case getType(activeSessionLoginFailure):
-      return {
-        ...state,
-        isUserLoggedIn: false
-      };
-
     case getType(setFinishedActiveSessionLoginFlow):
       return {
         isActiveSessionLogin: false,
@@ -132,12 +126,19 @@ const activeSessionLoginReducer = (
         activeSessionLoginLocalFlag: state.activeSessionLoginLocalFlag,
         engagement: { ...state.engagement }
       };
-    case getType(consolidateActiveSessionLoginData):
-    case getType(setLoggedOutUserWithDifferentCF):
-    case getType(sessionCorrupted):
-    case getType(logoutSuccess):
-    case getType(logoutFailure):
-      return activeSessionLoginInitialState;
+    case getType(setIdpSelectedActiveSessionLogin):
+      return {
+        ...state,
+        loginInfo: {
+          ...state.loginInfo,
+          idp: action.payload
+        }
+      };
+    case getType(setStartActiveSessionLogin):
+      return {
+        ...state,
+        isActiveSessionLogin: true
+      };
     default:
       return state;
   }

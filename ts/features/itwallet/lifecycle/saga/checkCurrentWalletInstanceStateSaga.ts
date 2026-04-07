@@ -1,4 +1,5 @@
 import { call, put, select } from "typed-redux-saga/macro";
+
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { assert } from "../../../../utils/assert";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
@@ -10,25 +11,6 @@ import {
 import { getEnv } from "../../common/utils/environment.ts";
 import { getCurrentWalletInstanceStatus } from "../../common/utils/itwAttestationUtils.ts";
 import { itwLifecycleIsValidSelector } from "../store/selectors";
-
-export function* getCurrentStatusWalletInstance() {
-  const sessionToken = yield* select(sessionTokenSelector);
-  assert(sessionToken, "Missing session token");
-
-  const env = getEnv(yield* select(selectItwEnv));
-  const itwVersion = yield* select(selectItwSpecsVersion);
-
-  try {
-    return yield* call(
-      getCurrentWalletInstanceStatus,
-      env,
-      itwVersion,
-      sessionToken
-    );
-  } catch (e) {
-    return undefined;
-  }
-}
 
 export function* checkCurrentWalletInstanceStateSaga(): Generator<
   ReduxSagaEffect,
@@ -49,4 +31,23 @@ export function* checkCurrentWalletInstanceStateSaga(): Generator<
   );
 
   yield* put(itwSetWalletInstanceRemotelyActive(itwCanBeReactivated));
+}
+
+export function* getCurrentStatusWalletInstance() {
+  const sessionToken = yield* select(sessionTokenSelector);
+  assert(sessionToken, "Missing session token");
+
+  const env = getEnv(yield* select(selectItwEnv));
+  const itwVersion = yield* select(selectItwSpecsVersion);
+
+  try {
+    return yield* call(
+      getCurrentWalletInstanceStatus,
+      env,
+      itwVersion,
+      sessionToken
+    );
+  } catch (e) {
+    return undefined;
+  }
 }

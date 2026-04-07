@@ -6,7 +6,10 @@ import {
   fromPromise,
   SimulatedClock
 } from "xstate";
-import { itwProximityMachine } from "../machine/machine";
+
+import type { VerifierRequest } from "../utils/itwProximityTypeUtils";
+
+import { ItwTags } from "../../../machine/tags";
 import {
   CheckPermissionsInput,
   CloseActorOutput,
@@ -17,9 +20,8 @@ import {
   StartProximityFlowInput
 } from "../machine/actors";
 import { ProximityEvents } from "../machine/events";
-import { ItwTags } from "../../../machine/tags";
+import { itwProximityMachine } from "../machine/machine";
 import { ItwPresentationTags } from "../machine/tags";
-import type { VerifierRequest } from "../utils/itwProximityTypeUtils";
 
 const QR_CODE_STRING = "qr-code-string";
 const CREDENTIAL_TYPE = "org.iso.18013.5.1.mDL";

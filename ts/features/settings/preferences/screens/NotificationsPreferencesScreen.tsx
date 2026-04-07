@@ -1,17 +1,11 @@
-import { useCallback, useEffect, useState } from "react";
 import { ContentWrapper, useIOToast } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+import { useCallback, useEffect, useState } from "react";
+
 import { PushNotificationsContentTypeEnum } from "../../../../../definitions/backend/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../../../definitions/backend/ReminderStatus";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { profileUpsert } from "../../common/store/actions";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import {
-  profileHasErrorSelector,
-  profileIsUpdatingSelector,
-  pushNotificationPreviewEnabledSelector,
-  pushNotificationRemindersEnabledSelector
-} from "../../common/store/selectors";
 import { getFlowType } from "../../../../utils/analytics";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { ProfileNotificationSettings } from "../../../pushNotifications/components/ProfileNotificationsSettings";
@@ -20,6 +14,13 @@ import {
   trackNotificationsPreferencesPreviewStatus,
   trackNotificationsPreferencesReminderStatus
 } from "../../common/analytics";
+import { profileUpsert } from "../../common/store/actions";
+import {
+  profileHasErrorSelector,
+  profileIsUpdatingSelector,
+  pushNotificationPreviewEnabledSelector,
+  pushNotificationRemindersEnabledSelector
+} from "../../common/store/selectors";
 
 export const NotificationsPreferencesScreen = () => {
   const dispatch = useIODispatch();
@@ -98,11 +99,11 @@ export const NotificationsPreferencesScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
+      description={I18n.t("profile.preferences.notifications.subtitle")}
+      headerActionsProp={{ showHelp: true }}
       title={{
         label: I18n.t("profile.preferences.notifications.title")
       }}
-      description={I18n.t("profile.preferences.notifications.subtitle")}
-      headerActionsProp={{ showHelp: true }}
     >
       <ContentWrapper>
         <ProfileNotificationSettings
@@ -112,9 +113,9 @@ export const NotificationsPreferencesScreen = () => {
           isUpdatingRemindersSetting={isUpsertingReminders}
           onPreviewValueChanged={onPreviewValueChanged}
           onReminderValueChanged={onReminderValueChanged}
-          showSettingsPath={false}
           previewSwitchValue={previewSwitchIsOn}
           remindersSwitchValue={remindersSwitchIsOn}
+          showSettingsPath={false}
         />
       </ContentWrapper>
     </IOScrollViewWithLargeHeader>

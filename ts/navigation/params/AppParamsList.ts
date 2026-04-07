@@ -6,6 +6,11 @@ import {
   useNavigation
 } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
+
+import { AuthenticationParamsList } from "../../features/authentication/common/navigation/params/AuthenticationParamsList.ts";
+import { AUTHENTICATION_ROUTES } from "../../features/authentication/common/navigation/routes.ts";
+import { CdcBonusRequestParamsList } from "../../features/bonus/cdc/common/navigation/params.ts";
+import { CDC_ROUTES } from "../../features/bonus/cdc/common/navigation/routes.ts";
 import {
   CgnActivationParamsList,
   CgnDetailsParamsList,
@@ -22,9 +27,6 @@ import { IdPayBarcodeParamsList } from "../../features/idpay/barcode/navigation/
 import { IdPayBarcodeRoutes } from "../../features/idpay/barcode/navigation/routes";
 import { IdPayCodeParamsList } from "../../features/idpay/code/navigation/params";
 import { IdPayCodeRoutes } from "../../features/idpay/code/navigation/routes";
-
-import { CdcBonusRequestParamsList } from "../../features/bonus/cdc/common/navigation/params.ts";
-import { CDC_ROUTES } from "../../features/bonus/cdc/common/navigation/routes.ts";
 import { IdPayConfigurationParamsList } from "../../features/idpay/configuration/navigation/params";
 import { IdPayConfigurationRoutes } from "../../features/idpay/configuration/navigation/routes";
 import {
@@ -43,6 +45,7 @@ import { ItwRemoteParamsList } from "../../features/itwallet/presentation/remote
 import { ITW_REMOTE_ROUTES } from "../../features/itwallet/presentation/remote/navigation/routes.ts";
 import { MessagesParamsList } from "../../features/messages/navigation/params";
 import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
+import { OnboardingParamsList } from "../../features/onboarding/navigation/params/OnboardingParamsList.ts";
 import { PaymentsBarcodeParamsList } from "../../features/payments/barcode/navigation/params";
 import { PaymentsBarcodeRoutes } from "../../features/payments/barcode/navigation/routes";
 import { PaymentsCheckoutParamsList } from "../../features/payments/checkout/navigation/params";
@@ -54,17 +57,14 @@ import { PaymentsOnboardingRoutes } from "../../features/payments/onboarding/nav
 import { PaymentsReceiptParamsList } from "../../features/payments/receipts/navigation/params";
 import { PaymentsReceiptRoutes } from "../../features/payments/receipts/navigation/routes";
 import { NOTIFICATIONS_ROUTES } from "../../features/pushNotifications/navigation/routes";
+import { PushNotificationEngagementScreenNavigationParams } from "../../features/pushNotifications/screens/PushNotificationEngagementScreen.tsx";
 import { ServicesParamsList } from "../../features/services/common/navigation/params";
 import { SERVICES_ROUTES } from "../../features/services/common/navigation/routes";
+import { SettingsParamsList } from "../../features/settings/common/navigation/params/SettingsParamsList.ts";
+import { SETTINGS_ROUTES } from "../../features/settings/common/navigation/routes.ts";
 import { ZendeskParamsList } from "../../features/zendesk/navigation/params";
 import ZENDESK_ROUTES from "../../features/zendesk/navigation/routes";
 import ROUTES from "../routes";
-import { AuthenticationParamsList } from "../../features/authentication/common/navigation/params/AuthenticationParamsList.ts";
-import { AUTHENTICATION_ROUTES } from "../../features/authentication/common/navigation/routes.ts";
-import { SettingsParamsList } from "../../features/settings/common/navigation/params/SettingsParamsList.ts";
-import { SETTINGS_ROUTES } from "../../features/settings/common/navigation/routes.ts";
-import { OnboardingParamsList } from "../../features/onboarding/navigation/params/OnboardingParamsList.ts";
-import { PushNotificationEngagementScreenNavigationParams } from "../../features/pushNotifications/screens/PushNotificationEngagementScreen.tsx";
 import { CheckEmailParamsList } from "./CheckEmailParamsList";
 import { MainTabParamsList } from "./MainTabParamsList";
 
@@ -123,6 +123,11 @@ export type AppParamsList = {
   [SERVICES_ROUTES.SERVICES_HOME]: undefined;
 };
 
+export type IOStackNavigationProp<
+  ParamList extends ParamListBase,
+  RouteName extends keyof ParamList = string
+> = StackNavigationProp<AppParamsList & ParamList, RouteName>;
+
 /**
  * Merge the navigation of the ParamList stack with AppParamsList, in order to allow
  * the navigation in the same stack and the global stack.
@@ -135,11 +140,6 @@ export type IOStackNavigationRouteProps<
   navigation: IOStackNavigationProp<ParamList, RouteName>;
   route: RouteProp<ParamList, RouteName>;
 };
-
-export type IOStackNavigationProp<
-  ParamList extends ParamListBase,
-  RouteName extends keyof ParamList = string
-> = StackNavigationProp<AppParamsList & ParamList, RouteName>;
 export type IOTabNavigationProp<
   ParamList extends ParamListBase,
   RouteName extends keyof ParamList = string

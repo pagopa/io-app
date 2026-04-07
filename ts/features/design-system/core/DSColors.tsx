@@ -1,6 +1,7 @@
 import {
   H3,
   H6,
+  hexToRgba,
   IOColors,
   IOColorsExtra,
   IOColorsNeutral,
@@ -8,13 +9,13 @@ import {
   IOColorsTints,
   IOThemeDark,
   IOThemeLight,
-  VStack,
-  hexToRgba,
   themeStatusColorsDarkMode,
   themeStatusColorsLightMode,
-  useIOTheme
+  useIOTheme,
+  VStack
 } from "@pagopa/io-app-design-system";
 import { ColorValue, Dimensions, StyleSheet, Text, View } from "react-native";
+
 import themeVariables from "../../../theme/variables";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
@@ -103,9 +104,9 @@ const styles = StyleSheet.create({
 });
 
 type ColorThemeGroupProps = {
-  name: string;
-  colorObjectLightMode: Record<string, string>;
   colorObjectDarkMode: Record<string, string>;
+  colorObjectLightMode: Record<string, string>;
+  name: string;
 };
 
 const ColorThemeGroup = ({
@@ -152,10 +153,10 @@ const ColorThemeGroup = ({
                       }
                     >
                       <ColorBox
+                        color={colorValue}
                         isThemeColor
                         mode={"light"}
                         name={name}
-                        color={colorValue}
                         themeVariable
                       />
                     </View>
@@ -165,7 +166,7 @@ const ColorThemeGroup = ({
             </VStack>
           </View>
           <View style={styles.colorWrapperBothModes}>
-            <SmallCapsTitle title="Dark mode" darkMode />
+            <SmallCapsTitle darkMode title="Dark mode" />
             <VStack space={colorBoxMargin}>
               {Object.entries(colorObjectDarkMode).map(
                 ([name, colorValue], i) => {
@@ -176,12 +177,12 @@ const ColorThemeGroup = ({
 
                   return (
                     <ColorBox
-                      isThemeColor
-                      mode="dark"
-                      key={`${name}-darkMode`}
-                      name={name}
                       color={colorValue}
                       ghostMode={isSameColorValue}
+                      isThemeColor
+                      key={`${name}-darkMode`}
+                      mode="dark"
+                      name={name}
                       themeVariable
                     />
                   );
@@ -196,8 +197,8 @@ const ColorThemeGroup = ({
 };
 
 type ColorGroupProps = {
-  name: string;
   colorObject: Record<string, ColorValue>;
+  name: string;
 };
 
 const ColorGroup = ({ name, colorObject }: ColorGroupProps) => {
@@ -209,7 +210,7 @@ const ColorGroup = ({ name, colorObject }: ColorGroupProps) => {
 
       <VStack space={colorItemMargin}>
         {Object.entries(colorObject).map(([name, colorValue]) => (
-          <ColorBox key={name} name={name} color={colorValue} />
+          <ColorBox color={colorValue} key={name} name={name} />
         ))}
       </VStack>
     </VStack>
@@ -228,13 +229,13 @@ export const DSColors = () => {
 
           <VStack space={32}>
             {/* Neutrals */}
-            <ColorGroup name="Neutrals" colorObject={IOColorsNeutral} />
+            <ColorGroup colorObject={IOColorsNeutral} name="Neutrals" />
             {/* Tints */}
-            <ColorGroup name="Main tints" colorObject={IOColorsTints} />
+            <ColorGroup colorObject={IOColorsTints} name="Main tints" />
             {/* Status */}
-            <ColorGroup name="Status" colorObject={IOColorsStatus} />
+            <ColorGroup colorObject={IOColorsStatus} name="Status" />
             {/* Extra */}
-            <ColorGroup name="Extra" colorObject={IOColorsExtra} />
+            <ColorGroup colorObject={IOColorsExtra} name="Extra" />
           </VStack>
         </VStack>
 
@@ -244,14 +245,14 @@ export const DSColors = () => {
 
           <VStack space={40}>
             <ColorThemeGroup
-              name="Main"
-              colorObjectLightMode={IOThemeLight}
               colorObjectDarkMode={IOThemeDark}
+              colorObjectLightMode={IOThemeLight}
+              name="Main"
             />
             <ColorThemeGroup
-              name="Status"
-              colorObjectLightMode={themeStatusColorsLightMode}
               colorObjectDarkMode={themeStatusColorsDarkMode}
+              colorObjectLightMode={themeStatusColorsLightMode}
+              name="Status"
             />
           </VStack>
         </VStack>
@@ -261,11 +262,11 @@ export const DSColors = () => {
 };
 
 type ColorBoxProps = {
-  name: string;
   color: ColorValue;
-  isThemeColor?: boolean;
-  mode?: "light" | "dark";
   ghostMode?: boolean;
+  isThemeColor?: boolean;
+  mode?: "dark" | "light";
+  name: string;
   themeVariable?: boolean;
 };
 
@@ -297,6 +298,7 @@ const ColorBox = ({
 
       {name && (
         <Text
+          numberOfLines={1}
           style={{
             marginTop: 4,
             fontSize: 10,
@@ -306,7 +308,6 @@ const ColorBox = ({
                 : IOColors["grey-700"]
               : IOColors[theme["textBody-tertiary"]]
           }}
-          numberOfLines={1}
         >
           {name}
         </Text>
@@ -316,8 +317,8 @@ const ColorBox = ({
 };
 
 type SmallCapsTitleProps = {
-  title: string;
   darkMode?: boolean;
+  title: string;
 };
 
 const SmallCapsTitle = ({ title, darkMode }: SmallCapsTitleProps) => (

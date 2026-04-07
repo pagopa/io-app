@@ -1,8 +1,7 @@
-import * as t from "io-ts";
 import {
   ApiHeaderJson,
-  composeHeaderProducers,
   composeResponseDecoders as compD,
+  composeHeaderProducers,
   constantResponseDecoder as constD,
   createFetchRequestForApi,
   ioResponseDecoder as ioD,
@@ -10,53 +9,55 @@ import {
   IResponseType,
   ResponseDecoder
 } from "@pagopa/ts-commons/lib/requests";
+import { withoutUndefinedValues } from "@pagopa/ts-commons/lib/types";
+import * as t from "io-ts";
 import _ from "lodash";
 import { v4 as uuid } from "uuid";
-import { withoutUndefinedValues } from "@pagopa/ts-commons/lib/types";
+
 import { ProblemJson } from "../../definitions/backend/ProblemJson";
 import {
+  abortUserDataProcessingDefaultDecoder,
   AbortUserDataProcessingT,
   createOrUpdateInstallationDefaultDecoder,
   CreateOrUpdateInstallationT,
+  getPaymentInfoV2DefaultDecoder,
+  GetPaymentInfoV2T,
   getServicePreferencesDefaultDecoder,
   GetServicePreferencesT,
+  getThirdPartyMessageDefaultDecoder,
+  getThirdPartyMessagePreconditionDefaultDecoder,
+  GetThirdPartyMessagePreconditionT,
+  GetThirdPartyMessageT,
   getUserDataProcessingDefaultDecoder,
   GetUserDataProcessingT,
   getUserMessageDefaultDecoder,
   getUserMessagesDefaultDecoder,
+  GetUserMessagesT,
+  GetUserMessageT,
+  getUserProfileDefaultDecoder,
   GetUserProfileT,
+  startEmailValidationProcessDefaultDecoder,
   StartEmailValidationProcessT,
   updateProfileDefaultDecoder,
   UpdateProfileT,
+  upsertMessageStatusAttributesDefaultDecoder,
+  UpsertMessageStatusAttributesT,
   upsertServicePreferencesDefaultDecoder,
   UpsertServicePreferencesT,
   upsertUserDataProcessingDefaultDecoder,
-  UpsertUserDataProcessingT,
-  upsertMessageStatusAttributesDefaultDecoder,
-  UpsertMessageStatusAttributesT,
-  getUserProfileDefaultDecoder,
-  GetThirdPartyMessageT,
-  getThirdPartyMessageDefaultDecoder,
-  GetThirdPartyMessagePreconditionT,
-  getThirdPartyMessagePreconditionDefaultDecoder,
-  GetUserMessagesT,
-  GetUserMessageT,
-  startEmailValidationProcessDefaultDecoder,
-  abortUserDataProcessingDefaultDecoder,
-  GetPaymentInfoV2T,
-  getPaymentInfoV2DefaultDecoder
+  UpsertUserDataProcessingT
 } from "../../definitions/backend/requestTypes";
-import { defaultRetryingFetch } from "../utils/fetch";
-import {
-  tokenHeaderProducer,
-  withBearerToken as withToken
-} from "../utils/api";
-import { KeyInfo } from "../features/lollipop/utils/crypto";
-import { lollipopFetch } from "../features/lollipop/utils/fetch";
 import {
   getSessionStateDefaultDecoder,
   GetSessionStateT
 } from "../../definitions/session_manager/requestTypes";
+import { KeyInfo } from "../features/lollipop/utils/crypto";
+import { lollipopFetch } from "../features/lollipop/utils/fetch";
+import {
+  tokenHeaderProducer,
+  withBearerToken as withToken
+} from "../utils/api";
+import { defaultRetryingFetch } from "../utils/fetch";
 
 //
 // Other helper types
@@ -66,11 +67,18 @@ const SuccessResponse = t.interface({
   message: t.string
 });
 
-type SuccessResponse = t.TypeOf<typeof SuccessResponse>;
+export type BackendClient = ReturnType<typeof BackendClient>;
 
 //
 // Define the types of the requests
 //
+
+export type LogoutT = IPostApiRequestType<
+  { readonly Bearer: string },
+  "Authorization" | "Content-Type",
+  never,
+  BaseResponseType<SuccessResponse>
+>;
 
 /**
  *  The base response type defines 200, 401 and 500 statuses
@@ -81,27 +89,10 @@ type BaseResponseType<R> =
   | IResponseType<500, ProblemJson>;
 
 /**
- * A response decoder for base response types
- */
-function baseResponseDecoder<R, O = R>(
-  type: t.Type<R, O>
-): ResponseDecoder<BaseResponseType<R>> {
-  return compD(
-    compD(ioD<200, R, O>(200, type), constD<undefined, 401>(401, undefined)),
-    ioD<500, ProblemJson>(500, ProblemJson)
-  );
-}
-
-/**
  * Specific for the nodo-related requests
  */
 
-export type LogoutT = IPostApiRequestType<
-  { readonly Bearer: string },
-  "Authorization" | "Content-Type",
-  never,
-  BaseResponseType<SuccessResponse>
->;
+type SuccessResponse = t.TypeOf<typeof SuccessResponse>;
 
 //
 // Create client
@@ -346,4 +337,14 @@ export function BackendClient(
   };
 }
 
-export type BackendClient = ReturnType<typeof BackendClient>;
+/**
+ * A response decoder for base response types
+ */
+function baseResponseDecoder<R, O = R>(
+  type: t.Type<R, O>
+): ResponseDecoder<BaseResponseType<R>> {
+  return compD(
+    compD(ioD<200, R, O>(200, type), constD<undefined, 401>(401, undefined)),
+    ioD<500, ProblemJson>(500, ProblemJson)
+  );
+}

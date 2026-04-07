@@ -2,6 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import i18n from "i18next";
 import { useEffect } from "react";
+
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
@@ -45,13 +46,10 @@ export const SendAARInitialFlowScreen = ({
 
   useEffect(() => {
     switch (flowStateType) {
-      case sendAARFlowStates.notAddresseeFinal:
-      case sendAARFlowStates.ko:
-        navigation.replace(PN_ROUTES.SEND_AAR_ERROR);
+      case sendAARFlowStates.displayingAARToS: {
+        trackSendAARToS();
         break;
-      case sendAARFlowStates.notAddressee:
-        navigation.replace(PN_ROUTES.SEND_AAR_DELEGATION_PROPOSAL);
-        break;
+      }
       case sendAARFlowStates.displayingNotificationData: {
         const sendUserType: SendUserType =
           flowData.mandateId != null ? "mandatory" : "recipient";
@@ -64,10 +62,13 @@ export const SendAARInitialFlowScreen = ({
         });
         break;
       }
-      case sendAARFlowStates.displayingAARToS: {
-        trackSendAARToS();
+      case sendAARFlowStates.ko:
+      case sendAARFlowStates.notAddresseeFinal:
+        navigation.replace(PN_ROUTES.SEND_AAR_ERROR);
         break;
-      }
+      case sendAARFlowStates.notAddressee:
+        navigation.replace(PN_ROUTES.SEND_AAR_DELEGATION_PROPOSAL);
+        break;
     }
   }, [navigation, flowStateType, flowData]);
 

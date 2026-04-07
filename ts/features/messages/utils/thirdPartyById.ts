@@ -1,7 +1,7 @@
 import {
   EphemeralAARThirdPartyMessage,
-  ThirdPartyMessageUnion,
-  thirdPartyKind
+  thirdPartyKind,
+  ThirdPartyMessageUnion
 } from "../types/thirdPartyById";
 
 export const isEphemeralAARThirdPartyMessage = (

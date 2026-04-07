@@ -8,6 +8,7 @@
 import { IOColors } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { Platform } from "react-native";
+
 import { FontWeight, makeFontStyleObject } from "./fonts";
 
 export const VIBRATION_LONG_PRESS_DURATION = 50 as Millisecond;

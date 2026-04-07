@@ -1,3 +1,4 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { addMonths } from "date-fns";
 import _ from "lodash";
@@ -10,7 +11,7 @@ import {
   PersistPartial,
   persistReducer
 } from "redux-persist";
-import * as pot from "@pagopa/ts-commons/lib/pot";
+
 import { Action } from "../../../../../store/actions/types";
 import { isDevEnv } from "../../../../../utils/environment";
 import itwCredentialsReducer, {
@@ -36,15 +37,15 @@ import securePreferencesReducer, {
 } from "./securePreferences";
 
 export type ItWalletState = {
+  banners: ItwBannersState;
+  credentials: ItwCredentialsState & PersistPartial;
+  credentialsCatalogue: ItwCredentialsCatalogueState;
   environment: ItwEnvironmentState;
   identification: ItwIdentificationState;
   issuance: ItwIssuanceState & PersistPartial;
-  credentials: ItwCredentialsState & PersistPartial;
-  walletInstance: ItwWalletInstanceState & PersistPartial;
   preferences: ItwPreferencesState;
   securePreferences: ItwSecurePreferencesState & PersistPartial;
-  credentialsCatalogue: ItwCredentialsCatalogueState;
-  banners: ItwBannersState;
+  walletInstance: ItwWalletInstanceState & PersistPartial;
 };
 
 export type PersistedItWalletState = ReturnType<typeof persistedReducer>;

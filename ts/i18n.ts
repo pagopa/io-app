@@ -9,11 +9,10 @@ import { initReactI18next } from "react-i18next";
 
 // import { captureException } from "@sentry/react-native";
 import { BackendStatusMessage } from "../definitions/content/BackendStatusMessage";
-
-import it from "../locales/it/index.json";
-import en from "../locales/en/index.json";
-import de from "../locales/de/index.json";
 import { PreferredLanguageEnum } from "../definitions/session_manager/PreferredLanguage";
+import de from "../locales/de/index.json";
+import en from "../locales/en/index.json";
+import it from "../locales/it/index.json";
 // import { contentRepoUrl } from "./config";
 
 const resources = {
@@ -28,10 +27,16 @@ const resources = {
   }
 };
 
+export type Locales = keyof typeof resources;
+
+export type LocalizedMessageKeys = keyof BackendStatusMessage;
+
+export type TranslationKeys = ExtractKeys<typeof it>;
+
 // Utility type to extract all possible keys from resources as dot-separated paths
 // This provides the same TranslationKeys that i18next uses internally
 type ExtractKeys<Obj, Prefix extends string = ""> = {
-  [K in keyof Obj]: K extends string | number
+  [K in keyof Obj]: K extends number | string
     ? Obj[K] extends Record<string, any>
       ? ExtractKeys<Obj[K], Prefix extends "" ? `${K}` : `${Prefix}.${K}`>
       : Prefix extends ""
@@ -39,34 +44,28 @@ type ExtractKeys<Obj, Prefix extends string = ""> = {
         : `${Prefix}.${K}`
     : never;
 }[keyof Obj];
-
-export type TranslationKeys = ExtractKeys<typeof it>;
-
-export type Locales = keyof typeof resources;
-
-export type LocalizedMessageKeys = keyof BackendStatusMessage;
 type FallBackLocale = {
-  localizedMessageKey: LocalizedMessageKeys;
   locale: "it";
   localeEnum: PreferredLanguageEnum;
+  localizedMessageKey: LocalizedMessageKeys;
 };
 
 export const localeToLocalizedMessageKey = new Map<
   Locales,
   LocalizedMessageKeys
 >([
-  ["it", "it-IT"],
+  ["de", "de-DE"],
   ["en", "en-EN"],
-  ["de", "de-DE"]
+  ["it", "it-IT"]
 ]);
 
 export const localeToPreferredLanguageMapping = new Map<
   Locales,
   PreferredLanguageEnum
 >([
-  ["it", PreferredLanguageEnum.it_IT],
+  ["de", PreferredLanguageEnum.de_DE],
   ["en", PreferredLanguageEnum.en_GB],
-  ["de", PreferredLanguageEnum.de_DE]
+  ["it", PreferredLanguageEnum.it_IT]
 ]);
 
 // define the locale fallback used in the whole app code

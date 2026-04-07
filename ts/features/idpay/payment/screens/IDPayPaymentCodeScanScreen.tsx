@@ -1,10 +1,11 @@
 import { IOToast } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
+import I18n from "i18next";
 import { Alert, View } from "react-native";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
-import I18n from "i18next";
+
 import { useOpenDeepLink } from "../../../../hooks/useOpenDeepLink";
 import {
   AppParamsList,
@@ -21,8 +22,8 @@ import {
 } from "../../../barcode";
 import * as analytics from "../../../barcode/analytics";
 import { IOBarcodeOrigin } from "../../../barcode/types/IOBarcode";
-import { IdPayPaymentRoutes } from "../navigation/routes";
 import { IdPayFeatureFlagGuard } from "../../common/components/IdPayFeatureFlagGuard";
+import { IdPayPaymentRoutes } from "../navigation/routes";
 
 const IDPayPaymentCodeScan = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -89,22 +90,22 @@ const IDPayPaymentCodeScan = () => {
   return (
     <>
       <View
-        style={{ flex: 1 }}
         importantForAccessibility={
           isFilePickerVisible ? "no-hide-descendants" : "auto"
         }
+        style={{ flex: 1 }}
       >
         <BarcodeScanBaseScreenComponent
+          barcodeAnalyticsFlow="idpay"
           barcodeFormats={barcodeFormats}
           barcodeTypes={barcodeTypes}
-          onBarcodeSuccess={handleBarcodeSuccess}
-          onBarcodeError={handleBarcodeError}
-          onFileInputPressed={showFilePicker}
-          onManualInputPressed={navigateToCodeInputScreen}
           contextualHelp={emptyContextualHelp}
-          barcodeAnalyticsFlow="idpay"
           isDisabled={isFilePickerVisible || isFileReaderLoading}
           isLoading={isFileReaderLoading}
+          onBarcodeError={handleBarcodeError}
+          onBarcodeSuccess={handleBarcodeSuccess}
+          onFileInputPressed={showFilePicker}
+          onManualInputPressed={navigateToCodeInputScreen}
         />
       </View>
       {filePickerBottomSheet}

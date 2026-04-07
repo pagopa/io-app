@@ -1,7 +1,8 @@
 import { IOColors } from "@pagopa/io-app-design-system";
 import { render } from "@testing-library/react-native";
 import { Provider } from "react-redux";
-import { Store, createStore } from "redux";
+import { createStore, Store } from "redux";
+
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";

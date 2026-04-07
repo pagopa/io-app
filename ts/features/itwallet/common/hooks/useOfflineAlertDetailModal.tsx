@@ -1,14 +1,15 @@
-import { useCallback } from "react";
-import { VStack, IOButton } from "@pagopa/io-app-design-system";
+import { IOButton, VStack } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { useIODispatch } from "../../../../store/hooks";
-import { OfflineAccessReasonEnum } from "../../../ingress/store/reducer";
-import { trackItwOfflineRicaricaAppIO } from "../../wallet/analytics";
-import { resetOfflineAccessReason } from "../../../ingress/store/actions";
+import { useCallback } from "react";
+
+import IOMarkdown from "../../../../components/IOMarkdown";
 import { startupLoadSuccess } from "../../../../store/actions/startup";
+import { useIODispatch } from "../../../../store/hooks";
 import { StartupStatusEnum } from "../../../../store/reducers/startup";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
-import IOMarkdown from "../../../../components/IOMarkdown";
+import { resetOfflineAccessReason } from "../../../ingress/store/actions";
+import { OfflineAccessReasonEnum } from "../../../ingress/store/reducer";
+import { trackItwOfflineRicaricaAppIO } from "../../wallet/analytics";
 import { useAppRestartAction } from "../../wallet/hooks/useAppRestartAction";
 
 /**
@@ -64,11 +65,11 @@ export const useOfflineAlertDetailModal = (
           )}
         />
         <IOButton
-          variant="solid"
           label={I18n.t(
             `features.itWallet.offline.${offlineAccessReason}.modal.footerAction`
           )}
           onPress={handlePressModalAction}
+          variant="solid"
         />
       </VStack>
     )

@@ -3,6 +3,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
+
 import { IOScrollView } from "../../../components/ui/IOScrollView";
 import { useHeaderFirstLevel } from "../../../hooks/useHeaderFirstLevel";
 import { useTabItemPressWhenScreenActive } from "../../../hooks/useTabItemPressWhenScreenActive";

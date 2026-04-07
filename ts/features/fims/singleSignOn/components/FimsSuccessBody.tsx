@@ -17,9 +17,10 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/Option";
+import I18n from "i18next";
 import { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
-import I18n from "i18next";
+
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { Consent } from "../../../../../definitions/fims_sso/Consent";
 import { LoadingSkeleton } from "../../../../components/ui/LoadingSkeleton";
@@ -96,7 +97,6 @@ export const FimsFlowSuccessBody = ({
   return (
     <ForceScrollDownView
       contentContainerStyle={{ flexGrow: 1 }}
-      scrollEnabled
       footerActions={{
         actions: {
           type: "TwoButtons",
@@ -121,6 +121,7 @@ export const FimsFlowSuccessBody = ({
           }
         }
       }}
+      scrollEnabled
     >
       <ContentWrapper>
         <VSpacer size={24} />
@@ -128,9 +129,9 @@ export const FimsFlowSuccessBody = ({
           {/* TODO: We need to add a variant of `Avatar` that
           lets you set a custom icon with a custom colour. */}
           <View style={styles.outlineContainer}>
-            <Icon name="productIOApp" size={"100%"} color={"blueIO-500"} />
+            <Icon color={"blueIO-500"} name="productIOApp" size={"100%"} />
           </View>
-          <Icon name="transactions" color="grey-450" />
+          <Icon color="grey-450" name="transactions" />
           <Avatar logoUri={serviceLogo} size={"small"} />
         </HStack>
 
@@ -143,12 +144,12 @@ export const FimsFlowSuccessBody = ({
 
         <VSpacer size={24} />
         <IOButton
-          variant="link"
           label={I18n.t("global.why")}
           onPress={BottomSheet.present}
+          variant="link"
         />
         <VSpacer size={24} />
-        <ListItemHeader label="Dati richiesti" iconName="security" />
+        <ListItemHeader iconName="security" label="Dati richiesti" />
         <FimsClaimsList claims={consents.user_metadata} />
         <VSpacer size={24} />
 

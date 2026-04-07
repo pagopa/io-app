@@ -1,20 +1,21 @@
-import { fromPromise } from "xstate";
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
+import { fromPromise } from "xstate";
+
 import { Env } from "../../common/utils/environment";
+import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
+import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { EidIssuanceMode } from "../eid/context";
 
-export type UpgradeCredentialParams = {
-  pid: StoredCredential;
-  walletInstanceAttestation: string;
-  credential: StoredCredential;
-  issuanceMode: EidIssuanceMode;
+export type UpgradeCredentialOutput = {
+  credentials: ReadonlyArray<StoredCredential>;
+  credentialType: string;
 };
 
-export type UpgradeCredentialOutput = {
-  credentialType: string;
-  credentials: ReadonlyArray<StoredCredential>;
+export type UpgradeCredentialParams = {
+  credential: StoredCredential;
+  issuanceMode: EidIssuanceMode;
+  pid: StoredCredential;
+  walletInstanceAttestation: string;
 };
 
 export const createCredentialUpgradeActorsImplementation = (

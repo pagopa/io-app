@@ -1,4 +1,5 @@
 import * as E from "fp-ts/lib/Either";
+
 import { fixWalletPspTagsValues } from "../../utils/wallet";
 import {
   Amount,
@@ -15,7 +16,7 @@ import {
   WalletResponse
 } from "../pagopa";
 
-const validCreditCard: { [key: string]: any } = {
+const validCreditCard: Record<string, any> = {
   id: 1464,
   holder: "Mario Rossi",
   pan: "************0111",
@@ -31,7 +32,7 @@ const invalidCreditCard = Object.keys(validCreditCard)
   .filter(k => k !== "pan")
   .reduce((o, k) => ({ ...o, [k]: validCreditCard[k] }), {});
 
-const validAmount: { [key: string]: any } = {
+const validAmount: Record<string, any> = {
   currency: "EUR",
   amount: 1000,
   decimalDigits: 2
@@ -41,7 +42,7 @@ const invalidAmount = Object.keys(validAmount)
   .filter(k => k !== "amount")
   .reduce((o, k) => ({ ...o, [k]: validAmount[k] }), {});
 
-const validPsp: { [key: string]: any } = {
+const validPsp: Record<string, any> = {
   id: 43188,
   idPsp: "idPsp1",
   businessName: "WHITE bank",
@@ -69,7 +70,7 @@ const invalidPsp = Object.keys(validPsp)
   .filter(k => k !== "id")
   .reduce((o, k) => ({ ...o, [k]: validPsp[k] }), {});
 
-const validTransaction: { [key: string]: any } = {
+const validTransaction: Record<string, any> = {
   id: 2329,
   created: "2018-08-08T20:16:41Z",
   updated: "2018-08-08T20:16:41Z",
@@ -94,7 +95,7 @@ const invalidTransaction = Object.keys(validTransaction)
   .filter(k => k !== "idWallet")
   .reduce((o, k) => ({ ...o, [k]: validTransaction[k] }), {});
 
-const validSession: { [key: string]: any } = {
+const validSession: Record<string, any> = {
   sessionToken:
     "0r12345j8E1v2w5V1s4t1U0v5v2S6b7y4N6z01smAof3kFse3o3H9b2o4Y7a1o6I1o0r6K1b5z5G7t1m4S4p6h6n5A0r6y1U1m6Y1q9v1C8k2e0U8g12345m2n0J2c8k",
   user: {
@@ -113,7 +114,7 @@ const invalidSession = Object.keys(validSession)
   .filter(k => k !== "sessionToken")
   .reduce((o, k) => ({ ...o, [k]: validSession[k] }), {});
 
-const validWallet: { [key: string]: any } = {
+const validWallet: Record<string, any> = {
   idWallet: 2345,
   type: "CREDIT_CARD",
   favourite: false,
@@ -124,7 +125,7 @@ const validWallet: { [key: string]: any } = {
   lastUsage: "2018-08-07T15:50:08Z"
 };
 
-const validWalletNoCreditCard: { [key: string]: any } = {
+const validWalletNoCreditCard: Record<string, any> = {
   idWallet: 2345,
   type: "EXTERNAL_PS",
   favourite: false,

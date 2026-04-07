@@ -14,12 +14,12 @@ import { PasswordLogin } from "../../../../../../definitions/session_manager/Pas
 import { PublicSession } from "../../../../../../definitions/session_manager/PublicSession";
 import { SpidIdp } from "../../../../../utils/idps";
 
-export type LogoutError = {
-  error: Error;
-};
-
 export type CheckSessionResult = {
   isSessionValid: boolean;
+};
+
+export type LogoutError = {
+  error: Error;
 };
 
 export const idpSelected = createStandardAction("IDP_SELECTED")<SpidIdp>();
@@ -38,8 +38,8 @@ export const idpLoginUrlChanged = createStandardAction(
 )<{ url: string }>();
 
 export const loginSuccess = createStandardAction("LOGIN_SUCCESS")<{
-  token: string;
   idp: keyof IdpData;
+  token: string;
 }>();
 
 export const loginFailure = createStandardAction("LOGIN_FAILURE")<{
@@ -93,21 +93,21 @@ export const clearCurrentSession = createStandardAction(
 )();
 
 export type AuthenticationActions =
-  | ActionType<typeof idpSelected>
+  | ActionType<typeof checkCurrentSession>
+  | ActionType<typeof clearCurrentSession>
+  | ActionType<typeof disableNativeAuthentication>
   | ActionType<typeof idpLoginUrlChanged>
-  | ActionType<typeof testLoginRequest>
-  | ActionType<typeof testLoginCleanUp>
-  | ActionType<typeof loginSuccess>
+  | ActionType<typeof idpSelected>
   | ActionType<typeof loginFailure>
+  | ActionType<typeof loginSuccess>
+  | ActionType<typeof logoutFailure>
   | ActionType<typeof logoutRequest>
   | ActionType<typeof logoutSuccess>
-  | ActionType<typeof logoutFailure>
-  | ActionType<typeof sessionInformationLoadSuccess>
-  | ActionType<typeof sessionInformationLoadFailure>
-  | ActionType<typeof checkCurrentSession>
-  | ActionType<typeof sessionExpired>
-  | ActionType<typeof sessionCorrupted>
-  | ActionType<typeof sessionInvalid>
-  | ActionType<typeof clearCurrentSession>
   | ActionType<typeof resetAuthenticationState>
-  | ActionType<typeof disableNativeAuthentication>;
+  | ActionType<typeof sessionCorrupted>
+  | ActionType<typeof sessionExpired>
+  | ActionType<typeof sessionInformationLoadFailure>
+  | ActionType<typeof sessionInformationLoadSuccess>
+  | ActionType<typeof sessionInvalid>
+  | ActionType<typeof testLoginCleanUp>
+  | ActionType<typeof testLoginRequest>;

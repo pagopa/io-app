@@ -1,17 +1,18 @@
-import { fireEvent, waitFor } from "@testing-library/react-native";
-import { createStore } from "redux";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { fireEvent, waitFor } from "@testing-library/react-native";
 import I18n from "i18next";
-import ServicesPreferenceScreen from "../ServicesPreferenceScreen";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { appReducer } from "../../../../../store/reducers";
-import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
-import { applicationChangeState } from "../../../../../store/actions/application";
+import { createStore } from "redux";
+
 import { ServicesPreferencesModeEnum } from "../../../../../../definitions/backend/ServicesPreferencesMode";
+import { applicationChangeState } from "../../../../../store/actions/application";
 import * as hooks from "../../../../../store/hooks";
-import * as selectors from "../../../common/store/selectors";
+import { appReducer } from "../../../../../store/reducers";
 import * as usePreviousHook from "../../../../../utils/hooks/usePrevious";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 import { profileUpsert } from "../../../common/store/actions";
+import * as selectors from "../../../common/store/selectors";
+import ServicesPreferenceScreen from "../ServicesPreferenceScreen";
 
 jest.mock("../../../../../utils/analytics", () => ({
   getFlowType: jest.fn(() => "mock-flow")

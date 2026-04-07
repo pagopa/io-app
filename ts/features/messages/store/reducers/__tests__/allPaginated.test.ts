@@ -1,13 +1,26 @@
-import { getType } from "typesafe-actions";
-import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+import { getType } from "typesafe-actions";
+
+import { MessageCategory } from "../../../../../../definitions/backend/MessageCategory";
+import { pageSize } from "../../../../../config";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { PaymentByRptIdState } from "../../../../../store/reducers/entities/payments";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { isSomeLoadingOrSomeUpdating } from "../../../../../utils/pot";
+import { clearCache } from "../../../../settings/common/store/actions";
 import {
-  defaultRequestPayload,
   defaultRequestError,
+  defaultRequestPayload,
   successLoadNextPageMessagesPayload,
   successLoadPreviousPageMessagesPayload,
   successReloadMessagesPayload
 } from "../../../__mocks__/messages";
+import { nextPageLoadingWaitMillisecondsGenerator } from "../../../components/Home/homeUtils";
+import { UIMessage } from "../../../types";
+import { MessageListCategory } from "../../../types/messageListCategory";
+import { emptyMessageArray } from "../../../utils";
 import {
   loadNextPageMessages,
   loadPreviousPageMessages,
@@ -17,32 +30,20 @@ import {
   upsertMessageStatusAttributes,
   UpsertMessageStatusAttributesPayload
 } from "../../actions";
-import { GlobalState } from "../../../../../store/reducers/types";
 import reducer, {
   AllPaginated,
+  emptyListReasonSelector,
   isLoadingOrUpdatingInbox,
-  shownMessageCategorySelector,
-  MessagePagePot,
+  isPaymentMessageWithPaidNoticeSelector,
+  LastRequestType,
   messageListForCategorySelector,
   MessagePage,
-  emptyListReasonSelector,
-  shouldShowFooterListComponentSelector,
-  LastRequestType,
+  MessagePagePot,
   messagePagePotFromCategorySelector,
+  shouldShowFooterListComponentSelector,
   shouldShowRefreshControllOnListSelector,
-  isPaymentMessageWithPaidNoticeSelector
+  shownMessageCategorySelector
 } from "../allPaginated";
-import { pageSize } from "../../../../../config";
-import { UIMessage } from "../../../types";
-import { clearCache } from "../../../../settings/common/store/actions";
-import { appReducer } from "../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { MessageListCategory } from "../../../types/messageListCategory";
-import { emptyMessageArray } from "../../../utils";
-import { isSomeLoadingOrSomeUpdating } from "../../../../../utils/pot";
-import { PaymentByRptIdState } from "../../../../../store/reducers/entities/payments";
-import { MessageCategory } from "../../../../../../definitions/backend/MessageCategory";
-import { nextPageLoadingWaitMillisecondsGenerator } from "../../../components/Home/homeUtils";
 
 describe("allPaginated reducer", () => {
   describe("given a `reloadAllMessages` action", () => {

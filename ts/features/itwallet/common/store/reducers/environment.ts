@@ -1,11 +1,12 @@
-import { getType } from "typesafe-actions";
 import { type ItwVersion } from "@pagopa/io-react-native-wallet";
+import { getType } from "typesafe-actions";
+
 import { Action } from "../../../../../store/actions/types";
 import { EnvType } from "../../utils/environment.ts";
 import {
-  itwSetSpecsVersion,
   itwResetEnv,
-  itwSetEnv
+  itwSetEnv,
+  itwSetSpecsVersion
 } from "../actions/environment.ts";
 
 export type ItwEnvironmentState = {
@@ -25,17 +26,17 @@ const reducer = (
   action: Action
 ): ItwEnvironmentState => {
   switch (action.type) {
-    case getType(itwSetEnv): {
-      return {
-        ...state,
-        env: action.payload
-      };
-    }
-
     case getType(itwResetEnv): {
       return {
         ...state,
         env: initialState.env
+      };
+    }
+
+    case getType(itwSetEnv): {
+      return {
+        ...state,
+        env: action.payload
       };
     }
 

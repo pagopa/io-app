@@ -10,6 +10,7 @@ import I18n from "i18next";
 import { ComponentProps } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import Animated from "react-native-reanimated";
+
 import BackgroundImageValid from "../../../../../img/features/itWallet/brand/itw_deck_status.svg";
 import BackgroundImageExpired from "../../../../../img/features/itWallet/brand/itw_deck_status_expired.svg";
 import { ItWalletIdLogo } from "../../common/components/ItWalletIdLogo";
@@ -18,9 +19,9 @@ import { ItwSkiaBrandedGradientVariant } from "../../common/components/ItwBrande
 import { ItwJwtCredentialStatus } from "../../common/utils/itwTypesUtils";
 
 type ItwWalletIdStatusProps = {
-  pidStatus?: ItwJwtCredentialStatus;
-  pidExpiration?: string;
   onPress?: () => void;
+  pidExpiration?: string;
+  pidStatus?: ItwJwtCredentialStatus;
 };
 
 const statusIconPropsByPidStatus: Record<
@@ -66,18 +67,19 @@ export const ItwWalletIdStatus = ({
 
   return (
     <Pressable
-      testID={"itwWalletIdStatusTestID"}
+      accessibilityRole="button"
+      accessible={true}
       onPress={onPress}
       onPressIn={onPressIn}
       onPressOut={onPressOut}
-      accessible={true}
-      accessibilityRole="button"
+      testID={"itwWalletIdStatusTestID"}
     >
       <Animated.View style={[styles.container, scaleAnimatedStyle]}>
         {/* Branded Box with animated border and light effect */}
         <ItwBrandedBox variant={borderVariantByPidStatus[pidStatus]}>
           {/* Background Image  */}
           <BackgroundImage
+            height={100}
             style={[
               styles.backgroundImage,
               pidStatus === "valid"
@@ -85,12 +87,11 @@ export const ItwWalletIdStatus = ({
                 : styles.backgroundImageStickyBottom
             ]}
             width={72}
-            height={100}
           />
 
           {/* Header  */}
           <View style={styles.header}>
-            <ItWalletIdLogo width={103} height={24} />
+            <ItWalletIdLogo height={24} width={103} />
             <Icon size={16} {...statusIconPropsByPidStatus[pidStatus]} />
           </View>
 
@@ -119,11 +120,11 @@ export const ItwWalletIdStatus = ({
           {pidStatus === "jwtExpired" && (
             <View pointerEvents="none">
               <IOButton
-                variant="link"
                 label={I18n.t(
                   "features.itWallet.presentation.itWalletId.status.action"
                 )}
                 onPress={constNull}
+                variant="link"
               />
             </View>
           )}

@@ -1,7 +1,8 @@
-import { useState } from "react";
 import { RadioGroup, RadioItem } from "@pagopa/io-app-design-system";
-import { AccessibilityInfo } from "react-native";
 import I18n from "i18next";
+import { useState } from "react";
+import { AccessibilityInfo } from "react-native";
+
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { WalletPaymentPspSortType } from "../types";
 
@@ -52,10 +53,10 @@ const useSortPspBottomSheet = ({
 
   const getModalContent = () => (
     <RadioGroup<WalletPaymentPspSortType>
-      onPress={handleChangeSort}
-      type="radioListItem"
-      selectedItem={sortType}
       items={sortPspListOptions}
+      onPress={handleChangeSort}
+      selectedItem={sortType}
+      type="radioListItem"
     />
   );
 

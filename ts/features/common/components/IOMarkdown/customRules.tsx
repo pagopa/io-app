@@ -13,6 +13,7 @@ import {
   TxtStrNode
 } from "@textlint/ast-node-types";
 import I18n from "i18next";
+
 import {
   accessibleLinkNodeToReactNative,
   headerNodeToReactNative,
@@ -34,8 +35,8 @@ import { handleInternalLink } from "../../../../utils/internalLink";
 import { openWebUrl } from "../../../../utils/url";
 
 type HeadingMargins = {
-  marginStart: IOSpacer;
   marginEnd: IOSpacer;
+  marginStart: IOSpacer;
 };
 
 const HEADINGS_MAP = {
@@ -47,9 +48,7 @@ const HEADINGS_MAP = {
   6: Body
 };
 
-const SPACER_VALUES: {
-  [key: number]: HeadingMargins;
-} = {
+const SPACER_VALUES: Record<number, HeadingMargins> = {
   1: { marginStart: 16, marginEnd: 4 },
   2: { marginStart: 16, marginEnd: 8 }
 };

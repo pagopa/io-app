@@ -1,8 +1,9 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
-import { constTrue, pipe } from "fp-ts/lib/function";
 import { isAfter } from "date-fns";
+import { constTrue, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
+
 import { GlobalState } from "../../../../../store/reducers/types";
 import { DigitalCredentialMetadata } from "../../../common/utils/itwCredentialsCatalogueUtils";
 

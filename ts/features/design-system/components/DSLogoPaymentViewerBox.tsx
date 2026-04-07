@@ -1,8 +1,8 @@
-import { IOColors, hexToRgba, useIOTheme } from "@pagopa/io-app-design-system";
-import { ImageBackground, StyleSheet, Text, View } from "react-native";
-
+import { hexToRgba, IOColors, useIOTheme } from "@pagopa/io-app-design-system";
 /* Fake Transparent BG */
 import { ReactNode } from "react";
+import { ImageBackground, StyleSheet, Text, View } from "react-native";
+
 import FakeTransparentBg from "../../../../img/utils/transparent-background-pattern.png";
 
 export const logoItemGutter = 8;
@@ -63,9 +63,9 @@ const styles = StyleSheet.create({
 });
 
 type DSLogoPaymentViewerBoxProps = {
-  name: string;
   image: ReactNode;
-  size: "medium" | "large" | "full";
+  name: string;
+  size: "full" | "large" | "medium";
 };
 
 const sizeMap = {
@@ -94,20 +94,20 @@ export const DSLogoPaymentViewerBox = ({
     <View style={[styles.logoWrapper, sizeMap[size].wrapper]}>
       <View style={[styles.logoItem, sizeMap[size].item]}>
         <ImageBackground
+          source={FakeTransparentBg}
           style={
             size === "full"
               ? styles.fakeTransparentBgFull
               : styles.fakeTransparentBg
           }
-          source={FakeTransparentBg}
         />
         {image}
       </View>
       <View style={styles.nameWrapper}>
         {name && (
           <Text
-            numberOfLines={1}
             ellipsizeMode="tail"
+            numberOfLines={1}
             style={[
               styles.iconLabel,
               { color: IOColors[theme["textBody-tertiary"]] }

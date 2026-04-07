@@ -1,12 +1,13 @@
 import { createStore } from "redux";
+
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
-import { appReducer } from "../../../../store/reducers";
-import { applicationChangeState } from "../../../../store/actions/application";
-import { MessageAttachmentScreen } from "../MessageAttachmentScreen";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { downloadAttachment } from "../../store/actions";
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { MessageAttachmentScreen } from "../MessageAttachmentScreen";
 
 describe("MessageAttachment", () => {
   it("Should match the snapshot when there is an error", () => {

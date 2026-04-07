@@ -1,9 +1,9 @@
+import { createClient } from "../../../../definitions/lollipop/client";
 import { LollipopContentDigest } from "../../../../definitions/lollipop/LollipopContentDigest";
 import { LollipopMethodEnum } from "../../../../definitions/lollipop/LollipopMethod";
 import { LollipopOriginalURL } from "../../../../definitions/lollipop/LollipopOriginalURL";
 import { LollipopSignature } from "../../../../definitions/lollipop/LollipopSignature";
 import { LollipopSignatureInput } from "../../../../definitions/lollipop/LollipopSignatureInput";
-import { createClient } from "../../../../definitions/lollipop/client";
 import { LollipopConfig } from "../../lollipop";
 import { KeyInfo } from "../../lollipop/utils/crypto";
 import { lollipopFetch } from "../../lollipop/utils/fetch";
@@ -39,5 +39,5 @@ const signMessage = async (
 
 type LollipopClient = ReturnType<typeof createLollipopClient>;
 
-export type { LollipopSignRequestBody, LollipopClient };
+export type { LollipopClient, LollipopSignRequestBody };
 export { createLollipopClient, signMessage };

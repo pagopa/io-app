@@ -2,9 +2,10 @@ import { IOButton } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback } from "react";
-import { trackItwCiePinTutorialPin } from "../../analytics";
+
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
+import { trackItwCiePinTutorialPin } from "../../analytics";
 import { ItwCiePreparationScreenContent } from "../components/ItwCiePreparationScreenContent";
 import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet";
 
@@ -28,11 +29,6 @@ export const ItwCiePreparationPinScreen = () => {
 
   return (
     <ItwCiePreparationScreenContent
-      title={I18n.t(`features.itWallet.identification.cie.prepare.pin.title`)}
-      description={I18n.t(
-        `features.itWallet.identification.cie.prepare.pin.description`
-      )}
-      imageSrc={require("../../../../../../img/features/itWallet/identification/itw_cie_pin.gif")}
       actions={{
         type: "SingleButton",
         primary: {
@@ -40,13 +36,18 @@ export const ItwCiePreparationPinScreen = () => {
           onPress: () => machineRef.send({ type: "next" })
         }
       }}
+      description={I18n.t(
+        `features.itWallet.identification.cie.prepare.pin.description`
+      )}
+      imageSrc={require("../../../../../../img/features/itWallet/identification/itw_cie_pin.gif")}
+      title={I18n.t(`features.itWallet.identification.cie.prepare.pin.title`)}
     >
       <IOButton
-        variant="link"
         label={I18n.t(
           `features.itWallet.identification.cie.prepare.pin.buttonLink`
         )}
         onPress={() => infoBottomSheet.present()}
+        variant="link"
       />
       {infoBottomSheet.bottomSheet}
     </ItwCiePreparationScreenContent>

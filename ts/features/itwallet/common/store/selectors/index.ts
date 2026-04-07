@@ -2,17 +2,17 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { isConnectedSelector } from "../../../../connectivity/store/selectors";
 import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
 import {
-  itwCredentialsEidStatusSelector,
   itwCredentialsEidIssuedAtSelector,
+  itwCredentialsEidStatusSelector,
   itwIsWalletEmptySelector
 } from "../../../credentials/store/selectors";
-import { isCredentialIssuedBeforePid } from "../../utils/itwCredentialUtils";
 import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsOperationalOrValid,
   itwLifecycleIsValidSelector
 } from "../../../lifecycle/store/selectors";
 import { itwIsWalletInstanceStatusFailureSelector } from "../../../walletInstance/store/selectors";
+import { isCredentialIssuedBeforePid } from "../../utils/itwCredentialUtils";
 import {
   itwIsBannerHiddenSelector,
   itwIsDiscoveryBannerHiddenSelector,

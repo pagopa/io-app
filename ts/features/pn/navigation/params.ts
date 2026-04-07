@@ -1,4 +1,5 @@
 import { StackNavigationOptions } from "@react-navigation/stack";
+
 import { SendAARCieCardReadingScreenRouteParams } from "../aar/screen/SendAARCieCardReadingScreen";
 import { SendEngagementScreenNavigationParams } from "../aar/screen/SendEngagementScreen";
 import { SendQRScanFlowScreenProps } from "../aar/screen/SendQRScanFlowScreen";
@@ -7,9 +8,6 @@ import { MessageDetailsScreenRouteParams } from "../screens/MessageDetailsScreen
 import { PaidPaymentScreenRouteParams } from "../screens/PaidPaymentScreen";
 import PN_ROUTES from "./routes";
 
-type AnimationParamType =
-  | Pick<StackNavigationOptions, "animationTypeForReplace">
-  | undefined;
 export type PnParamsList = {
   [PN_ROUTES.MESSAGE_DETAILS]: MessageDetailsScreenRouteParams;
   [PN_ROUTES.MESSAGE_ATTACHMENT]: MessageAttachmentScreenRouteParams;
@@ -28,6 +26,9 @@ export type PnParamsList = {
   [PN_ROUTES.SEND_AAR_CIE_CARD_READING_EDUCATIONAL]: AnimationParamType;
   [PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL]: AnimationParamType;
   [PN_ROUTES.SEND_AAR_CIE_CAN_INSERTION]: AnimationParamType;
-  [PN_ROUTES.SEND_AAR_CIE_CARD_READING]: SendAARCieCardReadingScreenRouteParams &
-    AnimationParamType;
+  [PN_ROUTES.SEND_AAR_CIE_CARD_READING]: AnimationParamType &
+    SendAARCieCardReadingScreenRouteParams;
 };
+type AnimationParamType =
+  | Pick<StackNavigationOptions, "animationTypeForReplace">
+  | undefined;

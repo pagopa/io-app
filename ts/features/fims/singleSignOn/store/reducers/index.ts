@@ -1,11 +1,12 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
+
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { Consent } from "../../../../../../definitions/fims_sso/Consent";
 import { startApplicationInitialization } from "../../../../../store/actions/application";
 import { Action } from "../../../../../store/actions/types";
-import { Consent } from "../../../../../../definitions/fims_sso/Consent";
 import { shouldRestartFimsAuthAfterFastLoginFailure } from "../../utils";
 import {
   fimsAcceptConsentsAction,
@@ -16,29 +17,29 @@ import {
 } from "../actions";
 import { abortUrlFromConsentsPot } from "../selectors";
 
-export type FimsFlowStateTags =
-  | "idle"
-  | "consents"
-  | "in-app-browser-loading"
-  | "abort"
-  | "fastLogin_forced_restart";
-
 export type FIMS_SSO_ERROR_TAGS =
   | "AUTHENTICATION"
   | "GENERIC"
   | "MISSING_INAPP_BROWSER";
+
 export type FimsErrorStateType = {
-  errorTag: FIMS_SSO_ERROR_TAGS;
   debugMessage: string;
+  errorTag: FIMS_SSO_ERROR_TAGS;
 };
+export type FimsFlowStateTags =
+  | "abort"
+  | "consents"
+  | "fastLogin_forced_restart"
+  | "idle"
+  | "in-app-browser-loading";
 
 export type FimsSSOState = {
-  ssoData: pot.Pot<Consent, FimsErrorStateType>;
-  ephemeralSessionOniOS: boolean;
   ctaText?: string;
   currentFlowState: FimsFlowStateTags;
+  ephemeralSessionOniOS: boolean;
   relyingPartyServiceId?: ServiceId;
   relyingPartyUrl?: string;
+  ssoData: pot.Pot<Consent, FimsErrorStateType>;
 };
 
 export const INITIAL_STATE: FimsSSOState = {
@@ -55,45 +56,16 @@ const reducer = (
   action: Action
 ): FimsSSOState => {
   switch (action.type) {
-    case getType(startApplicationInitialization):
-      return shouldRestartFimsAuthAfterFastLoginFailure(state, action)
-        ? {
-            ...state,
-            ssoData: pot.none,
-            currentFlowState: "fastLogin_forced_restart",
-            relyingPartyServiceId: undefined
-          }
-        : INITIAL_STATE;
-
-    case getType(fimsGetConsentsListAction.request):
-      return {
-        ctaText: action.payload.ctaText,
-        currentFlowState: "consents",
-        ssoData: pot.noneLoading,
-        relyingPartyServiceId: undefined,
-        relyingPartyUrl: action.payload.ctaUrl,
-        ephemeralSessionOniOS: action.payload.ephemeralSessionOniOS
-      };
-    case getType(fimsGetConsentsListAction.success):
-      return {
-        ...state,
-        ssoData: pot.some(action.payload),
-        relyingPartyServiceId: action.payload.service_id as ServiceId
-      };
     case getType(fimsAcceptConsentsAction):
+
     case getType(fimsSignAndRetrieveInAppBrowserUrlAction.request):
       return {
         ...state,
         currentFlowState: "in-app-browser-loading",
         ssoData: pot.none
       };
-    case getType(fimsSignAndRetrieveInAppBrowserUrlAction.success):
-      return {
-        ...state,
-        currentFlowState: "idle"
-      };
-    case getType(fimsGetConsentsListAction.failure):
     case getType(fimsAcceptConsentsFailureAction):
+    case getType(fimsGetConsentsListAction.failure):
     case getType(fimsSignAndRetrieveInAppBrowserUrlAction.failure):
       return {
         ...state,
@@ -109,6 +81,35 @@ const reducer = (
           () => ({ ...state, currentFlowState: "abort" })
         )
       );
+    case getType(fimsGetConsentsListAction.request):
+      return {
+        ctaText: action.payload.ctaText,
+        currentFlowState: "consents",
+        ssoData: pot.noneLoading,
+        relyingPartyServiceId: undefined,
+        relyingPartyUrl: action.payload.ctaUrl,
+        ephemeralSessionOniOS: action.payload.ephemeralSessionOniOS
+      };
+    case getType(fimsGetConsentsListAction.success):
+      return {
+        ...state,
+        ssoData: pot.some(action.payload),
+        relyingPartyServiceId: action.payload.service_id as ServiceId
+      };
+    case getType(fimsSignAndRetrieveInAppBrowserUrlAction.success):
+      return {
+        ...state,
+        currentFlowState: "idle"
+      };
+    case getType(startApplicationInitialization):
+      return shouldRestartFimsAuthAfterFastLoginFailure(state, action)
+        ? {
+            ...state,
+            ssoData: pot.none,
+            currentFlowState: "fastLogin_forced_restart",
+            relyingPartyServiceId: undefined
+          }
+        : INITIAL_STATE;
   }
   return state;
 };

@@ -1,7 +1,8 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { itwIsWalletInstanceRemotelyActiveSelector } from "../store/selectors/preferences";
+
 import { useIOSelector } from "../../../../store/hooks.ts";
+import { itwIsWalletInstanceRemotelyActiveSelector } from "../store/selectors/preferences";
 
 export type DiscoveryBannerType = "onboarding" | "reactivating";
 

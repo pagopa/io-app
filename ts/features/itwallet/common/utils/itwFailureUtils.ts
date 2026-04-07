@@ -4,6 +4,7 @@ import {
   IntegrityErrorCodes
 } from "@pagopa/io-react-native-integrity";
 import { Trust } from "@pagopa/io-react-native-wallet";
+
 import { WithCredentialMetadata } from "./ItwFailureTypes";
 
 /**
@@ -22,7 +23,7 @@ export const isFederationError = (
  * Integrity errors thrown by the device.
  * These errors might occur locally before calling the Wallet Provider.
  */
-const localIntegrityErrors: Array<IntegrityErrorCodes | CryptoErrorCodes> = [
+const localIntegrityErrors: Array<CryptoErrorCodes | IntegrityErrorCodes> = [
   "REQUEST_ATTESTATION_FAILED",
   "UNSUPPORTED_DEVICE",
   "UNSUPPORTED_IOS_VERSION",

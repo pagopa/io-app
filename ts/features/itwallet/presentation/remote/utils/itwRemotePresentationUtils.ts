@@ -1,15 +1,16 @@
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import * as E from "fp-ts/lib/Either";
+
+import { isDefined } from "../../../../../utils/guards";
 import {
-  WellKnownClaim,
-  parseClaims
+  parseClaims,
+  WellKnownClaim
 } from "../../../common/utils/itwClaimsUtils";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUtils";
 import { validCredentialStatuses } from "../../../common/utils/itwCredentialUtils";
-import { isDefined } from "../../../../../utils/guards";
-import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import { getIoWallet } from "../../../common/utils/itwIoWallet";
+import { CredentialType } from "../../../common/utils/itwMocksUtils";
+import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { ItwRemoteCredentialCombination } from "../analytics/utils/types";
 import {
   EnrichedPresentationDetails,
@@ -27,7 +28,7 @@ const isPresentationDetailSdJwt = <T extends PresentationDetails[number]>(
  * Note: although this list is unlikely to change, you should ensure to have
  * a fallback when dealing with this list to prevent unwanted behaviours
  */
-const credentialTypesByVct: { [vct: string]: CredentialType } = {
+const credentialTypesByVct: Record<string, CredentialType> = {
   personidentificationdata: CredentialType.PID,
   mdl: CredentialType.DRIVING_LICENSE,
   europeandisabilitycard: CredentialType.EUROPEAN_DISABILITY_CARD,

@@ -1,15 +1,15 @@
-import { appReducer } from "../../../../../store/reducers";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { Action } from "../../../../../store/actions/types";
+import { appReducer } from "../../../../../store/reducers";
 import {
   getMessageDataAction,
   reloadAllMessages,
   resetGetMessageDataAction
 } from "../../actions";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { Action } from "../../../../../store/actions/types";
 import {
-  INITIAL_STATE,
   blockedFromPushNotificationSelector,
+  INITIAL_STATE,
   messageGetStatusReducer,
   messageSuccessDataSelector,
   showSpinnerFromMessageGetStatusSelector

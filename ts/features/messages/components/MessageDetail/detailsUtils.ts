@@ -1,10 +1,10 @@
+import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { isReady, RemoteValue } from "../../../../common/model/RemoteValue";
 import { GlobalState } from "../../../../store/reducers/types";
+import { CTA } from "../../../../types/LocalizedCTAs";
 import { serviceDetailsByIdSelector } from "../../../services/details/store/selectors";
 import { trackCTAPressed, trackPaymentStart } from "../../analytics";
-import { CTA } from "../../../../types/LocalizedCTAs";
-import { isReady, RemoteValue } from "../../../../common/model/RemoteValue";
-import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
 import {
   isTimeoutOrGenericOrOngoingPaymentError,
   MessagePaymentError

@@ -1,9 +1,6 @@
 import { assign, fromPromise, not, setup } from "xstate";
+
 import { type WalletInstanceAttestations } from "../../../common/utils/itwTypesUtils";
-import { Context, InitialContext } from "./context";
-import { mapEventToFailure, RemoteFailureType } from "./failure";
-import { RemoteEvents } from "./events";
-import { ItwPresentationTags } from "./tags";
 import {
   EvaluateRelyingPartyTrustInput,
   EvaluateRelyingPartyTrustOutput,
@@ -14,6 +11,10 @@ import {
   SendAuthorizationResponseInput,
   SendAuthorizationResponseOutput
 } from "./actors";
+import { Context, InitialContext } from "./context";
+import { RemoteEvents } from "./events";
+import { mapEventToFailure, RemoteFailureType } from "./failure";
+import { ItwPresentationTags } from "./tags";
 
 const notImplemented = () => {
   throw new Error("Not implemented");

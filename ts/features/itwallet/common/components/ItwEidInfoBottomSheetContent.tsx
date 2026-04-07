@@ -6,27 +6,28 @@ import {
   IOButton,
   VStack
 } from "@pagopa/io-app-design-system";
-import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { Fragment, memo, useEffect } from "react";
 import { View } from "react-native";
+
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { trackItwStartDeactivation } from "../../analytics";
-import { trackCredentialDetail } from "../../presentation/details/analytics";
 import { mapPIDStatusToMixpanel } from "../../analytics/utils";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import {
   itwCredentialsEidSelector,
   itwCredentialsEidStatusSelector
 } from "../../credentials/store/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { trackCredentialDetail } from "../../presentation/details/analytics";
+import { ITW_PRESENTATION_DETAILS_SCREENVIEW_EVENTS } from "../../presentation/details/analytics/enum";
 import { useItwStatusIconColor } from "../hooks/useItwStatusIconColor";
 import { parseClaims, WellKnownClaim } from "../utils/itwClaimsUtils";
 import { StoredCredential } from "../utils/itwTypesUtils";
-import { ITW_PRESENTATION_DETAILS_SCREENVIEW_EVENTS } from "../../presentation/details/analytics/enum";
 import { ItwCredentialClaim } from "./ItwCredentialClaim";
 import { ItwEidLifecycleAlert } from "./ItwEidLifecycleAlert";
 
@@ -41,7 +42,7 @@ export const ItwEidInfoBottomSheetTitle = ({
 
   return (
     <HStack space={8} style={{ alignItems: "center" }}>
-      <Icon name="legalValue" color={iconColor} />
+      <Icon color={iconColor} name="legalValue" />
       <H4>
         {I18n.t(
           isExpired
@@ -111,11 +112,11 @@ const ItwEidInfoBottomSheetContent = ({
           )}
         />
         <IOButton
-          fullWidth
-          variant="solid"
           color="danger"
+          fullWidth
           label={I18n.t("features.itWallet.walletRevocation.cta")}
           onPress={navigateToWalletRevocationScreen}
+          variant="solid"
         />
       </VStack>
     );

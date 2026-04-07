@@ -1,4 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
+
 import { isGestureEnabled } from "../../../../utils/navigation";
 import AuthenticationNavigator from "../../../authentication/common/navigation/AuthenticationNavigator";
 import { DesignSystemNavigator } from "../../../design-system/navigation/navigator";
@@ -7,11 +8,12 @@ import ProfileAboutApp from "../../aboutApp/screens/ProfileAboutApp";
 import { AppFeedbackPlayground } from "../../devMode/playgrounds/AppFeedbackPlayground";
 import CgnLandingPlayground from "../../devMode/playgrounds/CgnLandingPlayground";
 import { CiePlaygroundsNavigator } from "../../devMode/playgrounds/Cie/navigation/CiePlaygroundsNavigator";
+import { GuidedTourPlayground } from "../../devMode/playgrounds/GuidedTourPlayground";
 import { IdPayCodePlayGround } from "../../devMode/playgrounds/IdPayCodePlayground";
 import IdPayOnboardingPlayground from "../../devMode/playgrounds/IdPayOnboardingPlayground";
 import { IOMarkdownPlayground } from "../../devMode/playgrounds/IOMarkdownPlayground";
-import { GuidedTourPlayground } from "../../devMode/playgrounds/GuidedTourPlayground";
 import { NfcPlayground } from "../../devMode/playgrounds/NfcPlayground";
+import { SendPlaygroundScreen } from "../../devMode/playgrounds/SendPlaygroundScreen";
 import AppearancePreferenceScreen from "../../preferences/screens/AppearancePreferenceScreen";
 import CalendarsPreferencesScreen from "../../preferences/screens/CalendarsPreferencesScreen";
 import EmailForwardingScreen from "../../preferences/screens/EmailForwardingScreen";
@@ -34,7 +36,6 @@ import EmailInsertScreen from "../../userData/shared/screens/EmailInsertScreen";
 import EmailValidationSendEmailScreen from "../../userData/shared/screens/EmailValidationSendEmailScreen";
 import LogoutScreen from "../screens/LogoutScreen";
 import ProfileMainScreen from "../screens/ProfileMainScreen";
-import { SendPlaygroundScreen } from "../../devMode/playgrounds/SendPlaygroundScreen";
 import { SettingsParamsList } from "./params/SettingsParamsList";
 import { SETTINGS_ROUTES } from "./routes";
 
@@ -49,162 +50,162 @@ const SettingsStackNavigator = () => (
     screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
   >
     <Stack.Screen
-      options={{ headerShown: true }}
-      name={SETTINGS_ROUTES.SETTINGS_MAIN}
       component={ProfileMainScreen}
-    />
-    <Stack.Screen
-      name={SETTINGS_ROUTES.PROFILE_DATA}
-      component={ProfileDataScreen}
-    />
-    <Stack.Screen
-      name={SETTINGS_ROUTES.PROFILE_PRIVACY_MAIN}
-      component={PrivacyMainScreen}
-    />
-    <Stack.Screen
+      name={SETTINGS_ROUTES.SETTINGS_MAIN}
       options={{ headerShown: true }}
-      name={SETTINGS_ROUTES.PROFILE_PRIVACY}
+    />
+    <Stack.Screen
+      component={ProfileDataScreen}
+      name={SETTINGS_ROUTES.PROFILE_DATA}
+    />
+    <Stack.Screen
+      component={PrivacyMainScreen}
+      name={SETTINGS_ROUTES.PROFILE_PRIVACY_MAIN}
+    />
+    <Stack.Screen
       component={TosScreen}
+      name={SETTINGS_ROUTES.PROFILE_PRIVACY}
+      options={{ headerShown: true }}
     />
     <Stack.Screen
-      name={SETTINGS_ROUTES.PROFILE_PRIVACY_SHARE_DATA}
       component={ShareDataScreen}
+      name={SETTINGS_ROUTES.PROFILE_PRIVACY_SHARE_DATA}
     />
     <Stack.Screen
-      name={SETTINGS_ROUTES.PROFILE_SECURITY}
       component={SecurityScreen}
+      name={SETTINGS_ROUTES.PROFILE_SECURITY}
     />
     <Stack.Screen
-      name={SETTINGS_ROUTES.PROFILE_PREFERENCES_SERVICES}
       component={ServicesPreferenceScreen}
+      name={SETTINGS_ROUTES.PROFILE_PREFERENCES_SERVICES}
     />
     <Stack.Screen
-      name={SETTINGS_ROUTES.PROFILE_PREFERENCES_APPEARANCE}
       component={AppearancePreferenceScreen}
+      name={SETTINGS_ROUTES.PROFILE_PREFERENCES_APPEARANCE}
     />
     <Stack.Screen
-      name={SETTINGS_ROUTES.PROFILE_PREFERENCES_EMAIL_FORWARDING}
       component={EmailForwardingScreen}
+      name={SETTINGS_ROUTES.PROFILE_PREFERENCES_EMAIL_FORWARDING}
     />
     <Stack.Screen
-      name={SETTINGS_ROUTES.PROFILE_PREFERENCES_HOME}
       component={PreferencesScreen}
+      name={SETTINGS_ROUTES.PROFILE_PREFERENCES_HOME}
     />
     <Stack.Screen
-      name={SETTINGS_ROUTES.PROFILE_PREFERENCES_CALENDAR}
       component={CalendarsPreferencesScreen}
+      name={SETTINGS_ROUTES.PROFILE_PREFERENCES_CALENDAR}
     />
     <Stack.Screen
-      name={SETTINGS_ROUTES.PROFILE_PREFERENCES_LANGUAGE}
       component={LanguagesPreferencesScreen}
+      name={SETTINGS_ROUTES.PROFILE_PREFERENCES_LANGUAGE}
     />
     <Stack.Screen
-      name={SETTINGS_ROUTES.PROFILE_ABOUT_APP}
       component={ProfileAboutApp}
+      name={SETTINGS_ROUTES.PROFILE_ABOUT_APP}
     />
     <Stack.Screen
-      options={{
-        headerShown: false
-      }}
-      name={SETTINGS_ROUTES.PROFILE_LOGOUT}
       component={LogoutScreen}
+      name={SETTINGS_ROUTES.PROFILE_LOGOUT}
+      options={{
+        headerShown: false
+      }}
     />
     <Stack.Screen
-      name={SETTINGS_ROUTES.PROFILE_FISCAL_CODE}
       component={FiscalCodeScreen}
+      name={SETTINGS_ROUTES.PROFILE_FISCAL_CODE}
     />
     <Stack.Screen
-      options={{ gestureEnabled: false }}
-      name={SETTINGS_ROUTES.INSERT_EMAIL_SCREEN}
       component={EmailInsertScreen}
+      name={SETTINGS_ROUTES.INSERT_EMAIL_SCREEN}
+      options={{ gestureEnabled: false }}
     />
     <Stack.Screen
-      options={{ gestureEnabled: false, headerShown: false }}
-      name={SETTINGS_ROUTES.EMAIL_VERIFICATION_SCREEN}
       component={EmailValidationSendEmailScreen}
+      name={SETTINGS_ROUTES.EMAIL_VERIFICATION_SCREEN}
+      options={{ gestureEnabled: false, headerShown: false }}
     />
-    <Stack.Screen name={SETTINGS_ROUTES.PIN_SCREEN} component={PinScreen} />
+    <Stack.Screen component={PinScreen} name={SETTINGS_ROUTES.PIN_SCREEN} />
     <Stack.Screen
-      name={SETTINGS_ROUTES.PROFILE_DOWNLOAD_DATA}
       component={DownloadProfileDataScreen}
+      name={SETTINGS_ROUTES.PROFILE_DOWNLOAD_DATA}
     />
     <Stack.Screen
-      name={SETTINGS_ROUTES.IO_MARKDOWN_PLAYGROUND}
       component={IOMarkdownPlayground}
+      name={SETTINGS_ROUTES.IO_MARKDOWN_PLAYGROUND}
     />
     <Stack.Screen
-      name={SETTINGS_ROUTES.APP_FEEDBACK_PLAYGROUND}
       component={AppFeedbackPlayground}
+      name={SETTINGS_ROUTES.APP_FEEDBACK_PLAYGROUND}
     />
     <Stack.Screen
-      options={{
-        headerShown: false
-      }}
-      name={SETTINGS_ROUTES.DESIGN_SYSTEM}
       component={DesignSystemNavigator}
+      name={SETTINGS_ROUTES.DESIGN_SYSTEM}
+      options={{
+        headerShown: false
+      }}
     />
     <Stack.Screen
-      name={SETTINGS_ROUTES.LOLLIPOP_PLAYGROUND}
       component={LollipopPlayground}
+      name={SETTINGS_ROUTES.LOLLIPOP_PLAYGROUND}
     />
     <Stack.Screen
-      name={SETTINGS_ROUTES.CGN_LANDING_PLAYGROUND}
       component={CgnLandingPlayground}
+      name={SETTINGS_ROUTES.CGN_LANDING_PLAYGROUND}
     />
     <Stack.Screen
-      options={{
-        headerShown: false
-      }}
-      name={SETTINGS_ROUTES.IDPAY_ONBOARDING_PLAYGROUND}
       component={IdPayOnboardingPlayground}
-    />
-    <Stack.Screen
+      name={SETTINGS_ROUTES.IDPAY_ONBOARDING_PLAYGROUND}
       options={{
         headerShown: false
       }}
-      name={SETTINGS_ROUTES.IDPAY_CODE_PLAYGROUND}
+    />
+    <Stack.Screen
       component={IdPayCodePlayGround}
-    />
-    <Stack.Screen
-      name={SETTINGS_ROUTES.PROFILE_REMOVE_ACCOUNT_INFO}
-      component={RemoveAccountInfo}
-    />
-    <Stack.Screen
-      name={SETTINGS_ROUTES.PROFILE_REMOVE_ACCOUNT_DETAILS}
-      component={RemoveAccountDetails}
-    />
-    <Stack.Screen
+      name={SETTINGS_ROUTES.IDPAY_CODE_PLAYGROUND}
       options={{
         headerShown: false
       }}
-      name={SETTINGS_ROUTES.PROFILE_REMOVE_ACCOUNT_SUCCESS}
+    />
+    <Stack.Screen
+      component={RemoveAccountInfo}
+      name={SETTINGS_ROUTES.PROFILE_REMOVE_ACCOUNT_INFO}
+    />
+    <Stack.Screen
+      component={RemoveAccountDetails}
+      name={SETTINGS_ROUTES.PROFILE_REMOVE_ACCOUNT_DETAILS}
+    />
+    <Stack.Screen
       component={RemoveAccountSuccess}
+      name={SETTINGS_ROUTES.PROFILE_REMOVE_ACCOUNT_SUCCESS}
+      options={{
+        headerShown: false
+      }}
     />
     <Stack.Screen
-      name={SETTINGS_ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS}
       component={NotificationsPreferencesScreen}
+      name={SETTINGS_ROUTES.PROFILE_PREFERENCES_NOTIFICATIONS}
     />
     <Stack.Screen
-      name={SETTINGS_ROUTES.CIE_PLAYGROUND}
       component={CiePlaygroundsNavigator}
+      name={SETTINGS_ROUTES.CIE_PLAYGROUND}
       options={{ headerShown: false }}
     />
     <Stack.Screen
-      name={SETTINGS_ROUTES.NFC_PLAYGROUND}
       component={NfcPlayground}
+      name={SETTINGS_ROUTES.NFC_PLAYGROUND}
     />
     <Stack.Screen
-      name={SETTINGS_ROUTES.GUIDED_TOUR_PLAYGROUND}
       component={GuidedTourPlayground}
+      name={SETTINGS_ROUTES.GUIDED_TOUR_PLAYGROUND}
     />
     <Stack.Screen
-      name={SETTINGS_ROUTES.SEND_PLAYGROUND}
       component={SendPlaygroundScreen}
+      name={SETTINGS_ROUTES.SEND_PLAYGROUND}
     />
 
     <Stack.Screen
-      name={SETTINGS_ROUTES.AUTHENTICATION}
       component={AuthenticationNavigator}
+      name={SETTINGS_ROUTES.AUTHENTICATION}
       options={{
         headerShown: false,
         gestureEnabled: false

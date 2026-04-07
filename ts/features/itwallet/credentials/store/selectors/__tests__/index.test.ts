@@ -1,30 +1,29 @@
 import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
-import {
-  itwCredentialSelector,
-  itwCredentialsSelector,
-  itwCredentialsEidSelector,
-  itwCredentialsTypesSelector,
-  itwHasWalletAtLeastTwoCredentialsSelector,
-  itwIsWalletEmptySelector,
-  selectFiscalCodeFromEid,
-  selectNameSurnameFromEid,
-  itwCredentialsByTypeSelector,
-  itwCredentialsListByTypeSelector,
-  itwHasExpiringCredentialsSelector,
-  itwIsMdlPresentSelector
-} from "../index";
 import { CredentialType } from "../../../../common/utils/itwMocksUtils";
 import {
   ParsedCredential,
   StoredCredential
 } from "../../../../common/utils/itwTypesUtils";
+import {
+  itwCredentialsByTypeSelector,
+  itwCredentialsEidSelector,
+  itwCredentialSelector,
+  itwCredentialsListByTypeSelector,
+  itwCredentialsSelector,
+  itwCredentialsTypesSelector,
+  itwHasExpiringCredentialsSelector,
+  itwHasWalletAtLeastTwoCredentialsSelector,
+  itwIsMdlPresentSelector,
+  itwIsWalletEmptySelector,
+  selectFiscalCodeFromEid,
+  selectNameSurnameFromEid
+} from "../index";
 
-const getStateWithCredentials = (credentials: {
-  [key: string]: Partial<StoredCredential>;
-}) => {
+const getStateWithCredentials = (credentials: Record<string, Partial<StoredCredential>>) => {
   const defaultState = appReducer(undefined, applicationChangeState("active"));
   return _.merge(undefined, defaultState, {
     features: {

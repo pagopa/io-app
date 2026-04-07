@@ -1,6 +1,7 @@
 import { BodySmall } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
+
 import { ItWalletLogo } from "./ItWalletLogo";
 
 export const PoweredByItWalletText = () => (
@@ -9,7 +10,7 @@ export const PoweredByItWalletText = () => (
       {I18n.t("features.itWallet.presentation.credentialDetails.partOf")}
     </BodySmall>
     {/* eslint-disable-next-line i18next/no-literal-string */}
-    <ItWalletLogo width={80} height={16} accessibilityLabel="IT Wallet" />
+    <ItWalletLogo accessibilityLabel="IT Wallet" height={16} width={80} />
   </View>
 );
 

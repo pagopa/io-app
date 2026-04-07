@@ -1,19 +1,20 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
+import * as REMOTE_CONFIG_SELECTORS from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { SendUserType } from "../../../../pushNotifications/analytics";
 import PN_ROUTES from "../../../navigation/routes";
+import * as SELECTORS from "../../store/selectors";
 import { AARFlowState, sendAARFlowStates } from "../../utils/stateUtils";
 import { sendAarMockStateFactory } from "../../utils/testUtils";
 import {
   SendAARMessageDetailBottomSheet,
   SendAARMessageDetailBottomSheetProps
 } from "../SendAARMessageDetailBottomSheet";
-import { SendUserType } from "../../../../pushNotifications/analytics";
-import * as REMOTE_CONFIG_SELECTORS from "../../../../../store/reducers/backendStatus/remoteConfig";
-import * as SELECTORS from "../../store/selectors";
 
 type DisplayingNotificationDataState = Extract<
   AARFlowState,

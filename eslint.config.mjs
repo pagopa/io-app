@@ -47,8 +47,9 @@ export default defineConfig([
   ]),
 
   // Pagopa base config: @eslint/js recommended, typescript-eslint strict+stylistic,
-  // eslint-plugin-prettier, perfectionist
-  ...pagopaConfig,
+  // eslint-plugin-prettier, perfectionist.
+  // Vitest block is excluded — project uses Jest.
+  ...pagopaConfig.filter(config => !config.plugins?.vitest),
 
   {
     files: ["**/*.ts", "**/*.tsx"],
@@ -82,6 +83,16 @@ export default defineConfig([
     rules: {
       // Project uses oxfmt for formatting, not prettier
       "prettier/prettier": "off",
+
+      // Converting `type = {}` to `interface {}` breaks assignability to
+      // `Record<string, unknown>` — TypeScript requires an explicit index
+      // signature on interfaces, whereas type aliases satisfy it structurally.
+      // This affects analytics helpers, navigation param lists, and any other
+      // type used as a generic record argument throughout the codebase.
+      "@typescript-eslint/consistent-type-definitions": "off",
+
+      // Auto-fix corrupts multi-line property values (see comment below)
+      "perfectionist/sort-objects": "off",
 
       "react/react-in-jsx-scope": "off",
       "react/jsx-uses-react": "off",
@@ -266,6 +277,16 @@ export default defineConfig([
     }
   },
   {
+    // Navigation param lists are intentionally grouped by feature area.
+    // Alphabetical sorting destroys that structure without any TypeScript
+    // benefit (type member order is irrelevant to the type system).
+    files: ["**/navigation/**/*.ts", "**/navigation/params/*.ts"],
+    rules: {
+      "perfectionist/sort-object-types": "off",
+      "perfectionist/sort-interfaces": "off"
+    }
+  },
+  {
     files: ["**/*.test.ts", "**/*.test.tsx", "**/__tests__/**/*.ts", "**/__tests__/**/*.tsx"],
 
     rules: {
@@ -273,13 +294,7 @@ export default defineConfig([
       "@typescript-eslint/no-shadow": "off",
       "@typescript-eslint/no-require-imports": "off",
       "i18next/no-literal-string": "off",
-      "no-restricted-imports": "off",
-      // Disable vitest rules added by pagopa config
-      "vitest/prefer-called-with": "off",
-      "vitest/prefer-equality-matcher": "off",
-      "vitest/prefer-expect-resolves": "off",
-      "vitest/prefer-spy-on": "off",
-      "vitest/prefer-todo": "off"
+      "no-restricted-imports": "off"
     }
   },
   {

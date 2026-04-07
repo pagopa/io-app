@@ -1,10 +1,11 @@
 import { NavigatorScreenParams } from "@react-navigation/native";
-import PN_ROUTES from "../../pn/navigation/routes";
-import { MessageRouterScreenRouteParams } from "../screens/MessageRouterScreen";
-import { MessageDetailsScreenRouteParams } from "../screens/MessageDetailsScreen";
+
 import { PnParamsList } from "../../pn/navigation/params";
+import PN_ROUTES from "../../pn/navigation/routes";
 import { MessageAttachmentScreenRouteParams } from "../screens/MessageAttachmentScreen";
 import { MessageCalendarScreenRouteParams } from "../screens/MessageCalendarScreen";
+import { MessageDetailsScreenRouteParams } from "../screens/MessageDetailsScreen";
+import { MessageRouterScreenRouteParams } from "../screens/MessageRouterScreen";
 import { MESSAGES_ROUTES } from "./routes";
 
 export type MessagesParamsList = {

@@ -1,5 +1,6 @@
 import { Alert, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+
 import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 
 export type MessageCancelledContentProps = {

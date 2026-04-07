@@ -1,6 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import { Action } from "redux";
+
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
 import {
@@ -19,17 +20,17 @@ import {
 import { mockEphemeralAarMessageDataActionPayload } from "../../../../pn/aar/utils/testUtils";
 import { UIMessageDetails } from "../../../types";
 import {
-  ThirdPartyMessageUnion,
-  thirdPartyKind
+  thirdPartyKind,
+  ThirdPartyMessageUnion
 } from "../../../types/thirdPartyById";
 import { loadMessageDetails, loadThirdPartyMessage } from "../../actions";
 import { DetailsById } from "../detailsById";
 import {
-  ThirdPartyById,
   hasAttachmentsSelector,
   messageMarkdownSelector,
   messageTitleSelector,
   testable,
+  ThirdPartyById,
   thirdPartyByIdReducer,
   thirdPartyFromIdSelector,
   thirdPartyMessageAttachments,

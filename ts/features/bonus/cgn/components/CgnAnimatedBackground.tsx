@@ -3,14 +3,15 @@ import { Canvas, Path, Skia } from "@shopify/react-native-skia";
 import { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import {
-  Easing,
   cancelAnimation,
+  Easing,
   interpolate,
   useDerivedValue,
   useSharedValue,
   withRepeat,
   withTiming
 } from "react-native-reanimated";
+
 import { cgnCardColors } from "../screens/CgnDetailScreen";
 
 // Blob configuration
@@ -31,9 +32,9 @@ const OPACITY_RANGE = [0.4, 0.5] as const;
 const SEED_RANGE = [1, 7] as const;
 
 interface AnimatedBlobProps {
-  index: number;
-  canvasSize: { value: { width: number; height: number } };
+  canvasSize: { value: { height: number; width: number; } };
   color: string;
+  index: number;
 }
 
 /**
@@ -182,7 +183,7 @@ const AnimatedBlob = ({ index, canvasSize, color }: AnimatedBlobProps) => {
     };
   }, [orbitProgress]);
 
-  return <Path path={blobPath} color={foregroundColor} opacity={opacity} />;
+  return <Path color={foregroundColor} opacity={opacity} path={blobPath} />;
 };
 
 export const CgnAnimatedBackground = () => {
@@ -201,16 +202,16 @@ export const CgnAnimatedBackground = () => {
 
   return (
     <Canvas
-      style={[StyleSheet.absoluteFillObject, { backgroundColor }]}
-      pointerEvents="none"
       onSize={canvasSize}
+      pointerEvents="none"
+      style={[StyleSheet.absoluteFillObject, { backgroundColor }]}
     >
       {Array.from({ length: NUM_BLOBS }, (_, index) => (
         <AnimatedBlob
-          key={`blob-${index}`}
+          canvasSize={canvasSize}
           color={foregroundColor}
           index={index}
-          canvasSize={canvasSize}
+          key={`blob-${index}`}
         />
       ))}
     </Canvas>

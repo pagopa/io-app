@@ -5,6 +5,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+
 import { usePreviewMoreInfo } from "../hooks/usePreviewMoreInfo";
 import { NotificationsPreferencesPreview } from "./NotificationsPreferencesPreview";
 
@@ -41,40 +42,40 @@ export const ProfileNotificationSettings = ({
       />
       <VSpacer size={24} />
       <ListItemSwitch
-        label={I18n.t("profile.preferences.notifications.preview.title")}
-        description={I18n.t(
-          "profile.preferences.notifications.preview.description"
-        )}
         action={{
           label: I18n.t("profile.preferences.notifications.preview.link"),
           onPress: present
         }}
-        value={previewSwitchValue}
+        description={I18n.t(
+          "profile.preferences.notifications.preview.description"
+        )}
         disabled={disablePreviewSetting}
         isLoading={isUpdatingPreviewSetting}
+        label={I18n.t("profile.preferences.notifications.preview.title")}
         onSwitchValueChange={onPreviewValueChanged}
         switchTestID={"previewsPreferenceSwitch"}
+        value={previewSwitchValue}
       />
       <Divider />
       <ListItemSwitch
-        label={I18n.t("profile.preferences.notifications.reminders.title")}
         description={I18n.t(
           "profile.preferences.notifications.reminders.description"
         )}
-        value={remindersSwitchValue}
         disabled={disableRemindersSetting}
         isLoading={isUpdatingRemindersSetting}
+        label={I18n.t("profile.preferences.notifications.reminders.title")}
         onSwitchValueChange={onReminderValueChanged}
         switchTestID={"remindersPreferenceSwitch"}
+        value={remindersSwitchValue}
       />
       {showSettingsPath && <VSpacer size={40} />}
       {showSettingsPath && (
         <Banner
-          pictogramName="settings"
+          color="neutral"
           content={I18n.t(
             "profile.main.privacy.shareData.screen.profileSettings"
           )}
-          color="neutral"
+          pictogramName="settings"
         />
       )}
       <VSpacer size={32} />

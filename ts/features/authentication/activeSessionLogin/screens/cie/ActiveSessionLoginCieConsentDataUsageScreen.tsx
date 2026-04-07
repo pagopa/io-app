@@ -11,30 +11,31 @@ import {
   WebViewHttpErrorEvent,
   WebViewNavigation
 } from "react-native-webview/lib/WebViewTypes";
-import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../../navigation/routes";
 import { useIODispatch } from "../../../../../store/hooks";
+import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
+import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
+import { trackLoginFailure } from "../../../common/analytics";
+import {
+  trackLoginCieConsentDataUsageScreen,
+  trackLoginCieDataSharingError
+} from "../../../common/analytics/cieAnalytics";
+import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { onLoginUriChanged } from "../../../common/utils/login";
-import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
+import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
+import { CieConsentDataUsageScreenNavigationParams } from "../../../login/cie/screens/CieConsentDataUsageScreen";
+import { LoaderComponent } from "../../shared/components/LoaderComponent";
+import { ACS_PATH } from "../../shared/utils";
 import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess,
   setFinishedActiveSessionLoginFlow
 } from "../../store/actions";
-import { CieConsentDataUsageScreenNavigationParams } from "../../../login/cie/screens/CieConsentDataUsageScreen";
-import { LoaderComponent } from "../../shared/components/LoaderComponent";
-import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
-import ROUTES from "../../../../../navigation/routes";
 import useActiveSessionLoginNavigation from "../../utils/useActiveSessionLoginNavigation";
-import { ACS_PATH } from "../../shared/utils";
-import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
-import {
-  trackLoginCieConsentDataUsageScreen,
-  trackLoginCieDataSharingError
-} from "../../../common/analytics/cieAnalytics";
-import { trackLoginFailure } from "../../../common/analytics";
 
 const ActiveSessionLoginCieConsentDataUsageScreen = () => {
   const route =
@@ -150,17 +151,17 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <WebView
-          testID="webview-cie-test"
           androidCameraAccessDisabled={true}
           androidMicrophoneAccessDisabled={true}
-          textZoom={100}
-          originWhitelist={originSchemasWhiteList}
-          source={{ uri: decodeURIComponent(cieConsentUri) }}
           javaScriptEnabled={true}
-          onShouldStartLoadWithRequest={handleShouldStartLoading}
-          renderLoading={() => <LoaderComponent />}
           onError={handleLoadingError}
           onHttpError={handleLoadingError}
+          onShouldStartLoadWithRequest={handleShouldStartLoading}
+          originWhitelist={originSchemasWhiteList}
+          renderLoading={() => <LoaderComponent />}
+          source={{ uri: decodeURIComponent(cieConsentUri) }}
+          testID="webview-cie-test"
+          textZoom={100}
         />
       </SafeAreaView>
     );

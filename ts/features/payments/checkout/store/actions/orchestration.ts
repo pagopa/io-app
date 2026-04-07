@@ -1,4 +1,5 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
+
 import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
 import { PaymentMethodResponse } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodResponse";
 import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
@@ -11,26 +12,26 @@ export const walletPaymentSetCurrentStep = createStandardAction(
 )<WalletPaymentStepEnum>();
 
 export type OnPaymentSuccessAction =
+  | "showAARMessage"
   | "showHome"
-  | "showTransaction"
-  | "showAARMessage";
+  | "showTransaction";
 
 export type PaymentInitStateParams = {
-  startOrigin?: PaymentStartOrigin;
   onSuccess?: OnPaymentSuccessAction;
   serviceName?: string;
-};
-
-type PaymentCompletedSuccessPayload = {
-  rptId: RptId;
-  kind: "COMPLETED" | "DUPLICATED";
+  startOrigin?: PaymentStartOrigin;
 };
 
 export type PaymentStartWebViewPayload = {
-  url: string;
-  onSuccess?: (url: string) => void;
   onCancel?: (outcome?: WalletPaymentOutcomeEnum) => void;
   onError?: (outcome?: WalletPaymentOutcomeEnum) => void;
+  onSuccess?: (url: string) => void;
+  url: string;
+};
+
+type PaymentCompletedSuccessPayload = {
+  kind: "COMPLETED" | "DUPLICATED";
+  rptId: RptId;
 };
 
 /**
@@ -43,7 +44,7 @@ export const initPaymentStateAction = createStandardAction(
 
 export const selectPaymentMethodAction = createStandardAction(
   "PAYMENTS_SELECT_PAYMENT_METHOD"
-)<{ userWallet?: WalletInfo; paymentMethod?: PaymentMethodResponse }>();
+)<{ paymentMethod?: PaymentMethodResponse; userWallet?: WalletInfo; }>();
 
 export const selectPaymentPspAction = createStandardAction(
   "PAYMENTS_SELECT_PAYMENT_PSP"
@@ -66,11 +67,11 @@ export const paymentClearWebViewFlow = createStandardAction(
 )<void>();
 
 export type PaymentsCheckoutOrchestrationActions =
-  | ActionType<typeof walletPaymentSetCurrentStep>
   | ActionType<typeof initPaymentStateAction>
-  | ActionType<typeof selectPaymentMethodAction>
-  | ActionType<typeof selectPaymentPspAction>
+  | ActionType<typeof paymentClearWebViewFlow>
   | ActionType<typeof paymentCompletedSuccess>
   | ActionType<typeof paymentMethodPspBannerClose>
   | ActionType<typeof paymentStartWebViewFlow>
-  | ActionType<typeof paymentClearWebViewFlow>;
+  | ActionType<typeof selectPaymentMethodAction>
+  | ActionType<typeof selectPaymentPspAction>
+  | ActionType<typeof walletPaymentSetCurrentStep>;

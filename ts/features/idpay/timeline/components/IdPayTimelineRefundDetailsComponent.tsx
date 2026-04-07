@@ -9,9 +9,10 @@ import {
 } from "@pagopa/io-app-design-system";
 import { CommonActions } from "@react-navigation/native";
 import { format } from "date-fns";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
+
 import { RefundDetailDTO } from "../../../../../definitions/idpay/RefundDetailDTO";
 import { OperationTypeEnum } from "../../../../../definitions/idpay/RefundOperationDTO";
 import NavigationService from "../../../../navigation/NavigationService";
@@ -58,11 +59,11 @@ const IdPayTimelineRefundDetailsComponent = (props: Props) => {
     O.map(() => (
       <>
         <Alert
-          content={I18n.t(
-            "idpay.initiative.operationDetails.refund.rejectedAdvice.text"
-          )}
           action={I18n.t(
             "idpay.initiative.operationDetails.refund.rejectedAdvice.editIban"
+          )}
+          content={I18n.t(
+            "idpay.initiative.operationDetails.refund.rejectedAdvice.text"
           )}
           onPress={handleEditIbanPress}
           variant="error"
@@ -94,7 +95,6 @@ const IdPayTimelineRefundDetailsComponent = (props: Props) => {
       />
       <VSpacer size={8} />
       <ListItemHeader
-        label={I18n.t("idpay.initiative.operationDetails.refund.resultLabel")}
         endElement={{
           type: "badge",
           componentProps: {
@@ -107,6 +107,7 @@ const IdPayTimelineRefundDetailsComponent = (props: Props) => {
             )
           }
         }}
+        label={I18n.t("idpay.initiative.operationDetails.refund.resultLabel")}
       />
       <ListItemInfo
         label={I18n.t("idpay.initiative.operationDetails.refund.period")}
@@ -120,10 +121,10 @@ const IdPayTimelineRefundDetailsComponent = (props: Props) => {
       <Divider />
       <ListItemInfoCopy
         label={"CRO"}
-        value={refund.cro}
         onPress={() => {
           clipboardSetStringWithFeedback(refund.cro || "");
         }}
+        value={refund.cro}
       />
     </>
   );

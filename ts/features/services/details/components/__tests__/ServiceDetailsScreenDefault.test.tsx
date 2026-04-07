@@ -1,20 +1,21 @@
+import { Body } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import _ from "lodash";
 import { createStore } from "redux";
-import { Body } from "@pagopa/io-app-design-system";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { appReducer } from "../../../../../store/reducers";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
+
 import { OrganizationFiscalCode } from "../../../../../../definitions/services/OrganizationFiscalCode";
 import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { CTA } from "../../../../../types/LocalizedCTAs";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { ServicePreferenceResponse } from "../../types/ServicePreferenceResponse";
 import {
   ServiceDetailsScreenDefault,
   ServiceDetailsScreenDefaultProps
 } from "../ServiceDetailsScreenDefault";
-import { CTA } from "../../../../../types/LocalizedCTAs";
 
 const serviceId = "serviceDefault" as ServiceId;
 

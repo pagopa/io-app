@@ -9,6 +9,7 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
+import I18n from "i18next";
 import {
   ComponentProps,
   forwardRef,
@@ -16,10 +17,9 @@ import {
   useMemo,
   useState
 } from "react";
-
 import { LayoutChangeEvent, View } from "react-native";
 import Animated, { AnimatedRef } from "react-native-reanimated";
-import I18n from "i18next";
+
 import {
   BackProps,
   HeaderActionsProps,
@@ -31,34 +31,34 @@ import { useIOAlertVisible } from "../StatusMessages/IOAlertVisibleContext";
 import { IOScrollView } from "./IOScrollView";
 
 export type LargeHeaderTitleProps = {
-  label: string;
   accessibilityLabel?: string;
-  testID?: string;
+  label: string;
   section?: string;
+  testID?: string;
 };
 
 type Props = WithTestID<
-  {
-    children?: ReactNode;
+  SupportRequestParams & {
     actions?: ComponentProps<typeof IOScrollView>["actions"];
-    title: LargeHeaderTitleProps;
+    alwaysBounceVertical?: boolean;
+    animatedRef?: AnimatedRef<Animated.ScrollView>;
+    canGoback?: boolean;
+    children?: ReactNode;
     description?: string;
-    onDescriptionLinkPress?: (url: string) => void;
+    excludeEndContentMargin?: boolean;
     goBack?: BackProps["goBack"];
+    headerActionsProp?: HeaderActionsProps;
+    ignoreAccessibilityCheck?: ComponentProps<
+      typeof HeaderSecondLevel
+    >["ignoreAccessibilityCheck"];
     ignoreSafeAreaMargin?: ComponentProps<
       typeof HeaderSecondLevel
     >["ignoreSafeAreaMargin"];
     includeContentMargins?: boolean;
-    headerActionsProp?: HeaderActionsProps;
-    canGoback?: boolean;
-    excludeEndContentMargin?: boolean;
-    ignoreAccessibilityCheck?: ComponentProps<
-      typeof HeaderSecondLevel
-    >["ignoreAccessibilityCheck"];
-    animatedRef?: AnimatedRef<Animated.ScrollView>;
+    onDescriptionLinkPress?: (url: string) => void;
+    title: LargeHeaderTitleProps;
     topElement?: ReactNode;
-    alwaysBounceVertical?: boolean;
-  } & SupportRequestParams
+  }
 >;
 
 /**
@@ -135,28 +135,28 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
     return (
       <IOScrollView
         actions={actions}
+        alwaysBounceVertical={alwaysBounceVertical}
         animatedRef={animatedRef}
-        headerConfig={headerProps}
-        snapOffset={titleHeight}
-        includeContentMargins={false}
         excludeEndContentMargin={excludeEndContentMargin}
+        headerConfig={headerProps}
+        includeContentMargins={false}
+        snapOffset={titleHeight}
         testID={testID}
         topElement={topElement}
-        alwaysBounceVertical={alwaysBounceVertical}
       >
         <ContentWrapper onLayout={getTitleHeight}>
           <VStack space={8}>
             {title.section && (
-              <BodySmall weight="Semibold" color={theme["textBody-tertiary"]}>
+              <BodySmall color={theme["textBody-tertiary"]} weight="Semibold">
                 {title.section}
               </BodySmall>
             )}
             <H2
-              color={theme["textHeading-default"]}
-              testID={title?.testID}
-              ref={ref}
               accessibilityLabel={title.accessibilityLabel ?? title.label}
               accessibilityRole="header"
+              color={theme["textHeading-default"]}
+              ref={ref}
+              testID={title?.testID}
             >
               {title.label}
             </H2>
