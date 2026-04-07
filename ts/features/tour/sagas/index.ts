@@ -1,4 +1,5 @@
 import { put, select, takeEvery } from "typed-redux-saga/macro";
+import { isTestEnv } from "../../../utils/environment";
 import {
   completeTourAction,
   nextTourStepAction,
@@ -29,3 +30,7 @@ export function* watchTourSaga() {
   yield* takeEvery(startTourAction, handleStartTour);
   yield* takeEvery(nextTourStepAction, handleNextStep);
 }
+
+export const testable = isTestEnv
+  ? { handleStartTour, handleNextStep }
+  : undefined;
