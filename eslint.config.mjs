@@ -105,6 +105,10 @@ export default defineConfig([
       "@typescript-eslint/no-dynamic-delete": "off",
       "@typescript-eslint/no-non-null-assertion": "off",
 
+      // Incorrectly fires on mapped types (`[P in ...]`) — only meant for
+      // plain index signatures (`[key: string]: V`) which should use Record<K,V>
+      "@typescript-eslint/consistent-indexed-object-style": "off",
+
       "react/react-in-jsx-scope": "off",
       "react/jsx-uses-react": "off",
       "comma-dangle": ["error", "never"],
