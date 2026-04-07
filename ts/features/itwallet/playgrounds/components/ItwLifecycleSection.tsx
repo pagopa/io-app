@@ -6,6 +6,8 @@ import {
 import I18n from "i18next";
 import { Alert, View } from "react-native";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { resetTourCompletedAction } from "../../../tour/store/actions";
+import { isTourCompletedSelector } from "../../../tour/store/selectors";
 import { itwSetFiscalCodeWhitelisted } from "../../common/store/actions/preferences";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 import { itwLifecycleWalletReset } from "../../lifecycle/store/actions";
@@ -15,6 +17,7 @@ import {
   itwLifecycleIsOperationalSelector,
   itwLifecycleIsValidSelector
 } from "../../lifecycle/store/selectors";
+import { ITW_TOUR_GROUP_ID } from "../../tour/utils/constants";
 
 export const ItwLifecycleSection = () => {
   const dispatch = useIODispatch();
@@ -25,6 +28,9 @@ export const ItwLifecycleSection = () => {
   const isFiscalCodeWhitelisted = useIOSelector(itwIsL3EnabledSelector);
   const isITWalletInstanceValid = useIOSelector(
     itwLifecycleIsITWalletValidSelector
+  );
+  const isTourCompleted = useIOSelector(state =>
+    isTourCompletedSelector(state, ITW_TOUR_GROUP_ID)
   );
 
   const getLifecycleStateLabel = () => {
@@ -60,6 +66,10 @@ export const ItwLifecycleSection = () => {
     );
   };
 
+  const resetTourGuide = () => {
+    dispatch(resetTourCompletedAction({ groupId: ITW_TOUR_GROUP_ID }));
+  };
+
   return (
     <View>
       <ListItemHeader label="Wallet Instance" />
@@ -75,6 +85,18 @@ export const ItwLifecycleSection = () => {
         label="Disable L3 whitelist"
         disabled={!isFiscalCodeWhitelisted}
         onPress={confirmDisableL3Whitelist}
+      />
+      <ListItemHeader label="Tour Guide" />
+      <ListItemInfo
+        label="Tour status"
+        value={isTourCompleted ? "COMPLETED" : "NOT COMPLETED"}
+      />
+      <IOButton
+        variant="solid"
+        color="danger"
+        label="Reset tour guide status"
+        disabled={!isTourCompleted}
+        onPress={resetTourGuide}
       />
     </View>
   );
