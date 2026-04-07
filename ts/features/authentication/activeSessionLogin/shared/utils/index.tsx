@@ -7,7 +7,6 @@ import { ReadingState } from "../../../login/cie/components/CieCardReadingAnimat
 // the timeout we sleep until move to consent form screen when authentication goes well
 export const WAIT_TIMEOUT_NAVIGATION = 1700 as Millisecond;
 export const WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY = 5000 as Millisecond;
-export const VIBRATION = 100 as Millisecond;
 export const accessibityTimeout = 100 as Millisecond;
 
 // A subset of Cie Events (errors) which is of interest to analytics

@@ -3,8 +3,8 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { ScreenCHData } from "../../definitions/content/ScreenCHData";
-import { TranslationKeys } from "../../locales/locales";
 import { ContextualHelpData } from "../features/zendesk/screens/ZendeskSupportHelpCenter";
+import { TranslationKeys } from "../i18n";
 
 export type ContextualHelpProps = {
   title: string;
@@ -43,8 +43,8 @@ export const getContextualHelpConfig = (
     ? { body: contextualHelp.body, title: contextualHelp.title }
     : contextualHelpMarkdown
     ? {
-        body: I18n.t(contextualHelpMarkdown.body as any),
-        title: I18n.t(contextualHelpMarkdown.title as any)
+        body: I18n.t(contextualHelpMarkdown.body),
+        title: I18n.t(contextualHelpMarkdown.title)
       }
     : undefined;
 

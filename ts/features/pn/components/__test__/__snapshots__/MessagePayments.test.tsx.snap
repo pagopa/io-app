@@ -34,12 +34,9 @@ exports[`MessagePayments should match snapshot when cancelled with payments with
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -67,26 +64,18 @@ exports[`MessagePayments should match snapshot when cancelled with payments with
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -94,15 +83,13 @@ exports[`MessagePayments should match snapshot when cancelled with payments with
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -156,16 +143,11 @@ exports[`MessagePayments should match snapshot when cancelled with payments with
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   PN_ROUTES_MESSAGE_DETAILS
@@ -222,18 +204,14 @@ exports[`MessagePayments should match snapshot when cancelled with payments with
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -303,13 +281,9 @@ exports[`MessagePayments should match snapshot when cancelled with payments with
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -412,12 +386,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -445,26 +416,18 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -472,15 +435,13 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -534,16 +495,11 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   PN_ROUTES_MESSAGE_DETAILS
@@ -600,18 +556,14 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -681,13 +633,9 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -778,7 +726,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -842,6 +789,42 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                           testID="PnCancelledPaymentModulePaymentNotice"
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -862,7 +845,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -947,6 +930,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -977,7 +961,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -1092,6 +1075,42 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                           testID="PnCancelledPaymentModulePaymentNotice"
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -1112,7 +1131,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -1197,6 +1216,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -1227,7 +1247,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -1342,6 +1361,42 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                           testID="PnCancelledPaymentModulePaymentNotice"
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -1362,7 +1417,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -1447,6 +1502,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -1477,7 +1533,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -1592,6 +1647,42 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                           testID="PnCancelledPaymentModulePaymentNotice"
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -1612,7 +1703,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -1697,6 +1788,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -1727,7 +1819,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -1842,6 +1933,42 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                           testID="PnCancelledPaymentModulePaymentNotice"
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -1862,7 +1989,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -1947,6 +2074,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -1977,7 +2105,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -2092,6 +2219,42 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                           testID="PnCancelledPaymentModulePaymentNotice"
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -2112,7 +2275,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -2197,6 +2360,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -2227,7 +2391,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -2342,6 +2505,42 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                           testID="PnCancelledPaymentModulePaymentNotice"
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -2362,7 +2561,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -2447,6 +2646,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -2477,7 +2677,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -2596,12 +2795,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -2629,26 +2825,18 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -2656,15 +2844,13 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -2718,16 +2904,11 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   PN_ROUTES_MESSAGE_DETAILS
@@ -2784,18 +2965,14 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -2865,13 +3042,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -2962,7 +3135,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -3026,6 +3198,42 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                           testID="PnCancelledPaymentModulePaymentNotice"
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -3046,7 +3254,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -3131,6 +3339,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -3161,7 +3370,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -3276,6 +3484,42 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                           testID="PnCancelledPaymentModulePaymentNotice"
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -3296,7 +3540,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -3381,6 +3625,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -3411,7 +3656,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -3526,6 +3770,42 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                           testID="PnCancelledPaymentModulePaymentNotice"
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -3546,7 +3826,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -3631,6 +3911,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -3661,7 +3942,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -3776,6 +4056,42 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                           testID="PnCancelledPaymentModulePaymentNotice"
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -3796,7 +4112,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -3881,6 +4197,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -3911,7 +4228,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -4026,6 +4342,42 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                           testID="PnCancelledPaymentModulePaymentNotice"
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -4046,7 +4398,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -4131,6 +4483,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -4161,7 +4514,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -4276,6 +4628,42 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                           testID="PnCancelledPaymentModulePaymentNotice"
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -4296,7 +4684,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -4381,6 +4769,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -4411,7 +4800,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -4526,6 +4914,42 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                           testID="PnCancelledPaymentModulePaymentNotice"
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -4546,7 +4970,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -4631,6 +5055,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -4661,7 +5086,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -4780,12 +5204,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -4813,26 +5234,18 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -4840,15 +5253,13 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -4902,16 +5313,11 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   PN_ROUTES_MESSAGE_DETAILS
@@ -4968,18 +5374,14 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -5049,13 +5451,9 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -5158,12 +5556,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -5191,26 +5586,18 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -5218,15 +5605,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -5280,16 +5665,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   PN_ROUTES_MESSAGE_DETAILS
@@ -5346,18 +5726,14 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -5427,13 +5803,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -5524,7 +5896,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -5580,6 +5951,42 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -5600,7 +6007,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -5781,6 +6188,42 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -5801,7 +6244,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -5886,6 +6329,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -5916,7 +6360,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -6030,6 +6473,42 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -6050,7 +6529,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -6135,6 +6614,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -6165,7 +6645,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -6279,6 +6758,42 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -6299,7 +6814,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -6384,6 +6899,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -6414,7 +6930,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -6528,6 +7043,42 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -6548,7 +7099,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -6633,6 +7184,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -6663,7 +7215,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -6782,12 +7333,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -6815,26 +7363,18 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -6842,15 +7382,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -6904,16 +7442,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   PN_ROUTES_MESSAGE_DETAILS
@@ -6970,18 +7503,14 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -7051,13 +7580,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -7148,7 +7673,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -7204,6 +7728,42 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -7224,7 +7784,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -7405,6 +7965,42 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -7425,7 +8021,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -7510,6 +8106,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -7540,7 +8137,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -7654,6 +8250,42 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -7674,7 +8306,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -7759,6 +8391,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -7789,7 +8422,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -7903,6 +8535,42 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -7923,7 +8591,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -8008,6 +8676,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -8038,7 +8707,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -8152,6 +8820,42 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -8172,7 +8876,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -8257,6 +8961,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -8287,7 +8992,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -8406,12 +9110,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -8439,26 +9140,18 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -8466,15 +9159,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -8528,16 +9219,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   PN_ROUTES_MESSAGE_DETAILS
@@ -8594,18 +9280,14 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -8675,13 +9357,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -8772,7 +9450,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -8828,6 +9505,42 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -8848,7 +9561,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -9029,6 +9742,42 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -9049,7 +9798,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -9134,6 +9883,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -9164,7 +9914,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -9278,6 +10027,42 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -9298,7 +10083,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -9383,6 +10168,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -9413,7 +10199,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -9527,6 +10312,42 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -9547,7 +10368,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -9632,6 +10453,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -9662,7 +10484,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -9776,6 +10597,42 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -9796,7 +10653,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -9881,6 +10738,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -9911,7 +10769,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -10044,6 +10901,47 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderCurve": "continuous",
+                                  "elevation": 0,
+                                  "flexDirection": "row",
+                                  "justifyContent": "center",
+                                  "overflow": "hidden",
+                                  "textAlignVertical": "center",
+                                },
+                                {
+                                  "paddingHorizontal": 0,
+                                },
+                                {
+                                  "backgroundColor": "transparent",
+                                  "borderColor": "#0B3EE3",
+                                  "borderRadius": 8,
+                                  "borderWidth": 0,
+                                  "height": undefined,
+                                },
+                                {},
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -10055,7 +10953,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
-                                false,
+                                {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
                                 {},
                                 {
                                   "paddingHorizontal": 0,
@@ -10072,6 +10976,30 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                  },
+                                  {
+                                    "columnGap": 8,
+                                  },
+                                  false,
+                                ]
+                              }
                               style={
                                 [
                                   {
@@ -10090,15 +11018,38 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 accessibilityElementsHidden={true}
                                 accessible={false}
                                 allowFontScaling={true}
+                                collapsable={false}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "color": "rgba(11, 62, 227, 1)",
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "textAlign": "auto",
+                                    },
+                                    {
+                                      "color": "#0B3EE3",
+                                    },
+                                  ]
+                                }
                                 maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
@@ -10113,7 +11064,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "color": "#0B3EE3",
                                       },
                                       {
-                                        "color": undefined,
+                                        "color": "rgba(11, 62, 227, 1)",
                                       },
                                     ],
                                   ]
@@ -10179,12 +11130,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -10212,26 +11160,18 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -10239,15 +11179,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -10301,16 +11239,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   PN_ROUTES_MESSAGE_DETAILS
@@ -10367,18 +11300,14 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -10448,13 +11377,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -10545,7 +11470,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -10601,6 +11525,42 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -10621,7 +11581,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -10802,6 +11762,42 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -10822,7 +11818,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -10907,6 +11903,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -10937,7 +11934,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -11051,6 +12047,42 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -11071,7 +12103,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -11156,6 +12188,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -11186,7 +12219,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -11300,6 +12332,42 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -11320,7 +12388,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -11405,6 +12473,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -11435,7 +12504,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -11549,6 +12617,42 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -11569,7 +12673,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -11654,6 +12758,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -11684,7 +12789,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },
@@ -11817,6 +12921,47 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderCurve": "continuous",
+                                  "elevation": 0,
+                                  "flexDirection": "row",
+                                  "justifyContent": "center",
+                                  "overflow": "hidden",
+                                  "textAlignVertical": "center",
+                                },
+                                {
+                                  "paddingHorizontal": 0,
+                                },
+                                {
+                                  "backgroundColor": "transparent",
+                                  "borderColor": "#0B3EE3",
+                                  "borderRadius": 8,
+                                  "borderWidth": 0,
+                                  "height": undefined,
+                                },
+                                {},
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -11828,7 +12973,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   "overflow": "hidden",
                                   "textAlignVertical": "center",
                                 },
-                                false,
+                                {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
                                 {},
                                 {
                                   "paddingHorizontal": 0,
@@ -11845,6 +12996,30 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                  },
+                                  {
+                                    "columnGap": 8,
+                                  },
+                                  false,
+                                ]
+                              }
                               style={
                                 [
                                   {
@@ -11863,15 +13038,38 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                 accessibilityElementsHidden={true}
                                 accessible={false}
                                 allowFontScaling={true}
+                                collapsable={false}
                                 ellipsizeMode="tail"
                                 importantForAccessibility="no-hide-descendants"
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "color": "rgba(11, 62, 227, 1)",
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "textAlign": "auto",
+                                    },
+                                    {
+                                      "color": "#0B3EE3",
+                                    },
+                                  ]
+                                }
                                 maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 16,
                                       "fontStyle": "normal",
@@ -11886,7 +13084,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                         "color": "#0B3EE3",
                                       },
                                       {
-                                        "color": undefined,
+                                        "color": "rgba(11, 62, 227, 1)",
                                       },
                                     ],
                                   ]
@@ -11952,12 +13150,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -11985,26 +13180,18 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -12012,15 +13199,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -12074,16 +13259,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   PN_ROUTES_MESSAGE_DETAILS
@@ -12140,18 +13320,14 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -12221,13 +13397,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -12318,7 +13490,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -12374,6 +13545,42 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -12394,7 +13601,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -12580,12 +13787,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -12613,26 +13817,18 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -12640,15 +13836,13 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -12702,16 +13896,11 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   PN_ROUTES_MESSAGE_DETAILS
@@ -12768,18 +13957,14 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -12849,13 +14034,9 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -12946,7 +14127,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 allowFontScaling={true}
                                 dynamicTypeRamp="headline"
                                 maxFontSizeMultiplier={1.5}
-                                role="heading"
                                 style={
                                   [
                                     {},
@@ -13002,6 +14182,42 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -13022,7 +14238,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -13208,12 +14424,9 @@ exports[`MessagePayments should match snapshot when not cancelled, without payme
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -13241,26 +14454,18 @@ exports[`MessagePayments should match snapshot when not cancelled, without payme
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -13268,15 +14473,13 @@ exports[`MessagePayments should match snapshot when not cancelled, without payme
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -13330,16 +14533,11 @@ exports[`MessagePayments should match snapshot when not cancelled, without payme
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   PN_ROUTES_MESSAGE_DETAILS
@@ -13396,18 +14594,14 @@ exports[`MessagePayments should match snapshot when not cancelled, without payme
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -13477,13 +14671,9 @@ exports[`MessagePayments should match snapshot when not cancelled, without payme
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -13586,12 +14776,9 @@ exports[`MessagePayments should match snapshot when not cancelled, without payme
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -13619,26 +14806,18 @@ exports[`MessagePayments should match snapshot when not cancelled, without payme
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -13646,15 +14825,13 @@ exports[`MessagePayments should match snapshot when not cancelled, without payme
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -13708,16 +14885,11 @@ exports[`MessagePayments should match snapshot when not cancelled, without payme
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   PN_ROUTES_MESSAGE_DETAILS
@@ -13774,18 +14946,14 @@ exports[`MessagePayments should match snapshot when not cancelled, without payme
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -13855,13 +15023,9 @@ exports[`MessagePayments should match snapshot when not cancelled, without payme
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View

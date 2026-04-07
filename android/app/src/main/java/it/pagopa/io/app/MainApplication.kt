@@ -1,31 +1,35 @@
 package it.pagopa.io.app
+import android.content.res.Configuration
+import expo.modules.ApplicationLifecycleDispatcher
+import expo.modules.ReactNativeHostWrapper
 
 import android.app.Application
 import com.facebook.react.PackageList
 import com.facebook.react.ReactApplication
 import com.facebook.react.ReactHost
+import com.facebook.react.ReactNativeApplicationEntryPoint.loadReactNative
 import com.facebook.react.ReactNativeHost
 import com.facebook.react.ReactPackage
-import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.load
 import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
 import com.facebook.react.defaults.DefaultReactNativeHost
-import com.facebook.react.soloader.OpenSourceMergedSoMapping
-import com.facebook.soloader.SoLoader
 import it.ipzs.cieidsdk.native_bridge.CiePackage
 import it.pagopa.io.app.appreview.AppReviewPackage
+import it.pagopa.io.app.modules.NfcInfoPackage
 import it.pagopa.io.app.modules.PdfHighResGeneratorPackage
 
 class MainApplication : Application(), ReactApplication {
  
   override val reactNativeHost: ReactNativeHost =
-      object : DefaultReactNativeHost(this) {
+      ReactNativeHostWrapper(this, object : DefaultReactNativeHost(this) {
         override fun getPackages(): List<ReactPackage> =
           PackageList(this).packages.apply {
             // Packages that cannot be autolinked yet can be added manually here, for example:
             // add(MyReactNativePackage())
             add(CiePackage())
             add(AppReviewPackage())
+            add(NavigationBarManagerPackage())
             add(PdfHighResGeneratorPackage())
+            add(NfcInfoPackage())
           }
  
         override fun getJSMainModuleName(): String = "index"
@@ -34,18 +38,20 @@ class MainApplication : Application(), ReactApplication {
  
         override val isNewArchEnabled: Boolean = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED
         override val isHermesEnabled: Boolean = BuildConfig.IS_HERMES_ENABLED
-      }
+      })
  
   override val reactHost: ReactHost
-    get() = getDefaultReactHost(applicationContext, reactNativeHost)
+    get() = ReactNativeHostWrapper.createReactHost(applicationContext, reactNativeHost)
  
   override fun onCreate() {
     super.onCreate()
-    SoLoader.init(this, OpenSourceMergedSoMapping)
-    if (BuildConfig.IS_NEW_ARCHITECTURE_ENABLED) {
-      // If you opted-in for the New Architecture, we load the native entry point for this app.
-      load()
-    }
+    loadReactNative(this)
+    ApplicationLifecycleDispatcher.onApplicationCreate(this)
+  }
+ 
+  override fun onConfigurationChanged(newConfig: Configuration) {
+    super.onConfigurationChanged(newConfig)
+    ApplicationLifecycleDispatcher.onConfigurationChanged(this, newConfig)
   }
 }
 

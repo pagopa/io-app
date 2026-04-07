@@ -7,15 +7,6 @@ import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWr
 import * as walletSelectors from "../../store/selectors";
 import { WalletHomeScreen } from "../WalletHomeScreen";
 
-jest.mock("react-native-reanimated", () => ({
-  ...require("react-native-reanimated/mock"),
-  useReducedMotion: jest.fn,
-  useScrollViewOffset: jest.fn,
-  Layout: {
-    duration: jest.fn()
-  }
-}));
-
 describe("WalletHomeScreen", () => {
   jest.useFakeTimers();
   jest.runAllTimers();

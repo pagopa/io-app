@@ -48,7 +48,12 @@ describe("Test handleWalletPaymentCalculateFees saga", () => {
       .next("IT")
       .next(T_SESSION_TOKEN)
       .next(E.right({ status: 200, value: calculateFeesResponse }))
-      .put(paymentsCalculatePaymentFeesAction.success(calculateFeesResponse))
+      .put(
+        paymentsCalculatePaymentFeesAction.success({
+          ...calculateFeesResponse,
+          orderId: undefined
+        })
+      )
       .next()
       .isDone();
   });

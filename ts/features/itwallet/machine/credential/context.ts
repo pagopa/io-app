@@ -29,11 +29,6 @@ export type Context = {
    */
   isItWalletValid: boolean;
   /**
-   * Used to indicate that the flow is coming from the asynchrnous issuance flow for the MDL.
-   * TODO to be removed in [SIW-2839]
-   */
-  isAsyncContinuation: boolean;
-  /**
    * The type of the credential being issued.
    */
   credentialType: string | undefined;
@@ -69,7 +64,6 @@ export type Context = {
 export const InitialContext: Context = {
   mode: "issuance",
   isItWalletValid: false,
-  isAsyncContinuation: false,
   credentialType: undefined,
   wiaCryptoContext: undefined,
   walletInstanceAttestation: undefined,

@@ -3,22 +3,23 @@ import {
   ListItemHeader,
   ListItemInfo
 } from "@pagopa/io-app-design-system";
-import { FunctionComponent } from "react";
 import I18n from "i18next";
+import { FunctionComponent } from "react";
+import { View } from "react-native";
 import { Card } from "../../../../../../definitions/cgn/Card";
 import { CardActivated } from "../../../../../../definitions/cgn/CardActivated";
 import { CardExpired } from "../../../../../../definitions/cgn/CardExpired";
 import { CardPending } from "../../../../../../definitions/cgn/CardPending";
 import { CardRevoked } from "../../../../../../definitions/cgn/CardRevoked";
-import { getAccessibleExpirationDate } from "../../utils/dates";
 import { formatDateAsShortFormat } from "../../../../../utils/dates";
+import { getAccessibleExpirationDate } from "../../utils/dates";
 
 type Props = {
   cgnDetail: Card;
 };
 
 const CgnStatusDetail: FunctionComponent<Props> = ({ cgnDetail }: Props) => (
-  <>
+  <View>
     <ListItemHeader label={I18n.t("bonus.cgn.detail.status.title")} />
     {!CardPending.is(cgnDetail) && (
       <>
@@ -90,7 +91,7 @@ const CgnStatusDetail: FunctionComponent<Props> = ({ cgnDetail }: Props) => (
         )}
       </>
     )}
-  </>
+  </View>
 );
 
 export default CgnStatusDetail;

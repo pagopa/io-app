@@ -13,33 +13,42 @@ import {
   getPaymentsReceiptAction,
   getPaymentsLatestReceiptAction,
   hidePaymentsReceiptAction,
+  setNeedsHomeListRefreshAction,
   PaymentsTransactionReceiptInfoPayload
 } from "../actions";
 import {
   filterTransactionsByIdAndGetIndex,
-  getTransactionByIndex,
-  restoreTransactionAtIndex
+  restoreTransactionsToOriginalOrder
 } from "../../utils";
+import { ReceiptDownloadFailure } from "../../types";
 
-type CancelTransactionRecord = NoticeListItem & {
-  index: number;
+type CancelTransactionRecord = {
+  removedItems: Array<NoticeListItem>;
+  removedIndices: Array<number>;
   cancelType: "transactions" | "latestTransactions";
 };
 
 export type ReceiptTransactionState = {
   transactions: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>;
   latestTransactions: pot.Pot<ReadonlyArray<NoticeListItem>, NetworkError>;
+  latestTransactionsContinuationToken?: string;
   details: pot.Pot<NoticeDetailResponse, NetworkError>;
-  receiptDocument: pot.Pot<PaymentsTransactionReceiptInfoPayload, NetworkError>;
+  receiptDocument: pot.Pot<
+    PaymentsTransactionReceiptInfoPayload,
+    NetworkError | ReceiptDownloadFailure
+  >;
   cancelTransactionRecord: pot.Pot<CancelTransactionRecord, NetworkError>;
+  needsHomeListRefresh: boolean;
 };
 
 const INITIAL_STATE: ReceiptTransactionState = {
   transactions: pot.noneLoading,
   latestTransactions: pot.none,
+  latestTransactionsContinuationToken: undefined,
   details: pot.noneLoading,
   receiptDocument: pot.none,
-  cancelTransactionRecord: pot.none
+  cancelTransactionRecord: pot.none,
+  needsHomeListRefresh: false
 };
 
 const reducer = (
@@ -56,7 +65,8 @@ const reducer = (
     case getType(getPaymentsLatestReceiptAction.success):
       return {
         ...state,
-        latestTransactions: pot.some(action.payload || [])
+        latestTransactions: pot.some(action.payload.data || []),
+        latestTransactionsContinuationToken: action.payload.continuationToken
       };
     case getType(getPaymentsLatestReceiptAction.failure):
       return {
@@ -87,7 +97,8 @@ const reducer = (
         ...state,
         transactions: !action.payload.appendElements
           ? pot.some([...previousTransactions, ...maybeTransactions])
-          : pot.some(maybeTransactions)
+          : pot.some(maybeTransactions),
+        needsHomeListRefresh: false
       };
     case getType(getPaymentsReceiptAction.failure):
       return {
@@ -142,7 +153,7 @@ const reducer = (
         receiptDocument: pot.none
       };
     case getType(hidePaymentsReceiptAction.request): {
-      const { filteredTransactions, removedIndex: transactionIndex } =
+      const { filteredTransactions, removedIndices: transactionIndices } =
         filterTransactionsByIdAndGetIndex(
           state.transactions,
           action.payload.transactionId
@@ -150,25 +161,32 @@ const reducer = (
 
       const {
         filteredTransactions: filteredLatestTransactions,
-        removedIndex: latestTransactionIndex
+        removedIndices: latestTransactionIndices
       } = filterTransactionsByIdAndGetIndex(
         state.latestTransactions,
         action.payload.transactionId
       );
 
+      const hasTransactionRemovals = transactionIndices.length > 0;
+      const cancelType: "transactions" | "latestTransactions" =
+        hasTransactionRemovals ? "transactions" : "latestTransactions";
+      const removedIndices = hasTransactionRemovals
+        ? transactionIndices
+        : latestTransactionIndices;
+      const removedItems = hasTransactionRemovals
+        ? removedIndices.map(
+            index => pot.getOrElse(state.transactions, [])[index]
+          )
+        : removedIndices.map(
+            index => pot.getOrElse(state.latestTransactions, [])[index]
+          );
+
       return {
         ...state,
         cancelTransactionRecord: pot.some({
-          ...(transactionIndex > -1
-            ? getTransactionByIndex(state.transactions, transactionIndex)
-            : getTransactionByIndex(
-                state.latestTransactions,
-                latestTransactionIndex
-              )),
-          index:
-            transactionIndex > -1 ? transactionIndex : latestTransactionIndex,
-          cancelType:
-            transactionIndex > -1 ? "transactions" : "latestTransactions"
+          removedItems,
+          removedIndices,
+          cancelType
         }),
         transactions: pot.some(filteredTransactions),
         latestTransactions: pot.some(filteredLatestTransactions)
@@ -180,22 +198,42 @@ const reducer = (
         return state;
       }
 
-      const { cancelType, index, ...restoreItem } = restoreValue;
+      const { cancelType, removedItems, removedIndices } = restoreValue;
+      const currentTransactions = pot.getOrElse(state.transactions, []);
+      const currentLatestTransactions = pot.getOrElse(
+        state.latestTransactions,
+        []
+      );
+
+      const restoredTransactions =
+        cancelType === "transactions"
+          ? restoreTransactionsToOriginalOrder(
+              currentTransactions,
+              removedIndices,
+              removedItems
+            )
+          : currentTransactions;
+
+      const restoredLatestTransactions =
+        cancelType === "latestTransactions"
+          ? restoreTransactionsToOriginalOrder(
+              currentLatestTransactions,
+              removedIndices,
+              removedItems
+            )
+          : currentLatestTransactions;
 
       return {
         ...state,
-        transactions:
-          cancelType !== "latestTransactions"
-            ? restoreTransactionAtIndex(state.transactions, restoreItem, index)
-            : state.transactions,
-        latestTransactions:
-          cancelType === "latestTransactions"
-            ? restoreTransactionAtIndex(
-                state.latestTransactions,
-                restoreItem,
-                index
-              )
-            : state.latestTransactions
+        transactions: pot.some(restoredTransactions),
+        latestTransactions: pot.some(restoredLatestTransactions),
+        cancelTransactionRecord: pot.none
+      };
+    }
+    case getType(setNeedsHomeListRefreshAction): {
+      return {
+        ...state,
+        needsHomeListRefresh: action.payload
       };
     }
   }

@@ -2,7 +2,6 @@ import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
 
 type DefaultEventProperties = {
-  initiativeName?: string;
   initiativeId?: string;
 };
 

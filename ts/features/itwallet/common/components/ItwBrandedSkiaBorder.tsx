@@ -17,7 +17,7 @@ type ItwIridescentBorderProps = {
   height: LayoutRectangle["height"];
   variant?: ItwIridescentBorderVariant;
   thickness?: number;
-  cornerRadius?: number;
+  borderRadius?: number;
   themeType?: ColorSchemeName;
 };
 
@@ -30,7 +30,7 @@ export const ItwBrandedSkiaBorder = ({
   width,
   height,
   thickness = 3,
-  cornerRadius = 16,
+  borderRadius = 16,
   variant = "default",
   themeType = "light"
 }: ItwIridescentBorderProps) => {
@@ -65,7 +65,7 @@ export const ItwBrandedSkiaBorder = ({
           y={0}
           width={width}
           height={height}
-          r={cornerRadius}
+          r={borderRadius}
           strokeWidth={thickness}
           strokeJoin={"round"}
           style={"stroke"}

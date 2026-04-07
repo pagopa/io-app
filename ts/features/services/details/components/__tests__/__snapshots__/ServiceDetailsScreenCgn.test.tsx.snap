@@ -63,18 +63,14 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -144,13 +140,9 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -219,6 +211,17 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                           ]
                         }
                         decelerationRate="normal"
+                        forwardedRef={[Function]}
+                        jestAnimatedProps={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestAnimatedStyle={
+                          {
+                            "value": {},
+                          }
+                        }
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -270,6 +273,29 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                         }
                       >
                         <View
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "bottom": 0,
+                                "left": 0,
+                                "position": "absolute",
+                                "right": 0,
+                                "top": 0,
+                              },
+                              false,
+                            ]
+                          }
                           pointerEvents="none"
                           style={
                             [
@@ -285,10 +311,28 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "opacity": 1,
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
-                                  "opacity": undefined,
+                                  "opacity": 1,
                                 },
                                 false,
                               ]
@@ -298,26 +342,26 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                               colors={
                                 [
                                   16777215,
-                                  218103807,
-                                  419430399,
-                                  620756991,
-                                  822083583,
-                                  1040187391,
-                                  1241513983,
-                                  1442840575,
-                                  1644167167,
-                                  1845493759,
-                                  2046820351,
-                                  2264924159,
+                                  33554431,
+                                  83886079,
+                                  150994943,
+                                  268435455,
+                                  385875967,
+                                  520093695,
+                                  687865855,
+                                  855638015,
+                                  1056964607,
+                                  1258291199,
+                                  1476395007,
+                                  1711276031,
+                                  1946157055,
+                                  2214592511,
                                   2466250751,
-                                  2667577343,
-                                  2868903935,
-                                  3070230527,
-                                  3271557119,
-                                  3489660927,
-                                  3690987519,
-                                  3892314111,
-                                  4093640703,
+                                  2751463423,
+                                  3036676095,
+                                  3338665983,
+                                  3640655871,
+                                  3959422975,
                                   4294967295,
                                 ]
                               }
@@ -428,6 +472,48 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                             testID="service-cgn-deactivate-bonus-button"
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "backgroundColor": "rgba(209, 51, 51, 1)",
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "#D13333",
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
+                                  },
+                                  {},
+                                ]
+                              }
                               style={
                                 [
                                   {
@@ -439,9 +525,15 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
-                                  false,
                                   {
-                                    "backgroundColor": undefined,
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                  {
+                                    "backgroundColor": "rgba(209, 51, 51, 1)",
                                   },
                                   {
                                     "paddingHorizontal": 16,
@@ -458,6 +550,30 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
+                                    },
+                                    false,
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -476,15 +592,38 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                                   accessibilityElementsHidden={true}
                                   accessible={false}
                                   allowFontScaling={true}
+                                  collapsable={false}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "color": "rgba(255, 255, 255, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": "#FFFFFF",
+                                      },
+                                    ]
+                                  }
                                   maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -499,7 +638,7 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                                           "color": "#FFFFFF",
                                         },
                                         {
-                                          "color": undefined,
+                                          "color": "rgba(255, 255, 255, 1)",
                                         },
                                       ],
                                     ]
@@ -526,6 +665,29 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                       >
                         <View
                           accessibilityRole="header"
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 1)",
+                                "borderColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "borderBottomWidth": 1,
+                                "borderColor": "rgba(244,245,248,0)",
+                              },
+                              {},
+                            ]
+                          }
                           style={
                             [
                               {
@@ -534,13 +696,38 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                               },
                               {},
                               {
-                                "backgroundColor": undefined,
-                                "borderColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 1)",
+                                "borderColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "marginTop": 0,
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "flexGrow": 1,
+                                  "height": 56,
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 24,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -592,6 +779,35 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                               onStartShouldSetResponder={[Function]}
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "height": 24,
+                                      "width": 24,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -602,7 +818,13 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                                       "height": 24,
                                       "width": 24,
                                     },
-                                    false,
+                                    {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
                                   ]
                                 }
                               >
@@ -611,17 +833,25 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                                   accessibilityLabel=""
                                   accessible={false}
                                   align="xMidYMid"
-                                  animatedProps={
-                                    {
-                                      "color": undefined,
-                                    }
-                                  }
                                   bbHeight={36}
                                   bbWidth={36}
+                                  collapsable={false}
                                   color="#0E0F13"
                                   focusable={false}
                                   height={36}
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {
+                                        "color": "rgba(14, 15, 19, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
@@ -687,13 +917,34 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                               <Text
                                 accessible={false}
                                 allowFontScaling={true}
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "opacity": 0,
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "color": "#0E0F13",
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
                                 maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -706,7 +957,7 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                                         "textAlign": "center",
                                       },
                                       {
-                                        "opacity": undefined,
+                                        "opacity": 0,
                                       },
                                     ],
                                   ]
@@ -758,6 +1009,35 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -768,7 +1048,13 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                                         "height": 24,
                                         "width": 24,
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                     ]
                                   }
                                 >
@@ -777,17 +1063,25 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
                                     accessibilityLabel=""
                                     accessible={false}
                                     align="xMidYMid"
-                                    animatedProps={
-                                      {
-                                        "color": undefined,
-                                      }
-                                    }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    collapsable={false}
                                     color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {
+                                          "color": "rgba(14, 15, 19, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
@@ -852,22 +1146,14 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is active 1`
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -938,18 +1224,14 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -1019,13 +1301,9 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -1094,6 +1372,17 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                           ]
                         }
                         decelerationRate="normal"
+                        forwardedRef={[Function]}
+                        jestAnimatedProps={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestAnimatedStyle={
+                          {
+                            "value": {},
+                          }
+                        }
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -1145,6 +1434,29 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                         }
                       >
                         <View
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "bottom": 0,
+                                "left": 0,
+                                "position": "absolute",
+                                "right": 0,
+                                "top": 0,
+                              },
+                              false,
+                            ]
+                          }
                           pointerEvents="none"
                           style={
                             [
@@ -1160,10 +1472,28 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "opacity": 1,
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
-                                  "opacity": undefined,
+                                  "opacity": 1,
                                 },
                                 false,
                               ]
@@ -1173,26 +1503,26 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                               colors={
                                 [
                                   16777215,
-                                  218103807,
-                                  419430399,
-                                  620756991,
-                                  822083583,
-                                  1040187391,
-                                  1241513983,
-                                  1442840575,
-                                  1644167167,
-                                  1845493759,
-                                  2046820351,
-                                  2264924159,
+                                  33554431,
+                                  83886079,
+                                  150994943,
+                                  268435455,
+                                  385875967,
+                                  520093695,
+                                  687865855,
+                                  855638015,
+                                  1056964607,
+                                  1258291199,
+                                  1476395007,
+                                  1711276031,
+                                  1946157055,
+                                  2214592511,
                                   2466250751,
-                                  2667577343,
-                                  2868903935,
-                                  3070230527,
-                                  3271557119,
-                                  3489660927,
-                                  3690987519,
-                                  3892314111,
-                                  4093640703,
+                                  2751463423,
+                                  3036676095,
+                                  3338665983,
+                                  3640655871,
+                                  3959422975,
                                   4294967295,
                                 ]
                               }
@@ -1303,6 +1633,48 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                             testID="service-activate-bonus-button"
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "#0B3EE3",
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
+                                  },
+                                  {},
+                                ]
+                              }
                               style={
                                 [
                                   {
@@ -1314,9 +1686,15 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
-                                  false,
                                   {
-                                    "backgroundColor": undefined,
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                  {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
                                   },
                                   {
                                     "paddingHorizontal": 16,
@@ -1333,6 +1711,30 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
+                                    },
+                                    false,
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -1351,15 +1753,38 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                                   accessibilityElementsHidden={true}
                                   accessible={false}
                                   allowFontScaling={true}
+                                  collapsable={false}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "color": "rgba(255, 255, 255, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": "#FFFFFF",
+                                      },
+                                    ]
+                                  }
                                   maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -1374,7 +1799,7 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                                           "color": "#FFFFFF",
                                         },
                                         {
-                                          "color": undefined,
+                                          "color": "rgba(255, 255, 255, 1)",
                                         },
                                       ],
                                     ]
@@ -1401,6 +1826,29 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                       >
                         <View
                           accessibilityRole="header"
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 1)",
+                                "borderColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "borderBottomWidth": 1,
+                                "borderColor": "rgba(244,245,248,0)",
+                              },
+                              {},
+                            ]
+                          }
                           style={
                             [
                               {
@@ -1409,13 +1857,38 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                               },
                               {},
                               {
-                                "backgroundColor": undefined,
-                                "borderColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 1)",
+                                "borderColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "marginTop": 0,
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "flexGrow": 1,
+                                  "height": 56,
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 24,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -1467,6 +1940,35 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                               onStartShouldSetResponder={[Function]}
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "height": 24,
+                                      "width": 24,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -1477,7 +1979,13 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                                       "height": 24,
                                       "width": 24,
                                     },
-                                    false,
+                                    {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
                                   ]
                                 }
                               >
@@ -1486,17 +1994,25 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                                   accessibilityLabel=""
                                   accessible={false}
                                   align="xMidYMid"
-                                  animatedProps={
-                                    {
-                                      "color": undefined,
-                                    }
-                                  }
                                   bbHeight={36}
                                   bbWidth={36}
+                                  collapsable={false}
                                   color="#0E0F13"
                                   focusable={false}
                                   height={36}
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {
+                                        "color": "rgba(14, 15, 19, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
@@ -1562,13 +2078,34 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                               <Text
                                 accessible={false}
                                 allowFontScaling={true}
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "opacity": 0,
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "color": "#0E0F13",
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
                                 maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -1581,7 +2118,7 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                                         "textAlign": "center",
                                       },
                                       {
-                                        "opacity": undefined,
+                                        "opacity": 0,
                                       },
                                     ],
                                   ]
@@ -1633,6 +2170,35 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -1643,7 +2209,13 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                                         "height": 24,
                                         "width": 24,
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                     ]
                                   }
                                 >
@@ -1652,17 +2224,25 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
                                     accessibilityLabel=""
                                     accessible={false}
                                     align="xMidYMid"
-                                    animatedProps={
-                                      {
-                                        "color": undefined,
-                                      }
-                                    }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    collapsable={false}
                                     color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {
+                                          "color": "rgba(14, 15, 19, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
@@ -1727,22 +2307,14 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not activ
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -1813,18 +2385,14 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not enabl
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -1894,13 +2462,9 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not enabl
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -1969,6 +2533,17 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not enabl
                           ]
                         }
                         decelerationRate="normal"
+                        forwardedRef={[Function]}
+                        jestAnimatedProps={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestAnimatedStyle={
+                          {
+                            "value": {},
+                          }
+                        }
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -2016,6 +2591,29 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not enabl
                       >
                         <View
                           accessibilityRole="header"
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 1)",
+                                "borderColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "borderBottomWidth": 1,
+                                "borderColor": "rgba(244,245,248,0)",
+                              },
+                              {},
+                            ]
+                          }
                           style={
                             [
                               {
@@ -2024,13 +2622,38 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not enabl
                               },
                               {},
                               {
-                                "backgroundColor": undefined,
-                                "borderColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 1)",
+                                "borderColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "marginTop": 0,
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "flexGrow": 1,
+                                  "height": 56,
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 24,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -2082,6 +2705,35 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not enabl
                               onStartShouldSetResponder={[Function]}
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "height": 24,
+                                      "width": 24,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -2092,7 +2744,13 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not enabl
                                       "height": 24,
                                       "width": 24,
                                     },
-                                    false,
+                                    {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
                                   ]
                                 }
                               >
@@ -2101,17 +2759,25 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not enabl
                                   accessibilityLabel=""
                                   accessible={false}
                                   align="xMidYMid"
-                                  animatedProps={
-                                    {
-                                      "color": undefined,
-                                    }
-                                  }
                                   bbHeight={36}
                                   bbWidth={36}
+                                  collapsable={false}
                                   color="#0E0F13"
                                   focusable={false}
                                   height={36}
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {
+                                        "color": "rgba(14, 15, 19, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
@@ -2177,13 +2843,34 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not enabl
                               <Text
                                 accessible={false}
                                 allowFontScaling={true}
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "opacity": 0,
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "color": "#0E0F13",
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
                                 maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -2196,7 +2883,7 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not enabl
                                         "textAlign": "center",
                                       },
                                       {
-                                        "opacity": undefined,
+                                        "opacity": 0,
                                       },
                                     ],
                                   ]
@@ -2248,6 +2935,35 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not enabl
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -2258,7 +2974,13 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not enabl
                                         "height": 24,
                                         "width": 24,
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                     ]
                                   }
                                 >
@@ -2267,17 +2989,25 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not enabl
                                     accessibilityLabel=""
                                     accessible={false}
                                     align="xMidYMid"
-                                    animatedProps={
-                                      {
-                                        "color": undefined,
-                                      }
-                                    }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    collapsable={false}
                                     color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {
+                                          "color": "rgba(14, 15, 19, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
@@ -2342,22 +3072,14 @@ exports[`ServiceDetailsScreenCgn should match snapshot when service is not enabl
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>
@@ -2428,18 +3150,14 @@ exports[`ServiceDetailsScreenCgn should match snapshot when servicePreference co
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -2509,13 +3227,9 @@ exports[`ServiceDetailsScreenCgn should match snapshot when servicePreference co
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -2584,6 +3298,17 @@ exports[`ServiceDetailsScreenCgn should match snapshot when servicePreference co
                           ]
                         }
                         decelerationRate="normal"
+                        forwardedRef={[Function]}
+                        jestAnimatedProps={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestAnimatedStyle={
+                          {
+                            "value": {},
+                          }
+                        }
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -2631,6 +3356,29 @@ exports[`ServiceDetailsScreenCgn should match snapshot when servicePreference co
                       >
                         <View
                           accessibilityRole="header"
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(244, 245, 248, 1)",
+                                "borderColor": "rgba(244, 245, 248, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "borderBottomWidth": 1,
+                                "borderColor": "rgba(244,245,248,0)",
+                              },
+                              {},
+                            ]
+                          }
                           style={
                             [
                               {
@@ -2639,13 +3387,38 @@ exports[`ServiceDetailsScreenCgn should match snapshot when servicePreference co
                               },
                               {},
                               {
-                                "backgroundColor": undefined,
-                                "borderColor": undefined,
+                                "backgroundColor": "rgba(244, 245, 248, 1)",
+                                "borderColor": "rgba(244, 245, 248, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "marginTop": 0,
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "flexGrow": 1,
+                                  "height": 56,
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 24,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -2697,6 +3470,35 @@ exports[`ServiceDetailsScreenCgn should match snapshot when servicePreference co
                               onStartShouldSetResponder={[Function]}
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "height": 24,
+                                      "width": 24,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -2707,7 +3509,13 @@ exports[`ServiceDetailsScreenCgn should match snapshot when servicePreference co
                                       "height": 24,
                                       "width": 24,
                                     },
-                                    false,
+                                    {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
                                   ]
                                 }
                               >
@@ -2716,17 +3524,25 @@ exports[`ServiceDetailsScreenCgn should match snapshot when servicePreference co
                                   accessibilityLabel=""
                                   accessible={false}
                                   align="xMidYMid"
-                                  animatedProps={
-                                    {
-                                      "color": undefined,
-                                    }
-                                  }
                                   bbHeight={36}
                                   bbWidth={36}
+                                  collapsable={false}
                                   color="#0E0F13"
                                   focusable={false}
                                   height={36}
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {
+                                        "color": "rgba(14, 15, 19, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
@@ -2792,13 +3608,34 @@ exports[`ServiceDetailsScreenCgn should match snapshot when servicePreference co
                               <Text
                                 accessible={false}
                                 allowFontScaling={true}
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "opacity": 0,
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "color": "#0E0F13",
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
                                 maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -2811,7 +3648,7 @@ exports[`ServiceDetailsScreenCgn should match snapshot when servicePreference co
                                         "textAlign": "center",
                                       },
                                       {
-                                        "opacity": undefined,
+                                        "opacity": 0,
                                       },
                                     ],
                                   ]
@@ -2863,6 +3700,35 @@ exports[`ServiceDetailsScreenCgn should match snapshot when servicePreference co
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -2873,7 +3739,13 @@ exports[`ServiceDetailsScreenCgn should match snapshot when servicePreference co
                                         "height": 24,
                                         "width": 24,
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                     ]
                                   }
                                 >
@@ -2882,17 +3754,25 @@ exports[`ServiceDetailsScreenCgn should match snapshot when servicePreference co
                                     accessibilityLabel=""
                                     accessible={false}
                                     align="xMidYMid"
-                                    animatedProps={
-                                      {
-                                        "color": undefined,
-                                      }
-                                    }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    collapsable={false}
                                     color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {
+                                          "color": "rgba(14, 15, 19, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
@@ -2957,22 +3837,14 @@ exports[`ServiceDetailsScreenCgn should match snapshot when servicePreference co
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            [
-              {
-                "height": 44,
-              },
-              {
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-            ],
-          ]
+          {
+            "height": 44,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 1,
+          }
         }
       />
     </View>

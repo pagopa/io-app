@@ -12,7 +12,7 @@ import {
   hanldeMissingDevicePin,
   handleBiometricNotSupported
 } from "../biometricStateSagas";
-import { getBometricState } from "../../../../../utils/biometrics";
+import { getBiometricState } from "../../../../../utils/biometrics";
 import { isScreenLockSet } from "../../../../../utils/device";
 
 describe("checkAcknowledgedFingerprintSaga", () => {
@@ -57,7 +57,7 @@ describe("onboardFingerprintIfAvailableSaga", () => {
       .next()
       .put(fingerprintAcknowledged())
       .next()
-      .call(getBometricState)
+      .call(getBiometricState)
       .next("Available")
       .call(handleBiometricAvailable)
       .next()
@@ -69,7 +69,7 @@ describe("onboardFingerprintIfAvailableSaga", () => {
       .next()
       .put(fingerprintAcknowledged())
       .next()
-      .call(getBometricState)
+      .call(getBiometricState)
       .next("Unavailable")
       .call(isScreenLockSet)
       .next(false)
@@ -83,7 +83,7 @@ describe("onboardFingerprintIfAvailableSaga", () => {
       .next()
       .put(fingerprintAcknowledged())
       .next()
-      .call(getBometricState)
+      .call(getBiometricState)
       .next("NotEnrolled")
       .call(isScreenLockSet)
       .next(true)
@@ -97,7 +97,7 @@ describe("onboardFingerprintIfAvailableSaga", () => {
       .next()
       .put(fingerprintAcknowledged())
       .next()
-      .call(getBometricState)
+      .call(getBiometricState)
       .next("Unavailable")
       .call(isScreenLockSet)
       .next(true)

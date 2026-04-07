@@ -7,10 +7,13 @@ runs:
       uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
       with:
         node-version-file: ".node-version"    
-    - name: Checkout
-      uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
-    - uses: pnpm/action-setup@41ff72655975bd51cab0327fa583b6e92b6d3061 # v.4.2.0
-      name: Install pnpm # This automatically takes the packageManager field of package.json
+    - name: Enable Corepack and prepare pnpm
+      shell: bash
+      run: |
+        corepack enable
+        corepack prepare --activate
+    - id: yarn-cache
+      uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
       with:
         cache: true
     - name: Install dependencies
@@ -22,11 +25,6 @@ runs:
     - id: generate-api-client
       run: pnpm generate
       shell: bash
-    - id: upload-locales-artifact
-      uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
-      with:
-        name: locales
-        path: locales/
     - id: upload-clients-artifact
       uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
       with:

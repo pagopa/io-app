@@ -1,12 +1,13 @@
+import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
 import { RefObject } from "react";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIOStore } from "../../../../store/hooks";
+import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
+import { useIOSelector } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
-import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
+import { MessagesParamsList } from "../../../messages/navigation/params";
+import { SendUserType } from "../../../pushNotifications/analytics";
 import PN_ROUTES from "../../navigation/routes";
 import { isPnServiceEnabled } from "../../reminderBanner/reducer/bannerDismiss";
-import { SendUserType } from "../../../pushNotifications/analytics";
 import {
   trackSendAarNotificationClosureBack,
   trackSendAarNotificationClosureConfirm
@@ -22,38 +23,35 @@ export const SendAARMessageDetailBottomSheetComponent = ({
   aarBottomSheetRef,
   sendUserType
 }: SendAARMessageDetailBottomSheetComponentProps) => {
-  const navigation = useIONavigation();
-  const store = useIOStore();
+  const navigation =
+    useNavigation<
+      IOStackNavigationProp<MessagesParamsList, "MESSAGE_DETAIL">
+    >();
+  // This selector returns undefined if service's preferences have
+  // not been requested and loaded yet. But here, we are looking at
+  // the SEND special service's preferences, which were requested
+  // upon application startup. So, we make the assumption that
+  // either they were properly retrieved (and the selector will not
+  // return undefined) or, if there was an error of some sort, we
+  // do not make the request again and do not wait for them to be
+  // retrieved. The undefined case is treated as a disabled service,
+  // showing the activation flow to the user.
+  const isSendServiceEnabled = useIOSelector(isPnServiceEnabled) ?? false;
 
   const onSecondaryActionPress = () => {
     trackSendAarNotificationClosureConfirm(sendUserType);
 
     dismiss();
-
-    const state = store.getState();
-    // This selector returns undefined if service's preferences have
-    // not been requested and loaded yet. But here, we are looking at
-    // the SEND special service's preferences, which were requested
-    // upon application startup. So, we make the assumption that
-    // either they were properly retrieved (and the selector will not
-    // return undefined) or, if there was an error of some sort, we
-    // do not make the request again and do not wait for them to be
-    // retrieved. The undefined case is treated as a disabled service,
-    // showing the activation flow to the user.
-    const isSendServiceEnabled = isPnServiceEnabled(state) ?? false;
     if (isSendServiceEnabled) {
       navigation.popToTop();
       return;
     }
 
-    navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
-      screen: PN_ROUTES.MAIN,
+    navigation.replace(PN_ROUTES.MAIN, {
+      screen: PN_ROUTES.ENGAGEMENT_SCREEN,
       params: {
-        screen: PN_ROUTES.ENGAGEMENT_SCREEN,
-        params: {
-          sendOpeningSource: "aar",
-          sendUserType
-        }
+        sendOpeningSource: "aar",
+        sendUserType
       }
     });
   };

@@ -109,6 +109,7 @@ export const sendAarMockStateFactory: {
     iun,
     mandateId,
     signedVerificationCode: "signed_validation_code",
+    unsignedVerificationCode: verificationCode,
     mrtdData: {
       dg1: "",
       dg11: "",

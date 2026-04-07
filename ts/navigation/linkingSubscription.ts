@@ -10,11 +10,26 @@ import { walletUpdate } from "../features/wallet/store/actions";
 import { shouldTriggerWalletUpdate } from "../utils/deepLinkUtils";
 import { GlobalState } from "../store/reducers/types";
 import { initiateAarFlow } from "../features/pn/aar/store/actions";
+import { IO_LOGIN_CIE_URL_SCHEME } from "../features/authentication/login/cie/utils/cie";
+import { trackIOOpenedFromUniversalAppLink } from "../features/linking/analytics";
+
+// as of writing this, the only deep link that is dispatched after an app wake, but before the login's completion
+// is the CIEID login one.
+// it is then necessary to ignore it to avoid letting it rewrite other deep links that may be useful after login.
+const deepLinkStorageBlacklist: Array<RegExp> = [
+  new RegExp(`^${IO_LOGIN_CIE_URL_SCHEME}`, "i")
+];
+const isDeepLinkBlackListed = (url: string): boolean =>
+  deepLinkStorageBlacklist.some(regex => regex.test(url.trim()));
 
 export const linkingSubscription =
   (dispatch: Dispatch<Action>, store: Store<Readonly<GlobalState>>) =>
   (listener: (url: string) => void) => {
     const subscription = Linking.addEventListener("url", ({ url }) => {
+      // track if the app is opened from a universal link, but only if the url
+      // is an https link, to avoid tracking custom scheme deep links that are
+      // not universal links
+      trackIOOpenedFromUniversalAppLink(url);
       // Message archiving/restoring hides the bottom tab bar so we must make
       // sure that either it is disabled or we manually deactivate it, otherwise
       // a deep link may initiate a navigation flow that will later deliver the
@@ -39,7 +54,12 @@ export const linkingSubscription =
         }
       } else {
         // If we are not logged in, we store the URL to be processed later
-        dispatch(storeLinkingUrl(url));
+
+        // we avoid deepLinks that are handled in other parts of the app in order
+        // to not let them overwrite deepLinks queued for processing after login.
+        if (!isDeepLinkBlackListed(url)) {
+          dispatch(storeLinkingUrl(url));
+        }
       }
 
       // If we have a deep link with utm_medium and utm_source parameters, we want to track it

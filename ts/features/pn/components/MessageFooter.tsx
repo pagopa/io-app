@@ -1,7 +1,8 @@
-import { MutableRefObject, useCallback } from "react";
+import { MutableRefObject, useCallback, useEffect } from "react";
 import {
   FooterActions,
   FooterActionsMeasurements,
+  IOSpacing,
   useIOToast
 } from "@pagopa/io-app-design-system";
 import { useDispatch } from "react-redux";
@@ -78,7 +79,19 @@ export const MessageFooter = ({
     sendUserType,
     toast
   ]);
-  if (isCancelled || buttonState === "hidden") {
+
+  const isHidden = isCancelled || buttonState === "hidden";
+
+  useEffect(() => {
+    if (isHidden) {
+      onMeasure({
+        actionBlockHeight: 0,
+        safeBottomAreaHeight: IOSpacing.screenEndMargin
+      });
+    }
+  }, [isHidden, onMeasure]);
+
+  if (isHidden) {
     return null;
   }
   const isLoading = buttonState === "visibleLoading";

@@ -13,17 +13,18 @@ import {
   IssuanceFailureType
 } from "../../machine/eid/failure";
 import {
+  isL3FeaturesEnabledSelector,
   selectFailureOption,
-  selectIdentification
+  selectIdentification,
+  selectIssuanceLevel
 } from "../../machine/eid/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
-import {
-  useItwFailureSupportModal,
-  ZendeskSubcategoryValue
-} from "../../common/hooks/useItwFailureSupportModal";
-import { KoState, trackItwKoStateAction } from "../../analytics";
+import { useItwFailureSupportModal } from "../../common/hooks/useItwFailureSupportModal";
+import { ZendeskSubcategoryValue } from "../../common/hooks/useItwZendeskSupport";
+import { KoState } from "../../analytics/utils/types";
+import { trackItwKoStateAction } from "../../analytics";
 import { openWebUrl } from "../../../../utils/url";
 import { useEidEventsTracking } from "../hooks/useEidEventsTracking";
 import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
@@ -35,8 +36,12 @@ import { DOCUMENTS_ON_IO_FAQ_12_URL_BODY } from "../../../../urls";
 const zendeskAssistanceErrors = [
   IssuanceFailureType.UNEXPECTED,
   IssuanceFailureType.WALLET_PROVIDER_GENERIC,
-  IssuanceFailureType.UNSUPPORTED_DEVICE
+  IssuanceFailureType.UNSUPPORTED_DEVICE,
+  IssuanceFailureType.HARDWARE_KEY_INVALID
 ];
+
+const ASSERTION_FAILED_FAQ_URL =
+  "https://assistenza.ioapp.it/hc/it/articles/43824826487953-Provo-ad-aggiungere-un-documento-al-Portafoglio-ma-ricevo-un-errore-dal-mio-dispositivo-Apple";
 
 export const ItwIssuanceEidFailureScreen = () => {
   const failureOption =
@@ -57,6 +62,13 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const identification =
     ItwEidIssuanceMachineContext.useSelector(selectIdentification);
+  const issuanceLevel =
+    ItwEidIssuanceMachineContext.useSelector(selectIssuanceLevel);
+  const isL3Issuance = ItwEidIssuanceMachineContext.useSelector(
+    isL3FeaturesEnabledSelector
+  );
+  const credential = isL3Issuance ? "ITW_PID" : "ITW_ID";
+
   const toast = useIOToast();
 
   const FAQ_URL = useIOSelector(state =>
@@ -127,26 +139,31 @@ const ContentView = ({ failure }: ContentViewProps) => {
             },
             secondaryAction: supportModalAction
           };
+        case IssuanceFailureType.HARDWARE_KEY_INVALID:
+          return {
+            title: I18n.t("features.itWallet.hardwareKeyInvalid.error.title"),
+            subtitle: I18n.t("features.itWallet.hardwareKeyInvalid.error.body"),
+            pictogram: "fatalError",
+            action: {
+              label: I18n.t(
+                "features.itWallet.hardwareKeyInvalid.error.primaryAction"
+              ),
+              onPress: () => Linking.openURL(ASSERTION_FAILED_FAQ_URL)
+            },
+            secondaryAction: supportModalAction
+          };
         case IssuanceFailureType.UNSUPPORTED_DEVICE:
           return {
             title: I18n.t("features.itWallet.unsupportedDevice.error.title"),
-            subtitle: [
-              {
-                text: I18n.t("features.itWallet.unsupportedDevice.error.body")
-              },
-              {
-                text: I18n.t(
-                  "features.itWallet.unsupportedDevice.error.primaryAction"
-                ),
-                asLink: true,
-                weight: "Semibold",
-                onPress: () => {
-                  openWebUrl(FAQ_URL, () =>
-                    toast.error(I18n.t("global.jserror.title"))
-                  );
-                }
-              }
-            ],
+            subtitle: I18n.t(
+              "features.itWallet.unsupportedDevice.error.subtitle",
+              { faqUrl: FAQ_URL }
+            ),
+            onSubtitleLinkPress: url => {
+              openWebUrl(url, () =>
+                toast.error(I18n.t("global.jserror.title"))
+              );
+            },
             pictogram: "workInProgress",
             action: supportModalAction,
             secondaryAction: {
@@ -238,12 +255,48 @@ const ContentView = ({ failure }: ContentViewProps) => {
               label: I18n.t(
                 `features.itWallet.issuance.issuerNotTrustedCommonError.primaryAction`
               ),
-              onPress: () => machineRef.send({ type: "close" })
+              onPress: () => {
+                trackItwKoStateAction({
+                  reason: failure.reason.message,
+                  cta_category: "custom_1",
+                  cta_id: I18n.t(
+                    "features.itWallet.issuance.issuerNotTrustedCommonError.primaryAction"
+                  )
+                });
+                machineRef.send({ type: "close" });
+              }
             },
             secondaryAction: {
               label: I18n.t(
                 `features.itWallet.issuance.issuerNotTrustedCommonError.secondaryAction`
               ),
+              onPress: () => {
+                trackItwKoStateAction({
+                  reason: failure.reason.message,
+                  cta_category: "custom_2",
+                  cta_id: I18n.t(
+                    "features.itWallet.issuance.issuerNotTrustedCommonError.secondaryAction"
+                  )
+                });
+                supportModal.present();
+              }
+            }
+          };
+        case IssuanceFailureType.MRTD_CHALLENGE_INIT_ERROR:
+          return {
+            title: I18n.t(
+              "features.itWallet.issuance.mrtdChallengeInitError.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.issuance.mrtdChallengeInitError.subtitle"
+            ),
+            pictogram: "umbrella",
+            action: {
+              label: I18n.t("global.buttons.close"),
+              onPress: () => machineRef.send({ type: "retry" }) // Retry event goes to UserIdentification
+            },
+            secondaryAction: {
+              label: I18n.t("features.itWallet.support.button"),
               onPress: () => {
                 supportModal.present();
               }
@@ -252,16 +305,13 @@ const ContentView = ({ failure }: ContentViewProps) => {
       }
     };
 
-  useEidEventsTracking({ failure, identification });
+  useEidEventsTracking({ failure, identification, issuanceLevel, credential });
 
   const resultScreenProps = getOperationResultScreenContentProps();
 
   return (
     <>
-      <OperationResultScreenContent
-        {...resultScreenProps}
-        subtitleProps={{ textBreakStrategy: "simple" }}
-      />
+      <OperationResultScreenContent {...resultScreenProps} />
       {supportModal.bottomSheet}
     </>
   );

@@ -1,7 +1,8 @@
-import { ListItemHeader, VSpacer } from "@pagopa/io-app-design-system";
+import { ListItemHeader, VSpacer, VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
+import { View } from "react-native";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -14,18 +15,22 @@ import {
   ItwEidInfoBottomSheetTitle
 } from "../../common/components/ItwEidInfoBottomSheetContent";
 import { ItwEidLifecycleAlert } from "../../common/components/ItwEidLifecycleAlert";
+import { ItwL2EngagementBanner } from "../../common/components/ItwL2EngagementBanner.tsx";
 import { ItwWalletReadyBanner } from "../../common/components/ItwWalletReadyBanner";
 import { useItwPendingReviewRequest } from "../../common/hooks/useItwPendingReviewRequest";
 import { useItwStatusIconColor } from "../../common/hooks/useItwStatusIconColor.ts";
 import {
   itwShouldHideEidLifecycleAlert,
-  itwShouldRenderNewItWalletSelector
+  itwShouldRenderNewItWalletSelector,
+  itwShouldRenderL2EngagementBannerSelector,
+  itwShouldRenderUpgradeBannerSelector
 } from "../../common/store/selectors";
 import { ItwJwtCredentialStatus } from "../../common/utils/itwTypesUtils.ts";
 import {
   itwCredentialsEidExpirationSelector,
   itwCredentialsEidStatusSelector
 } from "../../credentials/store/selectors";
+import { ItwDiscoveryBanner } from "../../discovery/components/ItwDiscoveryBanner.tsx";
 import { ITW_ROUTES } from "../../navigation/routes.ts";
 import { ItwWalletIdStatus } from "./ItwWalletIdStatus.tsx";
 
@@ -35,9 +40,17 @@ const LIFECYCLE_STATUS: Array<ItwJwtCredentialStatus> = [
 ];
 
 export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
+  const navigation = useIONavigation();
+
   const isNewItwRenderable = useIOSelector(itwShouldRenderNewItWalletSelector);
   const shouldHideEidAlert = useIOSelector(itwShouldHideEidLifecycleAlert);
-  const navigation = useIONavigation();
+  const shouldRenderUpgradeBanner = useIOSelector(
+    itwShouldRenderUpgradeBannerSelector
+  );
+  const shouldRenderL2EngagementBanner = useIOSelector(
+    itwShouldRenderL2EngagementBannerSelector
+  );
+
   const cards = useIOSelector(state =>
     selectWalletCardsByCategory(state, "itw")
   );
@@ -127,7 +140,9 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
         cards={cards}
         header={sectionHeader}
         topElement={
-          <>
+          <VStack space={16}>
+            {shouldRenderUpgradeBanner && <ItwDiscoveryBanner flow="wallet" />}
+            {shouldRenderL2EngagementBanner && <ItwL2EngagementBanner />}
             <ItwWalletReadyBanner />
             {!shouldHideEidAlert && (
               <ItwEidLifecycleAlert
@@ -135,7 +150,9 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
                 navigation={navigation}
               />
             )}
-          </>
+            {/* Dummy view to add space in case there is another component */}
+            <View />
+          </VStack>
         }
       />
       {eidInfoBottomSheet.bottomSheet}

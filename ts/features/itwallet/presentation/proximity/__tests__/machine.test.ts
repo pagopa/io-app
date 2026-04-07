@@ -52,6 +52,7 @@ describe("itwProximityMachine", () => {
   const setHasGivenConsent = jest.fn();
   const navigateToGrantPermissionsScreen = jest.fn();
   const navigateToBluetoothActivationScreen = jest.fn();
+  const navigateToQrCodeScreen = jest.fn();
   const navigateToFailureScreen = jest.fn();
   const navigateToClaimsDisclosureScreen = jest.fn();
   const navigateToSendDocumentsResponseScreen = jest.fn();
@@ -79,6 +80,7 @@ describe("itwProximityMachine", () => {
       setHasGivenConsent,
       navigateToGrantPermissionsScreen,
       navigateToBluetoothActivationScreen,
+      navigateToQrCodeScreen,
       navigateToFailureScreen,
       navigateToClaimsDisclosureScreen,
       navigateToSendDocumentsResponseScreen,
@@ -142,7 +144,7 @@ describe("itwProximityMachine", () => {
 
       const actor = createActor(mockedMachine);
       actor.start();
-      actor.send({ type: "start", credentialType: CREDENTIAL_TYPE });
+      actor.send({ type: "start" });
 
       await waitFor(() =>
         expect(actor.getSnapshot().value).toStrictEqual({
@@ -178,7 +180,7 @@ describe("itwProximityMachine", () => {
 
       const actor = createActor(mockedMachine);
       actor.start();
-      actor.send({ type: "start", credentialType: CREDENTIAL_TYPE });
+      actor.send({ type: "start" });
 
       await waitFor(() =>
         expect(actor.getSnapshot().value).toStrictEqual({
@@ -221,7 +223,7 @@ describe("itwProximityMachine", () => {
 
       const actor = createActor(mockedMachine);
       actor.start();
-      actor.send({ type: "start", credentialType: CREDENTIAL_TYPE });
+      actor.send({ type: "start" });
 
       await waitFor(() =>
         expect(actor.getSnapshot().value).toStrictEqual({
@@ -252,7 +254,7 @@ describe("itwProximityMachine", () => {
 
       const actor = createActor(mockedMachine);
       actor.start();
-      actor.send({ type: "start", credentialType: CREDENTIAL_TYPE });
+      actor.send({ type: "start" });
 
       await waitFor(() =>
         expect(actor.getSnapshot().value).toStrictEqual({
@@ -289,7 +291,7 @@ describe("itwProximityMachine", () => {
 
       const actor = createActor(mockedMachine);
       actor.start();
-      actor.send({ type: "start", credentialType: CREDENTIAL_TYPE });
+      actor.send({ type: "start" });
 
       await waitFor(() =>
         expect(actor.getSnapshot().value).toStrictEqual({
@@ -336,7 +338,7 @@ describe("itwProximityMachine", () => {
 
       const actor = createActor(mockedMachine);
       actor.start();
-      actor.send({ type: "start", credentialType: CREDENTIAL_TYPE });
+      actor.send({ type: "start" });
 
       await waitFor(() =>
         expect(actor.getSnapshot().value).toStrictEqual({
@@ -372,7 +374,7 @@ describe("itwProximityMachine", () => {
 
       const actor = createActor(mockedMachine);
       actor.start();
-      actor.send({ type: "start", credentialType: CREDENTIAL_TYPE });
+      actor.send({ type: "start" });
 
       expect(actor.getSnapshot().tags).toStrictEqual(
         new Set([ItwTags.Loading])
@@ -412,7 +414,7 @@ describe("itwProximityMachine", () => {
 
       const actor = createActor(mockedMachine);
       actor.start();
-      actor.send({ type: "start", credentialType: CREDENTIAL_TYPE });
+      actor.send({ type: "start" });
 
       await waitFor(() =>
         expect(actor.getSnapshot().value).toStrictEqual({
@@ -464,7 +466,7 @@ describe("itwProximityMachine", () => {
 
       const actor = createActor(mockedMachine);
       actor.start();
-      actor.send({ type: "start", credentialType: CREDENTIAL_TYPE });
+      actor.send({ type: "start" });
 
       await waitFor(() =>
         expect(actor.getSnapshot().value).toStrictEqual({
@@ -499,7 +501,7 @@ describe("itwProximityMachine", () => {
 
       const actor = createActor(mockedMachine);
       actor.start();
-      actor.send({ type: "start", credentialType: CREDENTIAL_TYPE });
+      actor.send({ type: "start" });
 
       await waitFor(() =>
         expect(actor.getSnapshot().value).toStrictEqual({
@@ -574,7 +576,7 @@ describe("itwProximityMachine", () => {
       const clock = new SimulatedClock();
       const actor = createActor(mockedMachine, { clock });
       actor.start();
-      actor.send({ type: "start", credentialType: CREDENTIAL_TYPE });
+      actor.send({ type: "start" });
 
       await waitFor(() =>
         expect(actor.getSnapshot().value).toStrictEqual({
@@ -627,7 +629,7 @@ describe("itwProximityMachine", () => {
 
       const actor = createActor(mockedMachine, {});
       actor.start();
-      actor.send({ type: "start", credentialType: CREDENTIAL_TYPE });
+      actor.send({ type: "start" });
 
       await waitFor(() =>
         expect(actor.getSnapshot().value).toStrictEqual({
@@ -675,7 +677,7 @@ describe("itwProximityMachine", () => {
 
       const actor = createActor(mockedMachine);
       actor.start();
-      actor.send({ type: "start", credentialType: CREDENTIAL_TYPE });
+      actor.send({ type: "start" });
 
       await waitFor(() =>
         expect(actor.getSnapshot().value).toStrictEqual({

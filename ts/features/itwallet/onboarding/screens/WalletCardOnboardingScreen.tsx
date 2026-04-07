@@ -6,11 +6,9 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import * as O from "fp-ts/lib/Option";
-import { useCallback, useMemo } from "react";
-import { constFalse, pipe } from "fp-ts/lib/function";
-import { StyleSheet, View } from "react-native";
 import I18n from "i18next";
+import { useCallback, useMemo } from "react";
+import { StyleSheet, View } from "react-native";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -27,35 +25,17 @@ import {
   trackStartAddNewCredential
 } from "../../analytics";
 import { ItwDiscoveryBannerOnboarding } from "../../common/components/discoveryBanner/ItwDiscoveryBannerOnboarding";
-import {
-  itwIsL3EnabledSelector,
-  itwRequestedCredentialsSelector
-} from "../../common/store/selectors/preferences";
-import {
-  isItwEnabledSelector,
-  itwDisabledCredentialsSelector
-} from "../../common/store/selectors/remoteConfig";
-import { itwCredentialsTypesSelector } from "../../credentials/store/selectors";
-import {
-  itwLifecycleIsITWalletValidSelector,
-  itwLifecycleIsValidSelector
-} from "../../lifecycle/store/selectors";
-import {
-  selectCredentialTypeOption,
-  selectIsLoading
-} from "../../machine/credential/selectors";
-import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
-import { ItwOnboardingModuleCredential } from "../components/ItwOnboardingModuleCredential";
-import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard.ts";
-import { ITW_ROUTES } from "../../navigation/routes";
 import { selectItwEnv } from "../../common/store/selectors/environment";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
+import { isItwEnabledSelector } from "../../common/store/selectors/remoteConfig";
 import {
   availableCredentials,
-  isNewCredential,
-  isUpcomingCredential,
   newCredentials,
   upcomingCredentials
 } from "../../common/utils/itwCredentialUtils";
+import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingModuleCredentialsList.tsx";
+import { AsyncCredentialsCatalogue } from "../components/AsyncCredentialsCatalogueWrapper.tsx";
 
 const activeBadge: Badge = {
   variant: "success",
@@ -95,28 +75,13 @@ const WalletCardOnboardingScreen = () => {
 };
 
 const ItwCredentialOnboardingSection = () => {
-  const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
-  const navigation = useIONavigation();
-
-  const remotelyDisabledCredentials = useIOSelector(
-    itwDisabledCredentialsSelector
-  );
-  const requestedCredentials = useIOSelector(itwRequestedCredentialsSelector);
   const env = useIOSelector(selectItwEnv);
   const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
-  const itwCredentialsTypes = useIOSelector(itwCredentialsTypesSelector);
-  const isITWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
-  const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
-
-  const isCredentialIssuancePending =
-    ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
-  const selectedCredentialOption =
-    ItwCredentialIssuanceMachineContext.useSelector(selectCredentialTypeOption);
 
   // Show upcoming credentials only if L3 is enabled and env is "pre"
   const shouldShowUpcoming = isL3Enabled && env === "pre";
 
-  const getCredentialToDisplay = useCallback(() => {
+  const credentialsToDisplay = useMemo(() => {
     if (shouldShowUpcoming) {
       return [
         ...availableCredentials,
@@ -130,60 +95,16 @@ const ItwCredentialOnboardingSection = () => {
     }
   }, [isL3Enabled, shouldShowUpcoming]);
 
-  const displayedCredentials = getCredentialToDisplay();
-
-  const beginCredentialIssuance = useOfflineToastGuard(
-    useCallback(
-      (type: string) => {
-        if (isUpcomingCredential(type)) {
-          navigation.navigate(ITW_ROUTES.MAIN, {
-            screen: ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL
-          });
-        } else if (
-          !isWalletValid ||
-          (!isITWalletValid && isNewCredential(type))
-        ) {
-          navigation.navigate(ITW_ROUTES.MAIN, {
-            screen: ITW_ROUTES.DISCOVERY.INFO,
-            params: { level: "l3", credentialType: type }
-          });
-        } else {
-          machineRef.send({
-            type: "select-credential",
-            credentialType: type,
-            mode: "issuance"
-          });
-        }
-      },
-      [isITWalletValid, machineRef, navigation, isWalletValid]
-    )
-  );
-
   return (
     <View>
       <ListItemHeader
         label={I18n.t("features.wallet.onboarding.sections.itw")}
       />
-      <VStack space={8}>
-        {displayedCredentials.map(type => (
-          <ItwOnboardingModuleCredential
-            key={`itw_credential_${type}`}
-            type={type}
-            isActive={itwCredentialsTypes.includes(type)}
-            isDisabled={remotelyDisabledCredentials.includes(type)}
-            isRequested={requestedCredentials.includes(type)}
-            isUpcoming={isUpcomingCredential(type)}
-            isNew={isNewCredential(type)}
-            isCredentialIssuancePending={isCredentialIssuancePending}
-            isSelectedCredential={pipe(
-              selectedCredentialOption,
-              O.map(t => t === type),
-              O.getOrElse(constFalse)
-            )}
-            onPress={beginCredentialIssuance}
-          />
-        ))}
-      </VStack>
+      <AsyncCredentialsCatalogue>
+        <ItwOnboardingModuleCredentialsList
+          credentialTypesToDisplay={credentialsToDisplay}
+        />
+      </AsyncCredentialsCatalogue>
     </View>
   );
 };
@@ -195,7 +116,7 @@ const OtherCardsOnboardingSection = (props: { showTitle?: boolean }) => {
   const isCgnLoading = useIOSelector(isCgnDetailsLoading);
   const isCgnActive = useIOSelector(isCgnInformationAvailableSelector);
 
-  const startCgnActiviation = useCallback(() => {
+  const startCgnActivation = useCallback(() => {
     trackStartAddNewCredential("CGN");
     dispatch(loadAvailableBonuses.request());
     dispatch(cgnActivationStart());
@@ -217,11 +138,11 @@ const OtherCardsOnboardingSection = (props: { showTitle?: boolean }) => {
           testID="cgnModuleTestID"
           image={require("../../../../../img/bonus/cgn/cgn_logo.png")}
           label={I18n.t("features.wallet.onboarding.options.cgn")}
-          onPress={!isCgnActive ? startCgnActiviation : undefined}
+          onPress={!isCgnActive ? startCgnActivation : undefined}
           badge={isCgnActive ? activeBadge : undefined}
         />
       ),
-    [isCgnActive, isCgnLoading, startCgnActiviation]
+    [isCgnActive, isCgnLoading, startCgnActivation]
   );
 
   return (

@@ -1,9 +1,12 @@
-import { CredentialsCatalogue } from "@pagopa/io-react-native-wallet";
+import {
+  CredentialsCatalogue,
+  ItwVersion
+} from "@pagopa/io-react-native-wallet";
 import { Env } from "./environment";
+import { getIoWallet } from "./itwIoWallet";
 
-export type DigitalCredentialsCatalogue = Awaited<
-  ReturnType<typeof CredentialsCatalogue.fetchAndParseCatalogue>
->;
+export type DigitalCredentialsCatalogue =
+  CredentialsCatalogue.DigitalCredentialsCatalogue;
 
 export type DigitalCredentialMetadata =
   DigitalCredentialsCatalogue["credentials"][number];
@@ -12,7 +15,10 @@ export type DigitalCredentialMetadata =
  * Fetch the Digital Credentials Catalogue.
  *
  * @param env The environment to use for the Trust Anchor's base URL
+ * @param itwVersion - IT-Wallet technical specs version
  * @returns The credentials catalogue parsed JWT
  */
-export const fetchCredentialsCatalogue = (env: Env) =>
-  CredentialsCatalogue.fetchAndParseCatalogue(env.WALLET_TA_BASE_URL);
+export const fetchCredentialsCatalogue = (env: Env, itwVersion: ItwVersion) =>
+  getIoWallet(itwVersion).CredentialsCatalogue.fetchAndParseCatalogue(
+    env.WALLET_TA_BASE_URL
+  );

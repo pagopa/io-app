@@ -25,7 +25,10 @@ export function* handleWalletPaymentCalculateFees(
       O.getOrElse(() => "IT")
     );
 
-    const { paymentMethodId, idPsp, ...body } = { ...action.payload, language };
+    const { paymentMethodId, idPsp, ...body } = {
+      ...action.payload,
+      language
+    };
     const calculateFeesResult = yield* withPaymentsSessionToken(
       calculateFees,
       action,
@@ -59,7 +62,12 @@ export function* handleWalletPaymentCalculateFees(
           );
           return;
         }
-        yield* put(paymentsCalculatePaymentFeesAction.success(res.value));
+        yield* put(
+          paymentsCalculatePaymentFeesAction.success({
+            ...res.value,
+            orderId: action.payload.orderId
+          })
+        );
         return;
       } else if (res.status !== 401) {
         // The 401 status is handled by the withPaymentsSessionToken

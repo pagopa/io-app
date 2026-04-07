@@ -103,9 +103,9 @@ const PaymentsHomeTransactionsList = ({ enforcedLoadingState }: Props) => {
       return (
         <View testID="PaymentsHomeTransactionsListTestID">
           {latestTransactionsPot.value.map((latestTransaction, index) => (
-            <Fragment key={`transaction_${latestTransaction.eventId}`}>
+            <Fragment key={`transaction_${latestTransaction.eventId}${index}`}>
               <ReceiptListItemTransaction
-                key={`transaction_${latestTransaction.eventId}`}
+                key={`transaction_${latestTransaction.eventId}${index}`}
                 onPress={() =>
                   handleNavigateToTransactionDetails(latestTransaction)
                 }

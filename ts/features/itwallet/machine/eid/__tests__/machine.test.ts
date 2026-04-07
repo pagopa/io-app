@@ -37,6 +37,7 @@ type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
 const T_INTEGRITY_KEY = "abc";
 const T_WIA: string = "abcdefg";
+const T_ROUTE_NAME = "ITW_IDENTIFICATION_TEST_ROUTE";
 
 /**
  * Actions
@@ -62,6 +63,7 @@ const navigateToNfcInstructionsScreen = jest.fn();
 const navigateToCieIdLoginScreen = jest.fn();
 const navigateToCieWarningScreen = jest.fn();
 const navigateToIdentificationScreen = jest.fn();
+const navigateToUpgradeCredentialsScreen = jest.fn();
 const storeIntegrityKeyTag = jest.fn();
 const cleanupIntegrityKeyTag = jest.fn();
 const storeWalletInstanceAttestation = jest.fn();
@@ -78,6 +80,8 @@ const clearSimplifiedActivationRequirements = jest.fn();
 const loadPidIntoContext = jest.fn();
 const navigateToCieCanScreen = jest.fn();
 const navigateToCieInternalAuthAndMrtdScreen = jest.fn();
+const trackItwIdAuthenticationCompleted = jest.fn();
+const trackItwIdVerifiedDocument = jest.fn();
 
 /**
  * Actors
@@ -128,6 +132,7 @@ describe("itwEidIssuanceMachine", () => {
       navigateToIdentificationScreen,
       navigateToCieCanScreen,
       navigateToCieInternalAuthAndMrtdScreen,
+      navigateToUpgradeCredentialsScreen,
       storeIntegrityKeyTag,
       cleanupIntegrityKeyTag,
       storeWalletInstanceAttestation,
@@ -141,6 +146,8 @@ describe("itwEidIssuanceMachine", () => {
       storeAuthLevel,
       freezeSimplifiedActivationRequirements,
       clearSimplifiedActivationRequirements,
+      trackItwIdAuthenticationCompleted,
+      trackItwIdVerifiedDocument,
       loadPidIntoContext: assign(loadPidIntoContext)
     },
     actors: {
@@ -1636,7 +1643,11 @@ describe("itwEidIssuanceMachine", () => {
 
     const testWarningType: CieWarningType = "card";
 
-    actor.send({ type: "go-to-cie-warning", warning: testWarningType });
+    actor.send({
+      type: "go-to-cie-warning",
+      warning: testWarningType,
+      routeName: T_ROUTE_NAME
+    });
 
     await waitFor(() => {
       expect(actor.getSnapshot().value).toStrictEqual({
@@ -1702,6 +1713,72 @@ describe("itwEidIssuanceMachine", () => {
     expect(navigateToCiePinScreen).toHaveBeenCalledTimes(1);
   });
 
+  it("Should not track identification method selection when switching from CiePin to Spid", () => {
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: {
+        UserIdentification: {
+          CiePin: "PreparationPin"
+        }
+      },
+      context: {
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: { jwt: T_WIA },
+        level: "l3"
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, { snapshot });
+    actor.start();
+
+    actor.send({ type: "select-identification-mode", mode: "spid" });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: {
+        Spid: "IdpSelection"
+      }
+    });
+    expect(trackIdentificationMethodSelected).not.toHaveBeenCalled();
+  });
+
+  it("Should not track identification method selection when switching from CiePin to CieID", () => {
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: {
+        UserIdentification: {
+          CiePin: "PreparationPin"
+        }
+      },
+      context: {
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: { jwt: T_WIA },
+        level: "l3"
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, { snapshot });
+    actor.start();
+
+    actor.send({ type: "select-identification-mode", mode: "cieId" });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: {
+        CieID: "StartingCieIDAuthFlow"
+      }
+    });
+    expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
+      identification: {
+        mode: "cieId",
+        level: "L3"
+      }
+    });
+    expect(trackIdentificationMethodSelected).not.toHaveBeenCalled();
+  });
+
   it("Should return to PreparationPin when navigating back from CieWarning", async () => {
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
@@ -1734,7 +1811,11 @@ describe("itwEidIssuanceMachine", () => {
 
     const testWarningType: CieWarningType = "card";
 
-    actor.send({ type: "go-to-cie-warning", warning: testWarningType });
+    actor.send({
+      type: "go-to-cie-warning",
+      warning: testWarningType,
+      routeName: T_ROUTE_NAME
+    });
 
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: {
@@ -1781,10 +1862,11 @@ describe("itwEidIssuanceMachine", () => {
     expect(navigateToTosScreen).toHaveBeenCalledTimes(1);
   });
 
-  it("Should handle credentials upgrade", (onDone: jest.DoneCallback) => {
+  it("Should handle credentials upgrade", (done: jest.DoneCallback) => {
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
     ).getSnapshot();
+
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: { Issuance: "DisplayingPreview" },
       context: {
@@ -1802,9 +1884,17 @@ describe("itwEidIssuanceMachine", () => {
     const actor = createActor(mockedMachine, { snapshot });
     actor.start();
 
-    actor.subscribe(snap => {
-      if (snap.matches("CredentialsUpgrade")) {
-        onDone();
+    const subIntro = actor.subscribe(snap => {
+      if (_.isEqual(snap.value, { CredentialsUpgrade: "Intro" })) {
+        subIntro.unsubscribe();
+        actor.send({ type: "next" });
+      }
+    });
+
+    const subUpgrading = actor.subscribe(snap => {
+      if (_.isEqual(snap.value, { CredentialsUpgrade: "Upgrading" })) {
+        subUpgrading.unsubscribe();
+        done();
       }
     });
 
@@ -1901,13 +1991,14 @@ describe("itwEidIssuanceMachine", () => {
     expect(clearSimplifiedActivationRequirements).toHaveBeenCalledTimes(1);
   });
 
-  it("Should start the simplified activation flow with credentials upgrade only", onDone => {
+  it("Should start the simplified activation flow with credentials upgrade only", async () => {
     isEligibleForItwSimplifiedActivation.mockImplementation(() => true);
     loadPidIntoContext.mockReturnValue({ eid: {} });
 
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
     ).getSnapshot();
+
     const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
       value: "IpzsPrivacyAcceptance",
       context: {
@@ -1920,19 +2011,21 @@ describe("itwEidIssuanceMachine", () => {
         ] as ReadonlyArray<StoredCredential>
       }
     });
-    const actor = createActor(mockedMachine, { snapshot });
 
+    const actor = createActor(mockedMachine, { snapshot });
     actor.start();
 
-    actor.subscribe(snap => {
-      if (snap.matches("CredentialsUpgrade")) {
-        onDone();
-      }
-    });
-
     actor.send({ type: "accept-ipzs-privacy" });
+
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual({
+        CredentialsUpgrade: "Intro"
+      })
+    );
+
     expect(clearSimplifiedActivationRequirements).toHaveBeenCalledTimes(1);
     expect(loadPidIntoContext).toHaveBeenCalledTimes(1);
+    expect(navigateToUpgradeCredentialsScreen).toHaveBeenCalledTimes(1);
   });
 
   it("Should start the MRTD PoP flow", async () => {

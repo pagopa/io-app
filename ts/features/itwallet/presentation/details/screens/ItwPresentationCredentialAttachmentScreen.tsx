@@ -19,7 +19,7 @@ import {
 } from "../../../common/utils/itwClaimsUtils.ts";
 import { ParsedCredential } from "../../../common/utils/itwTypesUtils.ts";
 import { ItwParamsList } from "../../../navigation/ItwParamsList.ts";
-import { trackWalletCredentialFAC_SIMILE } from "../../../analytics";
+import { trackWalletCredentialFAC_SIMILE } from "../analytics";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { useIOSelector } from "../../../../../store/hooks";

@@ -3,7 +3,7 @@ import { VStack, IOButton } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { useIODispatch } from "../../../../store/hooks";
 import { OfflineAccessReasonEnum } from "../../../ingress/store/reducer";
-import { trackItwOfflineRicaricaAppIO } from "../../analytics";
+import { trackItwOfflineRicaricaAppIO } from "../../wallet/analytics";
 import { resetOfflineAccessReason } from "../../../ingress/store/actions";
 import { startupLoadSuccess } from "../../../../store/actions/startup";
 import { StartupStatusEnum } from "../../../../store/reducers/startup";

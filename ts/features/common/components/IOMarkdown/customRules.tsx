@@ -14,6 +14,7 @@ import {
 } from "@textlint/ast-node-types";
 import I18n from "i18next";
 import {
+  accessibleLinkNodeToReactNative,
   headerNodeToReactNative,
   htmlNodeToReactNative,
   linkNodeToReactNative,
@@ -122,3 +123,14 @@ export const testable = isTestEnv
       replaceBrWithNewline
     }
   : undefined;
+
+export const generateAccessibleLinkRule =
+  (): Partial<IOMarkdownRenderRules> => ({
+    Link(link: TxtLinkNode, render: Renderer) {
+      return accessibleLinkNodeToReactNative(
+        link,
+        { onPress: () => openWebUrl(link.url) },
+        render
+      );
+    }
+  });

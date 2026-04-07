@@ -167,13 +167,21 @@ const BarcodeScanScreen = () => {
         });
         break;
       case "ITW_REMOTE":
-        navigation.navigate(ITW_REMOTE_ROUTES.MAIN, {
+        /**
+         * Use replace so BARCODE_SCAN is removed from the parent stack.
+         * This lets the remote flow close with goBack and return directly
+         * to the screen shown before the scanner.
+         */
+        navigation.replace(ITW_REMOTE_ROUTES.MAIN, {
           screen: ITW_REMOTE_ROUTES.REQUEST_VALIDATION,
-          params: barcode.itwRemoteRequestPayload
+          params: {
+            ...barcode.itwRemoteRequestPayload,
+            flowType: "cross-device"
+          }
         });
         break;
       case "SEND":
-        navigation.navigate(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
+        navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
           screen: PN_ROUTES.MAIN,
           params: {
             screen: PN_ROUTES.QR_SCAN_FLOW,
@@ -268,18 +276,25 @@ const BarcodeScanScreen = () => {
 
   return (
     <>
-      <BarcodeScanBaseScreenComponent
-        barcodeFormats={barcodeFormats}
-        barcodeTypes={barcodeTypes}
-        onBarcodeSuccess={handleBarcodeSuccess}
-        onBarcodeError={handleBarcodeError}
-        onFileInputPressed={showFilePicker}
-        onManualInputPressed={handleManualInputPressed}
-        contextualHelp={emptyContextualHelp}
-        barcodeAnalyticsFlow="home"
-        isLoading={isFileReaderLoading}
-        isDisabled={isFilePickerVisible || isFileReaderLoading}
-      />
+      <View
+        style={{ flex: 1 }}
+        importantForAccessibility={
+          isFilePickerVisible ? "no-hide-descendants" : "auto"
+        }
+      >
+        <BarcodeScanBaseScreenComponent
+          barcodeFormats={barcodeFormats}
+          barcodeTypes={barcodeTypes}
+          onBarcodeSuccess={handleBarcodeSuccess}
+          onBarcodeError={handleBarcodeError}
+          onFileInputPressed={showFilePicker}
+          onManualInputPressed={handleManualInputPressed}
+          contextualHelp={emptyContextualHelp}
+          barcodeAnalyticsFlow="home"
+          isLoading={isFileReaderLoading}
+          isDisabled={isFilePickerVisible || isFileReaderLoading}
+        />
+      </View>
       {filePickerBottomSheet}
       {manualInputModal.bottomSheet}
     </>

@@ -5,8 +5,8 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
-import { ItwDiscoveryBanner } from "../ItwDiscoveryBanner";
 import * as useItwDiscoveryBannerTypeModule from "../../../hooks/useItwDiscoveryBannerType";
+import { ItwDiscoveryBannerLegacy } from "../ItwDiscoveryBanner";
 
 jest.mock("../../../hooks/useItwDiscoveryBannerType.ts", () => ({
   useItwDiscoveryBannerType: jest.fn()
@@ -56,7 +56,7 @@ const renderComponent = () => {
 
   return {
     component: renderScreenWithNavigationStoreContext<GlobalState>(
-      ItwDiscoveryBanner,
+      ItwDiscoveryBannerLegacy,
       ROUTES.WALLET_HOME,
       {},
       store

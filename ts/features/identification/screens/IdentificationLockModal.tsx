@@ -8,9 +8,9 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { useCallback, useEffect } from "react";
-import { Modal, SafeAreaView, View } from "react-native";
 import I18n from "i18next";
+import { useCallback, useEffect } from "react";
+import { Modal, View } from "react-native";
 import {
   CountdownProvider,
   useCountdown
@@ -55,12 +55,8 @@ const Countdown = (props: CountdownProps) => {
       <ProgressIndicator progress={loaderValue} />
       <VSpacer size={8} />
       <View style={{ flexDirection: "row" }}>
-        <BodySmall color="black" weight="Regular">
-          {waitMessageText}
-        </BodySmall>
-        <BodySmall weight="Semibold" color="black">
-          {` ${timerCount}s`}
-        </BodySmall>
+        <BodySmall weight="Regular">{waitMessageText}</BodySmall>
+        <BodySmall weight="Semibold">{` ${timerCount}s`}</BodySmall>
       </View>
     </>
   );
@@ -82,7 +78,7 @@ export const IdentificationLockModal = (props: Props) => {
 
   return (
     <Modal testID="identification-lock-modal">
-      <SafeAreaView
+      <View
         style={{
           flex: 1,
           justifyContent: "center",
@@ -111,7 +107,7 @@ export const IdentificationLockModal = (props: Props) => {
             </CountdownProvider>
           </View>
         </ContentWrapper>
-      </SafeAreaView>
+      </View>
     </Modal>
   );
 };

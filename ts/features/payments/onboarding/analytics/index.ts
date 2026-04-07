@@ -6,6 +6,10 @@ type PaymentOnboardingAnalyticsProps = {
   payment_method_selected: string;
 };
 
+type PaymentOnboardingContextualCardProps = {
+  savedPaymentMethods: number;
+};
+
 export const getOnboardingPaymentMethodOutcomeEvent = (
   outcome: WalletOnboardingOutcomeEnum
 ) => {
@@ -55,5 +59,42 @@ export const trackPaymentOnboardingErrorHelp = (
       payment_phase: "onboarding",
       ...props
     })
+  );
+};
+
+export const trackPaymentOnboardingContextualCard = (props: {
+  is_onboarded: boolean;
+}) => {
+  mixpanelTrack(
+    `PAYMENT_METHOD_ONBOARDED`,
+    buildEventProperties("TECH", undefined, props)
+  );
+};
+
+// Events related to the Android webview contextual card onboarding flow
+export const trackPaymentOnboardingUserCancellationRequest = (
+  props: Partial<PaymentOnboardingContextualCardProps>
+) => {
+  mixpanelTrack(
+    `PAYMENT_ONBOARDING_USER_CANCELLATION_REQUEST`,
+    buildEventProperties("UX", "screen_view", props)
+  );
+};
+
+export const trackPaymentOnboardingUserCancellationBack = (
+  props: Partial<PaymentOnboardingContextualCardProps>
+) => {
+  mixpanelTrack(
+    `PAYMENT_ONBOARDING_USER_CANCELLATION_BACK`,
+    buildEventProperties("UX", "action", props)
+  );
+};
+
+export const trackPaymentOnboardingUserCancellationContinue = (
+  props: Partial<PaymentOnboardingContextualCardProps>
+) => {
+  mixpanelTrack(
+    "PAYMENT_ONBOARDING_USER_CANCELLATION_CONTINUE",
+    buildEventProperties("UX", "action", props)
   );
 };

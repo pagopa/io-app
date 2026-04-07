@@ -30,6 +30,7 @@ import {
 } from "../featureFlagWithMinAppVersionStatus";
 import { isIdPayLocallyEnabledSelector } from "../persistedPreferences";
 import { GlobalState } from "../types";
+import { OSPerPlatform } from "../../../../definitions/content/OSPerPlatform";
 
 export type RemoteConfigState = O.Option<BackendStatus["config"]>;
 
@@ -628,6 +629,33 @@ export const paymentsFeedbackBannerConfigSelector = createSelector(
     )
 );
 
+export const isPnFeedbackBannerEnabledSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): boolean =>
+    pipe(
+      remoteConfig,
+      O.map(config =>
+        isVersionSupported(
+          Platform.OS === "ios"
+            ? config.pn.aar?.feedbackBanner?.min_app_version.ios
+            : config.pn.aar?.feedbackBanner?.min_app_version.android,
+          getAppVersion()
+        )
+      ),
+      O.getOrElse(() => false)
+    )
+);
+
+export const pnFeedbackBannerConfigSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): Banner | undefined =>
+    pipe(
+      remoteConfig,
+      O.map(config => config.pn.aar?.feedbackBanner),
+      O.toUndefined
+    )
+);
+
 export const landingScreenBannerOrderSelector = (state: GlobalState) =>
   pipe(
     state,
@@ -645,6 +673,16 @@ export const appFeedbackConfigSelector = createSelector(
       O.map(config => config.app_feedback),
       O.toUndefined
     )
+);
+
+export const minOsSupportedSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): OSPerPlatform | undefined => {
+    if (O.isSome(remoteConfig)) {
+      return remoteConfig.value.min_supported_os;
+    }
+    return undefined;
+  }
 );
 
 export const appFeedbackUriConfigSelector = (topic: TopicKeys = "general") =>
@@ -816,6 +854,21 @@ export const sendAARDelegateUrlSelector = (state: GlobalState) =>
     O.getOrElse(() => fallbackSendAARDelegateUrl)
   );
 
+export const sendAarInAppDelegationUrlSelector = (state: GlobalState) => {
+  const remoteConfigOption = remoteConfigSelector(state);
+  if (O.isSome(remoteConfigOption)) {
+    const inAppDelegationUrlOrUndefined =
+      remoteConfigOption.value.pn?.aar?.in_app_delegation?.helpCenter_url;
+    if (
+      inAppDelegationUrlOrUndefined != null &&
+      inAppDelegationUrlOrUndefined.trim().length > 0
+    ) {
+      return inAppDelegationUrlOrUndefined;
+    }
+  }
+  return fallbackSendAARDelegateUrl;
+};
+
 export const sendShowAbstractSelector = (state: GlobalState) => {
   const remoteConfigOption = remoteConfigSelector(state);
   if (O.isSome(remoteConfigOption)) {
@@ -875,4 +928,15 @@ export const sendVisitTheWebsiteUrlSelector = (state: GlobalState) => {
     }
   }
   return "https://cittadini.notifichedigitali.it/auth/login";
+};
+
+export const isSendLollipopPlaygroundEnabledSelector = (
+  state: GlobalState
+): boolean => {
+  const remoteConfigOption = remoteConfigSelector(state);
+  if (O.isNone(remoteConfigOption)) {
+    return false;
+  }
+  const remoteConfig = remoteConfigOption.value;
+  return !!remoteConfig.pn.lollipopPlaygroundEnabled;
 };

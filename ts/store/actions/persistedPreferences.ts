@@ -3,8 +3,8 @@
  */
 import { Calendar } from "react-native-calendar-events";
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { Locales } from "../../../locales/locales";
 import { ColorModeChoice } from "../../hooks/useAppThemeConfiguration";
+import { Locales } from "../../i18n";
 
 export type TypefaceChoice = "comfortable" | "standard";
 

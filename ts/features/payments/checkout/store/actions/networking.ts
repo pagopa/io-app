@@ -15,8 +15,18 @@ import { NetworkError } from "../../../../../utils/errors";
 import { WalletPaymentFailure } from "../../types/WalletPaymentFailure";
 import { WalletInfo } from "../../../../../../definitions/pagopa/ecommerce/WalletInfo";
 import { UserLastPaymentMethodResponse } from "../../../../../../definitions/pagopa/ecommerce/UserLastPaymentMethodResponse";
+import { RedirectUrlResponse } from "../../../../../../definitions/pagopa/ecommerce/RedirectUrlResponse";
 
 type NotFound = { kind: "notFound" };
+
+type CalculateFeeResponseWithOrderId = {
+  orderId?: string;
+} & CalculateFeeResponse;
+
+type GetPaymentTransactionInfoPayload = {
+  transactionId: string;
+  walletId?: string;
+};
 
 export const paymentsGetPaymentDetailsAction = createAsyncAction(
   "PAYMENTS_GET_PAYMENT_DETAILS_REQUEST",
@@ -51,8 +61,16 @@ export const paymentsGetRecentPaymentMethodUsedAction = createAsyncAction(
 )<undefined, UserLastPaymentMethodResponse, NetworkError>();
 
 type CalculateFeePayload = {
+  orderId?: string;
   paymentMethodId: string;
   idPsp?: string;
+};
+
+type GetContextualOnboardingUrlPayload = {
+  paymentMethodId: string;
+  rptId: RptId;
+  amount: AmountEuroCents;
+  onSuccess?: (redirectUrl: string) => void;
 };
 
 export const paymentsCalculatePaymentFeesAction = createAsyncAction(
@@ -62,13 +80,14 @@ export const paymentsCalculatePaymentFeesAction = createAsyncAction(
   "PAYMENTS_CALCULATE_PAYMENT_FEES_CANCEL"
 )<
   CalculateFeeRequest & CalculateFeePayload,
-  CalculateFeeResponse,
+  CalculateFeeResponseWithOrderId,
   NetworkError | NotFound,
   undefined
 >();
 
 export type WalletPaymentCreateTransactionPayload = {
   data: NewTransactionRequest;
+  orderId?: string;
   onError?: () => void;
 };
 
@@ -86,7 +105,7 @@ export const paymentsGetPaymentTransactionInfoAction = createAsyncAction(
   "PAYMENTS_GET_PAYMENT_TRANSACTION_INFO_REQUEST",
   "PAYMENTS_GET_PAYMENT_TRANSACTION_INFO_SUCCESS",
   "PAYMENTS_GET_PAYMENT_TRANSACTION_INFO_FAILURE"
-)<{ transactionId: string }, TransactionInfo, NetworkError>();
+)<GetPaymentTransactionInfoPayload, TransactionInfo, NetworkError>();
 
 export const paymentsDeleteTransactionAction = createAsyncAction(
   "PAYMENTS_DELETE_TRANSACTION_REQUEST",
@@ -96,6 +115,7 @@ export const paymentsDeleteTransactionAction = createAsyncAction(
 
 export type WalletPaymentAuthorizePayload = {
   transactionId: string;
+  orderId?: string;
   walletId?: string;
   paymentMethodId: string;
   pspId: string;
@@ -117,6 +137,12 @@ export const paymentsStartPaymentAuthorizationAction = createAsyncAction(
   undefined
 >();
 
+export const paymentsGetContextualOnboardingUrlAction = createAsyncAction(
+  "PAYMENTS_GET_CONTEXTUAL_ONBOARDING_URL_REQUEST",
+  "PAYMENTS_GET_CONTEXTUAL_ONBOARDING_URL_SUCCESS",
+  "PAYMENTS_GET_CONTEXTUAL_ONBOARDING_URL_FAILURE"
+)<GetContextualOnboardingUrlPayload, RedirectUrlResponse, NetworkError>();
+
 export type PaymentsCheckoutNetworkingActions =
   | ActionType<typeof paymentsGetPaymentDetailsAction>
   | ActionType<typeof paymentsGetPaymentMethodsAction>
@@ -126,4 +152,5 @@ export type PaymentsCheckoutNetworkingActions =
   | ActionType<typeof paymentsGetPaymentTransactionInfoAction>
   | ActionType<typeof paymentsDeleteTransactionAction>
   | ActionType<typeof paymentsGetRecentPaymentMethodUsedAction>
-  | ActionType<typeof paymentsStartPaymentAuthorizationAction>;
+  | ActionType<typeof paymentsStartPaymentAuthorizationAction>
+  | ActionType<typeof paymentsGetContextualOnboardingUrlAction>;

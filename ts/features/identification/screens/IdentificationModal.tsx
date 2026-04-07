@@ -384,7 +384,11 @@ export const IdentificationModal = () => {
         )
       }
     >
-      {Platform.OS === "ios" && <StatusBar barStyle={"light-content"} />}
+      <StatusBar
+        barStyle={"light-content"}
+        backgroundColor={"transparent"}
+        translucent
+      />
       <View
         style={[
           styles.contentWrapper,
@@ -410,6 +414,7 @@ export const IdentificationModal = () => {
           </View>
         )}
         <ScrollView
+          alwaysBounceVertical={false}
           centerContent={true}
           contentContainerStyle={[
             styles.scrollViewContentContainer,

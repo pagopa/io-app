@@ -1,7 +1,7 @@
 import { Alert, Body, IOButton, VStack } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks.ts";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet.tsx";
 import { itwResetEnv } from "../store/actions/environment.ts";
 import { selectItwEnv } from "../store/selectors/environment.ts";
 

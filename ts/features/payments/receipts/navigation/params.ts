@@ -9,4 +9,5 @@ export type PaymentsReceiptParamsList = {
   [PaymentsReceiptRoutes.PAYMENT_RECEIPT_LIST_SCREEN]: undefined;
   [PaymentsReceiptRoutes.PAYMENT_RECEIPT_PREVIEW_SCREEN]: undefined;
   [PaymentsReceiptRoutes.PAYMENT_RECEIPT_LOADING_SCREEN]: undefined;
+  [PaymentsReceiptRoutes.PAYMENT_RECEIPT_ERROR_SCREEN]: undefined;
 };

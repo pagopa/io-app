@@ -23,6 +23,10 @@ import {
   TempAarMandateState,
   tempAarMandateReducer
 } from "../../aar/store/reducers/tempAarMandate";
+import {
+  lollipopLambdaReducer,
+  SENDLollipopLambdaState
+} from "../../lollipopLambda/store/reducers";
 import { pnActivationReducer, PnActivationState } from "./activation";
 
 export type PnState = {
@@ -30,6 +34,7 @@ export type PnState = {
   bannerDismiss: PnBannerDismissState & PersistPartial;
   aarFlow: AARFlowState;
   loginEngagement: SENDLoginEngagementState & PersistPartial;
+  lollipopLambda: SENDLollipopLambdaState;
   tempAarMandate: TempAarMandateState;
 };
 
@@ -38,6 +43,7 @@ export const pnReducer = combineReducers<PnState, Action>({
   bannerDismiss: persistedPnBannerDismissReducer,
   aarFlow: aarFlowReducer,
   loginEngagement: persistedSendLoginEngagementReducer,
+  lollipopLambda: lollipopLambdaReducer,
   tempAarMandate: tempAarMandateReducer
 });
 

@@ -5,6 +5,7 @@ import { ComponentType } from "react";
 import { Provider } from "react-redux";
 import { Store } from "redux";
 import { Linking } from "react-native";
+import { IOThemeContextProvider } from "@pagopa/io-app-design-system";
 import { TestInnerNavigationContainer } from "../navigation/AppStackNavigator";
 import * as linkingSubscription from "../navigation/linkingSubscription";
 
@@ -31,15 +32,17 @@ export const renderScreenWithNavigationStoreContext = <S,>(
   const Stack = createStackNavigator();
   const component = (
     <Provider store={store}>
-      <TestInnerNavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen
-            name={route}
-            component={screen}
-            initialParams={params}
-          />
-        </Stack.Navigator>
-      </TestInnerNavigationContainer>
+      <IOThemeContextProvider theme={"light"}>
+        <TestInnerNavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen
+              name={route}
+              component={screen}
+              initialParams={params}
+            />
+          </Stack.Navigator>
+        </TestInnerNavigationContainer>
+      </IOThemeContextProvider>
     </Provider>
   );
 

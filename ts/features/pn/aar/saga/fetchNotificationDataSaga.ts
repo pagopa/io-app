@@ -6,7 +6,6 @@ import { MessageBodyMarkdown } from "../../../../../definitions/backend/MessageB
 import { MessageSubject } from "../../../../../definitions/backend/MessageSubject";
 import { pnMessagingServiceIdSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
-import { SessionToken } from "../../../../types/SessionToken";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";
 import { isTestEnv } from "../../../../utils/environment";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
@@ -33,7 +32,7 @@ const sendAARFailurePhase: SendAARFailurePhase = "Fetch Notification";
 
 export function* fetchAarDataSaga(
   fetchData: SendAARClient["getAARNotification"],
-  sessionToken: SessionToken,
+  sessionToken: string,
   action: ReturnType<typeof setAarFlowState>
 ) {
   const currentState = yield* select(currentAARFlowData);
@@ -41,7 +40,8 @@ export function* fetchAarDataSaga(
     yield* call(
       trackSendAARFailure,
       sendAARFailurePhase,
-      `Called in wrong state (${currentState.type})`
+      `Called in wrong state (${currentState.type})`,
+      undefined
     );
     return;
   }
@@ -61,21 +61,9 @@ export function* fetchAarDataSaga(
     )) as unknown as SagaCallReturnType<typeof fetchData>;
 
     if (E.isLeft(result)) {
-      const reason = `Decoding failure (${readableReportSimplified(
-        result.left
-      )})`;
-      yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
-      yield* put(
-        setAarFlowState({
-          type: sendAARFlowStates.ko,
-          previousState: currentState,
-          debugData: {
-            phase: sendAARFailurePhase,
-            reason
-          }
-        })
+      throw new Error(
+        `Decoding failure (${readableReportSimplified(result.left)})`
       );
-      return;
     }
 
     const { status, value } = result.right;
@@ -83,7 +71,8 @@ export function* fetchAarDataSaga(
       yield* call(
         trackSendAARFailure,
         sendAARFailurePhase,
-        "Fast login expiration"
+        "Fast login expiration",
+        undefined
       );
       return;
     }
@@ -92,7 +81,7 @@ export function* fetchAarDataSaga(
         status,
         value
       )})`;
-      yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
+      yield* call(trackSendAARFailure, sendAARFailurePhase, reason, value);
       yield* put(
         setAarFlowState({
           type: sendAARFlowStates.ko,
@@ -130,7 +119,7 @@ export function* fetchAarDataSaga(
     );
   } catch (e: unknown) {
     const reason = `An error was thrown (${unknownToReason(e)})`;
-    yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
+    yield* call(trackSendAARFailure, sendAARFailurePhase, reason, undefined);
     yield* put(
       setAarFlowState({
         type: sendAARFlowStates.ko,

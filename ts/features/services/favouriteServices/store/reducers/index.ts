@@ -1,19 +1,27 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
-import { FavouriteServiceType } from "../../../favouriteServices/types";
+import type {
+  FavouriteServicesSortType,
+  FavouriteServiceType
+} from "../../../favouriteServices/types";
 import {
   addFavouriteServiceSuccess,
-  removeFavouriteService
+  removeFavouriteService,
+  setFavouriteServicesSortType
 } from "../../../favouriteServices/store/actions";
+import createSecureStorage from "../../../../../store/storages/secureStorage";
+import { clearCurrentSession } from "../../../../authentication/common/store/actions";
+import { differentProfileLoggedIn } from "../../../../../store/actions/crossSessions";
 
 export type FavouriteServicesState = {
   dataById: Record<string, FavouriteServiceType>;
+  sortType: FavouriteServicesSortType;
 };
 
 const INITIAL_STATE: FavouriteServicesState = {
-  dataById: {}
+  dataById: {},
+  sortType: "addedAt_desc"
 };
 
 const reducer = (
@@ -26,10 +34,7 @@ const reducer = (
         ...state,
         dataById: {
           ...state.dataById,
-          [action.payload.id]: {
-            ...action.payload,
-            addedAt: Date.now()
-          }
+          [action.payload.id]: action.payload
         }
       };
     }
@@ -40,6 +45,16 @@ const reducer = (
         dataById: rest
       };
     }
+    case getType(setFavouriteServicesSortType): {
+      return {
+        ...state,
+        sortType: action.payload
+      };
+    }
+    case getType(clearCurrentSession):
+    case getType(differentProfileLoggedIn): {
+      return INITIAL_STATE;
+    }
     default:
       return state;
   }
@@ -49,7 +64,7 @@ const CURRENT_REDUX_FAVOURITE_SERVICES_STORE_VERSION = -1;
 
 const favouriteServicesPersistConfig: PersistConfig = {
   key: "favouriteServicesPersistConfig",
-  storage: AsyncStorage,
+  storage: createSecureStorage(),
   version: CURRENT_REDUX_FAVOURITE_SERVICES_STORE_VERSION
 };
 

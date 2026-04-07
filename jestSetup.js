@@ -7,9 +7,8 @@
 import mockAsyncStorage from "@react-native-async-storage/async-storage/jest/async-storage-mock";
 import mockClipboard from "@react-native-clipboard/clipboard/jest/clipboard-mock.js";
 import nodeFetch from "node-fetch";
-import { NativeModules, AccessibilityInfo } from "react-native";
+import { NativeModules, AccessibilityInfo, AppState } from "react-native";
 import mockRNDeviceInfo from "react-native-device-info/jest/react-native-device-info-mock";
-import mockBackHandler from "react-native/Libraries/Utilities/__mocks__/BackHandler";
 import mockZendesk from "./ts/__mocks__/io-react-native-zendesk.ts";
 import { initI18n } from "./ts/i18n.ts";
 
@@ -27,7 +26,7 @@ const mockRNQRGenerator = {
 import "react-native-get-random-values";
 require("@shopify/flash-list/jestSetup");
 jest.mock("rn-qr-generator", () => mockRNQRGenerator);
-jest.mock("react-native-screenshot-prevent", () => ({}));
+jest.mock("expo-screen-capture", () => ({}));
 jest.mock("react-native-haptic-feedback", () => ({
   ...jest.requireActual("react-native-haptic-feedback"),
   trigger: jest.fn()
@@ -68,21 +67,16 @@ jest.mock("@react-native-cookies/cookies", () => jest.fn());
 jest.mock("react-native-share", () => jest.fn());
 jest.mock("@react-native-clipboard/clipboard", () => mockClipboard);
 
-jest.mock("react-native-reanimated", () => {
-  const Reanimated = require("react-native-reanimated/mock");
+// Mock react-native-worklets before reanimated setup
+// See: https://docs.swmansion.com/react-native-worklets/docs/guides/testing/
+jest.mock("react-native-worklets", () =>
+  require("react-native-worklets/lib/module/mock")
+);
 
-  // The mock misses the `addWhitelistedUIProps` implementation
-  // So we override it with a no-op
-  // eslint-disable-next-line functional/immutable-data,@typescript-eslint/no-empty-function
-  Reanimated.default.addWhitelistedUIProps = () => {};
-
-  return {
-    ...Reanimated,
-    LayoutAnimationConfig: require("react-native").View,
-    useScrollViewOffset: jest.fn,
-    useReducedMotion: jest.fn
-  };
-});
+// Setup react-native-reanimated for testing (v4.x)
+// See: https://docs.swmansion.com/react-native-reanimated/docs/guides/testing/
+const { setUpTests } = require("react-native-reanimated");
+setUpTests();
 
 jest.mock("react-native-blob-util", () => ({
   DocumentDir: () => jest.fn(),
@@ -137,6 +131,17 @@ jest.mock("@gorhom/bottom-sheet", () => {
 
 jest.mock("@sentry/react-native");
 
+jest.mock("@pagopa/io-app-design-system", () => {
+  const actual = jest.requireActual("@pagopa/io-app-design-system");
+  const React = require("react");
+  const { Text } = require("react-native");
+  return {
+    ...actual,
+    IOMarkdown: ({ content }) => React.createElement(Text, null, content),
+    IOMarkdownLite: ({ content }) => React.createElement(Text, null, content)
+  };
+});
+
 jest.mock("react-native-device-info", () => mockRNDeviceInfo);
 
 jest.mock("react-native-pdf", () => jest.fn());
@@ -161,18 +166,6 @@ jest.mock("react-native", () => {
     requestReview: jest.fn()
   };
 
-  // eslint-disable-next-line functional/immutable-data
-  RN.AppState = {
-    ...RN.AppState,
-    addEventListener: jest.fn((event, callback) => {
-      // Store the callback for later use in tests
-      if (event === "change") {
-        // eslint-disable-next-line functional/immutable-data
-        mockSubscription.callback = callback;
-      }
-      return mockSubscription;
-    })
-  };
   return RN;
 });
 
@@ -217,21 +210,7 @@ jest.mock(
     };
   }
 );
-
-jest.mock("react-native/Libraries/AppState/AppState", () => {
-  const appState = jest.requireActual(
-    "react-native/Libraries/AppState/AppState"
-  );
-
-  return {
-    ...appState,
-    addEventListener: () => ({
-      remove: jest.fn()
-    })
-  };
-});
-
-jest.mock('react-native/Libraries/Utilities/BackHandler', () => mockBackHandler);
+jest.spyOn(AppState, "addEventListener").mockImplementation(() => ({remove: jest.fn()}));
 
 jest.mock("mixpanel-react-native", () => ({
   __esModule: true,
@@ -267,14 +246,12 @@ jest.mock("@react-native-community/netinfo", () => ({
 // eslint-disable-next-line functional/immutable-data
 window.navigator = {};
 jest.mock("reactotron-react-native", () => ({
-  default: {
-    configure: jest.fn().mockReturnThis(),
-    setAsyncStorageHandler: jest.fn().mockReturnThis(),
-    useReactNative: jest.fn().mockReturnThis(),
-    use: jest.fn().mockReturnThis(),
-    connect: jest.fn().mockReturnThis(),
-    onCustomCommand: jest.fn()
-  }
+  configure: jest.fn().mockReturnThis(),
+  setAsyncStorageHandler: jest.fn().mockReturnThis(),
+  useReactNative: jest.fn().mockReturnThis(),
+  use: jest.fn().mockReturnThis(),
+  connect: jest.fn().mockReturnThis(),
+  onCustomCommand: jest.fn()
 }));
 
 jest.mock("uuid", () => ({
@@ -295,13 +272,13 @@ jest.mock("react-native-bluetooth-state-manager", () => ({
 }));
 
 jest.mock("@pagopa/io-react-native-iso18013", () => ({
-    CBOR: {
-      decodeIssuerSigned: jest.fn(() => Promise.resolve("test"))
-    },
-    COSE: {
-      verify: jest.fn(() => Promise.resolve(true))
-    }
-  }));
+  CBOR: {
+    decodeIssuerSigned: jest.fn(() => Promise.resolve("test"))
+  },
+  COSE: {
+    verify: jest.fn(() => Promise.resolve(true))
+  }
+}));
 
 jest.mock("@pagopa/io-react-native-cie", () => ({
   CieManager: jest.fn()

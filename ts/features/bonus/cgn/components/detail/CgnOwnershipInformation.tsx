@@ -5,11 +5,12 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 
-import { ReactElement } from "react";
 import I18n from "i18next";
+import { ReactElement } from "react";
+import { View } from "react-native";
 import { useIOSelector } from "../../../../../store/hooks";
-import { profileSelector } from "../../../../settings/common/store/selectors";
 import { capitalizeTextName } from "../../../../../utils/strings";
+import { profileSelector } from "../../../../settings/common/store/selectors";
 
 /**
  * Renders the CGN ownership block for detail screen, including Owner's Fiscal Code (The current user logged in)
@@ -18,7 +19,7 @@ import { capitalizeTextName } from "../../../../../utils/strings";
 const CgnOwnershipInformation = (): ReactElement => {
   const currentProfile = useIOSelector(profileSelector);
   return (
-    <>
+    <View>
       {pot.isSome(currentProfile) && (
         <>
           <ListItemHeader label={I18n.t("bonus.cgn.detail.ownership")} />
@@ -38,7 +39,7 @@ const CgnOwnershipInformation = (): ReactElement => {
           />
         </>
       )}
-    </>
+    </View>
   );
 };
 

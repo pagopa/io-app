@@ -48,7 +48,7 @@ export function* checkIntegrityServiceReadySaga(
     timeout: delay(timeout)
   });
 
-  return result?.payload === "ready" ?? false;
+  return result?.payload === "ready";
 }
 
 /**

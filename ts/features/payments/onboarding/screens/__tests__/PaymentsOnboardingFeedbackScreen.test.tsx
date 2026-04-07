@@ -14,7 +14,6 @@ import * as analytics from "../../analytics";
 import { usePaymentOnboardingAuthErrorBottomSheet } from "../../components/PaymentsOnboardingAuthErrorBottomSheet";
 import {
   selectPaymentOnboardingMethods,
-  selectPaymentOnboardingRptIdToResume,
   selectPaymentOnboardingSelectedMethod
 } from "../../store/selectors";
 import { WalletOnboardingOutcomeEnum } from "../../types/OnboardingOutcomeEnum";
@@ -50,9 +49,6 @@ jest.spyOn(hooks, "useIOSelector").mockImplementation(selector => {
   }
   if (selector === selectPaymentOnboardingSelectedMethod) {
     return "mock-selected-method-id";
-  }
-  if (selector === selectPaymentOnboardingRptIdToResume) {
-    return undefined;
   }
   return undefined;
 });

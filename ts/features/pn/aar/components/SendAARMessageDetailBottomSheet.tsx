@@ -1,7 +1,7 @@
 import {
-  BodySmall,
   FeatureInfo,
   IOButton,
+  IOMarkdownLite,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
@@ -11,6 +11,7 @@ import { sendVisitTheWebsiteUrlSelector } from "../../../../store/reducers/backe
 import { openWebUrl } from "../../../../utils/url";
 import { trackSendAarNotificationClosureExit } from "../analytics";
 import { SendUserType } from "../../../pushNotifications/analytics";
+import { SendAArFeedbackBanner } from "./SendAARFeedbackBanner";
 
 export type SendAARMessageDetailBottomSheetProps = {
   onPrimaryActionPress: () => void;
@@ -26,9 +27,9 @@ export const SendAARMessageDetailBottomSheet = ({
   const isDelegate = sendUserType === "mandatory";
   const sendVisitTheWebsiteUrl = useIOSelector(sendVisitTheWebsiteUrlSelector);
 
-  const onLinkPress = () => {
+  const onLinkPress = (url: string) => {
     trackSendAarNotificationClosureExit(sendUserType);
-    openWebUrl(sendVisitTheWebsiteUrl);
+    openWebUrl(url);
   };
 
   return (
@@ -43,29 +44,28 @@ export const SendAARMessageDetailBottomSheet = ({
         iconName="navScan"
       />
       <VSpacer size={24} />
-      <FeatureInfo
-        body={
-          <>
-            <BodySmall testID={isDelegate ? "body_mandate" : "body_nomandate"}>
-              {I18n.t(
-                isDelegate
-                  ? "features.pn.aar.flow.closeNotification.paragraphDelegate3"
-                  : "features.pn.aar.flow.closeNotification.paragraph3"
-              )}
-            </BodySmall>
-            <BodySmall
-              asLink
-              onPress={onLinkPress}
-              weight="Semibold"
-              testID="link"
-            >
-              {I18n.t("features.pn.aar.flow.closeNotification.link")}
-            </BodySmall>
-          </>
-        }
-        iconName="website"
-      />
-      <VSpacer size={24} />
+
+      {!isDelegate && (
+        <>
+          <FeatureInfo
+            body={
+              <IOMarkdownLite
+                content={I18n.t(
+                  "features.pn.aar.flow.closeNotification.paragraph3",
+                  { url: sendVisitTheWebsiteUrl }
+                )}
+                onLinkPress={onLinkPress}
+                small
+              />
+            }
+            iconName="website"
+          />
+          <VSpacer size={24} />
+        </>
+      )}
+
+      {isDelegate && <SendAArFeedbackBanner />}
+
       <IOButton
         label={I18n.t("features.pn.aar.flow.closeNotification.primaryAction")}
         onPress={onPrimaryActionPress}

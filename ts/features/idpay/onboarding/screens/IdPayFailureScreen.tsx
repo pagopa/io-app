@@ -38,12 +38,6 @@ const IdPayFailureScreen = () => {
     O.toUndefined
   );
 
-  const initiativeName = pipe(
-    initiative,
-    O.map(i => i.initiativeName),
-    O.toUndefined
-  );
-
   const { bottomSheet, present } = useIDPayFailureSupportModal(
     serviceId,
     initiativeId
@@ -104,7 +98,6 @@ const IdPayFailureScreen = () => {
         onPress: () => {
           trackIDPayOnboardingErrorHelp({
             initiativeId,
-            initiativeName,
             flow: "onboarding",
             reason: failureOption
           });
@@ -115,7 +108,7 @@ const IdPayFailureScreen = () => {
       enableAnimatedPictogram: true,
       loop: true
     }),
-    [failureOption, initiativeId, initiativeName, machine, present]
+    [failureOption, initiativeId, machine, present]
   );
 
   const mapFailureToContentProps = (
@@ -266,11 +259,10 @@ const IdPayFailureScreen = () => {
     if (O.some(failureOption) && O.isSome(failureOption)) {
       trackIDPayOnboardingFailure({
         initiativeId,
-        initiativeName,
         reason: failureOption
       });
     }
-  }, [initiativeId, initiativeName, failureOption]);
+  }, [initiativeId, failureOption]);
 
   return (
     <>

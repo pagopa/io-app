@@ -44,6 +44,7 @@ Map {
   "ko" => Set {
     "fetchingQRData",
     "fetchingNotificationData",
+    "cieCanAdvisory",
   },
   "notAddressee" => Set {
     "creatingMandate",
@@ -70,11 +71,12 @@ Map {
   },
   "cieScanning" => Set {
     "cieScanningAdvisory",
+    "cieCanAdvisory",
     "validatingMandate",
   },
   "validatingMandate" => Set {
     "ko",
-    "displayingNotificationData",
+    "fetchingNotificationData",
   },
 }
 `;

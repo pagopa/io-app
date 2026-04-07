@@ -15,8 +15,8 @@ let isNavigationReady: boolean = false;
 // eslint-disable-next-line functional/no-let
 let isMainNavigatorReady = false;
 
-export const setMainNavigatorReady = () => {
-  isMainNavigatorReady = true;
+export const setMainNavigatorReady = (isReady?: boolean) => {
+  isMainNavigatorReady = isReady ?? true;
 };
 
 export const setNavigationReady = () => {

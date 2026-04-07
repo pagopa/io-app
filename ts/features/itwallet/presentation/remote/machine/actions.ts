@@ -9,7 +9,10 @@ import { ITW_REMOTE_ROUTES } from "../navigation/routes.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import ROUTES from "../../../../../navigation/routes.ts";
 import { trackItwRemoteDataShare } from "../analytics";
-import { groupCredentialsByPurpose } from "../utils/itwRemotePresentationUtils";
+import {
+  getRemoteCredentialCombination,
+  groupCredentialsByPurpose
+} from "../utils/itwRemotePresentationUtils";
 import { useIOStore } from "../../../../../store/hooks.ts";
 import { itwWalletInstanceAttestationStore } from "../../../walletInstance/store/actions/index.ts";
 import { checkCurrentSession } from "../../../../authentication/common/store/actions/index.ts";
@@ -60,6 +63,9 @@ export const createRemoteActionsImplementation = (
       const { required, optional } = groupCredentialsByPurpose(
         context.presentationDetails
       );
+      const credential_type = getRemoteCredentialCombination(
+        context.presentationDetails
+      );
       const requestedCredentials = [...required, ...optional];
 
       const data_type = optional.length > 0 ? "optional" : "required";
@@ -86,7 +92,8 @@ export const createRemoteActionsImplementation = (
 
       trackItwRemoteDataShare({
         data_type,
-        request_type
+        request_type,
+        credential_type
       });
     }
   },

@@ -167,7 +167,12 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
         /**
          *  We store the initialUrl in the redux store so that
          *  it can be processed in case we need any kind of data
-         *  that would be accessible after the app's startup for that
+         *  that would be accessible after the app's startup for that.
+         *
+         *  while in `linkingSubscription` we avoid storing certain
+         *  blacklisted deep links, here it is not necessary since
+         *  this handler is called on app wake and thus there
+         *  is no risk of overwriting any previously stored deep link
          */
         dispatch(storeLinkingUrl(initialUrl));
       }

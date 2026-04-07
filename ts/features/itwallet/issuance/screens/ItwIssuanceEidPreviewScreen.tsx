@@ -1,42 +1,43 @@
 import {
+  BodySmall,
   ContentWrapper,
   ForceScrollDownView,
   H2,
   HeaderSecondLevel,
   HStack,
   Icon,
+  IOMarkdownLite,
   useIOTheme,
   VStack
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useCallback, useLayoutEffect } from "react";
 import I18n from "i18next";
-import IOMarkdown from "../../../../components/IOMarkdown";
+import { useCallback, useLayoutEffect } from "react";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { identificationRequest } from "../../../identification/store/actions";
 import { useIODispatch } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
+import { identificationRequest } from "../../../identification/store/actions";
 import {
   trackCredentialPreview,
   trackItwExit,
   trackItwRequestSuccess,
   trackSaveCredentialToWallet
-} from "../../analytics";
+} from "../analytics";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
+import { isItwCredential } from "../../common/utils/itwCredentialUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
   selectEidOption,
   selectIdentification
 } from "../../machine/eid/selectors";
-import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
-import { isItwCredential } from "../../common/utils/itwCredentialUtils";
 
 export const ItwIssuanceEidPreviewScreen = () => {
   const eidOption = ItwEidIssuanceMachineContext.useSelector(selectEidOption);
@@ -118,7 +119,10 @@ const ContentView = ({ eid }: ContentViewProps) => {
           onCancel: () => undefined
         },
         {
-          onSuccess: () => machineRef.send({ type: "add-to-wallet" })
+          onSuccess: () =>
+            machineRef.send({
+              type: "add-to-wallet"
+            })
         }
       )
     );
@@ -168,17 +172,31 @@ const ContentView = ({ eid }: ContentViewProps) => {
       <ContentWrapper style={{ flexGrow: 1 }}>
         <VStack space={24}>
           <HStack space={8} style={{ alignItems: "center" }}>
-            <Icon name="legalValue" color={theme["interactiveElem-default"]} />
-            <H2>{I18n.t("features.itWallet.issuance.eidPreview.title")}</H2>
-          </HStack>
-          <IOMarkdown
-            content={I18n.t(
-              `features.itWallet.issuance.eidPreview.${
-                isL3 ? "subtitleL3" : "subtitle"
-              }`
+            {!isL3 && (
+              <Icon
+                name="legalValue"
+                color={theme["interactiveElem-default"]}
+              />
             )}
+            <H2>
+              {isL3
+                ? I18n.t("features.itWallet.issuance.eidPreview.titleL3")
+                : I18n.t("features.itWallet.issuance.eidPreview.title")}
+            </H2>
+          </HStack>
+          <IOMarkdownLite
+            content={
+              isL3
+                ? I18n.t("features.itWallet.issuance.eidPreview.subtitleL3")
+                : I18n.t("features.itWallet.issuance.eidPreview.subtitle")
+            }
           />
           <ItwCredentialPreviewClaimsList data={eid} releaserVisible={false} />
+          {isL3 && (
+            <BodySmall>
+              {I18n.t("features.itWallet.issuance.eidPreview.bottomTextL3")}
+            </BodySmall>
+          )}
         </VStack>
       </ContentWrapper>
     </ForceScrollDownView>

@@ -15,6 +15,7 @@ type PaymentHomeAnalyticsProps = {
 type PaymentMethodAnalyticsProps = {
   payment_method_selected: string;
   payment_method_status: "valid" | "invalid";
+  source: "payments" | "wallet";
 };
 
 export const trackPaymentsHome = (

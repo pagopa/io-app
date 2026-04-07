@@ -1,6 +1,6 @@
-import { Alert, VSpacer } from "@pagopa/io-app-design-system";
-import Animated, { LinearTransition } from "react-native-reanimated";
+import { Alert } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+import Animated, { LinearTransition } from "react-native-reanimated";
 import { usePaymentsMethodPspDetailsBottomSheet } from "./PaymentsMethodPspDetailsBottomSheet";
 import { PaymentsMethodPspPayPalBanner } from "./PaymentsMethodPspPayPalBanner";
 
@@ -32,7 +32,6 @@ export const PaymentsMethodPspDetailsAlert = ({
           action={I18n.t("features.payments.details.pspAlert.action")}
           onPress={presentPspDetailsBottomSheet}
         />
-        <VSpacer size={24} />
         {pspDetailsBottomSheet}
       </Animated.View>
     </>

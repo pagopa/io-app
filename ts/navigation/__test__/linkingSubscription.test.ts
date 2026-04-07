@@ -11,6 +11,8 @@ import { appReducer } from "../../store/reducers";
 import { GlobalState } from "../../store/reducers/types";
 import { linkingSubscription } from "../linkingSubscription";
 import { initiateAarFlow } from "../../features/pn/aar/store/actions";
+import { IO_LOGIN_CIE_URL_SCHEME } from "../../features/authentication/login/cie/utils/cie";
+import * as LINKING_ANALYTICS from "../../features/linking/analytics";
 
 describe("linkingSubscription", () => {
   beforeEach(() => {
@@ -55,6 +57,23 @@ describe("linkingSubscription", () => {
       testUrl,
       expect.any(Function)
     );
+  });
+
+  it("should call 'trackIOOpenedFromUniversalAppLink' when a URL is received", () => {
+    const { mockCurrySubscription, addEventListenerSpy } = initializeTests();
+    const mockTrackIOOpenedFromUniversalAppLink = jest.fn();
+
+    jest
+      .spyOn(LINKING_ANALYTICS, "trackIOOpenedFromUniversalAppLink")
+      .mockImplementation(mockTrackIOOpenedFromUniversalAppLink);
+
+    mockCurrySubscription(jest.fn());
+
+    const testUrl = "https://example.com";
+    runEventListenerCallback(addEventListenerSpy, { url: testUrl });
+
+    expect(mockTrackIOOpenedFromUniversalAppLink).toHaveBeenCalledTimes(1);
+    expect(mockTrackIOOpenedFromUniversalAppLink).toHaveBeenCalledWith(testUrl);
   });
 
   it.each([false, true])(
@@ -126,6 +145,47 @@ describe("linkingSubscription", () => {
           expect(mockDispatch).toHaveBeenCalledWith(storeLinkingUrl(testUrl));
         }
       });
+    });
+  });
+  const blacklistTestCases = [
+    { url: `${IO_LOGIN_CIE_URL_SCHEME}`, shouldBlackList: true },
+    { url: `${IO_LOGIN_CIE_URL_SCHEME}somePath`, shouldBlackList: true },
+    {
+      url: `    ${IO_LOGIN_CIE_URL_SCHEME}`,
+      shouldBlackList: true
+    },
+    {
+      url: `    ${IO_LOGIN_CIE_URL_SCHEME}somePath`,
+      shouldBlackList: true
+    },
+    { url: `${IO_LOGIN_CIE_URL_SCHEME.toUpperCase()}`, shouldBlackList: true },
+    {
+      url: `https://example.com/${IO_LOGIN_CIE_URL_SCHEME}`,
+      shouldBlackList: false
+    },
+    {
+      url: `https://example.com/somePath`,
+      shouldBlackList: false
+    }
+  ];
+  blacklistTestCases.forEach(({ url, shouldBlackList }) => {
+    it(`${
+      shouldBlackList ? "shouldn't" : "should"
+    } store the DeepLink URL when not logged and passed the following URL: "${url}"`, () => {
+      const { mockDispatch, mockCurrySubscription, addEventListenerSpy } =
+        initializeTests();
+
+      jest.spyOn(UTIL_GUARDS, "isLoggedIn").mockImplementation(() => false);
+
+      mockCurrySubscription(jest.fn());
+
+      runEventListenerCallback(addEventListenerSpy, { url });
+
+      if (shouldBlackList) {
+        expect(mockDispatch).not.toHaveBeenCalledWith(storeLinkingUrl(url));
+      } else {
+        expect(mockDispatch).toHaveBeenCalledWith(storeLinkingUrl(url));
+      }
     });
   });
 });

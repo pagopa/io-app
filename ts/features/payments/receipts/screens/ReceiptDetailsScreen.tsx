@@ -1,4 +1,11 @@
-import { IOColors, useIOTheme, useIOToast } from "@pagopa/io-app-design-system";
+import {
+  Alert,
+  ContentWrapper,
+  IOColors,
+  useIOTheme,
+  useIOToast,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import { Dimensions, StyleSheet, View } from "react-native";
@@ -27,11 +34,13 @@ import {
   walletReceiptDetailsPotSelector,
   walletReceiptPotSelector
 } from "../store/selectors";
+import { DownloadReceiptOutcomeErrorEnum } from "../types";
 
 export type ReceiptDetailsScreenParams = {
   transactionId: string;
   isPayer?: boolean;
   isCart?: boolean;
+  isDebtor?: boolean;
 };
 
 type ReceiptDetailsScreenProps = RouteProp<
@@ -61,7 +70,7 @@ const ReceiptDetailsScreen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const route = useRoute<ReceiptDetailsScreenProps>();
-  const { transactionId, isPayer, isCart } = route.params;
+  const { transactionId, isPayer, isCart, isDebtor } = route.params;
   const paymentAnalyticsData = useIOSelector(paymentAnalyticsDataSelector);
   const transactionDetailsPot = useIOSelector(walletReceiptDetailsPotSelector);
   const transactionReceiptPot = useIOSelector(walletReceiptPotSelector);
@@ -89,20 +98,31 @@ const ReceiptDetailsScreen = () => {
     );
   };
 
-  const handleOnDownloadPdfReceiptError = () => {
+  const handlePdfReceiptGenerationError = () => {
     analytics.trackPaymentsDownloadReceiptError({
       organization_name: paymentAnalyticsData?.receiptOrganizationName,
       first_time_opening: paymentAnalyticsData?.receiptFirstTimeOpening,
       user: paymentAnalyticsData?.receiptUser,
       organization_fiscal_code:
-        paymentAnalyticsData?.receiptOrganizationFiscalCode
+        paymentAnalyticsData?.receiptOrganizationFiscalCode,
+      // This callback is only called when the generation fails due to a 404_002 error from the backend
+      reason: DownloadReceiptOutcomeErrorEnum.AT_404_002
     });
-    toast.error(I18n.t("features.payments.transactions.receipt.error"));
+
+    toast.info(
+      I18n.t("features.payments.transactions.receipt.error.banner.label")
+    );
   };
 
   const handleOnDownloadPdfReceiptSuccess = () => {
     navigation.navigate(PaymentsReceiptRoutes.PAYMENT_RECEIPT_NAVIGATOR, {
       screen: PaymentsReceiptRoutes.PAYMENT_RECEIPT_PREVIEW_SCREEN
+    });
+  };
+
+  const navigateToPdfErrorScreen = () => {
+    navigation.navigate(PaymentsReceiptRoutes.PAYMENT_RECEIPT_NAVIGATOR, {
+      screen: PaymentsReceiptRoutes.PAYMENT_RECEIPT_ERROR_SCREEN
     });
   };
 
@@ -117,8 +137,9 @@ const ReceiptDetailsScreen = () => {
     dispatch(
       getPaymentsReceiptDownloadAction.request({
         transactionId,
-        onError: handleOnDownloadPdfReceiptError,
-        onSuccess: handleOnDownloadPdfReceiptSuccess
+        onErrorGeneration: handlePdfReceiptGenerationError,
+        onSuccess: handleOnDownloadPdfReceiptSuccess,
+        onError: navigateToPdfErrorScreen
       })
     );
   };
@@ -153,7 +174,7 @@ const ReceiptDetailsScreen = () => {
   }
 
   const showGenerateReceiptButton =
-    transactionDetails?.infoNotice?.origin !== OriginEnum.PM && !isCart;
+    transactionDetails?.infoNotice?.origin !== OriginEnum.PM;
 
   return (
     <IOScrollView
@@ -187,7 +208,18 @@ const ReceiptDetailsScreen = () => {
           showUnavailableReceiptBanner={!showGenerateReceiptButton}
           loading={isLoading}
         />
-        <HideReceiptButton transactionId={transactionId} />
+        {isCart && isDebtor && (
+          <ContentWrapper>
+            <Alert
+              content={I18n.t(
+                "features.payments.transactions.receipt.debtorCartBanner"
+              )}
+              variant="info"
+            />
+            <VSpacer size={16} />
+          </ContentWrapper>
+        )}
+        <HideReceiptButton transactionId={transactionId} isCart={isCart} />
       </View>
     </IOScrollView>
   );

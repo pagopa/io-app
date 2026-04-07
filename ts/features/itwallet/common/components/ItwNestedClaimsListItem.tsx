@@ -4,11 +4,9 @@ import I18n from "i18next";
 import { ClaimDisplayFormat } from "../utils/itwClaimsUtils";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils.ts";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet.tsx";
-import {
-  CREDENTIALS_MAP,
-  getMixPanelCredential,
-  trackItwCredentialQualificationDetail
-} from "../../analytics";
+import { trackItwCredentialQualificationDetail } from "../../analytics";
+import { CREDENTIALS_MAP } from "../../analytics/utils/types.ts";
+import { getMixPanelCredential } from "../../analytics/utils/index.ts";
 import { useIOSelector } from "../../../../store/hooks.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialClaim } from "./ItwCredentialClaim.tsx";

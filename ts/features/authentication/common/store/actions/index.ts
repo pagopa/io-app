@@ -12,7 +12,6 @@ import {
 import { IdpData } from "../../../../../../definitions/content/IdpData";
 import { PasswordLogin } from "../../../../../../definitions/session_manager/PasswordLogin";
 import { PublicSession } from "../../../../../../definitions/session_manager/PublicSession";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { SpidIdp } from "../../../../../utils/idps";
 
 export type LogoutError = {
@@ -39,7 +38,7 @@ export const idpLoginUrlChanged = createStandardAction(
 )<{ url: string }>();
 
 export const loginSuccess = createStandardAction("LOGIN_SUCCESS")<{
-  token: SessionToken;
+  token: string;
   idp: keyof IdpData;
 }>();
 

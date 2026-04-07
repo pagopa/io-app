@@ -6,6 +6,7 @@
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 
 import {
+  Dismissable,
   IOColors,
   IOVisualCostants,
   ToastNotification,
@@ -21,7 +22,6 @@ import Animated, {
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { OperationResultScreenContent } from "../../components/screens/OperationResultScreenContent";
-import { Dismissable } from "../../components/ui/Dismissable";
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import { openAppStoreUrl } from "../../utils/url";
 import { trackForcedUpdateScreen, trackUpdateAppButton } from "./analytics";

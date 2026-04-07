@@ -1,23 +1,26 @@
-import { ListItemHeader, VStack } from "@pagopa/io-app-design-system";
+import { ListItemHeader } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { memo, useMemo } from "react";
-import { View } from "react-native";
+import { useMemo } from "react";
+import { StyleSheet, View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { useDebugInfo } from "../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../store/hooks";
 import { ItwEnvironmentAlert } from "../../itwallet/common/components/ItwEnvironmentAlert";
-import { ItwUpgradeBanner } from "../../itwallet/common/components/ItwUpgradeBanner";
+import { ItwL2EngagementBanner } from "../../itwallet/common/components/ItwL2EngagementBanner";
 import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
 import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
+import {
+  itwShouldRenderL2EngagementBannerForInactiveWalletSelector,
+  itwShouldRenderWalletDiscoveryBannerSelector
+} from "../../itwallet/common/store/selectors";
+import { ItwDiscoveryBanner } from "../../itwallet/discovery/components/ItwDiscoveryBanner";
 import { ItwWalletCardsContainer } from "../../itwallet/wallet/components/ItwWalletCardsContainer";
 import { useItwWalletInstanceRevocationAlert } from "../../itwallet/walletInstance/hook/useItwWalletInstanceRevocationAlert";
 import {
-  isWalletEmptySelector,
-  selectIsWalletLoading,
-  selectWalletCategories,
   selectWalletOtherCards,
   shouldRenderItwCardsContainerSelector,
-  shouldRenderWalletEmptyStateSelector
+  shouldRenderWalletEmptyStateSelector,
+  shouldRenderWalletLoadingStateSelector
 } from "../store/selectors";
 import { withWalletCategoryFilter } from "../utils";
 import { WalletCardSkeleton } from "./WalletCardSkeleton";
@@ -31,20 +34,23 @@ import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
  * and the empty state
  */
 const WalletCardsContainer = () => {
-  const isLoading = useIOSelector(selectIsWalletLoading);
-  const isWalletEmpty = useIOSelector(isWalletEmptySelector);
+  const shouldRenderLoadingState = useIOSelector(
+    shouldRenderWalletLoadingStateSelector
+  );
   const shouldRenderEmptyState = useIOSelector(
     shouldRenderWalletEmptyStateSelector
   );
   const shouldRenderItwCardsContainer = useIOSelector(
     shouldRenderItwCardsContainerSelector
   );
+  const shouldRenderItwDiscoveryBanner = useIOSelector(
+    itwShouldRenderWalletDiscoveryBannerSelector
+  );
+  const shouldRenderL2EngagementBanner = useIOSelector(
+    itwShouldRenderL2EngagementBannerForInactiveWalletSelector
+  );
 
   useItwWalletInstanceRevocationAlert();
-
-  // Loading state is only displayed if there is the initial loading and there are no cards or
-  // placeholders in the wallet
-  const shouldRenderLoadingState = isLoading && isWalletEmpty;
 
   // Content to render in the wallet screen, based on the current state
   const walletContent = useMemo(() => {
@@ -55,41 +61,35 @@ const WalletCardsContainer = () => {
       return <WalletEmptyScreenContent />;
     }
     return (
-      <View testID="walletCardsContainerTestID" style={{ flex: 1 }}>
-        {shouldRenderItwCardsContainer && <ItwWalletCardsContainer />}
-        <OtherWalletCardsContainer />
-      </View>
+      <>
+        {shouldRenderL2EngagementBanner && <ItwL2EngagementBanner />}
+        {shouldRenderItwDiscoveryBanner && <ItwDiscoveryBanner />}
+        <View testID="walletCardsContainerTestID" style={styles.content}>
+          {shouldRenderItwCardsContainer && <ItwWalletCardsContainer />}
+          <OtherWalletCardsContainer />
+        </View>
+      </>
     );
   }, [
-    shouldRenderEmptyState,
     shouldRenderLoadingState,
-    shouldRenderItwCardsContainer
+    shouldRenderEmptyState,
+    shouldRenderItwCardsContainer,
+    shouldRenderItwDiscoveryBanner,
+    shouldRenderL2EngagementBanner
   ]);
 
   return (
     <Animated.View
-      style={{ flex: 1, paddingTop: 16 }}
+      style={styles.container}
       layout={LinearTransition.duration(200)}
     >
-      <WalletBannersContainer />
+      <ItwEnvironmentAlert />
+      <ItwWalletNotAvailableBanner />
+      <ItwDiscoveryBannerStandalone />
       {walletContent}
     </Animated.View>
   );
 };
-
-/**
- * Renders the banners that are displayed at the top of the wallet screen
- */
-const WalletBannersContainer = memo(() => (
-  <VStack space={16}>
-    <ItwEnvironmentAlert />
-    <ItwUpgradeBanner />
-    <ItwWalletNotAvailableBanner />
-    <ItwDiscoveryBannerStandalone />
-    {/* Dummy view wich adds a spacer in case one of the above banners is rendered */}
-    <View />
-  </VStack>
-));
 
 /**
  * Skeleton for the wallet cards container
@@ -107,26 +107,12 @@ const WalletCardsContainerSkeleton = () => (
  */
 const OtherWalletCardsContainer = withWalletCategoryFilter("other", () => {
   const cards = useIOSelector(selectWalletOtherCards);
-  const categories = useIOSelector(selectWalletCategories);
 
   useDebugInfo({
     other: {
       cards
     }
   });
-
-  const sectionHeader = useMemo((): React.ReactElement | undefined => {
-    // The section header must be displayed only if there are more categories
-    if (categories.size <= 1) {
-      return undefined;
-    }
-    return (
-      <ListItemHeader
-        testID={"walletCardsCategoryOtherHeaderTestID"}
-        label={I18n.t("features.wallet.cards.categories.other")}
-      />
-    );
-  }, [categories.size]);
 
   if (cards.length === 0) {
     return <WalletCardsCategoryRetryErrorBanner />;
@@ -137,7 +123,12 @@ const OtherWalletCardsContainer = withWalletCategoryFilter("other", () => {
       key="cards_category_other"
       testID="otherWalletCardsContainerTestID"
       cards={cards}
-      header={sectionHeader}
+      header={
+        <ListItemHeader
+          testID={"walletCardsCategoryOtherHeaderTestID"}
+          label={I18n.t("features.wallet.cards.categories.other")}
+        />
+      }
       bottomElement={<WalletCardsCategoryRetryErrorBanner />}
     />
   );
@@ -148,3 +139,15 @@ export {
   OtherWalletCardsContainer,
   WalletCardsContainer
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    gap: 16,
+    marginTop: 16
+  },
+  content: {
+    flex: 1,
+    gap: 8
+  }
+});

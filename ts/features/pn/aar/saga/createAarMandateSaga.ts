@@ -2,7 +2,6 @@ import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/Either";
 import { call, put, select } from "typed-redux-saga/macro";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
-import { SessionToken } from "../../../../types/SessionToken";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { unknownToReason } from "../../../messages/utils";
@@ -12,6 +11,7 @@ import {
 } from "../analytics";
 import { SendAARClient } from "../api/client";
 import { setAarFlowState } from "../store/actions";
+import { getAarErrorBehaviour } from "../utils/aarErrorMappings";
 import {
   AARFlowState,
   SendAARFailurePhase,
@@ -21,7 +21,7 @@ import {
 const sendAarFailurePhase: SendAARFailurePhase = "Create Mandate";
 export function* createAarMandateSaga(
   createAarMandate: SendAARClient["createAARMandate"],
-  sessionToken: SessionToken,
+  sessionToken: string,
   action: ReturnType<typeof setAarFlowState>
 ) {
   const currentState = action.payload;
@@ -29,7 +29,8 @@ export function* createAarMandateSaga(
     yield* call(
       trackSendAARFailure,
       sendAarFailurePhase,
-      `Called in wrong state (${currentState.type})`
+      `Called in wrong state (${currentState.type})`,
+      undefined
     );
     return;
   }
@@ -76,7 +77,8 @@ export function* createAarMandateSaga(
         yield* call(
           trackSendAARFailure,
           sendAarFailurePhase,
-          "Fast login expiration"
+          "Fast login expiration",
+          undefined
         );
         break;
       default:
@@ -84,7 +86,11 @@ export function* createAarMandateSaga(
           status,
           value
         )})`;
-        yield* call(trackSendAARFailure, sendAarFailurePhase, reason);
+
+        yield* call(trackSendAARFailure, sendAarFailurePhase, reason, value);
+        const { track } = yield* call(getAarErrorBehaviour, value);
+        yield* call(track, reason);
+
         const errorState: AARFlowState = {
           type: sendAARFlowStates.ko,
           previousState: currentState,
@@ -99,7 +105,7 @@ export function* createAarMandateSaga(
     }
   } catch (e: unknown) {
     const reason = `An error was thrown (${unknownToReason(e)})`;
-    yield* call(trackSendAARFailure, sendAarFailurePhase, reason);
+    yield* call(trackSendAARFailure, sendAarFailurePhase, reason, undefined);
     yield* put(
       setAarFlowState({
         type: sendAARFlowStates.ko,

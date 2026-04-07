@@ -3,7 +3,7 @@ import { forwardRef, useCallback, useRef } from "react";
 import { FlatList, NativeSyntheticEvent } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import PagerView from "react-native-pager-view";
-import { OnPageSelectedEventData } from "react-native-pager-view/lib/typescript/specs/PagerViewNativeComponent";
+import { OnPageSelectedEventData } from "react-native-pager-view/lib/typescript/PagerViewNativeComponent";
 import { useIODispatch, useIOStore } from "../../../../store/hooks";
 import { setShownMessageCategoryAction } from "../../store/actions";
 import { GlobalState } from "../../../../store/reducers/types";

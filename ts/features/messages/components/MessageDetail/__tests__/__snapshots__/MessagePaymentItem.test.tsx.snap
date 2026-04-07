@@ -34,12 +34,9 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -67,26 +64,18 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -94,15 +83,13 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -156,16 +143,11 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   DUMMY
@@ -222,18 +204,14 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -303,13 +281,9 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -431,43 +405,166 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
                               >
                                 <View
                                   collapsable={false}
-                                  style={
+                                  jestAnimatedProps={
                                     {
-                                      "backgroundColor": "#E8EBF1",
-                                      "borderCurve": "continuous",
-                                      "borderRadius": 8,
-                                      "height": 12,
-                                      "opacity": 0.55,
-                                      "width": 120,
+                                      "value": {},
                                     }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "backgroundColor": "#E8EBF1",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 8,
+                                        "height": 12,
+                                        "width": 120,
+                                      },
+                                      {
+                                        "animationDuration": "1250ms",
+                                        "animationIterationCount": "infinite",
+                                        "animationName": {
+                                          "0%, 100%": {
+                                            "opacity": 0.75,
+                                          },
+                                          "50%": {
+                                            "opacity": 0.35,
+                                          },
+                                        },
+                                        "animationTimingFunction": CubicBezierEasing {
+                                          "x1": 0.37,
+                                          "x2": 0.63,
+                                          "y1": 0,
+                                          "y2": 1,
+                                        },
+                                      },
+                                    ]
+                                  }
+                                  style={
+                                    [
+                                      {
+                                        "backgroundColor": "#E8EBF1",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 8,
+                                        "height": 12,
+                                        "width": 120,
+                                      },
+                                      {},
+                                    ]
                                   }
                                 />
                                 <View
                                   collapsable={false}
-                                  style={
+                                  jestAnimatedProps={
                                     {
-                                      "backgroundColor": "#E8EBF1",
-                                      "borderCurve": "continuous",
-                                      "borderRadius": 8,
-                                      "height": 16,
-                                      "opacity": 0.55,
-                                      "width": 180,
+                                      "value": {},
                                     }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "backgroundColor": "#E8EBF1",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 8,
+                                        "height": 16,
+                                        "width": 180,
+                                      },
+                                      {
+                                        "animationDuration": "1250ms",
+                                        "animationIterationCount": "infinite",
+                                        "animationName": {
+                                          "0%, 100%": {
+                                            "opacity": 0.75,
+                                          },
+                                          "50%": {
+                                            "opacity": 0.35,
+                                          },
+                                        },
+                                        "animationTimingFunction": CubicBezierEasing {
+                                          "x1": 0.37,
+                                          "x2": 0.63,
+                                          "y1": 0,
+                                          "y2": 1,
+                                        },
+                                      },
+                                    ]
+                                  }
+                                  style={
+                                    [
+                                      {
+                                        "backgroundColor": "#E8EBF1",
+                                        "borderCurve": "continuous",
+                                        "borderRadius": 8,
+                                        "height": 16,
+                                        "width": 180,
+                                      },
+                                      {},
+                                    ]
                                   }
                                 />
                               </View>
                             </View>
                             <View
                               collapsable={false}
-                              style={
+                              jestAnimatedProps={
                                 {
-                                  "backgroundColor": "#E8EBF1",
-                                  "borderCurve": "continuous",
-                                  "borderRadius": 16,
-                                  "height": 24,
-                                  "opacity": 0.55,
-                                  "width": 64,
+                                  "value": {},
                                 }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "backgroundColor": "#E8EBF1",
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 16,
+                                    "height": 24,
+                                    "width": 64,
+                                  },
+                                  {
+                                    "animationDuration": "1250ms",
+                                    "animationIterationCount": "infinite",
+                                    "animationName": {
+                                      "0%, 100%": {
+                                        "opacity": 0.75,
+                                      },
+                                      "50%": {
+                                        "opacity": 0.35,
+                                      },
+                                    },
+                                    "animationTimingFunction": CubicBezierEasing {
+                                      "x1": 0.37,
+                                      "x2": 0.63,
+                                      "y1": 0,
+                                      "y2": 1,
+                                    },
+                                  },
+                                ]
+                              }
+                              style={
+                                [
+                                  {
+                                    "backgroundColor": "#E8EBF1",
+                                    "borderCurve": "continuous",
+                                    "borderRadius": 16,
+                                    "height": 24,
+                                    "width": 64,
+                                  },
+                                  {},
+                                ]
                               }
                             />
                           </View>
@@ -520,12 +617,9 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -553,26 +647,18 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -580,15 +666,13 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -642,16 +726,11 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   DUMMY
@@ -708,18 +787,14 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -789,13 +864,9 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -894,6 +965,42 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -914,7 +1021,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -1121,12 +1228,9 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable-wi
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -1154,26 +1258,18 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable-wi
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -1181,15 +1277,13 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable-wi
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -1243,16 +1337,11 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable-wi
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   DUMMY
@@ -1309,18 +1398,14 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable-wi
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -1390,13 +1475,9 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable-wi
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -1495,6 +1576,42 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable-wi
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -1515,7 +1632,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable-wi
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -1701,12 +1818,9 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -1734,26 +1848,18 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -1761,15 +1867,13 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -1823,16 +1927,11 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   DUMMY
@@ -1889,18 +1988,14 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -1970,13 +2065,9 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -2075,6 +2166,42 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                           onTouchEnd={[Function]}
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "transform": [
+                                    {
+                                      "scale": 1,
+                                    },
+                                  ],
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "borderColor": "#E8EBF1",
+                                  "borderCurve": "continuous",
+                                  "borderRadius": 8,
+                                  "borderWidth": 1,
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 16,
+                                  "paddingVertical": 16,
+                                },
+                                {
+                                  "borderColor": "#E8EBF1",
+                                },
+                                false,
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -2095,7 +2222,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                 {
                                   "transform": [
                                     {
-                                      "scale": undefined,
+                                      "scale": 1,
                                     },
                                   ],
                                 },
@@ -2180,6 +2307,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                         "borderCurve": "continuous",
                                         "flexDirection": "row",
                                         "justifyContent": "center",
+                                        "overflow": "hidden",
                                       },
                                       {
                                         "borderRadius": 36,
@@ -2210,7 +2338,6 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                         },
                                         {
                                           "alignSelf": "center",
-                                          "flexShrink": 1,
                                           "letterSpacing": 0.5,
                                           "textTransform": "uppercase",
                                         },

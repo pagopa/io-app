@@ -5,10 +5,10 @@ import { useIOSelector } from "../../../../store/hooks";
 import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../urls";
 import {
-  getMixPanelCredential,
   trackWalletCredentialShowAuthSource,
   trackWalletCredentialShowIssuer
 } from "../../analytics";
+import { getMixPanelCredential } from "../../analytics/utils/index.ts";
 import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors/index.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";

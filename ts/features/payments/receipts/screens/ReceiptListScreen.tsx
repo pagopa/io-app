@@ -34,9 +34,10 @@ import { walletReceiptListPotSelector } from "../store/selectors";
 import { ReceiptsCategoryFilter } from "../types";
 import { groupTransactionsByMonth } from "../utils";
 
-const AnimatedSectionList = Animated.createAnimatedComponent(
-  SectionList as new () => SectionList<NoticeListItem>
-);
+const AnimatedSectionList =
+  Animated.createAnimatedComponent<typeof SectionList<NoticeListItem>>(
+    SectionList
+  );
 
 const ReceiptListScreen = () => {
   const dispatch = useIODispatch();
@@ -67,7 +68,8 @@ const ReceiptListScreen = () => {
       params: {
         transactionId: transaction.eventId,
         isPayer: transaction.isPayer,
-        isCart: transaction.isCart
+        isCart: transaction.isCart,
+        isDebtor: transaction.isDebtor
       }
     });
   };
@@ -217,13 +219,17 @@ const ReceiptListScreen = () => {
       }
       testID="PaymentsTransactionsListTestID"
       ItemSeparatorComponent={Divider}
-      renderSectionHeader={({ section }) => (
-        <ListItemHeader label={section.title} />
-      )}
+      renderSectionHeader={({
+        section
+      }: {
+        section: SectionListData<NoticeListItem>;
+      }) => <ListItemHeader label={section.title} />}
       ListEmptyComponent={EmptyStateList}
       ListFooterComponent={renderLoadingFooter}
-      keyExtractor={item => `transaction_${item.eventId}`}
-      renderItem={({ item }) => (
+      keyExtractor={(item: NoticeListItem, index: number) =>
+        `transaction_${item.eventId}${index}`
+      }
+      renderItem={({ item }: { item: NoticeListItem }) => (
         <ReceiptFadeInOutAnimationView>
           <ReceiptListItemTransaction
             openedItemRef={openedItemRef}

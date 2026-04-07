@@ -10,7 +10,8 @@ import { useCallback, useEffect, useState } from "react";
 import HapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
-import { useScreenReaderEnabled } from "../../../../../utils/accessibility";
+import { useIOSelector } from "../../../../../store/hooks";
+import { isScreenReaderEnabledSelector } from "../../../../../store/reducers/preferences";
 import {
   WAIT_TIMEOUT_NAVIGATION,
   WAIT_TIMEOUT_NAVIGATION_ACCESSIBILITY
@@ -66,7 +67,7 @@ export const useCieManager: UseCieManager = ({
   onInternalAuthAndMRTDWithPaceSuccess,
   useUat
 }) => {
-  const isScreenReaderEnabled = useScreenReaderEnabled();
+  const isScreenReaderEnabled = useIOSelector(isScreenReaderEnabledSelector);
   const [state, setState] = useState<CieManagerState>({ state: "idle" });
 
   /**
@@ -133,6 +134,10 @@ export const useCieManager: UseCieManager = ({
         ? HapticFeedbackTypes.notificationWarning
         : HapticFeedbackTypes.notificationError
     );
+
+    CieManager.stopReading().catch(() => {
+      // Ignore errors on stop reading
+    });
   };
 
   /**
@@ -182,7 +187,9 @@ export const useCieManager: UseCieManager = ({
       // Remove the event listener on exit
       cleanup.forEach(remove => remove());
       // Ensure the reading is stopped when state is exited
-      void CieManager.stopReading();
+      void CieManager.stopReading().catch(() => {
+        // Ignore errors on stop reading
+      });
     };
   }, [completionHandler, onInternalAuthAndMRTDWithPaceSuccess, onSuccess]);
 

@@ -8,11 +8,12 @@ import {
 import { getType } from "typesafe-actions";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Action } from "../../../../../store/actions/types";
-import itwCreateSecureStorage from "../../../common/store/storages/itwSecureStorage";
+import createSecureStorage from "../../../../../store/storages/secureStorage";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import {
   itwWalletInstanceAttestationStore,
-  itwUpdateWalletInstanceStatus
+  itwUpdateWalletInstanceStatus,
+  itwSetWalletInstanceRenewalError
 } from "../actions";
 import {
   WalletInstanceStatus,
@@ -30,16 +31,22 @@ export type ItwWalletInstanceState = {
    * The Wallet Instance status fetched from the Wallet Provider backend
    */
   status: pot.Pot<WalletInstanceStatus, NetworkError>;
+  /**
+   * Whether a wallet instance renewal has already failed.
+   * Used to prevent re-entering the recovery block on subsequent actor retries.
+   */
+  renewalError: boolean;
 };
 
 export const itwWalletInstanceInitialState: ItwWalletInstanceState = {
   attestation: undefined,
-  status: pot.none
+  status: pot.none,
+  renewalError: false
 };
 
 type MigrationState = PersistedState & Record<string, any>;
 
-const CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION = 1;
+const CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION = 2;
 
 export const migrations: MigrationManifest = {
   // Convert status into a pot for better async handling
@@ -53,6 +60,11 @@ export const migrations: MigrationManifest = {
     attestation: {
       jwt: state.attestation
     }
+  }),
+  // Add renewalError field
+  "2": (state: MigrationState) => ({
+    ...state,
+    renewalError: false
   })
 };
 
@@ -64,7 +76,8 @@ const reducer = (
     case getType(itwWalletInstanceAttestationStore): {
       return {
         status: pot.none,
-        attestation: action.payload
+        attestation: action.payload,
+        renewalError: false
       };
     }
 
@@ -89,6 +102,12 @@ const reducer = (
       };
     }
 
+    case getType(itwSetWalletInstanceRenewalError):
+      return {
+        ...state,
+        renewalError: action.payload
+      };
+
     case getType(itwLifecycleStoresReset):
       return { ...itwWalletInstanceInitialState };
 
@@ -99,7 +118,7 @@ const reducer = (
 
 const itwWalletInstancePersistConfig: PersistConfig = {
   key: "itwWalletInstance",
-  storage: itwCreateSecureStorage(),
+  storage: createSecureStorage(),
   version: CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION,
   migrate: createMigrate(migrations, { debug: isDevEnv })
 };

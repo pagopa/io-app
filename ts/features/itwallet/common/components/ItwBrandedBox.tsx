@@ -23,6 +23,7 @@ import {
   useDerivedValue,
   useSharedValue
 } from "react-native-reanimated";
+import LinearGradient from "react-native-linear-gradient";
 import { useItWalletTheme } from "../utils/theme";
 import { ItwBrandedSkiaBorder } from "./ItwBrandedSkiaBorder";
 import { ItwSkiaBrandedGradientVariant } from "./ItwBrandedSkiaGradient";
@@ -30,8 +31,11 @@ import { ItwSkiaBrandedGradientVariant } from "./ItwBrandedSkiaGradient";
 type ItwIridescentBorderProps = {
   variant?: ItwSkiaBrandedGradientVariant;
   borderThickness?: number;
-  cornerRadius?: number;
+  borderRadius?: number;
+  backgroundVariant?: "solid" | "gradient";
 };
+
+const brandedBoxGradientColors = ["#FFFFFF", "#FBFDFF", "#F6FBFF", "#F2F9FF"];
 
 /* Light */
 const lightScaleMultiplier = 1;
@@ -43,13 +47,16 @@ const visibleLightPercentage = 0.25; // Visible light when it's near box boundar
  */
 export const ItwBrandedBox = ({
   borderThickness = 3,
-  cornerRadius = 16,
+  borderRadius = 16,
+  backgroundVariant = "solid",
   variant = "default",
   children
 }: PropsWithChildren<ItwIridescentBorderProps>) => {
   const theme = useItWalletTheme();
   const { themeType } = useIOThemeContext();
   const isLightMode = themeType === "light";
+  const shouldUseGradientBackground =
+    isLightMode && backgroundVariant === "gradient";
 
   const [size, setSize] = useState<{ width: number; height: number }>({
     width: 0,
@@ -154,12 +161,20 @@ export const ItwBrandedBox = ({
       style={[
         styles.container,
         {
+          borderRadius,
           backgroundColor: theme["banner-background"]
         }
       ]}
     >
-      {/* Box content */}
-      {children}
+      {shouldUseGradientBackground && (
+        <LinearGradient
+          pointerEvents="none"
+          colors={brandedBoxGradientColors}
+          start={{ x: 0.5, y: 0 }}
+          end={{ x: 0.5, y: 1 }}
+          style={StyleSheet.absoluteFill}
+        />
+      )}
 
       {/* Skia Canvas for border and light effect */}
       <Canvas
@@ -178,17 +193,19 @@ export const ItwBrandedBox = ({
           height={size.height}
           variant={variant}
           thickness={borderThickness}
-          cornerRadius={cornerRadius}
+          borderRadius={borderRadius}
           themeType={themeType}
         />
       </Canvas>
+
+      {/* Box content */}
+      {children}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 16,
     borderCurve: "continuous",
     padding: 16,
     gap: 6,

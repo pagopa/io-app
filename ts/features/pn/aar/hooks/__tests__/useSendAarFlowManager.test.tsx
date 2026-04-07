@@ -16,8 +16,9 @@ const mockNavigate = jest.fn();
 const mockDispatch = jest.fn();
 const mockSelector = jest.fn();
 
-jest.mock("../../../../../navigation/params/AppParamsList", () => ({
-  useIONavigation: () => ({
+jest.mock("@react-navigation/native", () => ({
+  ...jest.requireActual("@react-navigation/native"),
+  useNavigation: () => ({
     popToTop: mockPopToTop,
     reset: mockReset,
     navigate: mockNavigate
@@ -87,6 +88,7 @@ describe("useSendAarFlowManager", () => {
           expect(mockDispatch).not.toHaveBeenCalled();
           break;
       }
+      expect(mockNavigate).not.toHaveBeenCalled();
     });
   });
   it('should return "currentFlowData" as a 1/1 of the selector`s value', () => {

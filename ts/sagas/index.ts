@@ -10,9 +10,9 @@ import { watchTokenRefreshSaga } from "../features/authentication/fastLogin/saga
 import connectivityStatusSaga from "../features/connectivity/saga";
 import { watchIdentification } from "../features/identification/sagas";
 import { watchUtmLinkSaga } from "../features/utmLink/saga";
-import { watchWalletSaga } from "../features/wallet/saga";
 import { watchZendeskSupportSaga } from "../features/zendesk/saga";
 import { watchForceLogoutActiveSessionLogin } from "../features/authentication/activeSessionLogin/saga/forceLogoutActiveSessionLoginSaga";
+import { watchTourSaga } from "../features/tour/sagas";
 import backendStatusSaga from "./backendStatus";
 import { watchContentSaga } from "./contentLoaders";
 import { loadSystemPreferencesSaga } from "./preferences";
@@ -35,8 +35,8 @@ export default function* root() {
     call(watchPendingActionsSaga),
     call(watchUtmLinkSaga),
     call(watchLogoutSaga),
-    call(watchWalletSaga),
     call(watchForceLogoutActiveSessionLogin),
+    call(watchTourSaga),
     zendeskEnabled ? call(watchZendeskSupportSaga) : undefined
   ]);
 }

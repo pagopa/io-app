@@ -7,8 +7,18 @@ import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
 import { format } from "../../../utils/dates";
-import { BonusCard } from "../BonusCard";
+import { BonusCard, BonusCardWithColorSchemeValues } from "../BonusCard";
 import { BonusCardCounter } from "../BonusCardCounter";
+import {
+  BonusCardColorSchemeValues,
+  defaultBonusCardColors
+} from "../BonusCardScreenComponent";
+
+const mockResolvedColors: BonusCardColorSchemeValues = {
+  background: defaultBonusCardColors.light.background,
+  foreground: defaultBonusCardColors.light.foreground,
+  text: defaultBonusCardColors.light.text
+};
 
 jest.mock("react-native-safe-area-context", () => {
   const useSafeAreaInsets = () => ({ top: 0 });
@@ -21,7 +31,8 @@ describe("Test BonusCard", () => {
   describe("when the component is loading", () => {
     it("should display the skeleton", () => {
       const { queryByTestId, queryAllByTestId } = renderComponent({
-        isLoading: true
+        isLoading: true,
+        cardColorSchemeValues: mockResolvedColors
       });
       expect(queryByTestId("BonusCardSkeletonTestID")).not.toBeNull();
       expect(queryByTestId("BonusCardContentTestID")).toBeNull();
@@ -58,6 +69,7 @@ describe("Test BonusCard", () => {
       const { queryByTestId, queryAllByTestId, queryByText } = renderComponent({
         name: T_NAME,
         organizationName: T_ORG_NAME,
+        cardColorSchemeValues: mockResolvedColors,
         status: (
           <LabelMini weight="Regular" color="grey-650">
             {I18n.t("bonusCard.validUntil", {
@@ -80,7 +92,7 @@ describe("Test BonusCard", () => {
   });
 });
 
-const renderComponent = (props: BonusCard) => {
+const renderComponent = (props: BonusCardWithColorSchemeValues) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
 
   const mockStore = configureMockStore<GlobalState>();

@@ -31,6 +31,16 @@ const getFileDigest = (url: string) =>
         }).fetch("GET", url),
       E.toError
     ),
+    TE.chainW(response => {
+      const status = response.info().status;
+      return status >= 200 && status < 300
+        ? TE.right(response)
+        : TE.left(
+            new Error(
+              `Failed to download document for signature: HTTP ${status}`
+            )
+          );
+    }),
     TE.chain(response =>
       TE.tryCatch(
         () => ReactNativeBlobUtil.fs.readFile(response.path(), "base64"),

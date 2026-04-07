@@ -7,7 +7,7 @@ import {
   useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { FlatList, ListRenderItemInfo } from "react-native";
+import { FlatList, ListRenderItemInfo, Platform } from "react-native";
 import I18n from "i18next";
 import { ZendeskSubCategory } from "../../../../definitions/content/ZendeskSubCategory";
 import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
@@ -100,7 +100,7 @@ const ZendeskChooseSubCategory = (props: Props) => {
         label: I18n.t("support.chooseCategory.title.subCategory"),
         section: selectedCategory.description[locale]
       }}
-      ignoreSafeAreaMargin={true}
+      ignoreSafeAreaMargin={Platform.OS === "ios" ? true : false}
       testID={"ZendeskChooseCategory"}
     >
       {bannerEducational && (

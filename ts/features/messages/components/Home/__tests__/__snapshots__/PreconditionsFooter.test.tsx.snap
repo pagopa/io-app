@@ -34,12 +34,9 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -67,26 +64,18 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -94,15 +83,13 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -156,16 +143,11 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   MESSAGES_HOME
@@ -222,18 +204,14 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -303,13 +281,9 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -367,6 +341,31 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                       }
                     >
                       <View
+                        collapsable={false}
+                        jestAnimatedProps={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestAnimatedStyle={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestInlineStyle={
+                          [
+                            {
+                              "paddingBottom": 24,
+                              "width": "100%",
+                            },
+                            {
+                              "bottom": 0,
+                              "position": "absolute",
+                            },
+                            false,
+                            undefined,
+                          ]
+                        }
                         style={
                           [
                             {
@@ -383,6 +382,36 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                         }
                       >
                         <View
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "backgroundColor": "#FFFFFF",
+                                "bottom": 0,
+                                "height": 0,
+                                "position": "absolute",
+                                "shadowColor": "#0E0F13",
+                                "shadowOffset": {
+                                  "height": -4,
+                                  "width": 0,
+                                },
+                                "shadowOpacity": 0.1,
+                                "shadowRadius": 32,
+                                "width": "100%",
+                              },
+                              undefined,
+                            ]
+                          }
                           pointerEvents="none"
                           style={
                             [
@@ -456,6 +485,48 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                             testID="message_preconditions_footer_continue"
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "#0B3EE3",
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
+                                  },
+                                  {},
+                                ]
+                              }
                               style={
                                 [
                                   {
@@ -467,9 +538,15 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
-                                  false,
                                   {
-                                    "backgroundColor": undefined,
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                  {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
                                   },
                                   {
                                     "paddingHorizontal": 16,
@@ -486,6 +563,30 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
+                                    },
+                                    false,
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -504,15 +605,38 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                   accessibilityElementsHidden={true}
                                   accessible={false}
                                   allowFontScaling={true}
+                                  collapsable={false}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "color": "rgba(255, 255, 255, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": "#FFFFFF",
+                                      },
+                                    ]
+                                  }
                                   maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -527,7 +651,7 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                           "color": "#FFFFFF",
                                         },
                                         {
-                                          "color": undefined,
+                                          "color": "rgba(255, 255, 255, 1)",
                                         },
                                       ],
                                     ]
@@ -601,6 +725,47 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                               testID="message_preconditions_footer_cancel"
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "borderCurve": "continuous",
+                                      "elevation": 0,
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                      "overflow": "hidden",
+                                      "textAlignVertical": "center",
+                                    },
+                                    {
+                                      "paddingHorizontal": 0,
+                                    },
+                                    {
+                                      "backgroundColor": "transparent",
+                                      "borderColor": "#0B3EE3",
+                                      "borderRadius": 8,
+                                      "borderWidth": 0,
+                                      "height": undefined,
+                                    },
+                                    {},
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -612,7 +777,13 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                       "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
-                                    false,
+                                    {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
                                     {},
                                     {
                                       "paddingHorizontal": 0,
@@ -629,6 +800,30 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                 }
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "columnGap": 8,
+                                      },
+                                      false,
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -647,15 +842,38 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                     accessibilityElementsHidden={true}
                                     accessible={false}
                                     allowFontScaling={true}
+                                    collapsable={false}
                                     ellipsizeMode="tail"
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {
+                                          "color": "rgba(11, 62, 227, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                        },
+                                      ]
+                                    }
                                     maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
                                         {},
                                         {
-                                          "color": "#0E0F13",
+                                          "color": undefined,
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
@@ -670,7 +888,7 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
                                             "color": "#0B3EE3",
                                           },
                                           {
-                                            "color": undefined,
+                                            "color": "rgba(11, 62, 227, 1)",
                                           },
                                         ],
                                       ]
@@ -731,12 +949,9 @@ exports[`PreconditionsFooter should match snapshot for 'undefined' footer catego
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -764,26 +979,18 @@ exports[`PreconditionsFooter should match snapshot for 'undefined' footer catego
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -791,15 +998,13 @@ exports[`PreconditionsFooter should match snapshot for 'undefined' footer catego
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -853,16 +1058,11 @@ exports[`PreconditionsFooter should match snapshot for 'undefined' footer catego
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   MESSAGES_HOME
@@ -919,18 +1119,14 @@ exports[`PreconditionsFooter should match snapshot for 'undefined' footer catego
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -1000,13 +1196,9 @@ exports[`PreconditionsFooter should match snapshot for 'undefined' footer catego
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -1109,12 +1301,9 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -1142,26 +1331,18 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -1169,15 +1350,13 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -1231,16 +1410,11 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   MESSAGES_HOME
@@ -1297,18 +1471,14 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -1378,13 +1548,9 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View
@@ -1442,6 +1608,31 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                       }
                     >
                       <View
+                        collapsable={false}
+                        jestAnimatedProps={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestAnimatedStyle={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestInlineStyle={
+                          [
+                            {
+                              "paddingBottom": 24,
+                              "width": "100%",
+                            },
+                            {
+                              "bottom": 0,
+                              "position": "absolute",
+                            },
+                            false,
+                            undefined,
+                          ]
+                        }
                         style={
                           [
                             {
@@ -1458,6 +1649,36 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                         }
                       >
                         <View
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "backgroundColor": "#FFFFFF",
+                                "bottom": 0,
+                                "height": 0,
+                                "position": "absolute",
+                                "shadowColor": "#0E0F13",
+                                "shadowOffset": {
+                                  "height": -4,
+                                  "width": 0,
+                                },
+                                "shadowOpacity": 0.1,
+                                "shadowRadius": 32,
+                                "width": "100%",
+                              },
+                              undefined,
+                            ]
+                          }
                           pointerEvents="none"
                           style={
                             [
@@ -1531,6 +1752,48 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                             testID="message_preconditions_footer_update"
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "#0B3EE3",
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
+                                  },
+                                  {},
+                                ]
+                              }
                               style={
                                 [
                                   {
@@ -1542,9 +1805,15 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                     "overflow": "hidden",
                                     "textAlignVertical": "center",
                                   },
-                                  false,
                                   {
-                                    "backgroundColor": undefined,
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                  {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
                                   },
                                   {
                                     "paddingHorizontal": 16,
@@ -1561,6 +1830,30 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "columnGap": 8,
+                                    },
+                                    false,
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -1579,15 +1872,38 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                   accessibilityElementsHidden={true}
                                   accessible={false}
                                   allowFontScaling={true}
+                                  collapsable={false}
                                   ellipsizeMode="tail"
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "color": "rgba(255, 255, 255, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "textAlign": "auto",
+                                      },
+                                      {
+                                        "color": "#FFFFFF",
+                                      },
+                                    ]
+                                  }
                                   maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   style={
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -1602,7 +1918,7 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                           "color": "#FFFFFF",
                                         },
                                         {
-                                          "color": undefined,
+                                          "color": "rgba(255, 255, 255, 1)",
                                         },
                                       ],
                                     ]
@@ -1676,6 +1992,47 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                               testID="message_preconditions_footer_update_cancel"
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "borderCurve": "continuous",
+                                      "elevation": 0,
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                      "overflow": "hidden",
+                                      "textAlignVertical": "center",
+                                    },
+                                    {
+                                      "paddingHorizontal": 0,
+                                    },
+                                    {
+                                      "backgroundColor": "transparent",
+                                      "borderColor": "#0B3EE3",
+                                      "borderRadius": 8,
+                                      "borderWidth": 0,
+                                      "height": undefined,
+                                    },
+                                    {},
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -1687,7 +2044,13 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                       "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
-                                    false,
+                                    {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
                                     {},
                                     {
                                       "paddingHorizontal": 0,
@@ -1704,6 +2067,30 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                 }
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "columnGap": 8,
+                                      },
+                                      false,
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -1722,15 +2109,38 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                     accessibilityElementsHidden={true}
                                     accessible={false}
                                     allowFontScaling={true}
+                                    collapsable={false}
                                     ellipsizeMode="tail"
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {
+                                          "color": "rgba(11, 62, 227, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#0B3EE3",
+                                        },
+                                      ]
+                                    }
                                     maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
                                         {},
                                         {
-                                          "color": "#0E0F13",
+                                          "color": undefined,
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
@@ -1745,7 +2155,7 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
                                             "color": "#0B3EE3",
                                           },
                                           {
-                                            "color": undefined,
+                                            "color": "rgba(11, 62, 227, 1)",
                                           },
                                         ],
                                       ]
@@ -1806,12 +2216,9 @@ exports[`PreconditionsFooter should match snapshot for 'view' footer category 1`
         collapsable={false}
         pointerEvents="box-none"
         style={
-          [
-            {
-              "zIndex": 1,
-            },
-            false,
-          ]
+          {
+            "zIndex": 1,
+          }
         }
       >
         <View
@@ -1839,26 +2246,18 @@ exports[`PreconditionsFooter should match snapshot for 'view' footer category 1`
             <View
               collapsable={false}
               style={
-                [
-                  {
-                    "flex": 1,
-                    "shadowOffset": {
-                      "height": 0.5,
-                      "width": 0,
-                    },
-                    "shadowOpacity": 0.85,
-                    "shadowRadius": 0,
+                {
+                  "backgroundColor": "#FFFFFF",
+                  "borderBottomColor": "rgb(216, 216, 216)",
+                  "flex": 1,
+                  "shadowColor": "rgb(216, 216, 216)",
+                  "shadowOffset": {
+                    "height": 0.5,
+                    "width": 0,
                   },
-                  {
-                    "backgroundColor": "#FFFFFF",
-                    "borderBottomColor": "rgb(216, 216, 216)",
-                    "shadowColor": "rgb(216, 216, 216)",
-                  },
-                  [
-                    {},
-                    false,
-                  ],
-                ]
+                  "shadowOpacity": 0.85,
+                  "shadowRadius": 0,
+                }
               }
             />
           </View>
@@ -1866,15 +2265,13 @@ exports[`PreconditionsFooter should match snapshot for 'view' footer category 1`
             collapsable={false}
             pointerEvents="box-none"
             style={
-              [
-                {
-                  "height": 44,
-                  "maxHeight": undefined,
-                  "minHeight": undefined,
-                  "opacity": undefined,
-                  "transform": undefined,
-                },
-              ]
+              {
+                "height": 44,
+                "maxHeight": undefined,
+                "minHeight": undefined,
+                "opacity": undefined,
+                "transform": undefined,
+              }
             }
           >
             <View
@@ -1928,16 +2325,11 @@ exports[`PreconditionsFooter should match snapshot for 'view' footer category 1`
                   numberOfLines={1}
                   onLayout={[Function]}
                   style={
-                    [
-                      {
-                        "fontSize": 17,
-                        "fontWeight": "600",
-                      },
-                      {
-                        "color": "rgb(28, 28, 30)",
-                      },
-                      undefined,
-                    ]
+                    {
+                      "color": "rgb(28, 28, 30)",
+                      "fontSize": 17,
+                      "fontWeight": "600",
+                    }
                   }
                 >
                   MESSAGES_HOME
@@ -1994,18 +2386,14 @@ exports[`PreconditionsFooter should match snapshot for 'view' footer category 1`
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
           style={
-            [
-              {
-                "bottom": 0,
-                "left": 0,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-              },
-              {
-                "zIndex": undefined,
-              },
-            ]
+            {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "zIndex": undefined,
+            }
           }
         >
           <View
@@ -2075,13 +2463,9 @@ exports[`PreconditionsFooter should match snapshot for 'view' footer category 1`
               collapsable={false}
               pointerEvents="box-none"
               style={
-                [
-                  {
-                    "flex": 1,
-                  },
-                  undefined,
-                  null,
-                ]
+                {
+                  "flex": 1,
+                }
               }
             >
               <View

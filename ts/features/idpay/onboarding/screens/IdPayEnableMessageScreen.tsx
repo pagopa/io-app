@@ -89,9 +89,9 @@ const IdPayEnableMessageScreen = () => {
           Uncomment below to enable toast notifications for debugging or testing purposes:
           IOToast.error("I18n.t("global.genericError")");
         */
-        trackIDPayOnboardingNotificationError({ initiativeName, initiativeId });
+        trackIDPayOnboardingNotificationError({ initiativeId });
       } else if (isSuccessServicePreference) {
-        trackIDPayOnboardingNotificationOK({ initiativeName, initiativeId });
+        trackIDPayOnboardingNotificationOK({ initiativeId });
         machine.send({ type: "next" });
       }
     }
@@ -106,13 +106,12 @@ const IdPayEnableMessageScreen = () => {
   ]);
 
   const onCancel = () => {
-    trackIDPayOnboardingNotificationCancel({ initiativeName, initiativeId });
+    trackIDPayOnboardingNotificationCancel({ initiativeId });
     machine.send({ type: "close" });
   };
 
   useOnFirstRender(() => {
     trackIDPayOnboardingNotificationPermission({
-      initiativeName,
       initiativeId
     });
   });

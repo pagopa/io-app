@@ -6,9 +6,9 @@ import {
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
-import ITWalletIDImage from "../../../../../../img/features/itWallet/brand/itw_id_logo.svg";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar";
 import { getLuminance } from "../../../../../utils/color";
+import { ItWalletIdLogo } from "../../../common/components/ItWalletIdLogo";
 import { useItWalletTheme } from "../../../common/utils/theme";
 
 export const ItwPresentationPidDetailHeader = () => {
@@ -32,7 +32,7 @@ export const ItwPresentationPidDetailHeader = () => {
       >
         <ContentWrapper>
           <VStack space={8} style={styles.content}>
-            <ITWalletIDImage width={140} height={34} />
+            <ItWalletIdLogo width={140} height={34} />
             <Body>
               {I18n.t("features.itWallet.presentation.itWalletId.description")}
             </Body>

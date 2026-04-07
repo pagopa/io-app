@@ -3,9 +3,11 @@ import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import {
   itwOfflineAccessCounterReset,
-  itwOfflineAccessCounterUp
+  itwOfflineAccessCounterUp,
+  itwUnverifiedCredentialsCounterUp,
+  itwUnverifiedCredentialsCounterReset
 } from "../actions/securePreferences";
-import itwCreateSecureStorage from "../storages/itwSecureStorage";
+import createSecureStorage from "../../../../../store/storages/secureStorage";
 
 export type ItwSecurePreferencesState = {
   /**
@@ -13,10 +15,16 @@ export type ItwSecurePreferencesState = {
    * return online
    */
   offlineAccessCounter: number;
+  /**
+   * Number of accesses that user can perform during IPZS or AS
+   * down periods
+   */
+  unverifiedCredentialsAccessCounter: number;
 };
 
 export const itwSecurePreferencesInitialState: ItwSecurePreferencesState = {
-  offlineAccessCounter: 0
+  offlineAccessCounter: 0,
+  unverifiedCredentialsAccessCounter: 0
 };
 
 const reducer = (
@@ -30,11 +38,24 @@ const reducer = (
         offlineAccessCounter: state.offlineAccessCounter + 1
       };
     }
-
     case getType(itwOfflineAccessCounterReset): {
       return {
         ...state,
         offlineAccessCounter: 0
+      };
+    }
+
+    case getType(itwUnverifiedCredentialsCounterUp): {
+      return {
+        ...state,
+        unverifiedCredentialsAccessCounter:
+          state.unverifiedCredentialsAccessCounter + 1
+      };
+    }
+    case getType(itwUnverifiedCredentialsCounterReset): {
+      return {
+        ...state,
+        unverifiedCredentialsAccessCounter: 0
       };
     }
 
@@ -47,7 +68,7 @@ const CURRENT_REDUX_ITW_SECURE_PREFERENCES_STORE_VERSION = -1;
 
 const itwCredentialsPersistConfig: PersistConfig = {
   key: "itWalletSecurePreferences",
-  storage: itwCreateSecureStorage(),
+  storage: createSecureStorage(),
   version: CURRENT_REDUX_ITW_SECURE_PREFERENCES_STORE_VERSION
 };
 

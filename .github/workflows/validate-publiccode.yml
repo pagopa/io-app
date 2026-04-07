@@ -1,0 +1,12 @@
+name: Validate publiccode
+on: [push, pull_request]
+
+jobs:
+  publiccode_validation:
+    name: Parse publiccode
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@ee0669bd1cc54295c223e0bb666b733df41de1c5 # v2
+    - uses: italia/publiccode-parser-action@3244a5a109ae23f76cb379831abbad32927cad8c # v1
+      with:
+        publiccode: 'publiccode.yml'

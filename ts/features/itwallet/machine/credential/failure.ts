@@ -1,5 +1,9 @@
+import { type IntegrityError } from "@pagopa/io-react-native-integrity";
 import { Errors, Trust } from "@pagopa/io-react-native-wallet";
-import { isFederationError } from "../../common/utils/itwFailureUtils.ts";
+import {
+  isAssertionGenerationError,
+  isFederationError
+} from "../../common/utils/itwFailureUtils.ts";
 import { WithCredentialMetadata } from "../../common/utils/ItwFailureTypes.ts";
 import { CredentialIssuanceEvents } from "./events";
 
@@ -11,11 +15,11 @@ const {
 
 export enum CredentialIssuanceFailureType {
   UNEXPECTED = "UNEXPECTED",
-  ASYNC_ISSUANCE = "ASYNC_ISSUANCE",
   INVALID_STATUS = "INVALID_STATUS",
   ISSUER_GENERIC = "ISSUER_GENERIC",
   UNTRUSTED_ISS = "UNTRUSTED_ISS",
-  WALLET_PROVIDER_GENERIC = "WALLET_PROVIDER_GENERIC"
+  WALLET_PROVIDER_GENERIC = "WALLET_PROVIDER_GENERIC",
+  HARDWARE_KEY_INVALID = "HARDWARE_KEY_INVALID"
 }
 
 /**
@@ -24,9 +28,9 @@ export enum CredentialIssuanceFailureType {
 export type ReasonTypeByFailure = {
   [CredentialIssuanceFailureType.ISSUER_GENERIC]: Errors.IssuerResponseError;
   [CredentialIssuanceFailureType.INVALID_STATUS]: WithCredentialMetadata<Errors.IssuerResponseError>;
-  [CredentialIssuanceFailureType.ASYNC_ISSUANCE]: Errors.IssuerResponseError;
   [CredentialIssuanceFailureType.WALLET_PROVIDER_GENERIC]: Errors.WalletProviderResponseError;
   [CredentialIssuanceFailureType.UNTRUSTED_ISS]: Trust.Errors.FederationError;
+  [CredentialIssuanceFailureType.HARDWARE_KEY_INVALID]: IntegrityError;
   [CredentialIssuanceFailureType.UNEXPECTED]: unknown;
 };
 
@@ -62,16 +66,16 @@ export const mapEventToFailure = (
 
   const { error } = event;
 
-  if (isIssuerResponseError(error, Codes.CredentialInvalidStatus)) {
+  if (isAssertionGenerationError(error)) {
     return {
-      type: CredentialIssuanceFailureType.INVALID_STATUS,
+      type: CredentialIssuanceFailureType.HARDWARE_KEY_INVALID,
       reason: error
     };
   }
 
-  if (isIssuerResponseError(error, Codes.CredentialIssuingNotSynchronous)) {
+  if (isIssuerResponseError(error, Codes.CredentialInvalidStatus)) {
     return {
-      type: CredentialIssuanceFailureType.ASYNC_ISSUANCE,
+      type: CredentialIssuanceFailureType.INVALID_STATUS,
       reason: error
     };
   }

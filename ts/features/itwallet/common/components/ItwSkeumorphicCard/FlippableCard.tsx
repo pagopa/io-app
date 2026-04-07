@@ -1,11 +1,8 @@
-import { ReactElement, useEffect, memo } from "react";
+import { ReactElement, memo } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
-import Animated, {
-  interpolate,
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming
-} from "react-native-reanimated";
+import { createCSSAnimatedComponent } from "react-native-reanimated";
+
+const CSSAnimatedView = createCSSAnimatedComponent(View);
 
 const DEFAULT_DURATION = 500;
 
@@ -25,48 +22,37 @@ const FlippableCard = ({
   BackComponent,
   containerStyle,
   duration = DEFAULT_DURATION,
-  isFlipped: _isFlipped
-}: FlippableCardProps) => {
-  const isFlipped = useSharedValue(_isFlipped);
-
-  useEffect(() => {
-    // eslint-disable-next-line functional/immutable-data
-    isFlipped.value = _isFlipped;
-  }, [isFlipped, _isFlipped]);
-
-  const regularCardAnimatedStyle = useAnimatedStyle(() => {
-    const spinValue = interpolate(Number(isFlipped.value), [0, 1], [0, 180]);
-    const rotateValue = withTiming(`${spinValue}deg`, { duration });
-
-    return {
-      transform: [{ rotateY: rotateValue }]
-    };
-  }, []);
-
-  const flippedCardAnimatedStyle = useAnimatedStyle(() => {
-    const spinValue = interpolate(Number(isFlipped.value), [0, 1], [180, 360]);
-    const rotateValue = withTiming(`${spinValue}deg`, { duration });
-
-    return {
-      transform: [{ rotateY: rotateValue }]
-    };
-  }, []);
-
-  return (
-    <View style={containerStyle}>
-      <Animated.View
-        style={[styles.card, styles.front, regularCardAnimatedStyle]}
-      >
-        {FrontComponent}
-      </Animated.View>
-      <Animated.View
-        style={[styles.card, styles.back, flippedCardAnimatedStyle]}
-      >
-        {BackComponent}
-      </Animated.View>
-    </View>
-  );
-};
+  isFlipped
+}: FlippableCardProps) => (
+  <View style={containerStyle}>
+    <CSSAnimatedView
+      style={[
+        styles.card,
+        styles.front,
+        {
+          transform: [{ rotateY: isFlipped ? "180deg" : "0deg" }],
+          transitionProperty: "transform",
+          transitionDuration: duration
+        }
+      ]}
+    >
+      {FrontComponent}
+    </CSSAnimatedView>
+    <CSSAnimatedView
+      style={[
+        styles.card,
+        styles.back,
+        {
+          transform: [{ rotateY: isFlipped ? "360deg" : "180deg" }],
+          transitionProperty: "transform",
+          transitionDuration: duration
+        }
+      ]}
+    >
+      {BackComponent}
+    </CSSAnimatedView>
+  </View>
+);
 
 const styles = StyleSheet.create({
   card: {
@@ -77,7 +63,8 @@ const styles = StyleSheet.create({
     right: 0
   },
   front: {
-    zIndex: 1
+    zIndex: 1,
+    backfaceVisibility: "hidden"
   },
   back: {
     backfaceVisibility: "hidden",

@@ -6,7 +6,7 @@ import { useIOSelector } from "../../../../store/hooks";
 import {
   trackItwOfflineAccessExpired,
   trackItwOfflineAccessExpiring
-} from "../../analytics";
+} from "../analytics";
 import {
   itwIsOfflineAccessLimitReached,
   itwShouldDisplayOfflineAccessLimitWarning

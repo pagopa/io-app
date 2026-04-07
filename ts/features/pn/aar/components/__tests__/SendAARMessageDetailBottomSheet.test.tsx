@@ -12,10 +12,8 @@ import {
   SendAARMessageDetailBottomSheetProps
 } from "../SendAARMessageDetailBottomSheet";
 import { SendUserType } from "../../../../pushNotifications/analytics";
-import * as ANALYTICS from "../../analytics";
 import * as REMOTE_CONFIG_SELECTORS from "../../../../../store/reducers/backendStatus/remoteConfig";
 import * as SELECTORS from "../../store/selectors";
-import * as URL_UTILS from "../../../../../utils/url";
 
 type DisplayingNotificationDataState = Extract<
   AARFlowState,
@@ -49,42 +47,31 @@ describe("BottomSheetContent", () => {
   const mockUrl = "https://example.com/test-url";
 
   sendUserTypes.forEach(sendUserType => {
-    it(`calls openWebUrl when link is pressed and trackSendAarNotificationClosureExit with proper parameters (user type ${sendUserType})`, () => {
-      const openWebUrlSpy = jest
-        .spyOn(URL_UTILS, "openWebUrl")
-        .mockImplementation(jest.fn());
-
+    const isDelegate = sendUserType === "mandatory";
+    it(`${
+      isDelegate
+        ? "doesn't render the website section"
+        : "renders the website section with the URL"
+    } and matches its snapshot when called with user type = ${sendUserType})`, () => {
       jest
         .spyOn(SELECTORS, "currentAARFlowData")
         .mockImplementation(() => stateWithMandateId);
       jest
         .spyOn(REMOTE_CONFIG_SELECTORS, "sendVisitTheWebsiteUrlSelector")
         .mockImplementation(() => mockUrl);
-      const spiedOnMockedTrackSendAarNotificationClosureExit = jest
-        .spyOn(ANALYTICS, "trackSendAarNotificationClosureExit")
-        .mockImplementation();
 
-      const { getByTestId } = renderComponent({
+      const { queryByText, toJSON } = renderComponent({
         ...defaultProps,
         sendUserType
       });
 
-      const linkComponent = getByTestId("link");
-      expect(openWebUrlSpy).toHaveBeenCalledTimes(0);
-      fireEvent.press(linkComponent);
-
-      expect(openWebUrlSpy).toHaveBeenCalledWith(mockUrl);
-      expect(openWebUrlSpy).toHaveBeenCalledTimes(1);
-
-      expect(
-        spiedOnMockedTrackSendAarNotificationClosureExit.mock.calls.length
-      ).toBe(1);
-      expect(
-        spiedOnMockedTrackSendAarNotificationClosureExit.mock.calls[0].length
-      ).toBe(1);
-      expect(
-        spiedOnMockedTrackSendAarNotificationClosureExit.mock.calls[0][0]
-      ).toBe(sendUserType);
+      const urlInSubtitle = queryByText(new RegExp(`\\(${mockUrl}\\)`));
+      if (isDelegate) {
+        expect(urlInSubtitle).toBeNull();
+      } else {
+        expect(urlInSubtitle).not.toBeNull();
+      }
+      expect(toJSON()).toMatchSnapshot();
     });
   });
 

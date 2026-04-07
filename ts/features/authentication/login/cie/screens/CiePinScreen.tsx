@@ -40,7 +40,6 @@ import {
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { trackHelpCenterCtaTapped } from "../../../../../utils/analytics";
 import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
@@ -105,7 +104,7 @@ const CiePinScreen = () => {
   );
 
   const doLoginSuccess = useCallback(
-    (token: SessionToken, idp: keyof IdpData) =>
+    (token: string, idp: keyof IdpData) =>
       dispatch(loginSuccess({ token, idp })),
     [dispatch]
   );

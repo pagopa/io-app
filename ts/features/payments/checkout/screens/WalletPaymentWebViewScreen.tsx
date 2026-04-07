@@ -4,12 +4,12 @@ import { Alert } from "react-native";
 import I18n from "i18next";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { useIOSelector } from "../../../../store/hooks";
-import WalletPaymentWebView from "../components/WalletPaymentWebView";
 import { walletPaymentWebViewPayloadSelector } from "../store/selectors";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
 import * as analytics from "../analytics";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+import PaymentWebView from "../../common/components/PaymentWebView";
 
 const WalletPaymentWebViewScreen = () => {
   const payload = useIOSelector(walletPaymentWebViewPayloadSelector);
@@ -83,7 +83,9 @@ const WalletPaymentWebViewScreen = () => {
   });
 
   return payload?.url ? (
-    <WalletPaymentWebView
+    <PaymentWebView<WalletPaymentOutcomeEnum>
+      cancelOutcome={WalletPaymentOutcomeEnum.IN_APP_BROWSER_CLOSED_BY_USER}
+      errorOutcome={WalletPaymentOutcomeEnum.GENERIC_ERROR}
       onError={payload.onError}
       onCancel={promptUserToClose}
       onSuccess={payload.onSuccess}

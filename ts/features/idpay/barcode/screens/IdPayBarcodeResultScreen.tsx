@@ -6,6 +6,7 @@ import {
   IOColors,
   IOText,
   IOVisualCostants,
+  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
@@ -14,8 +15,9 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useEffect, useState } from "react";
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { TransactionBarCodeResponse } from "../../../../../definitions/idpay/TransactionBarCodeResponse";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
@@ -154,6 +156,7 @@ const SuccessContent = ({
   });
 
   const [isBarcodeExpired, setIsBarcodeExpired] = useState(false);
+  const theme = useIOTheme();
 
   useEffect(() => {
     if (isBarcodeExpired) {
@@ -204,6 +207,7 @@ const SuccessContent = ({
         <Barcode format="CODE128" value={trx} />
         <View style={{ alignItems: "center" }}>
           <IOText
+            color={theme["textBody-default"]}
             font="FiraCode"
             size={h3FontSize}
             lineHeight={h3LineHeight}
@@ -261,7 +265,9 @@ const BarcodeExpiredContent = ({
 };
 
 const LoadingScreen = () => (
-  <SafeAreaView style={styles.loadingWrapper}>
+  /* TODO: We should use a `LoadingScreenContent` component, to avoid
+    duplicates of the loading screen throughout the app */
+  <SafeAreaView style={styles.loadingWrapper} testID="idpay-bar-code-loading">
     <LoadingIndicator />
     <VSpacer size={24} />
     <H3>{I18n.t("idpay.barCode.resultScreen.loading.body")}</H3>

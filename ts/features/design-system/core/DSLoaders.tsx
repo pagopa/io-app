@@ -144,7 +144,9 @@ export const DSLoaders = () => {
           <H4 color={theme["textHeading-default"]}>Loading Spinner</H4>
           <VStack space={16}>
             <SpinnerViewerBox name="LoadingSpinner · Size 24, primary color">
-              <LoadingSpinner color="blueIO-500" />
+              <LoadingSpinner
+                color={IOColors[theme["interactiveElem-default"]]}
+              />
             </SpinnerViewerBox>
             <SpinnerViewerBox
               name="LoadingSpinner · Size 24, white color"

@@ -1,6 +1,6 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import _ from "lodash";
+import _, { partition } from "lodash";
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
@@ -270,6 +270,22 @@ export const itwCredentialsEidExpirationSelector = createSelector(
 );
 
 /**
+ * Returns the eID credential issued at date, if present.
+ *
+ * @param state - The global state.
+ * @returns The eID credential issued at date.
+ */
+export const itwCredentialsEidIssuedAtSelector = createSelector(
+  itwCredentialsEidSelector,
+  eidOption =>
+    pipe(
+      eidOption,
+      O.map(eid => eid.jwt.issuedAt),
+      O.toUndefined
+    )
+);
+
+/**
  * Return a list of all credentials of the same type, mainly used for clean up operations.
  * @param key The type of credential
  * @returns A list of StoredCredential
@@ -282,3 +298,48 @@ export const itwCredentialsListByTypeSelector = (key: string) =>
       O.getOrElse<ReadonlyArray<StoredCredential>>(() => [])
     )
   );
+
+/**
+ * Returns whether the wallet has at least one credential that is expiring or expired.
+ *
+ * @param state - The global state.
+ * @returns Whether the wallet has at least one expiring or expired credential.
+ */
+export const itwHasExpiringCredentialsSelector = createSelector(
+  itwCredentialsSelector,
+  credentials => {
+    const statuses = Object.values(credentials).map(credential =>
+      getCredentialStatus(credential)
+    );
+    return statuses.some(
+      status => status === "jwtExpiring" || status === "jwtExpired"
+    );
+  }
+);
+
+/**
+ * Convenience selector that returns true if the user has a mDL credential stored.
+ *
+ * @param state - The global state.
+ * @returns Whether the user has a mDL credential.
+ */
+export const itwIsMdlPresentSelector = createSelector(
+  itwCredentialsByTypeSelector,
+  credentials => credentials.mDL !== undefined
+);
+
+/**
+ * Split a given list of credential types into obtained / notObtained
+ * obtained = present in wallet
+ */
+export const itwCredentialsByPresenceSelector = createSelector(
+  itwCredentialsByTypeSelector,
+  (_state: GlobalState, types: ReadonlyArray<string>) => types,
+  (credentialsByType, types) => {
+    const [obtained, notObtained] = partition(
+      types,
+      type => credentialsByType[type] !== undefined
+    );
+    return { obtained, notObtained };
+  }
+);

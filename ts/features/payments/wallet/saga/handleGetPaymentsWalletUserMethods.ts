@@ -9,6 +9,7 @@ import { WalletClient } from "../../common/api/client";
 import { mapWalletsToCards } from "../../common/utils";
 import { getPaymentsWalletUserMethods } from "../store/actions";
 import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
+import { handleRemoveMissingCards } from "../../../wallet/saga/handleRemoveMissingCards";
 
 export function* handleGetPaymentsWalletUserMethods(
   getWalletsByIdUser: WalletClient["getIOPaymentWalletsByIdUser"],
@@ -34,9 +35,14 @@ export function* handleGetPaymentsWalletUserMethods(
         },
         function* (res) {
           if (res.status === 200) {
-            yield* put(
-              walletAddCards(mapWalletsToCards(res.value?.wallets || []))
-            );
+            const wallets = res.value?.wallets || [];
+            const cards = mapWalletsToCards(wallets);
+            yield* put(walletAddCards(cards));
+
+            // Create set of keys from latest API response and remove stored cards
+            const newKeys = new Set(cards.map(card => card.key));
+            yield* handleRemoveMissingCards(newKeys, "payment");
+
             yield* put(getPaymentsWalletUserMethods.success(res.value));
           } else if (res.status === 404) {
             yield* put(getPaymentsWalletUserMethods.success({ wallets: [] }));

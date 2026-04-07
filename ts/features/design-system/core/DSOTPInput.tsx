@@ -3,9 +3,13 @@ import {
   ContentWrapper,
   H4,
   H5,
+  HStack,
   IOButton,
   IOVisualCostants,
+  IconButton,
   OTPInput,
+  RadioGroup,
+  RadioItem,
   VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
@@ -13,32 +17,70 @@ import { useHeaderHeight } from "@react-navigation/elements";
 
 import { RefObject, useCallback, useMemo, useRef, useState } from "react";
 import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import { useScreenEndMargin } from "../../../hooks/useScreenEndMargin";
+import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 
-const OTP_LENGTH = 8;
-const OTP_COMPARE = "12345678";
+const OTP_LENGTH_8 = 8;
+const OTP_COMPARE_8 = "12345678";
+const OTP_LENGTH_6 = 6;
+const OTP_COMPARE_6 = "123456";
 
 type WrapperProps = {
   secret?: boolean;
   validation?: boolean;
   autoFocus?: boolean;
+  otpLength: number;
+  otpCompare: string;
+};
+
+type OtpID = typeof OTP_LENGTH_6 | typeof OTP_LENGTH_8;
+
+const radioButtons: ReadonlyArray<RadioItem<OtpID>> = [
+  {
+    id: OTP_LENGTH_8,
+    value: `OTP length ${OTP_LENGTH_8}`
+  },
+  {
+    id: OTP_LENGTH_6,
+    value: `OTP length ${OTP_LENGTH_6}`
+  }
+];
+
+const otpConfigMap: Record<
+  OtpID,
+  Pick<WrapperProps, "otpCompare" | "otpLength">
+> = {
+  [OTP_LENGTH_8]: {
+    otpLength: OTP_LENGTH_8,
+    otpCompare: OTP_COMPARE_8
+  },
+  [OTP_LENGTH_6]: {
+    otpLength: OTP_LENGTH_6,
+    otpCompare: OTP_COMPARE_6
+  }
 };
 
 const OTPWrapper = ({
   secret = false,
   validation = false,
-  autoFocus = false
+  autoFocus = false,
+  otpLength,
+  otpCompare
 }: WrapperProps) => {
   const [value, setValue] = useState("");
-  const onValueChange = useCallback((v: string) => {
-    if (v.length <= OTP_LENGTH) {
-      setValue(v);
-    }
-  }, []);
+  const onValueChange = useCallback(
+    (v: string) => {
+      if (v.length <= otpLength) {
+        setValue(v);
+      }
+    },
+    [otpLength]
+  );
 
   const onValidate = useCallback(
-    (v: string) => !validation || v === OTP_COMPARE,
-    [validation]
+    (v: string) => !validation || v === otpCompare,
+    [validation, otpCompare]
   );
 
   return useMemo(
@@ -48,7 +90,7 @@ const OTPWrapper = ({
           value={value}
           accessibilityLabel={"OTP Input"}
           onValueChange={onValueChange}
-          length={OTP_LENGTH}
+          length={otpLength}
           secret={secret}
           onValidate={onValidate}
           errorMessage={"Wrong OTP"}
@@ -61,7 +103,7 @@ const OTPWrapper = ({
         />
       </VStack>
     ),
-    [value, onValueChange, secret, onValidate, autoFocus]
+    [value, onValueChange, secret, onValidate, autoFocus, otpLength]
   );
 };
 
@@ -87,6 +129,19 @@ const scrollVerticallyToView = (
  */
 export const DSOTPInput = () => {
   const theme = useIOTheme();
+  const [selectedItem, setSelectedItem] = useState(radioButtons[0].id);
+
+  const { present, dismiss, bottomSheet } = useIOBottomSheetModal({
+    title: "OTP settings",
+    component: (
+      <RadioGroup<OtpID>
+        type="radioListItem"
+        items={radioButtons}
+        selectedItem={selectedItem}
+        onPress={setSelectedItem}
+      />
+    )
+  });
 
   const scrollViewRef = useRef<ScrollView>(null);
   const autofocusableOTPViewRef = useRef<View>(null);
@@ -97,6 +152,18 @@ export const DSOTPInput = () => {
 
   const sectionTitleMargin = 16;
   const blockMargin = 40;
+
+  useFocusEffect(
+    // eslint-disable-next-line arrow-body-style
+    useCallback(() => {
+      return () => {
+        // Dismiss bottom-sheet when navigating out of this screen
+        dismiss();
+      };
+    }, [dismiss])
+  );
+
+  const otpConfig = otpConfigMap[selectedItem];
 
   return (
     <View style={{ flexGrow: 1 }}>
@@ -113,22 +180,32 @@ export const DSOTPInput = () => {
       >
         <ScrollView ref={scrollViewRef}>
           <ContentWrapper>
-            <H4
-              color={theme["textHeading-default"]}
-              style={{ marginVertical: IOVisualCostants.appMarginDefault }}
+            <HStack
+              style={{ justifyContent: "space-between", alignItems: "center" }}
             >
-              OTP Input
-            </H4>
+              <H4
+                color={theme["textHeading-default"]}
+                style={{ marginVertical: IOVisualCostants.appMarginDefault }}
+              >
+                OTP Input with length of {otpConfig.otpLength}
+              </H4>
+              <IconButton
+                color="neutral"
+                accessibilityLabel="open settings"
+                onPress={present}
+                icon="coggle"
+              />
+            </HStack>
 
             <VStack space={blockMargin}>
               <VStack space={sectionTitleMargin}>
                 <H5 color={theme["textHeading-default"]}>Default</H5>
-                <OTPWrapper />
+                <OTPWrapper {...otpConfig} />
               </VStack>
 
               <VStack space={sectionTitleMargin}>
                 <H5 color={theme["textHeading-default"]}>Secret</H5>
-                <OTPWrapper secret />
+                <OTPWrapper secret {...otpConfig} />
               </VStack>
 
               <VStack space={sectionTitleMargin}>
@@ -136,11 +213,10 @@ export const DSOTPInput = () => {
                   <H5 color={theme["textHeading-default"]}>
                     {"Validation + Secret"}
                   </H5>
-                  <Body>Correct OTP {`${OTP_COMPARE}`}</Body>
+                  <Body>Correct OTP {otpConfig.otpCompare}</Body>
                 </View>
-                <OTPWrapper secret validation />
+                <OTPWrapper secret validation {...otpConfig} />
               </VStack>
-
               <VStack space={sectionTitleMargin}>
                 <H5 color={theme["textHeading-default"]}>Autofocus</H5>
                 <IOButton
@@ -160,7 +236,7 @@ export const DSOTPInput = () => {
                 />
                 {showAutofocusableOTP && (
                   <View ref={autofocusableOTPViewRef}>
-                    <OTPWrapper autoFocus />
+                    <OTPWrapper autoFocus {...otpConfig} />
                   </View>
                 )}
               </VStack>
@@ -168,6 +244,7 @@ export const DSOTPInput = () => {
           </ContentWrapper>
         </ScrollView>
       </KeyboardAvoidingView>
+      {bottomSheet}
     </View>
   );
 };

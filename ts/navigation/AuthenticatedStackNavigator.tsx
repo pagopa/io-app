@@ -37,12 +37,15 @@ import { ItwStackNavigator } from "../features/itwallet/navigation/ItwStackNavig
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
 import { ItwRemoteStackNavigator } from "../features/itwallet/presentation/remote/navigation/ItwRemoteStackNavigator.tsx";
 import { ITW_REMOTE_ROUTES } from "../features/itwallet/presentation/remote/navigation/routes.ts";
+import { ItwProximityStackNavigator } from "../features/itwallet/presentation/proximity/navigation/ItwProximityStackNavigator";
+import { ITW_PROXIMITY_ROUTES } from "../features/itwallet/presentation/proximity/navigation/routes";
 import UnsupportedDeviceScreen from "../features/lollipop/screens/UnsupportedDeviceScreen";
 import CheckEmailNavigator from "../features/mailCheck/navigation/CheckEmailNavigator.tsx";
 import { MessagesStackNavigator } from "../features/messages/navigation/MessagesNavigator";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { MessagesSearchScreen } from "../features/messages/screens/MessagesSearchScreen";
-import { PageNotFound } from "../features/pageNotFound/screens/index.tsx";
+import OnboardingNavigator from "../features/onboarding/navigation/OnboardingNavigator.tsx";
+import { PageNotFound } from "../features/pageNotFound/screens";
 import { WalletBarcodeNavigator } from "../features/payments/barcode/navigation/navigator";
 import { PaymentsBarcodeRoutes } from "../features/payments/barcode/navigation/routes";
 import { PaymentsCheckoutNavigator } from "../features/payments/checkout/navigation/navigator";
@@ -54,6 +57,7 @@ import { PaymentsOnboardingRoutes } from "../features/payments/onboarding/naviga
 import { PaymentsReceiptNavigator } from "../features/payments/receipts/navigation/navigator";
 import { PaymentsReceiptRoutes } from "../features/payments/receipts/navigation/routes";
 import { NOTIFICATIONS_ROUTES } from "../features/pushNotifications/navigation/routes";
+import { PushNotificationEngagementScreen } from "../features/pushNotifications/screens/PushNotificationEngagementScreen.tsx";
 import { SystemNotificationPermissionsScreen } from "../features/pushNotifications/screens/SystemNotificationPermissionsScreen";
 import ServicesNavigator from "../features/services/common/navigation/navigator";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
@@ -69,8 +73,6 @@ import {
   isFciEnabledSelector
 } from "../store/reducers/backendStatus/remoteConfig";
 import { isGestureEnabled } from "../utils/navigation";
-import OnboardingNavigator from "../features/onboarding/navigation/OnboardingNavigator.tsx";
-import { PushNotificationEngagementScreen } from "../features/pushNotifications/screens/PushNotificationEngagementScreen.tsx";
 import { AppParamsList } from "./params/AppParamsList";
 import ROUTES from "./routes";
 import { MainTabNavigator } from "./TabNavigator";
@@ -240,7 +242,8 @@ const AuthenticatedStackNavigator = () => {
       <Stack.Group
         screenOptions={{
           headerShown: false,
-          presentation: "modal"
+          /* Avoid buggy modal behavior on Android */
+          presentation: Platform.OS === "ios" ? "modal" : "card"
         }}
       >
         <Stack.Screen
@@ -364,6 +367,15 @@ const AuthenticatedStackNavigator = () => {
         name={ITW_REMOTE_ROUTES.MAIN}
         component={ItwRemoteStackNavigator}
         options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
+      />
+      <Stack.Screen
+        name={ITW_PROXIMITY_ROUTES.MAIN}
+        component={ItwProximityStackNavigator}
+        options={{
+          ...TransitionPresets.ModalSlideFromBottomIOS,
+          gestureEnabled: isGestureEnabled,
+          ...hideHeaderOptions
+        }}
       />
     </Stack.Navigator>
   );

@@ -1,18 +1,35 @@
 import * as E from "fp-ts/lib/Either";
+import configureMockStore from "redux-mock-store";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 import { WalletStatusEnum } from "../../../../../../definitions/pagopa/walletv3/WalletStatus";
 import { Wallets } from "../../../../../../definitions/pagopa/walletv3/Wallets";
-import { getPaymentsWalletUserMethods } from "../../store/actions";
-import { handleGetPaymentsWalletUserMethods } from "../handleGetPaymentsWalletUserMethods";
-import { WalletCard } from "../../../../wallet/types";
-import { walletAddCards } from "../../../../wallet/store/actions/cards";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { getDateFromExpiryDate } from "../../../../../utils/dates";
 import { getGenericError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
-import { getDateFromExpiryDate } from "../../../../../utils/dates";
+import { walletAddCards } from "../../../../wallet/store/actions/cards";
+import { WalletCard } from "../../../../wallet/types";
+import { getPaymentsWalletUserMethods } from "../../store/actions";
+import { handleGetPaymentsWalletUserMethods } from "../handleGetPaymentsWalletUserMethods";
 
 describe("handleGetPaymentsWalletUserMethods", () => {
   const T_SESSION_TOKEN = "ABCD";
+
+  const globalState = appReducer(undefined, applicationChangeState("active"));
+  const mockStore = configureMockStore<GlobalState>();
+  const store: ReturnType<typeof mockStore> = mockStore({
+    ...globalState,
+    features: {
+      ...globalState.features,
+      wallet: {
+        ...globalState.features.wallet,
+        cards: {}
+      }
+    }
+  } as GlobalState);
 
   it(`should put ${getType(getPaymentsWalletUserMethods.success)} and ${getType(
     walletAddCards
@@ -66,6 +83,7 @@ describe("handleGetPaymentsWalletUserMethods", () => {
       .next(E.right({ status: 200, value: getWalletsByIdUserResponse }))
       .put(walletAddCards(cards))
       .next()
+      .next(store.getState())
       .put(getPaymentsWalletUserMethods.success(getWalletsByIdUserResponse))
       .next()
       .isDone();

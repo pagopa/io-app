@@ -1,7 +1,7 @@
 import { Route, useRoute } from "@react-navigation/core";
 
 import { FunctionComponent } from "react";
-import { SafeAreaView } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import WebviewComponent from "../../../../../components/WebviewComponent";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
@@ -37,7 +37,7 @@ const CgnMerchantLandingWebview: FunctionComponent<Props> = () => {
   });
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }} edges={["bottom"]}>
       <WebviewComponent
         source={{
           uri: landingPageUrl,

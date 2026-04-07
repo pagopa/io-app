@@ -69,8 +69,7 @@ export const WalletCardsCategoryContainer = ({
 const styles = StyleSheet.create({
   container: {
     display: "flex",
-    flexDirection: "column",
-    marginBottom: 16
+    flexDirection: "column"
   },
   listHeader: {
     marginHorizontal: 8

@@ -36,7 +36,8 @@ describe("index", () => {
         selected_psp_flag: "unique",
         psp_selected: "13",
         editing: "payment_method",
-        browser_type: "webview"
+        browser_type: "webview",
+        is_onboarded: true
       };
 
       trackPaymentOutcomeSuccess(paymentProps);
@@ -82,7 +83,8 @@ describe("index", () => {
         selected_psp_flag: "unique",
         psp_selected: "13",
         editing: "payment_method",
-        browser_type: "webview"
+        browser_type: "webview",
+        is_onboarded: true
       };
 
       trackPaymentOutcomeSuccess(paymentProps);

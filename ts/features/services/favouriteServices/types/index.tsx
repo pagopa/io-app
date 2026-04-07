@@ -1,4 +1,5 @@
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 
 type InstitutionType = {
   name: string;
@@ -6,7 +7,7 @@ type InstitutionType = {
 };
 
 export type ServiceType = {
-  id: string;
+  id: ServiceId;
   name: string;
   institution: InstitutionType;
 };
@@ -18,3 +19,8 @@ export type FavouriteServiceType = ServiceType & {
    */
   addedAt: number;
 };
+
+export type FavouriteServicesSortType =
+  | "addedAt_asc"
+  | "addedAt_desc"
+  | "name_asc";

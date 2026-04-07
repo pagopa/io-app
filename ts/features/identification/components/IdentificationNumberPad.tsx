@@ -100,7 +100,7 @@ export const IdentificationNumberPad = (
             onPress={() => {
               setValue(pin);
             }}
-            accessibilityLabel={"Inserisci il PIN predefinito per sviluppatori"}
+            accessibilityLabel={I18n.t("identification.insertDevPin")}
           />
         </View>
       )}

@@ -1,4 +1,5 @@
 import { fromPromise } from "xstate";
+import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
 import { Env } from "../../common/utils/environment";
@@ -16,11 +17,14 @@ export type UpgradeCredentialOutput = {
   credentials: ReadonlyArray<StoredCredential>;
 };
 
-export const createCredentialUpgradeActorsImplementation = (env: Env) => ({
+export const createCredentialUpgradeActorsImplementation = (
+  env: Env,
+  itwVersion: ItwVersion
+) => ({
   /**
    * Handles both upgrading and reissuing credentials depending on issuanceMode.
-   * - upgrade → performs credential upgrade (skipMdocIssuance = false, operationType = "reissuing")
-   * - reissuance → performs credential reissuing (skipMdocIssuance = true, operationType = "undefined")
+   * - upgrade → performs credential upgrade (skipMdocIssuance = false)
+   * - reissuance → performs credential reissuing (skipMdocIssuance = true)
    */
   upgradeCredential: fromPromise<
     UpgradeCredentialOutput,
@@ -32,6 +36,7 @@ export const createCredentialUpgradeActorsImplementation = (env: Env) => ({
     const { requestedCredential, issuerConf, clientId, codeVerifier } =
       await credentialIssuanceUtils.requestCredential({
         env,
+        itwVersion,
         credentialType: credential.credentialType,
         walletInstanceAttestation,
         // TODO [SIW-3091]: Update when the L3 PID reissuance flow is ready
@@ -40,16 +45,14 @@ export const createCredentialUpgradeActorsImplementation = (env: Env) => ({
 
     const result = await credentialIssuanceUtils.obtainCredential({
       env,
+      itwVersion,
       credentialType: credential.credentialType,
       walletInstanceAttestation,
       requestedCredential,
       issuerConf,
       clientId,
       codeVerifier,
-      pid,
-      // TODO [SIW-3039]: Pass undefined as operationType when issuanceMode is "reissuance",
-      // once the sync flow for mDL issuing is ready
-      operationType: "reissuing"
+      pid
     });
 
     return {

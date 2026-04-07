@@ -1,14 +1,14 @@
 import { createStore } from "redux";
+import { Platform } from "react-native";
 import { appReducer } from "../../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import { CieCardReaderScreenWrapper } from "../CieCardReaderScreenWrapper";
 
-jest.mock("react-native/Libraries/Utilities/Platform", () => ({
-  OS: "android",
-  select: (objs: { default: any }) => objs.default
-}));
+jest
+  .spyOn(Platform, "select")
+  .mockImplementation((specifics: any) => specifics.default);
 
 jest.mock("react-native/Libraries/EventEmitter/NativeEventEmitter");
 

@@ -10,14 +10,18 @@ import { checkCurrentSession } from "../../../authentication/common/store/action
 import {
   trackItWalletIDMethodSelected,
   trackItwDeactivated,
-  trackSaveCredentialSuccess,
-  updateITWStatusAndPIDProperties
+  trackItwIdAuthenticationCompleted,
+  trackItwIdVerifiedDocument,
+  trackSaveCredentialSuccess
 } from "../../analytics";
+import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
 import {
-  itwSetAuthLevel,
+  itwClearSimplifiedActivationRequirements,
   itwFreezeSimplifiedActivationRequirements,
-  itwClearSimplifiedActivationRequirements
+  itwSetAuthLevel,
+  itwSetCredentialUpgradeFailed
 } from "../../common/store/actions/preferences";
+import { itwIsPidReissuingSurveyHiddenSelector } from "../../common/store/selectors/preferences";
 import {
   itwCredentialsRemoveByType,
   itwCredentialsStore
@@ -32,11 +36,10 @@ import {
 } from "../../issuance/store/actions";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwLifecycleWalletReset } from "../../lifecycle/store/actions";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
-import { itwIsPidReissuingSurveyHiddenSelector } from "../../common/store/selectors/preferences";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
@@ -142,9 +145,16 @@ export const createEidIssuanceActionsImplementation = (
     });
   },
 
-  navigateToCredentialCatalog: () => {
+  navigateToCredentialCatalog: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     navigation.replace(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ONBOARDING
+      screen:
+        context.level === "l3"
+          ? ITW_ROUTES.L3_ONBOARDING
+          : context.level === "l2-fallback"
+          ? ITW_ROUTES.L2_ONBOARDING
+          : ITW_ROUTES.ONBOARDING
     });
   },
 
@@ -219,8 +229,15 @@ export const createEidIssuanceActionsImplementation = (
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.CIE_WARNING,
       params: {
-        type: event.warning
+        type: event.warning,
+        routeName: event.routeName
       }
+    });
+  },
+
+  navigateToUpgradeCredentialsScreen: () => {
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ISSUANCE.UPGRADE_CREDENTIALS
     });
   },
 
@@ -293,8 +310,7 @@ export const createEidIssuanceActionsImplementation = (
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     // Save the auth level in the preferences
-    const authLevel = context.level === "l3" ? "L3" : "L2";
-    store.dispatch(itwSetAuthLevel(authLevel));
+    store.dispatch(itwSetAuthLevel(context.identification?.level));
   },
 
   freezeSimplifiedActivationRequirements: () => {
@@ -303,6 +319,19 @@ export const createEidIssuanceActionsImplementation = (
 
   clearSimplifiedActivationRequirements: () => {
     store.dispatch(itwClearSimplifiedActivationRequirements());
+  },
+
+  storeCredentialUpgradeFailures: ({
+    event
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    assertEvent(event, "xstate.done.actor.credentialUpgradeMachine");
+    store.dispatch(
+      itwSetCredentialUpgradeFailed(
+        event.output.failedCredentials.map(
+          failedCredential => failedCredential.credentialType
+        )
+      )
+    );
   },
 
   loadPidIntoContext: assign<
@@ -319,15 +348,21 @@ export const createEidIssuanceActionsImplementation = (
   trackWalletInstanceCreation: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
-    trackSaveCredentialSuccess(
-      context.level === "l3" ? "ITW_PID" : "ITW_ID_V2"
-    );
-    updateITWStatusAndPIDProperties(store.getState());
+    const identificationMethod =
+      context.identification?.mode ??
+      // Simplified PID activation skips identification but still requires ITW_ID_method for analytics.
+      (context.level === "l3" ? "ciePin" : undefined);
+
+    trackSaveCredentialSuccess({
+      credential: context.level === "l3" ? "ITW_PID" : "ITW_ID_V2",
+      ITW_ID_method: identificationMethod,
+      credential_details: itwMixPanelCredentialDetailsSelector(store.getState())
+    });
   },
 
   trackWalletInstanceRevocation: () => {
     const isItwL3 = itwLifecycleIsITWalletValidSelector(store.getState());
-    trackItwDeactivated(store.getState(), isItwL3 ? "ITW_PID" : "ITW_ID_V2");
+    trackItwDeactivated(isItwL3 ? "ITW_PID" : "ITW_ID_V2");
   },
 
   trackIdentificationMethodSelected: ({
@@ -335,10 +370,39 @@ export const createEidIssuanceActionsImplementation = (
     event
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     assertEvent(event, "select-identification-mode");
+    if (context.level === "l3") {
+      return;
+    }
 
     trackItWalletIDMethodSelected({
       ITW_ID_method: event.mode,
-      itw_flow: context.level === "l3" ? "L3" : "L2"
+      itw_flow: "L2"
     });
+  },
+
+  // Track SPID+CIE first phase
+  trackItwIdAuthenticationCompleted: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    assert(context.identification, "identification context is undefined");
+    assert(
+      context.identification.mode !== "ciePin",
+      "identification mode can not be ciePin"
+    );
+
+    trackItwIdAuthenticationCompleted(context.identification.mode);
+  },
+
+  // Track SPID+CIE final phase
+  trackItwIdVerifiedDocument: ({
+    context
+  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    assert(context.identification, "identification context is undefined");
+    assert(
+      context.identification.mode !== "ciePin",
+      "identification mode can not be ciePin"
+    );
+
+    trackItwIdVerifiedDocument(context.identification.mode);
   }
 });

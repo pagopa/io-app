@@ -25,7 +25,7 @@ const PaymentsOnboardingSelectMethodScreen = () => {
 
   const { startOnboarding, isLoading, isPendingOnboarding } =
     useWalletOnboardingWebView({
-      onOnboardingOutcome: (outcome, walletId) => {
+      onOnboardingOutcome: ({ outcome, walletId }) => {
         navigation.replace(
           PaymentsOnboardingRoutes.PAYMENT_ONBOARDING_NAVIGATOR,
           {

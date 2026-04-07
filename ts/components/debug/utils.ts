@@ -61,3 +61,26 @@ export const truncateObjectStrings = <T extends TruncatableValue>(
 
   return value;
 };
+
+/**
+ * Custom replacer function for JSON.stringify to handle Error objects and truncate strings.
+ * If the value is an instance of Error, it returns an object with the error's name, message, and stack.
+ * For all other values, it applies string truncation if the value is a string, or returns the value as is.
+ * @param _key The key of the property being processed (not used in this function)
+ * @param value The value of the property being processed. Can be of any type.
+ * @returns An object with error details if the value is an Error, a truncated string if the value is a string,
+ * or the original value for all other types.
+ */
+export const debugInfoReplacer =
+  (options: { truncateStrings?: boolean } = {}) =>
+  (_key: any, value: any) => {
+    const { truncateStrings = false } = options;
+    if (value instanceof Error) {
+      return {
+        name: value.name,
+        message: value.message,
+        stack: value.stack
+      };
+    }
+    return truncateStrings ? truncateObjectStrings(value) : value;
+  };
