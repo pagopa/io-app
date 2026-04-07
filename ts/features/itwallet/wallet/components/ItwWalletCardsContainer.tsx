@@ -2,7 +2,7 @@ import { ListItemHeader, VSpacer, VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -101,19 +101,21 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
     if (isNewItwRenderable) {
       return (
         <>
-          <GuidedTour
-            groupId={ITW_TOUR_GROUP_ID}
-            index={ITW_TOUR_STEP_ID}
-            title={I18n.t("features.itWallet.tour.id.title")}
-            description={I18n.t("features.itWallet.tour.id.description")}
-            cutoutStyle={{ padding: 64, cornerRadius: 16 }}
-          >
-            <ItwWalletIdStatus
-              pidStatus={eidStatus}
-              pidExpiration={eidExpiration}
-              onPress={handleNavigateToItwId}
-            />
-          </GuidedTour>
+          <View style={styles.idWrapper}>
+            <GuidedTour
+              groupId={ITW_TOUR_GROUP_ID}
+              index={ITW_TOUR_STEP_ID}
+              title={I18n.t("features.itWallet.tour.id.title")}
+              description={I18n.t("features.itWallet.tour.id.description")}
+              cutoutStyle={{ cornerRadius: 16 }}
+            >
+              <ItwWalletIdStatus
+                pidStatus={eidStatus}
+                pidExpiration={eidExpiration}
+                onPress={handleNavigateToItwId}
+              />
+            </GuidedTour>
+          </View>
           <VSpacer size={16} />
         </>
       );
@@ -164,19 +166,30 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
         {/* Dummy view to add space in case there is another component */}
         <View />
       </VStack>
-      <GuidedTour
-        groupId={ITW_TOUR_GROUP_ID}
-        index={ITW_TOUR_STEP_CREDENTIALS}
-        title={I18n.t("features.itWallet.tour.credentials.title")}
-        description={I18n.t("features.itWallet.tour.credentials.description")}
-      >
-        <WalletCardsCategoryContainer
-          key={`cards_category_itw`}
-          testID={`itwWalletCardsContainerTestID`}
-          cards={cards}
-        />
-      </GuidedTour>
+      <View style={styles.cardsWrapper}>
+        <GuidedTour
+          groupId={ITW_TOUR_GROUP_ID}
+          index={ITW_TOUR_STEP_CREDENTIALS}
+          title={I18n.t("features.itWallet.tour.credentials.title")}
+          description={I18n.t("features.itWallet.tour.credentials.description")}
+        >
+          <WalletCardsCategoryContainer
+            key={`cards_category_itw`}
+            testID={`itwWalletCardsContainerTestID`}
+            cards={cards}
+          />
+        </GuidedTour>
+      </View>
       {eidInfoBottomSheet.bottomSheet}
     </View>
   );
+});
+
+const styles = StyleSheet.create({
+  idWrapper: {
+    marginHorizontal: -8
+  },
+  cardsWrapper: {
+    marginHorizontal: -8
+  }
 });

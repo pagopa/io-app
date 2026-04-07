@@ -37,7 +37,6 @@ export const WalletCardsCategoryContainer = ({
     itemLayoutAnimation={itemLayoutAnimation}
     layout={LinearTransition.duration(200)}
     contentContainerStyle={styles.container}
-    style={styles.cardList}
     entering={FadeInDown.duration(150)}
     exiting={FadeOutDown.duration(150)}
   />
@@ -47,8 +46,5 @@ const styles = StyleSheet.create({
   container: {
     display: "flex",
     flexDirection: "column"
-  },
-  cardList: {
-    marginHorizontal: -8
   }
 });
