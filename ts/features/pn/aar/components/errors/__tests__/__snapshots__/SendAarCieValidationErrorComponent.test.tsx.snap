@@ -522,27 +522,7 @@ exports[`SendAarCieValidationErrors CieExpiredComponent should match snapshot 1`
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Consulta le altre modalità per accedere a questa notifica SEND.
                             </Text>
                             <View
@@ -1613,27 +1593,7 @@ exports[`SendAarCieValidationErrors CieValidationExpiredTtlComponent should matc
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Per motivi di sicurezza, hai 5 minuti di tempo per la lettura della CIE. Tienila a portata di mano prima di iniziare.
                             </Text>
                             <View
@@ -2387,27 +2347,7 @@ exports[`SendAarCieValidationErrors GenericCieValidationErrorComponent should ma
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Attendi qualche minuto e riprova.
                             </Text>
                             <View
@@ -3405,27 +3345,7 @@ exports[`SendAarCieValidationErrors UnrelatedCieComponent should match snapshot 
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Per consultare una notifica SEND per conto di un’altra persona devi utilizzare la sua Carta di Identità Elettronica.
                             </Text>
                             <View

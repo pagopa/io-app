@@ -519,27 +519,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 >
                                   This is a title
                                 </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 24,
-                                      },
-                                      {
-                                        "textAlign": "center",
-                                      },
-                                    ]
-                                  }
-                                >
+                                <Text>
                                   This is a description
                                 </Text>
                               </View>
@@ -1703,27 +1683,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 >
                                   This is a title
                                 </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 24,
-                                      },
-                                      {
-                                        "textAlign": "center",
-                                      },
-                                    ]
-                                  }
-                                >
+                                <Text>
                                   This is a description
                                 </Text>
                               </View>
@@ -3350,27 +3310,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 >
                                   This is a title
                                 </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 24,
-                                      },
-                                      {
-                                        "textAlign": "center",
-                                      },
-                                    ]
-                                  }
-                                >
+                                <Text>
                                   This is a description
                                 </Text>
                               </View>
@@ -4771,27 +4711,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 >
                                   This is a title
                                 </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 24,
-                                      },
-                                      {
-                                        "textAlign": "center",
-                                      },
-                                    ]
-                                  }
-                                >
+                                <Text>
                                   This is a description
                                 </Text>
                               </View>
@@ -5726,27 +5646,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 >
                                   This is a title
                                 </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 24,
-                                      },
-                                      {
-                                        "textAlign": "center",
-                                      },
-                                    ]
-                                  }
-                                >
+                                <Text>
                                   This is a description
                                 </Text>
                               </View>
@@ -7144,27 +7044,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
                                 >
                                   This is a title
                                 </Text>
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 24,
-                                      },
-                                      {
-                                        "textAlign": "center",
-                                      },
-                                    ]
-                                  }
-                                >
+                                <Text>
                                   This is a description
                                 </Text>
                               </View>

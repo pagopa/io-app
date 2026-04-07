@@ -7352,27 +7352,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Non è stato possibile recuperare i dettagli del tuo messaggio. Riprova per favore
                             </Text>
                           </View>
@@ -8248,27 +8228,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Non è stato possibile recuperare i dettagli del tuo messaggio. Riprova per favore
                             </Text>
                           </View>
@@ -9144,27 +9104,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Non è stato possibile recuperare i dettagli del tuo messaggio. Riprova per favore
                             </Text>
                           </View>
@@ -10040,27 +9980,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Non è stato possibile recuperare i dettagli del tuo messaggio. Riprova per favore
                             </Text>
                           </View>
@@ -10936,27 +10856,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Non è stato possibile recuperare i dettagli del tuo messaggio. Riprova per favore
                             </Text>
                           </View>
@@ -11832,27 +11732,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Non è stato possibile recuperare i dettagli del tuo messaggio. Riprova per favore
                             </Text>
                           </View>
@@ -12579,27 +12459,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Non è stato possibile recuperare i dettagli del tuo messaggio. Riprova per favore
                             </Text>
                           </View>
@@ -13326,27 +13186,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Non è stato possibile recuperare i dettagli del tuo messaggio. Riprova per favore
                             </Text>
                           </View>
@@ -14073,27 +13913,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Non è stato possibile recuperare i dettagli del tuo messaggio. Riprova per favore
                             </Text>
                           </View>

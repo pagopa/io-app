@@ -893,27 +893,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: pubblico, sicuro e gratuito.
                             </Text>
                             <View
@@ -1976,27 +1956,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Porta i tuoi documenti digitali verso funzionalità evolute con l'unico portafoglio digitale di Stato: pubblico, sicuro e gratuito.
                             </Text>
                             <View
@@ -2986,27 +2946,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Puoi gestire i tuoi documenti digitali nel Portafoglio.
                             </Text>
                             <View
@@ -4358,27 +4298,7 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Puoi gestire i tuoi documenti digitali nel Portafoglio.
                             </Text>
                             <View
