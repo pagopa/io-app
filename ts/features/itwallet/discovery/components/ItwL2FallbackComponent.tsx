@@ -14,6 +14,11 @@ import { itwDisableItwActivation } from "../../common/store/actions/preferences"
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import { ITW_ROUTES } from "../../navigation/routes";
+import {
+  trackItwFallbackL2Flow,
+  trackItwFallbackL2FlowExit,
+  trackItwFallbackL2FlowStart
+} from "../../identification/analytics";
 
 type Props = {
   credentialType?: string;
@@ -30,11 +35,18 @@ export const ItwL2FallbackComponent = ({ credentialType }: Props) => {
 
   useFocusEffect(
     useCallback(() => {
+      trackItwFallbackL2Flow({
+        fallback_reason: "nfc_not_supported"
+      });
       dispatch(itwDisableItwActivation());
     }, [dispatch])
   );
 
   const handleDocIOIssuing = () => {
+    trackItwFallbackL2FlowStart({
+      fallback_reason: "nfc_not_supported"
+    });
+
     if (isWalletActive && credentialType) {
       machineRef.send({
         type: "select-credential",
@@ -51,21 +63,23 @@ export const ItwL2FallbackComponent = ({ credentialType }: Props) => {
     });
   };
 
-  const navigateToWalletHomeScreen = useCallback(
-    () =>
-      navigation.reset({
-        index: 1,
-        routes: [
-          {
-            name: ROUTES.MAIN,
-            params: {
-              screen: ROUTES.WALLET_HOME
-            }
+  const navigateToWalletHomeScreen = useCallback(() => {
+    trackItwFallbackL2FlowExit({
+      fallback_reason: "nfc_not_supported"
+    });
+
+    navigation.reset({
+      index: 1,
+      routes: [
+        {
+          name: ROUTES.MAIN,
+          params: {
+            screen: ROUTES.WALLET_HOME
           }
-        ]
-      }),
-    [navigation]
-  );
+        }
+      ]
+    });
+  }, [navigation]);
 
   const action: OperationResultScreenContentProps["action"] = {
     label: I18n.t(
