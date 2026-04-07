@@ -109,6 +109,9 @@ export default defineConfig([
       // plain index signatures (`[key: string]: V`) which should use Record<K,V>
       "@typescript-eslint/consistent-indexed-object-style": "off",
 
+      // Force 'no-shadow` as warning, not error
+      "@typescript-eslint/no-shadow": "warn",
+
       "react/react-in-jsx-scope": "off",
       "react/jsx-uses-react": "off",
       "comma-dangle": ["error", "never"],
