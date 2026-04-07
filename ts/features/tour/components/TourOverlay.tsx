@@ -62,7 +62,6 @@ import { TourTooltip } from "./TourTooltip";
 
 const OVERLAY_COLOR = "rgba(0,0,0,0.5)";
 const CUTOUT_BORDER_RADIUS = 8;
-const CUTOUT_PADDING = 0;
 const ANIMATION_DURATION = 350;
 const STEP_EASING = Easing.inOut(Easing.quad);
 
@@ -91,6 +90,7 @@ export const TourOverlay = () => {
   const {
     getMeasurement,
     getConfig,
+    getCutoutStyle,
     isRegionItem,
     getScrollRef,
     cutoutX,
@@ -124,6 +124,7 @@ export const TourOverlay = () => {
 
   const opacity = useSharedValue(0);
   const cutoutOpacity = useSharedValue(1);
+  const cutoutR = useSharedValue(CUTOUT_BORDER_RADIUS);
 
   // When tour becomes active, mount the overlay and reset state
   useEffect(() => {
@@ -217,6 +218,7 @@ export const TourOverlay = () => {
     (
       padded: TourItemMeasurement,
       config: { title: string; description: string } | undefined,
+      cornerRadius: number,
       onCommit: () => void,
       didScroll: boolean
     ) => {
@@ -231,6 +233,7 @@ export const TourOverlay = () => {
         cutoutY.value = padded.y;
         cutoutW.value = padded.width;
         cutoutH.value = padded.height;
+        cutoutR.value = cornerRadius;
       };
 
       if (isFirstMeasurement.current) {
@@ -270,6 +273,7 @@ export const TourOverlay = () => {
             cutoutY.value = padded.y;
             cutoutW.value = padded.width;
             cutoutH.value = padded.height;
+            cutoutR.value = cornerRadius;
             scheduleOnRN(updateStep);
             cutoutOpacity.value = withTiming(
               1,
@@ -285,7 +289,16 @@ export const TourOverlay = () => {
         );
       }
     },
-    [cutoutX, cutoutY, cutoutW, cutoutH, cutoutOpacity, opacity, isTracking]
+    [
+      cutoutX,
+      cutoutY,
+      cutoutW,
+      cutoutH,
+      cutoutR,
+      cutoutOpacity,
+      opacity,
+      isTracking
+    ]
   );
 
   /**
@@ -351,21 +364,28 @@ export const TourOverlay = () => {
       const ox = overlayOffset?.x ?? 0;
       const oy = overlayOffset?.y ?? 0;
 
+      const { cornerRadius: itemCornerRadius } = getCutoutStyle(
+        groupId,
+        targetItem.index
+      );
+      const cornerRadius = itemCornerRadius ?? CUTOUT_BORDER_RADIUS;
+
       const padded: TourItemMeasurement = {
-        x: m.x - ox - CUTOUT_PADDING,
-        y: m.y - oy - CUTOUT_PADDING,
-        width: m.width + CUTOUT_PADDING * 2,
-        height: m.height + CUTOUT_PADDING * 2
+        x: m.x - ox,
+        y: m.y - oy,
+        width: m.width,
+        height: m.height
       };
 
       const config = getConfig(groupId, targetItem.index);
-      applyCutout(padded, config, onCommit, didScroll);
+      applyCutout(padded, config, cornerRadius, onCommit, didScroll);
     },
     [
       groupId,
       items,
       getMeasurement,
       getConfig,
+      getCutoutStyle,
       isRegionItem,
       scrollIntoViewIfNeeded,
       applyCutout,
@@ -446,7 +466,7 @@ export const TourOverlay = () => {
               y={cutoutY}
               width={cutoutW}
               height={cutoutH}
-              r={CUTOUT_BORDER_RADIUS}
+              r={cutoutR}
               color="black"
             />
           </Group>

@@ -106,6 +106,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
             index={ITW_TOUR_STEP_ID}
             title={I18n.t("features.itWallet.tour.id.title")}
             description={I18n.t("features.itWallet.tour.id.description")}
+            cutoutStyle={{ padding: 64, cornerRadius: 16 }}
           >
             <ItwWalletIdStatus
               pidStatus={eidStatus}

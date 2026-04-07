@@ -43,7 +43,8 @@ export const useItwGuidedTour = () => {
     index: ITW_TOUR_STEP_ADD_BUTTON,
     title: I18n.t("features.itWallet.tour.addCredential.title"),
     description: I18n.t("features.itWallet.tour.addCredential.description"),
-    region: headerRegion
+    region: headerRegion,
+    cutoutStyle: { cornerRadius: 0 }
   });
 
   /**
