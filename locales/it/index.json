@@ -1163,7 +1163,7 @@
       "cardGeneric": "Carta",
       "a11y": {
         "credit": {
-          "hpan": "{{circuit}} che termina con {{spacedHpan}}"
+          "hpan": "Carta {{circuit}} che termina con {{spacedHpan}}"
         },
         "paypal": {
           "owner": "account: {{email}}"
