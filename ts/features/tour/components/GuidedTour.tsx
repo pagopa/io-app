@@ -14,7 +14,7 @@ import {
 import { TourCutoutStyle } from "../types";
 import { useTourContext } from "./TourProvider";
 
-type GuidedTourProps = {
+export type GuidedTourProps = {
   groupId: string;
   index: number;
   title: string;
