@@ -22,7 +22,7 @@ import {
   trackItwProximityBluetoothBlock,
   trackItwProximityBluetoothBlockAction
 } from "../analytics";
-import { itwCredentialsByTypeSelector } from "../store/selectors";
+import { itwPresentableCredentialsByDocTypeSelector } from "../store/selectors";
 import {
   generateAcceptedFields,
   getDocuments,
@@ -161,7 +161,9 @@ export const createProximityActorsImplementation = (
           const parsedRequest = ISO18013_5.parseVerifierRequest(
             JSON.parse(data)
           );
-          const credentials = itwCredentialsByTypeSelector(store.getState());
+          const credentials = itwPresentableCredentialsByDocTypeSelector(
+            store.getState()
+          );
           const proximityDetails = getProximityDetails(
             parsedRequest.request,
             credentials
@@ -214,7 +216,9 @@ export const createProximityActorsImplementation = (
     const { verifierRequest } = input;
     assert(verifierRequest, "Missing required verifierRequest");
 
-    const credentials = itwCredentialsByTypeSelector(store.getState());
+    const credentials = itwPresentableCredentialsByDocTypeSelector(
+      store.getState()
+    );
     const wiaMdoc = itwWalletInstanceAttestationSelector(store.getState())?.[
       CredentialFormat.MDOC
     ];

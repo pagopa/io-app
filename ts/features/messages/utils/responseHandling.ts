@@ -1,6 +1,5 @@
 import { IResponseType } from "@pagopa/ts-commons/lib/requests";
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import { ValidationError } from "io-ts";
 
 import { Action } from "../../../store/actions/types";
@@ -13,12 +12,10 @@ export type ResponseType<T> =
       undefined | { title?: string }
     >;
 
-const checkIsError = (e: Array<ValidationError> | Error): e is Error =>
-  e instanceof Error;
 /**
  * Discern between Either.Right/Left, and status codes.
  * Will call onSuccess if and only if response is _Right with status 200_.
- * Takes care of managing status 401 via sessionExpired action.
+ * Returns undefined for status 401 (session expired, handled upstream).
  *
  * @param response
  * @param onSuccess
@@ -29,31 +26,27 @@ export function handleResponse<T>(
   onSuccess: (payload: T) => Action,
   onFailure: (e: Error) => Action
 ): Action | undefined {
-  return pipe(
-    response,
-    E.fromNullable(new Error("Response is undefined")),
-    E.flattenW,
-    E.fold(
-      error =>
-        onFailure(
-          checkIsError(error) ? error : new Error(readablePrivacyReport(error))
-        ),
-      data => {
-        if (data.status === 200) {
-          return onSuccess(data.value);
-        }
+  // This check has been kept for retro-compatibility,
+  // even if typescript suggests that 'response' is always defined
+  if (!response) {
+    return onFailure(new Error("Response is undefined"));
+  }
 
-        if (data.status === 401) {
-          return undefined;
-        }
+  if (E.isLeft(response)) {
+    return onFailure(new Error(readablePrivacyReport(response.left)));
+  }
 
-        if (data.status === 500) {
-          // TODO: provide status code along with message in error
-          //  see https://www.pivotaltracker.com/story/show/170819193
-          return onFailure(new Error(data.value?.title ?? "UNKNOWN"));
-        }
-        return onFailure(new Error("UNKNOWN"));
-      }
-    )
+  const data = response.right;
+
+  if (data.status === 200) {
+    return onSuccess(data.value);
+  }
+
+  if (data.status === 401) {
+    return undefined;
+  }
+
+  return onFailure(
+    new Error(`Response status code ${data.status} ${data.value?.title}`)
   );
 }

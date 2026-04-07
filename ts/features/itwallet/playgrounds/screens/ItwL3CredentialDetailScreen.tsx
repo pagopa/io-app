@@ -1,10 +1,9 @@
-import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList.ts";
 import {
   CredentialL3Key,
   ItwStoredCredentialsMocks
 } from "../../common/utils/itwMocksUtils";
 import { ItwPresentationCredentialDetail } from "../../presentation/details/screens/ItwPresentationCredentialDetailScreen";
-import { useItwPresentQRCode } from "../../presentation/proximity/hooks/useItwPresentQRCode.tsx";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList.ts";
 import { ItwPlaygroundParamsList } from "../navigation/ItwPlaygroundParamsList.ts";
 
 export type ItwL3CredentialDetailScreenNavigationParams = {
@@ -18,14 +17,7 @@ type ScreenProps = IOStackNavigationRouteProps<
 
 export const ItwL3CredentialDetailScreen = (params: ScreenProps) => {
   const { credentialType } = params.route.params;
-  const { bottomSheet } = useItwPresentQRCode();
-
   const credential = ItwStoredCredentialsMocks.L3[credentialType];
 
-  return (
-    <>
-      <ItwPresentationCredentialDetail credential={credential} />
-      {bottomSheet}
-    </>
-  );
+  return <ItwPresentationCredentialDetail credential={credential} />;
 };

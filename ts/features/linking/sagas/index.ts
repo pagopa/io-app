@@ -10,10 +10,12 @@ import { isSendAARLink } from "../../pn/aar/utils/deepLinking";
 import { walletUpdate } from "../../wallet/store/actions";
 import { clearLinkingUrl } from "../actions";
 import { storedLinkingUrlSelector } from "../reducers";
+import { trackIOOpenedFromUniversalAppLink } from "../analytics";
 
 export function* handleStoredLinkingUrlIfNeeded() {
   const storedLinkingUrl = yield* select(storedLinkingUrlSelector);
   if (storedLinkingUrl !== undefined) {
+    trackIOOpenedFromUniversalAppLink(storedLinkingUrl);
     const shouldNavigateToAAR = yield* select(isSendAARLink, storedLinkingUrl);
     if (shouldNavigateToAAR) {
       yield* put(clearLinkingUrl());

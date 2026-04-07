@@ -6,10 +6,14 @@ import Animated, { LinearTransition } from "react-native-reanimated";
 
 import { useDebugInfo } from "../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../store/hooks";
-import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
 import { ItwEnvironmentAlert } from "../../itwallet/common/components/ItwEnvironmentAlert";
+import { ItwL2EngagementBanner } from "../../itwallet/common/components/ItwL2EngagementBanner";
 import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
-import { itwShouldRenderWalletDiscoveryBannerSelector } from "../../itwallet/common/store/selectors";
+import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
+import {
+  itwShouldRenderL2EngagementBannerForInactiveWalletSelector,
+  itwShouldRenderWalletDiscoveryBannerSelector
+} from "../../itwallet/common/store/selectors";
 import { ItwDiscoveryBanner } from "../../itwallet/discovery/components/ItwDiscoveryBanner";
 import { ItwWalletCardsContainer } from "../../itwallet/wallet/components/ItwWalletCardsContainer";
 import { useItwWalletInstanceRevocationAlert } from "../../itwallet/walletInstance/hook/useItwWalletInstanceRevocationAlert";
@@ -43,6 +47,9 @@ const WalletCardsContainer = () => {
   const shouldRenderItwDiscoveryBanner = useIOSelector(
     itwShouldRenderWalletDiscoveryBannerSelector
   );
+  const shouldRenderL2EngagementBanner = useIOSelector(
+    itwShouldRenderL2EngagementBannerForInactiveWalletSelector
+  );
 
   useItwWalletInstanceRevocationAlert();
 
@@ -56,6 +63,7 @@ const WalletCardsContainer = () => {
     }
     return (
       <>
+        {shouldRenderL2EngagementBanner && <ItwL2EngagementBanner />}
         {shouldRenderItwDiscoveryBanner && <ItwDiscoveryBanner />}
         <View style={styles.content} testID="walletCardsContainerTestID">
           {shouldRenderItwCardsContainer && <ItwWalletCardsContainer />}
@@ -67,7 +75,8 @@ const WalletCardsContainer = () => {
     shouldRenderLoadingState,
     shouldRenderEmptyState,
     shouldRenderItwCardsContainer,
-    shouldRenderItwDiscoveryBanner
+    shouldRenderItwDiscoveryBanner,
+    shouldRenderL2EngagementBanner
   ]);
 
   return (

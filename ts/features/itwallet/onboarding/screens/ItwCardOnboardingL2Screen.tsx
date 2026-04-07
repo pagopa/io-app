@@ -54,7 +54,7 @@ const ItwL2CredentialOnboardingSection = () => {
         <AsyncCredentialsCatalogue>
           <ItwOnboardingModuleCredentialsList
             credentialTypesToDisplay={notObtained}
-            isRestrictedMode
+            isL2Credential
           />
         </AsyncCredentialsCatalogue>
         <Divider />

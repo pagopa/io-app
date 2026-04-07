@@ -1,6 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { ComponentType, memo } from "react";
-
 import { useIOSelector } from "../../../store/hooks";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { ItwGenericErrorContent } from "../common/components/ItwGenericErrorContent";
@@ -46,8 +45,6 @@ import {
   ItwEidIssuanceMachineContext,
   ItwEidIssuanceMachineProvider
 } from "../machine/eid/provider";
-import { ItwCardOnboardingL2Screen } from "../onboarding/screens/ItwCardOnboardingL2Screen.tsx";
-import { ItwCardOnboardingL3Screen } from "../onboarding/screens/ItwCardOnboardingL3Screen.tsx";
 import { WalletCardOnboardingScreen } from "../onboarding/screens/WalletCardOnboardingScreen";
 import { ItwL3CredentialDetailScreen } from "../playgrounds/screens/ItwL3CredentialDetailScreen.tsx";
 import ItwPlayground from "../playgrounds/screens/ItwPlayground.tsx";
@@ -57,18 +54,11 @@ import { ItwPresentationCredentialDetailScreen } from "../presentation/details/s
 import { ItwPresentationCredentialFiscalCodeModal } from "../presentation/details/screens/ItwPresentationCredentialFiscalCodeModal";
 import { ItwPresentationEidVerificationExpiredScreen } from "../presentation/details/screens/ItwPresentationEidVerificationExpiredScreen";
 import { ItwPresentationPidDetailScreen } from "../presentation/details/screens/ItwPresentationPidDetailScreen.tsx";
-import {
-  ItwProximityMachineContext,
-  ItwProximityMachineProvider
-} from "../presentation/proximity/machine/provider.tsx";
-import { ItwActivateBluetoothScreen } from "../presentation/proximity/screens/ItwActivateBluetoothScreen.tsx";
-import { ItwGrantPermissionsScreen } from "../presentation/proximity/screens/ItwGrantPermissionsScreen.tsx";
-import { ItwProximityClaimsDisclosureScreen } from "../presentation/proximity/screens/ItwProximityClaimsDisclosureScreen.tsx";
-import { ItwProximityFailureScreen } from "../presentation/proximity/screens/ItwProximityFailureScreen.tsx";
-import { ItwProximitySendDocumentsResponseScreen } from "../presentation/proximity/screens/ItwProximitySendDocumentsResponseScreen.tsx";
 import { ItwSettingsScreen } from "../settings/screens/ItwSettingsScreen.tsx";
 import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwOfflineWalletScreen } from "../wallet/screens/ItwOfflineWalletScreen";
+import { ItwCardOnboardingL3Screen } from "../onboarding/screens/ItwCardOnboardingL3Screen.tsx";
+import { ItwCardOnboardingL2Screen } from "../onboarding/screens/ItwCardOnboardingL2Screen.tsx";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -79,9 +69,7 @@ const hiddenHeader = { headerShown: false };
 export const ItwStackNavigator = () => (
   <ItwEidIssuanceMachineProvider>
     <ItwCredentialIssuanceMachineProvider>
-      <ItwProximityMachineProvider>
-        <InnerNavigator />
-      </ItwProximityMachineProvider>
+      <InnerNavigator />
     </ItwCredentialIssuanceMachineProvider>
   </ItwEidIssuanceMachineProvider>
 );
@@ -90,11 +78,11 @@ const InnerNavigator = memo(() => {
   const eidIssuanceMachineRef = ItwEidIssuanceMachineContext.useActorRef();
   const credentialIssuanceMachineRef =
     ItwCredentialIssuanceMachineContext.useActorRef();
-  const proximityMachineRef = ItwProximityMachineContext.useActorRef();
 
   return (
     <Stack.Navigator
       initialRouteName={ITW_ROUTES.OFFLINE.WALLET}
+      screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
       screenListeners={{
         beforeRemove: () => {
           // Read more on https://reactnavigation.org/docs/preventing-going-back/
@@ -102,26 +90,24 @@ const InnerNavigator = memo(() => {
           // Since the back event is accepted only by specific states, we can safely send a back event to each machine
           eidIssuanceMachineRef.send({ type: "back" });
           credentialIssuanceMachineRef.send({ type: "back" });
-          proximityMachineRef.send({ type: "back" });
         }
       }}
-      screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
     >
       <Stack.Screen
-        component={WalletCardOnboardingScreen}
         name={ITW_ROUTES.ONBOARDING}
+        component={WalletCardOnboardingScreen}
       />
       <Stack.Screen
-        component={ItwCardOnboardingL3Screen}
         name={ITW_ROUTES.L3_ONBOARDING}
+        component={ItwCardOnboardingL3Screen}
       />
       <Stack.Screen
-        component={ItwCardOnboardingL2Screen}
         name={ITW_ROUTES.L2_ONBOARDING}
+        component={ItwCardOnboardingL2Screen}
       />
       <Stack.Screen
-        component={ItwOfflineWalletScreen}
         name={ITW_ROUTES.OFFLINE.WALLET}
+        component={ItwOfflineWalletScreen}
         options={{
           gestureEnabled: isGestureEnabled,
           headerShown: false
@@ -129,243 +115,220 @@ const InnerNavigator = memo(() => {
       />
       {/* Landing screens from deep links */}
       <Stack.Screen
-        component={ItwDiscoveryLandingScreen}
         name={ITW_ROUTES.LANDING.DISCOVERY}
+        component={ItwDiscoveryLandingScreen}
         options={hiddenHeader}
       />
       <Stack.Screen
-        component={ItwIssuanceCredentialLandingScreen}
         name={ITW_ROUTES.LANDING.CREDENTIAL_ISSUANCE}
+        component={ItwIssuanceCredentialLandingScreen}
         options={hiddenHeader}
       />
       <Stack.Screen
-        component={withItwEnabled(ItwIssuanceCredentialAsyncContinuationScreen)}
         name={ITW_ROUTES.LANDING.CREDENTIAL_ASYNC_FLOW_CONTINUATION}
+        component={withItwEnabled(ItwIssuanceCredentialAsyncContinuationScreen)}
         options={hiddenHeader}
       />
       <Stack.Screen
-        component={withItwEnabled(ItwIssuanceEidReissuanceLandingScreen)}
         name={ITW_ROUTES.LANDING.EID_REISSUANCE}
+        component={withItwEnabled(ItwIssuanceEidReissuanceLandingScreen)}
         options={hiddenHeader}
       />
       {/* DISCOVERY */}
       <Stack.Screen
-        component={withItwEnabled(ItwDiscoveryInfoScreen)}
         name={ITW_ROUTES.DISCOVERY.INFO}
+        component={withItwEnabled(ItwDiscoveryInfoScreen)}
         options={({ route }) => ({
           ...hiddenHeader,
           animationEnabled: route.params?.animationEnabled
         })}
       />
       <Stack.Screen
-        component={ItwIpzsPrivacyScreen}
         name={ITW_ROUTES.DISCOVERY.IPZS_PRIVACY}
+        component={ItwIpzsPrivacyScreen}
       />
       <Stack.Screen
-        component={withItwEnabled(ItwAlreadyActiveScreen)}
         name={ITW_ROUTES.DISCOVERY.ALREADY_ACTIVE_SCREEN}
+        component={withItwEnabled(ItwAlreadyActiveScreen)}
         options={{ ...hiddenHeader, animationEnabled: false }}
       />
       {/* IDENTIFICATION */}
       <Stack.Screen
-        component={ItwIdentificationModeSelectionScreen}
         name={ITW_ROUTES.IDENTIFICATION.MODE_SELECTION}
+        component={ItwIdentificationModeSelectionScreen}
         options={({ route }) => ({
           animationEnabled: route.params.animationEnabled
         })}
       />
       <Stack.Screen
-        component={ItwIdentificationCieWarningScreen}
         name={ITW_ROUTES.IDENTIFICATION.CIE_WARNING}
+        component={ItwIdentificationCieWarningScreen}
       />
       <Stack.Screen
-        component={ItwIdentificationIdpSelectionScreen}
         name={ITW_ROUTES.IDENTIFICATION.IDP_SELECTION}
+        component={ItwIdentificationIdpSelectionScreen}
       />
       <Stack.Screen
-        component={ItwSpidIdpLoginScreen}
         name={ITW_ROUTES.IDENTIFICATION.SPID.LOGIN}
+        component={ItwSpidIdpLoginScreen}
       />
       <Stack.Screen
-        component={ItwCieIdLoginScreen}
         name={ITW_ROUTES.IDENTIFICATION.CIE_ID.LOGIN}
+        component={ItwCieIdLoginScreen}
       />
       {/* IDENTIFICATION CIE */}
       <Stack.Screen
-        component={ItwCiePreparationPinScreen}
         name={ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.PIN_SCREEN}
+        component={ItwCiePreparationPinScreen}
       />
       <Stack.Screen
-        component={ItwCiePreparationNfcScreen}
         name={ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.NFC_SCREEN}
+        component={ItwCiePreparationNfcScreen}
       />
       <Stack.Screen
-        component={ItwCiePreparationCanScreen}
         name={ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CAN_SCREEN}
+        component={ItwCiePreparationCanScreen}
       />
       <Stack.Screen
-        component={ItwCiePreparationCardScreen}
         name={ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CARD_SCREEN}
+        component={ItwCiePreparationCardScreen}
       />
       <Stack.Screen
-        component={ItwCiePinScreen}
         name={ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN}
+        component={ItwCiePinScreen}
       />
       <Stack.Screen
-        component={ItwCieCanScreen}
         name={ITW_ROUTES.IDENTIFICATION.CIE.CAN_SCREEN}
+        component={ItwCieCanScreen}
       />
       <Stack.Screen
-        component={ItwCieAuthenticationScreen}
         name={ITW_ROUTES.IDENTIFICATION.CIE.AUTH_SCREEN}
+        component={ItwCieAuthenticationScreen}
         options={hiddenHeader}
       />
       <Stack.Screen
-        component={ItwCieInternalAuthAndMrtdScreen}
         name={ITW_ROUTES.IDENTIFICATION.CIE.INTERNAL_AUTH_MRTD_SCREEN}
+        component={ItwCieInternalAuthAndMrtdScreen}
         options={hiddenHeader}
       />
       <Stack.Screen
-        component={ItwActivateNfcScreen}
         name={ITW_ROUTES.IDENTIFICATION.CIE.ACTIVATE_NFC}
+        component={ItwActivateNfcScreen}
       />
       {/* ISSUANCE */}
       <Stack.Screen
-        component={ItwIssuanceEidPreviewScreen}
         name={ITW_ROUTES.ISSUANCE.EID_PREVIEW}
+        component={ItwIssuanceEidPreviewScreen}
         options={hiddenHeader}
       />
       <Stack.Screen
-        component={ItwIssuanceCredentialIntroductionScreen}
         name={ITW_ROUTES.ISSUANCE.CREDENTIAL_INTRODUCTION}
+        component={ItwIssuanceCredentialIntroductionScreen}
         options={hiddenHeader}
       />
       <Stack.Screen
-        component={ItwIssuanceCredentialTrustIssuerScreen}
         name={ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER}
+        component={ItwIssuanceCredentialTrustIssuerScreen}
         options={({ route }) => ({
           ...hiddenHeader,
           animationEnabled: route.params?.animationEnabled
         })}
       />
       <Stack.Screen
-        component={ItwIssuanceCredentialPreviewScreen}
         name={ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW}
+        component={ItwIssuanceCredentialPreviewScreen}
         options={hiddenHeader}
       />
       <Stack.Screen
-        component={ItwIssuanceCredentialFailureScreen}
         name={ITW_ROUTES.ISSUANCE.CREDENTIAL_FAILURE}
+        component={ItwIssuanceCredentialFailureScreen}
         options={hiddenHeader}
       />
       <Stack.Screen
-        component={ItwIssuanceEidResultScreen}
         name={ITW_ROUTES.ISSUANCE.EID_RESULT}
+        component={ItwIssuanceEidResultScreen}
         options={hiddenHeader}
       />
       <Stack.Screen
-        component={ItwIssuanceEidFailureScreen}
         name={ITW_ROUTES.ISSUANCE.EID_FAILURE}
+        component={ItwIssuanceEidFailureScreen}
         options={{ headerShown: false, gestureEnabled: false }}
         /* gestureEnabled to false prevents going back to the loading screen, just go back to the home screen when swiping back.
          * TODO: [SIW-1375] better retry and go back handling logic for the issuance process
          */
       />
       <Stack.Screen
-        component={ItwIssuanceUpcomingCredentialScreen}
         name={ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL}
+        component={ItwIssuanceUpcomingCredentialScreen}
         options={hiddenHeader}
       />
       <Stack.Screen
-        component={ItwIssuanceUpgradeCredentialsScreen}
         name={ITW_ROUTES.ISSUANCE.UPGRADE_CREDENTIALS}
+        component={ItwIssuanceUpgradeCredentialsScreen}
         options={hiddenHeader}
       />
       {/* CREDENTIAL PRESENTATION */}
       <Stack.Screen
-        component={ItwPresentationCredentialDetailScreen}
         name={ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL}
+        component={ItwPresentationCredentialDetailScreen}
         options={hiddenHeader}
       />
       <Stack.Screen
-        component={ItwPresentationCredentialAttachmentScreen}
         name={ITW_ROUTES.PRESENTATION.CREDENTIAL_ATTACHMENT}
+        component={ItwPresentationCredentialAttachmentScreen}
       />
       <Stack.Screen
-        component={ItwPresentationCredentialCardModal}
         name={ITW_ROUTES.PRESENTATION.CREDENTIAL_CARD_MODAL}
+        component={ItwPresentationCredentialCardModal}
         options={{
           gestureEnabled: false,
           presentation: "transparentModal"
         }}
       />
       <Stack.Screen
-        component={ItwCredentialTrustmarkScreen}
         name={ITW_ROUTES.PRESENTATION.CREDENTIAL_TRUSTMARK}
+        component={ItwCredentialTrustmarkScreen}
       />
       <Stack.Screen
-        component={ItwPresentationCredentialFiscalCodeModal}
         name={ITW_ROUTES.PRESENTATION.CREDENTIAL_FISCAL_CODE_MODAL}
+        component={ItwPresentationCredentialFiscalCodeModal}
       />
       <Stack.Screen
-        component={ItwPresentationPidDetailScreen}
         name={ITW_ROUTES.PRESENTATION.PID_DETAIL}
+        component={ItwPresentationPidDetailScreen}
       />
       {/* LIFECYCLE */}
       <Stack.Screen
-        component={ItwIdentityNotMatchingScreen}
         name={ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN}
+        component={ItwIdentityNotMatchingScreen}
         options={{ gestureEnabled: false }}
       />
       <Stack.Screen
-        component={ItwLifecycleWalletRevocationScreen}
         name={ITW_ROUTES.WALLET_REVOCATION_SCREEN}
+        component={ItwLifecycleWalletRevocationScreen}
         options={{ headerShown: false, gestureEnabled: false }}
       />
       <Stack.Screen
-        component={ItwPresentationEidVerificationExpiredScreen}
         name={ITW_ROUTES.PRESENTATION.EID_VERIFICATION_EXPIRED}
+        component={ItwPresentationEidVerificationExpiredScreen}
         options={{ headerShown: false }}
       />
-      {/* Proximity's flow routes */}
-      <Stack.Group screenOptions={hiddenHeader}>
-        <Stack.Screen
-          component={ItwGrantPermissionsScreen}
-          name={ITW_ROUTES.PROXIMITY.DEVICE_PERMISSIONS}
-        />
-        <Stack.Screen
-          component={ItwActivateBluetoothScreen}
-          name={ITW_ROUTES.PROXIMITY.BLUETOOTH_ACTIVATION}
-        />
-        <Stack.Screen
-          component={ItwProximityClaimsDisclosureScreen}
-          name={ITW_ROUTES.PROXIMITY.CLAIMS_DISCLOSURE}
-        />
-        <Stack.Screen
-          component={ItwProximitySendDocumentsResponseScreen}
-          name={ITW_ROUTES.PROXIMITY.SEND_DOCUMENTS_RESPONSE}
-        />
-        <Stack.Screen
-          component={ItwProximityFailureScreen}
-          name={ITW_ROUTES.PROXIMITY.FAILURE}
-        />
-      </Stack.Group>
       {/* Playground's routes */}
       <Stack.Group screenOptions={hiddenHeader}>
         <Stack.Screen
-          component={ItwPlayground}
           name={ITW_ROUTES.PLAYGROUNDS.LANDING}
+          component={ItwPlayground}
         />
         <Stack.Screen
-          component={ItwL3CredentialDetailScreen}
           name={ITW_ROUTES.PLAYGROUNDS.CREDENTIAL_DETAIL}
+          component={ItwL3CredentialDetailScreen}
         />
         <Stack.Screen
-          component={ItwDiscoveryInfoFallbackComponent}
           name={ITW_ROUTES.PLAYGROUNDS.DISCOVERY_INFO_NEW}
+          component={ItwDiscoveryInfoFallbackComponent}
         />
       </Stack.Group>
-      <Stack.Screen component={ItwSettingsScreen} name={ITW_ROUTES.SETTINGS} />
+      <Stack.Screen name={ITW_ROUTES.SETTINGS} component={ItwSettingsScreen} />
     </Stack.Navigator>
   );
 });

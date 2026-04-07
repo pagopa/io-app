@@ -17,7 +17,6 @@ import {
   getGenericError,
   NetworkError
 } from "../../../utils/errors";
-import { trackFciSignatureDetailFailureAction } from "../analytics";
 import LoadingComponent from "../components/LoadingComponent";
 import {
   default as ErrorComponent,
@@ -27,6 +26,11 @@ import SuccessComponent from "../components/SuccessComponent";
 import { FciParamsList } from "../navigation/params";
 import { fciEndRequest, fciSignatureRequestFromId } from "../store/actions";
 import { fciSignatureRequestSelector } from "../store/reducers/fciSignatureRequest";
+import {
+  trackFciSignatureDetailFailureAction,
+  trackFciSignatureGenericFailure,
+  trackFciSignatureMismatch
+} from "../analytics";
 
 export type FciRouterScreenNavigationParams = Readonly<{
   signatureRequestId: SignatureRequestDetailView["id"];
@@ -68,6 +72,7 @@ const FciSignatureScreen = (
   const GenericError = (problemJson?: ProblemJson) => {
     const errorReason = problemJson ? problemJson.toString() : "unknown_error";
     if (problemJson?.status === 404) {
+      trackFciSignatureMismatch();
       return (
         <ErrorComponent
           onPress={() => dispatch(fciEndRequest())}
@@ -78,6 +83,7 @@ const FciSignatureScreen = (
         />
       );
     }
+    trackFciSignatureGenericFailure(errorReason);
     return (
       <SignatureStatusComponent
         onPress={() => {

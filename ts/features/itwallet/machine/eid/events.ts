@@ -90,6 +90,7 @@ export type ExternalErrorEvent = {
 export type GoToCieWarning = {
   type: "go-to-cie-warning";
   warning: CieWarningType;
+  routeName: string;
 };
 
 export type GoToL2IdentificationMode = {
@@ -154,10 +155,10 @@ export type SimulateFailure = {
  *    and starting the issuance process from the beginning.
  */
 export type Start = {
-  credentialType?: string;
-  level: EidIssuanceLevel;
+  type: "start" | "restart";
   mode: EidIssuanceMode;
-  type: "restart" | "start";
+  level: EidIssuanceLevel;
+  credentialType?: string;
 };
 
 export type UserIdentificationCompleted = {

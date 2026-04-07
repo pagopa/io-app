@@ -3,6 +3,10 @@ import type {
   VerifierRequest
 } from "../utils/itwProximityTypeUtils";
 
+export type Start = {
+  type: "start";
+};
+
 export type Back = {
   type: "back";
 };
@@ -62,9 +66,4 @@ export type ProximityEvents =
 
 export type Retry = {
   type: "retry";
-};
-
-export type Start = {
-  credentialType: string;
-  type: "start";
 };

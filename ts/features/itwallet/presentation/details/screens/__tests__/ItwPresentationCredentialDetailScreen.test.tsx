@@ -1,6 +1,4 @@
 import { createStore } from "redux";
-import { createActor } from "xstate";
-
 import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
@@ -9,8 +7,6 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/
 import * as itwLifecycleSelectors from "../../../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../../../navigation/routes";
-import { itwProximityMachine } from "../../../proximity/machine/machine";
-import { ItwProximityMachineContext } from "../../../proximity/machine/provider";
 import {
   ItwPresentationCredentialDetailNavigationParams,
   ItwPresentationCredentialDetailScreen
@@ -36,12 +32,6 @@ const renderComponent = (
   routeParams: ItwPresentationCredentialDetailNavigationParams
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
-  const initialSnapshot = createActor(itwProximityMachine).getSnapshot();
-
-  const snapshot: typeof initialSnapshot = {
-    ...initialSnapshot,
-    value: "Success"
-  };
 
   const mockNavigation = new Proxy(
     {},
@@ -61,12 +51,10 @@ const renderComponent = (
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
-      <ItwProximityMachineContext.Provider options={{ snapshot }}>
-        <ItwPresentationCredentialDetailScreen
-          navigation={mockNavigation}
-          route={route}
-        />
-      </ItwProximityMachineContext.Provider>
+      <ItwPresentationCredentialDetailScreen
+        navigation={mockNavigation}
+        route={route}
+      />
     ),
     ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
     routeParams ?? {},

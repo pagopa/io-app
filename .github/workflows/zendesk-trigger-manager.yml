@@ -27,6 +27,7 @@ permissions: {}
 
 jobs:
   get-trigger-status:
+    name: Get Zendesk Trigger Status
     # Run this job only if the user chose 'View Trigger Status'
     if: github.event.inputs.action == 'View Trigger Status'
     runs-on: ubuntu-latest
@@ -63,6 +64,7 @@ jobs:
           echo "- **App Version Tag:** \`$APP_VERSION_TAG\`" >> $GITHUB_STEP_SUMMARY
 
   update-trigger-app-version:
+    name: Update Zendesk Trigger for app version
     # Run this job only if the user chose 'Update App Version'
     if: github.event.inputs.action == 'Update App Version'
     runs-on: ubuntu-latest
@@ -166,6 +168,7 @@ jobs:
           fi
 
   send-slack-notification:
+    name: Send Slack notification 
     # Run this job only if the user chose 'Update App Version'
     if: github.event.inputs.action == 'Update App Version'
     runs-on: ubuntu-latest

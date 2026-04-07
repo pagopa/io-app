@@ -74,7 +74,9 @@ describe("handleUpsertMessageStatusAttributes", () => {
         )
         .put(
           action.failure({
-            error: new Error("462e5dffdb46435995d545999bed6b11"),
+            error: new Error(
+              "Response status code 500 462e5dffdb46435995d545999bed6b11"
+            ),
             payload: actionPayload
           })
         )

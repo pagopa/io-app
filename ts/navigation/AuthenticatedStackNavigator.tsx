@@ -38,13 +38,15 @@ import { ItwStackNavigator } from "../features/itwallet/navigation/ItwStackNavig
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
 import { ItwRemoteStackNavigator } from "../features/itwallet/presentation/remote/navigation/ItwRemoteStackNavigator.tsx";
 import { ITW_REMOTE_ROUTES } from "../features/itwallet/presentation/remote/navigation/routes.ts";
+import { ItwProximityStackNavigator } from "../features/itwallet/presentation/proximity/navigation/ItwProximityStackNavigator";
+import { ITW_PROXIMITY_ROUTES } from "../features/itwallet/presentation/proximity/navigation/routes";
 import UnsupportedDeviceScreen from "../features/lollipop/screens/UnsupportedDeviceScreen";
 import CheckEmailNavigator from "../features/mailCheck/navigation/CheckEmailNavigator.tsx";
 import { MessagesStackNavigator } from "../features/messages/navigation/MessagesNavigator";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { MessagesSearchScreen } from "../features/messages/screens/MessagesSearchScreen";
 import OnboardingNavigator from "../features/onboarding/navigation/OnboardingNavigator.tsx";
-import { PageNotFound } from "../features/pageNotFound/screens/index.tsx";
+import { PageNotFound } from "../features/pageNotFound/screens";
 import { WalletBarcodeNavigator } from "../features/payments/barcode/navigation/navigator";
 import { PaymentsBarcodeRoutes } from "../features/payments/barcode/navigation/routes";
 import { PaymentsCheckoutNavigator } from "../features/payments/checkout/navigation/navigator";
@@ -366,6 +368,15 @@ const AuthenticatedStackNavigator = () => {
         component={ItwRemoteStackNavigator}
         name={ITW_REMOTE_ROUTES.MAIN}
         options={{ gestureEnabled: isGestureEnabled, ...hideHeaderOptions }}
+      />
+      <Stack.Screen
+        name={ITW_PROXIMITY_ROUTES.MAIN}
+        component={ItwProximityStackNavigator}
+        options={{
+          ...TransitionPresets.ModalSlideFromBottomIOS,
+          gestureEnabled: isGestureEnabled,
+          ...hideHeaderOptions
+        }}
       />
     </Stack.Navigator>
   );

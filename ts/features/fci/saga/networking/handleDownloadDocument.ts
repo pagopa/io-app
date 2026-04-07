@@ -7,6 +7,7 @@ import { fetchTimeout } from "../../../../config";
 import { getNetworkError } from "../../../../utils/errors";
 import { getFileNameFromUrl } from "../../components/DocumentViewer";
 import { fciDownloadPreview } from "../../store/actions";
+import { trackFciDocOpeningFailure } from "../../analytics";
 
 export const FciDownloadPreviewDirectoryPath =
   RNFS.CachesDirectoryPath + "/fci";
@@ -35,12 +36,14 @@ export function* handleDownloadDocument(
     const { status } = result.info();
     if (status !== 200) {
       const error = new Error(`error ${status} fetching ${document.url}`);
+      trackFciDocOpeningFailure();
       yield* put(fciDownloadPreview.failure(getNetworkError(error)));
       return;
     }
     const path = result.path();
     yield* put(fciDownloadPreview.success({ path }));
   } catch (error) {
+    trackFciDocOpeningFailure();
     yield* put(fciDownloadPreview.failure(getNetworkError(error)));
   } finally {
     if (yield* cancelled()) {

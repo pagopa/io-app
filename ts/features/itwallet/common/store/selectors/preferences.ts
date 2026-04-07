@@ -55,3 +55,9 @@ export const itwIsPidReissuingSurveyHiddenSelector = (state: GlobalState) =>
  */
 export const itwCredentialUpgradeFailedSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.credentialUpgradeFailed ?? [];
+
+/**
+ * Returns whether IT Wallet activation is disabled (no nfc).
+ */
+export const itwIsActivationDisabledSelector = (state: GlobalState) =>
+  state.features.itWallet.preferences.isItwActivationDisabled ?? false;
