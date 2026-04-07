@@ -1,19 +1,23 @@
-const { defineConfig, globalIgnores } = require("eslint/config");
+import { defineConfig, globalIgnores } from "eslint/config";
+import { fixupConfigRules } from "@eslint/compat";
+import { FlatCompat } from "@eslint/eslintrc";
+import { createRequire } from "module";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+import pagopaConfig from "@pagopa/eslint-config";
+import tseslint from "typescript-eslint";
+import reactNativeConfig from "@react-native/eslint-config/flat";
+import importPlugin from "eslint-plugin-import";
+import functional from "eslint-plugin-functional";
+import sonarjs from "eslint-plugin-sonarjs";
+import stylisticEslintPluginJs from "@stylistic/eslint-plugin-js";
+import i18Next from "eslint-plugin-i18next";
+import js from "@eslint/js";
 
-const { fixupConfigRules } = require("@eslint/compat");
-
-const tseslint = require("typescript-eslint");
-const reactNativeConfig = require("@react-native/eslint-config/flat");
-const importPlugin = require("eslint-plugin-import");
-const functional = require("eslint-plugin-functional");
-const sonarjs = require("eslint-plugin-sonarjs");
-const stylisticEslintPluginJs = require("@stylistic/eslint-plugin-js");
-const i18Next = require("eslint-plugin-i18next");
-const js = require("@eslint/js");
-const prettierConfig = require("eslint-config-prettier");
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const require = createRequire(import.meta.url);
 const delegateEffectsRule = require("./scripts/eslint/delegate-effects.js");
-
-const { FlatCompat } = require("@eslint/eslintrc");
 
 const compat = new FlatCompat({
   baseDirectory: __dirname,
@@ -21,7 +25,17 @@ const compat = new FlatCompat({
   allConfig: js.configs.all
 });
 
-module.exports = defineConfig([
+// @typescript-eslint is already registered by pagopaConfig (via typescript-eslint).
+// Strip it from @react-native/eslint-config/flat to avoid "Cannot redefine plugin" errors.
+const reactNativeConfigWithoutTsPlugin = reactNativeConfig.map(config => {
+  if (config.plugins?.["@typescript-eslint"]) {
+    const { "@typescript-eslint": _removed, ...rest } = config.plugins;
+    return { ...config, plugins: rest };
+  }
+  return config;
+});
+
+export default defineConfig([
   globalIgnores([
     "**/*.js",
     "**/*.cjs",
@@ -31,14 +45,16 @@ module.exports = defineConfig([
     "definitions/*",
     "**/*.typegen.ts"
   ]),
+
+  // Pagopa base config: @eslint/js recommended, typescript-eslint strict+stylistic,
+  // eslint-plugin-prettier, perfectionist
+  ...pagopaConfig,
+
   {
     files: ["**/*.ts", "**/*.tsx"],
     extends: [
-      js.configs.recommended,
-      ...tseslint.configs.recommended,
-      ...reactNativeConfig,
-      ...fixupConfigRules(compat.extends("plugin:react-native-a11y/all")),
-      prettierConfig
+      ...reactNativeConfigWithoutTsPlugin,
+      ...fixupConfigRules(compat.extends("plugin:react-native-a11y/all"))
     ],
 
     languageOptions: {
@@ -64,6 +80,9 @@ module.exports = defineConfig([
     },
 
     rules: {
+      // Project uses oxfmt for formatting, not prettier
+      "prettier/prettier": "off",
+
       "react/react-in-jsx-scope": "off",
       "react/jsx-uses-react": "off",
       "comma-dangle": ["error", "never"],
@@ -103,7 +122,6 @@ module.exports = defineConfig([
       "guard-for-in": "error",
       complexity: "error",
       "arrow-body-style": "error",
-      "import/order": "error",
       "@typescript-eslint/no-unused-vars": "off",
       "@typescript-eslint/no-require-imports": [
         "error",
@@ -248,14 +266,20 @@ module.exports = defineConfig([
     }
   },
   {
-    files: ["**/*.test.ts", "**/*.test.tsx"],
+    files: ["**/*.test.ts", "**/*.test.tsx", "**/__tests__/**/*.ts", "**/__tests__/**/*.tsx"],
 
     rules: {
       "@typescript-eslint/no-non-null-assertion": "off",
       "@typescript-eslint/no-shadow": "off",
       "@typescript-eslint/no-require-imports": "off",
       "i18next/no-literal-string": "off",
-      "no-restricted-imports": "off"
+      "no-restricted-imports": "off",
+      // Disable vitest rules added by pagopa config
+      "vitest/prefer-called-with": "off",
+      "vitest/prefer-equality-matcher": "off",
+      "vitest/prefer-expect-resolves": "off",
+      "vitest/prefer-spy-on": "off",
+      "vitest/prefer-todo": "off"
     }
   },
   {
