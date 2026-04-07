@@ -1,4 +1,5 @@
 import { Alert, H4, useIOTheme, VStack } from "@pagopa/io-app-design-system";
+import { Alert as RNAlert } from "react-native";
 
 /* Types */
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
@@ -7,6 +8,10 @@ import { DSFullWidthComponent } from "../components/DSFullWidthComponent";
 const componentInnerMargin = 8;
 const sectionTitleMargin = 16;
 const blockMargin = 40;
+
+const onPress = () => {
+  RNAlert.alert("Action triggered");
+};
 
 export const DSAlert = () => {
   const theme = useIOTheme();
@@ -61,33 +66,25 @@ const renderContentPlusAction = () => (
     <Alert
       action="Alert action"
       content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
-      onPress={() => {
-        alert("Action triggered");
-      }}
+      onPress={onPress}
       variant="error"
     />
     <Alert
       action="Alert action"
       content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
-      onPress={() => {
-        alert("Action triggered");
-      }}
+      onPress={onPress}
       variant="warning"
     />
     <Alert
       action="Alert action"
       content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
-      onPress={() => {
-        alert("Action triggered");
-      }}
+      onPress={onPress}
       variant="info"
     />
     <Alert
       action="Alert action"
       content="Ut enim ad minim veniam, quis ullamco laboris nisi ut aliquid"
-      onPress={() => {
-        alert("Action triggered");
-      }}
+      onPress={onPress}
       variant="success"
     />
   </VStack>
@@ -121,7 +118,7 @@ const renderFullWidth = () => (
         content="Ut enim ad minim veniam, quis ullamco labo nisi ut aliquid ad minim veniam"
         fullWidth
         onPress={() => {
-          alert("Action triggered");
+          RNAlert.alert("Action triggered");
         }}
         variant="info"
       />

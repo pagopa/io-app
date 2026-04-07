@@ -94,6 +94,17 @@ export default defineConfig([
       // Auto-fix corrupts multi-line property values (see comment below)
       "perfectionist/sort-objects": "off",
 
+      // IE8-era catch variable shadowing rule, irrelevant for this project
+      "no-catch-shadow": "off",
+
+      // Rules from tseslint.strict / pagopa config that require widespread
+      // refactoring incompatible with the current codebase
+      "max-lines-per-function": "off",
+      "@typescript-eslint/no-invalid-void-type": "off",
+      "@typescript-eslint/no-empty-function": "off",
+      "@typescript-eslint/no-dynamic-delete": "off",
+      "@typescript-eslint/no-non-null-assertion": "off",
+
       "react/react-in-jsx-scope": "off",
       "react/jsx-uses-react": "off",
       "comma-dangle": ["error", "never"],
@@ -287,7 +298,12 @@ export default defineConfig([
     }
   },
   {
-    files: ["**/*.test.ts", "**/*.test.tsx", "**/__tests__/**/*.ts", "**/__tests__/**/*.tsx"],
+    files: [
+      "**/*.test.ts",
+      "**/*.test.tsx",
+      "**/__tests__/**/*.ts",
+      "**/__tests__/**/*.tsx"
+    ],
 
     rules: {
       "@typescript-eslint/no-non-null-assertion": "off",
