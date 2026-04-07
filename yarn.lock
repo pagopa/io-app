@@ -4144,8 +4144,8 @@ __metadata:
   linkType: hard
 
 "@pagopa/io-app-design-system@pagopa/io-app-design-system#IOPLT-000-react-navigation-v7-adjustment":
-  version: 6.0.7
-  resolution: "@pagopa/io-app-design-system@https://github.com/pagopa/io-app-design-system.git#commit=c5a795922cb6dd41d6488f88d9d6c60f00f63be7"
+  version: 7.0.1
+  resolution: "@pagopa/io-app-design-system@https://github.com/pagopa/io-app-design-system.git#commit=257b82091c511d7cad2863ac604743d63c1e8ce1"
   dependencies:
     auto-changelog: ^2.4.0
     markdown-it: ^14.1.0
@@ -4168,7 +4168,7 @@ __metadata:
     react-native-safe-area-context: "*"
     react-native-svg: "*"
     react-native-worklets: "*"
-  checksum: af8bdf43e683d1fc2c3e3fa024d637b07981ea41d9f0acb8755aac9e41e046198eea98b6511ff5255bbadb2652551cc523b8ed328e3207da2f727acaeb979321
+  checksum: cd6bc6efc3edf68f80e8598d23ec80c85ade42e2e42581ce7cfff3eef59f632c4aeea1224ff0be2ed6a20e08d2ecd607b20614d0620e0e50f786e14a3ceb9d66
   languageName: node
   linkType: hard
 
