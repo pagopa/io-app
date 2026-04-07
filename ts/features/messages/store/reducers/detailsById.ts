@@ -30,7 +30,7 @@ export const detailsByIdReducer = (
 ): DetailsById => {
   switch (action.type) {
     case getType(clearCache):
-
+      // falls through
     case getType(reloadAllMessages.request):
       return INITIAL_STATE;
 

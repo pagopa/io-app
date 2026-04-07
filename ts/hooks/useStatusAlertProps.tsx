@@ -213,7 +213,7 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
         }, 3000);
         break;
       case "blacklisted":
-
+        // falls through
       case "initial":
         setAlertVisible(false);
         setBottomSheet(undefined);

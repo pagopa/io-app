@@ -376,7 +376,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
         break;
       // The card is temporarily locked. Unlock is available by CieID app
       case "ON_CARD_PIN_LOCKED":
-
+        // falls through
       case "ON_PIN_ERROR":
       case "PIN Locked":
         this.setError({

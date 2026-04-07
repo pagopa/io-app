@@ -36,7 +36,7 @@ const userDataProcessingReducer = (
     case getType(clearCache):
       return INITIAL_STATE;
     case getType(deleteUserDataProcessing.failure):
-
+      // falls through
     case getType(loadUserDataProcessing.failure):
     case getType(upsertUserDataProcessing.failure):
       return {
@@ -47,7 +47,7 @@ const userDataProcessingReducer = (
         )
       };
     case getType(deleteUserDataProcessing.request):
-
+      // falls through
     case getType(upsertUserDataProcessing.request): {
       const maybeValue = state[action.payload];
       const prevValue = pot.isSome(maybeValue) ? maybeValue.value : undefined;

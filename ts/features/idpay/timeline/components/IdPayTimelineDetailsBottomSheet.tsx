@@ -86,7 +86,7 @@ const useIdPayTimelineDetailsBottomSheet = (
       O.map(details => {
         switch (details.operationType) {
           case RefundOperationTypeEnum.PAID_REFUND:
-
+            // falls through
           case RefundOperationTypeEnum.REJECTED_REFUND:
             return <IdPayTimelineRefundDetailsComponent refund={details} />;
           case TransactionOperationTypeEnum.REVERSAL:

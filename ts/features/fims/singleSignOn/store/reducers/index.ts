@@ -57,7 +57,7 @@ const reducer = (
 ): FimsSSOState => {
   switch (action.type) {
     case getType(fimsAcceptConsentsAction):
-
+      // falls through
     case getType(fimsSignAndRetrieveInAppBrowserUrlAction.request):
       return {
         ...state,

@@ -27,7 +27,7 @@ const reducer = (
 ): OrganizationNamesByFiscalCodeState => {
   switch (action.type) {
     case getType(logoutSuccess):
-
+      // falls through
     case getType(sessionCorrupted):
     case getType(sessionExpired):
       return INITIAL_STATE;
