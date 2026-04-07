@@ -103,6 +103,7 @@ const LanguagesPreferencesScreen = () => {
     [profile, renderedItem]
   );
 
+  const prevInitialSelectedItem = usePrevious(initialSelectedItem);
   const [selectedItem, setSelectedItem] = useState(initialSelectedItem);
 
   /* IT, EN pinned first, then all available translations
@@ -150,12 +151,13 @@ const LanguagesPreferencesScreen = () => {
   );
 
   useEffect(() => {
-    // update completed
+    // update completed: only show toast if preferred_languages actually changed
     if (
       prevProfile &&
       pot.isUpdating(prevProfile) &&
       pot.isSome(profile) &&
-      !pot.isError(profile)
+      !pot.isError(profile) &&
+      prevInitialSelectedItem !== initialSelectedItem
     ) {
       toast.success(
         I18n.t(
@@ -175,7 +177,13 @@ const LanguagesPreferencesScreen = () => {
       setSelectedItem(previousSelectedItem.current);
       toast.error(I18n.t("global.genericError"));
     }
-  }, [prevProfile, profile, toast]);
+  }, [
+    prevProfile,
+    profile,
+    prevInitialSelectedItem,
+    initialSelectedItem,
+    toast
+  ]);
 
   const onLanguageSelected = useCallback(
     (language: string) => {
