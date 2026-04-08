@@ -131,7 +131,9 @@ const legacyCredentialCardBackgrounds: { [type: string]: number } = {
 const legacyCredentialGradientColors: { [type: string]: Array<string> } = {
   [CredentialType.EDUCATION_DEGREE]: ["#F2F1CE", "#ECECEC"],
   [CredentialType.EDUCATION_ENROLLMENT]: ["#E0F2CE", "#ECECEC"],
-  [CredentialType.RESIDENCY]: ["#F2E4CE", "#ECECEC"]
+  [CredentialType.RESIDENCY]: ["#F2E4CE", "#ECECEC"],
+  [CredentialType.EDUCATION_DIPLOMA]: ["#F2F1CE", "#ECECEC"],
+  [CredentialType.EDUCATION_ATTENDANCE]: ["#F2F1CE", "#ECECEC"]
 };
 
 // Gradient colors per credential type.
