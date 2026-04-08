@@ -67,7 +67,6 @@ const INITIAL_STATE: ZendeskState = {
 const reducer = (
   state: ZendeskState = INITIAL_STATE,
   action: Action
-  // eslint-disable-next-line complexity
 ): ZendeskState => {
   switch (action.type) {
     case getType(getZendeskConfig.failure):

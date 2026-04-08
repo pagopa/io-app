@@ -66,7 +66,6 @@ import { IdentificationLockModal } from "./IdentificationLockModal";
 const VERTICAL_PADDING = 16;
 const A11Y_FOCUS_DELAY = 1000 as Millisecond;
 
-// eslint-disable-next-line complexity
 export const IdentificationModal = () => {
   const [isBiometricLocked, setIsBiometricLocked] = useState(false);
   const showRetryText = useRef(false);

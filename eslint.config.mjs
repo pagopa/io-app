@@ -111,10 +111,8 @@ export default defineConfig([
 
       "react/react-in-jsx-scope": "off",
       "react/jsx-uses-react": "off",
-      "comma-dangle": ["error", "never"],
       "no-case-declarations": "off",
       "no-inner-declarations": "off",
-      "prefer-const": "error",
       curly: "error",
 
       "spaced-comment": [
@@ -127,27 +125,16 @@ export default defineConfig([
         }
       ],
 
-      radix: "error",
       "one-var": ["error", "never"],
       "object-shorthand": "error",
-      "no-var": "error",
-      "no-param-reassign": "error",
       "no-underscore-dangle": "error",
-      "no-undef-init": "error",
       "no-throw-literal": "error",
-      "no-new-wrappers": "error",
-      "no-eval": "error",
       "no-console": "error",
       "no-caller": "error",
-      "no-bitwise": "error",
       "no-void": "off",
       "no-duplicate-imports": "error",
       quotes: "off",
-      eqeqeq: ["error", "smart"],
       "max-classes-per-file": ["error", 1],
-      "guard-for-in": "error",
-      complexity: "error",
-      "arrow-body-style": "error",
       "@typescript-eslint/no-unused-vars": "off",
       "@typescript-eslint/no-require-imports": [
         "error",
@@ -179,7 +166,6 @@ export default defineConfig([
 
       "@typescript-eslint/no-floating-promises": "error",
       "no-unused-expressions": "off",
-      "@typescript-eslint/no-unused-expressions": ["error"],
       "@typescript-eslint/prefer-function-type": "error",
       "@typescript-eslint/restrict-plus-operands": "error",
       "@typescript-eslint/unified-signatures": "error",

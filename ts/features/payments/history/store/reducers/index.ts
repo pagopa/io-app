@@ -1,4 +1,3 @@
-/* eslint-disable complexity */
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";

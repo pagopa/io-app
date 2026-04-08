@@ -1,4 +1,3 @@
-/* eslint-disable complexity */
 import { PersistPartial } from "redux-persist";
 import { isActionOf } from "typesafe-actions";
 
