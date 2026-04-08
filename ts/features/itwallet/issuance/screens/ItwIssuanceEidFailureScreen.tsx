@@ -43,6 +43,10 @@ const zendeskAssistanceErrors = [
 const ASSERTION_FAILED_FAQ_URL =
   "https://assistenza.ioapp.it/hc/it/articles/43824826487953-Provo-ad-aggiungere-un-documento-al-Portafoglio-ma-ricevo-un-errore-dal-mio-dispositivo-Apple";
 
+const failureLinkMapper: Partial<Record<IssuanceFailureType, string>> = {
+  [IssuanceFailureType.HARDWARE_KEY_INVALID]: ASSERTION_FAILED_FAQ_URL
+};
+
 export const ItwIssuanceEidFailureScreen = () => {
   const failureOption =
     ItwEidIssuanceMachineContext.useSelector(selectFailureOption);
@@ -86,7 +90,8 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const supportModal = useItwFailureSupportModal({
     failure,
     supportChatEnabled: zendeskAssistanceErrors.includes(failure.type),
-    zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI
+    zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI,
+    supportLink: failureLinkMapper[failure.type]
   });
 
   const closeIssuance = (errorConfig: KoState) => {
@@ -148,30 +153,31 @@ const ContentView = ({ failure }: ContentViewProps) => {
               label: I18n.t(
                 "features.itWallet.hardwareKeyInvalid.error.primaryAction"
               ),
-              onPress: () => Linking.openURL(ASSERTION_FAILED_FAQ_URL)
+              onPress: () => supportModal.present()
             },
-            secondaryAction: supportModalAction
+            secondaryAction: {
+              label: I18n.t("global.buttons.close"),
+              // eslint-disable-next-line sonarjs/no-identical-functions
+              onPress: () =>
+                closeIssuance({
+                  reason: failure.reason,
+                  cta_category: "custom_1",
+                  cta_id: I18n.t("global.buttons.close")
+                })
+            }
           };
         case IssuanceFailureType.UNSUPPORTED_DEVICE:
           return {
             title: I18n.t("features.itWallet.unsupportedDevice.error.title"),
-            subtitle: [
-              {
-                text: I18n.t("features.itWallet.unsupportedDevice.error.body")
-              },
-              {
-                text: I18n.t(
-                  "features.itWallet.unsupportedDevice.error.primaryAction"
-                ),
-                asLink: true,
-                weight: "Semibold",
-                onPress: () => {
-                  openWebUrl(FAQ_URL, () =>
-                    toast.error(I18n.t("global.jserror.title"))
-                  );
-                }
-              }
-            ],
+            subtitle: I18n.t(
+              "features.itWallet.unsupportedDevice.error.subtitle",
+              { faqUrl: FAQ_URL }
+            ),
+            onSubtitleLinkPress: url => {
+              openWebUrl(url, () =>
+                toast.error(I18n.t("global.jserror.title"))
+              );
+            },
             pictogram: "workInProgress",
             action: supportModalAction,
             secondaryAction: {
@@ -319,10 +325,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
 
   return (
     <>
-      <OperationResultScreenContent
-        {...resultScreenProps}
-        subtitleProps={{ textBreakStrategy: "simple" }}
-      />
+      <OperationResultScreenContent {...resultScreenProps} />
       {supportModal.bottomSheet}
     </>
   );
