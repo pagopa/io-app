@@ -33,7 +33,6 @@ export const EmailNotificationBanner = () => {
   );
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
   const isEmailChannelEnabled = useIOSelector(isEmailEnabledSelector);
-  const prevIsEmailChannelEnabled = usePrevious(isEmailChannelEnabled);
   const profile = useIOSelector(profileSelector);
   const prevProfile = usePrevious(profile);
 
@@ -79,10 +78,10 @@ export const EmailNotificationBanner = () => {
         trackIDPayOnboardingEmailActivationError();
         return;
       }
-      // only show email toast if is_email_enabled actually changed
       if (
+        pot.isSome(prevProfile) &&
         pot.isSome(profile) &&
-        prevIsEmailChannelEnabled !== isEmailChannelEnabled
+        prevProfile.value.is_email_enabled !== profile.value.is_email_enabled
       ) {
         dispatch(setIdPayOnboardingSucceeded(false));
         IOToast.hideAll();
@@ -95,14 +94,7 @@ export const EmailNotificationBanner = () => {
         return;
       }
     }
-  }, [
-    profile,
-    prevProfile,
-    prevIsEmailChannelEnabled,
-    isEmailChannelEnabled,
-    canShowBanner,
-    dispatch
-  ]);
+  }, [profile, prevProfile, canShowBanner, dispatch]);
 
   const handleOnCloseBanner = () => {
     mixPanelTracking("CLOSE_BANNER");
