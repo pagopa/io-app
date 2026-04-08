@@ -10,6 +10,7 @@ import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import * as preferencesSelectors from "../../../common/store/selectors/preferences";
 import * as credentialsSelectors from "../../../credentials/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes";
+import * as issuanceAnalytics from "../../../issuance/analytics";
 import { ItwIssuanceCredentialLandingScreen } from "../ItwIssuanceCredentialLandingScreen";
 
 const mockReplace = jest.fn();
@@ -214,8 +215,8 @@ describe("ItwIssuanceCredentialLandingScreen", () => {
     });
   });
 
-  describe("Invalid credential and EID expired/expiring", () => {
-    it("renders the error screen", () => {
+  describe("Landing error screen", () => {
+    it("renders the error screen as fallback", () => {
       mockSelectors({
         credentialStatus: undefined,
         pidStatus: undefined,
@@ -227,10 +228,9 @@ describe("ItwIssuanceCredentialLandingScreen", () => {
       expect(
         getByText(I18n.t(`features.itWallet.issuance.landingError.title`))
       ).toBeTruthy();
-      expect(mockReplace).toHaveBeenCalled();
     });
 
-    it("primary actions navigates to CTA message", () => {
+    it("primary action navigates to CTA message", () => {
       mockSelectors({
         credentialStatus: undefined,
         pidStatus: undefined,
@@ -244,6 +244,24 @@ describe("ItwIssuanceCredentialLandingScreen", () => {
       );
 
       expect(mockPopToTop).toHaveBeenCalled();
+    });
+
+    it("does not track failure analytics when navigation occurs", () => {
+      const trackSpy = jest.spyOn(
+        issuanceAnalytics,
+        "trackItwIssuanceFromMsgFailure"
+      );
+
+      mockSelectors({
+        credentialStatus: undefined,
+        pidStatus: undefined,
+        isItwValid: true
+      });
+
+      renderComponent();
+
+      expect(mockReplace).toHaveBeenCalled();
+      expect(trackSpy).not.toHaveBeenCalled();
     });
   });
 });

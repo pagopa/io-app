@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import {
   IOStackNavigationProp,
@@ -67,7 +67,7 @@ export const ItwIssuanceCredentialLandingScreen = ({
     [pidStatus]
   );
 
-  const isLandingError = !isEidExpiredOrExpiring && !isCredentialValid;
+  const didNavigateRef = useRef(false);
 
   useEffect(() => {
     if (isCredentialValid) {
@@ -82,6 +82,8 @@ export const ItwIssuanceCredentialLandingScreen = ({
 
     if (!isItwValid) {
       // ITW not active, redirect to discovery info screen
+      // eslint-disable-next-line functional/immutable-data
+      didNavigateRef.current = true;
       navigation.replace(ITW_ROUTES.DISCOVERY.INFO, {
         animationEnabled: false,
         level: isWhitelisted ? "l3" : "l2",
@@ -91,6 +93,8 @@ export const ItwIssuanceCredentialLandingScreen = ({
     }
 
     // ITW active, proceed to credential issuance
+    // eslint-disable-next-line functional/immutable-data
+    didNavigateRef.current = true;
     navigation.replace(ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER, {
       animationEnabled: false,
       credentialType
@@ -105,12 +109,21 @@ export const ItwIssuanceCredentialLandingScreen = ({
   ]);
 
   useEffect(() => {
-    if (isLandingError) {
+    if (
+      !isEidExpiredOrExpiring &&
+      !isCredentialValid &&
+      !didNavigateRef.current
+    ) {
       trackItwIssuanceFromMsgFailure(
         getMixPanelCredential(credentialType, isWhitelisted)
       );
     }
-  }, [isLandingError, credentialType, isWhitelisted]);
+  }, [
+    isEidExpiredOrExpiring,
+    isCredentialValid,
+    credentialType,
+    isWhitelisted
+  ]);
 
   if (isEidExpiredOrExpiring) {
     return (
