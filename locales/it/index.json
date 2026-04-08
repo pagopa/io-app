@@ -1163,7 +1163,7 @@
       "cardGeneric": "Carta",
       "a11y": {
         "credit": {
-          "hpan": "{{circuit}} che termina con {{spacedHpan}}"
+          "hpan": "Carta {{circuit}} che termina con {{spacedHpan}}"
         },
         "paypal": {
           "owner": "account: {{email}}"
@@ -3088,7 +3088,9 @@
         "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia",
         "ed": "Titoli accademici",
         "ee": "Iscrizioni accademiche",
-        "res": "Attestato di residenza"
+        "res": "Attestato di residenza",
+        "edip": "Diplomi",
+        "edat": "Frequenza scolastica"
       },
       "wallet": {
         "active": "Attivo",
@@ -3122,7 +3124,8 @@
         "email": "Scrivi una mail",
         "website": "Visita il sito",
         "additionalDataTitle": "Dati aggiuntivi",
-        "errorCode": "Codice errore"
+        "errorCode": "Codice errore",
+        "visitHelpCenter": "Visita il centro di assistenza"
       },
       "generic": {
         "error": {
@@ -3744,8 +3747,8 @@
       "hardwareKeyInvalid": {
         "error": {
           "title": "Non puoi proseguire con la richiesta",
-          "body": "Una verifica di sicurezza sul tuo dispositivo non è andata a buon fine. Leggi i consigli per risolvere il problema o contatta l’assistenza.",
-          "primaryAction": "Leggi cosa fare"
+          "body": "Una verifica di sicurezza sul tuo dispositivo non è andata a buon fine. Per sapere cosa puoi fare per risolvere il problema contatta l'assistenza.",
+          "primaryAction": "Contatta l’assistenza"
         }
       },
       "reissuanceLandingScreen": {
@@ -3892,7 +3895,9 @@
             "content": {
               "education_degree": "I tuoi titoli accademici digitali hanno piena validità ufficiale.",
               "education_enrollment": "Le tue iscrizioni accademiche digitali hanno piena validità ufficiale.",
-              "residency": "Il tuo attestato di residenza digitale ha piena validità ufficiale."
+              "residency": "Il tuo attestato di residenza digitale ha piena validità ufficiale.",
+              "education_diploma": "I tuoi Diplomi digitali hanno piena validità ufficiale.",
+              "education_attendance": "La tua iscrizione scolastica digitale ha piena validità ufficiale."
             }
           },
           "discoverItWallet": "Scopri IT-Wallet",
@@ -3902,7 +3907,7 @@
           "trustmark": "Mostra certificato di autenticità",
           "openPdf": "Mostra documento",
           "shareButton": "Salva o condividi",
-          "showQRCode": "Mostra QR Code di verifica"
+          "showQRCode": "Mostra codice QR"
         },
         "eid": {
           "verificationExpired": {
@@ -4158,6 +4163,19 @@
           "success": {
             "title": "Fatto!",
             "subtitle": "La verifica è stata completata con successo."
+          }
+        },
+        "qrCode": {
+          "instruction": "Mostra questo codice QR a chi verifica i tuoi documenti digitali",
+          "error": {
+            "message": "Abbiamo avuto un problema nel generare il QR Code.",
+            "invalid": "Non puoi far verificare i tuoi documenti digitali."
+          },
+          "banner": {
+            "invalid": "Conferma la tua identità per continuare a usare i tuoi documenti senza limitazioni."
+          },
+          "reissue": {
+            "cta": "Conferma identità"
           }
         },
         "itWalletId": {
