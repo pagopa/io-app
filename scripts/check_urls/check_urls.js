@@ -108,8 +108,7 @@ function scanDirectory(dirPath, fileBlackList, urlsBlackList) {
   return urlMap;
 }
 
-// Reuse a single HTTPS agent with SSL verification disabled across all requests,
-// matching the original Python script's `verify=False` behaviour.
+// Reuse a single HTTPS agent with SSL verification disabled across all requests
 const httpsAgent = new https.Agent({ rejectUnauthorized: false });
 
 /**
