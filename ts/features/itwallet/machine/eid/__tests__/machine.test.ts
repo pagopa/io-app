@@ -1824,7 +1824,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(trackIdentificationMethodSelected).not.toHaveBeenCalled();
   });
 
-  it("Should not track identification method selection when switching from CiePin to CieID", () => {
+  it("Should track identification method selection and set CieID to L2 when switching from CiePin", () => {
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
     ).getSnapshot();
@@ -1854,10 +1854,10 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
       identification: {
         mode: "cieId",
-        level: "L3"
+        level: "L2"
       }
     });
-    expect(trackIdentificationMethodSelected).not.toHaveBeenCalled();
+    expect(trackIdentificationMethodSelected).toHaveBeenCalledTimes(1);
   });
 
   it("Should return to PreparationPin when navigating back from CieWarning", async () => {
