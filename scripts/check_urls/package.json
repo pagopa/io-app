@@ -1,0 +1,13 @@
+{
+  "name": "check-urls",
+  "version": "1.0.0",
+  "description": "Check URLs validity in IO App",
+  "main": "check_urls.js",
+  "scripts": {
+    "start": "node check_urls.js"
+  },
+  "dependencies": {
+    "@slack/web-api": "^7.0.0",
+    "axios": "^1.6.0"
+  }
+}
