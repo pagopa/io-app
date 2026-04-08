@@ -2,7 +2,6 @@ import { Fragment, JSX } from "react";
 import { Linking, View } from "react-native";
 import * as O from "fp-ts/lib/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
-import { Errors } from "@pagopa/io-react-native-wallet";
 import {
   Body,
   Divider,
@@ -19,14 +18,13 @@ import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { IssuanceFailure } from "../../machine/eid/failure";
 import { CredentialIssuanceFailure } from "../../machine/credential/failure";
 import { ItwFailure } from "../utils/ItwFailureTypes.ts";
+import { extractItwFailureCode } from "../utils/itwFailureUtils";
 import { RemoteFailure } from "../../presentation/remote/machine/failure.ts";
 import { isDefined } from "../../../../utils/guards.ts";
 import {
   useItwZendeskSupport,
   ZendeskSubcategoryValue
 } from "./useItwZendeskSupport";
-
-const { isWalletProviderResponseError, isIssuerResponseError } = Errors;
 
 type SupportContactMethods = Partial<{
   email: string;
@@ -53,23 +51,6 @@ const contactMethodsByCredentialType: Record<
   }
 };
 
-const extractErrorCode = (failure: Props["failure"]) => {
-  const rawError = failure.reason;
-  if (
-    isWalletProviderResponseError(rawError) ||
-    isIssuerResponseError(rawError)
-  ) {
-    return rawError.code ?? failure.type;
-  }
-  if (rawError instanceof Errors.IoWalletError) {
-    return rawError.code;
-  }
-  if (rawError instanceof Error) {
-    return rawError.message;
-  }
-  return failure.type;
-};
-
 type Props = {
   failure:
     | IssuanceFailure
@@ -91,7 +72,7 @@ export const useItwFailureSupportModal = ({
   zendeskSubcategory
 }: Props) => {
   const { startItwZendeskSupport } = useItwZendeskSupport();
-  const code = extractErrorCode(failure);
+  const code = extractItwFailureCode(failure);
 
   const handleAskAssistance = () => {
     startItwZendeskSupport({

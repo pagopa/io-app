@@ -22,6 +22,7 @@ import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwFailureSupportModal } from "../../common/hooks/useItwFailureSupportModal";
+import { useItwIssuerDynamicErrorBottomSheet } from "../../common/hooks/useItwIssuerDynamicErrorBottomSheet";
 import { ZendeskSubcategoryValue } from "../../common/hooks/useItwZendeskSupport";
 import { KoState } from "../../analytics/utils/types";
 import { trackItwKoStateAction } from "../../analytics";
@@ -30,10 +31,7 @@ import { useEidEventsTracking } from "../hooks/useEidEventsTracking";
 import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
 import { useIOSelector } from "../../../../store/hooks";
 import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import {
-  DOCUMENTS_ON_IO_FAQ_12_URL_BODY,
-  DOCUMENTS_ON_IO_FAQ_URL_BODY
-} from "../../../../urls";
+import { DOCUMENTS_ON_IO_FAQ_12_URL_BODY } from "../../../../urls";
 import { isPidIssuanceBlockedByAnprError } from "../../common/utils/itwFailureUtils";
 
 // Errors that allow a user to send a support request to Zendesk
@@ -82,13 +80,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
       DOCUMENTS_ON_IO_FAQ_12_URL_BODY
     )
   );
-  const PID_ANPR_FAQ_URL = useIOSelector(state =>
-    generateDynamicUrlSelector(
-      state,
-      "io_showcase",
-      DOCUMENTS_ON_IO_FAQ_URL_BODY
-    )
-  );
 
   useDebugInfo({
     failure: serializeFailureReason(failure)
@@ -97,6 +88,10 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const supportModal = useItwFailureSupportModal({
     failure,
     supportChatEnabled: zendeskAssistanceErrors.includes(failure.type),
+    zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI
+  });
+  const issuerDynamicErrorBottomSheet = useItwIssuerDynamicErrorBottomSheet({
+    failure,
     zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI
   });
 
@@ -152,9 +147,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
                       "features.itWallet.issuance.pidAnprMismatchError.primaryAction"
                     )
                   });
-                  openWebUrl(PID_ANPR_FAQ_URL, () =>
-                    toast.error(I18n.t("global.jserror.title"))
-                  );
+                  issuerDynamicErrorBottomSheet.present();
                 }
               },
               secondaryAction: {
@@ -373,6 +366,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
         subtitleProps={{ textBreakStrategy: "simple" }}
       />
       {supportModal.bottomSheet}
+      {issuerDynamicErrorBottomSheet.bottomSheet}
     </>
   );
 };

@@ -3184,6 +3184,7 @@
         "button": "Mostra dettagli",
         "supportTitle": "Contatta l'assistenza",
         "supportDescription": "Prendi nota del codice di errore, potrebbe servirti per richiedere assistenza.",
+        "helpCenter": "Visita il centro assistenza",
         "phone": "Chiama {{phoneNumber}}",
         "landline": "Da telefono fisso",
         "chat": "Chiedi aiuto in chat",
@@ -3725,7 +3726,7 @@
         "pidAnprMismatchError": {
           "title": "Non puoi proseguire con la richiesta",
           "body": "Abbiamo rilevato incongruenze nei tuoi dati su ANPR (Anagrafe nazionale della popolazione residente).",
-          "primaryAction": "Leggi cosa fare"
+          "primaryAction": "Contatta l'assistenza"
         },
         "issuerNotTrustedCommonError": {
           "title": "Un problema non permette di continuare",
