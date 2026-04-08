@@ -41,7 +41,8 @@
     "lollipop_checks:comment": "./scripts/toggle-comments-on-lollipop-checks.sh comment ./ts/sagas/startup.ts",
     "lollipop_checks:uncomment": "./scripts/toggle-comments-on-lollipop-checks.sh uncomment ./ts/sagas/startup.ts",
     "prepare": "husky install",
-    "dev:pod-install": "cd ios && NO_INTERNAL_MODULE=1 bundle exec pod install && cd .."
+    "dev:pod-install": "cd ios && NO_INTERNAL_MODULE=1 bundle exec pod install && cd ..",
+    "dev:pod-update": "cd ios && NO_INTERNAL_MODULE=1 bundle exec pod update && cd .."
   },
   "lint-staged": {
     "*.{ts,tsx}": ["prettier --write", "eslint -c .eslintrc.js --fix"]
@@ -295,6 +296,12 @@
       "react-native@0.81.5": "patches/react-native@0.81.5.patch",
       "@gorhom/bottom-sheet@5.2.8": "patches/@gorhom__bottom-sheet@5.2.8.patch",
       "expo-screen-capture@8.0.9": "patches/expo-screen-capture@8.0.9.patch"
-    }
+    },
+    "onlyBuiltDependencies": [
+      "@sentry/cli",
+      "@shopify/react-native-skia",
+      "core-js",
+      "postinstall-postinstall"
+    ]
   }
 }
