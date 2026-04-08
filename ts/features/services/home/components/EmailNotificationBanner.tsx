@@ -79,11 +79,10 @@ export const EmailNotificationBanner = () => {
         trackIDPayOnboardingEmailActivationError();
         return;
       }
-      // only show email toast if is_email_enabled actually changed to true
+      // only show email toast if is_email_enabled actually changed
       if (
         pot.isSome(profile) &&
-        !prevIsEmailChannelEnabled &&
-        isEmailChannelEnabled
+        prevIsEmailChannelEnabled !== isEmailChannelEnabled
       ) {
         dispatch(setIdPayOnboardingSucceeded(false));
         IOToast.hideAll();
