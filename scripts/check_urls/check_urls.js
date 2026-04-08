@@ -93,7 +93,7 @@ function scanDirectory(dirPath, fileBlackList, urlsBlackList) {
     const basename = path.basename(filePath);
     if (fileBlackList.has(basename)) continue;
     // Exclude test, mock, and snapshot files
-    if (/__tests?__|__mocks?__|\.snap$/.test(filePath)) continue;
+    if (/(__tests?__|__mocks?__|\.snap)$/.test(filePath)) continue;
 
     const content = fs.readFileSync(filePath, 'utf8');
     for (const url of extractUrls(content, urlsBlackList)) {
