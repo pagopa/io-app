@@ -43,7 +43,7 @@ export const groupTransactionsByMonth = (
       }
       return acc;
     },
-    {} as Record<string, Array<NoticeListItem>>
+    {} as { [month: string]: Array<NoticeListItem> }
   );
 
   return Object.keys(groups).map(month => ({

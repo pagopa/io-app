@@ -1,5 +1,4 @@
 import {
-  Body,
   Divider,
   ListItemAction,
   ListItemHeader,
@@ -79,6 +78,7 @@ type Props = {
     | ItwFailure
     | RemoteFailure;
   supportChatEnabled: boolean;
+  supportLink?: string;
   zendeskSubcategory: ZendeskSubcategoryValue;
 };
 
@@ -89,7 +89,8 @@ export const useItwFailureSupportModal = ({
   failure,
   credentialType,
   supportChatEnabled,
-  zendeskSubcategory
+  zendeskSubcategory,
+  supportLink
 }: Props) => {
   const { startItwZendeskSupport } = useItwZendeskSupport();
   const code = extractErrorCode(failure);
@@ -193,33 +194,42 @@ export const useItwFailureSupportModal = ({
   const { bottomSheet, present, dismiss } = useIOBottomSheetModal({
     title: "",
     component: (
-      <VStack space={16}>
-        <Body>{I18n.t("features.itWallet.support.supportDescription")}</Body>
-        <VStack space={24}>
-          {hasContactMethods && (
-            <View>
-              <ListItemHeader
-                label={I18n.t("features.itWallet.support.supportTitle")}
-              />
-              {contactMethods}
-            </View>
-          )}
-          {code && (
-            <View>
-              <ListItemHeader
-                label={I18n.t("features.itWallet.support.additionalDataTitle")}
-              />
-              <ListItemInfoCopy
-                accessibilityHint={I18n.t("clipboard.copyIntoClipboard")}
-                icon="ladybug"
-                label={I18n.t("features.itWallet.support.errorCode")}
-                onPress={() => clipboardSetStringWithFeedback(code)}
-                value={code}
-              />
-              <VSpacer size={24} />
-            </View>
-          )}
-        </VStack>
+      <VStack space={24}>
+        {hasContactMethods && (
+          <View>
+            <ListItemHeader
+              label={I18n.t("features.itWallet.support.supportTitle")}
+            />
+            {supportLink && (
+              <>
+                <ListItemAction
+                  icon="website"
+                  label={I18n.t("features.itWallet.support.visitHelpCenter")}
+                  onPress={() => Linking.openURL(supportLink)}
+                  testID="contact-method-help-center"
+                  variant="primary"
+                />
+                <Divider />
+              </>
+            )}
+            {contactMethods}
+          </View>
+        )}
+        {code && (
+          <View>
+            <ListItemHeader
+              label={I18n.t("features.itWallet.support.additionalDataTitle")}
+            />
+            <ListItemInfoCopy
+              accessibilityHint={I18n.t("clipboard.copyIntoClipboard")}
+              icon="ladybug"
+              label={I18n.t("features.itWallet.support.errorCode")}
+              onPress={() => clipboardSetStringWithFeedback(code)}
+              value={code}
+            />
+            <VSpacer size={24} />
+          </View>
+        )}
       </VStack>
     )
   });

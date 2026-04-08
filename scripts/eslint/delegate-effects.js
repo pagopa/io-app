@@ -52,7 +52,7 @@ module.exports = {
         }
 
         const arg = node.argument;
-        if (!arg || arg.type !== "CallExpression") {
+        if (arg?.type !== "CallExpression") {
           return;
         }
 

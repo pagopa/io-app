@@ -117,12 +117,39 @@ describe("useItwFailureSupportModal", () => {
     expect(getByLabelText(expectedLabel)).toBeTruthy();
     expect(getByA11yHint(I18n.t("clipboard.copyIntoClipboard"))).toBeTruthy();
   });
+  it("renders the help center button when a supportLink is provided", () => {
+    const { queryByTestId } = renderHook({
+      supportChatEnabled: false,
+      credentialType: CredentialType.DRIVING_LICENSE,
+      zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI,
+      failure: {
+        type: CredentialIssuanceFailureType.ISSUER_GENERIC,
+        reason: {}
+      } as CredentialIssuanceFailure,
+      supportLink: "https://example.com/help"
+    });
+    expect(queryByTestId("contact-method-help-center")).toBeTruthy();
+  });
+
+  it("does not render the help center button when no supportLink is provided", () => {
+    const { queryByTestId } = renderHook({
+      supportChatEnabled: false,
+      credentialType: CredentialType.DRIVING_LICENSE,
+      zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI,
+      failure: {
+        type: CredentialIssuanceFailureType.ISSUER_GENERIC,
+        reason: {}
+      } as CredentialIssuanceFailure
+    });
+    expect(queryByTestId("contact-method-help-center")).toBeNull();
+  });
 });
 
 type Params = {
   credentialType?: string;
   failure: CredentialIssuanceFailure | IssuanceFailure | ItwFailure;
   supportChatEnabled: boolean;
+  supportLink?: string;
   zendeskSubcategory: ZendeskSubcategoryValue;
 };
 

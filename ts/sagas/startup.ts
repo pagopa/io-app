@@ -171,6 +171,7 @@ export const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
  * - On FL session refresh
  * - When accessing the Wallet mini app in offline mode
  */
+
 export function* initializeApplicationSaga(
   startupAction?: ActionType<typeof startApplicationInitialization>
 ): Generator<ReduxSagaEffect, void, any> {

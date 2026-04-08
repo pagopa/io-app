@@ -8,10 +8,13 @@ import { useContinueWithBottomSheet } from "../hooks/useContinueWithBottomSheet"
 
 type Props = {
   isL3: boolean;
-  isReissuanceMode: boolean;
+  isReissuanceMode?: boolean;
 };
 
-export const CiePinMethodModule = ({ isL3, isReissuanceMode }: Props) => {
+export const CiePinMethodModule = ({
+  isL3,
+  isReissuanceMode = false
+}: Props) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
 
   const handleOnPress = useCallback(() => {
@@ -37,6 +40,7 @@ export const CiePinMethodModule = ({ isL3, isReissuanceMode }: Props) => {
     return (
       <>
         <ModuleNavigationAlt
+          badge={!isReissuanceMode ? badgeProps : undefined}
           icon="fiscalCodeIndividual"
           onPress={() => {
             trackItWalletIDMethodSelected({
@@ -61,7 +65,7 @@ export const CiePinMethodModule = ({ isL3, isReissuanceMode }: Props) => {
   return (
     <ModuleNavigationAlt
       badge={isReissuanceMode ? badgeProps : undefined}
-      icon="cieCard"
+      icon="fiscalCodeIndividual"
       onPress={handleOnPress}
       subtitle={I18n.t(
         "features.itWallet.identification.modeSelection.mode.ciePin.subtitle.default"

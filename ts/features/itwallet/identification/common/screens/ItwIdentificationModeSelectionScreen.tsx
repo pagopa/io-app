@@ -176,7 +176,6 @@ export const ItwIdentificationModeSelectionScreen = ({
               isCieIdDisabled={isCieIdDisabled}
               isCiePinDisabled={isCiePinDisabled}
               isL3={isL3}
-              isReissuanceMode={isReissuanceMode}
               isSpidDisabled={isSpidDisabled}
             />
           )}
@@ -252,7 +251,6 @@ type DefaultMethodListProps = {
   isCieIdDisabled: boolean;
   isCiePinDisabled: boolean;
   isL3: boolean;
-  isReissuanceMode: boolean;
   isSpidDisabled: boolean;
 };
 
@@ -260,13 +258,10 @@ const DefaultMethodList = ({
   isCiePinDisabled,
   isCieIdDisabled,
   isSpidDisabled,
-  isL3,
-  isReissuanceMode
+  isL3
 }: DefaultMethodListProps) => (
   <>
-    {!isCiePinDisabled && (
-      <CiePinMethodModule isL3={isL3} isReissuanceMode={isReissuanceMode} />
-    )}
+    {!isCiePinDisabled && <CiePinMethodModule isL3={isL3} />}
     {!isCieIdDisabled && <CieIdMethodModule isL3={isL3} />}
     {!isSpidDisabled && <SpidMethodModule isL3={isL3} />}
   </>

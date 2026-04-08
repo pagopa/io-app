@@ -3,7 +3,6 @@ import { sequenceS } from "fp-ts/lib/Apply";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-import { Linking } from "react-native";
 
 import {
   OperationResultScreenContent,
@@ -43,6 +42,12 @@ const zendeskAssistanceErrors = [
   CredentialIssuanceFailureType.WALLET_PROVIDER_GENERIC,
   CredentialIssuanceFailureType.HARDWARE_KEY_INVALID
 ];
+
+const failureLinkMapper: Partial<
+  Record<CredentialIssuanceFailureType, string>
+> = {
+  [CredentialIssuanceFailureType.HARDWARE_KEY_INVALID]: ASSERTION_FAILED_FAQ_URL
+};
 
 export const ItwIssuanceCredentialFailureScreen = () => {
   const failureOption =
@@ -100,7 +105,8 @@ const ContentView = ({ failure }: ContentViewProps) => {
     failure,
     credentialType: O.toUndefined(credentialType),
     supportChatEnabled: zendeskAssistanceErrors.includes(failure.type),
-    zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI
+    zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI,
+    supportLink: failureLinkMapper[failure.type]
   });
 
   const supportModalAction = {
@@ -120,9 +126,12 @@ const ContentView = ({ failure }: ContentViewProps) => {
               label: I18n.t(
                 "features.itWallet.hardwareKeyInvalid.error.primaryAction"
               ),
-              onPress: () => Linking.openURL(ASSERTION_FAILED_FAQ_URL)
+              onPress: supportModal.present
             },
-            secondaryAction: supportModalAction
+            secondaryAction: {
+              label: I18n.t("global.buttons.close"),
+              onPress: closeIssuance
+            }
           };
         // Dynamic errors extracted from the entity configuration, with fallback
         case CredentialIssuanceFailureType.INVALID_STATUS: {
