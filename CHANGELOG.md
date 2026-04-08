@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.28.0-rc.5](https://github.com/pagopa/io-app/compare/3.28.0-rc.4...3.28.0-rc.5) (2026-04-08)
+
+
+### Features
+
+* [[IEL-214](https://pagopa.atlassian.net/browse/IEL-214)]added pictogram to SendEngagementComponent ([#7991](https://github.com/pagopa/io-app/issues/7991)) ([b446beb](https://github.com/pagopa/io-app/commit/b446beb1c97f0d52b0f542ab561489d05755086d))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4086](https://pagopa.atlassian.net/browse/SIW-4086)] Add support link and close button to HARDWARE_KEY_INVALID failure screens ([#7976](https://github.com/pagopa/io-app/issues/7976)) ([90a8b67](https://github.com/pagopa/io-app/commit/90a8b67e4a44492ea5e43929f6b12cd49b6cafbd))
+* **IT-Wallet:** [[SIW-4093](https://pagopa.atlassian.net/browse/SIW-4093)] Add WALLET_ADD_START event for education_degree ([#7996](https://github.com/pagopa/io-app/issues/7996)) ([c42d927](https://github.com/pagopa/io-app/commit/c42d927d2cee473d37dae6750fb41103d98f585f))
+* **IT-Wallet:** [[SIW-4121](https://pagopa.atlassian.net/browse/SIW-4121),[SIW-4127](https://pagopa.atlassian.net/browse/SIW-4127),[SIW-4234](https://pagopa.atlassian.net/browse/SIW-4234)] Update recommended badge and icon for Documenti su IO and IT-Wallet ([#7995](https://github.com/pagopa/io-app/issues/7995)) ([4970e17](https://github.com/pagopa/io-app/commit/4970e17ae49c38a2c84dd0bd5d9cd3bd32404f8e))
+
+
+### Chores
+
+* [[IEL-401](https://pagopa.atlassian.net/browse/IEL-401)] SEND change aar feedback banner color and title ([#7986](https://github.com/pagopa/io-app/issues/7986)) ([39489a3](https://github.com/pagopa/io-app/commit/39489a30100dc6a83f047ad99f7e4d92177201c3))
+* [[IOPLT-1739](https://pagopa.atlassian.net/browse/IOPLT-1739)] Migrate to the new `eslint` flat config (v9) ([#7974](https://github.com/pagopa/io-app/issues/7974)) ([edc98d4](https://github.com/pagopa/io-app/commit/edc98d416ac167f058fb7acbdd75aaba67cc921f))
+
 ## [3.28.0-rc.4](https://github.com/pagopa/io-app/compare/3.28.0-rc.3...3.28.0-rc.4) (2026-04-07)
 
 
