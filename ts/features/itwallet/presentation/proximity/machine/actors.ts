@@ -23,7 +23,7 @@ import {
 } from "../analytics";
 import type { EventsPayload } from "../utils/itwProximityTypeUtils";
 import { useIOStore } from "../../../../../store/hooks";
-import { itwCredentialsByTypeSelector } from "../store/selectors";
+import { itwPresentableCredentialsByDocTypeSelector } from "../store/selectors";
 import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors";
 import { CredentialFormat } from "../../../common/utils/itwTypesUtils";
 import { Env } from "../../../common/utils/environment";
@@ -159,7 +159,9 @@ export const createProximityActorsImplementation = (
           const parsedRequest = ISO18013_5.parseVerifierRequest(
             JSON.parse(data)
           );
-          const credentials = itwCredentialsByTypeSelector(store.getState());
+          const credentials = itwPresentableCredentialsByDocTypeSelector(
+            store.getState()
+          );
           const proximityDetails = getProximityDetails(
             parsedRequest.request,
             credentials
@@ -212,7 +214,9 @@ export const createProximityActorsImplementation = (
     const { verifierRequest } = input;
     assert(verifierRequest, "Missing required verifierRequest");
 
-    const credentials = itwCredentialsByTypeSelector(store.getState());
+    const credentials = itwPresentableCredentialsByDocTypeSelector(
+      store.getState()
+    );
     const wiaMdoc = itwWalletInstanceAttestationSelector(store.getState())?.[
       CredentialFormat.MDOC
     ];
