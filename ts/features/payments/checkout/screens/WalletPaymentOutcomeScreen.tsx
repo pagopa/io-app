@@ -193,6 +193,7 @@ const WalletPaymentOutcomeScreen = () => {
     trackOutcomeScreen();
   });
 
+  // eslint-disable-next-line complexity
   const trackOutcomeScreen = () => {
     if (outcome === WalletPaymentOutcomeEnum.SUCCESS) {
       analytics.trackPaymentOutcomeSuccess({

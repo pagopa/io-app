@@ -48,7 +48,6 @@ describe("index", () => {
     });
   });
 
-  // eslint-disable-next-line sonarjs/cognitive-complexity
   describe("trackPNUxSuccess", () => {
     [0, 1, 2].forEach(paymentCount =>
       [undefined, false, true].forEach(firstTimeOpening =>

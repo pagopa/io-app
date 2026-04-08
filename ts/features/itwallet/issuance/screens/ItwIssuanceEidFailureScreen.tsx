@@ -157,7 +157,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
             },
             secondaryAction: {
               label: I18n.t("global.buttons.close"),
-              // eslint-disable-next-line sonarjs/no-identical-functions
+
               onPress: () =>
                 closeIssuance({
                   reason: failure.reason,

@@ -91,7 +91,7 @@ export function* loadProfile(
 }
 
 // A saga to update the Profile.
-// eslint-disable-next-line sonarjs/cognitive-complexity
+
 function* createOrUpdateProfileSaga(
   createOrUpdateProfile: ReturnType<
     typeof BackendClient

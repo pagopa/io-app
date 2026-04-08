@@ -40,7 +40,6 @@ export const INITIAL_STATE: LoggedOutWithoutIdp = {
 const authenticationReducer = (
   state: AuthenticationState = INITIAL_STATE,
   action: Action
-  // eslint-disable-next-line sonarjs/cognitive-complexity
 ): AuthenticationState => {
   if (isActionOf(idpSelected, action) && !isLoggedIn(state)) {
     // Save the selected IDP in the state
