@@ -32,7 +32,9 @@ export const useThemeColorByCredentialType = (
             : "#744C63",
           textColor: withL3Design ? "#032D5C" : "#652035"
         };
+      case CredentialType.EDUCATION_ATTENDANCE:
       case CredentialType.EDUCATION_DEGREE:
+      case CredentialType.EDUCATION_DIPLOMA:
         return {
           backgroundColor: "#F2F1CE",
           textColor: IOColors.black

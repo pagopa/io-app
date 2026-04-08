@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.28.0-rc.4](https://github.com/pagopa/io-app/compare/3.28.0-rc.3...3.28.0-rc.4) (2026-04-07)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-3291](https://pagopa.atlassian.net/browse/SIW-3291),[SIW-3292](https://pagopa.atlassian.net/browse/SIW-3292),[SIW-3394](https://pagopa.atlassian.net/browse/SIW-3394)] Implementation of ANIST credentials ([#7872](https://github.com/pagopa/io-app/issues/7872)) ([efabf3f](https://github.com/pagopa/io-app/commit/efabf3f58268f72c017db1164e6373f33e0908d0))
+* [[IEL-272](https://pagopa.atlassian.net/browse/IEL-272)] Add credit card announcement for screen readers ([#7979](https://github.com/pagopa/io-app/issues/7979)) ([fe5a010](https://github.com/pagopa/io-app/commit/fe5a010c5858ea416c788ccc5591fe467563b5d5))
+
 ## [3.28.0-rc.3](https://github.com/pagopa/io-app/compare/3.28.0-rc.2...3.28.0-rc.3) (2026-04-03)
 
 

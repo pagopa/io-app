@@ -34,6 +34,7 @@ export enum WellKnownClaim {
    * Claim used to display the attachments of a credential (currently used for the European Health Insurance Card)
    */
   content = "content",
+  date_of_expiry = "date_of_expiry",
   /**
    * Claims that contains the document number, if applicable for the credential
    */
@@ -605,8 +606,10 @@ export const ClaimValue = t.union([
 export const getCredentialExpireDate = (
   credential: ParsedCredential
 ): Date | undefined => {
-  // A credential could contain its expiration date in `expiry_date`
-  const expireDate = credential[WellKnownClaim.expiry_date];
+  // A credential could contain its expiration date in `expiry_date` or `date_of_expiry`
+  const expireDate =
+    credential[WellKnownClaim.expiry_date] ||
+    credential[WellKnownClaim.date_of_expiry];
 
   if (!expireDate?.value) {
     return undefined;
@@ -650,7 +653,8 @@ export const extractFiscalCode = (s: string) =>
 export const getSafeText = (text: string) => truncate(text, { length: 128 });
 
 export const isExpirationDateClaim = (claim: ClaimDisplayFormat) =>
-  claim.id === WellKnownClaim.expiry_date;
+  claim.id === WellKnownClaim.expiry_date ||
+  claim.id === WellKnownClaim.date_of_expiry;
 
 /**
  *

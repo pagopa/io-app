@@ -55,6 +55,16 @@ export const ItwL3ScreensSection = () => {
         onPress={() => handleCredentialPress("res")}
         value="Residency L3"
       />
+      <ListItemNav
+        description="Navigate to the Education Diploma detail screen"
+        onPress={() => handleCredentialPress("edip")}
+        value="Education Diploma L3"
+      />
+      <ListItemNav
+        description="Navigate to the Education Attendance detail screen"
+        onPress={() => handleCredentialPress("edat")}
+        value="Education Attendance L3"
+      />
     </View>
   );
 };
