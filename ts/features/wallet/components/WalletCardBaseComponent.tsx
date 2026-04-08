@@ -21,22 +21,22 @@ export const withWalletCardBaseComponent =
   >(
     CardContent: ComponentType<CardProps>
   ) =>
-  ({ cardProps, isStacked = true, testID }: ContentProps) =>
-    (
-      <Animated.View
-        testID={testID}
-        style={[styles.container, isStacked && styles.containerStacked]}
-        layout={LinearTransition.duration(200)}
-        entering={FadeIn.duration(200)}
-        exiting={FadeOut.duration(200)}
-      >
-        <CardContent {...cardProps} />
-      </Animated.View>
-    );
+  ({ cardProps, isStacked = true, testID }: ContentProps) => (
+    <Animated.View
+      testID={testID}
+      style={[styles.container, isStacked && styles.containerStacked]}
+      layout={LinearTransition.duration(200)}
+      entering={FadeIn.duration(200)}
+      exiting={FadeOut.duration(200)}
+    >
+      <CardContent {...cardProps} />
+    </Animated.View>
+  );
 
 export type WalletCardBaseComponent<
   CardProps extends object = object,
-  ContentProps extends WalletCardComponentBaseProps<CardProps> = WalletCardComponentBaseProps<CardProps>
+  ContentProps extends WalletCardComponentBaseProps<CardProps> =
+    WalletCardComponentBaseProps<CardProps>
 > = ReturnType<typeof withWalletCardBaseComponent<CardProps, ContentProps>>;
 
 const styles = StyleSheet.create({

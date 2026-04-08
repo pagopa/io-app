@@ -86,8 +86,8 @@ export const createRemoteActionsImplementation = (
           purposes.length === 0
             ? "no_purpose"
             : purposes.length === 1
-            ? "unique_purpose"
-            : "multiple_purpose"
+              ? "unique_purpose"
+              : "multiple_purpose"
       );
 
       trackItwRemoteDataShare({

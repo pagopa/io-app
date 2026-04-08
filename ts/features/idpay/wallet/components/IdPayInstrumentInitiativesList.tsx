@@ -95,7 +95,7 @@ const IdPayInitiativeListItemSwitch = ({
         ({
           text: I18n.t(`idpay.wallet.initiativePairing.pendingStatus`),
           variant: "default"
-        } as Badge)
+        }) as Badge
     )
   );
 

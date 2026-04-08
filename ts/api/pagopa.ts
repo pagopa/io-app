@@ -757,7 +757,7 @@ export function PaymentManagerClient(
       pipe(
         createFetchRequestForApi(favouriteWallet, options),
         withPaymentManagerToken,
-        // eslint-disable-next-line sonarjs/no-identical-functions
+
         fn => (token: PaymentManagerToken) =>
           fn(token)({
             id
@@ -769,7 +769,7 @@ export function PaymentManagerClient(
       pipe(
         createFetchRequestForApi(deletePayment, options),
         withPaymentManagerToken,
-        // eslint-disable-next-line sonarjs/no-identical-functions
+
         fn => (token: PaymentManagerToken) =>
           fn(token)({
             id
@@ -788,7 +788,7 @@ export function PaymentManagerClient(
       pipe(
         createFetchRequestForApi(deleteWallet, options),
         withPaymentManagerToken,
-        // eslint-disable-next-line sonarjs/no-identical-functions
+
         fn => (token: PaymentManagerToken) =>
           fn(token)({
             id

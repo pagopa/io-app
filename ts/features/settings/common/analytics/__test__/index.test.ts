@@ -102,14 +102,12 @@ describe("should works all functions", () => {
     const mockMixpanelTrack = getMockMixpanelTrack();
     const updateProfile = jest
       .spyOn(
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
         require("../../../../../mixpanelConfig/profileProperties"),
         "updateMixpanelProfileProperties"
       )
       .mockResolvedValue(undefined);
     const updateSuper = jest
       .spyOn(
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
         require("../../../../../mixpanelConfig/superProperties"),
         "updateMixpanelSuperProperties"
       )
@@ -152,7 +150,6 @@ describe("should works all functions", () => {
     const mockMixpanelTrack = getMockMixpanelTrack();
     const updateProfile = jest
       .spyOn(
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
         require("../../../../../mixpanelConfig/profileProperties"),
         "updateMixpanelProfileProperties"
       )
@@ -266,7 +263,6 @@ describe("should works all functions", () => {
 
     const updateProfile = jest
       .spyOn(
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
         require("../../../../../mixpanelConfig/profileProperties"),
         "updateMixpanelProfileProperties"
       )
@@ -274,7 +270,6 @@ describe("should works all functions", () => {
 
     const updateSuper = jest
       .spyOn(
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
         require("../../../../../mixpanelConfig/superProperties"),
         "updateMixpanelSuperProperties"
       )

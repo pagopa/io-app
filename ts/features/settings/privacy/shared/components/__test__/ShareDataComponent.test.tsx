@@ -12,7 +12,6 @@ const mockPresentFn = jest.fn();
 const mockTrackInfo = jest.fn();
 
 jest.mock("../../../../../../utils/hooks/bottomSheet", () => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const react = require("react-native");
 
   return {
