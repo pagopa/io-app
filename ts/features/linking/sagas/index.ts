@@ -22,7 +22,7 @@ export function* handleStoredLinkingUrlIfNeeded() {
     }
     if (shouldTriggerWalletUpdate(storedLinkingUrl)) {
       yield* put(clearLinkingUrl());
-      yield* put(walletUpdate());
+      yield* put(walletUpdate({ isRefresh: false }));
       // If the stored linking URL is a CGN linking, we also need to get EYCA status
       if (isCGNLinking(storedLinkingUrl)) {
         yield* put(cgnEycaStatus.request());

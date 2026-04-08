@@ -45,7 +45,7 @@ export const linkingSubscription =
         // Trigger wallet update for external Universal Links and specific internal paths
         // when the user is authenticated and the app is already running
         if (shouldTriggerWalletUpdate(url)) {
-          dispatch(walletUpdate());
+          dispatch(walletUpdate({ isRefresh: false }));
         }
       } else {
         // If we are not logged in, we store the URL to be processed later

@@ -116,7 +116,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
    */
   useOnFirstRender(() => {
     dispatch(walletToggleLoadingState(true));
-    dispatch(walletUpdate());
+    dispatch(walletUpdate({ isRefresh: false }));
   });
 
   useFocusEffect(
@@ -154,7 +154,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
 
   const handleRefreshWallet = useCallback(() => {
     setIsRefreshing(true);
-    dispatch(walletUpdate());
+    dispatch(walletUpdate({ isRefresh: true }));
   }, [dispatch]);
 
   return (
