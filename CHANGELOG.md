@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.28.0-canary.8103](https://github.com/pagopa/io-app/compare/3.28.0-rc.4...3.28.0-canary.8103) (2026-04-08)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4086](https://pagopa.atlassian.net/browse/SIW-4086)] Add support link and close button to HARDWARE_KEY_INVALID failure screens ([#7976](https://github.com/pagopa/io-app/issues/7976)) ([90a8b67](https://github.com/pagopa/io-app/commit/90a8b67e4a44492ea5e43929f6b12cd49b6cafbd))
+
 ## [3.28.0-rc.4](https://github.com/pagopa/io-app/compare/3.28.0-rc.3...3.28.0-rc.4) (2026-04-07)
 
 
