@@ -81,9 +81,6 @@ export default defineConfig([
     },
 
     rules: {
-      // Project uses oxfmt for formatting, not prettier
-      "prettier/prettier": "off",
-
       // Converting `type = {}` to `interface {}` breaks assignability to
       // `Record<string, unknown>` — TypeScript requires an explicit index
       // signature on interfaces, whereas type aliases satisfy it structurally.

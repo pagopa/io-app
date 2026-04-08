@@ -27,10 +27,12 @@ export const isEmailEnabledSelector = createSelector(profileSelector, profile =>
   )
 );
 
-export const isInboxEnabledSelector = createSelector(profileSelector, profile =>
-  pot.isSome(profile) && InitializedProfile.is(profile.value)
-    ? profile.value.is_inbox_enabled
-    : false
+export const isInboxEnabledSelector = createSelector(
+  profileSelector,
+  profile =>
+    pot.isSome(profile) && InitializedProfile.is(profile.value)
+      ? profile.value.is_inbox_enabled
+      : false
 );
 
 // return the email address (as a string) if the profile pot is some and its value is of kind InitializedProfile and it has an email
