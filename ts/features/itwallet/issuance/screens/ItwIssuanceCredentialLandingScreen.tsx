@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo } from "react";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import {
   IOStackNavigationProp,
@@ -67,8 +67,6 @@ export const ItwIssuanceCredentialLandingScreen = ({
     [pidStatus]
   );
 
-  const didNavigateRef = useRef(false);
-
   useEffect(() => {
     if (isCredentialValid) {
       // Credential already present and valid, no need to issue it again
@@ -82,8 +80,6 @@ export const ItwIssuanceCredentialLandingScreen = ({
 
     if (!isItwValid) {
       // ITW not active, redirect to discovery info screen
-      // eslint-disable-next-line functional/immutable-data
-      didNavigateRef.current = true;
       navigation.replace(ITW_ROUTES.DISCOVERY.INFO, {
         animationEnabled: false,
         level: isWhitelisted ? "l3" : "l2",
@@ -92,13 +88,19 @@ export const ItwIssuanceCredentialLandingScreen = ({
       return;
     }
 
-    // ITW active, proceed to credential issuance
-    // eslint-disable-next-line functional/immutable-data
-    didNavigateRef.current = true;
-    navigation.replace(ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER, {
-      animationEnabled: false,
-      credentialType
-    });
+    if (isItwValid) {
+      // ITW active, proceed to credential issuance
+      navigation.replace(ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER, {
+        animationEnabled: false,
+        credentialType
+      });
+      return;
+    }
+
+    // No branch handled this state — track the error
+    trackItwIssuanceFromMsgFailure(
+      getMixPanelCredential(credentialType, isWhitelisted)
+    );
   }, [
     navigation,
     isItwValid,
@@ -106,23 +108,6 @@ export const ItwIssuanceCredentialLandingScreen = ({
     credentialType,
     isCredentialValid,
     isEidExpiredOrExpiring
-  ]);
-
-  useEffect(() => {
-    if (
-      !isEidExpiredOrExpiring &&
-      !isCredentialValid &&
-      !didNavigateRef.current
-    ) {
-      trackItwIssuanceFromMsgFailure(
-        getMixPanelCredential(credentialType, isWhitelisted)
-      );
-    }
-  }, [
-    isEidExpiredOrExpiring,
-    isCredentialValid,
-    credentialType,
-    isWhitelisted
   ]);
 
   if (isEidExpiredOrExpiring) {
