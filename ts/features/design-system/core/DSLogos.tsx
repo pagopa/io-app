@@ -29,7 +29,7 @@ import {
   logoItemGutter
 } from "../components/DSLogoPaymentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { contentRepoUrl } from "../../../config";
+import { DEFAULT_CONTENT_REPO_URL } from "../../../config";
 
 const styles = StyleSheet.create({
   itemsWrapper: {
@@ -85,7 +85,7 @@ export const DSLogos = () => {
   );
 };
 
-const cdnPath = `${contentRepoUrl}/logos/organizations/`;
+const cdnPath = `${DEFAULT_CONTENT_REPO_URL}/logos/organizations/`;
 
 const organizationsURIs = [
   {

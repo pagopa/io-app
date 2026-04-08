@@ -28,7 +28,7 @@ import { getBadgePropsByTransactionStatus } from "../../payments/common/utils";
 import { ListItemTransactionStatus } from "../../payments/common/utils/types";
 import { ListItemSearchInstitution } from "../../services/common/components/ListItemSearchInstitution";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { contentRepoUrl } from "../../../config";
+import { DEFAULT_CONTENT_REPO_URL } from "../../../config";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
@@ -38,7 +38,7 @@ const onCopyButtonPress = () => {
   Alert.alert("Copied!", "Value copied");
 };
 
-const cdnPath = `${contentRepoUrl}/logos/organizations/`;
+const cdnPath = `${DEFAULT_CONTENT_REPO_URL}/logos/organizations/`;
 
 const sectionTitleMargin = 16;
 const sectionMargin = 48;
@@ -133,7 +133,7 @@ const renderListItemNav = () => (
       <ListItemNav
         avatarProps={{
           logoUri: {
-            uri: `${contentRepoUrl}/logos/organizations/82003830161.png`
+            uri: `${DEFAULT_CONTENT_REPO_URL}/logos/organizations/82003830161.png`
           }
         }}
         description="Description"

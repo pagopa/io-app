@@ -56,19 +56,7 @@ export const ItwIssuanceCredentialAsyncContinuationScreen = () => {
   return (
     <OperationResultScreenContent
       title={I18n.t("features.itWallet.issuance.mdlMessageExpired.title")}
-      subtitle={[
-        {
-          text: I18n.t(
-            "features.itWallet.issuance.mdlMessageExpired.subtitleStart"
-          )
-        },
-        {
-          text: I18n.t(
-            "features.itWallet.issuance.mdlMessageExpired.subtitleBold"
-          ),
-          weight: "Semibold"
-        }
-      ]}
+      subtitle={I18n.t("features.itWallet.issuance.mdlMessageExpired.subtitle")}
       pictogram="ended"
       action={{
         label: I18n.t(

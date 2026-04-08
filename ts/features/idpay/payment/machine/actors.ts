@@ -82,7 +82,6 @@ export const createActorsImplementation = (
         E.fold(
           failure => Promise.reject(failure),
           flow(
-            // eslint-disable-next-line sonarjs/no-identical-functions
             E.map(({ status, value }) => {
               switch (status) {
                 case 200:
@@ -121,7 +120,6 @@ export const createActorsImplementation = (
       E.fold(
         failure => Promise.reject(failure),
         flow(
-          // eslint-disable-next-line sonarjs/no-identical-functions
           E.map(({ status, value }) => {
             switch (status) {
               case 200:

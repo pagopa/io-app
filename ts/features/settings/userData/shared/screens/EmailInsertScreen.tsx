@@ -405,7 +405,6 @@ const EmailInsertScreen = () => {
     };
   }, [isOnboarding, navigation, userNavigateToEmailValidationScreen]);
 
-  // eslint-disable-next-line sonarjs/cognitive-complexity
   useEffect(() => {
     if (prevUserProfile && pot.isUpdating(prevUserProfile)) {
       if (pot.isError(profile)) {
