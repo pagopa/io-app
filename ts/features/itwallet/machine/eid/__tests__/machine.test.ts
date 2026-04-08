@@ -36,6 +36,7 @@ type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
 const T_INTEGRITY_KEY = "abc";
 const T_WIA: string = "abcdefg";
+const T_ROUTE_NAME = "ITW_IDENTIFICATION_TEST_ROUTE";
 
 /**
  * Actions
@@ -1641,7 +1642,11 @@ describe("itwEidIssuanceMachine", () => {
 
     const testWarningType: CieWarningType = "card";
 
-    actor.send({ type: "go-to-cie-warning", warning: testWarningType });
+    actor.send({
+      type: "go-to-cie-warning",
+      warning: testWarningType,
+      routeName: T_ROUTE_NAME
+    });
 
     await waitFor(() => {
       expect(actor.getSnapshot().value).toStrictEqual({
@@ -1805,7 +1810,11 @@ describe("itwEidIssuanceMachine", () => {
 
     const testWarningType: CieWarningType = "card";
 
-    actor.send({ type: "go-to-cie-warning", warning: testWarningType });
+    actor.send({
+      type: "go-to-cie-warning",
+      warning: testWarningType,
+      routeName: T_ROUTE_NAME
+    });
 
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: {

@@ -4358,9 +4358,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-wallet@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "@pagopa/io-react-native-wallet@npm:3.0.0"
+"@pagopa/io-react-native-wallet@npm:3.0.1":
+  version: 3.0.1
+  resolution: "@pagopa/io-react-native-wallet@npm:3.0.1"
   dependencies:
     "@pagopa/io-wallet-oauth2": ^1.0.0
     "@pagopa/io-wallet-oid4vci": ^1.0.0
@@ -4385,7 +4385,7 @@ __metadata:
     react: "*"
     react-native: "*"
     react-native-quick-crypto: "*"
-  checksum: 6f2c53b65e787ec83570a8a8dc983c5c4acaeb43e96d7900a58b63266ed3ad6c9efbdcfc41b3dc82722c87d19f34bf635174a52c933fc4a7f0078252634db894
+  checksum: 5dd95787da9404bd7dd7f11314f2c2dfc0048d0966242548e588216e5b073c7ff713f3277daf9b368f8edede6c4c18e5f086d730c2556806e62c2f8d85bdbe05
   languageName: node
   linkType: hard
 
@@ -13371,7 +13371,7 @@ __metadata:
     "@pagopa/io-react-native-jwt": ^2.1.0
     "@pagopa/io-react-native-login-utils": 1.2.0
     "@pagopa/io-react-native-secure-storage": ^0.2.1
-    "@pagopa/io-react-native-wallet": ^3.0.0
+    "@pagopa/io-react-native-wallet": 3.0.1
     "@pagopa/io-react-native-zendesk": ^0.3.30
     "@pagopa/openapi-codegen-ts": ^14.2.0
     "@pagopa/react-native-cie": ^1.5.0
@@ -13501,6 +13501,7 @@ __metadata:
     react-native-pdf: 7.0.3
     react-native-permissions: ^5.3.0
     react-native-push-notification: ^8.1.1
+    react-native-qrcode-skia: ^0.4.0
     react-native-qrcode-svg: ^6.3.12
     react-native-quick-base64: ^2.2.2
     react-native-quick-crypto: ^0.7.17
@@ -18548,7 +18549,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"qrcode@npm:^1.5.1":
+"qrcode@npm:^1.5.1, qrcode@npm:^1.5.3":
   version: 1.5.4
   resolution: "qrcode@npm:1.5.4"
   dependencies:
@@ -19127,6 +19128,19 @@ __metadata:
     "@react-native-community/push-notification-ios": ^1.10.1
     react-native: ">=0.33"
   checksum: ae70b5cccabc6b48808b47bc59c5bd610f8b4cb10d3d624ab411ae0d2fe9d62afd41ebab95be69dab5922ef2f665a7daaee6debf2000a8f86cdec0f5330f9a69
+  languageName: node
+  linkType: hard
+
+"react-native-qrcode-skia@npm:^0.4.0":
+  version: 0.4.0
+  resolution: "react-native-qrcode-skia@npm:0.4.0"
+  dependencies:
+    qrcode: ^1.5.3
+  peerDependencies:
+    "@shopify/react-native-skia": ">=1.0.0"
+    react: "*"
+    react-native: "*"
+  checksum: da99c9c30f30ea7b809830a10b0d7a52c229f97888b9ac4ad50cda8f30ff6601d67f3a6fc763bfbc375038dc6282aa4794f324518eef0b34961eeb707fb15072
   languageName: node
   linkType: hard
 

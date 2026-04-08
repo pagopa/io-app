@@ -9,6 +9,18 @@ import {
 import { reloadAllMessages } from "../../store/actions";
 import { ResponseType, handleResponse } from "../responseHandling";
 describe("`handleResponse` function", () => {
+  describe("given a null/undefined response", () => {
+    it("should run `onFailure` with 'Response is undefined'", () => {
+      const onFailure = jest.fn();
+
+      handleResponse(null as any, jest.fn(), onFailure);
+      expect(onFailure).toHaveBeenNthCalledWith(
+        1,
+        new Error("Response is undefined")
+      );
+    });
+  });
+
   describe("given a failure", () => {
     const failure: E.Either<
       Array<ValidationError>,
@@ -93,7 +105,10 @@ describe("`handleResponse` function", () => {
         const expectedAction = reloadAllMessages.failure(defaultRequestError);
         const onFailure = jest.fn(() => expectedAction);
         const action = handleResponse(success, jest.fn(), onFailure);
-        expect(onFailure).toHaveBeenNthCalledWith(1, new Error("seriously?"));
+        expect(onFailure).toHaveBeenNthCalledWith(
+          1,
+          new Error("Response status code 500 seriously?")
+        );
         expect(action).toEqual(expectedAction);
       });
 
@@ -106,15 +121,19 @@ describe("`handleResponse` function", () => {
   });
 
   describe("with any other status", () => {
+    const arbitraryStatus = Math.random();
     const success: E.Either<Array<ValidationError>, any> = E.right({
-      status: Math.random(),
-      value: {}
+      status: arbitraryStatus,
+      value: { title: "seriously?" }
     });
 
-    it("should run `onFailure` callback with the UNKNOWN error", () => {
+    it("should run `onFailure` callback with the HTTP status error", () => {
       const onFailure = jest.fn();
       handleResponse(success, jest.fn(), onFailure);
-      expect(onFailure).toHaveBeenNthCalledWith(1, new Error("UNKNOWN"));
+      expect(onFailure).toHaveBeenNthCalledWith(
+        1,
+        new Error(`Response status code ${arbitraryStatus} seriously?`)
+      );
     });
 
     it("should not run `onSuccess` callback", () => {
