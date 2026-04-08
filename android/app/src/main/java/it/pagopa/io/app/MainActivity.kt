@@ -1,4 +1,5 @@
 package it.pagopa.io.app;
+import expo.modules.ReactActivityDelegateWrapper
 
 import android.content.pm.ActivityInfo;
 import android.os.Build;
@@ -27,7 +28,7 @@ class MainActivity : ReactActivity() {
      * which allows you to enable New Architecture with a single boolean flags [fabricEnabled]
      */
     override fun createReactActivityDelegate(): ReactActivityDelegate =
-        DefaultReactActivityDelegate(this, mainComponentName, fabricEnabled)
+        ReactActivityDelegateWrapper(this, BuildConfig.IS_NEW_ARCHITECTURE_ENABLED, DefaultReactActivityDelegate(this, mainComponentName, fabricEnabled))
 
   // https://github.com/crazycodeboy/react-native-splash-screen#third-stepplugin-configuration
     override fun onCreate(savedInstanceState: Bundle?) {

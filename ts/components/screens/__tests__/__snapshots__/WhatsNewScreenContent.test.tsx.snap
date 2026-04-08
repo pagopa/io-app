@@ -248,6 +248,7 @@ exports[`WhatsNewScreenContent should match the snapshots 1`] = `
                     "borderCurve": "continuous",
                     "flexDirection": "row",
                     "justifyContent": "center",
+                    "overflow": "hidden",
                   },
                   {
                     "borderRadius": 36,
@@ -278,7 +279,6 @@ exports[`WhatsNewScreenContent should match the snapshots 1`] = `
                     },
                     {
                       "alignSelf": "center",
-                      "flexShrink": 1,
                       "letterSpacing": 0.5,
                       "textTransform": "uppercase",
                     },
@@ -542,7 +542,7 @@ exports[`WhatsNewScreenContent should match the snapshots 1`] = `
                       [
                         {},
                         {
-                          "color": "#0E0F13",
+                          "color": undefined,
                           "fontFamily": "Titillio",
                           "fontSize": 16,
                           "fontStyle": "normal",
@@ -772,7 +772,7 @@ exports[`WhatsNewScreenContent should match the snapshots 1`] = `
                       [
                         {},
                         {
-                          "color": "#0E0F13",
+                          "color": undefined,
                           "fontFamily": "Titillio",
                           "fontSize": 16,
                           "fontStyle": "normal",

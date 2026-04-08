@@ -635,7 +635,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -871,7 +871,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                                       [
                                         {},
                                         {
-                                          "color": "#0E0F13",
+                                          "color": undefined,
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
@@ -1538,7 +1538,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -1762,7 +1762,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -1998,7 +1998,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                                       [
                                         {},
                                         {
-                                          "color": "#0E0F13",
+                                          "color": undefined,
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
@@ -3017,7 +3017,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -4851,7 +4851,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -5517,7 +5517,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -5751,7 +5751,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                                       [
                                         {},
                                         {
-                                          "color": "#0E0F13",
+                                          "color": undefined,
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",

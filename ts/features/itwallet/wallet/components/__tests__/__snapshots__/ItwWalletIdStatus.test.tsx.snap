@@ -712,7 +712,7 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpired"
                   [
                     {},
                     {
-                      "color": "#0E0F13",
+                      "color": undefined,
                       "fontFamily": "Titillio",
                       "fontSize": 16,
                       "fontStyle": "normal",

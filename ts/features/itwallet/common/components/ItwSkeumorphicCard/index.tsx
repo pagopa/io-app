@@ -97,7 +97,7 @@ export const ItwSkeumorphicCard = ({
             : "features.itWallet.presentation.credentialDetails.card.front"
         )}`,
         accessibilityValue: { text: accessibilityLabelByStatus[status] }
-      } as AccessibilityProps),
+      }) as AccessibilityProps,
     [credential.credentialType, isFlipped, status]
   );
 

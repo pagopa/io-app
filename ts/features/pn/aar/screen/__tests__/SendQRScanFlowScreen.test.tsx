@@ -39,7 +39,7 @@ describe("SendQRScanFlowScreen", () => {
     const screen = renderScreen(mockAarUrl);
     expect(screen.toJSON()).toMatchSnapshot();
     expect(spiedOnMockedTrackSendAARFailure.mock.calls.length).toBe(1);
-    expect(spiedOnMockedTrackSendAARFailure.mock.calls[0].length).toBe(2);
+    expect(spiedOnMockedTrackSendAARFailure.mock.calls[0].length).toBe(3);
     expect(spiedOnMockedTrackSendAARFailure.mock.calls[0][0]).toBe(
       "Entry Point"
     );

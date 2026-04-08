@@ -1,9 +1,18 @@
-import { Body, FeatureInfo, H3, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  FeatureInfo,
+  H3,
+  IOMarkdownLite,
+  IOMaxFontSizeMultiplier,
+  Pictogram,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+import { useWindowDimensions, View } from "react-native";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useIOSelector } from "../../../../store/hooks";
 import { pnPrivacyUrlsSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { openWebUrl } from "../../../../utils/url";
+import { useDetectSmallScreen } from "../../../../hooks/useDetectSmallScreen.ts";
 
 export type SendEngagementComponentProps = {
   isLoading: boolean;
@@ -19,6 +28,11 @@ export const SendEngagementComponent = ({
   const { privacy: privacyUrl, tos: tosUrl } = useIOSelector(
     pnPrivacyUrlsSelector
   );
+
+  const { isDeviceScreenSmall } = useDetectSmallScreen();
+  const { fontScale } = useWindowDimensions();
+  const isFontTooBig = fontScale > IOMaxFontSizeMultiplier;
+
   const openWebUrlIfNotLoading = (url: string) => {
     if (!isLoading) {
       openWebUrl(url);
@@ -49,6 +63,12 @@ export const SendEngagementComponent = ({
         }
       }}
     >
+      {!isDeviceScreenSmall && !isFontTooBig && (
+        <View style={{ alignSelf: "center" }} testID="pictogram-test">
+          <Pictogram name="message" size={120} />
+        </View>
+      )}
+      <VSpacer size={24} />
       <H3 textStyle={{ textAlign: "center" }}>
         {I18n.t("features.pn.aar.serviceActivation.title")}
       </H3>
@@ -56,73 +76,37 @@ export const SendEngagementComponent = ({
       <FeatureInfo
         pictogramProps={{ name: "emailDotNotif", pictogramStyle: "default" }}
         body={
-          <Body>
-            <Body>
-              {I18n.t("features.pn.aar.serviceActivation.feature1.part1")}
-            </Body>
-            <Body weight="Semibold">
-              {I18n.t("features.pn.aar.serviceActivation.feature1.part2")}
-            </Body>
-            <Body>
-              {I18n.t("features.pn.aar.serviceActivation.feature1.part3")}
-            </Body>
-          </Body>
+          <IOMarkdownLite
+            content={I18n.t("features.pn.aar.serviceActivation.feature1")}
+          />
         }
       />
       <VSpacer size={24} />
       <FeatureInfo
         pictogramProps={{ name: "savingMoney", pictogramStyle: "default" }}
         body={
-          <Body>
-            <Body>
-              {I18n.t("features.pn.aar.serviceActivation.feature2.part1")}
-            </Body>
-            <Body weight="Semibold">
-              {I18n.t("features.pn.aar.serviceActivation.feature2.part2")}
-            </Body>
-          </Body>
+          <IOMarkdownLite
+            content={I18n.t("features.pn.aar.serviceActivation.feature2")}
+          />
         }
       />
       <VSpacer size={24} />
       <FeatureInfo
         pictogramProps={{ name: "cardFavourite", pictogramStyle: "default" }}
         body={
-          <Body>
-            <Body>
-              {I18n.t("features.pn.aar.serviceActivation.feature3.part1")}
-            </Body>
-            <Body weight="Semibold">
-              {I18n.t("features.pn.aar.serviceActivation.feature3.part2")}
-            </Body>
-          </Body>
+          <IOMarkdownLite
+            content={I18n.t("features.pn.aar.serviceActivation.feature3")}
+          />
         }
       />
       <VSpacer size={32} />
-      <Body>
-        <Body>{I18n.t("features.pn.aar.serviceActivation.footer.part1")}</Body>
-        <Body weight="Semibold">
-          {I18n.t("features.pn.aar.serviceActivation.footer.part2")}
-        </Body>
-        <Body>{I18n.t("features.pn.aar.serviceActivation.footer.part3")}</Body>
-        <Body
-          asLink
-          weight="Semibold"
-          onPress={() => openWebUrlIfNotLoading(privacyUrl)}
-          testID="privacy-link"
-        >
-          {I18n.t("features.pn.aar.serviceActivation.footer.part4")}
-        </Body>
-        <Body>{I18n.t("features.pn.aar.serviceActivation.footer.part5")}</Body>
-        <Body
-          asLink
-          weight="Semibold"
-          onPress={() => openWebUrlIfNotLoading(tosUrl)}
-          testID="tos-link"
-        >
-          {I18n.t("features.pn.aar.serviceActivation.footer.part6")}
-        </Body>
-        <Body>{I18n.t("features.pn.aar.serviceActivation.footer.part7")}</Body>
-      </Body>
+      <IOMarkdownLite
+        content={I18n.t("features.pn.aar.serviceActivation.footer", {
+          privacyUrl,
+          tosUrl
+        })}
+        onLinkPress={openWebUrlIfNotLoading}
+      />
     </IOScrollView>
   );
 };

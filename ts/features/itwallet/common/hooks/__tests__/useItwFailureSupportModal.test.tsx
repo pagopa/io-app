@@ -3,10 +3,8 @@ import configureMockStore from "redux-mock-store";
 import { render } from "@testing-library/react-native";
 import { JSX } from "react";
 import I18n from "i18next";
-import {
-  useItwFailureSupportModal,
-  ZendeskSubcategoryValue
-} from "../useItwFailureSupportModal";
+import { useItwFailureSupportModal } from "../useItwFailureSupportModal";
+import { ZendeskSubcategoryValue } from "../useItwZendeskSupport";
 import {
   IssuanceFailure,
   IssuanceFailureType
@@ -20,6 +18,11 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { GlobalState } from "../../../../../store/reducers/types";
 import { ItwFailure, ItwFailureType } from "../../utils/ItwFailureTypes.ts";
 import { CredentialType } from "../../utils/itwMocksUtils.ts";
+
+jest.mock("@react-navigation/native", () => ({
+  ...jest.requireActual("@react-navigation/native"),
+  useRoute: () => ({ name: "MOCK_SCREEN" })
+}));
 
 jest.mock("../../../../../utils/hooks/bottomSheet", () => ({
   // Mock the bottom sheet to immediately render the component
@@ -113,6 +116,32 @@ describe("useItwFailureSupportModal", () => {
     expect(getByLabelText(expectedLabel)).toBeTruthy();
     expect(getByA11yHint(I18n.t("clipboard.copyIntoClipboard"))).toBeTruthy();
   });
+  it("renders the help center button when a supportLink is provided", () => {
+    const { queryByTestId } = renderHook({
+      supportChatEnabled: false,
+      credentialType: CredentialType.DRIVING_LICENSE,
+      zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI,
+      failure: {
+        type: CredentialIssuanceFailureType.ISSUER_GENERIC,
+        reason: {}
+      } as CredentialIssuanceFailure,
+      supportLink: "https://example.com/help"
+    });
+    expect(queryByTestId("contact-method-help-center")).toBeTruthy();
+  });
+
+  it("does not render the help center button when no supportLink is provided", () => {
+    const { queryByTestId } = renderHook({
+      supportChatEnabled: false,
+      credentialType: CredentialType.DRIVING_LICENSE,
+      zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI,
+      failure: {
+        type: CredentialIssuanceFailureType.ISSUER_GENERIC,
+        reason: {}
+      } as CredentialIssuanceFailure
+    });
+    expect(queryByTestId("contact-method-help-center")).toBeNull();
+  });
 });
 
 type Params = {
@@ -120,6 +149,7 @@ type Params = {
   credentialType?: string;
   supportChatEnabled: boolean;
   zendeskSubcategory: ZendeskSubcategoryValue;
+  supportLink?: string;
 };
 
 const renderHook = (params: Params) => {

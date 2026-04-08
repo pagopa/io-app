@@ -230,6 +230,20 @@ export const trackBackToWallet = ({ exit_page, credential }: BackToWallet) => {
   );
 };
 
+export const trackWalletInstanceRenewalSuccess = () => {
+  void mixpanelTrack(
+    ITW_ISSUANCE_TECH_EVENTS.ITW_WALLET_INSTANCE_RENEWAL_SUCCESS,
+    buildEventProperties("TECH", undefined)
+  );
+};
+
+export const trackWalletInstanceRenewalFailure = (reason: unknown) => {
+  void mixpanelTrack(
+    ITW_ISSUANCE_ERRORS_EVENTS.ITW_WALLET_INSTANCE_RENEWAL_FAILURE,
+    buildEventProperties("KO", "error", { reason })
+  );
+};
+
 // Tech events
 
 export const trackItwRequestSuccess = (

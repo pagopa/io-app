@@ -548,7 +548,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -1387,7 +1387,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -1708,7 +1708,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -2547,7 +2547,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -2783,7 +2783,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                       [
                                         {},
                                         {
-                                          "color": "#0E0F13",
+                                          "color": undefined,
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
@@ -3105,7 +3105,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",

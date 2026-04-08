@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/cognitive-complexity */
 import { act, fireEvent, waitFor } from "@testing-library/react-native";
 import _ from "lodash";
 import { RefObject } from "react";

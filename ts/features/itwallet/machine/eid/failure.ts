@@ -2,7 +2,7 @@ import { CryptoError } from "@pagopa/io-react-native-crypto";
 import { type IntegrityError } from "@pagopa/io-react-native-integrity";
 import { Errors, Trust } from "@pagopa/io-react-native-wallet";
 import {
-  isDeviceCheckInvalidKeyError,
+  isAssertionGenerationError,
   isFederationError,
   isLocalIntegrityError
 } from "../../common/utils/itwFailureUtils";
@@ -75,7 +75,7 @@ export const mapEventToFailure = (
 
   const { error } = event;
 
-  if (isDeviceCheckInvalidKeyError(error)) {
+  if (isAssertionGenerationError(error)) {
     return {
       type: IssuanceFailureType.HARDWARE_KEY_INVALID,
       reason: error

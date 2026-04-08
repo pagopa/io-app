@@ -120,3 +120,4 @@ sentry.properties
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+.eslintcache

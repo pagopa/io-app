@@ -287,24 +287,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
@@ -1264,7 +1247,7 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -1770,24 +1753,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
@@ -2747,7 +2713,7 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -3253,24 +3219,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
@@ -4230,7 +4179,7 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -4736,24 +4685,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
@@ -5713,7 +5645,7 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -6219,24 +6151,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
@@ -7196,7 +7111,7 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -7702,24 +7617,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
@@ -8679,7 +8577,7 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -9185,24 +9083,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
@@ -10162,7 +10043,7 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -10668,24 +10549,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
@@ -11645,7 +11509,7 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -12151,24 +12015,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
@@ -13128,7 +12975,7 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -13634,24 +13481,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
@@ -14611,7 +14441,7 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -15117,24 +14947,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
@@ -16094,7 +15907,7 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -16600,24 +16413,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
@@ -17577,7 +17373,7 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -18083,24 +17879,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
@@ -19060,7 +18839,7 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -19566,24 +19345,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
@@ -20543,7 +20305,7 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -21049,24 +20811,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
@@ -22026,7 +21771,7 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -22532,24 +22277,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
@@ -23509,7 +23237,7 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -24015,24 +23743,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
@@ -24992,7 +24703,7 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -25498,24 +25209,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Scegli se mostrare le anteprime e ricevere promemoria, come in questo esempio.
                             </Text>
                           </View>
@@ -26475,7 +26169,7 @@ Queste informazioni sono gestite dal sistema operativo del tuo dispositivo e dal
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",

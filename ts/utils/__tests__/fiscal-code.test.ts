@@ -1,5 +1,4 @@
-import { Locales } from "../../../locales/locales";
-import { setLocale } from "../../i18n";
+import { setLocale, Locales } from "../../i18n";
 import { formatFiscalCodeBirthdayAsShortFormat } from "../dates";
 
 // https://en.wikipedia.org/wiki/List_of_tz_database_time_zones

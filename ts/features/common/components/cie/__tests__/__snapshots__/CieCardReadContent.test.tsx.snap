@@ -486,7 +486,7 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
                   [
                     {},
                     {
-                      "color": "#0E0F13",
+                      "color": undefined,
                       "fontFamily": "Titillio",
                       "fontSize": 16,
                       "fontStyle": "normal",
@@ -1000,7 +1000,7 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
                   [
                     {},
                     {
-                      "color": "#0E0F13",
+                      "color": undefined,
                       "fontFamily": "Titillio",
                       "fontSize": 16,
                       "fontStyle": "normal",
@@ -1231,7 +1231,7 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
                   [
                     {},
                     {
-                      "color": "#0E0F13",
+                      "color": undefined,
                       "fontFamily": "Titillio",
                       "fontSize": 16,
                       "fontStyle": "normal",
@@ -2052,7 +2052,7 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
                 [
                   {},
                   {
-                    "color": "#0E0F13",
+                    "color": undefined,
                     "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
@@ -2554,7 +2554,7 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
               [
                 {},
                 {
-                  "color": "#0E0F13",
+                  "color": undefined,
                   "fontFamily": "Titillio",
                   "fontSize": 16,
                   "fontStyle": "normal",
@@ -2782,7 +2782,7 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
                 [
                   {},
                   {
-                    "color": "#0E0F13",
+                    "color": undefined,
                     "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",

@@ -7,8 +7,7 @@ import { FiscalCode } from "../../../../../definitions/backend/FiscalCode";
 import { MessageBodyMarkdown } from "../../../../../definitions/backend/MessageBodyMarkdown";
 import { MessageContent } from "../../../../../definitions/backend/MessageContent";
 import { TimeToLiveSeconds } from "../../../../../definitions/backend/TimeToLiveSeconds";
-import { Locales } from "../../../../../locales/locales";
-import { setLocale } from "../../../../i18n";
+import { setLocale, Locales } from "../../../../i18n";
 import { CTA, CTAS, LocalizedCTAs } from "../../../../types/LocalizedCTAs";
 import {
   ctasFromLocalizedCTAs,
@@ -1808,7 +1807,6 @@ describe("handleCtaAction", () => {
     "mailto:johnsmith@gmail.com",
     "copy://aValue",
     "copy:aValue"
-    // eslint-disable-next-line sonarjs/cognitive-complexity
   ].forEach((anUri, index) => {
     const linkToCalled = index < 3;
     const fimsCalled = index > 2 && index < 6;
@@ -1817,10 +1815,10 @@ describe("handleCtaAction", () => {
       linkToCalled
         ? "linkTo"
         : fimsCalled
-        ? "fimsCallback"
-        : openUrlCalled
-        ? "Linking.openUrl"
-        : "nothing"
+          ? "fimsCallback"
+          : openUrlCalled
+            ? "Linking.openUrl"
+            : "nothing"
     }' when the CTA's action is ${anUri}`, () => {
       const spiedOnMockedOpenURL = jest
         .spyOn(Linking, "openURL")

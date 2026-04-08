@@ -1,4 +1,3 @@
-import { createCryptoContextFor } from "@pagopa/io-react-native-wallet";
 import { StoredCredential } from "../../../../common/utils/itwTypesUtils";
 import {
   enrichPresentationDetails,
@@ -18,12 +17,14 @@ describe("groupCredentialsByPurpose", () => {
     const presentationDetails: EnrichedPresentationDetails = [
       {
         id: "cred_1",
+        format: "dc+sd-jwt",
         vct: "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/personidentificationdata",
         credential: "",
-        cryptoContext: createCryptoContextFor("keytag"),
+        keyTag: "keytag",
         purposes: [{ required: true }],
         claimsToDisplay: [{ id: "name", label: "Nome", value: "John" }],
-        requiredDisclosures: [["a", "name", "John"]]
+        requiredDisclosures: [{ name: "name", value: "John" }],
+        presentationFrame: { name: true }
       }
     ];
 
@@ -39,21 +40,25 @@ describe("groupCredentialsByPurpose", () => {
     const presentationDetails: EnrichedPresentationDetails = [
       {
         id: "cred_1",
+        format: "dc+sd-jwt",
         vct: "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/personidentificationdata",
         credential: "",
-        cryptoContext: createCryptoContextFor("keytag"),
+        keyTag: "keytag",
         purposes: [{ required: true }],
         claimsToDisplay: [{ id: "name", label: "Nome", value: "John" }],
-        requiredDisclosures: [["a", "name", "John"]]
+        requiredDisclosures: [{ name: "name", value: "John" }],
+        presentationFrame: { name: true }
       },
       {
         id: "cred_2",
+        format: "dc+sd-jwt",
         vct: "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/mdl",
         credential: "",
-        cryptoContext: createCryptoContextFor("keytag"),
+        keyTag: "keytag",
         purposes: [{ required: false }],
         claimsToDisplay: [{ id: "taxcode", label: "Codice", value: "123" }],
-        requiredDisclosures: [["b", "taxcode", "123"]]
+        requiredDisclosures: [{ name: "taxcode", value: "123" }],
+        presentationFrame: { taxcode: true }
       }
     ];
 
@@ -69,12 +74,14 @@ describe("groupCredentialsByPurpose", () => {
     const presentationDetails: EnrichedPresentationDetails = [
       {
         id: "cred_1",
+        format: "dc+sd-jwt",
         vct: "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/personidentificationdata",
         credential: "",
-        cryptoContext: createCryptoContextFor("keytag"),
+        keyTag: "keytag",
         purposes: [{ description: "Identification", required: true }],
         claimsToDisplay: [{ id: "name", label: "Nome", value: "John" }],
-        requiredDisclosures: [["a", "name", "John"]]
+        requiredDisclosures: [{ name: "name", value: "John" }],
+        presentationFrame: { name: true }
       }
     ];
 
@@ -92,21 +99,25 @@ describe("groupCredentialsByPurpose", () => {
     const presentationDetails: EnrichedPresentationDetails = [
       {
         id: "cred_1",
+        format: "dc+sd-jwt",
         vct: "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/personidentificationdata",
         credential: "",
-        cryptoContext: createCryptoContextFor("keytag"),
+        keyTag: "keytag",
         purposes: [{ description: "Identification", required: true }],
         claimsToDisplay: [{ id: "name", label: "Nome", value: "John" }],
-        requiredDisclosures: [["a", "name", "John"]]
+        requiredDisclosures: [{ name: "name", value: "John" }],
+        presentationFrame: { name: true }
       },
       {
         id: "cred_2",
+        format: "dc+sd-jwt",
         vct: "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/mdl",
         credential: "",
-        cryptoContext: createCryptoContextFor("keytag"),
+        keyTag: "keytag",
         purposes: [{ description: "Extra services", required: false }],
         claimsToDisplay: [{ id: "taxcode", label: "Codice", value: "123" }],
-        requiredDisclosures: [["b", "taxcode", "123"]]
+        requiredDisclosures: [{ name: "taxcode", value: "123" }],
+        presentationFrame: { taxcode: true }
       }
     ];
 
@@ -126,27 +137,31 @@ describe("groupCredentialsByPurpose", () => {
     const presentationDetails: EnrichedPresentationDetails = [
       {
         id: "cred_1",
+        format: "dc+sd-jwt",
         vct: "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/personidentificationdata",
         credential: "",
-        cryptoContext: createCryptoContextFor("keytag"),
+        keyTag: "keytag",
         purposes: [
           { description: "Identification", required: true },
           { description: "Extra services", required: false }
         ],
         claimsToDisplay: [{ id: "name", label: "Nome", value: "John" }],
-        requiredDisclosures: [["a", "name", "John"]]
+        requiredDisclosures: [{ name: "name", value: "John" }],
+        presentationFrame: { name: true }
       },
       {
         id: "cred_2",
+        format: "dc+sd-jwt",
         vct: "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/mdl",
         credential: "",
-        cryptoContext: createCryptoContextFor("keytag"),
+        keyTag: "keytag",
         purposes: [
           { description: "Extra services", required: false },
           { description: "Top service", required: false }
         ],
         claimsToDisplay: [{ id: "taxcode", label: "Codice", value: "123" }],
-        requiredDisclosures: [["b", "taxcode", "123"]]
+        requiredDisclosures: [{ name: "taxcode", value: "123" }],
+        presentationFrame: { taxcode: true }
       }
     ];
 
@@ -185,13 +200,15 @@ describe("enrichPresentationDetails", () => {
         {
           id: "one",
           credential: "",
-          cryptoContext: createCryptoContextFor("one-keytag"),
+          keyTag: "one-keytag",
+          format: "dc+sd-jwt",
           vct: "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/personidentificationdata",
           requiredDisclosures: [
-            ["salt1", "name", "Mario"],
-            ["salt2", "surname", "Rossi"]
+            { name: "name", value: "Mario" },
+            { name: "surname", value: "Rossi" }
           ],
-          purposes: [{ required: true }]
+          purposes: [{ required: true }],
+          presentationFrame: { name: true, surname: true }
         }
       ],
       { PersonIdentificationData: storedCredentialMock }
@@ -209,14 +226,16 @@ describe("enrichPresentationDetails", () => {
         {
           id: "one",
           credential: "",
-          cryptoContext: createCryptoContextFor("one-keytag"),
+          keyTag: "one-keytag",
+          format: "dc+sd-jwt",
           vct: "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/personidentificationdata",
           requiredDisclosures: [
-            ["salt1", "name", "Mario"],
-            ["salt2", "surname", "Rossi"],
-            ["salt3", "iat", 123456]
+            { name: "name", value: "Mario" },
+            { name: "surname", value: "Rossi" },
+            { name: "iat", value: 123456 }
           ],
-          purposes: [{ required: true }]
+          purposes: [{ required: true }],
+          presentationFrame: { name: true, surname: true, iat: true }
         }
       ],
       { PersonIdentificationData: storedCredentialMock }
@@ -232,14 +251,16 @@ describe("enrichPresentationDetails", () => {
     const missingCredentialDetails: PresentationDetails[number] = {
       id: "one",
       credential: "",
-      cryptoContext: createCryptoContextFor("one-keytag"),
+      keyTag: "one-keytag",
+      format: "dc+sd-jwt",
       vct: "missing_PID",
       requiredDisclosures: [
-        ["salt1", "name", "Mario"],
-        ["salt2", "surname", "Rossi"],
-        ["salt3", "iat", 123456]
+        { name: "name", value: "Mario" },
+        { name: "surname", value: "Rossi" },
+        { name: "iat", value: 123456 }
       ],
-      purposes: [{ required: true }]
+      purposes: [{ required: true }],
+      presentationFrame: { name: true, surname: true, iat: true }
     };
     expect(
       enrichPresentationDetails([missingCredentialDetails], {

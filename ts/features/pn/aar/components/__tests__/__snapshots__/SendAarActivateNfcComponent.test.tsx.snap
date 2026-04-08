@@ -62,24 +62,7 @@ exports[`SendAarActivateNfcComponent should match the snapshot 1`] = `
           }
         }
       />
-      <Text
-        allowFontScaling={true}
-        dynamicTypeRamp="body"
-        maxFontSizeMultiplier={1.5}
-        style={
-          [
-            {},
-            {
-              "color": "#555C70",
-              "fontFamily": "Titillio",
-              "fontSize": 16,
-              "fontStyle": "normal",
-              "fontWeight": "400",
-              "lineHeight": 24,
-            },
-          ]
-        }
-      >
+      <Text>
         features.pn.aar.flow.androidNfcActivation.description
       </Text>
       <View
@@ -793,7 +776,7 @@ exports[`SendAarActivateNfcComponent should match the snapshot 1`] = `
                 [
                   {},
                   {
-                    "color": "#0E0F13",
+                    "color": undefined,
                     "fontFamily": "Titillio",
                     "fontSize": 16,
                     "fontStyle": "normal",
@@ -1030,7 +1013,7 @@ exports[`SendAarActivateNfcComponent should match the snapshot 1`] = `
                   [
                     {},
                     {
-                      "color": "#0E0F13",
+                      "color": undefined,
                       "fontFamily": "Titillio",
                       "fontSize": 16,
                       "fontStyle": "normal",

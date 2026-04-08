@@ -15,8 +15,8 @@ export const QtspDocumentToSign = t.type({
   url: t.string
 });
 
-export type QtspDocumentToSign =
-  | t.TypeOf<typeof QtspDocumentToSign> & DocumentToSign;
+export type QtspDocumentToSign = t.TypeOf<typeof QtspDocumentToSign> &
+  DocumentToSign;
 
 const getFileDigest = (url: string) =>
   pipe(
@@ -31,6 +31,16 @@ const getFileDigest = (url: string) =>
         }).fetch("GET", url),
       E.toError
     ),
+    TE.chainW(response => {
+      const status = response.info().status;
+      return status >= 200 && status < 300
+        ? TE.right(response)
+        : TE.left(
+            new Error(
+              `Failed to download document for signature: HTTP ${status}`
+            )
+          );
+    }),
     TE.chain(response =>
       TE.tryCatch(
         () => ReactNativeBlobUtil.fs.readFile(response.path(), "base64"),
@@ -75,8 +85,7 @@ export const getCustomSignature = (
             .map(signatureField =>
               "unique_name" in signatureField.attrs
                 ? signatureField.attrs.unique_name
-                : // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-                  signatureField.attrs.page +
+                : signatureField.attrs.page +
                   "-" +
                   signatureField.attrs.bottom_left.x +
                   "-" +

@@ -18,7 +18,7 @@ import {
   defaultZendeskBonusesCategory,
   defaultZendeskIDPayCategory,
   zendeskCategoryId,
-  zendeskIdPayCategoryId
+  zendeskBonusAndInitiativeCategoryId
 } from "../../../../utils/supportAssistance";
 import {
   zendeskSelectedCategory,
@@ -45,7 +45,7 @@ const useIDPayFailureSupportModal = (
     resetCustomFields();
     // attach the main zendesk category to the ticket
     addTicketCustomField(
-      zendeskIdPayCategoryId,
+      zendeskBonusAndInitiativeCategoryId,
       defaultZendeskIDPayCategory.value
     );
 

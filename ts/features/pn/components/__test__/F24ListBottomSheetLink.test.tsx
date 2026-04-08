@@ -18,7 +18,7 @@ const numberToThirdPartyAttachment = (index: number) =>
   ({
     id: `${index}`,
     url: `https://domain.url/doc${index}.pdf`
-  } as ThirdPartyAttachment);
+  }) as ThirdPartyAttachment;
 
 const f24Lists: ReadonlyArray<ReadonlyArray<ThirdPartyAttachment>> = [
   [],

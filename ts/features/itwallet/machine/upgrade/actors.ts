@@ -1,4 +1,5 @@
 import { fromPromise } from "xstate";
+import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
 import { Env } from "../../common/utils/environment";
@@ -16,7 +17,10 @@ export type UpgradeCredentialOutput = {
   credentials: ReadonlyArray<StoredCredential>;
 };
 
-export const createCredentialUpgradeActorsImplementation = (env: Env) => ({
+export const createCredentialUpgradeActorsImplementation = (
+  env: Env,
+  itwVersion: ItwVersion
+) => ({
   /**
    * Handles both upgrading and reissuing credentials depending on issuanceMode.
    * - upgrade → performs credential upgrade (skipMdocIssuance = false)
@@ -32,6 +36,7 @@ export const createCredentialUpgradeActorsImplementation = (env: Env) => ({
     const { requestedCredential, issuerConf, clientId, codeVerifier } =
       await credentialIssuanceUtils.requestCredential({
         env,
+        itwVersion,
         credentialType: credential.credentialType,
         walletInstanceAttestation,
         // TODO [SIW-3091]: Update when the L3 PID reissuance flow is ready
@@ -40,6 +45,7 @@ export const createCredentialUpgradeActorsImplementation = (env: Env) => ({
 
     const result = await credentialIssuanceUtils.obtainCredential({
       env,
+      itwVersion,
       credentialType: credential.credentialType,
       walletInstanceAttestation,
       requestedCredential,

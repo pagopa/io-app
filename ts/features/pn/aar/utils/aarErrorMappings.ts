@@ -1,17 +1,22 @@
 import _ from "lodash";
 import { ComponentType } from "react";
-import { AARError } from "../../../../../definitions/pn/aar/AARError";
+import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
 import { isTestEnv } from "../../../../utils/environment";
 import {
+  trackSendAarMandateCieDataError,
   trackSendAarMandateCieExpiredError,
-  trackSendAarMandateCieNotRelatedToDelegatorError
+  trackSendAarMandateCieNotRelatedToDelegatorError,
+  trackSendAarMandateRetryError,
+  trackSendAarMandateTtlExpiredError
 } from "../analytics";
-import { SendAarGenericErrorComponent } from "../components/errors/SendAARErrorComponent";
 import {
   CieExpiredComponent,
+  CieValidationExpiredTtlComponent,
   GenericCieValidationErrorComponent,
   UnrelatedCieComponent
 } from "../components/errors/SendAarCieValidationErrorComponent";
+import { SendAarGenericErrorComponent } from "../components/errors/SendAARErrorComponent";
+import { SendAarPendingDelegationErrorComponent } from "../components/errors/SendAarPendingDelegationErrorComponent";
 
 const cieErrors = {
   PN_MANDATE_BADREQUEST: "PN_MANDATE_BADREQUEST",
@@ -25,48 +30,101 @@ const cieErrors = {
   CIE_EXPIRED_ERROR: "CIE_EXPIRED_ERROR",
   CIE_NOT_RELATED_TO_DELEGATOR_ERROR: "CIE_NOT_RELATED_TO_DELEGATOR_ERROR"
 } as const;
+const mandateCreationErrors = {
+  PN_MANDATE_ALREADYEXISTS: "PN_MANDATE_ALREADYEXISTS"
+} as const;
 const deliveryErrors = {
   PN_DELIVERY_MANDATENOTFOUND: "PN_DELIVERY_MANDATENOTFOUND"
 } as const;
-type SendAarErrorCodes = keyof (typeof cieErrors & typeof deliveryErrors);
+const sendAarProblemJsonErrorCodes = {
+  ...cieErrors,
+  ...deliveryErrors,
+  ...mandateCreationErrors
+} as const;
+type SendAarErrorCodes = keyof typeof sendAarProblemJsonErrorCodes;
 
-const aarProblemJsonErrorComponentsMap = {
-  ..._.mapValues(cieErrors, () => GenericCieValidationErrorComponent),
-  [cieErrors.CIE_EXPIRED_ERROR]: CieExpiredComponent,
-  [cieErrors.CIE_NOT_RELATED_TO_DELEGATOR_ERROR]: UnrelatedCieComponent
+// -------------- BEHAVIOUR MAPPING LOGIC --------------
+const isCieErrorCode = (code: string): code is keyof typeof cieErrors =>
+  code in cieErrors;
+
+export const getAarErrorBehaviour = (
+  problemJson?: AARProblemJson
+): AarErrorBehaviour => {
+  if (problemJson == null) {
+    return aarGenericBehaviour;
+  }
+  const { status, errors } = problemJson;
+  const errorCode = errors?.[0]?.code.toUpperCase();
+
+  if (errorCode == null) {
+    return aarGenericBehaviour;
+  }
+
+  const isCieError = isCieErrorCode(errorCode);
+
+  return _.get(
+    specificBehavioursByStatus,
+    [status, errorCode],
+    isCieError ? cieGenericBehaviour : aarGenericBehaviour
+  );
 };
-export const aarProblemJsonErrorTrackingMap = {
-  [cieErrors.CIE_EXPIRED_ERROR]: trackSendAarMandateCieExpiredError,
-  [cieErrors.CIE_NOT_RELATED_TO_DELEGATOR_ERROR]:
-    trackSendAarMandateCieNotRelatedToDelegatorError
-} satisfies {
-  [K in SendAarErrorCodes]?: () => void;
+
+type AarErrorBehaviour = {
+  track: (reason: string) => void;
+  Component: ComponentType;
 };
+
+const specificBehavioursByStatus: {
+  [status: number]: {
+    [errorCode in SendAarErrorCodes]?: AarErrorBehaviour;
+  };
+} = {
+  [404]: {
+    [sendAarProblemJsonErrorCodes.PN_MANDATE_NOTFOUND]: {
+      track: trackSendAarMandateTtlExpiredError,
+      Component: CieValidationExpiredTtlComponent
+    }
+  },
+  [409]: {
+    [sendAarProblemJsonErrorCodes.PN_MANDATE_ALREADYEXISTS]: {
+      track: trackSendAarMandateRetryError,
+      Component: SendAarPendingDelegationErrorComponent
+    }
+  },
+  [422]: {
+    [sendAarProblemJsonErrorCodes.CIE_EXPIRED_ERROR]: {
+      track: trackSendAarMandateCieExpiredError,
+      Component: CieExpiredComponent
+    },
+    [sendAarProblemJsonErrorCodes.CIE_NOT_RELATED_TO_DELEGATOR_ERROR]: {
+      track: trackSendAarMandateCieNotRelatedToDelegatorError,
+      Component: UnrelatedCieComponent
+    }
+  }
+};
+
+const cieGenericBehaviour: AarErrorBehaviour = {
+  track: trackSendAarMandateCieDataError,
+  Component: GenericCieValidationErrorComponent
+};
+
+const aarGenericBehaviour: AarErrorBehaviour = {
+  track: () => undefined,
+  Component: SendAarGenericErrorComponent
+};
+
+// ---------------- HELPER FUNCTION FOR SPECIFIC ERROR TYPES ----------------
 
 export const isAarAttachmentTtlError = (
   error?: string
 ): error is typeof deliveryErrors.PN_DELIVERY_MANDATENOTFOUND =>
   error === deliveryErrors.PN_DELIVERY_MANDATENOTFOUND;
 
-export const getSendAarErrorComponent = (
-  errors: ReadonlyArray<AARError> | undefined
-): ComponentType => {
-  if (errors === undefined || errors.length === 0) {
-    return SendAarGenericErrorComponent;
-  }
-  const maybeErrorKey = errors
-    .map(({ code }) => code)
-    .find(
-      (error): error is keyof typeof aarProblemJsonErrorComponentsMap =>
-        error in aarProblemJsonErrorComponentsMap
-    );
-
-  if (maybeErrorKey == null) {
-    // if none found, return the generic error component
-    return SendAarGenericErrorComponent;
-  }
-
-  return aarProblemJsonErrorComponentsMap[maybeErrorKey];
-};
-
-export const testable = isTestEnv ? { aarProblemJsonErrorComponentsMap } : {};
+export const testable = isTestEnv
+  ? {
+      cieErrors,
+      sendAarProblemJsonErrorCodes,
+      specificBehavioursByStatus,
+      aarGenericBehaviour
+    }
+  : undefined;

@@ -26,12 +26,14 @@ export const trackSendQRCodeScanRedirectDismissed = () => {
 
 export const trackSendAARFailure = (
   phase: SendAARFailurePhase,
-  reason: string
+  reason: string,
+  aarProblemJson: AARProblemJson | undefined
 ) => {
   const eventName = "SEND_AAR_ERROR";
   const props = buildEventProperties("KO", undefined, {
     phase,
-    reason
+    reason,
+    aarProblemJson
   });
   void mixpanelTrack(eventName, props);
 };
@@ -335,6 +337,23 @@ export const trackSendAarMandateCieExpiredError = () => {
 
 export const trackSendAarMandateCieNotRelatedToDelegatorError = () => {
   const eventName = "SEND_MANDATE_CIE_NOT_RELATED_TO_DELEGATOR_ERROR";
+  const eventProps = buildEventProperties("KO", undefined);
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarMandateRetryError = () => {
+  const eventName = "SEND_MANDATE_RETRY_ERROR";
+  const eventProps = buildEventProperties("KO", undefined);
+  void mixpanelTrack(eventName, eventProps);
+};
+
+export const trackSendAarMandateTtlExpiredError = () => {
+  const eventName = "SEND_MANDATE_TTL_EXPIRED_ERROR";
+  const eventProps = buildEventProperties("KO", undefined);
+  void mixpanelTrack(eventName, eventProps);
+};
+export const trackSendAarNotificationDetailTtlError = () => {
+  const eventName = "SEND_NOTIFICATION_DETAIL_TIME_EXPIRED_ERROR";
   const eventProps = buildEventProperties("KO", undefined);
   void mixpanelTrack(eventName, eventProps);
 };

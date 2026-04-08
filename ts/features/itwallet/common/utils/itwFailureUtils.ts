@@ -39,22 +39,13 @@ export const isLocalIntegrityError = (e: unknown): e is IntegrityError =>
   localIntegrityErrors.includes(e.message as IntegrityErrorCodes);
 
 /**
- * Regex to match the DCAppAttest error domain and invalid key code (3)
- * in the NSError localizedDescription, regardless of the system locale.
+ * Guard used to check if the error is a `GENERATION_ASSERTION_FAILED` error.
+ * This occurs on iOS when the stored DCAppAttest key becomes invalid
+ * (DCErrorInvalidKey, com.apple.devicecheck.error 3), e.g. after a device
+ * restore or app reinstall.
  */
-const DEVICE_CHECK_INVALID_KEY_REGEX = /com\.apple\.devicecheck\.error.*\b3\b/;
-
-/**
- * Guard used to check if the error is an integrity failure caused by DCAppAttest
- * throwing a com.apple.devicecheck.error with code 3 (invalidKey).
- * This error indicates the hardware attestation key is no longer valid.
- */
-export const isDeviceCheckInvalidKeyError = (e: unknown): e is IntegrityError =>
-  e instanceof Error &&
-  e.message === ("GENERATION_ASSERTION_FAILED" as IntegrityErrorCodes) &&
-  DEVICE_CHECK_INVALID_KEY_REGEX.test(
-    (e as unknown as IntegrityError).userInfo?.error ?? ""
-  );
+export const isAssertionGenerationError = (e: unknown): e is IntegrityError =>
+  e instanceof Error && e.message === "GENERATION_ASSERTION_FAILED";
 
 /**
  * Enrich instances of Error with `credentialId` so it is possible to retrieve the credential configuration

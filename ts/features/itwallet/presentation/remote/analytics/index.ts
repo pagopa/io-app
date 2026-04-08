@@ -11,7 +11,8 @@ import {
   ItwRemoteFailure,
   ItwRemoteMissingCredential,
   ItwRemoteInvalidCredential,
-  ItwL3UpgradeTrigger
+  ItwL3UpgradeTrigger,
+  ItwRemoteCredentialCombination
 } from "./utils/types";
 
 // Screen view events
@@ -25,11 +26,16 @@ export const trackItwRemoteUntrustedRPBottomSheet = () => {
 
 export const trackItwRemoteDataShare = ({
   data_type,
-  request_type
+  request_type,
+  credential_type
 }: ItwRemoteDataShare) => {
   void mixpanelTrack(
     ITW_REMOTE_SCREENVIEW_EVENTS.ITW_REMOTE_DATA_SHARE,
-    buildEventProperties("UX", "screen_view", { data_type, request_type })
+    buildEventProperties("UX", "screen_view", {
+      data_type,
+      request_type,
+      credential_type
+    })
   );
 };
 
@@ -40,19 +46,24 @@ export const trackItwRemoteInvalidAuthResponseBottomSheet = () => {
   );
 };
 
-export const trackItwRemotePresentationCompleted = (redirect_url: boolean) => {
+export const trackItwRemotePresentationCompleted = (
+  redirect_url: boolean,
+  credential_type: ItwRemoteCredentialCombination
+) => {
   void mixpanelTrack(
     ITW_REMOTE_SCREENVIEW_EVENTS.ITW_REMOTE_UX_SUCCESS,
-    buildEventProperties("UX", "screen_view", { redirect_url })
+    buildEventProperties("UX", "screen_view", { redirect_url, credential_type })
   );
 };
 
 // Actions events
 
-export const trackItwRemoteContinuePresentation = () => {
+export const trackItwRemoteContinuePresentation = (
+  credential_type: ItwRemoteCredentialCombination
+) => {
   void mixpanelTrack(
     ITW_REMOTE_ACTIONS_EVENTS.ITW_REMOTE_UX_CONVERSION,
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", { credential_type })
   );
 };
 

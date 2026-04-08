@@ -1,0 +1,1863 @@
+{
+  "sub": "https://pre.eaa.wallet.ipzs.it/1-0",
+  "metadata": {
+    "openid_credential_issuer": {
+      "credential_hash_alg_supported": "sha-256",
+      "trust_frameworks_supported": ["it_wallet"],
+      "jwks": {
+        "keys": [
+          {
+            "kty": "EC",
+            "use": "sig",
+            "crv": "P-256",
+            "kid": "HH9JY9xFA3eBp7GvQsJEfvgYXzHv4dEe8lnkxt0v0cQ",
+            "x": "Pm93czfLFUy8xFbWVra_JDZcOeDJ0sbp4bS0dWXAhZw",
+            "y": "maDVY3SuVjSoiHSD0I5_QvXcsqKzbPiciRgAN1o0Sdw",
+            "alg": "ES256"
+          }
+        ]
+      },
+      "credential_issuer": "https://pre.eaa.wallet.ipzs.it/1-0",
+      "display": [
+        {
+          "name": "Istituto Poligrafico e Zecca dello Stato S.P.A.",
+          "locale": "it-IT",
+          "logo": {
+            "uri": "https://pre.eaa.wallet.ipzs.it/1-0/public/logo.svg",
+            "alt_text": "logo di questo eID Provider"
+          }
+        },
+        {
+          "name": "Istituto Poligrafico e Zecca dello Stato S.P.A.",
+          "locale": "en-US",
+          "logo": {
+            "uri": "https://pre.eaa.wallet.ipzs.it/1-0/public/logo.svg",
+            "alt_text": "eID Provider's logo"
+          }
+        }
+      ],
+      "evidence_supported": ["vouch"],
+      "status_attestation_endpoint": "https://pre.eaa.wallet.ipzs.it/1-0/status",
+      "credential_configurations_supported": {
+        "dc_sd_jwt_EuropeanDisabilityCard": {
+          "format": "dc+sd-jwt",
+          "scope": "EuropeanDisabilityCard",
+          "cryptographic_binding_methods_supported": ["jwk"],
+          "credential_signing_alg_values_supported": [
+            "ES256",
+            "ES384",
+            "ES512"
+          ],
+          "proof_types_supported": {
+            "jwt": {
+              "proof_signing_alg_values_supported": ["ES256", "ES384", "ES512"]
+            }
+          },
+          "display": [
+            {
+              "name": "Carta Europea della Disabilità",
+              "locale": "it-IT"
+            },
+            {
+              "name": "European Disability Card",
+              "locale": "en-US"
+            }
+          ],
+          "vct": "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/europeandisabilitycard",
+          "claims": [
+            {
+              "path": ["link_qr_code"],
+              "display": [
+                {
+                  "locale": "it-IT",
+                  "name": "Codice QR"
+                },
+                {
+                  "locale": "en-US",
+                  "name": "QR code"
+                }
+              ]
+            },
+            {
+              "path": ["given_name"],
+              "display": [
+                {
+                  "locale": "it-IT",
+                  "name": "Nome"
+                },
+                {
+                  "locale": "en-US",
+                  "name": "First Name"
+                }
+              ]
+            },
+            {
+              "path": ["family_name"],
+              "display": [
+                {
+                  "name": "Cognome",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Family name",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["birth_date"],
+              "display": [
+                {
+                  "name": "Data di nascita",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Date of birth",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["expiry_date"],
+              "display": [
+                {
+                  "name": "Data di scadenza",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Date of expiry",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["document_number"],
+              "display": [
+                {
+                  "name": "Numero",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Licence number",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["portrait"],
+              "display": [
+                {
+                  "name": "Fotografia",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Portrait",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["constant_attendance_allowance"],
+              "display": [
+                {
+                  "name": "Indennità di assistenza continua",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Constant Attendance Allowance",
+                  "locale": "en-US"
+                }
+              ]
+            }
+          ],
+          "issuance_errors_supported": {
+            "credential_not_found": {
+              "display": [
+                {
+                  "title": "Non è possibile aggiungere Carta europea della disabilità al Portafoglio",
+                  "description": "Ricorda che devi essere in possesso del documento fisico valido prima di aggiungere la sua versione digitale al Portafoglio di IO. Se hai bisogno di assistenza puoi utilizzare il servizio Inps Risponde accedendo all’area riservata MyInps sul portale www.inps.it o utilizzando l’app Inps Mobile.",
+                  "locale": "it-IT"
+                }
+              ]
+            }
+          }
+        },
+        "dc_sd_jwt_EuropeanHealthInsuranceCard": {
+          "format": "dc+sd-jwt",
+          "scope": "EuropeanHealthInsuranceCard",
+          "cryptographic_binding_methods_supported": ["jwk"],
+          "credential_signing_alg_values_supported": [
+            "ES256",
+            "ES384",
+            "ES512"
+          ],
+          "proof_types_supported": {
+            "jwt": {
+              "proof_signing_alg_values_supported": ["ES256", "ES384", "ES512"]
+            }
+          },
+          "display": [
+            {
+              "locale": "it-IT",
+              "name": "Tessera Sanitaria - Tessera Europea di Assicurazione"
+            },
+            {
+              "locale": "en-US",
+              "name": "European Health Insurance Card"
+            }
+          ],
+          "vct": "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/europeanhealthinsurancecard",
+          "claims": [
+            {
+              "path": ["content"],
+              "display": [
+                {
+                  "locale": "it-IT",
+                  "name": "Tessera-Sanitaria.pdf"
+                },
+                {
+                  "locale": "en-US",
+                  "name": "Health-Insurance-Card.pdf"
+                }
+              ]
+            }
+          ]
+        },
+        "dc_sd_jwt_mDL": {
+          "format": "dc+sd-jwt",
+          "scope": "mDL",
+          "cryptographic_binding_methods_supported": ["jwk"],
+          "credential_signing_alg_values_supported": [
+            "ES256",
+            "ES384",
+            "ES512"
+          ],
+          "proof_types_supported": {
+            "jwt": {
+              "proof_signing_alg_values_supported": ["ES256", "ES384", "ES512"]
+            }
+          },
+          "display": [
+            {
+              "name": "Patente di guida",
+              "locale": "it-IT"
+            },
+            {
+              "name": "Mobile Driving Licence",
+              "locale": "en-US"
+            }
+          ],
+          "vct": "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/mdl",
+          "claims": [
+            {
+              "path": ["given_name"],
+              "display": [
+                {
+                  "name": "Nome",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "First Name",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["family_name"],
+              "display": [
+                {
+                  "name": "Cognome",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Family Name",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["birth_date"],
+              "display": [
+                {
+                  "name": "Data di nascita",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Date of birth",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["birth_place"],
+              "display": [
+                {
+                  "name": "Luogo di nascita",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Place of birth",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["issue_date"],
+              "display": [
+                {
+                  "name": "Data di rilascio",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Date of issue",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["document_iss_country"],
+              "display": [
+                {
+                  "name": "Paese di rilascio",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Issuing country",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["document_iss_authority"],
+              "display": [
+                {
+                  "name": "Rilasciato da",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Issuing authority",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["expiry_date"],
+              "display": [
+                {
+                  "name": "Data di scadenza",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Date of expiry",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["document_number"],
+              "display": [
+                {
+                  "name": "Numero",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Licence number",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["portrait"],
+              "display": [
+                {
+                  "name": "Fotografia",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Portrait",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["un_distinguishing_sign"],
+              "display": [
+                {
+                  "name": "EU/UN distinguishing sign",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "EU/UN distinguishing sign",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["restrictions_conditions"],
+              "display": [
+                {
+                  "name": "Codici",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Restriction condition",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["driving_privileges", null],
+              "display": [
+                {
+                  "name": "Categoria",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Driving privileges",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["driving_privileges", null, "vehicle_category_code"],
+              "display": [
+                {
+                  "name": "Codice categoria",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Category code",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["driving_privileges", null, "issue_date"],
+              "display": [
+                {
+                  "name": "Data rilascio categoria",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Category issue date",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["driving_privileges", null, "expiry_date"],
+              "display": [
+                {
+                  "name": "Data di scadenza della categoria",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Category expiry date",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["driving_privileges", null, "codes", null],
+              "display": [
+                {
+                  "name": "Restrizioni e condizioni della categoria",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Category conditions/restrictions",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["driving_privileges", null, "codes", null, "code"],
+              "display": [
+                {
+                  "name": "Codice restrizione/condizione",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Condition/restriction code",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["driving_privileges", null, "codes", null, "sign"],
+              "display": [
+                {
+                  "name": "Segno restrizione/condizione",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Condition/restriction sign",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["driving_privileges", null, "codes", null, "value"],
+              "display": [
+                {
+                  "name": "Valore restrizione/condizione",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Condition/restriction value",
+                  "locale": "en-US"
+                }
+              ]
+            }
+          ],
+          "issuance_errors_supported": {
+            "credential_expired": {
+              "display": [
+                {
+                  "title": "La tua Patente risulta scaduta",
+                  "description": "In questo momento non puoi guidare le categorie di veicoli associate alla tua Patente. Rinnova il documento presso la Motorizzazione Civile o un ente abilitato del tuo territorio.",
+                  "locale": "it-IT"
+                }
+              ]
+            },
+            "credential_suspended": {
+              "display": [
+                {
+                  "title": "La tua Patente risulta sospesa",
+                  "description": "In questo momento non puoi guidare le categorie di veicoli associate alla tua Patente. Rivolgiti alla Motorizzazione Civile per maggiori dettagli sul termine del periodo di sospensione.",
+                  "locale": "it-IT"
+                }
+              ]
+            },
+            "credential_revoked": {
+              "display": [
+                {
+                  "title": "La tua Patente risulta revocata",
+                  "description": "In questo momento non puoi guidare le categorie di veicoli associate alla tua Patente. Rivolgiti alla Motorizzazione Civile per maggiori dettagli.",
+                  "locale": "it-IT"
+                }
+              ]
+            },
+            "credential_voided": {
+              "display": [
+                {
+                  "title": "La tua Patente risulta annullata",
+                  "description": "In questo momento non puoi guidare le categorie di veicoli associate alla tua Patente. Rivolgiti alla Motorizzazione Civile per maggiori dettagli.",
+                  "locale": "it-IT"
+                }
+              ]
+            },
+            "credential_invalid": {
+              "display": [
+                {
+                  "title": "La tua Patente risulta non valida",
+                  "description": "Rivolgiti alla Motorizzazione Civile per maggiori dettagli.",
+                  "locale": "it-IT"
+                }
+              ]
+            },
+            "credential_not_found": {
+              "display": [
+                {
+                  "title": "Non è possibile aggiungere il documento al Portafoglio",
+                  "description": "La Motorizzazione Civile ha rilevato un errore. Rivolgiti alla Motorizzazione Civile per maggiori dettagli.",
+                  "locale": "it-IT"
+                }
+              ]
+            },
+            "credential_conflict": {
+              "display": [
+                {
+                  "title": "Non è possibile aggiungere il documento al portafoglio",
+                  "description": "La Motorizzazione Civile ha rilevato incongruenze anagrafiche. Per assistenza, contatta uco.dgmot@servizidt.it, oppure chiama il numero verde 800 232323 (da fisso) o il 06 45775927 (da cellulare).",
+                  "locale": "it-IT"
+                }
+              ]
+            }
+          }
+        },
+        "mso_mdoc_mDL": {
+          "format": "mso_mdoc",
+          "scope": "mDL",
+          "cryptographic_binding_methods_supported": ["cose_key"],
+          "credential_signing_alg_values_supported": [
+            "ES256",
+            "ES384",
+            "ES512"
+          ],
+          "proof_types_supported": {
+            "jwt": {
+              "proof_signing_alg_values_supported": ["ES256", "ES384", "ES512"]
+            }
+          },
+          "display": [
+            {
+              "name": "Patente di guida",
+              "locale": "it-IT"
+            },
+            {
+              "name": "Mobile Driving Licence",
+              "locale": "en-US"
+            }
+          ],
+          "claims": [
+            {
+              "path": ["org.iso.18013.5.1", "given_name"],
+              "display": [
+                {
+                  "name": "Nome",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "First name",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["org.iso.18013.5.1", "family_name"],
+              "display": [
+                {
+                  "name": "Cognome",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Family name",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["org.iso.18013.5.1", "birth_date"],
+              "display": [
+                {
+                  "name": "Data di nascita",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Date of birth",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["org.iso.18013.5.1", "birth_place"],
+              "display": [
+                {
+                  "name": "Luogo di nascita",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Place of birth",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["org.iso.18013.5.1", "portrait"],
+              "display": [
+                {
+                  "name": "Fotografia",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Portrait",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["org.iso.18013.5.1", "issue_date"],
+              "display": [
+                {
+                  "name": "Data di rilascio",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Issue date",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["org.iso.18013.5.1.IT", "document_iss_country"],
+              "display": [
+                {
+                  "name": "Paese di rilascio",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Issuing country",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["org.iso.18013.5.1", "un_distinguishing_sign"],
+              "display": [
+                {
+                  "name": "Codice identificativo nazionale",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "National ID number",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["org.iso.18013.5.1", "driving_privileges"],
+              "display": [
+                {
+                  "name": "Categoria",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Driving licence category",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["org.iso.18013.5.1", "expiry_date"],
+              "display": [
+                {
+                  "name": "Scadenza",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Expiry date",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["org.iso.18013.5.1", "document_number"],
+              "display": [
+                {
+                  "name": "Numero",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Document number",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["org.iso.18013.5.1.IT", "document_iss_authority"],
+              "display": [
+                {
+                  "name": "Origine dei dati",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Origin of the data",
+                  "locale": "en-US"
+                }
+              ]
+            }
+          ],
+          "issuance_errors_supported": {
+            "credential_expired": {
+              "display": [
+                {
+                  "title": "La tua Patente risulta scaduta",
+                  "description": "In questo momento non puoi guidare le categorie di veicoli associate alla tua Patente. Rinnova il documento presso la Motorizzazione Civile o un ente abilitato del tuo territorio.",
+                  "locale": "it-IT"
+                }
+              ]
+            },
+            "credential_suspended": {
+              "display": [
+                {
+                  "title": "La tua Patente risulta sospesa",
+                  "description": "In questo momento non puoi guidare le categorie di veicoli associate alla tua Patente. Rivolgiti alla Motorizzazione Civile per maggiori dettagli sul termine del periodo di sospensione.",
+                  "locale": "it-IT"
+                }
+              ]
+            },
+            "credential_revoked": {
+              "display": [
+                {
+                  "title": "La tua Patente risulta revocata",
+                  "description": "In questo momento non puoi guidare le categorie di veicoli associate alla tua Patente. Rivolgiti alla Motorizzazione Civile per maggiori dettagli.",
+                  "locale": "it-IT"
+                }
+              ]
+            },
+            "credential_voided": {
+              "display": [
+                {
+                  "title": "La tua Patente risulta annullata",
+                  "description": "In questo momento non puoi guidare le categorie di veicoli associate alla tua Patente. Rivolgiti alla Motorizzazione Civile per maggiori dettagli.",
+                  "locale": "it-IT"
+                }
+              ]
+            },
+            "credential_invalid": {
+              "display": [
+                {
+                  "title": "La tua Patente risulta non valida",
+                  "description": "Rivolgiti alla Motorizzazione Civile per maggiori dettagli.",
+                  "locale": "it-IT"
+                }
+              ]
+            },
+            "credential_not_found": {
+              "display": [
+                {
+                  "title": "Non è possibile aggiungere il documento al Portafoglio",
+                  "description": "La Motorizzazione Civile ha rilevato un errore. Rivolgiti alla Motorizzazione Civile per maggiori dettagli.",
+                  "locale": "it-IT"
+                }
+              ]
+            },
+            "credential_conflict": {
+              "display": [
+                {
+                  "title": "Non è possibile aggiungere il documento al portafoglio",
+                  "description": "La Motorizzazione Civile ha rilevato incongruenze anagrafiche. Per assistenza, contatta uco.dgmot@servizidt.it, oppure chiama il numero verde 800 232323 (da fisso) o il 06 45775927 (da cellulare).",
+                  "locale": "it-IT"
+                }
+              ]
+            }
+          },
+          "doctype": "org.iso.18013.5.1.mDL"
+        },
+        "dc_sd_jwt_education_degree": {
+          "format": "dc+sd-jwt",
+          "scope": "education_degree",
+          "cryptographic_binding_methods_supported": ["jwk"],
+          "credential_signing_alg_values_supported": [
+            "ES256",
+            "ES384",
+            "ES512"
+          ],
+          "proof_types_supported": {
+            "jwt": {
+              "proof_signing_alg_values_supported": ["ES256", "ES384", "ES512"]
+            }
+          },
+          "display": [
+            {
+              "name": "Titoli accademici",
+              "locale": "it-IT"
+            },
+            {
+              "name": "Education degrees",
+              "locale": "en-US"
+            }
+          ],
+          "vct": "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/education_degree",
+          "claims": [
+            {
+              "path": ["education_degrees", null],
+              "display": [
+                {
+                  "name": "Elenco dei titoli di studio",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "List of education degrees",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["education_degrees", null, "institute_name"],
+              "display": [
+                {
+                  "name": "Istituto",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Institute name",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["education_degrees", null, "qualification_name"],
+              "display": [
+                {
+                  "name": "Qualifica",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Qualification name",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["education_degrees", null, "programme_type_name"],
+              "display": [
+                {
+                  "name": "Tipologia di corso",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Program type name",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["education_degrees", null, "degree_course_name"],
+              "display": [
+                {
+                  "name": "Corso di laurea",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Degree course name",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["education_degrees", null, "degree_class_name"],
+              "display": [
+                {
+                  "name": "Classe di laurea",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Degree class name",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["education_degrees", null, "degree_class"],
+              "display": [
+                {
+                  "name": "Codice classe di laurea",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Degree class code",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": [
+                "education_degrees",
+                null,
+                "academic_qualification_date"
+              ],
+              "display": [
+                {
+                  "name": "Data di conseguimento",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Qualification date",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["education_degrees", null, "qualification_grade_value"],
+              "display": [
+                {
+                  "name": "Voto",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Qualification grade value",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["tax_id_code"],
+              "display": [
+                {
+                  "locale": "it-IT",
+                  "name": "Codice Fiscale"
+                },
+                {
+                  "locale": "en-US",
+                  "name": "Tax id code"
+                }
+              ]
+            }
+          ]
+        },
+        "dc_sd_jwt_education_enrollment": {
+          "format": "dc+sd-jwt",
+          "scope": "education_enrollment",
+          "cryptographic_binding_methods_supported": ["jwk"],
+          "credential_signing_alg_values_supported": [
+            "ES256",
+            "ES384",
+            "ES512"
+          ],
+          "proof_types_supported": {
+            "jwt": {
+              "proof_signing_alg_values_supported": ["ES256", "ES384", "ES512"]
+            }
+          },
+          "display": [
+            {
+              "name": "Iscrizioni universitarie",
+              "locale": "it-IT"
+            },
+            {
+              "name": "Education enrollments",
+              "locale": "en-US"
+            }
+          ],
+          "vct": "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/education_enrollment",
+          "claims": [
+            {
+              "path": ["education_enrollments", null],
+              "display": [
+                {
+                  "name": "Iscrizioni universitarie",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Education enrollments",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["education_enrollments", null, "institute_name"],
+              "display": [
+                {
+                  "name": "Istituto",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Institute name",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["education_enrollments", null, "programme_type_name"],
+              "display": [
+                {
+                  "name": "Tipologia di corso",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Program type name",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["education_enrollments", null, "degree_course_name"],
+              "display": [
+                {
+                  "name": "Corso di laurea",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Degree course name",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["education_enrollments", null, "degree_class_name"],
+              "display": [
+                {
+                  "name": "Classe di laurea",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Degree class name",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["education_enrollments", null, "degree_class"],
+              "display": [
+                {
+                  "name": "Codice classe di laurea",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Degree class code",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["education_enrollments", null, "degree_course_year"],
+              "display": [
+                {
+                  "name": "Anno di corso",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Degree course year",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["education_enrollments", null, "academic_year"],
+              "display": [
+                {
+                  "name": "Anno accademico",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Academic year",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["tax_id_code"],
+              "display": [
+                {
+                  "locale": "it-IT",
+                  "name": "Codice Fiscale"
+                },
+                {
+                  "locale": "en-US",
+                  "name": "Tax id code"
+                }
+              ]
+            }
+          ]
+        },
+        "dc_sd_jwt_residency": {
+          "format": "dc+sd-jwt",
+          "scope": "residency",
+          "cryptographic_binding_methods_supported": ["jwk"],
+          "credential_signing_alg_values_supported": [
+            "ES256",
+            "ES384",
+            "ES512"
+          ],
+          "proof_types_supported": {
+            "jwt": {
+              "proof_signing_alg_values_supported": ["ES256", "ES384", "ES512"]
+            }
+          },
+          "display": [
+            {
+              "name": "Residenza",
+              "locale": "it-IT"
+            },
+            {
+              "name": "Residence",
+              "locale": "en-US"
+            }
+          ],
+          "vct": "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/residency",
+          "claims": [
+            {
+              "path": ["family_name"],
+              "display": [
+                {
+                  "locale": "it-IT",
+                  "name": "Cognome"
+                },
+                {
+                  "locale": "en-US",
+                  "name": "Family name"
+                }
+              ]
+            },
+            {
+              "path": ["given_name"],
+              "display": [
+                {
+                  "locale": "it-IT",
+                  "name": "Nome"
+                },
+                {
+                  "locale": "en-US",
+                  "name": "First name"
+                }
+              ]
+            },
+            {
+              "path": ["birth_date"],
+              "display": [
+                {
+                  "locale": "it-IT",
+                  "name": "Data di nascita"
+                },
+                {
+                  "locale": "en-US",
+                  "name": "Date of birth"
+                }
+              ]
+            },
+            {
+              "path": ["birth_place"],
+              "display": [
+                {
+                  "name": "Luogo di nascita",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Place of birth",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["tax_id_code"],
+              "display": [
+                {
+                  "name": "Codice Fiscale",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Tax id code",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["address"],
+              "display": [
+                {
+                  "name": "Indirizzo",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Address",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["address", "country"],
+              "display": [
+                {
+                  "name": "Paese di residenza",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Country of residence",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["address", "locality"],
+              "display": [
+                {
+                  "name": "Comune di residenza",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "City of residence",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["address", "locality_fraction"],
+              "display": [
+                {
+                  "name": "Frazione",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Locality",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["address", "street_address"],
+              "display": [
+                {
+                  "name": "Indirizzo",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Street address",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["address", "house_number"],
+              "display": [
+                {
+                  "name": "Seconda riga indirizzo",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Street address line 2",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["address", "postal_code"],
+              "display": [
+                {
+                  "name": "Codice postale",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Postal code",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["address", "region"],
+              "display": [
+                {
+                  "name": "Provincia/Stato/Regione",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Region",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["consulate_code"],
+              "display": [
+                {
+                  "name": "Codice Consolato",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Consulate code",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["consulate_name"],
+              "display": [
+                {
+                  "name": "Nome Consolato",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Consulate name",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["effective_date"],
+              "display": [
+                {
+                  "name": "Residente dal",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Effective date",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["foreign_residence"],
+              "display": [
+                {
+                  "name": "Residenza straniera",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Foreign residence",
+                  "locale": "en-US"
+                }
+              ]
+            }
+          ]
+        },
+        "dc_sd_jwt_education_attendance": {
+          "format": "dc+sd-jwt",
+          "scope": "education_attendance",
+          "cryptographic_binding_methods_supported": ["jwk"],
+          "credential_signing_alg_values_supported": [
+            "ES256",
+            "ES384",
+            "ES512"
+          ],
+          "proof_types_supported": {
+            "jwt": {
+              "proof_signing_alg_values_supported": ["ES256", "ES384", "ES512"]
+            }
+          },
+          "display": [
+            {
+              "name": "Frequenza Scolastica",
+              "locale": "it-IT"
+            },
+            {
+              "name": "Education attendance",
+              "locale": "en-US"
+            }
+          ],
+          "vct": "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/education_attendance",
+          "claims": [
+            {
+              "path": ["tax_id_code"],
+              "display": [
+                {
+                  "locale": "it-IT",
+                  "name": "Codice Fiscale"
+                },
+                {
+                  "locale": "en-US",
+                  "name": "Tax id code"
+                }
+              ]
+            },
+            {
+              "path": ["institute_code"],
+              "display": [
+                {
+                  "locale": "it-IT",
+                  "name": "Codice meccanografico dell'Istituto"
+                },
+                {
+                  "locale": "en-US",
+                  "name": "Institute identification code"
+                }
+              ]
+            },
+            {
+              "path": ["institute_name"],
+              "display": [
+                {
+                  "locale": "it-IT",
+                  "name": "Denominazione dell'Istituto"
+                },
+                {
+                  "locale": "en-US",
+                  "name": "Institute Name"
+                }
+              ]
+            },
+            {
+              "path": ["school_name"],
+              "display": [
+                {
+                  "name": "Denominazione del Plesso Scolastico",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "School Name",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["school_code"],
+              "display": [
+                {
+                  "name": "Codice meccanografico del Plesso Scolastico",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "School Code",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["school_course_year"],
+              "display": [
+                {
+                  "name": "Anno del corso",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Course year",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["school_year"],
+              "display": [
+                {
+                  "name": "Anno scolastico",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "School year",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["educational_track"],
+              "display": [
+                {
+                  "name": "Indirizzo di studio",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Educational track",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["cpia_school_year"],
+              "display": [
+                {
+                  "name": "Anno corso CPIA",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "CPIA school year",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["school_attendance_type"],
+              "display": [
+                {
+                  "name": "Tipo di frequenza",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Attendance type",
+                  "locale": "en-US"
+                }
+              ]
+            }
+          ]
+        },
+        "dc_sd_jwt_education_diploma": {
+          "format": "dc+sd-jwt",
+          "scope": "education_diploma",
+          "cryptographic_binding_methods_supported": ["jwk"],
+          "credential_signing_alg_values_supported": [
+            "ES256",
+            "ES384",
+            "ES512"
+          ],
+          "proof_types_supported": {
+            "jwt": {
+              "proof_signing_alg_values_supported": ["ES256", "ES384", "ES512"]
+            }
+          },
+          "display": [
+            {
+              "name": "Titolo di studio scolastico",
+              "locale": "it-IT"
+            },
+            {
+              "name": "School Qualification",
+              "locale": "en-US"
+            }
+          ],
+          "vct": "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/education_diploma",
+          "claims": [
+            {
+              "path": ["tax_id_code"],
+              "display": [
+                {
+                  "locale": "it-IT",
+                  "name": "Codice Fiscale"
+                },
+                {
+                  "locale": "en-US",
+                  "name": "Tax id code"
+                }
+              ]
+            },
+            {
+              "path": ["school_qualifications", null],
+              "display": [
+                {
+                  "locale": "it-IT",
+                  "name": "Elenco dei titoli di studio scolastici"
+                },
+                {
+                  "locale": "en-US",
+                  "name": "List of School Qualification"
+                }
+              ]
+            },
+            {
+              "path": ["school_qualifications", null, "school_year"],
+              "display": [
+                {
+                  "locale": "it-IT",
+                  "name": "Anno scolastico"
+                },
+                {
+                  "locale": "en-US",
+                  "name": "School year"
+                }
+              ]
+            },
+            {
+              "path": ["school_qualifications", null, "qualification_year"],
+              "display": [
+                {
+                  "name": "Anno scolastico di conseguimento",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "School year of achievement",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["school_qualifications", null, "institute_code"],
+              "display": [
+                {
+                  "name": "Codice meccanografico dell'Istituto",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Institute identification code",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["school_qualifications", null, "institute_name"],
+              "display": [
+                {
+                  "name": "Denominazione dell'Istituto",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Institute Name",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["school_qualifications", null, "school_name"],
+              "display": [
+                {
+                  "name": "Denominazione del Plesso Scolastico",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "School Name",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["school_qualifications", null, "school_code"],
+              "display": [
+                {
+                  "name": "Codice meccanografico del Plesso Scolastico",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "School Code",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": [
+                "school_qualifications",
+                null,
+                "qualification_grade_value"
+              ],
+              "display": [
+                {
+                  "name": "Voto finale",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Qualification Grade Value",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["school_qualifications", null, "educational_track"],
+              "display": [
+                {
+                  "name": "Indirizzo di studio",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Educational track",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": ["school_qualifications", null, "qualification_type"],
+              "display": [
+                {
+                  "name": "Tipologia del titolo di studio",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Qualification Type",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": [
+                "school_qualifications",
+                null,
+                "qualification_type_description"
+              ],
+              "display": [
+                {
+                  "name": "Descrizione della Tipologia del titolo di studio",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Qualification Type Description",
+                  "locale": "en-US"
+                }
+              ]
+            },
+            {
+              "path": [
+                "school_qualifications",
+                null,
+                "professional_qualification"
+              ],
+              "display": [
+                {
+                  "name": "Qualifica professionale",
+                  "locale": "it-IT"
+                },
+                {
+                  "name": "Professional qualification",
+                  "locale": "en-US"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "nonce_endpoint": "https://pre.eaa.wallet.ipzs.it/1-0/nonce",
+      "status_assertion_endpoint": "https://pre.eaa.wallet.ipzs.it/1-0/status",
+      "credential_endpoint": "https://pre.eaa.wallet.ipzs.it/1-0/credential"
+    },
+    "oauth_authorization_server": {
+      "pushed_authorization_request_endpoint": "https://pre.eaa.wallet.ipzs.it/1-0/as/par",
+      "jwks": {
+        "keys": [
+          {
+            "kty": "EC",
+            "use": "sig",
+            "crv": "P-256",
+            "kid": "HH9JY9xFA3eBp7GvQsJEfvgYXzHv4dEe8lnkxt0v0cQ",
+            "x": "Pm93czfLFUy8xFbWVra_JDZcOeDJ0sbp4bS0dWXAhZw",
+            "y": "maDVY3SuVjSoiHSD0I5_QvXcsqKzbPiciRgAN1o0Sdw",
+            "alg": "ES256"
+          }
+        ]
+      },
+      "scopes_supported": [
+        "mDL",
+        "EuropeanDisabilityCard",
+        "EuropeanHealthInsuranceCard",
+        "education_degree",
+        "education_diploma",
+        "education_attendance",
+        "education_enrollment",
+        "residency",
+        "external_issuer_credential"
+      ],
+      "issuer": "https://pre.eaa.wallet.ipzs.it/1-0",
+      "acr_values_supported": [
+        "https://www.spid.gov.it/SpidL2",
+        "https://www.spid.gov.it/SpidL3"
+      ],
+      "authorization_endpoint": "https://pre.eaa.wallet.ipzs.it/1-0/authorize",
+      "token_endpoint_auth_methods_supported": ["attest_jwt_client_auth"],
+      "response_modes_supported": ["query", "form_post.jwt"],
+      "token_endpoint": "https://pre.eaa.wallet.ipzs.it/1-0/token",
+      "response_types_supported": ["code"],
+      "client_registration_types_supported": ["automatic"],
+      "grant_types_supported": ["authorization_code"],
+      "token_endpoint_auth_signing_alg_values_supported": [
+        "ES256",
+        "ES384",
+        "ES512"
+      ],
+      "code_challenge_methods_supported": ["S256"],
+      "authorization_signing_alg_values_supported": ["ES256"],
+      "request_object_signing_alg_values_supported": ["ES256", "ES384", "ES512"]
+    },
+    "openid_credential_verifier": {
+      "authorization_signed_response_alg": "ES256",
+      "authorization_encrypted_response_alg": "ECDH-ES",
+      "authorization_encrypted_response_enc": "A256GCM",
+      "jwks": {
+        "keys": [
+          {
+            "kty": "EC",
+            "use": "sig",
+            "crv": "P-256",
+            "kid": "LvkYQBylsTp3XXSHa7TJjA0L4ZVqskXsixqWUKv-hrc",
+            "x": "cnKcdbVE87XppOtXq7Tiuhh7pwv7FAgz1RdcXndP548",
+            "y": "xkICf7LUDopOuiSqnxzZIgqALgiBwz1buDR8OVw_Ll0",
+            "alg": "ES256"
+          }
+        ]
+      },
+      "application_type": "web",
+      "response_uris": ["https://pre.eaa.wallet.ipzs.it/1-0/response_uri"],
+      "request_uris": ["https://pre.eaa.wallet.ipzs.it/1-0/request_uri"],
+      "redirect_uris": ["https://pre.eaa.wallet.ipzs.it/1-0/response_uri"],
+      "client_name": "Istituto Poligrafico e Zecca dello Stato S.P.A.",
+      "client_id": "https://pre.eaa.wallet.ipzs.it/1-0",
+      "contacts": ["informazioni@ipzs.it", "protocollo@pec.ipzs.it"],
+      "vp_formats": {
+        "dc+sd-jwt": {
+          "sd-jwt_alg_values": ["ES256", "ES384", "ES512"],
+          "kb-jwt_alg_values": ["ES256", "ES384", "ES512"]
+        }
+      }
+    },
+    "federation_entity": {
+      "homepage_uri": "https://pre.eaa.wallet.ipzs.it/1-0",
+      "logo_uri": "https://pre.eaa.wallet.ipzs.it/1-0/public/logo.svg",
+      "organization_name": "Istituto Poligrafico e Zecca dello Stato S.P.A.",
+      "tos_uri": "https://pre.eaa.wallet.ipzs.it/1-0/public/info_policy.html",
+      "contacts": ["informazioni@ipzs.it", "protocollo@pec.ipzs.it"],
+      "policy_uri": "https://pre.eaa.wallet.ipzs.it/1-0/public/privacy_policy.html"
+    }
+  },
+  "jwks": {
+    "keys": [
+      {
+        "kty": "EC",
+        "use": "sig",
+        "crv": "P-256",
+        "kid": "HH9JY9xFA3eBp7GvQsJEfvgYXzHv4dEe8lnkxt0v0cQ",
+        "x5c": [
+          "MIIDzDCCA3GgAwIBAgIGAZer8K/SMAoGCCqGSM49BAMCMIGzMQswCQYDVQQGEwJJVDEOMAwGA1UECAwFTGF6aW8xDTALBgNVBAcMBFJvbWExMTAvBgNVBAoMKElzdGl0dXRvIFBvbGlncmFmaWNvIGUgWmVjY2EgZGVsbG8gU3RhdG8xCzAJBgNVBAsMAklUMR4wHAYDVQQDDBVwcmUudGEud2FsbGV0LmlwenMuaXQxJTAjBgkqhkiG9w0BCQEWFnByb3RvY29sbG9AcGVjLmlwenMuaXQwHhcNMjUwNjI2MTExMjQ3WhcNMjcwNjI2MTExMjQ3WjCBsjELMAkGA1UEBhMCSVQxDjAMBgNVBAgMBUxhemlvMQ0wCwYDVQQHDARSb21hMTgwNgYDVQQKDC9Jc3RpdHV0byBQb2xpZ3JhZmljbyBlIFplY2NhIGRlbGxvIFN0YXRvIFMuUC5BLjEjMCEGA1UEAwwacHJlLmVhYS53YWxsZXQuaXB6cy5pdC8xLTAxJTAjBgkqhkiG9w0BCQEWFnByb3RvY29sbG9AcGVjLmlwenMuaXQwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAAQ+b3dzN8sVTLzEVtZWtr8kNlw54MnSxunhtLR1ZcCFnJmg1WN0rlY0qIh0g9COf0L13LKis2z4nIkYADdaNEnco4IBbjCCAWowHQYDVR0OBBYEFO6NTuR4x6IRbajyGCwT9vcNqvi8MIHlBgNVHSMEgd0wgdqAFPNQg3GMQKld6bTPIimydOq/cMQZoYG5pIG2MIGzMQswCQYDVQQGEwJJVDEOMAwGA1UECAwFTGF6aW8xDTALBgNVBAcMBFJvbWExMTAvBgNVBAoMKElzdGl0dXRvIFBvbGlncmFmaWNvIGUgWmVjY2EgZGVsbG8gU3RhdG8xCzAJBgNVBAsMAklUMR4wHAYDVQQDDBVwcmUudGEud2FsbGV0LmlwenMuaXQxJTAjBgkqhkiG9w0BCQEWFnByb3RvY29sbG9AcGVjLmlwenMuaXSCBgGXOvl5QzASBgNVHRMBAf8ECDAGAQH/AgEAMA4GA1UdDwEB/wQEAwIBpjA9BgNVHR8ENjA0MDKgMKAuhixodHRwczovL3ByZS50YS53YWxsZXQuaXB6cy5pdC9wa2kvdGEtc3ViLmNybDAKBggqhkjOPQQDAgNJADBGAiEAog7qdpTSJ6Cb6p0H6cPAabJt10eDpZOkMMEmkDirS24CIQCRUyj12/jaNXClbYiCQf8+F9vP6Y/RnliFiO48+p4ddA==",
+          "MIIDQzCCAuigAwIBAgIGAZc6+XlDMAoGCCqGSM49BAMCMIGzMQswCQYDVQQGEwJJVDEOMAwGA1UECAwFTGF6aW8xDTALBgNVBAcMBFJvbWExMTAvBgNVBAoMKElzdGl0dXRvIFBvbGlncmFmaWNvIGUgWmVjY2EgZGVsbG8gU3RhdG8xCzAJBgNVBAsMAklUMR4wHAYDVQQDDBVwcmUudGEud2FsbGV0LmlwenMuaXQxJTAjBgkqhkiG9w0BCQEWFnByb3RvY29sbG9AcGVjLmlwenMuaXQwHhcNMjUwNjA0MTI0NTE3WhcNMzAwNjAzMTI0NTE3WjCBszELMAkGA1UEBhMCSVQxDjAMBgNVBAgMBUxhemlvMQ0wCwYDVQQHDARSb21hMTEwLwYDVQQKDChJc3RpdHV0byBQb2xpZ3JhZmljbyBlIFplY2NhIGRlbGxvIFN0YXRvMQswCQYDVQQLDAJJVDEeMBwGA1UEAwwVcHJlLnRhLndhbGxldC5pcHpzLml0MSUwIwYJKoZIhvcNAQkBFhZwcm90b2NvbGxvQHBlYy5pcHpzLml0MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEaE0xyhd3e9LDT7uwHOclL5H3389gwiCwFhI3KOvidn0glBIHYxqH+4Z9VTMYWG5L8cwC9AaJUCNGu2dp5ZiiTKOB5TCB4jAdBgNVHQ4EFgQU81CDcYxAqV3ptM8iKbJ06r9wxBkwHwYDVR0jBBgwFoAU81CDcYxAqV3ptM8iKbJ06r9wxBkwDwYDVR0TAQH/BAUwAwEB/zBEBggrBgEFBQcBAQQ4MDYwNAYIKwYBBQUHMAKGKGh0dHBzOi8vcHJlLnRhLndhbGxldC5pcHpzLml0L3BraS90YS5jZXIwDgYDVR0PAQH/BAQDAgEGMDkGA1UdHwQyMDAwLqAsoCqGKGh0dHBzOi8vcHJlLnRhLndhbGxldC5pcHpzLml0L3BraS90YS5jcmwwCgYIKoZIzj0EAwIDSQAwRgIhAOsQYzR+eGf4je63VGHqkpmkBbfyOre+mfIdHHowWWR/AiEA58xBNb5UW5uMB+tQur8fq24RD5MmRHLYS6bDgIYmluw="
+        ],
+        "x": "Pm93czfLFUy8xFbWVra_JDZcOeDJ0sbp4bS0dWXAhZw",
+        "y": "maDVY3SuVjSoiHSD0I5_QvXcsqKzbPiciRgAN1o0Sdw"
+      }
+    ]
+  },
+  "iss": "https://pre.eaa.wallet.ipzs.it/1-0",
+  "authority_hints": ["https://pre.ta.wallet.ipzs.it"],
+  "exp": 1804591808,
+  "iat": 1773055808
+}

@@ -799,7 +799,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                     [
                                       {},
                                       {
-                                        "color": "#0E0F13",
+                                        "color": undefined,
                                         "fontFamily": "Titillio",
                                         "fontSize": 16,
                                         "fontStyle": "normal",
@@ -1120,7 +1120,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -1726,27 +1726,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Se il problema non si risolve segnalacelo con l'icona '?' in alto a destra, grazie!
                             </Text>
                           </View>
@@ -2045,7 +2025,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",

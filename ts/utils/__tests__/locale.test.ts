@@ -1,6 +1,5 @@
 import * as O from "fp-ts/lib/Option";
-import { Locales } from "../../../locales/locales";
-import { localeFallback, setLocale } from "../../i18n";
+import { localeFallback, setLocale, Locales } from "../../i18n";
 import { getLocalePrimary, getLocalePrimaryWithFallback } from "../locale";
 
 describe("getLocalePrimary", () => {

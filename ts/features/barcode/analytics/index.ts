@@ -10,7 +10,8 @@ export type BarcodeAnalyticsCode =
   | "data_matrix"
   | "idpay"
   | "SEND"
-  | "ITW presentazione remota"; // Should be extended for every feature
+  | "ITW presentazione remota"
+  | "firma con IO"; // Should be extended for every feature
 export type BarcodeAnalyticsDataEntry = "qr code" | "file";
 
 const getEventCodeFromBarcode = (
@@ -30,6 +31,10 @@ const getEventCodeFromBarcode = (
 
   if (barcode.type === "ITW_REMOTE") {
     return "ITW presentazione remota";
+  }
+
+  if (barcode.type === "FCI") {
+    return "firma con IO";
   }
 
   return undefined;
