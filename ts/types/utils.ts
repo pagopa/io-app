@@ -10,9 +10,9 @@ export type SagaCallReturnType<
 > =
   R extends Generator<infer _, infer B0, infer _>
     ? B0
-    : R extends Iterator<(infer B) | Effect>
+    : R extends Iterator<infer B | Effect>
       ? B
-      : R extends IterableIterator<(infer B1) | Effect>
+      : R extends IterableIterator<infer B1 | Effect>
         ? B1
         : R extends Promise<infer B2>
           ? B2

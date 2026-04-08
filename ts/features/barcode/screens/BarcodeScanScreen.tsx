@@ -74,12 +74,13 @@ const BarcodeScanScreen = () => {
     format => (format === "DATA_MATRIX" ? dataMatrixPosteEnabled : true)
   );
 
-  const barcodeTypes: Array<IOBarcodeType> = IO_BARCODE_ALL_TYPES.filter(type =>
-    type === "IDPAY"
-      ? isIdPayEnabledInScanScreen
-      : type === "SEND"
-        ? isSendEnabled
-        : true
+  const barcodeTypes: Array<IOBarcodeType> = IO_BARCODE_ALL_TYPES.filter(
+    type =>
+      type === "IDPAY"
+        ? isIdPayEnabledInScanScreen
+        : type === "SEND"
+          ? isSendEnabled
+          : true
   );
 
   /**

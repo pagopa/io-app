@@ -1,6 +1,0 @@
-{
-  "$schema": "./node_modules/oxfmt/configuration_schema.json",
-  "trailingComma": "none",
-  "arrowParens": "avoid",
-  "printWidth": 80
-}
