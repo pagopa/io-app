@@ -26,17 +26,14 @@ jobs:
     steps:
       - name: checkout repo content
         uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
-      - name: setup python
-        uses: actions/setup-python@57ded4d7d5e986d7296eab16560982c6dd7c923b #v4.6.0
+      - name: setup node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
-          python-version: '3.8'
-      - name: install pipenv
-        run: pip install pipenv
+          node-version-file: ".node-version"    
+      - name: install dependencies
+        run: yarn install
       - name: check uris validity on static texts
-        run: |
-          cd scripts/check_urls
-          pipenv install
-          pipenv run python3 check_urls.py
+        run: node scripts/check_urls/check_urls.js
   io_check_cie_button_exists_ios:
     name: Check that CIE button exists on iOS
     runs-on: ubuntu-latest

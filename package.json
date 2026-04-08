@@ -2,6 +2,9 @@
   "name": "io",
   "version": "3.28.0-rc.4",
   "private": true,
+  "workspaces": [
+    "scripts/check_urls"
+  ],
   "scripts": {
     "start": "react-native start",
     "setup": "yarn install && yarn postinstall && yarn prepare",
