@@ -54,6 +54,7 @@ export const CiePinMethodModule = ({
             });
             ciePinBottomSheet.present();
           }}
+          badge={!isReissuanceMode ? badgeProps : undefined}
         />
         {ciePinBottomSheet.bottomSheet}
       </>
