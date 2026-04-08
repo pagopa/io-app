@@ -40,6 +40,7 @@ const ReceiptInfoSection = ({
   transaction,
   loading,
   showUnavailableReceiptBanner
+  // eslint-disable-next-line complexity
 }: Props) => {
   const theme = useIOTheme();
   const backgroundColor = IOColors[theme["appBackground-primary"]];

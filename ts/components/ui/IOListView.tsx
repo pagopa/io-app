@@ -109,6 +109,7 @@ export const IOListView = <T,>({
   ItemSeparatorComponent,
   testID,
   loading
+  // eslint-disable-next-line complexity
 }: IOListView<T>) => {
   const theme = useIOTheme();
 
