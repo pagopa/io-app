@@ -50,11 +50,15 @@ const CgnDiscoveryBanner = () => {
 
   useOnFirstRender(
     () => {
-      if (!cgnFetched && pot.isNone(cgnStatus)) {
+      if (isRemoteBannerEnabled && !cgnFetched && pot.isNone(cgnStatus)) {
         dispatch(cgnDetails.request());
       }
     },
-    () => !cgnFetched && pot.isNone(cgnStatus) && !isBannerClosed
+    () =>
+      isRemoteBannerEnabled &&
+      !cgnFetched &&
+      pot.isNone(cgnStatus) &&
+      !isBannerClosed
   );
 
   if (
