@@ -226,7 +226,11 @@ export const itwProximityMachine = setup({
         "Manages the communication lifecycle between the device and the verifier",
       invoke: {
         id: "proximityCommunicationLogic",
-        src: "proximityCommunicationLogic"
+        src: "proximityCommunicationLogic",
+        onError: {
+          actions: "setFailure",
+          target: "#itwProximityMachine.Failure"
+        }
       },
       on: {
         "qr-code-string": {
