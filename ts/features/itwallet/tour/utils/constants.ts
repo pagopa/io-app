@@ -1,5 +1,5 @@
 /** Defines the groupd ID for the IT-Wallet guided tour */
-export const ITW_TOUR_GROUP_ID = "ITW_INITIAL_TOUR_TEST_223550053bb322";
+export const ITW_TOUR_GROUP_ID = "itwActivationTourGuide";
 
 /** Guided tour steps */
 export const ITW_TOUR_STEP_ID = 0;
