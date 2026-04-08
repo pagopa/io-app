@@ -76,7 +76,7 @@ const migrations: MigrationManifest = {
         ...((state as any).notifications ? (state as any).notifications : {}),
         installation: generateInitialState()
       }
-    } as PersistedState),
+    }) as PersistedState,
 
   // version 1
   // we changed the type of the services state to use Pot types so we clear all
@@ -85,7 +85,7 @@ const migrations: MigrationManifest = {
     ({
       ...state,
       entities: {}
-    } as PersistedState),
+    }) as PersistedState,
 
   // Version 2
   // Adds messagesIdsByServiceId

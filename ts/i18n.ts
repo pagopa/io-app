@@ -35,8 +35,8 @@ type ExtractKeys<Obj, Prefix extends string = ""> = {
     ? Obj[K] extends Record<string, any>
       ? ExtractKeys<Obj[K], Prefix extends "" ? `${K}` : `${Prefix}.${K}`>
       : Prefix extends ""
-      ? `${K}`
-      : `${Prefix}.${K}`
+        ? `${K}`
+        : `${Prefix}.${K}`
     : never;
 }[keyof Obj];
 

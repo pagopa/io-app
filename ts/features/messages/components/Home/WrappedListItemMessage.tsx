@@ -86,11 +86,11 @@ export const WrappedListItemMessage = ({
           text: I18n.t("features.pn.details.badge.legalValue")
         }
       : isPaymentMessageWithPaidNotice
-      ? {
-          variant: "success",
-          text: I18n.t("messages.badge.paid")
-        }
-      : undefined;
+        ? {
+            variant: "success",
+            text: I18n.t("messages.badge.paid")
+          }
+        : undefined;
 
   const accessibilityLabel = useMemo(
     () => accessibilityLabelForMessageItem(message, source, isSelected),

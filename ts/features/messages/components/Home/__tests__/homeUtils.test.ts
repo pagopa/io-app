@@ -72,7 +72,7 @@ const createGlobalState = (
         }
       }
     }
-  } as GlobalState);
+  }) as GlobalState;
 
 const checkReturnedAction = (action?: Action, getArchived: boolean = false) => {
   expect(action).not.toBeUndefined();
@@ -123,7 +123,6 @@ describe("getInitialReloadAllMessagesActionIfNeeded", () => {
     isLoadingOrUpdating(oppositeCategoryPot) ||
     !isStrictNone(currentCategoryPot);
 
-  // eslint-disable-next-line sonarjs/cognitive-complexity
   shownCategories.forEach(shownCategory =>
     archiveStatuses.forEach(archiveStatus =>
       potValues.forEach(inboxPot =>
@@ -505,7 +504,7 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
     new Date(2024, 1, 1, 9, 30, 29, 0),
     new Date(2024, 1, 1, 9, 30, 27, 0)
   ];
-  // eslint-disable-next-line sonarjs/cognitive-complexity
+
   generatePots().forEach(oppositeCategoryData =>
     errorTimes.forEach(errorTime =>
       nextValues.forEach(selectedCategoryNextValue =>
@@ -692,7 +691,7 @@ describe("getLoadNextPreviousPageMessagesActionIfAllowed", () => {
       fromUserAction: false
     });
   };
-  // eslint-disable-next-line sonarjs/cognitive-complexity
+
   ["INBOX", "ARCHIVE"].forEach(shownCategory =>
     [undefined, "01J2C0Z8H1XFTNRHRJHB20QZHG"].forEach(previousPageMessageId =>
       generateMessagePots(previousPageMessageId).forEach(

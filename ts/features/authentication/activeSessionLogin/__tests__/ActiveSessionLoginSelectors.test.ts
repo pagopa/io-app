@@ -22,7 +22,7 @@ describe("isActiveSessionLoginRemotelyEnabledSelector", () => {
       remoteConfig: O.some({
         loginConfig
       })
-    } as unknown as GlobalState);
+    }) as unknown as GlobalState;
 
   it("should return true if activeSessionLogin is enabled and min_app_version is == current version", () => {
     const state = getState({
@@ -83,7 +83,7 @@ describe("isActiveSessionLoginEnabledSelector (local and remote flags)", () => {
           }
         }
       }
-    } as unknown as GlobalState);
+    }) as unknown as GlobalState;
 
   it("should return true if both remote and local flag are true", () => {
     const state = getState(
