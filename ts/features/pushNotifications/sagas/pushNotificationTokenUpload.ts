@@ -23,8 +23,9 @@ import {
 export const notificationsPlatform: PlatformEnum =
   Platform.select<PlatformEnum>({
     ios: PlatformEnum.apns,
-    android: PlatformEnum.gcm,
-    default: PlatformEnum.gcm
+    // TODO: proper specs in https://github.com/pagopa/io-app/pull/7916
+    android: "fcmv1" as PlatformEnum,
+    default: "fcmv1" as PlatformEnum
   });
 
 export function* pushNotificationTokenUpload(

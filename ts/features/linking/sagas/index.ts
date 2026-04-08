@@ -9,10 +9,12 @@ import {
 } from "../../../utils/deepLinkUtils";
 import { walletUpdate } from "../../wallet/store/actions";
 import { cgnEycaStatus } from "../../bonus/cgn/store/actions/eyca/details";
+import { trackIOOpenedFromUniversalAppLink } from "../analytics";
 
 export function* handleStoredLinkingUrlIfNeeded() {
   const storedLinkingUrl = yield* select(storedLinkingUrlSelector);
   if (storedLinkingUrl !== undefined) {
+    trackIOOpenedFromUniversalAppLink(storedLinkingUrl);
     const shouldNavigateToAAR = yield* select(isSendAARLink, storedLinkingUrl);
     if (shouldNavigateToAAR) {
       yield* put(clearLinkingUrl());
