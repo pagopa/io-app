@@ -45,7 +45,6 @@ export function* watchActiveSessionLoginSaga() {
   );
 }
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 export function* handleActiveSessionLoginSaga(): Generator<
   ReduxSagaEffect,
   void,

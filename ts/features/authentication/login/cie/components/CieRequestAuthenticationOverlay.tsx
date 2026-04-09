@@ -139,9 +139,8 @@ export enum CieEntityIds {
 }
 
 const CieWebView = (props: Props) => {
-  const [internalState, setInternalState] = useState<InternalState>(
-    generateResetState()
-  );
+  const [internalState, setInternalState] =
+    useState<InternalState>(generateResetState());
 
   const [requestInfo, setRequestInfo] = useState<RequestInfo>({
     requestState: "LOADING",

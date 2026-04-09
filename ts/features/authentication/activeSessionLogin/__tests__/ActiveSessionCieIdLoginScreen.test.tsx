@@ -47,7 +47,6 @@ jest.mock("react-redux", () => ({
 }));
 
 jest.mock("react-native-webview", () => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const { View } = require("react-native");
   const WebView = (props: any) => <View {...props} />;
   return {

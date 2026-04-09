@@ -34,7 +34,11 @@ describe("itwCredentialUpgradeMachine actions", () => {
             credentials: [ItwStoredCredentialsMocks.L3.mdl]
           }
         }
-      } as unknown as ActionArgs<Context, CredentialUpgradeEvents, CredentialUpgradeEvents>);
+      } as unknown as ActionArgs<
+        Context,
+        CredentialUpgradeEvents,
+        CredentialUpgradeEvents
+      >);
 
       expect(mockDispatch).toHaveBeenCalledWith(
         itwCredentialsRemoveByType("MDL")
