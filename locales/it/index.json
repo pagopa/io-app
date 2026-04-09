@@ -2521,7 +2521,7 @@
             "notAdressee": {
               "infoAlert": "Stai aiutando un’altra persona ad accedere a una notifica SEND.",
               "title": "Vuoi aprire la notifica SEND di {{name}}?",
-              "subtitle": "Se la persona che ha ricevuto la comunicazione ti ha chiesto di farlo, puoi aprire questa notifica SEND per suo conto.",
+              "subtitle": "Per aprire la notifica per suo conto, tieni a portata di mano la Carta di Identità Elettronica (CIE) di {{name}}.",
               "primaryAction": "Apri notifica SEND",
               "bottomSheet": {
                 "title": "Cosa ti serve?",

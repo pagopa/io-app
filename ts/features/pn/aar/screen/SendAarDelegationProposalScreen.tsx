@@ -132,7 +132,10 @@ const DelegationProposalContent = ({
         title={i18n.t("features.pn.aar.flow.delegated.notAdressee.title", {
           name: denomination
         })}
-        subtitle={i18n.t("features.pn.aar.flow.delegated.notAdressee.subtitle")}
+        subtitle={i18n.t(
+          "features.pn.aar.flow.delegated.notAdressee.subtitle",
+          { name: denomination }
+        )}
         pictogram="identityCheck"
         action={{
           label: i18n.t(
