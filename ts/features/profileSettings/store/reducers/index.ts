@@ -12,6 +12,7 @@ import { Action } from "../../../../store/actions/types";
 import { differentProfileLoggedIn } from "../../../../store/actions/crossSessions";
 import { isDevEnv } from "../../../../utils/environment";
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export type ProfileSettingsState = {};
 
 export const profileSettingsReducerInitialState = {};

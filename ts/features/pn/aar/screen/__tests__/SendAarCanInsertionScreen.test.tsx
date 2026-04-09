@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/cognitive-complexity */
 import I18n from "i18next";
 import { act, fireEvent, waitFor } from "@testing-library/react-native";
 import _ from "lodash";

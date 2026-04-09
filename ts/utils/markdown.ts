@@ -31,10 +31,10 @@ function customPlugin() {
 
 export const remarkProcessor = remark()
   .use(remarkDirective)
-  .use(customPlugin) // @ts-ignore
-  .use(remarkRehype) // @ts-ignore
-  .use(rehypeFormat) // @ts-ignore
-  .use(rehypeStringify) // @ts-ignore
+  .use(customPlugin) // @ts-expect-error remark plugin type mismatch
+  .use(remarkRehype) // @ts-expect-error remark plugin type mismatch
+  .use(rehypeFormat) // @ts-expect-error remark plugin type mismatch
+  .use(rehypeStringify) // @ts-expect-error remark plugin type mismatch
   .use(remarkDirective);
 
 export const markdownToPlainText = (md: string): string =>

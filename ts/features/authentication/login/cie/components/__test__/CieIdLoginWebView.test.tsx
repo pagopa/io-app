@@ -62,13 +62,13 @@ describe(CieIdLoginWebView, () => {
   it("Should match the snapshot", async () => {
     jest
       .spyOn(Linking, "addEventListener")
-      // @ts-ignore
+      // @ts-expect-error partial mock return value
       .mockReturnValue({ remove: jest.fn() });
     const component = renderComponent();
     expect(component).toMatchSnapshot();
   });
   it("Should cancel the operation and navigate to the auth CieID error screen", async () => {
-    // @ts-ignore
+    // @ts-expect-error partial mock return value
     jest.spyOn(loginHooks, "useLollipopLoginSource").mockReturnValue(() => ({
       shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(),
       webviewSource: undefined
@@ -99,7 +99,7 @@ describe(CieIdLoginWebView, () => {
     expect(idpScreen).toBeTruthy();
   });
   it("Should navigate to error screen", () => {
-    // @ts-ignore
+    // @ts-expect-error partial mock return value
     jest.spyOn(loginHooks, "useLollipopLoginSource").mockReturnValue({
       shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(),
       webviewSource: { uri: API_PREFIX_URL }
@@ -118,7 +118,7 @@ describe(CieIdLoginWebView, () => {
     });
   });
   it("Should trigger onHttpError and execute navigation to error screen", () => {
-    // @ts-ignore
+    // @ts-expect-error partial mock return value
     jest.spyOn(loginHooks, "useLollipopLoginSource").mockReturnValue({
       shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(),
       webviewSource: { uri: API_PREFIX_URL }
@@ -140,7 +140,7 @@ describe(CieIdLoginWebView, () => {
     });
   });
   it("Should trigger onHttpError without navigating to the error screen", () => {
-    // @ts-ignore
+    // @ts-expect-error partial mock return value
     jest.spyOn(loginHooks, "useLollipopLoginSource").mockReturnValue({
       shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(),
       webviewSource: { uri: API_PREFIX_URL }
@@ -161,7 +161,7 @@ describe(CieIdLoginWebView, () => {
     });
   });
   it("Should trigger onHttpError and navigate to the error screen", () => {
-    // @ts-ignore
+    // @ts-expect-error partial mock return value
     jest.spyOn(loginHooks, "useLollipopLoginSource").mockReturnValue({
       shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(),
       webviewSource: { uri: API_PREFIX_URL }
@@ -182,7 +182,7 @@ describe(CieIdLoginWebView, () => {
     });
   });
   it("Should trigger an authentication error", () => {
-    // @ts-ignore
+    // @ts-expect-error partial mock return value
     jest.spyOn(loginHooks, "useLollipopLoginSource").mockReturnValue({
       shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(),
       webviewSource: { uri: API_PREFIX_URL }
@@ -213,7 +213,7 @@ describe(CieIdLoginWebView, () => {
     });
   });
   it("Should execute the login", () => {
-    // @ts-ignore
+    // @ts-expect-error partial mock return value
     jest.spyOn(loginHooks, "useLollipopLoginSource").mockReturnValue({
       shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(),
       webviewSource: { uri: API_PREFIX_URL }
@@ -235,7 +235,7 @@ describe(CieIdLoginWebView, () => {
     );
   });
   it("Shouldn't execute the login because of missing token", () => {
-    // @ts-ignore
+    // @ts-expect-error partial mock return value
     jest.spyOn(loginHooks, "useLollipopLoginSource").mockReturnValue({
       shouldBlockUrlNavigationWhileCheckingLollipop: jest.fn(),
       webviewSource: { uri: API_PREFIX_URL }

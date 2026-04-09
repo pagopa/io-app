@@ -5124,33 +5124,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-native/eslint-config@npm:0.85.0-rc.7":
-  version: 0.85.0-rc.7
-  resolution: "@react-native/eslint-config@npm:0.85.0-rc.7"
+"@react-native/eslint-config@npm:0.84.1":
+  version: 0.84.1
+  resolution: "@react-native/eslint-config@npm:0.84.1"
   dependencies:
     "@babel/core": ^7.25.2
     "@babel/eslint-parser": ^7.25.1
-    "@react-native/eslint-plugin": 0.85.0-rc.7
+    "@react-native/eslint-plugin": 0.84.1
     "@typescript-eslint/eslint-plugin": ^8.36.0
     "@typescript-eslint/parser": ^8.36.0
     eslint-config-prettier: ^8.5.0
     eslint-plugin-eslint-comments: ^3.2.0
     eslint-plugin-ft-flow: ^2.0.1
     eslint-plugin-jest: ^29.0.1
-    eslint-plugin-react: ^7.37.5
+    eslint-plugin-react: ^7.30.1
     eslint-plugin-react-hooks: ^7.0.1
     eslint-plugin-react-native: ^5.0.0
   peerDependencies:
     eslint: ^8.0.0 || ^9.0.0
     prettier: ">=2"
-  checksum: c641159d2c229850dee980bbdc0c08d1306f6be6532209d0efda4299cd71f7c74d7d363730543995d68309f8eb1b4d0ca1740636e35991d5fa73354537d123ee
+  checksum: df33735342142c02dc97391f636d4bd934e8354cbf0232bf153fa87369b47f13f9878a060a6f8e45e857b4f8ec849a12b14f34e3eda34bd206d3c374b7ef8d95
   languageName: node
   linkType: hard
 
-"@react-native/eslint-plugin@npm:0.85.0-rc.7":
-  version: 0.85.0-rc.7
-  resolution: "@react-native/eslint-plugin@npm:0.85.0-rc.7"
-  checksum: ff04c4a41bf2ca04e02a0cfa9dd6dc67c47e4f571e64486db4ee207c5e79c534d6d8866c64327a90ede3549bd1dcc6a63071711cc5d4f71d5fda18aa9bbe305a
+"@react-native/eslint-plugin@npm:0.84.1":
+  version: 0.84.1
+  resolution: "@react-native/eslint-plugin@npm:0.84.1"
+  checksum: 7ff1a967fa1e9c2c27f1912638e39cdede5e9218e3df76c7292627c3a9d356bab360a981ba7ed845741a49acbc33efaf2d3d6c75849ae3f8e9440db527583016
   languageName: node
   linkType: hard
 
@@ -11429,7 +11429,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react@npm:^7.37.5":
+"eslint-plugin-react@npm:^7.30.1":
   version: 7.37.5
   resolution: "eslint-plugin-react@npm:7.37.5"
   dependencies:
@@ -13703,7 +13703,7 @@ __metadata:
     "@react-native-cookies/cookies": ^6.2.1
     "@react-native-documents/picker": ^10.1.2
     "@react-native/babel-preset": 0.83.4
-    "@react-native/eslint-config": 0.85.0-rc.7
+    "@react-native/eslint-config": 0.84.1
     "@react-native/metro-config": 0.83.4
     "@react-native/typescript-config": 0.83.4
     "@react-navigation/bottom-tabs": 6.5.11

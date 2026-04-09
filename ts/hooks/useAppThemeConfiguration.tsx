@@ -27,7 +27,7 @@ export const useAppThemeConfiguration = () => {
         const colorScheme = value as ColorSchemeName;
         Appearance.setColorScheme(colorScheme);
         setTheme(colorScheme);
-        // eslint-disable-next-line sonarjs/no-redundant-jump
+
         return;
       })
       .catch(() => {

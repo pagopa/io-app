@@ -190,7 +190,7 @@
     "@react-native-community/cli-platform-android": "20.0.0",
     "@react-native-community/cli-platform-ios": "20.0.0",
     "@react-native/babel-preset": "0.83.4",
-    "@react-native/eslint-config": "0.85.0-rc.7",
+    "@react-native/eslint-config": "0.84.1",
     "@react-native/metro-config": "0.83.4",
     "@react-native/typescript-config": "0.83.4",
     "@stylistic/eslint-plugin-js": "^2.1.0",
