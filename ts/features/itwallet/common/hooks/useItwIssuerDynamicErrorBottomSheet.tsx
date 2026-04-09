@@ -25,11 +25,26 @@ export const ITW_ISSUER_DYNAMIC_ERROR_HELP_CENTER_URL =
 
 type Failure = CredentialIssuanceFailure | IssuanceFailure;
 
+/**
+ * Input required to configure the issuer dynamic error bottom sheet.
+ * `failure` is used both to derive the support error code and to provide
+ * additional troubleshooting data to Zendesk.
+ */
 type Props = {
   failure: Failure;
   zendeskSubcategory: ZendeskSubcategoryValue;
 };
 
+/**
+ * Builds the support bottom sheet shown for issuer-side dynamic failures.
+ * It gives the user two recovery paths:
+ * - open the dedicated Help Center article
+ * - start a Zendesk conversation
+ * The sheet also shows the error code with a copy-to-clipboard action to facilitate support interactions.
+ * @param failure - The failure object from which the error code is extracted and sent to Zendesk.
+ * @param zendeskSubcategory - The Zendesk subcategory to be used when starting a support conversation.
+ * @returns An object containing the bottom sheet component and functions to present and dismiss it.
+ */
 export const useItwIssuerDynamicErrorBottomSheet = ({
   failure,
   zendeskSubcategory
