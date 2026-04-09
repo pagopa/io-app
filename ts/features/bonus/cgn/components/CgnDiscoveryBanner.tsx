@@ -20,7 +20,7 @@ import { trackStartAddNewCredential } from "../../../itwallet/analytics";
 import { loadAvailableBonuses } from "../../common/store/actions/availableBonusesTypes";
 import useCgnEligibility from "../hooks/useCgnEligibility.tsx";
 import { cgnActivationStart } from "../store/actions/activation";
-import { setCgnDiscoveryBannerClosed } from "../store/actions/banners";
+import { closeCgnDiscoveryBanner } from "../store/actions/banners";
 import { cgnDetails } from "../store/actions/details.ts";
 import { isCgnDiscoveryBannerClosedSelector } from "../store/reducers/banners";
 import {
@@ -88,7 +88,7 @@ const CgnDiscoveryBanner = () => {
         }
         pictogramName="star"
         color="turquoise"
-        onClose={() => dispatch(setCgnDiscoveryBannerClosed(true))}
+        onClose={() => dispatch(closeCgnDiscoveryBanner())}
         labelClose={I18n.t("global.buttons.close")}
         onPress={() => {
           trackStartAddNewCredential("CGN");

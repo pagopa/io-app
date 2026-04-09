@@ -4,7 +4,7 @@ import { getType } from "typesafe-actions";
 import { differentProfileLoggedIn } from "../../../../../store/actions/crossSessions";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { setCgnDiscoveryBannerClosed } from "../actions/banners";
+import { closeCgnDiscoveryBanner } from "../actions/banners";
 
 export type CgnBannersState = {
   discoveryBannerClosed: boolean;
@@ -19,10 +19,10 @@ const cgnBannersReducer = (
   action: Action
 ): CgnBannersState => {
   switch (action.type) {
-    case getType(setCgnDiscoveryBannerClosed):
+    case getType(closeCgnDiscoveryBanner):
       return {
         ...state,
-        discoveryBannerClosed: action.payload
+        discoveryBannerClosed: false
       };
     case getType(differentProfileLoggedIn):
       return initialState;

@@ -1,7 +1,7 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
 
-export const setCgnDiscoveryBannerClosed = createStandardAction(
+export const closeCgnDiscoveryBanner = createStandardAction(
   "CGN_DISCOVERY_BANNER_CLOSED"
-)<boolean>();
+)();
 
-export type CgnBannersActions = ActionType<typeof setCgnDiscoveryBannerClosed>;
+export type CgnBannersActions = ActionType<typeof closeCgnDiscoveryBanner>;
