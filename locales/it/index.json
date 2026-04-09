@@ -3430,6 +3430,7 @@
             "subtitle": "È il codice a 6 cifre (CAN) che trovi stampato sul fronte della tua Carta di Identità Elettronica, in basso a destra."
           },
           "readingCard": {
+            "progressAccessibilityAnnouncement": "Lettura {{percentage}}% completata",
             "android": {
               "idle": {
                 "title": "Appoggia la CIE alla parte alta del telefono",

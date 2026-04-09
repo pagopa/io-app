@@ -37,6 +37,13 @@ export type CieCardReadContentProps = {
    * @platform iOS
    */
   hiddenProgressBar?: boolean;
+  /**
+   * Optional function to generate the accessibility label for the progress indicator.
+   * Receives the progress percentage (0-100) and should return a descriptive string
+   * for screen readers (e.g. "Lettura 37% completata").
+   * Falls back to announcing just the percentage if not provided.
+   */
+  progressAccessibilityLabel?: (percentage: number) => string;
 };
 
 /**
@@ -121,7 +128,7 @@ const Actions = (
  * @param props.progress - Progress value from 0 to 1
  */
 const LinearProgressBar = (
-  props: Pick<CieCardReadContentProps, "progress">
+  props: Pick<CieCardReadContentProps, "progress" | "progressAccessibilityLabel">
 ) => {
   const { progress = 0 } = props;
   const [width, setWidth] = useState(0);
@@ -145,6 +152,10 @@ const LinearProgressBar = (
     width: animatedWidth.value
   }));
 
+  const a11yLabel = props.progressAccessibilityLabel
+    ? props.progressAccessibilityLabel(progressPercent)
+    : `${progressPercent}%`;
+
   return (
     <View
       focusable
@@ -158,7 +169,7 @@ const LinearProgressBar = (
       }}
       onLayout={e => setWidth(e.nativeEvent.layout.width)}
       importantForAccessibility="yes"
-      accessibilityLabel={`${progressPercent}%`}
+      accessibilityLabel={a11yLabel}
       accessible={true}
       accessibilityRole="progressbar"
       accessibilityValue={{
@@ -182,7 +193,10 @@ const ContentIos = (props: CieCardReadContentProps) => (
     <VSpacer size={32} />
     <VStack space={16} style={{ flex: 1 }}>
       {!props.hiddenProgressBar && (
-        <LinearProgressBar progress={props.progress} />
+        <LinearProgressBar
+          progress={props.progress}
+          progressAccessibilityLabel={props.progressAccessibilityLabel}
+        />
       )}
       <HStack space={32}>
         <View style={{ flex: 1, paddingVertical: 8, gap: 4 }}>
@@ -209,8 +223,11 @@ const ContentAndroid = (props: CieCardReadContentProps) => {
   const stepped = Math.floor(progressPercent / announceStep) * announceStep;
 
   useEffect(() => {
-    AccessibilityInfo.announceForAccessibility(`${stepped}%`);
-  }, [stepped]);
+    const announcement = props.progressAccessibilityLabel
+      ? props.progressAccessibilityLabel(stepped)
+      : `${stepped}%`;
+    AccessibilityInfo.announceForAccessibility(announcement);
+  }, [stepped, props.progressAccessibilityLabel]);
 
   return (
     <IOScrollView centerContent>

@@ -109,11 +109,22 @@ export const useCieManager: UseCieManager = ({
     }
 
     // Updates the status alert for the iOS NFC system dialog with the current reading progress.
-    const progressEmojis = getCieProgressEmojis(event.progress);
-    const label = I18n.t(
-      "features.itWallet.identification.cie.readingCard.ios.reading.status"
-    );
-    CieManager.setCurrentAlertMessage(`${progressEmojis}\n${label}`);
+    // When the screen reader is active, use a descriptive text label instead of emoji
+    // to avoid VoiceOver reading individual emoji names.
+    if (isScreenReaderEnabled) {
+      const percentage = Math.round(event.progress * 100);
+      const label = I18n.t(
+        "features.itWallet.identification.cie.readingCard.progressAccessibilityAnnouncement",
+        { percentage }
+      );
+      CieManager.setCurrentAlertMessage(label);
+    } else {
+      const progressEmojis = getCieProgressEmojis(event.progress);
+      const label = I18n.t(
+        "features.itWallet.identification.cie.readingCard.ios.reading.status"
+      );
+      CieManager.setCurrentAlertMessage(`${progressEmojis}\n${label}`);
+    }
   };
 
   /**

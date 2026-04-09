@@ -49,6 +49,12 @@ export const ItwCieCardReadProgressContent = (
     default: "android" as const
   });
 
+  const progressAccessibilityLabel = (percentage: number) =>
+    I18n.t(
+      "features.itWallet.identification.cie.readingCard.progressAccessibilityAnnouncement",
+      { percentage }
+    );
+
   const cancelAction: IOButtonProps = {
     variant: "link",
     label: I18n.t("global.buttons.cancel"),
@@ -81,6 +87,7 @@ export const ItwCieCardReadProgressContent = (
           )}
           pictogram="nfcScanAndroid"
           secondaryAction={cancelAction}
+          progressAccessibilityLabel={progressAccessibilityLabel}
         />
       );
     }
@@ -96,6 +103,7 @@ export const ItwCieCardReadProgressContent = (
           )}
           pictogram="nfcScanAndroid"
           secondaryAction={cancelAction}
+          progressAccessibilityLabel={progressAccessibilityLabel}
         />
       );
     }
@@ -107,6 +115,7 @@ export const ItwCieCardReadProgressContent = (
             `features.itWallet.identification.cie.readingCard.${platform}.completed.title`
           )}
           pictogram="success"
+          progressAccessibilityLabel={progressAccessibilityLabel}
         />
       );
   }
