@@ -1,3 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ActivityIndicator should match the snapshot with default props 1`] = `null`;
+exports[`ActivityIndicator should match the snapshot with default props 1`] = `
+<ActivityIndicator
+  color="#0B3EE3"
+  size="large"
+  testID="rn-activity-indicator"
+/>
+`;

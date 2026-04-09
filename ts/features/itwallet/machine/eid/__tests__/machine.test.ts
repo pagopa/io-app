@@ -988,7 +988,9 @@ describe("itwEidIssuanceMachine", () => {
 
     // Wallet instance creation failed
 
-    expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance")
+    );
   });
 
   it("Should fail when creating Wallet Instance", async () => {
@@ -1487,10 +1489,14 @@ describe("itwEidIssuanceMachine", () => {
     await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(1));
 
     // Wallet Instance Attestation failure triggers cleanupIntegrityKeyTag
-    expect(cleanupIntegrityKeyTag).toHaveBeenCalledTimes(1);
+    await waitFor(() =>
+      expect(cleanupIntegrityKeyTag).toHaveBeenCalledTimes(1)
+    );
 
     // Check that the machine transitions to Failure state
-    expect(actor.getSnapshot().value).toStrictEqual("Failure");
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual("Failure")
+    );
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
   });
 
@@ -1609,7 +1615,9 @@ describe("itwEidIssuanceMachine", () => {
     // Wallet instance creation and attestation obtainment success
 
     // Navigate to ipzs privacy screen
-    expect(actor.getSnapshot().value).toStrictEqual("IpzsPrivacyAcceptance");
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual("IpzsPrivacyAcceptance")
+    );
   });
 
   it("Should navigate to CieWarning screen when 'go-to-cie-warning' event is received", async () => {

@@ -1,6 +1,5 @@
 import { createStore, Store } from "redux";
 import { fireEvent, RenderAPI } from "@testing-library/react-native";
-import { ReactTestInstance } from "react-test-renderer";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -32,7 +31,7 @@ describe("the ZendeskPanicMode screen", () => {
       globalState as any
     );
     const component: RenderAPI = renderComponent(store);
-    const closeButton: ReactTestInstance = component.getByTestId("closeButton");
+    const closeButton = component.getByTestId("closeButton");
     fireEvent(closeButton, "onPress");
     expect(zendeskWorkunitCompletedSpy).toBeCalled();
   });

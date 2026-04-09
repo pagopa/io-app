@@ -1,6 +1,5 @@
 import { createStore, Store } from "redux";
 import { act, fireEvent, RenderAPI } from "@testing-library/react-native";
-import { ReactTestInstance } from "react-test-renderer";
 import { InitializedProfile } from "../../../../../definitions/backend/InitializedProfile";
 import MockZendesk from "../../../../__mocks__/io-react-native-zendesk";
 import * as mixpanel from "../../../../mixpanel";
@@ -247,8 +246,7 @@ describe("the ZendeskAskPermissions screen", () => {
       });
       const component: RenderAPI = renderComponent(store, false);
 
-      const continueButton: ReactTestInstance =
-        component.getByTestId("continueButtonId");
+      const continueButton = component.getByTestId("continueButtonId");
       fireEvent(continueButton, "onPress");
       expect(mixpanelTrackSpy).toBeCalled();
       expect(MockZendesk.openTicket).toBeCalled();
