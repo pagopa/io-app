@@ -100,6 +100,7 @@ const handleAuthLevelSanitizationSaga = function* (
 ): SagaIterator {
   if (action.payload) {
     // Skip the sanitization for whitelisted users
+    return;
   }
 
   // Check whether the user has an IT-Wallet PID credential
