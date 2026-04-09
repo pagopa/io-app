@@ -128,7 +128,10 @@ const Actions = (
  * @param props.progress - Progress value from 0 to 1
  */
 const LinearProgressBar = (
-  props: Pick<CieCardReadContentProps, "progress" | "progressAccessibilityLabel">
+  props: Pick<
+    CieCardReadContentProps,
+    "progress" | "progressAccessibilityLabel"
+  >
 ) => {
   const { progress = 0 } = props;
   const [width, setWidth] = useState(0);
@@ -215,6 +218,7 @@ const ContentIos = (props: CieCardReadContentProps) => (
 
 const ContentAndroid = (props: CieCardReadContentProps) => {
   const announceStep = 30;
+  const { progressAccessibilityLabel } = props;
 
   const progressPercent = Math.round(
     Math.max(Math.min(props.progress ?? 0, 1.0), 0) * 100
@@ -223,11 +227,11 @@ const ContentAndroid = (props: CieCardReadContentProps) => {
   const stepped = Math.floor(progressPercent / announceStep) * announceStep;
 
   useEffect(() => {
-    const announcement = props.progressAccessibilityLabel
-      ? props.progressAccessibilityLabel(stepped)
+    const announcement = progressAccessibilityLabel
+      ? progressAccessibilityLabel(stepped)
       : `${stepped}%`;
     AccessibilityInfo.announceForAccessibility(announcement);
-  }, [stepped, props.progressAccessibilityLabel]);
+  }, [stepped, progressAccessibilityLabel]);
 
   return (
     <IOScrollView centerContent>
