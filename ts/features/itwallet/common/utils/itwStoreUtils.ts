@@ -70,12 +70,10 @@ export const serializeFailureReason = (
     | RemoteFailure
     | ProximityFailure,
   origin?: string
-) => {
-  return {
-    ...failure,
-    reason: mapFailureReason(failure.reason, origin)
-  };
-};
+) => ({
+  ...failure,
+  reason: mapFailureReason(failure.reason, origin)
+});
 
 /**
  * This logic was agreed upon with the Mixpanel team to allow them to filter these specific error cases.
@@ -87,9 +85,18 @@ const createReasonObject = (message: string, origin?: string) => ({
   origin
 });
 
+/**
+ * Narrows failure reasons that can be safely inspected with Object.keys and spread with the origin.
+ */
 const isReasonObject = (reason: unknown): reason is object =>
   typeof reason === "object" && reason !== null;
 
+/**
+ * Guards and maps failure reasons to a consistent format for serialization.
+ * Missing reasons and Error instances are converted to a structured object,
+ * Existing reason objects are preserved and enriched with the origin.
+ * Primitive values are returned as-is.
+ */
 const mapFailureReason = (reason: unknown, origin?: string) => {
   if (!reason) {
     return createReasonObject("Reason not provided", origin);
