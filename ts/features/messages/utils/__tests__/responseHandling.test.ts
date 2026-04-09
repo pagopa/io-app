@@ -136,7 +136,6 @@ describe("`handleResponse` function", () => {
       );
     });
 
-    // eslint-disable-next-line sonarjs/no-identical-functions
     it("should not run `onSuccess` callback", () => {
       const onSuccess = jest.fn();
       handleResponse(success, onSuccess, jest.fn());

@@ -38,7 +38,7 @@ describe("SendAarNfcNotSupportedComponent", () => {
       () =>
         ({
           setOptions: setOptionsMock
-        } as unknown as ReturnType<typeof IO_NAV.useIONavigation>)
+        }) as unknown as ReturnType<typeof IO_NAV.useIONavigation>
     );
     renderComponent();
     expect(setOptionsMock).toHaveBeenCalledWith({ headerShown: true });
@@ -57,7 +57,7 @@ describe("SendAarNfcNotSupportedComponent", () => {
       () =>
         ({
           terminateFlow: terminateFlowMock
-        } as unknown as ReturnType<typeof FLOW_MANAGER.useSendAarFlowManager>)
+        }) as unknown as ReturnType<typeof FLOW_MANAGER.useSendAarFlowManager>
     );
     const { getByTestId } = renderComponent();
     const closeButton = getByTestId("close-x");

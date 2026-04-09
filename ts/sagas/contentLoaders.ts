@@ -127,9 +127,8 @@ function* watchLoadIdps(
   getIdps: ReturnType<typeof ContentClient>["getIdps"]
 ): SagaIterator {
   try {
-    const idpsListResponse: SagaCallReturnType<typeof getIdps> = yield* call(
-      getIdps
-    );
+    const idpsListResponse: SagaCallReturnType<typeof getIdps> =
+      yield* call(getIdps);
     if (E.isRight(idpsListResponse)) {
       if (idpsListResponse.right.status === 200) {
         yield* put(loadIdps.success(idpsListResponse.right.value));
