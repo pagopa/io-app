@@ -12,15 +12,15 @@ jobs:
       canaryVersion: ${{ steps.github-release-creation.outputs.CANARY_VERSION }}
     steps:
       - id: checkout
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
       - id: setup-node
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version-file: ".node-version"
       - id: yarn-cache
-        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
         env:
           cache-name: cache-node-modules
         with:
@@ -59,7 +59,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - id: checkout
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
           ref: ${{ needs.prepare-canary-release.outputs.canaryVersion }}
@@ -74,11 +74,11 @@ jobs:
           echo "After cleanup:"
           df -h
       - id: setup-node
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version-file: ".node-version"
       - id: yarn-cache
-        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
         env:
           cache-name: cache-node-modules
         with:
@@ -125,14 +125,14 @@ jobs:
       - id: upload-universal-apk          
         # We don't want to fail whole job if the universal APK upload step fails
         continue-on-error: true
-        uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
           name: io-app-canary-universal.apk
           path: android/io-app-canary-universal.apk
       - id: upload-aab
         # We don't want to fail whole job if the AAB upload step fails
         continue-on-error: true
-        uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
           name: app-canary-release.aab
           path: android/app/build/outputs/bundle/canaryRelease/app-canary-release.aab
@@ -153,16 +153,16 @@ jobs:
         run: sudo xcode-select -s '/Applications/Xcode_26.2.0.app/Contents/Developer'
         shell: bash
       - id: checkout
-        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab #v3.5.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
           ref: ${{ needs.prepare-canary-release.outputs.canaryVersion }}
       - id: setup-node
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
         with:
           node-version-file: ".node-version"
       - id: yarn-cache
-        uses: actions/cache@1bd1e32a3bdc45362d1e726936510720a7c30a57 # v4.2.0
+        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
         env:
           cache-name: cache-node-modules
         with:
@@ -214,14 +214,14 @@ jobs:
         if: ${{ always() }} 
         # We don't want to fail whole job if the dSYM upload step fails
         continue-on-error: true 
-        uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8 # v4.0.3
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
           name: IO.app.dSYM.zip
           path: ios/IO.app.dSYM.zip
       - id: upload-ipa
         # We don't want to fail whole job if the IPA upload step fails
         continue-on-error: true
-        uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
           name: IO.ipa
           path: ios/IO.ipa
