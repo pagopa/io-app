@@ -101,7 +101,7 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpired"
         }
       >
         <skGroup
-          opacity={0.05}
+          opacity={0.4}
           origin={
             JsiSkPoint {
               "CanvasKit": {
@@ -222,7 +222,7 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpired"
             <skGroup>
               <skGroup
                 blendMode="colorDodge"
-                opacity={0.8}
+                opacity={1}
               >
                 <skRect
                   height={0}
@@ -333,7 +333,7 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpired"
                             0,
                             0,
                             0,
-                            0.8,
+                            1,
                             0,
                           ]
                         }
@@ -382,7 +382,7 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpired"
                       0,
                       0,
                       0,
-                      0.8,
+                      1,
                       0,
                     ]
                   }
@@ -845,7 +845,7 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpiring
         }
       >
         <skGroup
-          opacity={0.05}
+          opacity={0.4}
           origin={
             JsiSkPoint {
               "CanvasKit": {
@@ -966,7 +966,7 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpiring
             <skGroup>
               <skGroup
                 blendMode="colorDodge"
-                opacity={0.8}
+                opacity={1}
               >
                 <skRect
                   height={0}
@@ -1077,7 +1077,7 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpiring
                             0,
                             0,
                             0,
-                            0.8,
+                            1,
                             0,
                           ]
                         }
@@ -1126,7 +1126,7 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpiring
                       0,
                       0,
                       0,
-                      0.8,
+                      1,
                       0,
                     ]
                   }
@@ -1384,7 +1384,7 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "valid" 1`] 
         }
       >
         <skGroup
-          opacity={0.05}
+          opacity={0.4}
           origin={
             JsiSkPoint {
               "CanvasKit": {
@@ -1505,7 +1505,7 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "valid" 1`] 
             <skGroup>
               <skGroup
                 blendMode="colorDodge"
-                opacity={0.8}
+                opacity={1}
               >
                 <skRect
                   height={0}
@@ -1616,7 +1616,7 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "valid" 1`] 
                             0,
                             0,
                             0,
-                            0.8,
+                            1,
                             0,
                           ]
                         }
@@ -1665,7 +1665,7 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "valid" 1`] 
                       0,
                       0,
                       0,
-                      0.8,
+                      1,
                       0,
                     ]
                   }

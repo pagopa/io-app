@@ -1,3 +1,4 @@
+import { IOThemeContextProvider } from "@pagopa/io-app-design-system";
 import { fireEvent, render } from "@testing-library/react-native";
 import { constNull } from "fp-ts/lib/function";
 import { ItwJwtCredentialStatus } from "../../../common/utils/itwTypesUtils";
@@ -12,11 +13,13 @@ describe("ItwWalletIdStatus", () => {
     "should match snapshot when PID status is %p",
     pidStatus => {
       const component = render(
-        <ItwWalletIdStatus
-          pidStatus={pidStatus}
-          pidExpiration="2026-11-12T14:11:48.000Z"
-          onPress={constNull}
-        />
+        <IOThemeContextProvider theme="light">
+          <ItwWalletIdStatus
+            pidStatus={pidStatus}
+            pidExpiration="2026-11-12T14:11:48.000Z"
+            onPress={constNull}
+          />
+        </IOThemeContextProvider>
       );
 
       expect(component).toMatchSnapshot();
@@ -26,7 +29,9 @@ describe("ItwWalletIdStatus", () => {
   it("should call onShowPress when CTA pressed", () => {
     const handlePressMock = jest.fn();
     const { getByTestId } = render(
-      <ItwWalletIdStatus onPress={handlePressMock} />
+      <IOThemeContextProvider theme="light">
+        <ItwWalletIdStatus onPress={handlePressMock} />
+      </IOThemeContextProvider>
     );
     const cta = getByTestId("itwWalletIdStatusTestID");
     fireEvent.press(cta);
