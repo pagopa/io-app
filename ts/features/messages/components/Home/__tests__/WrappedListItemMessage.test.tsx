@@ -253,7 +253,7 @@ const generateMessage = (
     title: "Message title",
     category,
     hasPrecondition
-  } as UIMessage);
+  }) as UIMessage;
 
 const renderComponent = (
   index: number,

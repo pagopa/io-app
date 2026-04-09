@@ -551,6 +551,13 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                         }
                       >
                         <View>
+                          <View
+                            style={
+                              {
+                                "height": 24,
+                              }
+                            }
+                          />
                           <Text
                             allowFontScaling={true}
                             dynamicTypeRamp="title2"
@@ -2277,6 +2284,13 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                         }
                       >
                         <View>
+                          <View
+                            style={
+                              {
+                                "height": 24,
+                              }
+                            }
+                          />
                           <Text
                             allowFontScaling={true}
                             dynamicTypeRamp="title2"

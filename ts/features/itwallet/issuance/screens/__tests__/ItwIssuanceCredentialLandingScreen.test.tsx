@@ -238,7 +238,7 @@ const mockSelectors = ({
   jest
     .spyOn(credentialsSelectors, "itwCredentialStatusSelector")
     .mockImplementation(
-      () => ({ status: credentialStatus, message: undefined } as any)
+      () => ({ status: credentialStatus, message: undefined }) as any
     );
   jest
     .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")

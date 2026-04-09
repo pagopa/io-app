@@ -25,7 +25,7 @@ describe("linkingSubscription", () => {
 
     const removeMock = jest.fn();
     addEventListenerSpy.mockImplementation(
-      () => ({ remove: removeMock } as any)
+      () => ({ remove: removeMock }) as any
     );
 
     const mockUnsubscribe = mockCurrySubscription(jest.fn());
