@@ -1,4 +1,4 @@
-import { IOButton, TextInputValidation } from "@pagopa/io-app-design-system";
+import { TextInputValidation } from "@pagopa/io-app-design-system";
 import {
   PaymentNoticeNumberFromString,
   RptId
@@ -9,7 +9,7 @@ import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { flow, pipe } from "fp-ts/lib/function";
 import { useEffect, useRef, useState } from "react";
-import { InputAccessoryView, Keyboard, Platform, View } from "react-native";
+import { Keyboard, Platform, View } from "react-native";
 import I18n from "i18next";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import {
@@ -53,10 +53,6 @@ const WalletPaymentInputFiscalCodeScreen = () => {
     fiscalCodeText: "",
     fiscalCode: O.none
   });
-
-  const accessoryViewID = `fiscalCodeInputAccessoryView-${new Date()
-    .getTime()
-    .toString()}`;
 
   const textInputWrapperRef = useRef<View>(null);
   const textInputRef = useRef<TextInputValidationRefProps>(null);
@@ -161,7 +157,7 @@ const WalletPaymentInputFiscalCodeScreen = () => {
               keyboardType: "number-pad",
               inputMode: "numeric",
               returnKeyType: "done",
-              inputAccessoryViewID: accessoryViewID
+              inputAccessoryViewID: "fiscalCodeInputAccessoryView"
             }}
             autoFocus
           />
@@ -171,7 +167,7 @@ const WalletPaymentInputFiscalCodeScreen = () => {
         // TODO: We remove the InputAccessoryView for now cause of some issues experiencing with a no show of the component inside.
         // ref: https://github.com/facebook/react-native/pull/52825
         // Platform.OS === "ios" && (
-        //   <InputAccessoryView nativeID={accessoryViewID}>
+        //   <InputAccessoryView nativeID={"fiscalCodeInputAccessoryView"}>
         //     <View style={{ padding: 20 }}>
         //       <IOButton
         //         fullWidth

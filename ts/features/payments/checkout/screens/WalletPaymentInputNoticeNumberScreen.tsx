@@ -1,10 +1,10 @@
-import { IOButton, TextInputValidation } from "@pagopa/io-app-design-system";
+import { TextInputValidation } from "@pagopa/io-app-design-system";
 import { PaymentNoticeNumberFromString } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useRef, useState } from "react";
-import { InputAccessoryView, Keyboard, Platform, View } from "react-native";
+import { Keyboard, View } from "react-native";
 import I18n from "i18next";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import {
