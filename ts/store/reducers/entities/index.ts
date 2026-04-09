@@ -45,7 +45,7 @@ const migrations: MigrationManifest = {
   "1": (state: PersistedState): PersistedEntitiesState =>
     ({
       ...state
-    } as PersistedEntitiesState),
+    }) as PersistedEntitiesState,
   // version 2
   // remove some sections unused after moving to pagination.
   "2": (state: PersistedState): PersistedEntitiesState => {

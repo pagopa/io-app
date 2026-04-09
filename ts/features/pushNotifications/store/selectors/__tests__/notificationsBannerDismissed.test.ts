@@ -39,7 +39,7 @@ const getTestState = ({
         pushNotificationBannerForceDismissionDate: forceDismissionDate
       } as UserBehaviourState
     }
-  } as unknown as GlobalState);
+  }) as unknown as GlobalState;
 
 const unreadMessage = {
   isRead: false,

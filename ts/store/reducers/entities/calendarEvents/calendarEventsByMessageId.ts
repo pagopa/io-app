@@ -36,7 +36,7 @@ const reducer = (
       const messageId = action.payload.messageId;
 
       const stateCopy = { ...state };
-      // eslint-disable-next-line
+      // eslint-disable-next-line functional/immutable-data
       delete stateCopy[messageId];
       return stateCopy;
     }
