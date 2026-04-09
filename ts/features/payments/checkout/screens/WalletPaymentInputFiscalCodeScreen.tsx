@@ -54,6 +54,10 @@ const WalletPaymentInputFiscalCodeScreen = () => {
     fiscalCode: O.none
   });
 
+  const accessoryViewID = `fiscalCodeInputAccessoryView-${new Date()
+    .getTime()
+    .toString()}`;
+
   const textInputWrapperRef = useRef<View>(null);
   const textInputRef = useRef<TextInputValidationRefProps>(null);
   const screenReaderEnabled = useIOSelector(isScreenReaderEnabledSelector);
@@ -118,17 +122,13 @@ const WalletPaymentInputFiscalCodeScreen = () => {
         canGoback
         headerActionsProp={{ showHelp: true }}
         contextualHelp={emptyContextualHelp}
-        actions={
-          Platform.OS === "android"
-            ? {
-                type: "SingleButton",
-                primary: {
-                  label: I18n.t("global.buttons.continue"),
-                  onPress: handleContinueClick
-                }
-              }
-            : undefined
-        }
+        actions={{
+          type: "SingleButton",
+          primary: {
+            label: I18n.t("global.buttons.continue"),
+            onPress: handleContinueClick
+          }
+        }}
         ref={textInputWrapperRef}
         includeContentMargins
       >
@@ -161,24 +161,28 @@ const WalletPaymentInputFiscalCodeScreen = () => {
               keyboardType: "number-pad",
               inputMode: "numeric",
               returnKeyType: "done",
-              inputAccessoryViewID: "fiscalCodeInputAccessoryView"
+              inputAccessoryViewID: accessoryViewID
             }}
             autoFocus
           />
         )}
       </IOScrollViewWithLargeHeader>
-      {Platform.OS === "ios" && (
-        <InputAccessoryView nativeID="fiscalCodeInputAccessoryView">
-          <View style={{ padding: 20 }}>
-            <IOButton
-              fullWidth
-              variant="solid"
-              label={I18n.t("global.buttons.continue")}
-              onPress={handleContinueClick}
-            />
-          </View>
-        </InputAccessoryView>
-      )}
+      {
+        // TODO: We remove the InputAccessoryView for now cause of some issues experiencing with a no show of the component inside.
+        // ref: https://github.com/facebook/react-native/pull/52825
+        // Platform.OS === "ios" && (
+        //   <InputAccessoryView nativeID={accessoryViewID}>
+        //     <View style={{ padding: 20 }}>
+        //       <IOButton
+        //         fullWidth
+        //         variant="solid"
+        //         label={I18n.t("global.buttons.continue")}
+        //         onPress={handleContinueClick}
+        //       />
+        //     </View>
+        //   </InputAccessoryView>
+        // )
+      }
     </>
   );
 };

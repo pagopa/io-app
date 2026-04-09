@@ -22,6 +22,7 @@ DerivedData
 *.ipa
 *.xcuserstate
 **/.xcode.env.local
+*.derived-data*
 
 # Ruby / CocoaPods
 **/Pods/
