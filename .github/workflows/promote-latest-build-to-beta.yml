@@ -11,7 +11,7 @@ jobs:
         with:
           fetch-depth: 0
       - id: setup-ruby
-        uses: ruby/setup-ruby@a4effe49ee8ee5b8b5091268c473a4628afb5651 #v1.245.0
+        uses: ruby/setup-ruby@e65c17d16e57e481586a6a5a0282698790062f92 # v1.300.0
         with:
           bundler-cache: true
       - id: build-release-android
@@ -32,7 +32,7 @@ jobs:
         with:
           fetch-depth: 0
       - id: setup-ruby
-        uses: ruby/setup-ruby@a4effe49ee8ee5b8b5091268c473a4628afb5651 #v1.245.0
+        uses: ruby/setup-ruby@e65c17d16e57e481586a6a5a0282698790062f92 # v1.300.0
         with:
           bundler-cache: true
       - id: prepare-ios-build
