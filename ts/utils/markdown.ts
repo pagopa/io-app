@@ -29,7 +29,6 @@ function customPlugin() {
   };
 }
 
- 
 export const remarkProcessor = remark()
   .use(remarkDirective)
   .use(customPlugin) // @ts-ignore

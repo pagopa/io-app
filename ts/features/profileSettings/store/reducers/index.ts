@@ -12,7 +12,6 @@ import { Action } from "../../../../store/actions/types";
 import { differentProfileLoggedIn } from "../../../../store/actions/crossSessions";
 import { isDevEnv } from "../../../../utils/environment";
 
- 
 export type ProfileSettingsState = {};
 
 export const profileSettingsReducerInitialState = {};

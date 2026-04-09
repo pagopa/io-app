@@ -1,4 +1,3 @@
- 
 import { act, fireEvent, render } from "@testing-library/react-native";
 import { EmitterSubscription, Linking } from "react-native";
 import CieIdLoginWebView from "../CieIdLoginWebView";
