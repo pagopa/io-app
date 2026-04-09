@@ -34,11 +34,21 @@ jest.mock("../../../../../store/hooks", () => ({
 }));
 
 jest.mock("i18next", () => ({
-  t: (path: string) => path
+  t: (path: string, params?: any) => {
+    if (params?.denomination) {
+      return `${path} ${params.denomination}`;
+    }
+    return path;
+  }
 }));
 
 describe("SendAarCieCanInsertionScreen", () => {
-  beforeEach(jest.clearAllMocks);
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest
+      .spyOn(AAR_SELECTORS, "aarAdresseeDenominationSelector")
+      .mockReturnValue("MOCKED_DENOMINATION");
+  });
 
   it("should match the snapshot", () => {
     const component = renderComponent();
