@@ -1,4 +1,4 @@
-name: Start a new release cycle on stores
+name: Publish app version
 on:
   workflow_dispatch:
     inputs:
@@ -13,8 +13,9 @@ on:
         - patch
 jobs:
   run-static-checks:
-    uses: ./.github/workflows/staticcheck.yaml
+    uses: ./.github/workflows/static-checks.yaml
   bump-app-version:
+    name: Bump app version
     needs: run-static-checks
     runs-on: ubuntu-24.04
     environment: prod
@@ -69,6 +70,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release-android:
+    name: Release Android app on Play Store
     needs: bump-app-version
     environment: prod
     runs-on: ubuntu-24.04
@@ -117,7 +119,6 @@ jobs:
           cd android && bundle exec fastlane alpha
         shell: bash
         env:
-          RUBYOPT: '-rostruct' # TODO: Remove when https://github.com/fastlane/fastlane/pull/21950 gets released
           ENCODED_IOAPP_GOOGLE_SERVICES_JSON_FILE: ${{secrets.ENCODED_IOAPP_GOOGLE_SERVICES_JSON_FILE}}
           ENCODED_IOAPP_JSON_KEY_FILE: ${{secrets.ENCODED_IOAPP_JSON_KEY_FILE}}
           ENCODED_IO_APP_RELEASE_KEYSTORE: ${{secrets.ENCODED_IO_APP_RELEASE_KEYSTORE}}
@@ -136,7 +137,6 @@ jobs:
           echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
           bundle exec fastlane download_apk
         env:
-          RUBYOPT: '-rostruct' # TODO: Remove when https://github.com/fastlane/fastlane/pull/21950 gets released
           ENCODED_IOAPP_JSON_KEY_FILE: ${{secrets.ENCODED_IOAPP_JSON_KEY_FILE}}          
           VERSION_CODE: ${{ env.VERSION_CODE }}
       - id: upload-universal-apk          
@@ -161,6 +161,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release-ios:
+    name: Release iOS app on App Store
     needs: bump-app-version
     environment: prod
     runs-on: macos-26-xlarge
@@ -220,7 +221,6 @@ jobs:
         env:
           LC_ALL: en_US.UTF-8
           LANG: en_US.UTF-8
-          RUBYOPT: '-rostruct' # TODO: Remove when https://github.com/fastlane/fastlane/pull/21950 gets released
           APP_STORE_API_KEY_ID: ${{secrets.APP_STORE_API_KEY_ID}}
           APP_STORE_API_PRIVATE_KEY: ${{secrets.APP_STORE_API_PRIVATE_KEY}}
           APP_STORE_API_KEY_ISSUER_ID: ${{secrets.APP_STORE_API_KEY_ISSUER_ID}}

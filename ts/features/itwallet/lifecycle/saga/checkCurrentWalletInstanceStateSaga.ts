@@ -44,8 +44,8 @@ export function* checkCurrentWalletInstanceStateSaga(): Generator<
 
   const itwCanBeReactivated = Boolean(
     remoteWalletInstanceStatus &&
-      !remoteWalletInstanceStatus.is_revoked &&
-      !isItwValidLocally
+    !remoteWalletInstanceStatus.is_revoked &&
+    !isItwValidLocally
   );
 
   yield* put(itwSetWalletInstanceRemotelyActive(itwCanBeReactivated));

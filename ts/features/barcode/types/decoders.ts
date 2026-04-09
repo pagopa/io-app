@@ -98,7 +98,7 @@ const decodePagoPAQRCode: IOBarcodeStaticDecoderFn = (data: string) =>
         rptIdFromPaymentNoticeQrCode(paymentNotice),
         E.map(
           rptId =>
-            ({ type: "PAGOPA", rptId, amount: paymentNotice.amount } as const)
+            ({ type: "PAGOPA", rptId, amount: paymentNotice.amount }) as const
         )
       )
     ),
@@ -109,7 +109,7 @@ const decodePagoPADataMatrix: IOBarcodeStaticDecoderFn = (data: string) =>
   pipe(
     data,
     decodePosteDataMatrix,
-    O.map(({ e1, e2 }) => ({ type: "PAGOPA", rptId: e1, amount: e2 } as const))
+    O.map(({ e1, e2 }) => ({ type: "PAGOPA", rptId: e1, amount: e2 }) as const)
   );
 
 const decodePagoPABarcode: IOBarcodeStaticDecoderFn = (data: string) =>

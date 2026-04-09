@@ -10,7 +10,6 @@ import * as loginUtils from "../../common/utils/login";
 import { runConsentScreenSuite } from "../shared/CieContentDataUsageCommonSuite";
 
 jest.mock("react-native-webview", () => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const { View } = require("react-native");
   const WebView = (props: any) => <View {...props} />;
   return { __esModule: true, default: WebView };
@@ -61,5 +60,5 @@ runConsentScreenSuite({
         statusCode: 500,
         url: "https://fake.url/consent"
       }
-    } as any)
+    }) as any
 });

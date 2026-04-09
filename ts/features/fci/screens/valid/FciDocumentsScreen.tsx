@@ -25,7 +25,12 @@ import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp";
-import { trackFciDocOpeningSuccess, trackFciSigningDoc } from "../../analytics";
+import {
+  trackFciDocOpeningFailure,
+  trackFciDocOpeningSuccess,
+  trackFciDocumentsView,
+  trackFciSigningDoc
+} from "../../analytics";
 import DocumentsNavigationBar from "../../components/DocumentsNavigationBar";
 import LoadingComponent from "../../components/LoadingComponent";
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
@@ -48,6 +53,7 @@ import {
   getRequiredSignatureFields,
   getSignatureFieldsLength
 } from "../../utils/signatureFields";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -82,6 +88,10 @@ const FciDocumentsScreen = () => {
     footerActionsInlineMeasurements,
     handleFooterActionsInlineMeasurements
   } = useFooterActionsInlineMeasurements();
+
+  useOnFirstRender(() => {
+    trackFciDocumentsView();
+  });
 
   // Initialize document signatures once when documents are loaded
   useEffect(() => {
@@ -219,6 +229,7 @@ const FciDocumentsScreen = () => {
         setTotalPages(numberOfPages);
         setCurrentPage(page);
       }}
+      onError={_ => trackFciDocOpeningFailure()}
       enablePaging
       style={styles.pdf}
     />

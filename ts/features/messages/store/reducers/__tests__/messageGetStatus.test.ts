@@ -58,7 +58,9 @@ describe("messageGetStatusReducer", () => {
       containsAttachments: false,
       hasRemoteContent: false,
       hasFIMSCTA: false,
-      createdAt: new Date()
+      createdAt: new Date(),
+      fciMessageType: "not_set" as const,
+      fciResult: "not_set" as const
     };
     const expectedSuccessState = {
       status: "success",
@@ -171,7 +173,9 @@ describe("showSpinnerFromMessageGetStatusSelector", () => {
         containsAttachments: false,
         hasRemoteContent: false,
         hasFIMSCTA: false,
-        createdAt: new Date()
+        createdAt: new Date(),
+        fciMessageType: "request",
+        fciResult: "not_set"
       })
     );
     const showSpinner = showSpinnerFromMessageGetStatusSelector(globalState);
@@ -234,7 +238,9 @@ describe("messageSuccessDataSelector", () => {
       containsAttachments: false,
       hasRemoteContent: false,
       hasFIMSCTA: false,
-      createdAt: new Date()
+      createdAt: new Date(),
+      fciMessageType: "not_set" as const,
+      fciResult: "not_set" as const
     };
     const globalState = appReducer(
       undefined,
@@ -275,7 +281,9 @@ describe("blockedFromPushNotificationSelector", () => {
         containsAttachments: false,
         hasRemoteContent: false,
         hasFIMSCTA: false,
-        createdAt: new Date()
+        createdAt: new Date(),
+        fciMessageType: "not_set",
+        fciResult: "not_set"
       })
     );
     const blockedFromPush = blockedFromPushNotificationSelector(globalState);

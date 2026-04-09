@@ -12,6 +12,7 @@ import { GlobalState } from "../../store/reducers/types";
 import { linkingSubscription } from "../linkingSubscription";
 import { initiateAarFlow } from "../../features/pn/aar/store/actions";
 import { IO_LOGIN_CIE_URL_SCHEME } from "../../features/authentication/login/cie/utils/cie";
+import * as LINKING_ANALYTICS from "../../features/linking/analytics";
 
 describe("linkingSubscription", () => {
   beforeEach(() => {
@@ -24,7 +25,7 @@ describe("linkingSubscription", () => {
 
     const removeMock = jest.fn();
     addEventListenerSpy.mockImplementation(
-      () => ({ remove: removeMock } as any)
+      () => ({ remove: removeMock }) as any
     );
 
     const mockUnsubscribe = mockCurrySubscription(jest.fn());
@@ -56,6 +57,23 @@ describe("linkingSubscription", () => {
       testUrl,
       expect.any(Function)
     );
+  });
+
+  it("should call 'trackIOOpenedFromUniversalAppLink' when a URL is received", () => {
+    const { mockCurrySubscription, addEventListenerSpy } = initializeTests();
+    const mockTrackIOOpenedFromUniversalAppLink = jest.fn();
+
+    jest
+      .spyOn(LINKING_ANALYTICS, "trackIOOpenedFromUniversalAppLink")
+      .mockImplementation(mockTrackIOOpenedFromUniversalAppLink);
+
+    mockCurrySubscription(jest.fn());
+
+    const testUrl = "https://example.com";
+    runEventListenerCallback(addEventListenerSpy, { url: testUrl });
+
+    expect(mockTrackIOOpenedFromUniversalAppLink).toHaveBeenCalledTimes(1);
+    expect(mockTrackIOOpenedFromUniversalAppLink).toHaveBeenCalledWith(testUrl);
   });
 
   it.each([false, true])(
