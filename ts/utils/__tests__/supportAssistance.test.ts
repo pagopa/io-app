@@ -46,7 +46,7 @@ describe("handleSendAssistanceLog", () => {
   });
   it("if the assistanceTool is Zendesk should call the appendLog function", () => {
     handleSendAssistanceLog(ToolEnum.zendesk, "mockedLog");
-    expect(MockZendesk.appendLog).toBeCalled();
+    expect(MockZendesk.appendLog).toHaveBeenCalled();
   });
 });
 describe("snapshots", () => {

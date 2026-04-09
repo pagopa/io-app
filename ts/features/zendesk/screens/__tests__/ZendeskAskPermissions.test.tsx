@@ -59,7 +59,7 @@ describe("the ZendeskAskPermissions screen", () => {
       globalState as any
     );
     renderComponent(store, true);
-    expect(zendeskSupportFailureSpy).toBeCalled();
+    expect(zendeskSupportFailureSpy).toHaveBeenCalled();
   });
   it("should render the screen container", () => {
     const store: Store<GlobalState> = createStore(
@@ -228,9 +228,9 @@ describe("the ZendeskAskPermissions screen", () => {
     const component: RenderAPI = renderComponent(store, false);
     const cancelButton = component.getByTestId("cancelButtonId");
     fireEvent(cancelButton, "onPress");
-    expect(handleItemOnPressSpy).toBeCalled();
-    expect(mixpanelTrackSpy).toBeCalled();
-    expect(zendeskSupportCompletedSpy).toBeCalled();
+    expect(handleItemOnPressSpy).toHaveBeenCalled();
+    expect(mixpanelTrackSpy).toHaveBeenCalled();
+    expect(zendeskSupportCompletedSpy).toHaveBeenCalled();
   });
 
   describe("when the continue button is pressed", () => {
@@ -248,8 +248,8 @@ describe("the ZendeskAskPermissions screen", () => {
 
       const continueButton = component.getByTestId("continueButtonId");
       fireEvent(continueButton, "onPress");
-      expect(mixpanelTrackSpy).toBeCalled();
-      expect(MockZendesk.openTicket).toBeCalled();
+      expect(mixpanelTrackSpy).toHaveBeenCalled();
+      expect(MockZendesk.openTicket).toHaveBeenCalled();
     });
   });
 });

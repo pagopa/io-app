@@ -33,7 +33,7 @@ describe("the ZendeskPanicMode screen", () => {
     const component: RenderAPI = renderComponent(store);
     const closeButton = component.getByTestId("closeButton");
     fireEvent(closeButton, "onPress");
-    expect(zendeskWorkunitCompletedSpy).toBeCalled();
+    expect(zendeskWorkunitCompletedSpy).toHaveBeenCalled();
   });
 });
 
