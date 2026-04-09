@@ -1,4 +1,5 @@
 import { fireEvent } from "@testing-library/react-native";
+import I18n from "i18next";
 import MockDate from "mockdate";
 import { Store, createStore } from "redux";
 import { InitializedProfile } from "../../../../../../definitions/backend/InitializedProfile";
@@ -167,5 +168,63 @@ describe("CgnDiscoveryBanner", () => {
     fireEvent.press(ctaButton);
     expect(spy).toHaveBeenCalledWith(loadAvailableBonuses.request());
     expect(spy).toHaveBeenCalledWith(cgnActivationStart());
+  });
+
+  it("should dispatch cgnDetails.request when CGN details have not been fetched yet", () => {
+    const store = createTestStore();
+    store.dispatch(profileLoadSuccess(youngProfile));
+    store.dispatch(
+      backendStatusLoadSuccess({
+        ...baseRawBackendStatus,
+        config: {
+          ...baseRawBackendStatus.config,
+          cgn: {
+            ...baseRawBackendStatus.config.cgn,
+            show_cgn_engagement_banner: mockBannerConfig
+          }
+        }
+      })
+    );
+    // Do NOT dispatch cgnDetails.cancel() — so cgnFetched=false and cgnStatus=pot.none
+    const spy = jest.spyOn(store, "dispatch");
+    renderComponent(store);
+    expect(spy).toHaveBeenCalledWith(cgnDetails.request());
+  });
+
+  it("should not dispatch cgnDetails.request when CGN details have already been fetched", () => {
+    const store = createTestStore();
+    setupStoreWithBannerEnabled(store);
+    const spy = jest.spyOn(store, "dispatch");
+    renderComponent(store);
+    expect(spy).not.toHaveBeenCalledWith(cgnDetails.request());
+  });
+
+  it("should use i18n fallback CTA when action label is not provided", () => {
+    const store = createTestStore();
+    const bannerConfigWithoutAction = {
+      min_app_version: mockBannerConfig.min_app_version,
+      description: mockBannerConfig.description,
+      title: mockBannerConfig.title
+      // no action field
+    };
+    store.dispatch(profileLoadSuccess(youngProfile));
+    store.dispatch(
+      backendStatusLoadSuccess({
+        ...baseRawBackendStatus,
+        config: {
+          ...baseRawBackendStatus.config,
+          cgn: {
+            ...baseRawBackendStatus.config.cgn,
+            show_cgn_engagement_banner: bannerConfigWithoutAction
+          }
+        }
+      })
+    );
+    store.dispatch(cgnDetails.cancel());
+    const component = renderComponent(store);
+    expect(component.queryByTestId("cgnDiscoveryBannerTestID")).not.toBeNull();
+    expect(
+      component.getByText(I18n.t("bonus.cgn.engagement.banner.cta"))
+    ).toBeTruthy();
   });
 });
