@@ -5,7 +5,6 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 
 import I18n from "i18next";
@@ -24,10 +23,15 @@ import {
   profileNameSelector,
   profileSelector
 } from "../../../settings/common/store/selectors";
-import { trackFciUserDataConfirmed, trackFciUserExit } from "../../analytics";
+import {
+  trackFciChangeEmail,
+  trackFciUserDataConfirmed,
+  trackFciUserDataShare
+} from "../../analytics";
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 const FciDataSharingScreen = (): ReactElement => {
   const profile = useIOSelector(profileSelector);
@@ -35,7 +39,6 @@ const FciDataSharingScreen = (): ReactElement => {
   const fiscalCode = useIOSelector(profileFiscalCodeSelector);
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const navigation = useIONavigation();
-  const route = useRoute();
   const familyName = pot.getOrElse(
     pot.map(profile, p => capitalize(p.family_name)),
     undefined
@@ -48,6 +51,10 @@ const FciDataSharingScreen = (): ReactElement => {
 
   const { present, bottomSheet: fciAbortSignature } =
     useFciAbortSignatureFlow();
+
+  useOnFirstRender(() => {
+    trackFciUserDataShare();
+  });
 
   const actions: ComponentProps<typeof IOScrollView>["actions"] = {
     testID: "FciDataSharingScreenFooterTestID",
@@ -126,7 +133,7 @@ const FciDataSharingScreen = (): ReactElement => {
             content={I18n.t("features.fci.shareDataScreen.alertText")}
             action={I18n.t("features.fci.shareDataScreen.alertLink")}
             onPress={() => {
-              trackFciUserExit(route.name, fciEnvironment, "modifica_email");
+              trackFciChangeEmail();
               navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
                 screen: SETTINGS_ROUTES.INSERT_EMAIL_SCREEN,
                 params: {

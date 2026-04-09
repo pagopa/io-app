@@ -50,6 +50,7 @@ export const AppFeedbackProvider = ({ children }: PropsWithChildren) => {
     component: (
       <>
         <Body>{I18n.t("appFeedback.bottomSheet.description")}</Body>
+        <VSpacer size={32} />
         {isAndroid && <VSpacer size={32} />}
       </>
     ),

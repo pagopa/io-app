@@ -52,7 +52,6 @@ export const ItwCredentialFromCatalogueMocks: DigitalCredentialMetadata = {
   name: "Tessera Sanitaria Digitale",
   description:
     "Versione Digitale della Tessera Sanitaria - Tessera europea di assicurazione malattia",
-  claims: [],
   purposes: [],
   version: "1.0",
   credential_type: "EuropeanHealthInsuranceCard",
@@ -62,11 +61,6 @@ export const ItwCredentialFromCatalogueMocks: DigitalCredentialMetadata = {
     status_methods: [],
     allowed_states: []
   },
-  authentication: {
-    user_auth_required: true,
-    min_loa: "high",
-    supported_eid_schemes: ["it_wallet"]
-  },
   issuers: [],
   authentic_sources: [
     {
@@ -74,7 +68,7 @@ export const ItwCredentialFromCatalogueMocks: DigitalCredentialMetadata = {
       organization_code: "m_ef",
       id: "https://www.rgs.mef.gov.it",
       organization_country: "IT",
-      source_type: "public"
+      organization_type: "public"
     }
   ],
   formats: []

@@ -591,7 +591,9 @@ describe("getAttachmentMetadata", () => {
               mockedGetNotificationAttachment,
               downloadRequestAction
             )
-            .next(response);
+            .next(response)
+            .call(analytics.trackSendAarNotificationDetailTtlError)
+            .next();
         } catch (e: unknown) {
           exceptionThrown = true;
           expect((e as Error).name).toBe("SendServerError");

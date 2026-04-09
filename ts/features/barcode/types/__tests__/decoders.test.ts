@@ -4,6 +4,13 @@ import { IO_BARCODE_ALL_TYPES } from "../IOBarcode";
 import { GlobalState } from "../../../../store/reducers/types";
 
 const fakeGlobalState = {
+  features: {
+    itWallet: {
+      environment: {
+        itWalletSpecsVersion: "1.0.0"
+      }
+    }
+  },
   remoteConfig: O.some({
     pn: {
       aarQRCodeRegex:

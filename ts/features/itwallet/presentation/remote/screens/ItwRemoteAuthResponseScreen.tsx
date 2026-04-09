@@ -6,6 +6,7 @@ import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisa
 import { ItwRemoteLoadingScreen } from "../components/ItwRemoteLoadingScreen";
 import { ItwRemoteMachineContext } from "../machine/provider";
 import {
+  selectFlowType,
   selectIsLoading,
   selectIsSuccess,
   selectRedirectUri,
@@ -26,6 +27,7 @@ export const ItwRemoteAuthResponseScreen = () => {
   const credential_type = ItwRemoteMachineContext.useSelector(
     selectRemoteCredentialCombination
   );
+  const flowType = ItwRemoteMachineContext.useSelector(selectFlowType);
 
   useOnFirstRender(() => {
     if (credential_type) {
@@ -51,6 +53,31 @@ export const ItwRemoteAuthResponseScreen = () => {
 
   const closeMachine = () => machineRef.send({ type: "close" });
 
+  const isSameDeviceFlowWithRedirectUri =
+    flowType === "same-device" && !!redirectUri;
+
+  const action = isSameDeviceFlowWithRedirectUri
+    ? {
+        icon: "externalLinkSmall" as const,
+        label: I18n.t("features.itWallet.presentation.remote.success.cta"),
+        onPress: () => {
+          Linking.openURL(redirectUri)
+            .catch(() => IOToast.error("global.genericError"))
+            .finally(closeMachine);
+        }
+      }
+    : {
+        label: I18n.t("global.buttons.close"),
+        onPress: closeMachine
+      };
+
+  const secondaryAction = isSameDeviceFlowWithRedirectUri
+    ? {
+        label: I18n.t("global.buttons.close"),
+        onPress: closeMachine
+      }
+    : undefined;
+
   return (
     <OperationResultScreenContent
       pictogram="success"
@@ -58,24 +85,8 @@ export const ItwRemoteAuthResponseScreen = () => {
       subtitle={I18n.t(
         "features.itWallet.presentation.remote.success.subtitle"
       )}
-      action={
-        redirectUri
-          ? {
-              icon: "externalLinkSmall",
-              label: I18n.t(
-                "features.itWallet.presentation.remote.success.cta"
-              ),
-              onPress: () => {
-                Linking.openURL(redirectUri)
-                  .catch(() => IOToast.error("global.genericError"))
-                  .finally(closeMachine);
-              }
-            }
-          : {
-              label: I18n.t("global.buttons.close"),
-              onPress: closeMachine
-            }
-      }
+      action={action}
+      secondaryAction={secondaryAction}
     />
   );
 };

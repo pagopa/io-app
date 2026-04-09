@@ -1,6 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
-import { Trust } from "@pagopa/io-react-native-wallet";
+import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import { useIOStore } from "../../../../store/hooks";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { assert } from "../../../../utils/assert";
@@ -17,6 +17,7 @@ import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
 import { itwSetWalletInstanceRenewalError } from "../../walletInstance/store/actions";
 import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
 import { Env } from "../../common/utils/environment";
+import { getIoWallet } from "../../common/utils/itwIoWallet";
 import {
   enrichErrorWithMetadata,
   isAssertionGenerationError
@@ -52,28 +53,31 @@ export type ObtainStatusAssertionActorInput = Pick<Context, "credentials">;
 /**
  * Creates the actors for the eid issuance machine
  * @param env - The environment to use for the IT Wallet API calls
+ * @param itwVersion - IT-Wallet technical specs version
  * @param store the IOStore
  * @returns the actors
  */
 export const createCredentialIssuanceActorsImplementation = (
   env: Env,
+  itwVersion: ItwVersion,
   store: ReturnType<typeof useIOStore>
 ) => {
   const verifyTrustFederation = fromPromise<void>(async () => {
+    const ioWallet = getIoWallet(itwVersion);
     // Evaluate the issuer trust
     const trustAnchorEntityConfig =
-      await Trust.Build.getTrustAnchorEntityConfiguration(
+      await ioWallet.Trust.getTrustAnchorEntityConfiguration(
         env.WALLET_TA_BASE_URL
       );
 
     // Create the trust chain for the PID provider
-    const builtChainJwts = await Trust.Build.buildTrustChain(
-      env.WALLET_EAA_PROVIDER_BASE_URL,
+    const builtChainJwts = await ioWallet.Trust.buildTrustChain(
+      env.WALLET_EAA_PROVIDER_BASE_URL.value(itwVersion),
       trustAnchorEntityConfig
     );
 
     // Perform full validation on the built chain
-    await Trust.Verify.verifyTrustChain(
+    await ioWallet.Trust.verifyTrustChain(
       trustAnchorEntityConfig,
       builtChainJwts,
       {
@@ -95,6 +99,7 @@ export const createCredentialIssuanceActorsImplementation = (
       try {
         return await itwAttestationUtils.getAttestation(
           env,
+          itwVersion,
           integrityKeyTag.value,
           sessionToken
         );
@@ -120,13 +125,14 @@ export const createCredentialIssuanceActorsImplementation = (
         store.dispatch(itwStoreIntegrityKeyTag(newHardwareKeyTag));
         await itwAttestationUtils.registerWalletInstance(
           env,
+          itwVersion,
           newHardwareKeyTag,
           sessionToken,
           { isRenewal: true }
         );
 
         return await itwAttestationUtils
-          .getAttestation(env, newHardwareKeyTag, sessionToken)
+          .getAttestation(env, itwVersion, newHardwareKeyTag, sessionToken)
           .then(attestation => {
             // Track the successful renewal in Mixpanel
             trackWalletInstanceRenewalSuccess();
@@ -156,6 +162,7 @@ export const createCredentialIssuanceActorsImplementation = (
 
     return await credentialIssuanceUtils.requestCredential({
       env,
+      itwVersion,
       credentialType,
       walletInstanceAttestation,
       skipMdocIssuance
@@ -187,6 +194,7 @@ export const createCredentialIssuanceActorsImplementation = (
 
     return await credentialIssuanceUtils.obtainCredential({
       env,
+      itwVersion,
       credentialType,
       walletInstanceAttestation,
       requestedCredential,
@@ -212,7 +220,7 @@ export const createCredentialIssuanceActorsImplementation = (
       }
 
       const { statusAssertion, parsedStatusAssertion } =
-        await getCredentialStatusAssertion(credential, env).catch(
+        await getCredentialStatusAssertion(credential, env, itwVersion).catch(
           enrichErrorWithMetadata({ credentialId: credential.credentialId })
         );
 
@@ -221,7 +229,7 @@ export const createCredentialIssuanceActorsImplementation = (
         storedStatusAssertion: {
           credentialStatus: "valid",
           statusAssertion,
-          parsedStatusAssertion: parsedStatusAssertion.payload
+          parsedStatusAssertion
         }
       };
     };

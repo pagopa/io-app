@@ -29,6 +29,7 @@ import {
   logoItemGutter
 } from "../components/DSLogoPaymentViewerBox";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { contentRepoUrl } from "../../../config";
 
 const styles = StyleSheet.create({
   itemsWrapper: {
@@ -84,7 +85,7 @@ export const DSLogos = () => {
   );
 };
 
-const cdnPath = "https://assets.cdn.io.pagopa.it/logos/organizations/";
+const cdnPath = `${contentRepoUrl}/logos/organizations/`;
 
 const organizationsURIs = [
   {

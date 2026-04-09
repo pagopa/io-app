@@ -382,7 +382,7 @@ $ yarn && yarn setup
 
 # Install podfiles when targeting iOS (ignore this step for Android)
 # Run this only during the first setup and when Pods dependencies change
-$ cd iOS && bundle exec pod install && cd ..
+$ yarn dev:pod-install
 
 # Generate the definitions from the OpenAPI specs and from the YAML translations
 # Run this only during the first setup and when specs/translations change

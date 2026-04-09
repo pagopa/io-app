@@ -30,7 +30,7 @@ const makeProblemJson = (
 describe("AarErrorMappings", () => {
   beforeEach(jest.clearAllMocks);
   describe("resolveAarError", () => {
-    [422, 400, 500, 418].forEach(responseStatus => {
+    [422, 400, 500, 418, 404, 409].forEach(responseStatus => {
       Object.values(sendAarProblemJsonErrorCodes).forEach(errCode => {
         const maybeSpecificErrorBehaviour =
           specificBehavioursByStatus[responseStatus] &&
@@ -44,10 +44,17 @@ describe("AarErrorMappings", () => {
               makeProblemJson(errCode, responseStatus)
             );
             expect(Component).toBe(expectedComponent);
+            expect(track).toBe(expectedTrack);
 
-            expect(expectedTrack).not.toHaveBeenCalled();
-            track("reason");
-            expect(expectedTrack).toHaveBeenCalledTimes(1);
+            if (jest.isMockFunction(expectedTrack)) {
+              expect(expectedTrack).not.toHaveBeenCalled();
+              track("reason");
+              expect(expectedTrack).toHaveBeenCalledTimes(1);
+            } else {
+              // falls here in case the expected track is
+              // a placeholder void function (in this case ()=>null)
+              expect(track("reason")).toBeNull();
+            }
           });
         } else if (errCode in cieErrors) {
           it(`should return GenericCieValidationErrorComponent and track the correct event for ${responseStatus} status and CIE errorCode ${errCode}`, () => {
@@ -115,7 +122,6 @@ describe("AarErrorMappings", () => {
       }
     );
   });
-
   describe("isAarAttachmentTtlError", () => {
     it("should return true for PN_DELIVERY_MANDATENOTFOUND", () => {
       expect(isAarAttachmentTtlError("PN_DELIVERY_MANDATENOTFOUND")).toBe(true);
