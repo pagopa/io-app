@@ -22,7 +22,7 @@ const cgnBannersReducer = (
     case getType(closeCgnDiscoveryBanner):
       return {
         ...state,
-        discoveryBannerClosed: false
+        discoveryBannerClosed: true
       };
     case getType(differentProfileLoggedIn):
       return initialState;
