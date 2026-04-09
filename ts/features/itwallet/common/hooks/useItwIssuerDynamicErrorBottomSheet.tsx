@@ -20,9 +20,8 @@ import {
   ZendeskSubcategoryValue
 } from "./useItwZendeskSupport";
 
-// TODO: replace with the final Help Center URL when available.
 export const ITW_ISSUER_DYNAMIC_ERROR_HELP_CENTER_URL =
-  "https://example.com/it-wallet-help-center";
+  "https://assistenza.ioapp.it/hc/it/articles/40032473652881-Continuare-a-usare-Documenti-su-IO-senza-limitazioni-dopo-12-mesi";
 
 type Failure = CredentialIssuanceFailure | IssuanceFailure;
 
