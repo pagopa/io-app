@@ -79,7 +79,7 @@ const CgnDiscoveryBanner = () => {
     >
       <VSpacer size={16} />
       <Banner
-        testID="itwDiscoveryBannerTestID"
+        testID="cgnDiscoveryBannerTestID"
         title={engagementBannerContent.title?.[localeFallback]}
         content={engagementBannerContent.description[localeFallback]}
         action={
