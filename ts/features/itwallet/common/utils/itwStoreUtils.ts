@@ -58,8 +58,7 @@ export const pollForStoreValue = <T>({
  */
 export const shouldSerializeReason = (failure: { reason?: unknown }) =>
   !failure.reason ||
-  (typeof failure.reason === "object" &&
-    Object.keys(failure.reason).length === 0);
+  (isReasonObject(failure.reason) && Object.keys(failure.reason).length === 0);
 
 /**
  * Serialize failure reasons that are instances of {@link Error}, to be safely stored and displayed.
@@ -72,17 +71,9 @@ export const serializeFailureReason = (
     | ProximityFailure,
   origin?: string
 ) => {
-  const reason = !failure.reason
-    ? createReasonObject("Reason not provided", origin)
-    : failure.reason instanceof Error
-    ? createReasonObject(failure.reason.message, origin)
-    : typeof failure.reason === "object"
-    ? { ...failure.reason, origin }
-    : failure.reason;
-
   return {
     ...failure,
-    reason
+    reason: mapFailureReason(failure.reason, origin)
   };
 };
 
@@ -95,3 +86,22 @@ const createReasonObject = (message: string, origin?: string) => ({
   errorDescription: message,
   origin
 });
+
+const isReasonObject = (reason: unknown): reason is object =>
+  typeof reason === "object" && reason !== null;
+
+const mapFailureReason = (reason: unknown, origin?: string) => {
+  if (!reason) {
+    return createReasonObject("Reason not provided", origin);
+  }
+
+  if (reason instanceof Error) {
+    return createReasonObject(reason.message, origin);
+  }
+
+  if (isReasonObject(reason)) {
+    return { ...reason, origin };
+  }
+
+  return reason;
+};
