@@ -47,7 +47,7 @@ describe("SendAarCieCanInsertionScreen", () => {
     jest.clearAllMocks();
     jest
       .spyOn(AAR_SELECTORS, "aarAdresseeDenominationSelector")
-      .mockReturnValue("MOCKED_DENOMINATION");
+      .mockReturnValue("Mario Rossi");
   });
 
   it("should match the snapshot", () => {
