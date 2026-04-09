@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.28.0-canary.8112](https://github.com/pagopa/io-app/compare/3.28.0-rc.5...3.28.0-canary.8112) (2026-04-09)
+
+
+### Bug Fixes
+
+* [[IOPLT-1755](https://pagopa.atlassian.net/browse/IOPLT-1755)] Fix the incorrect toast message on the language selection screen ([#7993](https://github.com/pagopa/io-app/issues/7993)) ([d01de5b](https://github.com/pagopa/io-app/commit/d01de5b6b3fa97cc56908363f1f2b22722b52a86))
+
 ## [3.28.0-rc.5](https://github.com/pagopa/io-app/compare/3.28.0-rc.4...3.28.0-rc.5) (2026-04-08)
 
 
