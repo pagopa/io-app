@@ -10,7 +10,7 @@ import * as t from "io-ts";
 import Config from "react-native-config";
 
 // default repository for fetching app content (e.g. services metadata)
-const DEFAULT_CONTENT_REPO_URL =
+export const DEFAULT_CONTENT_REPO_URL =
   "https://assets.io.pagopa.it" as NonEmptyString;
 
 // default timeout of fetch (in ms)

@@ -109,7 +109,6 @@ const AnimatedStrokeGradient = () => {
   return (
     <View
       style={StyleSheet.absoluteFill}
-      // eslint-disable-next-line sonarjs/no-identical-functions
       onLayout={event => {
         setDimensions({
           width: event.nativeEvent.layout.width,

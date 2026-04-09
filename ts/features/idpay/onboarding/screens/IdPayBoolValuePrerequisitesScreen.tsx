@@ -82,7 +82,7 @@ const IdPayBoolValuePrerequisitesScreen = () => {
     };
 
   const getSelfCriteriaBoolAnswer = (criteria: SelfCriteriaBoolDTO) =>
-    criteria.code ? selfCriteriaBoolAnswers[criteria.code] ?? false : false;
+    criteria.code ? (selfCriteriaBoolAnswers[criteria.code] ?? false) : false;
 
   const selfCriteriaBoolSubtitle = selfCriteriaBool[0]?.subDescription;
 

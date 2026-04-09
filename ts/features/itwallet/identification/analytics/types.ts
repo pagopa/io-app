@@ -70,3 +70,7 @@ export type ItwUserWithoutL3requirements = {
   reason: "user_without_cie" | "user_without_pin";
   position: "screen" | "bottom_sheet";
 };
+
+export type ItwFallbackL2Flow = {
+  fallback_reason: "nfc_not_supported" | "user_without_cie";
+};

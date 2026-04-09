@@ -329,7 +329,6 @@ describe("singleSignOn selectors", () => {
     );
   });
 
-  // eslint-disable-next-line sonarjs/cognitive-complexity
   describe("fimsLoadingStateSelector exhaustive tests", () => {
     beforeEach(() => {
       jest.restoreAllMocks();

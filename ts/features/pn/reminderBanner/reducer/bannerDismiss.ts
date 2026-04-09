@@ -48,7 +48,7 @@ const migrations: MigrationManifest = {
     ({
       ...state,
       dismissed: false
-    } as PersistedState)
+    }) as PersistedState
 };
 
 const persistConfig: PersistConfig = {

@@ -25,21 +25,25 @@ export const RECEIPT_DOCUMENT_TYPE_PREFIX = "data:application/pdf;base64,";
 export const groupTransactionsByMonth = (
   transactions: ReadonlyArray<NoticeListItem>
 ): Array<SectionListData<NoticeListItem>> => {
-  const groups = transactions.reduce((acc, element) => {
-    if (element.noticeDate !== undefined) {
-      const isCurrentYear =
-        new Date().getFullYear() === new Date(element.noticeDate).getFullYear();
-      const month = new Date(element.noticeDate).toLocaleString("default", {
-        month: "long",
-        year: isCurrentYear ? undefined : "numeric"
-      });
-      return {
-        ...acc,
-        [month]: [...(acc[month] || []), element]
-      };
-    }
-    return acc;
-  }, {} as { [month: string]: Array<NoticeListItem> });
+  const groups = transactions.reduce(
+    (acc, element) => {
+      if (element.noticeDate !== undefined) {
+        const isCurrentYear =
+          new Date().getFullYear() ===
+          new Date(element.noticeDate).getFullYear();
+        const month = new Date(element.noticeDate).toLocaleString("default", {
+          month: "long",
+          year: isCurrentYear ? undefined : "numeric"
+        });
+        return {
+          ...acc,
+          [month]: [...(acc[month] || []), element]
+        };
+      }
+      return acc;
+    },
+    {} as { [month: string]: Array<NoticeListItem> }
+  );
 
   return Object.keys(groups).map(month => ({
     title: month,
