@@ -12,7 +12,7 @@ export const getCgnUserAgeRange = (
   }
   const date = new Date();
   const birthDate = new Date(profileBDay);
-  const age = date.getFullYear() - birthDate.getFullYear();
+  const age = ageFromDate(birthDate, date);
   if (age > 30) {
     return "31-35";
   } else if (age > 25) {
