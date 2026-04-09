@@ -26,7 +26,8 @@ import {
   sendShowAbstractSelector,
   sendVisitTheWebsiteUrlSelector,
   isSendLollipopPlaygroundEnabledSelector,
-  isCGNDiscoveryBannerEnabledSelector
+  isCGNDiscoveryBannerEnabledSelector,
+  engagementCGNDiscoveryBannerSelector
 } from "../remoteConfig";
 
 describe("remoteConfig", () => {
@@ -1373,5 +1374,43 @@ describe("isCGNDiscoveryBannerEnabledSelector", () => {
     jest.spyOn(appVersion, "getAppVersion").mockImplementation(() => "2.0.0.0");
     expect(isCGNDiscoveryBannerEnabledSelector(state)).toBe(true);
     expect(isCGNDiscoveryBannerEnabledSelector(equalsVersionState)).toBe(true);
+  });
+});
+
+describe("engagementCGNDiscoveryBannerSelector", () => {
+  it("should return undefined if remoteConfig is not set", () => {
+    const state = {
+      remoteConfig: O.none
+    } as GlobalState;
+    expect(engagementCGNDiscoveryBannerSelector(state)).toBeUndefined();
+  });
+
+  it("should return the correct configuration if remoteConfig is set", () => {
+    const state = {
+      remoteConfig: O.some({
+        cgn: {
+          show_cgn_engagement_banner: {
+            min_app_version: {
+              android: "1.0.0.0",
+              ios: "1.0.0.0"
+            },
+            description: {
+              "it-IT": "test",
+              "en-EN": "test"
+            }
+          }
+        }
+      })
+    } as GlobalState;
+    expect(engagementCGNDiscoveryBannerSelector(state)).toEqual({
+      min_app_version: {
+        android: "1.0.0.0",
+        ios: "1.0.0.0"
+      },
+      description: {
+        "it-IT": "test",
+        "en-EN": "test"
+      }
+    });
   });
 });
