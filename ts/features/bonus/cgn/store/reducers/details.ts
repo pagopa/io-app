@@ -63,7 +63,7 @@ export default reducer;
 export const cgnDetailSelector = (state: GlobalState) =>
   state.bonus.cgn.detail.information;
 
-export const isCgnAlreadyFetchedSelector = (state: GlobalState) =>
+export const isCgnDetailsAlreadyFetchedSelector = (state: GlobalState) =>
   state.bonus.cgn.detail.fetched;
 
 // Returns true only if card information are available and not in PENDING status

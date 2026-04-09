@@ -2,7 +2,7 @@ import { ActionType } from "typesafe-actions";
 import { put, select } from "typed-redux-saga/macro";
 import { getCdcStatusWallet } from "../../bonus/cdc/wallet/store/actions";
 import { cgnDetails } from "../../bonus/cgn/store/actions/details";
-import { isCgnAlreadyFetchedSelector } from "../../bonus/cgn/store/reducers/details";
+import { isCgnDetailsAlreadyFetchedSelector } from "../../bonus/cgn/store/reducers/details";
 import { idPayWalletGet } from "../../idpay/wallet/store/actions";
 import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/actions";
 import { walletUpdate } from "../store/actions";
@@ -19,7 +19,7 @@ export function* handleWalletUpdateSaga(
   // Updates the IDPay wallet, if active
   yield* put(idPayWalletGet.request());
   // Updates the CGN details only on refresh or if not already fetched
-  const cgnAlreadyFetched = yield* select(isCgnAlreadyFetchedSelector);
+  const cgnAlreadyFetched = yield* select(isCgnDetailsAlreadyFetchedSelector);
   if (action.payload?.isRefresh || !cgnAlreadyFetched) {
     yield* put(cgnDetails.request());
   }

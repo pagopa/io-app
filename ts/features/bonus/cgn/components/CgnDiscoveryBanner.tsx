@@ -25,7 +25,7 @@ import { cgnDetails } from "../store/actions/details.ts";
 import { isCgnDiscoveryBannerClosedSelector } from "../store/reducers/banners";
 import {
   cgnDetailSelector,
-  isCgnAlreadyFetchedSelector,
+  isCgnDetailsAlreadyFetchedSelector,
   isCgnEnrolledSelector
 } from "../store/reducers/details";
 
@@ -46,7 +46,7 @@ const CgnDiscoveryBanner = () => {
   const isBannerClosed = useIOSelector(isCgnDiscoveryBannerClosedSelector);
 
   const cgnStatus = useIOSelector(cgnDetailSelector);
-  const cgnFetched = useIOSelector(isCgnAlreadyFetchedSelector);
+  const cgnFetched = useIOSelector(isCgnDetailsAlreadyFetchedSelector);
 
   const shouldFetchCgnDetails =
     isRemoteBannerEnabled && !cgnFetched && pot.isNone(cgnStatus);
