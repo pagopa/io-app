@@ -26,7 +26,7 @@ export const ITW_ISSUER_DYNAMIC_ERROR_HELP_CENTER_URL =
 type Failure = CredentialIssuanceFailure | IssuanceFailure;
 
 /**
- * Input required to configure the issuer dynamic error bottom sheet.
+ * Props used by the hook to render the issuer dynamic error bottom sheet.
  * `failure` is used both to derive the support error code and to provide
  * additional troubleshooting data to Zendesk.
  */
