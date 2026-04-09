@@ -142,7 +142,7 @@ describe("SendAarCieValidationErrors", () => {
       }
     );
   });
-  // eslint-disable-next-line sonarjs/cognitive-complexity
+
   describe("UnrelatedCieComponent", () => {
     it("should match snapshot", () => {
       mockSendAarFlowManager.mockImplementation(() => ({

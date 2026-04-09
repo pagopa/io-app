@@ -118,7 +118,6 @@ function isSessionInvalid(resultAction: Action) {
   );
 }
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 export function* withThirdPartyRefreshApiCall<R>(
   apiCall: Promise<t.Validation<IResponseType<401, any> | R>>,
   options?: RefreshThirdPartyApiCallOptions

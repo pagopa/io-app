@@ -13,7 +13,7 @@ const getState = (notifs: boolean, appearanceBanner: boolean) =>
         systemNotificationsEnabled: notifs
       }
     }
-  } as GlobalState);
+  }) as GlobalState;
 
 describe("profileBannerToShowSelector", () => {
   it("should return 'NOTIFICATIONS' if notifications are not enabled", () => {

@@ -35,8 +35,8 @@ describe("fetchQrCodeSaga", () => {
         prevState.type === "fetchingQRData"
           ? "Fetch QRCode"
           : prevState.type === "fetchingNotificationData"
-          ? "Fetch Notification"
-          : "Entry Point",
+            ? "Fetch Notification"
+            : "Entry Point",
       reason
     }
   });

@@ -50,7 +50,7 @@ describe("handleStoredLinkingUrlIfNeeded", () => {
       .next()
       .select(storedLinkingUrlSelector)
       .next(aarUrl)
-      .select(isSendAARLink, aarUrl);
+      .select(isSendAarLink, aarUrl);
 
     expect(trackIOOpenedFromUniversalAppLink).toHaveBeenCalledWith(aarUrl);
     expect(trackIOOpenedFromUniversalAppLink).toHaveBeenCalledTimes(1);

@@ -29,7 +29,6 @@ import { SendAarDelegationProposalScreen } from "../SendAarDelegationProposalScr
 // By mocking Gesture Handlers with simple Views we avoid global side effects and
 // ensure deterministic and stable tests and snapshots.
 jest.mock("react-native-gesture-handler", () => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const { View } = require("react-native");
 
   return {
@@ -293,7 +292,7 @@ describe("SendAarDelegationProposalScreen", () => {
       it(testName, async () => {
         jest
           .spyOn(FLOW_MANAGER, "useSendAarFlowManager")
-          // eslint-disable-next-line sonarjs/no-identical-functions
+
           .mockImplementation(() => ({
             terminateFlow: jest.fn(),
             goToNextState: jest.fn(),

@@ -88,8 +88,8 @@ describe("SendQRScanFlowHandlerComponent", () => {
         shouldNavigateToEngagementScreen
           ? "navigate to service engagment screen"
           : shouldNavigateToNotificationPermissionsScreen
-          ? "navigate to notification permissions screen"
-          : "popToTop"
+            ? "navigate to notification permissions screen"
+            : "popToTop"
       } when SEND service is ${
         sendServiceActive ? "" : "not "
       }active and notifications permissions are ${

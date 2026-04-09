@@ -40,7 +40,7 @@ const generateUserProfile = (
         ? ServicesPreferencesModeEnum.LEGACY
         : ServicesPreferencesModeEnum.AUTO
     }
-  } as InitializedProfile);
+  }) as InitializedProfile;
 
 const profileUpsertResult = () => ({
   payload: {

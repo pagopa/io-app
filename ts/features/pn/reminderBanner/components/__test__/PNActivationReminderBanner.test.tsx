@@ -24,7 +24,7 @@ describe("pnActivationBanner", () => {
     const mockNavigate = jest.fn();
     jest
       .spyOn(USEIO, "useIONavigation")
-      .mockImplementation(() => ({ navigate: mockNavigate } as any));
+      .mockImplementation(() => ({ navigate: mockNavigate }) as any);
     const component = renderComponent();
     const banner = component.getByTestId("pn-banner");
     fireEvent.press(banner);

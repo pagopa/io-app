@@ -70,7 +70,7 @@ const mockSectionStatusState = (
         issuance: { integrityKeyTag: O.some("key-tag") }
       } as ItWalletState
     } as PersistedFeaturesState
-  } as unknown as GlobalState);
+  }) as unknown as GlobalState;
 
 const mockStore = configureMockStore();
 
