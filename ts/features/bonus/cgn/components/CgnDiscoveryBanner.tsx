@@ -84,7 +84,7 @@ const CgnDiscoveryBanner = () => {
         content={engagementBannerContent.description[localeFallback]}
         action={
           engagementBannerContent.action?.label[localeFallback] ??
-          "Attiva Carta Giovani"
+          I18n.t("bonus.cgn.engagement.banner.cta")
         }
         pictogramName="star"
         color="turquoise"
