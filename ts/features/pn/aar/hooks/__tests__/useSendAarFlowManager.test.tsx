@@ -59,7 +59,7 @@ describe("useSendAarFlowManager", () => {
         () =>
           ({
             type: stateKind
-          } as AARFlowState)
+          }) as AARFlowState
       );
 
       const { result } = renderHook(useSendAarFlowManager);

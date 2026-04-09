@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { remark } from "remark";
 import remarkDirective from "remark-directive";
 import remarkRehype from "remark-rehype";
@@ -17,16 +16,20 @@ function customPlugin() {
         node.type === "leafDirective" ||
         node.type === "containerDirective"
       ) {
+        // eslint-disable-next-line functional/immutable-data
         const data = node.data || (node.data = {});
         const hast = h(node.name, node.attributes);
 
+        // eslint-disable-next-line functional/immutable-data
         data.hName = hast.tagName;
+        // eslint-disable-next-line functional/immutable-data
         data.hProperties = hast.properties;
       }
     });
   };
 }
 
+ 
 export const remarkProcessor = remark()
   .use(remarkDirective)
   .use(customPlugin) // @ts-ignore

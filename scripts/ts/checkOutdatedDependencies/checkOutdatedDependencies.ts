@@ -35,7 +35,8 @@ const readOutdatedJson = async (): Promise<string> => {
       return stdout;
     } else {
       throw new Error(
-        `Error ${code} while executing 'yarn outdated --json': ${message}`
+        `Error ${code} while executing 'yarn outdated --json': ${message}`,
+        { cause: e }
       );
     }
   }

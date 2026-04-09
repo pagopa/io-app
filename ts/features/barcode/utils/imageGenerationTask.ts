@@ -25,5 +25,5 @@ export const imageGenerationTask = (
       );
       return paths.map(path => ({ uri: path }));
     },
-    error => ({ reason: `UNEXPECTED${error}` } as BarcodeFailure)
+    error => ({ reason: `UNEXPECTED${error}` }) as BarcodeFailure
   );

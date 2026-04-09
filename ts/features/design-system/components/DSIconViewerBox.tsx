@@ -102,8 +102,8 @@ export const DSIconViewerBox = ({
         fullWidth
           ? undefined
           : size
-          ? sizeMap[size].wrapper
-          : styles.iconWrapperAuto
+            ? sizeMap[size].wrapper
+            : styles.iconWrapperAuto
       ]}
     >
       <View

@@ -49,7 +49,7 @@ const ShareDataScreen = () => {
   const { present, bottomSheet } = useConfirmOptOutBottomSheet(() => {
     const flow = getFlowType(false, false);
     trackMixpanelDeclined(flow);
-    trackMixpanelSetEnabled(false, flow, store.getState()).finally(() => {
+    void trackMixpanelSetEnabled(false, flow, store.getState()).finally(() => {
       dispatch(setMixpanelEnabled(false));
     });
     showUpdatedPreferencesToastMessage();

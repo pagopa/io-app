@@ -325,7 +325,6 @@ describe("Mixpanel module", () => {
   });
 
   describe("processEnqueuedMixpanelEvents", () => {
-    // eslint-disable-next-line sonarjs/no-identical-functions
     beforeEach(() => {
       // Make sure mixpanel is not initialized
       MixpanelModule.terminateMixpanel();
