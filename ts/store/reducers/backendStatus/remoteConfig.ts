@@ -147,15 +147,16 @@ export const isCGNDiscoveryBannerEnabledSelector = (state: GlobalState) =>
   pipe(
     state,
     remoteConfigSelector,
-    O.map(config =>
-      isVersionSupported(
-        Platform.OS === "ios"
-          ? config.cgn.show_cgn_engagement_banner?.min_app_version?.ios
-          : config.cgn.show_cgn_engagement_banner?.min_app_version?.android,
-        getAppVersion()
-      )
+    O.chainNullableK(
+      config => config.cgn.show_cgn_engagement_banner?.min_app_version
     ),
-    O.getOrElse(() => false)
+    minAppVersion =>
+      isMinAppVersionSupported(
+        pipe(
+          minAppVersion,
+          O.map(mav => ({ min_app_version: mav }))
+        )
+      )
   );
 
 export const engagementCGNDiscoveryBannerSelector = createSelector(
