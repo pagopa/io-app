@@ -114,10 +114,9 @@ export const useCieManager: UseCieManager = ({
       // to avoid VoiceOver reading individual emoji names.
       if (isScreenReaderEnabled) {
         const percentage = Math.round(event.progress * 100);
-        const label = I18n.t(
-          "features.itWallet.identification.cie.readingCard.progressAccessibilityAnnouncement",
-          { percentage }
-        );
+        const label = I18n.t("global.accessibility.cieReadingProgress", {
+          percentage
+        });
         CieManager.setCurrentAlertMessage(label);
       } else {
         const progressEmojis = getCieProgressEmojis(event.progress);
