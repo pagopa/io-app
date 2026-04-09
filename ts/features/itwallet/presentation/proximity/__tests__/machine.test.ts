@@ -371,7 +371,7 @@ describe("itwProximityMachine", () => {
       );
     });
 
-    it("should navigate to Failure when startEngagement fails", async () => {
+    it("should call setFailure and stay in Starting when startEngagement fails", async () => {
       startEngagement.mockImplementation(() =>
         Promise.reject(new Error("Engagement error"))
       );
@@ -380,11 +380,46 @@ describe("itwProximityMachine", () => {
       actor.start();
       actor.send({ type: "start" });
 
-      await waitFor(() =>
-        expect(actor.getSnapshot().value).toStrictEqual("Failure")
-      );
+      await waitFor(() => expect(setFailure).toHaveBeenCalled());
 
-      expect(navigateToFailureScreen).toHaveBeenCalled();
+      expect(actor.getSnapshot().value).toStrictEqual({
+        Presentation: "Starting"
+      });
+      expect(actor.getSnapshot().hasTag(ItwPresentationTags.Loading)).toBe(
+        true
+      );
+      expect(navigateToFailureScreen).not.toHaveBeenCalled();
+    });
+
+    it("should restart engagement via Retrying state when retry event is sent after failure", async () => {
+      startEngagement
+        .mockImplementationOnce(() =>
+          Promise.reject(new Error("Engagement error"))
+        )
+        .mockResolvedValueOnce(undefined);
+
+      const actor = createActor(mockedMachine);
+      actor.start();
+      actor.send({ type: "start" });
+
+      await waitFor(() => expect(setFailure).toHaveBeenCalledTimes(1));
+
+      actor.send({ type: "retry" });
+
+      // Passes through Retrying (always → Starting), startEngagement runs again
+      await waitFor(() => expect(startEngagement).toHaveBeenCalledTimes(2));
+
+      expect(actor.getSnapshot().value).toStrictEqual({
+        Presentation: "Starting"
+      });
+
+      actor.send({ type: "qr-code-string", payload: QR_CODE_STRING });
+
+      await waitFor(() =>
+        expect(actor.getSnapshot().value).toStrictEqual({
+          Presentation: "DisplayQrCode"
+        })
+      );
     });
   });
 

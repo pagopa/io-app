@@ -109,8 +109,8 @@ const buildSnapshot = (
     case "error":
       return {
         ...initialSnapshot,
-        value: { Presentation: "DisplayQrCode" },
-        tags: new Set([ItwPresentationTags.Presenting]),
+        value: { Presentation: "Starting" },
+        tags: new Set([ItwPresentationTags.Loading]),
         context: {
           ...initialSnapshot.context,
           failure: {
