@@ -49,7 +49,6 @@ export const useSecuritySuggestionsBottomSheet = (
     // During the onboarding or the first onboarding we wait for isSecurityAdviceReadyToBeShown
     // before showing the bottom sheet.
 
-    // eslint-disable-next-line sonarjs/no-collapsible-if
     if (!useManualBottomsheetOpening) {
       if (isSecurityAdviceReadyToBeShown) {
         showSecuritySuggestionModal();

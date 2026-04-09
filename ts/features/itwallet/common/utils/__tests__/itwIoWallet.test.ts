@@ -1,5 +1,5 @@
 /* eslint-disable functional/no-let */
-/* eslint-disable @typescript-eslint/no-var-requires */
+
 import type { IoWallet, ItwVersion } from "@pagopa/io-react-native-wallet";
 
 jest.mock("@pagopa/io-react-native-wallet", () => ({
