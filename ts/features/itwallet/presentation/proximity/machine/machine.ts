@@ -47,13 +47,13 @@ export const itwProximityMachine = setup({
     ),
     checkBluetoothIsActive: fromPromise<boolean, void>(notImplemented),
     proximityCommunicationLogic: fromCallback<ProximityEvents>(notImplemented),
-    startEngagement: fromPromise(notImplemented),
-    terminateProximitySession:
-      fromPromise<SendErrorResponseActorOutput>(notImplemented),
+    startEngagement: fromPromise<void>(notImplemented),
     sendDocuments: fromPromise<
       SendDocumentsActorOutput,
       SendDocumentsActorInput
     >(notImplemented),
+    terminateProximitySession:
+      fromPromise<SendErrorResponseActorOutput>(notImplemented),
     closeProximityFlow: fromPromise<CloseActorOutput, void>(notImplemented)
   },
   guards: {

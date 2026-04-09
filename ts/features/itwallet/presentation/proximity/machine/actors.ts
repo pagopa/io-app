@@ -103,7 +103,7 @@ export const createProximityActorsImplementation = (
     return bluetoothState === "PoweredOn";
   });
 
-  const startEngagement = fromPromise(async () => {
+  const startEngagement = fromPromise<void>(async () => {
     // Ensure any existing session is closed before starting a new one
     await ISO18013_5.close().catch(() => null);
 
