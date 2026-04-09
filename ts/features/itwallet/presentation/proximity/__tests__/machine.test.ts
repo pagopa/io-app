@@ -1,27 +1,19 @@
 import { waitFor } from "@testing-library/react-native";
-import {
-  assign,
-  createActor,
-  fromCallback,
-  fromPromise,
-  SimulatedClock
-} from "xstate";
+import { createActor, fromCallback, fromPromise, SimulatedClock } from "xstate";
 import { itwProximityMachine } from "../machine/machine";
 import {
   CheckPermissionsInput,
   CloseActorOutput,
-  GetQrCodeStringActorOutput,
   SendDocumentsActorInput,
   SendDocumentsActorOutput,
-  SendErrorResponseActorOutput,
-  StartProximityFlowInput
+  SendErrorResponseActorOutput
 } from "../machine/actors";
 import { ProximityEvents } from "../machine/events";
 import { ItwTags } from "../../../machine/tags";
 import { ItwPresentationTags } from "../machine/tags";
 import type { VerifierRequest } from "../utils/itwProximityTypeUtils";
 
-const QR_CODE_STRING = "qr-code-string";
+const QR_CODE_STRING = "test-qr-code-data";
 const CREDENTIAL_TYPE = "org.iso.18013.5.1.mDL";
 
 const PROXIMITY_DETAILS = [
@@ -47,7 +39,6 @@ const VERIFIER_REQUEST = {
 
 describe("itwProximityMachine", () => {
   const setFailure = jest.fn();
-  const setQRCodeGenerationError = jest.fn();
   const setHasGivenConsent = jest.fn();
   const navigateToGrantPermissionsScreen = jest.fn();
   const navigateToBluetoothActivationScreen = jest.fn();
@@ -57,12 +48,10 @@ describe("itwProximityMachine", () => {
   const navigateToSendDocumentsResponseScreen = jest.fn();
   const navigateToWallet = jest.fn();
   const closeProximity = jest.fn();
-  const trackQrCodeGenerationOutcome = jest.fn();
 
   const checkPermissions = jest.fn();
   const checkBluetoothIsActive = jest.fn();
-  const startProximityFlow = jest.fn();
-  const generateQrCodeString = jest.fn();
+  const startEngagement = jest.fn();
   const closeProximityFlow = jest.fn();
   const proximityCommunicationLogic = jest.fn();
   const terminateProximitySession = jest.fn();
@@ -73,9 +62,6 @@ describe("itwProximityMachine", () => {
   const mockedMachine = itwProximityMachine.provide({
     actions: {
       setFailure,
-      setQRCodeGenerationError: assign({
-        isQRCodeGenerationError: true
-      }),
       setHasGivenConsent,
       navigateToGrantPermissionsScreen,
       navigateToBluetoothActivationScreen,
@@ -84,8 +70,7 @@ describe("itwProximityMachine", () => {
       navigateToClaimsDisclosureScreen,
       navigateToSendDocumentsResponseScreen,
       navigateToWallet,
-      closeProximity,
-      trackQrCodeGenerationOutcome
+      closeProximity
     },
     actors: {
       checkPermissions: fromPromise<boolean, CheckPermissionsInput>(
@@ -94,12 +79,7 @@ describe("itwProximityMachine", () => {
       checkBluetoothIsActive: fromPromise<boolean, void>(
         checkBluetoothIsActive
       ),
-      startProximityFlow: fromPromise<void, StartProximityFlowInput>(
-        startProximityFlow
-      ),
-      generateQrCodeString: fromPromise<GetQrCodeStringActorOutput, void>(
-        generateQrCodeString
-      ),
+      startEngagement: fromPromise(startEngagement),
       closeProximityFlow: fromPromise<CloseActorOutput, void>(
         closeProximityFlow
       ),
@@ -120,7 +100,7 @@ describe("itwProximityMachine", () => {
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    jest.resetAllMocks();
   });
 
   describe("Initialization", () => {
@@ -246,7 +226,7 @@ describe("itwProximityMachine", () => {
       checkPermissions.mockImplementation(() => Promise.resolve(true));
     });
 
-    it("should proceed to QR generation when bluetooth enabled on retry", async () => {
+    it("should proceed to presentation when bluetooth enabled on retry", async () => {
       checkBluetoothIsActive
         .mockImplementationOnce(() => Promise.resolve(false))
         .mockImplementationOnce(() => Promise.resolve(true));
@@ -278,7 +258,7 @@ describe("itwProximityMachine", () => {
 
       await waitFor(() =>
         expect(actor.getSnapshot().value).toStrictEqual({
-          DeviceCommunication: "DisplayQrCode"
+          Presentation: "Starting"
         })
       );
 
@@ -356,59 +336,44 @@ describe("itwProximityMachine", () => {
     });
   });
 
-  describe("QR Code Generation Flow", () => {
+  describe("Presentation Flow", () => {
     beforeEach(() => {
       checkPermissions.mockImplementation(() => Promise.resolve(true));
       checkBluetoothIsActive.mockImplementation(() => Promise.resolve(true));
     });
 
-    it("should complete QR generation flow and display QR code", async () => {
-      // Delay to capture StartingProximityFlow state and verify Loading tag
-      startProximityFlow.mockImplementation(
-        () => new Promise<void>(resolve => setTimeout(() => resolve(), 50))
-      );
-      generateQrCodeString.mockImplementation(() =>
-        Promise.resolve(QR_CODE_STRING)
-      );
-
+    it("should display QR code when engagement starts and qr-code-string event is received", async () => {
       const actor = createActor(mockedMachine);
       actor.start();
       actor.send({ type: "start" });
 
-      expect(actor.getSnapshot().tags).toStrictEqual(
-        new Set([ItwTags.Loading])
-      );
-
       await waitFor(() =>
         expect(actor.getSnapshot().value).toStrictEqual({
-          GenerateQRCode: "StartingProximityFlow"
+          Presentation: "Starting"
         })
       );
 
+      expect(actor.getSnapshot().hasTag(ItwPresentationTags.Loading)).toBe(
+        true
+      );
+
+      actor.send({ type: "qr-code-string", payload: QR_CODE_STRING });
+
       await waitFor(() =>
         expect(actor.getSnapshot().value).toStrictEqual({
-          DeviceCommunication: "DisplayQrCode"
+          Presentation: "DisplayQrCode"
         })
       );
 
       expect(actor.getSnapshot().context.qrCodeString).toBe(QR_CODE_STRING);
-      expect(actor.getSnapshot().context.isQRCodeGenerationError).toBe(false);
-
-      expect(startProximityFlow).toHaveBeenCalledTimes(1);
-      expect(generateQrCodeString).toHaveBeenCalledTimes(1);
-
-      expect(setQRCodeGenerationError).not.toHaveBeenCalled();
-      expect(setFailure).not.toHaveBeenCalled();
+      expect(actor.getSnapshot().hasTag(ItwPresentationTags.Presenting)).toBe(
+        true
+      );
     });
 
-    it("should restart proximity flow with isRestarting flag when retrying after error", async () => {
-      startProximityFlow
-        .mockImplementationOnce(() =>
-          Promise.reject(new Error("Proximity error"))
-        )
-        .mockImplementationOnce(() => Promise.resolve());
-      generateQrCodeString.mockImplementation(() =>
-        Promise.resolve(QR_CODE_STRING)
+    it("should navigate to Failure when startEngagement fails", async () => {
+      startEngagement.mockImplementation(() =>
+        Promise.reject(new Error("Engagement error"))
       );
 
       const actor = createActor(mockedMachine);
@@ -416,70 +381,10 @@ describe("itwProximityMachine", () => {
       actor.send({ type: "start" });
 
       await waitFor(() =>
-        expect(actor.getSnapshot().value).toStrictEqual({
-          GenerateQRCode: "QRCodeGenerationError"
-        })
+        expect(actor.getSnapshot().value).toStrictEqual("Failure")
       );
 
-      expect(actor.getSnapshot().tags).toStrictEqual(
-        new Set([ItwPresentationTags.Presenting])
-      );
-
-      expect(actor.getSnapshot().context.isQRCodeGenerationError).toBe(true);
-
-      actor.send({ type: "retry" });
-
-      await waitFor(() =>
-        expect(actor.getSnapshot().value).toStrictEqual({
-          GenerateQRCode: "RestartingProximityFlow"
-        })
-      );
-
-      expect(startProximityFlow).toHaveBeenCalledWith(
-        expect.objectContaining({
-          input: { isRestarting: true }
-        })
-      );
-
-      await waitFor(() =>
-        expect(actor.getSnapshot().value).toStrictEqual({
-          DeviceCommunication: "DisplayQrCode"
-        })
-      );
-
-      expect(actor.getSnapshot().tags).toStrictEqual(
-        new Set([ItwPresentationTags.Presenting])
-      );
-
-      expect(actor.getSnapshot().context.qrCodeString).toBe(QR_CODE_STRING);
-      expect(actor.getSnapshot().context.isQRCodeGenerationError).toBe(false);
-
-      expect(startProximityFlow).toHaveBeenCalledTimes(2);
-      expect(generateQrCodeString).toHaveBeenCalledTimes(1);
-    });
-
-    it("should handle proximity flow startup error and allow close", async () => {
-      startProximityFlow.mockImplementation(() =>
-        Promise.reject(new Error("Proximity error"))
-      );
-
-      const actor = createActor(mockedMachine);
-      actor.start();
-      actor.send({ type: "start" });
-
-      await waitFor(() =>
-        expect(actor.getSnapshot().value).toStrictEqual({
-          GenerateQRCode: "QRCodeGenerationError"
-        })
-      );
-
-      expect(actor.getSnapshot().context.isQRCodeGenerationError).toBe(true);
-
-      actor.send({ type: "dismiss" });
-
-      await waitFor(() =>
-        expect(actor.getSnapshot().value).toStrictEqual("ClosePresentation")
-      );
+      expect(navigateToFailureScreen).toHaveBeenCalled();
     });
   });
 
@@ -487,11 +392,29 @@ describe("itwProximityMachine", () => {
     beforeEach(() => {
       checkPermissions.mockImplementation(() => Promise.resolve(true));
       checkBluetoothIsActive.mockImplementation(() => Promise.resolve(true));
-      startProximityFlow.mockImplementation(() => Promise.resolve());
-      generateQrCodeString.mockImplementation(() =>
-        Promise.resolve(QR_CODE_STRING)
-      );
+      startEngagement.mockResolvedValue(undefined);
     });
+
+    const startAndReachDisplayQrCode = async (
+      actor: ReturnType<typeof createActor<typeof mockedMachine>>
+    ) => {
+      actor.start();
+      actor.send({ type: "start" });
+
+      await waitFor(() =>
+        expect(actor.getSnapshot().value).toStrictEqual({
+          Presentation: "Starting"
+        })
+      );
+
+      actor.send({ type: "qr-code-string", payload: QR_CODE_STRING });
+
+      await waitFor(() =>
+        expect(actor.getSnapshot().value).toStrictEqual({
+          Presentation: "DisplayQrCode"
+        })
+      );
+    };
 
     it("should complete full device communication flow from QR display to successful document transmission", async () => {
       sendDocuments.mockImplementation(() =>
@@ -499,14 +422,7 @@ describe("itwProximityMachine", () => {
       );
 
       const actor = createActor(mockedMachine);
-      actor.start();
-      actor.send({ type: "start" });
-
-      await waitFor(() =>
-        expect(actor.getSnapshot().value).toStrictEqual({
-          DeviceCommunication: "DisplayQrCode"
-        })
-      );
+      await startAndReachDisplayQrCode(actor);
 
       expect(actor.getSnapshot().tags).toStrictEqual(
         new Set([ItwPresentationTags.Presenting])
@@ -515,13 +431,13 @@ describe("itwProximityMachine", () => {
       actor.send({ type: "device-connecting" });
 
       expect(actor.getSnapshot().value).toStrictEqual({
-        DeviceCommunication: "Connecting"
+        Presentation: "Connecting"
       });
 
       actor.send({ type: "device-connected" });
 
       expect(actor.getSnapshot().value).toStrictEqual({
-        DeviceCommunication: "Connected"
+        Presentation: "Connected"
       });
 
       expect(navigateToClaimsDisclosureScreen).toHaveBeenCalled();
@@ -533,7 +449,7 @@ describe("itwProximityMachine", () => {
       });
 
       expect(actor.getSnapshot().value).toStrictEqual({
-        DeviceCommunication: "ClaimsDisclosure"
+        Presentation: "ClaimsDisclosure"
       });
 
       expect(actor.getSnapshot().context.proximityDetails).toEqual(
@@ -549,7 +465,7 @@ describe("itwProximityMachine", () => {
 
       await waitFor(() =>
         expect(actor.getSnapshot().value).toStrictEqual({
-          DeviceCommunication: {
+          Presentation: {
             SendingDocuments: "Initial"
           }
         })
@@ -573,14 +489,7 @@ describe("itwProximityMachine", () => {
 
       const clock = new SimulatedClock();
       const actor = createActor(mockedMachine, { clock });
-      actor.start();
-      actor.send({ type: "start" });
-
-      await waitFor(() =>
-        expect(actor.getSnapshot().value).toStrictEqual({
-          DeviceCommunication: "DisplayQrCode"
-        })
-      );
+      await startAndReachDisplayQrCode(actor);
 
       actor.send({ type: "device-connecting" });
       actor.send({ type: "device-connected" });
@@ -593,7 +502,7 @@ describe("itwProximityMachine", () => {
 
       await waitFor(() =>
         expect(actor.getSnapshot().value).toStrictEqual({
-          DeviceCommunication: {
+          Presentation: {
             SendingDocuments: "Initial"
           }
         })
@@ -602,7 +511,7 @@ describe("itwProximityMachine", () => {
       clock.increment(5000);
       await waitFor(() =>
         expect(actor.getSnapshot().value).toStrictEqual({
-          DeviceCommunication: {
+          Presentation: {
             SendingDocuments: "Reminder"
           }
         })
@@ -611,7 +520,7 @@ describe("itwProximityMachine", () => {
       clock.increment(10000);
       await waitFor(() =>
         expect(actor.getSnapshot().value).toStrictEqual({
-          DeviceCommunication: {
+          Presentation: {
             SendingDocuments: "Final"
           }
         })
@@ -626,14 +535,7 @@ describe("itwProximityMachine", () => {
       );
 
       const actor = createActor(mockedMachine, {});
-      actor.start();
-      actor.send({ type: "start" });
-
-      await waitFor(() =>
-        expect(actor.getSnapshot().value).toStrictEqual({
-          DeviceCommunication: "DisplayQrCode"
-        })
-      );
+      await startAndReachDisplayQrCode(actor);
 
       actor.send({ type: "device-connecting" });
       actor.send({ type: "device-connected" });
@@ -644,14 +546,14 @@ describe("itwProximityMachine", () => {
       });
 
       expect(actor.getSnapshot().value).toStrictEqual({
-        DeviceCommunication: "ClaimsDisclosure"
+        Presentation: "ClaimsDisclosure"
       });
 
       actor.send({ type: "back" });
 
       await waitFor(() =>
         expect(actor.getSnapshot().value).toStrictEqual({
-          DeviceCommunication: "Closing"
+          Presentation: "Terminating"
         })
       );
 
@@ -674,14 +576,7 @@ describe("itwProximityMachine", () => {
       hasFailure.mockImplementation(() => true);
 
       const actor = createActor(mockedMachine);
-      actor.start();
-      actor.send({ type: "start" });
-
-      await waitFor(() =>
-        expect(actor.getSnapshot().value).toStrictEqual({
-          DeviceCommunication: "DisplayQrCode"
-        })
-      );
+      await startAndReachDisplayQrCode(actor);
 
       expect(actor.getSnapshot().hasTag("Presenting")).toBe(true);
 
@@ -690,12 +585,16 @@ describe("itwProximityMachine", () => {
 
       await waitFor(() =>
         expect(actor.getSnapshot().value).toStrictEqual({
-          DeviceCommunication: "Closing"
+          Presentation: "Terminating"
         })
       );
 
       expect(terminateProximitySession).toHaveBeenCalled();
-      expect(actor.getSnapshot().value).toStrictEqual("Failure");
+
+      await waitFor(() =>
+        expect(actor.getSnapshot().value).toStrictEqual("Failure")
+      );
+
       expect(navigateToFailureScreen).toHaveBeenCalled();
     });
   });

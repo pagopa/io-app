@@ -198,7 +198,7 @@ export const createProximityActorsImplementation = (
         // Remove event listeners
         listeners.forEach(listener => listener.remove());
         // Close the Bluetooth connection and clear all resources
-        void ISO18013_5.close().catch(constUndefined);
+        void ISO18013_5.close().catch(() => null);
       };
     }
   );
