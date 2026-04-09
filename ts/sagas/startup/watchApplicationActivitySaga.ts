@@ -66,7 +66,6 @@ export function* watchApplicationActivitySaga(): IterableIterator<ReduxSagaEffec
           typeof NavigationService.getCurrentRouteName
         > = yield* call(NavigationService.getCurrentRouteName);
         const isSecuredRoute =
-          // eslint-disable-next-line sonarjs/no-empty-collection
           currentRoute && whiteList.indexOf(currentRoute) !== -1;
         if (isSecuredRoute) {
           /**

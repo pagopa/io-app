@@ -121,8 +121,8 @@ describe("fimsHistoryErrorSelector", () => {
       consentsDataPot.kind === "PotNoneError"
         ? "FULL_KO"
         : consentsDataPot.kind === "PotSomeError"
-        ? "ALERT_ONLY"
-        : undefined;
+          ? "ALERT_ONLY"
+          : undefined;
     it(`When 'features.fims.history.consentsList' is of type '${consentsDataPot.kind}', it should return ${expectedOutput}`, () => {
       const globalState = {
         features: {

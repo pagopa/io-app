@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/no-identical-functions */
 import { waitFor } from "@testing-library/react-native";
 import _ from "lodash";
 import {

@@ -129,7 +129,8 @@ export const itwCredentialIssuanceMachine = setup({
             ({ context }) => context.mode === "issuance",
             "hasCredentialIntroContent"
           ]),
-          target: "CredentialIntroduction"
+          target: "CredentialIntroduction",
+          actions: ["trackStartAddCredential"]
         },
         {
           guard: ({ context }) => context.mode === "issuance",

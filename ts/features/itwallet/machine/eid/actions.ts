@@ -156,8 +156,8 @@ export const createEidIssuanceActionsImplementation = (
         context.level === "l3"
           ? ITW_ROUTES.L3_ONBOARDING
           : context.level === "l2-fallback"
-          ? ITW_ROUTES.L2_ONBOARDING
-          : ITW_ROUTES.ONBOARDING
+            ? ITW_ROUTES.L2_ONBOARDING
+            : ITW_ROUTES.ONBOARDING
     });
   },
 
