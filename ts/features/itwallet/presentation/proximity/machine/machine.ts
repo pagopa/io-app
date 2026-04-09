@@ -272,14 +272,23 @@ export const itwProximityMachine = setup({
         }
       },
       states: {
+        Retrying: {
+          tags: [ItwPresentationTags.Loading],
+          always: "Starting"
+        },
         Starting: {
           tags: [ItwPresentationTags.Loading],
           description: "Start the proximity and generates the QR code string",
           invoke: {
             src: "startEngagement",
             onError: {
-              actions: "setFailure",
-              target: "#itwProximityMachine.Failure"
+              actions: "setFailure"
+            }
+          },
+          on: {
+            retry: {
+              actions: assign(() => ({ failure: undefined })),
+              target: "Retrying"
             }
           }
         },
