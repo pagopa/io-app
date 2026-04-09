@@ -1,11 +1,7 @@
 /**
  * A screens to express the preferences related to email forwarding.
  */
-import {
-  BodyProps,
-  ListItemSwitch,
-  useIOToast
-} from "@pagopa/io-app-design-system";
+import { ListItemSwitch, useIOToast } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -75,18 +71,9 @@ const EmailForwardingScreen = () => {
     [dispatch]
   );
 
-  const bodyPropsArray: Array<BodyProps> = [
-    {
-      text: I18n.t("send_email_messages.subtitle")
-    },
-    {
-      text: <> {userEmail}</>,
-      weight: "Semibold"
-    },
-    {
-      text: I18n.t("global.symbols.question")
-    }
-  ];
+  const description = I18n.t("send_email_messages.subtitle", {
+    email: userEmail
+  });
 
   const handleSwitchValueChange = useCallback(
     (canSendEmail: boolean) => {
@@ -130,7 +117,7 @@ const EmailForwardingScreen = () => {
     <IOScrollViewWithLargeHeader
       includeContentMargins
       title={{ label: I18n.t("send_email_messages.title") }}
-      description={bodyPropsArray}
+      description={description}
       headerActionsProp={{ showHelp: true }}
       contextualHelpMarkdown={contextualHelpMarkdown}
       canGoback={true}

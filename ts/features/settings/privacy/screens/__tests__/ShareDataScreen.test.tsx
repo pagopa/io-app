@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";

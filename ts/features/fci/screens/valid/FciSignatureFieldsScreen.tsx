@@ -35,6 +35,7 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import {
   trackFciShowSignatureFields,
+  trackFciSignatureFieldsView,
   trackFciStartSignature
 } from "../../analytics";
 import DocumentWithSignature from "../../components/DocumentWithSignature";
@@ -59,6 +60,7 @@ import {
   getSectionListData,
   orderSignatureFields
 } from "../../utils/signatureFields";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 export type FciSignatureFieldsScreenNavigationParams = Readonly<{
   documentId: DocumentDetailView["id"];
@@ -87,6 +89,10 @@ const FciSignatureFieldsScreen = () => {
 
   const { footerActionsMeasurements, handleFooterActionsMeasurements } =
     useFooterActionsMeasurements();
+
+  useOnFirstRender(() => {
+    trackFciSignatureFieldsView();
+  });
 
   // get signatureFields for the current document
   const docSignatures = useMemo(

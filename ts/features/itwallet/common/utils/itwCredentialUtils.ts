@@ -35,14 +35,24 @@ export const newCredentials = [
 
 export type NewCredential = (typeof newCredentials)[number];
 
+export type L2Credential = (typeof l2Credentials)[number];
+
 // Credentials that will be available in the future
-export const upcomingCredentials = [] as ReadonlyArray<string>;
+// TODO: [SIW-3923] remove once IPZS releases new credentials in PROD
+export const upcomingCredentials = [
+  CredentialType.EDUCATION_DIPLOMA,
+  CredentialType.EDUCATION_ATTENDANCE
+] as ReadonlyArray<string>;
 
 export const isUpcomingCredential = (type: string): boolean =>
   upcomingCredentials.includes(type);
 
 export const isNewCredential = (type: string): type is NewCredential =>
   newCredentials.includes(type as NewCredential);
+
+export const isL2Credential = (
+  type: string | undefined
+): type is L2Credential => l2Credentials.includes(type as L2Credential);
 
 export const itwGetCredentialNameByCredentialType = (
   isItwCredential: boolean
@@ -67,7 +77,13 @@ export const itwGetCredentialNameByCredentialType = (
   [CredentialType.EDUCATION_ENROLLMENT]: I18n.t(
     "features.itWallet.credentialName.ee"
   ),
-  [CredentialType.RESIDENCY]: I18n.t("features.itWallet.credentialName.res")
+  [CredentialType.RESIDENCY]: I18n.t("features.itWallet.credentialName.res"),
+  [CredentialType.EDUCATION_DIPLOMA]: I18n.t(
+    "features.itWallet.credentialName.edip"
+  ),
+  [CredentialType.EDUCATION_ATTENDANCE]: I18n.t(
+    "features.itWallet.credentialName.edat"
+  )
 });
 
 export const getCredentialNameFromType = (
