@@ -77,7 +77,7 @@ describe("EmailInsertScreen", () => {
     const screen = renderComponent();
     fireEvent.changeText(screen.getByTestId("email-input"), "not-an-email");
     fireEvent.press(screen.getByText(I18n.t("global.buttons.continue")));
-    // eslint-disable-next-line sonarjs/no-identical-functions
+
     await waitFor(() => {
       expect(
         screen.queryByText(I18n.t("email.newinsert.alert.invalidemail"))
@@ -109,7 +109,7 @@ describe("EmailInsertScreen", () => {
     const screen = renderComponent();
     fireEvent.changeText(screen.getByTestId("email-input"), "");
     fireEvent.press(screen.getByText(I18n.t("global.buttons.continue")));
-    // eslint-disable-next-line sonarjs/no-identical-functions
+
     await waitFor(() => {
       expect(
         screen.queryByText(I18n.t("email.newinsert.alert.description3"))

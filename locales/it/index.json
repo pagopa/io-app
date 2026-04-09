@@ -3124,7 +3124,8 @@
         "email": "Scrivi una mail",
         "website": "Visita il sito",
         "additionalDataTitle": "Dati aggiuntivi",
-        "errorCode": "Codice errore"
+        "errorCode": "Codice errore",
+        "visitHelpCenter": "Visita il centro di assistenza"
       },
       "generic": {
         "error": {
@@ -3746,8 +3747,8 @@
       "hardwareKeyInvalid": {
         "error": {
           "title": "Non puoi proseguire con la richiesta",
-          "body": "Una verifica di sicurezza sul tuo dispositivo non è andata a buon fine. Leggi i consigli per risolvere il problema o contatta l’assistenza.",
-          "primaryAction": "Leggi cosa fare"
+          "body": "Una verifica di sicurezza sul tuo dispositivo non è andata a buon fine. Per sapere cosa puoi fare per risolvere il problema contatta l'assistenza.",
+          "primaryAction": "Contatta l’assistenza"
         }
       },
       "reissuanceLandingScreen": {
