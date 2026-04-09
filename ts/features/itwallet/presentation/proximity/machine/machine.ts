@@ -161,7 +161,7 @@ export const itwProximityMachine = setup({
             onDone: [
               {
                 guard: ({ event }) => !!event.output,
-                target: "#itwProximityMachine.GenerateQRCode"
+                target: "#itwProximityMachine.Presentation"
               },
               {
                 guard: ({ event }) => !event.output,
@@ -194,7 +194,7 @@ export const itwProximityMachine = setup({
             onDone: [
               {
                 guard: ({ event }) => !!event.output,
-                target: "#itwProximityMachine.GenerateQRCode"
+                target: "#itwProximityMachine.Presentation"
               },
               {
                 guard: ({ event }) => !event.output,
@@ -234,41 +234,41 @@ export const itwProximityMachine = setup({
       },
       on: {
         "qr-code-string": {
-          target: "DeviceCommunication.DisplayQrCode",
+          target: "Presentation.DisplayQrCode",
           actions: assign(({ event }) => ({
             qrCodeString: event.payload
           }))
         },
         "device-connecting": {
-          target: "DeviceCommunication.Connecting"
+          target: "Presentation.Connecting"
         },
         "device-connected": {
-          target: "DeviceCommunication.Connected"
+          target: "Presentation.Connected"
         },
         "device-document-request-received": {
           actions: assign(({ event }) => ({
             proximityDetails: event.proximityDetails,
             verifierRequest: event.verifierRequest
           })),
-          target: "DeviceCommunication.ClaimsDisclosure"
+          target: "Presentation.ClaimsDisclosure"
         },
         "device-disconnected": [
           {
             // This event is dispatched when the verifier sends the END (0x02) termination flag after sendDocuments.
             // At this point, the verification process is complete and we can navigate to the success state.
-            guard: stateIn("DeviceCommunication.SendingDocuments"),
+            guard: stateIn("Presentation.SendingDocuments"),
             target: "#itwProximityMachine.Success"
           },
           {
             // This event is dispatched when the verifier sends the END (0x02) termination flag before sendDocuments.
             // At this point, the verification process is NOT complete and we can safely close the proximity session.
             actions: "setFailure",
-            target: "DeviceCommunication.Closing"
+            target: "Presentation.Terminating"
           }
         ],
         "device-error": {
           actions: "setFailure",
-          target: "DeviceCommunication.Closing"
+          target: "Presentation.Terminating"
         }
       },
       states: {
@@ -307,11 +307,10 @@ export const itwProximityMachine = setup({
           on: {
             "holder-consent": {
               actions: "setHasGivenConsent",
-              target:
-                "#itwProximityMachine.DeviceCommunication.SendingDocuments"
+              target: "#itwProximityMachine.Presentation.SendingDocuments"
             },
             back: {
-              target: "#itwProximityMachine.DeviceCommunication.Closing"
+              target: "#itwProximityMachine.Presentation.Terminating"
             }
           }
         },
@@ -340,7 +339,7 @@ export const itwProximityMachine = setup({
               after: {
                 5000: {
                   target:
-                    "#itwProximityMachine.DeviceCommunication.SendingDocuments.Reminder"
+                    "#itwProximityMachine.Presentation.SendingDocuments.Reminder"
                 }
               }
             },
@@ -349,7 +348,7 @@ export const itwProximityMachine = setup({
               after: {
                 10000: {
                   target:
-                    "#itwProximityMachine.DeviceCommunication.SendingDocuments.Final"
+                    "#itwProximityMachine.Presentation.SendingDocuments.Final"
                 }
               }
             },
@@ -358,7 +357,7 @@ export const itwProximityMachine = setup({
             }
           }
         },
-        Closing: {
+        Terminating: {
           description: "Terminates the proximity session with the verifier",
           invoke: {
             id: "terminateProximitySession",
@@ -384,19 +383,19 @@ export const itwProximityMachine = setup({
               }
             ]
           }
-        }
-      }
-    },
-    ClosingPresentation: {
-      description: "Close the proximity presentation flow",
-      invoke: {
-        src: "closeProximityFlow",
-        onDone: {
-          target: "Idle"
         },
-        onError: {
-          target: "Failure",
-          actions: "setFailure"
+        Closing: {
+          description: "Close the proximity presentation flow",
+          invoke: {
+            src: "closeProximityFlow",
+            onDone: {
+              target: "#itwProximityMachine.Idle"
+            },
+            onError: {
+              target: "#itwProximityMachine.Failure",
+              actions: "setFailure"
+            }
+          }
         }
       }
     },

@@ -1,4 +1,3 @@
-import { constUndefined } from "fp-ts/lib/function";
 import { fromCallback, fromPromise } from "xstate";
 import { Platform } from "react-native";
 import {
@@ -106,7 +105,7 @@ export const createProximityActorsImplementation = (
 
   const startEngagement = fromPromise(async () => {
     // Ensure any existing session is closed before starting a new one
-    await ISO18013_5.close().catch(constUndefined);
+    await ISO18013_5.close().catch(() => null);
 
     // Start a new engagement session with QRCode -> Ble configuration
     await ISO18013_5.startEngagement({
@@ -118,8 +117,10 @@ export const createProximityActorsImplementation = (
 
   const proximityCommunicationLogic = fromCallback<ProximityEvents>(
     ({ sendBack }) => {
-      const handleQrCodeString = () => {
-        sendBack({ type: "qr-code-string" });
+      const handleQrCodeString = (
+        eventPayload: EventsPayload["onQrCodeString"]
+      ) => {
+        sendBack({ type: "qr-code-string", payload: eventPayload.data });
       };
 
       const handleDeviceConnecting = () => {

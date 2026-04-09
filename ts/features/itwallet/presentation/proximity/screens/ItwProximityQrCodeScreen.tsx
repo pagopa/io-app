@@ -10,32 +10,33 @@ import {
   useIOThemeContext,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { useEffect, useState } from "react";
 import { StyleSheet, useWindowDimensions, View } from "react-native";
 import QRCode from "react-native-qrcode-skia";
-import I18n from "i18next";
+import ItwIcon from "../../../../../../img/features/itWallet/brand/itw_icon.svg";
 import {
   IOScrollView,
   IOScrollViewActions
 } from "../../../../../components/ui/IOScrollView.tsx";
+import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { useMaxBrightness } from "../../../../../utils/brightness.ts";
-import { ItwBrandedBox } from "../../../common/components/ItwBrandedBox.tsx";
+import { emptyContextualHelp } from "../../../../../utils/contextualHelp.ts";
 import { ItWalletLogo } from "../../../common/components/ItWalletLogo.tsx";
+import { ItwBrandedBox } from "../../../common/components/ItwBrandedBox.tsx";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
 import {
+  selectFailure,
   selectIsBluetoothRequiredState,
   selectIsLoading,
   selectIsPermissionsRequiredState,
-  selectIsQRCodeGenerationError,
   selectQRCodeString
 } from "../machine/selectors.ts";
-import ItwIcon from "../../../../../../img/features/itWallet/brand/itw_icon.svg";
 import { shouldBlockProximityQrCodeSelector } from "../store/selectors";
-import { emptyContextualHelp } from "../../../../../utils/contextualHelp.ts";
 
 const QR_CODE_LOGO_SIZE = 52;
 
@@ -63,9 +64,8 @@ export const ItwProximityQrCodeScreen = () => {
   const qrCodeString =
     ItwProximityMachineContext.useSelector(selectQRCodeString);
   const isLoading = ItwProximityMachineContext.useSelector(selectIsLoading);
-  const isProximityError = ItwProximityMachineContext.useSelector(
-    selectIsQRCodeGenerationError
-  );
+  const failure = ItwProximityMachineContext.useSelector(selectFailure);
+
   const isPermissionsRequired = ItwProximityMachineContext.useSelector(
     selectIsPermissionsRequiredState
   );
@@ -75,6 +75,16 @@ export const ItwProximityQrCodeScreen = () => {
   const shouldBlockProximityPresentation = useIOSelector(
     shouldBlockProximityQrCodeSelector
   );
+
+  useDebugInfo({
+    isLoading,
+    failure,
+    isPermissionsRequired,
+    isBluetoothRequired,
+    shouldBlockProximityPresentation,
+    qrCodeString
+  });
+
   // Auto-start only on the initial mount. When the flow is closing, the machine
   // transitions back to Idle briefly before unmount, and we must not restart it.
   useEffect(() => {
@@ -140,11 +150,10 @@ export const ItwProximityQrCodeScreen = () => {
         }
       : undefined;
 
-  const showStatusContent =
-    isProximityError || shouldBlockProximityPresentation;
+  const showStatusContent = !!failure || shouldBlockProximityPresentation;
 
   const renderQrCodeContent = () => {
-    if (isProximityError) {
+    if (failure !== undefined) {
       return (
         <StatusBox
           iconName="warningFilled"
