@@ -244,6 +244,7 @@ const trackError = ({
   readProgress,
   identification,
   origin
+  // eslint-disable-next-line complexity
 }: TrackErrorParams) => {
   const itw_flow: ItwFlow = isL3 ? "L3" : "L2";
   // readProgress is a number between 0 and 1, mixpanel needs a number between 0 and 100
