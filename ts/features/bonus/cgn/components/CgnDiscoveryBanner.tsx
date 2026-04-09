@@ -48,26 +48,26 @@ const CgnDiscoveryBanner = () => {
   const cgnStatus = useIOSelector(cgnDetailSelector);
   const cgnFetched = useIOSelector(isCgnAlreadyFetchedSelector);
 
+  const shouldFetchCgnDetails =
+    isRemoteBannerEnabled && !cgnFetched && pot.isNone(cgnStatus);
+
   useOnFirstRender(
     () => {
-      if (isRemoteBannerEnabled && !cgnFetched && pot.isNone(cgnStatus)) {
+      if (shouldFetchCgnDetails) {
         dispatch(cgnDetails.request());
       }
     },
-    () =>
-      isRemoteBannerEnabled &&
-      !cgnFetched &&
-      pot.isNone(cgnStatus) &&
-      !isBannerClosed
+    () => shouldFetchCgnDetails && !isBannerClosed
   );
 
-  if (
-    !eligibleForCgn ||
-    !isRemoteBannerEnabled ||
-    !engagementBannerContent ||
-    isCgnEnrolled ||
-    isBannerClosed
-  ) {
+  const shouldRenderBanner =
+    eligibleForCgn &&
+    isRemoteBannerEnabled &&
+    engagementBannerContent &&
+    !isCgnEnrolled &&
+    !isBannerClosed;
+
+  if (!shouldRenderBanner) {
     return null;
   }
 
