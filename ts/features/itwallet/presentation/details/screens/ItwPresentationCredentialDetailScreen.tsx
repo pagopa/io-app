@@ -268,7 +268,10 @@ export const ItwPresentationCredentialDetail = ({
         onPress: () => {
           trackItwProximityShowQrCode();
           navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-            screen: ITW_PROXIMITY_ROUTES.QR_CODE
+            screen: ITW_PROXIMITY_ROUTES.QR_CODE,
+            params: {
+              source: "ITW_CREDENTIAL_DETAIL"
+            }
           });
         }
       };

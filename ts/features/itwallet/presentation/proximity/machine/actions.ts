@@ -3,7 +3,8 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList"
 import { ITW_PROXIMITY_ROUTES } from "../navigation/routes";
 import {
   trackItwProximityQrCode,
-  trackItwProximityQrCodeLoadingFailure
+  trackItwProximityQrCodeLoadingFailure,
+  trackItwQRCodeLoadingFailure
 } from "../analytics";
 import { serializeFailureReason } from "../../../common/utils/itwStoreUtils";
 import { Context } from "./context";
@@ -65,6 +66,7 @@ export const createProximityActionsImplementation = (
       const failure = mapEventToFailure(event);
       const serializedFailure = serializeFailureReason(failure);
       trackItwProximityQrCodeLoadingFailure(serializedFailure);
+      trackItwQRCodeLoadingFailure(serializedFailure);
     } else {
       trackItwProximityQrCode();
     }

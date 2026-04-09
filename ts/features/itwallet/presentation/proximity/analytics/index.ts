@@ -5,7 +5,12 @@ import {
   ITW_PROXIMITY_ERRORS_EVENTS,
   ITW_PROXIMITY_SCREENVIEW_EVENTS
 } from "./enum";
-import { ItwProximityFailure, ItwProximityGenericFailure } from "./types";
+import {
+  ItwProximityFailure,
+  ItwProximityGenericFailure,
+  ItwQrCode,
+  ItwStartReissuingPID
+} from "./types";
 
 // Screen view events
 
@@ -72,6 +77,13 @@ export const trackItwProximityUnofficialVerifierBottomSheet = () => {
   );
 };
 
+export const trackItwQRCode = ({ source, qr_code_status }: ItwQrCode) => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_SCREENVIEW_EVENTS.ITW_QR_CODE,
+    buildEventProperties("UX", "screen_view", { source, qr_code_status })
+  );
+};
+
 // Actions events
 
 export const trackItwProximityShowQrCode = () => {
@@ -130,6 +142,22 @@ export const trackItwProximityContinuePresentation = () => {
   );
 };
 
+export const trackItwQRCodeLoadingRetry = () => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ACTIONS_EVENTS.ITW_QR_CODE_LOADING_RETRY,
+    buildEventProperties("UX", "action")
+  );
+};
+
+export const trackItwStartReissuingPID = ({
+  position
+}: ItwStartReissuingPID) => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ACTIONS_EVENTS.ITW_START_REISSUING_PID,
+    buildEventProperties("UX", "action", { position })
+  );
+};
+
 // Errors events
 
 export const trackItwProximityQrCodeLoadingFailure = ({
@@ -184,5 +212,14 @@ export const trackItwProximityUnofficialVerifier = ({
   void mixpanelTrack(
     ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_UNOFFICIAL_VERIFIER,
     buildEventProperties("KO", "screen_view", { reason, type })
+  );
+};
+
+export const trackItwQRCodeLoadingFailure = ({
+  reason
+}: ItwProximityFailure) => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ERRORS_EVENTS.ITW_QR_CODE_LOADING_FAILURE,
+    buildEventProperties("KO", "screen_view", { reason })
   );
 };
