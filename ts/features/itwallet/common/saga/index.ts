@@ -23,7 +23,6 @@ import {
   updateNfcInfoTrackingProperties
 } from "../../analytics/saga";
 import {
-  itwClearSimplifiedActivationRequirements,
   itwFreezeSimplifiedActivationRequirements,
   itwSetAuthLevel,
   itwSetFiscalCodeWhitelisted
@@ -96,21 +95,11 @@ export function* watchItwOfflineSaga(): SagaIterator {
  *
  * TODO: This check can be safely removed once the minimum supported app version is greater than 3.21
  */
-export const handleAuthLevelSanitizationSaga = function* (
+const handleAuthLevelSanitizationSaga = function* (
   action: ActionType<typeof itwSetFiscalCodeWhitelisted>
 ): SagaIterator {
   if (action.payload) {
-    // User is confirmed whitelisted: clear any stale isItwSimplifiedActivationRequired
-    // that may have been incorrectly set during a previous BE downtime.
-    const hasItwPID = pipe(
-      yield* select(itwCredentialsEidSelector),
-      O.map(isItwCredential),
-      O.getOrElse(() => false)
-    );
-    if (hasItwPID) {
-      yield* put(itwClearSimplifiedActivationRequirements());
-    }
-    return;
+    // Skip the sanitization for whitelisted users
   }
 
   // Check whether the user has an IT-Wallet PID credential
