@@ -1461,7 +1461,7 @@
           "action": "Cosa puoi fare?"
         },
         "PAYMENT_DUPLICATED": {
-          "title": "TEST SINGLE SNAP"
+          "title": "Questo avviso è stato già pagato!"
         },
         "PAYMENT_VERIFY_GENERIC_ERROR": {
           "title": "Non riusciamo a verificare lo stato di questo avviso",
