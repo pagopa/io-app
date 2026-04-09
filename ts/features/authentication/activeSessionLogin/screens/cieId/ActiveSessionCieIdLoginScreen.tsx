@@ -141,7 +141,6 @@ const ActiveSessionCieIdLoginWebView = ({
     [dispatch, navigation, spidLevel, isUat]
   );
 
-  // eslint-disable-next-line sonarjs/cognitive-complexity
   useEffect(() => {
     // https://reactnative.dev/docs/linking#open-links-and-deep-links-universal-links
     const urlListenerSubscription = Linking.addEventListener(

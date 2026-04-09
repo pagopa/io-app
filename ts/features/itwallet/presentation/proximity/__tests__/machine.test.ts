@@ -52,7 +52,6 @@ const VERIFIER_REQUEST = {
   }
 } as unknown as VerifierRequest;
 
-/* eslint-disable sonarjs/no-identical-functions */
 describe("itwProximityMachine", () => {
   const setFailure = jest.fn();
   const setQRCodeGenerationError = jest.fn();
@@ -612,7 +611,6 @@ describe("itwProximityMachine", () => {
     });
 
     it("should progress through SendingDocuments timeout states when transmission hangs", async () => {
-      // eslint-disable-next-line @typescript-eslint/no-empty-function
       sendDocuments.mockImplementation(() => new Promise(() => {}));
 
       const initialSnapshot = createActor(itwProximityMachine).getSnapshot();

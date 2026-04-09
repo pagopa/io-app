@@ -96,7 +96,7 @@ describe("SendEngagementScreen", () => {
     const mockReplace = jest.fn();
     jest
       .spyOn(navigation, "useIONavigation")
-      .mockImplementation(() => ({ popToTop: mockPopToTop } as any));
+      .mockImplementation(() => ({ popToTop: mockPopToTop }) as any);
 
     const screen = renderScreen();
 
@@ -158,7 +158,7 @@ describe("SendEngagementScreen", () => {
                 popToTop: mockPopToTop,
                 setOptions: mockSetOptions,
                 replace: mockReplace
-              } as any)
+              }) as any
           );
 
           const screen = renderScreen(

@@ -286,7 +286,6 @@ export const DSDynamicCardRotation = () => {
 
   const CardPatternMask = () => {
     const cardPattern = useImage(
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
       require("../../../../img/dynamicCardRotation/driver-license-background.png")
     );
 

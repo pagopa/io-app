@@ -36,7 +36,11 @@ describe("itwCredentialUpgradeMachine actions", () => {
             ]
           }
         }
-      } as unknown as ActionArgs<Context, CredentialUpgradeEvents, CredentialUpgradeEvents>);
+      } as unknown as ActionArgs<
+        Context,
+        CredentialUpgradeEvents,
+        CredentialUpgradeEvents
+      >);
 
       expect(mockDispatch).toHaveBeenCalledWith(
         itwCredentialsReplaceByType(

@@ -648,7 +648,7 @@ export const itwEidIssuanceMachine = setup({
               tags: [ItwTags.Loading],
               invoke: {
                 src: "startAuthFlow",
-                // eslint-disable-next-line sonarjs/no-identical-functions
+
                 input: ({ context }) => ({
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
