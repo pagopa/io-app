@@ -10,11 +10,12 @@ import {
   useIOThemeContext,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
+import I18n from "i18next";
 import { useCallback, useEffect, useState } from "react";
 import { StyleSheet, useWindowDimensions, View } from "react-native";
 import QRCode from "react-native-qrcode-skia";
-import I18n from "i18next";
-import { useFocusEffect } from "@react-navigation/native";
+import ItwIcon from "../../../../../../img/features/itWallet/brand/itw_icon.svg";
 import {
   IOScrollView,
   IOScrollViewActions
@@ -26,9 +27,15 @@ import {
 } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { useMaxBrightness } from "../../../../../utils/brightness.ts";
-import { ItwBrandedBox } from "../../../common/components/ItwBrandedBox.tsx";
+import { emptyContextualHelp } from "../../../../../utils/contextualHelp.ts";
 import { ItWalletLogo } from "../../../common/components/ItWalletLogo.tsx";
+import { ItwBrandedBox } from "../../../common/components/ItwBrandedBox.tsx";
 import { ITW_ROUTES } from "../../../navigation/routes";
+import {
+  trackItwQRCode,
+  trackItwQRCodeLoadingRetry,
+  trackItwStartReissuingPID
+} from "../analytics/index.ts";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
 import {
   selectIsBluetoothRequiredState,
@@ -37,16 +44,8 @@ import {
   selectIsQRCodeGenerationError,
   selectQRCodeString
 } from "../machine/selectors.ts";
-import ItwIcon from "../../../../../../img/features/itWallet/brand/itw_icon.svg";
-import { shouldBlockProximityQrCodeSelector } from "../store/selectors";
-import { emptyContextualHelp } from "../../../../../utils/contextualHelp.ts";
 import { ItwProximityParamsList } from "../navigation/ItwProximityParamsList.ts";
-import {
-  trackItwQRCode,
-  trackItwQRCodeLoadingFailure,
-  trackItwQRCodeLoadingRetry,
-  trackItwStartReissuingPID
-} from "../analytics/index.ts";
+import { shouldBlockProximityQrCodeSelector } from "../store/selectors";
 
 const QR_CODE_LOGO_SIZE = 52;
 
