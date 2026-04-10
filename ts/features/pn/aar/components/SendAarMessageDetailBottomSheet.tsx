@@ -11,19 +11,19 @@ import { sendVisitTheWebsiteUrlSelector } from "../../../../store/reducers/backe
 import { openWebUrl } from "../../../../utils/url";
 import { trackSendAarNotificationClosureExit } from "../analytics";
 import { SendUserType } from "../../../pushNotifications/analytics";
-import { SendAArFeedbackBanner } from "./SendAARFeedbackBanner";
+import { SendAArFeedbackBanner } from "./SendAarFeedbackBanner";
 
-export type SendAARMessageDetailBottomSheetProps = {
+export type SendAarMessageDetailBottomSheetProps = {
   onPrimaryActionPress: () => void;
   onSecondaryActionPress: () => void;
   sendUserType: SendUserType;
 };
 
-export const SendAARMessageDetailBottomSheet = ({
+export const SendAarMessageDetailBottomSheet = ({
   onPrimaryActionPress,
   onSecondaryActionPress,
   sendUserType
-}: SendAARMessageDetailBottomSheetProps) => {
+}: SendAarMessageDetailBottomSheetProps) => {
   const isDelegate = sendUserType === "mandatory";
   const sendVisitTheWebsiteUrl = useIOSelector(sendVisitTheWebsiteUrlSelector);
 

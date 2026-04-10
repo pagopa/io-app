@@ -5,47 +5,47 @@ import LoadingScreenContent from "../../../../components/screens/LoadingScreenCo
 import { useIOSelector } from "../../../../store/hooks";
 import { PnParamsList } from "../../navigation/params";
 import PN_ROUTES from "../../navigation/routes";
-import { trackSendAARAccessDeniedScreenView } from "../analytics";
-import { SendAarGenericErrorComponent } from "../components/errors/SendAARErrorComponent";
+import { trackSendAarAccessDeniedScreenView } from "../analytics";
+import { SendAarGenericErrorComponent } from "../components/errors/SendAarErrorComponent";
 import { SendAarNfcNotSupportedComponent } from "../components/errors/SendAarNfcNotSupportedComponent";
 import { SendAarNotAddresseeKoComponent } from "../components/errors/SendAarNotAddresseeKoComponent";
-import { currentAARFlowData } from "../store/selectors";
+import { currentAarFlowData } from "../store/selectors";
 import { getAarErrorBehaviour } from "../utils/aarErrorMappings";
-import { sendAARFlowStates } from "../utils/stateUtils";
+import { sendAarFlowStates } from "../utils/stateUtils";
 
-export const SendAARErrorScreen = () => {
-  const flowData = useIOSelector(currentAARFlowData);
+export const SendAarErrorScreen = () => {
+  const flowData = useIOSelector(currentAarFlowData);
   const navigation =
     useNavigation<StackNavigationProp<PnParamsList, "SEND_AAR_ERROR">>();
   const { type } = flowData;
 
   useEffect(() => {
-    if (type === sendAARFlowStates.notAddresseeFinal) {
-      trackSendAARAccessDeniedScreenView();
+    if (type === sendAarFlowStates.notAddresseeFinal) {
+      trackSendAarAccessDeniedScreenView();
     }
   }, [type]);
 
   useEffect(() => {
     // handle navigation for retryable errors
-    if (type === sendAARFlowStates.cieCanAdvisory) {
+    if (type === sendAarFlowStates.cieCanAdvisory) {
       navigation.replace(PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL);
     }
   }, [navigation, type]);
 
   switch (type) {
-    case sendAARFlowStates.notAddresseeFinal: {
+    case sendAarFlowStates.notAddresseeFinal: {
       return <SendAarNotAddresseeKoComponent />;
     }
-    case sendAARFlowStates.nfcNotSupportedFinal: {
+    case sendAarFlowStates.nfcNotSupportedFinal: {
       return <SendAarNfcNotSupportedComponent />;
     }
-    case sendAARFlowStates.ko: {
+    case sendAarFlowStates.ko: {
       const { Component: ErrorComponent } = getAarErrorBehaviour(
         flowData.error
       );
       return <ErrorComponent />;
     }
-    case sendAARFlowStates.cieCanAdvisory: {
+    case sendAarFlowStates.cieCanAdvisory: {
       // navigation handled in useEffect,
       // this is to avoid rendering the default error component while redirecting
       return <LoadingScreenContent title="" />;

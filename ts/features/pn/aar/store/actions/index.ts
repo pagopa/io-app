@@ -8,7 +8,7 @@ import {
 import { MessageBodyMarkdown } from "../../../../../../definitions/backend/MessageBodyMarkdown";
 import { MessageSubject } from "../../../../../../definitions/backend/MessageSubject";
 import { ThirdPartyMessage } from "../../../../../../definitions/pn/aar/ThirdPartyMessage";
-import { AARFlowState, AARFlowStateName } from "../../utils/stateUtils";
+import { AarFlowState, AarFlowStateName } from "../../utils/stateUtils";
 import { MandateCreationResponse } from "../../../../../../definitions/pn/aar/MandateCreationResponse";
 
 export type EphemeralAarMessageDataActionPayload = {
@@ -22,7 +22,7 @@ export type EphemeralAarMessageDataActionPayload = {
 };
 export type TerminateAarFlowPayload = {
   messageId?: string;
-  currentFlowState?: AARFlowStateName;
+  currentFlowState?: AarFlowStateName;
 };
 export type InitiateAarFlowPayload = {
   aarUrl: string;
@@ -32,7 +32,7 @@ export const initiateAarFlow =
   createStandardAction("INITIATE_AAR_FLOW")<InitiateAarFlowPayload>();
 
 export const setAarFlowState =
-  createStandardAction("SET_AAR_FLOW_STATE")<AARFlowState>();
+  createStandardAction("SET_AAR_FLOW_STATE")<AarFlowState>();
 
 export const terminateAarFlow =
   createStandardAction("TERMINATE_AAR_FLOW")<TerminateAarFlowPayload>();
@@ -55,7 +55,7 @@ export const testAarClearData = createStandardAction(
   "TEST_AAR_CLEAR_DATA"
 )<void>();
 
-export type AARFlowStateActions = ActionType<
+export type AarFlowStateActions = ActionType<
   | typeof setAarFlowState
   | typeof terminateAarFlow
   | typeof populateStoresWithEphemeralAarMessageData

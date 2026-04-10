@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`SendAARCieCardReadingComponent should match the snapshot for readState: {
+exports[`SendAarCieCardReadingComponent should match the snapshot for readState: {
   status: 'SUCCESS',
   data: {
     mrtd_data: { dg1: '', dg11: '', sod: '' },
@@ -653,7 +653,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
 </View>
 `;
 
-exports[`SendAARCieCardReadingComponent should match the snapshot for readState: { status: 'ERROR', error: { name: 'APDU_ERROR' } } 1`] = `
+exports[`SendAarCieCardReadingComponent should match the snapshot for readState: { status: 'ERROR', error: { name: 'APDU_ERROR' } } 1`] = `
 <View
   style={
     {
@@ -1756,7 +1756,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
 </View>
 `;
 
-exports[`SendAARCieCardReadingComponent should match the snapshot for readState: { status: 'ERROR', error: { name: 'CANCELLED_BY_USER' } } 1`] = `
+exports[`SendAarCieCardReadingComponent should match the snapshot for readState: { status: 'ERROR', error: { name: 'CANCELLED_BY_USER' } } 1`] = `
 <View
   style={
     {
@@ -2859,7 +2859,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
 </View>
 `;
 
-exports[`SendAARCieCardReadingComponent should match the snapshot for readState: { status: 'ERROR', error: { name: 'NOT_A_CIE' } } 1`] = `
+exports[`SendAarCieCardReadingComponent should match the snapshot for readState: { status: 'ERROR', error: { name: 'NOT_A_CIE' } } 1`] = `
 <View
   style={
     {
@@ -3962,7 +3962,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
 </View>
 `;
 
-exports[`SendAARCieCardReadingComponent should match the snapshot for readState: { status: 'ERROR', error: { name: 'TAG_LOST' } } 1`] = `
+exports[`SendAarCieCardReadingComponent should match the snapshot for readState: { status: 'ERROR', error: { name: 'TAG_LOST' } } 1`] = `
 <View
   style={
     {
@@ -5016,7 +5016,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
 </View>
 `;
 
-exports[`SendAARCieCardReadingComponent should match the snapshot for readState: { status: 'IDLE' } 1`] = `
+exports[`SendAarCieCardReadingComponent should match the snapshot for readState: { status: 'IDLE' } 1`] = `
 <View
   style={
     {
@@ -5992,7 +5992,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
 </View>
 `;
 
-exports[`SendAARCieCardReadingComponent should match the snapshot for readState: { status: 'READING', progress: 0 } 1`] = `
+exports[`SendAarCieCardReadingComponent should match the snapshot for readState: { status: 'READING', progress: 0 } 1`] = `
 <View
   style={
     {
@@ -6988,7 +6988,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
 </View>
 `;
 
-exports[`SendAARCieCardReadingComponent should match the snapshot for readState: { status: 'READING', progress: 0.5 } 1`] = `
+exports[`SendAarCieCardReadingComponent should match the snapshot for readState: { status: 'READING', progress: 0.5 } 1`] = `
 <View
   style={
     {
@@ -7984,7 +7984,7 @@ exports[`SendAARCieCardReadingComponent should match the snapshot for readState:
 </View>
 `;
 
-exports[`SendAARCieCardReadingComponent should match the snapshot for readState: { status: 'READING', progress: 1 } 1`] = `
+exports[`SendAarCieCardReadingComponent should match the snapshot for readState: { status: 'READING', progress: 1 } 1`] = `
 <View
   style={
     {
