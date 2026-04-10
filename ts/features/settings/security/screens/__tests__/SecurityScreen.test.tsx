@@ -136,12 +136,11 @@ describe("Test SecurityScreen", () => {
 
   it("should navigate to IDPay onboarding when not onboarded", async () => {
     jest
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
+
       .spyOn(require("../../../../../store/hooks"), "useIOSelector")
       .mockImplementation((selector: any) => {
         if (
           selector ===
-          // eslint-disable-next-line @typescript-eslint/no-var-requires
           require("../../../../idpay/code/store/selectors")
             .isIdPayCodeOnboardedSelector
         ) {
@@ -149,7 +148,6 @@ describe("Test SecurityScreen", () => {
         }
         if (
           selector ===
-          // eslint-disable-next-line @typescript-eslint/no-var-requires
           require("../../../../../store/reducers/backendStatus/remoteConfig")
             .isIdPayCiePaymentCodeEnabledSelector
         ) {
@@ -168,7 +166,7 @@ describe("Test SecurityScreen", () => {
 
   it("should enable biometric section when biometrics are available", async () => {
     jest
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
+
       .spyOn(require("../../../../../utils/biometrics"), "getBiometricsType")
       .mockResolvedValueOnce("FaceID");
 
@@ -185,7 +183,7 @@ describe("Test SecurityScreen", () => {
 
   it("should silently fail when getBiometricsType rejects", async () => {
     jest
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
+
       .spyOn(require("../../../../../utils/biometrics"), "getBiometricsType")
       .mockRejectedValueOnce(new Error("mock error"));
 

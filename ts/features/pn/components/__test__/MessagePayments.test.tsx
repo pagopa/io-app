@@ -21,14 +21,14 @@ const generatePayablePayment = (rptId: string, amount: number) =>
     amount,
     dueDate: globalDueDate,
     description: "hendrerit orci id dolor consectetur"
-  } as PaymentInfoResponse);
+  }) as PaymentInfoResponse;
 const notificationPaymentInfosFromPaymentIds = (paymentIds: Array<string>) =>
   paymentIds.map(
     payment =>
       ({
         creditorTaxId: payment.substring(0, 11),
         noticeCode: payment.substring(11)
-      } as NotificationPaymentInfo)
+      }) as NotificationPaymentInfo
   );
 
 describe("MessagePayments", () => {

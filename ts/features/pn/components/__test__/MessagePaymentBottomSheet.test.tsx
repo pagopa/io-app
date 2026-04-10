@@ -86,7 +86,7 @@ describe("MessagePaymentBottomSheet", () => {
         ({
           creditorTaxId: paymentID.substring(0, 11),
           noticeCode: paymentID.substring(11)
-        } as NotificationPaymentInfo)
+        }) as NotificationPaymentInfo
     );
     const component = renderComponent(messageId, paymentList, paymentsState);
     expect(component.toJSON()).toMatchSnapshot();

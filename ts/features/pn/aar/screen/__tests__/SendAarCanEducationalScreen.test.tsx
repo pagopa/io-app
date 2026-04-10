@@ -15,8 +15,8 @@ import {
   trackSendAarMandateCieReadingClosureAlertContinue
 } from "../../analytics";
 import { setAarFlowState } from "../../store/actions";
-import * as AAR_SELECTORS from "../../store/selectors";
-import { sendAARFlowStates } from "../../utils/stateUtils";
+import * as Aar_SELECTORS from "../../store/selectors";
+import { sendAarFlowStates } from "../../utils/stateUtils";
 import { sendAarMockStates } from "../../utils/testUtils";
 import {
   SendAarCanEducationalScreen,
@@ -193,12 +193,12 @@ describe("SendAarCanEducationalScreen", () => {
 
   describe.each(sendAarMockStates)('AAR state: "$type"', aarState => {
     beforeEach(() => {
-      jest.spyOn(AAR_SELECTORS, "currentAARFlowData").mockReturnValue(aarState);
+      jest.spyOn(Aar_SELECTORS, "currentAarFlowData").mockReturnValue(aarState);
     });
 
-    const isCieCanAdvisory = aarState.type === sendAARFlowStates.cieCanAdvisory;
+    const isCieCanAdvisory = aarState.type === sendAarFlowStates.cieCanAdvisory;
     const isCieCanInsertion =
-      aarState.type === sendAARFlowStates.cieCanInsertion;
+      aarState.type === sendAarFlowStates.cieCanInsertion;
 
     it(`${
       isCieCanAdvisory ? "should" : "should not"
@@ -218,7 +218,7 @@ describe("SendAarCanEducationalScreen", () => {
         expect(mockDispatch).toHaveBeenCalledWith(
           setAarFlowState({
             ...aarState,
-            type: sendAARFlowStates.cieCanInsertion
+            type: sendAarFlowStates.cieCanInsertion
           })
         );
       } else {
@@ -233,7 +233,7 @@ describe("SendAarCanEducationalScreen", () => {
 
     it(`${
       isCieCanInsertion ? "should" : "should not"
-    } replace to the "SendAARCieCanInsertionScreen"`, () => {
+    } replace to the "SendAarCieCanInsertionScreen"`, () => {
       renderComponent();
 
       if (isCieCanInsertion) {
