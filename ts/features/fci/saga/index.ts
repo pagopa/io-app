@@ -6,6 +6,7 @@ import RNFS from "react-native-fs";
 import { call, takeLatest, put, select, take } from "typed-redux-saga/macro";
 import { CommonActions, StackActions } from "@react-navigation/native";
 import I18n from "i18next";
+import { CieUtils } from "@pagopa/io-react-native-cie";
 import NavigationService from "../../../navigation/NavigationService";
 import { FCI_ROUTES } from "../navigation/routes";
 import ROUTES from "../../../navigation/routes";
@@ -46,6 +47,7 @@ import {
 import { fciDocumentSignaturesSelector } from "../store/reducers/fciDocumentSignatures";
 import { KeyInfo } from "../../lollipop/utils/crypto";
 import { createFciClient } from "../api/backendFci";
+import { spidLevelShortSelector } from "../../authentication/common/store/selectors";
 import { handleGetSignatureRequestById } from "./networking/handleGetSignatureRequestById";
 import { handleGetQtspMetadata } from "./networking/handleGetQtspMetadata";
 import { handleCreateFilledDocument } from "./networking/handleCreateFilledDocument";
@@ -177,26 +179,56 @@ function* watchFciQtspClausesSaga(): SagaIterator {
 
 /**
  * Handle the FCI start requests saga
+ * TODO (POC): For production, consider refactoring to separate saga
  */
 function* watchFciStartSaga(): SagaIterator {
-  yield* call(
-    NavigationService.dispatchNavigationAction,
-    StackActions.replace(FCI_ROUTES.MAIN, {
-      screen: FCI_ROUTES.DOCUMENTS,
-      params: {
-        attrs: undefined
-      }
-    })
-  );
-  // when the user start signing flow
-  // start a request to get the QTSP metadata
-  // this is needed to get the document_url
-  // that will be used to create the filled document
-  yield* put(fciLoadQtspClauses.request());
+  const spidLevel = yield* select(spidLevelShortSelector);
 
-  // start a request to get the metadata
-  // this is needed to get the service_id
-  yield* put(fciMetadataRequest.request());
+  if (spidLevel === "L3") {
+    yield* call(
+      NavigationService.dispatchNavigationAction,
+      StackActions.replace(FCI_ROUTES.MAIN, {
+        screen: FCI_ROUTES.DOCUMENTS,
+        params: {
+          attrs: undefined
+        }
+      })
+    );
+    // when the user start signing flow
+    // start a request to get the QTSP metadata
+    // this is needed to get the document_url
+    // that will be used to create the filled document
+    yield* put(fciLoadQtspClauses.request());
+
+    // start a request to get the metadata
+    // this is needed to get the service_id
+    yield* put(fciMetadataRequest.request());
+  } else {
+    // Check NFC availability using yield* call instead of async/await
+    // eslint-disable-next-line functional/no-let, no-useless-assignment
+    let isNfcAvailable = false;
+    try {
+      isNfcAvailable = yield* call([CieUtils, "hasNfcFeature"]);
+    } catch {
+      isNfcAvailable = false;
+    }
+
+    if (isNfcAvailable) {
+      yield* call(
+        NavigationService.dispatchNavigationAction,
+        StackActions.replace(FCI_ROUTES.MAIN, {
+          screen: FCI_ROUTES.FCI_LOGIN_L3
+        })
+      );
+    } else {
+      yield* call(
+        NavigationService.dispatchNavigationAction,
+        StackActions.replace(FCI_ROUTES.MAIN, {
+          screen: FCI_ROUTES.NFC_NOT_AVAILABLE
+        })
+      );
+    }
+  }
 }
 
 /**
