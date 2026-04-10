@@ -65,7 +65,8 @@ const CgnDiscoveryBanner = () => {
     isRemoteBannerEnabled &&
     engagementBannerContent &&
     !isCgnEnrolled &&
-    !isBannerClosed;
+    !isBannerClosed && 
+    !pot.isLoading(cgnStatus);
 
   if (!shouldRenderBanner) {
     return null;
