@@ -1187,17 +1187,9 @@ export const itwEidIssuanceMachine = setup({
             id: "credentialUpgradeMachine",
             src: "credentialUpgradeMachine",
             input: ({ context }) => {
-              assert(context.eid, "PID must be defined for credential upgrade");
-              assert(
-                context.walletInstanceAttestation,
-                "Wallet instance attestation must be defined"
-              );
               assert(context.mode, "Issuance mode must be defined");
 
               return {
-                pid: context.eid,
-                walletInstanceAttestation:
-                  context.walletInstanceAttestation?.jwt,
                 credentials: context.credentialsToUpgrade,
                 issuanceMode: context.mode
               };

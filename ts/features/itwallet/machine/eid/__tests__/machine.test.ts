@@ -2157,6 +2157,48 @@ describe("itwEidIssuanceMachine", () => {
     expect(navigateToUpgradeCredentialsScreen).toHaveBeenCalledTimes(1);
   });
 
+  it("Should reach CredentialsUpgrade.Upgrading in simplified flow without eid in context (regression)", done => {
+    isEligibleForItwSimplifiedActivation.mockImplementation(() => true);
+
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+
+    // No `eid` in context — mirrors the simplified activation scenario where
+    // no fresh PID is issued. The upgrade machine loads the PID from storage.
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: "IpzsPrivacyAcceptance",
+      context: {
+        mode: "upgrade",
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: { jwt: T_WIA },
+        level: "l3",
+        credentialsToUpgrade: [
+          ItwStoredCredentialsMocks.mdl
+        ] as ReadonlyArray<CredentialMetadata>
+      }
+    });
+
+    const actor = createActor(mockedMachine, { snapshot });
+    actor.start();
+
+    const subIntro = actor.subscribe(snap => {
+      if (_.isEqual(snap.value, { CredentialsUpgrade: "Intro" })) {
+        subIntro.unsubscribe();
+        actor.send({ type: "next" });
+      }
+    });
+
+    const subUpgrading = actor.subscribe(snap => {
+      if (_.isEqual(snap.value, { CredentialsUpgrade: "Upgrading" })) {
+        subUpgrading.unsubscribe();
+        done();
+      }
+    });
+
+    actor.send({ type: "accept-ipzs-privacy" });
+  });
+
   it("Should start the MRTD PoP flow", async () => {
     /** Initial part - setup with L3 and existing WIA */
     const initialSnapshot: MachineSnapshot = createActor(
