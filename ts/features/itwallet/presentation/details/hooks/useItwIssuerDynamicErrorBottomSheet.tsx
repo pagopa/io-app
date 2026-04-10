@@ -34,13 +34,21 @@ type UseItwIssuerDynamicErrorBottomSheetParams = {
  * shown in the bottom sheet.
  *
  * - non-mDL credentials never render extra CTAs here
- * - expired/invalid mDL credentials show both update and remove actions
+ * - expired mDL credentials show both update and remove actions
+ * - invalid mDL credentials show both update and remove actions only when
+ *   the issuer error code is `credential_invalid`
  * - any other mDL status falls back to the single remove action
  */
 export const getIssuerDynamicErrorBottomSheetContentConfig = (
-  credentialType: StoredCredential["credentialType"],
+  credential: StoredCredential,
   status?: ItwCredentialStatus
 ): IssuerDynamicErrorBottomSheetContentConfig => {
+  const { credentialType, storedStatusAssertion } = credential;
+  const invalidErrorCode =
+    storedStatusAssertion?.credentialStatus === "invalid"
+      ? storedStatusAssertion.errorCode
+      : undefined;
+
   if (credentialType !== CredentialType.DRIVING_LICENSE) {
     return {
       actionMode: "none",
@@ -55,10 +63,15 @@ export const getIssuerDynamicErrorBottomSheetContentConfig = (
         showDrivingLicenseExtraContent: true
       };
     case "invalid":
-      return {
-        actionMode: "updateAndRemove",
-        showDrivingLicenseExtraContent: false
-      };
+      return invalidErrorCode === "credential_invalid"
+        ? {
+            actionMode: "updateAndRemove",
+            showDrivingLicenseExtraContent: false
+          }
+        : {
+            actionMode: "removeOnly",
+            showDrivingLicenseExtraContent: false
+          };
     default:
       return {
         actionMode: "removeOnly",
@@ -77,7 +90,7 @@ export const useItwIssuerDynamicErrorBottomSheet = ({
   const { confirmAndRemoveCredential } =
     useItwRemoveCredentialWithConfirm(credential);
   const contentConfig = getIssuerDynamicErrorBottomSheetContentConfig(
-    credential.credentialType,
+    credential,
     status
   );
 
