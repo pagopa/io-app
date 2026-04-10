@@ -1,4 +1,4 @@
-import { TextInputValidation } from "@pagopa/io-app-design-system";
+import { IOButton, TextInputValidation } from "@pagopa/io-app-design-system";
 import {
   PaymentNoticeNumberFromString,
   RptId
@@ -10,6 +10,7 @@ import * as O from "fp-ts/lib/Option";
 import { flow, pipe } from "fp-ts/lib/function";
 import { useEffect, useRef, useState } from "react";
 import { Keyboard, Platform, View } from "react-native";
+import { KeyboardStickyView } from "react-native-keyboard-controller";
 import I18n from "i18next";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import {
@@ -28,6 +29,7 @@ import { PaymentsCheckoutParamsList } from "../navigation/params";
 import { TextInputValidationRefProps } from "../types";
 import { useIOSelector } from "../../../../store/hooks";
 import { isScreenReaderEnabledSelector } from "../../../../store/reducers/preferences";
+import { useFooterActionsMargin } from "../../../../hooks/useFooterActionsMargin";
 
 export type WalletPaymentInputFiscalCodeScreenNavigationParams = {
   paymentNoticeNumber: O.Option<PaymentNoticeNumberFromString>;
@@ -107,6 +109,8 @@ const WalletPaymentInputFiscalCodeScreen = () => {
     analytics.trackPaymentOrganizationDataEntry();
   });
 
+  const { bottomMargin } = useFooterActionsMargin();
+
   return (
     <>
       <IOScrollViewWithLargeHeader
@@ -118,13 +122,6 @@ const WalletPaymentInputFiscalCodeScreen = () => {
         canGoback
         headerActionsProp={{ showHelp: true }}
         contextualHelp={emptyContextualHelp}
-        actions={{
-          type: "SingleButton",
-          primary: {
-            label: I18n.t("global.buttons.continue"),
-            onPress: handleContinueClick
-          }
-        }}
         ref={textInputWrapperRef}
         includeContentMargins
       >
@@ -156,29 +153,22 @@ const WalletPaymentInputFiscalCodeScreen = () => {
             textInputProps={{
               keyboardType: "number-pad",
               inputMode: "numeric",
-              returnKeyType: "done",
-              inputAccessoryViewID: "fiscalCodeInputAccessoryView"
+              inputAccessoryViewID: "keyboardStickyView"
             }}
             autoFocus
           />
         )}
       </IOScrollViewWithLargeHeader>
-      {
-        // TODO: We remove the InputAccessoryView for now cause of some issues experiencing with a no show of the component inside.
-        // ref: https://github.com/facebook/react-native/pull/52825
-        // Platform.OS === "ios" && (
-        //   <InputAccessoryView nativeID={"fiscalCodeInputAccessoryView"}>
-        //     <View style={{ padding: 20 }}>
-        //       <IOButton
-        //         fullWidth
-        //         variant="solid"
-        //         label={I18n.t("global.buttons.continue")}
-        //         onPress={handleContinueClick}
-        //       />
-        //     </View>
-        //   </InputAccessoryView>
-        // )
-      }
+      <KeyboardStickyView offset={{ closed: 0 }}>
+        <View style={{ paddingHorizontal: 20, marginBottom: bottomMargin }}>
+          <IOButton
+            fullWidth
+            variant="solid"
+            label={I18n.t("global.buttons.continue")}
+            onPress={handleContinueClick}
+          />
+        </View>
+      </KeyboardStickyView>
     </>
   );
 };
