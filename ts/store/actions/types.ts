@@ -35,7 +35,7 @@ import { MessagesActions } from "../../features/messages/store/actions";
 import { MixpanelFeatureActions } from "../../features/mixpanel/store/actions";
 import { OnboardingActions } from "../../features/onboarding/store/actions";
 import { PaymentsActions as PaymentsFeatureActions } from "../../features/payments/common/store/actions";
-import { AARFlowStateActions } from "../../features/pn/aar/store/actions";
+import { AarFlowStateActions } from "../../features/pn/aar/store/actions";
 import { SENDLoginEngagementActions } from "../../features/pn/loginEngagement/store/actions";
 import { SENDLollipopLambdaActions } from "../../features/pn/lollipopLambda/store/actions";
 import { PnActions } from "../../features/pn/store/actions";
@@ -122,7 +122,7 @@ export type Action =
   | AppFeedbackActions
   | UtmLinkActions
   | ConnectivityActions
-  | AARFlowStateActions
+  | AarFlowStateActions
   | SENDLollipopLambdaActions
   | BackgroundLinkingActions
   | SENDLoginEngagementActions

@@ -4,9 +4,9 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { thirdPartyFromIdSelector } from "../../../../messages/store/reducers/thirdPartyById";
 import { toSENDMessage } from "../../../store/types/transformers";
 import {
-  AARFlowState,
+  AarFlowState,
   maybeIunFromAarFlowState,
-  sendAARFlowStates
+  sendAarFlowStates
 } from "../../utils/stateUtils";
 
 export const thirdPartySenderDenominationSelector = (
@@ -23,13 +23,13 @@ export const thirdPartySenderDenominationSelector = (
 };
 
 export const aarAdresseeDenominationSelector = (state: GlobalState) => {
-  const currentState = currentAARFlowData(state);
+  const currentState = currentAarFlowData(state);
 
   switch (currentState.type) {
-    case sendAARFlowStates.none:
-    case sendAARFlowStates.ko:
-    case sendAARFlowStates.displayingAARToS:
-    case sendAARFlowStates.fetchingQRData:
+    case sendAarFlowStates.none:
+    case sendAarFlowStates.ko:
+    case sendAarFlowStates.displayingAarToS:
+    case sendAarFlowStates.fetchingQRData:
       return undefined;
     default:
       return currentState.recipientInfo.denomination;
@@ -38,21 +38,21 @@ export const aarAdresseeDenominationSelector = (state: GlobalState) => {
 export const currentAarFlowIunSelector = (
   state: GlobalState
 ): string | undefined => {
-  const currentState = currentAARFlowData(state);
+  const currentState = currentAarFlowData(state);
   return maybeIunFromAarFlowState(currentState);
 };
 
-export const currentAARFlowData = (state: GlobalState) =>
+export const currentAarFlowData = (state: GlobalState) =>
   state.features.pn.aarFlow;
-export const currentAARFlowStateType = (state: GlobalState) =>
+export const currentAarFlowStateType = (state: GlobalState) =>
   state.features.pn.aarFlow.type;
 
-export const currentAARFlowStateAssistanceErrorCode = (
+export const currentAarFlowStateAssistanceErrorCode = (
   state: GlobalState
 ): string | undefined => {
   const aarFlow = state.features.pn.aarFlow;
 
-  if (aarFlow.type !== sendAARFlowStates.ko) {
+  if (aarFlow.type !== sendAarFlowStates.ko) {
     return undefined;
   }
 
@@ -74,10 +74,10 @@ export const currentAARFlowStateAssistanceErrorCode = (
 };
 
 const emptyInstance = {};
-export const currentAARFlowStateErrorDebugInfoSelector = createSelector(
+export const currentAarFlowStateErrorDebugInfoSelector = createSelector(
   (state: GlobalState) => state.features.pn.aarFlow,
-  (aarFlow: AARFlowState) => {
-    if (aarFlow.type === sendAARFlowStates.ko) {
+  (aarFlow: AarFlowState) => {
+    if (aarFlow.type === sendAarFlowStates.ko) {
       const errorCodes = aarFlow.error?.errors
         ?.map(error => `${error.code} ${error.detail ?? ""}`)
         .join(", ");
