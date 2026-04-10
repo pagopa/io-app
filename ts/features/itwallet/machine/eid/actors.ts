@@ -353,10 +353,11 @@ export const createEidIssuanceActorsImplementation = (
       assert(eid, "eID credential is undefined");
 
       // Waits for the credential store/replace to complete before proceeding
-      await new Promise<void>(resolve => {
+      await new Promise<void>((resolve, reject) => {
         store.dispatch(
           itwCredentialsReplaceByType([eid], {
-            onComplete: resolve
+            onComplete: resolve,
+            onError: reject
           })
         );
       });

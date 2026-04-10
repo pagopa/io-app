@@ -18,21 +18,19 @@ export function* handleItwCredentialsReplaceByTypeSaga(
   const credentials = action.payload;
   const { onComplete, onError } = action.meta;
 
-  if (credentials.length === 0) {
-    return;
+  if (credentials.length > 0) {
+    const credentialType = credentials[0].metadata.credentialType;
+
+    // Remove first, then store — sequential execution, no race condition
+    yield* call(
+      handleItwCredentialsRemoveByTypeSaga,
+      itwCredentialsRemoveByType(credentialType, { onError })
+    );
+    yield* call(
+      handleItwCredentialsStoreBundleSaga,
+      itwCredentialsStoreBundle(credentials, { onError })
+    );
   }
-
-  const credentialType = credentials[0].metadata.credentialType;
-
-  // Remove first, then store — sequential execution, no race condition
-  yield* call(
-    handleItwCredentialsRemoveByTypeSaga,
-    itwCredentialsRemoveByType(credentialType, { onError })
-  );
-  yield* call(
-    handleItwCredentialsStoreBundleSaga,
-    itwCredentialsStoreBundle(credentials, { onError })
-  );
 
   onComplete?.();
 }
