@@ -37,6 +37,7 @@ import {
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
 import { itwSetWalletInstanceRenewalError } from "../../walletInstance/store/actions";
 import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
+import { createCredentialUpgradeActionsImplementation } from "../upgrade/actions";
 import { createCredentialUpgradeActorsImplementation } from "../upgrade/actors";
 import { itwCredentialUpgradeMachine } from "../upgrade/machine";
 import type {
@@ -365,6 +366,7 @@ export const createEidIssuanceActorsImplementation = (
   ),
 
   credentialUpgradeMachine: itwCredentialUpgradeMachine.provide({
+    actions: createCredentialUpgradeActionsImplementation(store),
     actors: createCredentialUpgradeActorsImplementation(env, store, itwVersion)
   })
 });
