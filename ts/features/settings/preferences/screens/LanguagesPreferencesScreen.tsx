@@ -156,12 +156,16 @@ const LanguagesPreferencesScreen = () => {
   );
 
   useEffect(() => {
-    // update completed
     if (
       prevProfile &&
       pot.isUpdating(prevProfile) &&
+      pot.isSome(prevProfile) &&
       pot.isSome(profile) &&
-      !pot.isError(profile)
+      !pot.isError(profile) &&
+      !_.isEqual(
+        prevProfile.value.preferred_languages,
+        profile.value.preferred_languages
+      )
     ) {
       toast.success(
         I18n.t(

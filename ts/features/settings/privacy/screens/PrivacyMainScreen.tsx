@@ -148,7 +148,6 @@ const PrivacyMainScreen = ({ navigation }: Props) => {
     [handleAlreadyProcessingAlert, navigation, userDataProcessing]
   );
 
-  // eslint-disable-next-line sonarjs/cognitive-complexity
   useEffect(() => {
     const prevIsLoading = (choice: UserDataProcessingChoiceEnum) =>
       prevUserDataProcessing && pot.isLoading(prevUserDataProcessing[choice]);

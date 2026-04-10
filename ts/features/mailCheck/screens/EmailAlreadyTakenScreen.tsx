@@ -1,7 +1,6 @@
 import { Route, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import { useCallback, useMemo } from "react";
-import { BodyProps } from "@pagopa/io-app-design-system";
+import { useCallback } from "react";
 import I18n from "i18next";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
@@ -60,31 +59,6 @@ const EmailAlreadyTakenScreen = () => {
     navigateToInsertEmailScreen();
   }, [dispatch, flow, navigateToInsertEmailScreen]);
 
-  const bodyPropsArray: Array<BodyProps> = useMemo(
-    () => [
-      {
-        text: I18n.t("email.cduScreens.emailAlreadyTaken.subtitleStart"),
-        style: {
-          textAlign: "center"
-        }
-      },
-      {
-        text: <> {email} </>,
-        style: {
-          textAlign: "center"
-        },
-        weight: "Semibold"
-      },
-      {
-        text: I18n.t("email.cduScreens.emailAlreadyTaken.subtitleEnd"),
-        style: {
-          textAlign: "center"
-        }
-      }
-    ],
-    [email]
-  );
-
   useHeaderSecondLevel({
     title: "",
     supportRequest: true,
@@ -96,7 +70,9 @@ const EmailAlreadyTakenScreen = () => {
     <OperationResultScreenContent
       pictogram="accessDenied"
       title={I18n.t("email.cduScreens.emailAlreadyTaken.title")}
-      subtitle={bodyPropsArray}
+      subtitle={I18n.t("email.cduScreens.emailAlreadyTaken.subtitle", {
+        email
+      })}
       action={{
         label: I18n.t("email.cduScreens.emailAlreadyTaken.editButton"),
         accessibilityLabel: I18n.t(
