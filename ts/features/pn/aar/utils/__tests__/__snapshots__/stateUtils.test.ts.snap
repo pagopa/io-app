@@ -8,7 +8,7 @@ exports[`stateUtils snapshots flowStates 1`] = `
   "cieScanning": "cieScanning",
   "cieScanningAdvisory": "cieScanningAdvisory",
   "creatingMandate": "creatingMandate",
-  "displayingAARToS": "displayingAARToS",
+  "displayingAarToS": "displayingAarToS",
   "displayingNotificationData": "displayingNotificationData",
   "fetchingNotificationData": "fetchingNotificationData",
   "fetchingQRData": "fetchingQRData",
@@ -24,9 +24,9 @@ exports[`stateUtils snapshots flowStates 1`] = `
 exports[`stateUtils snapshots validTransitions 1`] = `
 Map {
   "none" => Set {
-    "displayingAARToS",
+    "displayingAarToS",
   },
-  "displayingAARToS" => Set {
+  "displayingAarToS" => Set {
     "fetchingQRData",
   },
   "fetchingQRData" => Set {

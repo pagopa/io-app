@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType = "androidNFCActivation" 1`] = `
+exports[`SendAarCieCardReadingScreen should match the snapshot for the flowType = "androidNFCActivation" 1`] = `
 <View
   style={
     {
@@ -352,7 +352,7 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
 </View>
 `;
 
-exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType = "cieCanAdvisory" 1`] = `
+exports[`SendAarCieCardReadingScreen should match the snapshot for the flowType = "cieCanAdvisory" 1`] = `
 <View
   style={
     {
@@ -704,7 +704,7 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
 </View>
 `;
 
-exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType = "cieCanInsertion" 1`] = `
+exports[`SendAarCieCardReadingScreen should match the snapshot for the flowType = "cieCanInsertion" 1`] = `
 <View
   style={
     {
@@ -1056,7 +1056,7 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
 </View>
 `;
 
-exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType = "cieScanning" 1`] = `
+exports[`SendAarCieCardReadingScreen should match the snapshot for the flowType = "cieScanning" 1`] = `
 <View
   style={
     {
@@ -1398,7 +1398,7 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
                     >
                       <View>
                         <Text>
-                          Mock SendAARCieCardReadingComponent
+                          Mock SendAarCieCardReadingComponent
                         </Text>
                         <Text>
                           can: 123456
@@ -1432,7 +1432,7 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
 </View>
 `;
 
-exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType = "cieScanningAdvisory" 1`] = `
+exports[`SendAarCieCardReadingScreen should match the snapshot for the flowType = "cieScanningAdvisory" 1`] = `
 <View
   style={
     {
@@ -1784,7 +1784,7 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
 </View>
 `;
 
-exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType = "creatingMandate" 1`] = `
+exports[`SendAarCieCardReadingScreen should match the snapshot for the flowType = "creatingMandate" 1`] = `
 <View
   style={
     {
@@ -2136,7 +2136,7 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
 </View>
 `;
 
-exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType = "displayingAARToS" 1`] = `
+exports[`SendAarCieCardReadingScreen should match the snapshot for the flowType = "displayingAarToS" 1`] = `
 <View
   style={
     {
@@ -2488,7 +2488,7 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
 </View>
 `;
 
-exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType = "displayingNotificationData" 1`] = `
+exports[`SendAarCieCardReadingScreen should match the snapshot for the flowType = "displayingNotificationData" 1`] = `
 <View
   style={
     {
@@ -2840,7 +2840,7 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
 </View>
 `;
 
-exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType = "fetchingNotificationData" 1`] = `
+exports[`SendAarCieCardReadingScreen should match the snapshot for the flowType = "fetchingNotificationData" 1`] = `
 <View
   style={
     {
@@ -3489,7 +3489,7 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
 </View>
 `;
 
-exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType = "fetchingQRData" 1`] = `
+exports[`SendAarCieCardReadingScreen should match the snapshot for the flowType = "fetchingQRData" 1`] = `
 <View
   style={
     {
@@ -3841,7 +3841,7 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
 </View>
 `;
 
-exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType = "ko" 1`] = `
+exports[`SendAarCieCardReadingScreen should match the snapshot for the flowType = "ko" 1`] = `
 <View
   style={
     {
@@ -4193,7 +4193,7 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
 </View>
 `;
 
-exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType = "nfcNotSupportedFinal" 1`] = `
+exports[`SendAarCieCardReadingScreen should match the snapshot for the flowType = "nfcNotSupportedFinal" 1`] = `
 <View
   style={
     {
@@ -4545,7 +4545,7 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
 </View>
 `;
 
-exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType = "none" 1`] = `
+exports[`SendAarCieCardReadingScreen should match the snapshot for the flowType = "none" 1`] = `
 <View
   style={
     {
@@ -4897,7 +4897,7 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
 </View>
 `;
 
-exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType = "notAddressee" 1`] = `
+exports[`SendAarCieCardReadingScreen should match the snapshot for the flowType = "notAddressee" 1`] = `
 <View
   style={
     {
@@ -5249,7 +5249,7 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
 </View>
 `;
 
-exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType = "notAddresseeFinal" 1`] = `
+exports[`SendAarCieCardReadingScreen should match the snapshot for the flowType = "notAddresseeFinal" 1`] = `
 <View
   style={
     {
@@ -5601,7 +5601,7 @@ exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType 
 </View>
 `;
 
-exports[`SendAARCieCardReadingScreen should match the snapshot for the flowType = "validatingMandate" 1`] = `
+exports[`SendAarCieCardReadingScreen should match the snapshot for the flowType = "validatingMandate" 1`] = `
 <View
   style={
     {

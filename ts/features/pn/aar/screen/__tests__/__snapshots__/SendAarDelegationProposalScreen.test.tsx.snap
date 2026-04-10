@@ -2678,7 +2678,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
 </View>
 `;
 
-exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the displayingAARToS state, displaying \\n      a loading screen 1`] = `
+exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the displayingAarToS state, displaying \\n      a loading screen 1`] = `
 <View
   style={
     {

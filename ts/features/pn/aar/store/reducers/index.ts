@@ -1,23 +1,23 @@
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
 import {
-  AARFlowState,
-  isValidAARStateTransition
+  AarFlowState,
+  isValidAarStateTransition
 } from "../../utils/stateUtils";
 import { setAarFlowState, terminateAarFlow } from "../actions";
 
-export const INITIAL_AAR_FLOW_STATE: AARFlowState = {
+export const INITIAL_AAR_FLOW_STATE: AarFlowState = {
   type: "none"
 };
 
 export const aarFlowReducer = (
-  state: AARFlowState = INITIAL_AAR_FLOW_STATE,
+  state: AarFlowState = INITIAL_AAR_FLOW_STATE,
   action: Action
-): AARFlowState => {
+): AarFlowState => {
   switch (action.type) {
     case getType(setAarFlowState):
       return {
-        ...(isValidAARStateTransition(state.type, action.payload.type)
+        ...(isValidAarStateTransition(state.type, action.payload.type)
           ? action.payload
           : state)
       };

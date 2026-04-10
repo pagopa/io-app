@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`SendAARMessageDetailBottomSheetComponent should match snapshot 1`] = `
+exports[`SendAarMessageDetailBottomSheetComponent should match snapshot 1`] = `
 <View
   style={
     {
@@ -375,7 +375,7 @@ exports[`SendAARMessageDetailBottomSheetComponent should match snapshot 1`] = `
                           <View>
                             <View>
                               <View>
-                                Mock SendAARMessageDetailBottomSheet
+                                Mock SendAarMessageDetailBottomSheet
                               </View>
                               <View>
                                 Send user type: not_set

@@ -4,7 +4,7 @@ import {
   CieExpiredComponent,
   GenericCieValidationErrorComponent
 } from "../../components/errors/SendAarCieValidationErrorComponent";
-import { SendAarGenericErrorComponent } from "../../components/errors/SendAARErrorComponent";
+import { SendAarGenericErrorComponent } from "../../components/errors/SendAarErrorComponent";
 import {
   getAarErrorBehaviour,
   isAarAttachmentTtlError,
@@ -12,7 +12,7 @@ import {
 } from "../aarErrorMappings";
 jest.mock("../../analytics");
 
-const { cieErrors, sendAarProblemJsonErrorCodes, specificBehavioursByStatus } =
+const { cieErrors, sendAARProblemJsonErrorCodes, specificBehavioursByStatus } =
   testable!;
 
 const makeProblemJson = (
@@ -31,7 +31,7 @@ describe("AarErrorMappings", () => {
   beforeEach(jest.clearAllMocks);
   describe("resolveAarError", () => {
     [422, 400, 500, 418, 404, 409].forEach(responseStatus => {
-      Object.values(sendAarProblemJsonErrorCodes).forEach(errCode => {
+      Object.values(sendAARProblemJsonErrorCodes).forEach(errCode => {
         const maybeSpecificErrorBehaviour =
           specificBehavioursByStatus[responseStatus] &&
           specificBehavioursByStatus[responseStatus]?.[errCode];

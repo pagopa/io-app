@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`AARFlowStateActions should match snapshot for populateStoresWithEphemeralAarMessageData 1`] = `
+exports[`AarFlowStateActions should match snapshot for populateStoresWithEphemeralAarMessageData 1`] = `
 {
   "meta": undefined,
   "payload": {
@@ -16,7 +16,7 @@ exports[`AARFlowStateActions should match snapshot for populateStoresWithEphemer
 }
 `;
 
-exports[`AARFlowStateActions tryInitiateAarFlow action should have correct type="TRY_INITIATE_AAR_FLOW" 1`] = `
+exports[`AarFlowStateActions tryInitiateAarFlow action should have correct type="TRY_INITIATE_AAR_FLOW" 1`] = `
 {
   "meta": undefined,
   "payload": {

@@ -1,5 +1,5 @@
 import { StackNavigationOptions } from "@react-navigation/stack";
-import { SendAARCieCardReadingScreenRouteParams } from "../aar/screen/SendAARCieCardReadingScreen";
+import { SendAarCieCardReadingScreenRouteParams } from "../aar/screen/SendAarCieCardReadingScreen";
 import { SendEngagementScreenNavigationParams } from "../aar/screen/SendEngagementScreen";
 import { SendQRScanFlowScreenProps } from "../aar/screen/SendQRScanFlowScreen";
 import { MessageAttachmentScreenRouteParams } from "../screens/MessageAttachmentScreen";
@@ -28,6 +28,6 @@ export type PnParamsList = {
   [PN_ROUTES.SEND_AAR_CIE_CARD_READING_EDUCATIONAL]: AnimationParamType;
   [PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL]: AnimationParamType;
   [PN_ROUTES.SEND_AAR_CIE_CAN_INSERTION]: AnimationParamType;
-  [PN_ROUTES.SEND_AAR_CIE_CARD_READING]: SendAARCieCardReadingScreenRouteParams &
+  [PN_ROUTES.SEND_AAR_CIE_CARD_READING]: SendAarCieCardReadingScreenRouteParams &
     AnimationParamType;
 };
