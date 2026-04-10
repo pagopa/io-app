@@ -6,21 +6,21 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import PN_ROUTES from "../../../navigation/routes";
 import * as ANALYTICS from "../../analytics";
-import * as ERROR_COMPONENT from "../../components/errors/SendAARErrorComponent";
+import * as ERROR_COMPONENT from "../../components/errors/SendAarErrorComponent";
 import * as NFC_NOT_SUPPORTED_COMPONENT from "../../components/errors/SendAarNfcNotSupportedComponent";
 import * as NOT_ADDRESSEE_COMPONENT from "../../components/errors/SendAarNotAddresseeKoComponent";
 import * as SELECTORS from "../../store/selectors";
 import * as ERROR_MAPPINGS from "../../utils/aarErrorMappings";
 import {
-  AARFlowState,
-  AARFlowStateName,
-  sendAARFlowStates
+  AarFlowState,
+  AarFlowStateName,
+  sendAarFlowStates
 } from "../../utils/stateUtils";
 import { sendAarMockStates } from "../../utils/testUtils";
-import { SendAARErrorScreen } from "../SendAARErrorScreen";
+import { SendAarErrorScreen } from "../SendAarErrorScreen";
 
-const handledRetryStates: Array<AARFlowStateName> = [
-  sendAARFlowStates.cieCanAdvisory
+const handledRetryStates: Array<AarFlowStateName> = [
+  sendAarFlowStates.cieCanAdvisory
 ];
 const mockReplace = jest.fn();
 const mockShouldNeverCall = jest.fn();
@@ -42,7 +42,7 @@ jest.mock("@react-navigation/native", () => {
       })
   };
 });
-describe("SendAARErrorScreen", () => {
+describe("SendAarErrorScreen", () => {
   const mockKoComponent = jest.fn().mockImplementation(() => <></>);
   const notAddresseeComponentSpy = jest
     .spyOn(NOT_ADDRESSEE_COMPONENT, "SendAarNotAddresseeKoComponent")
@@ -61,15 +61,15 @@ describe("SendAARErrorScreen", () => {
     Component: mockKoComponent
   }));
 
-  const getSpecificErrorScreenSpy = (flowState: AARFlowState) => {
+  const getSpecificErrorScreenSpy = (flowState: AarFlowState) => {
     switch (flowState.type) {
-      case sendAARFlowStates.notAddresseeFinal:
+      case sendAarFlowStates.notAddresseeFinal:
         return notAddresseeComponentSpy;
-      case sendAARFlowStates.nfcNotSupportedFinal:
+      case sendAarFlowStates.nfcNotSupportedFinal:
         return nfcNotSupportedComponentSpy;
-      case sendAARFlowStates.ko:
+      case sendAarFlowStates.ko:
         return mockKoComponent;
-      case sendAARFlowStates.cieCanAdvisory:
+      case sendAarFlowStates.cieCanAdvisory:
         return loadingScreenSpy;
       default:
         return undefined;
@@ -82,29 +82,29 @@ describe("SendAARErrorScreen", () => {
 
   sendAarMockStates.forEach(mockState => {
     it(`should ${
-      mockState.type === sendAARFlowStates.notAddresseeFinal ? "" : "not "
-    }call trackSendAARAccessDeniedScreenView when state is ${
+      mockState.type === sendAarFlowStates.notAddresseeFinal ? "" : "not "
+    }call trackSendAarAccessDeniedScreenView when state is ${
       mockState.type
     }`, () => {
       jest
-        .spyOn(SELECTORS, "currentAARFlowData")
+        .spyOn(SELECTORS, "currentAarFlowData")
         .mockImplementation(_state => mockState);
-      const spiedOnMockedTrackSendAARAccessDeniedScreenView = jest
-        .spyOn(ANALYTICS, "trackSendAARAccessDeniedScreenView")
+      const spiedOnMockedTrackSendAarAccessDeniedScreenView = jest
+        .spyOn(ANALYTICS, "trackSendAarAccessDeniedScreenView")
         .mockImplementation();
 
       renderScreen();
 
-      if (mockState.type === sendAARFlowStates.notAddresseeFinal) {
+      if (mockState.type === sendAarFlowStates.notAddresseeFinal) {
         expect(
-          spiedOnMockedTrackSendAARAccessDeniedScreenView.mock.calls.length
+          spiedOnMockedTrackSendAarAccessDeniedScreenView.mock.calls.length
         ).toBe(1);
         expect(
-          spiedOnMockedTrackSendAARAccessDeniedScreenView.mock.calls[0].length
+          spiedOnMockedTrackSendAarAccessDeniedScreenView.mock.calls[0].length
         ).toBe(0);
       } else {
         expect(
-          spiedOnMockedTrackSendAARAccessDeniedScreenView.mock.calls.length
+          spiedOnMockedTrackSendAarAccessDeniedScreenView.mock.calls.length
         ).toBe(0);
       }
     });
@@ -116,7 +116,7 @@ describe("SendAARErrorScreen", () => {
         : "the standard error screen"
     } when the AAR state is ${mockState.type} `, () => {
       jest
-        .spyOn(SELECTORS, "currentAARFlowData")
+        .spyOn(SELECTORS, "currentAarFlowData")
         .mockImplementation(_state => mockState);
 
       if (isSpecificErrorScreen) {
@@ -135,7 +135,7 @@ describe("SendAARErrorScreen", () => {
       shouldNavigateToRetry ? "should" : "should not"
     } navigate to retry screen when the AAR state is ${mockState.type}`, () => {
       jest
-        .spyOn(SELECTORS, "currentAARFlowData")
+        .spyOn(SELECTORS, "currentAarFlowData")
         .mockImplementation(_state => mockState);
       expect(mockReplace).not.toHaveBeenCalled();
       renderScreen();
@@ -149,7 +149,7 @@ describe("SendAARErrorScreen", () => {
 
     it(`should never call any non-replace navigation action when type is "${mockState.type}"`, () => {
       jest
-        .spyOn(SELECTORS, "currentAARFlowData")
+        .spyOn(SELECTORS, "currentAarFlowData")
         .mockImplementation(_state => mockState);
 
       renderScreen();
@@ -165,7 +165,7 @@ const renderScreen = () => {
     ...baseState
   } as GlobalState;
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    () => <SendAARErrorScreen />,
+    () => <SendAarErrorScreen />,
     PN_ROUTES.SEND_AAR_ERROR,
     {},
     createStore(appReducer, globalState as any)

@@ -11,9 +11,9 @@ import PN_ROUTES from "../../../navigation/routes";
 import * as ANALYTICS from "../../analytics";
 import { setAarFlowState } from "../../store/actions";
 import * as SELECTORS from "../../store/selectors";
-import { AARFlowState, sendAARFlowStates } from "../../utils/stateUtils";
+import { AarFlowState, sendAarFlowStates } from "../../utils/stateUtils";
 import { sendAarMockStates } from "../../utils/testUtils";
-import { SendAARInitialFlowScreen } from "../SendAARInitialFlowScreen";
+import { SendAarInitialFlowScreen } from "../SendAarInitialFlowScreen";
 
 const mockReplace = jest.fn();
 const mockSetOptions = jest.fn();
@@ -43,8 +43,8 @@ jest.mock("@react-navigation/native", () => {
 
 const mockQr = "https://example.com";
 
-describe("SendAARInitialFlowScreen", () => {
-  const flowStateSelectorSpy = jest.spyOn(SELECTORS, "currentAARFlowData");
+describe("SendAarInitialFlowScreen", () => {
+  const flowStateSelectorSpy = jest.spyOn(SELECTORS, "currentAarFlowData");
   const dispatchSpy = jest.spyOn(HOOKS, "useIODispatch");
   const mockDispatch = jest.fn();
 
@@ -54,15 +54,15 @@ describe("SendAARInitialFlowScreen", () => {
 
   [
     [
-      sendAARFlowStates.displayingAARToS,
+      sendAarFlowStates.displayingAarToS,
       "should render the tos Screen"
     ] as const,
-    [sendAARFlowStates.fetchingQRData, "should render loading screen"] as const
+    [sendAarFlowStates.fetchingQRData, "should render loading screen"] as const
   ].forEach(([state, title]) => {
     it(`${title} when the state is ${state}`, async () => {
-      flowStateSelectorSpy.mockReturnValue({ type: state } as AARFlowState);
+      flowStateSelectorSpy.mockReturnValue({ type: state } as AarFlowState);
       const { findByTestId } = renderComponent();
-      if (state === sendAARFlowStates.displayingAARToS) {
+      if (state === sendAarFlowStates.displayingAarToS) {
         const data = await waitFor(() => findByTestId("AAR_TOS"));
         expect(data).toBeDefined();
       } else {
@@ -74,20 +74,20 @@ describe("SendAARInitialFlowScreen", () => {
 
   sendAarMockStates.forEach(state => {
     it(`should ${
-      state.type === sendAARFlowStates.displayingAARToS ? "" : "not "
-    }call 'trackSendAARToS' when state is ${state.type}`, () => {
-      const spiedOnMockedTrackSendAARToS = jest
-        .spyOn(ANALYTICS, "trackSendAARToS")
+      state.type === sendAarFlowStates.displayingAarToS ? "" : "not "
+    }call 'trackSendAarToS' when state is ${state.type}`, () => {
+      const spiedOnMockedTrackSendAarToS = jest
+        .spyOn(ANALYTICS, "trackSendAarToS")
         .mockImplementation();
       flowStateSelectorSpy.mockReturnValue(state);
 
       renderComponent();
 
-      if (state.type === sendAARFlowStates.displayingAARToS) {
-        expect(spiedOnMockedTrackSendAARToS.mock.calls.length).toBe(1);
-        expect(spiedOnMockedTrackSendAARToS.mock.calls[0].length).toBe(0);
+      if (state.type === sendAarFlowStates.displayingAarToS) {
+        expect(spiedOnMockedTrackSendAarToS.mock.calls.length).toBe(1);
+        expect(spiedOnMockedTrackSendAarToS.mock.calls[0].length).toBe(0);
       } else {
-        expect(spiedOnMockedTrackSendAARToS.mock.calls.length).toBe(0);
+        expect(spiedOnMockedTrackSendAarToS.mock.calls.length).toBe(0);
       }
     });
 
@@ -102,12 +102,12 @@ describe("SendAARInitialFlowScreen", () => {
   });
 
   it('should initialize the aar flow state if it is "none"', () => {
-    flowStateSelectorSpy.mockReturnValue({ type: sendAARFlowStates.none });
+    flowStateSelectorSpy.mockReturnValue({ type: sendAarFlowStates.none });
     dispatchSpy.mockReturnValue(mockDispatch);
     renderComponent();
     expect(mockDispatch).toHaveBeenCalledWith(
       setAarFlowState({
-        type: sendAARFlowStates.displayingAARToS,
+        type: sendAarFlowStates.displayingAarToS,
         qrCode: mockQr
       })
     );
@@ -116,8 +116,8 @@ describe("SendAARInitialFlowScreen", () => {
 
   it("should not re-initialize the aar flow state if it didn't start as 'none'", async () => {
     flowStateSelectorSpy.mockReturnValue({
-      type: sendAARFlowStates.displayingAARToS
-    } as AARFlowState);
+      type: sendAarFlowStates.displayingAarToS
+    } as AarFlowState);
     dispatchSpy.mockReturnValue(mockDispatch);
     const component = renderComponentWithStoreAndNavigationContextForFocus(
       componentToRender,
@@ -127,8 +127,8 @@ describe("SendAARInitialFlowScreen", () => {
 
     await act(() =>
       flowStateSelectorSpy.mockReturnValue({
-        type: sendAARFlowStates.none
-      } as AARFlowState)
+        type: sendAarFlowStates.none
+      } as AarFlowState)
     );
     component.rerender(componentToRender);
     expect(mockDispatch).not.toHaveBeenCalled();
@@ -136,19 +136,19 @@ describe("SendAARInitialFlowScreen", () => {
 
   it("should call navigation.setOptions to hide header on mount", () => {
     flowStateSelectorSpy.mockReturnValue({
-      type: sendAARFlowStates.fetchingQRData
-    } as AARFlowState);
+      type: sendAarFlowStates.fetchingQRData
+    } as AarFlowState);
     dispatchSpy.mockReturnValue(mockDispatch);
     renderComponent();
     expect(mockSetOptions).toHaveBeenCalledWith({ headerShown: false });
   });
 
-  [sendAARFlowStates.ko, sendAARFlowStates.notAddresseeFinal].forEach(
+  [sendAarFlowStates.ko, sendAarFlowStates.notAddresseeFinal].forEach(
     errorState => {
       it(`should replace to error screen when flowState is '${errorState}'`, async () => {
         flowStateSelectorSpy.mockReturnValue({
           type: errorState
-        } as AARFlowState);
+        } as AarFlowState);
         dispatchSpy.mockReturnValue(mockDispatch);
         renderComponent();
 
@@ -158,10 +158,10 @@ describe("SendAARInitialFlowScreen", () => {
       });
     }
   );
-  it(`should replace to the delegation proposal screen screen when flowState is '${sendAARFlowStates.notAddressee}'`, async () => {
+  it(`should replace to the delegation proposal screen screen when flowState is '${sendAarFlowStates.notAddressee}'`, async () => {
     flowStateSelectorSpy.mockReturnValue({
-      type: sendAARFlowStates.notAddressee
-    } as AARFlowState);
+      type: sendAarFlowStates.notAddressee
+    } as AarFlowState);
     dispatchSpy.mockReturnValue(mockDispatch);
     renderComponent();
 
@@ -172,13 +172,13 @@ describe("SendAARInitialFlowScreen", () => {
     });
   });
   [undefined, "572d8247-92bb-4c01-8e15-d0966a9b7506"].forEach(mandateId => {
-    it(`should replace to the notification display screen when flowState is '${sendAARFlowStates.displayingNotificationData}'`, async () => {
+    it(`should replace to the notification display screen when flowState is '${sendAarFlowStates.displayingNotificationData}'`, async () => {
       flowStateSelectorSpy.mockReturnValue({
-        type: sendAARFlowStates.displayingNotificationData,
+        type: sendAarFlowStates.displayingNotificationData,
         iun: "TEST_IUN",
         pnServiceId: "SERVICE_ID",
         mandateId
-      } as AARFlowState);
+      } as AarFlowState);
       dispatchSpy.mockReturnValue(mockDispatch);
       renderComponent();
 
@@ -195,12 +195,12 @@ describe("SendAARInitialFlowScreen", () => {
   });
 });
 
-const componentToRender = <SendAARInitialFlowScreen qrCode={mockQr} />;
+const componentToRender = <SendAarInitialFlowScreen qrCode={mockQr} />;
 function renderComponent() {
   const baseState = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, baseState as any);
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    () => <SendAARInitialFlowScreen qrCode={mockQr} />,
+    () => <SendAarInitialFlowScreen qrCode={mockQr} />,
     PN_ROUTES.QR_SCAN_FLOW,
     {},
     store

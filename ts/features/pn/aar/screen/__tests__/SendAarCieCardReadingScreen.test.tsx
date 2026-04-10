@@ -6,25 +6,25 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import PN_ROUTES from "../../../navigation/routes";
 import * as AAR_SELECTORS from "../../store/selectors";
-import { AARFlowStateName, sendAARFlowStates } from "../../utils/stateUtils";
+import { AarFlowStateName, sendAarFlowStates } from "../../utils/stateUtils";
 import { sendAarMockStates } from "../../utils/testUtils";
 import {
-  SendAARCieCardReadingScreen,
-  SendAARCieCardReadingScreenProps
-} from "../SendAARCieCardReadingScreen";
+  SendAarCieCardReadingScreen,
+  SendAarCieCardReadingScreenProps
+} from "../SendAarCieCardReadingScreen";
 
 const mockReplace = jest.fn();
 const mockShouldNeverCall = jest.fn();
 
-jest.mock("../../components/SendAARCieCardReadingComponent");
+jest.mock("../../components/SendAarCieCardReadingComponent");
 
-describe("SendAARCieCardReadingScreen", () => {
+describe("SendAarCieCardReadingScreen", () => {
   afterEach(jest.clearAllMocks);
 
   it.each(sendAarMockStates)(
     'should match the snapshot for the flowType = "$type"',
     aarState => {
-      jest.spyOn(AAR_SELECTORS, "currentAARFlowData").mockReturnValue(aarState);
+      jest.spyOn(AAR_SELECTORS, "currentAarFlowData").mockReturnValue(aarState);
       const component = renderComponent();
 
       expect(component.toJSON()).toMatchSnapshot();
@@ -35,23 +35,23 @@ describe("SendAARCieCardReadingScreen", () => {
     const { type } = aarState;
     const shouldNavigate = (
       [
-        sendAARFlowStates.ko,
-        sendAARFlowStates.displayingNotificationData,
-        sendAARFlowStates.cieCanAdvisory,
-        sendAARFlowStates.cieScanningAdvisory
-      ] as Array<AARFlowStateName>
+        sendAarFlowStates.ko,
+        sendAarFlowStates.displayingNotificationData,
+        sendAarFlowStates.cieCanAdvisory,
+        sendAarFlowStates.cieScanningAdvisory
+      ] as Array<AarFlowStateName>
     ).includes(type);
     const shouldNavigateBack = (
       [
-        sendAARFlowStates.cieCanAdvisory,
-        sendAARFlowStates.cieScanningAdvisory
-      ] as Array<AARFlowStateName>
+        sendAarFlowStates.cieCanAdvisory,
+        sendAarFlowStates.cieScanningAdvisory
+      ] as Array<AarFlowStateName>
     ).includes(type);
 
     it(`${shouldNavigate ? "should" : "should not"} call "replace"${
       shouldNavigateBack ? ' with "pop" as animation parameter' : ""
     } and never call any non-replace actions when type is: "${type}"`, () => {
-      jest.spyOn(AAR_SELECTORS, "currentAARFlowData").mockReturnValue(aarState);
+      jest.spyOn(AAR_SELECTORS, "currentAarFlowData").mockReturnValue(aarState);
       renderComponent();
 
       if (shouldNavigate) {
@@ -80,8 +80,8 @@ function renderComponent() {
   const store = createStore(appReducer, baseState as any);
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    ({ route, navigation }: SendAARCieCardReadingScreenProps) => (
-      <SendAARCieCardReadingScreen
+    ({ route, navigation }: SendAarCieCardReadingScreenProps) => (
+      <SendAarCieCardReadingScreen
         navigation={{
           ..._.mapValues(navigation, () => mockShouldNeverCall),
           replace: mockReplace

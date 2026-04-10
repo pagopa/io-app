@@ -8,19 +8,19 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { SendUserType } from "../../../pushNotifications/analytics";
 import { PnParamsList } from "../../navigation/params";
 import PN_ROUTES from "../../navigation/routes";
-import { trackSendAARToS } from "../analytics";
-import { SendAARTosComponent } from "../components/SendAARTosComponent";
+import { trackSendAarToS } from "../analytics";
+import { SendAarTosComponent } from "../components/SendAarTosComponent";
 import { setAarFlowState } from "../store/actions";
-import { currentAARFlowData } from "../store/selectors";
-import { sendAARFlowStates } from "../utils/stateUtils";
+import { currentAarFlowData } from "../store/selectors";
+import { sendAarFlowStates } from "../utils/stateUtils";
 
 type SendAarInitialFlowScreenT = {
   qrCode: string;
 };
-export const SendAARInitialFlowScreen = ({
+export const SendAarInitialFlowScreen = ({
   qrCode
 }: SendAarInitialFlowScreenT) => {
-  const flowData = useIOSelector(currentAARFlowData);
+  const flowData = useIOSelector(currentAarFlowData);
   const dispatch = useIODispatch();
   const navigation =
     useNavigation<StackNavigationProp<PnParamsList, "PN_QR_SCAN_FLOW">>();
@@ -33,10 +33,10 @@ export const SendAARInitialFlowScreen = ({
   }, [navigation]);
 
   useOnFirstRender(() => {
-    if (flowStateType === sendAARFlowStates.none) {
+    if (flowStateType === sendAarFlowStates.none) {
       dispatch(
         setAarFlowState({
-          type: sendAARFlowStates.displayingAARToS,
+          type: sendAarFlowStates.displayingAarToS,
           qrCode
         })
       );
@@ -45,14 +45,14 @@ export const SendAARInitialFlowScreen = ({
 
   useEffect(() => {
     switch (flowStateType) {
-      case sendAARFlowStates.notAddresseeFinal:
-      case sendAARFlowStates.ko:
+      case sendAarFlowStates.notAddresseeFinal:
+      case sendAarFlowStates.ko:
         navigation.replace(PN_ROUTES.SEND_AAR_ERROR);
         break;
-      case sendAARFlowStates.notAddressee:
+      case sendAarFlowStates.notAddressee:
         navigation.replace(PN_ROUTES.SEND_AAR_DELEGATION_PROPOSAL);
         break;
-      case sendAARFlowStates.displayingNotificationData: {
+      case sendAarFlowStates.displayingNotificationData: {
         const sendUserType: SendUserType =
           flowData.mandateId != null ? "mandatory" : "recipient";
         navigation.replace(PN_ROUTES.MESSAGE_DETAILS, {
@@ -64,16 +64,16 @@ export const SendAARInitialFlowScreen = ({
         });
         break;
       }
-      case sendAARFlowStates.displayingAARToS: {
-        trackSendAARToS();
+      case sendAarFlowStates.displayingAarToS: {
+        trackSendAarToS();
         break;
       }
     }
   }, [navigation, flowStateType, flowData]);
 
   switch (flowStateType) {
-    case sendAARFlowStates.displayingAARToS:
-      return <SendAARTosComponent />;
+    case sendAarFlowStates.displayingAarToS:
+      return <SendAarTosComponent />;
     default:
       return (
         <LoadingScreenContent
