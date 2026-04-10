@@ -10,6 +10,7 @@ import {
   StoredCredential
 } from "../../../common/utils/itwTypesUtils";
 import { ITW_ROUTES } from "../../../navigation/routes";
+import { shouldShowMdlUpdateDigitalCredential } from "../utils";
 import { useItwRemoveCredentialWithConfirm } from "./useItwRemoveCredentialWithConfirm";
 
 type IssuerDynamicErrorBottomSheetActionMode =
@@ -43,11 +44,7 @@ export const getIssuerDynamicErrorBottomSheetContentConfig = (
   credential: StoredCredential,
   status?: ItwCredentialStatus
 ): IssuerDynamicErrorBottomSheetContentConfig => {
-  const { credentialType, storedStatusAssertion } = credential;
-  const invalidErrorCode =
-    storedStatusAssertion?.credentialStatus === "invalid"
-      ? storedStatusAssertion.errorCode
-      : undefined;
+  const { credentialType } = credential;
 
   if (credentialType !== CredentialType.DRIVING_LICENSE) {
     return {
@@ -63,7 +60,7 @@ export const getIssuerDynamicErrorBottomSheetContentConfig = (
         showDrivingLicenseExtraContent: true
       };
     case "invalid":
-      return invalidErrorCode === "credential_invalid"
+      return shouldShowMdlUpdateDigitalCredential(credential, status)
         ? {
             actionMode: "updateAndRemove",
             showDrivingLicenseExtraContent: false
