@@ -1,10 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   aarAdresseeDenominationSelector,
-  currentAARFlowData,
-  currentAARFlowStateAssistanceErrorCode,
-  currentAARFlowStateErrorDebugInfoSelector,
-  currentAARFlowStateType,
+  currentAarFlowData,
+  currentAarFlowStateAssistanceErrorCode,
+  currentAarFlowStateErrorDebugInfoSelector,
+  currentAarFlowStateType,
   currentAarFlowIunSelector,
   thirdPartySenderDenominationSelector
 } from "..";
@@ -12,9 +12,9 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import { thirdPartyFromIdSelector } from "../../../../../messages/store/reducers/thirdPartyById";
 import { toSENDMessage } from "../../../../store/types/transformers";
 import {
-  AARFlowState,
+  AarFlowState,
   maybeIunFromAarFlowState,
-  sendAARFlowStates
+  sendAarFlowStates
 } from "../../../utils/stateUtils";
 import {
   sendAarMockStateFactory,
@@ -84,7 +84,7 @@ describe("thirdPartySenderDenominationSelector", () => {
     expect(result).toBeUndefined();
   });
 });
-describe(" currentAARFlowData and currentAARFlowStateType", () => {
+describe(" currentAarFlowData and currentAarFlowStateType", () => {
   it(" should return the correct AAR flow state from the global state", () => {
     const mockFetchingState =
       sendAarMockStateFactory.fetchingNotificationData();
@@ -97,8 +97,8 @@ describe(" currentAARFlowData and currentAARFlowStateType", () => {
       }
     } as unknown as GlobalState;
 
-    const result = currentAARFlowData(mockGlobalFetchingNotification);
-    const resultType = currentAARFlowStateType(mockGlobalFetchingNotification);
+    const result = currentAarFlowData(mockGlobalFetchingNotification);
+    const resultType = currentAarFlowStateType(mockGlobalFetchingNotification);
     expect(resultType).toEqual(mockFetchingState.type);
     expect(result).toEqual(mockFetchingState);
   });
@@ -112,13 +112,13 @@ describe(" currentAARFlowData and currentAARFlowStateType", () => {
       }
     } as unknown as GlobalState;
 
-    const result = currentAARFlowData(mockInitialState);
-    const resultType = currentAARFlowStateType(mockInitialState);
+    const result = currentAarFlowData(mockInitialState);
+    const resultType = currentAarFlowStateType(mockInitialState);
     expect(result).toEqual(INITIAL_AAR_FLOW_STATE);
     expect(resultType).toEqual(INITIAL_AAR_FLOW_STATE.type);
   });
 });
-describe("currentAARFlowStateAssistanceErrorCode", () => {
+describe("currentAarFlowStateAssistanceErrorCode", () => {
   const testCases: Array<{
     description: string;
     traceId?: string;
@@ -153,8 +153,8 @@ describe("currentAARFlowStateAssistanceErrorCode", () => {
 
   testCases.forEach(({ description, traceId, errors, expected }) => {
     it(description, () => {
-      const aarFlow: AARFlowState = {
-        type: sendAARFlowStates.ko,
+      const aarFlow: AarFlowState = {
+        type: sendAarFlowStates.ko,
         previousState: sendAarMockStateFactory.fetchingQRData(),
         error: {
           detail: "Some error",
@@ -176,7 +176,7 @@ describe("currentAARFlowStateAssistanceErrorCode", () => {
         }
       } as unknown as GlobalState;
 
-      const result = currentAARFlowStateAssistanceErrorCode(mockGlobalState);
+      const result = currentAarFlowStateAssistanceErrorCode(mockGlobalState);
       expect(result).toEqual(expected);
     });
   });
@@ -186,7 +186,7 @@ describe("aarAdresseeDenominationSelector", () => {
   sendAarMockStates.forEach(state => {
     const fullName = (
       state as Extract<
-        AARFlowState,
+        AarFlowState,
         { recipientInfo?: { denomination: string; taxId: string } }
       >
     ).recipientInfo?.denomination;
@@ -206,9 +206,9 @@ describe("aarAdresseeDenominationSelector", () => {
   });
 });
 
-describe("currentAARFlowStateErrorDebugInfoSelector", () => {
+describe("currentAarFlowStateErrorDebugInfoSelector", () => {
   const nonErrorStates = sendAarMockStates.filter(
-    s => s.type !== sendAARFlowStates.ko
+    s => s.type !== sendAarFlowStates.ko
   );
 
   nonErrorStates.forEach(state => {
@@ -216,7 +216,7 @@ describe("currentAARFlowStateErrorDebugInfoSelector", () => {
       const mockGlobalState = {
         features: { pn: { aarFlow: state } }
       } as unknown as GlobalState;
-      const result = currentAARFlowStateErrorDebugInfoSelector(mockGlobalState);
+      const result = currentAarFlowStateErrorDebugInfoSelector(mockGlobalState);
       expect(result).toEqual({});
     });
   });
@@ -227,8 +227,8 @@ describe("currentAARFlowStateErrorDebugInfoSelector", () => {
   };
 
   it("should handle ErrorState with no errors and no traceId", () => {
-    const state: AARFlowState = {
-      type: sendAARFlowStates.ko,
+    const state: AarFlowState = {
+      type: sendAarFlowStates.ko,
       previousState: sendAarMockStateFactory.fetchingQRData(),
       error: { status: 599, detail: "Internal Server Error" },
       debugData
@@ -236,7 +236,7 @@ describe("currentAARFlowStateErrorDebugInfoSelector", () => {
     const mockGlobalState = {
       features: { pn: { aarFlow: state } }
     } as unknown as GlobalState;
-    const result = currentAARFlowStateErrorDebugInfoSelector(mockGlobalState);
+    const result = currentAarFlowStateErrorDebugInfoSelector(mockGlobalState);
     expect(result).toEqual({
       errorCodes: undefined,
       phase: debugData.phase,
@@ -246,8 +246,8 @@ describe("currentAARFlowStateErrorDebugInfoSelector", () => {
   });
 
   it("should handle ErrorState with no errors but traceId", () => {
-    const state: AARFlowState = {
-      type: sendAARFlowStates.ko,
+    const state: AarFlowState = {
+      type: sendAarFlowStates.ko,
       previousState: sendAarMockStateFactory.fetchingQRData(),
       error: {
         status: 599,
@@ -259,7 +259,7 @@ describe("currentAARFlowStateErrorDebugInfoSelector", () => {
     const mockGlobalState = {
       features: { pn: { aarFlow: state } }
     } as unknown as GlobalState;
-    const result = currentAARFlowStateErrorDebugInfoSelector(mockGlobalState);
+    const result = currentAarFlowStateErrorDebugInfoSelector(mockGlobalState);
     expect(result).toEqual({
       errorCodes: undefined,
       phase: debugData.phase,
@@ -269,8 +269,8 @@ describe("currentAARFlowStateErrorDebugInfoSelector", () => {
   });
 
   it("should handle ErrorState with traceId and empty array errors", () => {
-    const state: AARFlowState = {
-      type: sendAARFlowStates.ko,
+    const state: AarFlowState = {
+      type: sendAarFlowStates.ko,
       previousState: sendAarMockStateFactory.fetchingQRData(),
       error: {
         status: 599,
@@ -283,7 +283,7 @@ describe("currentAARFlowStateErrorDebugInfoSelector", () => {
     const mockGlobalState = {
       features: { pn: { aarFlow: state } }
     } as unknown as GlobalState;
-    const result = currentAARFlowStateErrorDebugInfoSelector(mockGlobalState);
+    const result = currentAarFlowStateErrorDebugInfoSelector(mockGlobalState);
     expect(result).toEqual({
       errorCodes: "",
       phase: debugData.phase,
@@ -293,8 +293,8 @@ describe("currentAARFlowStateErrorDebugInfoSelector", () => {
   });
 
   it("should handle ErrorState with one error with code but no detail", () => {
-    const state: AARFlowState = {
-      type: sendAARFlowStates.ko,
+    const state: AarFlowState = {
+      type: sendAarFlowStates.ko,
       previousState: sendAarMockStateFactory.fetchingQRData(),
       error: {
         status: 599,
@@ -307,7 +307,7 @@ describe("currentAARFlowStateErrorDebugInfoSelector", () => {
     const mockGlobalState = {
       features: { pn: { aarFlow: state } }
     } as unknown as GlobalState;
-    const result = currentAARFlowStateErrorDebugInfoSelector(mockGlobalState);
+    const result = currentAarFlowStateErrorDebugInfoSelector(mockGlobalState);
     expect(result).toEqual({
       errorCodes: "ERR01 ",
       phase: debugData.phase,
@@ -317,8 +317,8 @@ describe("currentAARFlowStateErrorDebugInfoSelector", () => {
   });
 
   it("should handle ErrorState with one error with code and detail", () => {
-    const state: AARFlowState = {
-      type: sendAARFlowStates.ko,
+    const state: AarFlowState = {
+      type: sendAarFlowStates.ko,
       previousState: sendAarMockStateFactory.fetchingQRData(),
       error: {
         status: 599,
@@ -331,7 +331,7 @@ describe("currentAARFlowStateErrorDebugInfoSelector", () => {
     const mockGlobalState = {
       features: { pn: { aarFlow: state } }
     } as unknown as GlobalState;
-    const result = currentAARFlowStateErrorDebugInfoSelector(mockGlobalState);
+    const result = currentAarFlowStateErrorDebugInfoSelector(mockGlobalState);
     expect(result).toEqual({
       errorCodes: "ERR01 Something is wrong",
       phase: debugData.phase,
@@ -341,8 +341,8 @@ describe("currentAARFlowStateErrorDebugInfoSelector", () => {
   });
 
   it("should handle ErrorState with two errors with code but no detail", () => {
-    const state: AARFlowState = {
-      type: sendAARFlowStates.ko,
+    const state: AarFlowState = {
+      type: sendAarFlowStates.ko,
       previousState: sendAarMockStateFactory.fetchingQRData(),
       error: {
         status: 599,
@@ -355,7 +355,7 @@ describe("currentAARFlowStateErrorDebugInfoSelector", () => {
     const mockGlobalState = {
       features: { pn: { aarFlow: state } }
     } as unknown as GlobalState;
-    const result = currentAARFlowStateErrorDebugInfoSelector(mockGlobalState);
+    const result = currentAarFlowStateErrorDebugInfoSelector(mockGlobalState);
     expect(result).toEqual({
       errorCodes: "ERR01 , ERR02 ",
       phase: debugData.phase,
@@ -365,8 +365,8 @@ describe("currentAARFlowStateErrorDebugInfoSelector", () => {
   });
 
   it("should handle ErrorState with two errors, first with detail, second without", () => {
-    const state: AARFlowState = {
-      type: sendAARFlowStates.ko,
+    const state: AarFlowState = {
+      type: sendAarFlowStates.ko,
       previousState: sendAarMockStateFactory.fetchingQRData(),
       error: {
         status: 599,
@@ -379,7 +379,7 @@ describe("currentAARFlowStateErrorDebugInfoSelector", () => {
     const mockGlobalState = {
       features: { pn: { aarFlow: state } }
     } as unknown as GlobalState;
-    const result = currentAARFlowStateErrorDebugInfoSelector(mockGlobalState);
+    const result = currentAarFlowStateErrorDebugInfoSelector(mockGlobalState);
     expect(result).toEqual({
       errorCodes: "ERR01 Detail 1, ERR02 ",
       phase: debugData.phase,
@@ -389,8 +389,8 @@ describe("currentAARFlowStateErrorDebugInfoSelector", () => {
   });
 
   it("should handle ErrorState with two errors, first without detail, second with", () => {
-    const state: AARFlowState = {
-      type: sendAARFlowStates.ko,
+    const state: AarFlowState = {
+      type: sendAarFlowStates.ko,
       previousState: sendAarMockStateFactory.fetchingQRData(),
       error: {
         status: 599,
@@ -403,7 +403,7 @@ describe("currentAARFlowStateErrorDebugInfoSelector", () => {
     const mockGlobalState = {
       features: { pn: { aarFlow: state } }
     } as unknown as GlobalState;
-    const result = currentAARFlowStateErrorDebugInfoSelector(mockGlobalState);
+    const result = currentAarFlowStateErrorDebugInfoSelector(mockGlobalState);
     expect(result).toEqual({
       errorCodes: "ERR01 , ERR02 Detail 2",
       phase: debugData.phase,
@@ -413,8 +413,8 @@ describe("currentAARFlowStateErrorDebugInfoSelector", () => {
   });
 
   it("should handle ErrorState with two errors with code and detail", () => {
-    const state: AARFlowState = {
-      type: sendAARFlowStates.ko,
+    const state: AarFlowState = {
+      type: sendAarFlowStates.ko,
       previousState: sendAarMockStateFactory.fetchingQRData(),
       error: {
         status: 599,
@@ -430,7 +430,7 @@ describe("currentAARFlowStateErrorDebugInfoSelector", () => {
     const mockGlobalState = {
       features: { pn: { aarFlow: state } }
     } as unknown as GlobalState;
-    const result = currentAARFlowStateErrorDebugInfoSelector(mockGlobalState);
+    const result = currentAarFlowStateErrorDebugInfoSelector(mockGlobalState);
     expect(result).toEqual({
       errorCodes: "ERR01 Detail 1, ERR02 Detail 2",
       phase: debugData.phase,

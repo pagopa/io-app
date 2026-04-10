@@ -4,14 +4,14 @@ type ThirdPartyKind = typeof thirdPartyKind;
 type StandardThirdPartyMessage = {
   kind: ThirdPartyKind["TPM"];
 } & ThirdPartyMessageWithContent;
-export type EphemeralAARThirdPartyMessage = {
+export type EphemeralAarThirdPartyMessage = {
   kind: ThirdPartyKind["AAR"];
   mandateId?: string;
 } & ThirdPartyMessageWithContent;
 
 export type ThirdPartyMessageUnion =
   | StandardThirdPartyMessage
-  | EphemeralAARThirdPartyMessage;
+  | EphemeralAarThirdPartyMessage;
 export const thirdPartyKind = {
   TPM: "TPM",
   AAR: "AAR"
