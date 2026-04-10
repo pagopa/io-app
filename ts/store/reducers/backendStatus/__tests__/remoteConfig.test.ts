@@ -226,7 +226,7 @@ describe("remoteConfig", () => {
             priority_order
           }
         })
-      } as GlobalState);
+      }) as GlobalState;
 
     const some_priorityOrder = ["id1", "id2", "id3"];
     const customNoneStore = {

@@ -25,7 +25,11 @@ import SuccessComponent from "../components/SuccessComponent";
 import { FciParamsList } from "../navigation/params";
 import { fciEndRequest, fciSignatureRequestFromId } from "../store/actions";
 import { fciSignatureRequestSelector } from "../store/reducers/fciSignatureRequest";
-import { trackFciSignatureDetailFailureAction } from "../analytics";
+import {
+  trackFciSignatureDetailFailureAction,
+  trackFciSignatureGenericFailure,
+  trackFciSignatureMismatch
+} from "../analytics";
 
 export type FciRouterScreenNavigationParams = Readonly<{
   signatureRequestId: SignatureRequestDetailView["id"];
@@ -67,6 +71,7 @@ const FciSignatureScreen = (
   const GenericError = (problemJson?: ProblemJson) => {
     const errorReason = problemJson ? problemJson.toString() : "unknown_error";
     if (problemJson?.status === 404) {
+      trackFciSignatureMismatch();
       return (
         <ErrorComponent
           title={I18n.t("features.fci.errors.generic.wrongUser.title")}
@@ -77,6 +82,7 @@ const FciSignatureScreen = (
         />
       );
     }
+    trackFciSignatureGenericFailure(errorReason);
     return (
       <SignatureStatusComponent
         title={I18n.t("features.fci.errors.generic.default.title")}

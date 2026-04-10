@@ -29,7 +29,7 @@ const OnboardingShareDataScreen = (): ReactElement => {
   const { showAlert } = useOnboardingAbortAlert();
   const { present, bottomSheet } = useConfirmOptOutBottomSheet(() => {
     trackMixpanelDeclined(flow);
-    trackMixpanelSetEnabled(false, flow, store.getState()).finally(() => {
+    void trackMixpanelSetEnabled(false, flow, store.getState()).finally(() => {
       dispatch(setMixpanelEnabled(false));
     });
   });
