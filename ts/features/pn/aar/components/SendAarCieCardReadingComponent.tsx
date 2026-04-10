@@ -26,13 +26,13 @@ import {
 import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
 import { useTrackCieReadingEvents } from "../hooks/useTrackCieReadingEvents";
 import { setAarFlowState } from "../store/actions";
-import { RecipientInfo, sendAARFlowStates } from "../utils/stateUtils";
+import { RecipientInfo, sendAarFlowStates } from "../utils/stateUtils";
 import { useAarGenericErrorBottomSheet } from "./errors/hooks/useAarGenericErrorBottomSheet";
 import { SendAarZendeskSecondLevelTag } from "./errors/hooks/useAarStartSendZendeskSupport";
 
 type ScreenContentProps = Omit<CieCardReadContentProps, "progress">;
 
-export type SendAARCieCardReadingComponentProps = {
+export type SendAarCieCardReadingComponentProps = {
   iun: string;
   mandateId: string;
   recipientInfo: RecipientInfo;
@@ -40,13 +40,13 @@ export type SendAARCieCardReadingComponentProps = {
   verificationCode: string;
 };
 
-export const SendAARCieCardReadingComponent = ({
+export const SendAarCieCardReadingComponent = ({
   can,
   verificationCode,
   iun,
   recipientInfo,
   mandateId
-}: SendAARCieCardReadingComponentProps) => {
+}: SendAarCieCardReadingComponentProps) => {
   const dispatch = useIODispatch();
   const theme = useIOTheme();
   const { startReading, readState } = useCieInternalAuthAndMrtdReading();
@@ -86,7 +86,7 @@ export const SendAARCieCardReadingComponent = ({
 
       dispatch(
         setAarFlowState({
-          type: sendAARFlowStates.validatingMandate,
+          type: sendAarFlowStates.validatingMandate,
           iun,
           recipientInfo,
           mandateId,
@@ -106,7 +106,7 @@ export const SendAARCieCardReadingComponent = ({
   const restartToCanAdvisory = useCallback(() => {
     dispatch(
       setAarFlowState({
-        type: sendAARFlowStates.cieCanAdvisory,
+        type: sendAarFlowStates.cieCanAdvisory,
         iun,
         recipientInfo,
         mandateId,
@@ -120,7 +120,7 @@ export const SendAARCieCardReadingComponent = ({
   const restartToScanningAdvisory = useCallback(() => {
     dispatch(
       setAarFlowState({
-        type: sendAARFlowStates.cieScanningAdvisory,
+        type: sendAarFlowStates.cieScanningAdvisory,
         iun,
         recipientInfo,
         mandateId,
