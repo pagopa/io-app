@@ -1,12 +1,12 @@
 import {
-  trackSendAARAccessDeniedDelegateInfo,
-  trackSendAARAccessDeniedDismissed,
-  trackSendAARAccessDeniedScreenView,
-  trackSendAARToS,
-  trackSendAARToSAccepted,
-  trackSendAARToSDismissed,
+  trackSendAarAccessDeniedDelegateInfo,
+  trackSendAarAccessDeniedDismissed,
+  trackSendAarAccessDeniedScreenView,
+  trackSendAarToS,
+  trackSendAarToSAccepted,
+  trackSendAarToSDismissed,
   aarProblemJsonAnalyticsReport,
-  trackSendAARFailure,
+  trackSendAarFailure,
   trackSendQRCodeScanRedirect,
   trackSendQRCodeScanRedirectConfirmed,
   trackSendQRCodeScanRedirectDismissed,
@@ -113,38 +113,38 @@ const simpleTrackingTests: ReadonlyArray<TrackingTestBase> = [
     eventProps: { event_category: "UX", event_type: "action" }
   },
   {
-    name: "trackSendAARToS",
-    fn: trackSendAARToS,
+    name: "trackSendAarToS",
+    fn: trackSendAarToS,
     eventName: "SEND_TEMPORARY_NOTIFICATION_OPENING_DISCLAIMER",
     eventProps: { event_category: "UX", event_type: "screen_view" }
   },
   {
-    name: "trackSendAARToSAccepted",
-    fn: trackSendAARToSAccepted,
+    name: "trackSendAarToSAccepted",
+    fn: trackSendAarToSAccepted,
     eventName: "SEND_TEMPORARY_NOTIFICATION_OPENING_DISCLAIMER_ACCEPTED",
     eventProps: { event_category: "UX", event_type: "action" }
   },
   {
-    name: "trackSendAARToSDismissed",
-    fn: trackSendAARToSDismissed,
+    name: "trackSendAarToSDismissed",
+    fn: trackSendAarToSDismissed,
     eventName: "SEND_TEMPORARY_NOTIFICATION_OPENING_DISCLAIMER_DISMISSED",
     eventProps: { event_category: "UX", event_type: "action" }
   },
   {
-    name: "trackSendAARAccessDeniedScreenView",
-    fn: trackSendAARAccessDeniedScreenView,
+    name: "trackSendAarAccessDeniedScreenView",
+    fn: trackSendAarAccessDeniedScreenView,
     eventName: "SEND_TEMPORARY_NOTIFICATION_OPENING_NOT_ALLOWED",
     eventProps: { event_category: "UX", event_type: "screen_view" }
   },
   {
-    name: "trackSendAARAccessDeniedDelegateInfo",
-    fn: trackSendAARAccessDeniedDelegateInfo,
+    name: "trackSendAarAccessDeniedDelegateInfo",
+    fn: trackSendAarAccessDeniedDelegateInfo,
     eventName: "SEND_TEMPORARY_NOTIFICATION_OPENING_NOT_ALLOWED_MANDATE_INFO",
     eventProps: { event_category: "UX", event_type: "exit" }
   },
   {
-    name: "trackSendAARAccessDeniedDismissed",
-    fn: trackSendAARAccessDeniedDismissed,
+    name: "trackSendAarAccessDeniedDismissed",
+    fn: trackSendAarAccessDeniedDismissed,
     eventName: "SEND_TEMPORARY_NOTIFICATION_OPENING_NOT_ALLOWED_DISMISSED",
     eventProps: { event_category: "UX", event_type: "action" }
   },
@@ -450,7 +450,7 @@ describe("index", () => {
     }
   );
 
-  describe("trackSendAARFailure", () => {
+  describe("trackSendAarFailure", () => {
     (
       [
         "Download Attachment",
@@ -462,7 +462,7 @@ describe("index", () => {
     ).forEach(phase =>
       it(`should call 'mixpanelTrack' with proper event name and properties (phase : ${phase})`, () => {
         const reason = "The reason";
-        trackSendAARFailure(phase, reason, undefined);
+        trackSendAarFailure(phase, reason, undefined);
 
         expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
         expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
@@ -486,7 +486,7 @@ describe("index", () => {
         traceId: "abc-123",
         errors: [{ code: "PN_DELIVERY_ERROR", detail: "Something went wrong" }]
       } as unknown as AARProblemJson;
-      trackSendAARFailure("Fetch Notification", reason, aarProblemJson);
+      trackSendAarFailure("Fetch Notification", reason, aarProblemJson);
 
       expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
       expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(

@@ -9,8 +9,8 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import PN_ROUTES from "../../../navigation/routes";
 import * as FLOW_MANAGER from "../../hooks/useSendAarFlowManager";
 import * as SELECTORS from "../../store/selectors";
-import { sendAARFlowStates } from "../../utils/stateUtils";
-import { SendAARTosComponent } from "../SendAARTosComponent";
+import { sendAarFlowStates } from "../../utils/stateUtils";
+import { SendAarTosComponent } from "../SendAarTosComponent";
 import * as ANALYTICS from "../../analytics";
 
 const qrCodeMock = "TEST";
@@ -20,9 +20,9 @@ const mockPrivacyUrls = {
 };
 
 const privacyUrlSpy = jest.spyOn(REMOTE_CONFIG, "pnPrivacyUrlsSelector");
-const flowDataSpy = jest.spyOn(SELECTORS, "currentAARFlowData");
+const flowDataSpy = jest.spyOn(SELECTORS, "currentAarFlowData");
 const managerSpy = jest.spyOn(FLOW_MANAGER, "useSendAarFlowManager");
-describe("SendAARTosComponent", () => {
+describe("SendAarTosComponent", () => {
   const mockGoNextState = jest.fn();
   const mockTerminateFlow = jest.fn();
   const mockDispatch = jest.fn();
@@ -48,9 +48,9 @@ describe("SendAARTosComponent", () => {
     fireEvent.press(button);
     expect(mockGoNextState).toHaveBeenCalledTimes(1);
   });
-  it("quits out of the flow on secondary button press and call 'trackSendAARToSDismissed' ", () => {
-    const spiedOnMockedTrackSendAARToSDismissed = jest
-      .spyOn(ANALYTICS, "trackSendAARToSDismissed")
+  it("quits out of the flow on secondary button press and call 'trackSendAarToSDismissed' ", () => {
+    const spiedOnMockedTrackSendAarToSDismissed = jest
+      .spyOn(ANALYTICS, "trackSendAarToSDismissed")
       .mockImplementation();
 
     const { getByTestId } = renderComponent(qrCodeMock);
@@ -59,8 +59,8 @@ describe("SendAARTosComponent", () => {
     expect(mockTerminateFlow).toHaveBeenCalledTimes(0);
     fireEvent.press(button);
     expect(mockTerminateFlow).toHaveBeenCalledTimes(1);
-    expect(spiedOnMockedTrackSendAARToSDismissed.mock.calls.length).toBe(1);
-    expect(spiedOnMockedTrackSendAARToSDismissed.mock.calls[0].length).toBe(0);
+    expect(spiedOnMockedTrackSendAarToSDismissed.mock.calls.length).toBe(1);
+    expect(spiedOnMockedTrackSendAarToSDismissed.mock.calls[0].length).toBe(0);
   });
   it("should match snapshot", () => {
     const { toJSON } = renderComponent(qrCodeMock);
@@ -78,13 +78,13 @@ describe("SendAARTosComponent", () => {
 const renderComponent = (qr: string, isRightState = true) => {
   flowDataSpy.mockImplementation(() => ({
     type: isRightState
-      ? sendAARFlowStates.displayingAARToS
-      : sendAARFlowStates.fetchingQRData,
+      ? sendAarFlowStates.displayingAarToS
+      : sendAarFlowStates.fetchingQRData,
     qrCode: qr
   }));
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    () => <SendAARTosComponent />,
+    () => <SendAarTosComponent />,
     PN_ROUTES.QR_SCAN_FLOW,
     {},
     createStore(appReducer, globalState as any)
