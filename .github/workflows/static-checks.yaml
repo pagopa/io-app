@@ -3,8 +3,6 @@ on:
   - pull_request
   - merge_group
   - workflow_call
-permissions:
-  contents: read
 jobs:
   static-checks:
     name: Typescript lint and prettier
@@ -61,9 +59,9 @@ jobs:
         with:
           pattern: coverage-*
           path: coverage/
-          merge-multiple: true
       - id: codecov-script
         uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           directory: coverage/
+          recursive: true
