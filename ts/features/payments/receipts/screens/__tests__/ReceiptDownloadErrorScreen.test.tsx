@@ -7,15 +7,6 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { PaymentsReceiptRoutes } from "../../navigation/routes";
 import ReceiptDownloadErrorScreen from "../ReceiptDownloadErrorScreen";
 
-beforeAll(() => {
-  jest.useFakeTimers();
-});
-
-afterAll(() => {
-  jest.runOnlyPendingTimers();
-  jest.useRealTimers();
-});
-
 const renderComponent = (state: GlobalState) => {
   const store = createStore(appReducer, state as any);
 

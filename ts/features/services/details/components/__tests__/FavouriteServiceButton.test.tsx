@@ -13,15 +13,6 @@ import { ServiceDetails } from "../../../../../../definitions/services/ServiceDe
 import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { FavouriteServiceType } from "../../../favouriteServices/types";
 
-beforeAll(() => {
-  jest.useFakeTimers();
-});
-
-afterAll(() => {
-  jest.runOnlyPendingTimers();
-  jest.useRealTimers();
-});
-
 const serviceId = "serviceCgn" as ServiceId;
 
 const mockService = {

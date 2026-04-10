@@ -14,15 +14,6 @@ import {
   newCredentials
 } from "../../../../common/utils/itwCredentialUtils";
 
-beforeAll(() => {
-  jest.useFakeTimers();
-});
-
-afterAll(() => {
-  jest.runOnlyPendingTimers();
-  jest.useRealTimers();
-});
-
 describe("ItwPresentationAdditionalInfoSection", () => {
   test.each(newCredentials)(
     "renders new credential alert for %s",

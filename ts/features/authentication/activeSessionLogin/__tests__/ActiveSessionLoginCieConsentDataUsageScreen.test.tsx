@@ -9,15 +9,6 @@ import ActiveSessionLoginCieConsentDataUsageScreen from "../screens/cie/ActiveSe
 import * as loginUtils from "../../common/utils/login";
 import { runConsentScreenSuite } from "../shared/CieContentDataUsageCommonSuite";
 
-beforeAll(() => {
-  jest.useFakeTimers();
-});
-
-afterAll(() => {
-  jest.runOnlyPendingTimers();
-  jest.useRealTimers();
-});
-
 jest.mock("react-native-webview", () => {
   const { View } = require("react-native");
   const WebView = (props: any) => <View {...props} />;

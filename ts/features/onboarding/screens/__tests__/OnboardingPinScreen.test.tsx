@@ -6,15 +6,6 @@ import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import ROUTES from "../../../../navigation/routes";
 
-beforeAll(() => {
-  jest.useFakeTimers();
-});
-
-afterAll(() => {
-  jest.runOnlyPendingTimers();
-  jest.useRealTimers();
-});
-
 jest.mock("../../../settings/security/shared/components/PinCreation", () => ({
   PinCreation: jest.fn(() => null)
 }));

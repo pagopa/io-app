@@ -15,7 +15,6 @@ import { AARFlowState, sendAARFlowStates } from "../../utils/stateUtils";
 import { sendAarMockStates } from "../../utils/testUtils";
 import { SendAARInitialFlowScreen } from "../SendAARInitialFlowScreen";
 
-jest.useFakeTimers();
 const mockReplace = jest.fn();
 const mockSetOptions = jest.fn();
 const mockShouldNeverCall = jest.fn();

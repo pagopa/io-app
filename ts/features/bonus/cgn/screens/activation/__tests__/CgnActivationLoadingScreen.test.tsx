@@ -9,15 +9,6 @@ import CGN_ROUTES from "../../../navigation/routes";
 import { cgnRequestActivation } from "../../../store/actions/activation";
 import CgnActivationLoadingScreen from "../CgnActivationLoadingScreen";
 
-beforeAll(() => {
-  jest.useFakeTimers();
-});
-
-afterAll(() => {
-  jest.runOnlyPendingTimers();
-  jest.useRealTimers();
-});
-
 const renderComponent = (store: Store) =>
   renderScreenWithNavigationStoreContext<GlobalState>(
     () => <CgnActivationLoadingScreen />,

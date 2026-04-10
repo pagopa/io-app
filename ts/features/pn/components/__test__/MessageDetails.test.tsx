@@ -17,15 +17,6 @@ import {
   SendUserType
 } from "../../../pushNotifications/analytics";
 
-beforeAll(() => {
-  jest.useFakeTimers();
-});
-
-afterAll(() => {
-  jest.runOnlyPendingTimers();
-  jest.useRealTimers();
-});
-
 jest.mock("../MessageCancelledContent");
 jest.mock("../MessageDetailsContent");
 jest.mock(

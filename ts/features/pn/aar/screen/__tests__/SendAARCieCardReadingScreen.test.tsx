@@ -13,15 +13,6 @@ import {
   SendAARCieCardReadingScreenProps
 } from "../SendAARCieCardReadingScreen";
 
-beforeAll(() => {
-  jest.useFakeTimers();
-});
-
-afterAll(() => {
-  jest.runOnlyPendingTimers();
-  jest.useRealTimers();
-});
-
 const mockReplace = jest.fn();
 const mockShouldNeverCall = jest.fn();
 

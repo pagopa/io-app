@@ -5,15 +5,6 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { SecuritySuggestions } from "../SecuritySuggestions";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
 
-beforeAll(() => {
-  jest.useFakeTimers();
-});
-
-afterAll(() => {
-  jest.runOnlyPendingTimers();
-  jest.useRealTimers();
-});
-
 describe("SecuritySuggestions", () => {
   it("should match snapshot", () => {
     const securitySuggestions = renderComponent();

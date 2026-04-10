@@ -156,6 +156,29 @@ const mockSubscription = {
 jest.mock("react-native", () => {
   const RN = jest.requireActual("react-native"); // use original implementation, which comes with mocks out of the box
 
+  // Eagerly load specific react-native exports to avoid "Jest environment has
+  // been torn down" errors. In React Native 0.81+, many exports are lazy
+  // getters that call require() internally. When @react-navigation/stack v7's
+  // Card.tsx and helpers access these inside setTimeout callbacks that fire
+  // after jest tears down the environment, the require() calls throw a
+  // ReferenceError. Replacing the specific getters with pre-loaded plain
+  // properties prevents any require() call in those post-teardown callbacks.
+  //
+  // Properties known to be accessed in @react-navigation/stack v7 timeouts:
+  //   - Animated (Card.tsx: spec.animation === 'spring' ? Animated.spring : ...)
+  //   - Keyboard (useKeyboardManager.tsx: Keyboard.dismiss())
+  const eagerLoad = (prop) => {
+    const value = RN[prop];
+    Object.defineProperty(RN, prop, {
+      value,
+      writable: true,
+      configurable: true,
+      enumerable: true
+    });
+  };
+  eagerLoad("Animated");
+  eagerLoad("Keyboard");
+
   // eslint-disable-next-line functional/immutable-data
   RN.NativeModules.JailMonkey = jest.requireActual("jail-monkey");
 
@@ -283,30 +306,3 @@ jest.mock("@pagopa/io-react-native-iso18013", () => ({
 jest.mock("@pagopa/io-react-native-cie", () => ({
   CieManager: jest.fn()
 }));
-
-// Mock to prevent Timeout.closing [as _onTimeout] (node_modules/@react-navigation/stack/src/views/Stack/Card.tsx:413:9)
-// Cannot read properties of undefined (reading 'spring')
-jest.mock("@react-navigation/stack", () => {
-  const React = require("react");
-  const actual = jest.requireActual("@react-navigation/stack");
-
-  return {
-    ...actual,
-    // We override the Card to be a simple wrapper that ignores animations
-    Card: React.forwardRef(({ children, style }, ref) => {
-      const { View } = require("react-native");
-      return React.createElement(View, { ref, style }, children);
-    }),
-    // Force transitions to have 0 duration logic
-    TransitionPresets: {
-      ...actual.TransitionPresets,
-      DefaultTransition: {
-        ...actual.TransitionPresets.DefaultTransition,
-        transitionSpec: {
-          open: { animation: 'timing', config: { duration: 0 } },
-          close: { animation: 'timing', config: { duration: 0 } },
-        },
-      },
-    },
-  };
-});
