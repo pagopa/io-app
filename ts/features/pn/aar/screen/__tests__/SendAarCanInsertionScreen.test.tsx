@@ -34,7 +34,7 @@ jest.mock("../../../../../store/hooks", () => ({
 }));
 
 jest.mock("i18next", () => ({
-  t: (path: string, params?: any) => {
+  t: (path: string, params?: Record<string, string>) => {
     if (params?.denomination) {
       return `${path} ${params.denomination}`;
     }
