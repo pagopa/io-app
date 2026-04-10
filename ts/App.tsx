@@ -6,6 +6,7 @@ import {
   ToastProvider
 } from "@pagopa/io-app-design-system";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { KeyboardProvider } from "react-native-keyboard-controller";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
@@ -155,33 +156,35 @@ export type AppDispatch = typeof store.dispatch;
  */
 const App = (): JSX.Element => (
   <GestureHandlerRootView style={{ flex: 1 }}>
-    <SafeAreaProvider>
-      <IODSExperimentalContextProvider>
-        <IONewTypefaceContextProvider>
-          <IOThemeContextProvider theme={"light"}>
-            <ToastProvider>
-              <Provider store={store}>
-                <PersistGate loading={undefined} persistor={persistor}>
-                  <TourProvider>
-                    <IOAlertVisibleContextProvider>
-                      <BottomSheetModalProvider>
-                        <LightModalProvider>
-                          <AppFeedbackProvider>
-                            <StatusMessages>
-                              <RootContainer store={store} />
-                            </StatusMessages>
-                          </AppFeedbackProvider>
-                        </LightModalProvider>
-                      </BottomSheetModalProvider>
-                    </IOAlertVisibleContextProvider>
-                  </TourProvider>
-                </PersistGate>
-              </Provider>
-            </ToastProvider>
-          </IOThemeContextProvider>
-        </IONewTypefaceContextProvider>
-      </IODSExperimentalContextProvider>
-    </SafeAreaProvider>
+    <KeyboardProvider>
+      <SafeAreaProvider>
+        <IODSExperimentalContextProvider>
+          <IONewTypefaceContextProvider>
+            <IOThemeContextProvider theme={"light"}>
+              <ToastProvider>
+                <Provider store={store}>
+                  <PersistGate loading={undefined} persistor={persistor}>
+                    <TourProvider>
+                      <IOAlertVisibleContextProvider>
+                        <BottomSheetModalProvider>
+                          <LightModalProvider>
+                            <AppFeedbackProvider>
+                              <StatusMessages>
+                                <RootContainer store={store} />
+                              </StatusMessages>
+                            </AppFeedbackProvider>
+                          </LightModalProvider>
+                        </BottomSheetModalProvider>
+                      </IOAlertVisibleContextProvider>
+                    </TourProvider>
+                  </PersistGate>
+                </Provider>
+              </ToastProvider>
+            </IOThemeContextProvider>
+          </IONewTypefaceContextProvider>
+        </IODSExperimentalContextProvider>
+      </SafeAreaProvider>
+    </KeyboardProvider>
   </GestureHandlerRootView>
 );
 
