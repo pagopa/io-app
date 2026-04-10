@@ -31,7 +31,7 @@ import * as commonSelectors from "../../../settings/common/store/selectors";
 import { thirdPartyMessage } from "../../__mocks__/pnMessage";
 import * as AAR_ANALYTICS from "../../aar/analytics";
 import { terminateAarFlow } from "../../aar/store/actions";
-import { sendAARFlowStates } from "../../aar/utils/stateUtils";
+import { sendAarFlowStates } from "../../aar/utils/stateUtils";
 import { sendAarMockStateFactory } from "../../aar/utils/testUtils";
 import * as SEND_ANALYTICS from "../../analytics";
 import PN_ROUTES from "../../navigation/routes";
@@ -47,7 +47,7 @@ jest.mock("react-redux", () => ({
 }));
 
 jest.mock("../../components/MessageDetails");
-jest.mock("../../aar/components/SendAARMessageDetailBottomSheetComponent");
+jest.mock("../../aar/components/SendAarMessageDetailBottomSheetComponent");
 
 const sendOpeningSources: ReadonlyArray<SendOpeningSource> = [
   "aar",
@@ -79,10 +79,10 @@ describe("MessageDetailsScreen", () => {
   sendOpeningSources.forEach(sendOpeningSource => {
     sendUserTypes.forEach(sendUserType => {
       it(`should match the snapshot when there is an error${
-        sendOpeningSource === "aar" ? " and dispatch trackSendAARFailure" : ""
+        sendOpeningSource === "aar" ? " and dispatch trackSendAarFailure" : ""
       } (opening source ${sendOpeningSource}, user type ${sendUserType})`, () => {
-        const spiedOnMockedTrackSendAARFailure = jest
-          .spyOn(AAR_ANALYTICS, "trackSendAARFailure")
+        const spiedOnMockedTrackSendAarFailure = jest
+          .spyOn(AAR_ANALYTICS, "trackSendAarFailure")
           .mockImplementation();
         const sequenceOfActions: ReadonlyArray<Action> = [
           applicationChangeState("active")
@@ -114,22 +114,22 @@ describe("MessageDetailsScreen", () => {
         expect(component).toMatchSnapshot();
 
         if (sendOpeningSource === "aar") {
-          expect(spiedOnMockedTrackSendAARFailure.mock.calls.length).toBe(1);
-          expect(spiedOnMockedTrackSendAARFailure.mock.calls[0].length).toBe(3);
-          expect(spiedOnMockedTrackSendAARFailure.mock.calls[0][0]).toBe(
+          expect(spiedOnMockedTrackSendAarFailure.mock.calls.length).toBe(1);
+          expect(spiedOnMockedTrackSendAarFailure.mock.calls[0].length).toBe(3);
+          expect(spiedOnMockedTrackSendAarFailure.mock.calls[0][0]).toBe(
             "Show Notification"
           );
-          expect(spiedOnMockedTrackSendAARFailure.mock.calls[0][1]).toBe(
+          expect(spiedOnMockedTrackSendAarFailure.mock.calls[0][1]).toBe(
             "Screen rendering with undefined SEND message"
           );
         } else {
-          expect(spiedOnMockedTrackSendAARFailure.mock.calls.length).toBe(0);
+          expect(spiedOnMockedTrackSendAarFailure.mock.calls.length).toBe(0);
         }
       });
 
-      it(`should match the snapshot when everything went fine and not dispatch trackSendAARFailure (opening source ${sendOpeningSource}, user type ${sendUserType})`, () => {
-        const spiedOnMockedTrackSendAARFailure = jest
-          .spyOn(AAR_ANALYTICS, "trackSendAARFailure")
+      it(`should match the snapshot when everything went fine and not dispatch trackSendAarFailure (opening source ${sendOpeningSource}, user type ${sendUserType})`, () => {
+        const spiedOnMockedTrackSendAarFailure = jest
+          .spyOn(AAR_ANALYTICS, "trackSendAarFailure")
           .mockImplementation();
         jest
           .spyOn(commonSelectors, "profileFiscalCodeSelector")
@@ -161,7 +161,7 @@ describe("MessageDetailsScreen", () => {
         );
         expect(component).toMatchSnapshot();
 
-        expect(spiedOnMockedTrackSendAARFailure.mock.calls.length).toBe(0);
+        expect(spiedOnMockedTrackSendAarFailure.mock.calls.length).toBe(0);
       });
 
       [false, true].forEach(firstTimeOpening =>
@@ -321,7 +321,7 @@ describe("MessageDetailsScreen", () => {
         jest
           .spyOn(REDUCERS, "curriedSendMessageFromIdSelector")
           .mockImplementation(getMockCurriedSelector(sendMessage));
-        const spiedOnMockedTrackSendAARNotificationClosure = jest
+        const spiedOnMockedTrackSendAarNotificationClosure = jest
           .spyOn(AAR_ANALYTICS, "trackSendAarNotificationClosure")
           .mockImplementation();
         const spiedOnMockedUseHardwareBackButtonWhenFocused = jest
@@ -341,7 +341,7 @@ describe("MessageDetailsScreen", () => {
         const result = useHardwareBackButtonCallback();
 
         const { calls: notificationClosureCalls = [] } =
-          spiedOnMockedTrackSendAARNotificationClosure.mock;
+          spiedOnMockedTrackSendAarNotificationClosure.mock;
         if (sendOpeningSource === "aar") {
           expect(notificationClosureCalls.length).toBe(1);
           expect(notificationClosureCalls[0].length).toBe(1);
@@ -380,7 +380,7 @@ describe("MessageDetailsScreen", () => {
         jest
           .spyOn(REDUCERS, "curriedSendMessageFromIdSelector")
           .mockImplementation(getMockCurriedSelector(sendMessage));
-        const spiedOnMockedTrackSendAARNotificationClosure = jest
+        const spiedOnMockedTrackSendAarNotificationClosure = jest
           .spyOn(AAR_ANALYTICS, "trackSendAarNotificationClosure")
           .mockImplementation();
 
@@ -396,19 +396,19 @@ describe("MessageDetailsScreen", () => {
           fireEvent.press(headerCloseButton);
 
           expect(
-            spiedOnMockedTrackSendAARNotificationClosure.mock.calls.length
+            spiedOnMockedTrackSendAarNotificationClosure.mock.calls.length
           ).toBe(1);
           expect(
-            spiedOnMockedTrackSendAARNotificationClosure.mock.calls[0].length
+            spiedOnMockedTrackSendAarNotificationClosure.mock.calls[0].length
           ).toBe(1);
           expect(
-            spiedOnMockedTrackSendAARNotificationClosure.mock.calls[0][0]
+            spiedOnMockedTrackSendAarNotificationClosure.mock.calls[0][0]
           ).toBe(sendUserType);
         } else {
           component.getByTestId("support_close_button");
 
           expect(
-            spiedOnMockedTrackSendAARNotificationClosure.mock.calls.length
+            spiedOnMockedTrackSendAarNotificationClosure.mock.calls.length
           ).toBe(0);
         }
       });
@@ -425,7 +425,7 @@ describe("MessageDetailsScreen", () => {
     expect(mockDispatch).not.toHaveBeenCalledWith(
       terminateAarFlow({
         messageId: message_1.id,
-        currentFlowState: sendAARFlowStates.displayingNotificationData
+        currentFlowState: sendAarFlowStates.displayingNotificationData
       })
     );
 
@@ -438,7 +438,7 @@ describe("MessageDetailsScreen", () => {
     expect(mockDispatch).toHaveBeenCalledWith(
       terminateAarFlow({
         messageId: message_1.id,
-        currentFlowState: sendAARFlowStates.displayingNotificationData
+        currentFlowState: sendAarFlowStates.displayingNotificationData
       })
     );
   });

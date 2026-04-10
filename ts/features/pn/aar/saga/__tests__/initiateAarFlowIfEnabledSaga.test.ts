@@ -5,9 +5,9 @@ import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import PN_ROUTES from "../../../navigation/routes";
 import { initiateAarFlowSaga } from "../initiateAarFlowSaga";
 import { terminateAarFlow, initiateAarFlow } from "../../store/actions";
-import { sendAARFlowStates } from "../../utils/stateUtils";
+import { sendAarFlowStates } from "../../utils/stateUtils";
 import {
-  currentAARFlowStateType,
+  currentAarFlowStateType,
   currentAarFlowIunSelector
 } from "../../store/selectors";
 
@@ -24,11 +24,11 @@ describe("initiateAarFlowIfEnabled saga", () => {
   it("should terminate current flow and replace navigation if flow state is not none", () => {
     const mockNavigate =
       NavigationService.dispatchNavigationAction as jest.Mock;
-    const mockCurrentState = sendAARFlowStates.fetchingQRData;
+    const mockCurrentState = sendAarFlowStates.fetchingQRData;
 
     testSaga(initiateAarFlowSaga, action)
       .next()
-      .select(currentAARFlowStateType)
+      .select(currentAarFlowStateType)
       .next(mockCurrentState)
       .select(currentAarFlowIunSelector)
       .next("iun-123")
@@ -53,8 +53,8 @@ describe("initiateAarFlowIfEnabled saga", () => {
 
     testSaga(initiateAarFlowSaga, action)
       .next()
-      .select(currentAARFlowStateType)
-      .next(sendAARFlowStates.none)
+      .select(currentAarFlowStateType)
+      .next(sendAarFlowStates.none)
       .call(mockNavigate, MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
         screen: PN_ROUTES.MAIN,
         params: {

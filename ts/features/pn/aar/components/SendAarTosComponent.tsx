@@ -4,14 +4,14 @@ import { useIOSelector } from "../../../../store/hooks";
 import { pnPrivacyUrlsSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { openWebUrl } from "../../../../utils/url";
 import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
-import { trackSendAARToSDismissed } from "../analytics";
+import { trackSendAarToSDismissed } from "../analytics";
 
-export const SendAARTosComponent = () => {
+export const SendAarTosComponent = () => {
   const tosConfig = useIOSelector(pnPrivacyUrlsSelector);
   const { goToNextState, terminateFlow } = useSendAarFlowManager();
 
   const onSecondaryAction = () => {
-    trackSendAARToSDismissed();
+    trackSendAarToSDismissed();
     terminateFlow();
   };
 
