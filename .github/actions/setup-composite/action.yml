@@ -27,6 +27,7 @@ runs:
           ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           ${{ runner.os }}-yarn-
     - name: Install dependencies
+      if: steps.yarn-cache.outputs.cache-hit != 'true'
       run: yarn install --frozen-lockfile
       shell: bash
     - id: generate-api-client
