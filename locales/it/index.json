@@ -2441,7 +2441,7 @@
           },
           "cieScanningAdvisory": {
             "title": "Posiziona la CIE su una superficie stabile per la lettura",
-            "description": "Dovrai poggiare il retro del telefono sulla carta e tenerlo fermo per la lettura.",
+            "description": "Dovrai avvicinare il telefono alla carta e tenerlo fermo per la lettura. Rimuovi eventuali cover.",
             "primaryAction": "Inizia lettura CIE"
           },
           "androidNfcActivation": {
