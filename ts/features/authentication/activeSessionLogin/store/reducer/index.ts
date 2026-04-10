@@ -14,7 +14,8 @@ import {
   setLoggedOutUserWithDifferentCF,
   setStartActiveSessionLogin,
   setActiveSessionLoginBlockingScreenHasBeenVisualized,
-  setCieIDSelectedSecurityLevelActiveSessionLogin
+  setCieIDSelectedSecurityLevelActiveSessionLogin,
+  setActiveSessionLoginFlow
 } from "../actions";
 import { SpidIdp } from "../../../../../utils/idps";
 import { StandardLoginRequestInfo } from "../../../login/idp/store/types";
@@ -25,6 +26,11 @@ import {
   logoutSuccess,
   logoutFailure
 } from "../../../common/store/actions";
+
+export type ActiveSessionLoginFlowType = {
+  type: "FCI";
+  route?: any;
+};
 
 export type ActiveSessionLoginState = {
   activeSessionLoginLocalFlag: boolean;
@@ -41,6 +47,7 @@ export type ActiveSessionLoginState = {
     hasBlockingScreenBeenVisualized: boolean;
     showSessionExpirationBanner: boolean;
   };
+  flow?: ActiveSessionLoginFlowType;
 };
 
 export const activeSessionLoginInitialState: ActiveSessionLoginState = {
@@ -63,6 +70,11 @@ const activeSessionLoginReducer = (
         ...state,
         activeSessionLoginLocalFlag: action.payload,
         engagement: { ...activeSessionLoginInitialState.engagement }
+      };
+    case getType(setActiveSessionLoginFlow):
+      return {
+        ...state,
+        flow: action.payload
       };
     case getType(setActiveSessionLoginBlockingScreenHasBeenVisualized):
       return {

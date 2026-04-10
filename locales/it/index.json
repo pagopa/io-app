@@ -2791,6 +2791,15 @@
           }
         }
       },
+      "requestL3": {
+        "nfcError": {
+          "title": "NFC non disponibile",
+          "subTitle": "Per firmare i documenti è necessario un dispositivo con NFC. Verifica le impostazioni del tuo dispositivo o usa un altro telefono."
+        },
+        "title": "Conferma la tua identità per firmare i documenti",
+        "subtitle": "È un passaggio di sicurezza necessario per associare la firma alla tua identità (o per emettere la richiesta di firma?)\nTi servirà la Carta di Identità Elettronica.",
+        "action": "Configura"
+      },
       "abort": {
         "title": "Annulla la firma",
         "content": "Vuoi annullare la firma di **{{dossierTitle}}**?",

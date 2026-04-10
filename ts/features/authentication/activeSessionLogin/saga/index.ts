@@ -20,7 +20,8 @@ import {
   isActiveSessionFastLoginEnabledSelector,
   idpSelectedActiveSessionLoginSelector,
   newTokenActiveSessionLoginSelector,
-  cieIDSelectedSecurityLevelActiveSessionLoginSelector
+  cieIDSelectedSecurityLevelActiveSessionLoginSelector,
+  activeSessionLoginFlowSelector
 } from "../store/selectors";
 import { startApplicationInitialization } from "../../../../store/actions/application";
 import { watchCieAuthenticationSaga } from "../../login/cie/sagas/cie";
@@ -104,6 +105,8 @@ export function* handleActiveSessionLoginSaga(): Generator<
 
     if (isDataComplete) {
       const state = (yield* select()) as GlobalState;
+      const flow = yield* select(activeSessionLoginFlowSelector);
+
       yield* call(
         updateLoginSessionProfileAndSuperProperties,
         state,
@@ -119,14 +122,14 @@ export function* handleActiveSessionLoginSaga(): Generator<
           cieIDSelectedSecurityLevel
         })
       );
-
       yield* put(analyticsAuthenticationCompleted("reauth"));
 
       yield* put(
         startApplicationInitialization({
           handleSessionExpiration: false,
           showIdentificationModalAtStartup: false,
-          isActiveLoginSuccess: true
+          isActiveLoginSuccess: true,
+          ...(flow?.route && { test: flow.route })
         })
       );
     }

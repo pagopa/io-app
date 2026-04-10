@@ -1993,6 +1993,15 @@
           }
         }
       },
+      "requestL3": {
+        "nfcError": {
+          "title": "NFC not available",
+          "subTitle": "An NFC-enabled device is required to sign documents. Check your device settings or use another phone."
+        },
+        "title": "Confirm your identity to sign the documents",
+        "subtitle": "This is a security step necessary to associate the signature with your identity (or to issue the signature request?)\nYou will need the Electronic Identity Card.",
+        "action": "Set up"
+      },
       "abort": {
         "title": "Quit signing",
         "content": "Do you want to quit signing **{{dossierTitle}}**?",

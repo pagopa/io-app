@@ -14,6 +14,7 @@ import {
 import { SpidIdp } from "../../../../../utils/idps";
 import { format } from "../../../../../utils/dates";
 import { AuthenticationState, AuthenticationStateWithIdp } from "../models";
+import { SpidLevel } from "../../../../../../definitions/session_manager/SpidLevel";
 
 export const authenticationStateSelector = (
   state: GlobalState
@@ -78,6 +79,30 @@ export const zendeskTokenSelector = (state: GlobalState): string | undefined =>
   isLoggedInWithSessionInfo(state.authentication)
     ? state.authentication.sessionInfo.zendeskToken
     : undefined;
+
+export const spidLevelSelector = (state: GlobalState): SpidLevel | undefined =>
+  isLoggedInWithSessionInfo(state.authentication)
+    ? state.authentication.sessionInfo.spidLevel
+    : undefined;
+
+/**
+ * Maps SPID level URIs to their short form (L1, L2, L3)
+ */
+const SPID_LEVEL_SHORT_MAP: Record<SpidLevel, "L1" | "L2" | "L3"> = {
+  "https://www.spid.gov.it/SpidL1": "L1",
+  "https://www.spid.gov.it/SpidL2": "L2",
+  "https://www.spid.gov.it/SpidL3": "L3"
+};
+
+/**
+ * Returns the short SPID level (L1, L2, L3) from the session info
+ */
+export const spidLevelShortSelector = (
+  state: GlobalState
+): "L1" | "L2" | "L3" | undefined => {
+  const spidLevel = spidLevelSelector(state);
+  return spidLevel ? SPID_LEVEL_SHORT_MAP[spidLevel] : undefined;
+};
 
 export const walletTokenSelector = (state: GlobalState): string | undefined =>
   isLoggedInWithSessionInfo(state.authentication)
