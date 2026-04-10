@@ -9,6 +9,7 @@ import {
   ItwProximityFailure,
   ItwProximityGenericFailure,
   ItwQrCode,
+  ItwShowQrCode,
   ItwStartReissuingPID
 } from "./types";
 
@@ -139,6 +140,13 @@ export const trackItwProximityContinuePresentation = () => {
   void mixpanelTrack(
     ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_UX_CONVERSION,
     buildEventProperties("UX", "action")
+  );
+};
+
+export const trackItwShowQrCode = ({ credential, position }: ItwShowQrCode) => {
+  void mixpanelTrack(
+    ITW_PROXIMITY_ACTIONS_EVENTS.ITW_SHOW_QR_CODE,
+    buildEventProperties("UX", "action", { credential, position })
   );
 };
 

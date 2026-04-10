@@ -1,3 +1,5 @@
+import { MixPanelCredential } from "../../../analytics/utils/types";
+
 export type ItwProximityFailure = {
   reason: unknown;
   type: string;
@@ -14,6 +16,14 @@ export type ItwQrCode = {
 
 export type ItwQRCodeLoadingFailure = {
   reason: string;
+};
+
+export type ItwShowQrCode = {
+  credential: MixPanelCredential | "general";
+  position:
+    | "ITW_CREDENTIAL_DETAIL"
+    | "ITW_CREDENTIAL_CARD_MODAL"
+    | "WALLET_HOME";
 };
 
 export type ItwStartReissuingPID = {

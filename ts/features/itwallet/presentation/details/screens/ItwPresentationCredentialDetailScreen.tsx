@@ -44,7 +44,10 @@ import {
 import { ItwParamsList } from "../../../navigation/ItwParamsList.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { ItwCredentialTrustmark } from "../../../trustmark/components/ItwCredentialTrustmark.tsx";
-import { trackItwProximityShowQrCode } from "../../proximity/analytics";
+import {
+  trackItwProximityShowQrCode,
+  trackItwShowQrCode
+} from "../../proximity/analytics";
 import { ITW_PROXIMITY_ROUTES } from "../../proximity/navigation/routes";
 import {
   trackCredentialDetail,
@@ -267,6 +270,10 @@ export const ItwPresentationCredentialDetail = ({
         iconPosition: "end",
         onPress: () => {
           trackItwProximityShowQrCode();
+          trackItwShowQrCode({
+            credential: mixPanelCredential,
+            position: "ITW_CREDENTIAL_DETAIL"
+          });
           navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
             screen: ITW_PROXIMITY_ROUTES.QR_CODE,
             params: {

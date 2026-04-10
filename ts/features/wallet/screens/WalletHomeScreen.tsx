@@ -28,7 +28,10 @@ import { itwSetPidReissuingSurveyHidden } from "../../itwallet/common/store/acti
 import { itwIsL3EnabledSelector } from "../../itwallet/common/store/selectors/preferences.ts";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { ITW_PROXIMITY_ROUTES } from "../../itwallet/presentation/proximity/navigation/routes";
-import { trackItwProximityShowQrCode } from "../../itwallet/presentation/proximity/analytics";
+import {
+  trackItwProximityShowQrCode,
+  trackItwShowQrCode
+} from "../../itwallet/presentation/proximity/analytics";
 import { hasPresentableCredentialsSelector } from "../../itwallet/presentation/proximity/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../itwallet/lifecycle/store/selectors";
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
@@ -177,6 +180,10 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
           iconPosition: "end",
           onPress: () => {
             trackItwProximityShowQrCode();
+            trackItwShowQrCode({
+              credential: "general",
+              position: "WALLET_HOME"
+            });
             navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
               screen: ITW_PROXIMITY_ROUTES.QR_CODE,
               params: {
