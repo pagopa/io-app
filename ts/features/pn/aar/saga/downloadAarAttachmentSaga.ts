@@ -19,13 +19,13 @@ import {
 } from "../../../messages/utils/attachments";
 import {
   aarProblemJsonAnalyticsReport,
-  trackSendAARFailure,
+  trackSendAarFailure,
   trackSendAarNotificationDetailTtlError
 } from "../analytics";
-import { createSendAARClientWithLollipop } from "../api/client";
+import { createSendAarClientWithLollipop } from "../api/client";
 import { isAarAttachmentTtlError } from "../utils/aarErrorMappings";
 import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
-import { SendAARFailurePhase } from "../utils/stateUtils";
+import { SendAarFailurePhase } from "../utils/stateUtils";
 class SendServerError extends Error {
   public readonly aarProblemJson: AARProblemJson;
   constructor(message: string, aarProblemJson: AARProblemJson) {
@@ -36,13 +36,13 @@ class SendServerError extends Error {
   }
 }
 
-const sendAarFailurePhase: SendAARFailurePhase = "Download Attachment";
+const sendAarFailurePhase: SendAarFailurePhase = "Download Attachment";
 const fastLoginType = "FAST_LOGIN_EXPIRED";
 const fastLoginError = Error(fastLoginType);
 const isFastLoginError = (e: unknown) =>
   e instanceof Error && e.message === fastLoginType;
 
-export function* downloadAARAttachmentSaga(
+export function* downloadAarAttachmentSaga(
   bearerToken: string,
   keyInfo: KeyInfo,
   mandateId: string | undefined,
@@ -80,7 +80,7 @@ export function* downloadAARAttachmentSaga(
     const reason = unknownToReason(e);
     if (isFastLoginError(e)) {
       yield* call(
-        trackSendAARFailure,
+        trackSendAarFailure,
         sendAarFailurePhase,
         "Fast login expiration",
         undefined
@@ -89,7 +89,7 @@ export function* downloadAARAttachmentSaga(
       const problemJson =
         e instanceof SendServerError ? e.aarProblemJson : undefined;
       yield* call(
-        trackSendAARFailure,
+        trackSendAarFailure,
         sendAarFailurePhase,
         reason,
         problemJson
@@ -149,8 +149,8 @@ function* getAttachmentMetadata(
   mandateId: string | undefined,
   action: ActionType<typeof downloadAttachment.request>
 ): Generator<ReduxSagaEffect, string | number> {
-  const sendAARClient = createSendAARClientWithLollipop(apiUrlPrefix, keyInfo);
-  const getAttachmentMetadataFactory = sendAARClient.getNotificationAttachment;
+  const sendAarClient = createSendAarClientWithLollipop(apiUrlPrefix, keyInfo);
+  const getAttachmentMetadataFactory = sendAarClient.getNotificationAttachment;
 
   const urlEncodedBase64AttachmentUrl = encodeAttachmentUrl(attachmentUrl);
 
