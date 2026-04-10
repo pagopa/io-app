@@ -53,7 +53,24 @@ export const getIssuerDynamicErrorBottomSheetContentConfig = (
     };
   }
 
-  switch (status) {
+  if (status === "expired") {
+    return {
+      actionMode: "updateAndRemove",
+      showDrivingLicenseExtraContent: true
+    };
+  }
+
+  if (shouldShowMdlUpdateDigitalCredential(credential, status)) {
+    return {
+      actionMode: "updateAndRemove",
+      showDrivingLicenseExtraContent: false
+    };
+  }
+
+  return {
+    actionMode: "removeOnly",
+    showDrivingLicenseExtraContent: false
+  };
     case "expired":
       return {
         actionMode: "updateAndRemove",
