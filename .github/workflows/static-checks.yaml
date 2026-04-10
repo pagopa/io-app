@@ -3,6 +3,8 @@ on:
   - pull_request
   - merge_group
   - workflow_call
+permissions:
+  contents: read
 jobs:
   static-checks:
     name: Typescript lint and prettier
@@ -51,6 +53,9 @@ jobs:
     name: Codecov
     runs-on: ubuntu-latest
     environment: dev
+    permissions:
+      contents: read
+      deployments: write
     needs: unit-test
     if: always()
     steps:
