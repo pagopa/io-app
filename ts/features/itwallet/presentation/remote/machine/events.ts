@@ -1,9 +1,13 @@
 import type { DoneActorEvent } from "xstate";
-import { ItwRemoteRequestPayload } from "../utils/itwRemoteTypeUtils.ts";
+import {
+  ItwRemoteFlowType,
+  ItwRemoteRequestPayload
+} from "../utils/itwRemoteTypeUtils.ts";
 
 export type Start = {
   type: "start";
   payload: ItwRemoteRequestPayload;
+  flowType: ItwRemoteFlowType;
 };
 
 export type GoToWalletActivation = {

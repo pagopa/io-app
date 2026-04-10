@@ -6,7 +6,6 @@ import { appReducer } from "../../../../../store/reducers";
 import * as REMOTE_CONFIG from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import * as URL_UTILS from "../../../../../utils/url";
 import PN_ROUTES from "../../../navigation/routes";
 import * as FLOW_MANAGER from "../../hooks/useSendAarFlowManager";
 import * as SELECTORS from "../../store/selectors";
@@ -27,9 +26,6 @@ describe("SendAARTosComponent", () => {
   const mockGoNextState = jest.fn();
   const mockTerminateFlow = jest.fn();
   const mockDispatch = jest.fn();
-  const mockOpenWebUrl = jest
-    .spyOn(URL_UTILS, "openWebUrl")
-    .mockImplementation();
 
   beforeAll(() => {
     jest.spyOn(HOOKS, "useIODispatch").mockImplementation(() => mockDispatch);
@@ -70,16 +66,12 @@ describe("SendAARTosComponent", () => {
     const { toJSON } = renderComponent(qrCodeMock);
     expect(toJSON()).toMatchSnapshot();
   });
-  (["privacy", "tos"] as const).forEach(testId => {
-    it(`should open the ${testId} url on press`, () => {
-      const { getByTestId } = renderComponent(qrCodeMock);
-      const link = getByTestId(testId);
-      expect(mockOpenWebUrl).toHaveBeenCalledTimes(0);
-      fireEvent(link, "press");
-
-      expect(mockOpenWebUrl).toHaveBeenCalledTimes(1);
-      expect(mockOpenWebUrl).toHaveBeenCalledWith(mockPrivacyUrls[testId]);
-    });
+  it("should include privacy and tos URLs in the subtitle", () => {
+    const { getByText } = renderComponent(qrCodeMock);
+    expect(
+      getByText(new RegExp(`\\(${mockPrivacyUrls.privacy}\\)`))
+    ).toBeTruthy();
+    expect(getByText(new RegExp(`\\(${mockPrivacyUrls.tos}\\)`))).toBeTruthy();
   });
 });
 

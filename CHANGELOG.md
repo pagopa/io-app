@@ -2,6 +2,179 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.28.0-rc.6](https://github.com/pagopa/io-app/compare/3.28.0-rc.5...3.28.0-rc.6) (2026-04-09)
+
+
+### Bug Fixes
+
+* [[IOPLT-1755](https://pagopa.atlassian.net/browse/IOPLT-1755)] Fix the incorrect toast message on the language selection screen ([#7993](https://github.com/pagopa/io-app/issues/7993)) ([d01de5b](https://github.com/pagopa/io-app/commit/d01de5b6b3fa97cc56908363f1f2b22722b52a86))
+
+## [3.28.0-rc.5](https://github.com/pagopa/io-app/compare/3.28.0-rc.4...3.28.0-rc.5) (2026-04-08)
+
+
+### Features
+
+* [[IEL-214](https://pagopa.atlassian.net/browse/IEL-214)]added pictogram to SendEngagementComponent ([#7991](https://github.com/pagopa/io-app/issues/7991)) ([b446beb](https://github.com/pagopa/io-app/commit/b446beb1c97f0d52b0f542ab561489d05755086d))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4086](https://pagopa.atlassian.net/browse/SIW-4086)] Add support link and close button to HARDWARE_KEY_INVALID failure screens ([#7976](https://github.com/pagopa/io-app/issues/7976)) ([90a8b67](https://github.com/pagopa/io-app/commit/90a8b67e4a44492ea5e43929f6b12cd49b6cafbd))
+* **IT-Wallet:** [[SIW-4093](https://pagopa.atlassian.net/browse/SIW-4093)] Add WALLET_ADD_START event for education_degree ([#7996](https://github.com/pagopa/io-app/issues/7996)) ([c42d927](https://github.com/pagopa/io-app/commit/c42d927d2cee473d37dae6750fb41103d98f585f))
+* **IT-Wallet:** [[SIW-4121](https://pagopa.atlassian.net/browse/SIW-4121),[SIW-4127](https://pagopa.atlassian.net/browse/SIW-4127),[SIW-4234](https://pagopa.atlassian.net/browse/SIW-4234)] Update recommended badge and icon for Documenti su IO and IT-Wallet ([#7995](https://github.com/pagopa/io-app/issues/7995)) ([4970e17](https://github.com/pagopa/io-app/commit/4970e17ae49c38a2c84dd0bd5d9cd3bd32404f8e))
+
+
+### Chores
+
+* [[IEL-401](https://pagopa.atlassian.net/browse/IEL-401)] SEND change aar feedback banner color and title ([#7986](https://github.com/pagopa/io-app/issues/7986)) ([39489a3](https://github.com/pagopa/io-app/commit/39489a30100dc6a83f047ad99f7e4d92177201c3))
+* [[IOPLT-1739](https://pagopa.atlassian.net/browse/IOPLT-1739)] Migrate to the new `eslint` flat config (v9) ([#7974](https://github.com/pagopa/io-app/issues/7974)) ([edc98d4](https://github.com/pagopa/io-app/commit/edc98d416ac167f058fb7acbdd75aaba67cc921f))
+
+## [3.28.0-rc.4](https://github.com/pagopa/io-app/compare/3.28.0-rc.3...3.28.0-rc.4) (2026-04-07)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-3291](https://pagopa.atlassian.net/browse/SIW-3291),[SIW-3292](https://pagopa.atlassian.net/browse/SIW-3292),[SIW-3394](https://pagopa.atlassian.net/browse/SIW-3394)] Implementation of ANIST credentials ([#7872](https://github.com/pagopa/io-app/issues/7872)) ([efabf3f](https://github.com/pagopa/io-app/commit/efabf3f58268f72c017db1164e6373f33e0908d0))
+* [[IEL-272](https://pagopa.atlassian.net/browse/IEL-272)] Add credit card announcement for screen readers ([#7979](https://github.com/pagopa/io-app/issues/7979)) ([fe5a010](https://github.com/pagopa/io-app/commit/fe5a010c5858ea416c788ccc5591fe467563b5d5))
+
+## [3.28.0-rc.3](https://github.com/pagopa/io-app/compare/3.28.0-rc.2...3.28.0-rc.3) (2026-04-03)
+
+
+### Features
+
+* [[IEL-255](https://pagopa.atlassian.net/browse/IEL-255)] Add MP event `IO_UNIVERSAL_APP_LINK` ([#7978](https://github.com/pagopa/io-app/issues/7978)) ([1b6e966](https://github.com/pagopa/io-app/commit/1b6e96663a3b68f15021f57674333f688397406e))
+* [[IEL-284](https://pagopa.atlassian.net/browse/IEL-284)] added remaining MP events to the FCI flow  ([#7981](https://github.com/pagopa/io-app/issues/7981)) ([60353d6](https://github.com/pagopa/io-app/commit/60353d6373ea41480153478ec51bdfe034c4cede))
+* **IT-Wallet:** [[SIW-4016](https://pagopa.atlassian.net/browse/SIW-4016)] Unique QR Code screen ([#7945](https://github.com/pagopa/io-app/issues/7945)) ([68f8ed8](https://github.com/pagopa/io-app/commit/68f8ed88cf817d1c34cb6d09f5e7dabe31ae1800))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4091](https://pagopa.atlassian.net/browse/SIW-4091)] legacy SD-JWT credentials decode ([#7987](https://github.com/pagopa/io-app/issues/7987)) ([bd5415e](https://github.com/pagopa/io-app/commit/bd5415e6e5642f30104655d5a5eabea73c5c9758))
+
+
+### Chores
+
+* **release:** 3.27.1-rc.0 ([#7990](https://github.com/pagopa/io-app/issues/7990)) ([a15c1ad](https://github.com/pagopa/io-app/commit/a15c1add43fec1136325eee945061c5c75f4a887))
+* [[IOAPPX-503](https://pagopa.atlassian.net/browse/IOAPPX-503)] Rename workflows ([#7717](https://github.com/pagopa/io-app/issues/7717)) ([ba72941](https://github.com/pagopa/io-app/commit/ba729410ea1673d787c113d4ffe80eda6afdf91e))
+
+## [3.28.0-rc.2](https://github.com/pagopa/io-app/compare/3.28.0-rc.1...3.28.0-rc.2) (2026-04-02)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-3955](https://pagopa.atlassian.net/browse/SIW-3955)] new KO no NFC fallback cases ([#7930](https://github.com/pagopa/io-app/issues/7930)) ([28b5352](https://github.com/pagopa/io-app/commit/28b53528d6ef1ba611ee00cd8a2d268c2e8057d7))
+* **IT-Wallet:** [[SIW-3984](https://pagopa.atlassian.net/browse/SIW-3984)] Refinement tracking ITW activation flow ([#7982](https://github.com/pagopa/io-app/issues/7982)) ([3927f31](https://github.com/pagopa/io-app/commit/3927f31ca81e0c8c9dfede3aa4f4cf193f7f7fbb))
+
+
+### Chores
+
+* [[IOCOM-3012](https://pagopa.atlassian.net/browse/IOCOM-3012)] notification platform registration update ([#7968](https://github.com/pagopa/io-app/issues/7968)) ([d54db02](https://github.com/pagopa/io-app/commit/d54db02290f65164b30481767e1a3f9e77a6b86f))
+* **IT-Wallet:** [[SIW-3583](https://pagopa.atlassian.net/browse/SIW-3583)] Update identification methods screen UI ([#7971](https://github.com/pagopa/io-app/issues/7971)) ([07fa353](https://github.com/pagopa/io-app/commit/07fa353406856369963db8258c681cdb270f6c2e))
+* **IT-Wallet:** [[SIW-3869](https://pagopa.atlassian.net/browse/SIW-3869)] Allow status assertion retry and reissuing of credentials with unknown status ([#7958](https://github.com/pagopa/io-app/issues/7958)) ([952a371](https://github.com/pagopa/io-app/commit/952a37115ad42a576547055add6ad6c29af4f6b5))
+
+## [3.28.0-rc.1](https://github.com/pagopa/io-app/compare/3.28.0-rc.0...3.28.0-rc.1) (2026-04-01)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-4020](https://pagopa.atlassian.net/browse/SIW-4020),[SIW-4026](https://pagopa.atlassian.net/browse/SIW-4026)] New reactivation banner for ITW ([#7940](https://github.com/pagopa/io-app/issues/7940)) ([c41f481](https://github.com/pagopa/io-app/commit/c41f481fe63c32a7bd70e339d9511521cb4ebca6))
+
+
+### Chores
+
+* [[IOPID-3874](https://pagopa.atlassian.net/browse/IOPID-3874)] Improve error handling in `handleResponse` utility ([#7970](https://github.com/pagopa/io-app/issues/7970)) ([b7f9282](https://github.com/pagopa/io-app/commit/b7f92827af47ab5484e05c824d3921d83be7a7ad))
+* [[IOPLT-1704](https://pagopa.atlassian.net/browse/IOPLT-1704)] Replace the legacy content formatting with the new `IOMarkdownLite` and `IOMarkdown` ([#7946](https://github.com/pagopa/io-app/issues/7946)) ([26fb460](https://github.com/pagopa/io-app/commit/26fb4604b11108e641b5c199013d7757e720e796))
+
+## [3.28.0-rc.0](https://github.com/pagopa/io-app/compare/3.27.0-rc.9...3.28.0-rc.0) (2026-03-31)
+
+## [3.27.1-rc.0](https://github.com/pagopa/io-app/compare/3.27.0-rc.6...3.27.1-rc.0) (2026-04-03)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4091](https://pagopa.atlassian.net/browse/SIW-4091)] legacy SD-JWT credentials decode ([#7987](https://github.com/pagopa/io-app/issues/7987)) ([e97ff54](https://github.com/pagopa/io-app/commit/e97ff5443a63e7f2a2e250f4e315c1e41e0b92c4))
+
+
+### Chores
+
+* [[IOAPPX-503](https://pagopa.atlassian.net/browse/IOAPPX-503)] Rename workflows ([#7717](https://github.com/pagopa/io-app/issues/7717)) ([68b12c3](https://github.com/pagopa/io-app/commit/68b12c3eafdc9d9526dded4699bef07579d24a21))
+* update Android versionCode ([0de9530](https://github.com/pagopa/io-app/commit/0de95304d32e47807308fab897c65f8ef4978b91))
+
+## [3.27.0-rc.9](https://github.com/pagopa/io-app/compare/3.27.0-rc.8...3.27.0-rc.9) (2026-03-30)
+
+
+### Chores
+
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Adjust `Podfile` for Xcode 26.4 compatibility ([#7967](https://github.com/pagopa/io-app/issues/7967)) ([5a02ff0](https://github.com/pagopa/io-app/commit/5a02ff0e11cf828435bfec95d26d5b800583aeae))
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Pin yarn version ([#7949](https://github.com/pagopa/io-app/issues/7949)) ([4bba558](https://github.com/pagopa/io-app/commit/4bba5582a99d51bd4c19ca5d35c17b808bfc2189))
+* **IT-Wallet:** [[SIW-4079](https://pagopa.atlassian.net/browse/SIW-4079)] Allow switching IT-Wallet specs in playground ([#7963](https://github.com/pagopa/io-app/issues/7963)) ([040460e](https://github.com/pagopa/io-app/commit/040460eabc1a77f8174c86771708d4f6fe019992))
+
+## [3.27.0-rc.8](https://github.com/pagopa/io-app/compare/3.27.0-rc.7...3.27.0-rc.8) (2026-03-27)
+
+
+### Chores
+
+* [[IEL-223](https://pagopa.atlassian.net/browse/IEL-223)] Replaced useIOStore with useIOSelector for SendAARMessageDetailBottomSheetComponent ([#7961](https://github.com/pagopa/io-app/issues/7961)) ([ccc6ae8](https://github.com/pagopa/io-app/commit/ccc6ae8661250e10a08fdfd2f3a7048a77a0516d))
+* [[IOPLT-1724](https://pagopa.atlassian.net/browse/IOPLT-1724)] Use `FlatList` instead of `map` to render main icon set ([#7962](https://github.com/pagopa/io-app/issues/7962)) ([dc595e5](https://github.com/pagopa/io-app/commit/dc595e573e0fa2bb571f47010d96554d81832149))
+
+## [3.27.0-rc.7](https://github.com/pagopa/io-app/compare/3.27.0-rc.6...3.27.0-rc.7) (2026-03-26)
+
+
+### Bug Fixes
+
+* [[IOPLT-1725](https://pagopa.atlassian.net/browse/IOPLT-1725)] Restore assets in the local env of the DS section ([#7964](https://github.com/pagopa/io-app/issues/7964)) ([052ea3f](https://github.com/pagopa/io-app/commit/052ea3fd2e0b7a0dd0997fd782c46864e9d85a51))
+
+## [3.27.0-rc.6](https://github.com/pagopa/io-app/compare/3.27.0-rc.5...3.27.0-rc.6) (2026-03-26)
+
+
+### Features
+
+* [[IEL-253](https://pagopa.atlassian.net/browse/IEL-253)] add feedback survey banner to SEND notifcation AAR (delegate) flow ([#7956](https://github.com/pagopa/io-app/issues/7956)) ([364ae0d](https://github.com/pagopa/io-app/commit/364ae0d4161069f2030364184c907651806be3c2))
+
+## [3.27.0-rc.5](https://github.com/pagopa/io-app/compare/3.27.0-rc.4...3.27.0-rc.5) (2026-03-25)
+
+
+### Bug Fixes
+
+* [[IEL-230](https://pagopa.atlassian.net/browse/IEL-230)] Managed bottom margin for AAR message details with pay button hidden ([#7955](https://github.com/pagopa/io-app/issues/7955)) ([5b69736](https://github.com/pagopa/io-app/commit/5b697368a2523ad659287095425cd534a0bf9378))
+
+
+### Chores
+
+* [[IEL-117](https://pagopa.atlassian.net/browse/IEL-117)] Add new MP tracking on FCI flow ([#7935](https://github.com/pagopa/io-app/issues/7935)) ([39283f4](https://github.com/pagopa/io-app/commit/39283f46cbe5a2fcb57b3172618bb5ed2ae2385a)), closes [/#diff-578d07a01bfa89c6d7133e46f1c8b76ec7e6b1473474eb9e64457f43e69619bdR18-R57](https://github.com/pagopa///issues/diff-578d07a01bfa89c6d7133e46f1c8b76ec7e6b1473474eb9e64457f43e69619bdR18-R57) [/#diff-578d07a01bfa89c6d7133e46f1c8b76ec7e6b1473474eb9e64457f43e69619bdR72-R129](https://github.com/pagopa///issues/diff-578d07a01bfa89c6d7133e46f1c8b76ec7e6b1473474eb9e64457f43e69619bdR72-R129) [/#diff-578d07a01bfa89c6d7133e46f1c8b76ec7e6b1473474eb9e64457f43e69619bdR208-R240](https://github.com/pagopa///issues/diff-578d07a01bfa89c6d7133e46f1c8b76ec7e6b1473474eb9e64457f43e69619bdR208-R240) [/#diff-1f6aa041d4dbc422755a5225d9dd1455ac29221608f2947e4fe217dcd1fc0b17L6-R13](https://github.com/pagopa///issues/diff-1f6aa041d4dbc422755a5225d9dd1455ac29221608f2947e4fe217dcd1fc0b17L6-R13) [/#diff-1f6aa041d4dbc422755a5225d9dd1455ac29221608f2947e4fe217dcd1fc0b17R39](https://github.com/pagopa///issues/diff-1f6aa041d4dbc422755a5225d9dd1455ac29221608f2947e4fe217dcd1fc0b17R39) [/#diff-1f6aa041d4dbc422755a5225d9dd1455ac29221608f2947e4fe217dcd1fc0b17R59](https://github.com/pagopa///issues/diff-1f6aa041d4dbc422755a5225d9dd1455ac29221608f2947e4fe217dcd1fc0b17R59) [/#diff-1f6aa041d4dbc422755a5225d9dd1455ac29221608f2947e4fe217dcd1fc0b17R70](https://github.com/pagopa///issues/diff-1f6aa041d4dbc422755a5225d9dd1455ac29221608f2947e4fe217dcd1fc0b17R70) [/#diff-1f6aa041d4dbc422755a5225d9dd1455ac29221608f2947e4fe217dcd1fc0b17R81](https://github.com/pagopa///issues/diff-1f6aa041d4dbc422755a5225d9dd1455ac29221608f2947e4fe217dcd1fc0b17R81) [/#diff-1f6aa041d4dbc422755a5225d9dd1455ac29221608f2947e4fe217dcd1fc0b17R93](https://github.com/pagopa///issues/diff-1f6aa041d4dbc422755a5225d9dd1455ac29221608f2947e4fe217dcd1fc0b17R93) [/#diff-1f6aa041d4dbc422755a5225d9dd1455ac29221608f2947e4fe217dcd1fc0b17R105-R110](https://github.com/pagopa///issues/diff-1f6aa041d4dbc422755a5225d9dd1455ac29221608f2947e4fe217dcd1fc0b17R105-R110) [/#diff-85b287c101b3a9870a696d123804753206854f526f15c6f3f53f7708c269524aL10-R15](https://github.com/pagopa///issues/diff-85b287c101b3a9870a696d123804753206854f526f15c6f3f53f7708c269524aL10-R15) [/#diff-85b287c101b3a9870a696d123804753206854f526f15c6f3f53f7708c269524aR37](https://github.com/pagopa///issues/diff-85b287c101b3a9870a696d123804753206854f526f15c6f3f53f7708c269524aR37) [/#diff-85b287c101b3a9870a696d123804753206854f526f15c6f3f53f7708c269524aR49](https://github.com/pagopa///issues/diff-85b287c101b3a9870a696d123804753206854f526f15c6f3f53f7708c269524aR49) [/#diff-85b287c101b3a9870a696d123804753206854f526f15c6f3f53f7708c269524aL62-R73](https://github.com/pagopa///issues/diff-85b287c101b3a9870a696d123804753206854f526f15c6f3f53f7708c269524aL62-R73) [/#diff-85b287c101b3a9870a696d123804753206854f526f15c6f3f53f7708c269524aR89-R93](https://github.com/pagopa///issues/diff-85b287c101b3a9870a696d123804753206854f526f15c6f3f53f7708c269524aR89-R93) [/#diff-1f6aa041d4dbc422755a5225d9dd1455ac29221608f2947e4fe217dcd1fc0b17R39](https://github.com/pagopa///issues/diff-1f6aa041d4dbc422755a5225d9dd1455ac29221608f2947e4fe217dcd1fc0b17R39) [/#diff-1f6aa041d4dbc422755a5225d9dd1455ac29221608f2947e4fe217dcd1fc0b17R59](https://github.com/pagopa///issues/diff-1f6aa041d4dbc422755a5225d9dd1455ac29221608f2947e4fe217dcd1fc0b17R59) [/#diff-1f6aa041d4dbc422755a5225d9dd1455ac29221608f2947e4fe217dcd1fc0b17R70](https://github.com/pagopa///issues/diff-1f6aa041d4dbc422755a5225d9dd1455ac29221608f2947e4fe217dcd1fc0b17R70) [/#diff-1f6aa041d4dbc422755a5225d9dd1455ac29221608f2947e4fe217dcd1fc0b17R81](https://github.com/pagopa///issues/diff-1f6aa041d4dbc422755a5225d9dd1455ac29221608f2947e4fe217dcd1fc0b17R81) [/#diff-1f6aa041d4dbc422755a5225d9dd1455ac29221608f2947e4fe217dcd1fc0b17R93](https://github.com/pagopa///issues/diff-1f6aa041d4dbc422755a5225d9dd1455ac29221608f2947e4fe217dcd1fc0b17R93) [/#diff-1f6aa041d4dbc422755a5225d9dd1455ac29221608f2947e4fe217dcd1fc0b17R105-R110](https://github.com/pagopa///issues/diff-1f6aa041d4dbc422755a5225d9dd1455ac29221608f2947e4fe217dcd1fc0b17R105-R110) [/#diff-85b287c101b3a9870a696d123804753206854f526f15c6f3f53f7708c269524aR37](https://github.com/pagopa///issues/diff-85b287c101b3a9870a696d123804753206854f526f15c6f3f53f7708c269524aR37) [/#diff-85b287c101b3a9870a696d123804753206854f526f15c6f3f53f7708c269524aR49](https://github.com/pagopa///issues/diff-85b287c101b3a9870a696d123804753206854f526f15c6f3f53f7708c269524aR49) [/#diff-85b287c101b3a9870a696d123804753206854f526f15c6f3f53f7708c269524aR89-R93](https://github.com/pagopa///issues/diff-85b287c101b3a9870a696d123804753206854f526f15c6f3f53f7708c269524aR89-R93) [/#diff-caa02fa9a2ba17ac3ed7eec32e22df6db3eecb966f617e8e772ba0df27749ba4R28](https://github.com/pagopa///issues/diff-caa02fa9a2ba17ac3ed7eec32e22df6db3eecb966f617e8e772ba0df27749ba4R28) [/#diff-caa02fa9a2ba17ac3ed7eec32e22df6db3eecb966f617e8e772ba0df27749ba4L66-R69](https://github.com/pagopa///issues/diff-caa02fa9a2ba17ac3ed7eec32e22df6db3eecb966f617e8e772ba0df27749ba4L66-R69) [/#diff-caa02fa9a2ba17ac3ed7eec32e22df6db3eecb966f617e8e772ba0df27749ba4L79-R100](https://github.com/pagopa///issues/diff-caa02fa9a2ba17ac3ed7eec32e22df6db3eecb966f617e8e772ba0df27749ba4L79-R100) [/#diff-caa02fa9a2ba17ac3ed7eec32e22df6db3eecb966f617e8e772ba0df27749ba4L97-R117](https://github.com/pagopa///issues/diff-caa02fa9a2ba17ac3ed7eec32e22df6db3eecb966f617e8e772ba0df27749ba4L97-R117) [/#diff-22964a5c3dd572fad596fd7a73380bd73b6dc65bb5708977c3ed9e2e819718b6R38-L39](https://github.com/pagopa///issues/diff-22964a5c3dd572fad596fd7a73380bd73b6dc65bb5708977c3ed9e2e819718b6R38-L39) [/#diff-22964a5c3dd572fad596fd7a73380bd73b6dc65bb5708977c3ed9e2e819718b6L48-R49](https://github.com/pagopa///issues/diff-22964a5c3dd572fad596fd7a73380bd73b6dc65bb5708977c3ed9e2e819718b6L48-R49) [/#diff-22964a5c3dd572fad596fd7a73380bd73b6dc65bb5708977c3ed9e2e819718b6R80-R92](https://github.com/pagopa///issues/diff-22964a5c3dd572fad596fd7a73380bd73b6dc65bb5708977c3ed9e2e819718b6R80-R92) [/#diff-3b5804f9dc57861be248091441b9d0ed0b3a82b6d81d0313c293977dadf1c9e4L55-R69](https://github.com/pagopa///issues/diff-3b5804f9dc57861be248091441b9d0ed0b3a82b6d81d0313c293977dadf1c9e4L55-R69) [/#diff-3b5804f9dc57861be248091441b9d0ed0b3a82b6d81d0313c293977dadf1c9e4R143-R144](https://github.com/pagopa///issues/diff-3b5804f9dc57861be248091441b9d0ed0b3a82b6d81d0313c293977dadf1c9e4R143-R144) [/#diff-631d9265c886b204154c839ec89be5851f616bc9e659b5fdc6fb57f62932397bL13-R14](https://github.com/pagopa///issues/diff-631d9265c886b204154c839ec89be5851f616bc9e659b5fdc6fb57f62932397bL13-R14) [/#diff-631d9265c886b204154c839ec89be5851f616bc9e659b5fdc6fb57f62932397bR36-R39](https://github.com/pagopa///issues/diff-631d9265c886b204154c839ec89be5851f616bc9e659b5fdc6fb57f62932397bR36-R39)
+* [[IOPLT-1547](https://pagopa.atlassian.net/browse/IOPLT-1547)] Switch the endpoint of CDN to the new domain ([#7944](https://github.com/pagopa/io-app/issues/7944)) ([7de4c26](https://github.com/pagopa/io-app/commit/7de4c26e2ec00264ec7de0946a235da05414fd02))
+
+## [3.27.0-rc.4](https://github.com/pagopa/io-app/compare/3.27.0-rc.3...3.27.0-rc.4) (2026-03-23)
+
+## [3.27.0-rc.3](https://github.com/pagopa/io-app/compare/3.27.0-rc.2...3.27.0-rc.3) (2026-03-23)
+
+
+### Features
+
+* **IT Wallet:** [[SIW-3953](https://pagopa.atlassian.net/browse/SIW-3953)] new KO no CIE fallback cases ([#7919](https://github.com/pagopa/io-app/issues/7919)) ([7a61b4b](https://github.com/pagopa/io-app/commit/7a61b4bac2a48a3e514332eadba396c2c8b933ad))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4014](https://pagopa.atlassian.net/browse/SIW-4014)] Handle cta in `ItwRemoteAuthResponseScreen` ([#7937](https://github.com/pagopa/io-app/issues/7937)) ([b227116](https://github.com/pagopa/io-app/commit/b2271164a431659e619847a65803c79ac8797fbe))
+
+
+### Chores
+
+* [[IOPLT-0000](https://pagopa.atlassian.net/browse/IOPLT-0000)] Removes not necessary android permission for expo-screen-capture and patches to fix iOS black screen blocking UI ([#7952](https://github.com/pagopa/io-app/issues/7952)) ([12bf27e](https://github.com/pagopa/io-app/commit/12bf27eed53a2841d4ef0ddb67fe7b4aba76f6ad))
+
+## [3.27.0-rc.2](https://github.com/pagopa/io-app/compare/3.27.0-rc.1...3.27.0-rc.2) (2026-03-20)
+
+
+### Features
+
+* [[IOPLT-1572](https://pagopa.atlassian.net/browse/IOPLT-1572)] Adds expo-modules support and install expo-screen-capture ([#7840](https://github.com/pagopa/io-app/issues/7840)) ([ac74742](https://github.com/pagopa/io-app/commit/ac74742afdda720d913fda3f1519984adc0dcd2b))
+
+
+### Chores
+
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Update session manager version ([#7947](https://github.com/pagopa/io-app/issues/7947)) ([865e16c](https://github.com/pagopa/io-app/commit/865e16c69ce1edfc14585b5e26940eaf2e616fd1))
+
 ## [3.27.0-rc.1](https://github.com/pagopa/io-app/compare/3.27.0-rc.0...3.27.0-rc.1) (2026-03-18)
 
 

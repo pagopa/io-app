@@ -88,8 +88,8 @@ export function formatDateAsLocal(
   return extendedYear
     ? format(date, dateFormat) + "/" + format(date, "YYYY")
     : includeYear
-    ? format(date, dateFormat) + "/" + format(date, "YY")
-    : format(date, dateFormat);
+      ? format(date, dateFormat) + "/" + format(date, "YY")
+      : format(date, dateFormat);
 }
 
 export function format(
@@ -230,8 +230,8 @@ export const getExpireStatus = (date: Date): ExpireStatus => {
   return remainingMilliseconds > 1000 * 60 * 60 * 24 * 7
     ? "VALID"
     : remainingMilliseconds > 0
-    ? "EXPIRING"
-    : "EXPIRED";
+      ? "EXPIRING"
+      : "EXPIRED";
 };
 
 /*

@@ -1,10 +1,11 @@
-name: Canary release
+name: Publish app canary
 on:
   workflow_dispatch:
 jobs:
   run-static-checks:
-    uses: ./.github/workflows/staticcheck.yaml
+    uses: ./.github/workflows/static-checks.yaml
   prepare-canary-release:
+    name: Prepare canary release
     needs: run-static-checks
     runs-on: ubuntu-24.04
     outputs:
@@ -52,6 +53,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release-android:
+    name: Release Android app on Play Store
     needs: prepare-canary-release
     environment: canary
     runs-on: ubuntu-24.04
@@ -100,7 +102,6 @@ jobs:
           cd android && bundle exec fastlane alpha_canary
         shell: bash
         env:
-          RUBYOPT: '-rostruct' # TODO: Remove when https://github.com/fastlane/fastlane/pull/21950 gets released
           ENCODED_IOAPP_GOOGLE_SERVICES_JSON_FILE: ${{secrets.ENCODED_IOAPP_GOOGLE_SERVICES_JSON_FILE}}
           ENCODED_IOAPP_JSON_KEY_FILE: ${{secrets.ENCODED_IOAPP_JSON_KEY_FILE}}
           ENCODED_IO_APP_RELEASE_KEYSTORE: ${{secrets.ENCODED_IO_APP_RELEASE_KEYSTORE}}
@@ -119,7 +120,6 @@ jobs:
           echo "VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
           bundle exec fastlane download_canary_apk
         env:
-          RUBYOPT: '-rostruct' # TODO: Remove when https://github.com/fastlane/fastlane/pull/21950 gets released
           ENCODED_IOAPP_JSON_KEY_FILE: ${{ secrets.ENCODED_IOAPP_JSON_KEY_FILE }}          
           VERSION_CODE: ${{ env.VERSION_CODE }}
       - id: upload-universal-apk          
@@ -144,6 +144,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release-ios:
+    name: Release iOS app on App Store
     needs: prepare-canary-release
     environment: canary
     runs-on: macos-26-xlarge
@@ -196,14 +197,12 @@ jobs:
         env:
           SSH_DEPLOY_KEY: ${{secrets.SSH_CERTS_DEPLOY_KEY}}
       - id: build-upload-app-store
-        name: Build & submit to App store
         run: |
           cd ios
           bundle exec fastlane canary_ci_testflight
         env:
           LC_ALL: en_US.UTF-8
           LANG: en_US.UTF-8
-          RUBYOPT: '-rostruct' # TODO: Remove when https://github.com/fastlane/fastlane/pull/21950 gets released
           APP_STORE_API_KEY_ID: ${{secrets.APP_STORE_API_KEY_ID}}
           APP_STORE_API_PRIVATE_KEY: ${{secrets.APP_STORE_API_PRIVATE_KEY}}
           APP_STORE_API_KEY_ISSUER_ID: ${{secrets.APP_STORE_API_KEY_ISSUER_ID}}
@@ -234,6 +233,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   notify-new-version:
+    name: Notifiy new version on Slack
     runs-on: ubuntu-24.04
     environment: dev
     needs:

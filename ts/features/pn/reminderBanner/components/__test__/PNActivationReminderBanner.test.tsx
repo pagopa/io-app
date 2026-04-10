@@ -13,7 +13,7 @@ import { PNActivationReminderBanner } from "../PNActivationReminderBanner";
 import { renderComponentWithStoreAndNavigationContextForFocus } from "../../../../messages/utils/__tests__/testUtils.test";
 
 jest.mock("rn-qr-generator", () => ({}));
-jest.mock("react-native-screenshot-prevent", () => ({}));
+jest.mock("expo-screen-capture", () => ({}));
 
 describe("pnActivationBanner", () => {
   it("should match snapshot", () => {
@@ -24,7 +24,7 @@ describe("pnActivationBanner", () => {
     const mockNavigate = jest.fn();
     jest
       .spyOn(USEIO, "useIONavigation")
-      .mockImplementation(() => ({ navigate: mockNavigate } as any));
+      .mockImplementation(() => ({ navigate: mockNavigate }) as any);
     const component = renderComponent();
     const banner = component.getByTestId("pn-banner");
     fireEvent.press(banner);

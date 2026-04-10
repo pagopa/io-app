@@ -26,7 +26,7 @@ const mockRNQRGenerator = {
 import "react-native-get-random-values";
 require("@shopify/flash-list/jestSetup");
 jest.mock("rn-qr-generator", () => mockRNQRGenerator);
-jest.mock("react-native-screenshot-prevent", () => ({}));
+jest.mock("expo-screen-capture", () => ({}));
 jest.mock("react-native-haptic-feedback", () => ({
   ...jest.requireActual("react-native-haptic-feedback"),
   trigger: jest.fn()
@@ -130,6 +130,17 @@ jest.mock("@gorhom/bottom-sheet", () => {
 });
 
 jest.mock("@sentry/react-native");
+
+jest.mock("@pagopa/io-app-design-system", () => {
+  const actual = jest.requireActual("@pagopa/io-app-design-system");
+  const React = require("react");
+  const { Text } = require("react-native");
+  return {
+    ...actual,
+    IOMarkdown: ({ content }) => React.createElement(Text, null, content),
+    IOMarkdownLite: ({ content }) => React.createElement(Text, null, content)
+  };
+});
 
 jest.mock("react-native-device-info", () => mockRNDeviceInfo);
 

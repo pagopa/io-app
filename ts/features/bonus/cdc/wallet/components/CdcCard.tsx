@@ -13,11 +13,12 @@ import { StyleSheet, View } from "react-native";
 import WalletCardShape from "../../../../../../img/features/cdc/cdc_wallet_card.svg";
 import DarkModeWalletCardShape from "../../../../../../img/features/cdc/cdc_wallet_card_dark.svg";
 import { CitizenStatus } from "../../../../../../definitions/cdc/CitizenStatus.ts";
+import { contentRepoUrl } from "../../../../../config.ts";
 
 export type CdcCardProps = CitizenStatus;
 
 // TODO: Edit this logo when the organization logo is available
-const CDC_ORGANIZATION_LOGO = `https://assets.cdn.io.pagopa.it/logos/services/01jv4m365chazn5c0fdr62dcvd.png`;
+const CDC_ORGANIZATION_LOGO = `${contentRepoUrl}/logos/services/01jv4m365chazn5c0fdr62dcvd.png`;
 
 /**
  * Component that renders the CdC wallet card in the wallet

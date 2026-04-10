@@ -37,7 +37,6 @@ const getTestState = ({ hasSeen }: TestStateProps): GlobalState => {
 
 const falseTrueArr = [false, true];
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 describe("isPushNotificationsBannerRenderableSelector", () => {
   beforeEach(() => {
     jest.resetAllMocks();

@@ -39,12 +39,12 @@ export const migrationKeyTagFunctional = (
               ({
                 ...state,
                 keyTag: O.none
-              } as PersistedLollipopState),
+              }) as PersistedLollipopState,
             keyTg =>
               ({
                 ...state,
                 keyTag: O.some(keyTg)
-              } as PersistedLollipopState)
+              }) as PersistedLollipopState
           )
         )
     )

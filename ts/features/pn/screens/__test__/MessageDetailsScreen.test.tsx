@@ -76,7 +76,6 @@ describe("MessageDetailsScreen", () => {
     jest.restoreAllMocks();
   });
 
-  // eslint-disable-next-line sonarjs/cognitive-complexity
   sendOpeningSources.forEach(sendOpeningSource => {
     sendUserTypes.forEach(sendUserType => {
       it(`should match the snapshot when there is an error${
