@@ -1,4 +1,3 @@
-import * as E from "fp-ts/Either";
 import { SagaIterator } from "redux-saga";
 import { call, put } from "typed-redux-saga/macro";
 import { ItWalletClient } from "../../api/client.ts";
@@ -18,7 +17,8 @@ export function* handleGetWhitelistedStatus(
     const response = yield* call(client.isFiscalCodeWhitelisted, {
       Bearer: sessionToken
     });
-    if (E.isRight(response) && response.right.status === 200) {
+    // eslint-disable-next-line no-underscore-dangle
+    if (response._tag === "Right" && response.right.status === 200) {
       const { whitelisted } = response.right.value;
       yield* put(itwSetFiscalCodeWhitelisted(whitelisted));
     }
