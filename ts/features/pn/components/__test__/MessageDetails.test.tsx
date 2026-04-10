@@ -48,7 +48,7 @@ describe("MessageDetails component", () => {
     jest.restoreAllMocks();
   });
 
-  describe("isAARMessage logic", () => {
+  describe("isAarMessage logic", () => {
     beforeEach(() => {
       jest.clearAllMocks();
     });

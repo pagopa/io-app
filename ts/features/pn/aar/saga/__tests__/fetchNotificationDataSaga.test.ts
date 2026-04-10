@@ -7,14 +7,14 @@ import { pnMessagingServiceIdSelector } from "../../../../../store/reducers/back
 import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { profileFiscalCodeSelector } from "../../../../settings/common/store/selectors";
-import { trackSendAARFailure } from "../../analytics";
-import { SendAARClient } from "../../api/client";
+import { trackSendAarFailure } from "../../analytics";
+import { SendAarClient } from "../../api/client";
 import {
   populateStoresWithEphemeralAarMessageData,
   setAarFlowState
 } from "../../store/actions";
-import { currentAARFlowData } from "../../store/selectors";
-import { sendAARFlowStates } from "../../utils/stateUtils";
+import { currentAarFlowData } from "../../store/selectors";
+import { sendAarFlowStates } from "../../utils/stateUtils";
 import {
   mockEphemeralAarMessageDataActionPayload,
   sendAarMockStateFactory,
@@ -25,7 +25,7 @@ import { trackPNNotificationLoadSuccess } from "../../../analytics";
 import { getServiceDetails } from "../../../../services/common/saga/getServiceDetails";
 
 const mockCurrentState = {
-  type: sendAARFlowStates.fetchingNotificationData,
+  type: sendAarFlowStates.fetchingNotificationData,
   iun: "IUN123",
   mandateId: "MANDATE123",
   recipientInfo: {
@@ -74,7 +74,7 @@ const mockSendMessage = {
 
 const mockResolvedCall = (resolved: any) =>
   new Promise((res, _reject) => res(resolved)) as unknown as ReturnType<
-    SendAARClient["getAARNotification"]
+    SendAarClient["getAARNotification"]
   >;
 describe("fetchAarDataSaga", () => {
   describe("error paths", () => {
@@ -86,10 +86,10 @@ describe("fetchAarDataSaga", () => {
         fetchingNotificationDataRequestAction
       )
         .next()
-        .select(currentAARFlowData)
+        .select(currentAarFlowData)
         .next(sendAarMockStates[0])
         .call(
-          trackSendAARFailure,
+          trackSendAarFailure,
           "Fetch Notification",
           "Called in wrong state (none)",
           undefined
@@ -111,7 +111,7 @@ describe("fetchAarDataSaga", () => {
         fetchingNotificationDataRequestAction
       )
         .next()
-        .select(currentAARFlowData)
+        .select(currentAarFlowData)
         .next(mockCurrentState)
         .select(isPnTestEnabledSelector)
         .next(true)
@@ -122,7 +122,7 @@ describe("fetchAarDataSaga", () => {
         )
         .next(mockFailure)
         .call(
-          trackSendAARFailure,
+          trackSendAarFailure,
           "Fetch Notification",
           failureReason,
           undefined
@@ -130,7 +130,7 @@ describe("fetchAarDataSaga", () => {
         .next()
         .put(
           setAarFlowState({
-            type: sendAARFlowStates.ko,
+            type: sendAarFlowStates.ko,
             previousState: mockCurrentState,
             debugData: {
               phase: "Fetch Notification",
@@ -166,7 +166,7 @@ describe("fetchAarDataSaga", () => {
         fetchingNotificationDataRequestAction
       )
         .next()
-        .select(currentAARFlowData)
+        .select(currentAarFlowData)
         .next(mockCurrentState)
         .select(isPnTestEnabledSelector)
         .next(true)
@@ -177,7 +177,7 @@ describe("fetchAarDataSaga", () => {
         )
         .next(mockResolvedEither)
         .call(
-          trackSendAARFailure,
+          trackSendAarFailure,
           "Fetch Notification",
           "HTTP request failed (400 400 A detail)",
           mockResolved.value
@@ -185,7 +185,7 @@ describe("fetchAarDataSaga", () => {
         .next()
         .put(
           setAarFlowState({
-            type: sendAARFlowStates.ko,
+            type: sendAarFlowStates.ko,
             previousState: mockCurrentState,
             error: mockResolved.value as unknown as AARProblemJson,
             debugData: {
@@ -217,12 +217,12 @@ describe("fetchAarDataSaga", () => {
         fetchingNotificationDataRequestAction
       )
         .next()
-        .select(currentAARFlowData)
+        .select(currentAarFlowData)
         .next(mockCurrentState)
         .select(isPnTestEnabledSelector)
         .next(true)
         .call(
-          trackSendAARFailure,
+          trackSendAarFailure,
           "Fetch Notification",
           "An error was thrown (fail)",
           undefined
@@ -230,7 +230,7 @@ describe("fetchAarDataSaga", () => {
         .next()
         .put(
           setAarFlowState({
-            type: sendAARFlowStates.ko,
+            type: sendAarFlowStates.ko,
             previousState: mockCurrentState,
             debugData: {
               phase: "Fetch Notification",
@@ -250,7 +250,7 @@ describe("fetchAarDataSaga", () => {
       });
     });
 
-    it("should call trackSendAARFailure with 'Fast login expiration' and stop on 401", () => {
+    it("should call trackSendAarFailure with 'Fast login expiration' and stop on 401", () => {
       const mockResolved = {
         status: 401,
         value: { status: 401, detail: "Unauthorized" }
@@ -267,7 +267,7 @@ describe("fetchAarDataSaga", () => {
         fetchingNotificationDataRequestAction
       )
         .next()
-        .select(currentAARFlowData)
+        .select(currentAarFlowData)
         .next(mockCurrentState)
         .select(isPnTestEnabledSelector)
         .next(true)
@@ -278,7 +278,7 @@ describe("fetchAarDataSaga", () => {
         )
         .next(mockResolvedEither)
         .call(
-          trackSendAARFailure,
+          trackSendAarFailure,
           "Fetch Notification",
           "Fast login expiration",
           undefined
@@ -306,7 +306,7 @@ describe("fetchAarDataSaga", () => {
         fetchingNotificationDataRequestAction
       )
         .next()
-        .select(currentAARFlowData)
+        .select(currentAarFlowData)
         .next(mockCurrentState)
         .select(isPnTestEnabledSelector)
         .next(true)
@@ -323,7 +323,7 @@ describe("fetchAarDataSaga", () => {
         )
         .next(E.left("Unable to retrieve user fiscal code"))
         .call(
-          trackSendAARFailure,
+          trackSendAarFailure,
           "Fetch Notification",
           "An error was thrown (Unable to retrieve user fiscal code)",
           undefined
@@ -331,7 +331,7 @@ describe("fetchAarDataSaga", () => {
         .next()
         .put(
           setAarFlowState({
-            type: sendAARFlowStates.ko,
+            type: sendAarFlowStates.ko,
             previousState: mockCurrentState,
             debugData: {
               phase: "Fetch Notification",
@@ -362,7 +362,7 @@ describe("fetchAarDataSaga", () => {
         fetchingNotificationDataRequestAction
       )
         .next()
-        .select(currentAARFlowData)
+        .select(currentAarFlowData)
         .next(mockCurrentState)
         .select(isPnTestEnabledSelector)
         .next(true)
@@ -382,7 +382,7 @@ describe("fetchAarDataSaga", () => {
         .next()
         .put(
           setAarFlowState({
-            type: sendAARFlowStates.displayingNotificationData,
+            type: sendAarFlowStates.displayingNotificationData,
             notification: mockSendMessage,
             recipientInfo: mockCurrentState.recipientInfo,
             mandateId: mockPayload.mandateId,
