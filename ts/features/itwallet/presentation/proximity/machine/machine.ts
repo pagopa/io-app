@@ -39,7 +39,13 @@ export const itwProximityMachine = setup({
     navigateToClaimsDisclosureScreen: notImplemented,
     navigateToSendDocumentsResponseScreen: notImplemented,
     navigateToWallet: notImplemented,
-    closeProximity: notImplemented
+    closeProximity: notImplemented,
+
+    /**
+     * Analytics
+     */
+
+    trackQrCodeGenerationOutcome: notImplemented
   },
   actors: {
     checkPermissions: fromPromise<boolean, CheckPermissionsInput>(
@@ -274,20 +280,25 @@ export const itwProximityMachine = setup({
       states: {
         Retrying: {
           tags: [ItwPresentationTags.Loading],
-          always: "Starting"
+          always: {
+            target: "Starting",
+            actions: assign(() => ({ failure: undefined }))
+          }
         },
         Starting: {
           tags: [ItwPresentationTags.Loading],
           description: "Start the proximity and generates the QR code string",
           invoke: {
             src: "startEngagement",
+            onDone: {
+              actions: "trackQrCodeGenerationOutcome"
+            },
             onError: {
-              actions: "setFailure"
+              actions: ["setFailure", "trackQrCodeGenerationOutcome"]
             }
           },
           on: {
             retry: {
-              actions: assign(() => ({ failure: undefined })),
               target: "Retrying"
             }
           }
