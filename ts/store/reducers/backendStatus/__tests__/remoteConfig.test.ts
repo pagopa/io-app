@@ -16,10 +16,10 @@ import {
   isPnAppVersionSupportedSelector,
   isPremiumMessagesOptInOutEnabledSelector,
   landingScreenBannerOrderSelector,
-  pnAARQRCodeRegexSelector,
+  pnAarQRCodeRegexSelector,
   pnMessagingServiceIdSelector,
   pnPrivacyUrlsSelector,
-  sendAARDelegateUrlSelector,
+  sendAarDelegateUrlSelector,
   sendAarInAppDelegationUrlSelector,
   sendCustomServiceCenterUrlSelector,
   sendEstimateTimelinesUrlSelector,
@@ -228,7 +228,7 @@ describe("remoteConfig", () => {
             priority_order
           }
         })
-      } as GlobalState);
+      }) as GlobalState;
 
     const some_priorityOrder = ["id1", "id2", "id3"];
     const customNoneStore = {
@@ -681,10 +681,10 @@ describe("fimsServiceIdInCookieDisabledListSelector", () => {
   });
 });
 
-describe("pnAARQRCodeRegexSelector", () => {
+describe("pnAarQRCodeRegexSelector", () => {
   it("should return undefined for 'O.none' remote config", () => {
     const state = { remoteConfig: O.none } as GlobalState;
-    const aarQRCodeRegex = pnAARQRCodeRegexSelector(state);
+    const aarQRCodeRegex = pnAarQRCodeRegexSelector(state);
     expect(aarQRCodeRegex).toBeUndefined();
   });
   it("should return undefined for undefined aarQRCodeRegex", () => {
@@ -693,7 +693,7 @@ describe("pnAARQRCodeRegexSelector", () => {
         pn: {}
       })
     } as GlobalState;
-    const aarQRCodeRegex = pnAARQRCodeRegexSelector(state);
+    const aarQRCodeRegex = pnAarQRCodeRegexSelector(state);
     expect(aarQRCodeRegex).toBeUndefined();
   });
   it("should return value stored in remoteConfig.pn.aarQRCodeRegex", () => {
@@ -704,12 +704,12 @@ describe("pnAARQRCodeRegexSelector", () => {
         }
       })
     } as GlobalState;
-    const aarQRCodeRegex = pnAARQRCodeRegexSelector(state);
+    const aarQRCodeRegex = pnAarQRCodeRegexSelector(state);
     expect(aarQRCodeRegex).toBe("some-regex");
   });
 });
 
-describe("isAARRemoteEnabled", () => {
+describe("isAarRemoteEnabled", () => {
   (
     [
       [
@@ -913,9 +913,9 @@ describe("isAarInAppDelegationRemoteEnabledSelector", () => {
   });
 });
 
-describe("sendAARDelegateUrlSelector", () => {
+describe("sendAarDelegateUrlSelector", () => {
   const delegateUrl = "https://delegate.it";
-  const fallbackSendAARDelegateUrl =
+  const fallbackSendAarDelegateUrl =
     "https://assistenza.notifichedigitali.it/hc/it/articles/32453819931537-Delegare-qualcuno-a-visualizzare-le-tue-notifiche";
 
   const someState = {
@@ -946,11 +946,11 @@ describe("sendAARDelegateUrlSelector", () => {
       input: someState
     },
     {
-      result: fallbackSendAARDelegateUrl,
+      result: fallbackSendAarDelegateUrl,
       input: emptyObjectState
     },
     {
-      result: fallbackSendAARDelegateUrl,
+      result: fallbackSendAarDelegateUrl,
       input: noneState
     }
   ];
@@ -959,7 +959,7 @@ describe("sendAARDelegateUrlSelector", () => {
     it(`should return '${result}' for input remoteConfig : ${JSON.stringify(
       input.remoteConfig
     )}`, () => {
-      const output = sendAARDelegateUrlSelector(input);
+      const output = sendAarDelegateUrlSelector(input);
       expect(output).toEqual(result);
     });
   }

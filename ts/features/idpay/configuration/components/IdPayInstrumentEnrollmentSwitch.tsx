@@ -57,7 +57,7 @@ const IdPayInstrumentEnrollmentSwitch = (
         ({
           text: instrumentStatusLabels[status],
           variant: "default"
-        } as Badge)
+        }) as Badge
     )
   );
 
@@ -81,8 +81,8 @@ const IdPayInstrumentEnrollmentSwitch = (
     CreditCardType.decode(wallet.creditCard?.brand?.toUpperCase()),
     E.map(brand => cardLogoByBrand[brand]),
     E.fold(
-      () => ({ icon: "creditCard" } as ListItemSwitchIconProps),
-      paymentLogo => ({ paymentLogo } as ListItemSwitchIconProps)
+      () => ({ icon: "creditCard" }) as ListItemSwitchIconProps,
+      paymentLogo => ({ paymentLogo }) as ListItemSwitchIconProps
     )
   );
 

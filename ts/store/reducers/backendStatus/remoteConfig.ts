@@ -340,7 +340,7 @@ export const pnFrontendUrlSelector = (state: GlobalState) =>
     O.getOrElse(() => "")
   );
 
-export const pnAARQRCodeRegexSelector = (state: GlobalState) =>
+export const pnAarQRCodeRegexSelector = (state: GlobalState) =>
   pipe(
     state.remoteConfig,
     O.chainNullableK(config => config.pn.aarQRCodeRegex),
@@ -870,14 +870,14 @@ export const caCBannerConfigSelector = (state: GlobalState) =>
     O.toUndefined
   );
 
-const fallbackSendAARDelegateUrl =
+const fallbackSendAarDelegateUrl =
   "https://assistenza.notifichedigitali.it/hc/it/articles/32453819931537-Delegare-qualcuno-a-visualizzare-le-tue-notifiche";
-export const sendAARDelegateUrlSelector = (state: GlobalState) =>
+export const sendAarDelegateUrlSelector = (state: GlobalState) =>
   pipe(
     state,
     remoteConfigSelector,
     O.chainNullableK(config => config.pn.aar?.delegate_url),
-    O.getOrElse(() => fallbackSendAARDelegateUrl)
+    O.getOrElse(() => fallbackSendAarDelegateUrl)
   );
 
 export const sendAarInAppDelegationUrlSelector = (state: GlobalState) => {
@@ -892,7 +892,7 @@ export const sendAarInAppDelegationUrlSelector = (state: GlobalState) => {
       return inAppDelegationUrlOrUndefined;
     }
   }
-  return fallbackSendAARDelegateUrl;
+  return fallbackSendAarDelegateUrl;
 };
 
 export const sendShowAbstractSelector = (state: GlobalState) => {

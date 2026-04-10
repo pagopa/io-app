@@ -61,7 +61,7 @@ describe("UseEngamentScreenFocusLogic", () => {
         ({
           setOptions: testSetOptions,
           popToTop: mockPopToTop
-        } as unknown as navType)
+        }) as unknown as navType
     );
     jest
       .spyOn(NOTIF_UTILS, "openSystemNotificationSettingsScreen")

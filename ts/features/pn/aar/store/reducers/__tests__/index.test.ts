@@ -1,7 +1,7 @@
 import { aarFlowReducer, INITIAL_AAR_FLOW_STATE } from "..";
 import {
-  AARFlowStateName,
-  isValidAARStateTransition
+  AarFlowStateName,
+  isValidAarStateTransition
 } from "../../../utils/stateUtils";
 import {
   sendAarMockStateFactory,
@@ -26,7 +26,7 @@ describe("aarFlowReducer and related functions", () => {
           const actionPayload: TerminateAarFlowPayload = {
             messageId: "test",
             currentFlowState: actionParamFlowState as
-              | AARFlowStateName
+              | AarFlowStateName
               | undefined
           };
           const state = aarFlowReducer(
@@ -53,7 +53,7 @@ describe("aarFlowReducer and related functions", () => {
         const nextState = sendAarMockStateFactory[nextType]();
         const action = setAarFlowState(nextState);
 
-        const shouldAllow = isValidAARStateTransition(
+        const shouldAllow = isValidAarStateTransition(
           currentState.type,
           nextState.type
         );

@@ -9,7 +9,7 @@ import PN_ROUTES from "../../../../navigation/routes";
 import * as FLOW_MANAGER from "../../../hooks/useSendAarFlowManager";
 import * as SELECTORS from "../../../store/selectors";
 import { sendAarMockStateFactory } from "../../../utils/testUtils";
-import { SendAarGenericErrorComponent } from "../../errors/SendAARErrorComponent";
+import { SendAarGenericErrorComponent } from "../../errors/SendAarErrorComponent";
 import * as debugHooks from "../../../../../../hooks/useDebugInfo";
 import * as ANALYTICS from "../../../analytics";
 import { useAarGenericErrorBottomSheet } from "../hooks/useAarGenericErrorBottomSheet";
@@ -23,7 +23,7 @@ const mockUseAarGenericErrorBottomSheet =
 
 const managerSpy = jest.spyOn(FLOW_MANAGER, "useSendAarFlowManager");
 
-describe("SendAARErrorComponent - Full Test Suite", () => {
+describe("SendAarErrorComponent - Full Test Suite", () => {
   const mockGoNextState = jest.fn();
   const mockTerminateFlow = jest.fn();
   const mockPresent = jest.fn();
@@ -38,7 +38,7 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
     }));
 
     jest
-      .spyOn(SELECTORS, "currentAARFlowStateAssistanceErrorCode")
+      .spyOn(SELECTORS, "currentAarFlowStateAssistanceErrorCode")
       .mockReturnValue(assistanceErrorCode);
 
     mockUseAarGenericErrorBottomSheet.mockReturnValue({
@@ -138,7 +138,7 @@ describe("SendAARErrorComponent - Full Test Suite", () => {
       traceId: "traceId-123"
     };
     jest
-      .spyOn(SELECTORS, "currentAARFlowStateErrorDebugInfoSelector")
+      .spyOn(SELECTORS, "currentAarFlowStateErrorDebugInfoSelector")
       .mockImplementation(_state => fakeDebugInfo);
     const spiedOnUseDebugInfo = jest.spyOn(debugHooks, "useDebugInfo");
     const { toJSON } = renderComponent();

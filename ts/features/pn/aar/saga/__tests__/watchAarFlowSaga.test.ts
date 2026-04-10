@@ -4,19 +4,19 @@ import { take } from "typed-redux-saga/macro";
 import { apiUrlPrefix } from "../../../../../config";
 import { KeyInfo } from "../../../../lollipop/utils/crypto";
 import {
-  SendAARClient,
-  createSendAARClientWithLollipop
+  SendAarClient,
+  createSendAarClientWithLollipop
 } from "../../api/client";
 import {
   setAarFlowState,
   terminateAarFlow,
   initiateAarFlow
 } from "../../store/actions";
-import { sendAARFlowStates } from "../../utils/stateUtils";
+import { sendAarFlowStates } from "../../utils/stateUtils";
 import { initiateAarFlowSaga } from "../initiateAarFlowSaga";
 import { fetchAarDataSaga } from "../fetchNotificationDataSaga";
-import { fetchAARQrCodeSaga } from "../fetchQrCodeSaga";
-import { testable, watchAarFlowSaga } from "../watchAARFlowSaga";
+import { fetchAarQrCodeSaga } from "../fetchQrCodeSaga";
+import { testable, watchAarFlowSaga } from "../watchAarFlowSaga";
 import { validateMandateSaga } from "../validateMandateSaga";
 import { isAarInAppDelegationRemoteEnabledSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { createAarMandateSaga } from "../createAarMandateSaga";
@@ -27,7 +27,7 @@ const { aarFlowMasterSaga, raceWithTerminateFlow } = testable as NonNullable<
 const mockSessionToken = "mock-session-token";
 const mockKeyInfo = {} as KeyInfo;
 
-const mockSendAARClient: SendAARClient = {
+const mockSendAarClient: SendAarClient = {
   aarQRCodeCheck: jest.fn(),
   getAARNotification: jest.fn(),
   getNotificationAttachment: jest.fn(),
@@ -43,12 +43,12 @@ describe("watchAarFlowSaga", () => {
   it("should race takeLatest(setAarFlowState) and take(terminateAarFlow)", () => {
     testSaga(watchAarFlowSaga, mockSessionToken, mockKeyInfo)
       .next()
-      .call(createSendAARClientWithLollipop, apiUrlPrefix, mockKeyInfo)
-      .next(mockSendAARClient)
+      .call(createSendAarClientWithLollipop, apiUrlPrefix, mockKeyInfo)
+      .next(mockSendAarClient)
       .takeLatest(
         setAarFlowState,
         raceWithTerminateFlow,
-        mockSendAARClient,
+        mockSendAarClient,
         mockSessionToken
       )
       .next()
@@ -64,15 +64,15 @@ describe("watchAarFlowSaga", () => {
 
     it("should call fetchQrCodeSaga when an updateState action has fetchingQRData as payload", () => {
       const action = setAarFlowState({
-        type: sendAARFlowStates.fetchingQRData,
+        type: sendAarFlowStates.fetchingQRData,
         qrCode
       });
 
-      testSaga(aarFlowMasterSaga, mockSendAARClient, mockSessionToken, action)
+      testSaga(aarFlowMasterSaga, mockSendAarClient, mockSessionToken, action)
         .next()
         .call(
-          fetchAARQrCodeSaga,
-          mockSendAARClient.aarQRCodeCheck,
+          fetchAarQrCodeSaga,
+          mockSendAarClient.aarQRCodeCheck,
           mockSessionToken,
           action
         )
@@ -81,7 +81,7 @@ describe("watchAarFlowSaga", () => {
     });
     it("should call the fetchAarDataSaga when an updateState action has getAARNotification as payload", () => {
       const action = setAarFlowState({
-        type: sendAARFlowStates.fetchingNotificationData,
+        type: sendAarFlowStates.fetchingNotificationData,
         recipientInfo: {
           denomination: "Mario Rossi",
           taxId: "RSSMRA74D22A001Q"
@@ -89,11 +89,11 @@ describe("watchAarFlowSaga", () => {
         iun: "123"
       });
 
-      testSaga(aarFlowMasterSaga, mockSendAARClient, mockSessionToken, action)
+      testSaga(aarFlowMasterSaga, mockSendAarClient, mockSessionToken, action)
         .next()
         .call(
           fetchAarDataSaga,
-          mockSendAARClient.getAARNotification,
+          mockSendAarClient.getAARNotification,
           mockSessionToken,
           action
         )
@@ -103,7 +103,7 @@ describe("watchAarFlowSaga", () => {
 
     it('should call the validateMandateSaga when an updateState action has "validatingMandate" as type', () => {
       const action = setAarFlowState({
-        type: sendAARFlowStates.validatingMandate,
+        type: sendAarFlowStates.validatingMandate,
         recipientInfo: {
           denomination: "Mario Rossi",
           taxId: "RSSMRA74D22A001Q"
@@ -124,11 +124,11 @@ describe("watchAarFlowSaga", () => {
         }
       });
 
-      testSaga(aarFlowMasterSaga, mockSendAARClient, mockSessionToken, action)
+      testSaga(aarFlowMasterSaga, mockSendAarClient, mockSessionToken, action)
         .next()
         .call(
           validateMandateSaga,
-          mockSendAARClient.acceptAARMandate,
+          mockSendAarClient.acceptAARMandate,
           mockSessionToken,
           action
         )
@@ -141,13 +141,13 @@ describe("watchAarFlowSaga", () => {
         type: "unknownState" as any
       });
 
-      testSaga(aarFlowMasterSaga, mockSendAARClient, mockSessionToken, action)
+      testSaga(aarFlowMasterSaga, mockSendAarClient, mockSessionToken, action)
         .next()
         .isDone();
     });
     it("should call createAarMandateSaga when an updateState action has creatingMandate as payload", () => {
       const action = setAarFlowState({
-        type: sendAARFlowStates.creatingMandate,
+        type: sendAarFlowStates.creatingMandate,
         recipientInfo: {
           denomination: "Mario Rossi",
           taxId: "RSSMRA74D22A001Q"
@@ -155,11 +155,11 @@ describe("watchAarFlowSaga", () => {
         iun: "123",
         qrCode: "TESTETST"
       });
-      testSaga(aarFlowMasterSaga, mockSendAARClient, mockSessionToken, action)
+      testSaga(aarFlowMasterSaga, mockSendAarClient, mockSessionToken, action)
         .next()
         .call(
           createAarMandateSaga,
-          mockSendAARClient.createAARMandate,
+          mockSendAarClient.createAARMandate,
           mockSessionToken,
           action
         )
@@ -169,13 +169,13 @@ describe("watchAarFlowSaga", () => {
   });
   describe("raceWithTerminateFlow", () => {
     const action = setAarFlowState({
-      type: sendAARFlowStates.fetchingQRData,
+      type: sendAarFlowStates.fetchingQRData,
       qrCode: "TESTETST"
     });
     it("should race aarFlowMasterSaga and take terminateAarFlow", () => {
       const saga = testSaga(
         raceWithTerminateFlow,
-        mockSendAARClient,
+        mockSendAarClient,
         mockSessionToken,
         action
       )
@@ -183,7 +183,7 @@ describe("watchAarFlowSaga", () => {
         .race({
           task: call(
             aarFlowMasterSaga,
-            mockSendAARClient,
+            mockSendAarClient,
             mockSessionToken,
             action
           ),
