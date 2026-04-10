@@ -380,12 +380,36 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                         testID="FeaturedInstitutionCardTestID-pressable"
                       >
                         <View
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "transform": [
+                                  {
+                                    "scale": 1,
+                                  },
+                                ],
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "flexGrow": 1,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
                                 "transform": [
                                   {
-                                    "scale": undefined,
+                                    "scale": 1,
                                   },
                                 ],
                               },
@@ -473,7 +497,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                                         [
                                           {
                                             "height": 180,
-                                            "uri": "https://assets.cdn.io.pagopa.it/logos/organizations/1.png",
+                                            "uri": "https://assets.io.pagopa.it/logos/organizations/1.png",
                                             "width": 180,
                                           },
                                         ]
@@ -917,12 +941,36 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                         testID="FeaturedInstitutionCardTestID-pressable"
                       >
                         <View
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "transform": [
+                                  {
+                                    "scale": 1,
+                                  },
+                                ],
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "flexGrow": 1,
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
                                 "transform": [
                                   {
-                                    "scale": undefined,
+                                    "scale": 1,
                                   },
                                 ],
                               },
@@ -1013,7 +1061,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                                         [
                                           {
                                             "height": 180,
-                                            "uri": "https://assets.cdn.io.pagopa.it/logos/organizations/1.png",
+                                            "uri": "https://assets.io.pagopa.it/logos/organizations/1.png",
                                             "width": 180,
                                           },
                                         ]

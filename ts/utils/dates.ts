@@ -8,7 +8,7 @@ import * as O from "fp-ts/lib/Option";
 import * as t from "io-ts";
 import { Errors } from "io-ts";
 import I18n from "i18next";
-import { Locales } from "../../locales/locales";
+import { Locales } from "../i18n";
 import { CreditCardExpirationMonth, CreditCardExpirationYear } from "./input";
 import { getLocalePrimary } from "./locale";
 import { NumberFromString } from "./number";
@@ -82,8 +82,8 @@ export function formatDateAsLocal(
   return extendedYear
     ? format(date, dateFormat) + "/" + format(date, "YYYY")
     : includeYear
-    ? format(date, dateFormat) + "/" + format(date, "YY")
-    : format(date, dateFormat);
+      ? format(date, dateFormat) + "/" + format(date, "YY")
+      : format(date, dateFormat);
 }
 
 export function format(
@@ -224,8 +224,8 @@ export const getExpireStatus = (date: Date): ExpireStatus => {
   return remainingMilliseconds > 1000 * 60 * 60 * 24 * 7
     ? "VALID"
     : remainingMilliseconds > 0
-    ? "EXPIRING"
-    : "EXPIRED";
+      ? "EXPIRING"
+      : "EXPIRED";
 };
 
 /*

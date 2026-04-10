@@ -1,5 +1,5 @@
 import { ContentWrapper, IOToast, VStack } from "@pagopa/io-app-design-system";
-import { useRoute } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 import { TxtLinkNode } from "@textlint/ast-node-types";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
@@ -12,8 +12,9 @@ import { ButtonBlockProps } from "../../../../components/ui/utils/buttons";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import {
-  trackItwDiscoveryBannerTap,
-  trackWalletStartDeactivation
+  trackItwSettings,
+  trackItwStartActivation,
+  trackItwStartDeactivation
 } from "../../analytics";
 import { ItwEidLifecycleAlert } from "../../common/components/ItwEidLifecycleAlert";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
@@ -21,14 +22,20 @@ import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum";
 
+const MIXPANEL_SCREEN_NAME = ITW_SCREENVIEW_EVENTS.ITW_SETTINGS;
+
 const ItwSettingsScreen = () => {
   const navigation = useIONavigation();
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
-  const { name: routeName } = useRoute();
+
+  useFocusEffect(trackItwSettings);
 
   const handleRevokeOnPress = useCallback(() => {
-    trackWalletStartDeactivation("ITW_PID");
+    trackItwStartDeactivation({
+      credential: "ITW_PID",
+      screen_name: MIXPANEL_SCREEN_NAME
+    });
     Alert.alert(
       I18n.t("features.itWallet.presentation.itWalletId.dialog.revoke.title"),
       I18n.t("features.itWallet.presentation.itWalletId.dialog.revoke.message"),
@@ -51,17 +58,12 @@ const ItwSettingsScreen = () => {
   }, [machineRef]);
 
   const handleObtainItwOnPress = useCallback(() => {
-    // TODO SIW-3572: deletion of ITW_TAP_BANNER
-    trackItwDiscoveryBannerTap({
-      banner_id: "itwDiscoveryItWalletNewUser",
-      banner_page: routeName,
-      banner_landing: ITW_SCREENVIEW_EVENTS.ITW_INTRO
-    });
+    trackItwStartActivation(MIXPANEL_SCREEN_NAME);
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO,
       params: { level: "l3" }
     });
-  }, [navigation, routeName]);
+  }, [navigation]);
 
   const ctaProps: ButtonBlockProps = useMemo(
     () => ({

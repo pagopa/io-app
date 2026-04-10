@@ -159,7 +159,9 @@ const globalStateFromStatus = (
           containsPayment: undefined,
           hasRemoteContent: false,
           hasFIMSCTA: false,
-          createdAt: new Date()
+          createdAt: new Date(),
+          fciMessageType: "not_set",
+          fciResult: "not_set"
         })
       );
   }

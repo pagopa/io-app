@@ -1,6 +1,6 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import _ from "lodash";
+import _, { partition } from "lodash";
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
@@ -326,4 +326,20 @@ export const itwHasExpiringCredentialsSelector = createSelector(
 export const itwIsMdlPresentSelector = createSelector(
   itwCredentialsByTypeSelector,
   credentials => credentials.mDL !== undefined
+);
+
+/**
+ * Split a given list of credential types into obtained / notObtained
+ * obtained = present in wallet
+ */
+export const itwCredentialsByPresenceSelector = createSelector(
+  itwCredentialsByTypeSelector,
+  (_state: GlobalState, types: ReadonlyArray<string>) => types,
+  (credentialsByType, types) => {
+    const [obtained, notObtained] = partition(
+      types,
+      type => credentialsByType[type] !== undefined
+    );
+    return { obtained, notObtained };
+  }
 );

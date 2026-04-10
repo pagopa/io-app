@@ -448,6 +448,7 @@ exports[`CieCardReadingAnimation Should match the snapshot 1`] = `
                                       "stroke",
                                       "strokeWidth",
                                       "strokeDasharray",
+                                      "strokeDashoffset",
                                       "strokeLinecap",
                                     ]
                                   }
@@ -464,6 +465,7 @@ exports[`CieCardReadingAnimation Should match the snapshot 1`] = `
                                       565.4866776461628,
                                     ]
                                   }
+                                  strokeDashoffset={null}
                                   strokeLinecap={1}
                                   strokeWidth={3}
                                 />

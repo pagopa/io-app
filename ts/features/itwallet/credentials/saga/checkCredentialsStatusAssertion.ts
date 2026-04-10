@@ -1,8 +1,12 @@
 import { select, call, all, put } from "typed-redux-saga/macro";
+import { ActionType } from "typesafe-actions";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { Errors } from "@pagopa/io-react-native-wallet";
-import { itwCredentialsSelector } from "../store/selectors";
+import {
+  itwCredentialSelector,
+  itwCredentialsSelector
+} from "../store/selectors";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import {
   shouldRequestStatusAssertion,
@@ -14,8 +18,14 @@ import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsValidSelector
 } from "../../lifecycle/store/selectors";
-import { itwCredentialsStore } from "../store/actions";
-import { selectItwEnv } from "../../common/store/selectors/environment";
+import {
+  itwCredentialsStore,
+  itwCredentialsRefreshStatusByType
+} from "../store/actions";
+import {
+  selectItwEnv,
+  selectItwSpecsVersion
+} from "../../common/store/selectors/environment";
 import { getEnv } from "../../common/utils/environment";
 import { syncItwAnalyticsProperties } from "../../analytics/saga";
 import { getMixPanelCredential } from "../../analytics/utils";
@@ -32,6 +42,7 @@ export function* updateCredentialStatusAssertionSaga(
   credential: StoredCredential
 ): Generator<ReduxSagaEffect, StoredCredential> {
   const env = yield* select(selectItwEnv);
+  const itwVersion = yield* select(selectItwSpecsVersion);
   const isItwL3 = yield* select(itwLifecycleIsITWalletValidSelector);
   const mixpanelCredential = getMixPanelCredential(
     credential.credentialType,
@@ -41,14 +52,15 @@ export function* updateCredentialStatusAssertionSaga(
     const { parsedStatusAssertion, statusAssertion } = yield* call(
       getCredentialStatusAssertion,
       credential,
-      getEnv(env)
+      getEnv(env),
+      itwVersion
     );
     return {
       ...credential,
       storedStatusAssertion: {
         credentialStatus: "valid",
         statusAssertion,
-        parsedStatusAssertion: parsedStatusAssertion.payload
+        parsedStatusAssertion
       }
     };
   } catch (e) {
@@ -140,4 +152,22 @@ export function* checkCredentialsStatusAssertion() {
   }
 
   yield* call(syncItwAnalyticsProperties);
+}
+
+/**
+ * Saga that updates a specific credential status assertion without additional logic.
+ * It is triggered by the user when the credential status is unknown.
+ */
+export function* handleCredentialStatusAssertionRetry(
+  action: ActionType<typeof itwCredentialsRefreshStatusByType>
+) {
+  const credential = yield* select(itwCredentialSelector(action.payload));
+
+  if (O.isSome(credential)) {
+    const updatedCredential = yield* call(
+      updateCredentialStatusAssertionSaga,
+      credential.value
+    );
+    yield* put(itwCredentialsStore([updatedCredential]));
+  }
 }

@@ -1134,6 +1134,35 @@ exports[`MessageDetailsBody should match snapshot for message with invalid CTA 1
                         testID="markdown-decoding-error-alert"
                       >
                         <View
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "transform": [
+                                  {
+                                    "scale": 1,
+                                  },
+                                ],
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "borderCurve": "continuous",
+                                "borderRadius": 12,
+                                "padding": 16,
+                              },
+                              {
+                                "backgroundColor": "#FFF5DA",
+                              },
+                            ]
+                          }
                           style={
                             [
                               {
@@ -1147,7 +1176,7 @@ exports[`MessageDetailsBody should match snapshot for message with invalid CTA 1
                               {
                                 "transform": [
                                   {
-                                    "scale": undefined,
+                                    "scale": 1,
                                   },
                                 ],
                               },

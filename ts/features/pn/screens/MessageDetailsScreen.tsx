@@ -1,11 +1,10 @@
 import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
-import _ from "lodash";
 import { RefObject, useCallback, useEffect, useMemo, useRef } from "react";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
-import { useHardwareBackButton } from "../../../hooks/useHardwareBackButton";
+import { useHardwareBackButtonWhenFocused } from "../../../hooks/useHardwareBackButton";
 import { useOfflineToastGuard } from "../../../hooks/useOfflineToastGuard";
 import { useStartSupportRequest } from "../../../hooks/useStartSupportRequest";
 import {
@@ -25,12 +24,12 @@ import {
 } from "../../pushNotifications/analytics";
 import { profileFiscalCodeSelector } from "../../settings/common/store/selectors";
 import {
-  trackSendAARFailure,
+  trackSendAarFailure,
   trackSendAarNotificationClosure
 } from "../aar/analytics";
-import { SendAARMessageDetailBottomSheetComponent } from "../aar/components/SendAARMessageDetailBottomSheetComponent";
+import { SendAarMessageDetailBottomSheetComponent } from "../aar/components/SendAarMessageDetailBottomSheetComponent";
 import { terminateAarFlow } from "../aar/store/actions";
-import { sendAARFlowStates } from "../aar/utils/stateUtils";
+import { sendAarFlowStates } from "../aar/utils/stateUtils";
 import { trackPNUxSuccess } from "../analytics";
 import { MessageDetails } from "../components/MessageDetails";
 import { PnParamsList } from "../navigation/params";
@@ -151,7 +150,7 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
     return false;
   }, [isAarMessage, sendUserType]);
 
-  useHardwareBackButton(androidBackButtonCallback);
+  useHardwareBackButtonWhenFocused(androidBackButtonCallback);
   useCorrectHeader(isAarMessage, aarBottomSheetRef, sendUserType);
 
   // useEffect for payment tracking and resource dealloaction
@@ -171,7 +170,7 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
         dispatch(
           terminateAarFlow({
             messageId,
-            currentFlowState: sendAARFlowStates.displayingNotificationData
+            currentFlowState: sendAarFlowStates.displayingNotificationData
           })
         );
       }
@@ -193,9 +192,10 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
         sendUserType
       );
     } else if (isAarMessage) {
-      trackSendAARFailure(
+      trackSendAarFailure(
         "Show Notification",
-        "Screen rendering with undefined SEND message"
+        "Screen rendering with undefined SEND message",
+        undefined
       );
     }
   });
@@ -243,7 +243,7 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
         sendUserType={sendUserType}
       />
       {isAarMessage && (
-        <SendAARMessageDetailBottomSheetComponent
+        <SendAarMessageDetailBottomSheetComponent
           aarBottomSheetRef={aarBottomSheetRef}
           sendUserType={sendUserType}
         />

@@ -1,3 +1,4 @@
+import { isString as lodashIsString } from "lodash";
 import { MessagesFailurePayload } from "../features/messages/store/actions";
 
 export type TimeoutError = { readonly kind: "timeout" };
@@ -10,8 +11,8 @@ export type NetworkError = TimeoutError | GenericError;
 export const getError = (error: unknown): Error => {
   if (error instanceof Error) {
     return error;
-  } else if (error instanceof String) {
-    return Error(error as string);
+  } else if (lodashIsString(error)) {
+    return Error(error);
   }
   return Error("unknown");
 };

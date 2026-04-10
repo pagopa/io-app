@@ -1,6 +1,5 @@
-import { loginInfoReducer } from "../reducers"; // aggiorna il path se serve
+import { loginInfoReducer } from "../reducers";
 import { loginSuccess } from "../../../common/store/actions";
-import { SessionToken } from "../../../../../types/SessionToken";
 
 describe("loginInfoReducer", () => {
   it("should return the initial state", () => {
@@ -12,7 +11,7 @@ describe("loginInfoReducer", () => {
 
   it("should handle loginSuccess and set userFromSuccessLogin to true", () => {
     const action = loginSuccess({
-      token: "faketoken" as SessionToken,
+      token: "mock-token",
       idp: "test"
     });
 

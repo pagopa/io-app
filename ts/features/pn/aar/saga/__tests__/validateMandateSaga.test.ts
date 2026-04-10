@@ -1,46 +1,38 @@
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
+import { AARProblemJson } from "../../../../../../definitions/pn/aar/AARProblemJson";
+import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
+import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import {
-  AcceptMandateSuccessfulResponse,
-  testable,
-  validateMandateSaga
-} from "../validateMandateSaga";
-import { AARFlowState, sendAARFlowStates } from "../../utils/stateUtils";
+  aarProblemJsonAnalyticsReport,
+  trackSendAarFailure
+} from "../../analytics";
+import { setAarFlowState } from "../../store/actions";
+import { AarFlowState, sendAarFlowStates } from "../../utils/stateUtils";
 import {
   sendAarMockStateFactory,
   sendAarMockStates
 } from "../../utils/testUtils";
-import { SessionToken } from "../../../../../types/SessionToken";
-import { setAarFlowState } from "../../store/actions";
 import {
-  aarProblemJsonAnalyticsReport,
-  trackSendAARFailure,
-  trackSendAarMandateCieExpiredError,
-  trackSendAarMandateCieNotRelatedToDelegatorError,
-  trackSendAarMandateCieDataError
-} from "../../analytics";
-import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
-import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
-import { AARProblemJson } from "../../../../../../definitions/pn/aar/AARProblemJson";
-import { HttpStatusCode } from "../../../../../../definitions/pagopa/ecommerce/HttpStatusCode";
-
-const { handleMixPanelCustomTrackingIfNeeded } = testable!;
+  AcceptMandateSuccessfulResponse,
+  validateMandateSaga
+} from "../validateMandateSaga";
 
 const mockValidatingMandateState = sendAarMockStateFactory.validatingMandate();
 const mockValidatingMandateAction = setAarFlowState(mockValidatingMandateState);
 const aarStatesWithoutValidatingMandate = sendAarMockStates.filter(
   ({ type }) => type !== mockValidatingMandateState.type
 );
-const sessionToken = "test-session-token" as SessionToken;
-const sessionTokenWithBearer = `Bearer ${sessionToken}` as SessionToken;
+const sessionToken = "mock-session-token";
+const sessionTokenWithBearer = `Bearer ${sessionToken}`;
 
 const mockAcceptMandate = jest.fn();
 
 const getMockKoState = (
-  prevState: AARFlowState,
+  prevState: AarFlowState,
   error: AARProblemJson | undefined,
   reason: string
-): AARFlowState => ({
+): AarFlowState => ({
   type: "ko",
   previousState: { ...prevState },
   ...(error != null && { error }),
@@ -50,12 +42,7 @@ const getMockKoState = (
   }
 });
 
-jest.mock("../../analytics", () => ({
-  ...jest.requireActual("../../analytics"),
-  trackSendAarMandateCieExpiredError: jest.fn(),
-  trackSendAarMandateCieNotRelatedToDelegatorError: jest.fn(),
-  trackSendAarMandateCieDataError: jest.fn()
-}));
+jest.mock("../../analytics");
 
 describe("validateMandateSaga", () => {
   afterEach(jest.clearAllMocks);
@@ -104,18 +91,19 @@ describe("validateMandateSaga", () => {
       )
         .next()
         .call(
-          trackSendAARFailure,
+          trackSendAarFailure,
           "Validate Mandate",
-          `Called in wrong state (${payload.type})`
+          `Called in wrong state (${payload.type})`,
+          undefined
         )
         .next()
         .isDone();
     }
   );
 
-  it(`should dispatch "setAarFlowState" with type: "${sendAARFlowStates.fetchingNotificationData}" on a 204`, () => {
-    const successState: AARFlowState = {
-      type: sendAARFlowStates.fetchingNotificationData,
+  it(`should dispatch "setAarFlowState" with type: "${sendAarFlowStates.fetchingNotificationData}" on a 204`, () => {
+    const successState: AarFlowState = {
+      type: sendAarFlowStates.fetchingNotificationData,
       iun: mockValidatingMandateState.iun,
       recipientInfo: { ...mockValidatingMandateState.recipientInfo },
       mandateId: mockValidatingMandateState.mandateId
@@ -147,40 +135,77 @@ describe("validateMandateSaga", () => {
   });
 
   it.each([
-    E.right({
-      status: 500,
-      value: { status: 500, detail: "A detail" }
-    }),
-    E.right({
-      status: 404,
-      value: { status: 404, detail: "A detail" }
-    }),
-    E.right({
-      status: 418,
-      value: { status: 418, detail: "A detail" }
-    }),
-    E.right({
-      status: 422,
-      value: {
+    {
+      name: "500 generic error",
+      res: E.right({
+        status: 500,
+        value: { status: 500, detail: "A detail" }
+      })
+    },
+    {
+      name: "404 generic error",
+      res: E.right({
+        status: 404,
+        value: { status: 404, detail: "A detail" }
+      })
+    },
+    {
+      name: "418 generic error",
+      res: E.right({
+        status: 418,
+        value: { status: 418, detail: "A detail" }
+      })
+    },
+    {
+      name: "422 CIE_EXPIRED_ERROR",
+      res: E.right({
         status: 422,
-        detail: "A detail",
-        errors: [{ code: "CIE_EXPIRED_ERROR" }]
-      }
-    }),
-    E.right({
-      status: 422,
-      value: {
+        value: {
+          status: 422,
+          detail: "A detail",
+          errors: [{ code: "CIE_EXPIRED_ERROR" }]
+        }
+      })
+    },
+    {
+      name: "422 CIE_NOT_RELATED_TO_DELEGATOR_ERROR",
+      res: E.right({
         status: 422,
-        detail: "A detail",
-        errors: [{ code: "CIE_NOT_RELATED_TO_DELEGATOR_ERROR" }]
-      }
-    })
-  ] as Array<AcceptMandateSuccessfulResponse>)(
-    "should dispatch a KO state when the response is %o",
-    res => {
+        value: {
+          status: 422,
+          detail: "A detail",
+          errors: [{ code: "CIE_NOT_RELATED_TO_DELEGATOR_ERROR" }]
+        }
+      })
+    },
+    {
+      name: "500 with body status 422 CIE_NOT_RELATED_TO_DELEGATOR_ERROR",
+      res: E.right({
+        status: 500,
+        value: {
+          status: 422,
+          detail: "A detail",
+          errors: [{ code: "CIE_NOT_RELATED_TO_DELEGATOR_ERROR" }]
+        }
+      })
+    },
+    {
+      name: "500 with body status 422 CIE_EXPIRED_ERROR",
+      res: E.right({
+        status: 500,
+        value: {
+          status: 422,
+          detail: "A detail",
+          errors: [{ code: "CIE_EXPIRED_ERROR" }]
+        }
+      })
+    }
+  ] as Array<{ name: string; res: AcceptMandateSuccessfulResponse }>)(
+    "should dispatch the correct KO state for $name",
+    ({ res }) => {
       const error = res.right.value;
       const reason = `HTTP request failed (${aarProblemJsonAnalyticsReport(
-        res.right.value!.status,
+        res.right.status,
         res.right.value!
       )})`;
 
@@ -199,14 +224,7 @@ describe("validateMandateSaga", () => {
           mockValidatingMandateAction
         )
         .next(res)
-        .call(
-          handleMixPanelCustomTrackingIfNeeded,
-          res.right.status,
-          res.right.value,
-          reason
-        )
-        .next()
-        .call(trackSendAARFailure, "Validate Mandate", reason)
+        .call(trackSendAarFailure, "Validate Mandate", reason, error)
         .next()
         .put(
           setAarFlowState(
@@ -218,7 +236,7 @@ describe("validateMandateSaga", () => {
     }
   );
 
-  it('should call "trackSendAARFailure" with "Fast login expiration" and stop on 401', () => {
+  it('should call "trackSendAarFailure" with "Fast login expiration" and stop on 401', () => {
     testSaga(
       validateMandateSaga,
       mockAcceptMandate,
@@ -240,7 +258,12 @@ describe("validateMandateSaga", () => {
           value: {}
         })
       )
-      .call(trackSendAARFailure, "Validate Mandate", "Fast login expiration")
+      .call(
+        trackSendAarFailure,
+        "Validate Mandate",
+        "Fast login expiration",
+        undefined
+      )
       .next()
       .isDone();
   });
@@ -261,7 +284,12 @@ describe("validateMandateSaga", () => {
         mockValidatingMandateAction
       )
       .throw(new Error())
-      .call(trackSendAARFailure, "Validate Mandate", "An error was thrown ()")
+      .call(
+        trackSendAarFailure,
+        "Validate Mandate",
+        "An error was thrown ()",
+        undefined
+      )
       .next()
       .put(
         setAarFlowState(
@@ -293,7 +321,7 @@ describe("validateMandateSaga", () => {
         mockValidatingMandateAction
       )
       .next(E.left([]))
-      .call(trackSendAARFailure, "Validate Mandate", failureReason)
+      .call(trackSendAarFailure, "Validate Mandate", failureReason, undefined)
       .next()
       .put(
         setAarFlowState(
@@ -303,123 +331,4 @@ describe("validateMandateSaga", () => {
       .next()
       .isDone();
   });
-});
-
-describe("handleMixPanelCustomTrackingIfNeeded", () => {
-  beforeEach(jest.clearAllMocks);
-
-  it.each([
-    "CIE_EXPIRED_ERROR",
-    "cie_expired_error",
-    "Cie_Expired_Error",
-    "cIe_ExPiReD_eRrOr"
-  ])(
-    'should call "trackSendAarMandateCieExpiredError" event for status 422 and errorCode "%s"',
-    code => {
-      handleMixPanelCustomTrackingIfNeeded(
-        422,
-        {
-          detail: "A detail",
-          status: 422 as HttpStatusCode,
-          errors: [{ code }]
-        },
-        "Some reason"
-      );
-
-      expect(trackSendAarMandateCieExpiredError).toHaveBeenCalledTimes(1);
-      expect(
-        trackSendAarMandateCieNotRelatedToDelegatorError
-      ).not.toHaveBeenCalled();
-      expect(trackSendAarMandateCieDataError).not.toHaveBeenCalled();
-    }
-  );
-
-  it.each([
-    "CIE_NOT_RELATED_TO_DELEGATOR_ERROR",
-    "cie_not_related_to_delegator_error",
-    "Cie_Not_Related_To_Delegator_Error",
-    "cIe_NoT_rElAtEd_To_DeLeGaToR_eRrOr"
-  ])(
-    'should call "trackSendAarMandateCieNotRelatedToDelegatorError" event for status 422 and errorCode "%s"',
-    code => {
-      handleMixPanelCustomTrackingIfNeeded(
-        422,
-        {
-          detail: "A detail",
-          status: 422 as HttpStatusCode,
-          errors: [{ code }]
-        },
-        "Some reason"
-      );
-
-      expect(
-        trackSendAarMandateCieNotRelatedToDelegatorError
-      ).toHaveBeenCalledTimes(1);
-      expect(trackSendAarMandateCieExpiredError).not.toHaveBeenCalled();
-      expect(trackSendAarMandateCieDataError).not.toHaveBeenCalled();
-    }
-  );
-
-  it.each([
-    {
-      status: 400
-    },
-
-    {
-      status: 400,
-      errors: [{ code: "CIE_EXPIRED_ERROR" }]
-    },
-    {
-      status: 400,
-      errors: [{ code: "CIE_NOT_RELATED_TO_DELEGATOR_ERROR" }]
-    },
-    {
-      status: 422
-    },
-    {
-      status: 422,
-      errors: [{ code: "ANY_ERROR_CODE" }]
-    },
-    {
-      status: 422,
-      errors: [{ code: "NOT_A_CIE_NOT_RELATED_TO_DELEGATOR_ERROR" }]
-    },
-    {
-      status: 422,
-      errors: [{ code: "NOT_A_CIE_EXPIRED_ERROR" }]
-    },
-    {
-      status: 500
-    },
-    {
-      status: 500,
-      errors: [{ code: "CIE_NOT_RELATED_TO_DELEGATOR_ERROR" }]
-    },
-    {
-      status: 500,
-      errors: [{ code: "CIE_EXPIRED_ERROR" }]
-    }
-  ] as Array<{ status: 400 | 422 | 500; errors?: Array<{ code: string }> }>)(
-    'should track "trackSendAarMandateCieDataError" event for %o',
-    ({ status, errors }) => {
-      const reason = "Some reason";
-
-      handleMixPanelCustomTrackingIfNeeded(
-        status,
-        {
-          detail: "A detail",
-          status: status as HttpStatusCode,
-          errors
-        },
-        reason
-      );
-
-      expect(trackSendAarMandateCieDataError).toHaveBeenCalledTimes(1);
-      expect(trackSendAarMandateCieDataError).toHaveBeenCalledWith(reason);
-      expect(
-        trackSendAarMandateCieNotRelatedToDelegatorError
-      ).not.toHaveBeenCalled();
-      expect(trackSendAarMandateCieExpiredError).not.toHaveBeenCalled();
-    }
-  );
 });

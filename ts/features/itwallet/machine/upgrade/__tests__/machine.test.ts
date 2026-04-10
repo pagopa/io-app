@@ -14,6 +14,7 @@ const makeCredential = (
   credentialId: "id",
   issuerConf: {} as any,
   jwt: { expiration: new Date().toISOString() },
+  spec_version: "1.0.0",
   ...overrides
 });
 

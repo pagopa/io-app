@@ -14,22 +14,17 @@ import {
   VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
-import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { useFocusEffect } from "@react-navigation/native";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { Platform, View } from "react-native";
+import { useEffect, useState } from "react";
+import { AccessibilityInfo, View } from "react-native";
 import Animated, {
   useAnimatedStyle,
-  useSharedValue,
+  useDerivedValue,
   withSpring
 } from "react-native-reanimated";
 import { CircularProgress } from "../../../../components/ui/CircularProgress";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
-import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { isDevEnv } from "../../../../utils/environment";
 import { platformSelect } from "../../utils";
-
-const accessibityTimeout = 100 as Millisecond;
 
 export type CieCardReadContentProps = {
   progress?: number;
@@ -47,26 +42,22 @@ export type CieCardReadContentProps = {
 /**
  * Renders the title component title based on the platform
  */
-const Title = ({ title }: Pick<CieCardReadContentProps, "title">) => {
-  const titleRef = useRef<View>(null);
-
-  useFocusEffect(
-    useCallback(() => {
-      if (!titleRef.current && Platform.OS === "android") {
-        setAccessibilityFocus(titleRef, accessibityTimeout);
-      }
-    }, [])
-  );
-
-  return (
-    <View accessible ref={titleRef}>
-      {platformSelect({
-        ios: <H4>{title}</H4>,
-        default: <H3 style={{ textAlign: "center" }}>{title}</H3>
-      })}
-    </View>
-  );
-};
+const Title = ({ title }: Pick<CieCardReadContentProps, "title">) => (
+  <View>
+    {/* A11y live node */}
+    <View
+      accessible
+      accessibilityLiveRegion="polite"
+      accessibilityLabel={title}
+      style={{ position: "absolute", width: 1, height: 1, opacity: 0 }}
+      importantForAccessibility="yes"
+    />
+    {platformSelect({
+      ios: <H4>{title}</H4>,
+      default: <H3 style={{ textAlign: "center" }}>{title}</H3>
+    })}
+  </View>
+);
 
 /**
  * Renders the component subtitle based on the platform and progress
@@ -134,7 +125,6 @@ const LinearProgressBar = (
 ) => {
   const { progress = 0 } = props;
   const [width, setWidth] = useState(0);
-  const progressWidth = useSharedValue(0);
 
   const backgroundColor = IOColors["grey-200"];
   const foregroundColor = IOColors["turquoise-500"];
@@ -144,16 +134,15 @@ const LinearProgressBar = (
     Math.max(Math.min(progress, 1.0), 0) * 100
   );
 
-  useEffect(() => {
-    // eslint-disable-next-line functional/immutable-data
-    progressWidth.value = withSpring(
+  const animatedWidth = useDerivedValue(() =>
+    withSpring(
       Math.round((progressPercent * width) / 100),
       IOSpringValues.accordion
-    );
-  }, [progressWidth, progressPercent, width]);
+    )
+  );
 
   const animatedStyle = useAnimatedStyle(() => ({
-    width: progressWidth.value
+    width: animatedWidth.value
   }));
 
   return (
@@ -210,32 +199,46 @@ const ContentIos = (props: CieCardReadContentProps) => (
   </ContentWrapper>
 );
 
-const ContentAndroid = (props: CieCardReadContentProps) => (
-  <IOScrollView centerContent>
-    <ContentWrapper>
-      <VStack space={24}>
-        <CircularProgress
-          size={240}
-          radius={120}
-          progress={(props.progress || 0) * 100}
-          strokeColor={IOColors["blueIO-500"]}
-          strokeBgColor={IOColors["grey-200"]}
-          strokeWidth={4}
-        >
-          <Pictogram size={180} name={props.pictogram} />
-        </CircularProgress>
-        <VStack space={8}>
-          <Title title={props.title} />
-          <Subtitle subtitle={props.subtitle} />
+const ContentAndroid = (props: CieCardReadContentProps) => {
+  const announceStep = 30;
+
+  const progressPercent = Math.round(
+    Math.max(Math.min(props.progress ?? 0, 1.0), 0) * 100
+  );
+
+  const stepped = Math.floor(progressPercent / announceStep) * announceStep;
+
+  useEffect(() => {
+    AccessibilityInfo.announceForAccessibility(`${stepped}%`);
+  }, [stepped]);
+
+  return (
+    <IOScrollView centerContent>
+      <ContentWrapper>
+        <VStack space={24}>
+          <CircularProgress
+            size={240}
+            radius={120}
+            progress={(props.progress || 0) * 100}
+            strokeColor={IOColors["blueIO-500"]}
+            strokeBgColor={IOColors["grey-200"]}
+            strokeWidth={4}
+          >
+            <Pictogram size={180} name={props.pictogram} />
+          </CircularProgress>
+          <VStack space={8}>
+            <Title title={props.title} />
+            <Subtitle subtitle={props.subtitle} />
+          </VStack>
+          <Actions
+            primaryAction={props.primaryAction}
+            secondaryAction={props.secondaryAction}
+          />
         </VStack>
-        <Actions
-          primaryAction={props.primaryAction}
-          secondaryAction={props.secondaryAction}
-        />
-      </VStack>
-    </ContentWrapper>
-  </IOScrollView>
-);
+      </ContentWrapper>
+    </IOScrollView>
+  );
+};
 
 /**
  * Renders the read progress screen content based on the platform.

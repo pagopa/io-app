@@ -12,7 +12,6 @@ import ReactNativeBlobUtil from "react-native-blob-util";
 import I18n from "i18next";
 import { ReduxSagaEffect } from "../../../types/utils";
 import { fetchTimeout } from "../../../config";
-import { SessionToken } from "../../../types/SessionToken";
 import { getError } from "../../../utils/errors";
 import { isTestEnv } from "../../../utils/environment";
 import {
@@ -35,8 +34,8 @@ import {
   pdfSavePath,
   restrainRetryAfterIntervalInMilliseconds
 } from "../utils/attachments";
-import { isEphemeralAARThirdPartyMessage } from "../utils/thirdPartyById";
-import { downloadAARAttachmentSaga } from "../../pn/aar/saga/downloadAARAttachmentSaga";
+import { isEphemeralAarThirdPartyMessage } from "../utils/thirdPartyById";
+import { downloadAarAttachmentSaga } from "../../pn/aar/saga/downloadAarAttachmentSaga";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
 import { getKeyInfo } from "../../lollipop/saga";
 import { handleRequestInit } from "./handleRequestInit";
@@ -58,7 +57,7 @@ export function* handleDownloadAttachment(
   }
 
   const messageId = action.payload.messageId;
-  const { ephemeralAARThirdPartyMessage, mandateId } = yield* call(
+  const { ephemeralAarThirdPartyMessage, mandateId } = yield* call(
     computeThirdPartyMessageData,
     messageId
   );
@@ -69,9 +68,9 @@ export function* handleDownloadAttachment(
   // and/or which one it is, on PN attachments - or manually by the
   // user on generic attachments).
   yield* race({
-    polling: ephemeralAARThirdPartyMessage
+    polling: ephemeralAarThirdPartyMessage
       ? call(
-          downloadAARAttachmentSaga,
+          downloadAarAttachmentSaga,
           sessionToken,
           keyInfo,
           mandateId,
@@ -85,28 +84,28 @@ export function* handleDownloadAttachment(
 function* computeThirdPartyMessageData(messageId: string): Generator<
   ReduxSagaEffect,
   {
-    ephemeralAARThirdPartyMessage: boolean;
+    ephemeralAarThirdPartyMessage: boolean;
     mandateId: string | undefined;
   }
 > {
   const thirdPartyMessage = yield* select(thirdPartyMessageSelector, messageId);
   if (
     thirdPartyMessage != null &&
-    isEphemeralAARThirdPartyMessage(thirdPartyMessage)
+    isEphemeralAarThirdPartyMessage(thirdPartyMessage)
   ) {
     return {
-      ephemeralAARThirdPartyMessage: true,
+      ephemeralAarThirdPartyMessage: true,
       mandateId: thirdPartyMessage.mandateId
     };
   }
   return {
-    ephemeralAARThirdPartyMessage: false,
+    ephemeralAarThirdPartyMessage: false,
     mandateId: undefined
   };
 }
 
 function* downloadAttachmentWorker(
-  bearerToken: SessionToken,
+  bearerToken: string,
   keyInfo: KeyInfo,
   action: ActionType<typeof downloadAttachment.request>
 ): Generator<ReduxSagaEffect, void> {

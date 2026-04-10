@@ -25,10 +25,7 @@ import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
 import { withTrailingPoliceCarLightEmojii } from "../../../../../utils/strings";
 import { isCieLoginUatEnabledSelector } from "../../../../authentication/login/cie/store/selectors";
-import {
-  trackItWalletCiePinEnter,
-  trackItWalletCiePinInfo
-} from "../../analytics";
+import { trackItWalletCiePinEnter } from "../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet";
@@ -116,10 +113,7 @@ export const ItwCiePinScreen = () => {
                 "features.itWallet.identification.cie.inputPin.buttonLink"
               )}
               onPress={() => {
-                trackItWalletCiePinInfo(itw_flow);
-                pinInfoBottomSheet.present({
-                  skipTracking: true
-                });
+                pinInfoBottomSheet.present();
               }}
             />
             <VSpacer size={24} />

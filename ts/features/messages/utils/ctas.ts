@@ -7,13 +7,12 @@ import { Linking } from "react-native";
 import { MessageBodyMarkdown } from "../../../../definitions/backend/MessageBodyMarkdown";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { ServiceMetadata } from "../../../../definitions/services/ServiceMetadata";
-import { Locales } from "../../../../locales/locales";
 import {
   deriveCustomHandledLink,
   isIoInternalLink
 } from "../../../components/ui/Markdown/handlers/link";
 import { trackCTAFrontMatterDecodingError } from "../analytics";
-import { localeFallback } from "../../../i18n";
+import { localeFallback, Locales } from "../../../i18n";
 import {
   CTA,
   CTAS,

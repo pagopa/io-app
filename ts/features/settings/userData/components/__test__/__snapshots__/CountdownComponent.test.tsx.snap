@@ -377,6 +377,27 @@ exports[`CountdownComponent should render correctly when visible is true 1`] = `
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "width": 0,
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "backgroundColor": "#0B3EE3",
+                                  "height": 4,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {

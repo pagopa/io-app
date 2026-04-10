@@ -13,7 +13,7 @@ import { useIsNfcFeatureAvailable } from "../hooks/useIsNfcFeatureAvailable";
 import { useSendAarDelegationProposalScreenBottomSheet } from "../hooks/useSendAarDelegationProposalScreenBottomSheet";
 import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
 import { setAarFlowState } from "../store/actions";
-import { AarStatesByName, sendAARFlowStates } from "../utils/stateUtils";
+import { AarStatesByName, sendAarFlowStates } from "../utils/stateUtils";
 import {
   trackSendAarNotificationOpeningMandateBottomSheet,
   trackSendAarNotificationOpeningMandateDisclaimer,
@@ -28,21 +28,21 @@ export const SendAarDelegationProposalScreen = () => {
     useNavigation<
       StackNavigationProp<PnParamsList, "SEND_AAR_DELEGATION_PROPOSAL">
     >();
-  const { warning, hideAll } = useIOToast();
+  const { info, hideAll } = useIOToast();
 
   useOnFirstRender(() => {
-    warning(i18n.t("features.pn.aar.flow.delegated.notAdressee.warningAlert"));
+    info(i18n.t("features.pn.aar.flow.delegated.notAdressee.infoAlert"));
   });
 
   useEffect(() => {
     switch (type) {
-      case sendAARFlowStates.ko:
-      case sendAARFlowStates.nfcNotSupportedFinal: {
+      case sendAarFlowStates.ko:
+      case sendAarFlowStates.nfcNotSupportedFinal: {
         hideAll();
         navigation.replace(PN_ROUTES.SEND_AAR_ERROR);
         break;
       }
-      case sendAARFlowStates.cieCanAdvisory: {
+      case sendAarFlowStates.cieCanAdvisory: {
         hideAll();
         navigation.replace(PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL);
         break;
@@ -51,7 +51,7 @@ export const SendAarDelegationProposalScreen = () => {
   }, [hideAll, navigation, type]);
 
   switch (type) {
-    case sendAARFlowStates.notAddressee:
+    case sendAarFlowStates.notAddressee:
       return (
         <DelegationProposalContent
           terminateFlow={terminateFlow}
@@ -91,7 +91,7 @@ const DelegationProposalContent = ({
   const handleIdentificationSuccess = useCallback(() => {
     dispatch(
       setAarFlowState({
-        type: sendAARFlowStates.creatingMandate,
+        type: sendAarFlowStates.creatingMandate,
         iun: notAdresseeData.iun,
         recipientInfo: notAdresseeData.recipientInfo,
         qrCode: notAdresseeData.qrCode
@@ -114,7 +114,7 @@ const DelegationProposalContent = ({
       dispatch(
         setAarFlowState({
           ...notAdresseeData,
-          type: sendAARFlowStates.nfcNotSupportedFinal
+          type: sendAarFlowStates.nfcNotSupportedFinal
         })
       );
     }

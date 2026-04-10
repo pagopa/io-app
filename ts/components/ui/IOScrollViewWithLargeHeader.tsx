@@ -1,19 +1,24 @@
 import {
-  Body,
-  BodyProps,
   BodySmall,
-  ComposedBodyFromArray,
   ContentWrapper,
   H2,
   HeaderSecondLevel,
+  IOMarkdownLite,
   useIOTheme,
   VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import { ComponentProps, forwardRef, ReactNode, useState } from "react";
+import {
+  ComponentProps,
+  forwardRef,
+  ReactNode,
+  useMemo,
+  useState
+} from "react";
 
 import { LayoutChangeEvent, View } from "react-native";
+import Animated, { AnimatedRef } from "react-native-reanimated";
 import I18n from "i18next";
 import {
   BackProps,
@@ -22,6 +27,7 @@ import {
 } from "../../hooks/useHeaderProps";
 import { SupportRequestParams } from "../../hooks/useStartSupportRequest";
 import { WithTestID } from "../../types/WithTestID";
+import { useIOAlertVisible } from "../StatusMessages/IOAlertVisibleContext";
 import { IOScrollView } from "./IOScrollView";
 
 export type LargeHeaderTitleProps = {
@@ -36,7 +42,8 @@ type Props = WithTestID<
     children?: ReactNode;
     actions?: ComponentProps<typeof IOScrollView>["actions"];
     title: LargeHeaderTitleProps;
-    description?: string | Array<BodyProps>;
+    description?: string;
+    onDescriptionLinkPress?: (url: string) => void;
     goBack?: BackProps["goBack"];
     ignoreSafeAreaMargin?: ComponentProps<
       typeof HeaderSecondLevel
@@ -48,6 +55,7 @@ type Props = WithTestID<
     ignoreAccessibilityCheck?: ComponentProps<
       typeof HeaderSecondLevel
     >["ignoreAccessibilityCheck"];
+    animatedRef?: AnimatedRef<Animated.ScrollView>;
     topElement?: ReactNode;
     alwaysBounceVertical?: boolean;
   } & SupportRequestParams
@@ -64,6 +72,7 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
       children,
       title,
       description,
+      onDescriptionLinkPress,
       actions,
       goBack,
       canGoback = true,
@@ -76,12 +85,15 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
       excludeEndContentMargin,
       testID,
       ignoreAccessibilityCheck = false,
+      animatedRef,
       topElement = undefined,
       alwaysBounceVertical
     },
     ref
   ) => {
     const [titleHeight, setTitleHeight] = useState(0);
+
+    const { isAlertVisible } = useIOAlertVisible();
 
     const navigation = useNavigation();
     const theme = useIOTheme();
@@ -99,8 +111,15 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
       ...headerActionsProp
     };
 
+    const computeIgnoreSafeAreaMargin = useMemo(() => {
+      if (isAlertVisible) {
+        return true;
+      }
+      return ignoreSafeAreaMargin;
+    }, [ignoreSafeAreaMargin, isAlertVisible]);
+
     const headerProps: ComponentProps<typeof HeaderSecondLevel> = {
-      ignoreSafeAreaMargin,
+      ignoreSafeAreaMargin: computeIgnoreSafeAreaMargin,
       ignoreAccessibilityCheck,
       ...useHeaderProps(
         canGoback
@@ -116,6 +135,7 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
     return (
       <IOScrollView
         actions={actions}
+        animatedRef={animatedRef}
         headerConfig={headerProps}
         snapOffset={titleHeight}
         includeContentMargins={false}
@@ -146,11 +166,10 @@ export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
         {description && (
           <ContentWrapper>
             <VSpacer size={16} />
-            {typeof description === "string" ? (
-              <Body color={theme["textBody-tertiary"]}>{description}</Body>
-            ) : (
-              <ComposedBodyFromArray body={description} textAlign="left" />
-            )}
+            <IOMarkdownLite
+              content={description}
+              onLinkPress={onDescriptionLinkPress}
+            />
           </ContentWrapper>
         )}
         {children && (

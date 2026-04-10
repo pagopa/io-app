@@ -38,7 +38,6 @@ import Animated, {
   Extrapolation,
   interpolate,
   SensorType,
-  useAnimatedReaction,
   useAnimatedSensor,
   useDerivedValue,
   useReducedMotion,
@@ -111,26 +110,17 @@ export const ItwCredentialTrustmark = ({
   );
 
   const rotationSensor = useAnimatedSensor(SensorType.ROTATION);
-  const currentRoll = useSharedValue(0);
-  const initialRoll = useSharedValue(0);
 
-  useAnimatedReaction(
-    () => rotationSensor.sensor.value,
-    s => {
-      if (initialRoll.value === 0) {
-        initialRoll.value = s.roll;
-      }
-      currentRoll.value = s.roll;
-    },
-    []
-  );
+  // Store initial roll value on first sensor reading
+  const initialRoll = useSharedValue<number | null>(null);
 
   /* Not all devices are in an initial flat position on a surface
     (e.g. a table) then we use a relative rotation value,
-    not an absolute one  */
-  const relativeRoll = useDerivedValue(
-    () => initialRoll.value - currentRoll.value
-  );
+    not an absolute one. Initial value is captured on first read. */
+  const relativeRoll = useDerivedValue(() => {
+    const { roll } = rotationSensor.sensor.value;
+    return (initialRoll.value ??= roll) - roll;
+  });
 
   /* Get button size to set the basic boundaries */
   const [buttonSize, setButtonSize] = useState<ButtonSize>();
@@ -244,7 +234,7 @@ export const ItwCredentialTrustmark = ({
     /* We use the `html` extension to avoid the `svg-transformer` to render
     local SVG files, as it causes conflicts with the `skia` library.
     To learn more: https://github.com/Shopify/react-native-skia/issues/1335#issuecomment-2088240523 */
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
+
     require("../../../../../img/features/itWallet/credential/trustmark-stamp.svg.html")
   );
 

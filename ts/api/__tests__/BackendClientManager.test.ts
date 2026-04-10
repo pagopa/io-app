@@ -1,9 +1,8 @@
 import { KeyInfo } from "../../features/lollipop/utils/crypto";
-import { SessionToken } from "../../types/SessionToken";
 import { TestBackendClientManager } from "../BackendClientManager";
 
 const exampleUrl = "http://www.example.com";
-const exampleSessionToken: SessionToken = "session_token" as SessionToken;
+const exampleSessionToken = "mock-session-token";
 const exampleKeyInfo: KeyInfo = {
   keyTag: "KEY_TAG",
   publicKeyThumbprint: "THUMBPRINT",
@@ -29,7 +28,7 @@ describe("BackendClientManager", () => {
       description: "should return a new instance when token is different",
       token1: exampleSessionToken,
       keyInfo1: exampleKeyInfo,
-      token2: "different_token" as SessionToken,
+      token2: "different-session-token",
       keyInfo2: exampleKeyInfo
     },
     {
@@ -44,7 +43,7 @@ describe("BackendClientManager", () => {
         "should return a new instance when both token and keyInfo are different",
       token1: exampleSessionToken,
       keyInfo1: exampleKeyInfo,
-      token2: "different_token" as SessionToken,
+      token2: "different-session-token",
       keyInfo2: { ...exampleKeyInfo, keyTag: "DIFFERENT_KEY_TAG" }
     }
   ])("$description", ({ token1, keyInfo1, token2, keyInfo2 }) => {

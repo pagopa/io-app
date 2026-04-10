@@ -5,7 +5,6 @@ import { call, select } from "redux-saga/effects";
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { pnMessagingServiceIdSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { loadServicePreference } from "../../../../services/details/store/actions/preference";
 import { servicePreferencePotByIdSelector } from "../../../../services/details/store/selectors";
 import {
@@ -21,7 +20,7 @@ import { watchPaymentStatusForMixpanelTracking } from "../watchPaymentStatusSaga
 import * as SAGAS from "../watchPnSaga";
 
 // Mock constants
-const mockBearerToken = "mock-token" as SessionToken;
+const mockBearerToken = "mock-token";
 const mockServiceId = "service-id" as ServiceId;
 const mockUpsertPNActivation = jest.fn();
 const mockPnClient: Partial<CLIENT.PnClient> = {

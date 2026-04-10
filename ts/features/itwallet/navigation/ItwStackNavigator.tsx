@@ -54,18 +54,11 @@ import { ItwPresentationCredentialDetailScreen } from "../presentation/details/s
 import { ItwPresentationCredentialFiscalCodeModal } from "../presentation/details/screens/ItwPresentationCredentialFiscalCodeModal";
 import { ItwPresentationEidVerificationExpiredScreen } from "../presentation/details/screens/ItwPresentationEidVerificationExpiredScreen";
 import { ItwPresentationPidDetailScreen } from "../presentation/details/screens/ItwPresentationPidDetailScreen.tsx";
-import {
-  ItwProximityMachineContext,
-  ItwProximityMachineProvider
-} from "../presentation/proximity/machine/provider.tsx";
-import { ItwActivateBluetoothScreen } from "../presentation/proximity/screens/ItwActivateBluetoothScreen.tsx";
-import { ItwGrantPermissionsScreen } from "../presentation/proximity/screens/ItwGrantPermissionsScreen.tsx";
-import { ItwProximityClaimsDisclosureScreen } from "../presentation/proximity/screens/ItwProximityClaimsDisclosureScreen.tsx";
-import { ItwProximityFailureScreen } from "../presentation/proximity/screens/ItwProximityFailureScreen.tsx";
-import { ItwProximitySendDocumentsResponseScreen } from "../presentation/proximity/screens/ItwProximitySendDocumentsResponseScreen.tsx";
 import { ItwSettingsScreen } from "../settings/screens/ItwSettingsScreen.tsx";
 import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwOfflineWalletScreen } from "../wallet/screens/ItwOfflineWalletScreen";
+import { ItwCardOnboardingL3Screen } from "../onboarding/screens/ItwCardOnboardingL3Screen.tsx";
+import { ItwCardOnboardingL2Screen } from "../onboarding/screens/ItwCardOnboardingL2Screen.tsx";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -76,9 +69,7 @@ const hiddenHeader = { headerShown: false };
 export const ItwStackNavigator = () => (
   <ItwEidIssuanceMachineProvider>
     <ItwCredentialIssuanceMachineProvider>
-      <ItwProximityMachineProvider>
-        <InnerNavigator />
-      </ItwProximityMachineProvider>
+      <InnerNavigator />
     </ItwCredentialIssuanceMachineProvider>
   </ItwEidIssuanceMachineProvider>
 );
@@ -87,7 +78,6 @@ const InnerNavigator = memo(() => {
   const eidIssuanceMachineRef = ItwEidIssuanceMachineContext.useActorRef();
   const credentialIssuanceMachineRef =
     ItwCredentialIssuanceMachineContext.useActorRef();
-  const proximityMachineRef = ItwProximityMachineContext.useActorRef();
 
   return (
     <Stack.Navigator
@@ -100,13 +90,20 @@ const InnerNavigator = memo(() => {
           // Since the back event is accepted only by specific states, we can safely send a back event to each machine
           eidIssuanceMachineRef.send({ type: "back" });
           credentialIssuanceMachineRef.send({ type: "back" });
-          proximityMachineRef.send({ type: "back" });
         }
       }}
     >
       <Stack.Screen
         name={ITW_ROUTES.ONBOARDING}
         component={WalletCardOnboardingScreen}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.L3_ONBOARDING}
+        component={ItwCardOnboardingL3Screen}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.L2_ONBOARDING}
+        component={ItwCardOnboardingL2Screen}
       />
       <Stack.Screen
         name={ITW_ROUTES.OFFLINE.WALLET}
@@ -316,29 +313,6 @@ const InnerNavigator = memo(() => {
         component={ItwPresentationEidVerificationExpiredScreen}
         options={{ headerShown: false }}
       />
-      {/* Proximity's flow routes */}
-      <Stack.Group screenOptions={hiddenHeader}>
-        <Stack.Screen
-          name={ITW_ROUTES.PROXIMITY.DEVICE_PERMISSIONS}
-          component={ItwGrantPermissionsScreen}
-        />
-        <Stack.Screen
-          name={ITW_ROUTES.PROXIMITY.BLUETOOTH_ACTIVATION}
-          component={ItwActivateBluetoothScreen}
-        />
-        <Stack.Screen
-          name={ITW_ROUTES.PROXIMITY.CLAIMS_DISCLOSURE}
-          component={ItwProximityClaimsDisclosureScreen}
-        />
-        <Stack.Screen
-          name={ITW_ROUTES.PROXIMITY.SEND_DOCUMENTS_RESPONSE}
-          component={ItwProximitySendDocumentsResponseScreen}
-        />
-        <Stack.Screen
-          name={ITW_ROUTES.PROXIMITY.FAILURE}
-          component={ItwProximityFailureScreen}
-        />
-      </Stack.Group>
       {/* Playground's routes */}
       <Stack.Group screenOptions={hiddenHeader}>
         <Stack.Screen

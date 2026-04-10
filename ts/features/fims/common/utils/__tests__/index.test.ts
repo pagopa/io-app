@@ -1,6 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { preferredLanguageToString } from "..";
-import { Locales } from "../../../../../../locales/locales";
+import { Locales } from "../../../../../i18n";
 
 describe("preferredLanguageToString", () => {
   it("Should return 'it' for 'O.none'", () => {

@@ -36,8 +36,8 @@ export const ReadStatusComponent = ({
 }: ReadStatusComponentProps) => (
   <Animated.View layout={LinearTransition} style={styles.statusContainer}>
     <CircularProgress
-      size={300}
-      radius={150}
+      size={250}
+      radius={125}
       progress={progress * 100}
       strokeColor={IOColors[statusColorMap[status]]}
       strokeBgColor={IOColors["grey-100"]}

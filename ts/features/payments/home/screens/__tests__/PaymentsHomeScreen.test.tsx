@@ -13,15 +13,6 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { PaymentsHomeScreen } from "../PaymentsHomeScreen";
 import { NoticeListItem } from "../../../../../../definitions/pagopa/biz-events/NoticeListItem";
 
-jest.mock("react-native-reanimated", () => ({
-  ...require("react-native-reanimated/mock"),
-  useReducedMotion: jest.fn,
-  useScrollViewOffset: jest.fn,
-  Layout: {
-    duration: jest.fn()
-  }
-}));
-
 const validTransaction: NoticeListItem = {
   eventId: "0e208420-19dc-490c-8f3f-5772b7249643",
   payeeName: "Hessel, Muller and Kilback",

@@ -9,7 +9,6 @@ import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import * as requestinfo from "../../store/selectors";
 import * as IOHooks from "../../../../../../store/hooks";
 import * as commonStoreSelector from "../../../../common/store/selectors";
-import { SessionToken } from "../../../../../../types/SessionToken";
 import * as useLollipopLoginSource from "../../../../../lollipop/hooks/useLollipopLoginSource";
 
 jest.mock("@react-navigation/native", () => {
@@ -91,7 +90,7 @@ describe("IdpLoginScreen", () => {
         logo: { light: { uri: "" } },
         profileUrl: ""
       },
-      sessionToken: "fake-session-token" as SessionToken,
+      sessionToken: "mock-session-token",
       _persist: {
         version: -1,
         rehydrated: true

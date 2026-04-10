@@ -63,19 +63,7 @@ exports[`ItwBrandedBox should render correctly for variant default 1`] = `
         cx={0}
         cy={0}
         r={125}
-        transform={
-          {
-            "get": [Function],
-            "value": [
-              {
-                "translateX": undefined,
-              },
-              {
-                "scale": 1,
-              },
-            ],
-          }
-        }
+        transform={"[{"translateX":0},{"scale":1}]"}
       >
         <skRadialGradient
           c={
@@ -165,16 +153,7 @@ exports[`ItwBrandedBox should render correctly for variant default 1`] = `
           >
             <skRect
               height={0}
-              transform={
-                {
-                  "get": [Function],
-                  "value": [
-                    {
-                      "translateY": undefined,
-                    },
-                  ],
-                }
-              }
+              transform={"[{"translateY":0}]"}
               width={0}
               x={0}
               y={-0}
@@ -421,19 +400,7 @@ exports[`ItwBrandedBox should render correctly for variant error 1`] = `
         cx={0}
         cy={0}
         r={125}
-        transform={
-          {
-            "get": [Function],
-            "value": [
-              {
-                "translateX": undefined,
-              },
-              {
-                "scale": 1,
-              },
-            ],
-          }
-        }
+        transform={"[{"translateX":0},{"scale":1}]"}
       >
         <skRadialGradient
           c={
@@ -523,16 +490,7 @@ exports[`ItwBrandedBox should render correctly for variant error 1`] = `
           >
             <skRect
               height={0}
-              transform={
-                {
-                  "get": [Function],
-                  "value": [
-                    {
-                      "translateY": undefined,
-                    },
-                  ],
-                }
-              }
+              transform={"[{"translateY":0}]"}
               width={0}
               x={0}
               y={-0}
@@ -779,19 +737,7 @@ exports[`ItwBrandedBox should render correctly for variant warning 1`] = `
         cx={0}
         cy={0}
         r={125}
-        transform={
-          {
-            "get": [Function],
-            "value": [
-              {
-                "translateX": undefined,
-              },
-              {
-                "scale": 1,
-              },
-            ],
-          }
-        }
+        transform={"[{"translateX":0},{"scale":1}]"}
       >
         <skRadialGradient
           c={
@@ -881,16 +827,7 @@ exports[`ItwBrandedBox should render correctly for variant warning 1`] = `
           >
             <skRect
               height={0}
-              transform={
-                {
-                  "get": [Function],
-                  "value": [
-                    {
-                      "translateY": undefined,
-                    },
-                  ],
-                }
-              }
+              transform={"[{"translateY":0}]"}
               width={0}
               x={0}
               y={-0}

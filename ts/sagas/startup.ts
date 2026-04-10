@@ -75,7 +75,7 @@ import { checkAcknowledgedFingerprintSaga } from "../features/onboarding/saga/bi
 import { completeOnboardingSaga } from "../features/onboarding/saga/completeOnboardingSaga";
 import { watchAbortOnboardingSaga } from "../features/onboarding/saga/watchAbortOnboardingSaga";
 import { watchPaymentsSaga } from "../features/payments/common/saga";
-import { watchAarFlowSaga } from "../features/pn/aar/saga/watchAARFlowSaga";
+import { watchAarFlowSaga } from "../features/pn/aar/saga/watchAarFlowSaga";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { notificationPermissionsListener } from "../features/pushNotifications/sagas/notificationPermissionsListener";
 import { profileAndSystemNotificationsPermissions } from "../features/pushNotifications/sagas/profileAndSystemNotificationsPermissions";
@@ -137,6 +137,12 @@ import { showSessionExpirationBlockingScreenSelector } from "../features/authent
 import { watchCdcSaga } from "../features/bonus/cdc/common/saga";
 import { watchMessagesSaga } from "../features/messages/saga";
 import { watchWalletSaga } from "../features/wallet/saga";
+import { watchSendLollipopLambda } from "../features/pn/lollipopLambda/saga";
+import {
+  isAppSupportedSelector,
+  versionInfoDataSelector
+} from "../common/versionInfo/store/reducers/versionInfo";
+import { versionInfoLoadSuccess } from "../common/versionInfo/store/actions/versionInfo";
 import { maybeHandlePendingBackgroundActions } from "./backgroundActions";
 import { previousInstallationDataDeleteSaga } from "./installation";
 import {
@@ -145,7 +151,6 @@ import {
   initMixpanel,
   watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel
 } from "./mixpanel";
-import { setLanguageFromProfileIfExists } from "./preferences";
 import { askServicesPreferencesModeOptin } from "./services/servicesOptinSaga";
 import { checkAppHistoryVersionSaga } from "./startup/appVersionHistorySaga";
 import { checkAcceptedTosSaga } from "./startup/checkAcceptedTosSaga";
@@ -165,7 +170,7 @@ export const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
  * - On FL session refresh
  * - When accessing the Wallet mini app in offline mode
  */
-// eslint-disable-next-line sonarjs/cognitive-complexity, complexity
+// eslint-disable-next-line complexity
 export function* initializeApplicationSaga(
   startupAction?: ActionType<typeof startApplicationInitialization>
 ): Generator<ReduxSagaEffect, void, any> {
@@ -263,6 +268,18 @@ export function* initializeApplicationSaga(
   const remoteConfig = yield* select(remoteConfigSelector);
   if (O.isNone(remoteConfig)) {
     yield* take(backendStatusLoadSuccess);
+  }
+
+  // Before proceeding, ensure that version info is loaded and app is supported
+  // we need to check that the min app version is satisfied to proceed any other step
+  const versionInfo = yield* select(versionInfoDataSelector);
+  if (versionInfo === null) {
+    yield* take(versionInfoLoadSuccess);
+  }
+
+  const isAppSupported = yield* select(isAppSupportedSelector);
+  if (!isAppSupported) {
+    return;
   }
 
   // ingress screen
@@ -518,10 +535,6 @@ export function* initializeApplicationSaga(
       return;
     }
 
-    if (!handleSessionExpiration) {
-      yield* call(setLanguageFromProfileIfExists);
-    }
-
     const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
     if (isFastLoginEnabled) {
       // At application startup, the state of the refresh token is "idle".
@@ -547,9 +560,6 @@ export function* initializeApplicationSaga(
   // Ask to accept ToS if there is a new available version
   yield* call(checkAcceptedTosSaga, userProfile);
 
-  if (!handleSessionExpiration) {
-    yield* call(setLanguageFromProfileIfExists);
-  }
   // check if the user expressed preference about mixpanel, if not ask for it
   yield* call(askMixpanelOptIn);
 
@@ -626,8 +636,9 @@ export function* initializeApplicationSaga(
     // Start watching for PN actions
     yield* fork(watchPnSaga, sessionToken);
 
-    const aarRemoteEnabled = yield* select(isAarRemoteEnabled);
+    yield* fork(watchSendLollipopLambda, sessionToken, keyInfo);
 
+    const aarRemoteEnabled = yield* select(isAarRemoteEnabled);
     if (aarRemoteEnabled) {
       yield* fork(watchAarFlowSaga, sessionToken, keyInfo);
     }

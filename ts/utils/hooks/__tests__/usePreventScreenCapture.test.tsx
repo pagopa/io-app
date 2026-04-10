@@ -1,7 +1,7 @@
 import {
-  enableSecureView,
-  disableSecureView
-} from "react-native-screenshot-prevent";
+  preventScreenCaptureAsync,
+  allowScreenCaptureAsync
+} from "expo-screen-capture";
 import { createStore } from "redux";
 import { appReducer } from "../../../store/reducers";
 import { applicationChangeState } from "../../../store/actions/application";
@@ -13,9 +13,9 @@ jest.mock("../../environment", () => ({
   isDevEnv: false
 }));
 
-jest.mock("react-native-screenshot-prevent", () => ({
-  enableSecureView: jest.fn(),
-  disableSecureView: jest.fn()
+jest.mock("expo-screen-capture", () => ({
+  preventScreenCaptureAsync: jest.fn(),
+  allowScreenCaptureAsync: jest.fn()
 }));
 
 describe("usePreventScreenCapture", () => {
@@ -27,10 +27,10 @@ describe("usePreventScreenCapture", () => {
 
   it("calls native methods once if mounted & unmounted", async () => {
     const { unmount } = renderHook();
-    expect(enableSecureView).toHaveBeenCalledTimes(1);
+    expect(preventScreenCaptureAsync).toHaveBeenCalledTimes(1);
     unmount();
     jest.advanceTimersByTime(500);
-    expect(disableSecureView).toHaveBeenCalledTimes(1);
+    expect(allowScreenCaptureAsync).toHaveBeenCalledTimes(1);
   });
 
   it("does not re-allow screen capture when two hooks are active and one is unmounted", async () => {
@@ -38,8 +38,8 @@ describe("usePreventScreenCapture", () => {
     const hook2 = renderHook({ key: "B" });
     hook2.unmount();
     jest.advanceTimersByTime(500);
-    expect(enableSecureView).toHaveBeenCalledTimes(2);
-    expect(disableSecureView).toHaveBeenCalledTimes(0);
+    expect(preventScreenCaptureAsync).toHaveBeenCalledTimes(2);
+    expect(allowScreenCaptureAsync).toHaveBeenCalledTimes(0);
   });
 });
 

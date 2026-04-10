@@ -11,7 +11,8 @@ import {
   TrackCieCanProperties,
   TrackItWalletErrorCardReading,
   TrackItWalletCardReadingClose,
-  TrackIdMethodBottomsheetProperties
+  TrackIdMethodBottomsheetProperties,
+  ItwFallbackL2Flow
 } from "./types";
 import {
   ITW_IDENTIFICATION_ACTIONS_EVENTS,
@@ -144,13 +145,6 @@ export const trackItWalletSpidIDPSelected = (
   );
 };
 
-export const trackItWalletCiePinInfo = (itw_flow: ItwFlow) => {
-  void mixpanelTrack(
-    ITW_IDENTIFICATION_ACTIONS_EVENTS.ITW_CIE_PIN_INFO,
-    buildEventProperties("UX", "action", { itw_flow })
-  );
-};
-
 export const trackItWalletCiePinForgotten = (itw_flow: ItwFlow) => {
   void mixpanelTrack(
     ITW_IDENTIFICATION_ACTIONS_EVENTS.ITW_CIE_PIN_FORGOTTEN,
@@ -273,5 +267,39 @@ export const trackItwUserWithoutL3Requirements = (
   void mixpanelTrack(
     ITW_IDENTIFICATION_ERRORS_EVENTS.ITW_USER_WITHOUT_L3_REQUIREMENTS,
     buildEventProperties("KO", "screen_view", itwUserWithoutL3requirements)
+  );
+};
+
+export const trackItwUserWithoutCie = () => {
+  void mixpanelTrack(
+    ITW_IDENTIFICATION_ACTIONS_EVENTS.ITW_USER_WITHOUT_CIE,
+    buildEventProperties("UX", "action")
+  );
+};
+
+export const trackItwFallbackL2Flow = (
+  itwFallbackL2Flow: ItwFallbackL2Flow
+) => {
+  void mixpanelTrack(
+    ITW_IDENTIFICATION_SCREENVIEW_EVENTS.ITW_FALLBACK_L2_FLOW,
+    buildEventProperties("UX", "screen_view", itwFallbackL2Flow)
+  );
+};
+
+export const trackItwFallbackL2FlowStart = (
+  itwFallbackL2Flow: ItwFallbackL2Flow
+) => {
+  void mixpanelTrack(
+    ITW_IDENTIFICATION_ACTIONS_EVENTS.ITW_FALLBACK_L2_FLOW_START,
+    buildEventProperties("UX", "action", itwFallbackL2Flow)
+  );
+};
+
+export const trackItwFallbackL2FlowExit = (
+  itwFallbackL2Flow: ItwFallbackL2Flow
+) => {
+  void mixpanelTrack(
+    ITW_IDENTIFICATION_ACTIONS_EVENTS.ITW_FALLBACK_L2_FLOW_EXIT,
+    buildEventProperties("UX", "action", itwFallbackL2Flow)
   );
 };

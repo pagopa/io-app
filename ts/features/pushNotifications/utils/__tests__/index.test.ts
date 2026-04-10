@@ -3,6 +3,7 @@ import PushNotificationIOS, {
   AuthorizationStatus,
   PushNotificationPermissions
 } from "@react-native-community/push-notification-ios";
+import * as Sentry from "@sentry/react-native";
 import PushNotification from "react-native-push-notification";
 import NotificationsUtils from "react-native-notifications-utils";
 import {
@@ -27,17 +28,9 @@ jest.mock("@react-native-community/push-notification-ios", () => ({
 }));
 
 // As above
-const mockCaptureException = jest.fn();
-const mockCaptureMessage = jest.fn();
 jest.mock("@sentry/react-native", () => ({
-  captureException: (exception: any, hint?: unknown) => {
-    mockCaptureException(exception, hint);
-    return "";
-  },
-  captureMessage: (message: string, captureContext?: unknown) => {
-    mockCaptureMessage(message, captureContext);
-    return "";
-  }
+  captureException: jest.fn(),
+  captureMessage: jest.fn()
 }));
 
 // As above
@@ -78,13 +71,11 @@ const testCheckNotificationPermissionsThrowsiOS = () => {
 
     const hasPermission = await checkNotificationPermissions();
 
-    expect(mockCaptureException.mock.calls.length).toBe(1);
-    expect(mockCaptureException.mock.calls[0].length).toBeGreaterThanOrEqual(1);
-    expect(mockCaptureException.mock.calls[0][0]).toEqual(Error("Test error"));
+    expect(Sentry.captureException).toHaveBeenCalledTimes(1);
+    expect(Sentry.captureException).toHaveBeenCalledWith(Error("Test error"));
 
-    expect(mockCaptureMessage.mock.calls.length).toBe(1);
-    expect(mockCaptureMessage.mock.calls[0].length).toBeGreaterThanOrEqual(1);
-    expect(mockCaptureMessage.mock.calls[0][0]).toEqual(
+    expect(Sentry.captureMessage).toHaveBeenCalledTimes(1);
+    expect(Sentry.captureMessage).toHaveBeenCalledWith(
       "[PushNotifications] 'checkNotificationPermissions' has thrown an exception on iOS"
     );
 
@@ -101,13 +92,10 @@ const testCheckNotificationPermissionsThrowsAndroid = () => {
 
     const hasPermission = await checkNotificationPermissions();
 
-    expect(mockCaptureException.mock.calls.length).toBe(1);
-    expect(mockCaptureException.mock.calls[0].length).toBeGreaterThanOrEqual(1);
-    expect(mockCaptureException.mock.calls[0][0]).toEqual(Error("Test error"));
-
-    expect(mockCaptureMessage.mock.calls.length).toBe(1);
-    expect(mockCaptureMessage.mock.calls[0].length).toBeGreaterThanOrEqual(1);
-    expect(mockCaptureMessage.mock.calls[0][0]).toEqual(
+    expect(Sentry.captureException).toHaveBeenCalledTimes(1);
+    expect(Sentry.captureException).toHaveBeenCalledWith(Error("Test error"));
+    expect(Sentry.captureMessage).toHaveBeenCalledTimes(1);
+    expect(Sentry.captureMessage).toHaveBeenCalledWith(
       "[PushNotifications] 'checkNotificationPermissions' has thrown an exception on Android"
     );
 
@@ -249,8 +237,8 @@ const testRequestNotificationPermissionsOniOS = () => {
 
       const permissionHasBeenGiven = await requestNotificationPermissions();
 
-      expect(mockCaptureException.mock.calls.length).toBe(0);
-      expect(mockCaptureMessage.mock.calls.length).toBe(0);
+      expect(Sentry.captureException).toHaveBeenCalledTimes(0);
+      expect(Sentry.captureMessage).toHaveBeenCalledTimes(0);
       expect(permissionHasBeenGiven).toBe(expectedResult);
     });
   });
@@ -283,8 +271,8 @@ const testRequestNotificationPermissionsOnAndroid = () => {
 
       const permissionHasBeenGiven = await requestNotificationPermissions();
 
-      expect(mockCaptureException.mock.calls.length).toBe(0);
-      expect(mockCaptureMessage.mock.calls.length).toBe(0);
+      expect(Sentry.captureException).toHaveBeenCalledTimes(0);
+      expect(Sentry.captureMessage).toHaveBeenCalledTimes(0);
       expect(permissionHasBeenGiven).toBe(expectedResult);
     });
   });
@@ -302,13 +290,11 @@ const testRequestNotificationPermissionsOniOSThrows = () => {
 
     const permissionHasBeenGiven = await requestNotificationPermissions();
 
-    expect(mockCaptureException.mock.calls.length).toBe(1);
-    expect(mockCaptureException.mock.calls[0].length).toBeGreaterThanOrEqual(1);
-    expect(mockCaptureException.mock.calls[0][0]).toEqual("Test rejection");
+    expect(Sentry.captureException).toHaveBeenCalledTimes(1);
+    expect(Sentry.captureException).toHaveBeenCalledWith("Test rejection");
 
-    expect(mockCaptureMessage.mock.calls.length).toBe(1);
-    expect(mockCaptureMessage.mock.calls[0].length).toBeGreaterThanOrEqual(1);
-    expect(mockCaptureMessage.mock.calls[0][0]).toEqual(
+    expect(Sentry.captureMessage).toHaveBeenCalledTimes(1);
+    expect(Sentry.captureMessage).toHaveBeenCalledWith(
       "[PushNotifications] 'requestNotificationPermissions' has thrown an exception on iOS"
     );
 
@@ -328,13 +314,11 @@ const testRequestNotificationPermissionsOnAndroidThrows = () => {
 
     const permissionHasBeenGiven = await requestNotificationPermissions();
 
-    expect(mockCaptureException.mock.calls.length).toBe(1);
-    expect(mockCaptureException.mock.calls[0].length).toBeGreaterThanOrEqual(1);
-    expect(mockCaptureException.mock.calls[0][0]).toEqual("Test rejection");
+    expect(Sentry.captureException).toHaveBeenCalledTimes(1);
+    expect(Sentry.captureException).toHaveBeenCalledWith("Test rejection");
 
-    expect(mockCaptureMessage.mock.calls.length).toBe(1);
-    expect(mockCaptureMessage.mock.calls[0].length).toBeGreaterThanOrEqual(1);
-    expect(mockCaptureMessage.mock.calls[0][0]).toEqual(
+    expect(Sentry.captureMessage).toHaveBeenCalledTimes(1);
+    expect(Sentry.captureMessage).toHaveBeenCalledWith(
       "[PushNotifications] 'requestNotificationPermissions' has thrown an exception on Android"
     );
 

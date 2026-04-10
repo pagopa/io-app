@@ -7,7 +7,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { isUserSelectedPaymentSelector } from "../../../messages/store/reducers/payments";
 import { thirdPartyFromIdSelector } from "../../../messages/store/reducers/thirdPartyById";
 import { aarFlowReducer } from "../../aar/store/reducers";
-import { AARFlowState } from "../../aar/utils/stateUtils";
+import { AarFlowState } from "../../aar/utils/stateUtils";
 import {
   persistedPnBannerDismissReducer,
   PnBannerDismissState
@@ -23,13 +23,18 @@ import {
   TempAarMandateState,
   tempAarMandateReducer
 } from "../../aar/store/reducers/tempAarMandate";
+import {
+  lollipopLambdaReducer,
+  SENDLollipopLambdaState
+} from "../../lollipopLambda/store/reducers";
 import { pnActivationReducer, PnActivationState } from "./activation";
 
 export type PnState = {
   activation: PnActivationState;
   bannerDismiss: PnBannerDismissState & PersistPartial;
-  aarFlow: AARFlowState;
+  aarFlow: AarFlowState;
   loginEngagement: SENDLoginEngagementState & PersistPartial;
+  lollipopLambda: SENDLollipopLambdaState;
   tempAarMandate: TempAarMandateState;
 };
 
@@ -38,6 +43,7 @@ export const pnReducer = combineReducers<PnState, Action>({
   bannerDismiss: persistedPnBannerDismissReducer,
   aarFlow: aarFlowReducer,
   loginEngagement: persistedSendLoginEngagementReducer,
+  lollipopLambda: lollipopLambdaReducer,
   tempAarMandate: tempAarMandateReducer
 });
 

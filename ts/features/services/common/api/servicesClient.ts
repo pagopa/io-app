@@ -1,8 +1,7 @@
 import { createClient } from "../../../../../definitions/services/client";
-import { SessionToken } from "../../../../types/SessionToken";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 
-export const createServicesClient = (baseUrl: string, token: SessionToken) =>
+export const createServicesClient = (baseUrl: string, token: string) =>
   createClient<"Bearer">({
     baseUrl,
     fetchApi: defaultRetryingFetch(),

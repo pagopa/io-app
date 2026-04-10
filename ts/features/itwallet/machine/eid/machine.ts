@@ -84,6 +84,7 @@ export const itwEidIssuanceMachine = setup({
     storeWalletInstanceAttestation: notImplemented,
     storeAuthLevel: notImplemented,
     storeEidCredential: notImplemented,
+    storeCredentialUpgradeFailures: notImplemented,
     handleSessionExpired: notImplemented,
     resetWalletInstance: notImplemented,
     freezeSimplifiedActivationRequirements: notImplemented,
@@ -102,6 +103,12 @@ export const itwEidIssuanceMachine = setup({
      * Context manipulation
      */
 
+    setCieIdIdentificationL2: assign(() => ({
+      identification: {
+        mode: "cieId",
+        level: "L2"
+      }
+    })),
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     loadPidIntoContext: notImplemented,
     /**
@@ -227,6 +234,14 @@ export const itwEidIssuanceMachine = setup({
     reset: {
       target: "#itwEidIssuanceMachine.Idle"
     },
+    // This action should only be used in the playground
+    "simulate-failure": {
+      actions: assign(({ event }) => {
+        assertEvent(event, "simulate-failure");
+        return { failure: event.failure };
+      }),
+      target: "#itwEidIssuanceMachine.Failure"
+    },
     // This action restarts the machine, resetting it to the Idle state before starting it again.
     // This is crucial if we want to restart the machine without having a possible race condition with two events sent simultaneously.
     restart: {
@@ -235,7 +250,8 @@ export const itwEidIssuanceMachine = setup({
         raise(({ event }) => ({
           type: "start",
           mode: event.mode,
-          level: event.level
+          level: event.level,
+          credentialType: event.credentialType
         }))
       ]
     }
@@ -507,12 +523,7 @@ export const itwEidIssuanceMachine = setup({
                 guard: ({ event }) => event.mode === "cieId",
                 actions: [
                   "trackIdentificationMethodSelected",
-                  assign(({ context }) => ({
-                    identification: {
-                      mode: "cieId",
-                      level: context.level === "l2" ? "L2" : "L3"
-                    }
-                  }))
+                  "setCieIdIdentificationL2"
                 ],
                 target: "#itwEidIssuanceMachine.UserIdentification.CieID"
               }
@@ -635,7 +646,7 @@ export const itwEidIssuanceMachine = setup({
               tags: [ItwTags.Loading],
               invoke: {
                 src: "startAuthFlow",
-                // eslint-disable-next-line sonarjs/no-identical-functions
+
                 input: ({ context }) => ({
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
@@ -818,7 +829,11 @@ export const itwEidIssuanceMachine = setup({
               states: {
                 Identification: {
                   on: {
-                    back: "#itwEidIssuanceMachine.UserIdentification.Identification"
+                    back: "#itwEidIssuanceMachine.UserIdentification.Identification",
+                    close: {
+                      target: "#itwEidIssuanceMachine.Idle",
+                      actions: "closeIssuance"
+                    }
                   }
                 },
                 PreparationCie: {
@@ -848,19 +863,13 @@ export const itwEidIssuanceMachine = setup({
             "select-identification-mode": [
               {
                 guard: ({ event }) => event.mode === "spid",
-                actions: "trackIdentificationMethodSelected",
                 target: "#itwEidIssuanceMachine.UserIdentification.Spid"
               },
               {
                 guard: ({ event }) => event.mode === "cieId",
                 actions: [
                   "trackIdentificationMethodSelected",
-                  assign(() => ({
-                    identification: {
-                      mode: "cieId",
-                      level: "L3"
-                    }
-                  }))
+                  "setCieIdIdentificationL2"
                 ],
                 target: "#itwEidIssuanceMachine.UserIdentification.CieID"
               }
@@ -916,8 +925,8 @@ export const itwEidIssuanceMachine = setup({
             "Displays informations to prepare the CIE for reading (currently not used for CAN flow).",
           entry: "navigateToCieCardPreparationScreen",
           on: {
-            back: {
-              target: "WaitingForCan"
+            close: {
+              actions: "closeIssuance"
             },
             next: {
               target: "DisplayingCieNfcPreparationInstructions"
@@ -929,6 +938,9 @@ export const itwEidIssuanceMachine = setup({
             "Once the challenge is initialized, we show NFC instructions with a dedicated screen.",
           entry: "navigateToCieCanPreparationScreen",
           on: {
+            close: {
+              actions: "closeIssuance"
+            },
             next: {
               target: "WaitingForCan"
             }
@@ -1152,6 +1164,7 @@ export const itwEidIssuanceMachine = setup({
           entry: "navigateToSuccessScreen",
           tags: [ItwTags.Loading],
           invoke: {
+            id: "credentialUpgradeMachine",
             src: "credentialUpgradeMachine",
             input: ({ context }) => {
               assert(context.eid, "PID must be defined for credential upgrade");
@@ -1171,9 +1184,12 @@ export const itwEidIssuanceMachine = setup({
             },
             onDone: {
               description: "Credentials upgrade completed successfully",
-              actions: assign(({ event }) => ({
-                failedCredentials: event.output.failedCredentials
-              })),
+              actions: [
+                assign(({ event }) => ({
+                  failedCredentials: event.output.failedCredentials
+                })),
+                "storeCredentialUpgradeFailures"
+              ],
               target: "#itwEidIssuanceMachine.Success"
             },
             onError: {

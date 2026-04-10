@@ -211,6 +211,16 @@ exports[`CieLoginConfigScreen renders the locked screen initially (PIN view) 1`]
                           ]
                         }
                         decelerationRate="normal"
+                        jestAnimatedProps={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestAnimatedStyle={
+                          {
+                            "value": {},
+                          }
+                        }
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -279,6 +289,30 @@ exports[`CieLoginConfigScreen renders the locked screen initially (PIN view) 1`]
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "transform": [
+                                      {
+                                        "translateX": 0,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "flexGrow": 1,
+                                  },
+                                ]
+                              }
                               style={
                                 [
                                   {
@@ -309,10 +343,10 @@ exports[`CieLoginConfigScreen renders the locked screen initially (PIN view) 1`]
                                     "max": undefined,
                                     "min": undefined,
                                     "now": undefined,
-                                    "text": "",
+                                    "text": undefined,
                                   }
                                 }
-                                accessible={true}
+                                accessible={false}
                                 collapsable={false}
                                 focusable={true}
                                 onBlur={[Function]}
@@ -324,17 +358,16 @@ exports[`CieLoginConfigScreen renders the locked screen initially (PIN view) 1`]
                                 onResponderTerminate={[Function]}
                                 onResponderTerminationRequest={[Function]}
                                 onStartShouldSetResponder={[Function]}
-                                style={
-                                  {
-                                    "columnGap": 8,
-                                    "flexDirection": "row",
-                                    "justifyContent": "space-between",
-                                  }
-                                }
                               >
                                 <TextInput
+                                  accessibilityValue={
+                                    {
+                                      "text": "",
+                                    }
+                                  }
                                   accessible={true}
                                   autoFocus={false}
+                                  caretHidden={true}
                                   inputMode="numeric"
                                   keyboardType="numeric"
                                   maxLength={6}
@@ -344,187 +377,209 @@ exports[`CieLoginConfigScreen renders the locked screen initially (PIN view) 1`]
                                   returnKeyType="done"
                                   secureTextEntry={true}
                                   style={
-                                    {
-                                      "opacity": 0,
-                                      "position": "absolute",
-                                    }
+                                    [
+                                      {
+                                        "bottom": 0,
+                                        "left": 0,
+                                        "position": "absolute",
+                                        "right": 0,
+                                        "top": 0,
+                                      },
+                                      {
+                                        "opacity": 0.01,
+                                      },
+                                    ]
                                   }
                                   textContentType="oneTimeCode"
                                   value=""
                                 />
                                 <View
-                                  accessible={false}
+                                  accessibilityElementsHidden={true}
+                                  importantForAccessibility="no-hide-descendants"
                                   style={
                                     {
-                                      "aspectRatio": 0.75,
-                                      "flex": 1,
-                                      "maxHeight": 64,
-                                      "maxWidth": 48,
+                                      "columnGap": 8,
+                                      "flexDirection": "row",
+                                      "flexGrow": 1,
+                                      "justifyContent": "space-between",
+                                      "zIndex": 10,
                                     }
                                   }
                                 >
                                   <View
+                                    accessible={false}
                                     style={
-                                      [
-                                        {
-                                          "alignItems": "center",
-                                          "borderCurve": "continuous",
-                                          "borderRadius": 8,
-                                          "flex": 1,
-                                          "justifyContent": "center",
-                                        },
-                                        {
-                                          "borderColor": "#636B82",
-                                          "borderWidth": 1,
-                                        },
-                                      ]
+                                      {
+                                        "aspectRatio": 0.75,
+                                        "flex": 1,
+                                        "maxHeight": 64,
+                                        "maxWidth": 48,
+                                      }
                                     }
-                                  />
-                                </View>
-                                <View
-                                  accessible={false}
-                                  style={
-                                    {
-                                      "aspectRatio": 0.75,
-                                      "flex": 1,
-                                      "maxHeight": 64,
-                                      "maxWidth": 48,
-                                    }
-                                  }
-                                >
+                                  >
+                                    <View
+                                      style={
+                                        [
+                                          {
+                                            "alignItems": "center",
+                                            "borderCurve": "continuous",
+                                            "borderRadius": 8,
+                                            "flex": 1,
+                                            "justifyContent": "center",
+                                          },
+                                          {
+                                            "borderColor": "#636B82",
+                                            "borderWidth": 1,
+                                          },
+                                        ]
+                                      }
+                                    />
+                                  </View>
                                   <View
+                                    accessible={false}
                                     style={
-                                      [
-                                        {
-                                          "alignItems": "center",
-                                          "borderCurve": "continuous",
-                                          "borderRadius": 8,
-                                          "flex": 1,
-                                          "justifyContent": "center",
-                                        },
-                                        {
-                                          "borderColor": "#636B82",
-                                          "borderWidth": 1,
-                                        },
-                                      ]
+                                      {
+                                        "aspectRatio": 0.75,
+                                        "flex": 1,
+                                        "maxHeight": 64,
+                                        "maxWidth": 48,
+                                      }
                                     }
-                                  />
-                                </View>
-                                <View
-                                  accessible={false}
-                                  style={
-                                    {
-                                      "aspectRatio": 0.75,
-                                      "flex": 1,
-                                      "maxHeight": 64,
-                                      "maxWidth": 48,
-                                    }
-                                  }
-                                >
+                                  >
+                                    <View
+                                      style={
+                                        [
+                                          {
+                                            "alignItems": "center",
+                                            "borderCurve": "continuous",
+                                            "borderRadius": 8,
+                                            "flex": 1,
+                                            "justifyContent": "center",
+                                          },
+                                          {
+                                            "borderColor": "#636B82",
+                                            "borderWidth": 1,
+                                          },
+                                        ]
+                                      }
+                                    />
+                                  </View>
                                   <View
+                                    accessible={false}
                                     style={
-                                      [
-                                        {
-                                          "alignItems": "center",
-                                          "borderCurve": "continuous",
-                                          "borderRadius": 8,
-                                          "flex": 1,
-                                          "justifyContent": "center",
-                                        },
-                                        {
-                                          "borderColor": "#636B82",
-                                          "borderWidth": 1,
-                                        },
-                                      ]
+                                      {
+                                        "aspectRatio": 0.75,
+                                        "flex": 1,
+                                        "maxHeight": 64,
+                                        "maxWidth": 48,
+                                      }
                                     }
-                                  />
-                                </View>
-                                <View
-                                  accessible={false}
-                                  style={
-                                    {
-                                      "aspectRatio": 0.75,
-                                      "flex": 1,
-                                      "maxHeight": 64,
-                                      "maxWidth": 48,
-                                    }
-                                  }
-                                >
+                                  >
+                                    <View
+                                      style={
+                                        [
+                                          {
+                                            "alignItems": "center",
+                                            "borderCurve": "continuous",
+                                            "borderRadius": 8,
+                                            "flex": 1,
+                                            "justifyContent": "center",
+                                          },
+                                          {
+                                            "borderColor": "#636B82",
+                                            "borderWidth": 1,
+                                          },
+                                        ]
+                                      }
+                                    />
+                                  </View>
                                   <View
+                                    accessible={false}
                                     style={
-                                      [
-                                        {
-                                          "alignItems": "center",
-                                          "borderCurve": "continuous",
-                                          "borderRadius": 8,
-                                          "flex": 1,
-                                          "justifyContent": "center",
-                                        },
-                                        {
-                                          "borderColor": "#636B82",
-                                          "borderWidth": 1,
-                                        },
-                                      ]
+                                      {
+                                        "aspectRatio": 0.75,
+                                        "flex": 1,
+                                        "maxHeight": 64,
+                                        "maxWidth": 48,
+                                      }
                                     }
-                                  />
-                                </View>
-                                <View
-                                  accessible={false}
-                                  style={
-                                    {
-                                      "aspectRatio": 0.75,
-                                      "flex": 1,
-                                      "maxHeight": 64,
-                                      "maxWidth": 48,
-                                    }
-                                  }
-                                >
+                                  >
+                                    <View
+                                      style={
+                                        [
+                                          {
+                                            "alignItems": "center",
+                                            "borderCurve": "continuous",
+                                            "borderRadius": 8,
+                                            "flex": 1,
+                                            "justifyContent": "center",
+                                          },
+                                          {
+                                            "borderColor": "#636B82",
+                                            "borderWidth": 1,
+                                          },
+                                        ]
+                                      }
+                                    />
+                                  </View>
                                   <View
+                                    accessible={false}
                                     style={
-                                      [
-                                        {
-                                          "alignItems": "center",
-                                          "borderCurve": "continuous",
-                                          "borderRadius": 8,
-                                          "flex": 1,
-                                          "justifyContent": "center",
-                                        },
-                                        {
-                                          "borderColor": "#636B82",
-                                          "borderWidth": 1,
-                                        },
-                                      ]
+                                      {
+                                        "aspectRatio": 0.75,
+                                        "flex": 1,
+                                        "maxHeight": 64,
+                                        "maxWidth": 48,
+                                      }
                                     }
-                                  />
-                                </View>
-                                <View
-                                  accessible={false}
-                                  style={
-                                    {
-                                      "aspectRatio": 0.75,
-                                      "flex": 1,
-                                      "maxHeight": 64,
-                                      "maxWidth": 48,
-                                    }
-                                  }
-                                >
+                                  >
+                                    <View
+                                      style={
+                                        [
+                                          {
+                                            "alignItems": "center",
+                                            "borderCurve": "continuous",
+                                            "borderRadius": 8,
+                                            "flex": 1,
+                                            "justifyContent": "center",
+                                          },
+                                          {
+                                            "borderColor": "#636B82",
+                                            "borderWidth": 1,
+                                          },
+                                        ]
+                                      }
+                                    />
+                                  </View>
                                   <View
+                                    accessible={false}
                                     style={
-                                      [
-                                        {
-                                          "alignItems": "center",
-                                          "borderCurve": "continuous",
-                                          "borderRadius": 8,
-                                          "flex": 1,
-                                          "justifyContent": "center",
-                                        },
-                                        {
-                                          "borderColor": "#636B82",
-                                          "borderWidth": 1,
-                                        },
-                                      ]
+                                      {
+                                        "aspectRatio": 0.75,
+                                        "flex": 1,
+                                        "maxHeight": 64,
+                                        "maxWidth": 48,
+                                      }
                                     }
-                                  />
+                                  >
+                                    <View
+                                      style={
+                                        [
+                                          {
+                                            "alignItems": "center",
+                                            "borderCurve": "continuous",
+                                            "borderRadius": 8,
+                                            "flex": 1,
+                                            "justifyContent": "center",
+                                          },
+                                          {
+                                            "borderColor": "#636B82",
+                                            "borderWidth": 1,
+                                          },
+                                        ]
+                                      }
+                                    />
+                                  </View>
                                 </View>
                               </View>
                               <View
@@ -552,6 +607,29 @@ exports[`CieLoginConfigScreen renders the locked screen initially (PIN view) 1`]
                       >
                         <View
                           accessibilityRole="header"
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "rgba(255, 255, 255, 1)",
+                                "borderColor": "rgba(210, 214, 227, 0)",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "borderBottomWidth": 1,
+                                "borderColor": "rgba(210,214,227,0)",
+                              },
+                              {},
+                            ]
+                          }
                           style={
                             [
                               {
@@ -560,13 +638,38 @@ exports[`CieLoginConfigScreen renders the locked screen initially (PIN view) 1`]
                               },
                               {},
                               {
-                                "backgroundColor": undefined,
-                                "borderColor": undefined,
+                                "backgroundColor": "rgba(255, 255, 255, 1)",
+                                "borderColor": "rgba(210, 214, 227, 0)",
                               },
                             ]
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "marginTop": 0,
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "flexGrow": 1,
+                                  "height": 56,
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 24,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -618,6 +721,35 @@ exports[`CieLoginConfigScreen renders the locked screen initially (PIN view) 1`]
                               onStartShouldSetResponder={[Function]}
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "height": 24,
+                                      "width": 24,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -628,7 +760,13 @@ exports[`CieLoginConfigScreen renders the locked screen initially (PIN view) 1`]
                                       "height": 24,
                                       "width": 24,
                                     },
-                                    false,
+                                    {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
                                   ]
                                 }
                               >
@@ -637,17 +775,25 @@ exports[`CieLoginConfigScreen renders the locked screen initially (PIN view) 1`]
                                   accessibilityLabel=""
                                   accessible={false}
                                   align="xMidYMid"
-                                  animatedProps={
-                                    {
-                                      "color": undefined,
-                                    }
-                                  }
                                   bbHeight={36}
                                   bbWidth={36}
+                                  collapsable={false}
                                   color="#0E0F13"
                                   focusable={false}
                                   height={36}
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {
+                                        "color": "rgba(14, 15, 19, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
@@ -713,13 +859,34 @@ exports[`CieLoginConfigScreen renders the locked screen initially (PIN view) 1`]
                               <Text
                                 accessible={false}
                                 allowFontScaling={true}
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "opacity": 0,
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "color": "#0E0F13",
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
                                 maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -732,7 +899,7 @@ exports[`CieLoginConfigScreen renders the locked screen initially (PIN view) 1`]
                                         "textAlign": "center",
                                       },
                                       {
-                                        "opacity": undefined,
+                                        "opacity": 0,
                                       },
                                     ],
                                   ]

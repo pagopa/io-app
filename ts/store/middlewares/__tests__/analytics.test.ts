@@ -16,7 +16,6 @@ import {
 } from "../../../features/authentication/common/store/actions";
 import { cieAuthenticationError } from "../../../features/authentication/login/cie/store/actions";
 import { loadAvailableBonuses } from "../../../features/bonus/common/store/actions/availableBonusesTypes";
-import { SessionToken } from "../../../types/SessionToken";
 import {
   analyticsAuthenticationCompleted,
   analyticsAuthenticationStarted
@@ -243,7 +242,7 @@ describe("analytics", () => {
 
     it("should call 'mixpanelTrack' for 'loginFailure' with proper parameters", () => {
       const action = loginFailure({
-        error: Error(),
+        error: Error("A reason"),
         idp: undefined
       });
 
@@ -252,11 +251,18 @@ describe("analytics", () => {
       expect(mockMixpanelTrack.mock.calls.length).toBe(1);
       expect(mockMixpanelTrack.mock.calls[0].length).toBe(2);
       expect(mockMixpanelTrack.mock.calls[0][0]).toBe(action.type);
+      expect(mockMixpanelTrack.mock.calls[0][1]).toEqual({
+        event_category: "TECH",
+        event_type: "error",
+        flow: "auth",
+        reason: "A reason",
+        idp: undefined
+      });
     });
 
     it("should call 'mixpanelTrack' for 'loginSuccess' with proper parameters", () => {
       const action = loginSuccess({
-        token: "" as SessionToken,
+        token: "mock-token",
         idp: "test"
       });
 

@@ -1,22 +1,24 @@
+import { Banner } from "@pagopa/io-app-design-system";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { ComponentProps, useCallback, useMemo } from "react";
-import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import {
+  trackItwDiscoveryBanner,
+  trackItwDiscoveryBannerClosure,
+  trackItwDiscoveryBannerTap
+} from "../../analytics";
+import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum";
 import { ItwEngagementBanner } from "../../common/components/ItwEngagementBanner";
 import { itwCloseBanner } from "../../common/store/actions/banners";
+import { itwIsWalletInstanceRemotelyActiveSelector } from "../../common/store/selectors/preferences";
 import {
   itwIsMdlPresentSelector,
   itwIsWalletEmptySelector
 } from "../../credentials/store/selectors";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
-import {
-  trackItwDiscoveryBannerClosure,
-  trackItwDiscoveryBannerTap,
-  trackItwDiscoveryBanner
-} from "../../analytics";
-import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum";
 
 type Props = {
   /** Flow type to determine dismissal logic and tracking properties  */
@@ -40,11 +42,17 @@ export const ItwDiscoveryBanner = ({
   const dispatch = useIODispatch();
   const route = useRoute();
 
+  const isWalletInstanceRemotelyActive = useIOSelector(
+    itwIsWalletInstanceRemotelyActiveSelector
+  );
   const isWalletActive = useIOSelector(itwLifecycleIsValidSelector);
   const isWalletEmpty = useIOSelector(itwIsWalletEmptySelector);
   const hasMdl = useIOSelector(itwIsMdlPresentSelector);
 
   const bannerId = useMemo(() => {
+    if (isWalletInstanceRemotelyActive) {
+      return "itwDeviceChangedBannerPid";
+    }
     if (!isWalletActive) {
       return "itwDiscoveryItWalletNewUser";
     }
@@ -55,7 +63,7 @@ export const ItwDiscoveryBanner = ({
       return "itwDiscoveryItWalletDrivingLicenseIsPresent";
     }
     return "itwDiscoveryItWalletGenericCredentials";
-  }, [isWalletActive, isWalletEmpty, hasMdl]);
+  }, [isWalletActive, isWalletEmpty, hasMdl, isWalletInstanceRemotelyActive]);
 
   const bannerLanding = useMemo(() => {
     if (!isWalletActive || isWalletEmpty) {
@@ -90,7 +98,7 @@ export const ItwDiscoveryBanner = ({
   const navigateToDocumentOnboardingScreen = () => {
     trackItwDiscoveryBannerTap(trackBannerProperties);
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ONBOARDING
+      screen: ITW_ROUTES.L3_ONBOARDING
     });
   };
 
@@ -99,6 +107,26 @@ export const ItwDiscoveryBanner = ({
     onDismiss?.();
     dispatch(itwCloseBanner(`discovery_${flow}`));
   };
+
+  if (isWalletInstanceRemotelyActive) {
+    return (
+      <Banner
+        testID="itwReactivationBannerTestID"
+        title={I18n.t("features.itWallet.engagementBanner.reactivation.title")}
+        content={I18n.t(
+          "features.itWallet.engagementBanner.reactivation.description"
+        )}
+        action={I18n.t(
+          "features.itWallet.engagementBanner.reactivation.confirm"
+        )}
+        pictogramName="itWallet"
+        color="turquoise"
+        onClose={handleOnDismiss}
+        labelClose={I18n.t("global.buttons.close")}
+        onPress={navigateToDocumentOnboardingScreen}
+      />
+    );
+  }
 
   if (!isWalletActive) {
     return (

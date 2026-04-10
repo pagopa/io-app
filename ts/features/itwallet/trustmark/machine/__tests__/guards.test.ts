@@ -11,7 +11,8 @@ describe("itwTrustmarkMachine guards", () => {
       [true, new ItwSessionExpiredError()],
       [false, new Error()]
     ])("returns %s if the error is %s", (expected, error) => {
-      const { isSessionExpired } = createItwTrustmarkGuardsImplementation();
+      const { isSessionExpired } =
+        createItwTrustmarkGuardsImplementation("1.0.0");
       expect(isSessionExpired({ event: { error, type: "error" } })).toBe(
         expected
       );
@@ -34,7 +35,7 @@ describe("itwTrustmarkMachine guards", () => {
       jest.setSystemTime(timestamp);
 
       const { hasValidWalletInstanceAttestation } =
-        createItwTrustmarkGuardsImplementation();
+        createItwTrustmarkGuardsImplementation("1.0.0");
       expect(
         hasValidWalletInstanceAttestation({
           context: {
@@ -47,7 +48,7 @@ describe("itwTrustmarkMachine guards", () => {
 
     it("returns false if the WIA is not valid", () => {
       const { hasValidWalletInstanceAttestation } =
-        createItwTrustmarkGuardsImplementation();
+        createItwTrustmarkGuardsImplementation("1.0.0");
       expect(
         hasValidWalletInstanceAttestation({
           context: {

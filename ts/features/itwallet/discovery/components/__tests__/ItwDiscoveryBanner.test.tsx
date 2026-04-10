@@ -103,7 +103,7 @@ describe("ItwDiscoveryBanner", () => {
         fireEvent.press(actionButton);
 
         expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
-          screen: ITW_ROUTES.ONBOARDING
+          screen: ITW_ROUTES.L3_ONBOARDING
         });
       }
     );

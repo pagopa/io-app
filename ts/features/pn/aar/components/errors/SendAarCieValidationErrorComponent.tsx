@@ -3,15 +3,14 @@ import { OperationResultScreenContent } from "../../../../../components/screens/
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { sendAarInAppDelegationUrlSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
-import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../../utils/url";
 import { useSendAarFlowManager } from "../../hooks/useSendAarFlowManager";
 import { setAarFlowState } from "../../store/actions";
 import {
-  currentAARFlowStateAssistanceErrorCode,
-  currentAARFlowStateErrorDebugInfoSelector
+  currentAarFlowStateAssistanceErrorCode,
+  currentAarFlowStateErrorDebugInfoSelector
 } from "../../store/selectors";
-import { sendAARFlowStates } from "../../utils/stateUtils";
+import { sendAarFlowStates } from "../../utils/stateUtils";
 import {
   trackSendAarMandateCieErrorCac,
   trackSendAarMandateCieErrorClosure,
@@ -20,13 +19,14 @@ import {
   trackSendAarMandateCieErrorDetailHelp,
   trackSendAarMandateCieErrorRetry
 } from "../../analytics";
-import { sendAarErrorSupportBottomSheetComponent } from "./SendAARErrorComponent";
+import { useAarGenericErrorBottomSheet } from "./hooks/useAarGenericErrorBottomSheet";
+import { SendAarZendeskSecondLevelTag } from "./hooks/useAarStartSendZendeskSupport";
 
 export const CieExpiredComponent = () => {
   const { terminateFlow } = useSendAarFlowManager();
   const helpCenterUrl = useIOSelector(sendAarInAppDelegationUrlSelector);
   const assistanceErrorCode = useIOSelector(
-    currentAARFlowStateAssistanceErrorCode
+    currentAarFlowStateAssistanceErrorCode
   );
 
   return (
@@ -61,13 +61,13 @@ export const UnrelatedCieComponent = () => {
   const dispatch = useIODispatch();
   const { currentFlowData, terminateFlow } = useSendAarFlowManager();
   const assistanceErrorCode =
-    useIOSelector(currentAARFlowStateAssistanceErrorCode) ?? "";
+    useIOSelector(currentAarFlowStateAssistanceErrorCode) ?? "";
 
   const handleRetry = () => {
     trackSendAarMandateCieErrorRetry(assistanceErrorCode);
     if (
       currentFlowData.type === "ko" &&
-      currentFlowData.previousState.type === sendAARFlowStates.validatingMandate
+      currentFlowData.previousState.type === sendAarFlowStates.validatingMandate
     ) {
       const {
         mandateId,
@@ -77,7 +77,7 @@ export const UnrelatedCieComponent = () => {
       } = currentFlowData.previousState;
       dispatch(
         setAarFlowState({
-          type: sendAARFlowStates.cieCanAdvisory,
+          type: sendAarFlowStates.cieCanAdvisory,
           iun,
           mandateId,
           recipientInfo,
@@ -109,24 +109,42 @@ export const UnrelatedCieComponent = () => {
     />
   );
 };
+export const CieValidationExpiredTtlComponent = () => {
+  const { terminateFlow } = useSendAarFlowManager();
+  const assistanceErrorCode =
+    useIOSelector(currentAarFlowStateAssistanceErrorCode) ?? "";
+
+  return (
+    <OperationResultScreenContent
+      pictogram="ended"
+      testID="CieValidationExpiredTtlErrorComponent"
+      title={i18n.t("features.pn.aar.flow.ko.cieValidation.expiredTtl.title")}
+      subtitle={i18n.t("features.pn.aar.flow.ko.cieValidation.expiredTtl.body")}
+      action={{
+        testID: "CieValidationExpiredTtlCloseButton",
+        label: i18n.t("global.buttons.close"),
+        onPress: () => {
+          trackSendAarMandateCieErrorClosure(assistanceErrorCode);
+          terminateFlow();
+        }
+      }}
+    />
+  );
+};
 export const GenericCieValidationErrorComponent = () => {
   const { terminateFlow } = useSendAarFlowManager();
-  const debugInfo = useIOSelector(currentAARFlowStateErrorDebugInfoSelector);
+  const debugInfo = useIOSelector(currentAarFlowStateErrorDebugInfoSelector);
   const assistanceErrorCode = useIOSelector(
-    currentAARFlowStateAssistanceErrorCode
+    currentAarFlowStateAssistanceErrorCode
   );
-  const handleZendeskAssistance = () => {
-    trackSendAarMandateCieErrorDetailHelp(assistanceErrorCode ?? "");
-    dismiss();
-  };
-
-  const { bottomSheet, present, dismiss } = useIOBottomSheetModal({
-    component: sendAarErrorSupportBottomSheetComponent(
-      handleZendeskAssistance,
-      assistanceErrorCode,
-      () => trackSendAarMandateCieErrorDetailCode(assistanceErrorCode ?? "")
-    ),
-    title: ""
+  const { bottomSheet, present } = useAarGenericErrorBottomSheet({
+    errorName: assistanceErrorCode,
+    zendeskSecondLevelTag:
+      SendAarZendeskSecondLevelTag.IO_PROBLEMA_NOTIFICA_SEND_QR_ALTRA_PERSONA,
+    onCopyToClipboard: () =>
+      trackSendAarMandateCieErrorDetailCode(assistanceErrorCode ?? ""),
+    onStartAssistance: () =>
+      trackSendAarMandateCieErrorDetailHelp(assistanceErrorCode ?? "")
   });
 
   useDebugInfo(debugInfo);

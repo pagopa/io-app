@@ -12,10 +12,8 @@ import { useIOSelector } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { trackItwKoStateAction } from "../../analytics";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
-import {
-  useItwFailureSupportModal,
-  ZendeskSubcategoryValue
-} from "../../common/hooks/useItwFailureSupportModal";
+import { useItwFailureSupportModal } from "../../common/hooks/useItwFailureSupportModal";
+import { ZendeskSubcategoryValue } from "../../common/hooks/useItwZendeskSupport";
 import { getClaimsFullLocale } from "../../common/utils/itwClaimsUtils";
 import { StatusAssertionError } from "../../common/utils/itwCredentialStatusAssertionUtils.ts";
 import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
@@ -34,11 +32,21 @@ import { useCredentialEventsTracking } from "../hooks/useCredentialEventsTrackin
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 
+const ASSERTION_FAILED_FAQ_URL =
+  "https://assistenza.ioapp.it/hc/it/articles/43824826487953-Provo-ad-aggiungere-un-documento-al-Portafoglio-ma-ricevo-un-errore-dal-mio-dispositivo-Apple";
+
 // Errors that allow a user to send a support request to Zendesk
 const zendeskAssistanceErrors = [
   CredentialIssuanceFailureType.UNEXPECTED,
-  CredentialIssuanceFailureType.WALLET_PROVIDER_GENERIC
+  CredentialIssuanceFailureType.WALLET_PROVIDER_GENERIC,
+  CredentialIssuanceFailureType.HARDWARE_KEY_INVALID
 ];
+
+const failureLinkMapper: Partial<
+  Record<CredentialIssuanceFailureType, string>
+> = {
+  [CredentialIssuanceFailureType.HARDWARE_KEY_INVALID]: ASSERTION_FAILED_FAQ_URL
+};
 
 export const ItwIssuanceCredentialFailureScreen = () => {
   const failureOption =
@@ -96,7 +104,8 @@ const ContentView = ({ failure }: ContentViewProps) => {
     failure,
     credentialType: O.toUndefined(credentialType),
     supportChatEnabled: zendeskAssistanceErrors.includes(failure.type),
-    zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI
+    zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI,
+    supportLink: failureLinkMapper[failure.type]
   });
 
   const supportModalAction = {
@@ -176,6 +185,22 @@ const ContentView = ({ failure }: ContentViewProps) => {
             }
           };
         }
+        case CredentialIssuanceFailureType.HARDWARE_KEY_INVALID:
+          return {
+            title: I18n.t("features.itWallet.hardwareKeyInvalid.error.title"),
+            subtitle: I18n.t("features.itWallet.hardwareKeyInvalid.error.body"),
+            pictogram: "fatalError",
+            action: {
+              label: I18n.t(
+                "features.itWallet.hardwareKeyInvalid.error.primaryAction"
+              ),
+              onPress: supportModal.present
+            },
+            secondaryAction: {
+              label: I18n.t("global.buttons.close"),
+              onPress: closeIssuance
+            }
+          };
       }
     };
 
@@ -189,10 +214,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const resultScreenProps = getOperationResultScreenContentProps();
   return (
     <>
-      <OperationResultScreenContent
-        {...resultScreenProps}
-        subtitleProps={{ textBreakStrategy: "simple" }}
-      />
+      <OperationResultScreenContent {...resultScreenProps} />
       {supportModal.bottomSheet}
     </>
   );

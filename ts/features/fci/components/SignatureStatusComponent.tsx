@@ -1,4 +1,4 @@
-import { BodyProps, IOPictograms } from "@pagopa/io-app-design-system";
+import { IOPictograms } from "@pagopa/io-app-design-system";
 import { EmailString } from "@pagopa/ts-commons/lib/strings";
 import I18n from "i18next";
 import { Linking } from "react-native";
@@ -16,10 +16,13 @@ import {
   resetCustomFields,
   zendeskCategoryId,
   zendeskFCICategory,
-  zendeskFciId
+  zendeskFciId,
+  defaultZendeskBonusesCategory,
+  zendeskBonusAndInitiativeCategoryId
 } from "../../../utils/supportAssistance";
 import {
   zendeskSelectedCategory,
+  zendeskSelectedSubcategory,
   zendeskSupportStart
 } from "../../zendesk/store/actions";
 import { fciSignatureRequestIdSelector } from "../store/reducers/fciSignatureRequest";
@@ -32,8 +35,8 @@ export type Props = WithTestID<{
   retry?: boolean;
   assistance?: boolean;
   onPress: () => void;
+  onPressAssistance?: () => void;
 }>;
-
 const SignatureStatusComponent = ({
   title,
   subTitle,
@@ -42,7 +45,8 @@ const SignatureStatusComponent = ({
   retry,
   assistance,
   onPress,
-  testID
+  testID,
+  onPressAssistance
 }: Props) => {
   const dispatch = useIODispatch();
   const signatureRequestId = useIOSelector(fciSignatureRequestIdSelector);
@@ -51,7 +55,14 @@ const SignatureStatusComponent = ({
 
   const zendeskAssistanceLogAndStart = () => {
     resetCustomFields();
-    addTicketCustomField(zendeskCategoryId, zendeskFCICategory.value);
+    addTicketCustomField(
+      zendeskCategoryId,
+      defaultZendeskBonusesCategory.value
+    );
+    addTicketCustomField(
+      zendeskBonusAndInitiativeCategoryId,
+      zendeskFCICategory.value
+    );
     addTicketCustomField(zendeskFciId, signatureRequestId ?? "");
     dispatch(
       zendeskSupportStart({
@@ -61,10 +72,14 @@ const SignatureStatusComponent = ({
         }
       })
     );
-    dispatch(zendeskSelectedCategory(zendeskFCICategory));
+    dispatch(zendeskSelectedCategory(defaultZendeskBonusesCategory));
+    dispatch(zendeskSelectedSubcategory(zendeskFCICategory));
   };
 
   const handleAskAssistance = () => {
+    if (onPressAssistance) {
+      onPressAssistance();
+    }
     switch (choosenTool) {
       case ToolEnum.zendesk:
         zendeskAssistanceLogAndStart();
@@ -72,6 +87,9 @@ const SignatureStatusComponent = ({
     }
   };
 
+  // If the button text changes in the future, you will need to update
+  // the properties tracked in Analytics where the same texts are used
+  // (e.g., FCI_SIGNATURE_DETAIL_FAILURE_ACTION).
   const retryButtonProps = {
     testID: "FciRetryButtonTestID",
     onPress,
@@ -122,43 +140,18 @@ const SignatureStatusComponent = ({
     };
   };
 
-  /* This is a result of a quick refactor. If there's an additional email address,
-  we compose the different `Body` components, otherwise we just display the text. */
-  const operationResultComposedBody: Array<BodyProps> = email
-    ? [
-        {
-          text: `${subTitle}\n`,
-          style: {
-            textAlign: "center"
-          }
-        },
-        {
-          asLink: true,
-          avoidPressable: true,
-          onPress: () => Linking.openURL(`mailto:${email}`),
-          text: email,
-          style: {
-            textAlign: "center"
-          },
-          weight: "Semibold"
-        }
-      ]
-    : [
-        {
-          text: subTitle,
-          style: {
-            textAlign: "center"
-          }
-        }
-      ];
+  const composedSubtitle = email
+    ? `${subTitle}\n\n**[${email}](mailto:${email})**`
+    : subTitle;
 
   return (
     <OperationResultScreenContent
       isHeaderVisible={false}
       title={title}
-      subtitle={operationResultComposedBody}
+      subtitle={composedSubtitle}
       pictogram={pictogram}
       testID={testID}
+      onSubtitleLinkPress={url => Linking.openURL(url)}
       {...operationResultActions()}
     />
   );

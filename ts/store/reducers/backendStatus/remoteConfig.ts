@@ -30,6 +30,7 @@ import {
 } from "../featureFlagWithMinAppVersionStatus";
 import { isIdPayLocallyEnabledSelector } from "../persistedPreferences";
 import { GlobalState } from "../types";
+import { OSPerPlatform } from "../../../../definitions/content/OSPerPlatform";
 
 export type RemoteConfigState = O.Option<BackendStatus["config"]>;
 
@@ -313,7 +314,7 @@ export const pnFrontendUrlSelector = (state: GlobalState) =>
     O.getOrElse(() => "")
   );
 
-export const pnAARQRCodeRegexSelector = (state: GlobalState) =>
+export const pnAarQRCodeRegexSelector = (state: GlobalState) =>
   pipe(
     state.remoteConfig,
     O.chainNullableK(config => config.pn.aarQRCodeRegex),
@@ -628,6 +629,33 @@ export const paymentsFeedbackBannerConfigSelector = createSelector(
     )
 );
 
+export const isPnFeedbackBannerEnabledSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): boolean =>
+    pipe(
+      remoteConfig,
+      O.map(config =>
+        isVersionSupported(
+          Platform.OS === "ios"
+            ? config.pn.aar?.feedbackBanner?.min_app_version.ios
+            : config.pn.aar?.feedbackBanner?.min_app_version.android,
+          getAppVersion()
+        )
+      ),
+      O.getOrElse(() => false)
+    )
+);
+
+export const pnFeedbackBannerConfigSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): Banner | undefined =>
+    pipe(
+      remoteConfig,
+      O.map(config => config.pn.aar?.feedbackBanner),
+      O.toUndefined
+    )
+);
+
 export const landingScreenBannerOrderSelector = (state: GlobalState) =>
   pipe(
     state,
@@ -645,6 +673,16 @@ export const appFeedbackConfigSelector = createSelector(
       O.map(config => config.app_feedback),
       O.toUndefined
     )
+);
+
+export const minOsSupportedSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): OSPerPlatform | undefined => {
+    if (O.isSome(remoteConfig)) {
+      return remoteConfig.value.min_supported_os;
+    }
+    return undefined;
+  }
 );
 
 export const appFeedbackUriConfigSelector = (topic: TopicKeys = "general") =>
@@ -806,14 +844,14 @@ export const caCBannerConfigSelector = (state: GlobalState) =>
     O.toUndefined
   );
 
-const fallbackSendAARDelegateUrl =
+const fallbackSendAarDelegateUrl =
   "https://assistenza.notifichedigitali.it/hc/it/articles/32453819931537-Delegare-qualcuno-a-visualizzare-le-tue-notifiche";
-export const sendAARDelegateUrlSelector = (state: GlobalState) =>
+export const sendAarDelegateUrlSelector = (state: GlobalState) =>
   pipe(
     state,
     remoteConfigSelector,
     O.chainNullableK(config => config.pn.aar?.delegate_url),
-    O.getOrElse(() => fallbackSendAARDelegateUrl)
+    O.getOrElse(() => fallbackSendAarDelegateUrl)
   );
 
 export const sendAarInAppDelegationUrlSelector = (state: GlobalState) => {
@@ -828,7 +866,7 @@ export const sendAarInAppDelegationUrlSelector = (state: GlobalState) => {
       return inAppDelegationUrlOrUndefined;
     }
   }
-  return fallbackSendAARDelegateUrl;
+  return fallbackSendAarDelegateUrl;
 };
 
 export const sendShowAbstractSelector = (state: GlobalState) => {
@@ -890,4 +928,15 @@ export const sendVisitTheWebsiteUrlSelector = (state: GlobalState) => {
     }
   }
   return "https://cittadini.notifichedigitali.it/auth/login";
+};
+
+export const isSendLollipopPlaygroundEnabledSelector = (
+  state: GlobalState
+): boolean => {
+  const remoteConfigOption = remoteConfigSelector(state);
+  if (O.isNone(remoteConfigOption)) {
+    return false;
+  }
+  const remoteConfig = remoteConfigOption.value;
+  return !!remoteConfig.pn.lollipopPlaygroundEnabled;
 };

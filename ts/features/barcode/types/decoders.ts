@@ -14,7 +14,8 @@ import { SignatureRequestDetailView } from "../../../../definitions/fci/Signatur
 import { decodePosteDataMatrix } from "../../../utils/payment";
 import { ItwRemoteRequestPayload } from "../../itwallet/presentation/remote/utils/itwRemoteTypeUtils";
 import { validateItwPresentationQrCodeParams } from "../../itwallet/presentation/remote/utils/itwRemotePresentationUtils";
-import { pnAARQRCodeRegexSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import { selectItwSpecsVersion } from "../../itwallet/common/store/selectors/environment";
+import { pnAarQRCodeRegexSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { IOBarcodeType } from "./IOBarcode";
 
 // Discriminated barcode type
@@ -52,15 +53,16 @@ type StaticDecodedIOBarcode =
   | {
       type: "FCI";
       signatureRequestId: SignatureRequestDetailView["id"];
+    };
+type RuntimeDecodedIOBarcode =
+  | {
+      type: "SEND";
+      qrCodeContent: string;
     }
   | {
       type: "ITW_REMOTE";
       itwRemoteRequestPayload: ItwRemoteRequestPayload;
     };
-type RuntimeDecodedIOBarcode = {
-  type: "SEND";
-  qrCodeContent: string;
-};
 export type DecodedIOBarcode = StaticDecodedIOBarcode | RuntimeDecodedIOBarcode;
 
 // Barcode decoder function which is used to determine the type and content of a barcode
@@ -96,7 +98,7 @@ const decodePagoPAQRCode: IOBarcodeStaticDecoderFn = (data: string) =>
         rptIdFromPaymentNoticeQrCode(paymentNotice),
         E.map(
           rptId =>
-            ({ type: "PAGOPA", rptId, amount: paymentNotice.amount } as const)
+            ({ type: "PAGOPA", rptId, amount: paymentNotice.amount }) as const
         )
       )
     ),
@@ -107,7 +109,7 @@ const decodePagoPADataMatrix: IOBarcodeStaticDecoderFn = (data: string) =>
   pipe(
     data,
     decodePosteDataMatrix,
-    O.map(({ e1, e2 }) => ({ type: "PAGOPA", rptId: e1, amount: e2 } as const))
+    O.map(({ e1, e2 }) => ({ type: "PAGOPA", rptId: e1, amount: e2 }) as const)
   );
 
 const decodePagoPABarcode: IOBarcodeStaticDecoderFn = (data: string) =>
@@ -129,21 +131,22 @@ const decodeFciBarcode: IOBarcodeStaticDecoderFn = (data: string) =>
     }))
   );
 
-const decodeItwRemoteBarcode: IOBarcodeStaticDecoderFn = (data: string) =>
+const decodeItwRemoteBarcode: IOBarcodeRuntimeDecoderFn = (
+  state: GlobalState,
+  data: string
+) =>
   pipe(
     O.fromNullable(
       data.match(/^https:\/\/continua\.io\.pagopa\.it\/itw\/auth\?(.*)$/)
     ),
     O.map(match => new URLSearchParams(match[1])),
     O.chainEitherK(params =>
-      validateItwPresentationQrCodeParams({
+      validateItwPresentationQrCodeParams(selectItwSpecsVersion(state), {
         client_id: params.get("client_id"),
         request_uri: params.get("request_uri"),
         state: params.get("state"),
-        request_uri_method: params.get(
-          "request_uri_method"
-        ) as ItwRemoteRequestPayload["request_uri_method"]
-      })
+        request_uri_method: params.get("request_uri_method")
+      } as ItwRemoteRequestPayload)
     ),
     O.map(itwRemoteRequestPayload => ({
       type: "ITW_REMOTE",
@@ -151,13 +154,13 @@ const decodeItwRemoteBarcode: IOBarcodeStaticDecoderFn = (data: string) =>
     }))
   );
 
-const decodeSENDAARBarcode: IOBarcodeRuntimeDecoderFn = (
+const decodeSENDAarBarcode: IOBarcodeRuntimeDecoderFn = (
   state: GlobalState,
   data: string
 ) =>
   pipe(
     state,
-    pnAARQRCodeRegexSelector,
+    pnAarQRCodeRegexSelector,
     O.fromNullable,
     O.map(aarQRCodeRegexString => new RegExp(aarQRCodeRegexString, "i")),
     O.filter(aarQRCodeRegExp => aarQRCodeRegExp.test(data)),
@@ -180,12 +183,12 @@ const decodeSENDAARBarcode: IOBarcodeRuntimeDecoderFn = (
 const StaticIOBarcodeDecoders: IOBarcodeStaticDecodersType = {
   IDPAY: decodeIdPayBarcode,
   PAGOPA: decodePagoPABarcode,
-  FCI: decodeFciBarcode,
-  ITW_REMOTE: decodeItwRemoteBarcode
+  FCI: decodeFciBarcode
 };
 
 const RuntimeIOBarcodeDecoders: IOBarcodeRuntimeDecodersType = {
-  SEND: decodeSENDAARBarcode
+  SEND: decodeSENDAarBarcode,
+  ITW_REMOTE: decodeItwRemoteBarcode
 };
 
 export const IOBarcodeDecoders = {

@@ -27,8 +27,8 @@ export const CgnMerchantListViewRenderItem =
             count: item.numberOfNewDiscounts
           })
         : item.newDiscounts
-        ? `${item.name} ${I18n.t("bonus.cgn.merchantsList.news")}`
-        : item.name) + getListItemAccessibilityLabelCount(props.count, index);
+          ? `${item.name} ${I18n.t("bonus.cgn.merchantsList.news")}`
+          : item.name) + getListItemAccessibilityLabelCount(props.count, index);
 
     return (
       <ContentWrapper>
