@@ -15,8 +15,8 @@ import { PnParamsList } from "../../navigation/params";
 import PN_ROUTES from "../../navigation/routes";
 import { trackSendAarMandateCieCanEnter } from "../analytics";
 import { setAarFlowState } from "../store/actions";
-import { currentAARFlowData } from "../store/selectors";
-import { sendAARFlowStates } from "../utils/stateUtils";
+import { currentAarFlowData } from "../store/selectors";
+import { sendAarFlowStates } from "../utils/stateUtils";
 
 export const CIE_CAN_LENGTH = 6;
 
@@ -31,19 +31,19 @@ export const SendAarCieCanInsertionScreen = ({
   const dispatch = useIODispatch();
   const [can, setCan] = useState("");
   const canPadViewRef = useRef<View>(null);
-  const currentAarState = useIOSelector(currentAARFlowData);
+  const currentAarState = useIOSelector(currentAarFlowData);
   const headerHeight = useHeaderHeight();
   const isFocused = useIsFocused();
 
   useEffect(() => {
     switch (currentAarState.type) {
-      case sendAARFlowStates.cieScanningAdvisory: {
+      case sendAarFlowStates.cieScanningAdvisory: {
         navigation.replace(PN_ROUTES.SEND_AAR_CIE_CARD_READING_EDUCATIONAL, {
           animationTypeForReplace: "push"
         });
         break;
       }
-      case sendAARFlowStates.cieCanAdvisory: {
+      case sendAarFlowStates.cieCanAdvisory: {
         navigation.replace(PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL, {
           animationTypeForReplace: "pop"
         });
@@ -72,14 +72,14 @@ export const SendAarCieCanInsertionScreen = ({
 
       if (
         value.length === CIE_CAN_LENGTH &&
-        currentAarState.type === sendAARFlowStates.cieCanInsertion
+        currentAarState.type === sendAarFlowStates.cieCanInsertion
       ) {
         Keyboard.dismiss();
 
         dispatch(
           setAarFlowState({
             ...currentAarState,
-            type: sendAARFlowStates.cieScanningAdvisory,
+            type: sendAarFlowStates.cieScanningAdvisory,
             can: value
           })
         );
@@ -89,11 +89,11 @@ export const SendAarCieCanInsertionScreen = ({
   );
 
   const handleGoBack = useCallback(() => {
-    if (currentAarState.type === sendAARFlowStates.cieCanInsertion) {
+    if (currentAarState.type === sendAarFlowStates.cieCanInsertion) {
       dispatch(
         setAarFlowState({
           ...currentAarState,
-          type: sendAARFlowStates.cieCanAdvisory
+          type: sendAarFlowStates.cieCanAdvisory
         })
       );
     }

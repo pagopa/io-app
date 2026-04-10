@@ -3,8 +3,8 @@ import {
   StackNavigationOptions
 } from "@react-navigation/stack";
 import _ from "lodash";
-import { SendAARCieCardReadingScreen } from "../aar/screen/SendAARCieCardReadingScreen";
-import { SendAARErrorScreen } from "../aar/screen/SendAARErrorScreen";
+import { SendAarCieCardReadingScreen } from "../aar/screen/SendAarCieCardReadingScreen";
+import { SendAarErrorScreen } from "../aar/screen/SendAarErrorScreen";
 import { SendAarActivateNfcScreen } from "../aar/screen/SendAarActivateNfcScreen";
 import { SendAarCanEducationalScreen } from "../aar/screen/SendAarCanEducationalScreen";
 import { SendAarCieCanInsertionScreen } from "../aar/screen/SendAarCieCanInsertionScreen";
@@ -81,7 +81,7 @@ export const PnStackNavigator = () => (
       />
       <Stack.Screen
         name={PN_ROUTES.SEND_AAR_ERROR}
-        component={SendAARErrorScreen}
+        component={SendAarErrorScreen}
         options={hiddenHeader}
       />
       <Stack.Screen
@@ -103,7 +103,7 @@ export const PnStackNavigator = () => (
       />
       <Stack.Screen
         name={PN_ROUTES.SEND_AAR_CIE_CARD_READING}
-        component={SendAARCieCardReadingScreen}
+        component={SendAarCieCardReadingScreen}
         options={hiddenHeader}
       />
       <Stack.Screen

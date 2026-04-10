@@ -1,15 +1,15 @@
 import { Text, View } from "react-native";
-import { SendAARCieCardReadingComponentProps } from "../SendAARCieCardReadingComponent";
+import { SendAarCieCardReadingComponentProps } from "../SendAarCieCardReadingComponent";
 
-export const SendAARCieCardReadingComponent = ({
+export const SendAarCieCardReadingComponent = ({
   can,
   verificationCode,
   iun,
   recipientInfo,
   mandateId
-}: SendAARCieCardReadingComponentProps) => (
+}: SendAarCieCardReadingComponentProps) => (
   <View>
-    <Text>Mock SendAARCieCardReadingComponent</Text>
+    <Text>Mock SendAarCieCardReadingComponent</Text>
     <Text>{`can: ${can}`}</Text>
     <Text>{`varificationCode: ${verificationCode}`}</Text>
     <Text>{`iun: ${iun}`}</Text>
