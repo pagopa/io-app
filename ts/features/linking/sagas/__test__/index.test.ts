@@ -2,7 +2,7 @@ import { testSaga } from "redux-saga-test-plan";
 import { handleStoredLinkingUrlIfNeeded } from "..";
 import { trackIOOpenedFromUniversalAppLink } from "../../analytics";
 import { initiateAarFlow } from "../../../pn/aar/store/actions";
-import { isSendAARLink } from "../../../pn/aar/utils/deepLinking";
+import { isSendAarLink } from "../../../pn/aar/utils/deepLinking";
 import { clearLinkingUrl } from "../../actions";
 import { storedLinkingUrlSelector } from "../../reducers";
 
@@ -21,7 +21,7 @@ describe("handleStoredLinkingUrlIfNeeded", () => {
       .next()
       .select(storedLinkingUrlSelector)
       .next(aarUrl)
-      .select(isSendAARLink, aarUrl)
+      .select(isSendAarLink, aarUrl)
       .next(true)
       .put(clearLinkingUrl())
       .next()
@@ -34,7 +34,7 @@ describe("handleStoredLinkingUrlIfNeeded", () => {
       .next()
       .select(storedLinkingUrlSelector)
       .next(aarUrl)
-      .select(isSendAARLink, aarUrl)
+      .select(isSendAarLink, aarUrl)
       .next(false)
       .isDone();
   });
@@ -50,7 +50,7 @@ describe("handleStoredLinkingUrlIfNeeded", () => {
       .next()
       .select(storedLinkingUrlSelector)
       .next(aarUrl)
-      .select(isSendAARLink, aarUrl);
+      .select(isSendAarLink, aarUrl);
 
     expect(trackIOOpenedFromUniversalAppLink).toHaveBeenCalledWith(aarUrl);
     expect(trackIOOpenedFromUniversalAppLink).toHaveBeenCalledTimes(1);

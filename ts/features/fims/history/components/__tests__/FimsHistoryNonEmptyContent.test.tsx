@@ -52,7 +52,7 @@ const generateMockStoreForSelectors = (
         }
       }
     }
-  } as GlobalState);
+  }) as GlobalState;
 const renderComponent = (
   props: FimsHistoryNonEmptyContentProps,
   mockState: GlobalState
@@ -69,7 +69,6 @@ const renderComponent = (
 
 // --------------- END UTILS
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 describe("fimsHistoryNonEmptyContent", () => {
   beforeEach(() => {
     jest.clearAllMocks();

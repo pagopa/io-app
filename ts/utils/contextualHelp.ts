@@ -42,11 +42,11 @@ export const getContextualHelpConfig = (
   contextualHelp
     ? { body: contextualHelp.body, title: contextualHelp.title }
     : contextualHelpMarkdown
-    ? {
-        body: I18n.t(contextualHelpMarkdown.body),
-        title: I18n.t(contextualHelpMarkdown.title)
-      }
-    : undefined;
+      ? {
+          body: I18n.t(contextualHelpMarkdown.body),
+          title: I18n.t(contextualHelpMarkdown.title)
+        }
+      : undefined;
 
 /**
  If contextualData (loaded from the content server) contains the route of the current screen,

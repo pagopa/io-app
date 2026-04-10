@@ -38,7 +38,7 @@ const useReceiptFailureSupportModal = (
   const dispatch = useIODispatch();
 
   const getFaultCodeDetail = (): string =>
-    error && "code" in error ? error?.code ?? "" : "";
+    error && "code" in error ? (error?.code ?? "") : "";
 
   const faultCodeDetail = getFaultCodeDetail();
 
