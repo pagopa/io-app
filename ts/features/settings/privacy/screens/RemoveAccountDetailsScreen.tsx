@@ -74,8 +74,8 @@ const FooterButton = memo(
   }
 );
 /**
- * A screen that ask user the motivation of the account removal
- * Here user can ask to delete his account
+ * A screen that ask user the motivation of the account removal Here user can
+ * ask to delete his account
  */
 const RemoveAccountDetails = () => {
   const dispatch = useIODispatch();

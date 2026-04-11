@@ -160,15 +160,11 @@ import { checkProfileEnabledSaga } from "./startup/checkProfileEnabledSaga";
 
 export const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 
+/** Handles the application startup and the main application logic loop */
 /**
- * Handles the application startup and the main application logic loop
- */
-/**
- * The startup saga is triggered in the following scenarios:
- * - During the root saga initialization
- * - On logout or expired session
- * - On FL session refresh
- * - When accessing the Wallet mini app in offline mode
+ * The startup saga is triggered in the following scenarios: - During the root
+ * saga initialization - On logout or expired session - On FL session refresh -
+ * When accessing the Wallet mini app in offline mode
  */
 // eslint-disable-next-line complexity
 export function* initializeApplicationSaga(
@@ -254,11 +250,11 @@ export function* initializeApplicationSaga(
    *   is updated due to a session refresh failure.
    * - If the session refresh process fails while offline, this saga will handle
    *   transitioning the app to offline mode accordingly.
-   * - Forking (`yield* fork(...)`) allows this watcher to run in parallel
-   *   without blocking the rest of the execution.
+   * - Forking (`yield* fork(...)`) allows this watcher to run in parallel without
+   *   blocking the rest of the execution.
    *
-   * This ensures that if the device is online but session refresh fails,
-   * the app correctly transitions to offline mode when necessary.
+   * This ensures that if the device is online but session refresh fails, the
+   * app correctly transitions to offline mode when necessary.
    */
   yield* fork(watchSessionRefreshInOfflineSaga);
 
@@ -577,10 +573,10 @@ export function* initializeApplicationSaga(
   }
 
   /**
-   * if the checks fail (email already taken or email not validated) then the user
-   * is sent back to the page that communicates the problem and from there if starts
-   * the validation flow. If the user wants to validate the email the flow
-   * that triggers polling begins (watchEmailValidationSaga)
+   * If the checks fail (email already taken or email not validated) then the
+   * user is sent back to the page that communicates the problem and from there
+   * if starts the validation flow. If the user wants to validate the email the
+   * flow that triggers polling begins (watchEmailValidationSaga)
    */
   userProfile = (yield* call(checkEmailSaga)) ?? userProfile;
 

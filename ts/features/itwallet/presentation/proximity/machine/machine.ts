@@ -23,17 +23,13 @@ export const itwProximityMachine = setup({
     events: {} as ProximityEvents
   },
   actions: {
-    /**
-     * Context manipulation
-     */
+    /** Context manipulation */
 
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     setQRCodeGenerationError: assign({ isQRCodeGenerationError: true }),
     setHasGivenConsent: assign({ hasGivenConsent: true }),
 
-    /**
-     * Navigation
-     */
+    /** Navigation */
 
     navigateToGrantPermissionsScreen: notImplemented,
     navigateToBluetoothActivationScreen: notImplemented,
@@ -44,9 +40,7 @@ export const itwProximityMachine = setup({
     navigateToWallet: notImplemented,
     closeProximity: notImplemented,
 
-    /**
-     * Analytics
-     */
+    /** Analytics */
 
     trackQrCodeGenerationOutcome: notImplemented
   },

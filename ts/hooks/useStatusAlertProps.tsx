@@ -60,10 +60,11 @@ type AlertProps = {
 
 /**
  * Helper to build the event properties for Mixpanel events related to banners.
- * @param eventType the type of the event, either "action" or "screen_view"
- * @param banner_page the current route where the banner is shown
- * @param banner_landing the URL of the banner, if any
- * @returns the event properties object
+ *
+ * @param eventType The type of the event, either "action" or "screen_view"
+ * @param banner_page The current route where the banner is shown
+ * @param banner_landing The URL of the banner, if any
+ * @returns The event properties object
  */
 const buildMPEventProperties = (
   eventType: "action" | "screen_view",
@@ -76,11 +77,12 @@ const buildMPEventProperties = (
   });
 
 /**
- * Helper hook to derive the connectivity state based on the current connectivity status,
- * the offline access reason, the current route and the startup status, which helps to reduce
- * the complexity of the main hook.
+ * Helper hook to derive the connectivity state based on the current
+ * connectivity status, the offline access reason, the current route and the
+ * startup status, which helps to reduce the complexity of the main hook.
  *
- * @returns the derived connectivity state based on the current connectivity status,
+ * @returns The derived connectivity state based on the current connectivity
+ *   status,
  */
 export const useDerivedConnectivityState = () => {
   const currentRoute = useIOSelector(currentRouteSelector);
@@ -179,7 +181,8 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
   const handleAppRestart = useAppRestartAction("banner");
 
   /**
-   * Effect to handle the connectivity state changes and update the alert and bottom sheet accordingly.
+   * Effect to handle the connectivity state changes and update the alert and
+   * bottom sheet accordingly.
    */
   useEffect(() => {
     if (derivedConnectivityState === prevDerivedConnectivityState) {
@@ -296,8 +299,8 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
         );
 
         /**
-         * Removes the "back online" alert after 3 seconds only if the app is not
-         * in the offline mode
+         * Removes the "back online" alert after 3 seconds only if the app is
+         * not in the offline mode
          */
         setTimeout(() => {
           setAlertVisible(false);

@@ -10,7 +10,8 @@ import { itwCredentialsRemoveByType } from "../../../credentials/store/actions";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 
 /**
- * Hook that shows a confirmation dialog and, if confirmed, removes a credential from the wallet
+ * Hook that shows a confirmation dialog and, if confirmed, removes a credential
+ * from the wallet
  */
 export const useItwRemoveCredentialWithConfirm = (
   credential: StoredCredential

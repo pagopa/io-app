@@ -14,19 +14,23 @@ import { Env } from "./environment.ts";
 import { getIoWallet } from "./itwIoWallet.ts";
 
 /**
- * Getter for the integrity hardware keytag to be used for an {@link IntegrityContext}.
- * @return the integrity hardware keytag to be persisted
+ * Getter for the integrity hardware keytag to be used for an
+ * {@link IntegrityContext}.
+ *
+ * @returns The integrity hardware keytag to be persisted
  */
 export const getIntegrityHardwareKeyTag = async (): Promise<string> =>
   await generateIntegrityHardwareKeyTag();
 
 /**
  * Register a new wallet instance with hardwareKeyTag.
+ *
  * @param env - The environment to use for the wallet provider base URL
  * @param itwVersion - IT-Wallet technical specs version
- * @param hardwareKeyTag - the hardware key tag of the integrity Context
- * @param sessionToken - the session token to use for the API calls
- * @param options - options to specify if the registration is for a renewal or not
+ * @param hardwareKeyTag - The hardware key tag of the integrity Context
+ * @param sessionToken - The session token to use for the API calls
+ * @param options - Options to specify if the registration is for a renewal or
+ *   not
  */
 export const registerWalletInstance = async (
   { WALLET_PROVIDER_BASE_URL }: Env,
@@ -52,12 +56,14 @@ export const registerWalletInstance = async (
 };
 
 /**
- * Getter for the wallet attestation binded to the wallet instance created with the given hardwareKeyTag.
+ * Getter for the wallet attestation binded to the wallet instance created with
+ * the given hardwareKeyTag.
+ *
  * @param env - The environment to use for the wallet provider base URL
  * @param itwVersion - IT-Wallet technical specs version
- * @param hardwareKeyTag - the hardware key tag of the wallet instance
- * @param sessionToken - the session token to use for the API calls
- * @return the wallet attestation in multiple formats
+ * @param hardwareKeyTag - The hardware key tag of the wallet instance
+ * @param sessionToken - The session token to use for the API calls
+ * @returns The wallet attestation in multiple formats
  */
 export const getAttestation = async (
   { WALLET_PROVIDER_BASE_URL }: Env,
@@ -95,11 +101,12 @@ export const getAttestation = async (
 };
 
 /**
- * Checks if the Wallet Instance Attestation needs to be requested by
- * checking the expiry date
+ * Checks if the Wallet Instance Attestation needs to be requested by checking
+ * the expiry date
+ *
  * @param itwVersion - IT-Wallet technical specs version
- * @param attestation - the Wallet Instance Attestation to validate
- * @returns true if the Wallet Instance Attestation is expired or not present
+ * @param attestation - The Wallet Instance Attestation to validate
+ * @returns True if the Wallet Instance Attestation is expired or not present
  */
 export const isWalletInstanceAttestationValid = (
   itwVersion: ItwVersion,
@@ -120,8 +127,9 @@ export const isWalletInstanceAttestationValid = (
 };
 
 /**
- * Get the wallet instance status from the Wallet Provider.
- * This operation is more lightweight than getting a new attestation to check the status.
+ * Get the wallet instance status from the Wallet Provider. This operation is
+ * more lightweight than getting a new attestation to check the status.
+ *
  * @param env - The environment to use for the wallet provider base URL
  * @param itwVersion - IT-Wallet technical specs version
  * @param hardwareKeyTag The hardware key tag used to create the wallet instance
@@ -144,8 +152,10 @@ export const getWalletInstanceStatus = (
   });
 
 /**
- * Get the current wallet instance status from the Wallet Provider.
- * This operation will check the wallet instance status based on the current fiscal code of the user.
+ * Get the current wallet instance status from the Wallet Provider. This
+ * operation will check the wallet instance status based on the current fiscal
+ * code of the user.
+ *
  * @param env - The environment to use for the wallet provider base URL
  * @param itwVersion - IT-Wallet technical specs version
  * @param sessionToken The session token to use for the API calls

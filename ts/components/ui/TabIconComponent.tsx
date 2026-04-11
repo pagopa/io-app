@@ -9,9 +9,7 @@ type TabIconComponent = {
   color?: ColorValue;
 };
 
-/**
- *  Generic tab icon with badge indicator
- */
+/** Generic tab icon with badge indicator */
 
 export const TabIconComponent = memo(
   ({ focused, iconName, iconNameFocused, color }: TabIconComponent) => (

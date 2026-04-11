@@ -9,19 +9,22 @@ const DEFAULT_EXPIRING_DAYS = 30;
 
 type GetCredentialStatusOptions = {
   /**
-   * Number of days before expiration required to mark a credential as "EXPIRING".
+   * Number of days before expiration required to mark a credential as
+   * "EXPIRING".
+   *
    * @default 30
    */
   expiringDays?: number;
 };
 
 /**
- * Get the overall status of the credential, taking into account the status assertion,
- * the physical document's expiration date and the JWT's expiration date.
- * Overlapping statuses are handled according to a specific order (see `IO-WALLET-DR-0018`).
+ * Get the overall status of the credential, taking into account the status
+ * assertion, the physical document's expiration date and the JWT's expiration
+ * date. Overlapping statuses are handled according to a specific order (see
+ * `IO-WALLET-DR-0018`).
  *
- * @param credential the stored credential
- * @param options see {@link GetCredentialStatusOptions}
+ * @param credential The stored credential
+ * @param options See {@link GetCredentialStatusOptions}
  * @returns ItwCredentialStatus
  */
 export const getCredentialStatus = (
@@ -86,8 +89,9 @@ export const getCredentialStatus = (
 };
 
 /**
- * Get the credential status and the error message corresponding to the status assertion error, if present.
- * The message is dynamic and extracted from the issuer configuration.
+ * Get the credential status and the error message corresponding to the status
+ * assertion error, if present. The message is dynamic and extracted from the
+ * issuer configuration.
  */
 export const getCredentialStatusObject = (credential: StoredCredential) => {
   const { storedStatusAssertion, issuerConf, credentialId } = credential;

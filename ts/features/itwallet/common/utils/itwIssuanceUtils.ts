@@ -33,9 +33,11 @@ type StartAuthFlowParams = {
 
 /**
  * Function to start the authentication flow. It must be invoked before
- * proceeding with the authentication process to get the `authUrl` and other parameters needed later.
- * After completing the initial authentication flow and obtaining the redirectAuthUrl from the WebView (CIE + PIN & SPID) or Browser (CIEID),
- * the flow must be completed by invoking `completeAuthFlow`.
+ * proceeding with the authentication process to get the `authUrl` and other
+ * parameters needed later. After completing the initial authentication flow and
+ * obtaining the redirectAuthUrl from the WebView (CIE + PIN & SPID) or Browser
+ * (CIEID), the flow must be completed by invoking `completeAuthFlow`.
+ *
  * @param env - The environment to use for the wallet provider base URL
  * @param itwVersion - IT-Wallet technical specs version
  * @param walletAttestation - The wallet attestation.
@@ -107,11 +109,14 @@ export type CompleteAuthFlowResult = Awaited<
 >;
 
 /**
- * Function to complete the authentication flow. It must be invoked after `startAuthFlow`
- * and after obtaining the final `callbackUrl` from the WebView (CIE + PIN & SPID) or Browser (CIEID).
- * The rest of the parameters are those obtained from `startAuthFlow` + the wallet attestation.
+ * Function to complete the authentication flow. It must be invoked after
+ * `startAuthFlow` and after obtaining the final `callbackUrl` from the WebView
+ * (CIE + PIN & SPID) or Browser (CIEID). The rest of the parameters are those
+ * obtained from `startAuthFlow` + the wallet attestation.
+ *
  * @param walletAttestation - The wallet attestation.
- * @param callbackUrl - The callback url from which the code to get the access token is extracted.
+ * @param callbackUrl - The callback url from which the code to get the access
+ *   token is extracted.
  * @returns Authentication tokens.
  */
 const completeAuthFlow = async ({
@@ -157,8 +162,9 @@ export type PidIssuanceParams = {
 };
 
 /**
- * Function to get the PID, parse it and return it in {@link StoredCredential} format.
- * It must be called after `startAuthFlow` and `completeAuthFlow`.
+ * Function to get the PID, parse it and return it in {@link StoredCredential}
+ * format. It must be called after `startAuthFlow` and `completeAuthFlow`.
+ *
  * @returns The stored credential.
  */
 const getPid = async ({
@@ -219,11 +225,14 @@ const getPid = async ({
 export { startAuthFlow, completeAuthFlow, getPid };
 
 /**
- * This function extracts the first credential identifier from the access token. The token might contain
- * more than one identifier, and for each one of them the Wallet should call `Credential.Issuance.ObtainCredential`.
- * Currently only one identifier is returned, so it is safe to extract the first.
+ * This function extracts the first credential identifier from the access token.
+ * The token might contain more than one identifier, and for each one of them
+ * the Wallet should call `Credential.Issuance.ObtainCredential`. Currently only
+ * one identifier is returned, so it is safe to extract the first.
+ *
  * @param accessToken The token received from the Issuer's token endpoint
- * @param authorizationDetail The initial authorization request for a certain credential
+ * @param authorizationDetail The initial authorization request for a certain
+ *   credential
  * @returns `credential_configuration_id` and `credential_identifier`
  */
 function getCredentialIdentifierFromAccessToken(
@@ -257,7 +266,8 @@ function getCredentialIdentifierFromAccessToken(
 
 /**
  * Consts for the IDP hints in test for SPID and CIE and in production for CIE.
- * In production for SPID the hint is retrieved from the IDP ID via the {@link getSpidProductionIdpHint} function.
+ * In production for SPID the hint is retrieved from the IDP ID via the
+ * {@link getSpidProductionIdpHint} function.
  */
 const SPID_HINT_TEST = "https://demo.spid.gov.it";
 const CIE_HINT_TEST =
@@ -265,9 +275,7 @@ const CIE_HINT_TEST =
 const CIE_HINT_PROD =
   "https://idserver.servizicie.interno.gov.it/idp/profile/SAML2/POST/SSO";
 
-/**
- * Object of the SPID IDP IDs and the corresponding production hint URLs.
- */
+/** Object of the SPID IDP IDs and the corresponding production hint URLs. */
 const SPID_IDP_HINTS: { [key: string]: string } = {
   arubaid: "https://loginspid.aruba.it",
   ehtid: "https://id.eht.eu",
@@ -284,13 +292,16 @@ const SPID_IDP_HINTS: { [key: string]: string } = {
 };
 
 /**
- * Get the IDP hint based on the identification context.
- * If the {@link itwIdpHintTest} is true the hint will be the test one, otherwise the production one.
- * In production for SPID the hint is retrieved from the IDP ID via the {@link getSpidProductionIdpHint} function,
- * for CIE the hint is always the same and it's defined in the {@link CIE_HINT_PROD} constant.
- * @param idCtx the identification context which contains the mode and the IDP ID if the mode is SPID
- * @param env the environment currently in use
- * @param isL3 flag that indicates that we need to issue an L3 PID
+ * Get the IDP hint based on the identification context. If the
+ * {@link itwIdpHintTest} is true the hint will be the test one, otherwise the
+ * production one. In production for SPID the hint is retrieved from the IDP ID
+ * via the {@link getSpidProductionIdpHint} function, for CIE the hint is always
+ * the same and it's defined in the {@link CIE_HINT_PROD} constant.
+ *
+ * @param idCtx The identification context which contains the mode and the IDP
+ *   ID if the mode is SPID
+ * @param env The environment currently in use
+ * @param isL3 Flag that indicates that we need to issue an L3 PID
  */
 export const getIdpHint = (idCtx: IdentificationContext, env: Env) => {
   const isSpidMode = idCtx.mode === "spid";
@@ -303,11 +314,12 @@ export const getIdpHint = (idCtx: IdentificationContext, env: Env) => {
 };
 
 /**
- * Map of the SPID IDP IDs and the corresponding production hint URLs.
- * If the IDP ID is not present in the map an error is thrown.
+ * Map of the SPID IDP IDs and the corresponding production hint URLs. If the
+ * IDP ID is not present in the map an error is thrown.
+ *
  * @param spidIdpId
- * @throws {@link Error} if the IDP ID is not present in the map
  * @returns
+ * @throws {@link Error} If the IDP ID is not present in the map
  */
 export const getSpidProductionIdpHint = (spidIdpId: string) => {
   if (!(spidIdpId in SPID_IDP_HINTS)) {

@@ -46,7 +46,9 @@ type IdPayTimelineDetailsBottomSheetModal = Omit<
 };
 
 /**
- * This hook is used to show the bottom sheet with the details of a timeline operation
+ * This hook is used to show the bottom sheet with the details of a timeline
+ * operation
+ *
  * @param initiativeId ID of the initiative associated to the operation details
  */
 const useIdPayTimelineDetailsBottomSheet = (

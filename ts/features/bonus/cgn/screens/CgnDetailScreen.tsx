@@ -103,9 +103,7 @@ export const cgnCardColors: NonNullable<
   }
 };
 
-/**
- * Screen to display all the information about the active CGN
- */
+/** Screen to display all the information about the active CGN */
 const CgnDetailScreen = (props: Props): ReactElement => {
   const navigation =
     useNavigation<IOStackNavigationProp<CgnDetailsParamsList, "CGN_DETAILS">>();

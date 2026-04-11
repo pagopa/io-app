@@ -42,11 +42,10 @@ type Props = IOStackNavigationRouteProps<
   "ZENDESK_SEE_REPORTS_ROUTERS"
 >;
 /**
- * this screen checks if a user has at least a ticket, it shows:
- * - a loading state when the request start
- * - the list of the ticket if the user has at least a ticket in the history
- * - an empty request screen if the user has not ticket
- * @constructor
+ * This screen checks if a user has at least a ticket, it shows: - a loading
+ * state when the request start - the list of the ticket if the user has at
+ * least a ticket in the history - an empty request screen if the user has not
+ * ticket
  */
 const ZendeskSeeReportsRouters = (props: Props) => {
   const dispatch = useIODispatch();

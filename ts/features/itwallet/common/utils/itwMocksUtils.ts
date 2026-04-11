@@ -18,9 +18,7 @@ export const ISSUER_MOCK_NAME = "Istituto Poligrafico e Zecca dello Stato";
 
 export type CredentialL3Key = keyof typeof ItwStoredCredentialsMocks.L3;
 
-/**
- * Credential types mocks.
- */
+/** Credential types mocks. */
 export enum CredentialType {
   EUROPEAN_HEALTH_INSURANCE_CARD = "EuropeanHealthInsuranceCard",
   EUROPEAN_DISABILITY_CARD = "EuropeanDisabilityCard",

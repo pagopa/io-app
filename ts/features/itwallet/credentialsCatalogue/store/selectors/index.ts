@@ -7,8 +7,8 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { DigitalCredentialMetadata } from "../../../common/utils/itwCredentialsCatalogueUtils";
 
 /**
- * Select the last fetched credentials catalogue.
- * **Note:** the catalogue may be stale.
+ * Select the last fetched credentials catalogue. **Note:** the catalogue may be
+ * stale.
  */
 export const itwCredentialsCatalogueSelector = (state: GlobalState) =>
   pot.toUndefined(state.features.itWallet.credentialsCatalogue.catalogue);
@@ -16,8 +16,9 @@ export const itwCredentialsCatalogueSelector = (state: GlobalState) =>
 /**
  * Select whether the credentials catalogue is stale, i.e. the JWT is expired.
  *
- * Normally, the catalogue is fetched every 24 hours according to the `expires` HTTP header.
- * If the fetch fails, it is still possible to select the persisted catalogue, but it may be stale.
+ * Normally, the catalogue is fetched every 24 hours according to the `expires`
+ * HTTP header. If the fetch fails, it is still possible to select the persisted
+ * catalogue, but it may be stale.
  */
 export const itwIsCredentialsCatalogueStale = (state: GlobalState) =>
   pipe(
@@ -28,7 +29,8 @@ export const itwIsCredentialsCatalogueStale = (state: GlobalState) =>
   );
 
 /**
- * Return a dictionary that maps each credential type to its metadata in the catalogue.
+ * Return a dictionary that maps each credential type to its metadata in the
+ * catalogue.
  */
 export const itwCredentialsCatalogueByTypesSelector = createSelector(
   itwCredentialsCatalogueSelector,

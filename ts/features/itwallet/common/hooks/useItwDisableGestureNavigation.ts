@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 
 /**
- * This hook disables gesture navigation and reenables it when the screen is unmounted
+ * This hook disables gesture navigation and reenables it when the screen is
+ * unmounted
  */
 export const useItwDisableGestureNavigation = () => {
   const navigation = useIONavigation();

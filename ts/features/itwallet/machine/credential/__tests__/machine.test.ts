@@ -164,9 +164,7 @@ describe("itwCredentialIssuanceMachine", () => {
       })
     );
 
-    /**
-     * Start
-     */
+    /** Start */
 
     const actor = createActor(mockedMachine);
     actor.start();
@@ -186,9 +184,7 @@ describe("itwCredentialIssuanceMachine", () => {
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
       credentialType: "MDL"
     });
-    /**
-     * Obtaint a new WIA if not present or expired
-     */
+    /** Obtaint a new WIA if not present or expired */
 
     await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(1));
     await waitFor(() =>
@@ -212,15 +208,11 @@ describe("itwCredentialIssuanceMachine", () => {
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([]));
 
-    /**
-     * Start credential issuance
-     */
+    /** Start credential issuance */
 
     expect(navigateToTrustIssuerScreen).toHaveBeenCalledTimes(1);
 
-    /**
-     * Obtain credential
-     */
+    /** Obtain credential */
 
     obtainCredential.mockImplementation(() =>
       Promise.resolve({
@@ -277,9 +269,7 @@ describe("itwCredentialIssuanceMachine", () => {
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([]));
     expect(navigateToCredentialPreviewScreen).toHaveBeenCalledTimes(1);
 
-    /**
-     * Store the credential
-     */
+    /** Store the credential */
 
     actor.send({
       type: "add-to-wallet"
@@ -309,9 +299,7 @@ describe("itwCredentialIssuanceMachine", () => {
       })
     );
 
-    /**
-     * Start
-     */
+    /** Start */
 
     const actor = createActor(mockedMachine);
     actor.start();
@@ -334,9 +322,7 @@ describe("itwCredentialIssuanceMachine", () => {
       credentialType: "MDL",
       walletInstanceAttestation: { jwt: T_WIA }
     });
-    /**
-     * Obtaint a new WIA if not present or expired
-     */
+    /** Obtaint a new WIA if not present or expired */
 
     await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(0));
     await waitFor(() =>
@@ -353,7 +339,10 @@ describe("itwCredentialIssuanceMachine", () => {
   });
 
   it("Should not store the credential if the user closes the issuance", () => {
-    /** Initial part is the same as the previous test, we can start from the preview */
+    /**
+     * Initial part is the same as the previous test, we can start from the
+     * preview
+     */
 
     const initialSnapshot: MachineSnapshot = createActor(
       itwCredentialIssuanceMachine
@@ -471,9 +460,7 @@ describe("itwCredentialIssuanceMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
-    /**
-     * Initialize wallet and start credential issuance
-     */
+    /** Initialize wallet and start credential issuance */
 
     verifyTrustFederation.mockImplementation(() => Promise.resolve());
 
@@ -526,7 +513,10 @@ describe("itwCredentialIssuanceMachine", () => {
   });
 
   it("Should close the issuance if the user does not confirm trust issuer data", () => {
-    /** Initial part is the same as the previous test, we can start from the preview */
+    /**
+     * Initial part is the same as the previous test, we can start from the
+     * preview
+     */
 
     const initialSnapshot: MachineSnapshot = createActor(
       itwCredentialIssuanceMachine
@@ -553,7 +543,10 @@ describe("itwCredentialIssuanceMachine", () => {
   });
 
   it("Should go to failure if credential issaunce fails", async () => {
-    /** Initial part is the same as the previous test, we can start from the preview */
+    /**
+     * Initial part is the same as the previous test, we can start from the
+     * preview
+     */
 
     const initialSnapshot: MachineSnapshot = createActor(
       itwCredentialIssuanceMachine

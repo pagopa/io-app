@@ -6,10 +6,12 @@ import { getIoWallet } from "./itwIoWallet";
 
 /**
  * Revoke the current wallet instance.
+ *
  * @param env - The environment to use for the wallet provider base URL
  * @param itwVersion - IT-Wallet technical specs version
  * @param sessionToken - The IO session token
- * @param integrityKeyTag - The integrity key tag used for the wallet instance creation
+ * @param integrityKeyTag - The integrity key tag used for the wallet instance
+ *   creation
  */
 export const revokeCurrentWalletInstance = async (
   { WALLET_PROVIDER_BASE_URL }: Env,

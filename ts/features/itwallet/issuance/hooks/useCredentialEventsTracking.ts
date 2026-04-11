@@ -23,9 +23,7 @@ type Params = {
   invalidErrorCode?: string;
 };
 
-/**
- * Track errors occurred during the credential issuance process for analytics.
- */
+/** Track errors occurred during the credential issuance process for analytics. */
 export const useCredentialEventsTracking = ({
   failure,
   isItwL3,

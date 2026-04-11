@@ -1,6 +1,4 @@
-/**
- * Generic utilities for strings
- */
+/** Generic utilities for strings */
 
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
@@ -8,9 +6,8 @@ import _ from "lodash";
 import { EnteBeneficiario } from "../../definitions/backend/EnteBeneficiario";
 
 /**
- * Check if the source includes searchText.
- * To make a case-insensitive check both the source and the searchText are
- * converted to lower-case.
+ * Check if the source includes searchText. To make a case-insensitive check
+ * both the source and the searchText are converted to lower-case.
  *
  * @param source Source string where you want to search
  * @param searchText String you want search for
@@ -23,10 +20,11 @@ export function isTextIncludedCaseInsensitive(
 }
 
 /**
- * return the same text with each token has the first char in uppercase.
- * tokens are retrieved by splitting the text with the provided separator
- * ex capitalize("Hello World") -> "Hello Word"
- * ex capitalize("hello,world",",") -> "Hello,Word"
+ * Return the same text with each token has the first char in uppercase. tokens
+ * are retrieved by splitting the text with the provided separator ex
+ * capitalize("Hello World") -> "Hello Word" ex capitalize("hello,world",",") ->
+ * "Hello,Word"
+ *
  * @param text
  * @param separator
  */
@@ -45,7 +43,8 @@ export function capitalize(text: string, separator: string = " ") {
 
 /**
  * Convert the EnteBEneficiario content type in a readable string
- * @param e organization data
+ *
+ * @param e Organization data
  */
 export const formatTextRecipient = (e: EnteBeneficiario): string => {
   const denomUnitOper = pipe(
@@ -90,8 +89,10 @@ ${cap}${city}${province}`.trim();
 };
 
 /**
- * Fetch only an organization's name as readable string from an EnteBeneficiario object
- * @param recipient organization data
+ * Fetch only an organization's name as readable string from an EnteBeneficiario
+ * object
+ *
+ * @param recipient Organization data
  */
 export const getRecepientName = (recipient: EnteBeneficiario) => {
   const denomUnitOper = pipe(
@@ -103,7 +104,8 @@ export const getRecepientName = (recipient: EnteBeneficiario) => {
   return `${recipient.denominazioneBeneficiario}${denomUnitOper}`.trim();
 };
 /**
- * determine if the text is undefined or empty (or composed only by blanks)
+ * Determine if the text is undefined or empty (or composed only by blanks)
+ *
  * @param text
  */
 export const isStringNullyOrEmpty = (
@@ -119,7 +121,9 @@ export const isStringNullyOrEmpty = (
   );
 
 /**
- * return some(text) if the text is not nully and not empty (or composed only by blanks)
+ * Return some(text) if the text is not nully and not empty (or composed only by
+ * blanks)
+ *
  * @param text
  */
 export const maybeNotNullyString = (
@@ -136,7 +140,8 @@ export const maybeNotNullyString = (
   );
 
 /**
- * return a string by adding 'toAdd' every 'every' chars
+ * Return a string by adding 'toAdd' every 'every' chars
+ *
  * @param text
  * @param toAdd
  * @param every
@@ -147,7 +152,8 @@ export const addEvery = (text: string, toAdd: string, every: number): string =>
     .replace(new RegExp(`(.{${every}})`, "g"), `$1${toAdd}`);
 
 /**
- * split text using the specified splitter and return the first substring
+ * Split text using the specified splitter and return the first substring
+ *
  * @param text
  * @param splitter
  */
@@ -166,10 +172,11 @@ export const withTrailingPoliceCarLightEmojii = (
 };
 
 /**
- * Format a number of bytes in a human readable format with the appropriate unit (B, KB, MB, GB, TB)
- * rounded to the first decimal.
- * @param bytes - number of bytes to format
- * @returns formatted string in the form of "value unit"
+ * Format a number of bytes in a human readable format with the appropriate unit
+ * (B, KB, MB, GB, TB) rounded to the first decimal.
+ *
+ * @param bytes - Number of bytes to format
+ * @returns Formatted string in the form of "value unit"
  */
 export const formatBytesWithUnit = (bytes: number) => {
   if (!bytes || bytes < 0) {
@@ -184,19 +191,20 @@ export const formatBytesWithUnit = (bytes: number) => {
 };
 
 /**
- * Capitalizes the first letter of each word in the given text, preserving leading and trailing spaces.
- * Words are separated by the specified separator.
- * Handles words with apostrophes by capitalizing the first letter of each sub-token.
+ * Capitalizes the first letter of each word in the given text, preserving
+ * leading and trailing spaces. Words are separated by the specified separator.
+ * Handles words with apostrophes by capitalizing the first letter of each
+ * sub-token.
+ *
+ * @example
+ *   capitalizeTextName(" hello world "); // returns " Hello World "
+ *
+ * @example
+ *   capitalizeTextName("d'angelo"); //returns "D'Angelo"
  *
  * @param {string} text
- * @param {string} [separator=" "]
+ * @param {string} [separator=" "] Default is `" "`
  * @returns {string}
- *
- * @example
- * capitalizeTextName(" hello world "); // returns " Hello World "
- *
- * @example
- * capitalizeTextName("d'angelo"); //returns "D'Angelo"
  */
 
 export const capitalizeTextName = (

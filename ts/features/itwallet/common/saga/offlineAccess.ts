@@ -24,12 +24,12 @@ import { OfflineAccessReasonEnum } from "../../../ingress/store/reducer";
 import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
 
 /**
- * Handles the offline access counter reset by listening for the wallet
- * instance status store success actions.
+ * Handles the offline access counter reset by listening for the wallet instance
+ * status store success actions.
  *
- * The offline access counter is reset when the wallet instance status is updated
- * successfully, indicating that the user has returned online and the wallet instance
- * stattus is refreshed.
+ * The offline access counter is reset when the wallet instance status is
+ * updated successfully, indicating that the user has returned online and the
+ * wallet instance stattus is refreshed.
  */
 function* handleItwOfflineAccessCounterReset() {
   yield* put(itwOfflineAccessCounterReset());
@@ -49,9 +49,9 @@ function* handleItwOfflineAccessCounterUp(
 }
 
 /**
- * Increments the offline access counter if the offline access reason is defined.
- * It also listens for the offline access reason action
- * to increment the counter if defined or reset it if not.
+ * Increments the offline access counter if the offline access reason is
+ * defined. It also listens for the offline access reason action to increment
+ * the counter if defined or reset it if not.
  */
 function* watchItwOfflineAccessCounterUp() {
   yield* takeLatest(
@@ -66,8 +66,8 @@ function* watchItwOfflineAccessCounterUp() {
 }
 
 /**
- * Watches for changes in the application state and resets the offline access reason
- * if the app goes to the background for a certain amount of time.
+ * Watches for changes in the application state and resets the offline access
+ * reason if the app goes to the background for a certain amount of time.
  */
 function* watchOfflineWalletBackgroundActivity() {
   const backgroundActivityTimeoutMillis = backgroundActivityTimeout * 1000;
@@ -130,9 +130,7 @@ function* watchOfflineWalletBackgroundActivity() {
   );
 }
 
-/**
- * Watch actions that trigger the offline access counter reset.
- */
+/** Watch actions that trigger the offline access counter reset. */
 export function* watchItwOfflineAccess() {
   yield* takeLatest(
     getType(itwUpdateWalletInstanceStatus.success),

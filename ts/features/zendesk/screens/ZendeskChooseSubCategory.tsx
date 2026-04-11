@@ -39,8 +39,9 @@ type Props = IOStackNavigationRouteProps<
 >;
 
 /**
- * this screen shows the sub-categories for which the user can ask support with the assistance
- * see {@link ZendeskChooseCategory} to check the previous category screen
+ * This screen shows the sub-categories for which the user can ask support with
+ * the assistance see {@link ZendeskChooseCategory} to check the previous
+ * category screen
  */
 const ZendeskChooseSubCategory = (props: Props) => {
   const { error } = useIOToast();

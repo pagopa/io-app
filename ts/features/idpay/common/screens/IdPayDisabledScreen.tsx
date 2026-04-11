@@ -6,9 +6,9 @@ import { OperationResultScreenContent } from "../../../../components/screens/Ope
 import { trackIDPayFeatureDisabledScreen } from "../analytics";
 
 /**
- * Screen displayed when the IDPay feature is disabled via feature flag.
- * This screen shows a message to the user informing them that the functionality
- * is no longer available.
+ * Screen displayed when the IDPay feature is disabled via feature flag. This
+ * screen shows a message to the user informing them that the functionality is
+ * no longer available.
  */
 export const IdPayDisabledScreen = () => {
   const navigation = useIONavigation();

@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   content: {
     paddingVertical: IOAppMargin[1]
   },
-  /** Hack to remove the white band when scrolling on iOS devices  */
+  /** Hack to remove the white band when scrolling on iOS devices */
   scrollHack: {
     paddingTop: 300,
     marginTop: -300

@@ -11,6 +11,7 @@ const initialState = { isActivating: false };
 
 /**
  * Store the activation state of the PN service
+ *
  * @param state
  * @param action
  */

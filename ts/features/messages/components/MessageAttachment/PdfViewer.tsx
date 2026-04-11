@@ -45,11 +45,12 @@ export const PdfViewer = ({
         accessible={true}
         accessibilityLabel={I18n.t("messagePDFPreview.pdfAccessibility")}
       >
-        {/** Be aware that, in react-native-pdf 6.7.7, on Android, there
-         * is a bug where onLoadComplete callback is not called. So,
-         * in order to detect proper PDF loading ending, we rely on
-         * onPageChanged, which is called to report that the first page
-         * has loaded */}
+        {/**
+         * Be aware that, in react-native-pdf 6.7.7, on Android, there is a bug where
+         * onLoadComplete callback is not called. So, in order to detect proper PDF
+         * loading ending, we rely on onPageChanged, which is called to report that the
+         * first page has loaded
+         */}
         <Pdf
           {...rest}
           source={{ uri: downloadPath, cache: true }}

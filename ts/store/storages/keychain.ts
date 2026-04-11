@@ -4,10 +4,10 @@ import * as Sentry from "@sentry/react-native";
 import { setGenericPasswordWithDefaultAccessibleOption } from "../../utils/keychain";
 
 /**
- * A storage to save/restore values from/to the Keychain.
- * The react-native-keychain library do not support storing multiple key/value so we
- * use the service as key. Each value is stored as a new service and a constant username
- * is set.
+ * A storage to save/restore values from/to the Keychain. The
+ * react-native-keychain library do not support storing multiple key/value so we
+ * use the service as key. Each value is stored as a new service and a constant
+ * username is set.
  */
 const USERNAME = "REDUX_PERSIST";
 

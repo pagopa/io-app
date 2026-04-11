@@ -97,14 +97,14 @@ export const isSessionExpiringSelector = createSelector(
 );
 
 /**
- * Determines whether to show the session expiration blocking screen.
- * The conditions are explicitly mapped for better readability and maintainability
+ * Determines whether to show the session expiration blocking screen. The
+ * conditions are explicitly mapped for better readability and maintainability
  *
  * This selector controls the display of a full-screen modal that appears when:
  * 1. The user's session is about to expire AND the active session login feature
- *    is remotely enabled AND the blocking screen hasn't been shown yet
- * 2. OR when testing locally with the local flag enabled AND the blocking screen
- *    hasn't been shown yet
+ * is remotely enabled AND the blocking screen hasn't been shown yet 2. OR when
+ * testing locally with the local flag enabled AND the blocking screen hasn't
+ * been shown yet
  *
  * The blocking screen is shown BEFORE the banner and serves as the primary
  * notification method. Once dismissed, it sets hasBlockingScreenBeenVisualized
@@ -143,22 +143,23 @@ export const showSessionExpirationBlockingScreenSelector = createSelector(
 );
 
 /**
- * Determines whether to show the session expiration banner.
- * The conditions are explicitly mapped for better readability and maintainability
+ * Determines whether to show the session expiration banner. The conditions are
+ * explicitly mapped for better readability and maintainability
  *
- * This selector controls the display of a banner that appears in different scenarios:
- * 1. Legacy mode: When active session login is NOT remotely enabled, but the session
- *    is expiring and the banner flag is true (maintains old behavior)
- * 2. Production mode: When the session is expiring, active session login is remotely
- *    enabled, the blocking screen has already been shown, and the banner flag is true
- * 3. Testing mode: When local testing is enabled, the blocking screen has been shown,
- *    and the banner flag is true (ignores session expiration for testing)
+ * This selector controls the display of a banner that appears in different
+ * scenarios: 1. Legacy mode: When active session login is NOT remotely enabled,
+ * but the session is expiring and the banner flag is true (maintains old
+ * behavior) 2. Production mode: When the session is expiring, active session
+ * login is remotely enabled, the blocking screen has already been shown, and
+ * the banner flag is true 3. Testing mode: When local testing is enabled, the
+ * blocking screen has been shown, and the banner flag is true (ignores session
+ * expiration for testing)
  *
- * The banner serves as a persistent reminder after the blocking screen has been dismissed,
- * or as the primary notification method in legacy mode when the new blocking screen
- * feature is disabled.
+ * The banner serves as a persistent reminder after the blocking screen has been
+ * dismissed, or as the primary notification method in legacy mode when the new
+ * blocking screen feature is disabled.
  *
- * the banner even when other conditions are met (useful for user dismissal).
+ * The banner even when other conditions are met (useful for user dismissal).
  */
 export const showSessionExpirationBannerRenderableSelector = createSelector(
   isSessionExpiringSelector,
@@ -207,9 +208,9 @@ export const showSessionExpirationBannerRenderableSelector = createSelector(
 );
 
 /**
- * This selector returns the remote API login URL prefix.
- * If the remote config does not provide a login URL,
- * it falls back to the default API login URL prefix.
+ * This selector returns the remote API login URL prefix. If the remote config
+ * does not provide a login URL, it falls back to the default API login URL
+ * prefix.
  */
 export const remoteApiLoginUrlPrefixSelector = createSelector(
   remoteConfigSelector,

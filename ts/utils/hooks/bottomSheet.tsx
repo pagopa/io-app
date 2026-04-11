@@ -61,11 +61,16 @@ export type IOBottomSheetModal = {
 /**
  * @typedef BottomSheetOptions
  * @type {BottomSheetOptions}
- * @property {component} component The React.Element to be rendered inside the bottom sheet body
- * @property {title} title String or React.Element to be rendered as bottom-sheet header title
- * @property {footer} footer React.Element or undefined to be rendered as sticky footer of our bottom sheet
- * @property {snapPoint} snapPoint The array of points used to pin the height of the bottom sheet
- * @property {onDismiss} onDismiss The possible function to be used as an effect of the dismissal of the bottom sheet
+ * @property {component} component The React.Element to be rendered inside the
+ *   bottom sheet body
+ * @property {title} title String or React.Element to be rendered as
+ *   bottom-sheet header title
+ * @property {footer} footer React.Element or undefined to be rendered as sticky
+ *   footer of our bottom sheet
+ * @property {snapPoint} snapPoint The array of points used to pin the height of
+ *   the bottom sheet
+ * @property {onDismiss} onDismiss The possible function to be used as an effect
+ *   of the dismissal of the bottom sheet
  */
 type BottomSheetOptions = {
   component: ReactNode;
@@ -76,7 +81,9 @@ type BottomSheetOptions = {
 };
 
 /**
- * Hook to generate a bottomSheet with a title, snapPoint and a component, in order to wrap the invocation of bottomSheetContent
+ * Hook to generate a bottomSheet with a title, snapPoint and a component, in
+ * order to wrap the invocation of bottomSheetContent
+ *
  * @param bottomSheetOptions
  * @see {BottomSheetOptions}
  */

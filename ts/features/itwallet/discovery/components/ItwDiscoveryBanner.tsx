@@ -21,17 +21,20 @@ import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 
 type Props = {
-  /** Flow type to determine dismissal logic and tracking properties  */
+  /** Flow type to determine dismissal logic and tracking properties */
   flow?: "messages_inbox" | "wallet";
   /** Dismiss handler */
   onDismiss?: () => void;
-  /** Custom styles applied to the underlying {@link ItwEngagementBanner} component */
+  /**
+   * Custom styles applied to the underlying {@link ItwEngagementBanner}
+   * component
+   */
   style?: ComponentProps<typeof ItwEngagementBanner>["style"];
 };
 
 /**
- * Displays a banner that prompts the user to activate or upgrade its wallet to the
- * new IT-Wallet.
+ * Displays a banner that prompts the user to activate or upgrade its wallet to
+ * the new IT-Wallet.
  */
 export const ItwDiscoveryBanner = ({
   flow = "wallet",

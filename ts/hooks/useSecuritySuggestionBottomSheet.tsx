@@ -10,8 +10,9 @@ import { useIOBottomSheetModal } from "../utils/hooks/bottomSheet";
 import SecuritySuggestions from "../features/authentication/fastLogin/components/SecuritySuggestions";
 
 /**
- * @param useManualBottomsheetOpening if true the caller must use the methods exported by
- * useIOBottomSheetModal whitout automation on bottomsheet opening.
+ * @param useManualBottomsheetOpening If true the caller must use the methods
+ *   exported by useIOBottomSheetModal whitout automation on bottomsheet
+ *   opening.
  */
 
 export const useSecuritySuggestionsBottomSheet = (

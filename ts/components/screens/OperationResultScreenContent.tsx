@@ -41,9 +41,7 @@ type OperationResultScreenContentProps = WithTestID<{
   disableAnimatedPictogram?: boolean;
 }>;
 
-/**
- * Check if a pictogram has an animated version or not
- */
+/** Check if a pictogram has an animated version or not */
 const hasAnimatedVersion = (
   pictogram: IOPictograms | IOAnimatedPictograms
 ): pictogram is IOAnimatedPictograms => pictogram in IOAnimatedPictogramsAssets;

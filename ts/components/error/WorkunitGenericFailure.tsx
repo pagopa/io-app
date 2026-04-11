@@ -5,11 +5,7 @@ import { connect } from "react-redux";
 import { useHeaderSecondLevel } from "../../hooks/useHeaderSecondLevel";
 import { OperationResultScreenContent } from "../screens/OperationResultScreenContent";
 
-/**
- * This screen is displayed when an unexpected failure occurs in a work unit
- * @constructor
- * @param props
- */
+/** This screen is displayed when an unexpected failure occurs in a work unit */
 export const WorkunitGenericFailure = (): ReactElement => {
   const navigation = useNavigation();
 

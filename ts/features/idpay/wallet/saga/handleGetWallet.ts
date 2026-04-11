@@ -13,6 +13,7 @@ import { idPayWalletGet } from "../store/actions";
 
 /**
  * Handle the remote call to retrieve the IDPay wallet
+ *
  * @param getWallet
  * @param action
  */

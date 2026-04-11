@@ -72,17 +72,13 @@ type SuccessResponse = t.TypeOf<typeof SuccessResponse>;
 // Define the types of the requests
 //
 
-/**
- *  The base response type defines 200, 401 and 500 statuses
- */
+/** The base response type defines 200, 401 and 500 statuses */
 type BaseResponseType<R> =
   | IResponseType<200, R>
   | IResponseType<401, undefined>
   | IResponseType<500, ProblemJson>;
 
-/**
- * A response decoder for base response types
- */
+/** A response decoder for base response types */
 function baseResponseDecoder<R, O = R>(
   type: t.Type<R, O>
 ): ResponseDecoder<BaseResponseType<R>> {
@@ -92,9 +88,7 @@ function baseResponseDecoder<R, O = R>(
   );
 }
 
-/**
- * Specific for the nodo-related requests
- */
+/** Specific for the nodo-related requests */
 
 export type LogoutT = IPostApiRequestType<
   { readonly Bearer: string },

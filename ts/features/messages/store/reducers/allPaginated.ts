@@ -46,7 +46,7 @@ export type LastRequestType = O.Option<LastRequestValues>;
 
 type Collection = {
   data: MessagePagePot;
-  /** persist the last action type occurred */
+  /** Persist the last action type occurred */
   lastRequest: LastRequestType;
   lastUpdateTime: Date;
 };
@@ -57,9 +57,7 @@ export type MessageOperationFailure = {
   operation: MessageOperation;
 };
 
-/**
- * A list of messages and pagination inbox.
- */
+/** A list of messages and pagination inbox. */
 export type AllPaginated = {
   archive: Collection;
   inbox: Collection;
@@ -73,9 +71,7 @@ const INITIAL_STATE: AllPaginated = {
   shownCategory: "INBOX"
 };
 
-/**
- * A reducer to store all messages with pagination
- */
+/** A reducer to store all messages with pagination */
 const reducer = (
   state: AllPaginated = INITIAL_STATE,
   action: Action
@@ -429,8 +425,8 @@ const reduceAutomaticMessageRefreshRequest = (
 };
 
 /**
- * Implements an optimistic UI by updating the state at request time and rolling back the updates
- * in case of failure.
+ * Implements an optimistic UI by updating the state at request time and rolling
+ * back the updates in case of failure.
  *
  * @param state
  * @param action
@@ -596,6 +592,7 @@ const reduceUpsertMessageStatusAttributes = (
 /**
  * True if the inbox state is loading or updating, regardless of the request
  * that triggered the load/update.
+ *
  * @param state
  */
 export const isLoadingOrUpdatingInbox = (state: GlobalState) =>
@@ -697,15 +694,17 @@ export const messagePagePotFromCategorySelector =
     );
 
 /**
- * This method checks if there is a local record of a processed payment
- * for the given message category's rptId (ricevuta pagamento telematico).
+ * This method checks if there is a local record of a processed payment for the
+ * given message category's rptId (ricevuta pagamento telematico).
  *
- * Be aware that such record is persisted on the device and it is not synchronized
- * with server so it is lost upon device change / app folder cleaning / app uninstall.
+ * Be aware that such record is persisted on the device and it is not
+ * synchronized with server so it is lost upon device change / app folder
+ * cleaning / app uninstall.
  *
  * @param state Redux global state
- * @param category The enriched message category, returned by the `GET /messages?enrich_result_data=true` endpoint, that contains the rptId
- * @returns true if there is a matching paid transaction
+ * @param category The enriched message category, returned by the `GET
+ *   /messages?enrich_result_data=true` endpoint, that contains the rptId
+ * @returns True if there is a matching paid transaction
  */
 export const isPaymentMessageWithPaidNoticeSelector = (
   state: GlobalState,

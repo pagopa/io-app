@@ -80,12 +80,11 @@ export function* handleCreateFilledDocument(
 }
 
 /**
- * Handle the FCI polling saga
- * This saga is used to poll the QTSP filled_document to check if the
- * document is ready to be downloaded by the user. The polling is done
- * every POLLING_FREQ_TIMEOUT seconds and the polling is stopped when
- * the document is ready or when the polling is stopped if
- * the polling time exceeds POLLING_TIME_THRESHOLD.
+ * Handle the FCI polling saga This saga is used to poll the QTSP
+ * filled_document to check if the document is ready to be downloaded by the
+ * user. The polling is done every POLLING_FREQ_TIMEOUT seconds and the polling
+ * is stopped when the document is ready or when the polling is stopped if the
+ * polling time exceeds POLLING_TIME_THRESHOLD.
  */
 export function* watchFciPollSaga(
   qtspFilledDocumentUrl: FilledDocumentDetailView["filled_document_url"]

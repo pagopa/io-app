@@ -62,11 +62,10 @@ export const GuidedTour = (props: PropsWithChildren<GuidedTourProps>) => {
   ]);
 
   /**
-   * Continuous position tracking on the UI thread.
-   * When this item is the active tour step and tracking is enabled,
-   * measure the element every frame and update the cutout shared values.
-   * This keeps the cutout aligned even when the layout shifts
-   * (e.g. offline banner, keyboard, orientation change).
+   * Continuous position tracking on the UI thread. When this item is the active
+   * tour step and tracking is enabled, measure the element every frame and
+   * update the cutout shared values. This keeps the cutout aligned even when
+   * the layout shifts (e.g. offline banner, keyboard, orientation change).
    */
   const frameCallback = useFrameCallback(() => {
     "worklet";

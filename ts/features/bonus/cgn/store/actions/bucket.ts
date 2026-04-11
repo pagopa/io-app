@@ -13,9 +13,7 @@ type CgnCodeBucketPayload = {
   onError: () => void;
 };
 
-/**
- * handle CGN discount code consumption from a bucket
- */
+/** Handle CGN discount code consumption from a bucket */
 export const cgnCodeFromBucket = createAsyncAction(
   "CGN_BUCKET_CODE_REQUEST",
   "CGN_BUCKET_CODE_SUCCESS",

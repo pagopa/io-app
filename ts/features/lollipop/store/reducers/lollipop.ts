@@ -1,6 +1,4 @@
-/**
- * A reducer for lollipop.
- */
+/** A reducer for lollipop. */
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import { PublicKey } from "@pagopa/io-react-native-crypto";

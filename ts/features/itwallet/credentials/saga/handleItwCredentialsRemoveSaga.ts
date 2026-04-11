@@ -9,9 +9,11 @@ import {
 import { itwCredentialsListByTypeSelector } from "../store/selectors";
 
 /**
- * This saga handles the credential removal action and ensures the consistency between stored credentials and wallet state.
- * It also makes sure that the crypto keys are deleted from the device.
- * If multiple credentials with the same type are found in the store, all of them are removed.
+ * This saga handles the credential removal action and ensures the consistency
+ * between stored credentials and wallet state. It also makes sure that the
+ * crypto keys are deleted from the device. If multiple credentials with the
+ * same type are found in the store, all of them are removed.
+ *
  * @param itwCredentialsRemoveByType
  */
 export function* handleItwCredentialsRemoveSaga(

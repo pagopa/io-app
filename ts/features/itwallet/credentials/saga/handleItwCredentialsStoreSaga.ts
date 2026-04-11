@@ -5,7 +5,9 @@ import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { mapCredentialToWalletCard } from "../../wallet/utils";
 
 /**
- * This saga handles the credential store action and ensures the consistency between stored credentials and wallet state.
+ * This saga handles the credential store action and ensures the consistency
+ * between stored credentials and wallet state.
+ *
  * @param itwCredentialsRemoveAction
  */
 export function* handleItwCredentialsStoreSaga(

@@ -11,15 +11,11 @@ import { trackFciDocOpeningFailure } from "../../analytics";
 export const FciDownloadPreviewDirectoryPath =
   RNFS.CachesDirectoryPath + "/fci";
 
-/**
- * Builds the save path for the given attachment
- */
+/** Builds the save path for the given attachment */
 export const savePath = (url: string) =>
   FciDownloadPreviewDirectoryPath + "/" + getFileNameFromUrl(url);
 
-/**
- * Handles the download of an Fci document preview
- */
+/** Handles the download of an Fci document preview */
 export function* handleDownloadDocument(
   action: ActionType<typeof fciDownloadPreview.request>
 ) {

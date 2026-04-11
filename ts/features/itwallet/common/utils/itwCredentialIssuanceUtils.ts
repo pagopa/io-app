@@ -32,12 +32,14 @@ export type RequestCredentialParams = {
 
 /**
  * List of credentials that cannot be issued in parallel, only sequentially.
- * Currently only the mDL must be requested sequentially because of locking issues.
+ * Currently only the mDL must be requested sequentially because of locking
+ * issues.
  */
 const SEQUENTIAL_ISSUANCE_CREDENTIALS = ["mDL"];
 
 /**
  * Requests a credential from the issuer.
+ *
  * @param env - The environment to use for the wallet provider base URL
  * @param itwVersion - IT-Wallet technical specs version
  * @param credentialType - The type of credential to request
@@ -109,6 +111,7 @@ export type ObtainCredentialParams = {
 
 /**
  * Obtains a credential from the issuer.
+ *
  * @param env - The environment to use for the wallet provider base URL
  * @param itwVersion - IT-Wallet technical specs version
  * @param credentialType - The type of credential to request

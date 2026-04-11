@@ -10,20 +10,19 @@
  */
 
 /**
- * An object defined for internationalization purpose.
- * The key is the language key and the value is the message text
+ * An object defined for internationalization purpose. The key is the language
+ * key and the value is the message text
  *
- * Accepted keys:
- * - it
- * - en
+ * Accepted keys: - it - en
+ *
  * @typedef {Object} MessagePayloadS
  * @property {string} it - The message defined in Italian.
  * @property {string} en - The message defined in English.
  */
 
 /**
- * An object defined for internationalization purpose.
- * The key is the language key and the value is the payload for alert box
+ * An object defined for internationalization purpose. The key is the language
+ * key and the value is the payload for alert box
  *
  * @typedef {Object} MessagePayloadL
  * @property {AlertContent} it - The values of the alert box in Italian language
@@ -54,7 +53,8 @@ function sendMessagesToRN(message) {
 }
 
 /**
- * This function sends to IO App the input to stop the webview communication and close the current screen.
+ * This function sends to IO App the input to stop the webview communication and
+ * close the current screen.
  */
 function closeModal() {
   const message = {
@@ -64,7 +64,8 @@ function closeModal() {
 }
 
 /**
- * This function sends to IO App the input to show the activity indicator loader.
+ * This function sends to IO App the input to show the activity indicator
+ * loader.
  */
 function showLoader() {
   const message = {
@@ -74,7 +75,8 @@ function showLoader() {
 }
 
 /**
- * This function sends to IO App the input to hide the activity indicator loader.
+ * This function sends to IO App the input to hide the activity indicator
+ * loader.
  */
 function hideLoader() {
   const message = {
@@ -86,7 +88,8 @@ function hideLoader() {
 /**
  * A function to show the success component on the IO App side.
  *
- * @param {MessagePayloadS} payload - Will be the message showed in the success screen, otherwise a common text will be displayed
+ * @param {MessagePayloadS} payload - Will be the message showed in the success
+ *   screen, otherwise a common text will be displayed
  */
 function showSuccess(payload) {
   const message = {
@@ -112,7 +115,7 @@ function showErrorMessage(payload) {
 /**
  * A function to show an AlertBox in the IO App component.
  *
- * @param {MessagePayloadL} payload - the value to display in the alert box.
+ * @param {MessagePayloadL} payload - The value to display in the alert box.
  */
 function showAlertBox(payload) {
   const message = {
@@ -123,8 +126,9 @@ function showAlertBox(payload) {
 }
 
 /**
- * This is a utility function to check if the injection is yet completed.
- * This calls onInjectionCompleted function which is implemented by the client and not injected by IO App.
+ * This is a utility function to check if the injection is yet completed. This
+ * calls onInjectionCompleted function which is implemented by the client and
+ * not injected by IO App.
  */
 function checkInjectionCompleted() {
   if (typeof onInjectionCompleted === "function") {

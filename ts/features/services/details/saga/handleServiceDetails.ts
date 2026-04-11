@@ -10,7 +10,8 @@ import { loadServiceDetail } from "../store/actions/details";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 
 /**
- * saga to handle the loading of a service detail
+ * Saga to handle the loading of a service detail
+ *
  * @param getService
  * @param action
  */

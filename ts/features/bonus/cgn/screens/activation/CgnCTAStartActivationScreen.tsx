@@ -23,9 +23,7 @@ import { OperationResultScreenContent } from "../../../../../components/screens/
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
-/**
- * this is a dummy screen reachable only from a message CTA
- */
+/** This is a dummy screen reachable only from a message CTA */
 const CgnCTAStartOnboardingComponent: FC<Props> = (props: Props) => {
   const isFirstRender = useRef<boolean>(true);
 
@@ -65,9 +63,7 @@ const CgnCTAStartOnboardingComponent: FC<Props> = (props: Props) => {
   return <LoadingScreenContent title={I18n.t("global.remoteStates.loading")} />;
 };
 
-/**
- * this is a dummy screen reachable only from a message CTA
- */
+/** This is a dummy screen reachable only from a message CTA */
 const CgnCTAStartOnboardingScreen = (props: Props) => {
   const navigation = useNavigation();
   if (!props.isCgnEnabled) {

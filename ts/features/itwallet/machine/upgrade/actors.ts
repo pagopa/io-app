@@ -23,8 +23,8 @@ export const createCredentialUpgradeActorsImplementation = (
 ) => ({
   /**
    * Handles both upgrading and reissuing credentials depending on issuanceMode.
-   * - upgrade → performs credential upgrade (skipMdocIssuance = false)
-   * - reissuance → performs credential reissuing (skipMdocIssuance = true)
+   * - upgrade → performs credential upgrade (skipMdocIssuance = false) -
+   * reissuance → performs credential reissuing (skipMdocIssuance = true)
    */
   upgradeCredential: fromPromise<
     UpgradeCredentialOutput,

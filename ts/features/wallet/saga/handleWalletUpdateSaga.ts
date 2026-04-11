@@ -5,8 +5,8 @@ import { idPayWalletGet } from "../../idpay/wallet/store/actions";
 import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/actions";
 
 /**
- * This saga handles the update of the wallet screen
- * Extend this function to add calls that the wallet screen needs to perform to update/refresh its content
+ * This saga handles the update of the wallet screen Extend this function to add
+ * calls that the wallet screen needs to perform to update/refresh its content
  */
 export function* handleWalletUpdateSaga() {
   // Updates the user methods

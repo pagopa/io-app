@@ -46,8 +46,9 @@ export function* checkAcceptedTosSaga(
       StackActions.popToTop()
     );
     /**
-     * The user profile is updated storing the last ToS version.
-     * If the user logs in for the first time, the accepted tos version is stored once the profile in initialized
+     * The user profile is updated storing the last ToS version. If the user
+     * logs in for the first time, the accepted tos version is stored once the
+     * profile in initialized
      */
     if (userProfile.has_profile) {
       yield* put(profileUpsert.request({ accepted_tos_version: tosVersion }));

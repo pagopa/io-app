@@ -1,7 +1,5 @@
 /* eslint-disable functional/immutable-data */
-/**
- * An ingress screen to choose the real first screen the user must navigate to.
- */
+/** An ingress screen to choose the real first screen the user must navigate to. */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as O from "fp-ts/lib/Option";

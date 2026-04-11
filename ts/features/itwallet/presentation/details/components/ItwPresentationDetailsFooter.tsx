@@ -64,9 +64,7 @@ const ItwPresentationDetailsFooter = ({
   );
 };
 
-/**
- * Returns custom CTAs for a credential
- */
+/** Returns custom CTAs for a credential */
 const getCredentialActions = (credential: StoredCredential): ReactNode => {
   const { credentialType, parsedCredential } = credential;
   const docNumber = getCredentialDocumentNumber(parsedCredential);
@@ -80,9 +78,7 @@ const getCredentialActions = (credential: StoredCredential): ReactNode => {
   }[credentialType];
 };
 
-/**
- * Renders the IPatente service action item
- */
+/** Renders the IPatente service action item */
 const IPatenteListItemAction = ({ docNumber }: IPatenteListItemActionProps) => {
   const { startFIMSAuthenticationFlow } =
     useFIMSRemoteServiceConfiguration("iPatente");

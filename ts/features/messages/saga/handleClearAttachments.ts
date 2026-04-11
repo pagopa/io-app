@@ -6,6 +6,7 @@ import { AttachmentsDirectoryPath } from "../utils/attachments";
 
 /**
  * Clears cached file for the attachment
+ *
  * @param action
  */
 export function* handleClearAttachment(
@@ -21,9 +22,7 @@ export function* handleClearAttachment(
   }
 }
 
-/**
- * Clears cached files for all the attachments
- */
+/** Clears cached files for all the attachments */
 export function* handleClearAllAttachments() {
   const isPresent = yield* call(RNFS.exists, AttachmentsDirectoryPath);
 

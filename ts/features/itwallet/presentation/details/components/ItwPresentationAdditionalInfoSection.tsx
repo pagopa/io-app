@@ -12,8 +12,8 @@ type Props = {
 };
 
 /**
- * This component returns the additional information required by a credential details screen, which is not
- * part of the credential claims
+ * This component returns the additional information required by a credential
+ * details screen, which is not part of the credential claims
  */
 const ItwPresentationAdditionalInfoSection = ({ credential }: Props) => {
   const shouldRenderWalletUpgradeMdlBanner = useIOSelector(

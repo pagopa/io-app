@@ -198,14 +198,15 @@ export const IOBarcodeDecoders = {
 
 type DecodeOptions = {
   /**
-   * List of barcode types to decode
-   * If not specified, all barcode types are decoded
+   * List of barcode types to decode If not specified, all barcode types are
+   * decoded
    */
   barcodeTypes?: ReadonlyArray<IOBarcodeType>;
 };
 
 /**
  * Returns the type of a barcode. Fallbacks to "UNKNOWN" if no type is found
+ *
  * @param state Global redux state of the application
  * @param value Barcode content
  * @param options Options to filter the active barcode types
@@ -241,10 +242,12 @@ const isDecoderTypeEnabled =
 
 /**
  * Barcode decoding for multiple values
+ *
  * @param state Global redux state of the application
  * @param values List of barcode contens
  * @param options Options to filter the active barcode types
- * @returns A list of DecodedIOBarcode {@see DecodedIOBarcode} if at least one barcode is decoded
+ * @returns A list of DecodedIOBarcode {@see DecodedIOBarcode} if at least one
+ *   barcode is decoded
  */
 export const decodeMultipleIOBarcodes = (
   state: GlobalState,

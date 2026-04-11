@@ -5,9 +5,7 @@ import { PaymentNoticeNumber } from "../../../../definitions/backend/PaymentNoti
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { TimeToLiveSeconds } from "../../../../definitions/backend/TimeToLiveSeconds";
 import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
-/**
- * Domain-specific representation of a Message with aggregated data.
- */
+/** Domain-specific representation of a Message with aggregated data. */
 export type UIMessage = {
   id: string;
   category: MessageCategory;
@@ -23,9 +21,7 @@ export type UIMessage = {
   hasPrecondition: boolean;
 };
 
-/**
- * Domain-specific representation of a Message details
- */
+/** Domain-specific representation of a Message details */
 export type UIMessageDetails = {
   id: string;
   subject: string;

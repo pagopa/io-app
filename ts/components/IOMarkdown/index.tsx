@@ -17,9 +17,7 @@ import { DEFAULT_RULES } from "./renderRules";
 type UnsafeProps = Omit<IOMarkdownProps, "onError">;
 
 export type IOMarkdownProps = {
-  /**
-   * The `markdown` string to render.
-   */
+  /** The `markdown` string to render. */
   content: string;
   onError?:
     | ((
@@ -28,16 +26,16 @@ export type IOMarkdownProps = {
         eventId: string
       ) => void)
     | undefined;
-  /**
-   * The render rules that can be used to override the `DEFAULT_RULES`.
-   */
+  /** The render rules that can be used to override the `DEFAULT_RULES`. */
   rules?: Partial<IOMarkdownRenderRules>;
 };
 
 /**
- * This component parses a markdown string and render it using the `DS` components.
+ * This component parses a markdown string and render it using the `DS`
+ * components.
  *
- * It's possible to override every single rule by passing a custom `rules` object.
+ * It's possible to override every single rule by passing a custom `rules`
+ * object.
  */
 const UnsafeIOMarkdown = ({ content, rules }: UnsafeProps) => {
   const screenReaderEnabled = useIOSelector(isScreenReaderEnabledSelector);

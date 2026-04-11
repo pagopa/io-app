@@ -9,9 +9,7 @@ import {
   itwSetSpecsVersion
 } from "../store/actions/environment";
 
-/**
- * Ensures the wallet is correctly reset when the environment changes.
- */
+/** Ensures the wallet is correctly reset when the environment changes. */
 function* handleItwEnvironmentChanged(
   action: ActionType<typeof itwSetEnv> | ActionType<typeof itwResetEnv>
 ): SagaIterator {
@@ -27,9 +25,7 @@ function* handleItwEnvironmentChanged(
   yield* put(itwSetSpecsVersion("1.0.0"));
 }
 
-/**
- * Watch environment actions and triggers the IT Wallet reset.
- */
+/** Watch environment actions and triggers the IT Wallet reset. */
 export function* watchItwEnvironment(): SagaIterator {
   yield* takeLatest(itwSetEnv, handleItwEnvironmentChanged);
   yield* takeLatest(itwResetEnv, handleItwEnvironmentChanged);

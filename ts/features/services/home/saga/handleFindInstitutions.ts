@@ -9,7 +9,8 @@ import { ServicesClient } from "../../common/api/servicesClient";
 import { paginatedInstitutionsGet } from "../store/actions";
 
 /**
- * saga to handle the loading of institutions
+ * Saga to handle the loading of institutions
+ *
  * @param findInstitutions
  * @param action
  */

@@ -24,8 +24,8 @@ const itemLayoutAnimation =
   Platform.OS !== "android" ? LinearTransition.duration(200) : undefined;
 
 /**
- * This component handles the rendering of cards of a specific category.
- * The component also handles logic behind card stacking and animations
+ * This component handles the rendering of cards of a specific category. The
+ * component also handles logic behind card stacking and animations
  */
 export const WalletCardsCategoryContainer = ({
   cards,

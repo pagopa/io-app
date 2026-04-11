@@ -6,8 +6,8 @@ import { openWebUrl } from "../../../../../../utils/url";
 import { EYCA_WEBSITE_BASE_URL } from "../../../utils/constants";
 
 /**
- * this component shows information about EYCA card. It is included within a bottom sheet
- * @constructor
+ * This component shows information about EYCA card. It is included within a
+ * bottom sheet
  */
 const EycaInformationComponent: React.FunctionComponent = () => (
   <>

@@ -12,6 +12,7 @@ import { idpayInitiativeGet } from "../store/actions";
 
 /**
  * Handle the remote call to retrieve the IDPay initiative details
+ *
  * @param getInitiativeDetails BE API call
  * @param bpdToken Auth token
  * @param language Preferred language

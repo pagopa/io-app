@@ -23,17 +23,13 @@ import { NetworkError } from "../../../../../utils/errors";
 import { isDevEnv } from "../../../../../utils/environment";
 
 export type ItwWalletInstanceState = {
-  /**
-   * The new Wallet Attestation in multiple formats
-   */
+  /** The new Wallet Attestation in multiple formats */
   attestation: WalletInstanceAttestations | undefined;
-  /**
-   * The Wallet Instance status fetched from the Wallet Provider backend
-   */
+  /** The Wallet Instance status fetched from the Wallet Provider backend */
   status: pot.Pot<WalletInstanceStatus, NetworkError>;
   /**
-   * Whether a wallet instance renewal has already failed.
-   * Used to prevent re-entering the recovery block on subsequent actor retries.
+   * Whether a wallet instance renewal has already failed. Used to prevent
+   * re-entering the recovery block on subsequent actor retries.
    */
   renewalError: boolean;
 };

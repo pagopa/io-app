@@ -12,6 +12,7 @@ import { ReduxSagaEffect } from "../../types/utils";
 
 /**
  * The data model needed to run the workunit
+ *
  * @deprecated
  */
 export type WorkUnit = {
@@ -31,22 +32,23 @@ export type WorkUnit = {
 
 /**
  * The result of the WorkUnit
+ *
  * @deprecated
  */
 export type SagaResult = "cancel" | "completed" | "back" | "failure";
 
-/**
- * @deprecated
- */
+/** @deprecated */
 export type WorkUnitHandler<T = unknown> = (
   g: (...args: Array<any>) => Generator<ReduxSagaEffect, SagaResult>
 ) => Generator<ReduxSagaEffect, SagaResult, T>;
 
 /**
- * Ensure that the `startScreen` is the current screen or navigate to `startScreen` using `navigateTo`
+ * Ensure that the `startScreen` is the current screen or navigate to
+ * `startScreen` using `navigateTo`
+ *
+ * @deprecated
  * @param navigateTo
  * @param startScreen
- * @deprecated
  */
 function* ensureScreen(navigateTo: () => void, startScreen: string) {
   const currentRoute: ReturnType<typeof NavigationService.getCurrentRouteName> =
@@ -58,10 +60,11 @@ function* ensureScreen(navigateTo: () => void, startScreen: string) {
 }
 
 /**
- * Ensure that after the execution of the saga `g`,
- * the navigation stack return to the screen from which the saga was invoked
- * @param g
+ * Ensure that after the execution of the saga `g`, the navigation stack return
+ * to the screen from which the saga was invoked
+ *
  * @deprecated
+ * @param g
  */
 export function* withResetNavigationStack<T>(
   g: (...args: Array<any>) => Generator<ReduxSagaEffect, T>
@@ -80,9 +83,11 @@ export function* withResetNavigationStack<T>(
 }
 
 /**
- * TODO: Generic handling for the failure of a workunit, navigate to GenericFailureScren
- * @param g
+ * TODO: Generic handling for the failure of a workunit, navigate to
+ * GenericFailureScren
+ *
  * @deprecated
+ * @param g
  */
 export function* withFailureHandling<T>(
   g: (...args: Array<any>) => Generator<ReduxSagaEffect, SagaResult, T>
@@ -96,8 +101,9 @@ export function* withFailureHandling<T>(
 
 /**
  * Execute the work unit, and wait for an action to complete
- * @param wu
+ *
  * @deprecated
+ * @param wu
  */
 export function* executeWorkUnit(
   wu: WorkUnit

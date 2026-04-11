@@ -1,6 +1,4 @@
-/**
- * Mocked version of the BackendClient.
- */
+/** Mocked version of the BackendClient. */
 export const BackendClient = {
   getMessage: jest.fn(),
   getMessages: jest.fn(),

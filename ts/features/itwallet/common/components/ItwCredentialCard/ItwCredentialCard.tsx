@@ -21,25 +21,24 @@ import { CardColorScheme } from "./types";
 
 export type ItwCredentialCard = {
   /**
-   * Type of the credential, which is used to determine the
-   * visual representation and styling of the card.
+   * Type of the credential, which is used to determine the visual
+   * representation and styling of the card.
    */
   credentialType: string;
   /**
-   * Current status of the credential, used to determine the
-   * visual representation and the status tag to display.
+   * Current status of the credential, used to determine the visual
+   * representation and the status tag to display.
    */
   credentialStatus?: ItwCredentialStatus;
   /**
-   * Issue date of the credential.
-   * Used to determine whether the card should display
-   * the "upgrade pending" badge when the user owns
-   * an L3 PID and the credential was issued before it.
+   * Issue date of the credential. Used to determine whether the card should
+   * display the "upgrade pending" badge when the user owns an L3 PID and the
+   * credential was issued before it.
    */
   issuedAt?: string;
   /**
-   * Indicates if the credential is a multi-level credential,
-   * which affects the display of a specific badge on the card.
+   * Indicates if the credential is a multi-level credential, which affects the
+   * display of a specific badge on the card.
    */
   isMultiCredential?: boolean;
 };

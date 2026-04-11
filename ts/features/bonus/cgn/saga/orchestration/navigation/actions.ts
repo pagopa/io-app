@@ -3,8 +3,9 @@ import NavigationService from "../../../../../../navigation/NavigationService";
 import CGN_ROUTES from "../../../navigation/routes";
 
 /**
- * NOTE: Do not use this method when you have access to a navigation prop or useNavigation.
- * It will behave differently, and many helper methods specific to screens won't be available.
+ * NOTE: Do not use this method when you have access to a navigation prop or
+ * useNavigation. It will behave differently, and many helper methods specific
+ * to screens won't be available.
  */
 export const navigateToCgnActivationInformationTos = () =>
   NavigationService.dispatchNavigationAction(
@@ -14,8 +15,9 @@ export const navigateToCgnActivationInformationTos = () =>
   );
 
 /**
- * NOTE: Do not use this method when you have access to a navigation prop or useNavigation.
- * It will behave differently, and many helper methods specific to screens won't be available.
+ * NOTE: Do not use this method when you have access to a navigation prop or
+ * useNavigation. It will behave differently, and many helper methods specific
+ * to screens won't be available.
  */
 export const navigateToCgnActivationLoading = () =>
   NavigationService.dispatchNavigationAction(
@@ -25,8 +27,9 @@ export const navigateToCgnActivationLoading = () =>
   );
 
 /**
- * NOTE: Do not use this method when you have access to a navigation prop or useNavigation.
- * It will behave differently, and many helper methods specific to screens won't be available.
+ * NOTE: Do not use this method when you have access to a navigation prop or
+ * useNavigation. It will behave differently, and many helper methods specific
+ * to screens won't be available.
  */
 export const navigateToEycaActivationLoading = () =>
   NavigationService.dispatchNavigationAction(
@@ -36,8 +39,9 @@ export const navigateToEycaActivationLoading = () =>
   );
 
 /**
- * NOTE: Do not use this method when you have access to a navigation prop or useNavigation.
- * It will behave differently, and many helper methods specific to screens won't be available.
+ * NOTE: Do not use this method when you have access to a navigation prop or
+ * useNavigation. It will behave differently, and many helper methods specific
+ * to screens won't be available.
  */
 export const navigateToCgnAlreadyActive = () =>
   NavigationService.dispatchNavigationAction(
@@ -47,8 +51,9 @@ export const navigateToCgnAlreadyActive = () =>
   );
 
 /**
- * NOTE: Do not use this method when you have access to a navigation prop or useNavigation.
- * It will behave differently, and many helper methods specific to screens won't be available.
+ * NOTE: Do not use this method when you have access to a navigation prop or
+ * useNavigation. It will behave differently, and many helper methods specific
+ * to screens won't be available.
  */
 export const navigateToCgnActivationPending = () =>
   NavigationService.dispatchNavigationAction(
@@ -58,8 +63,9 @@ export const navigateToCgnActivationPending = () =>
   );
 
 /**
- * NOTE: Do not use this method when you have access to a navigation prop or useNavigation.
- * It will behave differently, and many helper methods specific to screens won't be available.
+ * NOTE: Do not use this method when you have access to a navigation prop or
+ * useNavigation. It will behave differently, and many helper methods specific
+ * to screens won't be available.
  */
 export const navigateToCgnActivationTimeout = () =>
   NavigationService.dispatchNavigationAction(
@@ -69,8 +75,9 @@ export const navigateToCgnActivationTimeout = () =>
   );
 
 /**
- * NOTE: Do not use this method when you have access to a navigation prop or useNavigation.
- * It will behave differently, and many helper methods specific to screens won't be available.
+ * NOTE: Do not use this method when you have access to a navigation prop or
+ * useNavigation. It will behave differently, and many helper methods specific
+ * to screens won't be available.
  */
 export const navigateToCgnActivationIneligible = () =>
   NavigationService.dispatchNavigationAction(
@@ -80,8 +87,9 @@ export const navigateToCgnActivationIneligible = () =>
   );
 
 /**
- * NOTE: Do not use this method when you have access to a navigation prop or useNavigation.
- * It will behave differently, and many helper methods specific to screens won't be available.
+ * NOTE: Do not use this method when you have access to a navigation prop or
+ * useNavigation. It will behave differently, and many helper methods specific
+ * to screens won't be available.
  */
 export const navigateToCgnActivationCompleted = () =>
   NavigationService.dispatchNavigationAction(
@@ -91,8 +99,9 @@ export const navigateToCgnActivationCompleted = () =>
   );
 
 /**
- * NOTE: Do not use this method when you have access to a navigation prop or useNavigation.
- * It will behave differently, and many helper methods specific to screens won't be available.
+ * NOTE: Do not use this method when you have access to a navigation prop or
+ * useNavigation. It will behave differently, and many helper methods specific
+ * to screens won't be available.
  */
 export const navigateToCgnDetails = () =>
   NavigationService.dispatchNavigationAction(

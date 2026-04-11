@@ -65,7 +65,10 @@ type DSIconViewerBoxProps = {
   image: ReactNode;
   size?: "small" | "medium" | "large" | undefined;
   withDot?: boolean;
-  /** When true, the wrapper fills its parent width instead of using the size-based percentage. */
+  /**
+   * When true, the wrapper fills its parent width instead of using the
+   * size-based percentage.
+   */
   fullWidth?: boolean;
 };
 

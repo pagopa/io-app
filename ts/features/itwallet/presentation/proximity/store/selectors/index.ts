@@ -14,8 +14,8 @@ import {
 type PresentableCredentialsByDocType = Record<string, StoredCredential>;
 
 /**
- * Returns the credentials object from the itw credentials state.
- * Only MDOC credentials are returned.
+ * Returns the credentials object from the itw credentials state. Only MDOC
+ * credentials are returned.
  *
  * @param state - The global state.
  * @returns The credentials object.
@@ -25,8 +25,8 @@ const itwCredentialsAsMdocSelector = makeSelectAllCredentials(
 );
 
 /**
- * Returns the credentials object by doc type.
- * Only MDOC credentials are returned.
+ * Returns the credentials object by doc type. Only MDOC credentials are
+ * returned.
  *
  * @param state - The global state.
  * @returns The credentials object by doc type.
@@ -51,9 +51,7 @@ export const itwPresentableCredentialsByDocTypeSelector = createSelector(
     )
 );
 
-/**
- * Checks if a given credential is expired based on its status.
- */
+/** Checks if a given credential is expired based on its status. */
 const isExpiredPresentableCredential = (credential: StoredCredential) => {
   const status = getCredentialStatus(credential);
   return status === "expired" || status === "jwtExpired";
@@ -61,8 +59,11 @@ const isExpiredPresentableCredential = (credential: StoredCredential) => {
 
 /**
  * Checks if all presentable credentials are expired.
- * @param presentableCredentialsByDocType - The presentable credentials by document type.
- * @returns `true` if all presentable credentials are expired, `false` otherwise.
+ *
+ * @param presentableCredentialsByDocType - The presentable credentials by
+ *   document type.
+ * @returns `true` if all presentable credentials are expired, `false`
+ *   otherwise.
  */
 export const areAllPresentableCredentialsExpired = (
   presentableCredentialsByDocType: PresentableCredentialsByDocType
@@ -75,11 +76,12 @@ export const areAllPresentableCredentialsExpired = (
 };
 
 /**
- * Selector to determine whether there are any presentable credentials.
- * Returns `true` if there is at least one MDOC credential in the wallet.
+ * Selector to determine whether there are any presentable credentials. Returns
+ * `true` if there is at least one MDOC credential in the wallet.
  *
  * @param state - The global state.
- * @returns `true` if there is at least one presentable credential, `false` otherwise.
+ * @returns `true` if there is at least one presentable credential, `false`
+ *   otherwise.
  */
 export const hasPresentableCredentialsSelector = createSelector(
   itwPresentableCredentialsByDocTypeSelector,
@@ -89,11 +91,13 @@ export const hasPresentableCredentialsSelector = createSelector(
 
 /**
  * Selector to determine whether the Proximity QR Code screen should be blocked.
- * It is blocked when the PID is expired AND all presentable credentials are expired.
- * In this case the user must reissue the PID, which will renew all documents too.
+ * It is blocked when the PID is expired AND all presentable credentials are
+ * expired. In this case the user must reissue the PID, which will renew all
+ * documents too.
  *
  * @param state - The global state.
- * @returns `true` if the Proximity QR Code screen should be blocked, `false` otherwise.
+ * @returns `true` if the Proximity QR Code screen should be blocked, `false`
+ *   otherwise.
  */
 export const shouldBlockProximityQrCodeSelector = createSelector(
   itwCredentialsEidStatusSelector,

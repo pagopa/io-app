@@ -30,8 +30,8 @@ import { Store } from "../../../store/actions/types";
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
 
 /**
- * Helper type used to validate the notification payload.
- * The message_id can be in different places depending on the platform.
+ * Helper type used to validate the notification payload. The message_id can be
+ * in different places depending on the platform.
  */
 const NotificationPayload = t.partial({
   message_id: NonEmptyString,
@@ -183,8 +183,8 @@ const handleMessagePushNotification = (
 };
 
 /**
- * Decide how to refresh the messages based on pagination.
- * It only reloads Inbox since Archive is never changed server-side.
+ * Decide how to refresh the messages based on pagination. It only reloads Inbox
+ * since Archive is never changed server-side.
  */
 const handleForegroundMessageReload = (store: Store) => {
   const state = store.getState();

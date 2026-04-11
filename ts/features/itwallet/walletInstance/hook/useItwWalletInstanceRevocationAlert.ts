@@ -20,9 +20,7 @@ const alertCtaText = I18n.t(
   "features.itWallet.walletInstanceRevoked.alert.cta"
 );
 
-/**
- * Hook to monitor wallet instance status and display alerts if revoked.
- */
+/** Hook to monitor wallet instance status and display alerts if revoked. */
 export const useItwWalletInstanceRevocationAlert = () => {
   const walletInstanceStatus = useIOSelector(itwWalletInstanceStatusSelector);
   const dispatch = useIODispatch();
@@ -61,9 +59,7 @@ export const useItwWalletInstanceRevocationAlert = () => {
   );
 };
 
-/**
- * Displays an alert based on the revocation reason.
- */
+/** Displays an alert based on the revocation reason. */
 const showWalletRevocationAlert = (
   itwMinIntegrityReqUrl: string,
   itwDocsOnIOMultipleDevicesUrl: string,

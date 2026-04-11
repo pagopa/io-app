@@ -3,11 +3,12 @@ declare module "xss" {
   export type FilterXSSOptions = any;
 
   /**
-   * filter xss function
+   * Filter xss function
    *
    * @param {String} html
-   * @param {Object} options { whiteList, onTag, onTagAttr, onIgnoreTag, onIgnoreTagAttr, safeAttrValue, escapeHtml }
-   * @return {String}
+   * @param {Object} options { whiteList, onTag, onTagAttr, onIgnoreTag,
+   *   onIgnoreTagAttr, safeAttrValue, escapeHtml }
+   * @returns {String}
    */
   export function filterXSS(html: string, options?: FilterXSSOptions): string {
     const xss = new FilterXSS(options);

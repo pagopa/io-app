@@ -18,7 +18,8 @@ type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
 
 /**
- * This Screen shows all the information about the cgn program, with the rules and t&c.
+ * This Screen shows all the information about the cgn program, with the rules
+ * and t&c.
  */
 const CgnInformationScreen: FunctionComponent<Props> = (props: Props) => {
   const onConfirm = () => props.userActivateCgn();

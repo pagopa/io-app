@@ -27,10 +27,8 @@ import { useManualConfigBottomSheet } from "../shared/hooks/useManualConfigBotto
 import ServicesContactComponent from "../shared/components/ServicesContactComponent";
 
 /**
- * Display the current profile services preference mode (auto or manual)
- * User can update his/her mode
- * @param props
- * @constructor
+ * Display the current profile services preference mode (auto or manual) User
+ * can update his/her mode
  */
 const ServicesPreferenceScreen = (): ReactElement => {
   const store = useIOStore();

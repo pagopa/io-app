@@ -25,18 +25,17 @@ export type GetCredentialTrustmarkUrlActorOutput = Awaited<
 
 /**
  * Creates the actors for the itwTrustmarkMachine
+ *
  * @param env - The environment to use for the IT Wallet API calls
- * @param store the IOStore
- * @returns the actors
+ * @param store The IOStore
+ * @returns The actors
  */
 export const createItwTrustmarkActorsImplementation = (
   env: Env,
   itwVersion: ItwVersion,
   store: ReturnType<typeof useIOStore>
 ) => {
-  /**
-   * This actor gets the wallet instance attestation in case it's expired
-   */
+  /** This actor gets the wallet instance attestation in case it's expired */
   const getWalletAttestationActor =
     fromPromise<GetWalletAttestationActorOutput>(async () => {
       const sessionToken = sessionTokenSelector(store.getState());
@@ -45,9 +44,7 @@ export const createItwTrustmarkActorsImplementation = (
       assert(sessionToken, "sessionToken is undefined");
       assert(O.isSome(integrityKeyTag), "integriyKeyTag is not present");
 
-      /**
-       * Get the wallet instance attestation
-       */
+      /** Get the wallet instance attestation */
       return await itwAttestationUtils.getAttestation(
         env,
         itwVersion,

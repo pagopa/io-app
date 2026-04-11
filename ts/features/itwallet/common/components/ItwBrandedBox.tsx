@@ -42,9 +42,7 @@ const lightScaleMultiplier = 1;
 const lightSize: LayoutRectangle["width"] = 250;
 const visibleLightPercentage = 0.25; // Visible light when it's near box boundaries
 
-/**
- * Renders a box with IT-Wallet branded animated border and light effect.
- */
+/** Renders a box with IT-Wallet branded animated border and light effect. */
 export const ItwBrandedBox = ({
   borderThickness = 3,
   borderRadius = 16,

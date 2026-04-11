@@ -42,9 +42,7 @@ const getCalendarsByAccount = (calendars: ReadonlyArray<Calendar>) => {
   }));
 };
 
-/**
- * Allows the user to select one of the device available Calendars
- */
+/** Allows the user to select one of the device available Calendars */
 const CalendarsListContainer = ({
   onCalendarSelected,
   onCalendarsLoaded,

@@ -73,9 +73,7 @@ export function* handleSetMixpanelEnabled(
   }
 }
 
-/**
- * check, and eventually ask, about mixpanel opt-in
- */
+/** Check, and eventually ask, about mixpanel opt-in */
 export function* askMixpanelOptIn() {
   const isMixpanelEnabledResult: ReturnType<typeof isMixpanelEnabled> =
     yield* select(isMixpanelEnabled);

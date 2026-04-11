@@ -12,13 +12,11 @@ import {
   Locales
 } from "../i18n";
 import { LanguageEnum } from "../../definitions/pagopa/ecommerce/RequestAuthorizationRequest";
-/**
- * Helpers for handling locales
- */
+/** Helpers for handling locales */
 
 /**
- * Return a full string locale. (it -> it-IT)
- * If not italian, for all other languages italian is the default.
+ * Return a full string locale. (it -> it-IT) If not italian, for all other
+ * languages italian is the default.
  */
 export const getFullLocale = (): LocalizedMessageKeys =>
   localeToLocalizedMessageKey.get(I18n.language as Locales) ??
@@ -43,9 +41,9 @@ export function getLocalePrimary(
 export const getCurrentLocale = (): Locales => I18n.language as Locales;
 
 /**
- * return the primary component of the current locale (i.e: it-US -> it)
- * if the current locale (the language set in the device) is not a language supported by the app
- * the fallback will returned
+ * Return the primary component of the current locale (i.e: it-US -> it) if the
+ * current locale (the language set in the device) is not a language supported
+ * by the app the fallback will returned
  */
 export const getLocalePrimaryWithFallback = (): Locales =>
   pipe(

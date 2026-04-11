@@ -10,9 +10,12 @@ export type IdentificationMode = "spid" | "ciePin" | "cieId";
 
 /**
  * This event is used to either start the issuance process or restart it.
- * - "start" is used to start the issuance process from the beginning, going from the initial state (Idle) to the next state.
- * - "restart" is used to restart the issuance process, **going back** to the initial state (Idle) from any other state
- *    and starting the issuance process from the beginning.
+ *
+ * - "start" is used to start the issuance process from the beginning, going from
+ *   the initial state (Idle) to the next state.
+ * - "restart" is used to restart the issuance process, **going back** to the
+ *   initial state (Idle) from any other state and starting the issuance process
+ *   from the beginning.
  */
 export type Start = {
   type: "start" | "restart";

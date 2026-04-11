@@ -3,11 +3,13 @@ import { AsyncActionCreator, getType, PayloadAction } from "typesafe-actions";
 import * as E from "fp-ts/lib/Either";
 
 /**
- * execute an async action dispatching request and wait for the result.
- * If the action ends successfully it return right(value) otherwise left(error)
+ * Execute an async action dispatching request and wait for the result. If the
+ * action ends successfully it return right(value) otherwise left(error)
  * otherwise false will be returned (failure case)
- * @param action the action used to dispatch request and wait for success/failure
- * @param requestInput the input to give to action.request
+ *
+ * @param action The action used to dispatch request and wait for
+ *   success/failure
+ * @param requestInput The input to give to action.request
  */
 export function* getAsyncResult<T, I>(
   action: AsyncActionCreator<[any, I], [any, T], [any, Error]>,

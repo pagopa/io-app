@@ -53,11 +53,9 @@ type PrivacyNavListItem = {
 >;
 
 /**
- * A screen to show the main screen of the Privacy section.
- * Here the user can:
- * - display the accepted privacy policy (or Term of Service)
- * - send a request to delete his profile
- * - send a request to export all his data
+ * A screen to show the main screen of the Privacy section. Here the user can: -
+ * display the accepted privacy policy (or Term of Service) - send a request to
+ * delete his profile - send a request to export all his data
  */
 
 const PrivacyMainScreen = ({ navigation }: Props) => {

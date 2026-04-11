@@ -47,9 +47,7 @@ export const fimsTokenSelector = (state: GlobalState): string | undefined =>
     ? state.authentication.sessionInfo.fimsToken
     : undefined;
 
-/**
- * Return the authentication header required for IO Backend requests
- */
+/** Return the authentication header required for IO Backend requests */
 export const ioBackendAuthenticationHeaderSelector = createSelector(
   sessionTokenSelector,
   (token): { [key: string]: string } => ({ Authorization: `Bearer ${token}` })

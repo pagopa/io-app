@@ -60,6 +60,7 @@ import { handleDrawSignatureBox } from "./handleDrawSignatureBox";
 
 /**
  * Handle the FCI Signature requests
+ *
  * @param bearerToken
  */
 export function* watchFciSaga(
@@ -141,16 +142,12 @@ export function* watchFciSaga(
   yield* takeLatest(identificationPinReset, watchIdentificationPinResetSaga);
 }
 
-/**
- * Handle the identification pin reset to clear fci state
- */
+/** Handle the identification pin reset to clear fci state */
 function* watchIdentificationPinResetSaga(): SagaIterator {
   yield* put(fciClearStateRequest());
 }
 
-/**
- * Handle the FCI requests to get the QTSP filled_document
- */
+/** Handle the FCI requests to get the QTSP filled_document */
 function* watchFciQtspClausesSaga(): SagaIterator {
   const potQtspClauses: FciQtspClausesState = yield* select(
     fciQtspClausesMetadataSelector
@@ -175,9 +172,7 @@ function* watchFciQtspClausesSaga(): SagaIterator {
   }
 }
 
-/**
- * Handle the FCI start requests saga
- */
+/** Handle the FCI start requests saga */
 function* watchFciStartSaga(): SagaIterator {
   yield* call(
     NavigationService.dispatchNavigationAction,
@@ -199,9 +194,7 @@ function* watchFciStartSaga(): SagaIterator {
   yield* put(fciMetadataRequest.request());
 }
 
-/**
- * Handle the FCI signature request retry saga
- */
+/** Handle the FCI signature request retry saga */
 function* watchFciSignatureRequestRetrySaga(
   action: ActionType<typeof fciSignatureRequestRetryFromId>
 ): SagaIterator {
@@ -230,10 +223,7 @@ function* watchFciSignatureRequestRetrySaga(
   }
 }
 
-/**
- * Clears cached file for the fci document preview
- * and reset the state to empty.
- */
+/** Clears cached file for the fci document preview and reset the state to empty. */
 function* clearFciDownloadPreview(
   action: ActionType<typeof fciDownloadPreviewClear>
 ) {
@@ -248,9 +238,7 @@ function* clearFciDownloadPreview(
   );
 }
 
-/**
- * Handle the FCI start signing saga
- */
+/** Handle the FCI start signing saga */
 function* watchFciSigningRequestSaga(): SagaIterator {
   yield* put(
     identificationRequest(false, true, undefined, {
@@ -309,17 +297,12 @@ function* deletePath(path: string) {
   );
 }
 
-/**
- * Clears cached file for the fci document preview
- * and reset the state to empty.
- */
+/** Clears cached file for the fci document preview and reset the state to empty. */
 function* clearAllFciFiles(action: ActionType<typeof fciClearAllFiles>) {
   yield* deletePath(action.payload.path);
 }
 
-/**
- * Handle the FCI abort requests saga
- */
+/** Handle the FCI abort requests saga */
 function* watchFciEndSaga(): SagaIterator {
   yield* put(fciClearStateRequest());
   yield* put(fciClearAllFiles({ path: FciDownloadPreviewDirectoryPath }));

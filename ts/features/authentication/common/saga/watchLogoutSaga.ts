@@ -89,9 +89,7 @@ export function* logoutSaga({ payload }: ActionType<typeof logoutRequest>) {
   }
 }
 
-/**
- * Handles the logout flow
- */
+/** Handles the logout flow */
 export function* watchLogoutSaga() {
   yield* takeLatest(getType(logoutRequest), logoutSaga);
 }

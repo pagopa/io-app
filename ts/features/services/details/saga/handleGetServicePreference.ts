@@ -20,7 +20,8 @@ export const mapKinds: Record<
 };
 
 /**
- * saga to handle the load of service preferences for a specific service
+ * Saga to handle the load of service preferences for a specific service
+ *
  * @param getServicePreference
  * @param action
  */

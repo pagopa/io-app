@@ -7,8 +7,9 @@ import {
 } from "../../../../utils/hooks/bottomSheet";
 
 /**
- * This custom hook, useIdPayInfoCieBottomSheet, is designed to display a bottom sheet
- * containing detailed information about how the CIE (Carta d'Identità Elettronica) payment authorization works.
+ * This custom hook, useIdPayInfoCieBottomSheet, is designed to display a bottom
+ * sheet containing detailed information about how the CIE (Carta d'Identità
+ * Elettronica) payment authorization works.
  */
 const useIdPayInfoCieBottomSheet = (): IOBottomSheetModal => {
   const getModalContent = () => (

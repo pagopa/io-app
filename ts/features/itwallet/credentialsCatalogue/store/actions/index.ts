@@ -2,9 +2,7 @@ import { ActionType, createAsyncAction } from "typesafe-actions";
 import { NetworkError } from "../../../../../utils/errors";
 import { DigitalCredentialsCatalogue } from "../../../common/utils/itwCredentialsCatalogueUtils";
 
-/**
- * This action handles the Digital Credentials Catalogue fetch
- */
+/** This action handles the Digital Credentials Catalogue fetch */
 export const itwFetchCredentialsCatalogue = createAsyncAction(
   "ITW_CREDENTIALS_CATALOGUE_REQUEST",
   "ITW_CREDENTIALS_CATALOGUE_SUCCESS",

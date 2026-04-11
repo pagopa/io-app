@@ -20,7 +20,8 @@ export const IO_BARCODE_ALL_TYPES = Object.keys(
 ) as ReadonlyArray<IOBarcodeType>;
 
 /**
- * Scanned barcode, it contains the information about the scanned content, its format and its type
+ * Scanned barcode, it contains the information about the scanned content, its
+ * format and its type
  */
 export type IOBarcode = {
   format: IOBarcodeFormat;

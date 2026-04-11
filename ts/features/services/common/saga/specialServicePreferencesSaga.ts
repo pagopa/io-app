@@ -6,10 +6,10 @@ import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/prof
 import { pnMessagingServiceIdSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 
 /**
- * This saga is used to update the profile properties after
- * special services action status changes (for now, only SEND
- * is added as a profile property, nonetheless this saga can
- * later be used to trigger an update for other services)
+ * This saga is used to update the profile properties after special services
+ * action status changes (for now, only SEND is added as a profile property,
+ * nonetheless this saga can later be used to trigger an update for other
+ * services)
  */
 export function* specialServicePreferencesSaga(
   action: ActionType<typeof loadServicePreference.success>

@@ -24,6 +24,7 @@ import { handleDeleteInitiativeInstruments } from "./handleDeleteInitiativeInstr
 
 /**
  * Handle IDPAY initiative requests
+ *
  * @param idPayClient
  * @param bpdToken
  * @param preferredLanguage

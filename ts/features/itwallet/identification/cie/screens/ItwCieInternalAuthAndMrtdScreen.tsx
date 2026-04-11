@@ -18,13 +18,9 @@ import { useCieManager } from "../hooks/useCieManager";
 import { WebViewError } from "../utils/error";
 
 export type ItwCieInternalAuthAndMrtdScreenParams = {
-  /**
-   * The CIE card CAN code (6 digits)
-   */
+  /** The CIE card CAN code (6 digits) */
   can: string;
-  /**
-   * The challenge to be signed with PACE.
-   */
+  /** The challenge to be signed with PACE. */
   challenge: string;
 };
 
@@ -52,8 +48,8 @@ export const ItwCieInternalAuthAndMrtdScreen = ({ route }: Props) => {
   );
 
   /**
-   * Handles the challenge signed event sending to the
-   * machine the obtained data.
+   * Handles the challenge signed event sending to the machine the obtained
+   * data.
    */
   const handleChallengeSigned = useCallback(
     (data: InternalAuthAndMrtdResponse) => {
@@ -66,8 +62,8 @@ export const ItwCieInternalAuthAndMrtdScreen = ({ route }: Props) => {
   );
 
   /**
-   * Handles the completion of the authorization process sending to the
-   * machine the obtained authorization URL.
+   * Handles the completion of the authorization process sending to the machine
+   * the obtained authorization URL.
    */
   const handleAuthorizationComplete = useCallback(
     (authRedirectUrl: string) => {
@@ -80,8 +76,8 @@ export const ItwCieInternalAuthAndMrtdScreen = ({ route }: Props) => {
   );
 
   /**
-   * If we encounter an error in the webview we need to send the error event to the machine
-   * and to stop the issuance flow
+   * If we encounter an error in the webview we need to send the error event to
+   * the machine and to stop the issuance flow
    */
   const handleWebViewError = useCallback(
     (error: WebViewError) => {
@@ -91,8 +87,9 @@ export const ItwCieInternalAuthAndMrtdScreen = ({ route }: Props) => {
   );
 
   /**
-   * Step 1: Start CIE MRTD with PACE reading process to sign the challenge and return to the
-   * machine the data needed to build the validation URL, from which we will obtain the callback URL.
+   * Step 1: Start CIE MRTD with PACE reading process to sign the challenge and
+   * return to the machine the data needed to build the validation URL, from
+   * which we will obtain the callback URL.
    */
   if (callbackUrl === undefined) {
     return (
@@ -105,8 +102,8 @@ export const ItwCieInternalAuthAndMrtdScreen = ({ route }: Props) => {
   }
 
   /**
-   * Step 2: Once the validation completes and we have the callback url, we use the webview to fetch it and complete
-   * the CIE authentication process.
+   * Step 2: Once the validation completes and we have the callback url, we use
+   * the webview to fetch it and complete the CIE authentication process.
    */
   return (
     <ItwCieAuthorizationWebview
@@ -136,9 +133,7 @@ const CieManagerComponent = ({
     void startInternalAuthAndMRTDReading(can, challenge);
   }, [can, challenge, startInternalAuthAndMRTDReading]);
 
-  /**
-   * Starts the reading process as soon the component is mounted
-   */
+  /** Starts the reading process as soon the component is mounted */
   useOnFirstRender(() => {
     void startInternalAuthAndMRTDReading(can, challenge);
   });

@@ -12,8 +12,9 @@ export const getItwAuthSource = (credential: DigitalCredentialMetadata) =>
   );
 
 /**
- * Get the authentication source for a given credential based on its configuration.
- * This is only valid for legacy credentials (Documenti su IO)
+ * Get the authentication source for a given credential based on its
+ * configuration. This is only valid for legacy credentials (Documenti su IO)
+ *
  * @param credential - The credential to get the authentication source for.
  */
 export const getAuthSource = (credential: StoredCredential) =>

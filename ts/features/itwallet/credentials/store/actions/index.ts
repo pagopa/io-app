@@ -2,8 +2,8 @@ import { ActionType, createStandardAction } from "typesafe-actions";
 import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 
 /**
- * This action stores one or multiple credentials using the credential ID as key.
- * The new credential completely overwrites the previous one.
+ * This action stores one or multiple credentials using the credential ID as
+ * key. The new credential completely overwrites the previous one.
  */
 export const itwCredentialsStore = createStandardAction(
   "ITW_CREDENTIALS_STORE"
@@ -20,17 +20,17 @@ export const itwCredentialsRemove = createStandardAction(
 )<ReadonlyArray<StoredCredential>>();
 
 /**
- * Remove all credentials of the specified type. Used to fully clean
- * a credential in all its formats. A separate saga handles the deletion
- * of the associated crypto keys and Wallet cards.
+ * Remove all credentials of the specified type. Used to fully clean a
+ * credential in all its formats. A separate saga handles the deletion of the
+ * associated crypto keys and Wallet cards.
  */
 export const itwCredentialsRemoveByType = createStandardAction(
   "ITW_CREDENTIALS_REMOVE_BY_TYPE"
 )<string>();
 
 /**
- * Refresh the status of a credential, requesting a status assertion
- * to the Issuer and updating the stored credential with the result.
+ * Refresh the status of a credential, requesting a status assertion to the
+ * Issuer and updating the stored credential with the result.
  */
 export const itwCredentialsRefreshStatusByType = createStandardAction(
   "ITW_CREDENTIALS_REFRESH_STATUS_BY_TYPE"

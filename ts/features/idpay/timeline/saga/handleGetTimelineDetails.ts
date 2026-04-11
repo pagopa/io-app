@@ -12,6 +12,7 @@ import { idpayTimelineDetailsGet } from "../store/actions";
 
 /**
  * Handle the remote call to retrieve the IDPay operation details
+ *
  * @param getTimelineDetail BE API call
  * @param bpdToken Auth token
  * @param language Preferred language

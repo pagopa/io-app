@@ -10,9 +10,7 @@ import {
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 
-/**
- * Landing screen to route deeplink based on the ITW activation status
- */
+/** Landing screen to route deeplink based on the ITW activation status */
 export const ItwDiscoveryLandingScreen = () => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
   const isWalletActive = useIOSelector(itwLifecycleIsValidSelector);

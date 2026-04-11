@@ -9,54 +9,46 @@ import { DigitalCredentialMetadata } from "../../common/utils/itwCredentialsCata
 import { CredentialIssuanceFailure } from "./failure";
 
 /**
- * The mode for the credential issuance process.
- * It can be:
- * - "issuance": for a new credential issuance
- * - "reissuance": for reissuing an existing credential (for example, when the credential is expired
- *  or about to expire)
- * - "upgrade": for upgrading an existing credential to a the new format
+ * The mode for the credential issuance process. It can be: - "issuance": for a
+ * new credential issuance - "reissuance": for reissuing an existing credential
+ * (for example, when the credential is expired or about to expire) - "upgrade":
+ * for upgrading an existing credential to a the new format
  */
 export type CredentialIssuanceMode = "issuance" | "reissuance" | "upgrade";
 
 export type Context = {
   /**
-   * The mode for the credential issuance process. It does not change how the credentials are requested,
-   * but it is needed to determine how the machine should behave.
+   * The mode for the credential issuance process. It does not change how the
+   * credentials are requested, but it is needed to determine how the machine
+   * should behave.
    */
   mode: CredentialIssuanceMode;
-  /**
-   * Flag to indicate if the user has access to the L3 features.
-   */
+  /** Flag to indicate if the user has access to the L3 features. */
   isItWalletValid: boolean;
-  /**
-   * The type of the credential being issued.
-   */
+  /** The type of the credential being issued. */
   credentialType: string | undefined;
   /**
-   * The WIA crypto context, which contains the necessary cryptographic information for the issuance.
+   * The WIA crypto context, which contains the necessary cryptographic
+   * information for the issuance.
    */
   wiaCryptoContext: CryptoContext | undefined;
   /**
-   * The wallet instance attestation of the wallet. If expired, it will be requested a new one.
+   * The wallet instance attestation of the wallet. If expired, it will be
+   * requested a new one.
    */
   walletInstanceAttestation: WalletInstanceAttestations | undefined;
-  /**
-   * Credential request data
-   */
+  /** Credential request data */
   issuerConf: IssuerConfiguration | undefined;
   clientId: string | undefined;
   codeVerifier: string | undefined;
   requestedCredential: RequestObject | undefined;
-  /**
-   * Obtained credentials from the issuer.
-   */
+  /** Obtained credentials from the issuer. */
   credentials: Array<StoredCredential> | undefined;
-  /**
-   * The failure that occurred during the credential issuance process, if any.
-   */
+  /** The failure that occurred during the credential issuance process, if any. */
   failure: CredentialIssuanceFailure | undefined;
   /**
-   * The credentials catalogue as a dictionary, with an entry for each credential type.
+   * The credentials catalogue as a dictionary, with an entry for each
+   * credential type.
    */
   credentialsCatalogue: Record<string, DigitalCredentialMetadata> | undefined;
 };

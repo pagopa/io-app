@@ -17,8 +17,9 @@ import { IdentificationBackActionType } from "../../features/identification/stor
 
 /**
  * Listen to APP_STATE_CHANGE_ACTION and:
- * - if needed, force the user to identify
- * - if a notification is pressed, redirect to the related message
+ *
+ * - If needed, force the user to identify
+ * - If a notification is pressed, redirect to the related message
  */
 export function* watchApplicationActivitySaga(): IterableIterator<ReduxSagaEffect> {
   const backgroundActivityTimeoutMillis = backgroundActivityTimeout * 1000;
@@ -69,10 +70,11 @@ export function* watchApplicationActivitySaga(): IterableIterator<ReduxSagaEffec
           currentRoute && whiteList.indexOf(currentRoute) !== -1;
         if (isSecuredRoute) {
           /**
-           * Request always identification to display again screens included in the witheList.
-           * It is done on status change from active/inactive to background to avoid secured
-           * screen being displayed for a while before the IdentificationScreen when the user
-           * focuses again on the app
+           * Request always identification to display again screens included in
+           * the witheList. It is done on status change from active/inactive to
+           * background to avoid secured screen being displayed for a while
+           * before the IdentificationScreen when the user focuses again on the
+           * app
            */
           yield* put(
             identificationRequest(

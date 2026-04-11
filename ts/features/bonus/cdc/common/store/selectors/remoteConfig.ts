@@ -11,9 +11,7 @@ const cdcRemoteConfigSelector = (state: GlobalState) =>
     O.map(config => config.cdcV2)
   );
 
-/**
- * Return the remote config about CDC CTA inside the onboarding screen.
- */
+/** Return the remote config about CDC CTA inside the onboarding screen. */
 export const cdcCtaConfigSelector = createSelector(
   cdcRemoteConfigSelector,
   cdcConfig =>
@@ -25,7 +23,8 @@ export const cdcCtaConfigSelector = createSelector(
 );
 
 /**
- * Return true if the CdC wallet visibility feature is enabled by remote config and the app version is supported
+ * Return true if the CdC wallet visibility feature is enabled by remote config
+ * and the app version is supported
  */
 export const isCdCWalletVisibilityEnabledSelector = (state: GlobalState) =>
   pipe(state, remoteConfigSelector, remoteConfig =>
@@ -38,9 +37,7 @@ export const isCdCWalletVisibilityEnabledSelector = (state: GlobalState) =>
     })
   );
 
-/**
- * Return the remote config about CDC wallet visibility.
- */
+/** Return the remote config about CDC wallet visibility. */
 export const cdcWalletVisibilityConfigSelector = createSelector(
   cdcRemoteConfigSelector,
   cdcConfig =>

@@ -73,8 +73,8 @@ type TourContextValue = {
   cutoutW: SharedValue<number>;
   cutoutH: SharedValue<number>;
   /**
-   * When true, the active GuidedTour component continuously tracks its
-   * position via useFrameCallback. Set to false during step transitions.
+   * When true, the active GuidedTour component continuously tracks its position
+   * via useFrameCallback. Set to false during step transitions.
    */
   isTracking: SharedValue<boolean>;
   /** Animated ref for the overlay container, used for coordinate conversion. */

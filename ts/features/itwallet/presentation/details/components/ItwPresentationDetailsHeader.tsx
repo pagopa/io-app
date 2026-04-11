@@ -16,17 +16,16 @@ type ItwPresentationDetailsHeaderProps = {
   credential: StoredCredential;
 };
 
-/**
- * Credentials that should display a skeumorphic card
- */
+/** Credentials that should display a skeumorphic card */
 const credentialsWithSkeumorphicCard: ReadonlyArray<string> = [
   CredentialType.DRIVING_LICENSE,
   CredentialType.EUROPEAN_DISABILITY_CARD
 ];
 
 /**
- * This component renders the header for the presentation details screen of a credential
- * If the credential needs to show the card, it will render the card, otherwise it will render the header with the title
+ * This component renders the header for the presentation details screen of a
+ * credential If the credential needs to show the card, it will render the card,
+ * otherwise it will render the header with the title
  */
 const ItwPresentationDetailsHeader = ({
   credential

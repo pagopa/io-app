@@ -23,8 +23,8 @@ import { convertOldDemoMarkdownTag, generateHtml } from "./utils";
 export type MarkdownProps = {
   animated?: boolean;
   /**
-   * The code will be inserted in the html body between
-   * <script> and </script> tags.
+   * The code will be inserted in the html body between <script> and </script>
+   * tags.
    */
   avoidTextSelection?: true;
   children: string;
@@ -36,8 +36,10 @@ export type MarkdownProps = {
   onLinkClicked?: (url: string) => void;
   onLoadEnd?: () => void;
   /**
-   * if shouldHandleLink returns true the clicked link will be handled by the Markdown component
-   * otherwise Markdown will ignore it. If shouldHandleLink is not defined assume () => true
+   * If shouldHandleLink returns true the clicked link will be handled by the
+   * Markdown component otherwise Markdown will ignore it. If shouldHandleLink
+   * is not defined assume () => true
+   *
    * @param url
    */
   shouldHandleLink?: (url: string) => boolean;

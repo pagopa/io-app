@@ -11,8 +11,8 @@ import {
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 
 /**
- * Defines gradient color schemes for different credential types
- * to be used in the header of the {@link ClaimsSelector} component.
+ * Defines gradient color schemes for different credential types to be used in
+ * the header of the {@link ClaimsSelector} component.
  */
 export const claimsSelectorHeaderGradientsByCredentialType: {
   [type: string]: Array<string>;
@@ -29,13 +29,15 @@ export const claimsSelectorHeaderGradientsByCredentialType: {
 type PresentFn = (claims: Array<ClaimDisplayFormat>, title?: string) => void;
 
 /**
- *  Builds the optional endElement action shown at the end of a {@link ClaimsSelector} item.
- * When triggered, it opens the claim details bottom sheet managed by
- * `useClaimsDetailsBottomSheet`.
+ * Builds the optional endElement action shown at the end of a
+ * {@link ClaimsSelector} item. When triggered, it opens the claim details bottom
+ * sheet managed by `useClaimsDetailsBottomSheet`.
+ *
  * @param present - Function to present the bottom sheet with claim details.
  * @param claims - Array of claims to display in the bottom sheet.
  * @param title - Optional title for the bottom sheet.
- * @return A ListItemInfo endElement configuration or undefined if no present function is provided.
+ * @returns A ListItemInfo endElement configuration or undefined if no present
+ *   function is provided.
  */
 const buildInfoEndElement = (
   present: PresentFn | undefined,
@@ -57,12 +59,14 @@ const buildInfoEndElement = (
 };
 
 /**
- * Maps a list of claims into {@link ClaimsSelector} items, handling the different
- * display formats supported by the component.
+ * Maps a list of claims into {@link ClaimsSelector} items, handling the
+ * different display formats supported by the component.
+ *
  * @param claims - Array of claims to be mapped.
- * @param present - Optional function used to present claim details
- * in a bottom sheet.
- * @returns An array of items formatted for the {@link ClaimsSelector} component.
+ * @param present - Optional function used to present claim details in a bottom
+ *   sheet.
+ * @returns An array of items formatted for the {@link ClaimsSelector}
+ *   component.
  */
 export const mapClaimsToClaimsSelectorItems = (
   claims: Array<ClaimDisplayFormat>,

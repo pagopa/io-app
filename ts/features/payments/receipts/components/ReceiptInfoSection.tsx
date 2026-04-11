@@ -32,9 +32,7 @@ type Props = {
   showUnavailableReceiptBanner?: boolean;
 };
 
-/**
- * Component that shows the biz-events transaction info
- */
+/** Component that shows the biz-events transaction info */
 const ReceiptInfoSection = ({
   transaction,
   loading,

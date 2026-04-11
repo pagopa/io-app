@@ -1,7 +1,6 @@
 /**
- * A screen to guide the user to proper read the CIE
- * TODO: isolate cie event listener as saga
- * TODO: when 100% is reached, the animation end
+ * A screen to guide the user to proper read the CIE TODO: isolate cie event
+ * listener as saga TODO: when 100% is reached, the animation end
  */
 import {
   Body,
@@ -111,9 +110,7 @@ type ActiveSessionLoginCieCardReaderScreenProps = IOStackNavigationRouteProps<
   "CIE_CARD_READER_SCREEN_ACTIVE_SESSION_LOGIN"
 >;
 
-/**
- * This screen shown while reading the card
- */
+/** This screen shown while reading the card */
 const ActiveSessionLoginCieCardReaderScreen = ({
   navigation,
   route

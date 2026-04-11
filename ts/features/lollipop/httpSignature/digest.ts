@@ -5,7 +5,7 @@ import { constants } from "./constants";
  * Generates the 'Content-Digest' header value for the HTTP request body.
  *
  * @param {string} body - The request body payload.
- * @returns {string} contentDigest The 'Content-Digest' header value.
+ * @returns {string} ContentDigest The 'Content-Digest' header value.
  */
 function generateDigestHeader(body: string): string {
   // eslint-disable-next-line functional/no-let

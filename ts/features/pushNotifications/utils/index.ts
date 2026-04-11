@@ -78,23 +78,21 @@ export const requestNotificationPermissions = async () => {
 /**
  * Remove all the local notifications related to authentication with spid.
  *
- * With the previous library version (7.3.1 - now 8.1.1), cancelLocalNotifications
- * did not work. At the moment, the "first access spid" is the only kind of
- * scheduled notification and for this reason it is safe to use
- * PushNotification.cancelAllLocalNotifications();
- * If we add more scheduled notifications, we need to investigate if
- * cancelLocalNotifications works with the new library version
+ * With the previous library version (7.3.1 - now 8.1.1),
+ * cancelLocalNotifications did not work. At the moment, the "first access spid"
+ * is the only kind of scheduled notification and for this reason it is safe to
+ * use PushNotification.cancelAllLocalNotifications(); If we add more scheduled
+ * notifications, we need to investigate if cancelLocalNotifications works with
+ * the new library version
  */
 export const cancellAllLocalNotifications = () =>
   PushNotification.cancelAllLocalNotifications();
 
 /**
- * This is a legacy code that was used to generate a unique Id
- * from client side. It is still used because the backend API
- * requires it as part of the URL's path but it is later not
- * used in any way.
- * When the backend API spec will remove it, it can also be
- * unlinked and deleted here
+ * This is a legacy code that was used to generate a unique Id from client side.
+ * It is still used because the backend API requires it as part of the URL's
+ * path but it is later not used in any way. When the backend API spec will
+ * remove it, it can also be unlinked and deleted here
  */
 export const generateInstallationId = () => `001${uuid().replace(/-/g, "")}`;
 

@@ -28,33 +28,29 @@ export type CieManagerState =
   | { state: "success" };
 
 type UseCieManager = (params: {
-  /**
-   * Handler called upon successful CIE authentication flow.
-   */
+  /** Handler called upon successful CIE authentication flow. */
   onSuccess?: (authorizationUrl: string) => void;
   /**
-   * Handler called upon successful internal authentication and MRTD with PACE flow.
-   * Returned data is base64 encoded.
+   * Handler called upon successful internal authentication and MRTD with PACE
+   * flow. Returned data is base64 encoded.
    */
   onInternalAuthAndMRTDWithPaceSuccess?: (
     data: InternalAuthAndMrtdResponse
   ) => void;
-  /**
-   * Wether to use UAT endpoints for CIE auth operations.
-   */
+  /** Wether to use UAT endpoints for CIE auth operations. */
   useUat?: boolean;
 }) => {
-  /**
-   * The current state of the CIE manager.
-   */
+  /** The current state of the CIE manager. */
   state: CieManagerState;
   /**
-   * Starts the CIE reading process with the provided PIN and service provider URL.
+   * Starts the CIE reading process with the provided PIN and service provider
+   * URL.
    */
   startReading: (pin: string, serviceProviderUrl: string) => Promise<void>;
 
   /**
-   * Starts the internal authentication and MRTD with PACE reading process with the provided CAN and challenge to sign.
+   * Starts the internal authentication and MRTD with PACE reading process with
+   * the provided CAN and challenge to sign.
    */
   startInternalAuthAndMRTDReading: (
     can: string,
@@ -71,9 +67,9 @@ export const useCieManager: UseCieManager = ({
   const [state, setState] = useState<CieManagerState>({ state: "idle" });
 
   /**
-   * Handles the completion of the CIE reading process.
-   * It sets the progress to 1, triggers a success haptic feedback,
-   * and after a timeout, calls the provided handler.
+   * Handles the completion of the CIE reading process. It sets the progress to
+   * 1, triggers a success haptic feedback, and after a timeout, calls the
+   * provided handler.
    */
   const completionHandler = useCallback(
     (handler: () => void) => {
@@ -97,6 +93,7 @@ export const useCieManager: UseCieManager = ({
 
   /**
    * Handler for NFC events emitted by the CieManager.
+   *
    * @param event The NFC event containing the read progress
    */
   const onEventListener = (event: NfcEvent) => {
@@ -118,6 +115,7 @@ export const useCieManager: UseCieManager = ({
 
   /**
    * Handler for NFC errors emitted by the CieManager.
+   *
    * @param error The NFC error occurred during the reading process
    */
   const onErrorListener = (error: NfcError) => {
@@ -141,8 +139,8 @@ export const useCieManager: UseCieManager = ({
   };
 
   /**
-   * Sets up the CIE Manager alerts and event listeners for NFC events,
-   * errors, and success.
+   * Sets up the CIE Manager alerts and event listeners for NFC events, errors,
+   * and success.
    */
   useEffect(() => {
     CieManager.setAlertMessage(
@@ -194,9 +192,12 @@ export const useCieManager: UseCieManager = ({
   }, [completionHandler, onInternalAuthAndMRTDWithPaceSuccess, onSuccess]);
 
   /**
-   * Starts the CIE reading process with the provided PIN and service provider URL.
+   * Starts the CIE reading process with the provided PIN and service provider
+   * URL.
+   *
    * @param pin The CIE card PIN code.
-   * @param serviceProviderUrl The service provider URL for the CIE authentication flow.
+   * @param serviceProviderUrl The service provider URL for the CIE
+   *   authentication flow.
    */
   const startReading = async (pin: string, serviceProviderUrl: string) => {
     setState({ state: "idle" });
@@ -214,7 +215,9 @@ export const useCieManager: UseCieManager = ({
   };
 
   /**
-   * Starts the internal authentication and MRTD with PACE reading process with the provided CAN and challenge to sign.
+   * Starts the internal authentication and MRTD with PACE reading process with
+   * the provided CAN and challenge to sign.
+   *
    * @param can The CIE card CAN code.
    * @param challenge The challenge to be signed with PACE.
    */

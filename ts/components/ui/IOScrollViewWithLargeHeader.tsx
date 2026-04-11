@@ -62,9 +62,10 @@ type Props = WithTestID<
 >;
 
 /**
- * Special `IOScrollView` screen with a large title that is hidden by a transition when
- * the user scrolls. It also handles the contextual help and the FAQ.
- * Use of LargeHeader naming is due to similar behavior offered by the native iOS API.
+ * Special `IOScrollView` screen with a large title that is hidden by a
+ * transition when the user scrolls. It also handles the contextual help and the
+ * FAQ. Use of LargeHeader naming is due to similar behavior offered by the
+ * native iOS API.
  */
 export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
   (

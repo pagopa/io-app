@@ -4,9 +4,8 @@ import { useIODispatch } from "../../../store/hooks";
 import { zendeskSupportCompleted } from "../store/actions";
 
 /**
- * This screen is shown to users when panic mode is enabled in remote Zendesk configuration.
- * It only allows the user to leave the Zendesk workflow.
- * @constructor
+ * This screen is shown to users when panic mode is enabled in remote Zendesk
+ * configuration. It only allows the user to leave the Zendesk workflow.
  */
 const ZendeskPanicMode = () => {
   const dispatch = useIODispatch();

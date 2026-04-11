@@ -52,10 +52,11 @@ export type ObtainStatusAssertionActorInput = Pick<Context, "credentials">;
 
 /**
  * Creates the actors for the eid issuance machine
+ *
  * @param env - The environment to use for the IT Wallet API calls
  * @param itwVersion - IT-Wallet technical specs version
- * @param store the IOStore
- * @returns the actors
+ * @param store The IOStore
+ * @returns The actors
  */
 export const createCredentialIssuanceActorsImplementation = (
   env: Env,

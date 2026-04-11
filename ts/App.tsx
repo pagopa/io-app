@@ -51,8 +51,10 @@ const removeUserFromEvent = <T extends ErrorEvent | TransactionEvent>(
 };
 
 /**
- * Handler to eventually remove any http client error on ios.
- * Since Sentry ios sdk 8.0.0 the tracking of http error 500 is enabled by default and may ignore `enableCaptureFailedRequests` attribute on init callback.
+ * Handler to eventually remove any http client error on ios. Since Sentry ios
+ * sdk 8.0.0 the tracking of http error 500 is enabled by default and may ignore
+ * `enableCaptureFailedRequests` attribute on init callback.
+ *
  * @param event
  * @returns
  */
@@ -70,8 +72,9 @@ const removeHttpClientError = <T extends ErrorEvent | TransactionEvent>(
 };
 
 /**
- * Processes events before sending them to Sentry.
- * Removes user data from all events and applies sampling logic.
+ * Processes events before sending them to Sentry. Removes user data from all
+ * events and applies sampling logic.
+ *
  * @param event - The Sentry event (exception)  to process
  * @returns The processed event if it should be sent, or null to drop it
  */
@@ -149,10 +152,7 @@ Sentry.init({
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
-/**
- * Main component of the application
- * @constructor
- */
+/** Main component of the application */
 const App = (): JSX.Element => (
   <GestureHandlerRootView style={{ flex: 1 }}>
     <SafeAreaProvider>
@@ -186,7 +186,7 @@ const App = (): JSX.Element => (
 );
 
 /**
- * We wrap the main app component with the sentry utility function to handle
- * the Performance monitoring
+ * We wrap the main app component with the sentry utility function to handle the
+ * Performance monitoring
  */
 export default Sentry.wrap(App);

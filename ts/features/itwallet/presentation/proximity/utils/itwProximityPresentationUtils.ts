@@ -31,7 +31,8 @@ export const promiseWithTimeout = <T>(
 /**
  * Get the Presentation details based on the request from the Verifier.
  *
- * @param request The request from the Verifier, specifying which document types and claims are required
+ * @param request The request from the Verifier, specifying which document types
+ *   and claims are required
  * @param credentialsByType The credentials object by doc type
  * @returns The Presentation details
  */
@@ -80,7 +81,8 @@ export const getProximityDetails = (
 /**
  * Get the requested documents based on the request from the Verifier.
  *
- * @param request The request from the Verifier, specifying which document types and claims are required
+ * @param request The request from the Verifier, specifying which document types
+ *   and claims are required
  * @param credentialsByType The credentials object by doc type
  * @param wiaMdoc The WIA in mdoc format
  * @returns The requested documents

@@ -1,11 +1,10 @@
 /**
- * Defines the number of asterisks used to mask the value of claims in the credential details
+ * Defines the number of asterisks used to mask the value of claims in the
+ * credential details
  */
 export const HIDDEN_CLAIM_TEXT = "******";
 
-/**
- * Defines the colors used in the gradient of the ITW components
- */
+/** Defines the colors used in the gradient of the ITW components */
 export const itwGradientColors = [
   "#0B3EE3",
   "#234FFF",
@@ -20,9 +19,7 @@ export const itwGradientColors = [
   "#0B3EE3"
 ];
 
-/**
- * Qualtrics survey URLs
- */
+/** Qualtrics survey URLs */
 export const IT_WALLET_SURVEY_EID_REISSUANCE_SUCCESS =
   "https://pagopa.qualtrics.com/jfe/form/SV_3JmGHi0IjGYESYC";
 export const IT_WALLET_SURVEY_EID_REISSUANCE_FAILURE =

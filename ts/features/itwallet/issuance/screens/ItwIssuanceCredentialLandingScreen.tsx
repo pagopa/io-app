@@ -29,7 +29,8 @@ export type ItwIssuanceCredentialLandingScreenProps =
   >;
 
 /**
- * Landing screen to route credential issuance deeplink based on the ITW activation status and level
+ * Landing screen to route credential issuance deeplink based on the ITW
+ * activation status and level
  */
 export const ItwIssuanceCredentialLandingScreen = ({
   route
@@ -45,8 +46,8 @@ export const ItwIssuanceCredentialLandingScreen = ({
   const pidStatus = useIOSelector(itwCredentialsEidStatusSelector);
 
   /**
-   * Determines if the credential is still valid (JWT not expired nor expiring soon)
-   * and thus does not need to be issued again.
+   * Determines if the credential is still valid (JWT not expired nor expiring
+   * soon) and thus does not need to be issued again.
    */
   const isCredentialValid = useMemo(
     () =>
@@ -56,9 +57,7 @@ export const ItwIssuanceCredentialLandingScreen = ({
     [credentialStatus]
   );
 
-  /**
-   * Wether the PID is not expired/expiring and still valid
-   */
+  /** Wether the PID is not expired/expiring and still valid */
   const isEidExpiredOrExpiring = useMemo(
     () =>
       pidStatus ? ["jwtExpired", "jwtExpiring"].includes(pidStatus) : false,

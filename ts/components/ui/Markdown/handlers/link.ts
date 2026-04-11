@@ -14,8 +14,8 @@ export const isHttpLink = (href: string): boolean =>
   href.toLowerCase().startsWith("http://");
 
 /**
- * a dedicated codec for CustomHandledLink
- * ex: iohandledlink://tel:1234567 -> {url: tel:1234567, type: tel, value:1234567}
+ * A dedicated codec for CustomHandledLink ex: iohandledlink://tel:1234567 ->
+ * {url: tel:1234567, type: tel, value:1234567}
  */
 
 export const CustomHandledLink = t.interface({
@@ -38,8 +38,9 @@ export type CustomHandledLink = t.TypeOf<typeof CustomHandledLink>;
 export const IO_CUSTOM_HANDLED_PRESS_PREFIX = "iohandledlink://";
 
 /**
- * recognize if the give href string is corresponding to iohandledlink
- * if yes all data will be extracted
+ * Recognize if the give href string is corresponding to iohandledlink if yes
+ * all data will be extracted
+ *
  * @param href
  */
 export const deriveCustomHandledLink = (
@@ -66,9 +67,7 @@ export const deriveCustomHandledLink = (
   );
 };
 
-/**
- * Handles links clicked in the Markdown (webview) component.
- */
+/** Handles links clicked in the Markdown (webview) component. */
 export function handleLinkMessage(href: string) {
   if (isIoInternalLink(href)) {
     return;

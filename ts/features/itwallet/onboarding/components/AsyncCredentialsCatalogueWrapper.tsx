@@ -13,8 +13,9 @@ import {
 } from "../../credentialsCatalogue/store/selectors";
 
 /**
- * Local feature flag that enables catalogue loading/error handling.
- * Since credentials are still hardcoded and the catalogue barely used, we can keep it disabled.
+ * Local feature flag that enables catalogue loading/error handling. Since
+ * credentials are still hardcoded and the catalogue barely used, we can keep it
+ * disabled.
  */
 const CATALOGUE_ENABLED = false;
 

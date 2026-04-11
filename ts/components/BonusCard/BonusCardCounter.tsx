@@ -28,9 +28,7 @@ type AmountProps = {
 type AmountWithProgressProps = {
   type: "ValueWithProgress";
   value: string;
-  /**
-   * Progress bar value, expressed in a range from 0 to 1
-   */
+  /** Progress bar value, expressed in a range from 0 to 1 */
   progress: number;
 };
 

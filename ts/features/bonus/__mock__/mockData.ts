@@ -1,5 +1,6 @@
 /**
- * This is just a temporary file to define utility types to develop Bonus section
+ * This is just a temporary file to define utility types to develop Bonus
+ * section
  */
 
 export const svgBase64: string =

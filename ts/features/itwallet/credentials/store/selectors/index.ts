@@ -24,8 +24,8 @@ type CredentialsByType = {
 };
 
 /**
- * The Wallet might contain older credentials in `vc+sd-jwt` format.
- * We must ensure credentials selectors still work with the older format.
+ * The Wallet might contain older credentials in `vc+sd-jwt` format. We must
+ * ensure credentials selectors still work with the older format.
  */
 const withLegacyFallback = (
   credential: CredentialsByType[string] | undefined,
@@ -72,8 +72,8 @@ export const makeSelectAllCredentials = (format: CredentialFormat) =>
   );
 
 /**
- * Returns the credentials object from the itw credentials state, including the PID credential.
- * Only SD-JWT credentials are returned.
+ * Returns the credentials object from the itw credentials state, including the
+ * PID credential. Only SD-JWT credentials are returned.
  *
  * @param state - The global state.
  * @returns The credentials object.
@@ -83,8 +83,8 @@ export const itwCredentialsAllSelector = makeSelectAllCredentials(
 );
 
 /**
- * Returns the credentials object from the itw credentials state, excluding the PID credential.
- * Only SD-JWT credentials are returned.
+ * Returns the credentials object from the itw credentials state, excluding the
+ * PID credential. Only SD-JWT credentials are returned.
  *
  * @param state - The global state.
  * @returns The credentials object.
@@ -95,7 +95,8 @@ export const itwCredentialsSelector = createSelector(
 );
 
 /**
- * Convenience selector that returns an Option containing the eID credential from the credentials object.
+ * Convenience selector that returns an Option containing the eID credential
+ * from the credentials object.
  *
  * @param state - The global state.
  * @returns The eID credential Option
@@ -107,7 +108,8 @@ export const itwCredentialsEidSelector = createSelector(
 );
 
 /**
- * Given a credential key, returns an Option containing the credential of the given type from the credentials object.
+ * Given a credential key, returns an Option containing the credential of the
+ * given type from the credentials object.
  *
  * @param type - The credential type.
  * @param format - The credential format (default to SD-JWT).
@@ -122,7 +124,8 @@ export const itwCredentialSelector = (
   );
 
 /**
- * Returns the list of unique types of credentials contained in the credentials object.
+ * Returns the list of unique types of credentials contained in the credentials
+ * object.
  *
  * @param state - The global state.
  * @returns The types of the credentials.
@@ -175,7 +178,8 @@ export const selectNameSurnameFromEid = createSelector(
 );
 
 /**
- * Returns the number of credentials in the credentials object, excluding the eID credential.
+ * Returns the number of credentials in the credentials object, excluding the
+ * eID credential.
  *
  * @param state - The global state.
  * @returns The number of credentials.
@@ -200,8 +204,8 @@ export const itwIsWalletEmptySelector = createSelector(
 );
 
 /**
- * Returns whether the wallet has at least 2 credentials.
- * The eID is not considered, only other (Q)EAAs.
+ * Returns whether the wallet has at least 2 credentials. The eID is not
+ * considered, only other (Q)EAAs.
  *
  * Note: this selector does not check the wallet validity.
  *
@@ -214,14 +218,17 @@ export const itwHasWalletAtLeastTwoCredentialsSelector = createSelector(
 );
 
 /**
- * Get the credential status and the error message corresponding to the status assertion error, if present.
- * The message is dynamic and extracted from the issuer configuration.
+ * Get the credential status and the error message corresponding to the status
+ * assertion error, if present. The message is dynamic and extracted from the
+ * issuer configuration.
  *
- * Note: the credential type is passed as second argument to reuse the same selector and cache per credential type.
+ * Note: the credential type is passed as second argument to reuse the same
+ * selector and cache per credential type.
  *
  * @param state - The global state.
  * @param type - The credential type.
- * @returns The credential status and the error message corresponding to the status assertion error, if present.
+ * @returns The credential status and the error message corresponding to the
+ *   status assertion error, if present.
  */
 export const itwCredentialStatusSelector = createSelector(
   itwCredentialsSelector,
@@ -237,10 +244,12 @@ export const itwCredentialStatusSelector = createSelector(
 );
 
 /**
- * Returns the credential status and the error message corresponding to the status assertion error, if present.
+ * Returns the credential status and the error message corresponding to the
+ * status assertion error, if present.
  *
  * @param state - The global state.
- * @returns The credential status and the error message corresponding to the status assertion error, if present.
+ * @returns The credential status and the error message corresponding to the
+ *   status assertion error, if present.
  */
 export const itwCredentialsEidStatusSelector = createSelector(
   itwCredentialsEidSelector,
@@ -286,7 +295,9 @@ export const itwCredentialsEidIssuedAtSelector = createSelector(
 );
 
 /**
- * Return a list of all credentials of the same type, mainly used for clean up operations.
+ * Return a list of all credentials of the same type, mainly used for clean up
+ * operations.
+ *
  * @param key The type of credential
  * @returns A list of StoredCredential
  */
@@ -300,7 +311,8 @@ export const itwCredentialsListByTypeSelector = (key: string) =>
   );
 
 /**
- * Returns whether the wallet has at least one credential that is expiring or expired.
+ * Returns whether the wallet has at least one credential that is expiring or
+ * expired.
  *
  * @param state - The global state.
  * @returns Whether the wallet has at least one expiring or expired credential.
@@ -318,7 +330,8 @@ export const itwHasExpiringCredentialsSelector = createSelector(
 );
 
 /**
- * Convenience selector that returns true if the user has a mDL credential stored.
+ * Convenience selector that returns true if the user has a mDL credential
+ * stored.
  *
  * @param state - The global state.
  * @returns Whether the user has a mDL credential.
@@ -329,8 +342,8 @@ export const itwIsMdlPresentSelector = createSelector(
 );
 
 /**
- * Split a given list of credential types into obtained / notObtained
- * obtained = present in wallet
+ * Split a given list of credential types into obtained / notObtained obtained =
+ * present in wallet
  */
 export const itwCredentialsByPresenceSelector = createSelector(
   itwCredentialsByTypeSelector,
