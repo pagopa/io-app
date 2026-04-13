@@ -133,82 +133,8 @@ exports[`FimsPrivacyInfo component render LoadingSkeleton when privacyUrl is und
 </View>
 `;
 
-exports[`FimsPrivacyInfo component renders correctly with privacyUrl defined 1`] = `
-<Text
-  allowFontScaling={true}
-  dynamicTypeRamp="body"
-  maxFontSizeMultiplier={1.5}
-  style={
-    [
-      {},
-      {
-        "color": "#555C70",
-        "fontFamily": "Titillio",
-        "fontSize": 16,
-        "fontStyle": "normal",
-        "fontWeight": "400",
-        "lineHeight": 24,
-      },
-    ]
-  }
->
-  Per maggiori informazioni, leggi 
-  <View
-    accessibilityRole="link"
-    accessibilityState={
-      {
-        "busy": undefined,
-        "checked": undefined,
-        "disabled": undefined,
-        "expanded": undefined,
-        "selected": undefined,
-      }
-    }
-    accessibilityValue={
-      {
-        "max": undefined,
-        "min": undefined,
-        "now": undefined,
-        "text": undefined,
-      }
-    }
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    onBlur={[Function]}
-    onClick={[Function]}
-    onFocus={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-  >
-    <Text
-      accessibilityRole="link"
-      allowFontScaling={true}
-      dynamicTypeRamp="body"
-      maxFontSizeMultiplier={1.5}
-      style={
-        [
-          {
-            "textDecorationLine": "underline",
-          },
-          {
-            "color": "#0B3EE3",
-            "fontFamily": "Titillio",
-            "fontSize": 16,
-            "fontStyle": "normal",
-            "fontWeight": "600",
-            "lineHeight": 24,
-          },
-        ]
-      }
-      testID="body-primary-action"
-    >
-      l’Informativa sulla Privacy 
-    </Text>
-  </View>
+exports[`FimsPrivacyInfo component renders a properly formatted markdown link with privacyUrl 1`] = `
+<Text>
+  Per maggiori informazioni, leggi **[l’Informativa sulla Privacy](https://example.com/privacy)**
 </Text>
 `;

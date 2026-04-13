@@ -49,7 +49,6 @@ describe("isValidSixDigitNumber", () => {
       876543,
       765432,
       654321
-      // eslint-disable-next-line sonarjs/no-identical-functions
     ].forEach(input => {
       it(`${input}`, () => {
         expect(String(input).length).toBe(6);
@@ -59,7 +58,6 @@ describe("isValidSixDigitNumber", () => {
   });
 
   describe("returns false for non-numeric strings", () => {
-    // eslint-disable-next-line sonarjs/no-identical-functions
     ["abcdef", "12345a"].forEach(input => {
       it(`${input}`, () => {
         expect(isValidPinNumber(input)).toBe(false);

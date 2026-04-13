@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/no-identical-functions */
 import { waitFor } from "@testing-library/react-native";
 import _ from "lodash";
 import {
@@ -37,6 +36,7 @@ type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
 const T_INTEGRITY_KEY = "abc";
 const T_WIA: string = "abcdefg";
+const T_ROUTE_NAME = "ITW_IDENTIFICATION_TEST_ROUTE";
 
 /**
  * Actions
@@ -527,6 +527,88 @@ describe("itwEidIssuanceMachine", () => {
     expect(requestEid).toHaveBeenCalledTimes(1);
 
     /** Last part is the same as the previous test */
+  });
+
+  it("Should set CieID identification level to L2 in L2 fallback mode", async () => {
+    startAuthFlow.mockImplementation(() => Promise.resolve({}));
+
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { UserIdentification: "Identification" },
+      context: {
+        level: "l2-fallback",
+        mode: "issuance",
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: { jwt: T_WIA }
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, {
+      snapshot
+    });
+    actor.start();
+
+    actor.send({ type: "select-identification-mode", mode: "cieId" });
+
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual({
+        UserIdentification: {
+          CieID: "StartingCieIDAuthFlow"
+        }
+      })
+    );
+
+    expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
+      level: "l2-fallback",
+      identification: {
+        mode: "cieId",
+        level: "L2"
+      }
+    });
+  });
+
+  it("Should set CieID identification level to L2 in L3 mode", async () => {
+    startAuthFlow.mockImplementation(() => Promise.resolve({}));
+
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { UserIdentification: "Identification" },
+      context: {
+        level: "l3",
+        mode: "issuance",
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: { jwt: T_WIA }
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, {
+      snapshot
+    });
+    actor.start();
+
+    actor.send({ type: "select-identification-mode", mode: "cieId" });
+
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual({
+        UserIdentification: {
+          CieID: "StartingCieIDAuthFlow"
+        }
+      })
+    );
+
+    expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
+      level: "l3",
+      identification: {
+        mode: "cieId",
+        level: "L2"
+      }
+    });
   });
 
   it("Should obtain an eID (Cie+PIN)", async () => {
@@ -1642,7 +1724,11 @@ describe("itwEidIssuanceMachine", () => {
 
     const testWarningType: CieWarningType = "card";
 
-    actor.send({ type: "go-to-cie-warning", warning: testWarningType });
+    actor.send({
+      type: "go-to-cie-warning",
+      warning: testWarningType,
+      routeName: T_ROUTE_NAME
+    });
 
     await waitFor(() => {
       expect(actor.getSnapshot().value).toStrictEqual({
@@ -1738,7 +1824,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(trackIdentificationMethodSelected).not.toHaveBeenCalled();
   });
 
-  it("Should not track identification method selection when switching from CiePin to CieID", () => {
+  it("Should track identification method selection and set CieID to L2 when switching from CiePin", () => {
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
     ).getSnapshot();
@@ -1768,10 +1854,10 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
       identification: {
         mode: "cieId",
-        level: "L3"
+        level: "L2"
       }
     });
-    expect(trackIdentificationMethodSelected).not.toHaveBeenCalled();
+    expect(trackIdentificationMethodSelected).toHaveBeenCalledTimes(1);
   });
 
   it("Should return to PreparationPin when navigating back from CieWarning", async () => {
@@ -1806,7 +1892,11 @@ describe("itwEidIssuanceMachine", () => {
 
     const testWarningType: CieWarningType = "card";
 
-    actor.send({ type: "go-to-cie-warning", warning: testWarningType });
+    actor.send({
+      type: "go-to-cie-warning",
+      warning: testWarningType,
+      routeName: T_ROUTE_NAME
+    });
 
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: {
@@ -1825,6 +1915,48 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: {
         CiePin: "PreparationPin"
+      }
+    });
+  });
+
+  it("Should set CieID identification level to L2 when switching from CiePin flow", async () => {
+    startAuthFlow.mockImplementation(() => Promise.resolve({}));
+
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { UserIdentification: { CiePin: "PreparationPin" } },
+      context: {
+        ...InitialContext,
+        level: "l3",
+        mode: "issuance",
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: { jwt: T_WIA },
+        cieContext: {
+          isNFCEnabled: true,
+          isCIEAuthenticationSupported: true
+        }
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, { snapshot });
+    actor.start();
+
+    actor.send({ type: "select-identification-mode", mode: "cieId" });
+
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual({
+        UserIdentification: {
+          CieID: "StartingCieIDAuthFlow"
+        }
+      })
+    );
+
+    expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
+      identification: {
+        mode: "cieId",
+        level: "L2"
       }
     });
   });

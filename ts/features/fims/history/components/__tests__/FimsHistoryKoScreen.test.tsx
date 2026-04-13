@@ -21,7 +21,7 @@ describe("fimshistoryKoScreen", () => {
       () =>
         ({
           goBack: mockBack
-        } as any)
+        }) as any
     );
     const component = renderComponent();
     expect(component).toBeDefined();

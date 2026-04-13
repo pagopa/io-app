@@ -109,7 +109,6 @@ type RequestStateType = {
 
 const MAX_RETRIES = fastLoginMaxRetries;
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 function* doRefreshTokenSaga(
   refreshSessionTokenRequestAction: ReturnType<
     typeof refreshSessionToken.request
