@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.28.0-rc.7](https://github.com/pagopa/io-app/compare/3.28.0-rc.6...3.28.0-rc.7) (2026-04-10)
+
+
+### Features
+
+* [[IEL-409](https://pagopa.atlassian.net/browse/IEL-409)] Add Cie Can bottomsheet ([#8006](https://github.com/pagopa/io-app/issues/8006)) ([c3ce3ea](https://github.com/pagopa/io-app/commit/c3ce3ea61e9c4dda7d9932e03776070133ba340a))
+* [[IOCOM-2965](https://pagopa.atlassian.net/browse/IOCOM-2965)] SEND AAR CIE scanning errors tracking ([#7939](https://github.com/pagopa/io-app/issues/7939)) ([df17508](https://github.com/pagopa/io-app/commit/df17508feb6fc559696cbb3b1511df0ef677de22))
+
+
+### Chores
+
+* [[IEL-405](https://pagopa.atlassian.net/browse/IEL-405)] change copy ([#8007](https://github.com/pagopa/io-app/issues/8007)) ([df59989](https://github.com/pagopa/io-app/commit/df599899aa9b4bd3350ce63e27989770298a76c1))
+* **IT-Wallet:** [[SIW-4085](https://pagopa.atlassian.net/browse/SIW-4085)] Remove automatic retries from fetch requests to Wallet Provider ([#8000](https://github.com/pagopa/io-app/issues/8000)) ([6a3fb99](https://github.com/pagopa/io-app/commit/6a3fb992d26f75930d35fa2f092c6df8ac6d2011))
+* [[IEL-221](https://pagopa.atlassian.net/browse/IEL-221)] Rename AAR to Aar ([#7975](https://github.com/pagopa/io-app/issues/7975)) ([f4f9735](https://github.com/pagopa/io-app/commit/f4f973592d91aa1078a274138593d1dab3bda025))
+* **IT-Wallet:** [[SIW-3851](https://pagopa.atlassian.net/browse/SIW-3851)] implement CieID identification level tracking to L2 in issuance machine ([#7886](https://github.com/pagopa/io-app/issues/7886)) ([a375712](https://github.com/pagopa/io-app/commit/a375712e80cff3a7ef53bdf293de3ac3bfe515e9))
+
 ## [3.28.0-rc.6](https://github.com/pagopa/io-app/compare/3.28.0-rc.5...3.28.0-rc.6) (2026-04-09)
 
 
