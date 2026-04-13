@@ -10,6 +10,13 @@ import {
   CieCardReadContentProps
 } from "../../../common/components/cie/CieCardReadContent";
 import {
+  trackSendAarMandateCieErrorClosure,
+  trackSendAarMandateCieErrorDetail,
+  trackSendAarMandateCieErrorDetailCode,
+  trackSendAarMandateCieErrorDetailHelp,
+  trackSendAarMandateCieErrorRetry
+} from "../analytics";
+import {
   isErrorState,
   isReadingState,
   isSuccessState,
@@ -19,13 +26,13 @@ import {
 import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
 import { useTrackCieReadingEvents } from "../hooks/useTrackCieReadingEvents";
 import { setAarFlowState } from "../store/actions";
-import { RecipientInfo, sendAARFlowStates } from "../utils/stateUtils";
+import { RecipientInfo, sendAarFlowStates } from "../utils/stateUtils";
 import { useAarGenericErrorBottomSheet } from "./errors/hooks/useAarGenericErrorBottomSheet";
 import { SendAarZendeskSecondLevelTag } from "./errors/hooks/useAarStartSendZendeskSupport";
 
 type ScreenContentProps = Omit<CieCardReadContentProps, "progress">;
 
-export type SendAARCieCardReadingComponentProps = {
+export type SendAarCieCardReadingComponentProps = {
   iun: string;
   mandateId: string;
   recipientInfo: RecipientInfo;
@@ -33,13 +40,13 @@ export type SendAARCieCardReadingComponentProps = {
   verificationCode: string;
 };
 
-export const SendAARCieCardReadingComponent = ({
+export const SendAarCieCardReadingComponent = ({
   can,
   verificationCode,
   iun,
   recipientInfo,
   mandateId
-}: SendAARCieCardReadingComponentProps) => {
+}: SendAarCieCardReadingComponentProps) => {
   const dispatch = useIODispatch();
   const theme = useIOTheme();
   const { startReading, readState } = useCieInternalAuthAndMrtdReading();
@@ -51,11 +58,24 @@ export const SendAARCieCardReadingComponent = ({
   const errorName = isError ? readState.error.name : undefined;
   const progress = isReadingState(readState) ? readState.progress : 0;
   const { terminateFlow } = useSendAarFlowManager();
+
+  const handleStartAssistance = useCallback(
+    () => trackSendAarMandateCieErrorDetailHelp(errorName ?? "GENERIC_ERROR"),
+    [errorName]
+  );
+  const handleCopyToClipboard = useCallback(
+    () => trackSendAarMandateCieErrorDetailCode(errorName ?? "GENERIC_ERROR"),
+    [errorName]
+  );
+
   const { bottomSheet, present } = useAarGenericErrorBottomSheet({
     errorName,
     zendeskSecondLevelTag:
-      SendAarZendeskSecondLevelTag.IO_PROBLEMA_NOTIFICA_SEND_QR_ALTRA_PERSONA
+      SendAarZendeskSecondLevelTag.IO_PROBLEMA_NOTIFICA_SEND_QR_ALTRA_PERSONA,
+    onStartAssistance: handleStartAssistance,
+    onCopyToClipboard: handleCopyToClipboard
   });
+
   const handleStartReading = useCallback(() => {
     void startReading(can, verificationCode, "base64url");
   }, [can, startReading, verificationCode]);
@@ -66,7 +86,7 @@ export const SendAARCieCardReadingComponent = ({
 
       dispatch(
         setAarFlowState({
-          type: sendAARFlowStates.validatingMandate,
+          type: sendAarFlowStates.validatingMandate,
           iun,
           recipientInfo,
           mandateId,
@@ -86,7 +106,7 @@ export const SendAARCieCardReadingComponent = ({
   const restartToCanAdvisory = useCallback(() => {
     dispatch(
       setAarFlowState({
-        type: sendAARFlowStates.cieCanAdvisory,
+        type: sendAarFlowStates.cieCanAdvisory,
         iun,
         recipientInfo,
         mandateId,
@@ -100,7 +120,7 @@ export const SendAARCieCardReadingComponent = ({
   const restartToScanningAdvisory = useCallback(() => {
     dispatch(
       setAarFlowState({
-        type: sendAARFlowStates.cieScanningAdvisory,
+        type: sendAarFlowStates.cieScanningAdvisory,
         iun,
         recipientInfo,
         mandateId,
@@ -126,12 +146,18 @@ export const SendAARCieCardReadingComponent = ({
             ),
             primaryAction: {
               label: i18n.t("global.buttons.retry"),
-              onPress: handleStartReading
+              onPress: () => {
+                trackSendAarMandateCieErrorRetry(errorName);
+                handleStartReading();
+              }
             },
             secondaryAction: {
               testID: "tagLostCloseButton",
               label: i18n.t("global.buttons.close"),
-              onPress: restartToScanningAdvisory
+              onPress: () => {
+                trackSendAarMandateCieErrorClosure(errorName);
+                restartToScanningAdvisory();
+              }
             }
           };
         case "WRONG_CAN":
@@ -152,15 +178,22 @@ export const SendAARCieCardReadingComponent = ({
             primaryAction: {
               testID: "wrongCanRetryButton",
               label: i18n.t("global.buttons.retry"),
-              onPress: restartToCanAdvisory
+              onPress: () => {
+                trackSendAarMandateCieErrorRetry(errorName);
+                restartToCanAdvisory();
+              }
             },
             secondaryAction: {
               testID: "wrongCanCloseButton",
               label: i18n.t("global.buttons.close"),
-              onPress: errorCloseHandler
+              onPress: () => {
+                trackSendAarMandateCieErrorClosure(errorName);
+                errorCloseHandler();
+              }
             }
           };
         default:
+          const currentErrorName = errorName ?? "GENERIC_ERROR";
           return {
             pictogram: "umbrella",
             title: i18n.t(
@@ -172,11 +205,17 @@ export const SendAARCieCardReadingComponent = ({
             primaryAction: {
               testID: "genericErrorPrimaryAction",
               label: i18n.t("global.buttons.retry"),
-              onPress: restartToCanAdvisory
+              onPress: () => {
+                trackSendAarMandateCieErrorRetry(currentErrorName);
+                restartToCanAdvisory();
+              }
             },
             secondaryAction: {
               testID: "genericErrorSecondaryAction",
-              onPress: present,
+              onPress: () => {
+                trackSendAarMandateCieErrorDetail(currentErrorName);
+                present();
+              },
               label: i18n.t(
                 "features.pn.aar.flow.cieScanning.error.GENERIC.secondaryAction"
               )

@@ -16,8 +16,8 @@ import {
 } from "../analytics";
 import { SendAarActivateNfcComponent } from "../components/SendAarActivateNfcComponent";
 import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
-import { currentAARFlowData } from "../store/selectors";
-import { sendAARFlowStates } from "../utils/stateUtils";
+import { currentAarFlowData } from "../store/selectors";
+import { sendAarFlowStates } from "../utils/stateUtils";
 
 export type SendAarActivateNfcScreenProps = IOStackNavigationRouteProps<
   PnParamsList,
@@ -27,11 +27,11 @@ export type SendAarActivateNfcScreenProps = IOStackNavigationRouteProps<
 export const SendAarActivateNfcScreen = ({
   navigation
 }: SendAarActivateNfcScreenProps) => {
-  const currentAarData = useIOSelector(currentAARFlowData);
+  const currentAarData = useIOSelector(currentAarFlowData);
   const { terminateFlow } = useSendAarFlowManager();
 
   useEffect(() => {
-    if (currentAarData.type === sendAARFlowStates.cieScanning) {
+    if (currentAarData.type === sendAarFlowStates.cieScanning) {
       const { type: _, ...params } = currentAarData;
 
       navigation.replace(PN_ROUTES.SEND_AAR_CIE_CARD_READING, params);

@@ -1,13 +1,13 @@
 import { Pressable, View } from "react-native";
-import { SendAARMessageDetailBottomSheetProps } from "../SendAARMessageDetailBottomSheet";
+import { SendAarMessageDetailBottomSheetProps } from "../SendAarMessageDetailBottomSheet";
 
-export const SendAARMessageDetailBottomSheet = ({
+export const SendAarMessageDetailBottomSheet = ({
   onPrimaryActionPress,
   onSecondaryActionPress,
   sendUserType
-}: SendAARMessageDetailBottomSheetProps) => (
+}: SendAarMessageDetailBottomSheetProps) => (
   <View>
-    <View>{`Mock SendAARMessageDetailBottomSheet`}</View>
+    <View>{`Mock SendAarMessageDetailBottomSheet`}</View>
     <View>{`Send user type: ${sendUserType}`}</View>
     <Pressable
       accessibilityLabel=""

@@ -5,26 +5,26 @@ import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import PN_ROUTES from "../../../navigation/routes";
-import { AARFlowState, sendAARFlowStates } from "../../utils/stateUtils";
+import { AarFlowState, sendAarFlowStates } from "../../utils/stateUtils";
 import { sendAarMockStateFactory } from "../../utils/testUtils";
 import {
-  SendAARMessageDetailBottomSheet,
-  SendAARMessageDetailBottomSheetProps
-} from "../SendAARMessageDetailBottomSheet";
+  SendAarMessageDetailBottomSheet,
+  SendAarMessageDetailBottomSheetProps
+} from "../SendAarMessageDetailBottomSheet";
 import { SendUserType } from "../../../../pushNotifications/analytics";
 import * as REMOTE_CONFIG_SELECTORS from "../../../../../store/reducers/backendStatus/remoteConfig";
 import * as SELECTORS from "../../store/selectors";
 
 type DisplayingNotificationDataState = Extract<
-  AARFlowState,
-  { type: typeof sendAARFlowStates.displayingNotificationData }
+  AarFlowState,
+  { type: typeof sendAarFlowStates.displayingNotificationData }
 >;
 
 describe("BottomSheetContent", () => {
   const mockOnPrimaryActionPress = jest.fn();
   const mockOnSecondaryActionPress = jest.fn();
 
-  const defaultProps: SendAARMessageDetailBottomSheetProps = {
+  const defaultProps: SendAarMessageDetailBottomSheetProps = {
     onPrimaryActionPress: mockOnPrimaryActionPress,
     onSecondaryActionPress: mockOnSecondaryActionPress,
     sendUserType: "recipient"
@@ -54,7 +54,7 @@ describe("BottomSheetContent", () => {
         : "renders the website section with the URL"
     } and matches its snapshot when called with user type = ${sendUserType})`, () => {
       jest
-        .spyOn(SELECTORS, "currentAARFlowData")
+        .spyOn(SELECTORS, "currentAarFlowData")
         .mockImplementation(() => stateWithMandateId);
       jest
         .spyOn(REMOTE_CONFIG_SELECTORS, "sendVisitTheWebsiteUrlSelector")
@@ -77,7 +77,7 @@ describe("BottomSheetContent", () => {
 
   it("calls onPrimaryActionPress when primary button is pressed", () => {
     jest
-      .spyOn(SELECTORS, "currentAARFlowData")
+      .spyOn(SELECTORS, "currentAarFlowData")
       .mockImplementation(() => stateWithMandateId);
 
     const { getByTestId } = renderComponent(defaultProps);
@@ -89,7 +89,7 @@ describe("BottomSheetContent", () => {
 
   it("calls onSecondaryActionPress when secondary button is pressed", () => {
     jest
-      .spyOn(SELECTORS, "currentAARFlowData")
+      .spyOn(SELECTORS, "currentAarFlowData")
       .mockImplementation(() => stateWithMandateId);
 
     const { getByTestId } = renderComponent(defaultProps);
@@ -100,10 +100,10 @@ describe("BottomSheetContent", () => {
   });
 });
 
-const renderComponent = (props: SendAARMessageDetailBottomSheetProps) => {
+const renderComponent = (props: SendAarMessageDetailBottomSheetProps) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(
-    () => <SendAARMessageDetailBottomSheet {...props} />,
+    () => <SendAarMessageDetailBottomSheet {...props} />,
     PN_ROUTES.MESSAGE_DETAILS,
     {},
     createStore(appReducer, globalState as any)

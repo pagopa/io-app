@@ -9,8 +9,8 @@ import {
 } from "../../analytics";
 import { useSendAarFlowManager } from "../../hooks/useSendAarFlowManager";
 import {
-  currentAARFlowStateAssistanceErrorCode,
-  currentAARFlowStateErrorDebugInfoSelector
+  currentAarFlowStateAssistanceErrorCode,
+  currentAarFlowStateErrorDebugInfoSelector
 } from "../../store/selectors";
 import { useAarGenericErrorBottomSheet } from "./hooks/useAarGenericErrorBottomSheet";
 import { SendAarZendeskSecondLevelTag } from "./hooks/useAarStartSendZendeskSupport";
@@ -18,7 +18,7 @@ import { SendAarZendeskSecondLevelTag } from "./hooks/useAarStartSendZendeskSupp
 export const SendAarGenericErrorComponent = () => {
   const { terminateFlow } = useSendAarFlowManager();
   const assistanceErrorCode = useIOSelector(
-    currentAARFlowStateAssistanceErrorCode
+    currentAarFlowStateAssistanceErrorCode
   );
 
   const { bottomSheet, present } = useAarGenericErrorBottomSheet({
@@ -28,7 +28,7 @@ export const SendAarGenericErrorComponent = () => {
     onStartAssistance: trackSendAarErrorScreenDetailsHelp
   });
 
-  const debugInfo = useIOSelector(currentAARFlowStateErrorDebugInfoSelector);
+  const debugInfo = useIOSelector(currentAarFlowStateErrorDebugInfoSelector);
   useDebugInfo(debugInfo);
 
   return (

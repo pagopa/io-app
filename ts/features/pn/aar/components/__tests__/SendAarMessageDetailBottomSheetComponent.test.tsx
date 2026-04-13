@@ -10,11 +10,11 @@ import { SendUserType } from "../../../../pushNotifications/analytics";
 import PN_ROUTES from "../../../navigation/routes";
 import * as BANNER from "../../../reminderBanner/reducer/bannerDismiss";
 import * as ANALYTICS from "../../analytics";
-import { SendAARMessageDetailBottomSheetComponent } from "../SendAARMessageDetailBottomSheetComponent";
+import { SendAarMessageDetailBottomSheetComponent } from "../SendAarMessageDetailBottomSheetComponent";
 
 const mockReplace = jest.fn();
 const mockPopToTop = jest.fn();
-jest.mock("../SendAARMessageDetailBottomSheet");
+jest.mock("../SendAarMessageDetailBottomSheet");
 jest.mock("@react-navigation/native", () => {
   const actualNav = jest.requireActual("@react-navigation/native");
   return {
@@ -32,7 +32,7 @@ const sendUserTypes: ReadonlyArray<SendUserType> = [
   "recipient"
 ];
 
-describe("SendAARMessageDetailBottomSheetComponent", () => {
+describe("SendAarMessageDetailBottomSheetComponent", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     jest.restoreAllMocks();
@@ -158,7 +158,7 @@ const renderComponent = (sendUserType: SendUserType) => {
 
   const rendered = renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
-      <SendAARMessageDetailBottomSheetComponent
+      <SendAarMessageDetailBottomSheetComponent
         aarBottomSheetRef={aarBottomSheetRef}
         sendUserType={sendUserType}
       />

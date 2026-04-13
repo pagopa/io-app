@@ -12,17 +12,17 @@ import {
   trackSendAarNotificationClosureBack,
   trackSendAarNotificationClosureConfirm
 } from "../analytics";
-import { SendAARMessageDetailBottomSheet } from "./SendAARMessageDetailBottomSheet";
+import { SendAarMessageDetailBottomSheet } from "./SendAarMessageDetailBottomSheet";
 
-export type SendAARMessageDetailBottomSheetComponentProps = {
+export type SendAarMessageDetailBottomSheetComponentProps = {
   aarBottomSheetRef: RefObject<(() => void) | undefined>;
   sendUserType: SendUserType;
 };
 
-export const SendAARMessageDetailBottomSheetComponent = ({
+export const SendAarMessageDetailBottomSheetComponent = ({
   aarBottomSheetRef,
   sendUserType
-}: SendAARMessageDetailBottomSheetComponentProps) => {
+}: SendAarMessageDetailBottomSheetComponentProps) => {
   const navigation =
     useNavigation<
       IOStackNavigationProp<MessagesParamsList, "MESSAGE_DETAIL">
@@ -59,7 +59,7 @@ export const SendAARMessageDetailBottomSheetComponent = ({
   const { bottomSheet, present, dismiss } = useIOBottomSheetModal({
     title: I18n.t("features.pn.aar.flow.closeNotification.title"),
     component: (
-      <SendAARMessageDetailBottomSheet
+      <SendAarMessageDetailBottomSheet
         onPrimaryActionPress={() => {
           trackSendAarNotificationClosureBack(sendUserType);
           dismiss();
