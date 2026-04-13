@@ -20,7 +20,7 @@ const makeState = (overrides: Partial<TourState> = {}): GlobalState =>
         ...overrides
       }
     }
-  } as unknown as GlobalState);
+  }) as unknown as GlobalState;
 
 describe("tour selectors", () => {
   describe("isTourActiveSelector", () => {
