@@ -2,13 +2,17 @@ import {
   FeatureInfo,
   H3,
   IOMarkdownLite,
+  IOMaxFontSizeMultiplier,
+  Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+import { useWindowDimensions, View } from "react-native";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useIOSelector } from "../../../../store/hooks";
 import { pnPrivacyUrlsSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { openWebUrl } from "../../../../utils/url";
+import { useDetectSmallScreen } from "../../../../hooks/useDetectSmallScreen.ts";
 
 export type SendEngagementComponentProps = {
   isLoading: boolean;
@@ -24,6 +28,10 @@ export const SendEngagementComponent = ({
   const { privacy: privacyUrl, tos: tosUrl } = useIOSelector(
     pnPrivacyUrlsSelector
   );
+
+  const { isDeviceScreenSmall } = useDetectSmallScreen();
+  const { fontScale } = useWindowDimensions();
+  const isFontTooBig = fontScale > IOMaxFontSizeMultiplier;
 
   const openWebUrlIfNotLoading = (url: string) => {
     if (!isLoading) {
@@ -55,6 +63,12 @@ export const SendEngagementComponent = ({
         }
       }}
     >
+      {!isDeviceScreenSmall && !isFontTooBig && (
+        <View style={{ alignSelf: "center" }} testID="pictogram-test">
+          <Pictogram name="message" size={120} />
+        </View>
+      )}
+      <VSpacer size={24} />
       <H3 textStyle={{ textAlign: "center" }}>
         {I18n.t("features.pn.aar.serviceActivation.title")}
       </H3>

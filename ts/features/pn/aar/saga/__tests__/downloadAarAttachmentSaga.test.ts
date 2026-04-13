@@ -13,9 +13,9 @@ import * as attachmentsUtils from "../../../../messages/utils/attachments";
 import * as analytics from "../../analytics";
 import * as client from "../../api/client";
 import {
-  downloadAARAttachmentSaga,
+  downloadAarAttachmentSaga,
   testable
-} from "../downloadAARAttachmentSaga";
+} from "../downloadAarAttachmentSaga";
 
 // Mock external dependencies
 const mockRNBUFetch = jest.fn();
@@ -58,14 +58,14 @@ const downloadRequestAction = downloadAttachment.request({
   skipMixpanelTrackingOnFailure: false
 });
 
-describe("downloadAARAttachmentSaga", () => {
+describe("downloadAarAttachmentSaga", () => {
   [undefined, mandateId].forEach(mandateIdVariant => {
     [false, true].forEach(useUATEnvironment => {
       const prevalidatedUrl = "https://prevalidated.url/download";
       const attachmentPath = "/path/to/attachment.pdf";
       it(`should handle a successful download (mandateId: ${mandateIdVariant}, UAT environment: ${useUATEnvironment})`, () => {
         testSaga(
-          downloadAARAttachmentSaga,
+          downloadAarAttachmentSaga,
           bearerToken,
           keyInfo,
           mandateIdVariant,
@@ -109,7 +109,7 @@ describe("downloadAARAttachmentSaga", () => {
         (unknownToReason as jest.Mock).mockReturnValue(reason);
 
         testSaga(
-          downloadAARAttachmentSaga,
+          downloadAarAttachmentSaga,
           bearerToken,
           keyInfo,
           mandateId,
@@ -129,7 +129,7 @@ describe("downloadAARAttachmentSaga", () => {
           )
           .throw(error)
           .call(
-            analytics.trackSendAARFailure,
+            analytics.trackSendAarFailure,
             "Download Attachment",
             reason,
             undefined
@@ -147,7 +147,7 @@ describe("downloadAARAttachmentSaga", () => {
           .next(false)
           .isDone();
       });
-      it(`should pass aarProblemJson to trackSendAARFailure when a SendServerError is thrown (mandateId: ${mandateIdVariant}, UAT environment: ${useUATEnvironment})`, () => {
+      it(`should pass aarProblemJson to trackSendAarFailure when a SendServerError is thrown (mandateId: ${mandateIdVariant}, UAT environment: ${useUATEnvironment})`, () => {
         const reason = "Server error";
         const problemJson = {
           status: 500,
@@ -158,7 +158,7 @@ describe("downloadAARAttachmentSaga", () => {
         (unknownToReason as jest.Mock).mockReturnValue(reason);
 
         testSaga(
-          downloadAARAttachmentSaga,
+          downloadAarAttachmentSaga,
           bearerToken,
           keyInfo,
           mandateId,
@@ -178,7 +178,7 @@ describe("downloadAARAttachmentSaga", () => {
           )
           .throw(error)
           .call(
-            analytics.trackSendAARFailure,
+            analytics.trackSendAarFailure,
             "Download Attachment",
             reason,
             problemJson
@@ -202,7 +202,7 @@ describe("downloadAARAttachmentSaga", () => {
         (unknownToReason as jest.Mock).mockReturnValue(reason);
 
         testSaga(
-          downloadAARAttachmentSaga,
+          downloadAarAttachmentSaga,
           bearerToken,
           keyInfo,
           mandateId,
@@ -222,7 +222,7 @@ describe("downloadAARAttachmentSaga", () => {
           )
           .throw(error)
           .call(
-            analytics.trackSendAARFailure,
+            analytics.trackSendAarFailure,
             "Download Attachment",
             "Fast login expiration",
             undefined
@@ -242,7 +242,7 @@ describe("downloadAARAttachmentSaga", () => {
       });
       it(`should handle cancellation (mandateId: ${mandateIdVariant}, UAT environment: ${useUATEnvironment})`, () => {
         testSaga(
-          downloadAARAttachmentSaga,
+          downloadAarAttachmentSaga,
           bearerToken,
           keyInfo,
           mandateId,
@@ -370,7 +370,7 @@ describe("getAttachmentMetadata", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-  // eslint-disable-next-line sonarjs/cognitive-complexity
+
   [undefined, mandateId].forEach(mandateIdVariant => {
     [false, true].forEach(useUATEnvironment => {
       it(`should return url on successful response (mandateId: ${mandateIdVariant} isUAT: ${useUATEnvironment})`, () => {
@@ -708,7 +708,7 @@ describe("getAttachmentMetadata", () => {
           isTest: useUATEnvironment
         });
       });
-      it(`should throw FAST_LOGIN_EXPIRED and call trackSendAARFailure with 'Fast login expiration' on 401 response (mandateId: ${mandateIdVariant} isUAT: ${useUATEnvironment})`, () => {
+      it(`should throw FAST_LOGIN_EXPIRED and call trackSendAarFailure with 'Fast login expiration' on 401 response (mandateId: ${mandateIdVariant} isUAT: ${useUATEnvironment})`, () => {
         const response = E.right({
           status: 401,
           value: {
@@ -743,7 +743,7 @@ describe("getAttachmentMetadata", () => {
             )
             .next(response)
             .call(
-              analytics.trackSendAARFailure,
+              analytics.trackSendAarFailure,
               "Download Attachment",
               "Fast login expiration"
             );
@@ -888,14 +888,14 @@ describe("downloadAttachmentFromPrevalidatedUrl", () => {
 const generateMocks = (response: E.Either<unknown, unknown>) => {
   const mockedGetNotificationAttachment = Promise.resolve(response);
   const mockedGetNotificationAttachmentInput = jest.fn();
-  jest.spyOn(client, "createSendAARClientWithLollipop").mockImplementation(
+  jest.spyOn(client, "createSendAarClientWithLollipop").mockImplementation(
     (_baseUrl, _keyInfo) =>
       ({
         getNotificationAttachment: (input: unknown) => {
           mockedGetNotificationAttachmentInput(input);
           return mockedGetNotificationAttachment;
         }
-      } as any)
+      }) as any
   );
   return {
     mockedGetNotificationAttachment,

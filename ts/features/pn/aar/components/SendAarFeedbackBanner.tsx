@@ -23,7 +23,7 @@ export const SendAArFeedbackBanner = () => {
   return (
     <>
       <Banner
-        color="neutral"
+        color="turquoise"
         pictogramName="feedback"
         title={feedbackBannerConfig.title?.[localeFallback]}
         content={feedbackBannerConfig.description[localeFallback]}

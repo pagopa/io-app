@@ -72,7 +72,7 @@ describe("ReceiptPreviewScreen", () => {
     expect(button).toBeDefined();
 
     fireEvent.press(button);
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
+
     expect(require("react-native-share").open).toHaveBeenCalled();
   });
 });

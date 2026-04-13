@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MessageDetailsScreen should match the snapshot when everything went fine and not dispatch trackSendAARFailure (opening source aar, user type mandatory) 1`] = `
+exports[`MessageDetailsScreen should match the snapshot when everything went fine and not dispatch trackSendAarFailure (opening source aar, user type mandatory) 1`] = `
 <View
   style={
     {
@@ -294,7 +294,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                       </View>
                       <View>
                         <View>
-                          Mock SendAARMessageDetailBottomSheetComponent
+                          Mock SendAarMessageDetailBottomSheetComponent
                         </View>
                         <View>
                           Ref container: set to jest.fn() internally
@@ -665,7 +665,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
 </View>
 `;
 
-exports[`MessageDetailsScreen should match the snapshot when everything went fine and not dispatch trackSendAARFailure (opening source aar, user type not_set) 1`] = `
+exports[`MessageDetailsScreen should match the snapshot when everything went fine and not dispatch trackSendAarFailure (opening source aar, user type not_set) 1`] = `
 <View
   style={
     {
@@ -959,7 +959,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                       </View>
                       <View>
                         <View>
-                          Mock SendAARMessageDetailBottomSheetComponent
+                          Mock SendAarMessageDetailBottomSheetComponent
                         </View>
                         <View>
                           Ref container: set to jest.fn() internally
@@ -1330,7 +1330,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
 </View>
 `;
 
-exports[`MessageDetailsScreen should match the snapshot when everything went fine and not dispatch trackSendAARFailure (opening source aar, user type recipient) 1`] = `
+exports[`MessageDetailsScreen should match the snapshot when everything went fine and not dispatch trackSendAarFailure (opening source aar, user type recipient) 1`] = `
 <View
   style={
     {
@@ -1624,7 +1624,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                       </View>
                       <View>
                         <View>
-                          Mock SendAARMessageDetailBottomSheetComponent
+                          Mock SendAarMessageDetailBottomSheetComponent
                         </View>
                         <View>
                           Ref container: set to jest.fn() internally
@@ -1995,7 +1995,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
 </View>
 `;
 
-exports[`MessageDetailsScreen should match the snapshot when everything went fine and not dispatch trackSendAARFailure (opening source message, user type mandatory) 1`] = `
+exports[`MessageDetailsScreen should match the snapshot when everything went fine and not dispatch trackSendAarFailure (opening source message, user type mandatory) 1`] = `
 <View
   style={
     {
@@ -2790,7 +2790,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
 </View>
 `;
 
-exports[`MessageDetailsScreen should match the snapshot when everything went fine and not dispatch trackSendAARFailure (opening source message, user type not_set) 1`] = `
+exports[`MessageDetailsScreen should match the snapshot when everything went fine and not dispatch trackSendAarFailure (opening source message, user type not_set) 1`] = `
 <View
   style={
     {
@@ -3585,7 +3585,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
 </View>
 `;
 
-exports[`MessageDetailsScreen should match the snapshot when everything went fine and not dispatch trackSendAARFailure (opening source message, user type recipient) 1`] = `
+exports[`MessageDetailsScreen should match the snapshot when everything went fine and not dispatch trackSendAarFailure (opening source message, user type recipient) 1`] = `
 <View
   style={
     {
@@ -4380,7 +4380,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
 </View>
 `;
 
-exports[`MessageDetailsScreen should match the snapshot when everything went fine and not dispatch trackSendAARFailure (opening source not_set, user type mandatory) 1`] = `
+exports[`MessageDetailsScreen should match the snapshot when everything went fine and not dispatch trackSendAarFailure (opening source not_set, user type mandatory) 1`] = `
 <View
   style={
     {
@@ -5175,7 +5175,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
 </View>
 `;
 
-exports[`MessageDetailsScreen should match the snapshot when everything went fine and not dispatch trackSendAARFailure (opening source not_set, user type not_set) 1`] = `
+exports[`MessageDetailsScreen should match the snapshot when everything went fine and not dispatch trackSendAarFailure (opening source not_set, user type not_set) 1`] = `
 <View
   style={
     {
@@ -5970,7 +5970,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
 </View>
 `;
 
-exports[`MessageDetailsScreen should match the snapshot when everything went fine and not dispatch trackSendAARFailure (opening source not_set, user type recipient) 1`] = `
+exports[`MessageDetailsScreen should match the snapshot when everything went fine and not dispatch trackSendAarFailure (opening source not_set, user type recipient) 1`] = `
 <View
   style={
     {
@@ -12201,7 +12201,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
 </View>
 `;
 
-exports[`MessageDetailsScreen should match the snapshot when there is an error and dispatch trackSendAARFailure (opening source aar, user type mandatory) 1`] = `
+exports[`MessageDetailsScreen should match the snapshot when there is an error and dispatch trackSendAarFailure (opening source aar, user type mandatory) 1`] = `
 <View
   style={
     {
@@ -12958,7 +12958,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
 </View>
 `;
 
-exports[`MessageDetailsScreen should match the snapshot when there is an error and dispatch trackSendAARFailure (opening source aar, user type not_set) 1`] = `
+exports[`MessageDetailsScreen should match the snapshot when there is an error and dispatch trackSendAarFailure (opening source aar, user type not_set) 1`] = `
 <View
   style={
     {
@@ -13715,7 +13715,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
 </View>
 `;
 
-exports[`MessageDetailsScreen should match the snapshot when there is an error and dispatch trackSendAARFailure (opening source aar, user type recipient) 1`] = `
+exports[`MessageDetailsScreen should match the snapshot when there is an error and dispatch trackSendAarFailure (opening source aar, user type recipient) 1`] = `
 <View
   style={
     {
