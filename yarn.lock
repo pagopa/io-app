@@ -4358,14 +4358,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-wallet@npm:3.0.1":
-  version: 3.0.1
-  resolution: "@pagopa/io-react-native-wallet@npm:3.0.1"
+"@pagopa/io-react-native-wallet@npm:3.1.0":
+  version: 3.1.0
+  resolution: "@pagopa/io-react-native-wallet@npm:3.1.0"
   dependencies:
-    "@pagopa/io-wallet-oauth2": ^1.0.0
-    "@pagopa/io-wallet-oid4vci": ^1.0.0
-    "@pagopa/io-wallet-oid4vp": ^1.0.0
-    "@pagopa/io-wallet-utils": ^1.0.0
+    "@pagopa/io-wallet-oauth2": 1.2.1
+    "@pagopa/io-wallet-oid4vci": 1.2.1
+    "@pagopa/io-wallet-oid4vp": 1.2.1
+    "@pagopa/io-wallet-utils": 1.2.1
     "@sd-jwt/core": ^0.19.0
     "@sd-jwt/crypto-nodejs": ^0.19.0
     "@sd-jwt/jwt-status-list": ^0.19.0
@@ -4377,7 +4377,7 @@ __metadata:
     parse-url: ^10.0.3
     react-native-url-polyfill: ^2.0.0
     uuid: ^11.0.3
-    zod: ^3.25.76
+    zod: ^4.3.6
   peerDependencies:
     "@pagopa/io-react-native-crypto": "*"
     "@pagopa/io-react-native-iso18013": "*"
@@ -4385,7 +4385,7 @@ __metadata:
     react: "*"
     react-native: "*"
     react-native-quick-crypto: "*"
-  checksum: 5dd95787da9404bd7dd7f11314f2c2dfc0048d0966242548e588216e5b073c7ff713f3277daf9b368f8edede6c4c18e5f086d730c2556806e62c2f8d85bdbe05
+  checksum: ac853a5535c41bc5c0b4418b3bd7f834b7f5acc31e7650d1b0edc328c7a38a3c5cb328199b8dc9b9189bbfb14b424a3df05d9e43d02e457a508bf57ff236bd8a
   languageName: node
   linkType: hard
 
@@ -4399,7 +4399,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-wallet-oauth2@npm:, @pagopa/io-wallet-oauth2@npm:1.1.0, @pagopa/io-wallet-oauth2@npm:^1.0.0":
+"@pagopa/io-wallet-oauth2@npm:":
   version: 1.1.0
   resolution: "@pagopa/io-wallet-oauth2@npm:1.1.0"
   dependencies:
@@ -4412,7 +4412,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-wallet-oid-federation@npm:, @pagopa/io-wallet-oid-federation@npm:1.1.0":
+"@pagopa/io-wallet-oauth2@npm:1.2.1":
+  version: 1.2.1
+  resolution: "@pagopa/io-wallet-oauth2@npm:1.2.1"
+  dependencies:
+    "@openid4vc/oauth2": 0.4.3
+    "@openid4vc/utils": 0.4.3
+    "@pagopa/io-wallet-utils": 1.2.1
+    js-base64: ^3.7.8
+    zod: ^4.3.6
+  checksum: c4c836cc751938c66777dc9ca327f5e941a0d64af8f8b294e54ff308db47dda0d4f46d779b30885cba3a3d31cfc381201148a1dfa1dcc7f1fe9f412d76c7bade
+  languageName: node
+  linkType: hard
+
+"@pagopa/io-wallet-oid-federation@npm:":
   version: 1.1.0
   resolution: "@pagopa/io-wallet-oid-federation@npm:1.1.0"
   dependencies:
@@ -4423,26 +4436,37 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-wallet-oid4vci@npm:^1.0.0":
-  version: 1.1.0
-  resolution: "@pagopa/io-wallet-oid4vci@npm:1.1.0"
+"@pagopa/io-wallet-oid-federation@npm:1.2.1":
+  version: 1.2.1
+  resolution: "@pagopa/io-wallet-oid-federation@npm:1.2.1"
   dependencies:
-    "@openid-federation/core": ^0.2.1
-    "@openid4vc/oauth2": 0.4.3
-    "@openid4vc/openid4vci": 0.4.3
-    "@openid4vc/utils": 0.4.3
-    "@pagopa/io-wallet-oauth2": 1.1.0
-    "@pagopa/io-wallet-oid-federation": 1.1.0
-    "@pagopa/io-wallet-oid4vp": 1.1.0
-    "@pagopa/io-wallet-utils": 1.1.0
-    zod: ^3.24.2
-  checksum: 90f369cbc342416bf33d3ef7d1fba4110db3c4f22fe632e8164f362154f65b79bc4a8498e0105449b61d28d54fc2c742f1653011aeb6dfcd267921787b061ac8
+    "@pagopa/io-wallet-oauth2": ""
+    "@pagopa/io-wallet-utils": ""
+    buffer: ^6.0.3
+    zod: ^4.3.6
+  checksum: b4ef4117b96ae3e3a51307c8b06968d3ca5f44afa569987677534153397c82b3d6742eac75ebd27f4f09cb7b6ea8c46dff0c2ba548d12d3ae94f7eb2a11fef78
   languageName: node
   linkType: hard
 
-"@pagopa/io-wallet-oid4vp@npm:1.1.0, @pagopa/io-wallet-oid4vp@npm:^1.0.0":
-  version: 1.1.0
-  resolution: "@pagopa/io-wallet-oid4vp@npm:1.1.0"
+"@pagopa/io-wallet-oid4vci@npm:1.2.1":
+  version: 1.2.1
+  resolution: "@pagopa/io-wallet-oid4vci@npm:1.2.1"
+  dependencies:
+    "@openid4vc/oauth2": 0.4.3
+    "@openid4vc/openid4vci": 0.4.3
+    "@openid4vc/utils": 0.4.3
+    "@pagopa/io-wallet-oauth2": 1.2.1
+    "@pagopa/io-wallet-oid-federation": 1.2.1
+    "@pagopa/io-wallet-oid4vp": 1.2.1
+    "@pagopa/io-wallet-utils": 1.2.1
+    zod: ^4.3.6
+  checksum: a3171ef054a9d9f1eb47170b6b029de6adef48c7a27982afbcbdd934b83c99ef2d62b07e96429a9b511ffb4ee1559be01aa795e611d07da943d179c36e855c19
+  languageName: node
+  linkType: hard
+
+"@pagopa/io-wallet-oid4vp@npm:1.2.1":
+  version: 1.2.1
+  resolution: "@pagopa/io-wallet-oid4vp@npm:1.2.1"
   dependencies:
     "@openid4vc/oauth2": 0.4.3
     "@openid4vc/openid4vp": 0.4.3
@@ -4450,18 +4474,28 @@ __metadata:
     "@pagopa/io-wallet-oauth2": ""
     "@pagopa/io-wallet-oid-federation": ""
     "@pagopa/io-wallet-utils": ""
-    zod: ^3.24.2
-  checksum: ff684a03cce481a41670f2db493bfc85485fd96774cc28c36c72cd2fc7e3702dea683a59537a20ece0efe041a5b7fa3ef54a1e4b476ed3c1212c46c1a43c03e3
+    zod: ^4.3.6
+  checksum: fb8353d1f8e021dfcee07a14360fbf70b66c75e929e6943d1c96ab94cde945de61d4c06f5a79fe553c5d87213b738f23e11b4cc5d48d29f5e22610204ee234c2
   languageName: node
   linkType: hard
 
-"@pagopa/io-wallet-utils@npm:, @pagopa/io-wallet-utils@npm:1.1.0, @pagopa/io-wallet-utils@npm:^1.0.0":
+"@pagopa/io-wallet-utils@npm:, @pagopa/io-wallet-utils@npm:1.1.0":
   version: 1.1.0
   resolution: "@pagopa/io-wallet-utils@npm:1.1.0"
   dependencies:
     "@openid4vc/utils": 0.4.3
     zod: ^3.24.2
   checksum: 3f9e32d191a8d45c340e06edb4d9ab02476332d63ba6644fbfafcff1290c990722989fcc27275e576e2469749c94c6b8f593b2e58799ec06b81cfcb5ffd5a2e1
+  languageName: node
+  linkType: hard
+
+"@pagopa/io-wallet-utils@npm:1.2.1":
+  version: 1.2.1
+  resolution: "@pagopa/io-wallet-utils@npm:1.2.1"
+  dependencies:
+    "@openid4vc/utils": 0.4.3
+    zod: ^4.3.6
+  checksum: d79bd990f7640cbb0317aa1ae6bc1b274f5303e8cfdc8d305745e3a2efd8c73b9925e5250b800474c7bfcf05fc1d7745db6e6dd99d40a17ae320f4ee6631dbd7
   languageName: node
   linkType: hard
 
@@ -13371,7 +13405,7 @@ __metadata:
     "@pagopa/io-react-native-jwt": ^2.1.0
     "@pagopa/io-react-native-login-utils": 1.2.0
     "@pagopa/io-react-native-secure-storage": ^0.2.1
-    "@pagopa/io-react-native-wallet": 3.0.1
+    "@pagopa/io-react-native-wallet": 3.1.0
     "@pagopa/io-react-native-zendesk": ^0.3.30
     "@pagopa/openapi-codegen-ts": ^14.2.0
     "@pagopa/react-native-cie": ^1.5.0
@@ -23695,7 +23729,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:^3.23.8, zod@npm:^3.24.2, zod@npm:^3.25.67, zod@npm:^3.25.76":
+"zod@npm:^3.23.8, zod@npm:^3.24.2, zod@npm:^3.25.67":
   version: 3.25.76
   resolution: "zod@npm:3.25.76"
   checksum: c9a403a62b329188a5f6bd24d5d935d2bba345f7ab8151d1baa1505b5da9f227fb139354b043711490c798e91f3df75991395e40142e6510a4b16409f302b849
@@ -23709,7 +23743,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:^3.25.0 || ^4.0.0, zod@npm:^4.1.13":
+"zod@npm:^3.25.0 || ^4.0.0, zod@npm:^4.1.13, zod@npm:^4.3.6":
   version: 4.3.6
   resolution: "zod@npm:4.3.6"
   checksum: 19cec761b46bae4b6e7e861ea740f3f248e50a6671825afc8a5758e27b35d6f20ccde9942422fd5cf6f8b697f18bd05ef8bb33f5f2db112ab25cc628de2fae47
