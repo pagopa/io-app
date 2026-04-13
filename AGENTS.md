@@ -36,7 +36,7 @@ Every feature lives under `ts/features/<feature>/` and is self-contained:
 - `README.md` — Purpose & guideline for the feature
 - `machine/` — XState machine files (only for complex multi-step flows)
 
-## Guidelines
+## Boundaries
 
 - Never edit anything under `definitions/`. Run `yarn generate` to update them.
 - Avoid `fp-ts` in new code; use native TypeScript equivalents.
