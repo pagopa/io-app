@@ -497,7 +497,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
                                         [
                                           {
                                             "height": 180,
-                                            "uri": "https://assets.cdn.io.pagopa.it/logos/organizations/1.png",
+                                            "uri": "https://assets.io.pagopa.it/logos/organizations/1.png",
                                             "width": 180,
                                           },
                                         ]
@@ -1061,7 +1061,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
                                         [
                                           {
                                             "height": 180,
-                                            "uri": "https://assets.cdn.io.pagopa.it/logos/organizations/1.png",
+                                            "uri": "https://assets.io.pagopa.it/logos/organizations/1.png",
                                             "width": 180,
                                           },
                                         ]

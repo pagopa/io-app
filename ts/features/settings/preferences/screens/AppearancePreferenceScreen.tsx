@@ -86,7 +86,7 @@ const AppearancePreferenceScreen = (): ReactElement => {
 
   const handleTypefaceChange = (choice: TypefaceChoice) => {
     trackAppearancePreferenceTypefaceUpdate(choice, store.getState());
-    AsyncStorage.setItem(FONT_PERSISTENCE_KEY, choice).finally(() => {
+    void AsyncStorage.setItem(FONT_PERSISTENCE_KEY, choice).finally(() => {
       dispatch(preferencesFontSet(choice));
       setNewTypefaceEnabled(choice === "comfortable");
     });
@@ -94,7 +94,7 @@ const AppearancePreferenceScreen = (): ReactElement => {
 
   const handleColorModeChange = (choice: ColorModeChoice) => {
     trackAppearancePreferenceThemeUpdate(choice, store.getState());
-    AsyncStorage.setItem(THEME_PERSISTENCE_KEY, choice).finally(() => {
+    void AsyncStorage.setItem(THEME_PERSISTENCE_KEY, choice).finally(() => {
       dispatch(preferencesThemeSet(choice));
       setSelectedColorMode(choice);
       if (choice === "auto") {

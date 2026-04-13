@@ -244,7 +244,8 @@ export const itwEidIssuanceMachine = setup({
         raise(({ event }) => ({
           type: "start",
           mode: event.mode,
-          level: event.level
+          level: event.level,
+          credentialType: event.credentialType
         }))
       ]
     }
@@ -644,7 +645,7 @@ export const itwEidIssuanceMachine = setup({
               tags: [ItwTags.Loading],
               invoke: {
                 src: "startAuthFlow",
-                // eslint-disable-next-line sonarjs/no-identical-functions
+
                 input: ({ context }) => ({
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
@@ -827,7 +828,11 @@ export const itwEidIssuanceMachine = setup({
               states: {
                 Identification: {
                   on: {
-                    back: "#itwEidIssuanceMachine.UserIdentification.Identification"
+                    back: "#itwEidIssuanceMachine.UserIdentification.Identification",
+                    close: {
+                      target: "#itwEidIssuanceMachine.Idle",
+                      actions: "closeIssuance"
+                    }
                   }
                 },
                 PreparationCie: {

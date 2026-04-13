@@ -23,6 +23,7 @@ import {
 } from "../../../../common/utils/itwTypesUtils.ts";
 import { RemoteFailureType } from "../failure.ts";
 
+const T_FLOW_TYPE = "cross-device";
 const T_CLIENT_ID = "clientId";
 const T_REQUEST_URI = "https://example.com";
 const T_STATE = "state";
@@ -114,7 +115,8 @@ describe("itwRemoteMachine", () => {
 
     actor.send({
       type: "start",
-      payload: qrCodePayload
+      payload: qrCodePayload,
+      flowType: T_FLOW_TYPE
     });
 
     const snapshot = actor.getSnapshot();
@@ -194,7 +196,8 @@ describe("itwRemoteMachine", () => {
 
     actor.send({
       type: "start",
-      payload: qrCodePayload
+      payload: qrCodePayload,
+      flowType: T_FLOW_TYPE
     });
 
     const snapshot = actor.getSnapshot();
@@ -214,7 +217,8 @@ describe("itwRemoteMachine", () => {
 
     actor.send({
       type: "start",
-      payload: qrCodePayload
+      payload: qrCodePayload,
+      flowType: T_FLOW_TYPE
     });
 
     expect(actor.getSnapshot().value).toStrictEqual(
@@ -265,10 +269,15 @@ describe("itwRemoteMachine", () => {
     const actor = createActor(mockedMachine);
     actor.start();
 
-    actor.send({ type: "start", payload: qrCodePayload });
+    actor.send({
+      type: "start",
+      payload: qrCodePayload,
+      flowType: T_FLOW_TYPE
+    });
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
-      payload: qrCodePayload
+      payload: qrCodePayload,
+      flowType: T_FLOW_TYPE
     });
 
     /**
@@ -287,6 +296,7 @@ describe("itwRemoteMachine", () => {
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
       payload: qrCodePayload,
+      flowType: T_FLOW_TYPE,
       rpConf
     });
 
@@ -299,6 +309,7 @@ describe("itwRemoteMachine", () => {
       ...InitialContext,
       requestObjectEncodedJwt: unverifiedRequestObject,
       payload: qrCodePayload,
+      flowType: T_FLOW_TYPE,
       rpConf
     });
 
@@ -313,6 +324,7 @@ describe("itwRemoteMachine", () => {
       ...InitialContext,
       requestObjectEncodedJwt: unverifiedRequestObject,
       payload: qrCodePayload,
+      flowType: T_FLOW_TYPE,
       rpConf,
       requestObject,
       presentationDetails
@@ -333,6 +345,7 @@ describe("itwRemoteMachine", () => {
       ...InitialContext,
       requestObjectEncodedJwt: unverifiedRequestObject,
       payload: qrCodePayload,
+      flowType: T_FLOW_TYPE,
       rpConf,
       requestObject,
       presentationDetails,
@@ -352,6 +365,7 @@ describe("itwRemoteMachine", () => {
       ...InitialContext,
       requestObjectEncodedJwt: unverifiedRequestObject,
       payload: qrCodePayload,
+      flowType: T_FLOW_TYPE,
       rpConf,
       requestObject,
       presentationDetails,
@@ -380,6 +394,8 @@ describe("itwRemoteMachine", () => {
 
     actor.send({
       type: "start",
+      flowType: T_FLOW_TYPE,
+
       payload: qrCodePayload
     });
 
@@ -429,7 +445,8 @@ describe("itwRemoteMachine", () => {
         client_id: T_CLIENT_ID,
         request_uri: T_REQUEST_URI,
         state: T_STATE
-      } as ItwRemoteRequestPayload
+      } as ItwRemoteRequestPayload,
+      flowType: T_FLOW_TYPE
     });
 
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
@@ -443,6 +460,7 @@ describe("itwRemoteMachine", () => {
         value: "ClaimsDisclosure",
         context: {
           ...InitialContext,
+          flowType: T_FLOW_TYPE,
           payload: qrCodePayload
         }
       })
@@ -468,7 +486,11 @@ describe("itwRemoteMachine", () => {
     const actor = createActor(mockedMachine);
     actor.start();
 
-    actor.send({ type: "start", payload: qrCodePayload });
+    actor.send({
+      type: "start",
+      payload: qrCodePayload,
+      flowType: T_FLOW_TYPE
+    });
 
     await waitFor(actor, snapshot =>
       snapshot.matches("ObtainingWalletInstanceAttestation")

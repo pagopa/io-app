@@ -71,7 +71,7 @@ const mockBottomSheetModal = () => {
         present: mockBottomSheetPresent,
         dismiss: mockBottomSheetDismiss,
         bottomSheet: component
-      } as ReturnType<typeof bottomSheet.useIOBottomSheetModal>)
+      }) as ReturnType<typeof bottomSheet.useIOBottomSheetModal>
   );
 };
 
@@ -189,7 +189,12 @@ describe("ItwPresentationCredentialStatusAlert", () => {
       .spyOn(selectors, "itwCredentialStatusSelector")
       .mockImplementation(() => selectorMock);
 
-    const component = renderComponent();
+    const component = renderComponent({
+      storedStatusAssertion: {
+        credentialStatus: "invalid",
+        errorCode: "credential_invalid"
+      }
+    });
 
     expect(component.queryByText("Quali documenti devo preparare?")).toBeNull();
     expect(component.queryByText("Hai già rinnovato il documento?")).toBeNull();
@@ -283,7 +288,7 @@ describe("ItwPresentationCredentialStatusAlert", () => {
   });
 });
 
-function renderComponent() {
+function renderComponent(credentialOverride: Partial<StoredCredential> = {}) {
   const mockedMdl: StoredCredential = {
     credential: "",
     credentialType: "mDL",
@@ -300,12 +305,13 @@ function renderComponent() {
     },
     spec_version: "1.0.0"
   };
+  const credential: StoredCredential = { ...mockedMdl, ...credentialOverride };
 
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
       <ItwCredentialIssuanceMachineProvider>
-        <ItwPresentationCredentialStatusAlert credential={mockedMdl} />
+        <ItwPresentationCredentialStatusAlert credential={credential} />
       </ItwCredentialIssuanceMachineProvider>
     ),
     ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,

@@ -74,12 +74,13 @@ const BarcodeScanScreen = () => {
     format => (format === "DATA_MATRIX" ? dataMatrixPosteEnabled : true)
   );
 
-  const barcodeTypes: Array<IOBarcodeType> = IO_BARCODE_ALL_TYPES.filter(type =>
-    type === "IDPAY"
-      ? isIdPayEnabledInScanScreen
-      : type === "SEND"
-      ? isSendEnabled
-      : true
+  const barcodeTypes: Array<IOBarcodeType> = IO_BARCODE_ALL_TYPES.filter(
+    type =>
+      type === "IDPAY"
+        ? isIdPayEnabledInScanScreen
+        : type === "SEND"
+          ? isSendEnabled
+          : true
   );
 
   /**
@@ -167,9 +168,17 @@ const BarcodeScanScreen = () => {
         });
         break;
       case "ITW_REMOTE":
-        navigation.navigate(ITW_REMOTE_ROUTES.MAIN, {
+        /**
+         * Use replace so BARCODE_SCAN is removed from the parent stack.
+         * This lets the remote flow close with goBack and return directly
+         * to the screen shown before the scanner.
+         */
+        navigation.replace(ITW_REMOTE_ROUTES.MAIN, {
           screen: ITW_REMOTE_ROUTES.REQUEST_VALIDATION,
-          params: barcode.itwRemoteRequestPayload
+          params: {
+            ...barcode.itwRemoteRequestPayload,
+            flowType: "cross-device"
+          }
         });
         break;
       case "SEND":

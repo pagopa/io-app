@@ -25,7 +25,7 @@ import { format } from "../../../../../utils/dates.ts";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import IOMarkdown from "../../../../../components/IOMarkdown";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
-import { useItwRemoveCredentialWithConfirm } from "../hooks/useItwRemoveCredentialWithConfirm";
+import { useItwIssuerDynamicErrorBottomSheet } from "../hooks/useItwIssuerDynamicErrorBottomSheet";
 import { openWebUrl } from "../../../../../utils/url";
 import {
   trackItwCredentialTapBanner,
@@ -39,7 +39,6 @@ import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/se
 import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
 import { ItwEidLifecycleAlert } from "../../../common/components/ItwEidLifecycleAlert";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { ITW_ROUTES } from "../../../navigation/routes.ts";
 
 type Props = {
   credential: StoredCredential;
@@ -49,7 +48,9 @@ const excludedCredentialTypes = [
   CredentialType.PID,
   CredentialType.EDUCATION_DEGREE,
   CredentialType.EDUCATION_ENROLLMENT,
-  CredentialType.RESIDENCY
+  CredentialType.RESIDENCY,
+  CredentialType.EDUCATION_DIPLOMA,
+  CredentialType.EDUCATION_ATTENDANCE
 ] as const;
 
 type ExcludedCredentialTypes = (typeof excludedCredentialTypes)[number];
@@ -93,7 +94,6 @@ const useAlertPressHandler =
 // Helper function that calculates which alert type should be shown.
 export const deriveCredentialAlertType = (
   props: CredentialAlertProps
-  // eslint-disable-next-line sonarjs/cognitive-complexity
 ): CredentialAlertType | undefined => {
   const { eidStatus, credentialStatus, message, isOffline, isItwL3 } = props;
 
@@ -234,14 +234,14 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
         />
       );
     case CredentialAlertType.ISSUER_DYNAMIC_ERROR:
-      return (
+      return message ? (
         <IssuerDynamicErrorAlert
-          message={message!}
+          message={message}
           credential={credential}
           onTrack={trackCredentialAlertEvent}
           status={status}
         />
-      );
+      ) : null;
     case CredentialAlertType.DOCUMENT_EXPIRED:
       return (
         <Alert
@@ -364,88 +364,12 @@ const IssuerDynamicErrorAlert = ({
   onTrack,
   status
 }: IssuerDynamicErrorAlertProps) => {
-  const navigation = useIONavigation();
-  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const localizedMessage = getLocalizedMessageOrFallback(message);
-  const isDrivingLicense =
-    credential.credentialType === CredentialType.DRIVING_LICENSE;
-  const showDoubleActions =
-    isDrivingLicense && (status === "expired" || status === "invalid");
-
-  const { confirmAndRemoveCredential } = useItwRemoveCredentialWithConfirm(
+  const bottomSheet = useItwIssuerDynamicErrorBottomSheet({
     credential,
-    "bottom_sheet"
-  );
-
-  const handleUpdateCredential = () => {
-    if (status) {
-      trackCredentialRenewStart(
-        getMixPanelCredential(credential.credentialType, isItwL3),
-        {
-          credential_status: CREDENTIAL_STATUS_MAP[status],
-          position: "bottom_sheet"
-        }
-      );
-    }
-    bottomSheet.dismiss();
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER,
-      params: {
-        credentialType: credential.credentialType,
-        mode: "reissuance"
-      }
-    });
-  };
-  const bottomSheet = useIOBottomSheetModal({
-    title: localizedMessage.title,
-    component: (
-      <VStack space={24}>
-        <IOMarkdown content={localizedMessage.description} />
-        {isDrivingLicense && status === "expired" && (
-          <IOMarkdown
-            content={I18n.t(
-              "features.itWallet.presentation.bottomSheets.mDL.expired.content"
-            )}
-          />
-        )}
-        {showDoubleActions ? (
-          <VStack space={16}>
-            <IOButton
-              variant="solid"
-              fullWidth
-              label={I18n.t(
-                "features.itWallet.presentation.credentialDetails.actions.updateDigitalCredential"
-              )}
-              onPress={handleUpdateCredential}
-            />
-            <View style={{ alignSelf: "center" }}>
-              <IOButton
-                variant="link"
-                color="danger"
-                textAlign="center"
-                label={I18n.t(
-                  "features.itWallet.presentation.credentialDetails.actions.removeFromWallet"
-                )}
-                onPress={confirmAndRemoveCredential}
-              />
-            </View>
-          </VStack>
-        ) : (
-          isDrivingLicense && (
-            <View style={{ marginBottom: 16 }}>
-              <IOButton
-                variant="solid"
-                fullWidth
-                label={I18n.t(
-                  "features.itWallet.presentation.alerts.mdl.invalid.cta"
-                )}
-                onPress={confirmAndRemoveCredential}
-              />
-            </View>
-          )
-        )}
-      </VStack>
-    )
+    localizedMessage,
+    status,
+    onTrackPressCta: () => onTrack("press_cta")
   });
 
   const handleAlertPress = useAlertPressHandler(onTrack, bottomSheet);

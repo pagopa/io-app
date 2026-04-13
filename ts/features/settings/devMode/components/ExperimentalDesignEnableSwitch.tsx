@@ -18,7 +18,7 @@ const ExperimentalDesignEnableSwitch = () => {
   const onSwitchValueChange = (
     internalIsExperimentalDesignEnabled: boolean
   ) => {
-    AsyncStorage.setItem(
+    void AsyncStorage.setItem(
       DS_PERSISTENCE_KEY,
       JSON.stringify(internalIsExperimentalDesignEnabled)
     ).finally(() => {

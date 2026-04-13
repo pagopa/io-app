@@ -111,7 +111,6 @@ describe("fimsHistoryReducer, receiving 'fimsHistoryGet.success'", () => {
         }
       }
     ] as ReadonlyArray<Access>
-    // eslint-disable-next-line sonarjs/cognitive-complexity
   ].forEach(initialStateItems => {
     const consentsResponseDTO = {
       data: initialStateItems,
