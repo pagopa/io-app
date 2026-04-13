@@ -17,8 +17,8 @@ import {
 } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
-import { identificationRequest } from "../../../../identification/store/actions/index.ts";
-import { getMixPanelCredential } from "../../../analytics/utils/index.ts";
+import { identificationRequest } from "../../../../identification/store/actions";
+import { getMixPanelCredential } from "../../../analytics/utils";
 import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types.ts";
 import ItwCredentialNotFound from "../../../common/components/ItwCredentialNotFound.tsx";
 import { PoweredByItWalletText } from "../../../common/components/PoweredByItWalletText.tsx";
@@ -45,9 +45,7 @@ import { ItwParamsList } from "../../../navigation/ItwParamsList.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { ItwCredentialTrustmark } from "../../../trustmark/components/ItwCredentialTrustmark.tsx";
 import { trackItwProximityShowQrCode } from "../../proximity/analytics";
-import { useItwPresentQRCode } from "../../proximity/hooks/useItwPresentQRCode.tsx";
-import { ItwProximityMachineContext } from "../../proximity/machine/provider.tsx";
-import { selectIsLoading } from "../../proximity/machine/selectors.ts";
+import { ITW_PROXIMITY_ROUTES } from "../../proximity/navigation/routes";
 import {
   trackCredentialDetail,
   trackWalletCredentialShowFAC_SIMILE,
@@ -80,7 +78,6 @@ type Props = IOStackNavigationRouteProps<
 export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
-  const { bottomSheet } = useItwPresentQRCode();
   const { credentialType } = route.params;
 
   const isL3 = useIOSelector(itwIsL3EnabledSelector);
@@ -118,23 +115,31 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   );
 
   if (!isWalletValid) {
-    const ns = "features.itWallet.issuance.walletInstanceNotActive";
-
-    const copy = isL3 ? `${ns}.itWallet` : `${ns}.documentiSuIo`;
-
     return (
       <OperationResultScreenContent
-        title={I18n.t(`${copy}.title`)}
-        subtitle={[
-          { text: I18n.t(`${copy}.body`) },
-          {
-            text: I18n.t(`${copy}.bodyBold`),
-            weight: "Semibold"
-          }
-        ]}
+        title={
+          isL3
+            ? I18n.t(
+                "features.itWallet.issuance.walletInstanceNotActive.itWallet.title"
+              )
+            : I18n.t(
+                "features.itWallet.issuance.walletInstanceNotActive.documentiSuIo.title"
+              )
+        }
+        subtitle={
+          isL3
+            ? I18n.t(
+                "features.itWallet.issuance.walletInstanceNotActive.itWallet.subtitle"
+              )
+            : I18n.t(
+                "features.itWallet.issuance.walletInstanceNotActive.documentiSuIo.subtitle"
+              )
+        }
         pictogram="itWallet"
         action={{
-          label: I18n.t(`${ns}.primaryAction`),
+          label: I18n.t(
+            "features.itWallet.issuance.walletInstanceNotActive.primaryAction"
+          ),
           onPress: () =>
             navigation.replace(ITW_ROUTES.MAIN, {
               screen: ITW_ROUTES.DISCOVERY.INFO,
@@ -144,7 +149,9 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
             })
         }}
         secondaryAction={{
-          label: I18n.t(`${ns}.secondaryAction`),
+          label: I18n.t(
+            "features.itWallet.issuance.walletInstanceNotActive.secondaryAction"
+          ),
           onPress: () => navigation.popToTop()
         }}
       />
@@ -156,10 +163,7 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
     return <ItwCredentialNotFound credentialType={normalizedCredentialType} />;
   }
   return (
-    <>
-      <ItwPresentationCredentialDetail credential={credentialOption.value} />
-      {bottomSheet}
-    </>
+    <ItwPresentationCredentialDetail credential={credentialOption.value} />
   );
 };
 
@@ -175,15 +179,12 @@ export const ItwPresentationCredentialDetail = ({
 }: ItwPresentationCredentialDetailProps) => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
-  const itwProximityMachineRef = ItwProximityMachineContext.useActorRef();
 
   const itwFeaturesEnabled = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const isL3Credential = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
-  const isCheckingPermissions =
-    ItwProximityMachineContext.useSelector(selectIsLoading);
 
   const mixPanelCredential = useMemo(
     () => getMixPanelCredential(credential.credentialType, isL3Credential),
@@ -262,14 +263,12 @@ export const ItwPresentationCredentialDetail = ({
     ) {
       return {
         label: I18n.t("features.itWallet.presentation.ctas.showQRCode"),
-        icon: "qrCode",
+        icon: "productITWallet",
         iconPosition: "end",
-        loading: isCheckingPermissions,
         onPress: () => {
           trackItwProximityShowQrCode();
-          itwProximityMachineRef.send({
-            type: "start",
-            credentialType
+          navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
+            screen: ITW_PROXIMITY_ROUTES.QR_CODE
           });
         }
       };
@@ -300,8 +299,6 @@ export const ItwPresentationCredentialDetail = ({
     credential,
     itwFeaturesEnabled,
     navigation,
-    isCheckingPermissions,
-    itwProximityMachineRef,
     mixPanelCredential,
     shouldShowMdlUpdateCta
   ]);

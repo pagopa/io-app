@@ -16,7 +16,7 @@ const createMockGlobalState = (
         lollipopLambda: lollipopLambdaState
       }
     }
-  } as GlobalState);
+  }) as GlobalState;
 
 describe("isSendLollipopLambdaLoading", () => {
   it("should return true when state type is loading", () => {

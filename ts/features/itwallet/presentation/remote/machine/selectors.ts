@@ -54,3 +54,6 @@ export const selectRemoteCredentialCombination = (snapshot: MachineSnapshot) =>
     O.map(getRemoteCredentialCombination),
     O.toNullable
   );
+
+export const selectFlowType = (snapshot: MachineSnapshot) =>
+  snapshot.context.flowType;

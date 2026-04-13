@@ -114,7 +114,7 @@ export const selectWalletPlaceholderCards = createSelector(
   placeholders =>
     Object.entries(placeholders).map(
       ([key, category]) =>
-        ({ key, category, type: "placeholder" } as WalletCard)
+        ({ key, category, type: "placeholder" }) as WalletCard
     )
 );
 

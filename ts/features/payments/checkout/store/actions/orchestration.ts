@@ -13,7 +13,7 @@ export const walletPaymentSetCurrentStep = createStandardAction(
 export type OnPaymentSuccessAction =
   | "showHome"
   | "showTransaction"
-  | "showAARMessage";
+  | "showAarMessage";
 
 export type PaymentInitStateParams = {
   startOrigin?: PaymentStartOrigin;

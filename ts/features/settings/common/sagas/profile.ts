@@ -91,7 +91,7 @@ export function* loadProfile(
 }
 
 // A saga to update the Profile.
-// eslint-disable-next-line sonarjs/cognitive-complexity
+
 function* createOrUpdateProfileSaga(
   createOrUpdateProfile: ReturnType<
     typeof BackendClient
@@ -99,9 +99,8 @@ function* createOrUpdateProfileSaga(
   action: ActionType<(typeof profileUpsert)["request"]>
 ): Generator<ReduxSagaEffect, void, any> {
   // Get the current Profile from the state
-  const profileState: ReturnType<typeof profileSelector> = yield* select(
-    profileSelector
-  );
+  const profileState: ReturnType<typeof profileSelector> =
+    yield* select(profileSelector);
 
   if (pot.isNone(profileState)) {
     // something's wrong, we don't even have an AuthenticatedProfile meaning
@@ -325,13 +324,11 @@ function* startEmailValidationProcessSaga(
 }
 
 function* handleLoadBonusBeforeRemoveAccount() {
-  const cgnActive: ReturnType<typeof cgnDetailSelector> = yield* select(
-    cgnDetailSelector
-  );
+  const cgnActive: ReturnType<typeof cgnDetailSelector> =
+    yield* select(cgnDetailSelector);
 
-  const isCgnEnabled: ReturnType<typeof isCGNEnabledSelector> = yield* select(
-    isCGNEnabledSelector
-  );
+  const isCgnEnabled: ReturnType<typeof isCGNEnabledSelector> =
+    yield* select(isCGNEnabledSelector);
 
   if (pot.isNone(cgnActive) && isCgnEnabled) {
     // Load the cgn data and wait for a response
@@ -446,9 +443,8 @@ export function* watchProfile(
  * because of possible race conditions with the profile version.
  */
 export function* upsertAppVersionSaga() {
-  const profileState: ReturnType<typeof profileSelector> = yield* select(
-    profileSelector
-  );
+  const profileState: ReturnType<typeof profileSelector> =
+    yield* select(profileSelector);
 
   // If we don't have the profile inside the state there is
   // something wrong.

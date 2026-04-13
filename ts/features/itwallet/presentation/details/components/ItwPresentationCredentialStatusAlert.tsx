@@ -48,7 +48,9 @@ const excludedCredentialTypes = [
   CredentialType.PID,
   CredentialType.EDUCATION_DEGREE,
   CredentialType.EDUCATION_ENROLLMENT,
-  CredentialType.RESIDENCY
+  CredentialType.RESIDENCY,
+  CredentialType.EDUCATION_DIPLOMA,
+  CredentialType.EDUCATION_ATTENDANCE
 ] as const;
 
 type ExcludedCredentialTypes = (typeof excludedCredentialTypes)[number];
@@ -92,7 +94,6 @@ const useAlertPressHandler =
 // Helper function that calculates which alert type should be shown.
 export const deriveCredentialAlertType = (
   props: CredentialAlertProps
-  // eslint-disable-next-line sonarjs/cognitive-complexity
 ): CredentialAlertType | undefined => {
   const { eidStatus, credentialStatus, message, isOffline, isItwL3 } = props;
 

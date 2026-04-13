@@ -1,13 +1,14 @@
 import * as O from "fp-ts/lib/Option";
 import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
+import { Dimensions } from "react-native";
+import { IOMaxFontSizeMultiplier } from "@pagopa/io-app-design-system";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import PN_ROUTES from "../../../navigation/routes";
 import { SendEngagementComponent } from "../SendEngagementComponent";
 import { GlobalState } from "../../../../../store/reducers/types";
-import * as urlUtils from "../../../../../utils/url";
 
 const testPrivacyUrl = "https://a.privacy.url";
 const testTOSUrl = "https://a.tos.url";
@@ -66,61 +67,76 @@ describe("SendEngagmentComponent", () => {
       expect(onClose.mock.calls.length).toBe(0);
     })
   );
-  [false, true].forEach(loading =>
-    it(`should ${loading ? "" : "not "}navigate to the privacy url while ${
-      loading ? "" : "not "
-    }loading`, () => {
-      const mockedSpiedOnOpenWebUrl = jest
-        .spyOn(urlUtils, "openWebUrl")
-        .mockImplementation();
-      const onClose = jest.fn();
-      const onPrimaryAction = jest.fn();
+  it("should contain properly formatted markdown links in the footer", () => {
+    const component = renderComponent(
+      false,
+      () => undefined,
+      () => undefined
+    );
+    const markdownLinkPattern = (url: string) =>
+      new RegExp(`\\[.+\\]\\(${url.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\)`);
+    expect(
+      component.getByText(markdownLinkPattern(testPrivacyUrl))
+    ).toBeTruthy();
+    expect(component.getByText(markdownLinkPattern(testTOSUrl))).toBeTruthy();
+  });
 
-      const component = renderComponent(loading, onClose, onPrimaryAction);
+  describe("Pictogram visibility based on screen size and font scale", () => {
+    // IOMaxFontSizeMultiplier = 1.5
+    // MIN_HEIGHT_TO_SHOW_FULL_RENDER = 800
+    // Pictogram should be visible when: height >= 800 AND fontScale <= IOMaxFontSizeMultiplier
 
-      const privacyBodyLink = component.getByTestId("privacy-link");
-      fireEvent.press(privacyBodyLink);
+    it("should SHOW pictogram on large screen with max allowed font scale (height >= MIN_HEIGHT_TO_SHOW_FULL_RENDER, fontScale <= IOMaxFontSizeMultiplier)", () => {
+      jest.spyOn(Dimensions, "get").mockReturnValue({
+        width: 414,
+        height: 896,
+        scale: 1,
+        fontScale: IOMaxFontSizeMultiplier
+      });
 
-      if (loading) {
-        expect(mockedSpiedOnOpenWebUrl.mock.calls.length).toBe(0);
-      } else {
-        expect(mockedSpiedOnOpenWebUrl.mock.calls.length).toBe(1);
-        expect(mockedSpiedOnOpenWebUrl.mock.calls[0].length).toBe(1);
-        expect(mockedSpiedOnOpenWebUrl.mock.calls[0][0]).toEqual(
-          testPrivacyUrl
-        );
-      }
+      const component = renderComponent(
+        false,
+        () => undefined,
+        () => undefined
+      );
 
-      expect(onPrimaryAction.mock.calls.length).toBe(0);
-      expect(onClose.mock.calls.length).toBe(0);
-    })
-  );
-  [false, true].forEach(loading =>
-    it(`should ${loading ? "" : "not "}navigate to the tos url while ${
-      loading ? "" : "not "
-    }loading`, () => {
-      const mockedSpiedOnOpenWebUrl = jest
-        .spyOn(urlUtils, "openWebUrl")
-        .mockImplementation();
-      const onClose = jest.fn();
-      const onPrimaryAction = jest.fn();
+      expect(component.queryByTestId("pictogram-test")).toBeTruthy();
+    });
 
-      const component = renderComponent(loading, onClose, onPrimaryAction);
+    it("should HIDE pictogram on small screen even with default font (height < MIN_HEIGHT_TO_SHOW_FULL_RENDER, fontScale <= IOMaxFontSizeMultiplier)", () => {
+      jest.spyOn(Dimensions, "get").mockReturnValue({
+        width: 375,
+        height: 667,
+        scale: 1,
+        fontScale: IOMaxFontSizeMultiplier
+      });
 
-      const tosBodyLink = component.getByTestId("tos-link");
-      fireEvent.press(tosBodyLink);
+      const component = renderComponent(
+        false,
+        () => undefined,
+        () => undefined
+      );
 
-      if (loading) {
-        expect(mockedSpiedOnOpenWebUrl.mock.calls.length).toBe(0);
-      } else {
-        expect(mockedSpiedOnOpenWebUrl.mock.calls.length).toBe(1);
-        expect(mockedSpiedOnOpenWebUrl.mock.calls[0].length).toBe(1);
-        expect(mockedSpiedOnOpenWebUrl.mock.calls[0][0]).toEqual(testTOSUrl);
-      }
-      expect(onPrimaryAction.mock.calls.length).toBe(0);
-      expect(onClose.mock.calls.length).toBe(0);
-    })
-  );
+      expect(component.queryByTestId("pictogram-test")).toBeNull();
+    });
+
+    it("should HIDE pictogram on large screen with too large font (height >= MIN_HEIGHT_TO_SHOW_FULL_RENDER, fontScale > IOMaxFontSizeMultiplier)", () => {
+      jest.spyOn(Dimensions, "get").mockReturnValue({
+        width: 414,
+        height: 896,
+        scale: 2,
+        fontScale: IOMaxFontSizeMultiplier + 0.01
+      });
+
+      const component = renderComponent(
+        false,
+        () => undefined,
+        () => undefined
+      );
+
+      expect(component.queryByTestId("pictogram-test")).toBeNull();
+    });
+  });
 });
 
 const renderComponent = (
