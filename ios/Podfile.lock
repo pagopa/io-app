@@ -113,6 +113,35 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
+  - IoReactNativeHttpClient (1.1.1):
+    - Alamofire (~> 5.9.1)
+    - boost
+    - DoubleConversion
+    - fast_float
+    - fmt
+    - glog
+    - hermes-engine
+    - RCT-Folly
+    - RCT-Folly/Fabric
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - SocketRocket
+    - Yoga
   - IoReactNativeIso18013 (0.6.0):
     - boost
     - DoubleConversion
@@ -191,35 +220,6 @@ PODS:
     - glog
     - hermes-engine
     - OpenSSL-Universal
-    - RCT-Folly
-    - RCT-Folly/Fabric
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-ImageManager
-    - React-jsi
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-renderercss
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - SocketRocket
-    - Yoga
-  - pagopa-io-react-native-http-client (1.0.5):
-    - Alamofire (~> 5.9.1)
-    - boost
-    - DoubleConversion
-    - fast_float
-    - fmt
-    - glog
-    - hermes-engine
     - RCT-Folly
     - RCT-Folly/Fabric
     - RCTRequired
@@ -3567,12 +3567,12 @@ DEPENDENCIES:
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
   - "IoReactNativeCie (from `../node_modules/@pagopa/io-react-native-cie`)"
+  - "IoReactNativeHttpClient (from `../node_modules/@pagopa/io-react-native-http-client`)"
   - "IoReactNativeIso18013 (from `../node_modules/@pagopa/io-react-native-iso18013`)"
   - jail-monkey (from `../node_modules/jail-monkey`)
   - MixpanelReactNative (from `../node_modules/mixpanel-react-native`)
   - "pagopa-io-react-native-cieid (from `../node_modules/@pagopa/io-react-native-cieid`)"
   - "pagopa-io-react-native-crypto (from `../node_modules/@pagopa/io-react-native-crypto`)"
-  - "pagopa-io-react-native-http-client (from `../node_modules/@pagopa/io-react-native-http-client`)"
   - "pagopa-io-react-native-integrity (from `../node_modules/@pagopa/io-react-native-integrity`)"
   - "pagopa-io-react-native-jwt (from `../node_modules/@pagopa/io-react-native-jwt`)"
   - "pagopa-io-react-native-login-utils (from `../node_modules/@pagopa/io-react-native-login-utils`)"
@@ -3746,6 +3746,8 @@ EXTERNAL SOURCES:
     :tag: hermes-2025-07-07-RNv0.81.0-e0fc67142ec0763c6b6153ca2bf96df815539782
   IoReactNativeCie:
     :path: "../node_modules/@pagopa/io-react-native-cie"
+  IoReactNativeHttpClient:
+    :path: "../node_modules/@pagopa/io-react-native-http-client"
   IoReactNativeIso18013:
     :path: "../node_modules/@pagopa/io-react-native-iso18013"
   jail-monkey:
@@ -3756,8 +3758,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@pagopa/io-react-native-cieid"
   pagopa-io-react-native-crypto:
     :path: "../node_modules/@pagopa/io-react-native-crypto"
-  pagopa-io-react-native-http-client:
-    :path: "../node_modules/@pagopa/io-react-native-http-client"
   pagopa-io-react-native-integrity:
     :path: "../node_modules/@pagopa/io-react-native-integrity"
   pagopa-io-react-native-jwt:
@@ -3995,6 +3995,7 @@ SPEC CHECKSUMS:
   glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
   hermes-engine: 9f4dfe93326146a1c99eb535b1cb0b857a3cd172
   IoReactNativeCie: 8c772d46d499acad8cfab4e5993c5f50d78cd9e9
+  IoReactNativeHttpClient: 8095efc7a0ef59631b5664b35711c3ab42056d52
   IoReactNativeIso18013: 16937f3e6f9a1369af0892fbde445f44682cfc51
   IOWalletCBOR: 92742ef1cbd1b627ba153d0c7c11b81ad22f45cc
   IOWalletProximity: 1836d6b5df0a64a97e09f355d15d5155f086f830
@@ -4005,7 +4006,6 @@ SPEC CHECKSUMS:
   OpenSSL-Universal: 6082b0bf950e5636fe0d78def171184e2b3899c2
   pagopa-io-react-native-cieid: ff8a232612c44f72846202a4b857a4e16ff9db4d
   pagopa-io-react-native-crypto: eb62bb6767b44ea610ce169d855c89604b9e96d9
-  pagopa-io-react-native-http-client: 4216dcc3aaa5775f9dc0dfb61ed18b67cb0cc5b3
   pagopa-io-react-native-integrity: 3e84754db0333a531db86f83f786f60a6da22337
   pagopa-io-react-native-jwt: 3a558398517a730dabf61928fe2e92aee75ef2a0
   pagopa-io-react-native-login-utils: 4d4e00aeb67ffbb36dc6f5fcfc17e088ef5b9f34
