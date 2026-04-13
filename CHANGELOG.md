@@ -2,6 +2,74 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.28.0-canary.8208](https://github.com/pagopa/io-app/compare/3.28.0-rc.6...3.28.0-canary.8208) (2026-04-13)
+
+
+### Features
+
+* add new actions to handle credential store to both redux and secure storage ([6dc2176](https://github.com/pagopa/io-app/commit/6dc21760493798752d83116815eeae06a27e883c))
+* handleItwCredentialsReplaceByTypeSaga action ([e1311d4](https://github.com/pagopa/io-app/commit/e1311d4941b75268e01406e7bbb49e998ee9273e))
+
+
+### Bug Fixes
+
+* action ([455da92](https://github.com/pagopa/io-app/commit/455da929cd119000a2b72357954f63a15080517a))
+* actors ([ced7aa9](https://github.com/pagopa/io-app/commit/ced7aa9beb8cab44bff478957286d33b09386dd0))
+* add inline function ([f7d4f56](https://github.com/pagopa/io-app/commit/f7d4f56bb7f00881e2d92f30434f5cc66a1be6bf))
+* address copilot review comments ([6bc4fa7](https://github.com/pagopa/io-app/commit/6bc4fa762b8564fd43c6f63382bfdf9f0ba23960))
+* extractVerification ([e533f58](https://github.com/pagopa/io-app/commit/e533f583ea00c69dda1829fc8f66c5bb34d141ec))
+* handle possible exception ([fb86026](https://github.com/pagopa/io-app/commit/fb86026560071a50ba17809d783a84c57b736451))
+* imports ([bf8b000](https://github.com/pagopa/io-app/commit/bf8b00053117565a1b76997295bf1ec08fedf80e))
+* LoadingContext output ([5615035](https://github.com/pagopa/io-app/commit/561503508c85734381d0cec950c54c98158a815b))
+* migration ([aa179ba](https://github.com/pagopa/io-app/commit/aa179ba9cbc995eba6b1939117d15fb6abed7da0))
+* migration version ([b021344](https://github.com/pagopa/io-app/commit/b0213441cd0ffb9300b6a5dde76bc94ae501d378))
+* move PID to context ([290c559](https://github.com/pagopa/io-app/commit/290c5590e62055cbcb3bf67a83bec65eb08fbb28))
+* remove asserts in credentials upgrade machine invocation ([0fe1c8d](https://github.com/pagopa/io-app/commit/0fe1c8ddf2c73c33e00cb56276332a8108845123))
+* remove isItWalletValid from onInit ([c48247d](https://github.com/pagopa/io-app/commit/c48247d764345d704ebada3ce0896208a7b05fa9))
+* snapshots ([406ef72](https://github.com/pagopa/io-app/commit/406ef72eaad0ad83de71d4dc5a88cd6f313bea90))
+* snapshots ([126030c](https://github.com/pagopa/io-app/commit/126030c4a39f28b06b97f66619cd333208590d72))
+* tests ([2d0c078](https://github.com/pagopa/io-app/commit/2d0c0783fc317d851643cdcd153e3ff1c0328399))
+* tests ([2a91c7b](https://github.com/pagopa/io-app/commit/2a91c7b5a66d6d86647c1c55aac47a7a90a1c792))
+* tests ([687fc6d](https://github.com/pagopa/io-app/commit/687fc6d15e346b2c837f7df254f1fee899d2fe1f))
+* tests ([6d88250](https://github.com/pagopa/io-app/commit/6d882503854f2ad8957ede9cef26422d01051a1f))
+* tests ([8b10191](https://github.com/pagopa/io-app/commit/8b10191ecf83a480730b7ebc3214b172fb34ceb4))
+* tests ([04a4cd4](https://github.com/pagopa/io-app/commit/04a4cd4d56453303d7e1d2de16b1f828d47f79b7))
+* tests ([d817e06](https://github.com/pagopa/io-app/commit/d817e06a8ea6417f0b9bb3601e2d659938367a41))
+* tests ([04838f5](https://github.com/pagopa/io-app/commit/04838f5047750e42e63299cad41579ab83f1708f))
+* tsc ([20c73e0](https://github.com/pagopa/io-app/commit/20c73e04c984f139203e86d0d25c6da23e314d36))
+* tsc ([ea7bade](https://github.com/pagopa/io-app/commit/ea7bade31b050ece88ea61984296d5cf51d5bd8f))
+* tsc ([3f55e7c](https://github.com/pagopa/io-app/commit/3f55e7c49704c259b0146728e321c754107f36fb))
+* tsc and unit tests ([eab1668](https://github.com/pagopa/io-app/commit/eab1668cfb609778f412ba2ba595a0c635d68fea))
+* tsc tears ([b013b01](https://github.com/pagopa/io-app/commit/b013b018bb190b56d7244363eb483f448bc117c9))
+* tsx ([86e5957](https://github.com/pagopa/io-app/commit/86e5957e1d44df4c238cfbfaa7df6b7ecc521ce5))
+
+
+### Chores
+
+* add missing actions creation ([9a77d51](https://github.com/pagopa/io-app/commit/9a77d51ff66ce92064c41ecb18da95e0cf40ef5a))
+* add storeAll function ([50738ca](https://github.com/pagopa/io-app/commit/50738cab433489847781e3f42a97a99c184612e4))
+* call onComplete when no credentials passed to handleItwCredentialsReplaceByTypeSaga ([c395178](https://github.com/pagopa/io-app/commit/c3951783b6c213ff8cdcc0a10ea992410e45f007))
+* **IT-Wallet:** [[SIW-3851](https://pagopa.atlassian.net/browse/SIW-3851)] implement CieID identification level tracking to L2 in issuance machine ([#7886](https://github.com/pagopa/io-app/issues/7886)) ([a375712](https://github.com/pagopa/io-app/commit/a375712e80cff3a7ef53bdf293de3ac3bfe515e9))
+* add credential store ([68734b1](https://github.com/pagopa/io-app/commit/68734b18e211a9d1bee713e3ccaa29c77fca9e3a))
+* add tracking todos ([6417478](https://github.com/pagopa/io-app/commit/641747863840103456f8d775def856f3d933ecc1))
+* credential vault ([6e63e8b](https://github.com/pagopa/io-app/commit/6e63e8bad1ec892d4cbc0563a4c134da5a266206))
+* delete keys on credential remove ([175bc7b](https://github.com/pagopa/io-app/commit/175bc7b30d40eb3ff79fa631ea4e04298c2f918c))
+* fix type ([f20e777](https://github.com/pagopa/io-app/commit/f20e777908ae1f306bb7d6e82fe783601352af9d))
+* handle async credential storage ([95cfcaa](https://github.com/pagopa/io-app/commit/95cfcaaf313852901b98a0ad6e8f12c553cda61d))
+* improve migration ([59dd7ac](https://github.com/pagopa/io-app/commit/59dd7ac215c385e6b84aa7ae085fe7326143eb3e))
+* improvements ([a313434](https://github.com/pagopa/io-app/commit/a31343431ec81929491b30fcee50e6c72075b1b9))
+* migration ([3b56ace](https://github.com/pagopa/io-app/commit/3b56ace82a9517dbf25d06af06f419936d97edbd))
+* migrations (wip) ([17cf218](https://github.com/pagopa/io-app/commit/17cf2186c68cbbef93b11e7d6dd65b5664293b92))
+* move PID load into actors ([ab5315d](https://github.com/pagopa/io-app/commit/ab5315dbbf735a70324ad918795328d87aec6368))
+* remove raw credential from metadata ([f6a3684](https://github.com/pagopa/io-app/commit/f6a368468ae79b70e6bcb4839f7e35cdd736ea6a))
+* remove Sentry and update Vault failure handling ([af81def](https://github.com/pagopa/io-app/commit/af81defe278065ea4e8a079c808f77edaf0ca168))
+* remove storing states from machines ([e340a72](https://github.com/pagopa/io-app/commit/e340a72a1adb281def75db751ea80384e5d6e286))
+* skip credentials with pending legacy migration ([fdb36a4](https://github.com/pagopa/io-app/commit/fdb36a46e82b1f36b4a645842bcd38e8529c7743))
+* update arguments type ([1271ba5](https://github.com/pagopa/io-app/commit/1271ba5f9f8a0ccd587a1b286ce9157b8fa12343))
+* update comment ([c48fc5c](https://github.com/pagopa/io-app/commit/c48fc5cd8cd339d6bafd9b3779b072762b6090d2))
+* update type ([b79a7ae](https://github.com/pagopa/io-app/commit/b79a7ae83495885c369d50d993d811fa33789e2f))
+* update vault tests ([beba158](https://github.com/pagopa/io-app/commit/beba1586e01e7a7a0fdc80d6ba15015a2deb7efa))
+
 ## [3.28.0-rc.6](https://github.com/pagopa/io-app/compare/3.28.0-rc.5...3.28.0-rc.6) (2026-04-09)
 
 
