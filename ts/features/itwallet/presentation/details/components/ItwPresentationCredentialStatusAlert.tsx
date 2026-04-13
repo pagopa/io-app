@@ -32,7 +32,6 @@ import {
   trackItwCredentialBottomSheet,
   trackItwCredentialBottomSheetAction
 } from "../analytics";
-import { trackCredentialRenewStart } from "../../../analytics";
 import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types.ts";
 import { getMixPanelCredential } from "../../../analytics/utils/index.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
