@@ -1,5 +1,6 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
 import { ItwAuthLevel, StoredCredential } from "../../utils/itwTypesUtils.ts";
+import { IdentificationContext } from "../../../machine/eid/context.ts";
 
 export const itwSetReviewPending = createStandardAction(
   "ITW_SET_REVIEW_PENDING"
@@ -45,6 +46,10 @@ export const itwDisableItwActivation = createStandardAction(
   "ITW_DISABLE_ITW_ACTIVATION"
 )();
 
+export const itwSetIdentificationMode = createStandardAction(
+  "ITW_SET_IDENTIFICATION_MODE"
+)<IdentificationContext["mode"]>();
+
 export type ItwPreferencesActions =
   | ActionType<typeof itwSetReviewPending>
   | ActionType<typeof itwSetAuthLevel>
@@ -56,4 +61,5 @@ export type ItwPreferencesActions =
   | ActionType<typeof itwSetPidReissuingSurveyHidden>
   | ActionType<typeof itwSetCredentialUpgradeFailed>
   | ActionType<typeof itwClearCredentialUpgradeFailed>
-  | ActionType<typeof itwDisableItwActivation>;
+  | ActionType<typeof itwDisableItwActivation>
+  | ActionType<typeof itwSetIdentificationMode>;
