@@ -110,7 +110,7 @@ export const itwEidIssuanceMachine = setup({
       identification: {
         mode: "cieId",
         level: "L2"
-      }
+      } as const
     })),
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     loadPidIntoContext: notImplemented,
