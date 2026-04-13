@@ -6461,7 +6461,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                                       ]
                                     }
                                   >
-                                    Se la persona che ha ricevuto la comunicazione ti ha chiesto di farlo, puoi aprire questa notifica SEND per suo conto.
+                                    Per aprire la notifica per suo conto, tieni a portata di mano la Carta di Identità Elettronica (CIE) di Mario Rossi.
                                   </Text>
                                 </Text>
                               </View>
