@@ -387,6 +387,34 @@ PODS:
     - ZendeskChatSDK
     - ZendeskMessagingAPISDK
     - ZendeskSupportSDK
+  - Pulsar (1.0.2):
+    - boost
+    - DoubleConversion
+    - fast_float
+    - fmt
+    - glog
+    - hermes-engine
+    - RCT-Folly
+    - RCT-Folly/Fabric
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - SocketRocket
+    - Yoga
   - RCT-Folly (2024.11.18.00):
     - boost
     - DoubleConversion
@@ -3578,6 +3606,7 @@ DEPENDENCIES:
   - "pagopa-io-react-native-login-utils (from `../node_modules/@pagopa/io-react-native-login-utils`)"
   - "pagopa-io-react-native-secure-storage (from `../node_modules/@pagopa/io-react-native-secure-storage`)"
   - "pagopa-react-native-zendesk (from `../node_modules/@pagopa/io-react-native-zendesk`)"
+  - Pulsar (from `../node_modules/react-native-pulsar`)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTDeprecation (from `../node_modules/react-native/ReactApple/Libraries/RCTFoundation/RCTDeprecation`)
   - RCTRequired (from `../node_modules/react-native/Libraries/Required`)
@@ -3768,6 +3797,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@pagopa/io-react-native-secure-storage"
   pagopa-react-native-zendesk:
     :path: "../node_modules/@pagopa/io-react-native-zendesk"
+  Pulsar:
+    :path: "../node_modules/react-native-pulsar"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTDeprecation:
@@ -4011,6 +4042,7 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-login-utils: 4d4e00aeb67ffbb36dc6f5fcfc17e088ef5b9f34
   pagopa-io-react-native-secure-storage: 64dcc5dff82ec5ce136d7904bc076d70db157dec
   pagopa-react-native-zendesk: 9436edab6731dd9b64b72f1f2e039c166f0161b9
+  Pulsar: ed489192a2174d4ec4346a18d415eefaa05bc36d
   RCT-Folly: 846fda9475e61ec7bcbf8a3fe81edfcaeb090669
   RCTDeprecation: 5eb1d2eeff5fb91151e8a8eef45b6c7658b6c897
   RCTRequired: cebcf9442fc296c9b89ac791dfd463021d9f6f23
