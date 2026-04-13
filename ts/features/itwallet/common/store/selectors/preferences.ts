@@ -55,3 +55,9 @@ export const itwIsPidReissuingSurveyHiddenSelector = (state: GlobalState) =>
  */
 export const itwCredentialUpgradeFailedSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.credentialUpgradeFailed ?? [];
+
+/**
+ * Returns the identification mode used for the user.
+ */
+export const itwIdentificationModeSelector = (state: GlobalState) =>
+  state.features.itWallet.preferences.identificationMode;
