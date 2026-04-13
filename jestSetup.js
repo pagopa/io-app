@@ -32,7 +32,6 @@ jest.mock("react-native-haptic-feedback", () => ({
   trigger: jest.fn()
 }));
 
-
 // eslint-disable-next-line functional/immutable-data
 global.CanvasKit = {
   MakeCanvas: jest.fn(),
@@ -186,7 +185,6 @@ jest.mock("react-native/Libraries/TurboModule/TurboModuleRegistry", () => {
         "RNDocumentPicker",
         "RNHapticFeedback",
         "RNCWebViewModule",
-        "RNPulsar",
         "AppState"
       ];
       if (modulesToMock.includes(name)) {
