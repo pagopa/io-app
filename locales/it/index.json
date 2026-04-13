@@ -2435,7 +2435,11 @@
           },
           "cieCanInsertion": {
             "title": "Inserisci il codice a 6 cifre che trovi in basso a destra della CIE",
-            "description": "È il codice a 6 cifre (CAN) che trovi stampato sul fronte della Carta di Identità Elettronica, in basso a destra."
+            "description": "È il codice a 6 cifre (CAN) che trovi stampato sul fronte della Carta di Identità Elettronica, in basso a destra. [Dove lo trovo?](internal://can-location)",
+            "bottomSheet": {
+              "title": "Dove trovo il codice CAN?",
+              "info": "Lo trovi stampato sul fronte della Carta di Identità Elettronica (CIE) di {{denomination}}, in basso a destra."
+            }
           },
           "cieScanningAdvisory": {
             "title": "Posiziona la CIE su una superficie stabile per la lettura",
@@ -2523,7 +2527,7 @@
             "notAdressee": {
               "infoAlert": "Stai aiutando un’altra persona ad accedere a una notifica SEND.",
               "title": "Vuoi aprire la notifica SEND di {{name}}?",
-              "subtitle": "Se la persona che ha ricevuto la comunicazione ti ha chiesto di farlo, puoi aprire questa notifica SEND per suo conto.",
+              "subtitle": "Per aprire la notifica per suo conto, tieni a portata di mano la Carta di Identità Elettronica (CIE) di {{name}}.",
               "primaryAction": "Apri notifica SEND",
               "bottomSheet": {
                 "title": "Cosa ti serve?",
