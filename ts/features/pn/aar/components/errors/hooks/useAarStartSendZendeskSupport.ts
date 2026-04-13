@@ -34,7 +34,6 @@ export const useAarStartSendZendeskSupport = (
 ) => {
   const dispatch = useIODispatch();
 
-  // eslint-disable-next-line sonarjs/prefer-immediate-return
   const startZendeskSupport = useCallback(
     (errorCode: string | undefined) => {
       resetCustomFields();

@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable functional/immutable-data */
 import { remark } from "remark";
 import remarkDirective from "remark-directive";
 import remarkRehype from "remark-rehype";
@@ -18,18 +16,20 @@ function customPlugin() {
         node.type === "leafDirective" ||
         node.type === "containerDirective"
       ) {
+        // eslint-disable-next-line functional/immutable-data
         const data = node.data || (node.data = {});
         const hast = h(node.name, node.attributes);
 
-        // @ts-ignore
+        // eslint-disable-next-line functional/immutable-data
         data.hName = hast.tagName;
-        // @ts-ignore
+        // eslint-disable-next-line functional/immutable-data
         data.hProperties = hast.properties;
       }
     });
   };
 }
 
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 export const remarkProcessor = remark()
   .use(remarkDirective)
   .use(customPlugin) // @ts-ignore

@@ -41,9 +41,8 @@ export function* watchItwCredentialsAnalyticsSaga(): SagaIterator {
  */
 export function* updateNfcInfoTrackingProperties() {
   try {
-    const { deviceHeight, deviceWidth, availableNfcAntennas } = yield* call(
-      getNfcAntennaInfo
-    );
+    const { deviceHeight, deviceWidth, availableNfcAntennas } =
+      yield* call(getNfcAntennaInfo);
 
     const hasDeviceInfo = deviceHeight !== 0 && deviceWidth !== 0;
     const antennaCount = availableNfcAntennas.length;
