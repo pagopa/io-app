@@ -1,64 +1,23 @@
-# AGENTS.md — Agent Guide
+# Repository guidelines
 
-**Stack:** TypeScript, React Native (with Expo modules), Redux, Redux-Saga, XState v5
-**Package manager:** `yarn` (no `npm`)
+Uses TypeScript, React Native + Expo modules, Redux, Redux-Saga, XState v5
+Package manager: `yarn`
 
----
+## Build, Lint, Test
 
-## Critical Rules
+- `yarn sync` - full setup (first time / after pull)
+- `yarn setup` - Install deps + hooks
+- `yarn start` - Start Metro bundler
+- `yarn run-ios` - Run on iOS simulator
+- `yarn dev:run-android` - Run on Android emulator
+- `yarn generate` - Generate API models from OpenAPI
+- `yarn test:dev` - Run tests
+- `yarn tsc:noemit` - TypeScript type-check (no emit)
+- `yarn lint` - Lint
+- `yarn lint-autofix` - Lint + autofix
+- `yarn prettify` - Format code
 
-- **Generated files**: Never edit anything under `definitions/`. Run `yarn generate` to update them.
-- **Global types**: When adding Redux actions/reducers, always update `ts/store/actions/types.ts` and `ts/store/reducers/types.ts`.
-- **NO fp-ts**: Avoid `fp-ts` in new code; use native TypeScript equivalents.
-- **Design system first**: Always check `@pagopa/io-app-design-system` before building custom UI.
-- **Typed saga effects**: Always import from `typed-redux-saga/macro`, not bare `redux-saga/effects`.
-- **Strict TypeScript**: The `tsc:noemit` check must pass. No `@ts-ignore` without a comment explaining why.
-- **Localization**: No hardcoded user-facing strings — every string must have an `I18n.t(...)` key.
-
----
-
-## Quick-Reference Commands
-
-- `yarn sync` — Full setup (first time / after pull)
-- `yarn setup` — Install deps + hooks
-- `yarn start` — Start Metro bundler
-- `yarn run-ios` — Run on iOS simulator
-- `yarn run-android` — Run on Android emulator
-- `yarn dev:run-android` — Android debug (active arch only)
-- `yarn generate` — Generate API models from OpenAPI
-- `yarn test:dev` — Run tests (watch, no coverage)
-- `yarn test:ci` — Run tests in CI mode
-- `yarn test:tz` — Run timezone-sensitive tests
-- `yarn tsc:noemit` — TypeScript type-check (no emit)
-- `yarn lint` — Lint
-- `yarn lint-autofix` — Lint + autofix
-- `yarn prettify` — Format code
-
-> **Always run `yarn tsc:noemit` and `yarn lint` before considering any change complete.**
-
----
-
-## Repository Layout
-
-- `ts/App.tsx` — Root component & Redux store setup
-- `ts/store/actions/types.ts` — Union of ALL action types (update when adding new actions)
-- `ts/store/reducers/types.ts` — `GlobalState` shape (update when adding new reducers)
-- `ts/navigation/` — Root navigator + `AppParamsList` (global route registry)
-- `ts/components/` — Shared, domain-agnostic UI components
-- `ts/hooks/` — Shared React hooks
-- `ts/sagas/` — Root saga watcher
-- `ts/utils/` — Pure utility functions
-- `ts/api/` — `BackendClient` and API utilities
-- `ts/i18n.ts` — i18next init
-- `ts/features/` — Feature modules (see below)
-- `definitions/` — Auto-generated API types from OpenAPI specs (do NOT edit)
-- `locales/en/` — English translations (source of truth)
-- `locales/it/` — Italian translations
-- `locales/locales.ts` — Type-safe i18n key registry
-
----
-
-## Feature Module Structure
+## Feature Structure
 
 Every feature lives under `ts/features/<feature>/` and is self-contained:
 
@@ -75,26 +34,76 @@ Every feature lives under `ts/features/<feature>/` and is self-contained:
 - `types/` — Feature-specific TypeScript types
 - `utils/` — Feature-specific utilities
 - `README.md` — Purpose & guideline for the feature
-- `machine/` — XState machine files (only for complex multi-step flows, see [State Machines](#state-machines-xstate-v5))
+- `machine/` — XState machine files (only for complex multi-step flows)
 
----
+## Guidelines
 
-## TypeScript Rules
+- Never edit anything under `definitions/`. Run `yarn generate` to update them.
+- Avoid `fp-ts` in new code; use native TypeScript equivalents.
+- Always import from `typed-redux-saga/macro`, not bare `redux-saga/effects`.
+- The `tsc:noemit` check must pass. No `@ts-ignore` without a comment explaining why.
+- No hardcoded user-facing strings:  every string must have an `I18n.t(...)` key.
+- No magic numbers or hardcoded values.
+- All UI components must come from **`@pagopa/io-app-design-system`** first. Only build custom components when the design system has no suitable primitive.
+- Use `useIOTheme()` to access semantic color tokens. Never use raw hex values.
+- All interactive elements must have accessible labels.
+- Use Mixpanel for event tracking. Each feature's `analytics/` folder should esport typed track functions.
 
-- **Strict mode is enforced**: `noImplicitAny`, `noImplicitReturns`, `noUnusedParameters`, `noUnusedLocals`, `strictFunctionTypes`, `useUnknownInCatchVariables` — all `true`.
-- **No `allowJs`**: All source files must be `.ts` or `.tsx`.
-- Never use `any` except inside XState machine boilerplate or when explicitly required by a library type.
-- Prefer `unknown` in `catch` blocks; narrow with type guards before use.
-- Use `io-ts` codecs for runtime validation of external data (API responses, deep-link params, stored data).
-- Named exports are preferred over default exports for all non-screen/non-navigator files.
+## Navigation
 
----
+- Add new routes to both the feature's `navigation/params.ts` and `navigation/routes.ts`, then register the navigator in `ts/navigation/params/AppParamsList.ts` and the root navigator.
+- Access navigation and route params with the typed hook `useIONavigation()`.
 
-## Documentation
+## Redux
 
-- [Design System](docs/agents/design-system.md) - UI and Design System
-- [Navigation](docs/agents/navigation.md) - Adding new screen and handle navigation
-- [Redux](docs/agents/redux.md) - Handle application state via Redux
-- [State Machines](docs/agents/state-machines.md) - XState V5 machines for complex logic
-- [Testing](docs/agents/testing.md) - Tests structure and utilities
-- [Analytics](docs/agents/analytics.md) - Event tracking
+- Define Redux actions with `createAction` / `createAsyncAction` from `typesafe-actions`.
+- Always import saga effects from `typed-redux-saga/macro` for full type inference.
+- Use `withRefreshApiCall` for authenticated endpoints that require automatic token refresh.
+- Use typed wrappers `useIOSelector`, `useIODispatch`, `useIOStore` — **never** raw `useSelector` / `useDispatch` / `useStore`.
+- Do not use inline selectors, always define selector functiosn inside feature's `store/selectors/` folder.
+
+## State machines
+
+- `machine.ts` must be **pure and portable**, it contains no React, Redux, or navigation imports;
+- All side-effects (navigation, Redux dispatch, toasts) are injected via the provider.
+- Prefer nested states for complex flows with sub-steps
+- Define fully-typed context with JSDoc comments and an initial state
+- Define events as tagged union types with kebab-case type names
+- Use absolute state IDs for cross-hierarchy transitions (e.g. `#myMachine.Failure`)
+
+## Testing
+
+- Add tests for new behavior — cover success, failure, and edge cases.
+- Add non regressions tests when fixing bugs.
+- Co-locate tests in `__tests__/` next to implementation
+- Use `renderScreenWithNavigationStoreContext` for screens
+- Use `withStore` HOC for components needing store
+- Use `expectSaga` for saga integration tests, `testSaga` for unit tests
+- Use `test.each` to avoid repeating similar tests across multiple scenarios
+- Define scenario arrays with descriptive names and use `$name` interpolation in test titles
+- Derive initial state from `appReducer(undefined, applicationChangeState("active"))` for realistic defaults.
+
+## Commits
+
+- Use conventional commits specification
+- Write commit messages focused on user impact, not implementation details.
+- **NEVER** add Co-Authored-By with yourself as co-author of the commit. Agents cannot be authors, humans can be, Agents are assistants.
+- **NEVER** push to master, always check to have created a dedicated branch for the issue
+
+## Pull requests
+
+Before pushing,perform a self-review of your changes:
+1. Review the full diff and verify every change is intentional and related to the task — remove any unrelated changes.
+2. Confirm the code follows the project's coding standards and boundaries described in this file.
+3. Run `yarn tsc:noEmit` and `yarn lint` and fix any failures.
+4. Run relevant individual tests and confirm they pass.
+Before pushing, always rebase your branch onto the master branch to avoid merge conflicts and ensure CI runs against up-to-date code.
+If there are conflicts, resolve them and continue the rebase. If the rebase is too complex, ask the user for guidance.
+
+Then push the branch to the remote and open the PR creation page in the browser with title and body pre-filled:
+- title: conventional commit, under 70 chars, include issue number in between square brackets (e.g. `feat: [ABC-000] title`)
+- body: use the template at `.github/PULL_REQUEST_TEMPLATE.md`. Be short and concise, explain what changed and why. Add steps to test the PR, avoid abvious explanations. If the PR fixes a bug, add steps to reproduce it.
+    ```
+    gh pr create --web --title <title> --body <body>
+    ```
+The --web flag opens the browser so the user can review and submit.
