@@ -3,10 +3,10 @@ import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import * as ANALYTICS from "../../analytics";
 import { terminateAarFlow } from "../../store/actions";
 import {
-  AARFlowState,
-  AARFlowStateName,
-  isValidAARStateTransition,
-  sendAARFlowStates
+  AarFlowState,
+  AarFlowStateName,
+  isValidAarStateTransition,
+  sendAarFlowStates
 } from "../../utils/stateUtils";
 import { useSendAarFlowManager } from "../useSendAarFlowManager";
 
@@ -48,18 +48,18 @@ describe("useSendAarFlowManager", () => {
       terminateAarFlow({ messageId: undefined })
     );
   });
-  Object.values(sendAARFlowStates).forEach(stateKind => {
+  Object.values(sendAarFlowStates).forEach(stateKind => {
     it(`should navigate to a valid state when calling "goToNextState" when the state type is ${stateKind} and ${
-      stateKind === sendAARFlowStates.displayingAARToS ? "" : "not "
-    }call trackSendAARToSAccepted`, () => {
-      const spiedOnMockedTrackSendAARToSAccepted = jest
-        .spyOn(ANALYTICS, "trackSendAARToSAccepted")
+      stateKind === sendAarFlowStates.displayingAarToS ? "" : "not "
+    }call trackSendAarToSAccepted`, () => {
+      const spiedOnMockedTrackSendAarToSAccepted = jest
+        .spyOn(ANALYTICS, "trackSendAarToSAccepted")
         .mockImplementation();
       mockSelector.mockImplementation(
         () =>
           ({
             type: stateKind
-          }) as AARFlowState
+          }) as AarFlowState
       );
 
       const { result } = renderHook(useSendAarFlowManager);
@@ -67,22 +67,22 @@ describe("useSendAarFlowManager", () => {
         result.current.goToNextState();
       });
       switch (stateKind) {
-        case sendAARFlowStates.displayingAARToS:
-          const isValid = isValidAARStateTransition(
+        case sendAarFlowStates.displayingAarToS:
+          const isValid = isValidAarStateTransition(
             stateKind,
-            mockDispatch.mock.calls[0][0].payload.type as AARFlowStateName
+            mockDispatch.mock.calls[0][0].payload.type as AarFlowStateName
           );
-          expect(spiedOnMockedTrackSendAARToSAccepted.mock.calls.length).toBe(
+          expect(spiedOnMockedTrackSendAarToSAccepted.mock.calls.length).toBe(
             1
           );
           expect(
-            spiedOnMockedTrackSendAARToSAccepted.mock.calls[0].length
+            spiedOnMockedTrackSendAarToSAccepted.mock.calls[0].length
           ).toBe(0);
           expect(mockDispatch).toHaveBeenCalledTimes(1);
           expect(isValid).toBe(true);
           break;
         default:
-          expect(spiedOnMockedTrackSendAARToSAccepted.mock.calls.length).toBe(
+          expect(spiedOnMockedTrackSendAarToSAccepted.mock.calls.length).toBe(
             0
           );
           expect(mockDispatch).not.toHaveBeenCalled();
@@ -92,8 +92,8 @@ describe("useSendAarFlowManager", () => {
     });
   });
   it('should return "currentFlowData" as a 1/1 of the selector`s value', () => {
-    const value: AARFlowState = {
-      type: sendAARFlowStates.displayingNotificationData,
+    const value: AarFlowState = {
+      type: sendAarFlowStates.displayingNotificationData,
       recipientInfo: {
         denomination: "Mario Rossi",
         taxId: "RSSMRA74D22A001Q"
