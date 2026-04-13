@@ -48,7 +48,7 @@ export const itwDisableItwActivation = createStandardAction(
 
 export const itwSetIdentificationMode = createStandardAction(
   "ITW_SET_IDENTIFICATION_MODE"
-)<IdentificationContext["mode"]>();
+)<IdentificationContext["mode"] | undefined>();
 
 export type ItwPreferencesActions =
   | ActionType<typeof itwSetReviewPending>
