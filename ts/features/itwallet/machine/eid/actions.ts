@@ -19,7 +19,8 @@ import {
   itwClearSimplifiedActivationRequirements,
   itwFreezeSimplifiedActivationRequirements,
   itwSetAuthLevel,
-  itwSetCredentialUpgradeFailed
+  itwSetCredentialUpgradeFailed,
+  itwSetIdentificationMode
 } from "../../common/store/actions/preferences";
 import { itwIsPidReissuingSurveyHiddenSelector } from "../../common/store/selectors/preferences";
 import {
@@ -302,6 +303,7 @@ export const createEidIssuanceActionsImplementation = (
   resetWalletInstance: () => {
     store.dispatch(itwLifecycleWalletReset());
     store.dispatch(itwSetAuthLevel(undefined));
+    store.dispatch(itwSetIdentificationMode(undefined));
     toast.success(I18n.t("features.itWallet.issuance.credentialResult.toast"));
   },
 
@@ -310,6 +312,7 @@ export const createEidIssuanceActionsImplementation = (
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     // Save the auth level in the preferences
     store.dispatch(itwSetAuthLevel(context.identification?.level));
+    store.dispatch(itwSetIdentificationMode(context.identification?.mode));
   },
 
   freezeSimplifiedActivationRequirements: () => {
