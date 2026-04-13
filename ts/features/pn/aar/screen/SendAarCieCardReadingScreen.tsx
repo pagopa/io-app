@@ -7,41 +7,41 @@ import { useIOSelector } from "../../../../store/hooks";
 import type { PnParamsList } from "../../navigation/params";
 import PN_ROUTES from "../../navigation/routes";
 import {
-  SendAARCieCardReadingComponent,
-  type SendAARCieCardReadingComponentProps
-} from "../components/SendAARCieCardReadingComponent";
-import { currentAARFlowData } from "../store/selectors";
-import { sendAARFlowStates } from "../utils/stateUtils";
+  SendAarCieCardReadingComponent,
+  type SendAarCieCardReadingComponentProps
+} from "../components/SendAarCieCardReadingComponent";
+import { currentAarFlowData } from "../store/selectors";
+import { sendAarFlowStates } from "../utils/stateUtils";
 
-export type SendAARCieCardReadingScreenRouteParams =
-  Readonly<SendAARCieCardReadingComponentProps>;
+export type SendAarCieCardReadingScreenRouteParams =
+  Readonly<SendAarCieCardReadingComponentProps>;
 
-export type SendAARCieCardReadingScreenProps = IOStackNavigationRouteProps<
+export type SendAarCieCardReadingScreenProps = IOStackNavigationRouteProps<
   PnParamsList,
   typeof PN_ROUTES.SEND_AAR_CIE_CARD_READING
 >;
 
-export const SendAARCieCardReadingScreen = ({
+export const SendAarCieCardReadingScreen = ({
   route,
   navigation
-}: SendAARCieCardReadingScreenProps) => {
-  const currentFlow = useIOSelector(currentAARFlowData);
+}: SendAarCieCardReadingScreenProps) => {
+  const currentFlow = useIOSelector(currentAarFlowData);
 
   useEffect(() => {
     switch (currentFlow.type) {
-      case sendAARFlowStates.cieCanAdvisory: {
+      case sendAarFlowStates.cieCanAdvisory: {
         navigation.replace(PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL, {
           animationTypeForReplace: "pop"
         });
         break;
       }
-      case sendAARFlowStates.cieScanningAdvisory: {
+      case sendAarFlowStates.cieScanningAdvisory: {
         navigation.replace(PN_ROUTES.SEND_AAR_CIE_CARD_READING_EDUCATIONAL, {
           animationTypeForReplace: "pop"
         });
         break;
       }
-      case sendAARFlowStates.displayingNotificationData: {
+      case sendAarFlowStates.displayingNotificationData: {
         navigation.replace(PN_ROUTES.MESSAGE_DETAILS, {
           messageId: currentFlow.iun,
           firstTimeOpening: undefined,
@@ -51,7 +51,7 @@ export const SendAARCieCardReadingScreen = ({
         });
         break;
       }
-      case sendAARFlowStates.ko: {
+      case sendAarFlowStates.ko: {
         navigation.replace(PN_ROUTES.SEND_AAR_ERROR);
         break;
       }
@@ -61,10 +61,10 @@ export const SendAARCieCardReadingScreen = ({
   useHardwareBackButtonWhenFocused(() => true);
 
   switch (currentFlow.type) {
-    case sendAARFlowStates.cieScanning:
-      return <SendAARCieCardReadingComponent {...route.params} />;
-    case sendAARFlowStates.validatingMandate:
-    case sendAARFlowStates.fetchingNotificationData:
+    case sendAarFlowStates.cieScanning:
+      return <SendAarCieCardReadingComponent {...route.params} />;
+    case sendAarFlowStates.validatingMandate:
+    case sendAarFlowStates.fetchingNotificationData:
       return (
         <LoadingScreenContent
           testID="LoadingScreenContent"
