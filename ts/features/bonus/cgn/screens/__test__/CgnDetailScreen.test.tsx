@@ -1,3 +1,5 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import { createStore } from "redux";
 import { Card } from "../../../../../../definitions/cgn/Card";
@@ -7,20 +9,23 @@ import {
   CardRevoked,
   StatusEnum as RevokedStatusEnum
 } from "../../../../../../definitions/cgn/CardRevoked";
+import { CcdbNumber } from "../../../../../../definitions/cgn/CcdbNumber";
+import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { backendStatusLoadSuccess } from "../../../../../store/actions/backendStatus";
+import { useIODispatch } from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
 import { baseRawBackendStatus } from "../../../../../store/reducers/__mock__/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { formatDateAsShortFormat } from "../../../../../utils/dates";
 import { getGenericError } from "../../../../../utils/errors";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { loadAvailableBonuses } from "../../../common/store/actions/availableBonusesTypes";
 import CGN_ROUTES from "../../navigation/routes";
+import { cgnActivationStart } from "../../store/actions/activation";
 import { cgnDetails } from "../../store/actions/details";
-import CgnDetailScreen from "../CgnDetailScreen";
-
 import { cgnEycaStatus } from "../../store/actions/eyca/details";
-import { CcdbNumber } from "../../../../../../definitions/cgn/CcdbNumber";
+import CgnDetailScreen from "../CgnDetailScreen";
 
 jest.mock("../../components/CgnAnimatedBackground", () => ({
   CgnAnimatedBackground: () => null
@@ -28,6 +33,19 @@ jest.mock("../../components/CgnAnimatedBackground", () => ({
 
 jest.mock("../../../../../utils/hooks/useOnFocus", () => ({
   useActionOnFocus: jest.fn()
+}));
+
+jest.mock("../../../../../store/hooks", () => ({
+  ...jest.requireActual("../../../../../store/hooks"),
+  useIODispatch: jest.fn()
+}));
+
+jest.mock("../../../../../hooks/useHardwareBackButton", () => ({
+  useHardwareBackButton: jest.fn(),
+  useHardwareBackButtonToDismiss: jest.fn().mockReturnValue({
+    onOpen: jest.fn(),
+    onClose: jest.fn()
+  })
 }));
 
 const renderComponent = (state: GlobalState) =>
@@ -88,6 +106,12 @@ describe("CgnDetailScreen", () => {
     ).toBeTruthy();
   });
 
+  it("should render the loading screen when cgn details are loading", () => {
+    const state = appReducer(buildBaseState(), cgnDetails.request());
+    const { getByTestId } = renderComponent(state);
+    expect(getByTestId("BonusCardStatusSkeletonTestID")).toBeTruthy();
+  });
+
   it("should render the empty state when there are no cgn details", () => {
     const state = buildBaseState();
     const { getByText } = renderComponent(state);
@@ -101,6 +125,19 @@ describe("CgnDetailScreen", () => {
     expect(getAllByText(I18n.t("bonus.cgn.name"))).toBeTruthy();
     expect(getByText(I18n.t("bonus.cgn.departmentName"))).toBeTruthy();
     expect(getByText(I18n.t("bonus.cgn.detail.cta.discover"))).toBeTruthy();
+  });
+
+  it("should render profile name on footer if provided", () => {
+    const baseState = buildBaseState(true, activatedCard);
+    const state = {
+      ...baseState,
+      profile: pot.some({
+        name: "Mario",
+        family_name: "Rossi"
+      })
+    } as GlobalState;
+    const { getByText } = renderComponent(state);
+    expect(getByText("Mario Rossi")).toBeTruthy();
   });
 
   it("should show expired alert when card is expired", () => {
@@ -151,5 +188,22 @@ describe("CgnDetailScreen", () => {
     expect(
       getByText(I18n.t("bonus.cgn.detail.cta.eyca.showEycaDiscounts"))
     ).toBeTruthy();
+  });
+
+  it("should called back action when hardware back button is pressed", () => {
+    const state = buildBaseState(true, activatedCard);
+    renderComponent(state);
+    expect(useHardwareBackButton).toHaveBeenCalled();
+  });
+
+  it("should call load action on focus", () => {
+    const mockDispatch = jest.fn();
+    (useIODispatch as jest.Mock).mockReturnValue(mockDispatch);
+
+    const state = buildBaseState();
+    const { getByText } = renderComponent(state);
+    fireEvent.press(getByText(I18n.t("bonus.cgn.detail.empty.activateCta")));
+    expect(mockDispatch).toHaveBeenCalledWith(loadAvailableBonuses.request());
+    expect(mockDispatch).toHaveBeenCalledWith(cgnActivationStart());
   });
 });
