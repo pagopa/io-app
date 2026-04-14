@@ -6,7 +6,6 @@ import RNFS from "react-native-fs";
 import { call, takeLatest, put, select, take } from "typed-redux-saga/macro";
 import { CommonActions, StackActions } from "@react-navigation/native";
 import I18n from "i18next";
-import { CieUtils } from "@pagopa/io-react-native-cie";
 import NavigationService from "../../../navigation/NavigationService";
 import { FCI_ROUTES } from "../navigation/routes";
 import ROUTES from "../../../navigation/routes";
@@ -204,30 +203,12 @@ function* watchFciStartSaga(): SagaIterator {
     // this is needed to get the service_id
     yield* put(fciMetadataRequest.request());
   } else {
-    // Check NFC availability using yield* call instead of async/await
-    // eslint-disable-next-line functional/no-let, no-useless-assignment
-    let isNfcAvailable = false;
-    try {
-      isNfcAvailable = yield* call([CieUtils, "hasNfcFeature"]);
-    } catch {
-      isNfcAvailable = false;
-    }
-
-    if (isNfcAvailable) {
-      yield* call(
-        NavigationService.dispatchNavigationAction,
-        StackActions.replace(FCI_ROUTES.MAIN, {
-          screen: FCI_ROUTES.FCI_LOGIN_L3
-        })
-      );
-    } else {
-      yield* call(
-        NavigationService.dispatchNavigationAction,
-        StackActions.replace(FCI_ROUTES.MAIN, {
-          screen: FCI_ROUTES.NFC_NOT_AVAILABLE
-        })
-      );
-    }
+    yield* call(
+      NavigationService.dispatchNavigationAction,
+      StackActions.replace(FCI_ROUTES.MAIN, {
+        screen: FCI_ROUTES.FCI_LOGIN_L3
+      })
+    );
   }
 }
 
@@ -352,6 +333,8 @@ function* clearAllFciFiles(action: ActionType<typeof fciClearAllFiles>) {
 /**
  * Handle the FCI abort requests saga
  */
+// add parameter to handle the navigation to the NFC not available screen
+// in case of user with SPID level < L3 and NFC not available
 function* watchFciEndSaga(): SagaIterator {
   yield* put(fciClearStateRequest());
   yield* put(fciClearAllFiles({ path: FciDownloadPreviewDirectoryPath }));
