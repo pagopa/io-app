@@ -1,6 +1,5 @@
 import { IOThemeContextProvider } from "@pagopa/io-app-design-system";
 import { fireEvent, render } from "@testing-library/react-native";
-import type { ReactTestInstance } from "react-test-renderer";
 import I18n from "i18next";
 import { useSharedValue } from "react-native-reanimated";
 import { TourTooltip } from "../TourTooltip";
@@ -57,9 +56,11 @@ const TestWrapper = ({
 
 const renderTooltip = (props: Props = {}) => render(<TestWrapper {...props} />);
 
+type TestInstance = ReturnType<ReturnType<typeof render>["getByLabelText"]>;
+
 /** Recursively walks ancestors looking for a View with `opacity: 0`. */
 const ancestorHasOpacityZero = (
-  element: ReactTestInstance,
+  element: TestInstance,
   depth = 6
 ): boolean => {
   if (depth === 0 || !element.parent) {
