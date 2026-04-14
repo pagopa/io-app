@@ -286,6 +286,11 @@
     "path": "path-browserify",
     "crypto": "react-native-crypto"
   },
+  "reanimated": {
+    "staticFeatureFlags": {
+      "DISABLE_COMMIT_PAUSING_MECHANISM": true
+    }
+  },
   "browser": {
     "crypto": "react-native-crypto",
     "path": "path-browserify"
