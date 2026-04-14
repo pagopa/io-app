@@ -1,4 +1,3 @@
-import { constUndefined } from "fp-ts/lib/function";
 import { fromCallback, fromPromise } from "xstate";
 import { Platform } from "react-native";
 import {
@@ -46,14 +45,6 @@ const SEND_RESPONSE_TIMEOUT_MS = 20000;
 export type CheckPermissionsInput = {
   isSilent?: boolean;
 };
-
-export type StartProximityFlowInput = {
-  isRestarting?: boolean;
-} | void;
-
-export type GetQrCodeStringActorOutput = Awaited<
-  ReturnType<typeof ISO18013_5.getQrCodeString>
->;
 
 export type SendErrorResponseActorOutput = Awaited<
   ReturnType<typeof ISO18013_5.sendErrorResponse>
@@ -112,22 +103,26 @@ export const createProximityActorsImplementation = (
     return bluetoothState === "PoweredOn";
   });
 
-  const startProximityFlow = fromPromise<void, StartProximityFlowInput>(
-    async ({ input }) => {
-      if (input?.isRestarting) {
-        // The proximity flow must be closed before restarting
-        await ISO18013_5.close().catch(constUndefined);
-      }
-      await ISO18013_5.start({ certificates: [[env.X509_CERT_ROOT]] });
-    }
-  );
+  const startEngagement = fromPromise<void>(async () => {
+    // Ensure any existing session is closed before starting a new one
+    await ISO18013_5.close().catch(() => null);
 
-  const generateQrCodeString = fromPromise<GetQrCodeStringActorOutput, void>(
-    ISO18013_5.getQrCodeString
-  );
+    // Start a new engagement session with QRCode -> Ble configuration
+    await ISO18013_5.startEngagement({
+      engagementModes: ["qrcode"],
+      retrievalMethods: ["ble"],
+      certificates: [[env.X509_CERT_ROOT]]
+    });
+  });
 
   const proximityCommunicationLogic = fromCallback<ProximityEvents>(
     ({ sendBack }) => {
+      const handleQrCodeString = (
+        eventPayload: EventsPayload["onQrCodeString"]
+      ) => {
+        sendBack({ type: "qr-code-string", payload: eventPayload.data });
+      };
+
       const handleDeviceConnecting = () => {
         sendBack({ type: "device-connecting" });
       };
@@ -185,6 +180,7 @@ export const createProximityActorsImplementation = (
       };
 
       const listeners = [
+        ISO18013_5.addListener("onQrCodeString", handleQrCodeString),
         ISO18013_5.addListener("onDeviceConnecting", handleDeviceConnecting),
         ISO18013_5.addListener("onDeviceConnected", handleDeviceConnected),
         ISO18013_5.addListener(
@@ -202,7 +198,7 @@ export const createProximityActorsImplementation = (
         // Remove event listeners
         listeners.forEach(listener => listener.remove());
         // Close the Bluetooth connection and clear all resources
-        void ISO18013_5.close().catch(constUndefined);
+        void ISO18013_5.close().catch(() => null);
       };
     }
   );
@@ -253,11 +249,10 @@ export const createProximityActorsImplementation = (
   return {
     checkPermissions,
     checkBluetoothIsActive,
-    closeProximityFlow,
-    generateQrCodeString,
+    startEngagement,
     proximityCommunicationLogic,
+    closeProximityFlow,
     sendDocuments,
-    startProximityFlow,
     terminateProximitySession
   };
 };

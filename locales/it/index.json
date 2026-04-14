@@ -47,6 +47,7 @@
       "minusSymbol": "meno",
       "reload": "Ricarica",
       "search": "Cerca",
+      "cieReadingProgress": "Lettura {{percentage}}% completata",
       "dateFormat": "DD MMMM YYYY",
       "alert": "Avviso",
       "activityIndicator": {
@@ -2433,7 +2434,11 @@
           },
           "cieCanInsertion": {
             "title": "Inserisci il codice a 6 cifre che trovi in basso a destra della CIE",
-            "description": "È il codice a 6 cifre (CAN) che trovi stampato sul fronte della Carta di Identità Elettronica, in basso a destra."
+            "description": "È il codice a 6 cifre (CAN) che trovi stampato sul fronte della Carta di Identità Elettronica, in basso a destra. [Dove lo trovo?](internal://can-location)",
+            "bottomSheet": {
+              "title": "Dove trovo il codice CAN?",
+              "info": "Lo trovi stampato sul fronte della Carta di Identità Elettronica (CIE) di {{denomination}}, in basso a destra."
+            }
           },
           "cieScanningAdvisory": {
             "title": "Posiziona la CIE su una superficie stabile per la lettura",
@@ -2521,7 +2526,7 @@
             "notAdressee": {
               "infoAlert": "Stai aiutando un’altra persona ad accedere a una notifica SEND.",
               "title": "Vuoi aprire la notifica SEND di {{name}}?",
-              "subtitle": "Se la persona che ha ricevuto la comunicazione ti ha chiesto di farlo, puoi aprire questa notifica SEND per suo conto.",
+              "subtitle": "Per aprire la notifica per suo conto, tieni a portata di mano la Carta di Identità Elettronica (CIE) di {{name}}.",
               "primaryAction": "Apri notifica SEND",
               "bottomSheet": {
                 "title": "Cosa ti serve?",
@@ -3645,6 +3650,11 @@
         "credentialResult": {
           "toast": "Fatto!"
         },
+        "landingError": {
+          "title": "Qualcosa non va",
+          "body": "Si è verificato un problema, riprova più tardi.",
+          "action": "Chiudi"
+        },
         "notMatchingIdentityError": {
           "title": "Identità non riconosciuta",
           "body": "Attiva Documenti su IO con la stessa identità utilizzata per accedere all’app IO. Verifica le credenziali di accesso e riprova.",
@@ -4440,6 +4450,24 @@
         "restrictedMode": {
           "title": "Documenti con funzionalità ridotte",
           "description": "Puoi ottenere una versione digitale dei seguenti documenti utilizzabile solo dal vivo e senza le funzionalità evolute di IT-Wallet"
+        }
+      },
+      "tour": {
+        "id": {
+          "title": "Il tuo IT-Wallet ID",
+          "description": "Il cuore del tuo Portafoglio IT-Wallet: abilita l’aggiunta di documenti per identificarti e accedere ai servizi."
+        },
+        "credentials": {
+          "title": "I tuoi documenti digitali",
+          "description": "Premi su un documento per visualizzare i dettagli o gestirlo nel Portafoglio.  "
+        },
+        "addCredential": {
+          "title": "Aggiungi un documento",
+          "description": "Premi “+” o “Aggiungi documento” per scegliere un documento digitale da aggiungere al Portafoglio."
+        },
+        "qrCode": {
+          "title": "Mostra il codice QR a chi verifica",
+          "description": "Chi verifica i tuoi documenti dal vivo usa un’app ufficiale per scansionare questo codice QR. "
         }
       }
     },
