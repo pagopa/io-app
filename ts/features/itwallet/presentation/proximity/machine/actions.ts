@@ -76,7 +76,7 @@ export const createProximityActionsImplementation = (
     context,
     event
   }: ActionArgs<Context, ProximityEvents, ProximityEvents>) => {
-    if (context.isQRCodeGenerationError) {
+    if (context.failure) {
       const failure = mapEventToFailure(event);
       const serializedFailure = serializeFailureReason(failure);
       trackItwProximityQrCodeLoadingFailure(serializedFailure);

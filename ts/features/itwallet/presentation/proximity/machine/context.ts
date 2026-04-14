@@ -22,11 +22,6 @@ export type Context = {
    */
   qrCodeString?: string;
   /**
-   * A boolean value indicating whether an error occurs
-   * during the `qrCodeString` generation process
-   */
-  isQRCodeGenerationError?: boolean;
-  /**
    * The failure of the proximity presentation machine
    */
   failure?: ProximityFailure;

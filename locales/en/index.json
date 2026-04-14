@@ -2150,6 +2150,13 @@
       }
     },
     "itWallet": {
+      "issuance": {
+        "landingError": {
+          "title": "Something went wrong",
+          "body": "An error occurred, please try again later.",
+          "action": "Close"
+        }
+      },
       "verifiableCredentials": {
         "claims": {
           "attachments": "Attachments"
