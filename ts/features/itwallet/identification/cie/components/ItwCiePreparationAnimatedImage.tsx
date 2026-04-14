@@ -9,7 +9,7 @@ import { useCiePreparationAnimationPlayback } from "../hooks/useCiePreparationAn
  * It renders:
  * - an animated asset while playback is active
  * - a static fallback image when playback is stopped
- * - a play/pause control button
+ * - a play/stop control button
  */
 
 type ItwCiePreparationAnimatedImageProps = {
@@ -56,7 +56,7 @@ export const ItwCiePreparationAnimatedImage = ({
               ? "features.itWallet.identification.cie.prepare.animation.pause"
               : "features.itWallet.identification.cie.prepare.animation.play"
           )}
-          icon={isPlaying ? "pause" : "play"}
+          icon={isPlaying ? "stop" : "play"}
           disabled={reduceMotion}
           onPress={togglePlayback}
         />
