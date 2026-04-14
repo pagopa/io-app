@@ -28,5 +28,5 @@ export const itwWalletInstanceRenewalErrorSelector = (state: GlobalState) =>
 /**
  * Selector that returns all the Wallet Unit Attestations in the store.
  */
-export const itwWalletUnitAttestations = (state: GlobalState) =>
+export const itwWalletUnitAttestationsSelector = (state: GlobalState) =>
   state.features.itWallet.walletInstance.walletUnitAttestations;
