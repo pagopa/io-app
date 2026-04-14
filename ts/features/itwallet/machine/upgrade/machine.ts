@@ -106,6 +106,7 @@ export const itwCredentialUpgradeMachine = setup({
         description:
           "Obtain the credential(s) with the WUA if supported. This state is retried when the session expires, so it must contain the minimal retriable logic to obtain the credential",
         src: "upgradeCredential",
+        id: "upgradeCredential",
         input: ({ context }) => ({
           pid: context.pid,
           credential: context.credentials[context.credentialIndex],
