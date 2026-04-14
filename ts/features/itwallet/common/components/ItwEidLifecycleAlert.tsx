@@ -3,23 +3,23 @@ import { format } from "date-fns";
 import { sequenceT } from "fp-ts/lib/Apply";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
 import { ComponentProps, useMemo } from "react";
 import { View } from "react-native";
-import I18n from "i18next";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
+import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
 import {
   itwCredentialsEidSelector,
   itwCredentialsEidStatusSelector
 } from "../../credentials/store/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { ITW_ROUTES } from "../../navigation/routes";
+import { useItwEidLifecycleAlertTracking } from "../hooks/useItwEidLifecycleAlertTracking";
 import {
   ItwJwtCredentialStatus,
   StoredCredential
 } from "../utils/itwTypesUtils";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { ITW_ROUTES } from "../../navigation/routes";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
-import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
-import { useItwEidLifecycleAlertTracking } from "../hooks/useItwEidLifecycleAlertTracking";
 
 const defaultLifecycleStatus: Array<ItwJwtCredentialStatus> = [
   "valid",
@@ -53,7 +53,6 @@ export const ItwEidLifecycleAlert = ({
   const isOffline = offlineAccessReason !== undefined;
 
   const { trackAlertTap } = useItwEidLifecycleAlertTracking({
-    isItw,
     maybeEidStatus,
     navigation,
     skipViewTracking,
@@ -134,7 +133,17 @@ export const ItwEidLifecycleAlert = ({
         };
       }
 
-      return eIDAlertPropsMap[eidStatus];
+      const isPidDetailScreen =
+        currentScreenName === ITW_ROUTES.PRESENTATION.PID_DETAIL;
+
+      const baseProps = eIDAlertPropsMap[eidStatus];
+
+      if (isPidDetailScreen && eidStatus === "jwtExpired") {
+        const { action, onPress, ...rest } = baseProps;
+        return rest;
+      }
+
+      return baseProps;
     }, [eidStatus, eid.jwt.issuedAt, eid.jwt.expiration, nameSpace]);
 
     if (!lifecycleStatus.includes(eidStatus)) {

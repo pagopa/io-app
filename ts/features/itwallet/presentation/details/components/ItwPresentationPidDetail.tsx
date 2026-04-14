@@ -12,6 +12,7 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList"
 import { ItwCredentialClaim } from "../../../common/components/ItwCredentialClaim";
 import { ItwEidLifecycleAlert } from "../../../common/components/ItwEidLifecycleAlert";
 import { ItwIssuanceMetadata } from "../../../common/components/ItwIssuanceMetadata";
+import { ITW_ROUTES } from "../../../navigation/routes";
 
 type Props = {
   credential: StoredCredential;
@@ -46,7 +47,11 @@ export const ItwPresentationPidDetail = ({ credential }: Props) => {
 
   return (
     <View>
-      <ItwEidLifecycleAlert navigation={navigation} />
+      <ItwEidLifecycleAlert
+        navigation={navigation}
+        currentScreenName={ITW_ROUTES.PRESENTATION.PID_DETAIL}
+        skipViewTracking={false}
+      />
       {claims.length > 0 && (
         <ListItemHeader label={listItemHeaderLabel} endElement={endElement} />
       )}
