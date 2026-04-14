@@ -56,6 +56,7 @@ export const ItwCiePreparationAnimatedImage = ({
               ? "features.itWallet.identification.cie.prepare.animation.pause"
               : "features.itWallet.identification.cie.prepare.animation.play"
           )}
+          // @ts-expect-error Remove this comment once the PR with the fix for this icon is released
           icon={isPlaying ? "stop" : "play"}
           disabled={reduceMotion}
           onPress={togglePlayback}
