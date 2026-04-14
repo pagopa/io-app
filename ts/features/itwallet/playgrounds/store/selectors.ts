@@ -4,11 +4,6 @@ import {
   ItwCredentialStatus
 } from "../../common/utils/itwTypesUtils";
 
-export const itwDebugGlobalStatusOverrideSelector = (
-  state: GlobalState
-): ItwCredentialStatus | undefined =>
-  state.features.itWallet.debug?.globalCredentialStatusOverride;
-
 export const itwDebugCredentialStatusOverridesSelector = (
   state: GlobalState
 ): Record<string, ItwCredentialStatus> =>

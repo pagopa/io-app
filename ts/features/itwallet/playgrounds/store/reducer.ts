@@ -6,18 +6,13 @@ import {
 } from "../../common/utils/itwTypesUtils";
 import {
   itwDebugClearCredentialStatusOverride,
-  itwDebugClearGlobalStatusOverride,
   itwDebugSaveOriginalCredentials,
-  itwDebugSetCredentialStatusOverride,
-  itwDebugSetGlobalStatusOverride
+  itwDebugSetCredentialStatusOverride
 } from "./actions";
 
 export type ItwDebugState = {
-  /** The active global status override applied to all credentials. */
-  globalCredentialStatusOverride: ItwCredentialStatus | undefined;
   /**
    * Per-credential status overrides, keyed by credentialType.
-   * These take precedence over the global override for a specific credential.
    */
   credentialStatusOverrides: Record<string, ItwCredentialStatus>;
   /**
@@ -29,7 +24,6 @@ export type ItwDebugState = {
 };
 
 const initialState: ItwDebugState = {
-  globalCredentialStatusOverride: undefined,
   credentialStatusOverrides: {},
   savedCredentials: undefined
 };
@@ -39,12 +33,6 @@ const reducer = (
   action: Action
 ): ItwDebugState => {
   switch (action.type) {
-    case getType(itwDebugSetGlobalStatusOverride):
-      return { ...state, globalCredentialStatusOverride: action.payload };
-
-    case getType(itwDebugClearGlobalStatusOverride):
-      return initialState;
-
     case getType(itwDebugSetCredentialStatusOverride): {
       const { credentialType, status } = action.payload;
       return {
@@ -59,7 +47,13 @@ const reducer = (
     case getType(itwDebugClearCredentialStatusOverride): {
       const { credentialType } = action.payload;
       const { [credentialType]: _, ...rest } = state.credentialStatusOverrides;
-      return { ...state, credentialStatusOverrides: rest };
+      // Reset savedCredentials too if no overrides remain
+      const hasOverrides = Object.keys(rest).length > 0;
+      return {
+        ...state,
+        credentialStatusOverrides: rest,
+        savedCredentials: hasOverrides ? state.savedCredentials : undefined
+      };
     }
 
     case getType(itwDebugSaveOriginalCredentials): {
