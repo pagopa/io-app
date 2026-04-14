@@ -11,6 +11,10 @@ exports[`itWalletReducer should match snapshot [if this test fails, remember to 
       "kind": "PotNone",
     },
   },
+  "debug": {
+    "credentialStatusOverrides": {},
+    "savedCredentials": undefined,
+  },
   "environment": {
     "env": "prod",
     "itWalletSpecsVersion": "1.0.0",
