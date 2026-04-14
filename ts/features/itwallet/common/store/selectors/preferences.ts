@@ -61,3 +61,7 @@ export const itwCredentialUpgradeFailedSelector = (state: GlobalState) =>
  */
 export const itwIdentificationModeSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.identificationMode;
+ * Returns whether IT Wallet activation is disabled (no nfc).
+ */
+export const itwIsActivationDisabledSelector = (state: GlobalState) =>
+  state.features.itWallet.preferences.isItwActivationDisabled ?? false;

@@ -72,7 +72,6 @@ describe("availableBonusesTypes with FF enabled", () => {
 
   it("should return 2 bonuses available if an experimental bonus with no FF is available", () => {
     jest.spyOn(bonus, "mapBonusIdFeatureFlag").mockImplementation(
-      // eslint-disable-next-line sonarjs/no-identical-functions
       () =>
         new Map<number, boolean>([
           [ID_CGN_TYPE, true],
@@ -106,7 +105,6 @@ describe("availableBonusesTypes with FF enabled", () => {
 
   it("should return no bonuses if only disabled ones are passed", () => {
     jest.spyOn(bonus, "mapBonusIdFeatureFlag").mockImplementation(
-      // eslint-disable-next-line sonarjs/no-identical-functions
       () =>
         new Map<number, boolean>([
           [ID_CGN_TYPE, true],
@@ -122,7 +120,6 @@ describe("availableBonusesTypes with FF enabled", () => {
 
   it("should return the experimental bonus where the FF is ON", () => {
     jest.spyOn(bonus, "mapBonusIdFeatureFlag").mockImplementation(
-      // eslint-disable-next-line sonarjs/no-identical-functions
       () =>
         new Map<number, boolean>([
           [ID_CGN_TYPE, true],

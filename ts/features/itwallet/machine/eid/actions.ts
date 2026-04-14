@@ -154,8 +154,8 @@ export const createEidIssuanceActionsImplementation = (
         context.level === "l3"
           ? ITW_ROUTES.L3_ONBOARDING
           : context.level === "l2-fallback"
-          ? ITW_ROUTES.L2_ONBOARDING
-          : ITW_ROUTES.ONBOARDING
+            ? ITW_ROUTES.L2_ONBOARDING
+            : ITW_ROUTES.ONBOARDING
     });
   },
 
@@ -230,7 +230,8 @@ export const createEidIssuanceActionsImplementation = (
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.CIE_WARNING,
       params: {
-        type: event.warning
+        type: event.warning,
+        routeName: event.routeName
       }
     });
   },

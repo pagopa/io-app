@@ -66,9 +66,8 @@ export function* backendStatusWatcherLoop(
       yield* call(startTimer, BACKEND_SERVICES_STATUS_FAILURE_INTERVAL);
       continue;
     }
-    const deadsCounter: ReturnType<typeof deadsCounterSelector> = yield* select(
-      deadsCounterSelector
-    );
+    const deadsCounter: ReturnType<typeof deadsCounterSelector> =
+      yield* select(deadsCounterSelector);
 
     // if counter of dead > 0 but areSystem if false (must do other check to valid this information)
     // we change the sleep timeout (more frequent when dead is detected)

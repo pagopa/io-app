@@ -24,7 +24,7 @@ const createLoggedInState = (): GlobalState =>
       idp: { entityId: "idp1", isTestIdp: false },
       sessionToken: "abc"
     }
-  } as any);
+  }) as any;
 
 const createLoggedOutWithIdpState = (): GlobalState =>
   ({
@@ -32,7 +32,7 @@ const createLoggedOutWithIdpState = (): GlobalState =>
       kind: "LoggedOutWithIdp",
       idp: { entityId: "idp1", isTestIdp: false }
     }
-  } as any);
+  }) as any;
 
 const createLoggedInWithSessionInfoState = (): GlobalState =>
   ({
@@ -48,7 +48,7 @@ const createLoggedInWithSessionInfoState = (): GlobalState =>
         bpdToken: "bpd"
       }
     }
-  } as any);
+  }) as any;
 
 describe("authentication selectors", () => {
   it("should return authentication state", () => {

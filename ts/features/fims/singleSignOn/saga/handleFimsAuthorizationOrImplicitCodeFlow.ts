@@ -84,8 +84,7 @@ export function* handleFimsAuthorizationOrImplicitCodeFlow(
   if (!inAppBrowserRedirectUrl) {
     const debugMessage = `InApp Browser url call failed or without a valid redirect, code: ${
       inAppBrowserUrlResponse.type === "failure"
-        ? // eslint-disable-next-line sonarjs/no-nested-template-literals
-          `${inAppBrowserUrlResponse.code}, message: ${inAppBrowserUrlResponse.message}`
+        ? `${inAppBrowserUrlResponse.code}, message: ${inAppBrowserUrlResponse.message}`
         : inAppBrowserUrlResponse.status
     }`;
     yield* call(computeAndTrackAuthenticationError, debugMessage);

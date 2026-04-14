@@ -1,9 +1,7 @@
 import {
-  Body,
-  BodyProps,
-  ComposedBodyFromArray,
   H3,
   IOButton,
+  IOMarkdownLite,
   IOPictograms,
   Pictogram,
   VStack
@@ -19,7 +17,7 @@ import {
 export type IOScrollViewCentredContentProps = {
   pictogram: IOPictograms;
   title: string;
-  description?: string | Array<BodyProps>;
+  description?: string;
   additionalLink?: Pick<
     ComponentProps<typeof IOButton>,
     "label" | "accessibilityLabel" | "onPress" | "testID"
@@ -49,13 +47,7 @@ export const IOScrollViewCentredContent = ({
             {title}
           </H3>
           {description && (
-            <>
-              {typeof description === "string" ? (
-                <Body style={{ textAlign: "center" }}>{description}</Body>
-              ) : (
-                <ComposedBodyFromArray textAlign="center" body={description} />
-              )}
-            </>
+            <IOMarkdownLite content={description} textAlign="center" />
           )}
         </VStack>
       </View>

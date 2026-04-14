@@ -2,7 +2,7 @@ import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson
 import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
 import { SendUserType } from "../../../pushNotifications/analytics";
-import { SendAARFailurePhase } from "../utils/stateUtils";
+import { SendAarFailurePhase } from "../utils/stateUtils";
 
 export type SendAarScreen = "CIE_PREPARATION" | "NFC_ACTIVATION";
 
@@ -24,8 +24,8 @@ export const trackSendQRCodeScanRedirectDismissed = () => {
   mixpanelTrack(eventName, properties);
 };
 
-export const trackSendAARFailure = (
-  phase: SendAARFailurePhase,
+export const trackSendAarFailure = (
+  phase: SendAarFailurePhase,
   reason: string,
   aarProblemJson: AARProblemJson | undefined
 ) => {
@@ -38,38 +38,38 @@ export const trackSendAARFailure = (
   void mixpanelTrack(eventName, props);
 };
 
-export const trackSendAARToS = () => {
+export const trackSendAarToS = () => {
   const eventName = "SEND_TEMPORARY_NOTIFICATION_OPENING_DISCLAIMER";
   const props = buildEventProperties("UX", "screen_view");
   void mixpanelTrack(eventName, props);
 };
 
-export const trackSendAARToSAccepted = () => {
+export const trackSendAarToSAccepted = () => {
   const eventName = "SEND_TEMPORARY_NOTIFICATION_OPENING_DISCLAIMER_ACCEPTED";
   const props = buildEventProperties("UX", "action");
   void mixpanelTrack(eventName, props);
 };
 
-export const trackSendAARToSDismissed = () => {
+export const trackSendAarToSDismissed = () => {
   const eventName = "SEND_TEMPORARY_NOTIFICATION_OPENING_DISCLAIMER_DISMISSED";
   const props = buildEventProperties("UX", "action");
   void mixpanelTrack(eventName, props);
 };
 
-export const trackSendAARAccessDeniedScreenView = () => {
+export const trackSendAarAccessDeniedScreenView = () => {
   const eventName = "SEND_TEMPORARY_NOTIFICATION_OPENING_NOT_ALLOWED";
   const props = buildEventProperties("UX", "screen_view");
   void mixpanelTrack(eventName, props);
 };
 
-export const trackSendAARAccessDeniedDelegateInfo = () => {
+export const trackSendAarAccessDeniedDelegateInfo = () => {
   const eventName =
     "SEND_TEMPORARY_NOTIFICATION_OPENING_NOT_ALLOWED_MANDATE_INFO";
   const props = buildEventProperties("UX", "exit");
   void mixpanelTrack(eventName, props);
 };
 
-export const trackSendAARAccessDeniedDismissed = () => {
+export const trackSendAarAccessDeniedDismissed = () => {
   const eventName = "SEND_TEMPORARY_NOTIFICATION_OPENING_NOT_ALLOWED_DISMISSED";
   const props = buildEventProperties("UX", "action");
   void mixpanelTrack(eventName, props);

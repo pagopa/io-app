@@ -1,9 +1,9 @@
-import * as sendAARClient from "../../../../../../definitions/pn/aar/client";
+import * as sendAarClient from "../../../../../../definitions/pn/aar/client";
 import { LollipopConfig } from "../../../../lollipop";
 import { KeyInfo } from "../../../../lollipop/utils/crypto";
 import * as lollipopFetch from "../../../../lollipop/utils/fetch";
-import { createSendAARClientWithLollipop } from "../client";
-describe("createSendAARClientWithLollipop", () => {
+import { createSendAarClientWithLollipop } from "../client";
+describe("createSendAarClientWithLollipop", () => {
   it("should invoke `createClient` with input 'baseUrl', 'keyInfo' and the result of `lollipopFetch`", () => {
     const mockFetch = jest.fn();
     const spyLollipopFetch = jest
@@ -13,7 +13,7 @@ describe("createSendAARClientWithLollipop", () => {
       );
     const mockCreateClient = jest.fn();
     jest
-      .spyOn(sendAARClient, "createClient")
+      .spyOn(sendAarClient, "createClient")
       .mockImplementation(input => mockCreateClient(input));
 
     const baseUrl = "https://localhost:3000";
@@ -27,7 +27,7 @@ describe("createSendAARClientWithLollipop", () => {
       },
       publicKeyThumbprint: "qwe"
     };
-    createSendAARClientWithLollipop(baseUrl, keyInfo);
+    createSendAarClientWithLollipop(baseUrl, keyInfo);
 
     expect(mockCreateClient.mock.calls.length).toBe(1);
     expect(mockCreateClient.mock.calls[0].length).toBe(1);

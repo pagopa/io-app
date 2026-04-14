@@ -15,7 +15,7 @@ import { decodePosteDataMatrix } from "../../../utils/payment";
 import { ItwRemoteRequestPayload } from "../../itwallet/presentation/remote/utils/itwRemoteTypeUtils";
 import { validateItwPresentationQrCodeParams } from "../../itwallet/presentation/remote/utils/itwRemotePresentationUtils";
 import { selectItwSpecsVersion } from "../../itwallet/common/store/selectors/environment";
-import { pnAARQRCodeRegexSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import { pnAarQRCodeRegexSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { IOBarcodeType } from "./IOBarcode";
 
 // Discriminated barcode type
@@ -98,7 +98,7 @@ const decodePagoPAQRCode: IOBarcodeStaticDecoderFn = (data: string) =>
         rptIdFromPaymentNoticeQrCode(paymentNotice),
         E.map(
           rptId =>
-            ({ type: "PAGOPA", rptId, amount: paymentNotice.amount } as const)
+            ({ type: "PAGOPA", rptId, amount: paymentNotice.amount }) as const
         )
       )
     ),
@@ -109,7 +109,7 @@ const decodePagoPADataMatrix: IOBarcodeStaticDecoderFn = (data: string) =>
   pipe(
     data,
     decodePosteDataMatrix,
-    O.map(({ e1, e2 }) => ({ type: "PAGOPA", rptId: e1, amount: e2 } as const))
+    O.map(({ e1, e2 }) => ({ type: "PAGOPA", rptId: e1, amount: e2 }) as const)
   );
 
 const decodePagoPABarcode: IOBarcodeStaticDecoderFn = (data: string) =>
@@ -154,13 +154,13 @@ const decodeItwRemoteBarcode: IOBarcodeRuntimeDecoderFn = (
     }))
   );
 
-const decodeSENDAARBarcode: IOBarcodeRuntimeDecoderFn = (
+const decodeSENDAarBarcode: IOBarcodeRuntimeDecoderFn = (
   state: GlobalState,
   data: string
 ) =>
   pipe(
     state,
-    pnAARQRCodeRegexSelector,
+    pnAarQRCodeRegexSelector,
     O.fromNullable,
     O.map(aarQRCodeRegexString => new RegExp(aarQRCodeRegexString, "i")),
     O.filter(aarQRCodeRegExp => aarQRCodeRegExp.test(data)),
@@ -187,7 +187,7 @@ const StaticIOBarcodeDecoders: IOBarcodeStaticDecodersType = {
 };
 
 const RuntimeIOBarcodeDecoders: IOBarcodeRuntimeDecodersType = {
-  SEND: decodeSENDAARBarcode,
+  SEND: decodeSENDAarBarcode,
   ITW_REMOTE: decodeItwRemoteBarcode
 };
 

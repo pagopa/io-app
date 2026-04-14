@@ -12,6 +12,7 @@ import { GlobalState } from "../../store/reducers/types";
 import { linkingSubscription } from "../linkingSubscription";
 import { initiateAarFlow } from "../../features/pn/aar/store/actions";
 import { IO_LOGIN_CIE_URL_SCHEME } from "../../features/authentication/login/cie/utils/cie";
+import * as LINKING_ANALYTICS from "../../features/linking/analytics";
 
 describe("linkingSubscription", () => {
   beforeEach(() => {
@@ -24,7 +25,7 @@ describe("linkingSubscription", () => {
 
     const removeMock = jest.fn();
     addEventListenerSpy.mockImplementation(
-      () => ({ remove: removeMock } as any)
+      () => ({ remove: removeMock }) as any
     );
 
     const mockUnsubscribe = mockCurrySubscription(jest.fn());
@@ -58,6 +59,23 @@ describe("linkingSubscription", () => {
     );
   });
 
+  it("should call 'trackIOOpenedFromUniversalAppLink' when a URL is received", () => {
+    const { mockCurrySubscription, addEventListenerSpy } = initializeTests();
+    const mockTrackIOOpenedFromUniversalAppLink = jest.fn();
+
+    jest
+      .spyOn(LINKING_ANALYTICS, "trackIOOpenedFromUniversalAppLink")
+      .mockImplementation(mockTrackIOOpenedFromUniversalAppLink);
+
+    mockCurrySubscription(jest.fn());
+
+    const testUrl = "https://example.com";
+    runEventListenerCallback(addEventListenerSpy, { url: testUrl });
+
+    expect(mockTrackIOOpenedFromUniversalAppLink).toHaveBeenCalledTimes(1);
+    expect(mockTrackIOOpenedFromUniversalAppLink).toHaveBeenCalledWith(testUrl);
+  });
+
   it.each([false, true])(
     `should dispatch 'resetMessageArchivingAction' if archiving is not disabled; archiving : %d`,
     isDisabled => {
@@ -87,23 +105,23 @@ describe("linkingSubscription", () => {
   );
 
   [true, false].forEach(isLoggedIn => {
-    [true, false].forEach(isAARLink => {
+    [true, false].forEach(isAarLink => {
       it(`should handle a URL event when${
         isLoggedIn ? "" : " not"
       } logged in, and the link passed ${
-        isAARLink ? "is" : "isn't"
-      } a valid AAR link`, () => {
+        isAarLink ? "is" : "isn't"
+      } a valid Aar link`, () => {
         const { mockDispatch, mockCurrySubscription, addEventListenerSpy } =
           initializeTests();
         const mockNav = jest.fn();
-        const testUrl = `https://example.com/${isAARLink}/${isLoggedIn}`;
+        const testUrl = `https://example.com/${isAarLink}/${isLoggedIn}`;
 
         jest
           .spyOn(UTIL_GUARDS, "isLoggedIn")
           .mockImplementation(() => isLoggedIn);
         jest
-          .spyOn(DEEP_LINKING, "isSendAARLink")
-          .mockImplementation(() => isAARLink);
+          .spyOn(DEEP_LINKING, "isSendAarLink")
+          .mockImplementation(() => isAarLink);
 
         mockCurrySubscription(jest.fn());
 
@@ -115,7 +133,7 @@ describe("linkingSubscription", () => {
             expect.objectContaining({ type: "STORE_LINKING_URL" })
           );
 
-          if (isAARLink) {
+          if (isAarLink) {
             expect(mockDispatch).toHaveBeenCalledWith(
               initiateAarFlow({ aarUrl: testUrl })
             );
