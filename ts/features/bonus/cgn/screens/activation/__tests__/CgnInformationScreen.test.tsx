@@ -1,14 +1,25 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import { createStore } from "redux";
 import { BonusAvailable } from "../../../../../../../definitions/content/BonusAvailable";
 import { applicationChangeState } from "../../../../../../store/actions/application";
+import { useIODispatch } from "../../../../../../store/hooks";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
-import CGN_ROUTES from "../../../navigation/routes";
-import CgnInformationScreen from "../CgnInformationScreen";
 import { ID_CGN_TYPE } from "../../../../common/utils";
+import CGN_ROUTES from "../../../navigation/routes";
+import {
+  cgnActivationBack,
+  cgnRequestActivation
+} from "../../../store/actions/activation";
+import CgnInformationScreen from "../CgnInformationScreen";
+
+jest.mock("../../../../../../store/hooks", () => ({
+  ...jest.requireActual("../../../../../../store/hooks"),
+  useIODispatch: jest.fn()
+}));
 
 const mockCgnBonus: BonusAvailable = {
   id_type: ID_CGN_TYPE,
@@ -53,5 +64,41 @@ describe("CgnInformationScreen", () => {
     } as unknown as GlobalState;
     const { getByText } = renderComponent(state);
     expect(getByText(I18n.t("bonus.cgn.cta.activeBonus"))).toBeTruthy();
+  });
+
+  it("should trigger activation action on button press", () => {
+    const dispatchMock = jest.fn();
+    (useIODispatch as jest.Mock).mockReturnValue(dispatchMock);
+
+    const state = {
+      ...globalState,
+      bonus: {
+        ...globalState.bonus,
+        availableBonusTypes: pot.some([mockCgnBonus])
+      }
+    } as unknown as GlobalState;
+    const { getByTestId } = renderComponent(state);
+    const button = getByTestId("activate-bonus-button");
+    fireEvent.press(button);
+
+    expect(dispatchMock).toHaveBeenCalledWith(cgnRequestActivation());
+  });
+
+  it("should trigger back action on back button press", () => {
+    const dispatchMock = jest.fn();
+    (useIODispatch as jest.Mock).mockReturnValue(dispatchMock);
+
+    const state = {
+      ...globalState,
+      bonus: {
+        ...globalState.bonus,
+        availableBonusTypes: pot.some([mockCgnBonus])
+      }
+    } as unknown as GlobalState;
+    const { getByText } = renderComponent(state);
+    const button = getByText(I18n.t("bonus.cgn.cta.back"));
+    fireEvent.press(button);
+
+    expect(dispatchMock).toHaveBeenCalledWith(cgnActivationBack());
   });
 });
