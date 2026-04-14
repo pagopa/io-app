@@ -1065,58 +1065,54 @@ exports[`ItwProximityQrCodeScreen should render QR code when ready 1`] = `
                             <View
                               style={
                                 {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "gap": 8,
-                                  "justifyContent": "center",
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 16,
                                 }
                               }
                             >
-                              <SvgMock
-                                height={28}
-                                width={134}
+                              <View
+                                style={
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "gap": 8,
+                                    "justifyContent": "center",
+                                  }
+                                }
+                              >
+                                <SvgMock
+                                  height={28}
+                                  width={134}
+                                />
+                              </View>
+                              <Text
+                                allowFontScaling={true}
+                                dynamicTypeRamp="footnote"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#555C70",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 14,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "400",
+                                      "lineHeight": 21,
+                                    },
+                                    {
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
+                              >
+                                Mostra questo codice QR a chi verifica i tuoi documenti digitali
+                              </Text>
+                              <View
+                                testID="qrcode"
                               />
                             </View>
-                            <View
-                              style={
-                                {
-                                  "height": 8,
-                                }
-                              }
-                            />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="footnote"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 14,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 21,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                            >
-                              Mostra questo codice QR a chi verifica i tuoi documenti digitali
-                            </Text>
-                            <View
-                              style={
-                                {
-                                  "height": 16,
-                                }
-                              }
-                            />
-                            <View
-                              testID="qrcode"
-                            />
                           </View>
                         </View>
                       </RCTScrollView>
@@ -2198,247 +2194,171 @@ exports[`ItwProximityQrCodeScreen should render error state when QR code generat
                             <View
                               style={
                                 {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "gap": 8,
-                                  "justifyContent": "center",
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 16,
                                 }
                               }
                             >
-                              <SvgMock
-                                height={28}
-                                width={134}
-                              />
-                            </View>
-                            <View
-                              style={
-                                {
-                                  "height": 16,
-                                }
-                              }
-                            />
-                            <View
-                              style={
-                                {
-                                  "alignItems": "center",
-                                  "aspectRatio": 1,
-                                  "backgroundColor": "#F4F5F8",
-                                  "borderRadius": 16,
-                                  "gap": 8,
-                                  "justifyContent": "center",
-                                  "padding": 16,
-                                }
-                              }
-                            >
-                              <RNSVGSvgView
-                                accessibilityElementsHidden={true}
-                                accessibilityLabel=""
-                                accessible={false}
-                                align="xMidYMid"
-                                bbHeight={24}
-                                bbWidth={24}
-                                color="#555C70"
-                                focusable={false}
-                                height={24}
-                                importantForAccessibility="no-hide-descendants"
-                                meetOrSlice={0}
-                                minX={0}
-                                minY={0}
-                                style={
-                                  [
-                                    {
-                                      "backgroundColor": "transparent",
-                                      "borderWidth": 0,
-                                    },
-                                    {
-                                      "flex": 0,
-                                      "height": 24,
-                                      "width": 24,
-                                    },
-                                  ]
-                                }
-                                vbHeight={24}
-                                vbWidth={24}
-                                width={24}
-                              >
-                                <RNSVGGroup
-                                  fill={
-                                    {
-                                      "payload": 4278190080,
-                                      "type": 0,
-                                    }
-                                  }
-                                >
-                                  <RNSVGPath
-                                    clipRule={0}
-                                    d="m15.523 3.047 7.926 13.813c1.566 2.73-.392 6.14-3.523 6.14H4.074C.942 23-1.015 19.59.55 16.86L8.477 3.047c1.566-2.73 5.48-2.73 7.046 0Zm-3.495 13.458a1.528 1.528 0 1 1 0 3.056 1.528 1.528 0 0 1 0-3.056Zm0-1.944c.568 0 1.029-.46 1.029-1.028V5.528a1.028 1.028 0 0 0-2.057 0v8.005c0 .567.46 1.028 1.029 1.028Z"
-                                    fill={
-                                      {
-                                        "type": 2,
-                                      }
-                                    }
-                                    fillRule={0}
-                                    propList={
-                                      [
-                                        "fill",
-                                        "fillRule",
-                                      ]
-                                    }
-                                  />
-                                </RNSVGGroup>
-                              </RNSVGSvgView>
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="body"
-                                maxFontSizeMultiplier={1.5}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 24,
-                                    },
-                                    {
-                                      "textAlign": "center",
-                                    },
-                                  ]
-                                }
-                              >
-                                Abbiamo avuto un problema nel generare il QR Code.
-                              </Text>
                               <View
                                 style={
-                                  [
-                                    {
-                                      "marginTop": 0,
-                                    },
-                                    false,
-                                  ]
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "gap": 8,
+                                    "justifyContent": "center",
+                                  }
                                 }
                               >
+                                <SvgMock
+                                  height={28}
+                                  width={134}
+                                />
+                              </View>
+                              <View
+                                style={
+                                  {
+                                    "alignItems": "center",
+                                    "aspectRatio": 1,
+                                    "backgroundColor": "#F4F5F8",
+                                    "borderRadius": 16,
+                                    "gap": 8,
+                                    "justifyContent": "center",
+                                    "padding": 16,
+                                  }
+                                }
+                              >
+                                <RNSVGSvgView
+                                  accessibilityElementsHidden={true}
+                                  accessibilityLabel=""
+                                  accessible={false}
+                                  align="xMidYMid"
+                                  bbHeight={24}
+                                  bbWidth={24}
+                                  color="#555C70"
+                                  focusable={false}
+                                  height={24}
+                                  importantForAccessibility="no-hide-descendants"
+                                  meetOrSlice={0}
+                                  minX={0}
+                                  minY={0}
+                                  style={
+                                    [
+                                      {
+                                        "backgroundColor": "transparent",
+                                        "borderWidth": 0,
+                                      },
+                                      {
+                                        "flex": 0,
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                    ]
+                                  }
+                                  vbHeight={24}
+                                  vbWidth={24}
+                                  width={24}
+                                >
+                                  <RNSVGGroup
+                                    fill={
+                                      {
+                                        "payload": 4278190080,
+                                        "type": 0,
+                                      }
+                                    }
+                                  >
+                                    <RNSVGPath
+                                      clipRule={0}
+                                      d="m15.523 3.047 7.926 13.813c1.566 2.73-.392 6.14-3.523 6.14H4.074C.942 23-1.015 19.59.55 16.86L8.477 3.047c1.566-2.73 5.48-2.73 7.046 0Zm-3.495 13.458a1.528 1.528 0 1 1 0 3.056 1.528 1.528 0 0 1 0-3.056Zm0-1.944c.568 0 1.029-.46 1.029-1.028V5.528a1.028 1.028 0 0 0-2.057 0v8.005c0 .567.46 1.028 1.029 1.028Z"
+                                      fill={
+                                        {
+                                          "type": 2,
+                                        }
+                                      }
+                                      fillRule={0}
+                                      propList={
+                                        [
+                                          "fill",
+                                          "fillRule",
+                                        ]
+                                      }
+                                    />
+                                  </RNSVGGroup>
+                                </RNSVGSvgView>
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 24,
+                                      },
+                                      {
+                                        "textAlign": "center",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Abbiamo avuto un problema nel generare il QR Code.
+                                </Text>
                                 <View
-                                  accessibilityLabel="Riprova"
-                                  accessibilityRole="button"
-                                  accessibilityState={
-                                    {
-                                      "busy": false,
-                                      "checked": undefined,
-                                      "disabled": false,
-                                      "expanded": undefined,
-                                      "selected": undefined,
-                                    }
-                                  }
-                                  accessibilityValue={
-                                    {
-                                      "max": undefined,
-                                      "min": undefined,
-                                      "now": undefined,
-                                      "text": undefined,
-                                    }
-                                  }
-                                  accessible={true}
-                                  collapsable={false}
-                                  focusable={true}
-                                  hitSlop={
-                                    {
-                                      "bottom": 14,
-                                      "left": 24,
-                                      "right": 24,
-                                      "top": 14,
-                                    }
-                                  }
-                                  onBlur={[Function]}
-                                  onClick={[Function]}
-                                  onFocus={[Function]}
-                                  onResponderGrant={[Function]}
-                                  onResponderMove={[Function]}
-                                  onResponderRelease={[Function]}
-                                  onResponderTerminate={[Function]}
-                                  onResponderTerminationRequest={[Function]}
-                                  onStartShouldSetResponder={[Function]}
                                   style={
                                     {
-                                      "alignSelf": "flex-start",
+                                      "marginTop": 0,
                                     }
                                   }
                                 >
                                   <View
+                                    accessibilityLabel="Riprova"
+                                    accessibilityRole="button"
+                                    accessibilityState={
+                                      {
+                                        "busy": false,
+                                        "checked": undefined,
+                                        "disabled": false,
+                                        "expanded": undefined,
+                                        "selected": undefined,
+                                      }
+                                    }
+                                    accessibilityValue={
+                                      {
+                                        "max": undefined,
+                                        "min": undefined,
+                                        "now": undefined,
+                                        "text": undefined,
+                                      }
+                                    }
+                                    accessible={true}
                                     collapsable={false}
-                                    jestAnimatedProps={
+                                    focusable={true}
+                                    hitSlop={
                                       {
-                                        "value": {},
+                                        "bottom": 14,
+                                        "left": 24,
+                                        "right": 24,
+                                        "top": 14,
                                       }
                                     }
-                                    jestAnimatedStyle={
-                                      {
-                                        "value": {
-                                          "transform": [
-                                            {
-                                              "scale": 1,
-                                            },
-                                          ],
-                                        },
-                                      }
-                                    }
-                                    jestInlineStyle={
-                                      [
-                                        {
-                                          "alignItems": "center",
-                                          "borderCurve": "continuous",
-                                          "elevation": 0,
-                                          "flexDirection": "row",
-                                          "justifyContent": "center",
-                                          "overflow": "hidden",
-                                          "textAlignVertical": "center",
-                                        },
-                                        {
-                                          "paddingHorizontal": 0,
-                                        },
-                                        {
-                                          "backgroundColor": "transparent",
-                                          "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
-                                          "borderWidth": 0,
-                                          "height": undefined,
-                                        },
-                                        {},
-                                      ]
-                                    }
+                                    onBlur={[Function]}
+                                    onClick={[Function]}
+                                    onFocus={[Function]}
+                                    onResponderGrant={[Function]}
+                                    onResponderMove={[Function]}
+                                    onResponderRelease={[Function]}
+                                    onResponderTerminate={[Function]}
+                                    onResponderTerminationRequest={[Function]}
+                                    onStartShouldSetResponder={[Function]}
                                     style={
-                                      [
-                                        {
-                                          "alignItems": "center",
-                                          "borderCurve": "continuous",
-                                          "elevation": 0,
-                                          "flexDirection": "row",
-                                          "justifyContent": "center",
-                                          "overflow": "hidden",
-                                          "textAlignVertical": "center",
-                                        },
-                                        {
-                                          "transform": [
-                                            {
-                                              "scale": 1,
-                                            },
-                                          ],
-                                        },
-                                        {},
-                                        {
-                                          "paddingHorizontal": 0,
-                                        },
-                                        {
-                                          "backgroundColor": "transparent",
-                                          "borderColor": "#0B3EE3",
-                                          "borderRadius": 8,
-                                          "borderWidth": 0,
-                                          "height": undefined,
-                                        },
-                                        {},
-                                      ]
+                                      {
+                                        "alignSelf": "flex-start",
+                                      }
                                     }
                                   >
                                     <View
@@ -2450,43 +2370,74 @@ exports[`ItwProximityQrCodeScreen should render error state when QR code generat
                                       }
                                       jestAnimatedStyle={
                                         {
-                                          "value": {},
+                                          "value": {
+                                            "transform": [
+                                              {
+                                                "scale": 1,
+                                              },
+                                            ],
+                                          },
                                         }
                                       }
                                       jestInlineStyle={
                                         [
                                           {
                                             "alignItems": "center",
+                                            "borderCurve": "continuous",
+                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                            "overflow": "hidden",
+                                            "textAlignVertical": "center",
                                           },
                                           {
-                                            "columnGap": 8,
+                                            "paddingHorizontal": 0,
                                           },
-                                          false,
+                                          {
+                                            "backgroundColor": "transparent",
+                                            "borderColor": "#0B3EE3",
+                                            "borderRadius": 8,
+                                            "borderWidth": 0,
+                                            "height": undefined,
+                                          },
+                                          {},
                                         ]
                                       }
                                       style={
                                         [
                                           {
                                             "alignItems": "center",
+                                            "borderCurve": "continuous",
+                                            "elevation": 0,
                                             "flexDirection": "row",
                                             "justifyContent": "center",
+                                            "overflow": "hidden",
+                                            "textAlignVertical": "center",
                                           },
                                           {
-                                            "columnGap": 8,
+                                            "transform": [
+                                              {
+                                                "scale": 1,
+                                              },
+                                            ],
                                           },
-                                          false,
+                                          {},
+                                          {
+                                            "paddingHorizontal": 0,
+                                          },
+                                          {
+                                            "backgroundColor": "transparent",
+                                            "borderColor": "#0B3EE3",
+                                            "borderRadius": 8,
+                                            "borderWidth": 0,
+                                            "height": undefined,
+                                          },
+                                          {},
                                         ]
                                       }
                                     >
-                                      <Text
-                                        accessibilityElementsHidden={true}
-                                        accessible={false}
-                                        allowFontScaling={true}
+                                      <View
                                         collapsable={false}
-                                        ellipsizeMode="tail"
-                                        importantForAccessibility="no-hide-descendants"
                                         jestAnimatedProps={
                                           {
                                             "value": {},
@@ -2494,34 +2445,56 @@ exports[`ItwProximityQrCodeScreen should render error state when QR code generat
                                         }
                                         jestAnimatedStyle={
                                           {
-                                            "value": {
-                                              "color": "rgba(11, 62, 227, 1)",
-                                            },
+                                            "value": {},
                                           }
                                         }
                                         jestInlineStyle={
                                           [
                                             {
-                                              "textAlign": "auto",
+                                              "alignItems": "center",
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
                                             },
                                             {
-                                              "color": "#0B3EE3",
+                                              "columnGap": 8,
                                             },
+                                            false,
                                           ]
                                         }
-                                        maxFontSizeMultiplier={1.5}
-                                        numberOfLines={1}
                                         style={
                                           [
-                                            {},
                                             {
-                                              "color": undefined,
-                                              "fontFamily": "Titillio",
-                                              "fontSize": 16,
-                                              "fontStyle": "normal",
-                                              "fontWeight": "600",
-                                              "lineHeight": 20,
+                                              "alignItems": "center",
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
                                             },
+                                            {
+                                              "columnGap": 8,
+                                            },
+                                            false,
+                                          ]
+                                        }
+                                      >
+                                        <Text
+                                          accessibilityElementsHidden={true}
+                                          accessible={false}
+                                          allowFontScaling={true}
+                                          collapsable={false}
+                                          ellipsizeMode="tail"
+                                          importantForAccessibility="no-hide-descendants"
+                                          jestAnimatedProps={
+                                            {
+                                              "value": {},
+                                            }
+                                          }
+                                          jestAnimatedStyle={
+                                            {
+                                              "value": {
+                                                "color": "rgba(11, 62, 227, 1)",
+                                              },
+                                            }
+                                          }
+                                          jestInlineStyle={
                                             [
                                               {
                                                 "textAlign": "auto",
@@ -2529,15 +2502,38 @@ exports[`ItwProximityQrCodeScreen should render error state when QR code generat
                                               {
                                                 "color": "#0B3EE3",
                                               },
+                                            ]
+                                          }
+                                          maxFontSizeMultiplier={1.5}
+                                          numberOfLines={1}
+                                          style={
+                                            [
+                                              {},
                                               {
-                                                "color": "rgba(11, 62, 227, 1)",
+                                                "color": undefined,
+                                                "fontFamily": "Titillio",
+                                                "fontSize": 16,
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                                "lineHeight": 20,
                                               },
-                                            ],
-                                          ]
-                                        }
-                                      >
-                                        Riprova
-                                      </Text>
+                                              [
+                                                {
+                                                  "textAlign": "auto",
+                                                },
+                                                {
+                                                  "color": "#0B3EE3",
+                                                },
+                                                {
+                                                  "color": "rgba(11, 62, 227, 1)",
+                                                },
+                                              ],
+                                            ]
+                                          }
+                                        >
+                                          Riprova
+                                        </Text>
+                                      </View>
                                     </View>
                                   </View>
                                 </View>
@@ -3624,109 +3620,82 @@ exports[`ItwProximityQrCodeScreen should render loading skeleton when machine is
                             <View
                               style={
                                 {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "gap": 8,
-                                  "justifyContent": "center",
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 16,
                                 }
                               }
                             >
-                              <SvgMock
-                                height={28}
-                                width={134}
+                              <View
+                                style={
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "gap": 8,
+                                    "justifyContent": "center",
+                                  }
+                                }
+                              >
+                                <SvgMock
+                                  height={28}
+                                  width={134}
+                                />
+                              </View>
+                              <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "backgroundColor": "#E8EBF1",
+                                      "borderCurve": "continuous",
+                                      "borderRadius": 16,
+                                      "height": 670,
+                                      "width": 670,
+                                    },
+                                    {
+                                      "animationDuration": "1250ms",
+                                      "animationIterationCount": "infinite",
+                                      "animationName": {
+                                        "0%, 100%": {
+                                          "opacity": 0.75,
+                                        },
+                                        "50%": {
+                                          "opacity": 0.35,
+                                        },
+                                      },
+                                      "animationTimingFunction": CubicBezierEasing {
+                                        "x1": 0.37,
+                                        "x2": 0.63,
+                                        "y1": 0,
+                                        "y2": 1,
+                                      },
+                                    },
+                                  ]
+                                }
+                                style={
+                                  [
+                                    {
+                                      "backgroundColor": "#E8EBF1",
+                                      "borderCurve": "continuous",
+                                      "borderRadius": 16,
+                                      "height": 670,
+                                      "width": 670,
+                                    },
+                                    {},
+                                  ]
+                                }
                               />
                             </View>
-                            <View
-                              style={
-                                {
-                                  "height": 8,
-                                }
-                              }
-                            />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="footnote"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 14,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 21,
-                                  },
-                                  {
-                                    "textAlign": "center",
-                                  },
-                                ]
-                              }
-                            >
-                              Mostra questo codice QR a chi verifica i tuoi documenti digitali
-                            </Text>
-                            <View
-                              style={
-                                {
-                                  "height": 16,
-                                }
-                              }
-                            />
-                            <View
-                              collapsable={false}
-                              jestAnimatedProps={
-                                {
-                                  "value": {},
-                                }
-                              }
-                              jestAnimatedStyle={
-                                {
-                                  "value": {},
-                                }
-                              }
-                              jestInlineStyle={
-                                [
-                                  {
-                                    "backgroundColor": "#E8EBF1",
-                                    "borderCurve": "continuous",
-                                    "borderRadius": 16,
-                                    "height": 678,
-                                    "width": 678,
-                                  },
-                                  {
-                                    "animationDuration": "1250ms",
-                                    "animationIterationCount": "infinite",
-                                    "animationName": {
-                                      "0%, 100%": {
-                                        "opacity": 0.75,
-                                      },
-                                      "50%": {
-                                        "opacity": 0.35,
-                                      },
-                                    },
-                                    "animationTimingFunction": CubicBezierEasing {
-                                      "x1": 0.37,
-                                      "x2": 0.63,
-                                      "y1": 0,
-                                      "y2": 1,
-                                    },
-                                  },
-                                ]
-                              }
-                              style={
-                                [
-                                  {
-                                    "backgroundColor": "#E8EBF1",
-                                    "borderCurve": "continuous",
-                                    "borderRadius": 16,
-                                    "height": 678,
-                                    "width": 678,
-                                  },
-                                  {},
-                                ]
-                              }
-                            />
                           </View>
                         </View>
                       </RCTScrollView>
@@ -4808,175 +4777,178 @@ exports[`ItwProximityQrCodeScreen when credentials are expired should render blo
                             <View
                               style={
                                 {
-                                  "alignItems": "center",
-                                  "flexDirection": "row",
-                                  "gap": 8,
-                                  "justifyContent": "center",
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 16,
                                 }
                               }
                             >
-                              <SvgMock
-                                height={28}
-                                width={134}
-                              />
-                              <RNSVGSvgView
-                                accessibilityElementsHidden={true}
-                                accessibilityLabel=""
-                                accessible={false}
-                                align="xMidYMid"
-                                bbHeight={20}
-                                bbWidth={20}
-                                color="#D13333"
-                                focusable={false}
-                                height={20}
-                                importantForAccessibility="no-hide-descendants"
-                                meetOrSlice={0}
-                                minX={0}
-                                minY={0}
+                              <View
                                 style={
-                                  [
-                                    {
-                                      "backgroundColor": "transparent",
-                                      "borderWidth": 0,
-                                    },
-                                    {
-                                      "flex": 0,
-                                      "height": 20,
-                                      "width": 20,
-                                    },
-                                  ]
-                                }
-                                vbHeight={24}
-                                vbWidth={24}
-                                width={20}
-                              >
-                                <RNSVGGroup
-                                  fill={
-                                    {
-                                      "payload": 4278190080,
-                                      "type": 0,
-                                    }
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "gap": 8,
+                                    "justifyContent": "center",
                                   }
+                                }
+                              >
+                                <SvgMock
+                                  height={28}
+                                  width={134}
+                                />
+                                <RNSVGSvgView
+                                  accessibilityElementsHidden={true}
+                                  accessibilityLabel=""
+                                  accessible={false}
+                                  align="xMidYMid"
+                                  bbHeight={20}
+                                  bbWidth={20}
+                                  color="#D13333"
+                                  focusable={false}
+                                  height={20}
+                                  importantForAccessibility="no-hide-descendants"
+                                  meetOrSlice={0}
+                                  minX={0}
+                                  minY={0}
+                                  style={
+                                    [
+                                      {
+                                        "backgroundColor": "transparent",
+                                        "borderWidth": 0,
+                                      },
+                                      {
+                                        "flex": 0,
+                                        "height": 20,
+                                        "width": 20,
+                                      },
+                                    ]
+                                  }
+                                  vbHeight={24}
+                                  vbWidth={24}
+                                  width={20}
                                 >
-                                  <RNSVGPath
-                                    clipRule={0}
-                                    d="M7.00702 1c-.73494 0-1.41405.39209-1.78152 1.02856L.2756 11.0274c-.36747.6365-.36747 1.4206 0 2.0571l4.9499 8.8783c.36747.6365 1.04658 1.0286 1.78152 1.0286h9.94288c.7349 0 1.414-.3921 1.7815-1.0286l4.993-8.8783c.3675-.6365.3675-1.4206 0-2.0571l-4.993-8.99884C18.3639 1.39209 17.6848 1 16.9499 1H7.00702Zm5.02608 13.5549c.5676 0 1.0283-.4601 1.0283-1.0277V5.52583c0-.56758-.4601-1.02769-1.0277-1.02769-.5676 0-1.0282.46011-1.0282 1.02769v8.00137c0 .5676.4601 1.0277 1.0276 1.0277Zm0 1.9431c.8436 0 1.5275.6839 1.5275 1.5275 0 .8436-.6839 1.5275-1.5275 1.5275-.8436 0-1.5274-.6839-1.5274-1.5275 0-.8436.6838-1.5275 1.5274-1.5275Z"
+                                  <RNSVGGroup
                                     fill={
                                       {
-                                        "type": 2,
+                                        "payload": 4278190080,
+                                        "type": 0,
                                       }
                                     }
-                                    fillRule={0}
-                                    propList={
-                                      [
-                                        "fill",
-                                        "fillRule",
-                                      ]
-                                    }
-                                  />
-                                </RNSVGGroup>
-                              </RNSVGSvgView>
-                            </View>
-                            <View
-                              style={
-                                {
-                                  "height": 16,
-                                }
-                              }
-                            />
-                            <View
-                              style={
-                                {
-                                  "alignItems": "center",
-                                  "aspectRatio": 1,
-                                  "backgroundColor": "#F4F5F8",
-                                  "borderRadius": 16,
-                                  "gap": 8,
-                                  "justifyContent": "center",
-                                  "padding": 16,
-                                }
-                              }
-                            >
-                              <RNSVGSvgView
-                                accessibilityElementsHidden={true}
-                                accessibilityLabel=""
-                                accessible={false}
-                                align="xMidYMid"
-                                bbHeight={24}
-                                bbWidth={24}
-                                color="#555C70"
-                                focusable={false}
-                                height={24}
-                                importantForAccessibility="no-hide-descendants"
-                                meetOrSlice={0}
-                                minX={0}
-                                minY={0}
+                                  >
+                                    <RNSVGPath
+                                      clipRule={0}
+                                      d="M7.00702 1c-.73494 0-1.41405.39209-1.78152 1.02856L.2756 11.0274c-.36747.6365-.36747 1.4206 0 2.0571l4.9499 8.8783c.36747.6365 1.04658 1.0286 1.78152 1.0286h9.94288c.7349 0 1.414-.3921 1.7815-1.0286l4.993-8.8783c.3675-.6365.3675-1.4206 0-2.0571l-4.993-8.99884C18.3639 1.39209 17.6848 1 16.9499 1H7.00702Zm5.02608 13.5549c.5676 0 1.0283-.4601 1.0283-1.0277V5.52583c0-.56758-.4601-1.02769-1.0277-1.02769-.5676 0-1.0282.46011-1.0282 1.02769v8.00137c0 .5676.4601 1.0277 1.0276 1.0277Zm0 1.9431c.8436 0 1.5275.6839 1.5275 1.5275 0 .8436-.6839 1.5275-1.5275 1.5275-.8436 0-1.5274-.6839-1.5274-1.5275 0-.8436.6838-1.5275 1.5274-1.5275Z"
+                                      fill={
+                                        {
+                                          "type": 2,
+                                        }
+                                      }
+                                      fillRule={0}
+                                      propList={
+                                        [
+                                          "fill",
+                                          "fillRule",
+                                        ]
+                                      }
+                                    />
+                                  </RNSVGGroup>
+                                </RNSVGSvgView>
+                              </View>
+                              <View
                                 style={
-                                  [
-                                    {
-                                      "backgroundColor": "transparent",
-                                      "borderWidth": 0,
-                                    },
-                                    {
-                                      "flex": 0,
-                                      "height": 24,
-                                      "width": 24,
-                                    },
-                                  ]
-                                }
-                                vbHeight={24}
-                                vbWidth={24}
-                                width={24}
-                              >
-                                <RNSVGGroup
-                                  fill={
-                                    {
-                                      "payload": 4278190080,
-                                      "type": 0,
-                                    }
+                                  {
+                                    "alignItems": "center",
+                                    "aspectRatio": 1,
+                                    "backgroundColor": "#F4F5F8",
+                                    "borderRadius": 16,
+                                    "gap": 8,
+                                    "justifyContent": "center",
+                                    "padding": 16,
                                   }
+                                }
+                              >
+                                <RNSVGSvgView
+                                  accessibilityElementsHidden={true}
+                                  accessibilityLabel=""
+                                  accessible={false}
+                                  align="xMidYMid"
+                                  bbHeight={24}
+                                  bbWidth={24}
+                                  color="#555C70"
+                                  focusable={false}
+                                  height={24}
+                                  importantForAccessibility="no-hide-descendants"
+                                  meetOrSlice={0}
+                                  minX={0}
+                                  minY={0}
+                                  style={
+                                    [
+                                      {
+                                        "backgroundColor": "transparent",
+                                        "borderWidth": 0,
+                                      },
+                                      {
+                                        "flex": 0,
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                    ]
+                                  }
+                                  vbHeight={24}
+                                  vbWidth={24}
+                                  width={24}
                                 >
-                                  <RNSVGPath
-                                    clipRule={0}
-                                    d="M0 3a3 3 0 0 1 3-3h5a3 3 0 0 1 3 3v5a3 3 0 0 1-3 3H3a3 3 0 0 1-3-3V3Zm3-1a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H3ZM0 16a3 3 0 0 1 3-3h5a3 3 0 0 1 3 3v5a3 3 0 0 1-3 3H3a3 3 0 0 1-3-3v-5Zm3-1a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3ZM16 0a3 3 0 0 0-3 3v5a3 3 0 0 0 3 3h5a3 3 0 0 0 3-3V3a3 3 0 0 0-3-3h-5Zm-1 3a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1V3Zm-1.5 13.681a.5.5 0 0 1-.5-.5V13.5a.5.5 0 0 1 .5-.5h2.637a.5.5 0 0 1 .5.5v3.181H13.5Zm6.819 0h-3.682v3.637H13.5a.5.5 0 0 0-.5.5V23.5a.5.5 0 0 0 .5.5h3.137v-3.681h3.681V24H23.5a.5.5 0 0 0 .5-.5v-3.181h-3.681v-3.637Zm0 0V13.5a.5.5 0 0 1 .5-.5H23.5a.5.5 0 0 1 .5.5v3.181h-3.681ZM5 4a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H5ZM4 18a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1ZM18 4a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1h-1Z"
+                                  <RNSVGGroup
                                     fill={
                                       {
-                                        "type": 2,
+                                        "payload": 4278190080,
+                                        "type": 0,
                                       }
                                     }
-                                    fillRule={0}
-                                    propList={
-                                      [
-                                        "fill",
-                                        "fillRule",
-                                      ]
-                                    }
-                                  />
-                                </RNSVGGroup>
-                              </RNSVGSvgView>
-                              <Text
-                                allowFontScaling={true}
-                                dynamicTypeRamp="body"
-                                maxFontSizeMultiplier={1.5}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#555C70",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 16,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "400",
-                                      "lineHeight": 24,
-                                    },
-                                    {
-                                      "textAlign": "center",
-                                    },
-                                  ]
-                                }
-                              >
-                                Non puoi far verificare i tuoi documenti digitali.
-                              </Text>
+                                  >
+                                    <RNSVGPath
+                                      clipRule={0}
+                                      d="M0 3a3 3 0 0 1 3-3h5a3 3 0 0 1 3 3v5a3 3 0 0 1-3 3H3a3 3 0 0 1-3-3V3Zm3-1a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H3ZM0 16a3 3 0 0 1 3-3h5a3 3 0 0 1 3 3v5a3 3 0 0 1-3 3H3a3 3 0 0 1-3-3v-5Zm3-1a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3ZM16 0a3 3 0 0 0-3 3v5a3 3 0 0 0 3 3h5a3 3 0 0 0 3-3V3a3 3 0 0 0-3-3h-5Zm-1 3a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1V3Zm-1.5 13.681a.5.5 0 0 1-.5-.5V13.5a.5.5 0 0 1 .5-.5h2.637a.5.5 0 0 1 .5.5v3.181H13.5Zm6.819 0h-3.682v3.637H13.5a.5.5 0 0 0-.5.5V23.5a.5.5 0 0 0 .5.5h3.137v-3.681h3.681V24H23.5a.5.5 0 0 0 .5-.5v-3.181h-3.681v-3.637Zm0 0V13.5a.5.5 0 0 1 .5-.5H23.5a.5.5 0 0 1 .5.5v3.181h-3.681ZM5 4a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H5ZM4 18a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1ZM18 4a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1h-1Z"
+                                      fill={
+                                        {
+                                          "type": 2,
+                                        }
+                                      }
+                                      fillRule={0}
+                                      propList={
+                                        [
+                                          "fill",
+                                          "fillRule",
+                                        ]
+                                      }
+                                    />
+                                  </RNSVGGroup>
+                                </RNSVGSvgView>
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 24,
+                                      },
+                                      {
+                                        "textAlign": "center",
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Non puoi far verificare i tuoi documenti digitali.
+                                </Text>
+                              </View>
                             </View>
                           </View>
                           <View

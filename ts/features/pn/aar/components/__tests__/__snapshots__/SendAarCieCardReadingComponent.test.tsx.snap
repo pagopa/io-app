@@ -361,7 +361,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                             }
                           >
                             <View
-                              accessibilityLabel="0%"
+                              accessibilityLabel="global.accessibility.cieReadingProgress"
                               accessibilityRole="progressbar"
                               accessibilityValue={
                                 {
@@ -5216,7 +5216,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                             }
                           >
                             <View
-                              accessibilityLabel="0%"
+                              accessibilityLabel="global.accessibility.cieReadingProgress"
                               accessibilityRole="progressbar"
                               accessibilityValue={
                                 {
@@ -6161,7 +6161,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                             }
                           >
                             <View
-                              accessibilityLabel="0%"
+                              accessibilityLabel="global.accessibility.cieReadingProgress"
                               accessibilityRole="progressbar"
                               accessibilityValue={
                                 {
@@ -7126,7 +7126,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                             }
                           >
                             <View
-                              accessibilityLabel="50%"
+                              accessibilityLabel="global.accessibility.cieReadingProgress"
                               accessibilityRole="progressbar"
                               accessibilityValue={
                                 {
@@ -8091,7 +8091,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                             }
                           >
                             <View
-                              accessibilityLabel="100%"
+                              accessibilityLabel="global.accessibility.cieReadingProgress"
                               accessibilityRole="progressbar"
                               accessibilityValue={
                                 {
