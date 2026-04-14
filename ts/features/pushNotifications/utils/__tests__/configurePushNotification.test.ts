@@ -718,7 +718,7 @@ describe("configurePushNotifications", () => {
           persistedPreferences: {
             isMixpanelEnabled: true
           }
-        } as unknown as GlobalState)
+        }) as unknown as GlobalState
     } as unknown as Store;
     it("Should just call 'notification.finish' with proper parameters if the notification is not from a user interaction", () => {
       const notification = {

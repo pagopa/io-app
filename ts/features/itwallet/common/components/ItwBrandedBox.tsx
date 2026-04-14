@@ -14,6 +14,7 @@ import {
   StyleSheet,
   View
 } from "react-native";
+import LinearGradient from "react-native-linear-gradient";
 import {
   Extrapolation,
   interpolate,
@@ -31,7 +32,10 @@ type ItwIridescentBorderProps = {
   variant?: ItwSkiaBrandedGradientVariant;
   borderThickness?: number;
   borderRadius?: number;
+  backgroundVariant?: "solid" | "gradient";
 };
+
+const brandedBoxGradientColors = ["#FFFFFF", "#FBFDFF", "#F6FBFF", "#F2F9FF"];
 
 /* Light */
 const lightScaleMultiplier = 1;
@@ -44,12 +48,15 @@ const visibleLightPercentage = 0.25; // Visible light when it's near box boundar
 export const ItwBrandedBox = ({
   borderThickness = 3,
   borderRadius = 16,
+  backgroundVariant = "solid",
   variant = "default",
   children
 }: PropsWithChildren<ItwIridescentBorderProps>) => {
   const theme = useItWalletTheme();
   const { themeType } = useIOThemeContext();
   const isLightMode = themeType === "light";
+  const shouldUseGradientBackground =
+    isLightMode && backgroundVariant === "gradient";
 
   const [size, setSize] = useState<{ width: number; height: number }>({
     width: 0,
@@ -159,6 +166,16 @@ export const ItwBrandedBox = ({
         }
       ]}
     >
+      {shouldUseGradientBackground && (
+        <LinearGradient
+          pointerEvents="none"
+          colors={brandedBoxGradientColors}
+          start={{ x: 0.5, y: 0 }}
+          end={{ x: 0.5, y: 1 }}
+          style={StyleSheet.absoluteFill}
+        />
+      )}
+
       {/* Skia Canvas for border and light effect */}
       <Canvas
         style={{
@@ -187,10 +204,12 @@ export const ItwBrandedBox = ({
   );
 };
 
+export const ITW_BRANDED_BOX_PADDING = 16;
+
 const styles = StyleSheet.create({
   container: {
     borderCurve: "continuous",
-    padding: 16,
+    padding: ITW_BRANDED_BOX_PADDING,
     gap: 6,
     overflow: "hidden"
   }

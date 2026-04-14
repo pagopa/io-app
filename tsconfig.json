@@ -4,7 +4,7 @@
   "compilerOptions": {
     "jsx": "react-jsx",
     "target": "esnext",
-    "lib": ["es6", "dom", "es2019"],
+    "lib": ["es6", "dom", "es2019", "es2022"],
     "importHelpers": true,
     "noImplicitAny": true,
     "preserveConstEnums": true,
@@ -12,6 +12,7 @@
     "noImplicitReturns": true,
     "noUnusedParameters": true,
     "noUnusedLocals": true,
+    "strictNullChecks": true,
     "strictFunctionTypes": true,
     "useUnknownInCatchVariables": true,
   },

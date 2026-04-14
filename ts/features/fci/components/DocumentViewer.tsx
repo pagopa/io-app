@@ -21,6 +21,7 @@ import {
   fciDownloadPathSelector,
   fciDownloadPreviewSelector
 } from "../store/reducers/fciDownloadPreview";
+import { trackFciTosDocPreviewSuccess } from "../analytics";
 import LoadingComponent from "./LoadingComponent";
 
 const styles = StyleSheet.create({
@@ -137,6 +138,7 @@ export const DocumentViewer = (props: Props): ReactElement => {
             onError={_ => {
               setIsError(true);
             }}
+            onLoadComplete={() => trackFciTosDocPreviewSuccess()}
             enablePaging
           />
           {renderFooter(documentUrl, fciDownloadPath)}

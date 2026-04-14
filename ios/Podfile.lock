@@ -113,7 +113,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - IoReactNativeIso18013 (0.6.0):
+  - IoReactNativeIso18013 (0.8.0):
     - boost
     - DoubleConversion
     - fast_float
@@ -121,7 +121,7 @@ PODS:
     - glog
     - hermes-engine
     - IOWalletCBOR (= 0.2.1)
-    - IOWalletProximity (= 1.3.0)
+    - IOWalletProximity (= 1.4.1)
     - RCT-Folly
     - RCT-Folly/Fabric
     - RCTRequired
@@ -144,7 +144,7 @@ PODS:
     - SocketRocket
     - Yoga
   - IOWalletCBOR (0.2.1)
-  - IOWalletProximity (1.3.0)
+  - IOWalletProximity (1.4.1)
   - jail-monkey (2.8.3):
     - React-Core
   - JOSESwift (3.0.0)
@@ -3960,9 +3960,9 @@ SPEC CHECKSUMS:
   glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
   hermes-engine: 9f4dfe93326146a1c99eb535b1cb0b857a3cd172
   IoReactNativeCie: 8c772d46d499acad8cfab4e5993c5f50d78cd9e9
-  IoReactNativeIso18013: 16937f3e6f9a1369af0892fbde445f44682cfc51
+  IoReactNativeIso18013: efc3a6623463970575f986b6dc9b75fe9ba8b940
   IOWalletCBOR: 92742ef1cbd1b627ba153d0c7c11b81ad22f45cc
-  IOWalletProximity: 1836d6b5df0a64a97e09f355d15d5155f086f830
+  IOWalletProximity: 1d8fc9acc9d97d34364c42927af3ac682448977e
   jail-monkey: 9298d04aa09f8c9cdcf04e7bf597ea423b52b5bf
   JOSESwift: 7784b1b844194d0f534eb6ac4fba5af683bccc79
   Mixpanel-swift: e5dd85295923e6a875acf17ccbab8d2ecb10ea65

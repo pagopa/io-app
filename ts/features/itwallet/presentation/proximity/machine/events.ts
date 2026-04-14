@@ -5,7 +5,6 @@ import type {
 
 export type Start = {
   type: "start";
-  credentialType: string;
 };
 
 export type Back = {
@@ -26,6 +25,11 @@ export type Dismiss = {
 
 export type Retry = {
   type: "retry";
+};
+
+export type QrCodeString = {
+  type: "qr-code-string";
+  payload: string;
 };
 
 export type DeviceConnecting = {
@@ -63,6 +67,7 @@ export type ProximityEvents =
   | Close
   | Dismiss
   | Retry
+  | QrCodeString
   | DeviceConnecting
   | DeviceConnected
   | DeviceDisconnected

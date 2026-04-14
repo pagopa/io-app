@@ -47,9 +47,8 @@ export function* handleCgnStartActivationSaga(): SagaIterator {
     yield* call(NavigationService.getCurrentRoute);
 
   const sagaExecution = () => withResetNavigationStack(cgnActivationWorkUnit);
-  const result: SagaCallReturnType<typeof executeWorkUnit> = yield* call(
-    sagaExecution
-  );
+  const result: SagaCallReturnType<typeof executeWorkUnit> =
+    yield* call(sagaExecution);
 
   if (initialScreen?.name === CGN_ROUTES.ACTIVATION.CTA_START_CGN) {
     yield* call(NavigationService.navigate, ROUTES.MAIN, {
