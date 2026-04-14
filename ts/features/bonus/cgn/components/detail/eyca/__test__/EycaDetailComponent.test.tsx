@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react-native";
+import { fireEvent, render } from "@testing-library/react-native";
 import configureMockStore from "redux-mock-store";
 import { Provider } from "react-redux";
 import I18n from "i18next";
@@ -122,6 +122,53 @@ describe("EycaDetailComponent", () => {
       I18n.t("bonus.cgn.detail.status.eycaError")
     );
     expect(errorComponentText).not.toBeNull();
+  });
+
+  it("Should dispatch cgnEycaActivation.request when retry is pressed on error", () => {
+    const store = mockEYCAState(eycaCardPending, "ERROR");
+    const component = getComponent(store);
+
+    const retryButton = component.getByText(I18n.t("global.buttons.retry"));
+    fireEvent.press(retryButton);
+
+    expect(store.getActions()).toContainEqual(cgnEycaActivation.request());
+  });
+
+  it("Should show EYCA Error component if a card is Pending but activation is NOT_FOUND", () => {
+    const store = mockEYCAState(eycaCardPending, "NOT_FOUND");
+    const component = getComponent(store);
+
+    const pendingComponent = component.queryByTestId("eyca-pending-component");
+    expect(pendingComponent).toBeNull();
+
+    const errorComponent = component.queryByTestId("eyca-error-component");
+    expect(errorComponent).not.toBeNull();
+  });
+
+  it("Should show EYCA Error component if a card is Pending with no activation status", () => {
+    const store = mockEYCAState(eycaCardPending);
+    const component = getComponent(store);
+
+    const pendingComponent = component.queryByTestId("eyca-pending-component");
+    expect(pendingComponent).toBeNull();
+
+    const errorComponent = component.queryByTestId("eyca-error-component");
+    expect(errorComponent).not.toBeNull();
+  });
+
+  it("Should render null for an unknown card status", () => {
+    const unknownCard = { status: "UNKNOWN_STATUS" } as unknown as EycaCard;
+    const store = mockEYCAState(unknownCard);
+    const component = getComponent(store);
+
+    const pendingComponent = component.queryByTestId("eyca-pending-component");
+    expect(pendingComponent).toBeNull();
+
+    const errorComponent = component.queryByTestId("eyca-error-component");
+    expect(errorComponent).toBeNull();
+
+    const eycaNumber = component.queryByTestId("eyca-card-number");
+    expect(eycaNumber).toBeNull();
   });
 });
 
