@@ -22,15 +22,12 @@ import {
 } from "../utils/itwRemotePresentationUtils";
 import { assert } from "../../../../../utils/assert";
 import { IO_UNIVERSAL_LINK_PREFIX } from "../../../../../utils/navigation";
-import {
-  itwIntegrityKeyTagSelector,
-  itwIntegrityServiceStatusSelector
-} from "../../../issuance/store/selectors";
+import { itwIntegrityKeyTagSelector } from "../../../issuance/store/selectors";
 import { sessionTokenSelector } from "../../../../authentication/common/store/selectors";
 import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors";
+import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../../common/utils/itwStoreUtils";
 import { WIA_KEYTAG } from "../../../common/utils/itwCryptoContextUtils";
 import { getIoWallet } from "../../../common/utils/itwIoWallet";
-import { pollForStoreValue } from "../../../common/utils/itwStoreUtils";
 import { itwCredentialsAllSelector } from "../../../credentials/store/selectors";
 import { InvalidCredentialsStatusError } from "./failure";
 
@@ -240,17 +237,7 @@ export const createRemoteActorsImplementation = (
     async () => {
       // In the same-device flow the app might be launched directly to the presentation machine,
       // and the integrity service necessary to get the attestation might not yet be ready.
-      const integrityServiceStatus = await pollForStoreValue({
-        getState: store.getState,
-        selector: itwIntegrityServiceStatusSelector,
-        condition: value => value !== undefined
-      }).catch(() => {
-        throw new Error("Integrity service status check timed out");
-      });
-      assert(
-        integrityServiceStatus === "ready",
-        `Integrity service status is ${integrityServiceStatus}`
-      );
+      await ensureIntegrityServiceIsStoreReadyOrThrow(store);
 
       const sessionToken = sessionTokenSelector(store.getState());
       const integrityKeyTag = O.toUndefined(

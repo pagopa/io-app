@@ -19,6 +19,7 @@ import { itwSetWalletInstanceRenewalError } from "../../walletInstance/store/act
 import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
 import { Env } from "../../common/utils/environment";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
+import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../common/utils/itwStoreUtils";
 import {
   enrichErrorWithMetadata,
   isAssertionGenerationError
@@ -233,6 +234,11 @@ export const createCredentialIssuanceActorsImplementation = (
     assert(sessionToken, "sessionToken is undefined");
     assert(accessToken, "accessToken is undefined");
     assert(O.isSome(integrityKeyTag), "integriyKeyTag is undefined");
+
+    // The Wallet Unit Attestation makes use of the integrity service
+    if (getIoWallet(itwVersion).WalletUnitAttestation.isSupported) {
+      await ensureIntegrityServiceIsStoreReadyOrThrow(store);
+    }
 
     const authorizedCredentials =
       await credentialIssuanceUtils.generateKeysWithWalletUnitAttestation(

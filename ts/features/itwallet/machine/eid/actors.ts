@@ -20,7 +20,6 @@ import {
 import { isAssertionGenerationError } from "../../common/utils/itwFailureUtils";
 import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
 import { revokeCurrentWalletInstance } from "../../common/utils/itwRevocationUtils";
-import { pollForStoreValue } from "../../common/utils/itwStoreUtils";
 import {
   CredentialAccessToken,
   StoredCredential,
@@ -28,15 +27,13 @@ import {
 } from "../../common/utils/itwTypesUtils";
 import * as mrtdUtils from "../../common/utils/mrtd";
 import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
-import {
-  itwIntegrityKeyTagSelector,
-  itwIntegrityServiceStatusSelector
-} from "../../issuance/store/selectors";
+import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwSetWalletInstanceRenewalError } from "../../walletInstance/store/actions";
 import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
 import { generateKeysWithWalletUnitAttestation } from "../../common/utils/itwCredentialIssuanceUtils";
+import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../common/utils/itwStoreUtils";
 import { createCredentialUpgradeActionsImplementation } from "../upgrade/actions";
 import { createCredentialUpgradeActorsImplementation } from "../upgrade/actors";
 import { itwCredentialUpgradeMachine } from "../upgrade/machine";
@@ -145,20 +142,8 @@ export const createEidIssuanceActorsImplementation = (
     store.dispatch(itwLifecycleStoresReset());
 
     // Await the integrity preparation before requesting the integrity key tag
-    const integrityServiceStatus = await pollForStoreValue({
-      getState: store.getState,
-      selector: itwIntegrityServiceStatusSelector,
-      condition: value => value !== undefined
-    }).catch(() => {
-      throw new Error("Integrity service status check timed out");
-    });
+    await ensureIntegrityServiceIsStoreReadyOrThrow(store);
 
-    // If the integrity service preparation is not ready (still undefined) or in an error state after 10 seconds the user will be prompted with an error,
-    // he will need to retry.
-    assert(
-      integrityServiceStatus === "ready",
-      `Integrity service status is ${integrityServiceStatus}`
-    );
     const hardwareKeyTag = await getIntegrityHardwareKeyTag();
     await registerWalletInstance(env, itwVersion, hardwareKeyTag, sessionToken);
 
@@ -348,6 +333,11 @@ export const createEidIssuanceActorsImplementation = (
 
       const sessionToken = sessionTokenSelector(store.getState());
       assert(sessionToken, "sessionToken is undefined");
+
+      // The Wallet Unit Attestation makes use of the integrity service
+      if (getIoWallet(itwVersion).WalletUnitAttestation.isSupported) {
+        await ensureIntegrityServiceIsStoreReadyOrThrow(store);
+      }
 
       // Take the first element as only one credential is authorized during PID issuance
       const [authorizedCredential] =

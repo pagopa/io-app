@@ -12,6 +12,8 @@ import { assert } from "../../../../utils/assert";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { useIOStore } from "../../../../store/hooks";
 import { createCommonActorsImplementation } from "../utils/actors";
+import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../common/utils/itwStoreUtils";
+import { getIoWallet } from "../../common/utils/itwIoWallet";
 
 export type RequestAccessTokenParams = {
   pid: StoredCredential;
@@ -93,6 +95,11 @@ export const createCredentialUpgradeActorsImplementation = (
 
     const sessionToken = sessionTokenSelector(store.getState());
     assert(sessionToken, "sessionToken is undefined");
+
+    // The Wallet Unit Attestation makes use of the integrity service
+    if (getIoWallet(itwVersion).WalletUnitAttestation.isSupported) {
+      await ensureIntegrityServiceIsStoreReadyOrThrow(store);
+    }
 
     const authorizedCredentials =
       await credentialIssuanceUtils.generateKeysWithWalletUnitAttestation(
