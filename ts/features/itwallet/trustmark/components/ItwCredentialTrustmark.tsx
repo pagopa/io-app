@@ -234,7 +234,7 @@ export const ItwCredentialTrustmark = ({
     /* We use the `html` extension to avoid the `svg-transformer` to render
     local SVG files, as it causes conflicts with the `skia` library.
     To learn more: https://github.com/Shopify/react-native-skia/issues/1335#issuecomment-2088240523 */
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
+
     require("../../../../../img/features/itWallet/credential/trustmark-stamp.svg.html")
   );
 

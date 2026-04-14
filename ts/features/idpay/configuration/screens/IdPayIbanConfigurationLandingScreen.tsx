@@ -48,21 +48,9 @@ export const IdPayIbanConfigurationLandingScreen = () => {
         pictogram="ibanCard"
         title={I18n.t("idpay.configuration.iban.landing.header")}
         isHeaderVisible
-        subtitle={[
-          {
-            text: I18n.t("idpay.configuration.iban.landing.body")
-          },
-          {
-            text: "\n"
-          },
-          {
-            text: (
-              <Body asLink weight="Semibold" onPress={present}>
-                {I18n.t("idpay.configuration.iban.landing.bodyLink")}
-              </Body>
-            )
-          }
-        ]}
+        subtitle={I18n.t("idpay.configuration.iban.landing.body")}
+        // TODO: We should manage this link in a cleaner way, not included in the markdown
+        onSubtitleLinkPress={() => present()}
         action={{
           label: I18n.t("global.buttons.continue"),
           onPress: () => machine.send({ type: "next" })

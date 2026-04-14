@@ -4,7 +4,7 @@ import {
   CieExpiredComponent,
   GenericCieValidationErrorComponent
 } from "../../components/errors/SendAarCieValidationErrorComponent";
-import { SendAarGenericErrorComponent } from "../../components/errors/SendAARErrorComponent";
+import { SendAarGenericErrorComponent } from "../../components/errors/SendAarErrorComponent";
 import {
   getAarErrorBehaviour,
   isAarAttachmentTtlError,
@@ -12,7 +12,7 @@ import {
 } from "../aarErrorMappings";
 jest.mock("../../analytics");
 
-const { cieErrors, sendAarProblemJsonErrorCodes, specificBehavioursByStatus } =
+const { cieErrors, sendAARProblemJsonErrorCodes, specificBehavioursByStatus } =
   testable!;
 
 const makeProblemJson = (
@@ -30,8 +30,8 @@ const makeProblemJson = (
 describe("AarErrorMappings", () => {
   beforeEach(jest.clearAllMocks);
   describe("resolveAarError", () => {
-    [422, 400, 500, 418].forEach(responseStatus => {
-      Object.values(sendAarProblemJsonErrorCodes).forEach(errCode => {
+    [422, 400, 500, 418, 404, 409].forEach(responseStatus => {
+      Object.values(sendAARProblemJsonErrorCodes).forEach(errCode => {
         const maybeSpecificErrorBehaviour =
           specificBehavioursByStatus[responseStatus] &&
           specificBehavioursByStatus[responseStatus]?.[errCode];
@@ -44,10 +44,17 @@ describe("AarErrorMappings", () => {
               makeProblemJson(errCode, responseStatus)
             );
             expect(Component).toBe(expectedComponent);
+            expect(track).toBe(expectedTrack);
 
-            expect(expectedTrack).not.toHaveBeenCalled();
-            track("reason");
-            expect(expectedTrack).toHaveBeenCalledTimes(1);
+            if (jest.isMockFunction(expectedTrack)) {
+              expect(expectedTrack).not.toHaveBeenCalled();
+              track("reason");
+              expect(expectedTrack).toHaveBeenCalledTimes(1);
+            } else {
+              // falls here in case the expected track is
+              // a placeholder void function (in this case ()=>null)
+              expect(track("reason")).toBeNull();
+            }
           });
         } else if (errCode in cieErrors) {
           it(`should return GenericCieValidationErrorComponent and track the correct event for ${responseStatus} status and CIE errorCode ${errCode}`, () => {
@@ -115,7 +122,6 @@ describe("AarErrorMappings", () => {
       }
     );
   });
-
   describe("isAarAttachmentTtlError", () => {
     it("should return true for PN_DELIVERY_MANDATENOTFOUND", () => {
       expect(isAarAttachmentTtlError("PN_DELIVERY_MANDATENOTFOUND")).toBe(true);

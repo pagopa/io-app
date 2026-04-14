@@ -5,10 +5,10 @@ import { isPnTestEnabledSelector } from "../../../../../store/reducers/persisted
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import {
   aarProblemJsonAnalyticsReport,
-  trackSendAARFailure
+  trackSendAarFailure
 } from "../../analytics";
 import { setAarFlowState } from "../../store/actions";
-import { AARFlowState, sendAARFlowStates } from "../../utils/stateUtils";
+import { AarFlowState, sendAarFlowStates } from "../../utils/stateUtils";
 import {
   sendAarMockStateFactory,
   sendAarMockStates
@@ -29,10 +29,10 @@ const sessionTokenWithBearer = `Bearer ${sessionToken}`;
 const mockAcceptMandate = jest.fn();
 
 const getMockKoState = (
-  prevState: AARFlowState,
+  prevState: AarFlowState,
   error: AARProblemJson | undefined,
   reason: string
-): AARFlowState => ({
+): AarFlowState => ({
   type: "ko",
   previousState: { ...prevState },
   ...(error != null && { error }),
@@ -91,18 +91,19 @@ describe("validateMandateSaga", () => {
       )
         .next()
         .call(
-          trackSendAARFailure,
+          trackSendAarFailure,
           "Validate Mandate",
-          `Called in wrong state (${payload.type})`
+          `Called in wrong state (${payload.type})`,
+          undefined
         )
         .next()
         .isDone();
     }
   );
 
-  it(`should dispatch "setAarFlowState" with type: "${sendAARFlowStates.fetchingNotificationData}" on a 204`, () => {
-    const successState: AARFlowState = {
-      type: sendAARFlowStates.fetchingNotificationData,
+  it(`should dispatch "setAarFlowState" with type: "${sendAarFlowStates.fetchingNotificationData}" on a 204`, () => {
+    const successState: AarFlowState = {
+      type: sendAarFlowStates.fetchingNotificationData,
       iun: mockValidatingMandateState.iun,
       recipientInfo: { ...mockValidatingMandateState.recipientInfo },
       mandateId: mockValidatingMandateState.mandateId
@@ -223,7 +224,7 @@ describe("validateMandateSaga", () => {
           mockValidatingMandateAction
         )
         .next(res)
-        .call(trackSendAARFailure, "Validate Mandate", reason)
+        .call(trackSendAarFailure, "Validate Mandate", reason, error)
         .next()
         .put(
           setAarFlowState(
@@ -235,7 +236,7 @@ describe("validateMandateSaga", () => {
     }
   );
 
-  it('should call "trackSendAARFailure" with "Fast login expiration" and stop on 401', () => {
+  it('should call "trackSendAarFailure" with "Fast login expiration" and stop on 401', () => {
     testSaga(
       validateMandateSaga,
       mockAcceptMandate,
@@ -257,7 +258,12 @@ describe("validateMandateSaga", () => {
           value: {}
         })
       )
-      .call(trackSendAARFailure, "Validate Mandate", "Fast login expiration")
+      .call(
+        trackSendAarFailure,
+        "Validate Mandate",
+        "Fast login expiration",
+        undefined
+      )
       .next()
       .isDone();
   });
@@ -278,7 +284,12 @@ describe("validateMandateSaga", () => {
         mockValidatingMandateAction
       )
       .throw(new Error())
-      .call(trackSendAARFailure, "Validate Mandate", "An error was thrown ()")
+      .call(
+        trackSendAarFailure,
+        "Validate Mandate",
+        "An error was thrown ()",
+        undefined
+      )
       .next()
       .put(
         setAarFlowState(
@@ -310,7 +321,7 @@ describe("validateMandateSaga", () => {
         mockValidatingMandateAction
       )
       .next(E.left([]))
-      .call(trackSendAARFailure, "Validate Mandate", failureReason)
+      .call(trackSendAarFailure, "Validate Mandate", failureReason, undefined)
       .next()
       .put(
         setAarFlowState(

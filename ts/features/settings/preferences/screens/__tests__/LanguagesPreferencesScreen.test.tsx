@@ -13,7 +13,7 @@ import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 // Mock the useIOSelector hook
 jest.mock("../../../../../store/hooks", () => ({
   useIOSelector: jest.fn(),
-  useIODispatch: jest.fn(),
+  useIODispatch: () => jest.fn(),
   useIOStore: jest.fn()
 }));
 
@@ -64,13 +64,24 @@ describe("LanguagesPreferencesScreen", () => {
           I18n.t("profile.preferences.list.preferred_language.subtitle")
         )
       ).toBeTruthy();
+      // App locale radio buttons
+      const appLocaleIt = getByTestId("RadioItemTestID_app-locale-it");
+      const appLocaleEn = getByTestId("RadioItemTestID_app-locale-en");
+      const appLocaleDe = getByTestId("RadioItemTestID_app-locale-de");
+      expect(appLocaleIt).toBeTruthy();
+      expect(appLocaleEn).toBeTruthy();
+      expect(appLocaleDe).toBeTruthy();
+
+      // Message language radio buttons
       const radioItemIt = getByTestId("RadioItemTestID_it");
       const radioItemEn = getByTestId("RadioItemTestID_en");
       const radioItemDe = getByTestId("RadioItemTestID_de");
       expect(radioItemIt).toBeTruthy();
       expect(radioItemEn).toBeTruthy();
       expect(radioItemDe).toBeTruthy();
-      fireEvent.press(radioItemIt);
+
+      // Pressing an app locale radio button shows an Alert
+      fireEvent.press(appLocaleEn);
       expect(Alert.alert).toHaveBeenCalled();
 
       expect(toJSON()).toMatchSnapshot();

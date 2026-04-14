@@ -179,4 +179,4 @@ const generateMockedGlobalState = (
         mode: "AUTO"
       }
     })
-  } as GlobalState);
+  }) as GlobalState;

@@ -1,5 +1,6 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import { useIOStore } from "../../../../../store/hooks.ts";
 import { isItwEnabledSelector } from "../../../common/store/selectors/remoteConfig.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
@@ -11,6 +12,7 @@ import { ItwSessionExpiredError } from "../../../api/client.ts";
 import { RemoteEvents } from "./events.ts";
 
 export const createRemoteGuardsImplementation = (
+  itwVersion: ItwVersion,
   store: ReturnType<typeof useIOStore>
 ) => ({
   isItWalletL3Active: () =>
@@ -30,7 +32,9 @@ export const createRemoteGuardsImplementation = (
     );
     return pipe(
       O.fromNullable(walletAttestation?.jwt),
-      O.map(isWalletInstanceAttestationValid),
+      O.map(attestation =>
+        isWalletInstanceAttestationValid(itwVersion, attestation)
+      ),
       O.getOrElse(() => false)
     );
   },

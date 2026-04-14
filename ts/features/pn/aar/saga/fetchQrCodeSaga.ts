@@ -8,30 +8,31 @@ import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils
 import { unknownToReason } from "../../../messages/utils";
 import {
   aarProblemJsonAnalyticsReport,
-  trackSendAARFailure
+  trackSendAarFailure
 } from "../analytics";
-import { SendAARClient } from "../api/client";
+import { SendAarClient } from "../api/client";
 import { setAarFlowState } from "../store/actions";
-import { currentAARFlowData } from "../store/selectors";
+import { currentAarFlowData } from "../store/selectors";
 import {
-  AARFlowState,
-  SendAARFailurePhase,
-  sendAARFlowStates
+  AarFlowState,
+  SendAarFailurePhase,
+  sendAarFlowStates
 } from "../utils/stateUtils";
 
-const sendAARFailurePhase: SendAARFailurePhase = "Fetch QRCode";
+const sendAarFailurePhase: SendAarFailurePhase = "Fetch QRCode";
 
-export function* fetchAARQrCodeSaga(
-  fetchQRCode: SendAARClient["aarQRCodeCheck"],
+export function* fetchAarQrCodeSaga(
+  fetchQRCode: SendAarClient["aarQRCodeCheck"],
   sessionToken: string,
   action: ReturnType<typeof setAarFlowState>
 ) {
-  const currentState = yield* select(currentAARFlowData);
-  if (currentState.type !== sendAARFlowStates.fetchingQRData) {
+  const currentState = yield* select(currentAarFlowData);
+  if (currentState.type !== sendAarFlowStates.fetchingQRData) {
     yield* call(
-      trackSendAARFailure,
-      sendAARFailurePhase,
-      `Called in wrong state (${currentState.type})`
+      trackSendAarFailure,
+      sendAarFailurePhase,
+      `Called in wrong state (${currentState.type})`,
+      undefined
     );
     return;
   }
@@ -63,8 +64,8 @@ export function* fetchAARQrCodeSaga(
     switch (status) {
       case 200:
         const { iun, recipientInfo, mandateId } = value;
-        const nextState: AARFlowState = {
-          type: sendAARFlowStates.fetchingNotificationData,
+        const nextState: AarFlowState = {
+          type: sendAarFlowStates.fetchingNotificationData,
           iun,
           recipientInfo: { ...recipientInfo },
           mandateId
@@ -74,9 +75,10 @@ export function* fetchAARQrCodeSaga(
 
       case 401:
         yield* call(
-          trackSendAARFailure,
-          sendAARFailurePhase,
-          "Fast login expiration"
+          trackSendAarFailure,
+          sendAarFailurePhase,
+          "Fast login expiration",
+          undefined
         );
         return;
 
@@ -85,9 +87,9 @@ export function* fetchAARQrCodeSaga(
           isAarInAppDelegationRemoteEnabledSelector
         );
         const stateToPut = isDelegationEnabled
-          ? sendAARFlowStates.notAddressee
-          : sendAARFlowStates.notAddresseeFinal;
-        const notAddresseeState: AARFlowState = {
+          ? sendAarFlowStates.notAddressee
+          : sendAarFlowStates.notAddresseeFinal;
+        const notAddresseeState: AarFlowState = {
           type: stateToPut,
           iun: value.iun,
           recipientInfo: { ...value.recipientInfo },
@@ -101,13 +103,13 @@ export function* fetchAARQrCodeSaga(
           status,
           value
         )})`;
-        yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
-        const errorState: AARFlowState = {
-          type: sendAARFlowStates.ko,
+        yield* call(trackSendAarFailure, sendAarFailurePhase, reason, value);
+        const errorState: AarFlowState = {
+          type: sendAarFlowStates.ko,
           previousState: { ...currentState },
           ...(value !== undefined && { error: value }),
           debugData: {
-            phase: sendAARFailurePhase,
+            phase: sendAarFailurePhase,
             reason
           }
         };
@@ -116,13 +118,13 @@ export function* fetchAARQrCodeSaga(
     }
   } catch (e) {
     const reason = `An error was thrown (${unknownToReason(e)})`;
-    yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
+    yield* call(trackSendAarFailure, sendAarFailurePhase, reason, undefined);
     yield* put(
       setAarFlowState({
-        type: sendAARFlowStates.ko,
+        type: sendAarFlowStates.ko,
         previousState: { ...currentState },
         debugData: {
-          phase: sendAARFailurePhase,
+          phase: sendAarFailurePhase,
           reason
         }
       })

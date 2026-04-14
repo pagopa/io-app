@@ -42,7 +42,6 @@ const sendUserTypes: ReadonlyArray<SendUserType> = [
 ];
 
 thirdPartyAttachments.forEach(thirdPartyAttachment => {
-  // eslint-disable-next-line sonarjs/cognitive-complexity
   [false, true].forEach(isFetching => {
     [undefined, false, true].forEach(showBottomSpacer => {
       [undefined, false, true].forEach(isDisabled => {

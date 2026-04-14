@@ -8,6 +8,7 @@ import {
   WithTestID
 } from "@pagopa/io-app-design-system";
 import { TxtParagraphNode, TxtStrongNode } from "@textlint/ast-node-types";
+import I18n from "i18next";
 import { ComponentProps, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import ItWalletDeck from "../../../../../img/features/itWallet/brand/itw_deck_engagement.svg";
@@ -87,7 +88,7 @@ export const ItwEngagementBanner = ({
               <IconButton
                 testID="itwEngagementBannerCloseButtonTestID"
                 color="contrast"
-                accessibilityLabel="close"
+                accessibilityLabel={I18n.t("global.buttons.close")}
                 icon="closeMedium"
                 onPress={onDismiss}
               />

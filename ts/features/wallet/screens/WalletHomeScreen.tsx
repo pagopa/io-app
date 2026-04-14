@@ -3,7 +3,10 @@ import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
-import { IOScrollView } from "../../../components/ui/IOScrollView";
+import {
+  IOScrollView,
+  IOScrollViewActions
+} from "../../../components/ui/IOScrollView";
 import { useHeaderFirstLevel } from "../../../hooks/useHeaderFirstLevel";
 import { useTabItemPressWhenScreenActive } from "../../../hooks/useTabItemPressWhenScreenActive";
 import {
@@ -19,11 +22,19 @@ import {
   trackOpenWalletScreen,
   trackWalletAdd
 } from "../../itwallet/analytics";
-import { itwMixPanelCredentialDetailsSelector } from "../../itwallet/analytics/store/selectors/index.ts";
+import { itwMixPanelCredentialDetailsSelector } from "../../itwallet/analytics/store/selectors";
 import { useItwEidFeedbackBottomSheet } from "../../itwallet/common/hooks/useItwEidFeedbackBottomSheet.tsx";
 import { itwSetPidReissuingSurveyHidden } from "../../itwallet/common/store/actions/preferences.ts";
 import { itwIsL3EnabledSelector } from "../../itwallet/common/store/selectors/preferences.ts";
+import { itwLifecycleIsITWalletValidSelector } from "../../itwallet/lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
+import { trackItwProximityShowQrCode } from "../../itwallet/presentation/proximity/analytics";
+import { ITW_PROXIMITY_ROUTES } from "../../itwallet/presentation/proximity/navigation/routes";
+import { hasPresentableCredentialsSelector } from "../../itwallet/presentation/proximity/store/selectors";
+import {
+  ITW_TOUR_GROUP_ID,
+  ITW_TOUR_STEP_QR_BUTTON
+} from "../../itwallet/tour/utils/constants.ts";
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
 import { walletUpdate } from "../store/actions";
@@ -50,6 +61,10 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
     itwMixPanelCredentialDetailsSelector
   );
   const isItWalletEnabled = useIOSelector(itwIsL3EnabledSelector);
+  const itwFeaturesEnabled = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const hasPresentableCredentials = useIOSelector(
+    hasPresentableCredentialsSelector
+  );
 
   const isNewElementAdded = useRef(route.params?.newMethodAdded || false);
   const isRequiredEidFeedback = useRef(
@@ -76,6 +91,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
 
   const handleAddToWalletButtonPress = useCallback(() => {
     trackWalletAdd();
+
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: isItWalletEnabled
         ? ITW_ROUTES.L3_ONBOARDING
@@ -157,6 +173,27 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
     dispatch(walletUpdate());
   }, [dispatch]);
 
+  const proximityActionProps: IOScrollViewActions["primary"] | undefined =
+    itwFeaturesEnabled && hasPresentableCredentials
+      ? {
+          label: I18n.t("features.itWallet.presentation.ctas.showQRCode"),
+          icon: "productITWallet",
+          iconPosition: "end",
+          onPress: () => {
+            trackItwProximityShowQrCode();
+            navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
+              screen: ITW_PROXIMITY_ROUTES.QR_CODE
+            });
+          },
+          tourGuideProps: {
+            groupId: ITW_TOUR_GROUP_ID,
+            index: ITW_TOUR_STEP_QR_BUTTON,
+            title: I18n.t("features.itWallet.tour.qrCode.title"),
+            description: I18n.t("features.itWallet.tour.qrCode.description")
+          }
+        }
+      : undefined;
+
   return (
     <>
       <IOScrollView
@@ -168,6 +205,11 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
           refreshing: isRefreshing,
           onRefresh: handleRefreshWallet
         }}
+        actions={
+          proximityActionProps
+            ? { type: "SingleButton", primary: proximityActionProps }
+            : undefined
+        }
       >
         <WalletCategoryFilterTabs />
         <WalletCardsContainer />

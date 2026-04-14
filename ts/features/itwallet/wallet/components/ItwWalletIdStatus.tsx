@@ -73,7 +73,7 @@ export const ItwWalletIdStatus = ({
       accessible={true}
       accessibilityRole="button"
     >
-      <Animated.View style={[styles.container, scaleAnimatedStyle]}>
+      <Animated.View style={scaleAnimatedStyle}>
         {/* Branded Box with animated border and light effect */}
         <ItwBrandedBox variant={borderVariantByPidStatus[pidStatus]}>
           {/* Background Image  */}
@@ -100,9 +100,11 @@ export const ItwWalletIdStatus = ({
               {I18n.t(
                 "features.itWallet.presentation.itWalletId.status.expiringPrefix"
               )}
+              {/* eslint-disable i18next/no-literal-string */}
               <Body weight="Semibold">
                 {format(pidExpiration || "", "DD/MM/YYYY")}
               </Body>
+              {/* eslint-enable i18next/no-literal-string */}
             </Body>
           )}
           {pidStatus === "jwtExpired" && (
@@ -132,9 +134,6 @@ export const ItwWalletIdStatus = ({
 };
 
 const styles = StyleSheet.create({
-  container: {
-    marginHorizontal: -8
-  },
   backgroundImage: {
     position: "absolute",
     right: -1

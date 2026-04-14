@@ -287,24 +287,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Queste impostazioni ti permettono di personalizzare la tua esperienza su IO.
                             </Text>
                           </View>
@@ -350,7 +333,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                   "value": "Inoltro dei messaggi via email",
                                 },
                                 {
-                                  "description": "Scegli la lingua",
+                                  "description": "Scegli la lingua per l’app e per i messaggi",
                                   "onPress": [Function],
                                   "value": "Lingua",
                                 },
@@ -1565,7 +1548,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                 style={null}
                               >
                                 <View
-                                  accessibilityLabel="Lingua Scegli la lingua"
+                                  accessibilityLabel="Lingua Scegli la lingua per l’app e per i messaggi"
                                   accessibilityRole="button"
                                   accessibilityState={
                                     {
@@ -1724,7 +1707,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
                                             ]
                                           }
                                         >
-                                          Scegli la lingua
+                                          Scegli la lingua per l’app e per i messaggi
                                         </Text>
                                       </View>
                                       <RNSVGSvgView

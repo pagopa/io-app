@@ -6,9 +6,13 @@ import Animated, { LinearTransition } from "react-native-reanimated";
 import { useDebugInfo } from "../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../store/hooks";
 import { ItwEnvironmentAlert } from "../../itwallet/common/components/ItwEnvironmentAlert";
+import { ItwL2EngagementBanner } from "../../itwallet/common/components/ItwL2EngagementBanner";
 import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
 import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
-import { itwShouldRenderWalletDiscoveryBannerSelector } from "../../itwallet/common/store/selectors";
+import {
+  itwShouldRenderL2EngagementBannerForInactiveWalletSelector,
+  itwShouldRenderWalletDiscoveryBannerSelector
+} from "../../itwallet/common/store/selectors";
 import { ItwDiscoveryBanner } from "../../itwallet/discovery/components/ItwDiscoveryBanner";
 import { ItwWalletCardsContainer } from "../../itwallet/wallet/components/ItwWalletCardsContainer";
 import { useItwWalletInstanceRevocationAlert } from "../../itwallet/walletInstance/hook/useItwWalletInstanceRevocationAlert";
@@ -42,6 +46,9 @@ const WalletCardsContainer = () => {
   const shouldRenderItwDiscoveryBanner = useIOSelector(
     itwShouldRenderWalletDiscoveryBannerSelector
   );
+  const shouldRenderL2EngagementBanner = useIOSelector(
+    itwShouldRenderL2EngagementBannerForInactiveWalletSelector
+  );
 
   useItwWalletInstanceRevocationAlert();
 
@@ -55,8 +62,9 @@ const WalletCardsContainer = () => {
     }
     return (
       <>
+        {shouldRenderL2EngagementBanner && <ItwL2EngagementBanner />}
         {shouldRenderItwDiscoveryBanner && <ItwDiscoveryBanner />}
-        <View testID="walletCardsContainerTestID" style={styles.content}>
+        <View testID="walletCardsContainerTestID" style={styles.walletContent}>
           {shouldRenderItwCardsContainer && <ItwWalletCardsContainer />}
           <OtherWalletCardsContainer />
         </View>
@@ -66,7 +74,8 @@ const WalletCardsContainer = () => {
     shouldRenderLoadingState,
     shouldRenderEmptyState,
     shouldRenderItwCardsContainer,
-    shouldRenderItwDiscoveryBanner
+    shouldRenderItwDiscoveryBanner,
+    shouldRenderL2EngagementBanner
   ]);
 
   return (
@@ -110,18 +119,20 @@ const OtherWalletCardsContainer = withWalletCategoryFilter("other", () => {
   }
 
   return (
-    <WalletCardsCategoryContainer
-      key="cards_category_other"
-      testID="otherWalletCardsContainerTestID"
-      cards={cards}
-      header={
-        <ListItemHeader
-          testID={"walletCardsCategoryOtherHeaderTestID"}
-          label={I18n.t("features.wallet.cards.categories.other")}
+    <View>
+      <ListItemHeader
+        testID={"walletCardsCategoryOtherHeaderTestID"}
+        label={I18n.t("features.wallet.cards.categories.other")}
+      />
+      <View style={styles.cardsWrapper}>
+        <WalletCardsCategoryContainer
+          key="cards_category_other"
+          testID="otherWalletCardsContainerTestID"
+          cards={cards}
         />
-      }
-      bottomElement={<WalletCardsCategoryRetryErrorBanner />}
-    />
+      </View>
+      <WalletCardsCategoryRetryErrorBanner />
+    </View>
   );
 });
 
@@ -137,8 +148,11 @@ const styles = StyleSheet.create({
     gap: 16,
     marginTop: 16
   },
-  content: {
+  walletContent: {
     flex: 1,
     gap: 8
+  },
+  cardsWrapper: {
+    marginHorizontal: -8
   }
 });

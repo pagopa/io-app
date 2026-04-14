@@ -11,12 +11,13 @@ import * as URL_UTILS from "../../../../../../utils/url";
 import PN_ROUTES from "../../../../navigation/routes";
 import {
   CieExpiredComponent,
+  CieValidationExpiredTtlComponent,
   GenericCieValidationErrorComponent,
   UnrelatedCieComponent
 } from "../SendAarCieValidationErrorComponent";
 import { sendAarMockStateFactory } from "../../../utils/testUtils";
 import { setAarFlowState } from "../../../store/actions";
-import { AarStatesByName, sendAARFlowStates } from "../../../utils/stateUtils";
+import { AarStatesByName, sendAarFlowStates } from "../../../utils/stateUtils";
 import * as USE_DEBUGINFO from "../../../../../../hooks/useDebugInfo";
 import * as AAR_SELECTORS from "../../../store/selectors";
 import {
@@ -122,7 +123,7 @@ describe("SendAarCieValidationErrors", () => {
       'should call terminateFlow and "trackSendAarMandateCieErrorClosure" with "%s" on secondary action press',
       errorCode => {
         jest
-          .spyOn(AAR_SELECTORS, "currentAARFlowStateAssistanceErrorCode")
+          .spyOn(AAR_SELECTORS, "currentAarFlowStateAssistanceErrorCode")
           .mockReturnValue(errorCode);
         const { getByTestId } = renderComponent(CieExpiredComponent);
         const secondaryActionButton = getByTestId("CieExpiredCloseButton");
@@ -141,7 +142,7 @@ describe("SendAarCieValidationErrors", () => {
       }
     );
   });
-  // eslint-disable-next-line sonarjs/cognitive-complexity
+
   describe("UnrelatedCieComponent", () => {
     it("should match snapshot", () => {
       mockSendAarFlowManager.mockImplementation(() => ({
@@ -190,7 +191,7 @@ describe("SendAarCieValidationErrors", () => {
             expect(mockDispatch).toHaveBeenCalledTimes(1);
             expect(mockDispatch).toHaveBeenCalledWith(
               setAarFlowState({
-                type: sendAARFlowStates.cieCanAdvisory,
+                type: sendAarFlowStates.cieCanAdvisory,
                 iun,
                 mandateId,
                 recipientInfo,
@@ -208,7 +209,7 @@ describe("SendAarCieValidationErrors", () => {
       'should call "trackSendAarMandateCieErrorRetry" with "%s" on retry press',
       errorCode => {
         jest
-          .spyOn(AAR_SELECTORS, "currentAARFlowStateAssistanceErrorCode")
+          .spyOn(AAR_SELECTORS, "currentAarFlowStateAssistanceErrorCode")
           .mockReturnValue(errorCode);
         mockSendAarFlowManager.mockImplementation(() => ({
           currentFlowData: {},
@@ -234,7 +235,7 @@ describe("SendAarCieValidationErrors", () => {
       'should call "terminateFlow" and call "trackSendAarMandateCieErrorClosure" with "%s" on secondary action press',
       errorCode => {
         jest
-          .spyOn(AAR_SELECTORS, "currentAARFlowStateAssistanceErrorCode")
+          .spyOn(AAR_SELECTORS, "currentAarFlowStateAssistanceErrorCode")
           .mockReturnValue(errorCode);
         mockSendAarFlowManager.mockImplementation(() => ({
           currentFlowData: {},
@@ -263,10 +264,10 @@ describe("SendAarCieValidationErrors", () => {
     beforeEach(() => {
       jest.spyOn(USE_DEBUGINFO, "useDebugInfo").mockImplementation();
       jest
-        .spyOn(AAR_SELECTORS, "currentAARFlowStateErrorDebugInfoSelector")
+        .spyOn(AAR_SELECTORS, "currentAarFlowStateErrorDebugInfoSelector")
         .mockImplementation();
       jest
-        .spyOn(AAR_SELECTORS, "currentAARFlowStateAssistanceErrorCode")
+        .spyOn(AAR_SELECTORS, "currentAarFlowStateAssistanceErrorCode")
         .mockImplementation(() => mockAssistanceErrorCode);
       mockSendAarFlowManager.mockImplementation(() => ({
         terminateFlow: mockTerminateFlow
@@ -285,7 +286,7 @@ describe("SendAarCieValidationErrors", () => {
       'should call "sendAarErrorSupportBottomSheetComponent" with the correct parameters when errorCode is "%s"',
       errorCode => {
         jest
-          .spyOn(AAR_SELECTORS, "currentAARFlowStateAssistanceErrorCode")
+          .spyOn(AAR_SELECTORS, "currentAarFlowStateAssistanceErrorCode")
           .mockReturnValue(errorCode);
 
         renderComponent(GenericCieValidationErrorComponent);
@@ -307,7 +308,7 @@ describe("SendAarCieValidationErrors", () => {
       'should call "trackSendAarMandateCieErrorDetailHelp" with "%s"',
       errorCode => {
         jest
-          .spyOn(AAR_SELECTORS, "currentAARFlowStateAssistanceErrorCode")
+          .spyOn(AAR_SELECTORS, "currentAarFlowStateAssistanceErrorCode")
           .mockReturnValue(errorCode);
 
         renderComponent(GenericCieValidationErrorComponent);
@@ -333,7 +334,7 @@ describe("SendAarCieValidationErrors", () => {
       'should call "trackSendAarMandateCieErrorDetailCode" with "%s"',
       errorCode => {
         jest
-          .spyOn(AAR_SELECTORS, "currentAARFlowStateAssistanceErrorCode")
+          .spyOn(AAR_SELECTORS, "currentAarFlowStateAssistanceErrorCode")
           .mockReturnValue(errorCode);
 
         renderComponent(GenericCieValidationErrorComponent);
@@ -359,7 +360,7 @@ describe("SendAarCieValidationErrors", () => {
       'should call "present" bottom sheet and "trackSendAarMandateCieErrorDetail" with "%s" on secondary action press',
       errorCode => {
         jest
-          .spyOn(AAR_SELECTORS, "currentAARFlowStateAssistanceErrorCode")
+          .spyOn(AAR_SELECTORS, "currentAarFlowStateAssistanceErrorCode")
           .mockReturnValue(errorCode);
 
         const { getByTestId } = renderComponent(
@@ -393,7 +394,7 @@ describe("SendAarCieValidationErrors", () => {
       'should call "terminateFlow" and "trackSendAarMandateCieErrorClosure" with "%s" on primary action press',
       errorCode => {
         jest
-          .spyOn(AAR_SELECTORS, "currentAARFlowStateAssistanceErrorCode")
+          .spyOn(AAR_SELECTORS, "currentAarFlowStateAssistanceErrorCode")
           .mockReturnValue(errorCode);
         const { getByTestId } = renderComponent(
           GenericCieValidationErrorComponent
@@ -420,6 +421,41 @@ describe("SendAarCieValidationErrors", () => {
         expect(trackSendAarMandateCieErrorDetailCode).not.toHaveBeenCalled();
         expect(trackSendAarMandateCieErrorDetailHelp).not.toHaveBeenCalled();
         expect(trackSendAarMandateCieErrorDetail).not.toHaveBeenCalled();
+      }
+    );
+  });
+  describe("CieValidationExpiredTtlComponent", () => {
+    it("should match snapshot", () => {
+      const { toJSON, getByTestId } = renderComponent(
+        CieValidationExpiredTtlComponent
+      );
+      const component = getByTestId("CieValidationExpiredTtlErrorComponent");
+      expect(component).toBeDefined();
+      expect(toJSON()).toMatchSnapshot();
+    });
+    it.each(assistanceErrorCodes)(
+      'should call "trackSendAarMandateCieErrorClosure" with "%s" and terminate the flow on button press',
+      errorCode => {
+        jest
+          .spyOn(AAR_SELECTORS, "currentAarFlowStateAssistanceErrorCode")
+          .mockReturnValue(errorCode);
+        const { getByTestId } = renderComponent(
+          CieValidationExpiredTtlComponent
+        );
+        const button = getByTestId("CieValidationExpiredTtlCloseButton");
+        expect(button).toBeDefined();
+        expect(mockTerminateFlow).not.toHaveBeenCalled();
+        expect(trackSendAarMandateCieErrorClosure).not.toHaveBeenCalled();
+
+        act(() => {
+          fireEvent.press(button);
+        });
+
+        expect(trackSendAarMandateCieErrorClosure).toHaveBeenCalledTimes(1);
+        expect(trackSendAarMandateCieErrorClosure).toHaveBeenCalledWith(
+          errorCode ?? ""
+        );
+        expect(mockTerminateFlow).toHaveBeenCalled();
       }
     );
   });

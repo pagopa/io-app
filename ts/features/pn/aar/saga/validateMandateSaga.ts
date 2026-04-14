@@ -7,34 +7,35 @@ import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils
 import { unknownToReason } from "../../../messages/utils";
 import {
   aarProblemJsonAnalyticsReport,
-  trackSendAARFailure
+  trackSendAarFailure
 } from "../analytics";
-import { SendAARClient } from "../api/client";
+import { SendAarClient } from "../api/client";
 import { setAarFlowState } from "../store/actions";
 import { getAarErrorBehaviour } from "../utils/aarErrorMappings";
 import {
-  AARFlowState,
-  SendAARFailurePhase,
-  sendAARFlowStates
+  AarFlowState,
+  SendAarFailurePhase,
+  sendAarFlowStates
 } from "../utils/stateUtils";
 
-const sendAARFailurePhase: SendAARFailurePhase = "Validate Mandate";
+const sendAarFailurePhase: SendAarFailurePhase = "Validate Mandate";
 
 export type AcceptMandateSuccessfulResponse = Extract<
-  Awaited<ReturnType<SendAARClient["acceptAARMandate"]>>,
+  Awaited<ReturnType<SendAarClient["acceptAARMandate"]>>,
   { _tag: "Right" }
 >;
 
 export function* validateMandateSaga(
-  acceptMandate: SendAARClient["acceptAARMandate"],
+  acceptMandate: SendAarClient["acceptAARMandate"],
   sessionToken: string,
   action: ReturnType<typeof setAarFlowState>
 ) {
-  if (action.payload.type !== sendAARFlowStates.validatingMandate) {
+  if (action.payload.type !== sendAarFlowStates.validatingMandate) {
     yield* call(
-      trackSendAARFailure,
-      sendAARFailurePhase,
-      `Called in wrong state (${action.payload.type})`
+      trackSendAarFailure,
+      sendAarFailurePhase,
+      `Called in wrong state (${action.payload.type})`,
+      undefined
     );
     return;
   }
@@ -79,8 +80,8 @@ export function* validateMandateSaga(
     const { status, value } = result.right;
     switch (status) {
       case 204:
-        const nextState: AARFlowState = {
-          type: sendAARFlowStates.fetchingNotificationData,
+        const nextState: AarFlowState = {
+          type: sendAarFlowStates.fetchingNotificationData,
           iun,
           recipientInfo: { ...recipientInfo },
           mandateId
@@ -90,9 +91,10 @@ export function* validateMandateSaga(
 
       case 401:
         yield* call(
-          trackSendAARFailure,
-          sendAARFailurePhase,
-          "Fast login expiration"
+          trackSendAarFailure,
+          sendAarFailurePhase,
+          "Fast login expiration",
+          undefined
         );
         return;
       default:
@@ -100,15 +102,15 @@ export function* validateMandateSaga(
           status,
           value
         )})`;
+        yield* call(trackSendAarFailure, sendAarFailurePhase, reason, value);
         const { track } = getAarErrorBehaviour(value);
         track(reason);
-        yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
-        const errorState: AARFlowState = {
-          type: sendAARFlowStates.ko,
+        const errorState: AarFlowState = {
+          type: sendAarFlowStates.ko,
           previousState: { ...action.payload },
           ...(value !== undefined && { error: value }),
           debugData: {
-            phase: sendAARFailurePhase,
+            phase: sendAarFailurePhase,
             reason
           }
         };
@@ -117,13 +119,13 @@ export function* validateMandateSaga(
     }
   } catch (e) {
     const reason = `An error was thrown (${unknownToReason(e)})`;
-    yield* call(trackSendAARFailure, sendAARFailurePhase, reason);
+    yield* call(trackSendAarFailure, sendAarFailurePhase, reason, undefined);
     yield* put(
       setAarFlowState({
-        type: sendAARFlowStates.ko,
+        type: sendAarFlowStates.ko,
         previousState: { ...action.payload },
         debugData: {
-          phase: sendAARFailurePhase,
+          phase: sendAarFailurePhase,
           reason
         }
       })

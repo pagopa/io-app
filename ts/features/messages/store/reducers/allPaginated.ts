@@ -438,7 +438,6 @@ const reduceAutomaticMessageRefreshRequest = (
 const reduceUpsertMessageStatusAttributes = (
   state: AllPaginated = INITIAL_STATE,
   action: Action
-  // eslint-disable-next-line sonarjs/cognitive-complexity
 ): AllPaginated => {
   const remove = (message: UIMessage, from: Collection) =>
     refreshCursors({
