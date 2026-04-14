@@ -19,13 +19,6 @@ export const l2Credentials = [
   CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
 ] as const;
 
-// Credentials that can be actively requested and obtained by the user
-export const availableCredentials = [
-  CredentialType.DRIVING_LICENSE,
-  CredentialType.EUROPEAN_DISABILITY_CARD,
-  CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
-] as const;
-
 // New credentials that can be actively requested and obtained by the user
 export const newCredentials = [
   CredentialType.EDUCATION_DEGREE,

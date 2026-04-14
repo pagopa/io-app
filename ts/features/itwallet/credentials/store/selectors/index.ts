@@ -329,17 +329,18 @@ export const itwIsMdlPresentSelector = createSelector(
 );
 
 /**
- * Split a given list of credential types into obtained / notObtained
+ * Split a given list of credential with types into obtained / notObtained
  * obtained = present in wallet
  */
-export const itwCredentialsByPresenceSelector = createSelector(
-  itwCredentialsByTypeSelector,
-  (_state: GlobalState, types: ReadonlyArray<string>) => types,
-  (credentialsByType, types) => {
+export const makeItwCredentialsByPresenceSelector = <
+  T extends { type: string }
+>(
+  credentials: ReadonlyArray<T>
+) =>
+  createSelector(itwCredentialsByTypeSelector, credentialsByType => {
     const [obtained, notObtained] = partition(
-      types,
-      type => credentialsByType[type] !== undefined
+      credentials,
+      ({ type }) => credentialsByType[type] !== undefined
     );
     return { obtained, notObtained };
-  }
-);
+  });

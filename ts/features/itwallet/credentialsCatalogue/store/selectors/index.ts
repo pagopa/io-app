@@ -5,6 +5,33 @@ import { isAfter } from "date-fns";
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { DigitalCredentialMetadata } from "../../../common/utils/itwCredentialsCatalogueUtils";
+import {
+  getCredentialNameFromType,
+  l2Credentials,
+  newCredentials,
+  upcomingCredentials
+} from "../../../common/utils/itwCredentialUtils";
+import { CredentialType } from "../../../common/utils/itwMocksUtils";
+
+export type CredentialsListEntry = {
+  type: string;
+  name: string;
+};
+
+const EMPTY_ARRAY = [] as ReadonlyArray<CredentialsListEntry>;
+
+/**
+ * Hardcoded list of all obtainable credentials. When the credentials catalogue is not enabled,
+ * this list is used as the source of truth for displaying credentials in the UI.
+ */
+const hardcodedCredentialsList: ReadonlyArray<CredentialsListEntry> = [
+  ...l2Credentials,
+  ...newCredentials,
+  ...upcomingCredentials
+].map(type => ({
+  type,
+  name: getCredentialNameFromType(type)
+}));
 
 /**
  * Select the last fetched credentials catalogue.
@@ -53,3 +80,33 @@ export const itwIsCredentialsCatalogueLoading = (state: GlobalState) =>
 
 export const itwIsCredentialsCatalogueUnavailable = (state: GlobalState) =>
   pot.isNone(state.features.itWallet.credentialsCatalogue.catalogue);
+
+/**
+ * Return whether the list of obtainable credentials is built
+ * from the catalogue and does not use hardcoded values.
+ */
+export const itwIsCatalogueEnabledForCredentialsList = (state: GlobalState) =>
+  state.features.itWallet.credentialsCatalogue.isEnabledForCredentialsList;
+
+/**
+ * Select the list of all obtainable credentials that are available in the catalogue (if enabled),
+ * or the hardcoded list otherwise. This list is not filtered any further: it includes all credentials.
+ */
+export const itwAvailableCredentialsListSelector = createSelector(
+  [itwIsCatalogueEnabledForCredentialsList, itwCredentialsCatalogueSelector],
+  (isEnabled, catalogue): ReadonlyArray<CredentialsListEntry> => {
+    if (!isEnabled) {
+      return hardcodedCredentialsList;
+    }
+
+    if (!catalogue) {
+      return EMPTY_ARRAY;
+    }
+    return catalogue.credentials
+      .filter(credential => credential.credential_type !== CredentialType.PID)
+      .map(credential => ({
+        name: credential.name,
+        type: credential.credential_type
+      }));
+  }
+);
