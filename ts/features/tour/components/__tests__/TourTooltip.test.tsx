@@ -59,10 +59,7 @@ const renderTooltip = (props: Props = {}) => render(<TestWrapper {...props} />);
 type TestInstance = ReturnType<ReturnType<typeof render>["getByLabelText"]>;
 
 /** Recursively walks ancestors looking for a View with `opacity: 0`. */
-const ancestorHasOpacityZero = (
-  element: TestInstance,
-  depth = 6
-): boolean => {
+const ancestorHasOpacityZero = (element: TestInstance, depth = 6): boolean => {
   if (depth === 0 || !element.parent) {
     return false;
   }
