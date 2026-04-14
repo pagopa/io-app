@@ -19,6 +19,7 @@ import {
   itwCredentialsRemoveByType,
   itwCredentialsStore
 } from "../../credentials/store/actions";
+import { itwClearCredentialUpgradeFailed } from "../../common/store/actions/preferences";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
@@ -93,9 +94,17 @@ export const createCredentialIssuanceActionsImplementation = (
     });
   },
 
-  navigateToCardOnboardingScreen: () => {
+  navigateToCardOnboardingScreen: ({
+    context
+  }: ActionArgs<
+    Context,
+    CredentialIssuanceEvents,
+    CredentialIssuanceEvents
+  >) => {
     navigation.replace(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ONBOARDING
+      screen: context.isItWalletValid
+        ? ITW_ROUTES.L3_ONBOARDING
+        : ITW_ROUTES.ONBOARDING
     });
   },
 
@@ -132,6 +141,8 @@ export const createCredentialIssuanceActionsImplementation = (
     store.dispatch(itwCredentialsRemoveByType(context.credentialType));
     // Stores the new obtained credentials
     store.dispatch(itwCredentialsStore(context.credentials));
+    // Clear older upgrade-failed flag for this credential after a successful issuance/upgrade.
+    store.dispatch(itwClearCredentialUpgradeFailed(context.credentialType));
   },
 
   trackStartAddCredential: ({

@@ -1,6 +1,6 @@
 import type {
   AuthorizationDetail,
-  Credential
+  CredentialIssuance
 } from "@pagopa/io-react-native-wallet";
 import type {
   IssuerConfiguration,
@@ -58,8 +58,8 @@ export type MrtdPoPContext = {
   /**
    * IAS and MRTD payloads from the CIE MRTD PACE reading process.
    */
-  ias?: Credential.Issuance.MRTDPoP.IasPayload | undefined;
-  mrtd?: Credential.Issuance.MRTDPoP.MrtdPayload | undefined;
+  ias?: CredentialIssuance.MRTDPoP.IasPayload | undefined;
+  mrtd?: CredentialIssuance.MRTDPoP.MrtdPayload | undefined;
   /**
    * The callback URL to be used after the MRTD PoP flow from which
    * we fetch the final authorization URL.

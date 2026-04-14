@@ -35,6 +35,7 @@ function* cgnActivationWorkUnit() {
 
 const INITIAL_SCREENS_TO_WALLET_HOME: ReadonlyArray<string> = [
   ITW_ROUTES.ONBOARDING,
+  ITW_ROUTES.L3_ONBOARDING,
   CGN_ROUTES.DETAILS.DETAILS
 ];
 
@@ -46,9 +47,8 @@ export function* handleCgnStartActivationSaga(): SagaIterator {
     yield* call(NavigationService.getCurrentRoute);
 
   const sagaExecution = () => withResetNavigationStack(cgnActivationWorkUnit);
-  const result: SagaCallReturnType<typeof executeWorkUnit> = yield* call(
-    sagaExecution
-  );
+  const result: SagaCallReturnType<typeof executeWorkUnit> =
+    yield* call(sagaExecution);
 
   if (initialScreen?.name === CGN_ROUTES.ACTIVATION.CTA_START_CGN) {
     yield* call(NavigationService.navigate, ROUTES.MAIN, {

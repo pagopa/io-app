@@ -352,6 +352,16 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                           ]
                         }
                         decelerationRate="normal"
+                        jestAnimatedProps={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestAnimatedStyle={
+                          {
+                            "value": {},
+                          }
+                        }
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -418,24 +428,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Gestisci le modalità di autenticazione in app.
                             </Text>
                           </View>
@@ -489,6 +482,28 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                               testID="reset-unlock-code"
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "marginHorizontal": -24,
+                                      "paddingHorizontal": 24,
+                                      "paddingVertical": 12,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -497,12 +512,38 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                       "paddingVertical": 12,
                                     },
                                     {
-                                      "backgroundColor": undefined,
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
                                     },
                                   ]
                                 }
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "space-between",
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -513,7 +554,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                       {
                                         "transform": [
                                           {
-                                            "scale": undefined,
+                                            "scale": 1,
                                           },
                                         ],
                                       },
@@ -672,6 +713,28 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                               testID="fims-history"
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "marginHorizontal": -24,
+                                      "paddingHorizontal": 24,
+                                      "paddingVertical": 12,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -680,12 +743,38 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                       "paddingVertical": 12,
                                     },
                                     {
-                                      "backgroundColor": undefined,
+                                      "backgroundColor": "rgba(244, 245, 248, 0)",
                                     },
                                   ]
                                 }
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "space-between",
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -696,7 +785,7 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
                                       {
                                         "transform": [
                                           {
-                                            "scale": undefined,
+                                            "scale": 1,
                                           },
                                         ],
                                       },

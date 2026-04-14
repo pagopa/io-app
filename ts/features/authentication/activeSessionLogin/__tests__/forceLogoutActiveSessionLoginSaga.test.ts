@@ -16,13 +16,12 @@ import { sessionTokenSelector } from "../../common/store/selectors";
 import { startApplicationInitialization } from "../../../../store/actions/application";
 import { resetMixpanelSaga } from "../../../../sagas/mixpanel";
 import { getKeyInfo } from "../../../lollipop/saga";
-import { SessionToken } from "../../../../types/SessionToken";
 import { KeyInfo } from "../../../lollipop/utils/crypto";
 import * as error from "../../../../utils/errors";
 import * as analytics from "../../common/analytics";
 import * as messagesAnalytics from "../../../messages/analytics";
 
-const sessionToken: SessionToken = "FAKE_SESSION_TOKEN" as SessionToken;
+const sessionToken = "mock-session-token";
 
 const defaultKeyInfo: KeyInfo = {
   keyTag: "FAKE_KEY_TAG",

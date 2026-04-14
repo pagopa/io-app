@@ -12,7 +12,6 @@ import {
   setFinishedActiveSessionLoginFlow
 } from "../store/actions";
 import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
-import { SessionToken } from "../../../../types/SessionToken";
 import ActiveSessionCieIdLoginScreen from "../screens/cieId/ActiveSessionCieIdLoginScreen";
 
 const API_PREFIX_URL = "http://example.com";
@@ -48,7 +47,6 @@ jest.mock("react-redux", () => ({
 }));
 
 jest.mock("react-native-webview", () => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const { View } = require("react-native");
   const WebView = (props: any) => <View {...props} />;
   return {
@@ -99,12 +97,12 @@ describe("ActiveSessionCieIdLoginScreen", () => {
 
     act(() => {
       fireEvent(webView, "onShouldStartLoadWithRequest", {
-        url: `${API_PREFIX_URL}/profile.html?token=my-token`
+        url: `${API_PREFIX_URL}/profile.html#token=my-token`
       });
     });
 
     expect(mockDispatch).toHaveBeenCalledWith(
-      activeSessionLoginSuccess("my-token" as SessionToken)
+      activeSessionLoginSuccess("my-token")
     );
   });
 

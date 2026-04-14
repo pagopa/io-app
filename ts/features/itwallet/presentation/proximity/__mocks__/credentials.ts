@@ -128,6 +128,7 @@ export const MOCK_CREDENTIALS: Record<string, StoredCredential> = {
         value: "eidas",
         name: "verification.trust_framework"
       }
-    }
+    },
+    spec_version: "1.0.0"
   }
 };

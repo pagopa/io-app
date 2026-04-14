@@ -15,7 +15,7 @@ import * as NFC_AVAILABLE from "../../hooks/useIsNfcFeatureAvailable";
 import * as BS_HOOK from "../../hooks/useSendAarDelegationProposalScreenBottomSheet";
 import * as FLOW_MANAGER from "../../hooks/useSendAarFlowManager";
 import { setAarFlowState } from "../../store/actions";
-import { sendAARFlowStates } from "../../utils/stateUtils";
+import { sendAarFlowStates } from "../../utils/stateUtils";
 import {
   sendAarMockStateFactory,
   sendAarMockStates
@@ -29,7 +29,6 @@ import { SendAarDelegationProposalScreen } from "../SendAarDelegationProposalScr
 // By mocking Gesture Handlers with simple Views we avoid global side effects and
 // ensure deterministic and stable tests and snapshots.
 jest.mock("react-native-gesture-handler", () => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
   const { View } = require("react-native");
 
   return {
@@ -63,17 +62,18 @@ const mockBottomSheet = (_props: {
   present: mockPresent,
   dismiss: jest.fn()
 });
-const mockToastWarning = jest.fn();
+const mockToastInfo = jest.fn();
 const mockToastHideAll = jest.fn();
 
 jest.mock("@pagopa/io-app-design-system", () => ({
   ...jest.requireActual("@pagopa/io-app-design-system"),
+  LoadingSpinner: jest.fn(),
   useIOToast: () => ({
     show: (_message: string, _options?: unknown) => jest.fn(),
     error: jest.fn(),
-    warning: mockToastWarning,
+    warning: jest.fn(),
     success: jest.fn(),
-    info: (_message: string) => jest.fn(),
+    info: mockToastInfo,
     hideAll: mockToastHideAll,
     hide: (_id: number) => jest.fn()
   })
@@ -105,7 +105,7 @@ describe("SendAarDelegationProposalScreen", () => {
   describe("Delegation screen content", () => {
     sendAarMockStates.forEach(currentFlowData => {
       const isNotAddresseState =
-        currentFlowData.type === sendAARFlowStates.notAddressee;
+        currentFlowData.type === sendAarFlowStates.notAddressee;
 
       it(`${
         isNotAddresseState ? "should" : "should not"
@@ -181,7 +181,7 @@ describe("SendAarDelegationProposalScreen", () => {
             expect(mockDispatch).toHaveBeenCalledWith(
               setAarFlowState({
                 ...currentStateMockData,
-                type: sendAARFlowStates.nfcNotSupportedFinal
+                type: sendAarFlowStates.nfcNotSupportedFinal
               })
             );
           }
@@ -230,9 +230,9 @@ describe("SendAarDelegationProposalScreen", () => {
 
   describe("navigation to SEND AAR error screen", () => {
     const statesThatNavigate = [
-      sendAARFlowStates.nfcNotSupportedFinal,
-      sendAARFlowStates.ko,
-      sendAARFlowStates.cieCanAdvisory
+      sendAarFlowStates.nfcNotSupportedFinal,
+      sendAarFlowStates.ko,
+      sendAarFlowStates.cieCanAdvisory
     ];
 
     sendAarMockStates.forEach(state => {
@@ -270,10 +270,12 @@ describe("SendAarDelegationProposalScreen", () => {
   });
 
   describe("alert behavior", () => {
-    it("should show a warning alert on first render", () => {
-      expect(mockToastWarning).not.toHaveBeenCalled();
+    it("should show an info alert on first render", () => {
+      expect(mockToastInfo).not.toHaveBeenCalled();
       renderScreen();
-      expect(mockToastWarning).toHaveBeenCalledTimes(1);
+      expect(mockToastInfo).toHaveBeenCalledTimes(1);
+      const passedMessage = mockToastInfo.mock.calls[0][0];
+      expect(passedMessage).toMatchSnapshot();
     });
   });
 
@@ -283,14 +285,14 @@ describe("SendAarDelegationProposalScreen", () => {
         state.type
       } state, displaying 
       ${
-        state.type === sendAARFlowStates.notAddressee
+        state.type === sendAarFlowStates.notAddressee
           ? "the delegation proposal screen"
           : "a loading screen"
       }`;
       it(testName, async () => {
         jest
           .spyOn(FLOW_MANAGER, "useSendAarFlowManager")
-          // eslint-disable-next-line sonarjs/no-identical-functions
+
           .mockImplementation(() => ({
             terminateFlow: jest.fn(),
             goToNextState: jest.fn(),
@@ -299,7 +301,7 @@ describe("SendAarDelegationProposalScreen", () => {
         const { toJSON, findByTestId } = renderScreen();
         const getLoadingScreen = () => findByTestId("delegationLoading");
         const getDelegationScreen = () => findByTestId("delegationProposal");
-        if (state.type === sendAARFlowStates.notAddressee) {
+        if (state.type === sendAarFlowStates.notAddressee) {
           await expect(getDelegationScreen()).resolves.toBeDefined();
           await expect(getLoadingScreen()).rejects.toThrow();
         } else {

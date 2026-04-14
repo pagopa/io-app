@@ -14,6 +14,7 @@ type Props = {
   title: string;
   description: string;
   actions?: IOScrollViewActions;
+  goBack?: () => void;
 } & (
   | { imageSrc: ImageSourcePropType; imageComponent?: ReactNode }
   | { imageSrc?: never; imageComponent: ReactNode }
@@ -25,13 +26,15 @@ export const ItwCiePreparationScreenContent = ({
   imageSrc,
   imageComponent,
   actions,
-  children
+  children,
+  goBack
 }: PropsWithChildren<Props>) => (
   <IOScrollViewWithLargeHeader
     title={{ label: title }}
     description={description}
     headerActionsProp={{ showHelp: true }}
     actions={actions}
+    goBack={goBack}
   >
     <ContentWrapper>
       <VStack space={16}>

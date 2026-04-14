@@ -352,6 +352,16 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                           ]
                         }
                         decelerationRate="normal"
+                        jestAnimatedProps={
+                          {
+                            "value": {},
+                          }
+                        }
+                        jestAnimatedStyle={
+                          {
+                            "value": {},
+                          }
+                        }
                         onScroll={[Function]}
                         scrollEventThrottle={8}
                         snapToEnd={false}
@@ -418,24 +428,7 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                 }
                               }
                             />
-                            <Text
-                              allowFontScaling={true}
-                              dynamicTypeRamp="body"
-                              maxFontSizeMultiplier={1.5}
-                              style={
-                                [
-                                  {},
-                                  {
-                                    "color": "#555C70",
-                                    "fontFamily": "Titillio",
-                                    "fontSize": 16,
-                                    "fontStyle": "normal",
-                                    "fontWeight": "400",
-                                    "lineHeight": 24,
-                                  },
-                                ]
-                              }
-                            >
+                            <Text>
                               Ha 11 cifre, lo trovi vicino al codice QR.
                             </Text>
                           </View>
@@ -501,6 +494,33 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "borderColor": "rgba(210, 214, 227, 1)",
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "borderCurve": "continuous",
+                                      "borderRadius": 8,
+                                      "borderWidth": 1,
+                                      "bottom": 0,
+                                      "left": 0,
+                                      "position": "absolute",
+                                      "right": 0,
+                                      "top": 0,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -514,12 +534,42 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                       "top": 0,
                                     },
                                     {
-                                      "borderColor": undefined,
+                                      "borderColor": "rgba(210, 214, 227, 1)",
                                     },
                                   ]
                                 }
                               />
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "opacity": 0,
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "borderColor": "#0B3EE3",
+                                    },
+                                    {
+                                      "borderCurve": "continuous",
+                                      "borderRadius": 8,
+                                      "borderWidth": 2,
+                                      "bottom": 0,
+                                      "left": 0,
+                                      "position": "absolute",
+                                      "right": 0,
+                                      "top": 0,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -656,6 +706,34 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                 value=""
                               />
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "bottom": 0,
+                                      "justifyContent": "center",
+                                      "position": "absolute",
+                                      "top": 0,
+                                      "zIndex": 10,
+                                    },
+                                    {
+                                      "paddingHorizontal": 18,
+                                    },
+                                    {
+                                      "left": 48,
+                                    },
+                                  ]
+                                }
                                 pointerEvents="none"
                                 style={
                                   [
@@ -677,6 +755,41 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                               >
                                 <Text
                                   accessible={false}
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "translateX": 0,
+                                          },
+                                          {
+                                            "translateY": 0,
+                                          },
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": undefined,
+                                      },
+                                    ]
+                                  }
                                   maxFontSizeMultiplier={1.5}
                                   numberOfLines={1}
                                   onLayout={[Function]}
@@ -710,12 +823,32 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                 </Text>
                               </View>
                               <View
-                                style={
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
                                   {
                                     "alignSelf": "stretch",
                                     "justifyContent": "center",
                                     "overflow": "visible",
                                   }
+                                }
+                                style={
+                                  [
+                                    {
+                                      "alignSelf": "stretch",
+                                      "justifyContent": "center",
+                                      "overflow": "visible",
+                                    },
+                                  ]
                                 }
                               >
                                 <BVLinearGradient
@@ -879,6 +1012,48 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "backgroundColor": "rgba(11, 62, 227, 1)",
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "borderCurve": "continuous",
+                                      "elevation": 0,
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                      "overflow": "hidden",
+                                      "textAlignVertical": "center",
+                                    },
+                                    {
+                                      "paddingHorizontal": 16,
+                                    },
+                                    {
+                                      "backgroundColor": "#0B3EE3",
+                                      "borderColor": "#FFFFFF",
+                                      "borderRadius": 8,
+                                      "borderWidth": 0,
+                                      "height": 48,
+                                    },
+                                    {},
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -890,9 +1065,15 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                       "overflow": "hidden",
                                       "textAlignVertical": "center",
                                     },
-                                    false,
                                     {
-                                      "backgroundColor": undefined,
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                    {
+                                      "backgroundColor": "rgba(11, 62, 227, 1)",
                                     },
                                     {
                                       "paddingHorizontal": 16,
@@ -909,6 +1090,30 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                 }
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "columnGap": 8,
+                                      },
+                                      false,
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -927,15 +1132,38 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                     accessibilityElementsHidden={true}
                                     accessible={false}
                                     allowFontScaling={true}
+                                    collapsable={false}
                                     ellipsizeMode="tail"
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {
+                                          "color": "rgba(255, 255, 255, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "textAlign": "auto",
+                                        },
+                                        {
+                                          "color": "#FFFFFF",
+                                        },
+                                      ]
+                                    }
                                     maxFontSizeMultiplier={1.5}
                                     numberOfLines={1}
                                     style={
                                       [
                                         {},
                                         {
-                                          "color": "#0E0F13",
+                                          "color": undefined,
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
@@ -950,7 +1178,7 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                             "color": "#FFFFFF",
                                           },
                                           {
-                                            "color": undefined,
+                                            "color": "rgba(255, 255, 255, 1)",
                                           },
                                         ],
                                       ]

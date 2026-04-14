@@ -10,8 +10,8 @@ import * as t from "io-ts";
 import Config from "react-native-config";
 
 // default repository for fetching app content (e.g. services metadata)
-const DEFAULT_CONTENT_REPO_URL =
-  "https://assets.cdn.io.pagopa.it" as NonEmptyString;
+export const DEFAULT_CONTENT_REPO_URL =
+  "https://assets.io.pagopa.it" as NonEmptyString;
 
 // default timeout of fetch (in ms)
 const DEFAULT_FETCH_TIMEOUT_MS = 8000;
@@ -70,10 +70,6 @@ export const bonusApiUrlPrefix: string = Config.BONUS_API_URL_PREFIX;
 
 export const isPlaygroundsEnabled: boolean =
   Config.PLAYGROUNDS_ENABLED === "YES";
-
-// New locale selection
-export const isAppLocaleSelectionEnabled: boolean =
-  Config.APP_LOCALE_SELECTION_ENABLED === "YES";
 
 // Zendesk Feature Flag
 export const zendeskEnabled: boolean = Config.ZENDESK_ENABLED === "YES";

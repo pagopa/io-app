@@ -94,10 +94,10 @@ export const CgnMerchantCategoriesListScreen = () => {
           const accessibilityLabel =
             (countAvailable
               ? `${I18n.t("bonus.cgn.merchantsList.categoriesList.a11y", {
-                  name: I18n.t(s.nameKey as any),
+                  name: I18n.t(s.nameKey),
                   count: category.newDiscounts
                 })}`
-              : `${I18n.t(s.nameKey as any)}`) +
+              : `${I18n.t(s.nameKey)}`) +
             getListItemAccessibilityLabelCount(categoriesToArray.length, index);
 
           return (
@@ -112,7 +112,7 @@ export const CgnMerchantCategoriesListScreen = () => {
                       alignItems: "center"
                     }}
                   >
-                    <H6>{I18n.t(s.nameKey as any)}</H6>
+                    <H6>{I18n.t(s.nameKey)}</H6>
                     <Badge
                       accessible={false}
                       text={`${category?.newDiscounts}`}
@@ -120,7 +120,7 @@ export const CgnMerchantCategoriesListScreen = () => {
                     />
                   </View>
                 ) : (
-                  I18n.t(s.nameKey as any)
+                  I18n.t(s.nameKey)
                 )
               }
               accessibilityLabel={accessibilityLabel}

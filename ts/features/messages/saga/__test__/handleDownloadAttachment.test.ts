@@ -10,7 +10,6 @@ import {
   handleDownloadAttachment,
   testable
 } from "../handleDownloadAttachment";
-import { SessionToken } from "../../../../types/SessionToken";
 import {
   cancelPreviousAttachmentDownload,
   downloadAttachment
@@ -22,7 +21,7 @@ import {
   lollipopPublicKeySelector
 } from "../../../lollipop/store/reducers/lollipop";
 import { KeyInfo } from "../../../lollipop/utils/crypto";
-import { downloadAARAttachmentSaga } from "../../../pn/aar/saga/downloadAARAttachmentSaga";
+import { downloadAarAttachmentSaga } from "../../../pn/aar/saga/downloadAarAttachmentSaga";
 import { thirdPartyMessageSelector } from "../../store/reducers/thirdPartyById";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { getKeyInfo } from "../../../lollipop/saga";
@@ -31,7 +30,7 @@ import * as analytics from "../../analytics";
 const messageId = "01JTT75QYSHWBTNTFM3CZZ17SH";
 const savePath = "/tmp/attachment.pdf";
 const serviceId = "service0000001" as ServiceId;
-const sessionToken = "token" as SessionToken;
+const sessionToken = "mock-session-token";
 const keyTag = "a12e9221-c056-4bbc-8623-ca92df29361e";
 const someKeyTag = O.some(keyTag);
 const publicKey: PublicKey = {
@@ -70,7 +69,7 @@ describe("handleDownloadAttachment", () => {
         .call(getKeyInfo)
         .next(keyInfo)
         .call(testable!.computeThirdPartyMessageData, messageId)
-        .next({ ephemeralAARThirdPartyMessage: false, mandateId: undefined })
+        .next({ ephemeralAarThirdPartyMessage: false, mandateId: undefined })
         .race({
           polling: call(
             testable!.downloadAttachmentWorker,
@@ -91,7 +90,7 @@ describe("handleDownloadAttachment", () => {
         .call(getKeyInfo)
         .next(keyInfo)
         .call(testable!.computeThirdPartyMessageData, messageId)
-        .next({ ephemeralAARThirdPartyMessage: false, mandateId: undefined })
+        .next({ ephemeralAarThirdPartyMessage: false, mandateId: undefined })
         .race({
           polling: call(
             testable!.downloadAttachmentWorker,
@@ -112,10 +111,10 @@ describe("handleDownloadAttachment", () => {
         .call(getKeyInfo)
         .next(keyInfo)
         .call(testable!.computeThirdPartyMessageData, messageId)
-        .next({ ephemeralAARThirdPartyMessage: true, mandateId })
+        .next({ ephemeralAarThirdPartyMessage: true, mandateId })
         .race({
           polling: call(
-            downloadAARAttachmentSaga,
+            downloadAarAttachmentSaga,
             sessionToken,
             keyInfo,
             mandateId,
@@ -134,10 +133,10 @@ describe("handleDownloadAttachment", () => {
         .call(getKeyInfo)
         .next(keyInfo)
         .call(testable!.computeThirdPartyMessageData, messageId)
-        .next({ ephemeralAARThirdPartyMessage: true, mandateId })
+        .next({ ephemeralAarThirdPartyMessage: true, mandateId })
         .race({
           polling: call(
-            downloadAARAttachmentSaga,
+            downloadAarAttachmentSaga,
             sessionToken,
             keyInfo,
             mandateId,
@@ -156,7 +155,7 @@ describe("handleDownloadAttachment", () => {
         .select(thirdPartyMessageSelector, messageId)
         .next(undefined)
         .returns({
-          ephemeralAARThirdPartyMessage: false,
+          ephemeralAarThirdPartyMessage: false,
           mandateId: undefined
         });
     });
@@ -168,7 +167,7 @@ describe("handleDownloadAttachment", () => {
           kind: "TPM"
         })
         .returns({
-          ephemeralAARThirdPartyMessage: false,
+          ephemeralAarThirdPartyMessage: false,
           mandateId: undefined
         });
     });
@@ -180,7 +179,7 @@ describe("handleDownloadAttachment", () => {
           kind: "AAR"
         })
         .returns({
-          ephemeralAARThirdPartyMessage: true,
+          ephemeralAarThirdPartyMessage: true,
           mandateId: undefined
         });
     });
@@ -193,7 +192,7 @@ describe("handleDownloadAttachment", () => {
           mandateId
         })
         .returns({
-          ephemeralAARThirdPartyMessage: true,
+          ephemeralAarThirdPartyMessage: true,
           mandateId
         });
     });

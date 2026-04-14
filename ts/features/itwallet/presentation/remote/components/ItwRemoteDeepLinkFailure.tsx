@@ -4,10 +4,8 @@ import { OperationResultScreenContent } from "../../../../../components/screens/
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { trackItwKoStateAction } from "../../../analytics";
-import {
-  ZendeskSubcategoryValue,
-  useItwFailureSupportModal
-} from "../../../common/hooks/useItwFailureSupportModal.tsx";
+import { useItwFailureSupportModal } from "../../../common/hooks/useItwFailureSupportModal.tsx";
+import { ZendeskSubcategoryValue } from "../../../common/hooks/useItwZendeskSupport";
 import {
   ItwFailure,
   ItwFailureType

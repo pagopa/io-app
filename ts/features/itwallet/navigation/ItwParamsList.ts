@@ -4,16 +4,18 @@ import { ItwIdentificationCieWarningScreenNavigationParams } from "../identifica
 import { ItwIdentificationNavigationParams } from "../identification/common/screens/ItwIdentificationModeSelectionScreen.tsx";
 import { ItwIssuanceCredentialLandingScreenNavigationParams } from "../issuance/screens/ItwIssuanceCredentialLandingScreen.tsx";
 import { ItwIssuanceCredentialTrustIssuerNavigationParams } from "../issuance/screens/ItwIssuanceCredentialTrustIssuerScreen";
+import { ItwCardOnboardingL3NavigationParams } from "../onboarding/screens/ItwCardOnboardingL3Screen.tsx";
 import { ItwPlaygroundParamsList } from "../playgrounds/navigation/ItwPlaygroundParamsList.ts";
 import { ItwPresentationCredentialAttachmentNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialAttachmentScreen";
 import { ItwPresentationCredentialCardModalNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialCardModal";
 import { ItwPresentationCredentialDetailNavigationParams } from "../presentation/details/screens/ItwPresentationCredentialDetailScreen";
-import { ItwProximityParamsList } from "../presentation/proximity/navigation/ItwProximityParamsList.ts";
 import { ItwCredentialTrustmarkScreenNavigationParams } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ITW_ROUTES } from "./routes";
 
 export type ItwParamsList = {
   [ITW_ROUTES.ONBOARDING]: undefined;
+  [ITW_ROUTES.L3_ONBOARDING]: ItwCardOnboardingL3NavigationParams | undefined;
+  [ITW_ROUTES.L2_ONBOARDING]: undefined;
   // OFFLINE WALLET
   [ITW_ROUTES.OFFLINE.WALLET]: undefined;
   // LANDING SCREENS
@@ -77,5 +79,4 @@ export type ItwParamsList = {
   [ITW_ROUTES.IDENTITY_NOT_MATCHING_SCREEN]: undefined;
   [ITW_ROUTES.WALLET_REVOCATION_SCREEN]: undefined;
   [ITW_ROUTES.SETTINGS]: undefined;
-} & ItwProximityParamsList &
-  ItwPlaygroundParamsList;
+} & ItwPlaygroundParamsList;

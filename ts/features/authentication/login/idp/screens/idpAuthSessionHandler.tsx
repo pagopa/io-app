@@ -38,7 +38,6 @@ import { assistanceToolConfigSelector } from "../../../../../store/reducers/back
 import { idpContextualHelpDataFromIdSelector } from "../../../../../store/reducers/content";
 import { isMixpanelEnabled } from "../../../../../store/reducers/persistedPreferences";
 import themeVariables from "../../../../../theme/variables";
-import { SessionToken } from "../../../../../types/SessionToken";
 import { emptyContextualHelp } from "../../../../../utils/contextualHelp";
 import {
   assistanceToolRemoteConfig,
@@ -249,7 +248,7 @@ export const AuthSessionPage = () => {
   );
 
   const handleLoginSuccess = useCallback(
-    (token: SessionToken) => {
+    (token: string) => {
       setRequestInfo({
         requestState: "AUTHORIZED",
         nativeAttempts: requestInfo.nativeAttempts

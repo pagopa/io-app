@@ -1,7 +1,9 @@
 import { InternalAuthAndMrtdResponse } from "@pagopa/io-react-native-cie";
-import { ErrorActorEvent } from "xstate";
+import { DoneActorEvent, ErrorActorEvent } from "xstate";
 import { SpidIdp } from "../../../../utils/idps";
 import { CieWarningType } from "../../identification/cie/utils/types";
+import { Output } from "../upgrade/output";
+import type { IssuanceFailure } from "./failure";
 import { EidIssuanceLevel, EidIssuanceMode } from "./context";
 
 export type IdentificationMode = "spid" | "ciePin" | "cieId";
@@ -47,6 +49,7 @@ export type SelectIdentificationMode = {
 export type GoToCieWarning = {
   type: "go-to-cie-warning";
   warning: CieWarningType;
+  routeName: string;
 };
 
 export type SelectSpidIdp = {
@@ -127,6 +130,11 @@ export type GoToL2IdentificationMode = {
   type: "go-to-l2-identification";
 };
 
+export type SimulateFailure = {
+  type: "simulate-failure";
+  failure: IssuanceFailure;
+};
+
 export type EidIssuanceEvents =
   | Start
   | AcceptTos
@@ -149,7 +157,9 @@ export type EidIssuanceEvents =
   | RevokeWalletInstance
   | ErrorActorEvent
   | ExternalErrorEvent
+  | DoneActorEvent<Output>
   | GoToCieWarning
   | Next
   | GoToL2IdentificationMode
-  | Reset;
+  | Reset
+  | SimulateFailure;

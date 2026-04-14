@@ -7,6 +7,8 @@ import mdlL3 from "../../__mocks__/L3/mdlL3.json";
 import resL3 from "../../__mocks__/L3/resL3.json";
 import tsL3 from "../../__mocks__/L3/tsL3.json";
 import mdl from "../../__mocks__/mdl.json";
+import edipL3 from "../../__mocks__/L3/edipL3.json";
+import edatL3 from "../../__mocks__/L3/edatL3.json";
 import statusAssertion from "../../__mocks__/statusAssertion.json";
 import ts from "../../__mocks__/ts.json";
 import { DigitalCredentialMetadata } from "./itwCredentialsCatalogueUtils";
@@ -26,7 +28,9 @@ export enum CredentialType {
   PID = "PersonIdentificationData",
   EDUCATION_DEGREE = "education_degree",
   EDUCATION_ENROLLMENT = "education_enrollment",
-  RESIDENCY = "residency"
+  RESIDENCY = "residency",
+  EDUCATION_DIPLOMA = "education_diploma",
+  EDUCATION_ATTENDANCE = "education_attendance"
 }
 
 export const ItwStoredCredentialsMocks = {
@@ -40,7 +44,9 @@ export const ItwStoredCredentialsMocks = {
     dc: dcL3 as unknown as StoredCredential,
     ed: edL3 as unknown as StoredCredential,
     ee: eeL3 as unknown as StoredCredential,
-    res: resL3 as unknown as StoredCredential
+    res: resL3 as unknown as StoredCredential,
+    edip: edipL3 as unknown as StoredCredential,
+    edat: edatL3 as unknown as StoredCredential
   }
 };
 
@@ -52,7 +58,6 @@ export const ItwCredentialFromCatalogueMocks: DigitalCredentialMetadata = {
   name: "Tessera Sanitaria Digitale",
   description:
     "Versione Digitale della Tessera Sanitaria - Tessera europea di assicurazione malattia",
-  claims: [],
   purposes: [],
   version: "1.0",
   credential_type: "EuropeanHealthInsuranceCard",
@@ -62,11 +67,6 @@ export const ItwCredentialFromCatalogueMocks: DigitalCredentialMetadata = {
     status_methods: [],
     allowed_states: []
   },
-  authentication: {
-    user_auth_required: true,
-    min_loa: "high",
-    supported_eid_schemes: ["it_wallet"]
-  },
   issuers: [],
   authentic_sources: [
     {
@@ -74,7 +74,7 @@ export const ItwCredentialFromCatalogueMocks: DigitalCredentialMetadata = {
       organization_code: "m_ef",
       id: "https://www.rgs.mef.gov.it",
       organization_country: "IT",
-      source_type: "public"
+      organization_type: "public"
     }
   ],
   formats: []

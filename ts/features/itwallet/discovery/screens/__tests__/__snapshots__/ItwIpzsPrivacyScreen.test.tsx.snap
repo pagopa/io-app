@@ -251,14 +251,47 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                               testID="refreshIndicator"
                             >
                               <View
-                                style={
+                                collapsable={false}
+                                jestAnimatedProps={
                                   {
-                                    "transform": [
-                                      {
-                                        "rotateZ": "0deg",
-                                      },
-                                    ],
+                                    "value": {},
                                   }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  {
+                                    "animationDuration": 850,
+                                    "animationIterationCount": "infinite",
+                                    "animationName": {
+                                      "from": {
+                                        "transform": [
+                                          {
+                                            "rotateZ": "0deg",
+                                          },
+                                        ],
+                                      },
+                                      "to": {
+                                        "transform": [
+                                          {
+                                            "rotateZ": "360deg",
+                                          },
+                                        ],
+                                      },
+                                    },
+                                    "animationTimingFunction": "linear",
+                                    "transformOrigin": "center",
+                                  }
+                                }
+                                style={
+                                  [
+                                    {
+                                      "transformOrigin": "center",
+                                    },
+                                  ]
                                 }
                                 testID="LoadingSpinnerAnimatedTestID"
                               >
@@ -309,7 +342,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                         }
                                         gradientTransform={null}
                                         gradientUnits={0}
-                                        name="spinner-secondHalf"
+                                        name="«r0»-secondHalf"
                                         x1="0%"
                                         x2="100%"
                                         y1="0%"
@@ -326,7 +359,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                         }
                                         gradientTransform={null}
                                         gradientUnits={0}
-                                        name="spinner-firstHalf"
+                                        name="«r0»-firstHalf"
                                         x1="0%"
                                         x2="100%"
                                         y1="0%"
@@ -362,7 +395,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                         }
                                         stroke={
                                           {
-                                            "brushRef": "spinner-secondHalf",
+                                            "brushRef": "«r0»-secondHalf",
                                             "type": 1,
                                           }
                                         }
@@ -382,7 +415,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                         }
                                         stroke={
                                           {
-                                            "brushRef": "spinner-firstHalf",
+                                            "brushRef": "«r0»-firstHalf",
                                             "type": 1,
                                           }
                                         }
@@ -473,6 +506,16 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                               ]
                             }
                             decelerationRate="normal"
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {},
+                              }
+                            }
                             onScroll={[Function]}
                             scrollEventThrottle={8}
                             snapToEnd={false}
@@ -542,20 +585,40 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                   >
                                     Premendo 
                                     <Text
+                                      allowFontScaling={true}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
-                                        {
-                                          "fontWeight": "600",
-                                        }
+                                        [
+                                          {},
+                                          {
+                                            "color": undefined,
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": undefined,
+                                          },
+                                        ]
                                       }
                                     >
                                       Continua
                                     </Text>
                                      dichiari di aver letto e compreso l’
                                     <Text
+                                      allowFontScaling={true}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
-                                        {
-                                          "fontWeight": "600",
-                                        }
+                                        [
+                                          {},
+                                          {
+                                            "color": undefined,
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": undefined,
+                                          },
+                                        ]
                                       }
                                     >
                                       Informativa Privacy
@@ -598,7 +661,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                   messagingModuleName=""
                                   newSource={
                                     {
-                                      "uri": "https://util.wallet.ipzs.it/privacy.html",
+                                      "uri": "",
                                     }
                                   }
                                   onContentProcessDidTerminate={[Function]}
@@ -612,7 +675,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                   scrollEnabled={false}
                                   source={
                                     {
-                                      "uri": "https://util.wallet.ipzs.it/privacy.html",
+                                      "uri": "",
                                     }
                                   }
                                   style={
@@ -654,6 +717,29 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "bottom": 0,
+                                    "left": 0,
+                                    "position": "absolute",
+                                    "right": 0,
+                                    "top": 0,
+                                  },
+                                  false,
+                                ]
+                              }
                               pointerEvents="none"
                               style={
                                 [
@@ -669,10 +755,28 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "opacity": 1,
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    false,
+                                  ]
+                                }
                                 style={
                                   [
                                     {
-                                      "opacity": undefined,
+                                      "opacity": 1,
                                     },
                                     false,
                                   ]
@@ -682,26 +786,26 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                   colors={
                                     [
                                       16777215,
-                                      218103807,
-                                      419430399,
-                                      620756991,
-                                      822083583,
-                                      1040187391,
-                                      1241513983,
-                                      1442840575,
-                                      1644167167,
-                                      1845493759,
-                                      2046820351,
-                                      2264924159,
+                                      33554431,
+                                      83886079,
+                                      150994943,
+                                      268435455,
+                                      385875967,
+                                      520093695,
+                                      687865855,
+                                      855638015,
+                                      1056964607,
+                                      1258291199,
+                                      1476395007,
+                                      1711276031,
+                                      1946157055,
+                                      2214592511,
                                       2466250751,
-                                      2667577343,
-                                      2868903935,
-                                      3070230527,
-                                      3271557119,
-                                      3489660927,
-                                      3690987519,
-                                      3892314111,
-                                      4093640703,
+                                      2751463423,
+                                      3036676095,
+                                      3338665983,
+                                      3640655871,
+                                      3959422975,
                                       4294967295,
                                     ]
                                   }
@@ -811,6 +915,48 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                 }
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "backgroundColor": "rgba(11, 62, 227, 1)",
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "elevation": 0,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "overflow": "hidden",
+                                        "textAlignVertical": "center",
+                                      },
+                                      {
+                                        "paddingHorizontal": 16,
+                                      },
+                                      {
+                                        "backgroundColor": "#0B3EE3",
+                                        "borderColor": "#FFFFFF",
+                                        "borderRadius": 8,
+                                        "borderWidth": 0,
+                                        "height": 48,
+                                      },
+                                      {},
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -822,9 +968,15 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                         "overflow": "hidden",
                                         "textAlignVertical": "center",
                                       },
-                                      false,
                                       {
-                                        "backgroundColor": undefined,
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                      {
+                                        "backgroundColor": "rgba(11, 62, 227, 1)",
                                       },
                                       {
                                         "paddingHorizontal": 16,
@@ -841,6 +993,30 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                   }
                                 >
                                   <View
+                                    collapsable={false}
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "flexDirection": "row",
+                                          "justifyContent": "center",
+                                        },
+                                        {
+                                          "columnGap": 8,
+                                        },
+                                        false,
+                                      ]
+                                    }
                                     style={
                                       [
                                         {
@@ -859,15 +1035,38 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                       accessibilityElementsHidden={true}
                                       accessible={false}
                                       allowFontScaling={true}
+                                      collapsable={false}
                                       ellipsizeMode="tail"
                                       importantForAccessibility="no-hide-descendants"
+                                      jestAnimatedProps={
+                                        {
+                                          "value": {},
+                                        }
+                                      }
+                                      jestAnimatedStyle={
+                                        {
+                                          "value": {
+                                            "color": "rgba(255, 255, 255, 1)",
+                                          },
+                                        }
+                                      }
+                                      jestInlineStyle={
+                                        [
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                          {
+                                            "color": "#FFFFFF",
+                                          },
+                                        ]
+                                      }
                                       maxFontSizeMultiplier={1.5}
                                       numberOfLines={1}
                                       style={
                                         [
                                           {},
                                           {
-                                            "color": "#0E0F13",
+                                            "color": undefined,
                                             "fontFamily": "Titillio",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
@@ -882,7 +1081,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                               "color": "#FFFFFF",
                                             },
                                             {
-                                              "color": undefined,
+                                              "color": "rgba(255, 255, 255, 1)",
                                             },
                                           ],
                                         ]
@@ -911,6 +1110,29 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                       >
                         <View
                           accessibilityRole="header"
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "#FFFFFF",
+                                "borderColor": "transparent",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "borderBottomWidth": 1,
+                                "borderColor": "rgba(210,214,227,0)",
+                              },
+                              {},
+                            ]
+                          }
                           style={
                             [
                               {
@@ -926,6 +1148,31 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "marginTop": 0,
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "flexGrow": 1,
+                                  "height": 56,
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 24,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -977,6 +1224,35 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                               onStartShouldSetResponder={[Function]}
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "height": 24,
+                                      "width": 24,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -987,7 +1263,13 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                       "height": 24,
                                       "width": 24,
                                     },
-                                    false,
+                                    {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
                                   ]
                                 }
                               >
@@ -996,17 +1278,25 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                   accessibilityLabel=""
                                   accessible={false}
                                   align="xMidYMid"
-                                  animatedProps={
-                                    {
-                                      "color": undefined,
-                                    }
-                                  }
                                   bbHeight={36}
                                   bbWidth={36}
+                                  collapsable={false}
                                   color="#0E0F13"
                                   focusable={false}
                                   height={36}
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {
+                                        "color": "rgba(14, 15, 19, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
@@ -1072,13 +1362,34 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                               <Text
                                 accessible={false}
                                 allowFontScaling={true}
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "opacity": 1,
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "color": "#0E0F13",
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
                                 maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -1143,6 +1454,35 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -1153,7 +1493,13 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                         "height": 24,
                                         "width": 24,
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                     ]
                                   }
                                 >
@@ -1162,17 +1508,25 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                     accessibilityLabel=""
                                     accessible={false}
                                     align="xMidYMid"
-                                    animatedProps={
-                                      {
-                                        "color": undefined,
-                                      }
-                                    }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    collapsable={false}
                                     color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {
+                                          "color": "rgba(14, 15, 19, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
@@ -1503,14 +1857,47 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                               testID="refreshIndicator"
                             >
                               <View
-                                style={
+                                collapsable={false}
+                                jestAnimatedProps={
                                   {
-                                    "transform": [
-                                      {
-                                        "rotateZ": "0deg",
-                                      },
-                                    ],
+                                    "value": {},
                                   }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestInlineStyle={
+                                  {
+                                    "animationDuration": 850,
+                                    "animationIterationCount": "infinite",
+                                    "animationName": {
+                                      "from": {
+                                        "transform": [
+                                          {
+                                            "rotateZ": "0deg",
+                                          },
+                                        ],
+                                      },
+                                      "to": {
+                                        "transform": [
+                                          {
+                                            "rotateZ": "360deg",
+                                          },
+                                        ],
+                                      },
+                                    },
+                                    "animationTimingFunction": "linear",
+                                    "transformOrigin": "center",
+                                  }
+                                }
+                                style={
+                                  [
+                                    {
+                                      "transformOrigin": "center",
+                                    },
+                                  ]
                                 }
                                 testID="LoadingSpinnerAnimatedTestID"
                               >
@@ -1561,7 +1948,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                         }
                                         gradientTransform={null}
                                         gradientUnits={0}
-                                        name="spinner-secondHalf"
+                                        name="«r1»-secondHalf"
                                         x1="0%"
                                         x2="100%"
                                         y1="0%"
@@ -1578,7 +1965,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                         }
                                         gradientTransform={null}
                                         gradientUnits={0}
-                                        name="spinner-firstHalf"
+                                        name="«r1»-firstHalf"
                                         x1="0%"
                                         x2="100%"
                                         y1="0%"
@@ -1614,7 +2001,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                         }
                                         stroke={
                                           {
-                                            "brushRef": "spinner-secondHalf",
+                                            "brushRef": "«r1»-secondHalf",
                                             "type": 1,
                                           }
                                         }
@@ -1634,7 +2021,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                         }
                                         stroke={
                                           {
-                                            "brushRef": "spinner-firstHalf",
+                                            "brushRef": "«r1»-firstHalf",
                                             "type": 1,
                                           }
                                         }
@@ -1725,6 +2112,16 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                               ]
                             }
                             decelerationRate="normal"
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {},
+                              }
+                            }
                             onScroll={[Function]}
                             scrollEventThrottle={8}
                             snapToEnd={false}
@@ -1794,20 +2191,40 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                   >
                                     Premendo 
                                     <Text
+                                      allowFontScaling={true}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
-                                        {
-                                          "fontWeight": "600",
-                                        }
+                                        [
+                                          {},
+                                          {
+                                            "color": undefined,
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": undefined,
+                                          },
+                                        ]
                                       }
                                     >
                                       Continua
                                     </Text>
                                      dichiari di aver letto e compreso l’
                                     <Text
+                                      allowFontScaling={true}
+                                      maxFontSizeMultiplier={1.5}
                                       style={
-                                        {
-                                          "fontWeight": "600",
-                                        }
+                                        [
+                                          {},
+                                          {
+                                            "color": undefined,
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": undefined,
+                                          },
+                                        ]
                                       }
                                     >
                                       Informativa Privacy
@@ -1850,7 +2267,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                   messagingModuleName=""
                                   newSource={
                                     {
-                                      "uri": "https://util.wallet.ipzs.it/privacy.html",
+                                      "uri": "",
                                     }
                                   }
                                   onContentProcessDidTerminate={[Function]}
@@ -1864,7 +2281,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                   scrollEnabled={false}
                                   source={
                                     {
-                                      "uri": "https://util.wallet.ipzs.it/privacy.html",
+                                      "uri": "",
                                     }
                                   }
                                   style={
@@ -1906,6 +2323,29 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                             }
                           >
                             <View
+                              collapsable={false}
+                              jestAnimatedProps={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {},
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "bottom": 0,
+                                    "left": 0,
+                                    "position": "absolute",
+                                    "right": 0,
+                                    "top": 0,
+                                  },
+                                  false,
+                                ]
+                              }
                               pointerEvents="none"
                               style={
                                 [
@@ -1921,10 +2361,28 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                               }
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "opacity": 1,
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    false,
+                                  ]
+                                }
                                 style={
                                   [
                                     {
-                                      "opacity": undefined,
+                                      "opacity": 1,
                                     },
                                     false,
                                   ]
@@ -1934,26 +2392,26 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                   colors={
                                     [
                                       16777215,
-                                      218103807,
-                                      419430399,
-                                      620756991,
-                                      822083583,
-                                      1040187391,
-                                      1241513983,
-                                      1442840575,
-                                      1644167167,
-                                      1845493759,
-                                      2046820351,
-                                      2264924159,
+                                      33554431,
+                                      83886079,
+                                      150994943,
+                                      268435455,
+                                      385875967,
+                                      520093695,
+                                      687865855,
+                                      855638015,
+                                      1056964607,
+                                      1258291199,
+                                      1476395007,
+                                      1711276031,
+                                      1946157055,
+                                      2214592511,
                                       2466250751,
-                                      2667577343,
-                                      2868903935,
-                                      3070230527,
-                                      3271557119,
-                                      3489660927,
-                                      3690987519,
-                                      3892314111,
-                                      4093640703,
+                                      2751463423,
+                                      3036676095,
+                                      3338665983,
+                                      3640655871,
+                                      3959422975,
                                       4294967295,
                                     ]
                                   }
@@ -2063,6 +2521,48 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                 }
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "backgroundColor": "rgba(11, 62, 227, 1)",
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "borderCurve": "continuous",
+                                        "elevation": 0,
+                                        "flexDirection": "row",
+                                        "justifyContent": "center",
+                                        "overflow": "hidden",
+                                        "textAlignVertical": "center",
+                                      },
+                                      {
+                                        "paddingHorizontal": 16,
+                                      },
+                                      {
+                                        "backgroundColor": "#0B3EE3",
+                                        "borderColor": "#FFFFFF",
+                                        "borderRadius": 8,
+                                        "borderWidth": 0,
+                                        "height": 48,
+                                      },
+                                      {},
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -2074,9 +2574,15 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                         "overflow": "hidden",
                                         "textAlignVertical": "center",
                                       },
-                                      false,
                                       {
-                                        "backgroundColor": undefined,
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                      {
+                                        "backgroundColor": "rgba(11, 62, 227, 1)",
                                       },
                                       {
                                         "paddingHorizontal": 16,
@@ -2093,6 +2599,30 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                   }
                                 >
                                   <View
+                                    collapsable={false}
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
+                                    jestInlineStyle={
+                                      [
+                                        {
+                                          "alignItems": "center",
+                                          "flexDirection": "row",
+                                          "justifyContent": "center",
+                                        },
+                                        {
+                                          "columnGap": 8,
+                                        },
+                                        false,
+                                      ]
+                                    }
                                     style={
                                       [
                                         {
@@ -2111,15 +2641,38 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                       accessibilityElementsHidden={true}
                                       accessible={false}
                                       allowFontScaling={true}
+                                      collapsable={false}
                                       ellipsizeMode="tail"
                                       importantForAccessibility="no-hide-descendants"
+                                      jestAnimatedProps={
+                                        {
+                                          "value": {},
+                                        }
+                                      }
+                                      jestAnimatedStyle={
+                                        {
+                                          "value": {
+                                            "color": "rgba(255, 255, 255, 1)",
+                                          },
+                                        }
+                                      }
+                                      jestInlineStyle={
+                                        [
+                                          {
+                                            "textAlign": "auto",
+                                          },
+                                          {
+                                            "color": "#FFFFFF",
+                                          },
+                                        ]
+                                      }
                                       maxFontSizeMultiplier={1.5}
                                       numberOfLines={1}
                                       style={
                                         [
                                           {},
                                           {
-                                            "color": "#0E0F13",
+                                            "color": undefined,
                                             "fontFamily": "Titillio",
                                             "fontSize": 16,
                                             "fontStyle": "normal",
@@ -2134,7 +2687,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                               "color": "#FFFFFF",
                                             },
                                             {
-                                              "color": undefined,
+                                              "color": "rgba(255, 255, 255, 1)",
                                             },
                                           ],
                                         ]
@@ -2163,6 +2716,29 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                       >
                         <View
                           accessibilityRole="header"
+                          collapsable={false}
+                          jestAnimatedProps={
+                            {
+                              "value": {},
+                            }
+                          }
+                          jestAnimatedStyle={
+                            {
+                              "value": {
+                                "backgroundColor": "#FFFFFF",
+                                "borderColor": "transparent",
+                              },
+                            }
+                          }
+                          jestInlineStyle={
+                            [
+                              {
+                                "borderBottomWidth": 1,
+                                "borderColor": "rgba(210,214,227,0)",
+                              },
+                              {},
+                            ]
+                          }
                           style={
                             [
                               {
@@ -2178,6 +2754,31 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                           }
                         >
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {
+                                  "marginTop": 0,
+                                },
+                              }
+                            }
+                            jestInlineStyle={
+                              [
+                                {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "flexGrow": 1,
+                                  "height": 56,
+                                  "justifyContent": "space-between",
+                                  "paddingHorizontal": 24,
+                                },
+                              ]
+                            }
                             style={
                               [
                                 {
@@ -2229,6 +2830,35 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                               onStartShouldSetResponder={[Function]}
                             >
                               <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "height": 24,
+                                      "width": 24,
+                                    },
+                                  ]
+                                }
                                 style={
                                   [
                                     {
@@ -2239,7 +2869,13 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                       "height": 24,
                                       "width": 24,
                                     },
-                                    false,
+                                    {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
                                   ]
                                 }
                               >
@@ -2248,17 +2884,25 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                   accessibilityLabel=""
                                   accessible={false}
                                   align="xMidYMid"
-                                  animatedProps={
-                                    {
-                                      "color": undefined,
-                                    }
-                                  }
                                   bbHeight={36}
                                   bbWidth={36}
+                                  collapsable={false}
                                   color="#0E0F13"
                                   focusable={false}
                                   height={36}
                                   importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {
+                                        "color": "rgba(14, 15, 19, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
@@ -2324,13 +2968,34 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                               <Text
                                 accessible={false}
                                 allowFontScaling={true}
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "opacity": 1,
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "color": "#0E0F13",
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
                                 maxFontSizeMultiplier={1.5}
                                 numberOfLines={1}
                                 style={
                                   [
                                     {},
                                     {
-                                      "color": "#0E0F13",
+                                      "color": undefined,
                                       "fontFamily": "Titillio",
                                       "fontSize": 14,
                                       "fontStyle": "normal",
@@ -2395,6 +3060,35 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                 onStartShouldSetResponder={[Function]}
                               >
                                 <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    [
+                                      {
+                                        "alignItems": "center",
+                                        "justifyContent": "center",
+                                      },
+                                      {
+                                        "height": 24,
+                                        "width": 24,
+                                      },
+                                    ]
+                                  }
                                   style={
                                     [
                                       {
@@ -2405,7 +3099,13 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                         "height": 24,
                                         "width": 24,
                                       },
-                                      false,
+                                      {
+                                        "transform": [
+                                          {
+                                            "scale": 1,
+                                          },
+                                        ],
+                                      },
                                     ]
                                   }
                                 >
@@ -2414,17 +3114,25 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                     accessibilityLabel=""
                                     accessible={false}
                                     align="xMidYMid"
-                                    animatedProps={
-                                      {
-                                        "color": undefined,
-                                      }
-                                    }
                                     bbHeight={36}
                                     bbWidth={36}
+                                    collapsable={false}
                                     color="#0E0F13"
                                     focusable={false}
                                     height={36}
                                     importantForAccessibility="no-hide-descendants"
+                                    jestAnimatedProps={
+                                      {
+                                        "value": {
+                                          "color": "rgba(14, 15, 19, 1)",
+                                        },
+                                      }
+                                    }
+                                    jestAnimatedStyle={
+                                      {
+                                        "value": {},
+                                      }
+                                    }
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}

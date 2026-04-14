@@ -1,11 +1,9 @@
 import {
-  Body,
-  BodyProps,
   BodySmall,
-  ComposedBodyFromArray,
   Divider,
   H2,
   HeaderSecondLevel,
+  IOMarkdownLite,
   useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -28,7 +26,7 @@ import { IOScrollViewWithLargeHeader } from "./IOScrollViewWithLargeHeader";
 
 type Props<T> = ComponentProps<typeof IOListView<T>> &
   ComponentProps<typeof IOScrollViewWithLargeHeader> & {
-    subtitle?: string | Array<BodyProps>;
+    subtitle?: string;
   };
 
 /**
@@ -128,21 +126,13 @@ export const IOListViewWithLargeHeader = forwardRef(
             {description && (
               <>
                 <VSpacer size={16} />
-                {typeof description === "string" ? (
-                  <Body color={theme["textBody-tertiary"]}>{description}</Body>
-                ) : (
-                  <ComposedBodyFromArray body={description} textAlign="left" />
-                )}
+                <IOMarkdownLite content={description} />
               </>
             )}
             {subtitle && (
               <>
                 <VSpacer size={8} />
-                {typeof subtitle === "string" ? (
-                  <Body>{subtitle}</Body>
-                ) : (
-                  <ComposedBodyFromArray body={subtitle} />
-                )}
+                <IOMarkdownLite content={subtitle} />
               </>
             )}
             {ListHeaderComponent && (

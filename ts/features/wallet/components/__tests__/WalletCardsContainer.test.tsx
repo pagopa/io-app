@@ -34,13 +34,6 @@ import {
 } from "../WalletCardsContainer";
 
 jest.spyOn(Alert, "alert");
-jest.mock("react-native-reanimated", () => ({
-  ...require("react-native-reanimated/mock"),
-  useReducedMotion: jest.fn,
-  Layout: {
-    duration: jest.fn()
-  }
-}));
 
 const mockNavigate = jest.fn();
 const mockAddListener = jest.fn().mockImplementation(_event => jest.fn());
@@ -104,7 +97,7 @@ const T_PLACEHOLDERS: WalletCardsState = _.mapValues(
       type: "placeholder",
       category: card.category,
       key: card.key
-    } as WalletCard)
+    }) as WalletCard
 );
 
 describe("WalletCardsContainer", () => {
@@ -217,13 +210,45 @@ describe("ItwWalletCardsContainer", () => {
   it("should render the wallet ready banner", () => {
     jest
       .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
-      .mockImplementation(() => true);
+      .mockReturnValue(true);
+
+    jest
+      .spyOn(itwSelectors, "itwShouldRenderUpgradeBannerSelector")
+      .mockReturnValue(true);
+
     jest
       .spyOn(itwSelectors, "itwShouldRenderWalletReadyBannerSelector")
-      .mockImplementation(() => true);
+      .mockReturnValue(true);
+
+    jest
+      .spyOn(walletSelectors, "shouldRenderItwCardsContainerSelector")
+      .mockReturnValue(true);
+
+    jest
+      .spyOn(walletSelectors, "selectWalletCardsByCategory")
+      .mockReturnValue([]);
 
     const { queryByTestId } = renderComponent(ItwWalletCardsContainer);
+
     expect(queryByTestId("itwWalletReadyBannerTestID")).not.toBeNull();
+  });
+
+  it("should render the L2 engagement banner", () => {
+    jest
+      .spyOn(itwLifecycleSelectors, "itwLifecycleIsValidSelector")
+      .mockReturnValue(true);
+
+    jest
+      .spyOn(itwSelectors, "itwShouldRenderL2EngagementBannerSelector")
+      .mockReturnValue(true);
+
+    jest
+      .spyOn(walletSelectors, "selectWalletCardsByCategory")
+      .mockReturnValue([]);
+
+    const { queryByTestId } = renderComponent(ItwWalletCardsContainer);
+
+    expect(queryByTestId("itwWalletL2BannerTestID")).not.toBeNull();
   });
 
   it("should render credential cards", () => {

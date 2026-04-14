@@ -121,7 +121,7 @@ const trackAction =
       case getType(loginFailure):
         return trackLoginFailure({
           idp: action.payload.idp,
-          reason: action.payload.error,
+          reason: action.payload.error.message,
           flow: "auth"
         });
 

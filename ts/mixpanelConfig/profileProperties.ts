@@ -69,7 +69,7 @@ export const updateMixpanelProfileProperties = async (
     const notificationsEnabled = await checkNotificationPermissions();
     const pnServiceEnabled = isPnServiceEnabled(state);
 
-    const BIOMETRIC_TECHNOLOGY = await getBiometricsType();
+    const BIOMETRIC_TECHNOLOGY = await getBiometricsType(false);
     const CGN_STATUS = cgnStatusHandler(state);
     const CDC_STATUS = cdcStatusHandler(state);
     const FONT_PREFERENCE = fontPreferenceSelector(state);

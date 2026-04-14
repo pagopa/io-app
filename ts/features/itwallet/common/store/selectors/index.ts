@@ -3,8 +3,10 @@ import { isConnectedSelector } from "../../../../connectivity/store/selectors";
 import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
 import {
   itwCredentialsEidStatusSelector,
+  itwCredentialsEidIssuedAtSelector,
   itwIsWalletEmptySelector
 } from "../../../credentials/store/selectors";
+import { isCredentialIssuedBeforePid } from "../../utils/itwCredentialUtils";
 import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsOperationalOrValid,
@@ -17,7 +19,12 @@ import {
   itwIsWalletDiscoveryBannerHiddenSelector,
   itwIsWalletUpgradeMDLDetailsBannerHiddenSelector
 } from "./banners";
-import { itwIsL3EnabledSelector } from "./preferences";
+import {
+  itwCredentialUpgradeFailedSelector,
+  itwIsActivationDisabledSelector,
+  itwIsL3EnabledSelector,
+  itwIsWalletInstanceRemotelyActiveSelector
+} from "./preferences";
 import { isItwEnabledSelector } from "./remoteConfig";
 
 /**
@@ -62,7 +69,8 @@ export const itwShouldRenderWalletReadyBannerSelector = (state: GlobalState) =>
   !itwIsWalletInstanceStatusFailureSelector(state) &&
   itwCredentialsEidStatusSelector(state) !== "jwtExpired" &&
   itwCredentialsEidStatusSelector(state) !== "jwtExpiring" &&
-  itwIsWalletEmptySelector(state);
+  itwIsWalletEmptySelector(state) &&
+  !itwIsL3EnabledSelector(state);
 
 /**
  * Selectors that returns if the wallet is available for offline access. It joins three
@@ -85,6 +93,22 @@ export const itwShouldRenderL3UpgradeBannerSelector = (state: GlobalState) =>
   isItwEnabledSelector(state) &&
   itwIsL3EnabledSelector(state) &&
   !itwLifecycleIsITWalletValidSelector(state);
+
+/**
+ * Returns whether a credential should be upgraded in IT Wallet.
+ */
+export const itwShouldUpgradeCredentialSelector =
+  (credentialType: string, issuedAt?: string) => (state: GlobalState) => {
+    const isItwPid = itwLifecycleIsITWalletValidSelector(state);
+    const pidIssuedAt = itwCredentialsEidIssuedAtSelector(state);
+    const upgradeFailures = itwCredentialUpgradeFailedSelector(state);
+
+    const hasUpgradeFailed = upgradeFailures.includes(credentialType);
+    const isIssuedBeforePid =
+      isItwPid && isCredentialIssuedBeforePid(issuedAt, pidIssuedAt);
+
+    return isIssuedBeforePid || hasUpgradeFailed;
+  };
 
 /**
  * Returns whether the new IT-Wallet variant should be rendered.
@@ -135,12 +159,14 @@ export const itwShouldHideEidLifecycleAlert = (state: GlobalState): boolean =>
  * - The wallet is not offline
  * - The L3 feature flag is enabled
  * - The wallet is not valid (not yet active)
+ * - The itw activation is not disabled (nfc available)
  */
 export const itwShouldRenderDiscoveryBannerSelector = (state: GlobalState) =>
   isItwEnabledSelector(state) &&
   !offlineAccessReasonSelector(state) &&
   itwIsL3EnabledSelector(state) &&
-  !itwLifecycleIsValidSelector(state);
+  !itwLifecycleIsValidSelector(state) &&
+  !itwIsActivationDisabledSelector(state);
 
 /**
  * Returns whether the new IT-Wallet activation banner in the messages inbox screen should be rendered
@@ -149,7 +175,8 @@ export const itwShouldRenderInboxDiscoveryBannerSelector = (
   state: GlobalState
 ) =>
   itwShouldRenderDiscoveryBannerSelector(state) &&
-  !itwIsBannerHiddenSelector("discovery_messages_inbox")(state);
+  !itwIsBannerHiddenSelector("discovery_messages_inbox")(state) &&
+  !itwIsWalletInstanceRemotelyActiveSelector(state);
 
 /**
  * Returns whether the new IT-Wallet activation banner in the messages inbox screen should be rendered
@@ -167,10 +194,32 @@ export const itwShouldRenderWalletDiscoveryBannerSelector = (
  * - The L3 feature flag is enabled
  * - The wallet is active but not an IT Wallet instance
  * - The banner was not dismissed by the user
+ * - The activation is not disabled
  */
 export const itwShouldRenderUpgradeBannerSelector = (state: GlobalState) =>
   isItwEnabledSelector(state) &&
   !offlineAccessReasonSelector(state) &&
   itwIsL3EnabledSelector(state) &&
   !itwLifecycleIsITWalletValidSelector(state) &&
-  !itwIsWalletDiscoveryBannerHiddenSelector(state);
+  !itwIsWalletDiscoveryBannerHiddenSelector(state) &&
+  !itwIsActivationDisabledSelector(state);
+
+/**
+ * Returns whether the l2 restricted mode banner should be rendered.
+ * - The wallet is not offline
+ * - IT Wallet instance is not active
+ * - The wallet is not active (because the device does not have the nfc)
+ */
+export const itwShouldRenderL2EngagementBannerForInactiveWalletSelector = (
+  state: GlobalState
+) =>
+  !offlineAccessReasonSelector(state) &&
+  !itwLifecycleIsITWalletValidSelector(state) &&
+  !itwLifecycleIsValidSelector(state) &&
+  itwIsActivationDisabledSelector(state);
+
+export const itwShouldRenderL2EngagementBannerSelector = (state: GlobalState) =>
+  !offlineAccessReasonSelector(state) &&
+  !itwLifecycleIsITWalletValidSelector(state) &&
+  itwLifecycleIsValidSelector(state) &&
+  itwIsActivationDisabledSelector(state);

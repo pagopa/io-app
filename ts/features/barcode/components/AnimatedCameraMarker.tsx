@@ -1,8 +1,8 @@
+import { IOEasingCurves } from "@pagopa/io-app-design-system";
 import { StyleSheet, View } from "react-native";
-import Animated, { FadeIn } from "react-native-reanimated";
+import Animated, { AnimatedStyle, FadeIn } from "react-native-reanimated";
 import CameraMarkerCorner from "../../../../img/camera-marker-corner.svg";
 import CameraMarkerLine from "../../../../img/camera-marker-line.svg";
-import { useSineWaveAnimation } from "../../../components/ui/utils/hooks/useSineWaveAnimation";
 
 const ANIMATION_DURATION = 1500;
 
@@ -22,37 +22,42 @@ const AnimatedCameraMarker = ({
 }: Props) => {
   const lineSpan = size / 2 - cornerSize - 8;
 
-  const { animatedStyle: animatedLineStyle } = useSineWaveAnimation({
-    enabled: isAnimated,
-    span: lineSpan,
-    duration: ANIMATION_DURATION,
-    axis: "y"
-  });
-
-  const drawMarkerCorner = (rotation: number, size: number) => (
+  const drawMarkerCorner = (rotation: number) => (
     <CameraMarkerCorner
-      width={size}
-      height={size}
+      width={cornerSize}
+      height={cornerSize}
       style={{
         transform: [{ rotate: `${rotation}deg` }]
       }}
     />
   );
 
+  const scanAnimation: AnimatedStyle = {
+    animationName: {
+      from: { transform: [{ translateY: -lineSpan }] },
+      to: { transform: [{ translateY: lineSpan }] }
+    },
+    animationDuration: ANIMATION_DURATION,
+    animationTimingFunction: IOEasingCurves.easeInOutCubic,
+    animationIterationCount: "infinite",
+    animationDirection: "alternate",
+    animationPlayState: isAnimated ? "running" : "paused"
+  };
+
   return (
     <Animated.View style={styles.container} entering={FadeIn}>
       <View style={[styles.marker, { width: size, height: size }]}>
         <View style={styles.corners}>
           <View style={styles.cornersSide}>
-            {drawMarkerCorner(0, cornerSize)}
-            {drawMarkerCorner(90, cornerSize)}
+            {drawMarkerCorner(0)}
+            {drawMarkerCorner(90)}
           </View>
           <View style={styles.cornersSide}>
-            {drawMarkerCorner(-90, cornerSize)}
-            {drawMarkerCorner(180, cornerSize)}
+            {drawMarkerCorner(-90)}
+            {drawMarkerCorner(180)}
           </View>
         </View>
-        <Animated.View style={animatedLineStyle}>
+        <Animated.View style={scanAnimation}>
           <CameraMarkerLine width={size - 10} height={size} />
         </Animated.View>
       </View>

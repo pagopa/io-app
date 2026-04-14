@@ -104,3 +104,6 @@
 
 # Hermes
 -keep class com.facebook.hermes.unicode.** { *; }
+
+# React Native Skia
+-keep class com.shopify.reactnative.skia.** { *; }

@@ -13,6 +13,7 @@ import {
   HSpacer,
   IOPictogramsBleed,
   IOSpacer,
+  IOText,
   IOToast,
   IOVisualCostants,
   Nullable,
@@ -44,7 +45,7 @@ import {
   useLayoutEffect,
   useState
 } from "react";
-import { Dimensions, Image, Pressable, Text, View } from "react-native";
+import { Dimensions, Image, Pressable, View } from "react-native";
 import I18n from "i18next";
 import { isAndroid } from "../../utils/platform";
 import { openWebUrl } from "../../utils/url";
@@ -199,10 +200,15 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    * @returns The rendered component.
    */
   Emphasis(emphasis: TxtEmphasisNode, render: Renderer) {
+    const isInsideStrong = emphasis.parent?.type === "Strong";
     return (
-      <Text key={getTxtNodeKey(emphasis)} style={{ fontStyle: "italic" }}>
+      <IOText
+        key={getTxtNodeKey(emphasis)}
+        fontStyle="italic"
+        {...(isInsideStrong && { weight: "Semibold" })}
+      >
         {emphasis.children.map(render)}
-      </Text>
+      </IOText>
     );
   },
   /**
@@ -211,10 +217,15 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
    * @returns The rendered component.
    */
   Strong(strong: TxtStrongNode, render: Renderer) {
+    const isInsideEmphasis = strong.parent?.type === "Emphasis";
     return (
-      <Text key={getTxtNodeKey(strong)} style={{ fontWeight: "600" }}>
+      <IOText
+        key={getTxtNodeKey(strong)}
+        weight="Semibold"
+        {...(isInsideEmphasis && { fontStyle: "italic" })}
+      >
         {strong.children.map(render)}
-      </Text>
+      </IOText>
     );
   },
   /**

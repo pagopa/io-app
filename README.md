@@ -366,8 +366,9 @@ $ nodenv install && nodenv version
 # Install Ruby with rbenv, the returned version should match the one in the .ruby-version file
 $ rbenv install && rbenv version
 
-# Install yarn and rehash to install shims
-$ npm install -g yarn && nodenv rehash
+# Enable corepack and prepare yarn
+$ corepack enable
+$ corepack prepare --activate
 
 # Install bundle
 $ gem install bundle
@@ -382,7 +383,7 @@ $ yarn && yarn setup
 
 # Install podfiles when targeting iOS (ignore this step for Android)
 # Run this only during the first setup and when Pods dependencies change
-$ cd iOS && bundle exec pod install && cd ..
+$ yarn dev:pod-install
 
 # Generate the definitions from the OpenAPI specs and from the YAML translations
 # Run this only during the first setup and when specs/translations change

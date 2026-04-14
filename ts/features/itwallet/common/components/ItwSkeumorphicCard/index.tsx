@@ -31,6 +31,7 @@ import {
 } from "../ItwBrandedSkiaBorder";
 import { CardBackground } from "./CardBackground";
 import { CardData } from "./CardData";
+import { CardWidthContext } from "./CardWidthContext";
 import { FlippableCard } from "./FlippableCard";
 
 export type ItwSkeumorphicCardProps = {
@@ -96,7 +97,7 @@ export const ItwSkeumorphicCard = ({
             : "features.itWallet.presentation.credentialDetails.card.front"
         )}`,
         accessibilityValue: { text: accessibilityLabelByStatus[status] }
-      } as AccessibilityProps),
+      }) as AccessibilityProps,
     [credential.credentialType, isFlipped, status]
   );
 
@@ -180,39 +181,41 @@ const CardSideBase = ({ status, children, isItw }: CardSideBaseProps) => {
 
   return (
     <View onLayout={handleOnLayout} style={styles.container}>
-      {/* Status badge  */}
-      {statusTagProps && (
-        <View style={styles.tag}>
-          <Tag {...statusTagProps} />
-        </View>
-      )}
+      <CardWidthContext.Provider value={size.width}>
+        {/* Status badge  */}
+        {statusTagProps && (
+          <View style={styles.tag}>
+            <Tag {...statusTagProps} />
+          </View>
+        )}
 
-      {/* Card background and claims */}
-      {children}
+        {/* Card background and claims */}
+        {children}
 
-      {/* Displays a faded overlay if required by the credential status */}
-      <View style={[styles.faded, dynamicStyle]} />
+        {/* Displays a faded overlay if required by the credential status */}
+        <View style={[styles.faded, dynamicStyle]} />
 
-      {/* Skia Canvas for border and light effect, only displayed if IT-Wallet enabled */}
-      {isItw && (
-        <Canvas
-          style={{
-            position: "absolute",
-            width: size.width,
-            height: size.height
-          }}
-          testID="itWalletBrandBorderTestID"
-        >
-          {/* Animated gradient border */}
-          <ItwBrandedSkiaBorder
-            width={size.width}
-            height={size.height}
-            variant={gradientVariantByStatus[status]}
-            thickness={4}
-            borderRadius={8}
-          />
-        </Canvas>
-      )}
+        {/* Skia Canvas for border and light effect, only displayed if IT-Wallet enabled */}
+        {isItw && (
+          <Canvas
+            style={{
+              position: "absolute",
+              width: size.width,
+              height: size.height
+            }}
+            testID="itWalletBrandBorderTestID"
+          >
+            {/* Animated gradient border */}
+            <ItwBrandedSkiaBorder
+              width={size.width}
+              height={size.height}
+              variant={gradientVariantByStatus[status]}
+              thickness={4}
+              borderRadius={8}
+            />
+          </Canvas>
+        )}
+      </CardWidthContext.Provider>
     </View>
   );
 };

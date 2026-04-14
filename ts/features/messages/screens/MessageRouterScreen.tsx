@@ -85,7 +85,9 @@ export const MessageRouterScreen = (props: NavigationProps): ReactElement => {
         data.containsAttachments,
         fromPushNotification,
         data.hasFIMSCTA,
-        data.createdAt
+        data.createdAt,
+        data.fciMessageType,
+        data.fciResult
       );
 
       if (data.isLegacyGreenPass) {
