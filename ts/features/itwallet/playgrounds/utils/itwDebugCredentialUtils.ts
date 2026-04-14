@@ -1,5 +1,5 @@
 import { addDays, subDays } from "date-fns";
-import { WellKnownClaim } from "../../common/utils/itwClaimsUtils";
+import { SimpleDate, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import {
   ItwCredentialStatus,
   StoredCredential
@@ -52,9 +52,7 @@ export const applyStatusToCredential = (
       };
 
     case "expiring": {
-      const expiringDate = addDays(now, EXPIRING_DAYS)
-        .toISOString()
-        .split("T")[0];
+      const expiringDate = addDays(now, EXPIRING_DAYS);
       const existingExpiry =
         credential.parsedCredential[WellKnownClaim.expiry_date];
       return {
@@ -68,8 +66,21 @@ export const applyStatusToCredential = (
         parsedCredential: {
           ...credential.parsedCredential,
           [WellKnownClaim.expiry_date]: existingExpiry
-            ? { ...existingExpiry, value: expiringDate }
-            : { value: expiringDate }
+            ? {
+                ...existingExpiry,
+                value: new SimpleDate(
+                  expiringDate.getFullYear(),
+                  expiringDate.getMonth(),
+                  expiringDate.getDate()
+                )
+              }
+            : {
+                value: new SimpleDate(
+                  expiringDate.getFullYear(),
+                  expiringDate.getMonth(),
+                  expiringDate.getDate()
+                )
+              }
         } as StoredCredential["parsedCredential"]
       };
     }
