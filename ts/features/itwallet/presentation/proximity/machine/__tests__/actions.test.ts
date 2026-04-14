@@ -39,7 +39,10 @@ describe("createProximityActionsImplementation", () => {
 
   describe("trackQrCodeGenerationOutcome", () => {
     it("tracks qr code success when context has no failure", () => {
-      const actions = createProximityActionsImplementation(navigation);
+      const actions = createProximityActionsImplementation(
+        navigation,
+        {} as any
+      );
 
       actions.trackQrCodeGenerationOutcome({
         context: {},
@@ -51,7 +54,10 @@ describe("createProximityActionsImplementation", () => {
     });
 
     it("tracks qr code failure when context has a failure", () => {
-      const actions = createProximityActionsImplementation(navigation);
+      const actions = createProximityActionsImplementation(
+        navigation,
+        {} as any
+      );
       const error = new Error("engagement failed");
 
       actions.trackQrCodeGenerationOutcome({
