@@ -5,17 +5,24 @@ import {
   ItwCredentialStatus
 } from "../../common/utils/itwTypesUtils";
 import {
+  itwDebugClearCredentialStatusOverride,
   itwDebugClearGlobalStatusOverride,
   itwDebugSaveOriginalCredentials,
+  itwDebugSetCredentialStatusOverride,
   itwDebugSetGlobalStatusOverride
 } from "./actions";
 
 export type ItwDebugState = {
-  /** The active status override shown in the playground UI. */
+  /** The active global status override applied to all credentials. */
   globalCredentialStatusOverride: ItwCredentialStatus | undefined;
   /**
-   * Original credentials saved before the override was applied.
-   * Used to restore the real data when the override is cleared.
+   * Per-credential status overrides, keyed by credentialType.
+   * These take precedence over the global override for a specific credential.
+   */
+  credentialStatusOverrides: Record<string, ItwCredentialStatus>;
+  /**
+   * Original credentials saved before any override was applied.
+   * Used to restore the real data when overrides are cleared.
    * Keyed by credentialId.
    */
   savedCredentials: Record<string, StoredCredential> | undefined;
@@ -23,6 +30,7 @@ export type ItwDebugState = {
 
 const initialState: ItwDebugState = {
   globalCredentialStatusOverride: undefined,
+  credentialStatusOverrides: {},
   savedCredentials: undefined
 };
 
@@ -36,6 +44,23 @@ const reducer = (
 
     case getType(itwDebugClearGlobalStatusOverride):
       return initialState;
+
+    case getType(itwDebugSetCredentialStatusOverride): {
+      const { credentialType, status } = action.payload;
+      return {
+        ...state,
+        credentialStatusOverrides: {
+          ...state.credentialStatusOverrides,
+          [credentialType]: status
+        }
+      };
+    }
+
+    case getType(itwDebugClearCredentialStatusOverride): {
+      const { credentialType } = action.payload;
+      const { [credentialType]: _, ...rest } = state.credentialStatusOverrides;
+      return { ...state, credentialStatusOverrides: rest };
+    }
 
     case getType(itwDebugSaveOriginalCredentials): {
       // Only save originals once (don't overwrite if already saved)
