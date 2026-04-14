@@ -1,5 +1,6 @@
 import i18n from "i18next";
 import { useEffect } from "react";
+import { Body, HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import {
@@ -14,7 +15,7 @@ import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { fciEndRequest } from "../../store/actions";
 import { useIsNfcFeatureAvailable } from "../../../pn/aar/hooks/useIsNfcFeatureAvailable";
-import { IOScrollViewCentredContent } from "../../../../components/ui/IOScrollViewCentredContent";
+import { WhatsNewScreenContent } from "../../../../components/screens/WhatsNewScreenContent";
 
 export const FciLoginL3Screen = () => {
   const dispatch = useIODispatch();
@@ -23,8 +24,21 @@ export const FciLoginL3Screen = () => {
   const { setOptions } = useIONavigation();
 
   useEffect(() => {
-    setOptions({ headerShown: true, presentation: "modal" });
-  }, [setOptions]);
+    setOptions({
+      header: () => (
+        <HeaderSecondLevel
+          title=""
+          ignoreSafeAreaMargin={false}
+          type="singleAction"
+          firstAction={{
+            icon: "closeMedium",
+            onPress: () => dispatch(fciEndRequest()),
+            accessibilityLabel: i18n.t("global.buttons.close")
+          }}
+        />
+      )
+    });
+  }, [dispatch, setOptions]);
 
   const onPressContinue = () => {
     if (isNfcAvailable) {
@@ -51,40 +65,23 @@ export const FciLoginL3Screen = () => {
   };
 
   return (
-    <IOScrollViewCentredContent
+    <WhatsNewScreenContent
       pictogram="identityCheck"
       title={i18n.t("features.fci.requestL3.title")}
-      description={i18n.t("features.fci.requestL3.subtitle")}
-      actions={{
-        type: "TwoButtons",
-        primary: {
-          testID: "help-center-cta",
-          onPress: onPressContinue,
-          label: i18n.t("global.buttons.continue")
-        },
-        secondary: {
-          icon: "instruction",
-          label: "cosa devo fare?",
-          onPress: onNavigateToHelpCenter
-        }
+      action={{
+        label: i18n.t("global.buttons.continue"),
+        fullWidth: true,
+        onPress: onPressContinue
       }}
-      alwaysBounceVertical={false}
-      headerConfig={{
-        title: "",
-        type: "singleAction",
-        firstAction: {
-          icon: "closeLarge",
-          onPress: () => {
-            dispatch(fciEndRequest());
-          },
-          accessibilityLabel: i18n.t(
-            "global.accessibility.contextualHelp.close"
-          )
-        }
+      secondaryAction={{
+        label: i18n.t("features.fci.requestL3.secondaryAction"),
+        icon: "instruction",
+        onPress: onNavigateToHelpCenter
       }}
-      contentContainerStyle={{
-        paddingHorizontal: 32
-      }}
-    />
+    >
+      <Body style={{ textAlign: "center" }}>
+        {i18n.t("features.fci.requestL3.subtitle")}
+      </Body>
+    </WhatsNewScreenContent>
   );
 };

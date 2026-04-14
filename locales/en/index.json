@@ -2000,7 +2000,7 @@
         },
         "title": "Confirm your identity to sign the documents",
         "subtitle": "This is a security step necessary to associate the signature with your identity (or to issue the signature request?)\nYou will need the Electronic Identity Card.",
-        "action": "Set up"
+        "secondaryAction": "What should I do?"
       },
       "abort": {
         "title": "Quit signing",

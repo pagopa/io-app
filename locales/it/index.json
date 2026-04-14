@@ -2798,7 +2798,7 @@
         },
         "title": "Conferma la tua identità per firmare i documenti",
         "subtitle": "È un passaggio di sicurezza necessario per associare la firma alla tua identità (o per emettere la richiesta di firma?)\nTi servirà la Carta di Identità Elettronica.",
-        "action": "Configura"
+        "secondaryAction": "Cosa devo fare?"
       },
       "abort": {
         "title": "Annulla la firma",
