@@ -3,6 +3,7 @@ import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import { createStore } from "redux";
 import { BonusAvailable } from "../../../../../../../definitions/content/BonusAvailable";
+import * as useHardwareBackButtonModule from "../../../../../../hooks/useHardwareBackButton";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { useIODispatch } from "../../../../../../store/hooks";
 import { appReducer } from "../../../../../../store/reducers";
@@ -100,5 +101,30 @@ describe("CgnInformationScreen", () => {
     fireEvent.press(button);
 
     expect(dispatchMock).toHaveBeenCalledWith(cgnActivationBack());
+  });
+
+  it("should register useHardwareBackButton that dispatches back action", () => {
+    const dispatchMock = jest.fn();
+    (useIODispatch as jest.Mock).mockReturnValue(dispatchMock);
+    const spy = jest.spyOn(
+      useHardwareBackButtonModule,
+      "useHardwareBackButton"
+    );
+
+    const state = {
+      ...globalState,
+      bonus: {
+        ...globalState.bonus,
+        availableBonusTypes: pot.some([mockCgnBonus])
+      }
+    } as unknown as GlobalState;
+    renderComponent(state);
+
+    expect(spy).toHaveBeenCalled();
+    const handler = spy.mock.calls[0][0];
+    expect(handler()).toBe(true);
+    expect(dispatchMock).toHaveBeenCalledWith(cgnActivationBack());
+
+    spy.mockRestore();
   });
 });
