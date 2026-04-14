@@ -34,7 +34,7 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
     }
   >
     <View
-      accessibilityLabel="0%"
+      accessibilityLabel="Lettura 0% completata"
       accessibilityRole="progressbar"
       accessibilityValue={
         {
@@ -1295,7 +1295,7 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
     }
   >
     <View
-      accessibilityLabel="100%"
+      accessibilityLabel="Lettura 100% completata"
       accessibilityRole="progressbar"
       accessibilityValue={
         {
@@ -1604,7 +1604,7 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
     }
   >
     <View
-      accessibilityLabel="0%"
+      accessibilityLabel="Lettura 0% completata"
       accessibilityRole="progressbar"
       accessibilityValue={
         {
@@ -2845,7 +2845,7 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
     }
   >
     <View
-      accessibilityLabel="100%"
+      accessibilityLabel="Lettura 100% completata"
       accessibilityRole="progressbar"
       accessibilityValue={
         {
