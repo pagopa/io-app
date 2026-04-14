@@ -1,0 +1,155 @@
+import I18n from "i18next";
+import { createStore } from "redux";
+import { Card } from "../../../../../../definitions/cgn/Card";
+import { StatusEnum as ActivatedStatusEnum } from "../../../../../../definitions/cgn/CardActivated";
+import { StatusEnum as ExpiredStatusEnum } from "../../../../../../definitions/cgn/CardExpired";
+import {
+  CardRevoked,
+  StatusEnum as RevokedStatusEnum
+} from "../../../../../../definitions/cgn/CardRevoked";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { backendStatusLoadSuccess } from "../../../../../store/actions/backendStatus";
+import { appReducer } from "../../../../../store/reducers";
+import { baseRawBackendStatus } from "../../../../../store/reducers/__mock__/backendStatus";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { formatDateAsShortFormat } from "../../../../../utils/dates";
+import { getGenericError } from "../../../../../utils/errors";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import CGN_ROUTES from "../../navigation/routes";
+import { cgnDetails } from "../../store/actions/details";
+import CgnDetailScreen from "../CgnDetailScreen";
+
+import { cgnEycaStatus } from "../../store/actions/eyca/details";
+import { CcdbNumber } from "../../../../../../definitions/cgn/CcdbNumber";
+
+jest.mock("../../components/CgnAnimatedBackground", () => ({
+  CgnAnimatedBackground: () => null
+}));
+
+jest.mock("../../../../../utils/hooks/useOnFocus", () => ({
+  useActionOnFocus: jest.fn()
+}));
+
+const renderComponent = (state: GlobalState) =>
+  renderScreenWithNavigationStoreContext<GlobalState>(
+    CgnDetailScreen,
+    CGN_ROUTES.DETAILS.DETAILS,
+    {},
+    createStore(appReducer, state as any)
+  );
+
+const buildBaseState = (cgnEnabled = true, card?: Card) => {
+  const initialState = appReducer(undefined, applicationChangeState("active"));
+  const stateWithBackendStatus = appReducer(
+    initialState,
+    backendStatusLoadSuccess({
+      ...baseRawBackendStatus,
+      config: {
+        ...baseRawBackendStatus.config,
+        cgn: { ...baseRawBackendStatus.config.cgn, enabled: cgnEnabled }
+      }
+    })
+  );
+  return card
+    ? appReducer(stateWithBackendStatus, cgnDetails.success(card))
+    : stateWithBackendStatus;
+};
+
+const activatedCard: Card = {
+  status: ActivatedStatusEnum.ACTIVATED,
+  activation_date: new Date("2020-03-04"),
+  expiration_date: new Date("2037-02-20")
+};
+
+const expiredCard: Card = {
+  status: ExpiredStatusEnum.EXPIRED,
+  activation_date: new Date("2020-03-04"),
+  expiration_date: new Date("2023-02-20")
+};
+
+const revokedCard: Card = {
+  status: RevokedStatusEnum.REVOKED,
+  activation_date: new Date("2020-03-04"),
+  expiration_date: new Date("2037-02-20"),
+  revocation_date: new Date("2024-01-01"),
+  revocation_reason: "Some reason" as CardRevoked["revocation_reason"]
+};
+
+describe("CgnDetailScreen", () => {
+  it("should render the error screen when cgn details request fails", () => {
+    const state = appReducer(
+      buildBaseState(),
+      cgnDetails.failure(getGenericError(new Error("cgn error")))
+    );
+    const { getByText } = renderComponent(state);
+    expect(getByText(I18n.t("wallet.methodDetails.error.title"))).toBeTruthy();
+    expect(
+      getByText(I18n.t("wallet.methodDetails.error.subtitle"))
+    ).toBeTruthy();
+  });
+
+  it("should render the empty state when there are no cgn details", () => {
+    const state = buildBaseState();
+    const { getByText } = renderComponent(state);
+    expect(getByText(I18n.t("bonus.cgn.detail.empty.title"))).toBeTruthy();
+    expect(getByText(I18n.t("bonus.cgn.detail.empty.subtitle"))).toBeTruthy();
+  });
+
+  it("should render the detail screen when card is activated", () => {
+    const state = buildBaseState(true, activatedCard);
+    const { getAllByText, getByText } = renderComponent(state);
+    expect(getAllByText(I18n.t("bonus.cgn.name"))).toBeTruthy();
+    expect(getByText(I18n.t("bonus.cgn.departmentName"))).toBeTruthy();
+    expect(getByText(I18n.t("bonus.cgn.detail.cta.discover"))).toBeTruthy();
+  });
+
+  it("should show expired alert when card is expired", () => {
+    const state = buildBaseState(true, expiredCard);
+    const { getByText } = renderComponent(state);
+    expect(
+      getByText(
+        I18n.t("bonus.cgn.detail.information.expired", {
+          date: formatDateAsShortFormat(expiredCard.expiration_date)
+        })
+      )
+    ).toBeTruthy();
+  });
+
+  it("should show revoked alert when card is revoked", () => {
+    const state = buildBaseState(true, revokedCard);
+    const { getByText } = renderComponent(state);
+    expect(
+      getByText(
+        I18n.t("bonus.cgn.detail.information.revoked", {
+          reason: revokedCard.revocation_reason
+        })
+      )
+    ).toBeTruthy();
+  });
+
+  it("should not show discover CTA when CGN is disabled", () => {
+    const state = buildBaseState(false, activatedCard);
+    const { queryByText } = renderComponent(state);
+    expect(queryByText(I18n.t("bonus.cgn.detail.cta.discover"))).toBeNull();
+  });
+
+  it("should show discover Eyca CTA available", () => {
+    const state = buildBaseState(true, activatedCard);
+    const eycaState = appReducer(
+      state,
+      cgnEycaStatus.success({
+        status: "FOUND",
+        card: {
+          activation_date: new Date("2020-03-04"),
+          expiration_date: new Date("2037-02-20"),
+          status: ActivatedStatusEnum.ACTIVATED,
+          card_number: "W413-K096-O814-Z223" as CcdbNumber
+        }
+      })
+    );
+    const { getByText } = renderComponent(eycaState);
+    expect(
+      getByText(I18n.t("bonus.cgn.detail.cta.eyca.showEycaDiscounts"))
+    ).toBeTruthy();
+  });
+});
