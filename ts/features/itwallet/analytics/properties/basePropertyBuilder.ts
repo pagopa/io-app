@@ -150,8 +150,6 @@ export const computeItwStatus = (
     case "ciePin":
       return "L3 (cie_pin)";
     default:
-      break;
+      return authLevel;
   }
-
-  return authLevel;
 };
