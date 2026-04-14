@@ -49,6 +49,7 @@ jobs:
         with:
           name: coverage-${{ matrix.shard }}
           path: coverage/
+          retention-days: 1
   codecov:
     name: Codecov
     runs-on: ubuntu-latest
