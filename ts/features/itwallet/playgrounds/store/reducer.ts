@@ -6,6 +6,7 @@ import {
 } from "../../common/utils/itwTypesUtils";
 import {
   itwDebugClearCredentialStatusOverride,
+  itwDebugReset,
   itwDebugSaveOriginalCredentials,
   itwDebugSetCredentialStatusOverride
 } from "./actions";
@@ -67,6 +68,9 @@ const reducer = (
       );
       return { ...state, savedCredentials: record };
     }
+
+    case getType(itwDebugReset):
+      return initialState;
 
     default:
       return state;

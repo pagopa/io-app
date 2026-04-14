@@ -1,12 +1,40 @@
 import { addDays, subDays } from "date-fns";
 import { SimpleDate, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
+import { CredentialType } from "../../common/utils/itwMocksUtils";
 import {
   ItwCredentialStatus,
+  ItwJwtCredentialStatus,
   StoredCredential
 } from "../../common/utils/itwTypesUtils";
 
 const EXPIRING_DAYS = 15;
 const SAFE_JWT_DAYS = 365;
+
+/** Statuses available for the PID — only JWT-based, since the wallet card does not support status assertions on the eID. */
+export const PID_OVERRIDE_STATUSES: ReadonlyArray<ItwJwtCredentialStatus> = [
+  "valid",
+  "jwtExpiring",
+  "jwtExpired"
+];
+
+/** Statuses available for regular credentials. */
+export const CREDENTIAL_OVERRIDE_STATUSES: ReadonlyArray<ItwCredentialStatus> =
+  [
+    "valid",
+    "invalid",
+    "expiring",
+    "expired",
+    "jwtExpiring",
+    "jwtExpired",
+    "unknown"
+  ];
+
+export const getAvailableStatusOverrides = (
+  credentialType: string
+): ReadonlyArray<ItwCredentialStatus> =>
+  credentialType === CredentialType.PID
+    ? PID_OVERRIDE_STATUSES
+    : CREDENTIAL_OVERRIDE_STATUSES;
 
 /**
  * Returns a copy of the given credential modified so that

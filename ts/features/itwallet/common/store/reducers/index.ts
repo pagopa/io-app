@@ -176,7 +176,8 @@ const itwPersistConfig: PersistConfig = {
     "preferences",
     "environment",
     "credentialsCatalogue",
-    "banners"
+    "banners",
+    "debug"
   ] satisfies Array<keyof ItWalletState>,
   version: CURRENT_REDUX_ITW_STORE_VERSION,
   migrate: createMigrate(migrations, { debug: isDevEnv })
