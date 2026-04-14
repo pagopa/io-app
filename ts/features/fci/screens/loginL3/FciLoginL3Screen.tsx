@@ -1,7 +1,7 @@
 import i18n from "i18next";
 import { useEffect } from "react";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useIODispatch } from "../../../../store/hooks";
 import {
   setStartActiveSessionLogin,
   setIdpSelectedActiveSessionLogin,
@@ -13,14 +13,12 @@ import { Identifier } from "../../../authentication/login/optIn/screens/OptInScr
 import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { fciEndRequest } from "../../store/actions";
-import { fciSignatureRequestIdSelector } from "../../store/reducers/fciSignatureRequest";
 import { useIsNfcFeatureAvailable } from "../../../pn/aar/hooks/useIsNfcFeatureAvailable";
 import { IOScrollViewCentredContent } from "../../../../components/ui/IOScrollViewCentredContent";
 
 export const FciLoginL3Screen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
-  const signatureRequestId = useIOSelector(fciSignatureRequestIdSelector);
   const isNfcAvailable = useIsNfcFeatureAvailable();
   const { setOptions } = useIONavigation();
 
@@ -32,17 +30,7 @@ export const FciLoginL3Screen = () => {
     if (isNfcAvailable) {
       dispatch(setStartActiveSessionLogin());
       dispatch(setIdpSelectedActiveSessionLogin(IdpCIE));
-      dispatch(
-        setActiveSessionLoginFlow({
-          type: "FCI",
-          route:
-            (FCI_ROUTES.MAIN,
-            {
-              screen: FCI_ROUTES.ROUTER,
-              params: { signatureRequestId }
-            })
-        })
-      );
+      dispatch(setActiveSessionLoginFlow("FCI"));
       navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
         screen: SETTINGS_ROUTES.AUTHENTICATION,
         params: {

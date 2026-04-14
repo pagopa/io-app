@@ -13,6 +13,8 @@ import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess,
   consolidateActiveSessionLoginData,
+  setActiveSessionLoginFlow,
+  setNavigateAfterFinishedActiveSessionLoginFlow,
   setRetryActiveSessionLogin,
   setStartActiveSessionLogin
 } from "../store/actions";
@@ -38,12 +40,44 @@ import {
   analyticsAuthenticationCompleted,
   analyticsAuthenticationStarted
 } from "../../../../store/actions/analytics";
+import NavigationService from "../../../../navigation/NavigationService";
+import ROUTES from "../../../../navigation/routes";
+import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
+import { fciSignatureRequestIdSelector } from "../../../fci/store/reducers/fciSignatureRequest";
+import { fciSignatureRequestRetryFromId } from "../../../fci/store/actions";
 
 export function* watchActiveSessionLoginSaga() {
   yield* takeLatest(
     [getType(setStartActiveSessionLogin), getType(setRetryActiveSessionLogin)],
     handleActiveSessionLoginSaga
   );
+
+  yield* takeLatest(
+    getType(setNavigateAfterFinishedActiveSessionLoginFlow),
+    function* () {
+      yield* call(NavigationService.navigate, ROUTES.MAIN, {
+        screen: MESSAGES_ROUTES.MESSAGES_HOME
+      });
+    }
+  );
+}
+
+export function* activeSessionLoginNavigation() {
+  const activeSessionLoginFlow = yield* select(activeSessionLoginFlowSelector);
+  yield* put(setActiveSessionLoginFlow(undefined));
+  switch (activeSessionLoginFlow) {
+    case "FCI":
+      const signatureRequestId = yield* select(fciSignatureRequestIdSelector);
+      if (signatureRequestId) {
+        yield* put(fciSignatureRequestRetryFromId(signatureRequestId));
+      } else {
+        yield* put(setNavigateAfterFinishedActiveSessionLoginFlow());
+      }
+      break;
+    default:
+      yield* put(setNavigateAfterFinishedActiveSessionLoginFlow());
+      break;
+  }
 }
 
 export function* handleActiveSessionLoginSaga(): Generator<
@@ -105,7 +139,6 @@ export function* handleActiveSessionLoginSaga(): Generator<
 
     if (isDataComplete) {
       const state = (yield* select()) as GlobalState;
-      const flow = yield* select(activeSessionLoginFlowSelector);
 
       yield* call(
         updateLoginSessionProfileAndSuperProperties,
@@ -128,8 +161,7 @@ export function* handleActiveSessionLoginSaga(): Generator<
         startApplicationInitialization({
           handleSessionExpiration: false,
           showIdentificationModalAtStartup: false,
-          isActiveLoginSuccess: true,
-          ...(flow?.route && { test: flow.route })
+          isActiveLoginSuccess: true
         })
       );
     }

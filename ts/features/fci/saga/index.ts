@@ -205,7 +205,7 @@ function* watchFciStartSaga(): SagaIterator {
   } else {
     yield* call(
       NavigationService.dispatchNavigationAction,
-      StackActions.replace(FCI_ROUTES.MAIN, {
+      StackActions.push(FCI_ROUTES.MAIN, {
         screen: FCI_ROUTES.FCI_LOGIN_L3
       })
     );

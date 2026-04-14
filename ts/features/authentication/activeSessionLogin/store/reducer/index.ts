@@ -27,11 +27,6 @@ import {
   logoutFailure
 } from "../../../common/store/actions";
 
-export type ActiveSessionLoginFlowType = {
-  type: "FCI";
-  route?: any;
-};
-
 export type ActiveSessionLoginState = {
   activeSessionLoginLocalFlag: boolean;
   isActiveSessionLogin: boolean;
@@ -47,7 +42,7 @@ export type ActiveSessionLoginState = {
     hasBlockingScreenBeenVisualized: boolean;
     showSessionExpirationBanner: boolean;
   };
-  flow?: ActiveSessionLoginFlowType;
+  flow?: "FCI";
 };
 
 export const activeSessionLoginInitialState: ActiveSessionLoginState = {
@@ -145,6 +140,11 @@ const activeSessionLoginReducer = (
         engagement: { ...state.engagement }
       };
     case getType(consolidateActiveSessionLoginData):
+      // Preserve the flow when consolidating data, it will be used after startup
+      return {
+        ...activeSessionLoginInitialState,
+        flow: state.flow
+      };
     case getType(setLoggedOutUserWithDifferentCF):
     case getType(sessionCorrupted):
     case getType(logoutSuccess):

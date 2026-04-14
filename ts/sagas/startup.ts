@@ -19,7 +19,10 @@ import { UserDataProcessingChoiceEnum } from "../../definitions/backend/UserData
 import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserDataProcessingStatus";
 import { BackendClient } from "../api/backend";
 import { apiUrlPrefix, zendeskEnabled } from "../config";
-import { watchActiveSessionLoginSaga } from "../features/authentication/activeSessionLogin/saga";
+import {
+  activeSessionLoginNavigation,
+  watchActiveSessionLoginSaga
+} from "../features/authentication/activeSessionLogin/saga";
 import { authenticationSaga } from "../features/authentication/common/saga/authenticationSaga";
 import { loadSessionInformationSaga } from "../features/authentication/common/saga/loadSessionInformationSaga";
 import {
@@ -69,7 +72,6 @@ import { checkAcknowledgedEmailSaga } from "../features/mailCheck/sagas/checkAck
 import { watchEmailNotificationPreferencesSaga } from "../features/mailCheck/sagas/checkEmailNotificationPreferencesSaga";
 import { checkEmailSaga } from "../features/mailCheck/sagas/checkEmailSaga";
 import { watchEmailValidationSaga } from "../features/mailCheck/sagas/emailValidationPollingSaga";
-import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { handleClearAllAttachments } from "../features/messages/saga/handleClearAttachments";
 import { checkAcknowledgedFingerprintSaga } from "../features/onboarding/saga/biometric/checkAcknowledgedFingerprintSaga";
 import { completeOnboardingSaga } from "../features/onboarding/saga/completeOnboardingSaga";
@@ -98,8 +100,6 @@ import {
   watchZendeskGetSessionSaga
 } from "../features/zendesk/saga";
 import { formatRequestedTokenString } from "../features/zendesk/utils";
-import NavigationService from "../navigation/NavigationService";
-import ROUTES from "../navigation/routes";
 import {
   applicationInitialized,
   startApplicationInitialization
@@ -302,13 +302,6 @@ export function* initializeApplicationSaga(
     previousSessionToken
       ? previousSessionToken
       : yield* call(authenticationSaga);
-
-  // TODO: review this logic in order to make it more simple and clear
-  if (isActiveLoginSuccessProp) {
-    NavigationService.navigate(ROUTES.MAIN, {
-      screen: MESSAGES_ROUTES.MESSAGES_HOME
-    });
-  }
 
   // BE CAREFUL where you get lollipop keyInfo.
   // They MUST be placed after authenticationSaga, because they are regenerated with each login attempt.
@@ -728,21 +721,25 @@ export function* initializeApplicationSaga(
   // Watch for checking the user email notifications preferences
   yield* fork(watchEmailNotificationPreferencesSaga);
 
-  // Check if we have any pending background action to be handled
-  const isHandlingBackgroundActions = yield* call(
-    maybeHandlePendingBackgroundActions,
-    true
-  );
-
-  const showSessionExpirationBlockingScreen = yield* select(
-    showSessionExpirationBlockingScreenSelector
-  );
-
-  if (!isHandlingBackgroundActions && showSessionExpirationBlockingScreen) {
-    yield* call(navigateToActiveSessionLogin);
-  } else if (!isHandlingBackgroundActions) {
-    // Check if should navigate to the send activation screen
-    yield* fork(checkShouldDisplaySendEngagementScreen, isFirstOnboarding);
+  if (isActiveLoginSuccessProp) {
+    // If the user is logging in from the active session login flow, we can be sure that the session is valid
+    // and we can directly navigate him to the home screen, skipping all the checks about pending background
+    // actions and session expiration blocking screen.
+    yield* call(activeSessionLoginNavigation);
+  } else {
+    // Check if we have any pending background action to be handled
+    const isHandlingBackgroundActions = yield* call(
+      maybeHandlePendingBackgroundActions,
+      true
+    );
+    const showSessionExpirationBlockingScreen = yield* select(
+      showSessionExpirationBlockingScreenSelector
+    );
+    if (!isHandlingBackgroundActions && showSessionExpirationBlockingScreen) {
+      yield* call(navigateToActiveSessionLogin);
+    } else if (!isHandlingBackgroundActions) {
+      yield* fork(checkShouldDisplaySendEngagementScreen, isFirstOnboarding);
+    }
   }
 
   yield* put(

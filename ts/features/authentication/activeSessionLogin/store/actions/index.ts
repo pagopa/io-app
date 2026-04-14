@@ -1,7 +1,7 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
 import { SpidIdp } from "../../../../../utils/idps";
 import { SpidLevel } from "../../../login/cie/utils";
-import { ActiveSessionLoginFlowType } from "../reducer";
+import { ActiveSessionLoginState } from "../reducer";
 
 export const setActiveSessionLoginLocalFlag = createStandardAction(
   "SET_ACTIVE_SESSION_LOGIN_LOCAL_FLAG"
@@ -86,7 +86,12 @@ export const closeSessionExpirationBanner = createStandardAction(
 
 export const setActiveSessionLoginFlow = createStandardAction(
   "SET_ACTIVE_SESSION_LOGIN_FLOW"
-)<ActiveSessionLoginFlowType>();
+)<ActiveSessionLoginState["flow"]>();
+
+export const setNavigateAfterFinishedActiveSessionLoginFlow =
+  createStandardAction(
+    "SET_NAVIGATE_AFTER_FINISHED_ACTIVE_SESSION_LOGIN_FLOW"
+  )();
 
 export type LoginInfoActions =
   | ActionType<typeof setActiveSessionLoginLocalFlag>
@@ -104,4 +109,5 @@ export type LoginInfoActions =
   | ActionType<typeof setFinalizeLoggedOutUserWithDifferentCF>
   | ActionType<typeof setCieIDSelectedSecurityLevelActiveSessionLogin>
   | ActionType<typeof closeSessionExpirationBanner>
-  | ActionType<typeof setActiveSessionLoginFlow>;
+  | ActionType<typeof setActiveSessionLoginFlow>
+  | ActionType<typeof setNavigateAfterFinishedActiveSessionLoginFlow>;
