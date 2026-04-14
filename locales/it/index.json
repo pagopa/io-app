@@ -3821,9 +3821,9 @@
               },
               "itw": {
                 "valid": "Hai attivato il tuo ID con CIE il {{date}}.",
-                "expiring": "Rinnova il tuo ID per continuare ad usare IT-Wallet entro il {{date}}.",
-                "expired": "Rinnova il tuo ID per continuare ad usare IT-Wallet.",
-                "action": "Rinnova ID"
+                "expiring": "Conferma la tua indentità entro il {{date}} per continuare a usare i tuoi documenti senza limitazioni.",
+                "expired": "Conferma la tua identità per continuare a usare i tuoi documenti senza limitazioni.",
+                "action": "Conferma identità"
               }
             }
           },
