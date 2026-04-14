@@ -30,7 +30,6 @@ export const useCiePreparationAnimationPlayback = ({
     }
   }, [reduceMotion]);
 
-  // Auto-stop playback after a fixed duration.
   useEffect(() => {
     if (!isPlaying) {
       return;
