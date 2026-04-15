@@ -32,16 +32,12 @@ import {
 } from "../../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
-import IOMarkdown from "../../../../../components/IOMarkdown";
-import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
-import { useItwIssuerDynamicErrorBottomSheet } from "../hooks/useItwIssuerDynamicErrorBottomSheet";
-import { openWebUrl } from "../../../../../utils/url";
 import {
   trackItwCredentialBottomSheet,
   trackItwCredentialBottomSheetAction,
   trackItwCredentialTapBanner
 } from "../analytics";
-import { useItwRemoveCredentialWithConfirm } from "../hooks/useItwRemoveCredentialWithConfirm";
+import { useItwIssuerDynamicErrorBottomSheet } from "../hooks/useItwIssuerDynamicErrorBottomSheet";
 
 type Props = {
   credential: CredentialMetadata;

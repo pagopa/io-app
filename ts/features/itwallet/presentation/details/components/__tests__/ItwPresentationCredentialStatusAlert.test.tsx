@@ -148,9 +148,8 @@ describe("ItwPresentationCredentialStatusAlert", () => {
   });
 });
 
-function renderComponent(credentialOverride: Partial<StoredCredential> = {}) {
-  const mockedMdl: StoredCredential = {
-    credential: "",
+function renderComponent(credentialOverride: Partial<CredentialMetadata> = {}) {
+  const mockedMdl: CredentialMetadata = {
     credentialType: "mDL",
     credentialId: "dc_sd_jwt_mDL",
     parsedCredential: {
@@ -165,7 +164,10 @@ function renderComponent(credentialOverride: Partial<StoredCredential> = {}) {
     },
     spec_version: "1.0.0"
   };
-  const credential: StoredCredential = { ...mockedMdl, ...credentialOverride };
+  const credential: CredentialMetadata = {
+    ...mockedMdl,
+    ...credentialOverride
+  };
 
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(
