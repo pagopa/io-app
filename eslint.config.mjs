@@ -124,7 +124,6 @@ export default defineConfig([
       ],
       "one-var": ["error", "never"],
       "object-shorthand": "error",
-      quotes: "off",
       "max-classes-per-file": ["error", 1],
 
       // GENERAL JS SAFETY
