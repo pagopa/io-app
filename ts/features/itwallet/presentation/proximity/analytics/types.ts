@@ -4,5 +4,5 @@ export type ItwProximityFailure = {
 };
 
 export type ItwProximityGenericFailure = ItwProximityFailure & {
-  proximity_sharing_status: "post" | "pre";
+  proximity_sharing_status: "pre" | "post";
 };

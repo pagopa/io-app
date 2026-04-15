@@ -2,8 +2,8 @@
  * these actions allow to handle and dispatch all those data should be kept across multiple users sessions
  */
 
-import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { ActionType, createStandardAction } from "typesafe-actions";
+import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 
 type DifferentProfileLoggedInType = {
   isNewInstall: boolean;
@@ -23,5 +23,5 @@ export const differentProfileLoggedIn = createStandardAction(
 )<DifferentProfileLoggedInType | void>();
 
 export type CrossSessionsActions =
-  | ActionType<typeof differentProfileLoggedIn>
-  | ActionType<typeof setProfileHashedFiscalCode>;
+  | ActionType<typeof setProfileHashedFiscalCode>
+  | ActionType<typeof differentProfileLoggedIn>;

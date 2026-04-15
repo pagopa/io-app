@@ -3,8 +3,8 @@ import { ComponentType, Dispatch, SetStateAction, useState } from "react";
 import { useTabItemPressWhenScreenActive } from "../../hooks/useTabItemPressWhenScreenActive";
 
 export type TabBarItemPressType = {
-  setHasInternalTab: Dispatch<SetStateAction<boolean>>;
   setTabPressCallback: Dispatch<SetStateAction<() => void>>;
+  setHasInternalTab: Dispatch<SetStateAction<boolean>>;
 };
 
 export function withUseTabItemPressWhenScreenActive<P>(

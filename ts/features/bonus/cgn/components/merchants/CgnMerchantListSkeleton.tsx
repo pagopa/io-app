@@ -6,8 +6,8 @@ import {
 import { View } from "react-native";
 
 type Props = {
-  count?: number;
   hasIcons?: boolean;
+  count?: number;
 };
 
 export function CgnMerchantListSkeleton(props: Props) {
@@ -26,11 +26,11 @@ export function CgnMerchantListSkeleton(props: Props) {
             }}
           >
             <IOSkeleton
+              shape="rectangle"
               height={24}
               radius={8}
-              shape="rectangle"
-              testID={`CgnMerchantListSkeleton-Placeholder-${index}`}
               width="100%"
+              testID={`CgnMerchantListSkeleton-Placeholder-${index}`}
             />
           </View>
           <Divider />

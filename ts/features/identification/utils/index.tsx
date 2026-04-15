@@ -1,11 +1,10 @@
 import { BiometricsValidType, Body } from "@pagopa/io-app-design-system";
+import { BackHandler, Platform, View } from "react-native";
 import { TxtParagraphNode } from "@textlint/ast-node-types";
 import I18n from "i18next";
-import { BackHandler, Platform, View } from "react-native";
-
 import IOMarkdown from "../../../components/IOMarkdown";
-import { getTxtNodeKey } from "../../../components/IOMarkdown/renderRules";
 import { Renderer } from "../../../components/IOMarkdown/types";
+import { getTxtNodeKey } from "../../../components/IOMarkdown/renderRules";
 import { IdentificationBackActionType } from "../store/reducers";
 
 export const FAIL_ATTEMPTS_TO_SHOW_ALERT = 4;
@@ -57,8 +56,8 @@ export const IdentificationInstructionsComponent = (props: {
     Paragraph(paragraph: TxtParagraphNode, render: Renderer) {
       return (
         <Body
-          color="white"
           key={getTxtNodeKey(paragraph)}
+          color="white"
           style={{ textAlign: "center" }}
         >
           {paragraph.children.map(render)}
@@ -69,10 +68,10 @@ export const IdentificationInstructionsComponent = (props: {
 
   const instructionComponent = (
     <View
+      accessible
       accessibilityLabel={I18n.t(
         "identification.instructions.useUnlockCodeA11y"
       )}
-      accessible
       style={{ flexDirection: "row" }}
     >
       <IOMarkdown
@@ -91,8 +90,8 @@ export const IdentificationInstructionsComponent = (props: {
     case "TOUCH_ID":
       return (
         <View
-          accessibilityLabel={a11yInstruction}
           accessible
+          accessibilityLabel={a11yInstruction}
           style={{ flexDirection: "row" }}
         >
           <IOMarkdown
@@ -106,8 +105,8 @@ export const IdentificationInstructionsComponent = (props: {
     case "FACE_ID":
       return (
         <View
-          accessibilityLabel={a11yInstruction}
           accessible
+          accessibilityLabel={a11yInstruction}
           style={{ flexDirection: "row" }}
         >
           <IOMarkdown

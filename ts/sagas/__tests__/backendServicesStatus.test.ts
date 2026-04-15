@@ -2,10 +2,10 @@ import { right } from "fp-ts/lib/Either";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 
-import { BackendStatus } from "../../../definitions/content/BackendStatus";
 import { backendStatusLoadSuccess } from "../../store/actions/backendStatus";
-import { baseRawBackendStatus } from "../../store/reducers/__mock__/backendStatus";
 import { backendStatusSaga } from "../backendStatus";
+import { BackendStatus } from "../../../definitions/content/BackendStatus";
+import { baseRawBackendStatus } from "../../store/reducers/__mock__/backendStatus";
 
 jest.mock("react-native-background-timer", () => ({
   BackgroundTimer: { setTimeout: jest.fn }

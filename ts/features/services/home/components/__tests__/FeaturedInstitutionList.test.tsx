@@ -1,16 +1,15 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
-import _ from "lodash";
 import { createStore } from "redux";
-
-import { Institutions } from "../../../../../../definitions/services/Institutions";
-import { OrganizationFiscalCode } from "../../../../../../definitions/services/OrganizationFiscalCode";
+import _ from "lodash";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { getNetworkError, NetworkError } from "../../../../../utils/errors";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { getNetworkError, NetworkError } from "../../../../../utils/errors";
 import { FeaturedInstitutionList } from "../FeaturedInstitutionList";
+import { Institutions } from "../../../../../../definitions/services/Institutions";
+import { OrganizationFiscalCode } from "../../../../../../definitions/services/OrganizationFiscalCode";
 
 const MOCK_FEATURED_INSTITUTIONS: Institutions = {
   institutions: [

@@ -1,16 +1,15 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
-import I18n from "i18next";
-import { Alert } from "react-native";
 import { createStore } from "redux";
-
-import { applicationChangeState } from "../../../../../../store/actions/application";
-import { useIOSelector } from "../../../../../../store/hooks";
-import { appReducer } from "../../../../../../store/reducers";
-import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
-import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { Alert } from "react-native";
+import I18n from "i18next";
 import { openNFCSettings } from "../../utils/cie";
+import { appReducer } from "../../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { useIOSelector } from "../../../../../../store/hooks";
 import ActivateNfcScreen from "../ActivateNfcScreen";
+import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 
 // Mock the openNFCSettings function
 jest.mock("../../utils/cie", () => ({

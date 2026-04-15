@@ -1,14 +1,13 @@
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useEffect, useRef, useState } from "react";
-
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent.tsx";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIODispatch } from "../../../../../store/hooks.ts";
 import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils.ts";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
 import { itwCredentialsRefreshStatusByType } from "../../../credentials/store/actions/index.ts";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider.tsx";
 import {
@@ -17,7 +16,7 @@ import {
 } from "../../../machine/credential/selectors.ts";
 
 type Props = {
-  credential: StoredCredential;
+  credential: CredentialMetadata;
 };
 
 /**
@@ -78,6 +77,14 @@ export const ItwPresentationCredentialUnknownStatus = ({
   if (isRetryComplete) {
     return (
       <OperationResultScreenContent
+        pictogram="umbrella"
+        title={I18n.t(
+          "features.itWallet.presentation.statusAssertionUnknown.retryFailure.title"
+        )}
+        subtitle={I18n.t(
+          "features.itWallet.presentation.statusAssertionUnknown.retryFailure.content",
+          { credentialName }
+        )}
         action={{
           label: I18n.t(
             "features.itWallet.presentation.statusAssertionUnknown.retryFailure.primaryAction"
@@ -90,18 +97,10 @@ export const ItwPresentationCredentialUnknownStatus = ({
             });
           }
         }}
-        pictogram="umbrella"
         secondaryAction={{
           label: I18n.t("global.buttons.close"),
           onPress: () => navigation.goBack()
         }}
-        subtitle={I18n.t(
-          "features.itWallet.presentation.statusAssertionUnknown.retryFailure.content",
-          { credentialName }
-        )}
-        title={I18n.t(
-          "features.itWallet.presentation.statusAssertionUnknown.retryFailure.title"
-        )}
       />
     );
   }
@@ -109,6 +108,14 @@ export const ItwPresentationCredentialUnknownStatus = ({
   // Try to get a new status assertion.
   return (
     <OperationResultScreenContent
+      pictogram="cardIssue"
+      title={I18n.t(
+        "features.itWallet.presentation.statusAssertionUnknown.title",
+        { credentialName }
+      )}
+      subtitle={I18n.t(
+        "features.itWallet.presentation.statusAssertionUnknown.content"
+      )}
       action={{
         testID: "RetryButtonTestID",
         label: I18n.t("global.genericRetry"),
@@ -119,18 +126,10 @@ export const ItwPresentationCredentialUnknownStatus = ({
           );
         }
       }}
-      pictogram="cardIssue"
       secondaryAction={{
         label: I18n.t("global.buttons.close"),
         onPress: () => navigation.goBack()
       }}
-      subtitle={I18n.t(
-        "features.itWallet.presentation.statusAssertionUnknown.content"
-      )}
-      title={I18n.t(
-        "features.itWallet.presentation.statusAssertionUnknown.title",
-        { credentialName }
-      )}
     />
   );
 };

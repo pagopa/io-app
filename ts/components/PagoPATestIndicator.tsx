@@ -1,4 +1,4 @@
-import { hexToRgba, Icon, IOColors } from "@pagopa/io-app-design-system";
+import { IOColors, Icon, hexToRgba } from "@pagopa/io-app-design-system";
 import { StyleSheet, Text, View } from "react-native";
 
 const debugItemBgColor = hexToRgba(IOColors.white, 0.4);
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
 
 const PagoPATestIndicator = () => (
   <View style={styles.indicatoWrapper}>
-    <Icon color="grey-850" name="productPagoPA" size={20} />
+    <Icon name="productPagoPA" color="grey-850" size={20} />
     {/* eslint-disable i18next/no-literal-string */}
     <Text
       style={{

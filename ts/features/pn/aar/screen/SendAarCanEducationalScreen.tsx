@@ -4,7 +4,6 @@ import i18n from "i18next";
 import { useCallback, useEffect } from "react";
 import { Alert, Image } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
 import cieCanEducationalSource from "../../../../../img/features/pn/cieCanEducational.png";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useHardwareBackButtonWhenFocused } from "../../../../hooks/useHardwareBackButton";
@@ -106,7 +105,7 @@ export const SendAarCanEducationalScreen = ({
   });
 
   return (
-    <SafeAreaView edges={["bottom"]} style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }} edges={["bottom"]}>
       <IOScrollViewWithLargeHeader
         actions={{
           type: "SingleButton",
@@ -116,32 +115,32 @@ export const SendAarCanEducationalScreen = ({
             onPress: handleGoNext
           }
         }}
-        alwaysBounceVertical={false}
+        title={{
+          label: i18n.t("features.pn.aar.flow.cieCanAdvisory.title", {
+            denomination
+          })
+        }}
+        description={i18n.t("features.pn.aar.flow.cieCanAdvisory.description")}
+        headerActionsProp={{ showHelp: true }}
         contextualHelp={{
           title: i18n.t(
             "features.pn.aar.flow.delegated.cieContextualHelp.title"
           ),
           body: i18n.t("features.pn.aar.flow.delegated.cieContextualHelp.body")
         }}
-        description={i18n.t("features.pn.aar.flow.cieCanAdvisory.description")}
         goBack={handleGoBack}
-        headerActionsProp={{ showHelp: true }}
         includeContentMargins
-        title={{
-          label: i18n.t("features.pn.aar.flow.cieCanAdvisory.title", {
-            denomination
-          })
-        }}
+        alwaysBounceVertical={false}
       >
         <VSpacer size={8} />
         <Image
-          accessibilityIgnoresInvertColors
           source={{
             uri
           }}
           style={{
             aspectRatio
           }}
+          accessibilityIgnoresInvertColors
         />
       </IOScrollViewWithLargeHeader>
     </SafeAreaView>

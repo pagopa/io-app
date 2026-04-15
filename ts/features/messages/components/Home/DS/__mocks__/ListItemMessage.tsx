@@ -1,5 +1,4 @@
 import { Pressable, Text } from "react-native";
-
 import { ListItemMessageProps } from "../ListItemMessage";
 
 export const ListItemMessage = (props: ListItemMessageProps) => (

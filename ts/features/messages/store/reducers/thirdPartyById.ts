@@ -1,11 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
+import { pipe } from "fp-ts/lib/function";
 import _ from "lodash";
 import { getType } from "typesafe-actions";
-
 import { HasPreconditionEnum } from "../../../../../definitions/backend/HasPrecondition";
 import { RemoteContentDetails } from "../../../../../definitions/backend/RemoteContentDetails";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
@@ -44,12 +43,14 @@ export const thirdPartyByIdReducer = (
   action: Action
 ): ThirdPartyById => {
   switch (action.type) {
-    case getType(loadThirdPartyMessage.failure):
-      return toError(action.payload.id, state, action.payload.error);
     case getType(loadThirdPartyMessage.request):
       return toLoading(action.payload.id, state);
     case getType(loadThirdPartyMessage.success):
       return toSome(action.payload.id, state, action.payload.content);
+    case getType(loadThirdPartyMessage.failure):
+      return toError(action.payload.id, state, action.payload.error);
+    case getType(reloadAllMessages.request):
+      return initialState;
     case getType(populateStoresWithEphemeralAarMessageData):
       const {
         iun,
@@ -80,8 +81,6 @@ export const thirdPartyByIdReducer = (
         }
       };
       return toSome(iun, state, ephemeralMessage);
-    case getType(reloadAllMessages.request):
-      return initialState;
 
     case getType(terminateAarFlow):
       if (action.payload.messageId === undefined) {

@@ -1,10 +1,9 @@
-import * as O from "fp-ts/lib/Option";
 import { createStore } from "redux";
-
-import { EnvironmentEnum } from "../../../../../../definitions/fci/Environment";
+import * as O from "fp-ts/lib/Option";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { fciEnvironmentSet } from "../../actions";
+import { EnvironmentEnum } from "../../../../../../definitions/fci/Environment";
 
 describe("FciEnvironmentSet", () => {
   it("it should have an initialState equal to a none Option", () => {

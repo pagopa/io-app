@@ -1,33 +1,11 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { ActionType } from "typesafe-actions";
-
-import { maximumItemsFromAPI, pageSize } from "../../../../../config";
-import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
-import {
-  isLoadingOrUpdating,
-  isSomeOrSomeError,
-  isStrictNone,
-  isStrictSome,
-  isStrictSomeError
-} from "../../../../../utils/pot";
-import { activeSessionLoginInitialState } from "../../../../authentication/activeSessionLogin/store/reducer";
-import {
-  loadNextPageMessages,
-  loadPreviousPageMessages,
-  reloadAllMessages
-} from "../../../store/actions";
+import { MessageListCategory } from "../../../types/messageListCategory";
 import * as allPaginated from "../../../store/reducers/allPaginated";
 import {
-  ArchivingStatus,
-  INITIAL_STATE
-} from "../../../store/reducers/archiving";
-import { UIMessage } from "../../../types";
-import { MessageListCategory } from "../../../types/messageListCategory";
-import {
   accessibilityLabelForMessageItem,
-  archiveUnarchiveAccessibilityInstructions,
   getInitialReloadAllMessagesActionIfNeeded,
   getLoadNextPageMessagesActionIfAllowed,
   getLoadPreviousPageMessagesActionIfAllowed,
@@ -36,8 +14,29 @@ import {
   messageListCategoryToViewPageIndex,
   messageViewPageIndexToListCategory,
   nextPageLoadingWaitMillisecondsGenerator,
-  refreshIntervalMillisecondsGenerator
+  refreshIntervalMillisecondsGenerator,
+  archiveUnarchiveAccessibilityInstructions
 } from "../homeUtils";
+import { maximumItemsFromAPI, pageSize } from "../../../../../config";
+import { Action } from "../../../../../store/actions/types";
+import {
+  loadNextPageMessages,
+  loadPreviousPageMessages,
+  reloadAllMessages
+} from "../../../store/actions";
+import { UIMessage } from "../../../types";
+import {
+  isLoadingOrUpdating,
+  isSomeOrSomeError,
+  isStrictNone,
+  isStrictSome,
+  isStrictSomeError
+} from "../../../../../utils/pot";
+import {
+  ArchivingStatus,
+  INITIAL_STATE
+} from "../../../store/reducers/archiving";
+import { activeSessionLoginInitialState } from "../../../../authentication/activeSessionLogin/store/reducer";
 
 const createGlobalState = (
   archiveData: allPaginated.MessagePagePot,

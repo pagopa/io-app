@@ -1,38 +1,37 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as B from "fp-ts/lib/boolean";
 import { constTrue, constUndefined, pipe } from "fp-ts/lib/function";
+import * as B from "fp-ts/lib/boolean";
 import * as O from "fp-ts/lib/Option";
-import I18n from "i18next";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { StyleSheet } from "react-native";
 import { ActionType } from "typesafe-actions";
-
-import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
-import { maximumItemsFromAPI, pageSize } from "../../../../config";
-import NavigationService from "../../../../navigation/NavigationService";
+import I18n from "i18next";
 import { GlobalState } from "../../../../store/reducers/types";
+import {
+  loadNextPageMessages,
+  loadPreviousPageMessages,
+  reloadAllMessages
+} from "../../store/actions";
+import { maximumItemsFromAPI, pageSize } from "../../../../config";
+import { MessageListCategory } from "../../types/messageListCategory";
+import { UIMessage } from "../../types";
+import { convertReceivedDateToAccessible } from "../../utils/convertDateToWordDistance";
+import {
+  isPaymentMessageWithPaidNoticeSelector,
+  messagePagePotFromCategorySelector,
+  shownMessageCategorySelector
+} from "../../store/reducers/allPaginated";
 import {
   isLoadingOrUpdating,
   isSomeOrSomeError,
   isStrictNone,
   isStrictSomeError
 } from "../../../../utils/pot";
+import { isArchivingInProcessingModeSelector } from "../../store/reducers/archiving";
+import { TagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
+import NavigationService from "../../../../navigation/NavigationService";
 import { trackMessageListEndReached, trackMessagesPage } from "../../analytics";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
-import {
-  loadNextPageMessages,
-  loadPreviousPageMessages,
-  reloadAllMessages
-} from "../../store/actions";
-import {
-  isPaymentMessageWithPaidNoticeSelector,
-  messagePagePotFromCategorySelector,
-  shownMessageCategorySelector
-} from "../../store/reducers/allPaginated";
-import { isArchivingInProcessingModeSelector } from "../../store/reducers/archiving";
 import { areMessageSagasRegisteredSelector } from "../../store/reducers/messageSectionStatus";
-import { UIMessage } from "../../types";
-import { MessageListCategory } from "../../types/messageListCategory";
-import { convertReceivedDateToAccessible } from "../../utils/convertDateToWordDistance";
 import {
   ListItemMessageEnhancedHeight,
   ListItemMessageStandardHeight
@@ -83,7 +82,7 @@ export const messageViewPageIndexToListCategory = (
 
 export const accessibilityLabelForMessageItem = (
   message: UIMessage,
-  source: "SEARCH" | MessageListCategory,
+  source: MessageListCategory | "SEARCH",
   isSelected?: boolean
 ): string =>
   I18n.t("messages.accessibility.message.description", {
@@ -101,7 +100,7 @@ export const accessibilityLabelForMessageItem = (
   });
 
 export const archiveUnarchiveAccessibilityInstructions = (
-  source: "SEARCH" | MessageListCategory,
+  source: MessageListCategory | "SEARCH",
   isSelected?: boolean
 ): string => {
   // Search screen does not allow archiving/unarchiving

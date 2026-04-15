@@ -1,6 +1,5 @@
-import I18n from "i18next";
 import { createStore } from "redux";
-
+import I18n from "i18next";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { Store } from "../../../../../../store/actions/types";
 import { appReducer } from "../../../../../../store/reducers";

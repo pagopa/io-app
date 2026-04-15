@@ -1,8 +1,7 @@
 import { fireEvent } from "@testing-library/react-native";
-import I18n from "i18next";
 import { View } from "react-native";
 import configureMockStore from "redux-mock-store";
-
+import I18n from "i18next";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
@@ -138,11 +137,11 @@ const renderComponent = () => {
     component: renderScreenWithNavigationStoreContext<GlobalState>(
       () => (
         <BarcodeScanBaseScreenComponent
-          barcodeAnalyticsFlow="home"
-          onBarcodeError={() => null}
           onBarcodeSuccess={() => null}
+          onBarcodeError={() => null}
           onFileInputPressed={() => null}
           onManualInputPressed={() => null}
+          barcodeAnalyticsFlow="home"
         />
       ),
       ROUTES.MAIN,

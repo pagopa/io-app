@@ -1,18 +1,17 @@
-import { fireEvent } from "@testing-library/react-native";
 import { ComponentProps } from "react";
 import { Action, Store } from "redux";
 import configureMockStore from "redux-mock-store";
-
-import { ServiceMetadata } from "../../../../../../definitions/services/ServiceMetadata";
-import { applicationChangeState } from "../../../../../store/actions/application";
+import { fireEvent } from "@testing-library/react-native";
 import { appReducer } from "../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../store/actions/application";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { reproduceSequence } from "../../../../../utils/tests";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { loadServiceDetail } from "../../../../services/details/store/actions/details";
 import { messageId_1, service_1 } from "../../../__mocks__/messages";
-import { MESSAGES_ROUTES } from "../../../navigation/routes";
+import { reproduceSequence } from "../../../../../utils/tests";
 import { MessageDetailsFooter } from "../MessageDetailsFooter";
+import { ServiceMetadata } from "../../../../../../definitions/services/ServiceMetadata";
+import { MESSAGES_ROUTES } from "../../../navigation/routes";
 
 const mockPresentBottomSheet = jest.fn();
 

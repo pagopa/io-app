@@ -1,13 +1,12 @@
 import { fireEvent } from "@testing-library/react-native";
-import I18n from "i18next";
 import { createStore } from "redux";
-
+import I18n from "i18next";
+import RemoveAccountSuccess from "../RemoveAccountSuccessScreen";
+import { logoutRequest } from "../../../../authentication/common/store/actions";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { logoutRequest } from "../../../../authentication/common/store/actions";
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
-import RemoveAccountSuccess from "../RemoveAccountSuccessScreen";
 
 const mockDispatch = jest.fn();
 

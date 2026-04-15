@@ -1,11 +1,10 @@
 import { IOToast } from "@pagopa/io-app-design-system";
 import { TxtLinkNode, TxtParagraphNode } from "@textlint/ast-node-types";
 import I18n from "i18next";
-
 import {
+  ParagraphSize,
   linkNodeToReactNative,
-  paragraphNodeToReactNative,
-  ParagraphSize
+  paragraphNodeToReactNative
 } from "../../../../components/IOMarkdown/renderRules";
 import { Renderer } from "../../../../components/IOMarkdown/types";
 import { openWebUrl } from "../../../../utils/url";

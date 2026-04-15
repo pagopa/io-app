@@ -1,19 +1,18 @@
 import configureMockStore from "redux-mock-store";
-
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import * as envSelectors from "../../../common/store/selectors/environment";
-import * as preferencesSelectors from "../../../common/store/selectors/preferences";
-import * as itwRemoteConfigSelectors from "../../../common/store/selectors/remoteConfig";
-import { EnvType } from "../../../common/utils/environment";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import * as itwLifecycleSelectors from "../../../lifecycle/store/selectors";
 import { itwCredentialIssuanceMachine } from "../../../machine/credential/machine";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import { ITW_ROUTES } from "../../../navigation/routes";
+import * as itwRemoteConfigSelectors from "../../../common/store/selectors/remoteConfig";
 import { WalletCardOnboardingScreen } from "../WalletCardOnboardingScreen";
+import * as preferencesSelectors from "../../../common/store/selectors/preferences";
+import * as envSelectors from "../../../common/store/selectors/environment";
+import { EnvType } from "../../../common/utils/environment";
 
 describe("WalletCardOnboardingScreen", () => {
   it("it should render the screen correctly", () => {

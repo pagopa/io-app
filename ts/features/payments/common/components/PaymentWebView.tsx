@@ -3,20 +3,19 @@ import { useRef, useState } from "react";
 import { Linking } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import WebView from "react-native-webview";
-
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import { isDevEnv } from "../../../../utils/environment";
 import { getIntentFallbackUrl } from "../../../authentication/common/utils/login";
 import { WALLET_WEBVIEW_OUTCOME_SCHEMA } from "../../common/utils/const";
 
 type PaymentWebViewProps<T> = {
+  url: string;
   cancelOutcome: T;
   errorOutcome: T;
+  onSuccess?: (url: string) => void;
   onCancel?: (outcome: T) => void;
   onError?: (outcome: T) => void;
-  onSuccess?: (url: string) => void;
   originWhiteList?: Array<string>;
-  url: string;
 };
 
 const originSchemasWhiteList = [
@@ -49,11 +48,32 @@ const PaymentWebView = <T,>({
   });
 
   return (
-    <SafeAreaView edges={["bottom"]} style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }} edges={["bottom"]}>
       <WebView
-        allowsBackForwardNavigationGestures
-        androidCameraAccessDisabled
-        androidMicrophoneAccessDisabled
+        testID="webview"
+        ref={webViewRef}
+        originWhitelist={originWhiteList || originSchemasWhiteList}
+        onShouldStartLoadWithRequest={event => {
+          const { url, isTopFrame } = event;
+          if (url.startsWith(WALLET_WEBVIEW_OUTCOME_SCHEMA)) {
+            onSuccess?.(url);
+            return false;
+          }
+          if (url === "about:blank" && isTopFrame) {
+            onCancel?.(cancelOutcome);
+            return false;
+          }
+          const intent = getIntentFallbackUrl(url);
+          if (O.isSome(intent)) {
+            void Linking.openURL(decodeURIComponent(intent.value));
+            return false;
+          }
+          return true;
+        }}
+        onNavigationStateChange={event => setCanGoBack(event.canGoBack)}
+        onHttpError={() => {
+          onError?.(errorOutcome);
+        }}
         onError={syntheticEvent => {
           const { nativeEvent } = syntheticEvent;
 
@@ -72,35 +92,14 @@ const PaymentWebView = <T,>({
 
           onError?.(errorOutcome);
         }}
-        onHttpError={() => {
-          onError?.(errorOutcome);
-        }}
-        onNavigationStateChange={event => setCanGoBack(event.canGoBack)}
-        onShouldStartLoadWithRequest={event => {
-          const { url, isTopFrame } = event;
-          if (url.startsWith(WALLET_WEBVIEW_OUTCOME_SCHEMA)) {
-            onSuccess?.(url);
-            return false;
-          }
-          if (url === "about:blank" && isTopFrame) {
-            onCancel?.(cancelOutcome);
-            return false;
-          }
-          const intent = getIntentFallbackUrl(url);
-          if (O.isSome(intent)) {
-            void Linking.openURL(decodeURIComponent(intent.value));
-            return false;
-          }
-          return true;
-        }}
-        originWhitelist={originWhiteList || originSchemasWhiteList}
-        paymentRequestEnabled
-        ref={webViewRef}
+        allowsBackForwardNavigationGestures
+        style={{ flex: 1 }}
         source={{
           uri
         }}
-        style={{ flex: 1 }}
-        testID="webview"
+        paymentRequestEnabled
+        androidCameraAccessDisabled
+        androidMicrophoneAccessDisabled
       />
     </SafeAreaView>
   );

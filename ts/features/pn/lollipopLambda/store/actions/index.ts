@@ -1,19 +1,18 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
-
-import { ErrorResponse } from "../../../../../../definitions/pn/lollipop-lambda/ErrorResponse";
 import { SuccessResponse } from "../../../../../../definitions/pn/lollipop-lambda/SuccessResponse";
+import { ErrorResponse } from "../../../../../../definitions/pn/lollipop-lambda/ErrorResponse";
 
-type SENDLollipopLambdaActionFailure = {
-  reason: string;
-  type: "failure" | "invalidInput";
-};
 type SENDLollipopLambdaActionRequest = {
-  body: string;
   httpVerb: "Get" | "Post";
+  body: string;
 };
 type SENDLollipopLambdaActionSuccess = {
-  responseBody: ErrorResponse | SuccessResponse | undefined;
   statusCode: number;
+  responseBody: SuccessResponse | ErrorResponse | undefined;
+};
+type SENDLollipopLambdaActionFailure = {
+  reason: string;
+  type: "invalidInput" | "failure";
 };
 
 export const sendLollipopLambdaAction = createAsyncAction(

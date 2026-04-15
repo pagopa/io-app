@@ -1,5 +1,4 @@
 import { View } from "react-native";
-
 import { ShowMoreListItemProps } from "../ShowMoreListItem";
 
 export const ShowMoreListItem = ({ sections }: ShowMoreListItemProps) => (

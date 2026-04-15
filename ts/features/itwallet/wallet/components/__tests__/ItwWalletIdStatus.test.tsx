@@ -1,6 +1,5 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import { constNull } from "fp-ts/lib/function";
-
 import { ItwJwtCredentialStatus } from "../../../common/utils/itwTypesUtils";
 import { ItwWalletIdStatus } from "../ItwWalletIdStatus";
 
@@ -14,9 +13,9 @@ describe("ItwWalletIdStatus", () => {
     pidStatus => {
       const component = render(
         <ItwWalletIdStatus
-          onPress={constNull}
-          pidExpiration="2026-11-12T14:11:48.000Z"
           pidStatus={pidStatus}
+          pidExpiration="2026-11-12T14:11:48.000Z"
+          onPress={constNull}
         />
       );
 

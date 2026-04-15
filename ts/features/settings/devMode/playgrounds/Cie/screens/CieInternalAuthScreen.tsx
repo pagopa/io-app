@@ -19,7 +19,6 @@ import {
   View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
 import { useHeaderSecondLevel } from "../../../../../../hooks/useHeaderSecondLevel";
 import { useScreenEndMargin } from "../../../../../../hooks/useScreenEndMargin";
 import { ReadStatusComponent } from "../components/ReadStatusComponent";
@@ -138,27 +137,27 @@ export const CieInternalAuthScreen = () => {
         </View>
         <View style={styles.inputContainer}>
           <ListItemSwitch
-            disabled={status !== "idle"}
             label="Use base64 encoding"
             onSwitchValueChange={toggleEncodingSwitch}
             value={isBase64Encoding}
+            disabled={status !== "idle"}
           />
           <TextInput
             accessibilityLabel="Challenge text input field"
-            disabled={status !== "idle"}
-            onChangeText={setChallenge}
-            placeholder={"Challenge"}
             value={challenge}
+            placeholder={"Challenge"}
+            onChangeText={setChallenge}
+            disabled={status !== "idle"}
           />
         </View>
         <VSpacer size={16} />
         <IOButton
-          disabled={challenge.length === 0}
+          variant="solid"
           label={status === "reading" ? "Stop" : "Start sign"}
+          disabled={challenge.length === 0}
           onPress={() =>
             status === "reading" ? handleStopReading() : handleStartReading()
           }
-          variant="solid"
         />
         <VSpacer size={16} />
       </KeyboardAvoidingView>

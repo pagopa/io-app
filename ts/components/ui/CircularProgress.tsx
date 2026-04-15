@@ -1,4 +1,5 @@
 import { ReactNode, useEffect } from "react";
+
 import { ColorValue, StyleSheet, View } from "react-native";
 import Animated, {
   useAnimatedProps,
@@ -9,13 +10,13 @@ import Svg, { Circle, G } from "react-native-svg";
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 type CircularProgressProps = {
-  children?: ReactNode;
   progress: number;
-  radius: number;
   size: number;
-  strokeBgColor: ColorValue;
+  radius: number;
   strokeColor: ColorValue;
+  strokeBgColor: ColorValue;
   strokeWidth: number;
+  children?: ReactNode;
 };
 
 export const CircularProgress = ({
@@ -48,12 +49,12 @@ export const CircularProgress = ({
       testID={`circular-progress-${Math.round(progress)}`}
     >
       <Svg
-        fill="none"
+        width={size}
         height={size}
         viewBox={`0 0 ${size} ${size}`}
-        width={size}
+        fill="none"
       >
-        <G origin={`${size / 2}, ${size / 2}`} rotation="-90">
+        <G rotation="-90" origin={`${size / 2}, ${size / 2}`}>
           {/* Circle Background */}
           <Circle
             cx={size / 2}
@@ -64,14 +65,14 @@ export const CircularProgress = ({
           />
           {/* Active circle (animated) */}
           <AnimatedCircle
-            animatedProps={animatedProps}
             cx={size / 2}
             cy={size / 2}
             r={radius - strokeWidth / 2}
             stroke={strokeColor}
-            strokeDasharray={CIRCLE_LENGTH}
-            strokeLinecap={"round"}
             strokeWidth={strokeWidth}
+            strokeDasharray={CIRCLE_LENGTH}
+            animatedProps={animatedProps}
+            strokeLinecap={"round"}
           />
         </G>
       </Svg>

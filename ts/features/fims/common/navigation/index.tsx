@@ -1,5 +1,4 @@
 import { createStackNavigator } from "@react-navigation/stack";
-
 import { FimsHistoryScreen } from "../../history/screens/HistoryScreen";
 import {
   FimsFlowHandlerScreen,
@@ -13,9 +12,9 @@ export const FIMS_ROUTES = {
 } as const;
 
 export type FimsParamsList = {
+  [FIMS_ROUTES.MAIN]: undefined;
   [FIMS_ROUTES.CONSENTS]: FimsFlowHandlerScreenRouteParams;
   [FIMS_ROUTES.HISTORY]: undefined;
-  [FIMS_ROUTES.MAIN]: undefined;
 };
 
 const Stack = createStackNavigator<FimsParamsList>();
@@ -29,9 +28,9 @@ export const FimsNavigator = () => (
     screenOptions={{ gestureEnabled: false, headerShown: true }}
   >
     <Stack.Screen
-      component={FimsFlowHandlerScreen}
       name={FIMS_ROUTES.CONSENTS}
+      component={FimsFlowHandlerScreen}
     />
-    <Stack.Screen component={FimsHistoryScreen} name={FIMS_ROUTES.HISTORY} />
+    <Stack.Screen name={FIMS_ROUTES.HISTORY} component={FimsHistoryScreen} />
   </Stack.Navigator>
 );

@@ -1,12 +1,11 @@
-import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { merge } from "lodash";
-
-import { OrganizationName } from "../../../../../definitions/backend/OrganizationName";
-import { ScopeTypeEnum } from "../../../../../definitions/services/ScopeType";
-import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
-import { StandardServiceCategoryEnum } from "../../../../../definitions/services/StandardServiceCategory";
+import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { ServiceType } from "../types";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
+import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
+import { StandardServiceCategoryEnum } from "../../../../../definitions/services/StandardServiceCategory";
+import { ScopeTypeEnum } from "../../../../../definitions/services/ScopeType";
+import { OrganizationName } from "../../../../../definitions/backend/OrganizationName";
 
 const SERVICE_ID = "serviceId" as ServiceId;
 const FISCAL_CODE = "12345678901" as OrganizationFiscalCode;

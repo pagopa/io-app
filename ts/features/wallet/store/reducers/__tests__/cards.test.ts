@@ -1,6 +1,5 @@
 import _ from "lodash";
 import { createStore } from "redux";
-
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { WalletCard } from "../../../types";

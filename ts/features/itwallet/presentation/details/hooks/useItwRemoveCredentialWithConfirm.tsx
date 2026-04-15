@@ -1,11 +1,10 @@
 import { useIOToast } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { Alert } from "react-native";
-
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { getMixPanelCredential } from "../../../analytics/utils";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import { itwCredentialsRemoveByType } from "../../../credentials/store/actions";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { trackItwCredentialDelete } from "../analytics";
@@ -14,7 +13,7 @@ import { trackItwCredentialDelete } from "../analytics";
  * Hook that shows a confirmation dialog and, if confirmed, removes a credential from the wallet
  */
 export const useItwRemoveCredentialWithConfirm = (
-  credential: StoredCredential
+  credential: CredentialMetadata
 ) => {
   const dispatch = useIODispatch();
   const toast = useIOToast();
@@ -26,7 +25,7 @@ export const useItwRemoveCredentialWithConfirm = (
   );
 
   const handleRemoveCredential = () => {
-    dispatch(itwCredentialsRemoveByType(credential.credentialType));
+    dispatch(itwCredentialsRemoveByType(credential.credentialType, {}));
     toast.success(
       I18n.t("features.itWallet.presentation.credentialDetails.toast.removed")
     );

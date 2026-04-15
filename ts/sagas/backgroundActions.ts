@@ -1,5 +1,4 @@
 import { call } from "typed-redux-saga/macro";
-
 import { handleStoredLinkingUrlIfNeeded } from "../features/linking/sagas";
 import { handlePushNotificationIfNeeded } from "../features/pushNotifications/sagas/common";
 

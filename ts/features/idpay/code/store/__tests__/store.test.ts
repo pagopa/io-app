@@ -1,6 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { createStore, Store } from "redux";
-
+import { Store, createStore } from "redux";
 import {
   InitiativeDTO,
   StatusEnum

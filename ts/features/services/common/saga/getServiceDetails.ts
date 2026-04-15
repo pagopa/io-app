@@ -1,12 +1,11 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { put, select, take } from "typed-redux-saga/macro";
 import { isActionOf } from "typesafe-actions";
-
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
-import { ReduxSagaEffect } from "../../../../types/utils";
 import { loadServiceDetail } from "../../details/store/actions/details";
 import { serviceDetailsByIdPotSelector } from "../../details/store/selectors";
+import { ReduxSagaEffect } from "../../../../types/utils";
+import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
 
 export function* getServiceDetails(
   serviceId: ServiceId

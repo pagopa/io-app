@@ -1,29 +1,28 @@
 import { Body, H2, VSpacer, VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { sequenceS } from "fp-ts/lib/Apply";
+import I18n from "i18next";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import I18n from "i18next";
+import { sequenceS } from "fp-ts/lib/Apply";
 import { useCallback, useMemo } from "react";
-
-import IOMarkdown from "../../../../components/IOMarkdown";
-import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../store/hooks";
-import { getMixPanelCredential } from "../../analytics/utils";
-import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
-import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
-import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
-import {
-  selectCredentialIntroContentOption,
-  selectCredentialTypeOption,
-  selectIsLoading
-} from "../../machine/credential/selectors";
 import {
   trackItwCredentialIntro,
   trackItwCredentialStartIssuing
 } from "../analytics";
+import { getMixPanelCredential } from "../../analytics/utils";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
+import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
+import IOMarkdown from "../../../../components/IOMarkdown";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
+import {
+  selectCredentialTypeOption,
+  selectCredentialIntroContentOption,
+  selectIsLoading
+} from "../../machine/credential/selectors";
+import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 
 export const ItwIssuanceCredentialIntroductionScreen = () => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();

@@ -1,12 +1,11 @@
 import { BodySmall, VSpacer } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
-import I18n from "i18next";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
-
-import { TransactionBarCodeResponse } from "../../../../../definitions/idpay/TransactionBarCodeResponse";
+import I18n from "i18next";
 import { ProgressBar } from "../../../bonus/common/components/ProgressBar";
 import { calculateIdPayBarcodeSecondsToExpire } from "../utils";
+import { TransactionBarCodeResponse } from "../../../../../definitions/idpay/TransactionBarCodeResponse";
 
 type Props = {
   barcode: TransactionBarCodeResponse;

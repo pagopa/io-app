@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
 
 export type ServicesHeaderProps = {
   logoUri: ImageSourcePropType;
-  subTitle: string;
   title: string;
+  subTitle: string;
 };
 
 export const ServicesHeader = ({
@@ -46,8 +46,8 @@ export const ServicesHeader = ({
       testID="services-header"
     >
       <View
-        accessibilityElementsHidden={true}
         accessible={false}
+        accessibilityElementsHidden={true}
         importantForAccessibility="no-hide-descendants"
         style={styles.itemAvatar}
       >
@@ -57,7 +57,7 @@ export const ServicesHeader = ({
         <H3 accessibilityRole="header" color={theme["textHeading-secondary"]}>
           {title}
         </H3>
-        <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
+        <BodySmall weight="Regular" color={theme["textBody-tertiary"]}>
           {subTitle}
         </BodySmall>
       </View>
@@ -67,40 +67,40 @@ export const ServicesHeader = ({
 
 export const ServicesHeaderSkeleton = () => (
   <View
-    accessibilityState={{ busy: true }}
     accessible={true}
+    accessibilityState={{ busy: true }}
     style={styles.container}
     testID="services-header-skeleton"
   >
     <View style={styles.itemAvatar}>
       <IOSkeleton
         color={IOColors["grey-200"]}
-        radius={IOVisualCostants.avatarRadiusSizeMedium}
         shape="square"
         size={IOVisualCostants.avatarSizeMedium}
+        radius={IOVisualCostants.avatarRadiusSizeMedium}
       />
     </View>
     <VStack space={8} style={{ flex: 1 }}>
       <IOSkeleton
         color={IOColors["grey-200"]}
-        height={16}
-        radius={8}
         shape="rectangle"
         width={"100%"}
-      />
-      <IOSkeleton
-        color={IOColors["grey-200"]}
         height={16}
         radius={8}
-        shape="rectangle"
-        width={"80%"}
       />
       <IOSkeleton
         color={IOColors["grey-200"]}
-        height={8}
+        shape="rectangle"
+        width={"80%"}
+        height={16}
         radius={8}
+      />
+      <IOSkeleton
+        color={IOColors["grey-200"]}
         shape="rectangle"
         width={"60%"}
+        height={8}
+        radius={8}
       />
     </VStack>
   </View>

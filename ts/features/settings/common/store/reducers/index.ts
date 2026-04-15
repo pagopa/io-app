@@ -5,11 +5,7 @@
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-
 import { InitializedProfile } from "../../../../../../definitions/backend/InitializedProfile";
-import { Action } from "../../../../../store/actions/types";
-import { isDevEnv } from "../../../../../utils/environment";
-import { loginSuccess } from "../../../../authentication/common/store/actions";
 import {
   profileLoadFailure,
   profileLoadRequest,
@@ -17,8 +13,11 @@ import {
   profileUpsert,
   resetProfileState
 } from "../actions";
+import { Action } from "../../../../../store/actions/types";
 import { ProfileError } from "../types";
 import { isProfileFirstOnBoarding } from "../utils/guards";
+import { isDevEnv } from "../../../../../utils/environment";
+import { loginSuccess } from "../../../../authentication/common/store/actions";
 
 export type ProfileState = pot.Pot<InitializedProfile, ProfileError>;
 
@@ -29,12 +28,9 @@ const reducer = (
   action: Action
 ): ProfileState => {
   switch (action.type) {
-    case getType(loginSuccess):
     case getType(resetProfileState):
+    case getType(loginSuccess):
       return pot.none;
-
-    case getType(profileLoadFailure):
-      return pot.toError(state, action.payload);
 
     case getType(profileLoadRequest):
       return pot.toLoading(state);
@@ -42,6 +38,9 @@ const reducer = (
     case getType(profileLoadSuccess):
       // Store the loaded Profile in the store
       return pot.some(action.payload);
+
+    case getType(profileLoadFailure):
+      return pot.toError(state, action.payload);
 
     //
     // upsert

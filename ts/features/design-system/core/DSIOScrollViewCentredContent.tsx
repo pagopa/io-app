@@ -1,5 +1,4 @@
 import { Alert } from "react-native";
-
 import { IOScrollViewCentredContent } from "../../../components/ui/IOScrollViewCentredContent";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 
@@ -14,6 +13,13 @@ export const DSIOScrollViewCentredContent = () => {
   });
   return (
     <IOScrollViewCentredContent
+      pictogram="cie"
+      title="Titolo del wizard"
+      description="Descrizione del wizard che può essere più lunga e occupare più righe."
+      additionalLink={{
+        label: "Pulsante facoltativo",
+        onPress: onButtonPress
+      }}
       actions={{
         type: "TwoButtons",
         primary: {
@@ -25,13 +31,6 @@ export const DSIOScrollViewCentredContent = () => {
           onPress: onButtonPress
         }
       }}
-      additionalLink={{
-        label: "Pulsante facoltativo",
-        onPress: onButtonPress
-      }}
-      description="Descrizione del wizard che può essere più lunga e occupare più righe."
-      pictogram="cie"
-      title="Titolo del wizard"
     />
   );
 };

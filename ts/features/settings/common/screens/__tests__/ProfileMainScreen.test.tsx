@@ -1,15 +1,14 @@
+import { PreloadedState, createStore } from "redux";
 import { act, fireEvent, waitFor } from "@testing-library/react-native";
-import I18n from "i18next";
 import { Alert } from "react-native";
-import { createStore, PreloadedState } from "redux";
-
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { setDebugModeEnabled } from "../../../../../store/actions/debug";
+import I18n from "i18next";
 import { appReducer } from "../../../../../store/reducers";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { SETTINGS_ROUTES } from "../../navigation/routes";
 import ProfileMainScreen from "../ProfileMainScreen";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { SETTINGS_ROUTES } from "../../navigation/routes";
+import { setDebugModeEnabled } from "../../../../../store/actions/debug";
 
 jest.mock("../../../../../utils/environment", () => ({
   ...jest.requireActual("../../../../../utils/environment"),

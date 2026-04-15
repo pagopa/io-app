@@ -1,16 +1,15 @@
 import { put, select } from "typed-redux-saga/macro";
-
+import { initiateAarFlow } from "../../pn/aar/store/actions";
+import { isSendAarLink } from "../../pn/aar/utils/deepLinking";
+import { clearLinkingUrl } from "../actions";
+import { storedLinkingUrlSelector } from "../reducers";
 import {
   isCGNLinking,
   shouldTriggerWalletUpdate
 } from "../../../utils/deepLinkUtils";
-import { cgnEycaStatus } from "../../bonus/cgn/store/actions/eyca/details";
-import { initiateAarFlow } from "../../pn/aar/store/actions";
-import { isSendAarLink } from "../../pn/aar/utils/deepLinking";
 import { walletUpdate } from "../../wallet/store/actions";
-import { clearLinkingUrl } from "../actions";
+import { cgnEycaStatus } from "../../bonus/cgn/store/actions/eyca/details";
 import { trackIOOpenedFromUniversalAppLink } from "../analytics";
-import { storedLinkingUrlSelector } from "../reducers";
 
 export function* handleStoredLinkingUrlIfNeeded() {
   const storedLinkingUrl = yield* select(storedLinkingUrlSelector);

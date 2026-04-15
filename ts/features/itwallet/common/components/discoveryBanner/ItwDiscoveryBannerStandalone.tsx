@@ -1,5 +1,4 @@
 import { View } from "react-native";
-
 import { useIOSelector } from "../../../../../store/hooks";
 import { isItwDiscoveryBannerRenderableSelector } from "../../store/selectors";
 import { ItwDiscoveryBannerLegacy } from "./ItwDiscoveryBanner";
@@ -19,7 +18,7 @@ export const ItwDiscoveryBannerStandalone = () => {
 
   return (
     <View testID="itwDiscoveryBannerStandaloneTestID">
-      <ItwDiscoveryBannerLegacy closable={false} ignoreMargins={true} />
+      <ItwDiscoveryBannerLegacy ignoreMargins={true} closable={false} />
     </View>
   );
 };

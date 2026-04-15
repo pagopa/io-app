@@ -1,5 +1,4 @@
 import { View } from "react-native";
-
 import { TimelineListItemProps } from "../TimelineListItem";
 
 export const TimelineListItem = ({

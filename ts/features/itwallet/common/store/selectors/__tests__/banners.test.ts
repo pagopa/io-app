@@ -1,5 +1,4 @@
 import MockDate from "mockdate";
-
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { itwIsBannerHiddenSelector } from "../banners";
 

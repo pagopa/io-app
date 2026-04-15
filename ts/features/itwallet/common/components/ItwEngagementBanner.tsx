@@ -11,7 +11,6 @@ import { TxtParagraphNode, TxtStrongNode } from "@textlint/ast-node-types";
 import I18n from "i18next";
 import { ComponentProps, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
-
 import ItWalletDeck from "../../../../../img/features/itWallet/brand/itw_deck_engagement.svg";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { getTxtNodeKey } from "../../../../components/IOMarkdown/renderRules";
@@ -20,16 +19,16 @@ import { ItwBrandedBox } from "./ItwBrandedBox";
 import { PoweredByItWalletText } from "./PoweredByItWalletText";
 
 type Props = {
-  action: string;
-  description: string;
-  dismissable?: boolean;
-  onDismiss: () => void;
-  // Events
-  onPress: () => void;
-  // Styles
-  style?: ComponentProps<typeof View>["style"];
   // Content
   title: string;
+  description: string;
+  action: string;
+  dismissable?: boolean;
+  // Events
+  onPress: () => void;
+  onDismiss: () => void;
+  // Styles
+  style?: ComponentProps<typeof View>["style"];
 };
 
 export const ItwEngagementBanner = ({
@@ -71,41 +70,41 @@ export const ItwEngagementBanner = ({
 
   return (
     <View
+      testID={testID}
+      accessible={true}
       // A11y related props
       accessibilityLabel={accessibilityLabel}
       accessibilityRole={"button"}
-      accessible={true}
       onAccessibilityTap={onPress}
       // Styles
       style={style}
-      testID={testID}
     >
       <ItwBrandedBox borderRadius={8}>
-        <ItWalletDeck height={145} style={styles.deck} width={105} />
+        <ItWalletDeck width={105} height={145} style={styles.deck} />
         <VStack space={8}>
           <View style={styles.header}>
             <H4 style={styles.content}>{title}</H4>
             {dismissable && (
               <IconButton
-                accessibilityLabel={I18n.t("global.buttons.close")}
+                testID="itwEngagementBannerCloseButtonTestID"
                 color="contrast"
+                accessibilityLabel={I18n.t("global.buttons.close")}
                 icon="closeMedium"
                 onPress={onDismiss}
-                testID="itwEngagementBannerCloseButtonTestID"
               />
             )}
           </View>
           <View style={styles.content}>
-            <IOMarkdown content={description} rules={markdownRules} />
+            <IOMarkdown rules={markdownRules} content={description} />
           </View>
           <PoweredByItWalletText />
         </VStack>
         <VSpacer size={8} />
         <IOButton
+          testID="itwEngagementBannerActionButtonTestID"
           color="primary"
           label={action}
           onPress={onPress}
-          testID="itwEngagementBannerActionButtonTestID"
         />
       </ItwBrandedBox>
     </View>

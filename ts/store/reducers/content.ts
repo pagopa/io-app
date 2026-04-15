@@ -6,7 +6,6 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-
 import { ContextualHelp } from "../../../definitions/content/ContextualHelp";
 import { Idp } from "../../../definitions/content/Idp";
 import { IdpData } from "../../../definitions/content/IdpData";
@@ -21,7 +20,6 @@ import {
   RemoteValue
 } from "../../common/model/RemoteValue";
 import { getRemoteLocale } from "../../features/messages/utils/ctas";
-import { clearCache } from "../../features/settings/common/store/actions";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
 import {
   fromGeneratedToLocalSpidIdp,
@@ -34,6 +32,7 @@ import {
   loadContextualHelpData,
   loadIdps
 } from "../actions/content";
+import { clearCache } from "../../features/settings/common/store/actions";
 import { Action } from "../actions/types";
 import { currentRouteSelector } from "./navigation";
 import { GlobalState } from "./types";
@@ -43,9 +42,9 @@ import { GlobalState } from "./types";
  * help pages, etc...
  */
 export type ContentState = Readonly<{
+  municipality: MunicipalityState;
   contextualHelp: pot.Pot<ContextualHelp, Error>;
   idps: RemoteValue<ReadonlyArray<SpidIdp>, Error>;
-  municipality: MunicipalityState;
 }>;
 
 export type MunicipalityState = Readonly<{
@@ -181,25 +180,6 @@ export default function content(
   action: Action
 ): ContentState {
   switch (action.type) {
-    case getType(clearCache):
-      return {
-        ...state,
-        municipality: { ...initialContentState.municipality },
-        contextualHelp: { ...initialContentState.contextualHelp }
-      };
-
-    case getType(contentMunicipalityLoad.failure):
-      return {
-        ...state,
-        municipality: {
-          codiceCatastale: pot.toError(
-            state.municipality.codiceCatastale,
-            action.payload.error
-          ),
-          data: pot.toError(state.municipality.data, action.payload.error)
-        }
-      };
-
     case getType(contentMunicipalityLoad.request):
       const codiceCatastale = state.municipality.codiceCatastale;
       const municipalityData = state.municipality.data;
@@ -220,10 +200,16 @@ export default function content(
         }
       };
 
-    case getType(loadContextualHelpData.failure):
+    case getType(contentMunicipalityLoad.failure):
       return {
         ...state,
-        contextualHelp: pot.toError(state.contextualHelp, action.payload)
+        municipality: {
+          codiceCatastale: pot.toError(
+            state.municipality.codiceCatastale,
+            action.payload.error
+          ),
+          data: pot.toError(state.municipality.data, action.payload.error)
+        }
       };
 
     // contextualHelp text data
@@ -239,10 +225,10 @@ export default function content(
         contextualHelp: pot.some(action.payload)
       };
 
-    case getType(loadIdps.failure):
+    case getType(loadContextualHelpData.failure):
       return {
         ...state,
-        idps: remoteError(action.payload)
+        contextualHelp: pot.toError(state.contextualHelp, action.payload)
       };
 
     // idps data
@@ -256,6 +242,19 @@ export default function content(
       return {
         ...state,
         idps: remoteReady(fromGeneratedToLocalSpidIdp(action.payload.items))
+      };
+
+    case getType(loadIdps.failure):
+      return {
+        ...state,
+        idps: remoteError(action.payload)
+      };
+
+    case getType(clearCache):
+      return {
+        ...state,
+        municipality: { ...initialContentState.municipality },
+        contextualHelp: { ...initialContentState.contextualHelp }
       };
 
     default:

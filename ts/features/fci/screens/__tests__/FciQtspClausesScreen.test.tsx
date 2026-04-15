@@ -1,14 +1,13 @@
 import { createStore, Store } from "redux";
-
-import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
+import { applicationChangeState } from "../../../../store/actions/application";
 import { GlobalState } from "../../../../store/reducers/types";
-import { getNetworkError } from "../../../../utils/errors";
-import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { FCI_ROUTES } from "../../navigation/routes";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { fciLoadQtspClauses, fciPollFilledDocument } from "../../store/actions";
-import { mockQtspClausesMetadata } from "../../types/__mocks__/QtspClausesMetadata.mock";
 import FciQtspClausesScreen from "../valid/FciQtspClausesScreen";
+import { mockQtspClausesMetadata } from "../../types/__mocks__/QtspClausesMetadata.mock";
+import { getNetworkError } from "../../../../utils/errors";
 
 const networkError = getNetworkError(new Error("network error"));
 

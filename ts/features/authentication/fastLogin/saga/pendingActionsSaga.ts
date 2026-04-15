@@ -1,18 +1,17 @@
-import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { SagaIterator } from "redux-saga";
 import {
-  delay,
   put,
   race,
   select,
   take,
-  takeLatest
+  takeLatest,
+  delay
 } from "typed-redux-saga/macro";
-
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { applicationInitialized } from "../../../../store/actions/application";
-import { isDevEnv } from "../../../../utils/environment";
 import { clearPendingAction } from "../store/actions/tokenRefreshActions";
 import { fastLoginPendingActionsSelector } from "../store/selectors";
+import { isDevEnv } from "../../../../utils/environment";
 
 const ACTION_TO_WAIT_FOR_TIMEOUT = 3000 as Millisecond;
 

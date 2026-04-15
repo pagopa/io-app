@@ -1,28 +1,28 @@
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
-import { call, put, select, takeLatest } from "typed-redux-saga/macro";
-import { ActionType, getType } from "typesafe-actions";
 
-import { backendClientManager } from "../../../../api/BackendClientManager";
-import { apiUrlPrefix } from "../../../../config";
-import { setMainNavigatorReady } from "../../../../navigation/NavigationService";
-import { resetMixpanelSaga } from "../../../../sagas/mixpanel";
-import { startApplicationInitialization } from "../../../../store/actions/application";
-import { startupLoadSuccess } from "../../../../store/actions/startup";
-import { StartupStatusEnum } from "../../../../store/reducers/startup";
-import { SagaCallReturnType } from "../../../../types/utils";
-import { convertUnknownToError } from "../../../../utils/errors";
-import { resetAssistanceData } from "../../../../utils/supportAssistance";
+import { call, put, takeLatest, select } from "typed-redux-saga/macro";
+import { ActionType, getType } from "typesafe-actions";
 import {
   deleteCurrentLollipopKeyAndGenerateNewKeyTag,
   getKeyInfo
 } from "../../../lollipop/saga";
+import { startApplicationInitialization } from "../../../../store/actions/application";
+import { logoutFailure, logoutRequest, logoutSuccess } from "../store/actions";
+import { startupLoadSuccess } from "../../../../store/actions/startup";
+import { SagaCallReturnType } from "../../../../types/utils";
+import { convertUnknownToError } from "../../../../utils/errors";
+import { resetAssistanceData } from "../../../../utils/supportAssistance";
+import { StartupStatusEnum } from "../../../../store/reducers/startup";
+import { resetMixpanelSaga } from "../../../../sagas/mixpanel";
+import { backendClientManager } from "../../../../api/BackendClientManager";
+import { apiUrlPrefix } from "../../../../config";
+import { bareSessionTokenSelector } from "../store/selectors";
 import {
   trackUndefinedBearerToken,
   UndefinedBearerTokenPhase
 } from "../../../messages/analytics";
-import { logoutFailure, logoutRequest, logoutSuccess } from "../store/actions";
-import { bareSessionTokenSelector } from "../store/selectors";
+import { setMainNavigatorReady } from "../../../../navigation/NavigationService";
 
 export function* logoutSaga({ payload }: ActionType<typeof logoutRequest>) {
   const sessionToken = yield* select(bareSessionTokenSelector);

@@ -1,16 +1,15 @@
-import { Divider } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { Fragment, useCallback, useMemo, useState } from "react";
+import I18n from "i18next";
 import { View } from "react-native";
-
+import { Divider } from "@pagopa/io-app-design-system";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { ItwCredentialClaim } from "../../../common/components/ItwCredentialClaim";
 import { ClaimDisplayFormat } from "../../../common/utils/itwClaimsUtils";
 
-type ClaimsDetails = null | {
+type ClaimsDetails = {
   claims: Array<ClaimDisplayFormat>;
   title?: string;
-};
+} | null;
 
 /*
  * Hook that manages the presentation of claim details in a bottom sheet.

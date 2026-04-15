@@ -1,19 +1,18 @@
 import * as O from "fp-ts/lib/Option";
-
-import { GlobalState } from "../../../../../store/reducers/types";
-import { format } from "../../../../../utils/dates";
 import {
   authenticationStateSelector,
-  bpdTokenSelector,
-  fimsTokenSelector,
-  formattedExpirationDateSelector,
-  idpSelector,
   loggedOutWithIdpAuthSelector,
-  selectedIdentityProviderSelector,
+  fimsTokenSelector,
   sessionInfoSelector,
+  formattedExpirationDateSelector,
+  zendeskTokenSelector,
   walletTokenSelector,
-  zendeskTokenSelector
+  bpdTokenSelector,
+  selectedIdentityProviderSelector,
+  idpSelector
 } from "../selectors";
+import { format } from "../../../../../utils/dates";
+import { GlobalState } from "../../../../../store/reducers/types";
 import { isLogoutRequested } from "../utils/guards";
 
 const mockIdp = { entityId: "idp1", isTestIdp: false };

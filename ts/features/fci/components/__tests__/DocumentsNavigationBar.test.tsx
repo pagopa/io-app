@@ -1,18 +1,17 @@
 import { fireEvent, render } from "@testing-library/react-native";
-
 import DocumentsNavigationBar, {
   IndicatorPositionEnum
 } from "../DocumentsNavigationBar";
 
 type Props = {
-  disabled?: boolean;
-  iconLeftDisabled?: boolean;
-  iconRightDisabled?: boolean;
-  indicatorPosition: IndicatorPositionEnum;
-  onNext: () => void;
-  onPrevious: () => void;
-  titleLeft: string;
   titleRight: string;
+  titleLeft: string;
+  iconRightDisabled?: boolean;
+  iconLeftDisabled?: boolean;
+  disabled?: boolean;
+  indicatorPosition: IndicatorPositionEnum;
+  onPrevious: () => void;
+  onNext: () => void;
 };
 
 describe("Test DocumentsNavigationBar component", () => {

@@ -1,7 +1,6 @@
-import { Millisecond } from "@pagopa/ts-commons/lib/units";
 // watch for all actions regarding Zendesk
-import { call, put, select, take, takeLatest } from "typed-redux-saga/macro";
-
+import { takeLatest, call, put, take, select } from "typed-redux-saga/macro";
+import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { startTimer } from "../../../utils/timer";
 import {
   emailValidationPollingStart,
@@ -11,10 +10,6 @@ import {
 import { emailValidationSelector } from "../store/selectors/emailValidation";
 
 const GET_PROFILE_POLLING_INTERVAL = 5000 as Millisecond;
-
-export function* watchEmailValidationSaga() {
-  yield* takeLatest(emailValidationPollingStart, emailValidationPollingLoop);
-}
 
 function* emailValidationPollingLoop() {
   // eslint-disable-next-line functional/no-let
@@ -29,4 +24,8 @@ function* emailValidationPollingLoop() {
     profilePollingIsRunning =
       isEmailValidationSelector.isEmailValidationPollingRunning;
   }
+}
+
+export function* watchEmailValidationSaga() {
+  yield* takeLatest(emailValidationPollingStart, emailValidationPollingLoop);
 }

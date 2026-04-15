@@ -8,11 +8,10 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { Second } from "@pagopa/ts-commons/lib/units";
-import I18n from "i18next";
 import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
-
+import I18n from "i18next";
 import { Otp } from "../../../../../../definitions/cgn/Otp";
 import { isReady } from "../../../../../common/model/RemoteValue";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
@@ -86,20 +85,20 @@ const CgnDiscountCodeScreen = () => {
     dispatch(resetMerchantDiscountCode());
     return (
       <OperationResultScreenContent
+        testID="expired-screen"
+        pictogram="timing"
+        title={I18n.t("bonus.cgn.merchantDetail.discount.expired")}
+        isHeaderVisible
         action={{
           label: I18n.t("bonus.cgn.merchantDetail.discount.cta.createNew"),
           onPress: generateNewDiscountCode,
           testID: "generate-button"
         }}
-        isHeaderVisible
-        pictogram="timing"
         secondaryAction={{
           label: I18n.t("global.buttons.close"),
           onPress: onClose,
           testID: "close-button"
         }}
-        testID="expired-screen"
-        title={I18n.t("bonus.cgn.merchantDetail.discount.expired")}
       />
     );
   }
@@ -120,19 +119,19 @@ const CgnDiscountCodeScreen = () => {
             }
           }}
         >
-          <H2 accessibilityRole="header" color={theme["textHeading-default"]}>
+          <H2 color={theme["textHeading-default"]} accessibilityRole="header">
             {I18n.t(`bonus.cgn.merchantDetail.discount.title`)}
           </H2>
           <VSpacer size={24} />
           <View style={styles.discountCodeContainer}>
             <View style={{ flexDirection: "row", alignSelf: "center" }}>
-              <Icon color={theme["icon-decorative"]} name="tag" />
+              <Icon name="tag" color={theme["icon-decorative"]} />
             </View>
             <VSpacer size={4} />
             <Barcode
               format="CODE128"
-              height={70}
               value={discountCode}
+              height={70}
               width={1.15}
             />
             <VSpacer size={4} />
@@ -154,6 +153,7 @@ const CgnDiscountCodeScreen = () => {
           </View>
         </IOScrollView>
         <FooterActions
+          testID="copy-button"
           actions={{
             type: "SingleButton",
             primary: {
@@ -162,7 +162,6 @@ const CgnDiscountCodeScreen = () => {
               onPress: handleOnPressCopy
             }
           }}
-          testID="copy-button"
         />
       </>
     );

@@ -12,14 +12,13 @@ import {
   ListItemNavAlert,
   ListItemTransaction,
   ListItemTransactionLogo,
-  useIOTheme,
-  VStack
+  VStack,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { Fragment } from "react";
 import { Alert, View } from "react-native";
-
-import { DEFAULT_CONTENT_REPO_URL } from "../../../config";
+import I18n from "i18next";
+import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import {
   ListItemMessage,
   ListItemMessageProps
@@ -29,7 +28,7 @@ import { getBadgePropsByTransactionStatus } from "../../payments/common/utils";
 import { ListItemTransactionStatus } from "../../payments/common/utils/types";
 import { ListItemSearchInstitution } from "../../services/common/components/ListItemSearchInstitution";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
+import { DEFAULT_CONTENT_REPO_URL } from "../../../config";
 
 const onButtonPress = () => {
   Alert.alert("Alert", "Action triggered");
@@ -100,23 +99,22 @@ export const DSListItems = () => {
 const renderListItemNav = () => (
   <VStack space={componentMargin}>
     <DSComponentViewerBox name="ListItemNav">
-      <ListItemNav onPress={onButtonPress} value={"Value"} />
+      <ListItemNav value={"Value"} onPress={onButtonPress} />
       <Divider />
       <ListItemNav
+        value={"Value"}
         description="Description"
         onPress={onButtonPress}
-        value={"Value"}
       />
       <Divider />
       <ListItemNav
+        value="A looong looooong looooooooooong loooooooooooooong title"
         description="Description"
         onPress={onButtonPress}
-        value="A looong looooong looooooooooong loooooooooooooong title"
       />
       <Divider />
       <ListItemNav
         icon={"categLearning"}
-        onPress={onButtonPress}
         value={
           <View
             style={{
@@ -129,6 +127,7 @@ const renderListItemNav = () => (
             <Badge text={"3"} variant="cgn" />
           </View>
         }
+        onPress={onButtonPress}
       />
       <Divider />
       <ListItemNav
@@ -142,16 +141,17 @@ const renderListItemNav = () => (
         value={"Value"}
       />
       <Divider />
-      <ListItemNav icon="gallery" onPress={onButtonPress} value={"Value"} />
+      <ListItemNav value={"Value"} icon="gallery" onPress={onButtonPress} />
       <Divider />
       <ListItemNav
+        value={"Value"}
         description="Description"
         icon="gallery"
         onPress={onButtonPress}
-        value={"Value"}
       />
       <Divider />
       <ListItemNav
+        value={"Value"}
         description="This is a list item nav with badge"
         onPress={onButtonPress}
         topElement={{
@@ -160,20 +160,19 @@ const renderListItemNav = () => (
             variant: "default"
           }
         }}
-        value={"Value"}
       />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ListItemNav, without chevron">
       <ListItemNav
-        description="This is a list item nav without chevron icon"
-        hideChevron
-        onPress={onButtonPress}
         value={"Value"}
+        description="This is a list item nav without chevron icon"
+        onPress={onButtonPress}
+        hideChevron
       />
       <Divider />
       <ListItemNav
+        value={"Value"}
         description="This is a list item nav with badge without chevron"
-        hideChevron
         onPress={onButtonPress}
         topElement={{
           badgeProps: {
@@ -181,39 +180,39 @@ const renderListItemNav = () => (
             variant: "default"
           }
         }}
-        value={"Value"}
+        hideChevron
       />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ListItemNav, with image chevron">
       <ListItemNav
+        value={"Comune di Ischia"}
         avatarProps={{ logoUri: { uri: `${cdnPath}643280639.png` } }}
         onPress={onButtonPress}
-        value={"Comune di Ischia"}
       />
       <Divider />
       <ListItemNav
-        avatarProps={{ logoUri: { uri: `${cdnPath}643280639.png` } }}
-        description="This is a description"
-        onPress={onButtonPress}
         value={"Comune di Ischia"}
+        description="This is a description"
+        avatarProps={{ logoUri: { uri: `${cdnPath}643280639.png` } }}
+        onPress={onButtonPress}
       />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ListItemNavAlert">
-      <ListItemNavAlert onPress={onButtonPress} value={"Value"} />
+      <ListItemNavAlert value={"Value"} onPress={onButtonPress} />
       <Divider />
       <ListItemNavAlert
+        value={"Value"}
         description="Description"
         onPress={onButtonPress}
-        value={"Value"}
       />
       <Divider />
-      <ListItemNavAlert onPress={onButtonPress} value={"Value"} withoutIcon />
+      <ListItemNavAlert withoutIcon value={"Value"} onPress={onButtonPress} />
       <Divider />
       <ListItemNavAlert
+        withoutIcon
+        value={"Value"}
         description="Description"
         onPress={onButtonPress}
-        value={"Value"}
-        withoutIcon
       />
     </DSComponentViewerBox>
   </VStack>
@@ -258,55 +257,55 @@ const renderListItemMessage = () => (
     <DSComponentViewerBox name="ListItemMessage, with badge">
       <ListItemMessage
         {...listItemMessageSample}
-        isRead={true}
-        messageTitle="Hai un nuovo avviso di pagamento"
         serviceName="Richiesta di cittadinanza"
+        messageTitle="Hai un nuovo avviso di pagamento"
         tag={{ variant: "success", text: I18n.t("messages.badge.paid") }}
+        isRead={true}
       />
       <Divider />
       <ListItemMessage
         {...listItemMessageSample}
-        isRead={true}
-        messageTitle="Hai acquisito la cittadinanza italiana"
         serviceName="Richiesta di cittadinanza"
+        messageTitle="Hai acquisito la cittadinanza italiana"
         tag={{
           variant: "legalMessage",
           text: I18n.t("features.pn.details.badge.legalValue")
         }}
+        isRead={true}
       />
     </DSComponentViewerBox>
 
     <DSComponentViewerBox name="ListItemMessage, avatar undefined & double">
       <ListItemMessage
         {...listItemMessageSample}
-        isRead={true}
-        messageTitle="Hai un nuovo avviso di pagamento"
         organizationName="Comune di Isolabona"
-        serviceLogos={undefined}
         serviceName="Servizi cimiteriali"
+        messageTitle="Hai un nuovo avviso di pagamento"
+        serviceLogos={undefined}
+        isRead={true}
       />
       <Divider />
       <ListItemMessage
         {...listItemMessageSample}
         avatarDouble={true}
-        isRead={true}
-        messageTitle="Hai un pagamento in scadenza"
         organizationName={"Comune di Milano"}
-        serviceLogos={[{ uri: `${cdnPath}1199250158.png` }]}
         serviceName="Tassa sui rifiuti (TARI)"
+        messageTitle="Hai un pagamento in scadenza"
+        serviceLogos={[{ uri: `${cdnPath}1199250158.png` }]}
+        isRead={true}
       />
     </DSComponentViewerBox>
 
     <DSComponentViewerBox name="ListItemMessage, stress test">
       <ListItemMessage
         {...listItemMessageSample}
-        isRead={true}
+        organizationName={"Nome dell'ente molto molto molto lungo"}
+        serviceName="Nome del servizio mooolto lungo"
         messageTitle={
           "Titolo del messaggio scritto da una persona davvero prolissa"
         }
-        organizationName={"Nome dell'ente molto molto molto lungo"}
         serviceLogos={[{ uri: `${cdnPath}5779711000.png` }]}
-        serviceName="Nome del servizio mooolto lungo"
+        isRead={true}
       />
     </DSComponentViewerBox>
   </VStack>
@@ -316,28 +315,28 @@ const renderListItemInfoCopy = () => (
   <DSComponentViewerBox name="ListItemInfoCopy">
     <ListItemInfoCopy
       label={"Label"}
-      onPress={onCopyButtonPress}
       value="Value"
+      onPress={onCopyButtonPress}
     />
     <Divider />
     <ListItemInfoCopy
-      icon="institution"
       label={"Codice fiscale"}
-      onPress={onCopyButtonPress}
       value="01199250158"
+      onPress={onCopyButtonPress}
+      icon="institution"
     />
     <Divider />
     <ListItemInfoCopy
-      icon="creditCard"
       label={"Carta di credito"}
-      onPress={onCopyButtonPress}
       value="4975 3013 5042 7899"
+      onPress={onCopyButtonPress}
+      icon="creditCard"
     />
     <Divider />
     <ListItemInfoCopy
       label={"Indirizzo"}
-      onPress={onCopyButtonPress}
       value={`P.za Colonna, 370\n00186 Roma (RM)`}
+      onPress={onCopyButtonPress}
     />
   </DSComponentViewerBox>
 );
@@ -346,52 +345,52 @@ const renderListItemAction = () => (
   <VStack space={componentMargin}>
     <DSComponentViewerBox name="ListItemAction · Primary variant">
       <ListItemAction
+        variant="primary"
         label={"Link interno oppure link ad una pagina esterna"}
         onPress={onButtonPress}
-        variant="primary"
       />
       <ListItemAction
+        variant="primary"
         icon="website"
         label={"Link interno oppure link ad una pagina esterna"}
         onPress={onButtonPress}
-        variant="primary"
       />
       <ListItemAction
+        variant="primary"
         icon="device"
         label={"Scarica l'app"}
         onPress={onButtonPress}
-        variant="primary"
       />
       <ListItemAction
+        variant="primary"
         icon="security"
         label={"Informativa sulla privacy"}
         onPress={onButtonPress}
-        variant="primary"
       />
       <ListItemAction
+        variant="primary"
         icon="chat"
         label={"Richiedi assistenza"}
         onPress={onButtonPress}
-        variant="primary"
       />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ListItemAction · Danger variant">
       <ListItemAction
+        variant="danger"
         label={"Danger action"}
         onPress={onButtonPress}
-        variant="danger"
       />
       <ListItemAction
+        variant="danger"
         icon="trashcan"
         label={"Elimina"}
         onPress={onButtonPress}
-        variant="danger"
       />
       <ListItemAction
+        variant="danger"
         icon="logout"
         label={"Esci da IO"}
         onPress={onButtonPress}
-        variant="danger"
       />
     </DSComponentViewerBox>
   </VStack>
@@ -407,6 +406,9 @@ const renderListItemInfo = () => (
     />
     <Divider />
     <ListItemInfo
+      icon="creditCard"
+      label="Label"
+      value="A looong looooong looooooooong looooooooooong title"
       endElement={{
         type: "buttonLink",
         componentProps: {
@@ -415,12 +417,12 @@ const renderListItemInfo = () => (
           accessibilityLabel: ""
         }
       }}
-      icon="creditCard"
-      label="Label"
-      value="A looong looooong looooooooong looooooooooong title"
     />
     <Divider />
     <ListItemInfo
+      icon="psp"
+      label="Label"
+      value="A looong looooong looooooooong looooooooooong title"
       endElement={{
         type: "iconButton",
         componentProps: {
@@ -429,12 +431,12 @@ const renderListItemInfo = () => (
           accessibilityLabel: ""
         }
       }}
-      icon="psp"
-      label="Label"
-      value="A looong looooong looooooooong looooooooooong title"
     />
     <Divider />
     <ListItemInfo
+      icon="psp"
+      label="Label"
+      value="A looong looooong looooooooong looooooooooong title"
       endElement={{
         type: "badge",
         componentProps: {
@@ -442,14 +444,10 @@ const renderListItemInfo = () => (
           variant: "success"
         }
       }}
-      icon="psp"
-      label="Label"
-      value="A looong looooong looooooooong looooooooooong title"
     />
     <Divider />
-    <ListItemInfo icon="gallery" label="Label" value={"Value"} />
+    <ListItemInfo label="Label" value={"Value"} icon="gallery" />
     <ListItemInfo
-      icon="hourglass"
       topElement={{
         type: "badge",
         componentProps: {
@@ -458,10 +456,9 @@ const renderListItemInfo = () => (
         }
       }}
       value="With badge"
+      icon="hourglass"
     />
     <ListItemInfo
-      icon="gallery"
-      label="Label"
       topElement={{
         type: "badge",
         componentProps: {
@@ -470,6 +467,8 @@ const renderListItemInfo = () => (
         }
       }}
       value="With badge & label"
+      label="Label"
+      icon="gallery"
     />
   </DSComponentViewerBox>
 );
@@ -481,6 +480,7 @@ const renderListItemHeader = () => (
     <DSComponentViewerBox name="ListItemHeader, without icon">
       <ListItemHeader label="Label" />
       <ListItemHeader
+        label="Label"
         endElement={{
           type: "buttonLink",
           componentProps: {
@@ -489,9 +489,9 @@ const renderListItemHeader = () => (
             onPress: onButtonPress
           }
         }}
-        label="Label"
       />
       <ListItemHeader
+        label="Label"
         endElement={{
           type: "iconButton",
           componentProps: {
@@ -500,12 +500,13 @@ const renderListItemHeader = () => (
             onPress: onButtonPress
           }
         }}
-        label="Label"
       />
     </DSComponentViewerBox>
     <DSComponentViewerBox name="ListItemHeader, with icon">
-      <ListItemHeader iconName="gallery" label="Label" />
+      <ListItemHeader label="Label" iconName="gallery" />
       <ListItemHeader
+        iconName="creditCard"
+        label="Label"
         endElement={{
           type: "buttonLink",
           componentProps: {
@@ -514,10 +515,10 @@ const renderListItemHeader = () => (
             onPress: onButtonPress
           }
         }}
-        iconName="creditCard"
-        label="Label"
       />
       <ListItemHeader
+        iconName="psp"
+        label="Label"
         endElement={{
           type: "iconButton",
           componentProps: {
@@ -526,11 +527,11 @@ const renderListItemHeader = () => (
             onPress: onButtonPress
           }
         }}
-        iconName="psp"
-        label="Label"
       />
 
       <ListItemHeader
+        iconName="psp"
+        label="Label"
         endElement={{
           type: "badge",
           componentProps: {
@@ -538,8 +539,6 @@ const renderListItemHeader = () => (
             variant: "success"
           }
         }}
-        iconName="psp"
-        label="Label"
       />
     </DSComponentViewerBox>
   </VStack>
@@ -550,17 +549,17 @@ const renderListItemHeader = () => (
 const renderListItemSearchInstitution = () => (
   <DSComponentViewerBox name="ListItemSearchInstitution">
     <ListItemSearchInstitution
-      avatarProps={{ source: { uri: `${cdnPath}643280639.png` } }}
+      value={"Comune di Ischia"}
       numberOfLines={2}
       onPress={onButtonPress}
-      value={"Comune di Ischia"}
+      avatarProps={{ source: { uri: `${cdnPath}643280639.png` } }}
     />
     <Divider />
     <ListItemSearchInstitution
-      avatarProps={{ source: {} }}
+      value={"Comune di Isolabona"}
       numberOfLines={2}
       onPress={onButtonPress}
-      value={"Comune di Isolabona"}
+      avatarProps={{ source: {} }}
     />
   </DSComponentViewerBox>
 );
@@ -574,8 +573,8 @@ const organizationLogoURI = {
 };
 
 type mockTransactionStatusData = {
-  asset: ListItemTransactionLogo;
   status: ListItemTransactionStatus;
+  asset: ListItemTransactionLogo;
 };
 
 const transactionStatusArray: Array<mockTransactionStatusData> = [
@@ -601,14 +600,14 @@ const renderListItemTransaction = () => (
   <VStack space={componentMargin}>
     <DSComponentViewerBox name="ListItemTransaction, loading variant">
       <ListItemTransaction
-        isLoading={true}
-        onPress={onButtonPress}
-        subtitle="subtitle"
         title="Title"
+        subtitle="subtitle"
         transaction={{
           amount: "€ 1.000,00",
           amountAccessibilityLabel: "1000 euro"
         }}
+        isLoading={true}
+        onPress={onButtonPress}
       />
     </DSComponentViewerBox>
 
@@ -617,13 +616,13 @@ const renderListItemTransaction = () => (
         ({ status, asset }: mockTransactionStatusData, i) => (
           <Fragment key={`transactionStatus-${status}`}>
             <ListItemTransaction
-              onPress={onButtonPress}
-              paymentLogoIcon={asset}
-              subtitle="subtitle"
               title="Title"
+              subtitle="subtitle"
+              paymentLogoIcon={asset}
               transaction={{
                 badge: getBadgePropsByTransactionStatus(status)
               }}
+              onPress={onButtonPress}
             />
             {i < transactionStatusArray.length - 1 && <Divider />}
           </Fragment>
@@ -633,88 +632,88 @@ const renderListItemTransaction = () => (
 
     <DSComponentViewerBox name="ListItemTransaction, with amount">
       <ListItemTransaction
-        onPress={onButtonPress}
-        subtitle="subtitle"
         title="Title"
+        subtitle="subtitle"
         transaction={{
           amount: "€ 1.000,00",
           amountAccessibilityLabel: "1000 euro"
         }}
+        onPress={onButtonPress}
       />
 
       <Divider />
 
       <ListItemTransaction
-        onPress={onButtonPress}
+        title="Title"
+        subtitle="subtitle"
+        transaction={{
+          amount: "€ 1.000,00",
+          amountAccessibilityLabel: "1000 euro"
+        }}
         paymentLogoIcon={"mastercard"}
-        subtitle="subtitle"
-        title="Title"
-        transaction={{
-          amount: "€ 1.000,00",
-          amountAccessibilityLabel: "1000 euro"
-        }}
+        onPress={onButtonPress}
       />
 
       <Divider />
 
       <ListItemTransaction
-        onPress={onButtonPress}
-        showChevron
-        subtitle="subtitle"
         title="Title"
+        subtitle="subtitle"
         transaction={{
           amount: "€ 1.000,00",
           amountAccessibilityLabel: "1000 euro"
         }}
+        showChevron
+        onPress={onButtonPress}
       />
     </DSComponentViewerBox>
 
     <DSComponentViewerBox name="ListItemTransaction, refunded">
       <ListItemTransaction
-        onPress={onButtonPress}
-        paymentLogoIcon={<Icon name="refund" />}
-        subtitle="This one has a custom icon and transaction amount with a green color"
         title="Refunded transaction"
+        subtitle="This one has a custom icon and transaction amount with a green color"
         transaction={{
           badge: getBadgePropsByTransactionStatus("refunded")
         }}
+        paymentLogoIcon={<Icon name="refund" />}
+        onPress={onButtonPress}
       />
     </DSComponentViewerBox>
 
     <DSComponentViewerBox name="ListItemTransaction, clickable and not clickable">
       <ListItemTransaction
-        paymentLogoIcon={"postepay"}
-        subtitle="subtitle"
         title="This one is not clickable"
+        subtitle="subtitle"
         transaction={{
           badge: getBadgePropsByTransactionStatus("failure")
         }}
+        paymentLogoIcon={"postepay"}
       />
 
       <Divider />
 
       <ListItemTransaction
-        onPress={onButtonPress}
-        paymentLogoIcon={"postepay"}
-        subtitle="very long subtitle, the kind of subtitle you'd never wish to see in the app, like a very long one"
         title="This one is clickable but has a very long title"
+        subtitle="very long subtitle, the kind of subtitle you'd never wish to see in the app, like a very long one"
         transaction={{
           amount: "€ 1.000,00",
           amountAccessibilityLabel: "1000 euro"
         }}
+        paymentLogoIcon={"postepay"}
+        onPress={onButtonPress}
       />
     </DSComponentViewerBox>
 
     <DSComponentViewerBox name="ListItemTransaction, custom icon">
       <ListItemTransaction
-        onPress={onButtonPress}
-        paymentLogoIcon={<Icon color="error-500" name="notice" />}
-        subtitle="This one has a custom icon on the left"
         title="Custom icon"
+        subtitle="This one has a custom icon on the left"
         transaction={{
           amount: "",
           amountAccessibilityLabel: ""
         }}
+        paymentLogoIcon={<Icon name="notice" color="error-500" />}
+        onPress={onButtonPress}
       />
     </DSComponentViewerBox>
   </VStack>

@@ -1,6 +1,7 @@
 // FIX ME: remove this mocked Types when a new backend definition that includes the real ones is released.
 // Jira: https://pagopa.atlassian.net/browse/IOPID-264
 
+import * as t from "io-ts";
 import {
   composeResponseDecoders as compD,
   ioResponseDecoder as ioD,
@@ -8,8 +9,6 @@ import {
   IResponseType,
   ResponseDecoder
 } from "@pagopa/ts-commons/lib/requests";
-import * as t from "io-ts";
-
 import { ProblemJson } from "../../../../../definitions/backend/ProblemJson";
 
 // ------------ Nonce ---------------------
@@ -18,17 +17,17 @@ export const NonceResponse = t.interface({
   nonce: t.string
 });
 
+export type NonceBaseResponseType<R> =
+  | IResponseType<200, R>
+  | IResponseType<404, ProblemJson>
+  | IResponseType<500, ProblemJson>;
+
 export type GetNonceT = IPostApiRequestType<
   never,
   "Content-Type",
   never,
   NonceBaseResponseType<NonceResponse>
 >;
-
-export type NonceBaseResponseType<R> =
-  | IResponseType<200, R>
-  | IResponseType<404, ProblemJson>
-  | IResponseType<500, ProblemJson>;
 
 export type NonceResponse = t.TypeOf<typeof NonceResponse>;
 

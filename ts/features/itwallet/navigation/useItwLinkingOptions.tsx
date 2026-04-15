@@ -1,5 +1,4 @@
 import { PathConfigMap } from "@react-navigation/native";
-
 import { AppParamsList } from "../../../navigation/params/AppParamsList";
 import { ITW_REMOTE_ROUTES } from "../presentation/remote/navigation/routes.ts";
 import { ITW_ROUTES } from "./routes";

@@ -1,6 +1,6 @@
 import { Body, H2, VSpacer } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { View } from "react-native";
+import I18n from "i18next";
 
 export const FimsHistoryHeaderComponent = () => (
   <View>

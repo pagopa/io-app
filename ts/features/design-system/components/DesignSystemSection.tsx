@@ -1,5 +1,6 @@
-import { H3, useIOTheme, VStack } from "@pagopa/io-app-design-system";
+import { H3, VStack, useIOTheme } from "@pagopa/io-app-design-system";
 import { PropsWithChildren } from "react";
+
 import { View } from "react-native";
 
 type OwnProps = PropsWithChildren<{

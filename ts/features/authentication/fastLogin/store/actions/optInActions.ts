@@ -1,5 +1,4 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
-
 import { FastLoginOptInState } from "../reducers/optInReducer";
 
 export const setFastLoginOptIn = createStandardAction(

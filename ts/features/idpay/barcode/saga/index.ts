@@ -1,6 +1,5 @@
 import { SagaIterator } from "redux-saga";
 import { takeLatest } from "typed-redux-saga/macro";
-
 import { IDPayClient } from "../../common/api/client";
 import {
   idPayGenerateBarcode,

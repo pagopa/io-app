@@ -5,7 +5,6 @@ import {
   IOVisualCostants
 } from "@pagopa/io-app-design-system";
 import { StyleSheet, View } from "react-native";
-
 import { useHardwareBackButton } from "../../hooks/useHardwareBackButton";
 import themeVariables from "../../theme/variables";
 import { useModalStyle } from "../../utils/hooks/useModalStyle";
@@ -40,6 +39,7 @@ export const AlertModal = ({ message }: AlertModalProps) => {
   return (
     <AlertModalOverlay
       backgroundColor={backdrop.backgroundColor}
+      opacity={backdrop.opacity}
       foreground={
         <View
           style={[
@@ -54,7 +54,6 @@ export const AlertModal = ({ message }: AlertModalProps) => {
           <Body>{message}</Body>
         </View>
       }
-      opacity={backdrop.opacity}
     />
   );
 };

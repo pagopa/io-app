@@ -1,19 +1,19 @@
+import { useState, useCallback, useEffect } from "react";
 import {
-  Body,
-  BodySmall,
   CodeInput,
   H2,
-  hexToRgba,
-  IOButton,
   IOColors,
-  IOVisualCostants,
   ListItemSwitch,
   NumberPad,
+  VSpacer,
+  hexToRgba,
+  BodySmall,
+  IOVisualCostants,
   Pictogram,
-  VSpacer
+  Body,
+  IOButton
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import { useCallback, useEffect, useState } from "react";
 import { Alert, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -72,8 +72,8 @@ export const DSNumberPad = () => {
       >
         <ListItemSwitch
           label="Attiva sfondo blu"
-          onSwitchValueChange={() => setPrimaryBackground(v => !v)}
           value={primaryBackground}
+          onSwitchValueChange={() => setPrimaryBackground(v => !v)}
         />
       </View>
       <View style={{ alignItems: "center" }}>
@@ -97,38 +97,38 @@ export const DSNumberPad = () => {
           }}
         >
           <BodySmall
-            color={primaryBackground ? "white" : "black"}
             weight="Semibold"
+            color={primaryBackground ? "white" : "black"}
           >
             {value}
           </BodySmall>
         </View>
         <CodeInput
-          length={PIN_LENGTH}
-          onValidate={v => v === "123456"}
-          onValueChange={setValue}
           value={value}
+          length={PIN_LENGTH}
           variant={primaryBackground ? "primary" : "neutral"}
+          onValueChange={setValue}
+          onValidate={v => v === "123456"}
         />
       </View>
       <VSpacer size={48} />
       <View>
         <NumberPad
-          biometricAccessibilityLabel="Face ID"
-          biometricType="FACE_ID"
           deleteAccessibilityLabel="Delete"
-          onBiometricPress={() => Alert.alert("biometric")}
           onDeletePress={onDeletePress}
           onNumberPress={onValueChange}
           variant={primaryBackground ? "primary" : "neutral"}
+          biometricType="FACE_ID"
+          biometricAccessibilityLabel="Face ID"
+          onBiometricPress={() => Alert.alert("biometric")}
         />
         <VSpacer size={32} />
         <View style={{ alignSelf: "center" }}>
           <IOButton
-            color={primaryBackground ? "contrast" : "primary"}
-            label="Hai dimenticato il codice di sblocco?"
-            onPress={() => Alert.alert("Forgot unlock code")}
             variant="link"
+            color={primaryBackground ? "contrast" : "primary"}
+            onPress={() => Alert.alert("Forgot unlock code")}
+            label="Hai dimenticato il codice di sblocco?"
           />
         </View>
       </View>

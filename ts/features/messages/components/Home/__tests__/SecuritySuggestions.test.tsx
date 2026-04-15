@@ -1,10 +1,9 @@
 import { createStore } from "redux";
-
-import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import { SecuritySuggestions } from "../SecuritySuggestions";
+import { MESSAGES_ROUTES } from "../../../navigation/routes";
 
 describe("SecuritySuggestions", () => {
   it("should match snapshot", () => {

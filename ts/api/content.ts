@@ -8,7 +8,6 @@ import {
   createFetchRequestForApi,
   IGetApiRequestType
 } from "@pagopa/ts-commons/lib/requests";
-
 import { BonusesAvailable } from "../../definitions/content/BonusesAvailable";
 import { ContextualHelp } from "../../definitions/content/ContextualHelp";
 import { Municipality as MunicipalityMedadata } from "../../definitions/content/Municipality";

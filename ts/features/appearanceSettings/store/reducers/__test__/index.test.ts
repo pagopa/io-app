@@ -1,10 +1,9 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createStore } from "redux";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { persistStore } from "redux-persist";
-
 import {
-  appearanceSettingsReducerInitialState,
   appearanceSettingsReducerPersistor,
+  appearanceSettingsReducerInitialState,
   AppearanceSettingsState
 } from "..";
 import { differentProfileLoggedIn } from "../../../../../store/actions/crossSessions";

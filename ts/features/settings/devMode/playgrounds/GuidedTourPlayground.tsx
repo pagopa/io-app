@@ -14,7 +14,6 @@ import Animated, {
   useScrollOffset
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { GuidedTour } from "../../../tour/components/GuidedTour";
@@ -79,25 +78,25 @@ export const GuidedTourPlayground = () => {
 
   return (
     <IOScrollViewWithLargeHeader
+      title={{ label: "Guided Tour Playground" }}
       animatedRef={scrollRef}
       includeContentMargins
-      title={{ label: "Guided Tour Playground" }}
     >
       <IOButton
+        variant="solid"
         label="Start Tour"
         onPress={() =>
           dispatch(startTourAction({ groupId: PLAYGROUND_GROUP_ID }))
         }
-        variant="solid"
       />
       <VSpacer size={8} />
       <IOButton
+        variant="solid"
         color="danger"
         label="Reset Completed State"
         onPress={() =>
           dispatch(resetTourCompletedAction({ groupId: PLAYGROUND_GROUP_ID }))
         }
-        variant="solid"
       />
       <VSpacer size={8} />
       <Body>{`Tour completed: ${isCompleted}`}</Body>
@@ -105,10 +104,10 @@ export const GuidedTourPlayground = () => {
       <VSpacer size={32} />
 
       <GuidedTour
-        description="This is the first item in the tour. It shows a welcome message."
         groupId={PLAYGROUND_GROUP_ID}
         index={1}
         title="Welcome Card"
+        description="This is the first item in the tour. It shows a welcome message."
       >
         <View style={[styles.card, { backgroundColor: cardBgColor }]}>
           <H6>Welcome Card</H6>
@@ -120,26 +119,26 @@ export const GuidedTourPlayground = () => {
       <VSpacer size={24} />
 
       <GuidedTour
-        description="This button performs an important action."
         groupId={PLAYGROUND_GROUP_ID}
         index={2}
         title="Action Button"
+        description="This button performs an important action."
       >
         <IOButton
+          variant="solid"
           color="primary"
           label="Sample Action"
           onPress={() => undefined}
-          variant="solid"
         />
       </GuidedTour>
 
       <VSpacer size={24} />
 
       <GuidedTour
-        description="This section contains useful information about the feature."
         groupId={PLAYGROUND_GROUP_ID}
         index={3}
         title="Info Section"
+        description="This section contains useful information about the feature."
       >
         <View style={[styles.infoBox, { backgroundColor: cardBgColor }]}>
           <Body weight="Semibold">Info Section</Body>
@@ -154,10 +153,10 @@ export const GuidedTourPlayground = () => {
       <VSpacer size={48} />
 
       <GuidedTour
-        description="This item is below the fold. The tour should auto-scroll to reveal it."
         groupId={PLAYGROUND_GROUP_ID}
         index={4}
         title="Below the Fold"
+        description="This item is below the fold. The tour should auto-scroll to reveal it."
       >
         <View style={[styles.card, { backgroundColor: cardBgColor }]}>
           <H6>Below the Fold Card</H6>
@@ -169,10 +168,10 @@ export const GuidedTourPlayground = () => {
       <VSpacer size={24} />
 
       <GuidedTour
-        description="This is the last item, far down the page."
         groupId={PLAYGROUND_GROUP_ID}
         index={5}
         title="Bottom Item"
+        description="This is the last item, far down the page."
       >
         <View style={[styles.infoBox, { backgroundColor: cardBgColor }]}>
           <Body weight="Semibold">Bottom Item</Body>

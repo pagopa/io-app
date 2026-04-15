@@ -2,7 +2,6 @@ import { FeatureInfo, IOButton, VStack } from "@pagopa/io-app-design-system";
 import { constUndefined } from "fp-ts/lib/function";
 import i18n from "i18next";
 import { useRef } from "react";
-
 import { useIODispatch } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { identificationRequest } from "../../../identification/store/actions";
@@ -12,9 +11,9 @@ import {
 } from "../analytics";
 
 type BsFooterButtonProps = {
-  onContinuePress?: () => void;
-  onIdentificationCancel?: () => void;
   onIdentificationSuccess?: () => void;
+  onIdentificationCancel?: () => void;
+  onContinuePress?: () => void;
 };
 const BsFooterButton = ({
   onIdentificationCancel = constUndefined,
@@ -45,17 +44,17 @@ const BsFooterButton = ({
 
   return (
     <IOButton
+      testID="requestIdentification"
       fullWidth
+      variant="solid"
       label={i18n.t("global.buttons.continue")}
       onPress={handlePress}
-      testID="requestIdentification"
-      variant="solid"
     />
   );
 };
-type SendAarDelegationProposalBsProps = BsFooterButtonProps & {
+type SendAarDelegationProposalBsProps = {
   citizenName: string;
-};
+} & BsFooterButtonProps;
 
 export const useSendAarDelegationProposalScreenBottomSheet = ({
   citizenName,
@@ -72,28 +71,28 @@ export const useSendAarDelegationProposalScreenBottomSheet = ({
   const Body = () => (
     <VStack space={24}>
       <FeatureInfo
-        body={featureInfoText[0]}
         pictogramProps={{
           name: "cie"
         }}
+        body={featureInfoText[0]}
       />
       <FeatureInfo
-        body={featureInfoText[1]}
         pictogramProps={{
           name: "pinSecurity"
         }}
+        body={featureInfoText[1]}
       />
       <BsFooterButton
-        onContinuePress={() => {
-          // eslint-disable-next-line functional/immutable-data
-          ctaPressed.current = true;
-        }}
+        onIdentificationSuccess={onIdentificationSuccess}
         onIdentificationCancel={() => {
           // eslint-disable-next-line functional/immutable-data
           ctaPressed.current = false;
           onIdentificationCancel?.();
         }}
-        onIdentificationSuccess={onIdentificationSuccess}
+        onContinuePress={() => {
+          // eslint-disable-next-line functional/immutable-data
+          ctaPressed.current = true;
+        }}
       />
     </VStack>
   );

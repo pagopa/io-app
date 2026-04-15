@@ -1,17 +1,16 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import * as O from "fp-ts/lib/Option";
 import { expectSaga } from "redux-saga-test-plan";
+import { delay } from "typed-redux-saga/macro";
 import {
   EffectProviders,
   StaticProvider
 } from "redux-saga-test-plan/providers";
-import { delay } from "typed-redux-saga/macro";
-
+import * as O from "fp-ts/lib/Option";
 import { AssertionRef } from "../../../../definitions/backend/AssertionRef";
 import { PublicSession } from "../../../../definitions/session_manager/PublicSession";
+import { checkLollipopSessionAssertionAndInvalidateIfNeeded } from "../saga";
 import { restartCleanApplication } from "../../../sagas/commons";
 import { sessionInvalid } from "../../authentication/common/store/actions";
-import { checkLollipopSessionAssertionAndInvalidateIfNeeded } from "../saga";
 
 type DataFromServerType = {
   publicKeyForAssertionRef: PublicKey;
@@ -52,7 +51,7 @@ jest.mock("../../../utils/supportAssistance", () => ({
 
 const mockedDelay: StaticProvider = [delay(1000), true];
 
-const mockedFunctions: Array<EffectProviders | StaticProvider> = [mockedDelay];
+const mockedFunctions: Array<StaticProvider | EffectProviders> = [mockedDelay];
 
 describe(`Test login with lollipop check and store aligned with server`, () => {
   it(`should not put sessionIvalid or call restartCleanApplication`, async () =>

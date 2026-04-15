@@ -11,6 +11,6 @@ export const resetNotificationBannerDismissState = createStandardAction(
 )<void>();
 
 export type UserBehaviourActions =
+  | ActionType<typeof setUserDismissedNotificationsBanner>
   | ActionType<typeof resetNotificationBannerDismissState>
-  | ActionType<typeof setPushNotificationBannerForceDismissed>
-  | ActionType<typeof setUserDismissedNotificationsBanner>;
+  | ActionType<typeof setPushNotificationBannerForceDismissed>;

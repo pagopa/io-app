@@ -1,16 +1,15 @@
 import { StackActions } from "@react-navigation/native";
 import { testSaga } from "redux-saga-test-plan";
-
 import NavigationService from "../../../../../navigation/NavigationService";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import PN_ROUTES from "../../../navigation/routes";
-import { initiateAarFlow, terminateAarFlow } from "../../store/actions";
-import {
-  currentAarFlowIunSelector,
-  currentAarFlowStateType
-} from "../../store/selectors";
-import { sendAarFlowStates } from "../../utils/stateUtils";
 import { initiateAarFlowSaga } from "../initiateAarFlowSaga";
+import { terminateAarFlow, initiateAarFlow } from "../../store/actions";
+import { sendAarFlowStates } from "../../utils/stateUtils";
+import {
+  currentAarFlowStateType,
+  currentAarFlowIunSelector
+} from "../../store/selectors";
 
 jest.mock("../../../../../navigation/NavigationService");
 

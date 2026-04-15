@@ -1,6 +1,5 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
-
 import { OtpCode } from "../../../../../../../definitions/cgn/OtpCode";
 import { remoteReady } from "../../../../../../common/model/RemoteValue";
 import { applicationChangeState } from "../../../../../../store/actions/application";

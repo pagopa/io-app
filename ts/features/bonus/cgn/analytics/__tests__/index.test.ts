@@ -1,8 +1,5 @@
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-
 import trackCgnAction from "..";
-import { StatusEnum } from "../../../../../../definitions/cgn/CardPending";
-import { OtpCode } from "../../../../../../definitions/cgn/OtpCode";
 import * as MIXPANEL from "../../../../../mixpanel";
 import {
   cgnActivationBack,
@@ -13,8 +10,6 @@ import {
   cgnActivationStatus,
   cgnRequestActivation
 } from "../../store/actions/activation";
-import { cgnCodeFromBucket } from "../../store/actions/bucket";
-import { cgnCategories } from "../../store/actions/categories";
 import { cgnDetails } from "../../store/actions/details";
 import {
   cgnEycaActivation,
@@ -22,14 +17,18 @@ import {
   cgnEycaActivationStatusRequest
 } from "../../store/actions/eyca/activation";
 import { cgnEycaStatus } from "../../store/actions/eyca/details";
+import { cgnGenerateOtp } from "../../store/actions/otp";
 import {
   cgnOfflineMerchants,
   cgnOnlineMerchants,
   cgnSelectedMerchant
 } from "../../store/actions/merchants";
-import { cgnGenerateOtp } from "../../store/actions/otp";
+import { cgnCodeFromBucket } from "../../store/actions/bucket";
 import { cgnUnsubscribe } from "../../store/actions/unsubscribe";
+import { cgnCategories } from "../../store/actions/categories";
 import { CgnActivationProgressEnum } from "../../store/reducers/activation";
+import { StatusEnum } from "../../../../../../definitions/cgn/CardPending";
+import { OtpCode } from "../../../../../../definitions/cgn/OtpCode";
 
 describe("index", () => {
   beforeEach(() => {

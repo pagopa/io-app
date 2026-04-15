@@ -2,52 +2,52 @@
  * A reducer for not persisted preferences.
  */
 import { isActionOf } from "typesafe-actions";
-
 import {
   sessionCorrupted,
   sessionExpired,
   sessionInvalid
 } from "../../features/authentication/common/store/actions";
+
 import { startupLoadSuccess, startupTransientError } from "../actions/startup";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
 export enum StartupStatusEnum {
-  AUTHENTICATED = "authenticated",
   INITIAL = "initial",
+  ONBOARDING = "onboarding",
   NOT_AUTHENTICATED = "notAuthenticated",
-  OFFLINE = "offline",
-  ONBOARDING = "onboarding"
+  AUTHENTICATED = "authenticated",
+  OFFLINE = "offline"
 }
 
-export type StartupState = {
-  status: StartupStatusEnum;
-  transientError: StartupTransientError;
+type StartupTransientErrorNotSet = {
+  kind: "NOT_SET";
+  getSessionRetries: 0;
+  getProfileRetries: 0;
+};
+
+type StartupTransientErrorOnGetSession = {
+  kind: "GET_SESSION_DOWN";
+  getSessionRetries: number;
+  getProfileRetries: number;
+  showError: boolean;
+};
+
+type StartupTransientErrorOnGetProfile = {
+  kind: "GET_PROFILE_DOWN";
+  getSessionRetries: number;
+  getProfileRetries: number;
+  showError: boolean;
 };
 
 export type StartupTransientError =
   | StartupTransientErrorNotSet
-  | StartupTransientErrorOnGetProfile
-  | StartupTransientErrorOnGetSession;
+  | StartupTransientErrorOnGetSession
+  | StartupTransientErrorOnGetProfile;
 
-type StartupTransientErrorNotSet = {
-  getProfileRetries: 0;
-  getSessionRetries: 0;
-  kind: "NOT_SET";
-};
-
-type StartupTransientErrorOnGetProfile = {
-  getProfileRetries: number;
-  getSessionRetries: number;
-  kind: "GET_PROFILE_DOWN";
-  showError: boolean;
-};
-
-type StartupTransientErrorOnGetSession = {
-  getProfileRetries: number;
-  getSessionRetries: number;
-  kind: "GET_SESSION_DOWN";
-  showError: boolean;
+export type StartupState = {
+  status: StartupStatusEnum;
+  transientError: StartupTransientError;
 };
 
 export const startupTransientErrorInitialState: StartupTransientError = {

@@ -1,12 +1,11 @@
 import { IOToast } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { ActionArgs, assign } from "xstate";
-
+import I18n from "i18next";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
+import { checkCurrentSession } from "../../../authentication/common/store/actions";
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
-import { checkCurrentSession } from "../../../authentication/common/store/actions";
 import {
   trackSaveCredentialSuccess,
   trackStartAddNewCredential,
@@ -14,18 +13,15 @@ import {
   trackWalletDataShare,
   trackWalletDataShareAccepted
 } from "../../analytics";
-import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
 import { getMixPanelCredential } from "../../analytics/utils";
+import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
+import { itwCredentialsReplaceByType } from "../../credentials/store/actions";
 import { itwClearCredentialUpgradeFailed } from "../../common/store/actions/preferences";
-import {
-  itwCredentialsRemoveByType,
-  itwCredentialsStore
-} from "../../credentials/store/actions";
-import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 
@@ -137,11 +133,9 @@ export const createCredentialIssuanceActionsImplementation = (
     CredentialIssuanceEvents
   >) => {
     assert(context.credentialType, "credentialType is undefined");
-    assert(context.credentials, "credential is undefined");
-    // Removes any credentials with thye same type stored in the wallet
-    store.dispatch(itwCredentialsRemoveByType(context.credentialType));
-    // Stores the new obtained credentials
-    store.dispatch(itwCredentialsStore(context.credentials));
+    assert(context.credentials, "credentials is undefined");
+    // Removes any credentials with the same type and stores the new ones atomically
+    store.dispatch(itwCredentialsReplaceByType(context.credentials, {}));
     // Clear older upgrade-failed flag for this credential after a successful issuance/upgrade.
     store.dispatch(itwClearCredentialUpgradeFailed(context.credentialType));
   },

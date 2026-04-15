@@ -1,8 +1,7 @@
 import { fireEvent, render } from "@testing-library/react-native";
-
-import * as ClipboardModule from "../../../../../../utils/clipboard";
-import * as AnalyticsModule from "../../../analytics";
 import { sendAarErrorSupportBottomSheetComponent } from "../sendAarErrorSupportBottomSheetComponent";
+import * as AnalyticsModule from "../../../analytics";
+import * as ClipboardModule from "../../../../../../utils/clipboard";
 
 jest.mock("i18next", () => ({
   t: (s: string) => s

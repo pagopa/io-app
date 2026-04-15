@@ -1,16 +1,16 @@
 import { applicationChangeState } from "../../../../../../store/actions/application";
-import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
-import { ItwStoredCredentialsMocks } from "../../../utils/itwMocksUtils";
 import {
-  itwClearCredentialUpgradeFailed,
   itwSetAuthLevel,
   itwSetClaimValuesHidden,
-  itwSetCredentialUpgradeFailed
+  itwSetCredentialUpgradeFailed,
+  itwClearCredentialUpgradeFailed
 } from "../../actions/preferences";
 import reducer, {
   itwPreferencesInitialState,
   ItwPreferencesState
 } from "../preferences";
+import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
+import { ItwStoredCredentialsMocks } from "../../../utils/itwMocksUtils";
 
 describe("IT Wallet preferences reducer", () => {
   const INITIAL_STATE: ItwPreferencesState = {};

@@ -1,11 +1,10 @@
 import { Banner } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { View } from "react-native";
-
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { itwIsWalletEmptySelector } from "../../credentials/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { itwIsWalletEmptySelector } from "../../credentials/store/selectors";
 import { itwIsActivationDisabledSelector } from "../store/selectors/preferences";
 
 export const ItwL2EngagementBanner = () => {
@@ -31,15 +30,15 @@ export const ItwL2EngagementBanner = () => {
   return (
     <View style={{ marginHorizontal: -8 }}>
       <Banner
-        action={I18n.t("features.itWallet.engagementBanner.l2_banner.cta")}
-        color="neutral"
+        testID="itwWalletL2BannerTestID"
+        title={I18n.t("features.itWallet.engagementBanner.l2_banner.title")}
         content={I18n.t(
           "features.itWallet.engagementBanner.l2_banner.description"
         )}
+        action={I18n.t("features.itWallet.engagementBanner.l2_banner.cta")}
+        color="neutral"
         onPress={handleOnPress}
         pictogramName="cardAdd"
-        testID="itwWalletL2BannerTestID"
-        title={I18n.t("features.itWallet.engagementBanner.l2_banner.title")}
       />
     </View>
   );

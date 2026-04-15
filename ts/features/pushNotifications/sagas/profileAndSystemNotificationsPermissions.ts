@@ -1,15 +1,14 @@
 import { CommonActions, StackActions } from "@react-navigation/native";
 import { call, put, select, take } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
 import { updateMixpanelSuperProperties } from "../../../mixpanelConfig/superProperties";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
-import { GlobalState } from "../../../store/reducers/types";
 import { profileUpsert } from "../../settings/common/store/actions";
 import { isProfileFirstOnBoarding } from "../../settings/common/store/utils/guards";
+import { GlobalState } from "../../../store/reducers/types";
 import {
   trackNotificationsOptInPreviewStatus,
   trackNotificationsOptInReminderStatus,
@@ -17,8 +16,8 @@ import {
 } from "../analytics";
 import { setPushPermissionsRequestDuration } from "../store/actions/environment";
 import { notificationsInfoScreenConsent } from "../store/actions/profileNotificationPermissions";
-import { hasUserSeenSystemNotificationsPromptSelector } from "../store/selectors";
 import { requestNotificationPermissions } from "../utils";
+import { hasUserSeenSystemNotificationsPromptSelector } from "../store/selectors";
 import {
   checkAndUpdateNotificationPermissionsIfNeeded,
   updateNotificationPermissionsIfNeeded

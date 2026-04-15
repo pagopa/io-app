@@ -1,28 +1,27 @@
 import * as Sentry from "@sentry/react-native";
 import { Appearance, ColorSchemeName } from "react-native";
-
-import { LoginSessionDuration } from "../features/authentication/fastLogin/analytics/optinAnalytics";
-import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
-import { isConnectedSelector } from "../features/connectivity/store/selectors";
-import { checkNotificationPermissions } from "../features/pushNotifications/utils";
+import {
+  isMixpanelInstanceInitialized,
+  registerSuperProperties
+} from "../mixpanel.ts";
+import { isScreenReaderEnabled } from "../utils/accessibility";
+import { getAppVersion } from "../utils/appVersion";
+import {
+  getFontScale,
+  isScreenLockSet as isScreenLockSetFunc
+} from "../utils/device";
+import { BiometricsType, getBiometricsType } from "../utils/biometrics";
 import {
   getNotificationPermissionType,
   NotificationPermissionType,
   NotificationPreferenceConfiguration,
   ServiceConfigurationTrackingType
 } from "../features/settings/common/analytics";
-import {
-  isMixpanelInstanceInitialized,
-  registerSuperProperties
-} from "../mixpanel.ts";
 import { GlobalState } from "../store/reducers/types";
-import { isScreenReaderEnabled } from "../utils/accessibility";
-import { getAppVersion } from "../utils/appVersion";
-import { BiometricsType, getBiometricsType } from "../utils/biometrics";
-import {
-  getFontScale,
-  isScreenLockSet as isScreenLockSetFunc
-} from "../utils/device";
+import { LoginSessionDuration } from "../features/authentication/fastLogin/analytics/optinAnalytics";
+import { checkNotificationPermissions } from "../features/pushNotifications/utils";
+import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
+import { isConnectedSelector } from "../features/connectivity/store/selectors";
 import {
   cdcStatusHandler,
   cgnStatusHandler,
@@ -35,24 +34,24 @@ import {
   welfareStatusHandler
 } from "./mixpanelPropertyUtils";
 
-type ConnectivityStatus = "offline" | "online";
+type ConnectivityStatus = "online" | "offline";
 
 type SuperProperties = {
-  appReadableVersion: string;
-  biometricTechnology: BiometricsType;
-  CDC_STATUS: number;
-  CGN_STATUS: TrackCgnStatus;
-  colorScheme: ColorSchemeName;
-  CONNECTION_STATUS: ConnectivityStatus;
-  fontScale: number;
-  isScreenLockSet: boolean;
   isScreenReaderEnabled: boolean;
+  fontScale: number;
+  appReadableVersion: string;
+  colorScheme: ColorSchemeName;
+  biometricTechnology: BiometricsType;
+  isScreenLockSet: boolean;
   LOGIN_SESSION: LoginSessionDuration;
   NOTIFICATION_CONFIGURATION: NotificationPreferenceConfiguration;
   NOTIFICATION_PERMISSION: NotificationPermissionType;
-  SAVED_PAYMENT_METHOD?: number;
   SERVICE_CONFIGURATION: ServiceConfigurationTrackingType;
+  SAVED_PAYMENT_METHOD?: number;
+  CGN_STATUS: TrackCgnStatus;
+  CDC_STATUS: number;
   WELFARE_STATUS: ReadonlyArray<string>;
+  CONNECTION_STATUS: ConnectivityStatus;
 };
 
 export const updateMixpanelSuperProperties = async (

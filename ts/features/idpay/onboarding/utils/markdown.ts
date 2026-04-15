@@ -1,6 +1,5 @@
 import { BodySmall } from "@pagopa/io-app-design-system";
 import { createElement } from "react";
-
 import { getTxtNodeKey } from "../../../../components/IOMarkdown/renderRules";
 import { IOMarkdownRenderRules } from "../../../../components/IOMarkdown/types";
 import { handleOpenLink } from "../../../common/components/IOMarkdown/customRules";

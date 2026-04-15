@@ -1,18 +1,17 @@
+import { View } from "react-native";
+import i18n from "i18next";
 import { IOButton, VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import i18n from "i18next";
 import { useCallback, useRef } from "react";
-import { View } from "react-native";
-
 import IOMarkdown from "../../../../components/IOMarkdown";
-import { useIOSelector } from "../../../../store/hooks";
-import { pnPrivacyUrlsSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
-import { NotificationModalFlow } from "../../../pushNotifications/analytics";
+import { pnPrivacyUrlsSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { useIOSelector } from "../../../../store/hooks";
 import {
   trackSendAcceptanceDialogClosure,
   trackSendActivationAccepted
 } from "../../analytics/send";
+import { NotificationModalFlow } from "../../../pushNotifications/analytics";
 import { useSendActivationFlow } from "./useSendActivationFlow";
 
 export const flow: NotificationModalFlow = "access";
@@ -39,17 +38,17 @@ export const useSendActivationBottomSheet = () => {
           )}
         />
         <IOButton
+          testID="sendActivationID"
           label={i18n.t(
             "features.pn.loginEngagement.send.activationBottomSheet.action"
           )}
-          loading={isActivating}
           onPress={() => {
             // eslint-disable-next-line functional/immutable-data
             ctaPressed.current = true;
             trackSendActivationAccepted("tos_bottomsheet", flow);
             requestSendActivation();
           }}
-          testID="sendActivationID"
+          loading={isActivating}
         />
         {/* This empty View is used to add the bottom space */}
         <View />

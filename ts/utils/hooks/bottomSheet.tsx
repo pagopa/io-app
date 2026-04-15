@@ -10,9 +10,9 @@ import {
 import {
   IOBottomSheetHeaderRadius,
   IOColors,
+  VSpacer,
   IOVisualCostants,
-  useIOTheme,
-  VSpacer
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import { NonEmptyArray } from "fp-ts/lib/NonEmptyArray";
 import {
@@ -34,7 +34,6 @@ import {
   View
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-
 import { BottomSheetHeader } from "../../components/bottomSheet/BottomSheetHeader";
 import { useHardwareBackButtonToDismiss } from "../../hooks/useHardwareBackButton";
 import { isScreenReaderEnabled } from "../accessibility";
@@ -54,9 +53,9 @@ const styles = StyleSheet.create({
 });
 
 export type IOBottomSheetModal = {
-  bottomSheet: JSX.Element;
-  dismiss: () => void;
   present: () => void;
+  dismiss: () => void;
+  bottomSheet: JSX.Element;
 };
 
 /**
@@ -70,10 +69,10 @@ export type IOBottomSheetModal = {
  */
 type BottomSheetOptions = {
   component: ReactNode;
+  title: string | ReactNode;
+  snapPoint?: NonEmptyArray<number | string>;
   footer?: ReactElement;
   onDismiss?: () => void;
-  snapPoint?: NonEmptyArray<number | string>;
-  title: ReactNode | string;
 };
 
 /**
@@ -101,13 +100,13 @@ export const useIOBottomSheetModal = ({
     modal: { backgroundColor }
   } = useModalStyle();
 
-  const header = <BottomSheetHeader onClose={dismissAll} title={title} />;
+  const header = <BottomSheetHeader title={title} onClose={dismissAll} />;
   const bottomSheetContent = (
     <BottomSheetScrollView
-      overScrollMode={"never"}
       style={{
         paddingHorizontal: IOVisualCostants.appMarginDefault
       }}
+      overScrollMode={"never"}
     >
       {component}
       {footer ? (
@@ -136,9 +135,9 @@ export const useIOBottomSheetModal = ({
     (backdropProps: BottomSheetBackdropProps) => (
       <BottomSheetBackdrop
         {...backdropProps}
+        opacity={backdropOpacity}
         appearsOnIndex={0}
         disappearsOnIndex={-1}
-        opacity={backdropOpacity}
       />
     ),
     [backdropOpacity]
@@ -171,11 +170,8 @@ export const useIOBottomSheetModal = ({
         <StatusBar backgroundColor={"transparent"} translucent />
       )}
       <BottomSheetModal
-        accessible={false}
-        backdropComponent={BackdropElement}
+        style={styles.bottomSheet}
         backgroundStyle={{ backgroundColor }}
-        enableDismissOnClose={true}
-        enableDynamicSizing={!snapPoint}
         footerComponent={(props: BottomSheetFooterProps) =>
           footer ? (
             <BottomSheetFooter
@@ -190,17 +186,20 @@ export const useIOBottomSheetModal = ({
             </BottomSheetFooter>
           ) : null
         }
-        handleComponent={_ => header}
-        importantForAccessibility={"yes"}
+        enableDynamicSizing={!snapPoint}
         maxDynamicContentSize={screenHeight - insets.top}
-        onDismiss={handleDismiss}
-        ref={bottomSheetModalRef}
         snapPoints={snapPoint}
-        style={styles.bottomSheet}
+        ref={bottomSheetModalRef}
+        handleComponent={_ => header}
+        backdropComponent={BackdropElement}
+        enableDismissOnClose={true}
+        accessible={false}
+        importantForAccessibility={"yes"}
+        onDismiss={handleDismiss}
       >
         {screenReaderEnabled && Platform.OS === "android" ? (
           <Modal>
-            <View accessible={true} style={{ flex: 1, backgroundColor }}>
+            <View style={{ flex: 1, backgroundColor }} accessible={true}>
               {header}
               {bottomSheetContent}
             </View>

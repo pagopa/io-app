@@ -1,13 +1,12 @@
 import _ from "lodash";
 import MockDate from "mockdate";
-
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
-import { ItwAuthLevel } from "../../../utils/itwTypesUtils.ts";
 import {
   itwAuthLevelSelector,
   itwIsPidReissuingSurveyHiddenSelector
 } from "../preferences";
+import { ItwAuthLevel } from "../../../utils/itwTypesUtils.ts";
 
 describe("itwAuthLevelSelector", () => {
   afterEach(() => {

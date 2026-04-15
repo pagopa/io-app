@@ -1,5 +1,4 @@
 import { View } from "react-native";
-
 import { MessagePaymentsProps } from "../MessagePayments";
 
 export const MessagePayments = ({

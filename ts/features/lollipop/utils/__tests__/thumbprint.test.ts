@@ -1,7 +1,6 @@
-import { PublicKey } from "@pagopa/io-react-native-crypto";
 import * as O from "fp-ts/lib/Option";
+import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { jwkThumbprintByEncoding } from "jwk-thumbprint";
-
 import { toBase64EncodedThumbprint, toThumbprint } from "../crypto";
 import { DEFAULT_LOLLIPOP_HASH_ALGORITHM_CLIENT } from "../login";
 

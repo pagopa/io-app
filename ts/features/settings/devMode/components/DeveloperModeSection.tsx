@@ -10,15 +10,14 @@ import {
   ListItemInfoCopy,
   ListItemNav,
   ListItemSwitch,
-  useIOTheme,
-  VSpacer
+  VSpacer,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Sentry from "@sentry/react-native";
 import I18n from "i18next";
 import { ComponentProps, useContext } from "react";
 import { Alert, FlatList, ListRenderItemInfo } from "react-native";
-
 import { AlertModal } from "../../../../components/ui/AlertModal";
 import { LightModalContext } from "../../../../components/ui/LightModal";
 import { isPlaygroundsEnabled } from "../../../../config";
@@ -29,7 +28,6 @@ import {
   preferencesPagoPaTestEnvironmentSetEnabled
 } from "../../../../store/actions/persistedPreferences";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { isPnRemoteEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig.ts";
 import { isDebugModeEnabledSelector } from "../../../../store/reducers/debug";
 import {
   isIdPayLocallyEnabledSelector,
@@ -56,40 +54,38 @@ import { toThumbprint } from "../../../lollipop/utils/crypto";
 import { notificationsInstallationSelector } from "../../../pushNotifications/store/reducers/installation";
 import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 import { clearCache } from "../../common/store/actions";
+import { isPnRemoteEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig.ts";
 import ExperimentalDesignEnableSwitch from "./ExperimentalDesignEnableSwitch";
 
-type DevActionButton = Pick<
-  IOButtonBlockSpecificProps,
-  "color" | "label" | "onPress"
-> & {
-  condition: boolean;
-};
-
-type DevDataCopyListItem = Pick<
-  ComponentProps<typeof ListItemInfoCopy>,
-  "label" | "onPress" | "testID"
-> & {
-  condition?: boolean;
+type PlaygroundsNavListItem = {
   value: string;
-};
-
-type PlaygroundsNavListItem = Pick<
+  condition?: boolean;
+} & Pick<
   ComponentProps<typeof ListItemNav>,
-  "description" | "onPress" | "testID"
-> & {
-  condition?: boolean;
+  "description" | "testID" | "onPress"
+>;
+
+type DevDataCopyListItem = {
   value: string;
-};
+  condition?: boolean;
+} & Pick<
+  ComponentProps<typeof ListItemInfoCopy>,
+  "label" | "testID" | "onPress"
+>;
 
 type TestEnvironmentsListItem = Pick<
   ComponentProps<typeof ListItemSwitch>,
-  | "description"
-  | "disabled"
   | "label"
-  | "onSwitchValueChange"
-  | "testID"
   | "value"
+  | "description"
+  | "testID"
+  | "onSwitchValueChange"
+  | "disabled"
 >;
+
+type DevActionButton = {
+  condition: boolean;
+} & Pick<IOButtonBlockSpecificProps, "color" | "label" | "onPress">;
 
 const DeveloperActionsSection = () => {
   const dispatch = useIODispatch();
@@ -180,29 +176,29 @@ const DeveloperActionsSection = () => {
     item: { color = "danger", label, onPress }
   }: ListRenderItemInfo<DevActionButton>) => (
     <IOButton
-      accessibilityLabel={label}
-      color={color}
       fullWidth
-      label={label}
-      onPress={onPress}
       variant="solid"
+      color={color}
+      label={label}
+      accessibilityLabel={label}
+      onPress={onPress}
     />
   );
 
   return (
     <>
       <FlatList
+        ListHeaderComponent={<ListItemHeader label="Actions" />}
+        scrollEnabled={false}
+        keyExtractor={(item: DevActionButton, index: number) =>
+          `${item.label}-${index}`
+        }
         contentContainerStyle={{
           paddingHorizontal: IOVisualCostants.appMarginDefault
         }}
         data={filteredDevActionButtons}
-        ItemSeparatorComponent={() => <VSpacer size={8} />}
-        keyExtractor={(item: DevActionButton, index: number) =>
-          `${item.label}-${index}`
-        }
-        ListHeaderComponent={<ListItemHeader label="Actions" />}
         renderItem={renderDevActionButton}
-        scrollEnabled={false}
+        ItemSeparatorComponent={() => <VSpacer size={8} />}
       />
     </>
   );
@@ -275,12 +271,12 @@ const DeveloperDataSection = () => {
     if (condition !== false) {
       return (
         <ListItemInfoCopy
-          accessibilityLabel={value}
           label={label}
-          numberOfLines={5}
+          value={value}
           onPress={onPress}
           testID={testID}
-          value={value}
+          accessibilityLabel={value}
+          numberOfLines={5}
         />
       );
     } else {
@@ -290,17 +286,17 @@ const DeveloperDataSection = () => {
 
   return (
     <FlatList
+      ListHeaderComponent={<ListItemHeader label="Data" />}
+      scrollEnabled={false}
+      keyExtractor={(item: DevDataCopyListItem, index: number) =>
+        `${item.value}-${index}`
+      }
       contentContainerStyle={{
         paddingHorizontal: IOVisualCostants.appMarginDefault
       }}
       data={filteredDevDataCopyListItems}
-      ItemSeparatorComponent={() => <Divider />}
-      keyExtractor={(item: DevDataCopyListItem, index: number) =>
-        `${item.value}-${index}`
-      }
-      ListHeaderComponent={<ListItemHeader label="Data" />}
       renderItem={renderDevDataCopyItem}
-      scrollEnabled={false}
+      ItemSeparatorComponent={() => <Divider />}
     />
   );
 };
@@ -313,13 +309,13 @@ const DesignSystemSection = () => {
       <ListItemHeader label="Human Interface" />
 
       <ListItemNav
+        value={I18n.t("profile.main.designSystem")}
         accessibilityLabel={I18n.t("profile.main.designSystem")}
         onPress={() =>
           navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
             screen: SETTINGS_ROUTES.DESIGN_SYSTEM
           })
         }
-        value={I18n.t("profile.main.designSystem")}
       />
       <Divider />
       <ExperimentalDesignEnableSwitch />
@@ -440,9 +436,9 @@ const PlaygroundsSection = () => {
       return (
         <ListItemNav
           accessibilityLabel={value}
+          value={value}
           onPress={onPress}
           testID={testID}
-          value={value}
         />
       );
     } else {
@@ -452,17 +448,17 @@ const PlaygroundsSection = () => {
 
   return (
     <FlatList
+      ListHeaderComponent={<ListItemHeader label="Playground" />}
+      scrollEnabled={false}
+      keyExtractor={(item: PlaygroundsNavListItem, index: number) =>
+        `${item.value}-${index}`
+      }
       contentContainerStyle={{
         paddingHorizontal: IOVisualCostants.appMarginDefault
       }}
       data={filteredPlaygroundsNavListItems}
-      ItemSeparatorComponent={() => <Divider />}
-      keyExtractor={(item: PlaygroundsNavListItem, index: number) =>
-        `${item.value}-${index}`
-      }
-      ListHeaderComponent={<ListItemHeader label="Playground" />}
       renderItem={renderPlaygroundsNavItem}
-      scrollEnabled={false}
+      ItemSeparatorComponent={() => <Divider />}
     />
   );
 };
@@ -577,29 +573,29 @@ const DeveloperTestEnvironmentSection = ({
 
   return (
     <FlatList
-      contentContainerStyle={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault
-      }}
-      data={testEnvironmentsListItems}
-      ItemSeparatorComponent={() => <Divider />}
-      keyExtractor={(item: TestEnvironmentsListItem, index: number) =>
-        `${item.label}-${index}`
-      }
       ListHeaderComponent={
         <ListItemHeader
           label={I18n.t("profile.main.testEnvironmentSectionHeader")}
         />
       }
+      scrollEnabled={false}
+      keyExtractor={(item: TestEnvironmentsListItem, index: number) =>
+        `${item.label}-${index}`
+      }
+      contentContainerStyle={{
+        paddingHorizontal: IOVisualCostants.appMarginDefault
+      }}
+      data={testEnvironmentsListItems}
       renderItem={({ item }) => (
         <ListItemSwitch
-          description={item.description}
-          disabled={item.disabled}
           label={item.label}
-          onSwitchValueChange={item.onSwitchValueChange}
+          description={item.description}
           value={item.value}
+          onSwitchValueChange={item.onSwitchValueChange}
+          disabled={item.disabled}
         />
       )}
-      scrollEnabled={false}
+      ItemSeparatorComponent={() => <Divider />}
     />
   );
 };
@@ -630,12 +626,12 @@ const DeveloperModeSection = () => {
 
         {/* Enable/Disable Developer Mode */}
         <ListItemSwitch
+          testID="debugModeSwitch"
           label={I18n.t("profile.main.debugMode")}
+          value={isDebugModeEnabled}
           onSwitchValueChange={enabled =>
             dispatch(setDebugModeEnabled(enabled))
           }
-          testID="debugModeSwitch"
-          value={isDebugModeEnabled}
         />
       </ContentWrapper>
 

@@ -3,9 +3,8 @@ import {
   IOCategoryIcons
 } from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
-import I18n from "i18next";
 import { StatusBarProps } from "react-native";
-
+import I18n from "i18next";
 import {
   ProductCategory,
   ProductCategoryEnum
@@ -14,13 +13,13 @@ import { ProductCategoryWithNewDiscountsCount } from "../../../../../definitions
 import { TranslationKeys } from "../../../../i18n";
 
 type Category = {
-  colors: string;
-  headerVariant: HeaderSecondLevel["variant"];
+  type: ProductCategory;
   icon: IOCategoryIcons;
   nameKey: TranslationKeys;
+  colors: string;
+  textColor: "white" | "black";
   statusBarStyle: StatusBarProps["barStyle"];
-  textColor: "black" | "white";
-  type: ProductCategory;
+  headerVariant: HeaderSecondLevel["variant"];
 };
 
 export const categories: Record<ProductCategory, Category> = {

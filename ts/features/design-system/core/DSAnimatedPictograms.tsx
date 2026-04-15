@@ -1,25 +1,24 @@
 import {
   ContentWrapper,
-  hexToRgba,
   IOColors,
   IOPictogramSizeScale,
   IOVisualCostants,
   RadioGroup,
+  hexToRgba,
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { useCallback, useState } from "react";
 import { ScrollView, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-
 import {
   AnimatedPictogram,
   IOAnimatedPictograms
 } from "../../../components/ui/AnimatedPictogram";
 
 type AnimatedPictogramType = {
-  label: string;
   name: IOAnimatedPictograms;
+  label: string;
 };
 
 export const DSAnimatedPictograms = () => {
@@ -45,8 +44,8 @@ export const DSAnimatedPictograms = () => {
   ];
 
   const renderedPictogramsRefs: Array<{
-    id: string;
     value: string;
+    id: string;
   }> = pictogramsRefs.map(item => ({
     value: item.label,
     id: item.label
@@ -86,16 +85,12 @@ export const DSAnimatedPictograms = () => {
         <View style={{ marginVertical: IOVisualCostants.appMarginDefault }}>
           <AnimatedPictogram
             key={getCurrentPictogram()?.name || pictogramsRefs[0].name}
-            name={getCurrentPictogram()?.name || pictogramsRefs[0].name}
             size={pictogramSize}
+            name={getCurrentPictogram()?.name || pictogramsRefs[0].name}
           />
         </View>
 
         <LinearGradient
-          colors={[
-            IOColors[theme["appBackground-primary"]],
-            hexToRgba(IOColors[theme["appBackground-primary"]], 0)
-          ]}
           style={{
             height: scrollGradientHeight,
             position: "absolute",
@@ -103,6 +98,10 @@ export const DSAnimatedPictograms = () => {
             right: -IOVisualCostants.appMarginDefault,
             bottom: -scrollGradientHeight
           }}
+          colors={[
+            IOColors[theme["appBackground-primary"]],
+            hexToRgba(IOColors[theme["appBackground-primary"]], 0)
+          ]}
         />
       </View>
 
@@ -114,10 +113,10 @@ export const DSAnimatedPictograms = () => {
       >
         <ContentWrapper>
           <RadioGroup<string>
-            items={renderedPictogramsRefs}
-            onPress={onPictogramSelected}
-            selectedItem={selectedPictogram}
             type="radioListItem"
+            items={renderedPictogramsRefs}
+            selectedItem={selectedPictogram}
+            onPress={onPictogramSelected}
           />
         </ContentWrapper>
       </ScrollView>

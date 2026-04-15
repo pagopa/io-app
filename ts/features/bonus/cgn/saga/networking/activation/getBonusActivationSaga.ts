@@ -2,7 +2,6 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
 import { call } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-
 import { StatusEnum } from "../../../../../../../definitions/cgn/CgnActivationDetail";
 import { mixpanelTrack } from "../../../../../../mixpanel";
 import {

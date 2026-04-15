@@ -1,6 +1,5 @@
 import { addDays, isPast } from "date-fns";
 import { createSelector } from "reselect";
-
 import { GlobalState } from "../../../../../store/reducers/types";
 import { bannerHideDurations, ItwBannerId } from "../reducers/banners";
 

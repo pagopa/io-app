@@ -1,10 +1,10 @@
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 /**
  * utility that manages the lookup ID injected in some PM flows toward the Payment Manager
  * more info https://pagopa.atlassian.net/wiki/spaces/IOAPP/pages/135693522/PM+-+tracking+delle+chiamate+di+rete
  */
 import { v4 as uuid } from "uuid";
+import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 
 export type LookUpId = string | undefined;
 // eslint-disable-next-line functional/no-let

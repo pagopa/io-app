@@ -1,16 +1,15 @@
-import { useCallback, useEffect, useMemo, useRef } from "react";
-
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { trackItwBannerTap, trackItwBannerVisualized } from "../../analytics";
+import { useCallback, useMemo, useRef, useEffect } from "react";
+import { trackItwBannerVisualized, trackItwBannerTap } from "../../analytics";
 import { ITW_IDENTIFICATION_SCREENVIEW_EVENTS } from "../../identification/analytics/enum";
 import { ItwJwtCredentialStatus } from "../utils/itwTypesUtils";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 
 type Props = {
-  currentScreenName?: string;
   isItw: boolean;
-  isOffline?: boolean;
   maybeEidStatus: ItwJwtCredentialStatus | undefined;
   navigation: ReturnType<typeof useIONavigation>;
+  currentScreenName?: string;
+  isOffline?: boolean;
   skipViewTracking?: boolean;
 };
 

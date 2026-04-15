@@ -1,5 +1,4 @@
 import { format } from "date-fns";
-
 import { getSortedPspList, isPaymentMethodExpired } from "..";
 import { Bundle } from "../../../../../../definitions/pagopa/ecommerce/Bundle";
 

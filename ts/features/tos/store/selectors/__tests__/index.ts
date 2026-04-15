@@ -1,11 +1,10 @@
-import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import * as O from "fp-ts/lib/Option";
-
-import { getTosUrl, getTosVersion } from "../../..";
+import { NonNegativeNumber } from "@pagopa/ts-commons/lib/numbers";
 import { BackendStatus } from "../../../../../../definitions/content/BackendStatus";
-import { TosConfig } from "../../../../../../definitions/content/TosConfig";
 import { baseRawBackendStatus } from "../../../../../store/reducers/__mock__/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { TosConfig } from "../../../../../../definitions/content/TosConfig";
+import { getTosUrl, getTosVersion } from "../../..";
 
 const TOS_CONFIG: TosConfig = {
   tos_url: "https://www.example.com",

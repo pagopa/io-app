@@ -2,11 +2,10 @@ import {
   Body,
   ContentWrapper,
   H3,
-  useIOTheme,
-  VSpacer
+  VSpacer,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import { Alert } from "react-native";
-
 import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
 
 export const DSIOScrollViewScreenWithLargeHeader = () => {
@@ -21,12 +20,12 @@ export const DSIOScrollViewScreenWithLargeHeader = () => {
           onPress: () => Alert.alert("Primary action pressed! (⁠⁠ꈍ⁠ᴗ⁠ꈍ⁠)")
         }
       }}
-      description={
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean lobortis luctus odio vel ultricies. Sed non urna dui. Morbi at ipsum pulvinar, sagittis massa ut, viverra nisi. Donec dignissim mi vitae convallis ornare. Pellentesque vel volutpat ex, non tempor neque. Nulla fringilla mi non nisl luctus viverra. Proin efficitur odio id volutpat sodales. Aliquam purus lacus, ultrices at maximus ut, molestie a lorem. Morbi arcu ligula, gravida eu egestas suscipit, congue ut ligula. Aliquam rutrum ante eget dolor feugiat molestie. Phasellus porta tempus nibh sed suscipit."
-      }
       title={{
         label: "Screen title"
       }}
+      description={
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean lobortis luctus odio vel ultricies. Sed non urna dui. Morbi at ipsum pulvinar, sagittis massa ut, viverra nisi. Donec dignissim mi vitae convallis ornare. Pellentesque vel volutpat ex, non tempor neque. Nulla fringilla mi non nisl luctus viverra. Proin efficitur odio id volutpat sodales. Aliquam purus lacus, ultrices at maximus ut, molestie a lorem. Morbi arcu ligula, gravida eu egestas suscipit, congue ut ligula. Aliquam rutrum ante eget dolor feugiat molestie. Phasellus porta tempus nibh sed suscipit."
+      }
     >
       <VSpacer size={16} />
       <ContentWrapper>

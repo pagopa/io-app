@@ -1,9 +1,8 @@
 import { Banner } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
-import I18n from "i18next";
 import { memo, useCallback, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
-
+import I18n from "i18next";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
@@ -12,8 +11,8 @@ import {
   trackItwBannerVisualized
 } from "../../../analytics";
 import { ITW_ROUTES } from "../../../navigation/routes";
-import { useItwDiscoveryBannerType } from "../../hooks/useItwDiscoveryBannerType.ts";
 import { isItwDiscoveryBannerRenderableSelector } from "../../store/selectors";
+import { useItwDiscoveryBannerType } from "../../hooks/useItwDiscoveryBannerType.ts";
 
 const bannerConfig = {
   onboarding: {
@@ -74,13 +73,13 @@ const ItwDiscoveryBannerOnboarding = () => {
   return (
     <View style={styles.wrapper}>
       <Banner
-        action={I18n.t("features.itWallet.discovery.banner.onboarding.action")}
-        color="neutral"
+        testID="itwDiscoveryBannerOnboardingTestID"
         content={content}
+        action={I18n.t("features.itWallet.discovery.banner.onboarding.action")}
+        pictogramName="itWallet"
+        color="neutral"
         labelClose={I18n.t("global.buttons.close")}
         onPress={handleOnPress}
-        pictogramName="itWallet"
-        testID="itwDiscoveryBannerOnboardingTestID"
       />
     </View>
   );

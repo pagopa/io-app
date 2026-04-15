@@ -1,7 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
-
-import { IdPayFeatureFlagGuard } from "../../common/components/IdPayFeatureFlagGuard";
 import { IdPayBarcodeResultScreen } from "../screens/IdPayBarcodeResultScreen";
+import { IdPayFeatureFlagGuard } from "../../common/components/IdPayFeatureFlagGuard";
 import { IdPayBarcodeParamsList } from "./params";
 import { IdPayBarcodeRoutes } from "./routes";
 
@@ -13,8 +12,8 @@ export const IdPayBarcodeNavigator = () => (
       screenOptions={{ gestureEnabled: true }}
     >
       <Stack.Screen
-        component={IdPayBarcodeResultScreen}
         name={IdPayBarcodeRoutes.IDPAY_BARCODE_RESULT}
+        component={IdPayBarcodeResultScreen}
         options={{
           headerShown: false
         }}

@@ -1,12 +1,11 @@
-import { call } from "typed-redux-saga/macro";
 import { v4 as uuid } from "uuid";
-
-import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
-import { isTestEnv } from "../../../utils/environment";
+import { call } from "typed-redux-saga/macro";
 import { LollipopConfig } from "../../lollipop";
-import { KeyInfo } from "../../lollipop/utils/crypto";
 import { lollipopRequestInit } from "../../lollipop/utils/fetch";
+import { isTestEnv } from "../../../utils/environment";
+import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
 import { attachmentDownloadUrl } from "../utils/attachments";
+import { KeyInfo } from "../../lollipop/utils/crypto";
 
 type HeaderType = Record<string, string>;
 

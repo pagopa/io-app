@@ -1,5 +1,4 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-
 import { PinCreation } from "../../settings/security/shared/components/PinCreation";
 
 /**

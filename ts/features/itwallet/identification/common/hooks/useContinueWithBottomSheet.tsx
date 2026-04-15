@@ -12,7 +12,6 @@ import {
 import I18n from "i18next";
 import { useRef } from "react";
 import { StyleSheet, View } from "react-native";
-
 import { renderActionButtons } from "../../../../../components/ui/IOScrollView";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import {
@@ -22,7 +21,7 @@ import {
 } from "../../analytics";
 import { TrackIdMethodBottomsheetProperties } from "../../analytics/types";
 
-type ModeType = "cieId" | "ciePin" | "spid";
+type ModeType = "ciePin" | "cieId" | "spid";
 
 const firstIconMap: Record<ModeType, IOIcons> = {
   ciePin: "fiscalCodeIndividual",
@@ -37,9 +36,9 @@ const secondIconMap: Record<ModeType, IOIcons> = {
 };
 
 type Props = {
+  type: "ciePin" | "cieId" | "spid";
   isL3: boolean;
   onPrimaryAction: () => void;
-  type: "cieId" | "ciePin" | "spid";
 };
 
 /**
@@ -85,10 +84,10 @@ export const useContinueWithBottomSheet = ({
         />
         {type === "spid" && (
           <Alert
+            variant="warning"
             content={I18n.t(
               `features.itWallet.identification.modeSelection.mode.spid.bottomSheet.warning`
             )}
-            variant="warning"
           />
         )}
         <View>
@@ -138,8 +137,8 @@ const ListItem = (props: { content: string; icon: IOIcons }) => {
     <HStack space={16} style={styles.listItem}>
       <Icon
         allowFontScaling
-        color={theme["icon-decorative"]}
         name={props.icon}
+        color={theme["icon-decorative"]}
         size={IOListItemVisualParams.iconSize}
       />
       <Body style={{ flex: 1, flexWrap: "wrap" }}>{props.content}</Body>

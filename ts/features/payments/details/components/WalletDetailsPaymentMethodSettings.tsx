@@ -1,7 +1,7 @@
 import { Divider, ListItemHeader } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
-import { ReactElement } from "react";
 
+import { ReactElement } from "react";
+import I18n from "i18next";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import WalletDetailsPagoPaPaymentCapability from "./WalletDetailsPagoPaPaymentCapability";
 

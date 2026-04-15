@@ -1,5 +1,4 @@
 import { StateFrom } from "xstate";
-
 import { ItwProximityMachine } from "./machine";
 import { ItwPresentationTags } from "./tags";
 

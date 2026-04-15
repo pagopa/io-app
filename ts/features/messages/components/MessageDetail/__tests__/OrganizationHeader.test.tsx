@@ -1,6 +1,5 @@
 import { act, fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
-
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import * as USE_IO_NAV from "../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -82,13 +81,13 @@ const renderComponent = (
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
       <OrganizationHeader
-        canNavigateToServiceDetails={canNavigateToServiceDetails ?? true}
         logoUri={require("../../../../../../img/test/logo.png")}
         messageId={mockMessageId}
         organizationName={"#### organization_name ####"}
-        serviceId={mockServiceId}
         serviceName={"#### service name ####"}
+        serviceId={mockServiceId}
         thirdPartySenderDenomination={denomination}
+        canNavigateToServiceDetails={canNavigateToServiceDetails ?? true}
       />
     ),
     MESSAGES_ROUTES.MESSAGE_DETAIL,

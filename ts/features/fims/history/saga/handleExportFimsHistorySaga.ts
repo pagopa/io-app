@@ -2,12 +2,11 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-
 import { SagaCallReturnType } from "../../../../types/utils";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
-import { trackExportSucceeded } from "../../common/analytics";
 import { FimsHistoryClient } from "../api/client";
 import { fimsHistoryExport } from "../store/actions";
+import { trackExportSucceeded } from "../../common/analytics";
 
 export function* handleExportFimsHistorySaga(
   exportHistory: FimsHistoryClient["requestExport"],

@@ -1,3 +1,5 @@
+import { useCallback, useMemo } from "react";
+import { FlatList, ListRenderItemInfo, Platform } from "react-native";
 import {
   Divider,
   IOVisualCostants,
@@ -7,45 +9,39 @@ import {
   ListItemInfoCopy
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { useCallback, useMemo } from "react";
-import { FlatList, ListRenderItemInfo, Platform } from "react-native";
-
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { ServiceMetadata } from "../../../../../definitions/services/ServiceMetadata";
 import { useIOSelector } from "../../../../store/hooks";
+import { serviceMetadataByIdSelector } from "../store/selectors";
 import { handleItemOnPress } from "../../../../utils/url";
 import * as analytics from "../../common/analytics";
-import { serviceMetadataByIdSelector } from "../store/selectors";
 
-export type ServiceDetailsMetadataProps = {
-  organizationFiscalCode: string;
-  serviceId: ServiceId;
+type MetadataListItemBase = {
+  condition?: boolean;
 };
+
+type MetadataListItemAction = MetadataListItemBase & {
+  kind: "ListItemAction";
+} & Omit<ListItemAction, "variant">;
+
+type MetadataListItemInfo = MetadataListItemBase & {
+  kind: "ListItemInfo";
+  label: string;
+} & ListItemInfo;
+
+type MetadataListItemInfoCopy = MetadataListItemBase & {
+  kind: "ListItemInfoCopy";
+} & ListItemInfoCopy;
 
 type MetadataListItem =
   | MetadataListItemAction
   | MetadataListItemInfo
   | MetadataListItemInfoCopy;
 
-type MetadataListItemAction = MetadataListItemBase &
-  Omit<ListItemAction, "variant"> & {
-    kind: "ListItemAction";
-  };
-
-type MetadataListItemBase = {
-  condition?: boolean;
+export type ServiceDetailsMetadataProps = {
+  organizationFiscalCode: string;
+  serviceId: ServiceId;
 };
-
-type MetadataListItemInfo = ListItemInfo &
-  MetadataListItemBase & {
-    kind: "ListItemInfo";
-    label: string;
-  };
-
-type MetadataListItemInfoCopy = ListItemInfoCopy &
-  MetadataListItemBase & {
-    kind: "ListItemInfoCopy";
-  };
 
 export const ServiceDetailsMetadata = ({
   organizationFiscalCode,
@@ -202,13 +198,13 @@ export const ServiceDetailsMetadata = ({
 
   return (
     <FlatList
+      ListHeaderComponent={ListHeaderComponent}
+      ItemSeparatorComponent={() => <Divider />}
       contentContainerStyle={{
         paddingHorizontal: IOVisualCostants.appMarginDefault
       }}
       data={filteredMetadataListItems}
-      ItemSeparatorComponent={() => <Divider />}
       keyExtractor={item => item.label}
-      ListHeaderComponent={ListHeaderComponent}
       renderItem={renderItem}
       scrollEnabled={false}
     />

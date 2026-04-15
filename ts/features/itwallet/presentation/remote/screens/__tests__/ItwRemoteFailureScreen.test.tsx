@@ -1,22 +1,21 @@
+import { createActor } from "xstate";
+import { createStore } from "redux";
 import {
-  Errors,
   RemotePresentation,
+  Errors,
   Trust
 } from "@pagopa/io-react-native-wallet";
 import { constTrue } from "fp-ts/lib/function";
-import { createStore } from "redux";
-import { createActor } from "xstate";
-
-import { applicationChangeState } from "../../../../../../store/actions/application";
-import { appReducer } from "../../../../../../store/reducers";
-import { GlobalState } from "../../../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
-import * as preferencesSelectors from "../../../../common/store/selectors/preferences";
 import { RemoteFailure, RemoteFailureType } from "../../machine/failure";
 import { itwRemoteMachine } from "../../machine/machine";
 import { ItwRemoteMachineContext } from "../../machine/provider";
-import { ITW_REMOTE_ROUTES } from "../../navigation/routes";
 import { ItwRemoteFailureScreen } from "../ItwRemoteFailureScreen";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { ITW_REMOTE_ROUTES } from "../../navigation/routes";
+import { appReducer } from "../../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import * as preferencesSelectors from "../../../../common/store/selectors/preferences";
 
 describe("ItwRemoteFailureScreen", () => {
   test.each<RemoteFailure>([

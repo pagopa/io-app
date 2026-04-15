@@ -1,14 +1,13 @@
-import * as O from "fp-ts/Option";
 import { expectSaga } from "redux-saga-test-plan";
 import { select } from "redux-saga/effects";
-
-import { PublicSession } from "../../../../../../../definitions/session_manager/PublicSession";
-import { SpidLevelEnum } from "../../../../../../../definitions/session_manager/SpidLevel";
+import * as O from "fp-ts/Option";
+import { shouldTrackLevelSecurityMismatchSaga } from "../trackLevelSecuritySaga";
+import { cieIDSelectedSecurityLevelSelector } from "../../store/selectors";
 import { idpSelector } from "../../../../common/store/selectors";
 import { IdpCIE_ID } from "../../../hooks/useNavigateToLoginMethod";
 import { trackCieIdSecurityLevelMismatch } from "../../analytics";
-import { cieIDSelectedSecurityLevelSelector } from "../../store/selectors";
-import { shouldTrackLevelSecurityMismatchSaga } from "../trackLevelSecuritySaga";
+import { PublicSession } from "../../../../../../../definitions/session_manager/PublicSession";
+import { SpidLevelEnum } from "../../../../../../../definitions/session_manager/SpidLevel";
 
 jest.mock("../../analytics", () => ({
   trackCieIdSecurityLevelMismatch: jest.fn()

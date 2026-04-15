@@ -1,17 +1,16 @@
 import { Body, ListItemAction } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import I18n from "i18next";
 import { Alert } from "react-native";
-
+import I18n from "i18next";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
+import { identificationRequest } from "../../../identification/store/actions";
 import { useIODispatch } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp";
-import { identificationRequest } from "../../../identification/store/actions";
 import { useIdPayInfoCieBottomSheet } from "../components/IdPayInfoCieBottomSheet";
 import { IdPayCodeRoutes } from "../navigation/routes";
 import { idPayGenerateCode } from "../store/actions";
@@ -59,22 +58,22 @@ export const IdPayCodeRenewScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
-      contextualHelp={emptyContextualHelp}
-      description={I18n.t("idpay.code.renew.screen.body")}
-      headerActionsProp={{ showHelp: true }}
-      includeContentMargins
       title={{
         label: I18n.t("idpay.code.renew.screen.header")
       }}
+      description={I18n.t("idpay.code.renew.screen.body")}
+      contextualHelp={emptyContextualHelp}
+      headerActionsProp={{ showHelp: true }}
+      includeContentMargins
     >
-      <Body asLink onPress={presentCieBottomSheet} weight="Semibold">
+      <Body asLink weight="Semibold" onPress={presentCieBottomSheet}>
         {I18n.t("idpay.code.renew.screen.link")}
       </Body>
       <ListItemAction
-        accessibilityLabel={I18n.t("idpay.code.renew.screen.generateCTA")}
-        icon="change"
         label={I18n.t("idpay.code.renew.screen.generateCTA")}
         onPress={() => customAlert(handleConfirm)}
+        icon="change"
+        accessibilityLabel={I18n.t("idpay.code.renew.screen.generateCTA")}
         variant="danger"
       />
       {bottomSheet}

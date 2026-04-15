@@ -1,11 +1,10 @@
 import { createStore } from "redux";
-
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { FIMS_ROUTES } from "../../../common/navigation";
 import { FimsHistoryHeaderComponent } from "../FimsHistoryHeaderComponent";
+import { FIMS_ROUTES } from "../../../common/navigation";
 
 describe("FimsHistoryHeaderComponent", () => {
   it("should match snapshot", () => {

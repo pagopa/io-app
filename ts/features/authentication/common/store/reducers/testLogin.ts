@@ -1,36 +1,35 @@
 import { getType } from "typesafe-actions";
-
 import { Action } from "../../../../../store/actions/types";
-import { GlobalState } from "../../../../../store/reducers/types";
 import {
   loginFailure,
   loginSuccess,
   testLoginCleanUp,
   testLoginRequest
 } from "../actions";
-
-export type TestLoginFailedState = {
-  errorMessage: string;
-  kind: "failed";
-};
+import { GlobalState } from "../../../../../store/reducers/types";
 
 export type TestLoginInitialState = {
   kind: "idle";
+};
+
+export type TestLoginSuccessState = {
+  kind: "succedeed";
 };
 
 export type TestLoginRequestedState = {
   kind: "requested";
 };
 
-export type TestLoginState =
-  | TestLoginFailedState
-  | TestLoginInitialState
-  | TestLoginRequestedState
-  | TestLoginSuccessState;
-
-export type TestLoginSuccessState = {
-  kind: "succedeed";
+export type TestLoginFailedState = {
+  kind: "failed";
+  errorMessage: string;
 };
+
+export type TestLoginState =
+  | TestLoginInitialState
+  | TestLoginSuccessState
+  | TestLoginRequestedState
+  | TestLoginFailedState;
 
 export const testLoginSelector = (state: GlobalState): TestLoginState =>
   state.features.loginFeatures.testLogin;
@@ -40,13 +39,14 @@ export const testLoginReducer = (
   action: Action
 ): TestLoginState => {
   switch (action.type) {
-    case getType(loginFailure):
-      if (action.payload.idp !== "test") {
-        return state;
-      }
+    case getType(testLoginCleanUp):
       return {
-        kind: "failed",
-        errorMessage: action.payload.error.message
+        kind: "idle"
+      };
+
+    case getType(testLoginRequest):
+      return {
+        kind: "requested"
       };
 
     case getType(loginSuccess):
@@ -57,14 +57,13 @@ export const testLoginReducer = (
         kind: "succedeed"
       };
 
-    case getType(testLoginCleanUp):
+    case getType(loginFailure):
+      if (action.payload.idp !== "test") {
+        return state;
+      }
       return {
-        kind: "idle"
-      };
-
-    case getType(testLoginRequest):
-      return {
-        kind: "requested"
+        kind: "failed",
+        errorMessage: action.payload.error.message
       };
 
     default:

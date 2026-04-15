@@ -1,18 +1,14 @@
 import { default as configureMockStore } from "redux-mock-store";
 import { ActionArgs } from "xstate";
-
 import { applicationChangeState } from "../../../../../store/actions/application";
-import { useIOStore } from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
-import {
-  itwCredentialsRemoveByType,
-  itwCredentialsStore
-} from "../../../credentials/store/actions";
 import { createCredentialUpgradeActionsImplementation } from "../actions";
 import { Context } from "../context";
 import { CredentialUpgradeEvents } from "../events";
+import { useIOStore } from "../../../../../store/hooks";
+import { itwCredentialsReplaceByType } from "../../../credentials/store/actions";
 
 describe("itwCredentialUpgradeMachine actions", () => {
   describe("storeCredential", () => {
@@ -32,7 +28,12 @@ describe("itwCredentialUpgradeMachine actions", () => {
           actorId: "upgradeCredential",
           output: {
             credentialType: "MDL",
-            credentials: [ItwStoredCredentialsMocks.L3.mdl]
+            credentials: [
+              {
+                credential: "raw-jwt",
+                metadata: ItwStoredCredentialsMocks.L3.mdl
+              }
+            ]
           }
         }
       } as unknown as ActionArgs<
@@ -42,10 +43,15 @@ describe("itwCredentialUpgradeMachine actions", () => {
       >);
 
       expect(mockDispatch).toHaveBeenCalledWith(
-        itwCredentialsRemoveByType("MDL")
-      );
-      expect(mockDispatch).toHaveBeenCalledWith(
-        itwCredentialsStore([ItwStoredCredentialsMocks.L3.mdl])
+        itwCredentialsReplaceByType(
+          [
+            {
+              credential: "raw-jwt",
+              metadata: ItwStoredCredentialsMocks.L3.mdl
+            }
+          ],
+          {}
+        )
       );
     });
   });

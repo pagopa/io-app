@@ -1,5 +1,4 @@
 import * as O from "fp-ts/lib/Option";
-
 import { CreditCardDetector, SupportedBrand } from "../creditCard";
 
 describe("Test CC validate function", () => {

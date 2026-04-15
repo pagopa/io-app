@@ -1,21 +1,20 @@
+import { testSaga } from "redux-saga-test-plan";
+import * as E from "fp-ts/lib/Either";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import * as reporters from "@pagopa/ts-commons/lib/reporters";
-import * as E from "fp-ts/lib/Either";
-import { testSaga } from "redux-saga-test-plan";
-
 import { PasswordLogin } from "../../../../../../definitions/session_manager/PasswordLogin";
+import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
+import {
+  testLoginRequest,
+  loginSuccess,
+  loginFailure
+} from "../../store/actions";
+import { handleTestLogin } from "../testLoginSaga";
 import { ephemeralPublicKeySelector } from "../../../../lollipop/store/reducers/lollipop";
 import {
   isActiveSessionFastLoginEnabledSelector,
   isActiveSessionLoginSelector
 } from "../../../activeSessionLogin/store/selectors";
-import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
-import {
-  loginFailure,
-  loginSuccess,
-  testLoginRequest
-} from "../../store/actions";
-import { handleTestLogin } from "../testLoginSaga";
 
 const mockPayload = {
   username: "ABCDEF12G34H567I",

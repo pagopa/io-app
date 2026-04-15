@@ -1,21 +1,20 @@
 import { VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { useCallback, useRef } from "react";
-
+import { useRef, useCallback } from "react";
 import { isReady } from "../../../../../common/model/RemoteValue";
+import IdpsGrid from "../../../../authentication/login/idp/components/IdpsGrid";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
+import { randomOrderIdps } from "../../../../authentication/login/idp/screens/IdpSelectionScreen";
 import { loadIdps } from "../../../../../store/actions/content";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { idpsRemoteValueSelector } from "../../../../../store/reducers/content";
 import { idps as idpsFallback, SpidIdp } from "../../../../../utils/idps";
-import IdpsGrid from "../../../../authentication/login/idp/components/IdpsGrid";
-import { randomOrderIdps } from "../../../../authentication/login/idp/screens/IdpSelectionScreen";
-import { ItwFlow } from "../../../analytics/utils/types";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
+import { ItwFlow } from "../../../analytics/utils/types";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
 import {
-  trackItWalletSpidIDPSelected,
-  trackItWalletSpidIDPSelection
+  trackItWalletSpidIDPSelection,
+  trackItWalletSpidIDPSelected
 } from "../../analytics";
 
 export const ItwIdentificationIdpSelectionScreen = () => {
@@ -46,10 +45,10 @@ export const ItwIdentificationIdpSelectionScreen = () => {
   return (
     <IOScrollViewWithLargeHeader title={{ label: "" }}>
       <IdpsGrid
-        footerComponent={<VSpacer size={24} />}
-        headerComponent={undefined}
         idps={randomIdps.current}
         onIdpSelected={onIdpSelected}
+        headerComponent={undefined}
+        footerComponent={<VSpacer size={24} />}
       />
     </IOScrollViewWithLargeHeader>
   );

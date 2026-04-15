@@ -1,8 +1,7 @@
 import { FooterActionsInline } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-
-import IOMarkdown from "../../../../../components/IOMarkdown";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import IOMarkdown from "../../../../../components/IOMarkdown";
 
 const ManualConfigConfirm = (): React.ReactElement => (
   <IOMarkdown
@@ -20,6 +19,11 @@ export const useManualConfigBottomSheet = (onConfirm: () => void) => {
     component: <ManualConfigConfirm />,
     footer: (
       <FooterActionsInline
+        startAction={{
+          color: "primary",
+          label: I18n.t("global.buttons.cancel"),
+          onPress: () => dismiss()
+        }}
         endAction={{
           color: "danger",
           label: I18n.t("global.buttons.confirm"),
@@ -27,11 +31,6 @@ export const useManualConfigBottomSheet = (onConfirm: () => void) => {
             onConfirm();
             dismiss();
           }
-        }}
-        startAction={{
-          color: "primary",
-          label: I18n.t("global.buttons.cancel"),
-          onPress: () => dismiss()
         }}
       />
     )

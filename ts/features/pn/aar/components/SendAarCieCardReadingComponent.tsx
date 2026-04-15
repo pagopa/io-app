@@ -3,7 +3,6 @@ import i18n from "i18next";
 import { useCallback, useEffect, useMemo } from "react";
 import { Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
 import { useIODispatch } from "../../../../store/hooks";
 import { isDefined } from "../../../../utils/guards";
 import {
@@ -31,15 +30,15 @@ import { RecipientInfo, sendAarFlowStates } from "../utils/stateUtils";
 import { useAarGenericErrorBottomSheet } from "./errors/hooks/useAarGenericErrorBottomSheet";
 import { SendAarZendeskSecondLevelTag } from "./errors/hooks/useAarStartSendZendeskSupport";
 
+type ScreenContentProps = Omit<CieCardReadContentProps, "progress">;
+
 export type SendAarCieCardReadingComponentProps = {
-  can: string;
   iun: string;
   mandateId: string;
   recipientInfo: RecipientInfo;
+  can: string;
   verificationCode: string;
 };
-
-type ScreenContentProps = Omit<CieCardReadContentProps, "progress">;
 
 export const SendAarCieCardReadingComponent = ({
   can,
@@ -268,8 +267,8 @@ export const SendAarCieCardReadingComponent = ({
       ]}
     >
       <CieCardReadContent
-        hiddenProgressBar={isError}
         progress={progress}
+        hiddenProgressBar={isError}
         {...contentMap[readState.status]}
       />
       {bottomSheet}

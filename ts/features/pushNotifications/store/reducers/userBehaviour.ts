@@ -1,5 +1,4 @@
 import { getType } from "typesafe-actions";
-
 import { Action } from "../../../../store/actions/types";
 import {
   resetNotificationBannerDismissState,
@@ -22,20 +21,20 @@ export const userBehaviourReducer = (
   action: Action
 ): UserBehaviourState => {
   switch (action.type) {
-    case getType(resetNotificationBannerDismissState):
+    case getType(setUserDismissedNotificationsBanner):
       return {
-        ...INITIAL_STATE
+        ...state,
+        pushNotificationBannerDismissalCount:
+          state.pushNotificationBannerDismissalCount + 1
       };
     case getType(setPushNotificationBannerForceDismissed):
       return {
         ...state,
         pushNotificationBannerForceDismissionDate: new Date().getTime()
       };
-    case getType(setUserDismissedNotificationsBanner):
+    case getType(resetNotificationBannerDismissState):
       return {
-        ...state,
-        pushNotificationBannerDismissalCount:
-          state.pushNotificationBannerDismissalCount + 1
+        ...INITIAL_STATE
       };
   }
   return state;

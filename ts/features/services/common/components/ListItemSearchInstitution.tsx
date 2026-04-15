@@ -3,31 +3,32 @@ import {
   AvatarSearchProps,
   BodySmall,
   H6,
-  Icon,
   IOListItemStyles,
   IOListItemVisualParams,
+  Icon,
+  WithTestID,
   useIOTheme,
-  useListItemAnimation,
-  WithTestID
+  useListItemAnimation
 } from "@pagopa/io-app-design-system";
-import { ComponentProps, memo, ReactNode, useCallback } from "react";
+import { ComponentProps, ReactNode, memo, useCallback } from "react";
+
 import { GestureResponderEvent, Pressable, View } from "react-native";
 import Animated from "react-native-reanimated";
 
 export type ListItemSearchInstitution = WithTestID<
-  Pick<
-    ComponentProps<typeof Pressable>,
-    "accessibilityHint" | "accessibilityLabel"
-  > & {
+  {
+    value: string | ReactNode;
     avatarProps: AvatarSearchProps;
-    description?: ReactNode | string;
     /**
      * The maximum number of lines to display for the value.
      */
     numberOfLines?: number;
+    description?: string | ReactNode;
     onPress: (event: GestureResponderEvent) => void;
-    value: ReactNode | string;
-  }
+  } & Pick<
+    ComponentProps<typeof Pressable>,
+    "accessibilityLabel" | "accessibilityHint"
+  >
 >;
 
 export const ListItemSearchInstitution = memo(
@@ -63,7 +64,7 @@ export const ListItemSearchInstitution = memo(
         {description && (
           <>
             {typeof description === "string" ? (
-              <BodySmall color={theme["textBody-tertiary"]} weight="Regular">
+              <BodySmall weight="Regular" color={theme["textBody-tertiary"]}>
                 {description}
               </BodySmall>
             ) : (
@@ -81,14 +82,14 @@ export const ListItemSearchInstitution = memo(
 
     return (
       <Pressable
-        accessibilityHint={accessibilityHint}
-        accessibilityLabel={accessibilityLabel}
-        accessibilityRole="button"
-        accessible={true}
         onPress={handleOnPress}
         onPressIn={onPressIn}
         onPressOut={onPressOut}
         onTouchEnd={onPressOut}
+        accessible={true}
+        accessibilityLabel={accessibilityLabel}
+        accessibilityHint={accessibilityHint}
+        accessibilityRole="button"
         testID={testID}
       >
         <Animated.View
@@ -102,8 +103,8 @@ export const ListItemSearchInstitution = memo(
             </View>
             <View style={{ flex: 1 }}>{listItemSearchInstitutionContent}</View>
             <Icon
-              color={theme["interactiveElem-default"]}
               name="chevronRightListItem"
+              color={theme["interactiveElem-default"]}
               size={IOListItemVisualParams.chevronSize}
             />
           </Animated.View>

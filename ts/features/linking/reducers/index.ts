@@ -1,8 +1,7 @@
 import { getType } from "typesafe-actions";
-
+import { clearLinkingUrl, storeLinkingUrl } from "../actions";
 import { Action } from "../../../store/actions/types";
 import { GlobalState } from "../../../store/reducers/types";
-import { clearLinkingUrl, storeLinkingUrl } from "../actions";
 
 export type BackgroundLinkingState = {
   linkingUrl?: string;
@@ -15,13 +14,13 @@ export const backgroundLinkingReducer = (
   action: Action
 ) => {
   switch (action.type) {
-    case getType(clearLinkingUrl):
-      return INITIAL_STATE;
     case getType(storeLinkingUrl):
       return {
         ...state,
         linkingUrl: action.payload
       };
+    case getType(clearLinkingUrl):
+      return INITIAL_STATE;
   }
   return state;
 };

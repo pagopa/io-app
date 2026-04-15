@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-
 import {
   curriedSendMessageFromIdSelector,
   pnReducer,
@@ -7,8 +6,8 @@ import {
 } from "..";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import { GlobalState } from "../../../../../store/reducers/types";
 import { PNMessage } from "../../types/types";
+import { GlobalState } from "../../../../../store/reducers/types";
 
 describe("pnReducer", () => {
   it("should match snapshot", () => {

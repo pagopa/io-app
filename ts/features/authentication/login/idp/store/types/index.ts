@@ -5,21 +5,21 @@ export enum ErrorType {
   "LOGIN_ERROR" = "LOGIN_ERROR"
 }
 
-export type NativeLoginRequestInfo =
-  | RequestInfoError
-  | RequestInfoPositiveStates;
+export type RequestInfoPositiveStates = {
+  requestState: "LOADING" | "AUTHORIZED" | "AUTHORIZING";
+  nativeAttempts: number;
+};
 
 export type RequestInfoError = {
-  errorCodeOrMessage?: string;
-  errorType: ErrorType;
-  nativeAttempts: number;
   requestState: "ERROR";
+  errorType: ErrorType;
+  errorCodeOrMessage?: string;
+  nativeAttempts: number;
 };
 
-export type RequestInfoPositiveStates = {
-  nativeAttempts: number;
-  requestState: "AUTHORIZED" | "AUTHORIZING" | "LOADING";
-};
+export type NativeLoginRequestInfo =
+  | RequestInfoPositiveStates
+  | RequestInfoError;
 
 export type StandardLoginRequestInfo = {
   requestState: pot.Pot<true, ErrorType>;

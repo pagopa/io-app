@@ -1,6 +1,5 @@
 import { SagaIterator } from "redux-saga";
 import { takeLatest } from "typed-redux-saga/macro";
-
 import { PaymentClient } from "../../common/api/client";
 import {
   paymentsCalculatePaymentFeesAction,
@@ -19,11 +18,11 @@ import { handleWalletPaymentCalculateFees } from "./networking/handleWalletPayme
 import { handleWalletPaymentCreateTransaction } from "./networking/handleWalletPaymentCreateTransaction";
 import { handleWalletPaymentDeleteTransaction } from "./networking/handleWalletPaymentDeleteTransaction";
 import { handleWalletPaymentGetAllMethods } from "./networking/handleWalletPaymentGetAllMethods";
-import { handleWalletPaymentGetContextualOnboardingUrl } from "./networking/handleWalletPaymentGetContextualOnboardingUrl";
 import { handleWalletPaymentGetDetails } from "./networking/handleWalletPaymentGetDetails";
-import { handleWalletPaymentGetRecentMethod } from "./networking/handleWalletPaymentGetRecentMethod";
 import { handleWalletPaymentGetTransactionInfo } from "./networking/handleWalletPaymentGetTransactionInfo";
 import { handleWalletPaymentGetUserWallets } from "./networking/handleWalletPaymentGetUserWallets";
+import { handleWalletPaymentGetRecentMethod } from "./networking/handleWalletPaymentGetRecentMethod";
+import { handleWalletPaymentGetContextualOnboardingUrl } from "./networking/handleWalletPaymentGetContextualOnboardingUrl";
 
 /**
  * Handle the pagoPA payments requests

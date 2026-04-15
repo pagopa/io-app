@@ -1,6 +1,5 @@
 import { StackActions } from "@react-navigation/native";
 import { call, put } from "typed-redux-saga/macro";
-
 import NavigationService from "../../../../navigation/NavigationService";
 import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes";
 import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";

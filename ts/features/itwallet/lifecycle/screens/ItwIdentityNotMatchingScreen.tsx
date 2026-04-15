@@ -1,20 +1,19 @@
-import { Banner, ContentWrapper, VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
+import { Banner, ContentWrapper, VStack } from "@pagopa/io-app-design-system";
+import { Alert } from "react-native";
 import { constNull } from "fp-ts/lib/function";
 import I18n from "i18next";
-import { Alert } from "react-native";
-
-import IOMarkdown from "../../../../components/IOMarkdown";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import { useIODispatch } from "../../../../store/hooks";
-import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import { logoutRequest } from "../../../authentication/common/store/actions";
-import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
-import { trackItwIdNotMatch, trackWalletNewIdReset } from "../analytics";
 import {
   itwLifecycleIdentityCheckCompleted,
   itwLifecycleWalletReset
 } from "../store/actions";
+import { logoutRequest } from "../../../authentication/common/store/actions";
+import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
+import { useIODispatch } from "../../../../store/hooks";
+import { trackItwIdNotMatch, trackWalletNewIdReset } from "../analytics";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
+import IOMarkdown from "../../../../components/IOMarkdown";
 
 export const ItwIdentityNotMatchingScreen = () => {
   useAvoidHardwareBackButton();
@@ -51,6 +50,11 @@ export const ItwIdentityNotMatchingScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
+      title={{
+        label: I18n.t("features.itWallet.notMatchingIdentityScreen.title")
+      }}
+      headerActionsProp={{ showHelp: true }}
+      goBack={handleCancel}
       actions={{
         type: "TwoButtons",
         primary: {
@@ -62,11 +66,6 @@ export const ItwIdentityNotMatchingScreen = () => {
           onPress: handleCancel
         }
       }}
-      goBack={handleCancel}
-      headerActionsProp={{ showHelp: true }}
-      title={{
-        label: I18n.t("features.itWallet.notMatchingIdentityScreen.title")
-      }}
     >
       <ContentWrapper>
         <VStack space={24}>
@@ -76,11 +75,11 @@ export const ItwIdentityNotMatchingScreen = () => {
             )}
           />
           <Banner
-            color="neutral"
             content={I18n.t(
               "features.itWallet.notMatchingIdentityScreen.banner.title"
             )}
             pictogramName="security"
+            color="neutral"
           />
         </VStack>
       </ContentWrapper>

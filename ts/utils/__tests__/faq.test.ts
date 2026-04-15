@@ -1,5 +1,4 @@
 import I18n from "i18next";
-
 import { FAQsCategoriesType, FAQType, getFAQsFromCategories } from "../faq";
 
 describe("getFAQsFromCategories", () => {
@@ -47,7 +46,7 @@ describe("getFAQsFromCategories", () => {
     expect(getFAQsFromCategories(categories)).toStrictEqual(faqs);
   });
 
-  it("should return the FAQType array from a duplicated array of FAQsCategoriesType", () => {
+  it("should return the FAQType array from an array of FAQsCategoriesType", () => {
     expect(getFAQsFromCategories([...categories, ...categories])).toStrictEqual(
       faqs
     );
@@ -57,7 +56,7 @@ describe("getFAQsFromCategories", () => {
     expect(getFAQsFromCategories([])).toStrictEqual([]);
   });
 
-  it("Should return an empty array for unmapped category keys", () => {
+  it("Should return an empty array", () => {
     expect(
       getFAQsFromCategories(["not mapped key" as FAQsCategoriesType])
     ).toStrictEqual([]);

@@ -1,7 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
 import { RefObject } from "react";
-
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";

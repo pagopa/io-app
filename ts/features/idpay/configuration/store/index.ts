@@ -1,14 +1,14 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-
-import { StatusEnum } from "../../../../../definitions/idpay/InstrumentDTO";
 import { InstrumentListDTO } from "../../../../../definitions/idpay/InstrumentListDTO";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";
+import { StatusEnum } from "../../../../../definitions/idpay/InstrumentDTO";
 import {
   idpayInitiativeInstrumentDelete,
   idpayInitiativeInstrumentsGet
@@ -29,19 +29,26 @@ const reducer = (
   action: Action
 ): IdPayInitiativeConfigurationState => {
   switch (action.type) {
-    case getType(idpayInitiativeInstrumentDelete.failure): {
-      const { instrumentId, error } = action.payload;
+    case getType(idpayInitiativeInstrumentsGet.request):
+      if (!action.payload.isRefreshing) {
+        return {
+          ...state,
+          instruments: pot.noneLoading
+        };
+      }
+      return {
+        ...state
+      };
+    case getType(idpayInitiativeInstrumentsGet.success):
       return {
         ...state,
-        instrumentStatus: {
-          ...state.instrumentStatus,
-          [instrumentId]: pot.toError(
-            state.instrumentStatus[instrumentId],
-            error
-          )
-        }
+        instruments: pot.some(action.payload)
       };
-    }
+    case getType(idpayInitiativeInstrumentsGet.failure):
+      return {
+        ...state,
+        instruments: pot.toError(state.instruments, action.payload)
+      };
     case getType(idpayInitiativeInstrumentDelete.request): {
       const { instrumentId } = action.payload;
       if (!state.instrumentStatus[instrumentId]) {
@@ -86,26 +93,19 @@ const reducer = (
         }
       };
     }
-    case getType(idpayInitiativeInstrumentsGet.failure):
+    case getType(idpayInitiativeInstrumentDelete.failure): {
+      const { instrumentId, error } = action.payload;
       return {
         ...state,
-        instruments: pot.toError(state.instruments, action.payload)
+        instrumentStatus: {
+          ...state.instrumentStatus,
+          [instrumentId]: pot.toError(
+            state.instrumentStatus[instrumentId],
+            error
+          )
+        }
       };
-    case getType(idpayInitiativeInstrumentsGet.request):
-      if (!action.payload.isRefreshing) {
-        return {
-          ...state,
-          instruments: pot.noneLoading
-        };
-      }
-      return {
-        ...state
-      };
-    case getType(idpayInitiativeInstrumentsGet.success):
-      return {
-        ...state,
-        instruments: pot.some(action.payload)
-      };
+    }
   }
   return state;
 };

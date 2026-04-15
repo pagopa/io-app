@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import {
   BodyMonospace,
   ContentWrapper,
@@ -7,15 +9,14 @@ import {
   IOColors,
   TabItem,
   TabNavigation,
-  useIOTheme,
-  VStack
+  VStack,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
-import { useState } from "react";
 import { View } from "react-native";
-
-import { DesignSystemScreen } from "../components/DesignSystemScreen";
-import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import DESIGN_SYSTEM_ROUTES from "../navigation/routes";
+
+import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const tabItemMargin = 8;
 const componentMargin = 16;
@@ -33,8 +34,8 @@ export const DSTabNavigation = () => {
 
   return (
     <DesignSystemScreen
-      noMargin={true}
       title={DESIGN_SYSTEM_ROUTES.COMPONENTS.TAB_NAVIGATION.title}
+      noMargin={true}
     >
       <VStack space={blockMargin}>
         <ContentWrapper>
@@ -90,9 +91,9 @@ export const DSTabNavigation = () => {
                 </BodyMonospace>
               </ContentWrapper>
               <TabNavigationWithState>
-                <TabItem accessibilityLabel="Long label" label="Long label" />
-                <TabItem accessibilityLabel="Label" label="Label" />
-                <TabItem accessibilityLabel="Label" label="Label" />
+                <TabItem label="Long label" accessibilityLabel="Long label" />
+                <TabItem label="Label" accessibilityLabel="Label" />
+                <TabItem label="Label" accessibilityLabel="Label" />
               </TabNavigationWithState>
             </VStack>
 
@@ -103,9 +104,9 @@ export const DSTabNavigation = () => {
                 </BodyMonospace>
               </ContentWrapper>
               <TabNavigationWithState tabAlignment="start">
-                <TabItem accessibilityLabel="Long label" label="Long label" />
-                <TabItem accessibilityLabel="Label" label="Label" />
-                <TabItem accessibilityLabel="Label" label="Label" />
+                <TabItem label="Long label" accessibilityLabel="Long label" />
+                <TabItem label="Label" accessibilityLabel="Label" />
+                <TabItem label="Label" accessibilityLabel="Label" />
               </TabNavigationWithState>
             </VStack>
 
@@ -116,9 +117,9 @@ export const DSTabNavigation = () => {
                 </BodyMonospace>
               </ContentWrapper>
               <TabNavigationWithState tabAlignment="end">
-                <TabItem accessibilityLabel="Long label" label="Long label" />
-                <TabItem accessibilityLabel="Label" label="Label" />
-                <TabItem accessibilityLabel="Label" label="Label" />
+                <TabItem label="Long label" accessibilityLabel="Long label" />
+                <TabItem label="Label" accessibilityLabel="Label" />
+                <TabItem label="Label" accessibilityLabel="Label" />
               </TabNavigationWithState>
             </VStack>
 
@@ -129,9 +130,9 @@ export const DSTabNavigation = () => {
                 </BodyMonospace>
               </ContentWrapper>
               <TabNavigationWithState tabAlignment="stretch">
-                <TabItem accessibilityLabel="Long label" label="Long label" />
-                <TabItem accessibilityLabel="Label" label="Label" />
-                <TabItem accessibilityLabel="Label" label="Label" />
+                <TabItem label="Long label" accessibilityLabel="Long label" />
+                <TabItem label="Label" accessibilityLabel="Label" />
+                <TabItem label="Label" accessibilityLabel="Label" />
               </TabNavigationWithState>
             </VStack>
           </VStack>
@@ -145,7 +146,7 @@ const TabNavigationWithState = (props: TabNavigation) => {
   const [index, setIndex] = useState(0);
 
   return (
-    <TabNavigation {...props} onItemPress={setIndex} selectedIndex={index}>
+    <TabNavigation {...props} selectedIndex={index} onItemPress={setIndex}>
       {props.children}
     </TabNavigation>
   );
@@ -156,14 +157,14 @@ const renderTabItemLight = () => (
     <DSComponentViewerBox name="Light">
       <HStack space={tabItemMargin}>
         <TabItem
-          accessibilityLabel="Label tab"
           label="Label tab"
+          accessibilityLabel="Label tab"
           onPress={handlePress}
         />
         <TabItem
+          label="Label tab"
           accessibilityLabel="Label tab"
           icon={"starEmpty"}
-          label="Label tab"
           onPress={handlePress}
         />
       </HStack>
@@ -172,17 +173,17 @@ const renderTabItemLight = () => (
     <DSComponentViewerBox name="Light · Selected">
       <HStack space={tabItemMargin}>
         <TabItem
-          accessibilityLabel="Label tab"
           label="Label tab"
-          onPress={handlePress}
+          accessibilityLabel="Label tab"
           selected={true}
+          onPress={handlePress}
         />
         <TabItem
+          label="Label tab"
           accessibilityLabel="Label tab"
           icon={"starEmpty"}
-          label="Label tab"
-          onPress={handlePress}
           selected={true}
+          onPress={handlePress}
         />
       </HStack>
     </DSComponentViewerBox>
@@ -190,16 +191,16 @@ const renderTabItemLight = () => (
     <DSComponentViewerBox name="Light · Disabled">
       <HStack space={tabItemMargin}>
         <TabItem
+          label="Label tab"
           accessibilityLabel="Label tab"
           disabled
-          label="Label tab"
           onPress={handlePress}
         />
         <TabItem
+          label="Label tab"
           accessibilityLabel="Label tab"
           disabled
           icon={"starEmpty"}
-          label="Label tab"
           onPress={handlePress}
         />
       </HStack>
@@ -217,59 +218,59 @@ const renderTabItemDark = () => (
     }}
   >
     <VStack space={componentMargin}>
-      <DSComponentViewerBox colorMode="dark" name="Dark">
+      <DSComponentViewerBox name="Dark" colorMode="dark">
         <HStack space={tabItemMargin}>
           <TabItem
+            label="Label tab"
             accessibilityLabel="Label tab"
             color="dark"
-            label="Label tab"
             onPress={handlePress}
           />
           <TabItem
-            accessibilityLabel="Label tab"
-            color="dark"
-            icon={"starEmpty"}
             label="Label tab"
+            accessibilityLabel="Label tab"
+            icon={"starEmpty"}
+            color="dark"
             onPress={handlePress}
           />
         </HStack>
       </DSComponentViewerBox>
 
-      <DSComponentViewerBox colorMode="dark" name="Dark · Selected">
+      <DSComponentViewerBox name="Dark · Selected" colorMode="dark">
         <HStack space={tabItemMargin}>
           <TabItem
+            label="Label tab"
             accessibilityLabel="Label tab"
             color="dark"
-            label="Label tab"
-            onPress={handlePress}
             selected={true}
+            onPress={handlePress}
           />
           <TabItem
+            label="Label tab"
             accessibilityLabel="Label tab"
-            color="dark"
             icon={"starFilled"}
-            label="Label tab"
-            onPress={handlePress}
+            color="dark"
             selected={true}
+            onPress={handlePress}
           />
         </HStack>
       </DSComponentViewerBox>
 
-      <DSComponentViewerBox colorMode="dark" name="Dark · Disabled">
+      <DSComponentViewerBox name="Dark · Disabled" colorMode="dark">
         <HStack space={tabItemMargin}>
           <TabItem
+            label="Label tab"
             accessibilityLabel="Label tab"
             color="dark"
             disabled={true}
-            label="Label tab"
             onPress={handlePress}
           />
           <TabItem
+            label="Label tab"
             accessibilityLabel="Label tab"
+            icon={"starEmpty"}
             color="dark"
             disabled={true}
-            icon={"starEmpty"}
-            label="Label tab"
             onPress={handlePress}
           />
         </HStack>
@@ -281,46 +282,46 @@ const renderTabItemDark = () => (
 const renderTabNavigationLight = () => (
   <VStack space={componentMargin}>
     <TabNavigationWithState>
-      <TabItem accessibilityLabel="Label tab" label="Label tab" />
-      <TabItem accessibilityLabel="Label tab" label="Label tab" />
+      <TabItem label="Label tab" accessibilityLabel="Label tab" />
+      <TabItem label="Label tab" accessibilityLabel="Label tab" />
     </TabNavigationWithState>
 
     <TabNavigationWithState>
-      <TabItem accessibilityLabel="Label tab" label="Label tab" />
-      <TabItem accessibilityLabel="Label tab" label="Label tab" />
-      <TabItem accessibilityLabel="Label tab" label="Label tab" />
+      <TabItem label="Label tab" accessibilityLabel="Label tab" />
+      <TabItem label="Label tab" accessibilityLabel="Label tab" />
+      <TabItem label="Label tab" accessibilityLabel="Label tab" />
     </TabNavigationWithState>
 
     <TabNavigationWithState>
       <TabItem
+        label="Label tab"
         accessibilityLabel="Label tab"
         icon="starEmpty"
         iconSelected="starFilled"
-        label="Label tab"
       />
       <TabItem
+        label="Label tab"
         accessibilityLabel="Label tab"
         icon="starEmpty"
         iconSelected="starFilled"
-        label="Label tab"
       />
       <TabItem
+        label="Label tab"
         accessibilityLabel="Label tab"
         icon="starEmpty"
         iconSelected="starFilled"
-        label="Label tab"
       />
       <TabItem
+        label="Label tab"
         accessibilityLabel="Label tab"
         icon="starEmpty"
         iconSelected="starFilled"
-        label="Label tab"
       />
       <TabItem
+        label="Label tab"
         accessibilityLabel="Label tab"
         icon="starEmpty"
         iconSelected="starFilled"
-        label="Label tab"
       />
     </TabNavigationWithState>
   </VStack>
@@ -330,46 +331,46 @@ const renderTabNavigationDark = () => (
   <View style={{ paddingVertical: 24, backgroundColor: blueBackground }}>
     <VStack space={componentMargin}>
       <TabNavigationWithState color="dark">
-        <TabItem accessibilityLabel="Label tab" label="Label tab" />
-        <TabItem accessibilityLabel="Label tab" label="Label tab" />
+        <TabItem label="Label tab" accessibilityLabel="Label tab" />
+        <TabItem label="Label tab" accessibilityLabel="Label tab" />
       </TabNavigationWithState>
 
       <TabNavigationWithState color="dark">
-        <TabItem accessibilityLabel="Label tab" label="Label tab" />
-        <TabItem accessibilityLabel="Label tab" label="Label tab" />
-        <TabItem accessibilityLabel="Label tab" label="Label tab" />
+        <TabItem label="Label tab" accessibilityLabel="Label tab" />
+        <TabItem label="Label tab" accessibilityLabel="Label tab" />
+        <TabItem label="Label tab" accessibilityLabel="Label tab" />
       </TabNavigationWithState>
 
       <TabNavigationWithState color="dark">
         <TabItem
+          label="Label tab"
           accessibilityLabel="Label tab"
           icon="starEmpty"
           iconSelected="starFilled"
-          label="Label tab"
         />
         <TabItem
+          label="Label tab"
           accessibilityLabel="Label tab"
           icon="starEmpty"
           iconSelected="starFilled"
-          label="Label tab"
         />
         <TabItem
+          label="Label tab"
           accessibilityLabel="Label tab"
           icon="starEmpty"
           iconSelected="starFilled"
-          label="Label tab"
         />
         <TabItem
+          label="Label tab"
           accessibilityLabel="Label tab"
           icon="starEmpty"
           iconSelected="starFilled"
-          label="Label tab"
         />
         <TabItem
+          label="Label tab"
           accessibilityLabel="Label tab"
           icon="starEmpty"
           iconSelected="starFilled"
-          label="Label tab"
         />
       </TabNavigationWithState>
     </VStack>

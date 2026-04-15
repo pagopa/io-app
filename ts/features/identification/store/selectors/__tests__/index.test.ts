@@ -1,5 +1,4 @@
 import * as O from "fp-ts/lib/Option";
-
 import { identificationFailSelector, progressSelector } from "../../selectors";
 
 describe("identificationFailSelector", () => {

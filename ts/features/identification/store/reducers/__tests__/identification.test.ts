@@ -1,15 +1,6 @@
 import * as AR from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-
-import {
-  deltaTimespanBetweenAttempts,
-  freeAttempts,
-  identificationReducer,
-  IdentificationState,
-  maxAttempts
-} from "..";
-import { Action } from "../../../../../store/actions/types";
 import { PinString } from "../../../../../types/PinString";
 import { reproduceSequence } from "../../../../../utils/tests";
 import {
@@ -20,6 +11,14 @@ import {
   identificationStart,
   identificationSuccess
 } from "../../actions";
+import { Action } from "../../../../../store/actions/types";
+import {
+  deltaTimespanBetweenAttempts,
+  freeAttempts,
+  identificationReducer,
+  IdentificationState,
+  maxAttempts
+} from "..";
 
 const identificationStartMock = identificationStart("111111" as PinString);
 

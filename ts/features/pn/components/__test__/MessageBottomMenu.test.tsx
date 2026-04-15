@@ -1,16 +1,15 @@
 import { createStore } from "redux";
-
-import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
-import { NotificationStatusHistory } from "../../../../../definitions/pn/NotificationStatusHistory";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import PN_ROUTES from "../../navigation/routes";
+import { MessageBottomMenu } from "../MessageBottomMenu";
+import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
+import { NotificationStatusHistory } from "../../../../../definitions/pn/NotificationStatusHistory";
 import {
   SendOpeningSource,
   SendUserType
 } from "../../../pushNotifications/analytics";
-import PN_ROUTES from "../../navigation/routes";
-import { MessageBottomMenu } from "../MessageBottomMenu";
 
 jest.mock("../TimelineListItem");
 jest.mock("../NeedHelp");

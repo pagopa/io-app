@@ -1,19 +1,18 @@
-import * as B from "fp-ts/lib/boolean";
 import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
+import * as B from "fp-ts/lib/boolean";
 import * as RA from "fp-ts/lib/ReadonlyArray";
-
-import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
-import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
+import * as O from "fp-ts/lib/Option";
+import { GlobalState } from "../../../../store/reducers/types";
 import {
   isError,
   isReady,
   RemoteValue
 } from "../../../../common/model/RemoteValue";
-import { GlobalState } from "../../../../store/reducers/types";
+import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
+import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
+import { getRptIdStringFromPayment } from "../../../pn/utils/rptId";
 import { SinglePaymentState } from "../../../messages/store/reducers/payments";
 import { MessagePaymentError } from "../../../messages/types/paymentErrors";
-import { getRptIdStringFromPayment } from "../../../pn/utils/rptId";
 
 export const paymentsButtonStateSelector = (
   state: GlobalState,
@@ -55,8 +54,8 @@ const computeUpdatedPaymentCount =
     );
 
 type PaymentStatistics = {
-  errorPaymentCount: number;
   updatedPaymentCount: number;
+  errorPaymentCount: number;
 };
 
 const initialPaymentStatistics: () => PaymentStatistics = () => ({

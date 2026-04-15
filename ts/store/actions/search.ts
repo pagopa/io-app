@@ -15,6 +15,6 @@ export const updateSearchText =
 export const disableSearch = createStandardAction("DISABLE_SEARCH")();
 
 export type SearchActions =
-  | ActionType<typeof disableSearch>
   | ActionType<typeof searchMessagesEnabled>
-  | ActionType<typeof updateSearchText>;
+  | ActionType<typeof updateSearchText>
+  | ActionType<typeof disableSearch>;

@@ -1,22 +1,21 @@
 import { act, waitFor } from "@testing-library/react-native";
 import * as RN from "react-native";
 import { createStore } from "redux";
-
 import * as USEIO from "../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { setSecurityAdviceReadyToShow } from "../../../authentication/fastLogin/store/actions/securityAdviceActions";
+import * as NOTIF_UTILS from "../../utils";
+import { NOTIFICATIONS_ROUTES } from "../../navigation/routes";
+import * as MAIN_FILE from "../usePushNotificationEngagement";
 import * as analytics from "../../analytics";
 import {
   NotificationModalFlow,
   SendOpeningSource,
   SendUserType
 } from "../../analytics";
-import { NOTIFICATIONS_ROUTES } from "../../navigation/routes";
-import * as NOTIF_UTILS from "../../utils";
-import * as MAIN_FILE from "../usePushNotificationEngagement";
+import { setSecurityAdviceReadyToShow } from "../../../authentication/fastLogin/store/actions/securityAdviceActions";
 
 const notificationModalFlowList: Array<NotificationModalFlow> = [
   "authentication",

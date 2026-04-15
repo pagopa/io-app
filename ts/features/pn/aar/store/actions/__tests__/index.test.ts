@@ -1,16 +1,15 @@
 import { FiscalCode, NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-
 import {
   EphemeralAarMessageDataActionPayload,
-  initiateAarFlow,
   populateStoresWithEphemeralAarMessageData,
   setAarFlowState,
-  terminateAarFlow
+  terminateAarFlow,
+  initiateAarFlow
 } from "..";
-import { MessageBodyMarkdown } from "../../../../../../../definitions/backend/MessageBodyMarkdown";
-import { MessageSubject } from "../../../../../../../definitions/backend/MessageSubject";
 import { ThirdPartyMessage } from "../../../../../../../definitions/pn/ThirdPartyMessage";
 import { AarFlowState, sendAarFlowStates } from "../../../utils/stateUtils";
+import { MessageBodyMarkdown } from "../../../../../../../definitions/backend/MessageBodyMarkdown";
+import { MessageSubject } from "../../../../../../../definitions/backend/MessageSubject";
 
 describe("AarFlowStateActions", () => {
   const payload: AarFlowState = {

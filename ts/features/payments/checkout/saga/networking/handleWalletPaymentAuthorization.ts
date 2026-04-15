@@ -1,10 +1,8 @@
 import * as E from "fp-ts/lib/Either";
 import { put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-
 import { ApmDetailTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/ApmDetailType";
 import { AuthorizationDetails } from "../../../../../../definitions/pagopa/ecommerce/AuthorizationDetails";
-import { CardsDetailTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/CardsDetailType";
 import { PaymentMethodManagementTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/PaymentMethodManagementType";
 import { RedirectDetailTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/RedirectDetailType";
 import { RequestAuthorizationRequest } from "../../../../../../definitions/pagopa/ecommerce/RequestAuthorizationRequest";
@@ -15,6 +13,7 @@ import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { PaymentClient } from "../../../common/api/client";
 import { withPaymentsSessionToken } from "../../../common/utils/withPaymentsSessionToken";
 import { paymentsStartPaymentAuthorizationAction } from "../../store/actions/networking";
+import { CardsDetailTypeEnum } from "../../../../../../definitions/pagopa/ecommerce/CardsDetailType";
 
 type WalletAuthorizationAction = ActionType<
   (typeof paymentsStartPaymentAuthorizationAction)["request"]

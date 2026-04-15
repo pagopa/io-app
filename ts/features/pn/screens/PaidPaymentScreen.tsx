@@ -1,16 +1,15 @@
 import I18n from "i18next";
-
-import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
-import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
+import { PnParamsList } from "../navigation/params";
 import {
   IOStackNavigationRouteProps,
   useIONavigation
 } from "../../../navigation/params/AppParamsList";
-import { PnParamsList } from "../navigation/params";
+import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
+import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 
 export type PaidPaymentScreenRouteParams = {
-  creditorTaxId?: string;
   noticeCode: string;
+  creditorTaxId?: string;
 };
 
 type PaidPaymentScreenProps = IOStackNavigationRouteProps<
@@ -26,13 +25,13 @@ export const PaidPaymentScreen = (_: PaidPaymentScreenProps) => {
   });
   return (
     <OperationResultScreenContent
+      title={I18n.t("wallet.payment.failure.PAYMENT_DUPLICATED.title")}
+      pictogram={"moneyCheck"}
       action={{
         label: I18n.t("global.buttons.close"),
         accessibilityLabel: I18n.t("global.buttons.close"),
         onPress: () => navigation.pop()
       }}
-      pictogram={"moneyCheck"}
-      title={I18n.t("wallet.payment.failure.PAYMENT_DUPLICATED.title")}
     />
   );
 };

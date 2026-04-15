@@ -1,22 +1,21 @@
-import { readableReport } from "@pagopa/ts-commons/lib/reporters";
-import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
+import * as E from "fp-ts/lib/Either";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { getType } from "typesafe-actions";
-
-import { resetMixpanelSaga } from "../../../../../sagas/mixpanel";
-import { startApplicationInitialization } from "../../../../../store/actions/application";
-import { startupLoadSuccess } from "../../../../../store/actions/startup";
-import { StartupStatusEnum } from "../../../../../store/reducers/startup";
-import * as error from "../../../../../utils/errors";
-import { getKeyInfo } from "../../../../lollipop/saga";
-import { KeyInfo } from "../../../../lollipop/utils/crypto";
 import {
   logoutFailure,
   logoutRequest,
   logoutSuccess
 } from "../../store/actions";
+import { watchLogoutSaga, logoutSaga } from "../watchLogoutSaga";
+import { resetMixpanelSaga } from "../../../../../sagas/mixpanel";
+import { startupLoadSuccess } from "../../../../../store/actions/startup";
+import { StartupStatusEnum } from "../../../../../store/reducers/startup";
+import { startApplicationInitialization } from "../../../../../store/actions/application";
+import * as error from "../../../../../utils/errors";
 import { bareSessionTokenSelector } from "../../store/selectors";
-import { logoutSaga, watchLogoutSaga } from "../watchLogoutSaga";
+import { KeyInfo } from "../../../../lollipop/utils/crypto";
+import { getKeyInfo } from "../../../../lollipop/saga";
 
 const sessionToken = "mock-session-token";
 const defaultKeyInfo: KeyInfo = {

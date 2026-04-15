@@ -1,9 +1,9 @@
-import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList.ts";
 import {
   CredentialL3Key,
   ItwStoredCredentialsMocks
 } from "../../common/utils/itwMocksUtils";
 import { ItwPresentationCredentialDetail } from "../../presentation/details/screens/ItwPresentationCredentialDetailScreen";
+import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList.ts";
 import { ItwPlaygroundParamsList } from "../navigation/ItwPlaygroundParamsList.ts";
 
 export type ItwL3CredentialDetailScreenNavigationParams = {

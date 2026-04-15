@@ -1,7 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
-
 import {
   isWalletCategoryFilteringEnabledSelector,
   isWalletEmptySelector,
@@ -9,21 +8,21 @@ import {
   selectWalletCardsByCategory,
   selectWalletCardsByType,
   selectWalletCategories,
-  shouldRenderItwCardsContainerSelector,
   shouldRenderWalletCategorySelector,
   shouldRenderWalletEmptyStateSelector,
-  shouldRenderWalletLoadingStateSelector
+  shouldRenderWalletLoadingStateSelector,
+  shouldRenderItwCardsContainerSelector
 } from "..";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import * as connectivitySelectors from "../../../../connectivity/store/selectors";
-import * as itwSelectors from "../../../../itwallet/common/store/selectors/remoteConfig";
 import {
   CredentialType,
   ItwStoredCredentialsMocks
 } from "../../../../itwallet/common/utils/itwMocksUtils";
 import * as itwLifecycleSelectors from "../../../../itwallet/lifecycle/store/selectors";
 import * as itwWalletInstanceSelectors from "../../../../itwallet/walletInstance/store/selectors";
+import * as itwSelectors from "../../../../itwallet/common/store/selectors/remoteConfig";
+import * as connectivitySelectors from "../../../../connectivity/store/selectors";
 import { walletCardCategoryFilters } from "../../../types";
 import { WalletCardsState } from "../../reducers/cards";
 

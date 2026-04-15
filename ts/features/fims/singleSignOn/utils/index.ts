@@ -1,9 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ActionType } from "typesafe-actions";
-
+import { FimsFlowStateTags, FimsSSOState } from "../store/reducers";
 import { startApplicationInitialization } from "../../../../store/actions/application";
 import { isStrictSome } from "../../../../utils/pot";
-import { FimsFlowStateTags, FimsSSOState } from "../store/reducers";
 
 export const IO_FIMS_LINK_PROTOCOL = "iosso:";
 export const IO_FIMS_LINK_PREFIX = IO_FIMS_LINK_PROTOCOL + "//";
@@ -19,12 +18,12 @@ export const foldFimsFlowState = <A>(
   switch (flowState) {
     case "abort":
       return onAbort(flowState);
+    case "in-app-browser-loading":
+      return onInAppBrowser(flowState);
     case "fastLogin_forced_restart":
       return onShouldRestart(flowState);
     case "idle":
       return onIdle(flowState);
-    case "in-app-browser-loading":
-      return onInAppBrowser(flowState);
   }
   return onConsents(flowState);
 };

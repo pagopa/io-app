@@ -1,9 +1,8 @@
 import { takeLatest } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
-
-import { restartCleanApplication } from "../../../../sagas/commons";
-import { ReduxSagaEffect } from "../../../../types/utils";
 import { sessionExpired } from "../store/actions";
+import { ReduxSagaEffect } from "../../../../types/utils";
+import { restartCleanApplication } from "../../../../sagas/commons";
 
 /**
  * Watches for logout-related events during runtime

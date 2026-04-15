@@ -1,50 +1,49 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-
-import { PaymentInfoResponse } from "../../../../../../definitions/backend/PaymentInfoResponse";
 import { Detail_v2Enum } from "../../../../../../definitions/backend/PaymentProblemJson";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { PaymentInfoResponse } from "../../../../../../definitions/backend/PaymentInfoResponse";
+import {
+  cancelQueuedPaymentUpdates,
+  reloadAllMessages
+} from "../../../../messages/store/actions";
+import { Action } from "../../../../../store/actions/types";
+import { appReducer } from "../../../../../store/reducers";
+import { PaymentData, UIMessageDetails } from "../../../../messages/types";
 import {
   remoteError,
   remoteLoading,
   remoteReady,
   remoteUndefined
 } from "../../../../../common/model/RemoteValue";
-import * as versionInfo from "../../../../../common/versionInfo/store/reducers/versionInfo";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { Action } from "../../../../../store/actions/types";
-import { appReducer } from "../../../../../store/reducers";
-import { GlobalState } from "../../../../../store/reducers/types";
-import {
-  cancelQueuedPaymentUpdates,
-  reloadAllMessages
-} from "../../../../messages/store/actions";
-import { PaymentData, UIMessageDetails } from "../../../../messages/types";
-import * as profile from "../../../../settings/common/store/selectors";
-import {
-  toGenericMessagePaymentError,
-  toSpecificMessagePaymentError,
-  toTimeoutMessagePaymentError
-} from "../../../types/paymentErrors";
-import { getRptIdStringFromPaymentData } from "../../../utils";
 import {
   addUserSelectedPaymentRptId,
   updatePaymentForMessage
 } from "../../actions";
 import {
-  canNavigateToPaymentFromMessageSelector,
-  isPaymentsButtonVisibleSelector,
-  isUserSelectedPaymentSelector,
-  MultiplePaymentState,
-  paymentsButtonStateSelector,
   initialState as paymentsInitialState,
-  paymentsReducer,
-  paymentStatisticsForMessageUncachedSelector,
   paymentStatusForUISelector,
+  userSelectedPaymentRptIdSelector,
+  paymentsReducer,
   shouldRetrievePaymentDataSelector,
-  SinglePaymentState,
+  isUserSelectedPaymentSelector,
+  canNavigateToPaymentFromMessageSelector,
+  paymentsButtonStateSelector,
+  isPaymentsButtonVisibleSelector,
   testable,
-  userSelectedPaymentRptIdSelector
+  SinglePaymentState,
+  MultiplePaymentState,
+  paymentStatisticsForMessageUncachedSelector
 } from "../payments";
+import { getRptIdStringFromPaymentData } from "../../../utils";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import * as versionInfo from "../../../../../common/versionInfo/store/reducers/versionInfo";
+import * as profile from "../../../../settings/common/store/selectors";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import {
+  toGenericMessagePaymentError,
+  toSpecificMessagePaymentError,
+  toTimeoutMessagePaymentError
+} from "../../../types/paymentErrors";
 
 describe("Messages payments reducer's tests", () => {
   it("Should match initial state upon initialization", () => {

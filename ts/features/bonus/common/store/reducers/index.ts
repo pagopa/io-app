@@ -1,5 +1,4 @@
 import { combineReducers } from "redux";
-
 import { Action } from "../../../../../store/actions/types";
 import cgnReducer, { CgnState } from "../../../cgn/store/reducers";
 import availableBonusesReducer, {

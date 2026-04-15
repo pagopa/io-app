@@ -1,9 +1,8 @@
 import { Body, FooterActionsInline } from "@pagopa/io-app-design-system";
 import { StackActions } from "@react-navigation/native";
 import { increment } from "fp-ts/lib/function";
-import I18n from "i18next";
 import { ComponentProps } from "react";
-
+import I18n from "i18next";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
@@ -66,8 +65,8 @@ export const useFciNoSignatureFields = (props: Props) => {
     snapPoint: [280],
     footer: (
       <FooterActionsInline
-        endAction={confirmButtonProps}
         startAction={readButtonProps}
+        endAction={confirmButtonProps}
       />
     )
   });

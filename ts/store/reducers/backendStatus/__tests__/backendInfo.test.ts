@@ -1,9 +1,8 @@
 import * as O from "fp-ts/lib/Option";
-
 import { BackendStatus } from "../../../../../definitions/content/BackendStatus";
-import { backendStatusLoadSuccess } from "../../../actions/backendStatus";
 import { baseRawBackendStatus } from "../../__mock__/backendStatus";
 import { BackedInfoState, backendInfoReducer } from "../backendInfo";
+import { backendStatusLoadSuccess } from "../../../actions/backendStatus";
 
 describe("backend service status reducer", () => {
   // smoke tests: valid / invalid

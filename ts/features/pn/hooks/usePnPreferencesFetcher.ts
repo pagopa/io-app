@@ -1,8 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import React from "react";
-
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
@@ -12,8 +11,8 @@ import { isServicePreferenceResponseSuccess } from "../../services/details/types
 
 type PnStatus = {
   isEnabled: boolean;
-  isError: boolean;
   isLoading: boolean;
+  isError: boolean;
 };
 
 export const usePnPreferencesFetcher = (pnServiceId: ServiceId): PnStatus => {

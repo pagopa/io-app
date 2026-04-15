@@ -7,13 +7,12 @@ import {
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { enumType } from "@pagopa/ts-commons/lib/types";
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import I18n from "i18next";
+import { pipe } from "fp-ts/lib/function";
 import * as t from "io-ts";
 import { useState } from "react";
 import { View } from "react-native";
-
+import I18n from "i18next";
 import { InitiativeDTO } from "../../../../../definitions/idpay/InitiativeDTO";
 import { OperationListDTO } from "../../../../../definitions/idpay/OperationListDTO";
 import { OperationTypeEnum as RefundOperationTypeEnum } from "../../../../../definitions/idpay/RefundOperationDTO";
@@ -33,7 +32,7 @@ import { IdPayTimelineTransactionDetailsComponent } from "./IdPayTimelineTransac
 type OperationWithDetailsType = t.TypeOf<typeof OperationWithDetailsType>;
 
 const OperationWithDetailsType = enumType<
-  RefundOperationTypeEnum | TransactionOperationTypeEnum
+  TransactionOperationTypeEnum | RefundOperationTypeEnum
 >(
   { ...TransactionOperationTypeEnum, ...RefundOperationTypeEnum },
   "OperationWithDetails"
@@ -85,14 +84,6 @@ const useIdPayTimelineDetailsBottomSheet = (
       pot.toOption,
       O.map(details => {
         switch (details.operationType) {
-          case RefundOperationTypeEnum.PAID_REFUND:
-          // falls through
-          case RefundOperationTypeEnum.REJECTED_REFUND:
-            return <IdPayTimelineRefundDetailsComponent refund={details} />;
-          case TransactionOperationTypeEnum.REVERSAL:
-            return (
-              <IdPayTimelineTransactionDetailsComponent transaction={details} />
-            );
           case TransactionOperationTypeEnum.TRANSACTION:
             if (details.channel === ChannelEnum.RTD) {
               return (
@@ -106,6 +97,14 @@ const useIdPayTimelineDetailsBottomSheet = (
                 transaction={details}
               />
             );
+
+          case TransactionOperationTypeEnum.REVERSAL:
+            return (
+              <IdPayTimelineTransactionDetailsComponent transaction={details} />
+            );
+          case RefundOperationTypeEnum.PAID_REFUND:
+          case RefundOperationTypeEnum.REJECTED_REFUND:
+            return <IdPayTimelineRefundDetailsComponent refund={details} />;
           default:
             // We don't show additional info for other operation types
             return <></>;
@@ -138,7 +137,7 @@ const useIdPayTimelineDetailsBottomSheet = (
 };
 
 const TitleSkeleton = () => (
-  <IOSkeleton height={20} radius={4} shape="rectangle" width={100} />
+  <IOSkeleton shape="rectangle" width={100} height={20} radius={4} />
 );
 
 const ContentSkeleton = () => (
@@ -146,8 +145,8 @@ const ContentSkeleton = () => (
     {Array.from({ length: 6 }).map((_, i) => (
       <View key={i} style={{ paddingVertical: 8 }}>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <IOSkeleton height={21} radius={4} shape="rectangle" width={100} />
-          <IOSkeleton height={21} radius={4} shape="rectangle" width={150} />
+          <IOSkeleton shape="rectangle" width={100} height={21} radius={4} />
+          <IOSkeleton shape="rectangle" width={150} height={21} radius={4} />
         </View>
       </View>
     ))}

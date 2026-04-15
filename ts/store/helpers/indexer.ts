@@ -6,8 +6,8 @@ import * as O from "fp-ts/lib/Option";
  * been indexed by a specific property
  */
 export interface IndexedById<T> {
-  [key: number]: T | undefined;
   [key: string]: T | undefined;
+  [key: number]: T | undefined;
 }
 
 /**
@@ -19,7 +19,7 @@ export interface IndexedById<T> {
  */
 export const toIndexed = <T>(
   lst: ReadonlyArray<T>,
-  key: (_: T) => number | string
+  key: (_: T) => string | number
 ): IndexedById<T> =>
   lst.reduce((o, obj) => ({ ...o, [key(obj)]: obj }), {} as IndexedById<T>);
 

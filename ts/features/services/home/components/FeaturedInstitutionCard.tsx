@@ -7,17 +7,16 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { Dimensions, StyleSheet, View } from "react-native";
-
 import { WithTestID } from "../../../../types/WithTestID";
 import { CardPressableBase } from "../../common/components/CardPressableBase";
 import { getLogoForInstitution } from "../../common/utils";
 import { useServiceCardStyle } from "../hooks/useServiceCardStyle";
 
 export type FeaturedInstitutionCardProps = WithTestID<{
-  accessibilityLabel?: string;
   id: string;
-  isNew?: boolean;
   name: string;
+  accessibilityLabel?: string;
+  isNew?: boolean;
   onPress?: () => void;
 }>;
 
@@ -65,9 +64,9 @@ const FeaturedInstitutionCard = ({
 
   return (
     <CardPressableBase
-      accessibilityLabel={accessibilityLabel}
       onPress={onPress}
       testID={`${testID}-pressable`}
+      accessibilityLabel={accessibilityLabel}
     >
       <View
         style={[
@@ -83,13 +82,13 @@ const FeaturedInstitutionCard = ({
           </View>
           <View style={styles.cardLabel}>
             <H6
+              lineBreakMode="head"
+              numberOfLines={2}
               color={
                 isNew
                   ? newThemeStyle.foreground.primary
                   : defaultThemeStyle.foreground.primary
               }
-              lineBreakMode="head"
-              numberOfLines={2}
             >
               {name}
             </H6>
@@ -112,26 +111,26 @@ const FeaturedInstitutionCardSkeleton = ({ testID }: WithTestID<unknown>) => {
         <View style={styles.cardAvatar}>
           <IOSkeleton
             color={skeletonColor}
-            radius={IOVisualCostants.avatarRadiusSizeSmall}
             shape="square"
+            radius={IOVisualCostants.avatarRadiusSizeSmall}
             size={IOVisualCostants.avatarSizeSmall}
           />
         </View>
         <View style={styles.cardLabel}>
           <IOSkeleton
             color={skeletonColor}
-            height={16}
-            radius={8}
             shape="rectangle"
+            radius={8}
             width="70%"
+            height={16}
           />
           <VSpacer size={8} />
           <IOSkeleton
             color={skeletonColor}
-            height={16}
-            radius={8}
             shape="rectangle"
+            radius={8}
             width="55%"
+            height={16}
           />
         </View>
       </View>

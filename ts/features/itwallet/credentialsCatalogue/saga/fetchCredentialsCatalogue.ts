@@ -1,11 +1,10 @@
 import { call, put, select } from "typed-redux-saga/macro";
-
 import { getNetworkError } from "../../../../utils/errors";
+import { getEnv } from "../../common/utils/environment";
 import {
   selectItwEnv,
   selectItwSpecsVersion
 } from "../../common/store/selectors/environment";
-import { getEnv } from "../../common/utils/environment";
 import { fetchCredentialsCatalogue } from "../../common/utils/itwCredentialsCatalogueUtils";
 import { itwFetchCredentialsCatalogue } from "../store/actions";
 

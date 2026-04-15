@@ -1,5 +1,4 @@
 import { testSaga } from "redux-saga-test-plan";
-
 import { NotificationPaymentInfo } from "../../../../../../definitions/pn/NotificationPaymentInfo";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { Action } from "../../../../../store/actions/types";
@@ -16,11 +15,11 @@ import {
   cancelPNPaymentStatusTracking,
   startPNPaymentStatusTracking
 } from "../../actions";
-import * as REDUCERS from "../../reducers";
 import {
   testable,
   watchPaymentStatusForMixpanelTracking
 } from "../watchPaymentStatusSaga";
+import * as REDUCERS from "../../reducers";
 
 describe("watchPaymentStatusSaga", () => {
   afterEach(() => {
@@ -141,22 +140,22 @@ describe("watchPaymentStatusSaga", () => {
             .next(pnMessage.recipients.map(rec => rec.payment))
             .inspect(
               (effect: {
+                type: string;
                 payload: {
+                  polling: {
+                    type: string;
+                    payload: {
+                      fn: GeneratorFunction;
+                      args: Array<any>;
+                    };
+                  };
                   cancelAction: {
+                    type: string;
                     payload: {
                       pattern: (actionParam: Action) => boolean;
                     };
-                    type: string;
-                  };
-                  polling: {
-                    payload: {
-                      args: Array<any>;
-                      fn: GeneratorFunction;
-                    };
-                    type: string;
                   };
                 };
-                type: string;
               }) => {
                 expect(effect.type).toBe("RACE");
                 const { polling, cancelAction } = effect.payload;

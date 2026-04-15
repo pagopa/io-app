@@ -1,5 +1,4 @@
 import I18n from "i18next";
-
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
@@ -64,14 +63,14 @@ export const IdPayConfigurationSuccessScreen = () => {
 
   return (
     <OperationResultScreenContent
-      isHeaderVisible
       pictogram="success"
+      title={I18n.t("idpay.configuration.associationSuccess.title")}
+      isHeaderVisible
       subtitle={I18n.t(
         areInstrumentsSkipped
           ? "idpay.configuration.associationSuccess.noInstrumentsBody"
           : "idpay.configuration.associationSuccess.body"
       )}
-      title={I18n.t("idpay.configuration.associationSuccess.title")}
       {...renderActionsProps()}
     />
   );

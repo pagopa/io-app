@@ -9,7 +9,6 @@ import * as O from "fp-ts/Option";
 import I18n from "i18next";
 import React, { useCallback, useMemo } from "react";
 import { View } from "react-native";
-
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import {
@@ -31,8 +30,8 @@ import {
 import { WellKnownClaim } from "../../../common/utils/itwClaimsUtils.ts";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import {
-  isMultiLevelCredential,
-  StoredCredential
+  CredentialMetadata,
+  isMultiLevelCredential
 } from "../../../common/utils/itwTypesUtils.ts";
 import {
   itwCredentialSelector,
@@ -119,6 +118,25 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   if (!isWalletValid) {
     return (
       <OperationResultScreenContent
+        title={
+          isL3
+            ? I18n.t(
+                "features.itWallet.issuance.walletInstanceNotActive.itWallet.title"
+              )
+            : I18n.t(
+                "features.itWallet.issuance.walletInstanceNotActive.documentiSuIo.title"
+              )
+        }
+        subtitle={
+          isL3
+            ? I18n.t(
+                "features.itWallet.issuance.walletInstanceNotActive.itWallet.subtitle"
+              )
+            : I18n.t(
+                "features.itWallet.issuance.walletInstanceNotActive.documentiSuIo.subtitle"
+              )
+        }
+        pictogram="itWallet"
         action={{
           label: I18n.t(
             "features.itWallet.issuance.walletInstanceNotActive.primaryAction"
@@ -131,31 +149,12 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
               }
             })
         }}
-        pictogram="itWallet"
         secondaryAction={{
           label: I18n.t(
             "features.itWallet.issuance.walletInstanceNotActive.secondaryAction"
           ),
           onPress: () => navigation.popToTop()
         }}
-        subtitle={
-          isL3
-            ? I18n.t(
-                "features.itWallet.issuance.walletInstanceNotActive.itWallet.subtitle"
-              )
-            : I18n.t(
-                "features.itWallet.issuance.walletInstanceNotActive.documentiSuIo.subtitle"
-              )
-        }
-        title={
-          isL3
-            ? I18n.t(
-                "features.itWallet.issuance.walletInstanceNotActive.itWallet.title"
-              )
-            : I18n.t(
-                "features.itWallet.issuance.walletInstanceNotActive.documentiSuIo.title"
-              )
-        }
       />
     );
   }
@@ -170,7 +169,7 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
 };
 
 type ItwPresentationCredentialDetailProps = {
-  credential: StoredCredential;
+  credential: CredentialMetadata;
 };
 
 /**

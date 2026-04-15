@@ -1,8 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import configureMockStore from "redux-mock-store";
-
 import { InstitutionServicesResource } from "../../../../../../definitions/services/InstitutionServicesResource";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -11,6 +9,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import * as hooks from "../../../common/hooks/useFirstRender";
 import { SERVICES_ROUTES } from "../../../common/navigation/routes";
 import { InstitutionServicesScreen } from "../InstitutionServicesScreen";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 
 const MOCK_INSTITUTION_SERVICES: InstitutionServicesResource = {
   count: 3,

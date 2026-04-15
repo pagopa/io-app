@@ -4,23 +4,23 @@ import { useWindowDimensions, View } from "react-native";
 import QRCode, { QRCodeProps } from "react-native-qrcode-svg";
 
 export type QrCodeImageProps = {
-  // Accessibility
-  accessibilityLabel?: string;
-  // Optional color of the background
-  backgroundColor?: string;
-  // Optional color of the cell
-  color?: string;
-  // Optional correction level for the QR Code image
-  correctionLevel?: QRCodeProps["ecl"];
-  // If true, the QR code will be rendered with inverted colors
-  inverted?: boolean;
-  // Callback to handle the error if the QR Code generation fails
-  onError?: (error: Error) => void;
-  // Relative or absolute size of the QRCode image
-  size?: `${number}%` | number;
   // Value to decode and present using a QR Code
   // If undefined, a placeholder is shown
   value?: string;
+  // Relative or absolute size of the QRCode image
+  size?: number | `${number}%`;
+  // Optional color of the cell
+  color?: string;
+  // Optional color of the background
+  backgroundColor?: string;
+  // If true, the QR code will be rendered with inverted colors
+  inverted?: boolean;
+  // Optional correction level for the QR Code image
+  correctionLevel?: QRCodeProps["ecl"];
+  // Accessibility
+  accessibilityLabel?: string;
+  // Callback to handle the error if the QR Code generation fails
+  onError?: (error: Error) => void;
 };
 
 const defaultAccessibilityLabel = "QR Code";
@@ -52,21 +52,21 @@ const QrCodeImage = ({
 
   return value ? (
     <View
-      accessibilityLabel={accessibilityLabel}
-      accessibilityRole="image"
       accessible={true}
+      accessibilityRole="image"
+      accessibilityLabel={accessibilityLabel}
     >
       <QRCode
-        backgroundColor={colors[inverted ? 0 : 1]}
-        color={colors[inverted ? 1 : 0]}
-        ecl={correctionLevel}
-        onError={onError}
-        size={realSize}
         value={value}
+        size={realSize}
+        ecl={correctionLevel}
+        color={colors[inverted ? 1 : 0]}
+        backgroundColor={colors[inverted ? 0 : 1]}
+        onError={onError}
       />
     </View>
   ) : (
-    <IOSkeleton radius={16} shape="square" size={realSize} />
+    <IOSkeleton shape="square" size={realSize} radius={16} />
   );
 };
 

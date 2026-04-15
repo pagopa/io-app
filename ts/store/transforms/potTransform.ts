@@ -1,5 +1,6 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createTransform } from "redux-persist";
+
+import * as pot from "@pagopa/ts-commons/lib/pot";
 
 /**
  * If the value is a Pot object removes the loading and error states.

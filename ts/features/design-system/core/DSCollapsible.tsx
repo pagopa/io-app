@@ -1,14 +1,13 @@
 import {
   AccordionItem,
-  Body,
-  ClaimsSelector,
+  VSpacer,
   H4,
   useIOTheme,
-  VSpacer,
+  Body,
+  ClaimsSelector,
   VStack
 } from "@pagopa/io-app-design-system";
 import { FlatList, ListRenderItemInfo, View } from "react-native";
-
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 
@@ -53,7 +52,7 @@ export const DSCollapsible = () => {
   );
 
   const renderItem = ({ item }: ListRenderItemInfo<AccordionItem>) => (
-    <AccordionItem body={item.body} title={item.title} />
+    <AccordionItem title={item.title} body={item.body} />
   );
 
   return (
@@ -61,15 +60,15 @@ export const DSCollapsible = () => {
       <VStack space={48}>
         {/* Accordion */}
         <FlatList
+          scrollEnabled={false}
+          data={assistanceData}
           contentContainerStyle={{
             flexGrow: 1
           }}
-          data={assistanceData}
+          ListHeaderComponent={renderAccordionHeader}
           ItemSeparatorComponent={() => <VSpacer size={8} />}
           keyExtractor={(item, index) => `${item.title}-${index}`}
-          ListHeaderComponent={renderAccordionHeader}
           renderItem={renderItem}
-          scrollEnabled={false}
         />
 
         {/* ClaimsSelector */}
@@ -86,6 +85,8 @@ const renderClaimsSelector = () => (
     <DSComponentViewerBox name="ClaimsSelector · Default collapsed & unselectable">
       <ClaimsSelector
         defaultExpanded={false}
+        selectionEnabled={false}
+        title="Patente di guida"
         items={[
           {
             id: "name",
@@ -105,14 +106,14 @@ const renderClaimsSelector = () => (
             type: "image"
           }
         ]}
-        selectionEnabled={false}
-        title="Patente di guida"
       />
     </DSComponentViewerBox>
 
     <DSComponentViewerBox name="ClaimsSelector · Default expanded & selectable">
       <ClaimsSelector
         defaultExpanded
+        selectionEnabled
+        title="Patente di guida"
         items={[
           {
             id: "name",
@@ -130,8 +131,6 @@ const renderClaimsSelector = () => (
             description: "Data di nascita"
           }
         ]}
-        selectionEnabled
-        title="Patente di guida"
       />
     </DSComponentViewerBox>
   </VStack>

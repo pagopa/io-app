@@ -1,24 +1,23 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import I18n from "i18next";
 import configureMockStore from "redux-mock-store";
-
-import { InitializedProfile } from "../../../../../definitions/backend/InitializedProfile";
-import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";
-import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
-import ROUTES from "../../../../navigation/routes";
-import { applicationChangeState } from "../../../../store/actions/application";
+import I18n from "i18next";
 // import WebView from "react-native-webview";
 // import {
 //   WebViewErrorEvent,
 //   WebViewNavigationEvent
 // } from "react-native-webview/lib/WebViewTypes";
 import { appReducer } from "../../../../store/reducers";
+import { applicationChangeState } from "../../../../store/actions/application";
 import { GlobalState } from "../../../../store/reducers/types";
-import { mockAccessibilityInfo } from "../../../../utils/testAccessibility";
+import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
+import { InitializedProfile } from "../../../../../definitions/backend/InitializedProfile";
+import ROUTES from "../../../../navigation/routes";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 // import * as ToastUtils from "../../../utils/showToast";
 import OnboardingTosScreen from "../OnboardingTosScreen";
+import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";
+import { mockAccessibilityInfo } from "../../../../utils/testAccessibility";
 
 const CurrentTestToSVersion = 2.0;
 
@@ -276,11 +275,11 @@ type CurrentTestConfiguration = {
   acceptedToSVersion?: number;
   isProfileFirstOnBoarding?: boolean;
   profilePotType?:
-    | "noneError"
-    | "noneUpdating"
     | "some"
+    | "someUpdating"
+    | "noneUpdating"
     | "someError"
-    | "someUpdating";
+    | "noneError";
 };
 
 const commonSetup = ({

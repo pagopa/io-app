@@ -1,11 +1,10 @@
 import { LoadingSpinner } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { ComponentProps } from "react";
-
+import I18n from "i18next";
 import { WithTestID } from "../../types/WithTestID";
 
 export type LoadingIndicator = WithTestID<
-  Exclude<ComponentProps<typeof LoadingSpinner>, "color" | "duration" | "size">
+  Exclude<ComponentProps<typeof LoadingSpinner>, "size" | "color" | "duration">
 >;
 
 export const LoadingIndicator = ({
@@ -14,9 +13,9 @@ export const LoadingIndicator = ({
   testID = "LoadingIndicator"
 }: LoadingIndicator) => (
   <LoadingSpinner
+    size={48}
     accessibilityHint={accessibilityHint}
     accessibilityLabel={accessibilityLabel}
-    size={48}
     testID={testID}
   />
 );

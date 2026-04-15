@@ -1,6 +1,5 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
-
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { useIODispatch } from "../../../../../../store/hooks";
 import { appReducer } from "../../../../../../store/reducers";

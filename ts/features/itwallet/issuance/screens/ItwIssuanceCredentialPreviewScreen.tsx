@@ -5,12 +5,10 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
-import { sequenceS } from "fp-ts/lib/Apply";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
-
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -18,33 +16,27 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { identificationRequest } from "../../../identification/store/actions";
-import { getMixPanelCredential } from "../../analytics/utils";
-import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
-import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
-import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
-import {
-  isMultiLevelCredential,
-  StoredCredential
-} from "../../common/utils/itwTypesUtils";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
-import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
-import {
-  selectCredentialOption,
-  selectCredentialTypeOption
-} from "../../machine/credential/selectors";
-import { ITW_ROUTES } from "../../navigation/routes";
 import {
   trackCredentialPreview,
   trackIssuanceCredentialScrollToBottom,
   trackItwExit,
   trackSaveCredentialToWallet
 } from "../analytics";
+import { getMixPanelCredential } from "../../analytics/utils";
+import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
+import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
+import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
+import {
+  CredentialMetadata,
+  isMultiLevelCredential
+} from "../../common/utils/itwTypesUtils";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
+import { selectCredentialOption } from "../../machine/credential/selectors";
+import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
 
 export const ItwIssuanceCredentialPreviewScreen = () => {
-  const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
-    selectCredentialTypeOption
-  );
   const credentialOption = ItwCredentialIssuanceMachineContext.useSelector(
     selectCredentialOption
   );
@@ -54,10 +46,7 @@ export const ItwIssuanceCredentialPreviewScreen = () => {
   useAvoidHardwareBackButton();
 
   return pipe(
-    sequenceS(O.Monad)({
-      credentialType: credentialTypeOption,
-      credential: credentialOption
-    }),
+    credentialOption,
     O.fold(
       // If there is no credential in the context (None), we can safely assume the issuing phase is still ongoing.
       // A None credential cannot be stored in the context, as any issuance failure causes the machine to transition
@@ -67,28 +56,27 @@ export const ItwIssuanceCredentialPreviewScreen = () => {
           title={I18n.t("features.itWallet.issuance.credentialPreview.loading")}
         />
       ),
-      props => <ContentView {...props} />
+      credential => <ContentView credential={credential.metadata} />
     )
   );
 };
 
 type ContentViewProps = {
-  credential: StoredCredential;
-  credentialType: string;
+  credential: CredentialMetadata;
 };
 
 /**
  * Renders the content of the screen
  */
-const ContentView = ({ credentialType, credential }: ContentViewProps) => {
+const ContentView = ({ credential }: ContentViewProps) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const dispatch = useIODispatch();
   const route = useRoute();
   const isMultilevel = isMultiLevelCredential(credential);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const mixPanelCredential = useMemo(
-    () => getMixPanelCredential(credentialType, isItwL3),
-    [credentialType, isItwL3]
+    () => getMixPanelCredential(credential.credentialType, isItwL3),
+    [credential, isItwL3]
   );
 
   useFocusEffect(
@@ -146,6 +134,7 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
   return (
     <ForceScrollDownView
       contentContainerStyle={{ flexGrow: 1 }}
+      onThresholdCrossed={trackScrollToBottom}
       footerActions={{
         actions: {
           type: "TwoButtons",
@@ -165,12 +154,11 @@ const ContentView = ({ credentialType, credential }: ContentViewProps) => {
           }
         }
       }}
-      onThresholdCrossed={trackScrollToBottom}
     >
       <ContentWrapper style={{ flexGrow: 1 }}>
         <H2>
           {I18n.t("features.itWallet.issuance.credentialPreview.title", {
-            credential: getCredentialNameFromType(credentialType)
+            credential: getCredentialNameFromType(credential.credentialType)
           })}
         </H2>
         <VSpacer size={24} />

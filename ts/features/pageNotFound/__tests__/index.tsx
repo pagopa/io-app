@@ -1,11 +1,10 @@
 import { fireEvent, render } from "@testing-library/react-native";
-
-import * as url from "../../../utils/url";
 import {
   BTN_CLOSE_TEST_ID,
   BTN_UPDATE_TEST_ID,
   PageNotFound
 } from "../screens";
+import * as url from "../../../utils/url";
 
 const mockPopToTop = jest.fn();
 const mockOpenAppStoreUrl = jest.fn();

@@ -5,7 +5,6 @@ import Animated, {
   FadeOutDown,
   LinearTransition
 } from "react-native-reanimated";
-
 import { WalletCard } from "../types";
 import { renderWalletCardFn } from "../utils";
 
@@ -29,17 +28,17 @@ export const WalletCardsCategoryContainer = ({
   testID
 }: WalletCardsCategoryContainerProps) => (
   <Animated.FlatList
-    contentContainerStyle={styles.container}
+    testID={testID}
+    scrollEnabled={false}
     data={cards}
-    entering={FadeInDown.duration(150)}
-    exiting={FadeOutDown.duration(150)}
-    itemLayoutAnimation={itemLayoutAnimation}
-    layout={LinearTransition.duration(200)}
     renderItem={({ index, item }) =>
       renderWalletCardFn(item, index < cards.length - 1)
     }
-    scrollEnabled={false}
-    testID={testID}
+    itemLayoutAnimation={itemLayoutAnimation}
+    layout={LinearTransition.duration(200)}
+    contentContainerStyle={styles.container}
+    entering={FadeInDown.duration(150)}
+    exiting={FadeOutDown.duration(150)}
   />
 );
 

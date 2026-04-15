@@ -1,23 +1,23 @@
-import * as S from "fp-ts/lib/string";
 import * as t from "io-ts";
+import * as S from "fp-ts/lib/string";
 import { getType } from "typesafe-actions";
-
-import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { pageSize } from "../../../config";
+import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
 import {
   enqueueMixpanelEvent,
   isMixpanelInstanceInitialized,
   mixpanelTrack
 } from "../../../mixpanel";
-import { Action } from "../../../store/actions/types";
-import { GlobalState } from "../../../store/reducers/types";
+import { readablePrivacyReport } from "../../../utils/reporters";
 import {
   booleanToYesNo,
   buildEventProperties,
   dateToUTCISOString
 } from "../../../utils/analytics";
-import { readablePrivacyReport } from "../../../utils/reporters";
+import { MessageGetStatusFailurePhaseType } from "../store/reducers/messageGetStatus";
+import { MessageListCategory } from "../types/messageListCategory";
+import { Action } from "../../../store/actions/types";
+import { GlobalState } from "../../../store/reducers/types";
 import {
   loadNextPageMessages,
   loadPreviousPageMessages,
@@ -27,17 +27,16 @@ import {
   messageCountForCategorySelector,
   shownMessageCategorySelector
 } from "../store/reducers/allPaginated";
-import { MessageGetStatusFailurePhaseType } from "../store/reducers/messageGetStatus";
-import { MessageListCategory } from "../types/messageListCategory";
+import { pageSize } from "../../../config";
 
 export const trackMessagesActionsPostDispatch = (
   action: Action,
   state: GlobalState
 ) => {
   switch (action.type) {
-    case getType(loadNextPageMessages.success):
-    case getType(loadPreviousPageMessages.success):
     case getType(reloadAllMessages.success):
+    case getType(loadPreviousPageMessages.success):
+    case getType(loadNextPageMessages.success):
       const shownCategory = shownMessageCategorySelector(state);
       const messageCount = messageCountForCategorySelector(
         state,
@@ -65,8 +64,8 @@ export const trackOpenMessage = (
   fromPushNotification: boolean,
   hasFIMSCTA: boolean,
   createdAt: Date,
-  fciMessageType: "not_set" | "request" | "result",
-  fciResult: "failure" | "not_set" | "success"
+  fciMessageType: "request" | "result" | "not_set",
+  fciResult: "success" | "failure" | "not_set"
 ) => {
   const eventName = "OPEN_MESSAGE";
   const props = buildEventProperties("UX", "screen_view", {
@@ -99,7 +98,7 @@ export const trackCTAFrontMatterDecodingError = (
 
 export const trackMessageNotificationParsingFailure = (
   id: string,
-  reason: string | t.Errors,
+  reason: t.Errors | string,
   userOptedIn: boolean
 ) => {
   const eventName = "NOTIFICATION_PARSING_FAILURE";
@@ -540,18 +539,18 @@ export const trackMessagePaymentFailure = (reason: string) => {
 };
 
 export enum UndefinedBearerTokenPhase {
-  activeSessionLoginLogout = "activeSessionLoginLogout",
   attachmentDownload = "attachmentDownload",
-  getPaymentsInfo = "getPaymentsInfo",
-  logoutStandard = "logoutStandard",
+  thirdPartyMessagePrecondition = "thirdPartyMessagePrecondition",
+  thirdPartyMessageLoading = "thirdPartyMessageLoading",
   messageByIdLoading = "messageByIdLoading",
   messageDetailLoading = "messageDetailLoading",
   nextPageMessagesLoading = "nextPageMessagesLoading",
   previousPageMessagesLoading = "previousPageMessagesLoading",
+  getPaymentsInfo = "getPaymentsInfo",
   reloadAllMessagesLoading = "reloadAllMessages",
-  thirdPartyMessageLoading = "thirdPartyMessageLoading",
-  thirdPartyMessagePrecondition = "thirdPartyMessagePrecondition",
-  upsertMessageStatusAttributes = "upsertMessageStatusAttributes"
+  upsertMessageStatusAttributes = "upsertMessageStatusAttributes",
+  logoutStandard = "logoutStandard",
+  activeSessionLoginLogout = "activeSessionLoginLogout"
 }
 
 export const trackUndefinedBearerToken = (phase: UndefinedBearerTokenPhase) => {

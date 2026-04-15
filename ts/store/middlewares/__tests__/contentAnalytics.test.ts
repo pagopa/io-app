@@ -1,5 +1,5 @@
-import * as mixpanelTrackModule from "../../../mixpanel";
 import { loadContextualHelpData, loadIdps } from "../../actions/content";
+import * as mixpanelTrackModule from "../../../mixpanel";
 import { trackContentAction } from "../contentAnalytics";
 
 // Mock the mixpanelTrack function

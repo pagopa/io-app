@@ -1,22 +1,21 @@
 import { useIOToast } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { useEffect, useState } from "react";
 import { AppState, AppStateStatus } from "react-native";
-
+import I18n from "i18next";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
-import { useIODispatch } from "../../../store/hooks";
-import { isTestEnv } from "../../../utils/environment";
-import { setSecurityAdviceReadyToShow } from "../../authentication/fastLogin/store/actions/securityAdviceActions";
+import {
+  checkNotificationPermissions,
+  openSystemNotificationSettingsScreen
+} from "../utils";
 import {
   NotificationModalFlow,
   SendOpeningSource,
   SendUserType,
   trackSystemNotificationPermissionScreenOutcome
 } from "../analytics";
-import {
-  checkNotificationPermissions,
-  openSystemNotificationSettingsScreen
-} from "../utils";
+import { isTestEnv } from "../../../utils/environment";
+import { useIODispatch } from "../../../store/hooks";
+import { setSecurityAdviceReadyToShow } from "../../authentication/fastLogin/store/actions/securityAdviceActions";
 
 export const usePushNotificationEngagement = (
   flow: NotificationModalFlow,

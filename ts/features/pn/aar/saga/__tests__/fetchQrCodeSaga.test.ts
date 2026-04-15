@@ -1,8 +1,6 @@
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
-
 import { AARProblemJson } from "../../../../../../definitions/pn/aar/AARProblemJson";
-import { isAarInAppDelegationRemoteEnabledSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { trackSendAarFailure } from "../../analytics";
@@ -12,6 +10,7 @@ import { currentAarFlowData } from "../../store/selectors";
 import { AarFlowState, sendAarFlowStates } from "../../utils/stateUtils";
 import { sendAarMockStateFactory } from "../../utils/testUtils";
 import { fetchAarQrCodeSaga } from "../fetchQrCodeSaga";
+import { isAarInAppDelegationRemoteEnabledSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 
 const sendUATEnvironment = [false, true];
 

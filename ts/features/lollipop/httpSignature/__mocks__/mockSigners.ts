@@ -1,5 +1,4 @@
 import sha from "sha.js";
-
 import { constants } from "../constants";
 import { Signer } from "../types/Signer";
 

@@ -1,19 +1,18 @@
 import { render } from "@testing-library/react-native";
-import I18n from "i18next";
-import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-
+import { Provider } from "react-redux";
+import I18n from "i18next";
+import EycaDetailComponent from "../EycaDetailComponent";
+import { EycaCard } from "../../../../../../../../definitions/cgn/EycaCard";
 import { StatusEnum as AcivatedStatus } from "../../../../../../../../definitions/cgn/CardActivated";
 import { StatusEnum as PendingStatus } from "../../../../../../../../definitions/cgn/CardPending";
 import { CcdbNumber } from "../../../../../../../../definitions/cgn/CcdbNumber";
-import { EycaCard } from "../../../../../../../../definitions/cgn/EycaCard";
-import { applicationChangeState } from "../../../../../../../store/actions/application";
+import { CgnEycaActivationStatus } from "../../../../store/reducers/eyca/activation";
 import { appReducer } from "../../../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../../../store/actions/application";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 import { cgnEycaActivation } from "../../../../store/actions/eyca/activation";
 import { cgnEycaStatus } from "../../../../store/actions/eyca/details";
-import { CgnEycaActivationStatus } from "../../../../store/reducers/eyca/activation";
-import EycaDetailComponent from "../EycaDetailComponent";
 
 const eycaCardActive: EycaCard = {
   status: AcivatedStatus.ACTIVATED,

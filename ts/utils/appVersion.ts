@@ -1,11 +1,10 @@
-import { PatternString } from "@pagopa/ts-commons/lib/strings";
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
+import { PatternString } from "@pagopa/ts-commons/lib/strings";
 import { Platform } from "react-native";
 import semver, { SemVer } from "semver";
-
-import { getDeviceAppVersion } from "./device";
+import { pipe } from "fp-ts/lib/function";
 import { NumberFromString } from "./number";
+import { getDeviceAppVersion } from "./device";
 
 export const storeUrl = Platform.select({
   ios: "itms-apps://itunes.apple.com/it/app/io/id1501681835",

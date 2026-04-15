@@ -3,12 +3,12 @@ import { updateMixpanelProfileProperties } from "../../../../../mixpanelConfig/p
 import { FlowType } from "../../../../../utils/analytics";
 import {
   TrackingInfo,
-  trackMixpanelConsentBottomsheet,
-  trackMixpanelConsentCancel,
   trackMixpanelDeclined,
-  trackMixpanelNotNowSelected,
   trackMixpanelSetEnabled,
-  trackMixPanelTrackingInfo
+  trackMixPanelTrackingInfo,
+  trackMixpanelNotNowSelected,
+  trackMixpanelConsentBottomsheet,
+  trackMixpanelConsentCancel
 } from "../mixpanel/mixpanelAnalytics";
 
 jest.mock("../../../../../mixpanel", () => ({

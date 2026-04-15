@@ -1,15 +1,16 @@
 import { useCallback, useEffect, useState } from "react";
 import { Keyboard } from "react-native";
-
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import {
   useIODispatch,
   useIOSelector,
   useIOStore
 } from "../../../../store/hooks";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
-import { trackDisclaimerOpened } from "../../analytics";
-import { MESSAGES_ROUTES } from "../../navigation/routes";
+import {
+  preconditionsCategoryTagSelector,
+  preconditionsRequireAppUpdateSelector,
+  shouldPresentPreconditionsBottomSheetSelector
+} from "../../store/reducers/messagePrecondition";
 import {
   idlePreconditionStatusAction,
   retrievingDataPreconditionStatusAction,
@@ -18,14 +19,12 @@ import {
   toUpdateRequiredPayload,
   updateRequiredPreconditionStatusAction
 } from "../../store/actions/preconditions";
-import {
-  preconditionsCategoryTagSelector,
-  preconditionsRequireAppUpdateSelector,
-  shouldPresentPreconditionsBottomSheetSelector
-} from "../../store/reducers/messagePrecondition";
+import { MESSAGES_ROUTES } from "../../navigation/routes";
+import { trackDisclaimerOpened } from "../../analytics";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { PreconditionsTitle } from "./PreconditionsTitle";
 import { PreconditionsContent } from "./PreconditionsContent";
 import { PreconditionsFooter } from "./PreconditionsFooter";
-import { PreconditionsTitle } from "./PreconditionsTitle";
 
 export const Preconditions = () => {
   const [footerHeight, setFooterHeight] = useState<number>(0);
@@ -54,8 +53,8 @@ export const Preconditions = () => {
     footer: (
       <PreconditionsFooter
         onDismiss={() => modal.dismiss()}
-        onFooterHeightAvailable={setFooterHeight}
         onNavigation={onNavigationCallback}
+        onFooterHeightAvailable={setFooterHeight}
       />
     ),
     onDismiss: onDismissCallback

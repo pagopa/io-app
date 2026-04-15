@@ -1,5 +1,4 @@
 import { Platform } from "react-native";
-
 import { minOsSupportedSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../store/reducers/types";
 

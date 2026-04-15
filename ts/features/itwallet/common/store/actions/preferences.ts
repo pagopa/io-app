@@ -1,6 +1,5 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
-
-import { ItwAuthLevel, StoredCredential } from "../../utils/itwTypesUtils.ts";
+import { CredentialMetadata, ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
 
 export const itwSetReviewPending = createStandardAction(
   "ITW_SET_REVIEW_PENDING"
@@ -36,25 +35,25 @@ export const itwSetPidReissuingSurveyHidden = createStandardAction(
 
 export const itwSetCredentialUpgradeFailed = createStandardAction(
   "ITW_SET_CREDENTIAL_UPGRADE_FAILED"
-)<ReadonlyArray<StoredCredential["credentialType"]>>();
+)<ReadonlyArray<CredentialMetadata["credentialType"]>>();
 
 export const itwClearCredentialUpgradeFailed = createStandardAction(
   "ITW_CLEAR_CREDENTIAL_UPGRADE_FAILED"
-)<StoredCredential["credentialType"]>();
+)<CredentialMetadata["credentialType"]>();
 
 export const itwDisableItwActivation = createStandardAction(
   "ITW_DISABLE_ITW_ACTIVATION"
 )();
 
 export type ItwPreferencesActions =
-  | ActionType<typeof itwClearCredentialUpgradeFailed>
-  | ActionType<typeof itwClearSimplifiedActivationRequirements>
-  | ActionType<typeof itwDisableItwActivation>
-  | ActionType<typeof itwFreezeSimplifiedActivationRequirements>
+  | ActionType<typeof itwSetReviewPending>
   | ActionType<typeof itwSetAuthLevel>
   | ActionType<typeof itwSetClaimValuesHidden>
-  | ActionType<typeof itwSetCredentialUpgradeFailed>
+  | ActionType<typeof itwSetWalletInstanceRemotelyActive>
   | ActionType<typeof itwSetFiscalCodeWhitelisted>
+  | ActionType<typeof itwFreezeSimplifiedActivationRequirements>
+  | ActionType<typeof itwClearSimplifiedActivationRequirements>
   | ActionType<typeof itwSetPidReissuingSurveyHidden>
-  | ActionType<typeof itwSetReviewPending>
-  | ActionType<typeof itwSetWalletInstanceRemotelyActive>;
+  | ActionType<typeof itwSetCredentialUpgradeFailed>
+  | ActionType<typeof itwClearCredentialUpgradeFailed>
+  | ActionType<typeof itwDisableItwActivation>;

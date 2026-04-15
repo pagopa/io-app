@@ -1,4 +1,4 @@
-export type MessageListCategory = "ARCHIVE" | "INBOX";
+export type MessageListCategory = "INBOX" | "ARCHIVE";
 
 export const fold = <T>(
   category: MessageListCategory,
@@ -6,11 +6,11 @@ export const fold = <T>(
   onArchive: () => T
 ): T => {
   switch (category) {
-    case "ARCHIVE": {
-      return onArchive();
-    }
     case "INBOX": {
       return onInbox();
+    }
+    case "ARCHIVE": {
+      return onArchive();
     }
   }
 };

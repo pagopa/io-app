@@ -1,10 +1,6 @@
 import _ from "lodash";
-import { createActor, fromPromise, StateFrom, waitFor } from "xstate";
-
-import {
-  RequestObject,
-  WalletInstanceAttestations
-} from "../../../../common/utils/itwTypesUtils.ts";
+import { StateFrom, assign, createActor, fromPromise, waitFor } from "xstate";
+import { ItwRemoteMachine, itwRemoteMachine } from "../machine.ts";
 import {
   EnrichedPresentationDetails,
   ItwRemoteRequestPayload,
@@ -21,14 +17,20 @@ import {
   SendAuthorizationResponseOutput
 } from "../actors.ts";
 import { Context, InitialContext } from "../context.ts";
+import {
+  CredentialMetadata,
+  RequestObject,
+  WalletInstanceAttestations
+} from "../../../../common/utils/itwTypesUtils.ts";
 import { RemoteFailureType } from "../failure.ts";
-import { ItwRemoteMachine, itwRemoteMachine } from "../machine.ts";
 
 const T_FLOW_TYPE = "cross-device";
 const T_CLIENT_ID = "clientId";
 const T_REQUEST_URI = "https://example.com";
 const T_STATE = "state";
 const T_REDIRECT_URI = "https://example.com/redirect";
+const T_WIA: WalletInstanceAttestations = { jwt: "test-wia" };
+const T_CREDENTIALS: Record<string, CredentialMetadata> = {};
 
 const qrCodePayload: ItwRemoteRequestPayload = {
   client_id: T_CLIENT_ID,
@@ -61,6 +63,10 @@ describe("itwRemoteMachine", () => {
 
   const mockedMachine = itwRemoteMachine.provide({
     actions: {
+      onInit: assign({
+        walletInstanceAttestation: T_WIA,
+        credentials: T_CREDENTIALS
+      }),
       navigateToDiscoveryScreen,
       navigateToFailureScreen,
       navigateToClaimsDisclosureScreen,
@@ -215,6 +221,7 @@ describe("itwRemoteMachine", () => {
 
     isItWalletL3Active.mockReturnValue(true);
     isEidExpired.mockReturnValue(false);
+    evaluateRelyingPartyTrust.mockRejectedValue(new Error("test"));
 
     actor.send({
       type: "start",
@@ -225,6 +232,7 @@ describe("itwRemoteMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual(
       "EvaluatingRelyingPartyTrust"
     );
+    actor.stop();
   });
 
   it("should complete the presentation without errors", async () => {
@@ -235,7 +243,7 @@ describe("itwRemoteMachine", () => {
       subject: T_CLIENT_ID
     } as RelyingPartyConfiguration;
     const presentationDetails = [] as EnrichedPresentationDetails;
-    const unverifiedRequestObject = "";
+    const unverifiedRequestObject = "encoded-jwt";
     const requestObject = {
       ...({} as RequestObject),
       client_id: T_CLIENT_ID,
@@ -277,6 +285,8 @@ describe("itwRemoteMachine", () => {
     });
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
+      walletInstanceAttestation: T_WIA,
+      credentials: T_CREDENTIALS,
       payload: qrCodePayload,
       flowType: T_FLOW_TYPE
     });
@@ -296,6 +306,8 @@ describe("itwRemoteMachine", () => {
     expect(evaluateRelyingPartyTrust).toHaveBeenCalledTimes(1);
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
+      walletInstanceAttestation: T_WIA,
+      credentials: T_CREDENTIALS,
       payload: qrCodePayload,
       flowType: T_FLOW_TYPE,
       rpConf
@@ -308,6 +320,8 @@ describe("itwRemoteMachine", () => {
     expect(getRequestObject).toHaveBeenCalledTimes(1);
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
+      walletInstanceAttestation: T_WIA,
+      credentials: T_CREDENTIALS,
       requestObjectEncodedJwt: unverifiedRequestObject,
       payload: qrCodePayload,
       flowType: T_FLOW_TYPE,
@@ -323,6 +337,8 @@ describe("itwRemoteMachine", () => {
     expect(getPresentationDetails).toHaveBeenCalledTimes(1);
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
+      walletInstanceAttestation: T_WIA,
+      credentials: T_CREDENTIALS,
       requestObjectEncodedJwt: unverifiedRequestObject,
       payload: qrCodePayload,
       flowType: T_FLOW_TYPE,
@@ -344,6 +360,8 @@ describe("itwRemoteMachine", () => {
     actor.send({ type: "toggle-credential", credentialIds: ["cred03"] });
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
+      walletInstanceAttestation: T_WIA,
+      credentials: T_CREDENTIALS,
       requestObjectEncodedJwt: unverifiedRequestObject,
       payload: qrCodePayload,
       flowType: T_FLOW_TYPE,
@@ -364,6 +382,8 @@ describe("itwRemoteMachine", () => {
     expect(sendAuthorizationResponse).toHaveBeenCalledTimes(1);
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
+      walletInstanceAttestation: T_WIA,
+      credentials: T_CREDENTIALS,
       requestObjectEncodedJwt: unverifiedRequestObject,
       payload: qrCodePayload,
       flowType: T_FLOW_TYPE,
@@ -386,8 +406,11 @@ describe("itwRemoteMachine", () => {
   it("should transition to failure when an error occurs in GettingPresentationDetails", async () => {
     isItWalletL3Active.mockReturnValue(true);
     isEidExpired.mockReturnValue(false);
-    evaluateRelyingPartyTrust.mockResolvedValue({});
-    getRequestObject.mockReturnValue("");
+    evaluateRelyingPartyTrust.mockResolvedValue({
+      rpSubject: T_CLIENT_ID,
+      rpConf: {} as RelyingPartyConfiguration
+    });
+    getRequestObject.mockResolvedValue("encoded-jwt");
     getPresentationDetails.mockRejectedValue({ message: "ERROR" });
 
     const actor = createActor(mockedMachine);

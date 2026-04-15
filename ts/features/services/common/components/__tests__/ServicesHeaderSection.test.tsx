@@ -1,5 +1,4 @@
 import { render } from "@testing-library/react-native";
-
 import { ServicesHeaderSection } from "../ServicesHeaderSection";
 
 jest.mock("@react-navigation/elements", () => ({

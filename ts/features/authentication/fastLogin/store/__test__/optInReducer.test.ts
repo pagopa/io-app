@@ -1,13 +1,13 @@
 import {
-  logoutFailure,
-  logoutSuccess
-} from "../../../../authentication/common/store/actions";
-import { setFastLoginOptIn } from "../actions/optInActions";
-import {
   fastLoginOptInInitialState,
   FastLoginOptInState,
   testableFastLoginOptInReducer
 } from "../reducers/optInReducer";
+import {
+  logoutSuccess,
+  logoutFailure
+} from "../../../../authentication/common/store/actions";
+import { setFastLoginOptIn } from "../actions/optInActions";
 
 describe("fastLoginOptInReducer", () => {
   if (!testableFastLoginOptInReducer) {

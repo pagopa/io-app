@@ -1,9 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
 import * as O from "fp-ts/lib/Option";
-import I18n from "i18next";
 import configureMockStore from "redux-mock-store";
-
+import I18n from "i18next";
 import { Config } from "../../../../../../definitions/content/Config";
 import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
 import { applicationChangeState } from "../../../../../store/actions/application";

@@ -11,15 +11,14 @@ import I18n from "i18next";
 import { useCallback, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
-
 import { withLightModalContext } from "../../../../components/helpers/withLightModalContext";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIOSelector } from "../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { useMaxBrightness } from "../../../../utils/brightness";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
-import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
 import { FAQsCategoriesType } from "../../../../utils/faq";
+import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
 import {
   profileFiscalCodeSelector,
   profileNameSurnameSelector
@@ -64,6 +63,11 @@ const FiscalCodeScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
+      includeContentMargins
+      ref={titleRef}
+      title={{
+        label: I18n.t("profile.fiscalCode.fiscalCode")
+      }}
       actions={{
         type: "SingleButton",
         primary: {
@@ -77,24 +81,19 @@ const FiscalCodeScreen = () => {
             : I18n.t("profile.fiscalCode.copyCode")
         }
       }}
-      contextualHelpMarkdown={contextualHelpMarkdown}
       description={I18n.t("profile.fiscalCode.description")}
-      faqCategories={FAQ_CATEGORIES}
       headerActionsProp={{ showHelp: true }}
-      includeContentMargins
-      ref={titleRef}
-      title={{
-        label: I18n.t("profile.fiscalCode.fiscalCode")
-      }}
+      contextualHelpMarkdown={contextualHelpMarkdown}
+      faqCategories={FAQ_CATEGORIES}
     >
       <VSpacer size={8} />
       {fiscalCode && (
         <View
+          accessible
           accessibilityLabel={I18n.t(
             "profile.fiscalCode.accessibility.fiscalCodeHint",
             { fiscalCode }
           )}
-          accessible
           style={[
             styles.card,
             { borderColor: IOColors[theme["cardBorder-default"]] }
@@ -103,11 +102,11 @@ const FiscalCodeScreen = () => {
         >
           <BodySmall weight="Semibold">{nameSurname}</BodySmall>
           <Barcode
-            background={"transparent"}
-            height={80}
-            lineColor={IOColors[theme["textHeading-default"]]}
             value={fiscalCode}
             width={1.3}
+            height={80}
+            background={"transparent"}
+            lineColor={IOColors[theme["textHeading-default"]]}
           />
           <H3 testID="fiscal-code">{fiscalCode}</H3>
         </View>

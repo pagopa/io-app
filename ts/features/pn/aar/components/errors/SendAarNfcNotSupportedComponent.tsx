@@ -1,18 +1,17 @@
 import { FeatureInfo, VSpacer } from "@pagopa/io-app-design-system";
 import i18n from "i18next";
 import { useEffect } from "react";
-
 import { IOScrollViewCentredContent } from "../../../../../components/ui/IOScrollViewCentredContent";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { openWebUrl } from "../../../../../utils/url";
+import { useSendAarFlowManager } from "../../hooks/useSendAarFlowManager";
 import { useIOSelector } from "../../../../../store/hooks";
 import { sendAarInAppDelegationUrlSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
-import { openWebUrl } from "../../../../../utils/url";
 import {
   trackSendAarNotificationOpeningNfcNotSupported,
   trackSendAarNotificationOpeningNfcNotSupportedClosure,
   trackSendAarNotificationOpeningNfcNotSupportedInfo
 } from "../../analytics";
-import { useSendAarFlowManager } from "../../hooks/useSendAarFlowManager";
 
 export const SendAarNfcNotSupportedComponent = () => {
   const { terminateFlow } = useSendAarFlowManager();
@@ -34,6 +33,11 @@ export const SendAarNfcNotSupportedComponent = () => {
 
   return (
     <IOScrollViewCentredContent
+      pictogram="updateOS"
+      title={i18n.t("features.pn.aar.flow.delegated.nfcNotSupported.title")}
+      description={i18n.t(
+        "features.pn.aar.flow.delegated.nfcNotSupported.body"
+      )}
       actions={{
         type: "SingleButton",
         primary: {
@@ -47,12 +51,6 @@ export const SendAarNfcNotSupportedComponent = () => {
         }
       }}
       alwaysBounceVertical={false}
-      contentContainerStyle={{
-        paddingHorizontal: 32
-      }}
-      description={i18n.t(
-        "features.pn.aar.flow.delegated.nfcNotSupported.body"
-      )}
       headerConfig={{
         title: "",
         type: "singleAction",
@@ -68,13 +66,14 @@ export const SendAarNfcNotSupportedComponent = () => {
           testID: "close-x"
         }
       }}
-      pictogram="updateOS"
-      title={i18n.t("features.pn.aar.flow.delegated.nfcNotSupported.title")}
+      contentContainerStyle={{
+        paddingHorizontal: 32
+      }}
     >
       <VSpacer size={24} />
-      <FeatureInfo body={featureInfoText[0]} iconName="contactless" />
+      <FeatureInfo iconName="contactless" body={featureInfoText[0]} />
       <VSpacer size={24} />
-      <FeatureInfo body={featureInfoText[1]} iconName="history" />
+      <FeatureInfo iconName="history" body={featureInfoText[1]} />
     </IOScrollViewCentredContent>
   );
 };

@@ -1,6 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
-
 import { GlobalState } from "../../../../../store/reducers/types";
 import { PaymentsBackoffRetry } from "../../types/PaymentsBackoffRetry";
 

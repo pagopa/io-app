@@ -1,6 +1,6 @@
 import {
-  getTimeRemainingText,
-  isBackoffRetryTimeElapsed
+  isBackoffRetryTimeElapsed,
+  getTimeRemainingText
 } from "../backoffRetry";
 
 describe("getTimeRemainingText", () => {

@@ -1,28 +1,27 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-
-import { BlockedInboxOrChannels } from "../../definitions/backend/BlockedInboxOrChannels";
+import { pipe } from "fp-ts/lib/function";
 import { FiscalCode } from "../../definitions/backend/FiscalCode";
-import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
-import { ServiceId } from "../../definitions/backend/ServiceId";
 import { Municipality } from "../../definitions/content/Municipality";
 import { ProfileState } from "../features/settings/common/store/reducers";
+import { BlockedInboxOrChannels } from "../../definitions/backend/BlockedInboxOrChannels";
+import { ServiceId } from "../../definitions/backend/ServiceId";
+import { InitializedProfile } from "../../definitions/backend/InitializedProfile";
 import { pad } from "./dates";
+
+type GenderType = "M" | "F" | undefined;
 
 /**
  * Generic utilities for profile
  */
 type FiscalCodeDerivedData = Readonly<{
+  gender?: GenderType;
   birthDate?: Date;
   denominazione: string;
-  gender?: GenderType;
   siglaProvincia: string;
 }>;
 
-type GenderType = "F" | "M" | undefined;
-
-const months: Record<string, number> = {
+const months: { [k: string]: number } = {
   ["A"]: 1,
   ["B"]: 2,
   ["C"]: 3,
@@ -36,18 +35,6 @@ const months: Record<string, number> = {
   ["S"]: 11,
   ["T"]: 12
 };
-
-/**
- * The enabled/disabled state of each channel.
- *
- * Consider generating this map from the API specs.
- */
-export interface EnabledChannels {
-  can_access_message_read_status: boolean;
-  email: boolean;
-  inbox: boolean;
-  push: boolean;
-}
 
 // Generate object including data expressed into the given fiscal code
 export function extractFiscalCodeData(
@@ -105,6 +92,18 @@ export function extractFiscalCodeData(
   };
 }
 
+/**
+ * The enabled/disabled state of each channel.
+ *
+ * Consider generating this map from the API specs.
+ */
+export interface EnabledChannels {
+  inbox: boolean;
+  email: boolean;
+  push: boolean;
+  can_access_message_read_status: boolean;
+}
+
 const INBOX_CHANNEL = "INBOX";
 const EMAIL_CHANNEL = "EMAIL";
 const PUSH_CHANNEL = "WEBHOOK";
@@ -125,35 +124,6 @@ export function getChannelsforServicesList(
       [serviceId]: profileBlockedChannels[serviceId] || []
     }),
     {} as BlockedInboxOrChannels
-  );
-}
-
-/**
- * Finds out which channels are enabled in the profile for the provided service
- */
-export function getEnabledChannelsForService(
-  potProfile: ProfileState,
-  serviceId: ServiceId
-): EnabledChannels {
-  return pipe(
-    pot.toOption(potProfile),
-    O.chainNullableK(profile =>
-      InitializedProfile.is(profile) ? profile.blocked_inbox_or_channels : null
-    ),
-    O.chainNullableK(blockedChannels => blockedChannels[serviceId]),
-    O.map(_ => ({
-      inbox: _.indexOf(INBOX_CHANNEL) === -1,
-      email: _.indexOf(EMAIL_CHANNEL) === -1,
-      push: _.indexOf(PUSH_CHANNEL) === -1,
-      can_access_message_read_status:
-        _.indexOf(SEND_READ_MESSAGE_STATUS_CHANNEL) === -1
-    })),
-    O.getOrElseW(() => ({
-      inbox: true,
-      email: true,
-      push: true,
-      can_access_message_read_status: true
-    }))
   );
 }
 
@@ -203,6 +173,35 @@ export function getProfileChannelsforServicesList(
   });
 
   return profileBlockedChannels;
+}
+
+/**
+ * Finds out which channels are enabled in the profile for the provided service
+ */
+export function getEnabledChannelsForService(
+  potProfile: ProfileState,
+  serviceId: ServiceId
+): EnabledChannels {
+  return pipe(
+    pot.toOption(potProfile),
+    O.chainNullableK(profile =>
+      InitializedProfile.is(profile) ? profile.blocked_inbox_or_channels : null
+    ),
+    O.chainNullableK(blockedChannels => blockedChannels[serviceId]),
+    O.map(_ => ({
+      inbox: _.indexOf(INBOX_CHANNEL) === -1,
+      email: _.indexOf(EMAIL_CHANNEL) === -1,
+      push: _.indexOf(PUSH_CHANNEL) === -1,
+      can_access_message_read_status:
+        _.indexOf(SEND_READ_MESSAGE_STATUS_CHANNEL) === -1
+    })),
+    O.getOrElseW(() => ({
+      inbox: true,
+      email: true,
+      push: true,
+      can_access_message_read_status: true
+    }))
+  );
 }
 
 /**

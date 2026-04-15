@@ -1,21 +1,20 @@
 import { getType } from "typesafe-actions";
-
-import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
-import { SignatureRequestStatusEnum } from "../../../../definitions/fci/SignatureRequestStatus";
 import { mixpanelTrack } from "../../../mixpanel";
 import { Action } from "../../../store/actions/types";
-import { buildEventProperties } from "../../../utils/analytics";
-import { getNetworkErrorMessage } from "../../../utils/errors";
 import {
-  fciClearStateRequest,
   fciLoadQtspClauses,
   fciLoadQtspFilledDocument,
-  fciPollFilledDocument,
   fciSignatureRequestFromId,
-  fciSigningRequest,
   fciStartRequest,
-  fciUpdateDocumentSignaturesRequest
+  fciSigningRequest,
+  fciUpdateDocumentSignaturesRequest,
+  fciClearStateRequest,
+  fciPollFilledDocument
 } from "../store/actions";
+import { getNetworkErrorMessage } from "../../../utils/errors";
+import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
+import { buildEventProperties } from "../../../utils/analytics";
+import { SignatureRequestStatusEnum } from "../../../../definitions/fci/SignatureRequestStatus";
 
 export const trackFciSignatureCancelled = () =>
   mixpanelTrack(
@@ -66,10 +65,10 @@ export const trackFciSignatureGenericFailure = (reason: string) =>
 export const trackFciSignatureRequestStatus = (
   params:
     | {
-        environment: string;
-        expiresAt: Date;
         status: SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE;
+        expiresAt: Date;
         totalDocCount: number;
+        environment: string;
       }
     | {
         status: Exclude<
@@ -79,24 +78,24 @@ export const trackFciSignatureRequestStatus = (
       }
 ) => {
   switch (params.status) {
-    case SignatureRequestStatusEnum.CANCELLED:
-      trackFciSignatureCancelled();
-      break;
-    case SignatureRequestStatusEnum.REJECTED:
-      trackFciSignatureRejected();
-      break;
-    case SignatureRequestStatusEnum.SIGNED:
-      trackFciDocAlreadySigned();
-      break;
-    case SignatureRequestStatusEnum.WAIT_FOR_QTSP:
-      trackFciDocSignatureInProgress();
-      break;
     case SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE:
       trackFciDocOpening(
         params.expiresAt,
         params.totalDocCount,
         params.environment
       );
+      break;
+    case SignatureRequestStatusEnum.WAIT_FOR_QTSP:
+      trackFciDocSignatureInProgress();
+      break;
+    case SignatureRequestStatusEnum.SIGNED:
+      trackFciDocAlreadySigned();
+      break;
+    case SignatureRequestStatusEnum.REJECTED:
+      trackFciSignatureRejected();
+      break;
+    case SignatureRequestStatusEnum.CANCELLED:
+      trackFciSignatureCancelled();
       break;
     default:
       break;
@@ -312,39 +311,39 @@ const trackFciAction =
   (environment: string) =>
   (action: Action): void => {
     switch (action.type) {
-      case getType(fciClearStateRequest):
+      case getType(fciStartRequest):
+      case getType(fciSignatureRequestFromId.request):
+      case getType(fciSignatureRequestFromId.success):
       case getType(fciLoadQtspClauses.request):
       case getType(fciLoadQtspClauses.success):
       case getType(fciLoadQtspFilledDocument.request):
       case getType(fciLoadQtspFilledDocument.success):
-      case getType(fciPollFilledDocument.cancel):
+      case getType(fciSigningRequest.request):
+      case getType(fciUpdateDocumentSignaturesRequest):
+      case getType(fciClearStateRequest):
       case getType(fciPollFilledDocument.request):
       case getType(fciPollFilledDocument.success):
-      case getType(fciSignatureRequestFromId.request):
-      case getType(fciSignatureRequestFromId.success):
-      case getType(fciSigningRequest.request):
-      case getType(fciStartRequest):
-      case getType(fciUpdateDocumentSignaturesRequest):
+      case getType(fciPollFilledDocument.cancel):
         return mixpanelTrack(
           action.type,
           buildEventProperties("TECH", undefined, { environment })
         );
+      case getType(fciSigningRequest.success):
+        return mixpanelTrack(
+          action.type,
+          buildEventProperties("TECH", "control", { environment })
+        );
+      case getType(fciSignatureRequestFromId.failure):
       case getType(fciLoadQtspClauses.failure):
       case getType(fciLoadQtspFilledDocument.failure):
-      case getType(fciPollFilledDocument.failure):
-      case getType(fciSignatureRequestFromId.failure):
       case getType(fciSigningRequest.failure):
+      case getType(fciPollFilledDocument.failure):
         return mixpanelTrack(
           action.type,
           buildEventProperties("KO", undefined, {
             reason: getNetworkErrorMessage(action.payload),
             environment
           })
-        );
-      case getType(fciSigningRequest.success):
-        return mixpanelTrack(
-          action.type,
-          buildEventProperties("TECH", "control", { environment })
         );
     }
   };

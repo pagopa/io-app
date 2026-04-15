@@ -1,11 +1,10 @@
 import { render } from "@testing-library/react-native";
-
 import LinkedText from "../LinkedText";
 
 type Props = {
-  onPress: (holder: string) => void;
-  replacementUrl: string;
   text: string;
+  replacementUrl: string;
+  onPress: (holder: string) => void;
 };
 
 const MOCK_TEXT_ONE_LINK =

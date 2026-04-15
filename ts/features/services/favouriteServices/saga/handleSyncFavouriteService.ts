@@ -1,9 +1,8 @@
 import { put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-
 import { loadServiceDetail } from "../../details/store/actions/details";
-import { addFavouriteServiceSuccess } from "../store/actions";
 import { favouriteServiceByIdSelector } from "../store/selectors";
+import { addFavouriteServiceSuccess } from "../store/actions";
 
 /**
  * saga to align the stored favourite service data with the newly loaded details.

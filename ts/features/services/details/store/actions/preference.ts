@@ -1,12 +1,11 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
-
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
-import { NetworkError } from "../../../../../utils/errors";
 import {
   ServicePreference,
   ServicePreferenceResponse,
   WithServiceID
 } from "../../types/ServicePreferenceResponse";
+import { NetworkError } from "../../../../../utils/errors";
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 
 /**
  * Actions to load the specified preferences for a given ServiceID

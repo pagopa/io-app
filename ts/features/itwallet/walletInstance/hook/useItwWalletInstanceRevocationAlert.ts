@@ -1,18 +1,17 @@
-import I18n from "i18next";
-import { useCallback } from "react";
 import { Alert } from "react-native";
-
+import { useCallback } from "react";
+import I18n from "i18next";
+import { WalletInstanceRevocationReason } from "../../common/utils/itwTypesUtils";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { itwWalletInstanceStatusSelector } from "../store/selectors";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { itwUpdateWalletInstanceStatus } from "../store/actions";
+import { openWebUrl } from "../../../../utils/url";
 import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import {
   DOCUMENTS_ON_IO_FAQ_12_URL_BODY,
   DOCUMENTS_ON_IO_FAQ_14_URL_BODY
 } from "../../../../urls";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { openWebUrl } from "../../../../utils/url";
-import { WalletInstanceRevocationReason } from "../../common/utils/itwTypesUtils";
-import { itwUpdateWalletInstanceStatus } from "../store/actions";
-import { itwWalletInstanceStatusSelector } from "../store/selectors";
 
 const closeButtonText = I18n.t(
   "features.itWallet.walletInstanceRevoked.alert.closeButton"

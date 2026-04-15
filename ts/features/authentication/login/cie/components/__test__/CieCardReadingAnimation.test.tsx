@@ -1,10 +1,9 @@
 import React from "react";
 import { createStore } from "redux";
-
-import { applicationChangeState } from "../../../../../../store/actions/application";
-import { appReducer } from "../../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { appReducer } from "../../../../../../store/reducers";
 import CieCardReadingAnimation, {
   ReadingState,
   testableCieCardReadingAnimation

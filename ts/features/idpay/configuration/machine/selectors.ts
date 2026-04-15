@@ -2,14 +2,15 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
 import { StateFrom } from "xstate";
-
 import { InstrumentDTO } from "../../../../../definitions/idpay/InstrumentDTO";
 import { ConfigurationMode } from "../types";
 import { IdPayConfigurationMachine } from "./machine";
 
-type IDPayInstrumentsByIdWallet = Record<string, InstrumentDTO>;
-
 type MachineSnapshot = StateFrom<IdPayConfigurationMachine>;
+
+type IDPayInstrumentsByIdWallet = {
+  [idWallet: string]: InstrumentDTO;
+};
 
 const selectInitiativeDetails = (snapshot: MachineSnapshot) =>
   snapshot.context.initiative;

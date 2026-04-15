@@ -9,7 +9,6 @@ import { Canvas } from "@shopify/react-native-skia";
 import I18n from "i18next";
 import { useState } from "react";
 import { Alert, useWindowDimensions, View } from "react-native";
-
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { DSComponentViewerBox } from "../../../design-system/components/DSComponentViewerBox";
 import { ItwBrandedBox } from "../../common/components/ItwBrandedBox";
@@ -19,7 +18,7 @@ import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../common/components/ItwSkeumorphicCard/FlipGestureDetector";
 import { getCredentialStatusObject } from "../../common/utils/itwCredentialStatusUtils";
 import { ItwStoredCredentialsMocks } from "../../common/utils/itwMocksUtils";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import { ItwRequestedClaimsList } from "../../issuance/components/ItwRequestedClaimsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwPresentationCredentialCardFlipButton } from "../../presentation/details/components/ItwPresentationCredentialCardFlipButton";
@@ -48,9 +47,9 @@ const ItwWalletBrandSection = () => {
               style={{ width: width - marginHorizontal * 2, height: 50 }}
             >
               <ItwBrandedSkiaGradient
+                width={width - marginHorizontal * 2}
                 height={50}
                 variant={variant as any}
-                width={width - marginHorizontal * 2}
               />
             </Canvas>
           </DSComponentViewerBox>
@@ -88,8 +87,8 @@ const ItwWalletIdStatusSection = () => (
       </DSComponentViewerBox>
       <DSComponentViewerBox name={"jwtExpiring"}>
         <ItwWalletIdStatus
-          pidExpiration="2026-11-12T14:11:48.000Z"
           pidStatus="jwtExpiring"
+          pidExpiration="2026-11-12T14:11:48.000Z"
         />
       </DSComponentViewerBox>
       <DSComponentViewerBox name={"jwtExpired"}>
@@ -111,26 +110,26 @@ const ItwEngagementBannerSection = () => (
     <VStack space={8}>
       <DSComponentViewerBox name={"default"}>
         <ItwEngagementBanner
-          action={"Aggiungi un documento"}
+          title={"Porta su IO i tuoi documenti digitali"}
           description={
             "Con piena validità ufficiale, digitali e sempre a portata di mano!"
           }
-          dismissable={true}
-          onDismiss={() => Alert.alert("❌ Engagement Banner dismissed")}
+          action={"Aggiungi un documento"}
           onPress={() => Alert.alert("✅ Engagement Banner pressed")}
-          title={"Porta su IO i tuoi documenti digitali"}
+          onDismiss={() => Alert.alert("❌ Engagement Banner dismissed")}
+          dismissable={true}
         />
       </DSComponentViewerBox>
       <DSComponentViewerBox name={"link"}>
         <ItwEngagementBanner
-          action={"Inizia"}
+          title={"Dimostra chi sei col tuo dispositivo"}
           description={
             "Usa la tua Patente digitale anche come documento di riconoscimento, in modo facile e sicuro!"
           }
-          dismissable={true}
-          onDismiss={() => Alert.alert("❌ Engagement Banner dismissed")}
+          action={"Inizia"}
           onPress={() => Alert.alert("✅ Engagement Banner pressed")}
-          title={"Dimostra chi sei col tuo dispositivo"}
+          onDismiss={() => Alert.alert("❌ Engagement Banner dismissed")}
+          dismissable={true}
         />
       </DSComponentViewerBox>
     </VStack>
@@ -147,7 +146,7 @@ const ItwSkeumorphicCredentialSection = () => {
 
   const L2Credentials = Object.entries(ItwStoredCredentialsMocks)
     .filter(([key]) => key !== "L3")
-    .map(([_, value]) => value as StoredCredential)
+    .map(([_, value]) => value as CredentialMetadata)
     .filter(({ credentialType }) =>
       credentialsWithCard.includes(credentialType)
     );
@@ -156,16 +155,16 @@ const ItwSkeumorphicCredentialSection = () => {
       <ListItemHeader label="Skeumorphic credential card" />
       <ListItemSwitch
         label="Hide claim values"
+        value={valuesHidden}
         onSwitchValueChange={() => {
           setValuesHidden(!valuesHidden);
         }}
-        value={valuesHidden}
       />
       <VStack space={16}>
         {L2Credentials.map(l2Credential => (
           <ItwSkeumorphicCredentialItem
-            credential={l2Credential}
             key={l2Credential.credentialType}
+            credential={l2Credential}
             valuesHidden={valuesHidden}
           />
         ))}
@@ -178,7 +177,7 @@ const ItwSkeumorphicCredentialItem = ({
   credential,
   valuesHidden
 }: {
-  credential: StoredCredential;
+  credential: CredentialMetadata;
   valuesHidden: boolean;
 }) => {
   const navigation = useIONavigation();
@@ -200,15 +199,15 @@ const ItwSkeumorphicCredentialItem = ({
       <FlipGestureDetector isFlipped={isFlipped} setIsFlipped={setFlipped}>
         <ItwSkeumorphicCard
           credential={credential}
+          status={status}
           isFlipped={isFlipped}
           onPress={handleOnPress}
-          status={status}
           valuesHidden={valuesHidden}
         />
       </FlipGestureDetector>
       <ItwPresentationCredentialCardFlipButton
-        handleOnPress={() => setFlipped(_ => !_)}
         isFlipped={isFlipped}
+        handleOnPress={() => setFlipped(_ => !_)}
       />
     </VStack>
   );
@@ -245,11 +244,11 @@ export const ItwClaimsListSection = () => {
       }}
     >
       <ListItemHeader
-        iconColor={theme["icon-default"]}
-        iconName="security"
         label={I18n.t(
           "features.itWallet.issuance.credentialAuth.requiredClaims"
         )}
+        iconName="security"
+        iconColor={theme["icon-default"]}
       />
       <ItwRequestedClaimsList items={mock} />
     </View>

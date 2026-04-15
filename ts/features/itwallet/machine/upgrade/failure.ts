@@ -1,10 +1,9 @@
 import { Errors } from "@pagopa/io-react-native-wallet";
-
+import { CredentialUpgradeEvents } from "../upgrade/events";
 import {
   CredentialIssuanceFailure,
   CredentialIssuanceFailureType
 } from "../credential/failure";
-import { CredentialUpgradeEvents } from "../upgrade/events";
 
 const { isIssuerResponseError } = Errors;
 

@@ -1,5 +1,4 @@
 import { getType } from "typesafe-actions";
-
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { pnActivationUpsert } from "../actions";
@@ -20,14 +19,14 @@ export const pnActivationReducer = (
   action: Action
 ): PnActivationState => {
   switch (action.type) {
-    case getType(pnActivationUpsert.failure):
-    case getType(pnActivationUpsert.success):
-      return {
-        isActivating: false
-      };
     case getType(pnActivationUpsert.request):
       return {
         isActivating: true
+      };
+    case getType(pnActivationUpsert.success):
+    case getType(pnActivationUpsert.failure):
+      return {
+        isActivating: false
       };
   }
   return state;

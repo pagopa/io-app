@@ -1,8 +1,7 @@
 import { createSelector } from "reselect";
-
 import { GlobalState } from "../../../../../store/reducers/types";
-import { progressSelector } from "../../../../identification/store/selectors";
 import { ItwSecurePreferencesState } from "../reducers/securePreferences";
+import { progressSelector } from "../../../../identification/store/selectors";
 
 // 5 means that the fifth time the user accesses the app offline, they will be required to return online.
 export const ITW_MAX_OFFLINE_ACCESS_COUNTER = 5;

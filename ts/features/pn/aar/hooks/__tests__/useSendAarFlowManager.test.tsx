@@ -1,5 +1,4 @@
 import { act, renderHook } from "@testing-library/react-native";
-
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import * as ANALYTICS from "../../analytics";
 import { terminateAarFlow } from "../../store/actions";

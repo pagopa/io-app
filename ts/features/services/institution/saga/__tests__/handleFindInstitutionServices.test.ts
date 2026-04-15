@@ -1,16 +1,15 @@
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
-
 import { InstitutionServicesResource } from "../../../../../../definitions/services/InstitutionServicesResource";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { ServicesClient } from "../../../common/api/__mocks__/servicesClient";
 import {
-  paginatedServicesGet,
-  PaginatedServicesGetPayload
+  PaginatedServicesGetPayload,
+  paginatedServicesGet
 } from "../../store/actions";
 import { handleFindInstitutionServices } from "../handleFindInstitutionServices";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 
 const MOCK_INSTITUTION_ID = "I01";
 

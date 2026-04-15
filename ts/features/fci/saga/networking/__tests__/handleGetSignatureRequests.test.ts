@@ -1,13 +1,12 @@
-import { left, right } from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
+import { left, right } from "fp-ts/lib/Either";
 import { ActionType } from "typesafe-actions";
-
-import { SignatureRequestList } from "../../../../../../definitions/fci/SignatureRequestList";
 import { getNetworkError } from "../../../../../utils/errors";
-import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { fciSignaturesListRequest } from "../../../store/actions";
-import { mockedRandomSignatureRequestList } from "../../../types/__mocks__/SignaturesList.mock";
 import { handleGetSignatureRequests } from "../handleGetSignatureRequests";
+import { mockedRandomSignatureRequestList } from "../../../types/__mocks__/SignaturesList.mock";
+import { SignatureRequestList } from "../../../../../../definitions/fci/SignatureRequestList";
+import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 
 const successResponse = {
   status: 200,

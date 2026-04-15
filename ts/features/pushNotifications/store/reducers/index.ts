@@ -8,13 +8,12 @@ import {
   PersistPartial,
   persistReducer
 } from "redux-persist";
-
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { isDevEnv, isTestEnv } from "../../../../utils/environment";
 import { userFromSuccessLoginSelector } from "../../../authentication/loginInfo/store/selectors";
-import { generateTokenRegistrationTime } from "../../utils";
 import { hasUserSeenSystemNotificationsPromptSelector } from "../selectors";
+import { generateTokenRegistrationTime } from "../../utils";
 import { environmentReducer, EnvironmentState } from "./environment";
 import {
   installationReducer,
@@ -60,9 +59,9 @@ const migrations: MigrationManifest = {
 };
 
 export type NotificationsState = {
-  environment: EnvironmentState;
   installation: InstallationState;
   pendingMessage: PendingMessageState;
+  environment: EnvironmentState;
   userBehaviour: UserBehaviourState;
 };
 

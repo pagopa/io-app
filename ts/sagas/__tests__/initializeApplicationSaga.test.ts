@@ -1,56 +1,55 @@
 import * as O from "fp-ts/lib/Option";
 import { testSaga } from "redux-saga-test-plan";
-
-import { VersionInfo } from "../../../definitions/content/VersionInfo";
-import {
-  isAppSupportedSelector,
-  versionInfoDataSelector
-} from "../../common/versionInfo/store/reducers/versionInfo";
-import { checkSession } from "../../features/authentication/common/saga/watchCheckSessionSaga";
-import { watchForceLogoutSaga } from "../../features/authentication/common/saga/watchForceLogoutSaga";
 import { sessionExpired } from "../../features/authentication/common/store/actions";
 import {
   sessionInfoSelector,
   sessionTokenSelector
 } from "../../features/authentication/common/store/selectors";
-import { refreshSessionToken } from "../../features/authentication/fastLogin/store/actions/tokenRefreshActions";
-import { isFastLoginEnabledSelector } from "../../features/authentication/fastLogin/store/selectors";
-import { userFromSuccessLoginSelector } from "../../features/authentication/loginInfo/store/selectors";
-import {
-  shouldExitForOfflineAccess,
-  watchSessionRefreshInOfflineSaga
-} from "../../features/ingress/saga";
-import { isBlockingScreenSelector } from "../../features/ingress/store/selectors";
-import { watchItwOfflineSaga } from "../../features/itwallet/common/saga";
-import { checkPublicKeyAndBlockIfNeeded } from "../../features/lollipop/navigation";
-import {
-  checkLollipopSessionAssertionAndInvalidateIfNeeded,
-  generateLollipopKeySaga,
-  getKeyInfo
-} from "../../features/lollipop/saga";
-import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
-import { notificationPermissionsListener } from "../../features/pushNotifications/sagas/notificationPermissionsListener";
-import { cancellAllLocalNotifications } from "../../features/pushNotifications/utils";
-import {
-  loadProfile,
-  watchProfile,
-  watchProfileUpsertRequestsSaga
-} from "../../features/settings/common/sagas/profile";
-import { handleApplicationStartupTransientError } from "../../features/startup/sagas";
-import { formatRequestedTokenString } from "../../features/zendesk/utils";
-import { remoteConfigSelector } from "../../store/reducers/backendStatus/remoteConfig";
-import { startupTransientErrorInitialState } from "../../store/reducers/startup";
-import { trackKeychainFailures } from "../../utils/analytics";
 import { previousInstallationDataDeleteSaga } from "../installation";
 import {
   initMixpanel,
   watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel
 } from "../mixpanel";
 import {
+  loadProfile,
+  watchProfile,
+  watchProfileUpsertRequestsSaga
+} from "../../features/settings/common/sagas/profile";
+import {
   initializeApplicationSaga,
   testWaitForNavigatorServiceInitialization
 } from "../startup";
 import { checkAppHistoryVersionSaga } from "../startup/appVersionHistorySaga";
+import {
+  checkLollipopSessionAssertionAndInvalidateIfNeeded,
+  generateLollipopKeySaga,
+  getKeyInfo
+} from "../../features/lollipop/saga";
+import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducers/lollipop";
+import { isFastLoginEnabledSelector } from "../../features/authentication/fastLogin/store/selectors";
+import { refreshSessionToken } from "../../features/authentication/fastLogin/store/actions/tokenRefreshActions";
+import { remoteConfigSelector } from "../../store/reducers/backendStatus/remoteConfig";
+import { cancellAllLocalNotifications } from "../../features/pushNotifications/utils";
+import { handleApplicationStartupTransientError } from "../../features/startup/sagas";
+import { startupTransientErrorInitialState } from "../../store/reducers/startup";
+import { isBlockingScreenSelector } from "../../features/ingress/store/selectors";
+import { notificationPermissionsListener } from "../../features/pushNotifications/sagas/notificationPermissionsListener";
+import { trackKeychainFailures } from "../../utils/analytics";
+import { checkSession } from "../../features/authentication/common/saga/watchCheckSessionSaga";
+import { formatRequestedTokenString } from "../../features/zendesk/utils";
+import { checkPublicKeyAndBlockIfNeeded } from "../../features/lollipop/navigation";
+import { userFromSuccessLoginSelector } from "../../features/authentication/loginInfo/store/selectors";
+import { watchItwOfflineSaga } from "../../features/itwallet/common/saga";
+import {
+  shouldExitForOfflineAccess,
+  watchSessionRefreshInOfflineSaga
+} from "../../features/ingress/saga";
+import { watchForceLogoutSaga } from "../../features/authentication/common/saga/watchForceLogoutSaga";
+import {
+  isAppSupportedSelector,
+  versionInfoDataSelector
+} from "../../common/versionInfo/store/reducers/versionInfo";
+import { VersionInfo } from "../../../definitions/content/VersionInfo";
 
 const aSessionToken = "mock-session-token";
 const aSessionInfo = O.some({

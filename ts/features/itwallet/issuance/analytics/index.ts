@@ -8,13 +8,6 @@ import {
 } from "../../analytics/utils/types";
 import { IssuanceFailure } from "../../machine/eid/failure";
 import {
-  ITW_ISSUANCE_ACTIONS_EVENTS,
-  ITW_ISSUANCE_ERRORS_EVENTS,
-  ITW_ISSUANCE_EXIT_EVENTS,
-  ITW_ISSUANCE_SCREENVIEW_EVENTS,
-  ITW_ISSUANCE_TECH_EVENTS
-} from "./enum";
-import {
   AddCredentialFailure,
   BackToWallet,
   CredentialUnexpectedFailure,
@@ -26,6 +19,13 @@ import {
   TrackCredentialPreview,
   TrackGetChallengeInfoFailure
 } from "./types";
+import {
+  ITW_ISSUANCE_ACTIONS_EVENTS,
+  ITW_ISSUANCE_ERRORS_EVENTS,
+  ITW_ISSUANCE_EXIT_EVENTS,
+  ITW_ISSUANCE_SCREENVIEW_EVENTS,
+  ITW_ISSUANCE_TECH_EVENTS
+} from "./enum";
 
 // Screen view events
 

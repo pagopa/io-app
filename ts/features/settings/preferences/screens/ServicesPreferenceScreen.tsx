@@ -1,31 +1,30 @@
 import { useIOToast } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import I18n from "i18next";
 import { ReactElement, useCallback, useEffect } from "react";
-
+import I18n from "i18next";
 import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";
-import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
-import {
-  useIODispatch,
-  useIOSelector,
-  useIOStore
-} from "../../../../store/hooks";
-import { GlobalState } from "../../../../store/reducers/types";
-import { getFlowType } from "../../../../utils/analytics";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { usePrevious } from "../../../../utils/hooks/usePrevious";
-import {
-  trackServiceConfiguration,
-  trackServiceConfigurationScreen
-} from "../../common/analytics";
 import { profileUpsert } from "../../common/store/actions";
 import {
   profileSelector,
   profileServicePreferencesModeSelector
 } from "../../common/store/selectors";
-import ServicesContactComponent from "../shared/components/ServicesContactComponent";
+import { GlobalState } from "../../../../store/reducers/types";
+import { getFlowType } from "../../../../utils/analytics";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
+import {
+  useIODispatch,
+  useIOSelector,
+  useIOStore
+} from "../../../../store/hooks";
+import { usePrevious } from "../../../../utils/hooks/usePrevious";
+import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import {
+  trackServiceConfiguration,
+  trackServiceConfigurationScreen
+} from "../../common/analytics";
 import { useManualConfigBottomSheet } from "../shared/hooks/useManualConfigBottomSheet";
+import ServicesContactComponent from "../shared/components/ServicesContactComponent";
 
 /**
  * Display the current profile services preference mode (auto or manual)
@@ -112,17 +111,17 @@ const ServicesPreferenceScreen = (): ReactElement => {
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>
       <IOScrollViewWithLargeHeader
-        description={I18n.t("services.optIn.preferences.body")}
-        headerActionsProp={{ showHelp: true }}
-        includeContentMargins
         testID="services-preference-screen"
+        includeContentMargins
         title={{
           label: I18n.t("services.optIn.preferences.title")
         }}
+        description={I18n.t("services.optIn.preferences.body")}
+        headerActionsProp={{ showHelp: true }}
       >
         <ServicesContactComponent
-          mode={profileServicePreferenceMode}
           onSelectMode={handleOnSelectMode}
+          mode={profileServicePreferenceMode}
         />
         {manualConfigBottomSheet}
       </IOScrollViewWithLargeHeader>

@@ -1,16 +1,15 @@
 import MockDate from "mockdate";
 import { createStore } from "redux";
-
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { initPaymentStateAction } from "../../../checkout/store/actions/orchestration";
 import { PaymentStartOrigin } from "../../../checkout/types";
-import { WalletPaymentOutcomeEnum } from "../../../checkout/types/PaymentOutcomeEnum";
-import { storePaymentOutcomeToHistory } from "../actions";
 import {
   selectOngoingPaymentHistory,
   selectPaymentsHistoryArchive
 } from "../selectors";
+import { storePaymentOutcomeToHistory } from "../actions";
+import { WalletPaymentOutcomeEnum } from "../../../checkout/types/PaymentOutcomeEnum";
 
 const MOCKED_LOOKUP_ID = "123456";
 const MOCKED_DATE = new Date();

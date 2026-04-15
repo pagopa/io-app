@@ -1,15 +1,14 @@
 import { fireEvent } from "@testing-library/react-native";
-import I18n from "i18next";
-import { Alert } from "react-native";
 import { createStore } from "redux";
-
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { useIOSelector } from "../../../../../store/hooks";
+import { Alert } from "react-native";
+import I18n from "i18next";
 import { appReducer } from "../../../../../store/reducers";
-import { preferredLanguageSelector } from "../../../../../store/reducers/persistedPreferences";
+import { applicationChangeState } from "../../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
+import { useIOSelector } from "../../../../../store/hooks";
 import LanguagesPreferencesScreen from "../LanguagesPreferencesScreen";
+import { preferredLanguageSelector } from "../../../../../store/reducers/persistedPreferences";
+import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 
 // Mock the useIOSelector hook
 jest.mock("../../../../../store/hooks", () => ({

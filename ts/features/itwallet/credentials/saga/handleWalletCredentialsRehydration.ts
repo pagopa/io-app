@@ -1,6 +1,5 @@
 import * as O from "fp-ts/lib/Option";
 import { put, select } from "typed-redux-saga/macro";
-
 import { walletAddCards } from "../../../wallet/store/actions/cards";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { mapCredentialToWalletCard } from "../../wallet/utils";

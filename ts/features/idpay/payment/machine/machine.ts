@@ -1,8 +1,7 @@
 import * as E from "fp-ts/lib/Either";
-import { flow, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { flow, pipe } from "fp-ts/lib/function";
 import { assertEvent, assign, fromPromise, setup } from "xstate";
-
 import { AuthPaymentResponseDTO } from "../../../../../definitions/idpay/AuthPaymentResponseDTO";
 import { IdPayTags } from "../../common/machine/tags";
 import { IDPayTransactionCode } from "../common/types";

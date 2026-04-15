@@ -2,7 +2,6 @@ import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { useEffect } from "react";
 import { Modal } from "react-native";
-
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIOSelector } from "../../../../store/hooks";
 import {
@@ -26,11 +25,11 @@ export const GetProfileEndpointTransientError = () => {
     <Modal backdropColor={IOColors[theme["appBackground-primary"]]}>
       <OperationResultScreenContent
         pictogram="umbrella"
-        subtitle={I18n.t(
-          "fastLogin.userInteraction.sessionExpired.transientError.subtitle"
-        )}
         title={I18n.t(
           "fastLogin.userInteraction.sessionExpired.transientError.title"
+        )}
+        subtitle={I18n.t(
+          "fastLogin.userInteraction.sessionExpired.transientError.subtitle"
         )}
       />
     </Modal>

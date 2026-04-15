@@ -1,24 +1,23 @@
-import { render } from "@testing-library/react-native";
-import I18n from "i18next";
-import { JSX } from "react";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { appReducer } from "../../../../../store/reducers";
-import { GlobalState } from "../../../../../store/reducers/types";
-import {
-  CredentialIssuanceFailure,
-  CredentialIssuanceFailureType
-} from "../../../machine/credential/failure";
+import { render } from "@testing-library/react-native";
+import { JSX } from "react";
+import I18n from "i18next";
+import { useItwFailureSupportModal } from "../useItwFailureSupportModal";
+import { ZendeskSubcategoryValue } from "../useItwZendeskSupport";
 import {
   IssuanceFailure,
   IssuanceFailureType
 } from "../../../machine/eid/failure";
+import {
+  CredentialIssuanceFailure,
+  CredentialIssuanceFailureType
+} from "../../../machine/credential/failure";
+import { appReducer } from "../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { GlobalState } from "../../../../../store/reducers/types";
 import { ItwFailure, ItwFailureType } from "../../utils/ItwFailureTypes.ts";
 import { CredentialType } from "../../utils/itwMocksUtils.ts";
-import { useItwFailureSupportModal } from "../useItwFailureSupportModal";
-import { ZendeskSubcategoryValue } from "../useItwZendeskSupport";
 
 jest.mock("@react-navigation/native", () => ({
   ...jest.requireActual("@react-navigation/native"),
@@ -146,11 +145,11 @@ describe("useItwFailureSupportModal", () => {
 });
 
 type Params = {
+  failure: IssuanceFailure | CredentialIssuanceFailure | ItwFailure;
   credentialType?: string;
-  failure: CredentialIssuanceFailure | IssuanceFailure | ItwFailure;
   supportChatEnabled: boolean;
-  supportLink?: string;
   zendeskSubcategory: ZendeskSubcategoryValue;
+  supportLink?: string;
 };
 
 const renderHook = (params: Params) => {

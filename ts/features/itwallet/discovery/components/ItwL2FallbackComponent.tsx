@@ -1,7 +1,6 @@
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback } from "react";
-
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -12,14 +11,14 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { itwDisableItwActivation } from "../../common/store/actions/preferences";
+import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
+import { ITW_ROUTES } from "../../navigation/routes";
 import {
   trackItwFallbackL2Flow,
   trackItwFallbackL2FlowExit,
   trackItwFallbackL2FlowStart
 } from "../../identification/analytics";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
-import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
-import { ITW_ROUTES } from "../../navigation/routes";
 
 type Props = {
   credentialType?: string;
@@ -99,14 +98,14 @@ export const ItwL2FallbackComponent = ({ credentialType }: Props) => {
 
   return (
     <OperationResultScreenContent
-      action={action}
-      pictogram="cardAdd"
-      secondaryAction={secondaryAction}
+      testID="ItwRestrictedModeFallbackComponentTestID"
+      title={I18n.t("features.itWallet.discovery.continueWithoutItw.title")}
       subtitle={I18n.t(
         "features.itWallet.discovery.continueWithoutItw.subtitle"
       )}
-      testID="ItwRestrictedModeFallbackComponentTestID"
-      title={I18n.t("features.itWallet.discovery.continueWithoutItw.title")}
+      pictogram="cardAdd"
+      action={action}
+      secondaryAction={secondaryAction}
     />
   );
 };

@@ -1,10 +1,9 @@
 import { testSaga } from "redux-saga-test-plan";
-
 import { handleStoredLinkingUrlIfNeeded } from "..";
+import { trackIOOpenedFromUniversalAppLink } from "../../analytics";
 import { initiateAarFlow } from "../../../pn/aar/store/actions";
 import { isSendAarLink } from "../../../pn/aar/utils/deepLinking";
 import { clearLinkingUrl } from "../../actions";
-import { trackIOOpenedFromUniversalAppLink } from "../../analytics";
 import { storedLinkingUrlSelector } from "../../reducers";
 
 jest.mock("../../analytics", () => ({

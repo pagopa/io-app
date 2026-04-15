@@ -38,7 +38,6 @@ import {
   TxtStrNode,
   TxtStrongNode
 } from "@textlint/ast-node-types";
-import I18n from "i18next";
 import {
   ExoticComponent,
   Fragment,
@@ -47,7 +46,7 @@ import {
   useState
 } from "react";
 import { Dimensions, Image, Pressable, View } from "react-native";
-
+import I18n from "i18next";
 import { isAndroid } from "../../utils/platform";
 import { openWebUrl } from "../../utils/url";
 import {
@@ -57,7 +56,7 @@ import {
 } from "./markdownRenderer";
 import { IOMarkdownRenderRules, Renderer } from "./types";
 
-export type ParagraphSize = "default" | "small";
+export type ParagraphSize = "small" | "default";
 
 const BULLET_ITEM_FULL = "\u2022";
 const BULLET_ITEM_EMPTY = "\u25E6";
@@ -96,20 +95,6 @@ export function getStrValue({ children }: TxtParentNode): string {
 }
 
 /**
- * Used to get a valid key
- *
- * @param txtNode any Txt node
- * @returns a string to be used as component key inside of map loops.
- */
-export function getTxtNodeKey(txtNode: AnyTxtNode): string {
-  const encoded = Buffer.from(
-    `${txtNode.raw.substring(0, 10) + JSON.stringify(txtNode.loc.start)}`
-  ).toString("base64");
-
-  return `${txtNode.type}_${encoded}`;
-}
-
-/**
  *
  * @param node The node to scan.
  * @param nodeType If defined this function checks how many nodes of this type wrap the interested node, otherwise it takes all the nodes.
@@ -127,6 +112,20 @@ function getNodeNestingLevel<T extends AnyTxtNode | undefined>(
   return current + getNodeNestingLevel(node.parent, nodeType);
 }
 
+/**
+ * Used to get a valid key
+ *
+ * @param txtNode any Txt node
+ * @returns a string to be used as component key inside of map loops.
+ */
+export function getTxtNodeKey(txtNode: AnyTxtNode): string {
+  const encoded = Buffer.from(
+    `${txtNode.raw.substring(0, 10) + JSON.stringify(txtNode.loc.start)}`
+  ).toString("base64");
+
+  return `${txtNode.type}_${encoded}`;
+}
+
 export const generateAccesibilityLinkViewsIfNeeded = (
   allLinkData: ReadonlyArray<LinkData>,
   nodeKey: string,
@@ -138,14 +137,14 @@ export const generateAccesibilityLinkViewsIfNeeded = (
   }
   return allLinkData.map((link, index) => (
     <Pressable
+      accessible={true}
       accessibilityLabel={link.text}
       accessibilityRole="link"
-      accessible={true}
       collapsable={false}
       collapsableChildren={false}
+      style={{ height: 1 }}
       key={`${nodeKey}_${index}`}
       onPress={() => onPress(link.url)}
-      style={{ height: 1 }}
     />
   ));
 };
@@ -204,8 +203,8 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
     const isInsideStrong = emphasis.parent?.type === "Strong";
     return (
       <IOText
-        fontStyle="italic"
         key={getTxtNodeKey(emphasis)}
+        fontStyle="italic"
         {...(isInsideStrong && { weight: "Semibold" })}
       >
         {emphasis.children.map(render)}
@@ -276,14 +275,14 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
 
     return (
       <Image
-        accessibilityIgnoresInvertColors
-        accessibilityLabel={image.alt ?? ""}
         key={getTxtNodeKey(image)}
+        accessibilityIgnoresInvertColors
+        style={imageSize}
         resizeMode="contain"
+        accessibilityLabel={image.alt ?? ""}
         source={{
           uri: image.url
         }}
-        style={imageSize}
       />
     );
   },
@@ -317,9 +316,9 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
           <View style={{ flexDirection: "row" }}>
             {isFirstList && <HSpacer size={12} />}
             <View
-              accessibilityRole="list"
-              accessible={true}
               style={{ flex: 1, flexGrow: 1 }}
+              accessible={true}
+              accessibilityRole="list"
             >
               {list.children.map((child, i) => (
                 <View
@@ -354,8 +353,8 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
     return (
       <View
         accessible={false}
-        key={getTxtNodeKey(listItem)}
         style={{ flex: 1, flexShrink: 1 }}
+        key={getTxtNodeKey(listItem)}
       >
         {listItem.children.map(render)}
       </View>
@@ -387,11 +386,11 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
 
     return (
       <Banner
-        color="neutral"
-        content={content}
         key={getTxtNodeKey(blockQuote)}
         pictogramName={getPictogramName(pictogramName?.[1])}
+        color="neutral"
         title={title?.[1]}
+        content={content}
       />
     );
   },
@@ -495,11 +494,11 @@ export const linkNodeToReactNative = (
   const BodyComponent = options.size === "small" ? BodySmall : Body;
   return (
     <BodyComponent
+      weight="Semibold"
       asLink
       avoidPressable
       key={getTxtNodeKey(link)}
       onPress={options.onPress}
-      weight="Semibold"
     >
       {link.children.map(render)}
     </BodyComponent>
@@ -551,17 +550,17 @@ export const accessibleLinkNodeToReactNative = (
   const BodyComponent = options.size === "small" ? BodySmall : Body;
   return (
     <Pressable
-      accessibilityRole="link"
-      accessible
       focusable
+      accessible
+      accessibilityRole="link"
       key={getTxtNodeKey(link)}
       style={{ height: 19 }}
     >
       <BodyComponent
+        weight="Semibold"
         asLink
         avoidPressable
         onPress={options.onPress}
-        weight="Semibold"
       >
         {link.children.map(render)}
       </BodyComponent>

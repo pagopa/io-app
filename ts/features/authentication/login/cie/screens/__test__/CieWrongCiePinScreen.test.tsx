@@ -1,23 +1,22 @@
-import I18n from "i18next";
 import { createStore } from "redux";
-
+import I18n from "i18next";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
-import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import CieWrongCiePinScreen from "../../screens/CieWrongCiePinScreen";
+import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 
 const closeLabel = I18n.t("global.buttons.close");
 const retryLabel = I18n.t("global.buttons.retry");
 
 type Test = {
+  remainingCount: number;
+  title: string;
+  subtitle: string;
   actionLabel: string;
   actionTestID: string;
-  remainingCount: number;
   secondaryActionLabel: string;
   secondaryActionTestID: string;
-  subtitle: string;
-  title: string;
 };
 
 const tests: Array<Test> = [

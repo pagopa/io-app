@@ -1,10 +1,9 @@
 import { testSaga } from "redux-saga-test-plan";
-
 import { watchFimsHistorySaga } from "..";
+import * as HANDLE_GET from "../handleGetFimsHistorySaga";
 import { createFimsClient } from "../../api/client";
 import { fimsHistoryExport, fimsHistoryGet } from "../../store/actions";
 import { handleExportFimsHistorySaga } from "../handleExportFimsHistorySaga";
-import * as HANDLE_GET from "../handleGetFimsHistorySaga";
 
 const apiUrlPrefix = "mock-api-url-prefix";
 jest.mock("../../../../../config", () => ({

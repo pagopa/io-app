@@ -2,7 +2,6 @@ import { constNull } from "fp-ts/lib/function";
 import "react-native";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -101,8 +100,8 @@ const renderComponent = (props: Props) => {
     <Provider store={store}>
       <SignatureStatusComponent
         {...props}
-        onPress={constNull}
         testID={fakeTestID}
+        onPress={constNull}
       />
     </Provider>
   );

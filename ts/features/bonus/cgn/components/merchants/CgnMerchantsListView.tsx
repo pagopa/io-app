@@ -5,17 +5,16 @@ import {
   HSpacer,
   ListItemNav
 } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { ListRenderItem, View } from "react-native";
-
+import I18n from "i18next";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";
 import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
 import { getListItemAccessibilityLabelCount } from "../../../../../utils/accessibility";
 
 type Props = {
-  count: number;
   onItemPress: (id: Merchant["id"]) => void;
+  count: number;
 };
 
 export const CgnMerchantListViewRenderItem =
@@ -34,7 +33,6 @@ export const CgnMerchantListViewRenderItem =
     return (
       <ContentWrapper>
         <ListItemNav
-          accessibilityLabel={accessibilityLabel}
           onPress={() => props.onItemPress(item.id)}
           value={
             <View
@@ -52,17 +50,18 @@ export const CgnMerchantListViewRenderItem =
                 >
                   <Badge
                     accessible={false}
+                    variant="cgn"
                     text={
                       item.numberOfNewDiscounts
                         ? item.numberOfNewDiscounts.toString()
                         : I18n.t("bonus.cgn.merchantsList.news")
                     }
-                    variant="cgn"
                   />
                 </View>
               )}
             </View>
           }
+          accessibilityLabel={accessibilityLabel}
         />
       </ContentWrapper>
     );

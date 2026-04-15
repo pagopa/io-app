@@ -5,8 +5,8 @@ import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { useCallback } from "react";
 import { useWindowDimensions, View } from "react-native";
-
 import { useIOSelector } from "../../../../../store/hooks";
+import { trackCredentialDetail } from "../analytics";
 import { mapPIDStatusToMixpanel } from "../../../analytics/utils";
 import {
   ItwBrandedSkiaGradient,
@@ -14,14 +14,13 @@ import {
 } from "../../../common/components/ItwBrandedSkiaGradient";
 import { PoweredByItWalletText } from "../../../common/components/PoweredByItWalletText";
 import {
-  ItwJwtCredentialStatus,
-  StoredCredential
+  CredentialMetadata,
+  ItwJwtCredentialStatus
 } from "../../../common/utils/itwTypesUtils";
 import {
   itwCredentialsEidSelector,
   itwCredentialsEidStatusSelector
 } from "../../../credentials/store/selectors";
-import { trackCredentialDetail } from "../analytics";
 import { ItwPresentationDetailsScreenBase } from "../components/ItwPresentationDetailsScreenBase";
 import { ItwPresentationPidDetail } from "../components/ItwPresentationPidDetail";
 import { ItwPresentationPidDetailFooter } from "../components/ItwPresentationPidDetailFooter";
@@ -42,7 +41,7 @@ export const ItwPresentationPidDetailScreen = () => {
     }, [maybeEidStatus])
   );
 
-  const getContent = (credential: StoredCredential) => (
+  const getContent = (credential: CredentialMetadata) => (
     <ItwPresentationDetailsScreenBase credential={credential}>
       {/* Header with logo and description */}
       <ItwPresentationPidDetailHeader />
@@ -52,7 +51,7 @@ export const ItwPresentationPidDetailScreen = () => {
 
       {/* Page content */}
       <ContentWrapper>
-        <VStack space={16} style={{ paddingVertical: 16 }}>
+        <VStack style={{ paddingVertical: 16 }} space={16}>
           <ItwPresentationPidDetail credential={credential} />
           <ItwPresentationPidDetailFooter credential={credential} />
           <View style={{ alignItems: "center" }}>
@@ -82,9 +81,9 @@ const PidStatusGradient = () => {
   return (
     <Canvas style={{ width, height: 3 }}>
       <ItwBrandedSkiaGradient
+        width={width}
         height={3}
         variant={borderVariantByPidStatus[pidStatus || "valid"]}
-        width={width}
       />
     </Canvas>
   );

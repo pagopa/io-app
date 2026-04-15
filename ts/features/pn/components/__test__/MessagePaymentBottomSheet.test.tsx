@@ -1,17 +1,16 @@
 import { createStore } from "redux";
-
-import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
+import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
+import { appReducer } from "../../../../store/reducers";
+import { applicationChangeState } from "../../../../store/actions/application";
+import PN_ROUTES from "../../navigation/routes";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import { MessagePaymentBottomSheet } from "../MessagePaymentBottomSheet";
+import { GlobalState } from "../../../../store/reducers/types";
+import { remoteError, remoteReady } from "../../../../common/model/RemoteValue";
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
-import { remoteError, remoteReady } from "../../../../common/model/RemoteValue";
-import { applicationChangeState } from "../../../../store/actions/application";
-import { appReducer } from "../../../../store/reducers";
-import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { toSpecificMessagePaymentError } from "../../../messages/types/paymentErrors";
-import PN_ROUTES from "../../navigation/routes";
-import { MessagePaymentBottomSheet } from "../MessagePaymentBottomSheet";
+import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
 
 describe("MessagePaymentBottomSheet", () => {
   it("should match snapshot, no payments", () => {
@@ -113,9 +112,9 @@ const renderComponent = (
         messageId={messageId}
         payments={payments}
         presentPaymentsBottomSheetRef={mockPresentPaymentsBottomSheetRef}
+        serviceId={"01J5X3CYV736B41KSZS8DYR75Q" as ServiceId}
         sendOpeningSource={"message"}
         sendUserType={"recipient"}
-        serviceId={"01J5X3CYV736B41KSZS8DYR75Q" as ServiceId}
       />
     ),
     PN_ROUTES.MESSAGE_DETAILS,

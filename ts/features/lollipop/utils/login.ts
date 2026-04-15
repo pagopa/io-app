@@ -1,17 +1,16 @@
-import { PublicKey } from "@pagopa/io-react-native-crypto";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
+import * as TE from "fp-ts/lib/TaskEither";
+import { parseStringPromise } from "xml2js";
 import {
   getRedirects,
   isLoginUtilsError
 } from "@pagopa/io-react-native-login-utils";
-import { last } from "fp-ts/lib/Array";
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as TE from "fp-ts/lib/TaskEither";
-import pako from "pako";
 import URLParse from "url-parse";
-import { parseStringPromise } from "xml2js";
-
+import { PublicKey } from "@pagopa/io-react-native-crypto";
+import pako from "pako";
+import { last } from "fp-ts/lib/Array";
 import { handleRegenerateEphemeralKey } from "..";
 import { AppDispatch } from "../../../App";
 import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";

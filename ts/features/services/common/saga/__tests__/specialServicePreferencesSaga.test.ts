@@ -1,11 +1,10 @@
 import * as O from "fp-ts/lib/Option";
 import { expectSaga } from "redux-saga-test-plan";
-
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
-import * as profileProperties from "../../../../../mixpanelConfig/profileProperties";
-import { loadServicePreference } from "../../../details/store/actions/preference";
-import { ServicePreferenceResponse } from "../../../details/types/ServicePreferenceResponse";
 import { specialServicePreferencesSaga } from "../specialServicePreferencesSaga";
+import { loadServicePreference } from "../../../details/store/actions/preference";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
+import { ServicePreferenceResponse } from "../../../details/types/ServicePreferenceResponse";
+import * as profileProperties from "../../../../../mixpanelConfig/profileProperties";
 
 describe("specialServicePreferencesSaga", () => {
   const pnServiceId = "01G40DWQGKY5GRWSNM4303VNRP" as ServiceId;

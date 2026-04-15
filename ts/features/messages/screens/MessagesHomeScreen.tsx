@@ -1,9 +1,8 @@
 import { HeaderActionProps } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { useCallback, useMemo, useRef } from "react";
 import { View } from "react-native";
 import PagerView from "react-native-pager-view";
-
+import I18n from "i18next";
 import { useHeaderFirstLevel } from "../../../hooks/useHeaderFirstLevel";
 import {
   useHeaderFirstLevelActionPropSettings,

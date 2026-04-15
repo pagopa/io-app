@@ -1,29 +1,28 @@
 import { Route, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import I18n from "i18next";
 import { useCallback } from "react";
-
-import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
-import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
+import I18n from "i18next";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import ROUTES from "../../../navigation/routes";
-import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { getFlowType } from "../../../utils/analytics";
-import { ContextualHelpPropsMarkdown } from "../../../utils/contextualHelp";
-import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { acknowledgeOnEmailValidation } from "../../settings/common/store/actions";
+import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { isProfileFirstOnBoardingSelector } from "../../settings/common/store/selectors";
+import { getFlowType } from "../../../utils/analytics";
+import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import {
-  trackEmailAlreadyTaken,
-  trackEmailDuplicateEditingConfirm
+  trackEmailDuplicateEditingConfirm,
+  trackEmailAlreadyTaken
 } from "../analytics";
-
-export type EmailAlreadyUsedScreenParamList = {
-  email: string;
-};
+import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
+import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
+import { ContextualHelpPropsMarkdown } from "../../../utils/contextualHelp";
 
 export type OnboardingServicesPreferenceScreenNavigationParams = {
   isFirstOnboarding: boolean;
+};
+
+export type EmailAlreadyUsedScreenParamList = {
+  email: string;
 };
 
 const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
@@ -69,6 +68,11 @@ const EmailAlreadyTakenScreen = () => {
 
   return (
     <OperationResultScreenContent
+      pictogram="accessDenied"
+      title={I18n.t("email.cduScreens.emailAlreadyTaken.title")}
+      subtitle={I18n.t("email.cduScreens.emailAlreadyTaken.subtitle", {
+        email
+      })}
       action={{
         label: I18n.t("email.cduScreens.emailAlreadyTaken.editButton"),
         accessibilityLabel: I18n.t(
@@ -77,11 +81,6 @@ const EmailAlreadyTakenScreen = () => {
         onPress: confirmButtonOnPress
       }}
       isHeaderVisible={true}
-      pictogram="accessDenied"
-      subtitle={I18n.t("email.cduScreens.emailAlreadyTaken.subtitle", {
-        email
-      })}
-      title={I18n.t("email.cduScreens.emailAlreadyTaken.title")}
     />
   );
 };

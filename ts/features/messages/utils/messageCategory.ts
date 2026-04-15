@@ -1,7 +1,7 @@
 import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
 import { TagEnum } from "../../../../definitions/backend/MessageCategoryBase";
-import { MessageCategoryPayment } from "../../../../definitions/backend/MessageCategoryPayment";
 import { MessageCategoryPN } from "../../../../definitions/backend/MessageCategoryPN";
+import { MessageCategoryPayment } from "../../../../definitions/backend/MessageCategoryPayment";
 
 export const foldMessageCategoryK =
   <A>(
@@ -11,14 +11,14 @@ export const foldMessageCategoryK =
   ) =>
   (category: MessageCategory) => {
     switch (category.tag) {
-      case "EU_COVID_CERT":
-        return onGeneral(TagEnum.EU_COVID_CERT);
-      case "LEGAL_MESSAGE":
-        return onGeneral(TagEnum.LEGAL_MESSAGE);
       case "PAYMENT":
         return onPayment(category);
       case "PN":
         return onSend(category);
+      case "LEGAL_MESSAGE":
+        return onGeneral(TagEnum.LEGAL_MESSAGE);
+      case "EU_COVID_CERT":
+        return onGeneral(TagEnum.EU_COVID_CERT);
     }
     return onGeneral(TagEnum.GENERIC);
   };

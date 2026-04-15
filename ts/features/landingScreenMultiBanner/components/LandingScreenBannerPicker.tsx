@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { usePushNotificationsBannerTracking } from "../../pushNotifications/hooks/usePushNotificationsBannerTracking";
 import { updateLandingScreenBannerVisibility } from "../store/actions";

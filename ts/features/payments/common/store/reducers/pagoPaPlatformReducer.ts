@@ -1,6 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
 import {
@@ -11,8 +10,8 @@ import {
 } from "../actions";
 
 export type PaymentsPagoPaPlatformState = {
-  pendingActions: Array<Action>;
   sessionToken: pot.Pot<string, NetworkError>;
+  pendingActions: Array<Action>;
 };
 
 const INITIAL_STATE: PaymentsPagoPaPlatformState = {
@@ -25,16 +24,6 @@ const reducer = (
   action: Action
 ): PaymentsPagoPaPlatformState => {
   switch (action.type) {
-    case getType(clearPaymentsPendingActions):
-      return {
-        ...state,
-        pendingActions: []
-      };
-    case getType(paymentsGetPagoPaPlatformSessionTokenAction.failure):
-      return {
-        ...state,
-        sessionToken: pot.toError(state.sessionToken, action.payload)
-      };
     case getType(paymentsGetPagoPaPlatformSessionTokenAction.request):
       return {
         ...state,
@@ -44,6 +33,11 @@ const reducer = (
       return {
         ...state,
         sessionToken: pot.some(action.payload.token as string)
+      };
+    case getType(paymentsGetPagoPaPlatformSessionTokenAction.failure):
+      return {
+        ...state,
+        sessionToken: pot.toError(state.sessionToken, action.payload)
       };
     case getType(paymentsResetPagoPaPlatformSessionTokenAction):
       return {
@@ -61,6 +55,11 @@ const reducer = (
           ...state.pendingActions,
           actionToSave.payload.pendingAction
         ]
+      };
+    case getType(clearPaymentsPendingActions):
+      return {
+        ...state,
+        pendingActions: []
       };
   }
   return state;

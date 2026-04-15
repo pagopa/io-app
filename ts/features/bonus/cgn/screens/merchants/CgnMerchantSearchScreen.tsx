@@ -10,34 +10,33 @@ import {
   SearchInputRef,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-import { useFocusEffect } from "@react-navigation/native";
-import I18n from "i18next";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   FlatList,
   ListRenderItemInfo,
   Platform,
-  StyleSheet,
   View,
-  ViewStyle
+  ViewStyle,
+  StyleSheet
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-
-import { SearchItem } from "../../../../../../definitions/cgn/merchants/SearchItem";
-import { getValue } from "../../../../../common/model/RemoteValue";
-import { useDebouncedValue } from "../../../../../hooks/useDebouncedValue";
+import { useFocusEffect } from "@react-navigation/native";
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import I18n from "i18next";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { useDebouncedValue } from "../../../../../hooks/useDebouncedValue";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
-import { MerchantSearchResultListItem } from "../../components/merchants/MerchantSearchResultListItem";
-import {
-  cgnMerchantsCount,
-  cgnSearchMerchants
-} from "../../store/actions/merchants";
 import {
   cgnMerchantsCountSelector,
   cgnSearchMerchantsSelector
 } from "../../store/reducers/merchants";
+import { getValue } from "../../../../../common/model/RemoteValue";
+import { SearchItem } from "../../../../../../definitions/cgn/merchants/SearchItem";
+import {
+  cgnMerchantsCount,
+  cgnSearchMerchants
+} from "../../store/actions/merchants";
+import { MerchantSearchResultListItem } from "../../components/merchants/MerchantSearchResultListItem";
 
 const INPUT_PADDING: IOSpacingScale = 16;
 const MIN_SEARCH_TEXT_LENGTH: number = 3;
@@ -131,21 +130,21 @@ export function CgnMerchantSearchScreen() {
           onChangeText={setSearchText}
           placeholder={I18n.t("bonus.cgn.merchantSearch.input.placeholder")}
           ref={searchInputRef}
-          testID="cgnMerchantSearchInput"
           value={searchText}
+          testID="cgnMerchantSearchInput"
         />
       </ContentWrapper>
       <FlatList
-        data={merchants?.length !== 0 ? merchants : undefined}
         ItemSeparatorComponent={() => <Divider />}
+        data={merchants?.length !== 0 ? merchants : undefined}
+        keyExtractor={item => item.id}
+        renderItem={renderItemCallback}
+        ListEmptyComponent={renderListEmptyComponent}
         keyboardDismissMode={Platform.select({
           ios: "interactive",
           default: "on-drag"
         })}
         keyboardShouldPersistTaps="handled"
-        keyExtractor={item => item.id}
-        ListEmptyComponent={renderListEmptyComponent}
-        renderItem={renderItemCallback}
       />
     </>
   );
@@ -156,24 +155,6 @@ const styles = StyleSheet.create({
     marginHorizontal: IOVisualCostants.appMarginDefault
   }
 });
-
-function EmptyListNoResults() {
-  return (
-    <View style={styles.emptyListContainer}>
-      <View style={{ alignItems: "center" }}>
-        <Pictogram name="umbrella" size={120} />
-        <VSpacer size={24} />
-      </View>
-      <H6 style={{ textAlign: "center" }}>
-        {I18n.t("bonus.cgn.merchantSearch.emptyList.noResults.title")}
-      </H6>
-      <VSpacer size={8} />
-      <Body style={{ textAlign: "center" }}>
-        {I18n.t("bonus.cgn.merchantSearch.emptyList.noResults.subtitle")}
-      </Body>
-    </View>
-  );
-}
 
 function EmptyListShortQuery({
   merchantCount
@@ -198,6 +179,24 @@ function EmptyListShortQuery({
               }
             )}
       </H6>
+    </View>
+  );
+}
+
+function EmptyListNoResults() {
+  return (
+    <View style={styles.emptyListContainer}>
+      <View style={{ alignItems: "center" }}>
+        <Pictogram name="umbrella" size={120} />
+        <VSpacer size={24} />
+      </View>
+      <H6 style={{ textAlign: "center" }}>
+        {I18n.t("bonus.cgn.merchantSearch.emptyList.noResults.title")}
+      </H6>
+      <VSpacer size={8} />
+      <Body style={{ textAlign: "center" }}>
+        {I18n.t("bonus.cgn.merchantSearch.emptyList.noResults.subtitle")}
+      </Body>
     </View>
   );
 }

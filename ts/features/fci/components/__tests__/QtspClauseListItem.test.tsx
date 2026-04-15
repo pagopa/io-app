@@ -1,23 +1,22 @@
-import { Provider } from "react-redux";
 import { Store } from "redux";
+import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-
+import { mockQtspClausesMetadata } from "../../types/__mocks__/QtspClausesMetadata.mock";
 import { QtspClause } from "../../../../../definitions/fci/QtspClause";
-import { applicationChangeState } from "../../../../store/actions/application";
-import { appReducer } from "../../../../store/reducers";
+import QtspClauseListItem from "../QtspClauseListItem";
 import { GlobalState } from "../../../../store/reducers/types";
+import { appReducer } from "../../../../store/reducers";
+import { applicationChangeState } from "../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { fciLoadQtspFilledDocument } from "../../store/actions";
 import { qtspFilledDocument } from "../../types/__mocks__/CreateFilledDocumentBody.mock";
-import { mockQtspClausesMetadata } from "../../types/__mocks__/QtspClausesMetadata.mock";
-import QtspClauseListItem from "../QtspClauseListItem";
 
 type Props = {
   clause: QtspClause;
+  value?: boolean;
   onChange: (_: boolean) => void;
   onLinkPress: (url: string) => void;
-  value?: boolean;
 };
 
 const MOCK_CLAUSE = mockQtspClausesMetadata.clauses[0];

@@ -3,14 +3,13 @@ import {
   StackNavigationOptions
 } from "@react-navigation/stack";
 import _ from "lodash";
-
+import { SendAarCieCardReadingScreen } from "../aar/screen/SendAarCieCardReadingScreen";
+import { SendAarErrorScreen } from "../aar/screen/SendAarErrorScreen";
 import { SendAarActivateNfcScreen } from "../aar/screen/SendAarActivateNfcScreen";
 import { SendAarCanEducationalScreen } from "../aar/screen/SendAarCanEducationalScreen";
 import { SendAarCieCanInsertionScreen } from "../aar/screen/SendAarCieCanInsertionScreen";
 import { SendAarCieCardReadingEducationalScreen } from "../aar/screen/SendAarCieCardReadingEducationalScreen";
-import { SendAarCieCardReadingScreen } from "../aar/screen/SendAarCieCardReadingScreen";
 import { SendAarDelegationProposalScreen } from "../aar/screen/SendAarDelegationProposalScreen";
-import { SendAarErrorScreen } from "../aar/screen/SendAarErrorScreen";
 import { SendEngagementScreen } from "../aar/screen/SendEngagementScreen";
 import { SendQRScanFlowScreen } from "../aar/screen/SendQRScanFlowScreen";
 import { SendActivationErrorScreen } from "../loginEngagement/screens/SendActivationErrorScreen";
@@ -36,34 +35,34 @@ export const PnStackNavigator = () => (
   >
     <Stack.Group>
       <Stack.Screen
-        component={MessageDetailsScreen}
         name={PN_ROUTES.MESSAGE_DETAILS}
+        component={MessageDetailsScreen}
       />
       <Stack.Screen
-        component={MessageAttachmentScreen}
         name={PN_ROUTES.MESSAGE_ATTACHMENT}
+        component={MessageAttachmentScreen}
       />
       <Stack.Screen
-        component={PaidPaymentScreen}
         name={PN_ROUTES.CANCELLED_MESSAGE_PAID_PAYMENT}
+        component={PaidPaymentScreen}
       />
       <Stack.Screen
-        component={PNActivationBannerFlowScreen}
         name={PN_ROUTES.ACTIVATION_BANNER_FLOW}
+        component={PNActivationBannerFlowScreen}
         options={hiddenHeader}
       />
       <Stack.Screen
-        component={SendEngagementScreen}
         name={PN_ROUTES.ENGAGEMENT_SCREEN}
+        component={SendEngagementScreen}
       />
       <Stack.Screen
-        component={SendEngagementOnFirstAppOpenScreen}
         name={PN_ROUTES.SEND_ENGAGEMENT_ON_FIRST_APP_OPENING}
+        component={SendEngagementOnFirstAppOpenScreen}
         options={hiddenHeader}
       />
       <Stack.Screen
-        component={SendActivationErrorScreen}
         name={PN_ROUTES.SEND_ENGAGEMENT_ACTIVATION_ERROR}
+        component={SendActivationErrorScreen}
         options={hiddenHeader}
       />
     </Stack.Group>
@@ -77,39 +76,39 @@ export const PnStackNavigator = () => (
       }}
     >
       <Stack.Screen
-        component={SendQRScanFlowScreen}
         name={PN_ROUTES.QR_SCAN_FLOW}
+        component={SendQRScanFlowScreen}
       />
       <Stack.Screen
-        component={SendAarErrorScreen}
         name={PN_ROUTES.SEND_AAR_ERROR}
+        component={SendAarErrorScreen}
         options={hiddenHeader}
       />
       <Stack.Screen
-        component={SendAarDelegationProposalScreen}
         name={PN_ROUTES.SEND_AAR_DELEGATION_PROPOSAL}
+        component={SendAarDelegationProposalScreen}
         options={hiddenHeader}
       />
       <Stack.Screen
-        component={SendAarCanEducationalScreen}
         name={PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL}
+        component={SendAarCanEducationalScreen}
       />
       <Stack.Screen
-        component={SendAarCieCanInsertionScreen}
         name={PN_ROUTES.SEND_AAR_CIE_CAN_INSERTION}
+        component={SendAarCieCanInsertionScreen}
       />
       <Stack.Screen
-        component={SendAarCieCardReadingEducationalScreen}
         name={PN_ROUTES.SEND_AAR_CIE_CARD_READING_EDUCATIONAL}
+        component={SendAarCieCardReadingEducationalScreen}
       />
       <Stack.Screen
-        component={SendAarCieCardReadingScreen}
         name={PN_ROUTES.SEND_AAR_CIE_CARD_READING}
+        component={SendAarCieCardReadingScreen}
         options={hiddenHeader}
       />
       <Stack.Screen
-        component={SendAarActivateNfcScreen}
         name={PN_ROUTES.SEND_AAR_NFC_ACTIVATION}
+        component={SendAarActivateNfcScreen}
         options={{ presentation: "modal" }}
       />
     </Stack.Group>

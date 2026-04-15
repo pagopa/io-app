@@ -1,13 +1,12 @@
 import configureMockStore from "redux-mock-store";
-
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import { ITW_ROUTES } from "../../../../navigation/routes";
-import * as useItwDiscoveryBannerTypeModule from "../../../hooks/useItwDiscoveryBannerType.ts";
 import * as selectors from "../../../store/selectors";
 import { ItwDiscoveryBannerOnboarding } from "../ItwDiscoveryBannerOnboarding";
+import * as useItwDiscoveryBannerTypeModule from "../../../hooks/useItwDiscoveryBannerType.ts";
 
 jest.mock("../../../hooks/useItwDiscoveryBannerType.ts", () => ({
   useItwDiscoveryBannerType: jest.fn()

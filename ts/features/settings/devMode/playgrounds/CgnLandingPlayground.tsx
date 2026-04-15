@@ -1,17 +1,16 @@
 import {
   ContentWrapper,
-  FooterActionsInline,
-  IOSpacing,
-  TextInput,
-  useFooterActionsInlineMeasurements,
   VSpacer,
-  VStack
+  VStack,
+  TextInput,
+  FooterActionsInline,
+  useFooterActionsInlineMeasurements,
+  IOSpacing
 } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { useState } from "react";
 import { View } from "react-native";
 import { WebViewSourceUri } from "react-native-webview/lib/WebViewTypes";
-
+import I18n from "i18next";
 import WebviewComponent from "../../../../components/WebviewComponent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
@@ -38,29 +37,29 @@ const CgnLandingPlayground = () => {
       <ContentWrapper>
         <VStack space={8}>
           <TextInput
+            placeholder={I18n.t("bonus.cgn.playgrounds.link.placeholder")}
             accessibilityLabel={I18n.t(
               "bonus.cgn.playgrounds.link.placeholder"
             )}
             onChangeText={setNavigationUri}
-            placeholder={I18n.t("bonus.cgn.playgrounds.link.placeholder")}
+            value={navigationURI}
             textInputProps={{
               keyboardType: "url",
               autoCapitalize: "none",
               autoCorrect: false
             }}
-            value={navigationURI}
           />
           <TextInput
+            placeholder={I18n.t("bonus.cgn.playgrounds.referer.placeholder")}
             accessibilityLabel={I18n.t(
               "bonus.cgn.playgrounds.referer.placeholder"
             )}
             onChangeText={setRefererValue}
-            placeholder={I18n.t("bonus.cgn.playgrounds.referer.placeholder")}
+            value={refererValue}
             textInputProps={{
               autoCapitalize: "none",
               autoCorrect: false
             }}
-            value={refererValue}
           />
         </VStack>
       </ContentWrapper>
@@ -75,13 +74,21 @@ const CgnLandingPlayground = () => {
       >
         {source && (
           <WebviewComponent
-            key={`${reloadKey}_webview`}
             playgroundEnabled
+            key={`${reloadKey}_webview`}
             source={source}
           />
         )}
       </View>
       <FooterActionsInline
+        onMeasure={handleFooterActionsInlineMeasurements}
+        startAction={{
+          color: "primary",
+          icon: "reload",
+          label: I18n.t("global.accessibility.reload"),
+          accessibilityLabel: I18n.t("global.accessibility.reload"),
+          onPress: () => setReloadKey(r => r + 1)
+        }}
         endAction={{
           color: "primary",
           label: I18n.t("bonus.cgn.playgrounds.send"),
@@ -93,14 +100,6 @@ const CgnLandingPlayground = () => {
                 "X-PagoPa-CGN-Referer": refererValue
               }
             })
-        }}
-        onMeasure={handleFooterActionsInlineMeasurements}
-        startAction={{
-          color: "primary",
-          icon: "reload",
-          label: I18n.t("global.accessibility.reload"),
-          accessibilityLabel: I18n.t("global.accessibility.reload"),
-          onPress: () => setReloadKey(r => r + 1)
         }}
       />
     </View>

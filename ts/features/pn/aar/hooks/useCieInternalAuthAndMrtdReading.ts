@@ -1,46 +1,45 @@
+import { useCallback, useEffect, useState } from "react";
 import {
   CieManager,
+  ResultEncoding,
   type InternalAuthAndMrtdResponse,
-  type NfcError,
-  ResultEncoding
+  type NfcError
 } from "@pagopa/io-react-native-cie";
 import { constNull } from "fp-ts/lib/function";
-import i18n from "i18next";
-import { useCallback, useEffect, useState } from "react";
-import { Platform } from "react-native";
 import HapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
-
+import { Platform } from "react-native";
+import i18n from "i18next";
 import { getProgressEmojis } from "../../../common/utils/cie";
 
 export const enum ReadStatus {
-  ERROR = "ERROR",
   IDLE = "IDLE",
   READING = "READING",
-  SUCCESS = "SUCCESS"
+  SUCCESS = "SUCCESS",
+  ERROR = "ERROR"
 }
-
-export type CieReadState = ErrorState | IdleState | ReadingState | SuccessState;
-
-type ErrorState = {
-  error: NfcError;
-  status: ReadStatus.ERROR;
-};
 
 type IdleState = {
   status: ReadStatus.IDLE;
 };
 
 type ReadingState = {
-  progress: number;
   status: ReadStatus.READING;
+  progress: number;
 };
 
 type SuccessState = {
-  data: InternalAuthAndMrtdResponse;
   status: ReadStatus.SUCCESS;
+  data: InternalAuthAndMrtdResponse;
 };
+
+type ErrorState = {
+  status: ReadStatus.ERROR;
+  error: NfcError;
+};
+
+export type CieReadState = IdleState | ReadingState | SuccessState | ErrorState;
 
 export const isIdleState = (state: CieReadState): state is IdleState =>
   state.status === ReadStatus.IDLE;

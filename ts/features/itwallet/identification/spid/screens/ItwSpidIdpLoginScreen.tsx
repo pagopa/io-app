@@ -1,10 +1,9 @@
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { memo, useCallback, useMemo, useState } from "react";
 import { Linking, StyleSheet, View } from "react-native";
 import { WebView, WebViewNavigation } from "react-native-webview";
-
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import {
   HeaderSecondLevelHookProps,
@@ -117,22 +116,22 @@ const ItwSpidIdpLoginScreen = () => {
         () => null,
         (url: string) => (
           <WebView
-            allowsInlineMediaPlayback
+            key={"spid_webview"}
+            cacheEnabled={false}
             androidCameraAccessDisabled
             androidMicrophoneAccessDisabled
-            cacheEnabled={false}
             javaScriptEnabled
-            key={"spid_webview"}
-            mediaPlaybackRequiresUserAction
-            onError={onError}
-            onHttpError={onError}
-            onLoadEnd={onLoadEnd}
-            onNavigationStateChange={handleNavigationStateChange}
-            onShouldStartLoadWithRequest={handleShouldStartLoading}
+            textZoom={100}
             originWhitelist={originSchemasWhiteList}
             source={{ uri: url }}
-            textZoom={100}
+            onError={onError}
+            onHttpError={onError}
+            onNavigationStateChange={handleNavigationStateChange}
+            onShouldStartLoadWithRequest={handleShouldStartLoading}
+            allowsInlineMediaPlayback
+            mediaPlaybackRequiresUserAction
             userAgent={defaultUserAgent}
+            onLoadEnd={onLoadEnd}
           />
         )
       )(spidAuthUrl),

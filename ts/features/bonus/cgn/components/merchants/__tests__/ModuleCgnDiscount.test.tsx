@@ -1,7 +1,6 @@
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { fireEvent, render } from "@testing-library/react-native";
 import I18n from "i18next";
-
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
 import { ProductCategoryEnum } from "../../../../../../../definitions/cgn/merchants/ProductCategory";
 import { ModuleCgnDiscount } from "../ModuleCgnDiscount";
@@ -27,7 +26,7 @@ describe("ModuleCgnDiscount", () => {
 
   it("should render correctly", () => {
     const { getByText } = render(
-      <ModuleCgnDiscount discount={discount} onPress={onPressMock} />
+      <ModuleCgnDiscount onPress={onPressMock} discount={discount} />
     );
 
     expect(getByText(I18n.t("bonus.cgn.merchantsList.news"))).toBeTruthy();
@@ -37,7 +36,7 @@ describe("ModuleCgnDiscount", () => {
 
   it("should call onPress when pressed", () => {
     const { getByRole } = render(
-      <ModuleCgnDiscount discount={discount} onPress={onPressMock} />
+      <ModuleCgnDiscount onPress={onPressMock} discount={discount} />
     );
     fireEvent.press(getByRole("button"));
     expect(onPressMock).toHaveBeenCalled();

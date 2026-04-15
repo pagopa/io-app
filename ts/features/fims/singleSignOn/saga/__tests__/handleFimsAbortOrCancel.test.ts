@@ -5,7 +5,6 @@ import {
   nativeRequest
 } from "@pagopa/io-react-native-http-client";
 import { testSaga } from "redux-saga-test-plan";
-
 import { oidcProviderDomainSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { fimsPartialAbortUrl } from "../../store/selectors";
 import { handleFimsAbortOrCancel } from "../handleFimsAbortOrCancel";

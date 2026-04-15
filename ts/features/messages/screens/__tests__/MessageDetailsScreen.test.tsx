@@ -1,16 +1,15 @@
-import { Action, createStore, Store } from "redux";
-
+import { Action, Store, createStore } from "redux";
 import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
-import { reproduceSequence } from "../../../../utils/tests";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import { reproduceSequence } from "../../../../utils/tests";
 import {
-  message_1,
   messageWithExpiredPayment,
-  messageWithValidPayment
+  messageWithValidPayment,
+  message_1
 } from "../../../messages/__mocks__/message";
 import { service_1 } from "../../../messages/__mocks__/messages";
 import {

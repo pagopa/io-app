@@ -16,21 +16,21 @@ import { forwardRef } from "react";
 import { ScrollView, useWindowDimensions, View } from "react-native";
 
 type Props = {
-  accessibilityHint?: string;
-  accessibilityLabel?: string;
-  buttonLink?: Pick<
-    IOButtonLinkSpecificProps,
-    | "accessibilityHint"
-    | "accessibilityLabel"
-    | "color"
-    | "icon"
-    | "label"
-    | "onPress"
-    | "testID"
-  >;
-  content: string;
   pictogramName: IOPictograms;
   title: string;
+  content: string;
+  accessibilityLabel?: string;
+  accessibilityHint?: string;
+  buttonLink?: Pick<
+    IOButtonLinkSpecificProps,
+    | "color"
+    | "testID"
+    | "label"
+    | "accessibilityHint"
+    | "accessibilityLabel"
+    | "onPress"
+    | "icon"
+  >;
 };
 
 const PICTOGRAM_VERTICAL_SPACING = 24;
@@ -52,7 +52,7 @@ export const LandingSessionExpiredComponent = forwardRef<View, Props>(
             alignItems: "center"
           }}
         >
-          <Pictogram name={pictogramName} size={180} />
+          <Pictogram size={180} name={pictogramName} />
           <VSpacer size={PICTOGRAM_VERTICAL_SPACING} />
           <H3 accessible ref={ref} style={{ textAlign: "center" }}>
             {title}

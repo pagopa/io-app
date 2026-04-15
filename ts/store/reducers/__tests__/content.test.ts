@@ -4,9 +4,9 @@ import {
   remoteReady,
   remoteUndefined
 } from "../../../common/model/RemoteValue";
-import { idps, SpidIdp } from "../../../utils/idps";
-import { idps as mockedIdps } from "../__mock__/idps";
 import { idpsSelector } from "../content";
+import { idps as mockedIdps } from "../__mock__/idps";
+import { idps, SpidIdp } from "../../../utils/idps";
 
 describe("idps selector", () => {
   it("should return the list of Idps available", () => {

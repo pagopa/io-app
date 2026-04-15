@@ -4,9 +4,8 @@ import {
   TabNavigation,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { useState } from "react";
-
+import I18n from "i18next";
 import { IOListViewWithLargeHeader } from "../../../../../components/ui/IOListViewWithLargeHeader";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useDisableRootNavigatorGesture } from "../../hooks/useDisableRootNavigatorGesture";
@@ -25,8 +24,8 @@ type CgnMerchantsHomeTabParamsList = {
 };
 
 type TabOption = {
-  icon: IOIcons;
   title: string;
+  icon: IOIcons;
 };
 
 const tabOptions: Record<keyof CgnMerchantsHomeTabParamsList, TabOption> = {
@@ -68,8 +67,8 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
     <>
       <TabNavigation
         includeContentMargins={false}
-        selectedIndex={tabRoutesKeys.indexOf(selectedTab)}
         tabAlignment="start"
+        selectedIndex={tabRoutesKeys.indexOf(selectedTab)}
       >
         {tabRoutesKeys.map((routeKey, index) => {
           const route = routeKey as keyof CgnMerchantsHomeTabParamsList;
@@ -86,12 +85,12 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
           );
           return (
             <TabItem
-              accessibilityLabel={accessibilityLabel}
-              icon={tabOptions[route].icon}
-              key={route}
-              label={label}
-              onPress={onPress}
               testID={`cgn-merchants-tab-${route}`}
+              icon={tabOptions[route].icon}
+              label={label}
+              accessibilityLabel={accessibilityLabel}
+              key={route}
+              onPress={onPress}
             />
           );
         })}
@@ -102,7 +101,10 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
 
   return (
     <IOListViewWithLargeHeader
-      data={[...data]}
+      keyExtractor={item => ("id" in item ? item.id : item.productCategory)}
+      title={{
+        label: I18n.t("bonus.cgn.merchantsList.screenTitle")
+      }}
       headerActionsProp={{
         showHelp: true,
         headerType: "twoActions",
@@ -119,16 +121,13 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
           )
         }
       }}
-      keyExtractor={item => ("id" in item ? item.id : item.productCategory)}
-      ListEmptyComponent={ListEmptyComponent}
-      ListFooterComponent={ListFooterComponent}
-      ListHeaderComponent={ListHeaderComponent}
-      refreshControlProps={refreshControlProps}
       renderItem={({ item, index }) => renderItem(item as any, index)}
+      data={[...data]}
+      refreshControlProps={refreshControlProps}
+      ListHeaderComponent={ListHeaderComponent}
       skeleton={skeleton}
-      title={{
-        label: I18n.t("bonus.cgn.merchantsList.screenTitle")
-      }}
+      ListFooterComponent={ListFooterComponent}
+      ListEmptyComponent={ListEmptyComponent}
     />
   );
 };

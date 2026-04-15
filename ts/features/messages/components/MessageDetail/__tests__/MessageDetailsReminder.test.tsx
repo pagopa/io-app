@@ -1,10 +1,9 @@
 import { createStore } from "redux";
-
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { appReducer } from "../../../../../store/reducers";
-import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MessageDetailsReminder } from "../MessageDetailsReminder";
+import { appReducer } from "../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
 
 describe("MessageDetailsReminder", () => {
   beforeEach(() => {

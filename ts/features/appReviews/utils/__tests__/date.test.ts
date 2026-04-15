@@ -1,5 +1,4 @@
 import MockDate from "mockdate";
-
 import { checkFourMonthPeriod } from "../date";
 
 describe("Date utils for app review checks", () => {

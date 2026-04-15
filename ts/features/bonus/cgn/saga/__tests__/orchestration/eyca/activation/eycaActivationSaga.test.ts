@@ -1,7 +1,10 @@
 import { left, right } from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
-
 import { getGenericError } from "../../../../../../../../utils/errors";
+import {
+  navigateToCgnDetails,
+  navigateToEycaActivationLoading
+} from "../../../../orchestration/navigation/actions";
 import { cgnEycaActivation } from "../../../../../store/actions/eyca/activation";
 import { cgnEycaStatus } from "../../../../../store/actions/eyca/details";
 import {
@@ -10,10 +13,6 @@ import {
   handleStartActivation
 } from "../../../../networking/eyca/activation/getEycaActivationSaga";
 import { eycaActivationWorker } from "../../../../orchestration/eyca/eycaActivationSaga";
-import {
-  navigateToCgnDetails,
-  navigateToEycaActivationLoading
-} from "../../../../orchestration/navigation/actions";
 
 describe("eycaActivationWorker", () => {
   const getEycaActivation = jest.fn();

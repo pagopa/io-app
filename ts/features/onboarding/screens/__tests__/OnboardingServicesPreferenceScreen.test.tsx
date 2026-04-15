@@ -1,16 +1,15 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
-import I18n from "i18next";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createStore } from "redux";
-
+import I18n from "i18next";
+import OnboardingServicesPreferenceScreen from "../OnboardingServicesPreferenceScreen";
 import { ServicesPreferencesModeEnum } from "../../../../../definitions/backend/ServicesPreferencesMode";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
-import { useIOSelector } from "../../../../store/hooks";
 import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import { useIOSelector } from "../../../../store/hooks";
 import { profileUpsert } from "../../../settings/common/store/actions";
-import OnboardingServicesPreferenceScreen from "../OnboardingServicesPreferenceScreen";
 
 const mockNavigate = jest.fn();
 const mockDispatch = jest.fn();

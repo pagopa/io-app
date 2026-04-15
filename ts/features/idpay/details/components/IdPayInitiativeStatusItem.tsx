@@ -4,10 +4,9 @@ import {
   H6,
   IOListItemStyles
 } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { ComponentProps } from "react";
 import { View } from "react-native";
-
+import I18n from "i18next";
 import {
   StatusEnum,
   VoucherStatusEnum
@@ -17,10 +16,10 @@ const getStatusBadgeVariant = (
   status: StatusEnum | VoucherStatusEnum
 ): ComponentProps<typeof Badge>["variant"] => {
   switch (status) {
+    case StatusEnum.REFUNDABLE:
     case StatusEnum.NOT_REFUNDABLE:
     case StatusEnum.NOT_REFUNDABLE_ONLY_IBAN:
     case StatusEnum.NOT_REFUNDABLE_ONLY_INSTRUMENT:
-    case StatusEnum.REFUNDABLE:
     case VoucherStatusEnum.ACTIVE:
       return "success";
     case StatusEnum.UNSUBSCRIBED:

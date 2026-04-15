@@ -1,11 +1,10 @@
 import { render } from "@testing-library/react-native";
 import { Platform } from "react-native";
-
-import * as UTILS from "../../../utils";
 import {
-  CieCardReadContent,
-  CieCardReadContentProps
+  CieCardReadContentProps,
+  CieCardReadContent
 } from "../CieCardReadContent";
+import * as UTILS from "../../../utils";
 
 jest.mock("@react-navigation/native");
 

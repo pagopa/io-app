@@ -3,32 +3,31 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as T from "fp-ts/lib/Task";
 import { useCallback, useState } from "react";
-import { WebViewSource } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
-
-import { handleRegenerateEphemeralKey } from "..";
+import { WebViewSource } from "react-native-webview/lib/WebViewTypes";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
-import { hashedProfileFiscalCodeSelector } from "../../../store/reducers/crossSessions";
-import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
 import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
-import {
-  isActiveSessionFastLoginEnabledSelector,
-  isActiveSessionLoginSelector
-} from "../../authentication/activeSessionLogin/store/selectors";
-import { selectedIdentityProviderSelector } from "../../authentication/common/store/selectors";
-import { getLoginHeaders } from "../../authentication/common/utils/login";
-import { isFastLoginEnabledSelector } from "../../authentication/fastLogin/store/selectors";
-import { cieFlowForDevServerEnabled } from "../../authentication/login/cie/utils";
 import {
   ephemeralKeyTagSelector,
   ephemeralPublicKeySelector
 } from "../store/reducers/lollipop";
-import { LollipopCheckStatus } from "../types/LollipopCheckStatus";
 import {
   DEFAULT_LOLLIPOP_HASH_ALGORITHM_SERVER,
   lollipopSamlVerify
 } from "../utils/login";
+import { LollipopCheckStatus } from "../types/LollipopCheckStatus";
+import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
+import { handleRegenerateEphemeralKey } from "..";
+import { isFastLoginEnabledSelector } from "../../authentication/fastLogin/store/selectors";
+import { cieFlowForDevServerEnabled } from "../../authentication/login/cie/utils";
+import { selectedIdentityProviderSelector } from "../../authentication/common/store/selectors";
+import {
+  isActiveSessionFastLoginEnabledSelector,
+  isActiveSessionLoginSelector
+} from "../../authentication/activeSessionLogin/store/selectors";
+import { hashedProfileFiscalCodeSelector } from "../../../store/reducers/crossSessions";
+import { getLoginHeaders } from "../../authentication/common/utils/login";
 
 export const useLollipopLoginSource = (
   onLollipopCheckFailure: () => void,
@@ -36,7 +35,7 @@ export const useLollipopLoginSource = (
 ) => {
   const [lollipopCheckStatus, setLollipopCheckStatus] =
     useState<LollipopCheckStatus>({ status: "none", url: O.none });
-  const [webviewSource, setWebviewSource] = useState<undefined | WebViewSource>(
+  const [webviewSource, setWebviewSource] = useState<WebViewSource | undefined>(
     undefined
   );
 

@@ -1,13 +1,12 @@
-import { createStore } from "redux";
 import { createActor } from "xstate";
-
-import { applicationChangeState } from "../../../../../../store/actions/application";
-import { appReducer } from "../../../../../../store/reducers";
-import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { createStore } from "redux";
 import { itwProximityMachine } from "../../machine/machine";
-import { ItwProximityMachineContext } from "../../machine/provider";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { appReducer } from "../../../../../../store/reducers";
 import { ITW_PROXIMITY_ROUTES } from "../../navigation/routes";
+import { applicationChangeState } from "../../../../../../store/actions/application";
 import { ItwProximitySendDocumentsResponseScreen } from "../ItwProximitySendDocumentsResponseScreen";
+import { ItwProximityMachineContext } from "../../machine/provider";
 
 describe("ItwProximitySendDocumentsResponseScreen", () => {
   it("should match snapshot", () => {

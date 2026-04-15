@@ -25,8 +25,8 @@ export const DSSafeAreaCentered = () => {
       }}
     >
       <ScrollView
-        alwaysBounceVertical={false}
         centerContent
+        alwaysBounceVertical={false}
         contentContainerStyle={[
           { backgroundColor: IOColors.white },
           /* Android fallback because `centerContent`
@@ -38,8 +38,8 @@ export const DSSafeAreaCentered = () => {
         ]}
       >
         <VStack
-          space={24}
           style={{ padding: IOVisualCostants.appMarginDefault }}
+          space={24}
         >
           <H4>Start</H4>
           <Body>Single text</Body>

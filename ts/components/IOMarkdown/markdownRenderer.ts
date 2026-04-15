@@ -1,3 +1,4 @@
+import { parse as textLintParse } from "@textlint/markdown-to-ast";
 import {
   AnyTxtNode,
   TxtHeaderNode,
@@ -8,9 +9,7 @@ import {
   TxtParentNode,
   TxtStrNode
 } from "@textlint/ast-node-types";
-import { parse as textLintParse } from "@textlint/markdown-to-ast";
 import { omit } from "lodash";
-
 import { isIos } from "../../utils/platform";
 import { AnyTxtNodeWithSpacer, IOMarkdownRenderRules, Renderer } from "./types";
 
@@ -158,7 +157,7 @@ export const sanitizeMarkdownForImages = (
 
   const reversedMatches: Array<RegExpExecArray> = [];
   // eslint-disable-next-line functional/no-let
-  let match: null | RegExpExecArray;
+  let match: RegExpExecArray | null;
   while ((match = markdownImageRegex.exec(inputMarkdownContent)) !== null) {
     // eslint-disable-next-line functional/immutable-data
     reversedMatches.unshift(match);

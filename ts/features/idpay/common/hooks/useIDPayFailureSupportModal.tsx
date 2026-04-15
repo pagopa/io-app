@@ -9,17 +9,16 @@ import {
   appendLog,
   resetCustomFields
 } from "@pagopa/io-react-native-zendesk";
-import I18n from "i18next";
 import { JSX, useState } from "react";
-
+import I18n from "i18next";
 import { useIODispatch } from "../../../../store/hooks";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import {
   defaultZendeskBonusesCategory,
   defaultZendeskIDPayCategory,
-  zendeskBonusAndInitiativeCategoryId,
-  zendeskCategoryId
+  zendeskCategoryId,
+  zendeskBonusAndInitiativeCategoryId
 } from "../../../../utils/supportAssistance";
 import {
   zendeskSelectedCategory,
@@ -94,17 +93,18 @@ const useIDPayFailureSupportModal = (
       <>
         <ListItemHeader label={I18n.t("idpay.support.supportTitle")} />
         <ListItemAction
-          accessibilityLabel={I18n.t("idpay.support.chat")}
-          icon="chat"
           label={I18n.t("idpay.support.chat")}
+          accessibilityLabel={I18n.t("idpay.support.chat")}
           onPress={() => {
             dismiss();
             zendeskAssistanceLogAndStart();
           }}
           variant="primary"
+          icon="chat"
         />
         <VSpacer size={24} />
         <ListItemHeader
+          label={I18n.t("idpay.support.additionalDataTitle")}
           endElement={{
             type: "buttonLink",
             componentProps: {
@@ -112,29 +112,28 @@ const useIDPayFailureSupportModal = (
               onPress: handleCopyAllToClipboard
             }
           }}
-          label={I18n.t("idpay.support.additionalDataTitle")}
         />
         <ListItemInfoCopy
+          label={I18n.t("idpay.support.errorCode")}
           accessibilityLabel={I18n.t("idpay.support.errorCode")}
           icon="ladybug"
-          label={I18n.t("idpay.support.errorCode")}
-          onPress={() => clipboardSetStringWithFeedback(currentFaultCodeDetail)}
           value={currentFaultCodeDetail}
+          onPress={() => clipboardSetStringWithFeedback(currentFaultCodeDetail)}
         />
         <ListItemInfoCopy
-          icon="pinOff"
           label={I18n.t("idpay.support.serviceId")}
-          onPress={() => clipboardSetStringWithFeedback(serviceId)}
+          icon="pinOff"
           value={serviceId}
+          onPress={() => clipboardSetStringWithFeedback(serviceId)}
         />
         {initiativeId && (
           <ListItemInfoCopy
-            icon="bonus"
             label={I18n.t("idpay.support.initiativeId")}
+            icon="bonus"
+            value={initiativeId}
             onPress={() =>
               initiativeId && clipboardSetStringWithFeedback(initiativeId)
             }
-            value={initiativeId}
           />
         )}
         <VSpacer size={24} />

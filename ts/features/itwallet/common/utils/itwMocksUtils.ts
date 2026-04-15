@@ -1,52 +1,52 @@
 import dc from "../../__mocks__/dc.json";
 import eid from "../../__mocks__/eid.json";
 import dcL3 from "../../__mocks__/L3/dcL3.json";
-import edatL3 from "../../__mocks__/L3/edatL3.json";
-import edipL3 from "../../__mocks__/L3/edipL3.json";
 import edL3 from "../../__mocks__/L3/edL3.json";
 import eeL3 from "../../__mocks__/L3/eeL3.json";
 import mdlL3 from "../../__mocks__/L3/mdlL3.json";
 import resL3 from "../../__mocks__/L3/resL3.json";
 import tsL3 from "../../__mocks__/L3/tsL3.json";
 import mdl from "../../__mocks__/mdl.json";
+import edipL3 from "../../__mocks__/L3/edipL3.json";
+import edatL3 from "../../__mocks__/L3/edatL3.json";
 import statusAssertion from "../../__mocks__/statusAssertion.json";
 import ts from "../../__mocks__/ts.json";
 import { DigitalCredentialMetadata } from "./itwCredentialsCatalogueUtils";
-import { ParsedStatusAssertion, StoredCredential } from "./itwTypesUtils";
+import { ParsedStatusAssertion, CredentialMetadata } from "./itwTypesUtils";
 
 export const ISSUER_MOCK_NAME = "Istituto Poligrafico e Zecca dello Stato";
+
+export type CredentialL3Key = keyof typeof ItwStoredCredentialsMocks.L3;
 
 /**
  * Credential types mocks.
  */
 export enum CredentialType {
-  DRIVING_LICENSE = "mDL",
-  EDUCATION_ATTENDANCE = "education_attendance",
-  EDUCATION_DEGREE = "education_degree",
-  EDUCATION_DIPLOMA = "education_diploma",
-  EDUCATION_ENROLLMENT = "education_enrollment",
-  EUROPEAN_DISABILITY_CARD = "EuropeanDisabilityCard",
   EUROPEAN_HEALTH_INSURANCE_CARD = "EuropeanHealthInsuranceCard",
+  EUROPEAN_DISABILITY_CARD = "EuropeanDisabilityCard",
+  DRIVING_LICENSE = "mDL",
   PID = "PersonIdentificationData",
-  RESIDENCY = "residency"
+  EDUCATION_DEGREE = "education_degree",
+  EDUCATION_ENROLLMENT = "education_enrollment",
+  RESIDENCY = "residency",
+  EDUCATION_DIPLOMA = "education_diploma",
+  EDUCATION_ATTENDANCE = "education_attendance"
 }
 
-export type CredentialL3Key = keyof typeof ItwStoredCredentialsMocks.L3;
-
 export const ItwStoredCredentialsMocks = {
-  eid: eid as unknown as StoredCredential,
-  dc: dc as unknown as StoredCredential,
-  mdl: mdl as unknown as StoredCredential,
-  ts: ts as unknown as StoredCredential,
+  eid: eid as unknown as CredentialMetadata,
+  dc: dc as unknown as CredentialMetadata,
+  mdl: mdl as unknown as CredentialMetadata,
+  ts: ts as unknown as CredentialMetadata,
   L3: {
-    mdl: mdlL3 as unknown as StoredCredential,
-    ts: tsL3 as unknown as StoredCredential,
-    dc: dcL3 as unknown as StoredCredential,
-    ed: edL3 as unknown as StoredCredential,
-    ee: eeL3 as unknown as StoredCredential,
-    res: resL3 as unknown as StoredCredential,
-    edip: edipL3 as unknown as StoredCredential,
-    edat: edatL3 as unknown as StoredCredential
+    mdl: mdlL3 as unknown as CredentialMetadata,
+    ts: tsL3 as unknown as CredentialMetadata,
+    dc: dcL3 as unknown as CredentialMetadata,
+    ed: edL3 as unknown as CredentialMetadata,
+    ee: eeL3 as unknown as CredentialMetadata,
+    res: resL3 as unknown as CredentialMetadata,
+    edip: edipL3 as unknown as CredentialMetadata,
+    edat: edatL3 as unknown as CredentialMetadata
   }
 };
 

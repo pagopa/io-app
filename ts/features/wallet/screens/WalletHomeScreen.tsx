@@ -3,7 +3,6 @@ import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
-
 import {
   IOScrollView,
   IOScrollViewActions
@@ -198,11 +197,6 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   return (
     <>
       <IOScrollView
-        actions={
-          proximityActionProps
-            ? { type: "SingleButton", primary: proximityActionProps }
-            : undefined
-        }
         animatedRef={scrollViewContentRef}
         centerContent={true}
         excludeSafeAreaMargins={true}
@@ -211,6 +205,11 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
           refreshing: isRefreshing,
           onRefresh: handleRefreshWallet
         }}
+        actions={
+          proximityActionProps
+            ? { type: "SingleButton", primary: proximityActionProps }
+            : undefined
+        }
       >
         <WalletCategoryFilterTabs />
         <WalletCardsContainer />

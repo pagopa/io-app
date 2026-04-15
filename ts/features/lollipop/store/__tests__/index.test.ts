@@ -1,7 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { PersistedState } from "redux-persist";
-
-import { migrationKeyTagFunctional, PersistedLollipopState } from "..";
+import { PersistedLollipopState, migrationKeyTagFunctional } from "..";
 
 const migrationKeyTag = (state: PersistedState): PersistedLollipopState => {
   const persistedLS = state as PersistedLollipopState;

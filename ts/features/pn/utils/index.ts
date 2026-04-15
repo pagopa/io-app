@@ -1,17 +1,16 @@
 import { identity, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
-import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
+import { PNMessage } from "../store/types/types";
 import { NotificationStatus } from "../../../../definitions/pn/NotificationStatus";
-import { GlobalState } from "../../../store/reducers/types";
 import { CTAS } from "../../../types/LocalizedCTAs";
 import { isServiceDetailNavigationLink } from "../../../utils/internalLink";
+import { GlobalState } from "../../../store/reducers/types";
+import { NotificationPaymentInfo } from "../../../../definitions/pn/NotificationPaymentInfo";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
-import { SendOpeningSource } from "../../pushNotifications/analytics";
+import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { TimelineStatus } from "../components/Timeline";
-import { PNMessage } from "../store/types/types";
+import { SendOpeningSource } from "../../pushNotifications/analytics";
 
 export const maxVisiblePaymentCount = 5;
 
@@ -24,22 +23,22 @@ export const notificationStatusToTimelineStatus = (
   status: NotificationStatus
 ): TimelineStatus => {
   switch (status) {
-    case "CANCELLED":
-      return "cancelled";
+    case "VIEWED":
+      return "viewed";
     case "EFFECTIVE_DATE":
       return "effective";
     case "UNREACHABLE":
       return "unreachable";
-    case "VIEWED":
-      return "viewed";
+    case "CANCELLED":
+      return "cancelled";
   }
   return "default";
 };
 
 export type PNOptInMessageInfo = {
+  isPNOptInMessage: boolean;
   cta1LinksToPNService: boolean;
   cta2LinksToPNService: boolean;
-  isPNOptInMessage: boolean;
 };
 
 export const extractPNOptInMessageInfoIfAvailable = (

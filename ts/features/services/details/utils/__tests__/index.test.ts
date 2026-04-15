@@ -1,5 +1,4 @@
 import { GestureResponderEvent } from "react-native";
-
 import { getServiceActionsProps } from "..";
 import { IOScrollViewActions } from "../../../../../components/ui/IOScrollView";
 import { CTA, CTAS } from "../../../../../types/LocalizedCTAs";

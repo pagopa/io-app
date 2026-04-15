@@ -9,24 +9,22 @@ import {
   RptIdFromString
 } from "@pagopa/io-pagopa-commons/lib/pagopa";
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import I18n from "i18next";
+import { pipe } from "fp-ts/lib/function";
 import { JSX, useEffect } from "react";
 import { Linking } from "react-native";
-
+import I18n from "i18next";
 import { ToolEnum } from "../../../../../definitions/content/AssistanceToolConfig";
-import { isReady } from "../../../../common/model/RemoteValue";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import {
+  PAGOPA_SUPPORT_PHONE_NUMBER,
   addTicketCustomField,
   appendLog,
   assistanceToolRemoteConfig,
   defaultZendeskPaymentCategory,
-  PAGOPA_SUPPORT_PHONE_NUMBER,
   resetCustomFields,
   zendeskCategoryId,
   zendeskPaymentFailure,
@@ -43,27 +41,28 @@ import { zendeskMapSelector } from "../../../zendesk/store/reducers";
 import { formatPaymentNoticeNumber } from "../../common/utils";
 import { selectOngoingPaymentHistory } from "../../history/store/selectors";
 import {
-  getWalletOnboardingOutcomeEnumByValue,
-  WalletOnboardingOutcome
+  WalletOnboardingOutcome,
+  getWalletOnboardingOutcomeEnumByValue
 } from "../../onboarding/types/OnboardingOutcomeEnum";
 import { walletPaymentRptIdSelector } from "../store/selectors";
 import {
-  getWalletPaymentOutcomeEnumByValue,
-  WalletPaymentOutcome
+  WalletPaymentOutcome,
+  getWalletPaymentOutcomeEnumByValue
 } from "../types/PaymentOutcomeEnum";
 import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
 import { getSubCategoryFromFaultCode } from "../utils";
+import { isReady } from "../../../../common/model/RemoteValue";
+
+type PaymentFailureSupportModalParams = {
+  failure?: WalletPaymentFailure;
+  outcome?: WalletPaymentOutcome | WalletOnboardingOutcome;
+  isOnboarding?: boolean;
+  withPhoneAssistance?: boolean;
+};
 
 type PaymentFailureSupportModal = {
   bottomSheet: JSX.Element;
   present: () => void;
-};
-
-type PaymentFailureSupportModalParams = {
-  failure?: WalletPaymentFailure;
-  isOnboarding?: boolean;
-  outcome?: WalletOnboardingOutcome | WalletPaymentOutcome;
-  withPhoneAssistance?: boolean;
 };
 
 const usePaymentFailureSupportModal = ({
@@ -180,31 +179,32 @@ const usePaymentFailureSupportModal = ({
         <ListItemHeader label={I18n.t("wallet.payment.support.supportTitle")} />
         {withPhoneAssistance && (
           <ListItemAction
-            accessibilityLabel={I18n.t("wallet.payment.support.phone", {
+            label={I18n.t("wallet.payment.support.phone", {
               phoneNumber: displayPhoneNumber
             })}
-            icon="phone"
-            label={I18n.t("wallet.payment.support.phone", {
+            accessibilityLabel={I18n.t("wallet.payment.support.phone", {
               phoneNumber: displayPhoneNumber
             })}
             onPress={() =>
               Linking.openURL(`tel:${PAGOPA_SUPPORT_PHONE_NUMBER}`)
             }
             variant="primary"
+            icon="phone"
           />
         )}
         <ListItemAction
-          accessibilityLabel={I18n.t("wallet.payment.support.chat")}
-          icon="chat"
           label={I18n.t("wallet.payment.support.chat")}
+          accessibilityLabel={I18n.t("wallet.payment.support.chat")}
           onPress={() => {
             dismiss();
             handleAskAssistance();
           }}
           variant="primary"
+          icon="chat"
         />
         <VSpacer size={24} />
         <ListItemHeader
+          label={I18n.t("wallet.payment.support.additionalDataTitle")}
           endElement={{
             type: "buttonLink",
             componentProps: {
@@ -212,33 +212,32 @@ const usePaymentFailureSupportModal = ({
               onPress: handleCopyAllToClipboard
             }
           }}
-          label={I18n.t("wallet.payment.support.additionalDataTitle")}
         />
         <ListItemInfoCopy
+          label={I18n.t("wallet.payment.support.errorCode")}
           accessibilityLabel={I18n.t("wallet.payment.support.errorCode")}
           icon="ladybug"
-          label={I18n.t("wallet.payment.support.errorCode")}
-          onPress={() => clipboardSetStringWithFeedback(faultCodeDetail)}
           value={faultCodeDetail}
+          onPress={() => clipboardSetStringWithFeedback(faultCodeDetail)}
         />
         {!isOnboarding && (
           <ListItemInfoCopy
+            label={I18n.t("wallet.payment.support.noticeNumber")}
             accessibilityLabel={I18n.t("wallet.payment.support.noticeNumber")}
             icon="docPaymentCode"
-            label={I18n.t("wallet.payment.support.noticeNumber")}
-            onPress={() => clipboardSetStringWithFeedback(paymentNoticeNumber)}
             value={formattedPaymentNoticeNumber}
+            onPress={() => clipboardSetStringWithFeedback(paymentNoticeNumber)}
           />
         )}
         {!isOnboarding && (
           <ListItemInfoCopy
+            label={I18n.t("wallet.payment.support.entityCode")}
             accessibilityLabel={I18n.t("wallet.payment.support.entityCode")}
             icon="entityCode"
-            label={I18n.t("wallet.payment.support.entityCode")}
+            value={organizationFiscalCode}
             onPress={() =>
               clipboardSetStringWithFeedback(organizationFiscalCode)
             }
-            value={organizationFiscalCode}
           />
         )}
         <VSpacer size={24} />

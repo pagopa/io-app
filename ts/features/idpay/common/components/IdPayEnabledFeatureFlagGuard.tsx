@@ -1,14 +1,13 @@
 import { PropsWithChildren } from "react";
-
-import { useIOSelector } from "../../../../store/hooks";
 import {
   isIdPayDetailsEnabledSelector,
   isIdPayOnboardingEnabledSelector
 } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../store/reducers/types";
+import { useIOSelector } from "../../../../store/hooks";
 import { IdPayDisabledSubFeatureAlert } from "./IdPayDisabledSubFeatureAlert";
 
-export type IdPayFeatureKey = "idpay.initiative_details" | "idpay.onboarding";
+export type IdPayFeatureKey = "idpay.onboarding" | "idpay.initiative_details";
 
 const featureFlagSelectorMap: Record<
   IdPayFeatureKey,

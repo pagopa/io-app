@@ -1,7 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
-
 import { Action } from "../../../../store/actions/types.ts";
 import { TourItem } from "../../types/index.ts";
 import {
@@ -16,10 +15,10 @@ import {
 } from "../actions/index.ts";
 
 export type TourState = {
+  items: { [groupId: string]: ReadonlyArray<TourItem> };
   activeGroupId?: string;
   activeStepIndex: number;
   completed: ReadonlyArray<string>;
-  items: Record<string, ReadonlyArray<TourItem>>;
 };
 
 export const tourInitialState: TourState = {
@@ -34,30 +33,6 @@ const reducer = (
   action: Action
 ): TourState => {
   switch (action.type) {
-    case getType(completeTourAction): {
-      const alreadyCompleted = state.completed.includes(action.payload.groupId);
-      return {
-        ...state,
-        activeGroupId: undefined,
-        activeStepIndex: 0,
-        completed: alreadyCompleted
-          ? state.completed
-          : [...state.completed, action.payload.groupId]
-      };
-    }
-
-    case getType(nextTourStepAction):
-      return {
-        ...state,
-        activeStepIndex: state.activeStepIndex + 1
-      };
-
-    case getType(prevTourStepAction):
-      return {
-        ...state,
-        activeStepIndex: Math.max(0, state.activeStepIndex - 1)
-      };
-
     case getType(registerTourItemAction): {
       const itemsForGroup = state.items[action.payload.groupId] ?? [];
 
@@ -70,11 +45,20 @@ const reducer = (
       };
     }
 
-    case getType(resetTourCompletedAction):
+    case getType(unregisterTourItemAction): {
+      const itemsForGroup = state.items[action.payload.groupId] ?? [];
+      const updatedItemsForGroup = itemsForGroup.filter(
+        item => item.index !== action.payload.index
+      );
+
       return {
         ...state,
-        completed: state.completed.filter(id => id !== action.payload.groupId)
+        items: {
+          ...state.items,
+          [action.payload.groupId]: updatedItemsForGroup
+        }
       };
+    }
 
     case getType(startTourAction): {
       if (state.completed.includes(action.payload.groupId)) {
@@ -94,20 +78,35 @@ const reducer = (
         activeStepIndex: 0
       };
 
-    case getType(unregisterTourItemAction): {
-      const itemsForGroup = state.items[action.payload.groupId] ?? [];
-      const updatedItemsForGroup = itemsForGroup.filter(
-        item => item.index !== action.payload.index
-      );
-
+    case getType(nextTourStepAction):
       return {
         ...state,
-        items: {
-          ...state.items,
-          [action.payload.groupId]: updatedItemsForGroup
-        }
+        activeStepIndex: state.activeStepIndex + 1
+      };
+
+    case getType(prevTourStepAction):
+      return {
+        ...state,
+        activeStepIndex: Math.max(0, state.activeStepIndex - 1)
+      };
+
+    case getType(completeTourAction): {
+      const alreadyCompleted = state.completed.includes(action.payload.groupId);
+      return {
+        ...state,
+        activeGroupId: undefined,
+        activeStepIndex: 0,
+        completed: alreadyCompleted
+          ? state.completed
+          : [...state.completed, action.payload.groupId]
       };
     }
+
+    case getType(resetTourCompletedAction):
+      return {
+        ...state,
+        completed: state.completed.filter(id => id !== action.payload.groupId)
+      };
 
     default:
       return state;

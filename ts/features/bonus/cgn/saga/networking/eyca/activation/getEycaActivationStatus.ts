@@ -1,6 +1,5 @@
 import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
-
 import { SagaCallReturnType } from "../../../../../../../types/utils";
 import { BackendCGN } from "../../../../api/backendCgn";
 import { cgnEycaActivation } from "../../../../store/actions/eyca/activation";

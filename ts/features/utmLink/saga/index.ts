@@ -1,15 +1,14 @@
 import { SagaIterator } from "redux-saga";
 import { put, select, takeLatest } from "typed-redux-saga/macro";
-
-import { setIsMixpanelInitialized } from "../../mixpanel/store/actions";
-import { isMixpanelInitializedSelector } from "../../mixpanel/store/selectors";
-import { trackUtmLink } from "../analytics";
-import { utmLinkClearParams, utmLinkSetParams } from "../store/actions";
 import {
   utmLinkCampaignSelector,
   utmLinkMediumSelector,
   utmLinkSourceSelector
 } from "../store/selectors";
+import { isMixpanelInitializedSelector } from "../../mixpanel/store/selectors";
+import { setIsMixpanelInitialized } from "../../mixpanel/store/actions";
+import { utmLinkClearParams, utmLinkSetParams } from "../store/actions";
+import { trackUtmLink } from "../analytics";
 import { isMixpanelEnabled as isMixpanelEnabledSelector } from "./../../../store/reducers/persistedPreferences";
 
 /**

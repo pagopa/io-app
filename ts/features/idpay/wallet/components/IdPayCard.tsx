@@ -16,7 +16,6 @@ import {
   StyleSheet,
   View
 } from "react-native";
-
 import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 import WalletCardShape from "../../../../../img/features/idpay/wallet_card.svg";
 import DarkModeWalletCardShape from "../../../../../img/features/idpay/wallet_card_dark.svg";
@@ -25,19 +24,19 @@ import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 import { idPayWalletInitiativeListSelector } from "../store/reducers";
 
 export type IdPayCardProps = {
-  amount: number;
-  avatarSource: ImageURISource;
-  expireDate: Date;
   name: string;
+  avatarSource: ImageURISource;
+  amount: number;
+  expireDate: Date;
 };
 
 const idPayCardColorPalette: Record<
   NonNullable<ColorSchemeName>,
   {
+    title: IOColors;
     amountLabel: IOColors;
     amountValue: IOColors;
     expirationDate: IOColors;
-    title: IOColors;
   }
 > = {
   light: {
@@ -94,22 +93,22 @@ export const IdPayCard = (props: IdPayCardProps) => {
             >
               {props.name}
             </H6>
-            <Avatar logoUri={props.avatarSource} size="small" />
+            <Avatar size="small" logoUri={props.avatarSource} />
           </View>
           {initiativeCardDetails?.initiativeRewardType !==
             InitiativeRewardTypeEnum.EXPENSE && (
             <>
               <VSpacer size={16} />
-              <Body color={cardColors.amountLabel} weight="Regular">
+              <Body weight="Regular" color={cardColors.amountLabel}>
                 {I18n.t("idpay.wallet.card.available")}
               </Body>
-              <H3 color={cardColors.amountValue} testID="idpay-card-amount">
+              <H3 testID="idpay-card-amount" color={cardColors.amountValue}>
                 {formatNumberCentsToAmount(props.amount, true, "right")}
               </H3>
             </>
           )}
         </View>
-        <Body color={cardColors.expirationDate} weight="Regular">
+        <Body weight="Regular" color={cardColors.expirationDate}>
           {I18n.t("idpay.wallet.card.validThrough", {
             endDate: format(props.expireDate, "DD/MM/YY")
           })}

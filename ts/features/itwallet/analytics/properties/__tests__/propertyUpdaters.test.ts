@@ -1,16 +1,15 @@
 import { MixpanelProperties } from "mixpanel-react-native";
-
-import { GlobalState } from "../../../../../store/reducers/types";
 import * as baseBuilder from "../basePropertyBuilder";
+import * as superProp from "../superProperties";
 import * as profileProp from "../profileProperties";
-import { ITW_ANALYTICS_CREDENTIALS } from "../propertyTypes";
 import {
   updateCredentialProperties,
   updateItwAnalyticsProperties,
   updatePropertiesWalletRevoked
 } from "../propertyUpdaters";
-import * as superProp from "../superProperties";
+import { GlobalState } from "../../../../../store/reducers/types";
 import { ItwSuperProperties } from "../superProperties";
+import { ITW_ANALYTICS_CREDENTIALS } from "../propertyTypes";
 
 export const mockedRegisterSuperProperties = jest.fn();
 export const mockedSet = jest.fn();

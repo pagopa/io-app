@@ -5,7 +5,6 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { SectionListData } from "react-native";
-
 import { InfoNotice } from "../../../../../definitions/pagopa/biz-events/InfoNotice";
 import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import { OperationResultScreenContentProps } from "../../../../components/screens/OperationResultScreenContent";
@@ -226,6 +225,16 @@ export const mapDownloadReceiptErrorToOutcomeProps = (
   };
 
   switch (errorCode) {
+    case DownloadReceiptOutcomeErrorEnum.GN_400_003:
+      return {
+        title: I18n.t("features.payments.transactions.receipt.error.400.title"),
+        subtitle: I18n.t(
+          "features.payments.transactions.receipt.error.400.subtitle"
+        ),
+        pictogram: "attention",
+        action: supportAction,
+        secondaryAction: closeAction
+      };
     case DownloadReceiptOutcomeErrorEnum.AT_404_001:
     case DownloadReceiptOutcomeErrorEnum.BZ_404_003:
       return {
@@ -237,22 +246,12 @@ export const mapDownloadReceiptErrorToOutcomeProps = (
         action: closeAction,
         secondaryAction: supportAction
       };
-    case DownloadReceiptOutcomeErrorEnum.GN_400_003:
-      return {
-        title: I18n.t("features.payments.transactions.receipt.error.400.title"),
-        subtitle: I18n.t(
-          "features.payments.transactions.receipt.error.400.subtitle"
-        ),
-        pictogram: "attention",
-        action: supportAction,
-        secondaryAction: closeAction
-      };
-    case DownloadReceiptOutcomeErrorEnum.FG_000_001:
+    case DownloadReceiptOutcomeErrorEnum.UN_500_000:
     case DownloadReceiptOutcomeErrorEnum.GN_500_001:
     case DownloadReceiptOutcomeErrorEnum.GN_500_002:
     case DownloadReceiptOutcomeErrorEnum.GN_500_003:
     case DownloadReceiptOutcomeErrorEnum.GN_500_004:
-    case DownloadReceiptOutcomeErrorEnum.UN_500_000:
+    case DownloadReceiptOutcomeErrorEnum.FG_000_001:
     default:
       return {
         title: I18n.t("features.payments.transactions.receipt.error.500.title"),

@@ -1,5 +1,4 @@
 import type it from "../../locales/it/index.json";
-
 import { type TranslationKeys } from "../i18n";
 
 declare module "i18next" {
@@ -8,12 +7,12 @@ declare module "i18next" {
     resources: {
       index: typeof it;
     };
-    returnEmptyString: false;
     returnNull: false;
+    returnEmptyString: false;
   }
 
   interface TFunction {
     // eslint-disable-next-line @typescript-eslint/prefer-function-type
-    (key: Array<TranslationKeys> | TranslationKeys, options?: any): string;
+    (key: TranslationKeys | Array<TranslationKeys>, options?: any): string;
   }
 }

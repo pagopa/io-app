@@ -2,7 +2,6 @@ import { act, fireEvent } from "@testing-library/react-native";
 import { omit } from "lodash";
 import * as RN from "react-native";
 import { createStore } from "redux";
-
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
@@ -18,15 +17,15 @@ import { useTrackCieReadingEvents } from "../../hooks/useTrackCieReadingEvents";
 import { setAarFlowState } from "../../store/actions";
 import { sendAarFlowStates } from "../../utils/stateUtils";
 import { useAarGenericErrorBottomSheet } from "../errors/hooks/useAarGenericErrorBottomSheet";
-import { SendAarZendeskSecondLevelTag } from "../errors/hooks/useAarStartSendZendeskSupport";
 import {
   SendAarCieCardReadingComponent,
   SendAarCieCardReadingComponentProps
 } from "../SendAarCieCardReadingComponent";
-type ErrorState = Extract<ReadState, { status: ReadStatus.ERROR }>;
+import { SendAarZendeskSecondLevelTag } from "../errors/hooks/useAarStartSendZendeskSupport";
 type ReadState = ReturnType<
   typeof useCieInternalAuthAndMrtdReading
 >["readState"];
+type ErrorState = Extract<ReadState, { status: ReadStatus.ERROR }>;
 
 const mockStartReading = jest.fn();
 const mockStopReading = jest.fn();

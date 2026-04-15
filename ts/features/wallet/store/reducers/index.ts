@@ -1,14 +1,13 @@
 import { combineReducers } from "redux";
 import { PersistPartial } from "redux-persist";
-
+import preferencesPersistor, { WalletPreferencesState } from "./preferences";
 import cardsReducer, { WalletCardsState } from "./cards";
 import placeholdersPersistor, { WalletPlaceholdersState } from "./placeholders";
-import preferencesPersistor, { WalletPreferencesState } from "./preferences";
 
 export type WalletState = {
   cards: WalletCardsState;
-  placeholders: PersistPartial & WalletPlaceholdersState;
-  preferences: PersistPartial & WalletPreferencesState;
+  preferences: WalletPreferencesState & PersistPartial;
+  placeholders: WalletPlaceholdersState & PersistPartial;
 };
 
 const walletReducer = combineReducers({

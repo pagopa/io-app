@@ -3,13 +3,12 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-
-import { CgnActivationDetail } from "../../../../../../definitions/cgn/CgnActivationDetail";
 import { CgnActivationProgressEnum } from "../reducers/activation";
+import { CgnActivationDetail } from "../../../../../../definitions/cgn/CgnActivationDetail";
 
 type ActivationStatus = {
-  activation?: CgnActivationDetail;
   status: CgnActivationProgressEnum;
+  activation?: CgnActivationDetail;
 };
 
 export const cgnActivationStart = createStandardAction(
@@ -61,10 +60,10 @@ export const cgnRequestActivation = createStandardAction(
 )<void>();
 
 export type CgnActivationActions =
-  | ActionType<typeof cgnActivationBack>
-  | ActionType<typeof cgnActivationCancel>
-  | ActionType<typeof cgnActivationComplete>
-  | ActionType<typeof cgnActivationFailure>
-  | ActionType<typeof cgnActivationStart>
   | ActionType<typeof cgnActivationStatus>
-  | ActionType<typeof cgnRequestActivation>;
+  | ActionType<typeof cgnRequestActivation>
+  | ActionType<typeof cgnActivationStart>
+  | ActionType<typeof cgnActivationComplete>
+  | ActionType<typeof cgnActivationCancel>
+  | ActionType<typeof cgnActivationFailure>
+  | ActionType<typeof cgnActivationBack>;

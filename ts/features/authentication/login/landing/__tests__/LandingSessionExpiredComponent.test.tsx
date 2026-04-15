@@ -1,5 +1,4 @@
-import { fireEvent, render } from "@testing-library/react-native";
-
+import { render, fireEvent } from "@testing-library/react-native";
 import { LandingSessionExpiredComponent } from "../components/LandingSessionExpiredComponent";
 
 const pictogramName = "identityCheck";
@@ -11,9 +10,9 @@ describe("LandingSessionExpiredComponent", () => {
   it("renders correctly with required props", () => {
     const { getByText, queryByRole } = render(
       <LandingSessionExpiredComponent
-        content={content}
         pictogramName={pictogramName}
         title={title}
+        content={content}
       />
     );
 
@@ -25,14 +24,14 @@ describe("LandingSessionExpiredComponent", () => {
   it("renders correctly with optional props", () => {
     const { getByText, getByRole } = render(
       <LandingSessionExpiredComponent
+        pictogramName={pictogramName}
+        title={title}
+        content={content}
         buttonLink={{
           label: buttonLinkLabel,
           onPress: jest.fn(),
           testID: "login-button"
         }}
-        content={content}
-        pictogramName={pictogramName}
-        title={title}
       />
     );
 
@@ -45,14 +44,14 @@ describe("LandingSessionExpiredComponent", () => {
     const onPressMock = jest.fn();
     const { getByTestId } = render(
       <LandingSessionExpiredComponent
+        pictogramName={pictogramName}
+        title={title}
+        content={content}
         buttonLink={{
           label: buttonLinkLabel,
           onPress: onPressMock,
           testID: "login-button"
         }}
-        content={content}
-        pictogramName={pictogramName}
-        title={title}
       />
     );
 

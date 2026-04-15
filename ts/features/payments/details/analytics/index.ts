@@ -3,7 +3,7 @@ import { buildEventProperties } from "../../../../utils/analytics";
 
 type WalletPaymentRemoveAnalyticsProps = {
   payment_method_selected: string;
-  payment_method_status: "invalid" | "valid";
+  payment_method_status: "valid" | "invalid";
 };
 
 export const trackWalletPaymentRemoveMethodStart = (

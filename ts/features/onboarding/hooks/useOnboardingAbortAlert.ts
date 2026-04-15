@@ -1,9 +1,8 @@
-import I18n from "i18next";
-import { useCallback } from "react";
 import { Alert } from "react-native";
-
-import { useIODispatch } from "../../../store/hooks";
+import { useCallback } from "react";
+import I18n from "i18next";
 import { abortOnboarding } from "../store/actions";
+import { useIODispatch } from "../../../store/hooks";
 
 type OnboardingAbortAlertUtils = {
   showAlert: (callback?: () => void) => void;

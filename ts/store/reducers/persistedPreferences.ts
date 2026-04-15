@@ -1,41 +1,47 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 /**
  * A reducer for persisted preferences.
  */
 import * as O from "fp-ts/lib/Option";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Calendar } from "react-native-calendar-events";
 import { createSelector } from "reselect";
 import { isActionOf } from "typesafe-actions";
-
-import { ColorModeChoice } from "../../hooks/useAppThemeConfiguration";
-import { Locales } from "../../i18n";
-import { differentProfileLoggedIn } from "../actions/crossSessions";
 import { setMixpanelEnabled } from "../actions/mixpanel";
 import {
   continueWithRootOrJailbreak,
   customEmailChannelSetEnabled,
   preferenceFingerprintIsEnabledSaveSuccess,
-  preferencesExperimentalDesignEnabled,
-  preferencesFontSet,
-  preferencesIdPayTestSetEnabled,
   preferencesPagoPaTestEnvironmentSetEnabled,
-  preferencesPnTestEnvironmentSetEnabled,
-  preferencesThemeSet,
   preferredCalendarRemoveSuccess,
   preferredCalendarSaveSuccess,
   preferredLanguageSaveSuccess,
   serviceAlertDisplayedOnceSuccess,
-  TypefaceChoice
+  preferencesPnTestEnvironmentSetEnabled,
+  preferencesIdPayTestSetEnabled,
+  preferencesExperimentalDesignEnabled,
+  preferencesFontSet,
+  TypefaceChoice,
+  preferencesThemeSet
 } from "../actions/persistedPreferences";
 import { Action } from "../actions/types";
+import { differentProfileLoggedIn } from "../actions/crossSessions";
+import { ColorModeChoice } from "../../hooks/useAppThemeConfiguration";
+import { Locales } from "../../i18n";
 import { GlobalState } from "./types";
 
 export type PersistedPreferencesState = Readonly<{
-  continueWithRootOrJailbreak?: boolean;
-  fontPreference: TypefaceChoice;
+  isFingerprintEnabled?: boolean;
+  preferredCalendar?: Calendar;
+  preferredLanguage?: Locales;
+  wasServiceAlertDisplayedOnce?: boolean;
+  isPagoPATestEnabled: boolean;
   // TODO: create transformer for Option objects and use Option instead of pot
   //       https://www.pivotaltracker.com/story/show/170998374
   isCustomEmailChannelEnabled: pot.Pot<boolean, undefined>;
+  continueWithRootOrJailbreak?: boolean;
+  isMixpanelEnabled: boolean | null;
+  isPnTestEnabled: boolean;
+  isIdPayTestEnabled?: boolean;
   // 'isDesignSystemEnabled' (now known as 'isExperimentalDesignEnabled')
   // has been introduced without a migration (PR
   // https://github.com/pagopa/io-app/pull/4427) so there are cases where
@@ -43,15 +49,8 @@ export type PersistedPreferencesState = Readonly<{
   // changing the variable value later). Typescript cannot detect this so
   // be sure to handle such case when reading and using this value
   isExperimentalDesignEnabled: boolean;
-  isFingerprintEnabled?: boolean;
-  isIdPayTestEnabled?: boolean;
-  isMixpanelEnabled: boolean | null;
-  isPagoPATestEnabled: boolean;
-  isPnTestEnabled: boolean;
-  preferredCalendar?: Calendar;
-  preferredLanguage?: Locales;
+  fontPreference: TypefaceChoice;
   themePreference: ColorModeChoice;
-  wasServiceAlertDisplayedOnce?: boolean;
 }>;
 
 export const initialPreferencesState: PersistedPreferencesState = {

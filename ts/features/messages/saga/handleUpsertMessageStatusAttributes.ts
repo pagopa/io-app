@@ -1,46 +1,74 @@
-import I18n from "i18next";
 import {
   call,
   cancelled,
   put,
   race,
-  select,
-  take
+  take,
+  select
 } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
-
+import I18n from "i18next";
 import { MessageStatusArchivingChange } from "../../../../definitions/backend/MessageStatusArchivingChange";
 import { MessageStatusBulkChange } from "../../../../definitions/backend/MessageStatusBulkChange";
 import { MessageStatusChange } from "../../../../definitions/backend/MessageStatusChange";
 import { MessageStatusReadingChange } from "../../../../definitions/backend/MessageStatusReadingChange";
 import { BackendClient } from "../../../api/backend";
-import { backendClientManager } from "../../../api/BackendClientManager";
-import { apiUrlPrefix } from "../../../config";
-import { SagaCallReturnType } from "../../../types/utils";
-import { getError } from "../../../utils/errors";
-import { sessionTokenSelector } from "../../authentication/common/store/selectors";
-import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
-import {
-  trackArchivedRestoredMessages,
-  trackUndefinedBearerToken,
-  trackUpsertMessageStatusAttributesFailure,
-  UndefinedBearerTokenPhase
-} from "../analytics";
 import {
   upsertMessageStatusAttributes,
   UpsertMessageStatusAttributesPayload
 } from "../store/actions";
+import { SagaCallReturnType } from "../../../types/utils";
+import { getError } from "../../../utils/errors";
+import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
+import { errorToReason, unknownToReason } from "../utils";
 import {
+  trackArchivedRestoredMessages,
+  trackUpsertMessageStatusAttributesFailure,
+  trackUndefinedBearerToken,
+  UndefinedBearerTokenPhase
+} from "../analytics";
+import { handleResponse } from "../utils/responseHandling";
+import {
+  resetMessageArchivingAction,
   interruptMessageArchivingProcessingAction,
   removeScheduledMessageArchivingAction,
-  resetMessageArchivingAction,
   startProcessingMessageArchivingAction
 } from "../store/actions/archiving";
-import { paginatedMessageFromIdForCategorySelector } from "../store/reducers/allPaginated";
 import { nextQueuedMessageDataUncachedSelector } from "../store/reducers/archiving";
+import { paginatedMessageFromIdForCategorySelector } from "../store/reducers/allPaginated";
 import { MessageListCategory } from "../types/messageListCategory";
-import { errorToReason, unknownToReason } from "../utils";
-import { handleResponse } from "../utils/responseHandling";
+import { sessionTokenSelector } from "../../authentication/common/store/selectors";
+import { backendClientManager } from "../../../api/BackendClientManager";
+import { apiUrlPrefix } from "../../../config";
+
+/**
+ * @throws invalid payload
+ * @param payload
+ */
+function validatePayload(
+  payload: UpsertMessageStatusAttributesPayload
+): MessageStatusChange {
+  switch (payload.update.tag) {
+    case "archiving":
+      return {
+        change_type: "archiving",
+        is_archived: payload.update.isArchived
+      } as MessageStatusArchivingChange;
+    case "reading":
+      return {
+        change_type: "reading",
+        is_read: true
+      } as MessageStatusReadingChange;
+    case "bulk":
+      return {
+        change_type: "bulk",
+        is_read: true,
+        is_archived: payload.update.isArchived
+      } as MessageStatusBulkChange;
+    default:
+      throw new TypeError("invalid payload");
+  }
+}
 
 /**
  * The algorithm of this saga is as follows:
@@ -151,6 +179,29 @@ export function* handleMessageArchivingRestoring(
   } while (true);
 }
 
+// Be aware that this saga is execute with a takeEvery, in order to remain
+// compatible with the old messages home way of archiving messages
+export function* raceUpsertMessageStatusAttributes(
+  action: ActionType<typeof upsertMessageStatusAttributes.request>
+) {
+  const sessionToken = yield* select(sessionTokenSelector);
+
+  if (!sessionToken) {
+    trackUndefinedBearerToken(
+      UndefinedBearerTokenPhase.upsertMessageStatusAttributes
+    );
+    return;
+  }
+
+  const { upsertMessageStatusAttributes: putMessage } =
+    backendClientManager.getBackendClient(apiUrlPrefix, sessionToken);
+
+  yield* race({
+    task: call(handleUpsertMessageStatusAttributes, putMessage, action),
+    cancel: take(resetMessageArchivingAction)
+  });
+}
+
 export function* handleUpsertMessageStatusAttributes(
   putMessage: BackendClient["upsertMessageStatusAttributes"],
   action: ActionType<typeof upsertMessageStatusAttributes.request>
@@ -197,58 +248,6 @@ export function* handleUpsertMessageStatusAttributes(
         })
       );
     }
-  }
-}
-
-// Be aware that this saga is execute with a takeEvery, in order to remain
-// compatible with the old messages home way of archiving messages
-export function* raceUpsertMessageStatusAttributes(
-  action: ActionType<typeof upsertMessageStatusAttributes.request>
-) {
-  const sessionToken = yield* select(sessionTokenSelector);
-
-  if (!sessionToken) {
-    trackUndefinedBearerToken(
-      UndefinedBearerTokenPhase.upsertMessageStatusAttributes
-    );
-    return;
-  }
-
-  const { upsertMessageStatusAttributes: putMessage } =
-    backendClientManager.getBackendClient(apiUrlPrefix, sessionToken);
-
-  yield* race({
-    task: call(handleUpsertMessageStatusAttributes, putMessage, action),
-    cancel: take(resetMessageArchivingAction)
-  });
-}
-
-/**
- * @throws invalid payload
- * @param payload
- */
-function validatePayload(
-  payload: UpsertMessageStatusAttributesPayload
-): MessageStatusChange {
-  switch (payload.update.tag) {
-    case "archiving":
-      return {
-        change_type: "archiving",
-        is_archived: payload.update.isArchived
-      } as MessageStatusArchivingChange;
-    case "bulk":
-      return {
-        change_type: "bulk",
-        is_read: true,
-        is_archived: payload.update.isArchived
-      } as MessageStatusBulkChange;
-    case "reading":
-      return {
-        change_type: "reading",
-        is_read: true
-      } as MessageStatusReadingChange;
-    default:
-      throw new TypeError("invalid payload");
   }
 }
 

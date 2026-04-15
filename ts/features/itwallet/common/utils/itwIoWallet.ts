@@ -1,5 +1,4 @@
 import { IoWallet, ItwVersion } from "@pagopa/io-react-native-wallet";
-
 import { useIOSelector } from "../../../../store/hooks";
 import { selectItwSpecsVersion } from "../store/selectors/environment";
 
@@ -9,7 +8,9 @@ import { selectItwSpecsVersion } from "../store/selectors/environment";
  *
  * To access one of the instances it is required to use {@link getIoWallet} or {@link useIoWallet}.
  */
-const instances: Partial<Record<ItwVersion, IoWallet>> = {};
+const instances: {
+  [V in ItwVersion]?: IoWallet;
+} = {};
 
 /**
  * Convenience hook to get the {@link IoWallet} instance matching the current IT-Wallet specs version.

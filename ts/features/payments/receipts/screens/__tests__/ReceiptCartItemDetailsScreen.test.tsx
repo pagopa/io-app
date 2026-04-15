@@ -1,14 +1,13 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
-
 import { CartItem } from "../../../../../../definitions/pagopa/biz-events/CartItem";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { PaymentsReceiptRoutes } from "../../navigation/routes";
 import ReceiptCartItemDetailsScreen from "../ReceiptCartItemDetailsScreen";
+import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 
 jest.mock("../../../../../utils/clipboard", () => ({
   clipboardSetStringWithFeedback: jest.fn()

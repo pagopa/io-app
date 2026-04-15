@@ -2,18 +2,17 @@
  * The root saga that forks and includes all the other sagas.
  */
 import { all, call } from "typed-redux-saga/macro";
-
 import versionInfoSaga from "../common/versionInfo/saga/versionInfo";
 import { zendeskEnabled } from "../config";
-import { watchForceLogoutActiveSessionLogin } from "../features/authentication/activeSessionLogin/saga/forceLogoutActiveSessionLoginSaga";
 import { watchLogoutSaga } from "../features/authentication/common/saga/watchLogoutSaga";
 import { watchPendingActionsSaga } from "../features/authentication/fastLogin/saga/pendingActionsSaga";
 import { watchTokenRefreshSaga } from "../features/authentication/fastLogin/saga/tokenRefreshSaga";
 import connectivityStatusSaga from "../features/connectivity/saga";
 import { watchIdentification } from "../features/identification/sagas";
-import { watchTourSaga } from "../features/tour/sagas";
 import { watchUtmLinkSaga } from "../features/utmLink/saga";
 import { watchZendeskSupportSaga } from "../features/zendesk/saga";
+import { watchForceLogoutActiveSessionLogin } from "../features/authentication/activeSessionLogin/saga/forceLogoutActiveSessionLoginSaga";
+import { watchTourSaga } from "../features/tour/sagas";
 import backendStatusSaga from "./backendStatus";
 import { watchContentSaga } from "./contentLoaders";
 import { loadSystemPreferencesSaga } from "./preferences";

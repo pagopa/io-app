@@ -1,7 +1,6 @@
 import { act } from "@testing-library/react-native";
 import { Action, createStore } from "redux";
 import { fromPromise } from "xstate";
-
 import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList.ts";
 import { applicationChangeState } from "../../../../../../store/actions/application.ts";
 import { startupLoadSuccess } from "../../../../../../store/actions/startup.ts";
@@ -180,7 +179,8 @@ const renderComponent = (
       isEidExpired: jest.fn().mockReturnValue(false)
     },
     actions: {
-      navigateToClaimsDisclosureScreen: jest.fn()
+      navigateToClaimsDisclosureScreen: jest.fn(),
+      onInit: jest.fn()
     },
     actors: {
       evaluateRelyingPartyTrust: fromPromise(jest.fn()),

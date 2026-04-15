@@ -6,9 +6,8 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-
-import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 import { trackSendAarErrorScreenDetailsCode } from "../../analytics";
+import { clipboardSetStringWithFeedback } from "../../../../../utils/clipboard";
 
 export const sendAarErrorSupportBottomSheetComponent = (
   onAssistancePress: () => void,
@@ -22,12 +21,12 @@ export const sendAarErrorSupportBottomSheetComponent = (
       label={I18n.t("features.pn.aar.flow.ko.GENERIC.detail.supportTitle")}
     />
     <ListItemAction
-      accessibilityLabel={I18n.t("features.pn.aar.flow.ko.GENERIC.detail.chat")}
-      icon="chat"
       label={I18n.t("features.pn.aar.flow.ko.GENERIC.detail.chat")}
+      accessibilityLabel={I18n.t("features.pn.aar.flow.ko.GENERIC.detail.chat")}
       onPress={onAssistancePress}
-      testID="button_assistance"
       variant="primary"
+      icon="chat"
+      testID="button_assistance"
     />
     <VSpacer size={24} />
     {assistanceErrorCode && (
@@ -39,11 +38,12 @@ export const sendAarErrorSupportBottomSheetComponent = (
           testID="error_code_section_header"
         />
         <ListItemInfoCopy
+          label={I18n.t("features.pn.aar.flow.ko.GENERIC.detail.errorCode")}
           accessibilityLabel={I18n.t(
             "features.pn.aar.flow.ko.GENERIC.detail.errorCode"
           )}
           icon="ladybug"
-          label={I18n.t("features.pn.aar.flow.ko.GENERIC.detail.errorCode")}
+          value={assistanceErrorCode}
           numberOfLines={2}
           onPress={() => {
             trackSendAarErrorScreenDetailsCode();
@@ -51,7 +51,6 @@ export const sendAarErrorSupportBottomSheetComponent = (
             clipboardSetStringWithFeedback(assistanceErrorCode);
           }}
           testID="error_code_value"
-          value={assistanceErrorCode}
         />
         <VSpacer size={24} />
       </>

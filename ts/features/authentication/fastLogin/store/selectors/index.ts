@@ -1,10 +1,9 @@
-import { isEqual, uniqWith } from "lodash";
 import { createSelector } from "reselect";
-
-import { fastLoginEnabled, fastLoginOptIn } from "../../../../../config";
+import { uniqWith, isEqual } from "lodash";
 import { remoteConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
-import { isPropertyWithMinAppVersionEnabled } from "../../../../../store/reducers/featureFlagWithMinAppVersionStatus";
+import { fastLoginOptIn, fastLoginEnabled } from "../../../../../config";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { isPropertyWithMinAppVersionEnabled } from "../../../../../store/reducers/featureFlagWithMinAppVersionStatus";
 
 export const fastLoginOptInSelector = (state: GlobalState) =>
   state.features.loginFeatures.fastLogin.optIn;

@@ -1,10 +1,9 @@
 import { Badge, Divider, ListItemSwitch } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
+import { useCallback, Fragment } from "react";
 import I18n from "i18next";
-import { Fragment, useCallback } from "react";
-
 import {
   InitiativesStatusDTO,
   StatusEnum
@@ -17,8 +16,8 @@ import {
 import { idPayInitiativeFromInstrumentPotSelector } from "../store/reducers";
 
 type Props = {
-  idWallet: string;
   initiatives: ReadonlyArray<InitiativesStatusDTO>;
+  idWallet: string;
 };
 
 /*
@@ -32,7 +31,7 @@ export const IdPayInstrumentInitiativesList = ({
   <>
     {initiatives.map((item, index) => (
       <Fragment key={item.initiativeId}>
-        <IdPayInitiativeListItemSwitch idWallet={idWallet} item={item} />
+        <IdPayInitiativeListItemSwitch item={item} idWallet={idWallet} />
         {index < initiatives.length - 1 && <Divider />}
       </Fragment>
     ))}
@@ -40,8 +39,8 @@ export const IdPayInstrumentInitiativesList = ({
 );
 
 type IdPayInitiativeListItemSwitchProps = {
-  idWallet: string;
   item: InitiativesStatusDTO;
+  idWallet: string;
 };
 
 const IdPayInitiativeListItemSwitch = ({
@@ -102,11 +101,11 @@ const IdPayInitiativeListItemSwitch = ({
 
   return (
     <ListItemSwitch
+      label={initiativeName}
+      value={isActive}
+      onSwitchValueChange={() => handleSwitchValueChange(item)}
       badge={badge}
       isLoading={isLoading}
-      label={initiativeName}
-      onSwitchValueChange={() => handleSwitchValueChange(item)}
-      value={isActive}
     />
   );
 };

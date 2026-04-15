@@ -22,17 +22,17 @@ const fontWeights = {
   "700": "Bold"
 };
 
-enum FontStyle {
-  "italic" = "italic",
-  "normal" = "normal"
-}
-export type FontWeight = keyof typeof fontWeights;
 type FontFamily = keyof typeof fonts;
+export type FontWeight = keyof typeof fontWeights;
+enum FontStyle {
+  "normal" = "normal",
+  "italic" = "italic"
+}
 
 type FontStyleObject = {
   fontFamily: string;
-  fontStyle?: FontStyle;
   fontWeight?: FontWeight;
+  fontStyle?: FontStyle;
 };
 
 /**

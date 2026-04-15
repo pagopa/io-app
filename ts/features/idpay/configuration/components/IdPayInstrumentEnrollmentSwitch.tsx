@@ -6,28 +6,27 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-
+import { pipe } from "fp-ts/lib/function";
 import { StatusEnum as InstrumentStatusEnum } from "../../../../../definitions/idpay/InstrumentDTO";
 import { CreditCardType, Wallet } from "../../../../types/pagopa";
 import { instrumentStatusLabels } from "../../common/labels";
 import { IdPayConfigurationMachineContext } from "../machine/provider";
 import { instrumentStatusByIdWalletSelector } from "../machine/selectors";
 
-type InstrumentEnrollmentSwitchProps = {
-  isStaged: boolean;
-  onValueChange: (value: boolean) => void;
-  wallet: Wallet;
-};
-
 /**
  * See @ListItemSwitch
  */
 type ListItemSwitchIconProps =
-  | { icon: IOIcons; paymentLogo?: never }
   | { icon?: never; paymentLogo: IOLogoPaymentType }
+  | { icon: IOIcons; paymentLogo?: never }
   | { icon?: never; paymentLogo?: never };
+
+type InstrumentEnrollmentSwitchProps = {
+  wallet: Wallet;
+  isStaged: boolean;
+  onValueChange: (value: boolean) => void;
+};
 
 /**
  * A component to enable/disable the enrollment of an instrument
@@ -90,16 +89,18 @@ const IdPayInstrumentEnrollmentSwitch = (
   return (
     <ListItemSwitch
       {...iconProps}
-      badge={badge}
-      isLoading={pot.isLoading(instrumentStatusPot)}
       label={`•••• ${instrumentMaskedPan}`}
-      onSwitchValueChange={() => onValueChange(!isActive)}
       value={switchValue}
+      onSwitchValueChange={() => onValueChange(!isActive)}
+      isLoading={pot.isLoading(instrumentStatusPot)}
+      badge={badge}
     />
   );
 };
 
-const cardLogoByBrand: Record<CreditCardType, IOLogoPaymentType | undefined> = {
+const cardLogoByBrand: {
+  [key in CreditCardType]: IOLogoPaymentType | undefined;
+} = {
   MASTERCARD: "mastercard",
   VISA: "visa",
   AMEX: "amex",

@@ -7,9 +7,9 @@ import { JSX } from "react";
 export const ACTIVE_VERSION = 0;
 
 type WhatsNew = {
-  body: JSX.Element;
-  title: string;
   version: number;
+  title: string;
+  body: JSX.Element;
 };
 
 export const whatsNewVersions: Array<WhatsNew> = [];

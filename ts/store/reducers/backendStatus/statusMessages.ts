@@ -1,14 +1,13 @@
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-
+import { createSelector } from "reselect";
+import { pipe } from "fp-ts/lib/function";
 import { BackendStatus } from "../../../../definitions/content/BackendStatus";
-import { StatusMessage } from "../../../../definitions/content/StatusMessage";
-import { backendStatusLoadSuccess } from "../../actions/backendStatus";
 import { Action } from "../../actions/types";
-import { currentRouteSelector } from "../navigation";
+import { backendStatusLoadSuccess } from "../../actions/backendStatus";
 import { GlobalState } from "../types";
+import { currentRouteSelector } from "../navigation";
+import { StatusMessage } from "../../../../definitions/content/StatusMessage";
 
 export type StatusMessagesState = O.Option<BackendStatus["statusMessages"]>;
 

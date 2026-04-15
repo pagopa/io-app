@@ -3,11 +3,9 @@ import Color from "color";
 import I18n from "i18next";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
-
 import { useIOSelector } from "../../../../../store/hooks";
 import { fontPreferenceSelector } from "../../../../../store/reducers/persistedPreferences";
 import { useItwDisplayCredentialStatus } from "../../../presentation/details/hooks/useItwDisplayCredentialStatus";
-import { itwShouldUpgradeCredentialSelector } from "../../store/selectors";
 import {
   getCredentialNameFromType,
   tagPropsByStatus,
@@ -15,6 +13,7 @@ import {
   validCredentialStatuses
 } from "../../utils/itwCredentialUtils";
 import { useThemeColorByCredentialType } from "../../utils/itwStyleUtils";
+import { itwShouldUpgradeCredentialSelector } from "../../store/selectors";
 import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
 import { CardBackground } from "./CardBackground";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
@@ -22,20 +21,15 @@ import { CardColorScheme } from "./types";
 
 export type ItwCredentialCard = {
   /**
-   * Current status of the credential, used to determine the
-   * visual representation and the status tag to display.
-   */
-  credentialStatus?: ItwCredentialStatus;
-  /**
    * Type of the credential, which is used to determine the
    * visual representation and styling of the card.
    */
   credentialType: string;
   /**
-   * Indicates if the credential is a multi-level credential,
-   * which affects the display of a specific badge on the card.
+   * Current status of the credential, used to determine the
+   * visual representation and the status tag to display.
    */
-  isMultiCredential?: boolean;
+  credentialStatus?: ItwCredentialStatus;
   /**
    * Issue date of the credential.
    * Used to determine whether the card should display
@@ -43,12 +37,17 @@ export type ItwCredentialCard = {
    * an L3 PID and the credential was issued before it.
    */
   issuedAt?: string;
+  /**
+   * Indicates if the credential is a multi-level credential,
+   * which affects the display of a specific badge on the card.
+   */
+  isMultiCredential?: boolean;
 };
 
 type StyleProps = {
-  colorScheme: CardColorScheme;
   titleColor: string;
   titleOpacity: number;
+  colorScheme: CardColorScheme;
 };
 
 export const ItwCredentialCard = ({
@@ -79,7 +78,7 @@ export const ItwCredentialCard = ({
   const { titleColor, titleOpacity, colorScheme } = useMemo<StyleProps>(() => {
     // Include "jwtExpired" as a valid status because credentials with this state
     // should not appear faded. Only the "expired" status should be displayed with reduced opacity.
-    const isValid = ["jwtExpired", ...validCredentialStatuses].includes(status);
+    const isValid = [...validCredentialStatuses, "jwtExpired"].includes(status);
 
     if (needsItwUpgrade) {
       return {
@@ -115,20 +114,21 @@ export const ItwCredentialCard = ({
   return (
     <View style={styles.cardContainer}>
       <CardBackground
-        colorScheme={colorScheme}
         credentialType={credentialType}
+        colorScheme={colorScheme}
       />
       <View style={styles.header}>
         <HStack space={16}>
           <IOText
+            size={16}
+            lineHeight={20}
             font={
               typefacePreference === "comfortable"
                 ? "Titillio"
                 : "TitilliumSansPro"
             }
-            lineHeight={20}
+            weight="Semibold"
             maxFontSizeMultiplier={1.25}
-            size={16}
             style={{
               letterSpacing: 0.25,
               color: titleColor,
@@ -136,19 +136,18 @@ export const ItwCredentialCard = ({
               flex: 1,
               flexShrink: 1
             }}
-            weight="Semibold"
           >
             {getCredentialNameFromType(credentialType, "").toUpperCase()}
           </IOText>
           {statusTagProps && <Tag forceLightMode {...statusTagProps} />}
           {isMultiCredential && (
-            <Icon color="grey-850" name="multiCard" size={24} />
+            <Icon name="multiCard" color="grey-850" size={24} />
           )}
         </HStack>
       </View>
       <DigitalVersionBadge
-        colorScheme={colorScheme}
         credentialType={credentialType}
+        colorScheme={colorScheme}
       />
       <View style={[styles.border, { borderColor: borderColorMap[status] }]} />
     </View>

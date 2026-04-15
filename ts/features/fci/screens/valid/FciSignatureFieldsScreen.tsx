@@ -7,12 +7,12 @@ import {
   useFooterActionsMeasurements,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { isEqual } from "lodash";
 import { Route, StackActions, useRoute } from "@react-navigation/native";
-import { constFalse, increment, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
+import { constFalse, increment, pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
-import { isEqual } from "lodash";
 import {
   ComponentProps,
   useContext,
@@ -21,7 +21,6 @@ import {
   useState
 } from "react";
 import { SectionList, View } from "react-native";
-
 import {
   Clause,
   TypeEnum as ClausesTypeEnum
@@ -34,7 +33,6 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
   trackFciShowSignatureFields,
   trackFciSignatureFieldsView,
@@ -62,10 +60,11 @@ import {
   getSectionListData,
   orderSignatureFields
 } from "../../utils/signatureFields";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 export type FciSignatureFieldsScreenNavigationParams = Readonly<{
-  currentDoc: number;
   documentId: DocumentDetailView["id"];
+  currentDoc: number;
 }>;
 
 const FciSignatureFieldsScreen = () => {
@@ -188,6 +187,7 @@ const FciSignatureFieldsScreen = () => {
       <>
         <VSpacer size={12} />
         <ListItemHeader
+          label={clauseLabel}
           endElement={
             isUnfairClause
               ? {
@@ -200,7 +200,6 @@ const FciSignatureFieldsScreen = () => {
                 }
               : undefined
           }
-          label={clauseLabel}
         />
         {isUnfairClause && fciSignaturefieldInfo}
       </>
@@ -209,23 +208,26 @@ const FciSignatureFieldsScreen = () => {
 
   const renderSignatureFields = () => (
     <SectionList
+      stickySectionHeadersEnabled={false}
       contentContainerStyle={{
         paddingHorizontal: IOVisualCostants.appMarginDefault
       }}
-      ItemSeparatorComponent={() => <Divider />}
-      keyExtractor={(item, index) => `${item.clause.title}${index}`}
       ListHeaderComponent={() => (
         <>
           <H2>{I18n.t("features.fci.signatureFields.title")}</H2>
           <VSpacer size={32} />
         </>
       )}
+      sections={getSectionListData(
+        orderSignatureFields(signatureFieldsSelector)
+      )}
+      keyExtractor={(item, index) => `${item.clause.title}${index}`}
+      testID={"FciSignatureFieldsSectionListTestID"}
+      ItemSeparatorComponent={() => <Divider />}
       renderItem={({ item }) => (
         <SignatureFieldItem
-          disabled={item.clause.type === ClausesTypeEnum.REQUIRED}
-          onChange={v => onChange(v, item)}
-          onPressDetail={() => onPressDetail(item)}
           title={item.clause.title}
+          disabled={item.clause.type === ClausesTypeEnum.REQUIRED}
           value={pipe(
             documentsSignaturesSelector,
             RA.findFirst(doc => doc.document_id === docId),
@@ -234,14 +236,11 @@ const FciSignatureFieldsScreen = () => {
             O.map(RA.filter(f => isEqual(f, item))),
             O.fold(constFalse, RA.isNonEmpty)
           )}
+          onChange={v => onChange(v, item)}
+          onPressDetail={() => onPressDetail(item)}
         />
       )}
       renderSectionHeader={renderSectionHeader}
-      sections={getSectionListData(
-        orderSignatureFields(signatureFieldsSelector)
-      )}
-      stickySectionHeadersEnabled={false}
-      testID={"FciSignatureFieldsSectionListTestID"}
     />
   );
 
@@ -284,11 +283,11 @@ const FciSignatureFieldsScreen = () => {
   if (isError) {
     return (
       <SignatureStatusComponent
-        onPress={() => dispatch(fciEndRequest())}
-        pictogram={"umbrella"}
-        subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
-        testID={"FciGenericErrorTestID"}
         title={I18n.t("features.fci.errors.generic.default.title")}
+        subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
+        pictogram={"umbrella"}
+        onPress={() => dispatch(fciEndRequest())}
+        testID={"FciGenericErrorTestID"}
       />
     );
   }
@@ -303,8 +302,8 @@ const FciSignatureFieldsScreen = () => {
     >
       {renderSignatureFields()}
       <FooterActions
-        actions={actions}
         onMeasure={handleFooterActionsMeasurements}
+        actions={actions}
       />
       {fciAbortSignature}
     </View>

@@ -1,5 +1,4 @@
 import { call, put, select } from "typed-redux-saga/macro";
-
 import NavigationService from "../../../navigation/NavigationService";
 import { navigateToMainNavigatorAction } from "../../../store/actions/navigation";
 import { resetMessageArchivingAction } from "../../messages/store/actions/archiving";
@@ -26,6 +25,29 @@ export function* checkAndUpdateNotificationPermissionsIfNeeded(
     skipAnalyticsTracking
   );
   return systemNotificationPermissions;
+}
+
+export function* updateNotificationPermissionsIfNeeded(
+  systemNotificationPermissions: boolean,
+  skipAnalyticsTracking: boolean = false
+) {
+  // Retrieve the in-memory redux value of the
+  // notification receival permission
+  const storedNotificationPermissions = yield* select(
+    areNotificationPermissionsEnabledSelector
+  );
+  // If it is different, compared to the input one
+  if (systemNotificationPermissions !== storedNotificationPermissions) {
+    // Track the new status if allowed
+    if (!skipAnalyticsTracking) {
+      yield* call(
+        trackNotificationPermissionsStatus,
+        systemNotificationPermissions
+      );
+    }
+    // Update the in-memory redux value
+    yield* put(updateSystemNotificationsEnabled(systemNotificationPermissions));
+  }
 }
 
 export function* handlePushNotificationIfNeeded(
@@ -65,27 +87,4 @@ export function* handlePushNotificationIfNeeded(
     return true;
   }
   return false;
-}
-
-export function* updateNotificationPermissionsIfNeeded(
-  systemNotificationPermissions: boolean,
-  skipAnalyticsTracking: boolean = false
-) {
-  // Retrieve the in-memory redux value of the
-  // notification receival permission
-  const storedNotificationPermissions = yield* select(
-    areNotificationPermissionsEnabledSelector
-  );
-  // If it is different, compared to the input one
-  if (systemNotificationPermissions !== storedNotificationPermissions) {
-    // Track the new status if allowed
-    if (!skipAnalyticsTracking) {
-      yield* call(
-        trackNotificationPermissionsStatus,
-        systemNotificationPermissions
-      );
-    }
-    // Update the in-memory redux value
-    yield* put(updateSystemNotificationsEnabled(systemNotificationPermissions));
-  }
 }

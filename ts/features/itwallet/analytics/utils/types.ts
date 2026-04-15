@@ -2,9 +2,9 @@ import { ItwCredentialStatus } from "../../common/utils/itwTypesUtils";
 import { IdentificationContext } from "../../machine/eid/context";
 
 export type KoState = {
+  reason: unknown;
   cta_category: "custom_1" | "custom_2";
   cta_id: string;
-  reason: unknown;
 };
 
 export type MixPanelCredentialVersion = "V2" | "V3";
@@ -45,9 +45,9 @@ const mixPanelCredentials = [
 
 export type MixPanelCredential = (typeof mixPanelCredentials)[number];
 
-export type NewCredential = MixPanelCredential | OtherMixPanelCredential;
+type OtherMixPanelCredential = "welfare" | "payment_method" | "CGN";
 
-type OtherMixPanelCredential = "CGN" | "payment_method" | "welfare";
+export type NewCredential = MixPanelCredential | OtherMixPanelCredential;
 
 /**
  * This map is used to map the credential type to the MixPanel credential
@@ -55,7 +55,7 @@ type OtherMixPanelCredential = "CGN" | "payment_method" | "welfare";
  */
 export const CREDENTIALS_MAP: Record<
   string,
-  MixPanelCredential | Record<MixPanelCredentialVersion, MixPanelCredential>
+  Record<MixPanelCredentialVersion, MixPanelCredential> | MixPanelCredential
 > = {
   PersonIdentificationData: { V2: "ITW_ID_V2", V3: "ITW_PID" },
   mDL: { V2: "ITW_PG_V2", V3: "ITW_PG_V3" },
@@ -74,37 +74,37 @@ export type CredentialStatusAssertionFailure = {
   reason?: unknown;
 };
 
-export type ItwCredentialMixpanelStatus =
-  | "expired"
-  | "expiring"
-  | "expiring_verification"
-  | "not_available"
-  | "not_valid"
-  | "unknown"
-  | "valid"
-  | "verification_expired";
-
 export type ItwIdMethod = IdentificationContext["mode"];
+
+export type TrackItwBannerProperties = {
+  banner_id: string;
+  banner_page: string;
+  banner_landing: string;
+  banner_campaign?: string;
+};
+
+export type TrackITWalletIDMethodSelected = {
+  ITW_ID_method: ItwIdMethod;
+  itw_flow: ItwFlow;
+};
+
+export type ItwCredentialMixpanelStatus =
+  | "not_available"
+  | "valid"
+  | "not_valid"
+  | "expiring"
+  | "expired"
+  | "expiring_verification"
+  | "verification_expired"
+  | "unknown";
+
+export type ItwStatus = "not_active" | "L2" | "L3";
 
 // Assuming that the eID status is the same as the PID status
 export type ItwPIDStatus = Extract<
   ItwCredentialMixpanelStatus,
-  "expired" | "expiring" | "not_available" | "valid"
+  "not_available" | "valid" | "expiring" | "expired"
 >;
-
-export type ItwStatus = "L2" | "L3" | "not_active";
-
-export type TrackITWalletIDMethodSelected = {
-  itw_flow: ItwFlow;
-  ITW_ID_method: ItwIdMethod;
-};
-
-export type TrackItwBannerProperties = {
-  banner_campaign?: string;
-  banner_id: string;
-  banner_landing: string;
-  banner_page: string;
-};
 
 /**
  * This map is used to map the credentials status to the MixPanel credential status (not for eID)
@@ -129,51 +129,48 @@ export const CREDENTIAL_STATUS_MAP: Record<
   unknown: "unknown"
 };
 
+export type ItwWalletDataShare = {
+  credential: MixPanelCredential;
+  phase?:
+    | "initial_request"
+    | "request_in_progress"
+    | "old_message_request"
+    | "async_continuation";
+};
+
 export type ItwCopyListItem = {
   credential: MixPanelCredential;
   item_copied: string;
 };
-
-export type ItwCredentialDetails = Partial<
-  Record<MixPanelCredential, ItwCredentialMixpanelStatus>
->;
 
 export type ItwCredentialInfoDetails = {
   credential: MixPanelCredential;
   credential_screen_type: "detail" | "preview";
 };
 
-export type ItwDismissalAction = {
-  itw_flow: ItwFlow;
+// TODO: Add reissuing_PID when the L3 PID reissuance flow is ready
+export type ItwFlow = "L2" | "L3" | "reissuing_eID" | "not_available";
+
+export type ItwScreenFlowContext = {
   screen_name: string;
+  itw_flow: ItwFlow;
+};
+
+export type ItwDismissalAction = {
+  screen_name: string;
+  itw_flow: ItwFlow;
   user_action: string;
 };
 
-// TODO: Add reissuing_PID when the L3 PID reissuance flow is ready
-export type ItwFlow = "L2" | "L3" | "not_available" | "reissuing_eID";
-
-export type ItwScreenFlowContext = {
-  itw_flow: ItwFlow;
-  screen_name: string;
-};
-
-export type ItwWalletDataShare = {
-  credential: MixPanelCredential;
-  phase?:
-    | "async_continuation"
-    | "initial_request"
-    | "old_message_request"
-    | "request_in_progress";
-};
-
-export type TrackItwDeactivation = {
-  credential: MixPanelCredential;
-  screen_name: string;
-};
+type QualtricsSurveyId = "confirm_eid_flow_success" | "confirm_eid_flow_exit";
 
 export type TrackQualtricsSurvey = {
   survey_id: QualtricsSurveyId;
   survey_page: string;
+};
+
+export type ItwCredentialDetails = {
+  [K in MixPanelCredential]?: ItwCredentialMixpanelStatus;
 };
 
 export type TrackSaveCredentialSuccess = {
@@ -182,4 +179,7 @@ export type TrackSaveCredentialSuccess = {
   ITW_ID_method?: ItwIdMethod;
 };
 
-type QualtricsSurveyId = "confirm_eid_flow_exit" | "confirm_eid_flow_success";
+export type TrackItwDeactivation = {
+  credential: MixPanelCredential;
+  screen_name: string;
+};

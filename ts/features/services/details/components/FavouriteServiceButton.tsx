@@ -1,16 +1,15 @@
-import { ListItemAction, useIOToast } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { ComponentProps, memo } from "react";
-
-import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
+import I18n from "i18next";
+import { ListItemAction, useIOToast } from "@pagopa/io-app-design-system";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import * as analytics from "../../common/analytics";
-import { isFavouriteServicesEnabledSelector } from "../../common/store/selectors/remoteConfig";
+import { isFavouriteServiceSelector } from "../../favouriteServices/store/selectors";
 import {
   addFavouriteServiceRequest,
   removeFavouriteService
 } from "../../favouriteServices/store/actions";
-import { isFavouriteServiceSelector } from "../../favouriteServices/store/selectors";
+import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
+import { isFavouriteServicesEnabledSelector } from "../../common/store/selectors/remoteConfig";
+import * as analytics from "../../common/analytics";
 
 export type FavouriteServiceButtonProps = {
   service: ServiceDetails;

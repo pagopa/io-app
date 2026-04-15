@@ -1,6 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { testSaga } from "redux-saga-test-plan";
-
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
 import { loadServiceDetail } from "../../../details/store/actions/details";

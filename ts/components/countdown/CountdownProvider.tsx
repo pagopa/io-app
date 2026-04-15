@@ -1,11 +1,11 @@
-import { createContext, ReactNode, useContext, useRef, useState } from "react";
+import { createContext, useContext, useState, ReactNode, useRef } from "react";
 import BackgroundTimer from "react-native-background-timer";
 
 type CountdownContextType = {
-  isRunning?: () => boolean;
+  timerCount: number;
   resetTimer?: () => void;
   startTimer?: () => void;
-  timerCount: number;
+  isRunning?: () => boolean;
 };
 
 const CountdownContext = createContext<CountdownContextType>({ timerCount: 0 });
@@ -13,8 +13,8 @@ const CountdownContext = createContext<CountdownContextType>({ timerCount: 0 });
 // Props type for the provider component
 interface CountdownProviderProps {
   children: ReactNode;
-  intervalDuration: number;
   timerTiming: number;
+  intervalDuration: number;
 }
 
 export const CountdownProvider = (props: CountdownProviderProps) => {

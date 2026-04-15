@@ -1,9 +1,9 @@
 import { Body, H6, VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import I18n from "i18next";
+
 import { ComponentProps, ReactElement, useCallback } from "react";
 import { View } from "react-native";
-
+import I18n from "i18next";
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -15,9 +15,9 @@ import {
 import { idPayEnabledInitiativesFromInstrumentSelector } from "../../../idpay/wallet/store/reducers";
 import { PaymentsMethodDetailsRoutes } from "../navigation/routes";
 
-type Props = Pick<ComponentProps<typeof View>, "style"> & {
+type Props = {
   paymentMethod: WalletInfo;
-};
+} & Pick<ComponentProps<typeof View>, "style">;
 
 /**
  * This component enlists the different initiatives active on the payment methods
@@ -26,7 +26,7 @@ type Props = Pick<ComponentProps<typeof View>, "style"> & {
  */
 const WalletDetailsPaymentMethodInitiatives = (
   props: Props
-): null | ReactElement => {
+): ReactElement | null => {
   const navigation = useIONavigation();
   const idWalletString = props.paymentMethod.walletId;
 
@@ -61,7 +61,7 @@ const WalletDetailsPaymentMethodInitiatives = (
     });
 
   return initiativesList.length > 0 ? (
-    <View style={props.style} testID="idPayInitiativesList">
+    <View testID="idPayInitiativesList" style={props.style}>
       <View
         style={{
           flexDirection: "row",
@@ -72,8 +72,8 @@ const WalletDetailsPaymentMethodInitiatives = (
         <H6 color={"grey-700"}>{I18n.t("wallet.capability.title")}</H6>
         <Body
           asLink
-          onPress={navigateToPairableInitiativesList}
           weight="Semibold"
+          onPress={navigateToPairableInitiativesList}
         >
           {I18n.t("idpay.wallet.card.showAll")}
         </Body>

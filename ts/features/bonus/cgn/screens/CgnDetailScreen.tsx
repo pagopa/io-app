@@ -11,10 +11,10 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
+
 import I18n from "i18next";
 import { ReactElement } from "react";
 import { connect } from "react-redux";
-
 import { Card } from "../../../../../definitions/cgn/Card";
 import {
   CardActivated,
@@ -75,8 +75,8 @@ import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
 import { EYCA_WEBSITE_DISCOUNTS_PAGE_URL } from "../utils/constants";
 import { canEycaCardBeShown } from "../utils/eyca";
 
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
+type Props = ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>;
 
 function getLogoUris(card: Card | undefined, eycaDetails: EycaDetailsState) {
   const canCgnLogoBeShown = CardActivated.is(card);
@@ -148,24 +148,24 @@ const CgnDetailScreen = (props: Props): ReactElement => {
     // subText is a blank space to avoid default value when it is undefined
     return (
       <OperationResultScreenContent
+        pictogram="umbrella"
+        title={I18n.t("wallet.methodDetails.error.title")}
+        isHeaderVisible
+        subtitle={I18n.t("wallet.methodDetails.error.subtitle")}
         action={{
           label: I18n.t("global.buttons.close"),
           onPress: navigation.goBack
         }}
-        isHeaderVisible
-        pictogram="umbrella"
         secondaryAction={{
           label: I18n.t("global.buttons.retry"),
           onPress: loadCGN
         }}
-        subtitle={I18n.t("wallet.methodDetails.error.subtitle")}
-        title={I18n.t("wallet.methodDetails.error.title")}
       />
     );
   }
 
   if (props.isCgnInfoLoading || isLoading(props.unsubscriptionStatus)) {
-    return <BonusCardScreenComponent cardColors={cgnCardColors} isLoading />;
+    return <BonusCardScreenComponent isLoading cardColors={cgnCardColors} />;
   }
 
   const showDiscoverCta =
@@ -217,26 +217,33 @@ const CgnDetailScreen = (props: Props): ReactElement => {
   if (!props.cgnDetails) {
     return (
       <OperationResultScreenContent
+        pictogram="cardFavourite"
+        isHeaderVisible
+        title={I18n.t("bonus.cgn.detail.empty.title")}
+        subtitle={I18n.t("bonus.cgn.detail.empty.subtitle")}
         action={{
           label: I18n.t("bonus.cgn.detail.empty.activateCta"),
           onPress: startCgnActivation
         }}
-        isHeaderVisible
-        pictogram="cardFavourite"
         secondaryAction={{
           label: I18n.t("global.buttons.close"),
           onPress: navigation.goBack
         }}
-        subtitle={I18n.t("bonus.cgn.detail.empty.subtitle")}
-        title={I18n.t("bonus.cgn.detail.empty.title")}
       />
     );
   }
 
   return (
     <BonusCardScreenComponent
-      actions={footerActions}
+      logoUris={logoUris}
+      name={I18n.t("bonus.cgn.name")}
+      title={I18n.t("bonus.cgn.name")}
+      organizationName={I18n.t("bonus.cgn.departmentName")}
       cardBackground={<CgnAnimatedBackground />}
+      actions={footerActions}
+      status={
+        props.cgnDetails ? <CgnCardStatus card={props.cgnDetails} /> : undefined
+      }
       cardColors={cgnCardColors}
       cardFooter={
         <H4
@@ -254,31 +261,24 @@ const CgnDetailScreen = (props: Props): ReactElement => {
             : ""}
         </H4>
       }
-      logoUris={logoUris}
-      name={I18n.t("bonus.cgn.name")}
-      organizationName={I18n.t("bonus.cgn.departmentName")}
-      status={
-        props.cgnDetails ? <CgnCardStatus card={props.cgnDetails} /> : undefined
-      }
-      title={I18n.t("bonus.cgn.name")}
     >
       <VSpacer size={16} />
       <ContentWrapper style={{ flex: 1 }}>
         <VStack space={16}>
           {CardRevoked.is(props.cgnDetails) && (
             <Alert
+              variant="error"
               content={I18n.t("bonus.cgn.detail.information.revoked", {
                 reason: props.cgnDetails.revocation_reason
               })}
-              variant="error"
             />
           )}
           {CardExpired.is(props.cgnDetails) && (
             <Alert
+              variant="error"
               content={I18n.t("bonus.cgn.detail.information.expired", {
                 date: formatDateAsShortFormat(props.cgnDetails.expiration_date)
               })}
-              variant="error"
             />
           )}
           {/* Ownership block rendering owner's fiscal code */}

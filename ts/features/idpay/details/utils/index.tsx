@@ -4,7 +4,6 @@ import {
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-
 import {
   InitiativeDTO,
   VoucherStatusEnum
@@ -23,9 +22,9 @@ export function IdPayCardStatus({ initiative }: InitiativeProps) {
       return (
         initiative.voucherEndDate && (
           <LabelMini
+            weight="Regular"
             color={isDark ? "white" : "grey-650"}
             testID="idpay-card-status-active"
-            weight="Regular"
           >
             {I18n.t("idpay.wallet.card.validThrough", {
               endDate: format(initiative.voucherEndDate, "DD/MM/YY")
@@ -33,27 +32,27 @@ export function IdPayCardStatus({ initiative }: InitiativeProps) {
           </LabelMini>
         )
       );
-    case VoucherStatusEnum.EXPIRED:
-      return (
-        initiative.voucherEndDate && (
-          <Tag
-            testID="idpay-card-status-expired"
-            text={I18n.t("idpay.wallet.card.ended", {
-              endDate: format(initiative.voucherEndDate, "DD/MM/YY")
-            })}
-            variant="error"
-          />
-        )
-      );
     case VoucherStatusEnum.EXPIRING:
       return (
         initiative.voucherEndDate && (
           <Tag
             testID="idpay-card-status-expiring"
+            variant="warning"
             text={I18n.t("bonusCard.expiring", {
               endDate: format(initiative.voucherEndDate, "DD/MM/YY")
             })}
-            variant="warning"
+          />
+        )
+      );
+    case VoucherStatusEnum.EXPIRED:
+      return (
+        initiative.voucherEndDate && (
+          <Tag
+            testID="idpay-card-status-expired"
+            variant="error"
+            text={I18n.t("idpay.wallet.card.ended", {
+              endDate: format(initiative.voucherEndDate, "DD/MM/YY")
+            })}
           />
         )
       );
@@ -61,8 +60,8 @@ export function IdPayCardStatus({ initiative }: InitiativeProps) {
       return (
         <Tag
           testID="idpay-card-status-used"
-          text={I18n.t("bonusCard.used")}
           variant="success"
+          text={I18n.t("bonusCard.used")}
         />
       );
     default:

@@ -1,1 +1,1 @@
-export type ReadStatus = "error" | "idle" | "reading" | "success";
+export type ReadStatus = "idle" | "reading" | "error" | "success";

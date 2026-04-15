@@ -2,7 +2,6 @@ import { useIsFocused } from "@react-navigation/native";
 import { useCallback, useEffect, useState } from "react";
 import { AppState, Linking } from "react-native";
 import { Camera, CameraPermissionStatus } from "react-native-vision-camera";
-
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { isAndroid } from "../../../utils/platform";
 

@@ -1,14 +1,13 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { act, fireEvent, render } from "@testing-library/react-native";
 import { EmitterSubscription, Linking } from "react-native";
-
-import { SpidLevelEnum } from "../../../../../../../definitions/session_manager/SpidLevel";
-import { withStore } from "../../../../../../utils/jest/withStore";
-import * as loginHooks from "../../../../../lollipop/hooks/useLollipopLoginSource";
-import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
-import { loginFailure, loginSuccess } from "../../../../common/store/actions";
-import * as authSelectors from "../../../../common/store/selectors";
 import CieIdLoginWebView from "../CieIdLoginWebView";
+import * as loginHooks from "../../../../../lollipop/hooks/useLollipopLoginSource";
+import * as authSelectors from "../../../../common/store/selectors";
+import { SpidLevelEnum } from "../../../../../../../definitions/session_manager/SpidLevel";
+import { loginFailure, loginSuccess } from "../../../../common/store/actions";
+import { withStore } from "../../../../../../utils/jest/withStore";
+import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 
 const API_PREFIX_URL = "http://example.com";
 const SPID_LEVEL = "SpidL2";

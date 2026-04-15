@@ -1,8 +1,8 @@
+import customVariables from "../../../../theme/variables";
 import {
   Markdown,
   MarkdownProps
 } from "../../../../components/ui/Markdown/Markdown";
-import customVariables from "../../../../theme/variables";
 
 type Props = Omit<MarkdownProps, "cssStyle">;
 

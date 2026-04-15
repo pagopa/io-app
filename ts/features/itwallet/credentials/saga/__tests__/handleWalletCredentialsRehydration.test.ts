@@ -1,19 +1,17 @@
-import * as O from "fp-ts/lib/Option";
 import { DeepPartial } from "redux";
+import * as O from "fp-ts/lib/Option";
 import { expectSaga } from "redux-saga-test-plan";
-
 import { GlobalState } from "../../../../../store/reducers/types";
-import { walletAddCards } from "../../../../wallet/store/actions/cards";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { handleWalletCredentialsRehydration } from "../handleWalletCredentialsRehydration";
+import { walletAddCards } from "../../../../wallet/store/actions/cards";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 
 describe("ITW handleWalletCredentialsRehydration saga", () => {
   const expirationClaim = { value: "2100-09-04", name: "exp" };
   const educationClaim = { value: [{}, {}], name: "education claims" };
   const jwtExpiration = "2100-09-04T00:00:00.000Z";
-  const mockedEid: StoredCredential = {
-    credential: "",
+  const mockedEid: CredentialMetadata = {
     credentialType: CredentialType.PID,
     credentialId: "dc_sd_jwt_PersonIdentificationData",
     parsedCredential: {
@@ -21,15 +19,14 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
     },
     format: "dc+sd-jwt",
     keyTag: "1",
-    issuerConf: {} as StoredCredential["issuerConf"],
+    issuerConf: {} as CredentialMetadata["issuerConf"],
     jwt: {
       issuedAt: "2024-09-30T07:32:49.000Z",
       expiration: jwtExpiration
     },
     spec_version: "1.0.0"
   };
-  const mockedMdl: StoredCredential = {
-    credential: "",
+  const mockedMdl: CredentialMetadata = {
     credentialType: CredentialType.DRIVING_LICENSE,
     credentialId: "dc_sd_jwt_mDL",
     parsedCredential: {
@@ -37,15 +34,14 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
     },
     format: "dc+sd-jwt",
     keyTag: "2",
-    issuerConf: {} as StoredCredential["issuerConf"],
+    issuerConf: {} as CredentialMetadata["issuerConf"],
     jwt: {
       issuedAt: "2024-09-30T07:32:49.000Z",
       expiration: jwtExpiration
     },
     spec_version: "1.0.0"
   };
-  const mockedDc: StoredCredential = {
-    credential: "",
+  const mockedDc: CredentialMetadata = {
     credentialType: CredentialType.EUROPEAN_DISABILITY_CARD,
     credentialId: "dc_sd_jwt_EuropeanDisabilityCard",
     parsedCredential: {
@@ -53,7 +49,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
     },
     format: "dc+sd-jwt",
     keyTag: "3",
-    issuerConf: {} as StoredCredential["issuerConf"],
+    issuerConf: {} as CredentialMetadata["issuerConf"],
     jwt: {
       issuedAt: "2024-09-30T07:32:49.000Z",
       expiration: jwtExpiration
@@ -61,8 +57,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
     spec_version: "1.0.0"
   };
 
-  const mockedEd: StoredCredential = {
-    credential: "",
+  const mockedEd: CredentialMetadata = {
     credentialType: CredentialType.EDUCATION_DEGREE,
     credentialId: "dc_sd_jwt_education_degree",
     parsedCredential: {
@@ -71,7 +66,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
     },
     format: "dc+sd-jwt",
     keyTag: "4",
-    issuerConf: {} as StoredCredential["issuerConf"],
+    issuerConf: {} as CredentialMetadata["issuerConf"],
     jwt: {
       issuedAt: "2024-09-30T07:32:49.000Z",
       expiration: jwtExpiration

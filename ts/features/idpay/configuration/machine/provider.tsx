@@ -1,9 +1,9 @@
 import { createActorContext } from "@xstate/react";
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { ReactNode } from "react";
+import { pipe } from "fp-ts/lib/function";
 
+import { ReactNode } from "react";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import { PaymentManagerClient } from "../../../../api/pagopa";
 import {
@@ -19,16 +19,16 @@ import {
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
-  isPagoPATestEnabledSelector,
-  preferredLanguageSelector
-} from "../../../../store/reducers/persistedPreferences";
-import { defaultRetryingFetch } from "../../../../utils/fetch";
-import { fromLocaleToPreferredLanguage } from "../../../../utils/locale";
-import { SessionManager } from "../../../../utils/SessionManager";
-import {
   bpdTokenSelector,
   walletTokenSelector
 } from "../../../authentication/common/store/selectors";
+import {
+  isPagoPATestEnabledSelector,
+  preferredLanguageSelector
+} from "../../../../store/reducers/persistedPreferences";
+import { SessionManager } from "../../../../utils/SessionManager";
+import { defaultRetryingFetch } from "../../../../utils/fetch";
+import { fromLocaleToPreferredLanguage } from "../../../../utils/locale";
 import { createIDPayClient } from "../../common/api/client";
 import { createActionsImplementation } from "./actions";
 import { createActorsImplementation } from "./actors";

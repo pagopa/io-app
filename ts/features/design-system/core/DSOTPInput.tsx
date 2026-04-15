@@ -4,20 +4,20 @@ import {
   H4,
   H5,
   HStack,
-  IconButton,
   IOButton,
   IOVisualCostants,
+  IconButton,
   OTPInput,
   RadioGroup,
   RadioItem,
-  useIOTheme,
-  VStack
+  VStack,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import { useHeaderHeight } from "@react-navigation/elements";
-import { useFocusEffect } from "@react-navigation/native";
+
 import { RefObject, useCallback, useMemo, useRef, useState } from "react";
 import { KeyboardAvoidingView, Platform, ScrollView, View } from "react-native";
-
+import { useFocusEffect } from "@react-navigation/native";
 import { useScreenEndMargin } from "../../../hooks/useScreenEndMargin";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 
@@ -26,15 +26,15 @@ const OTP_COMPARE_8 = "12345678";
 const OTP_LENGTH_6 = 6;
 const OTP_COMPARE_6 = "123456";
 
-type OtpID = typeof OTP_LENGTH_6 | typeof OTP_LENGTH_8;
-
 type WrapperProps = {
-  autoFocus?: boolean;
-  otpCompare: string;
-  otpLength: number;
   secret?: boolean;
   validation?: boolean;
+  autoFocus?: boolean;
+  otpLength: number;
+  otpCompare: string;
 };
+
+type OtpID = typeof OTP_LENGTH_6 | typeof OTP_LENGTH_8;
 
 const radioButtons: ReadonlyArray<RadioItem<OtpID>> = [
   {
@@ -87,19 +87,19 @@ const OTPWrapper = ({
     () => (
       <VStack space={16}>
         <OTPInput
-          accessibilityLabel={"OTP Input"}
-          autoFocus={autoFocus}
-          errorMessage={"Wrong OTP"}
-          length={otpLength}
-          onValidate={onValidate}
-          onValueChange={onValueChange}
-          secret={secret}
           value={value}
+          accessibilityLabel={"OTP Input"}
+          onValueChange={onValueChange}
+          length={otpLength}
+          secret={secret}
+          onValidate={onValidate}
+          errorMessage={"Wrong OTP"}
+          autoFocus={autoFocus}
         />
         <IOButton
-          label={"Pulisci valore"}
-          onPress={() => setValue("")}
           variant="solid"
+          onPress={() => setValue("")}
+          label={"Pulisci valore"}
         />
       </VStack>
     ),
@@ -108,8 +108,8 @@ const OTPWrapper = ({
 };
 
 const scrollVerticallyToView = (
-  scrollViewRef: RefObject<null | ScrollView>,
-  targetViewRef: RefObject<null | View>
+  scrollViewRef: RefObject<ScrollView | null>,
+  targetViewRef: RefObject<View | null>
 ) => {
   if (targetViewRef.current && scrollViewRef.current) {
     targetViewRef.current.measureLayout(
@@ -135,10 +135,10 @@ export const DSOTPInput = () => {
     title: "OTP settings",
     component: (
       <RadioGroup<OtpID>
-        items={radioButtons}
-        onPress={setSelectedItem}
-        selectedItem={selectedItem}
         type="radioListItem"
+        items={radioButtons}
+        selectedItem={selectedItem}
+        onPress={setSelectedItem}
       />
     )
   });
@@ -190,10 +190,10 @@ export const DSOTPInput = () => {
                 OTP Input with length of {otpConfig.otpLength}
               </H4>
               <IconButton
-                accessibilityLabel="open settings"
                 color="neutral"
-                icon="coggle"
+                accessibilityLabel="open settings"
                 onPress={present}
+                icon="coggle"
               />
             </HStack>
 
@@ -220,9 +220,7 @@ export const DSOTPInput = () => {
               <VStack space={sectionTitleMargin}>
                 <H5 color={theme["textHeading-default"]}>Autofocus</H5>
                 <IOButton
-                  label={`${
-                    showAutofocusableOTP ? "Hide" : "Show"
-                  } Autofocusable OTP`}
+                  variant={showAutofocusableOTP ? "solid" : "outline"}
                   onPress={() => {
                     setShowAutofocusableOTP(!showAutofocusableOTP);
                     setTimeout(() => {
@@ -232,7 +230,9 @@ export const DSOTPInput = () => {
                       );
                     }, 100);
                   }}
-                  variant={showAutofocusableOTP ? "solid" : "outline"}
+                  label={`${
+                    showAutofocusableOTP ? "Hide" : "Show"
+                  } Autofocusable OTP`}
                 />
                 {showAutofocusableOTP && (
                   <View ref={autofocusableOTPViewRef}>

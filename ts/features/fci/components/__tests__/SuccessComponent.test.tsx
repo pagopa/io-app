@@ -1,17 +1,16 @@
-import { Provider } from "react-redux";
 import { createStore, Store } from "redux";
+import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-
-import { SignatureRequestDetailView } from "../../../../../definitions/fci/SignatureRequestDetailView";
-import { SignatureRequestStatusEnum } from "../../../../../definitions/fci/SignatureRequestStatus";
-import { applicationChangeState } from "../../../../store/actions/application";
-import { appReducer } from "../../../../store/reducers";
-import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import SuccessComponent from "../SuccessComponent";
+import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
+import { SignatureRequestDetailView } from "../../../../../definitions/fci/SignatureRequestDetailView";
+import { GlobalState } from "../../../../store/reducers/types";
+import { appReducer } from "../../../../store/reducers";
+import { applicationChangeState } from "../../../../store/actions/application";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { fciStartRequest } from "../../store/actions";
-import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
-import SuccessComponent from "../SuccessComponent";
+import { SignatureRequestStatusEnum } from "../../../../../definitions/fci/SignatureRequestStatus";
 
 type Props = {
   signatureRequest: SignatureRequestDetailView;

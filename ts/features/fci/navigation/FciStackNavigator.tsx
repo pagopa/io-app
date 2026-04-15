@@ -1,18 +1,17 @@
 import { PathConfigMap } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-
-import { AppParamsList } from "../../../navigation/params/AppParamsList";
 import { isGestureEnabled } from "../../../utils/navigation";
-import FciRouterScreen from "../screens/FciRouterScreen";
-import FciDataSharingScreen from "../screens/valid/FciDataSharingScreen";
-import { FciDocumentPreviewScreen } from "../screens/valid/FciDocumentPreviewScreen";
 import FciDocumentsScreen from "../screens/valid/FciDocumentsScreen";
-import FciQtspClausesScreen from "../screens/valid/FciQtspClausesScreen";
+import FciRouterScreen from "../screens/FciRouterScreen";
 import FciSignatureFieldsScreen from "../screens/valid/FciSignatureFieldsScreen";
-import FciSignatureRequestsScreen from "../screens/valid/FciSignatureRequestsScreen";
+import FciDataSharingScreen from "../screens/valid/FciDataSharingScreen";
+import FciQtspClausesScreen from "../screens/valid/FciQtspClausesScreen";
 import FciThankyouScreen from "../screens/valid/FciThankyouScreen";
-import { FciParamsList } from "./params";
+import { FciDocumentPreviewScreen } from "../screens/valid/FciDocumentPreviewScreen";
+import FciSignatureRequestsScreen from "../screens/valid/FciSignatureRequestsScreen";
+import { AppParamsList } from "../../../navigation/params/AppParamsList";
 import { FCI_ROUTES } from "./routes";
+import { FciParamsList } from "./params";
 
 const Stack = createStackNavigator<FciParamsList>();
 
@@ -32,36 +31,36 @@ export const FciStackNavigator = () => (
     screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
   >
     <Stack.Screen
-      component={FciRouterScreen}
       name={FCI_ROUTES.ROUTER}
+      component={FciRouterScreen}
       options={{
         headerShown: false
       }}
     />
-    <Stack.Screen component={FciDocumentsScreen} name={FCI_ROUTES.DOCUMENTS} />
+    <Stack.Screen name={FCI_ROUTES.DOCUMENTS} component={FciDocumentsScreen} />
     <Stack.Screen
-      component={FciSignatureFieldsScreen}
       name={FCI_ROUTES.SIGNATURE_FIELDS}
+      component={FciSignatureFieldsScreen}
     />
     <Stack.Screen
-      component={FciDataSharingScreen}
       name={FCI_ROUTES.USER_DATA_SHARE}
+      component={FciDataSharingScreen}
     />
-    <Stack.Screen component={FciQtspClausesScreen} name={FCI_ROUTES.QTSP_TOS} />
+    <Stack.Screen name={FCI_ROUTES.QTSP_TOS} component={FciQtspClausesScreen} />
     <Stack.Screen
-      component={FciThankyouScreen}
       name={FCI_ROUTES.TYP}
+      component={FciThankyouScreen}
       options={{
         headerShown: false
       }}
     />
     <Stack.Screen
-      component={FciDocumentPreviewScreen}
       name={FCI_ROUTES.DOC_PREVIEW}
+      component={FciDocumentPreviewScreen}
     />
     <Stack.Screen
-      component={FciSignatureRequestsScreen}
       name={FCI_ROUTES.SIGNATURE_REQUESTS}
+      component={FciSignatureRequestsScreen}
     />
   </Stack.Navigator>
 );

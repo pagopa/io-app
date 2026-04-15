@@ -1,9 +1,9 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
 
 export type UtmLinkParams = {
-  utmCampaign: string | undefined;
-  utmMedium: string;
   utmSource: string;
+  utmMedium: string;
+  utmCampaign: string | undefined;
 };
 
 export const utmLinkClearParams = createStandardAction(

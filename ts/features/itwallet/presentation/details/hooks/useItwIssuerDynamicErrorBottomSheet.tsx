@@ -1,14 +1,13 @@
 import { IOButton, VStack } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { View } from "react-native";
-
 import IOMarkdown from "../../../../../components/IOMarkdown";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import {
-  ItwCredentialStatus,
-  StoredCredential
+  CredentialMetadata,
+  ItwCredentialStatus
 } from "../../../common/utils/itwTypesUtils";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { shouldShowMdlUpdateDigitalCredential } from "../utils";
@@ -25,8 +24,8 @@ type IssuerDynamicErrorBottomSheetContentConfig = {
 };
 
 type UseItwIssuerDynamicErrorBottomSheetParams = {
-  credential: StoredCredential;
-  localizedMessage: { description: string; title: string };
+  credential: CredentialMetadata;
+  localizedMessage: { title: string; description: string };
   onTrackPressCta: () => void;
   status?: ItwCredentialStatus;
 };
@@ -42,7 +41,7 @@ type UseItwIssuerDynamicErrorBottomSheetParams = {
  * - any other mDL status falls back to the single remove action
  */
 export const getIssuerDynamicErrorBottomSheetContentConfig = (
-  credential: StoredCredential,
+  credential: CredentialMetadata,
   status?: ItwCredentialStatus
 ): IssuerDynamicErrorBottomSheetContentConfig => {
   const { credentialType } = credential;
@@ -115,22 +114,22 @@ export const useItwIssuerDynamicErrorBottomSheet = ({
         {contentConfig.actionMode === "updateAndRemove" && (
           <VStack space={16}>
             <IOButton
+              variant="solid"
               fullWidth
               label={I18n.t(
                 "features.itWallet.presentation.credentialDetails.actions.updateDigitalCredential"
               )}
               onPress={handleUpdateCredential}
-              variant="solid"
             />
             <View style={{ alignSelf: "center" }}>
               <IOButton
+                variant="link"
                 color="danger"
+                textAlign="center"
                 label={I18n.t(
                   "features.itWallet.presentation.credentialDetails.actions.removeFromWallet"
                 )}
                 onPress={confirmAndRemoveCredential}
-                textAlign="center"
-                variant="link"
               />
             </View>
           </VStack>
@@ -138,12 +137,12 @@ export const useItwIssuerDynamicErrorBottomSheet = ({
         {contentConfig.actionMode === "removeOnly" && (
           <View style={{ marginBottom: 16 }}>
             <IOButton
+              variant="solid"
               fullWidth
               label={I18n.t(
                 "features.itWallet.presentation.alerts.mdl.invalid.cta"
               )}
               onPress={confirmAndRemoveCredential}
-              variant="solid"
             />
           </View>
         )}

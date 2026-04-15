@@ -1,7 +1,6 @@
-import I18n from "i18next";
 import { FunctionComponent } from "react";
 import { connect } from "react-redux";
-
+import I18n from "i18next";
 import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
 import { Dispatch } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
@@ -31,13 +30,13 @@ const CgnInformationScreen: FunctionComponent<Props> = (props: Props) => {
     <>
       {props.bonus ? (
         <BonusInformationComponent
-          bonus={props.bonus}
-          contextualHelp={emptyContextualHelp}
           onBack={props.onBack}
-          onCancel={props.onCancel}
-          onConfirm={onConfirm}
           primaryCtaText={I18n.t("bonus.cgn.cta.activeBonus")}
           secondaryAction={{ type: "back", text: I18n.t("bonus.cgn.cta.back") }}
+          bonus={props.bonus}
+          onConfirm={onConfirm}
+          onCancel={props.onCancel}
+          contextualHelp={emptyContextualHelp}
         />
       ) : null}
     </>

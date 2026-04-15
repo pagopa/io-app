@@ -1,12 +1,11 @@
 import { IOToast } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent, render } from "@testing-library/react-native";
-import I18n from "i18next";
 import { voidType } from "io-ts";
 import { Alert } from "react-native";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-
+import I18n from "i18next";
 import { Range } from "../../../../../../definitions/pagopa/ecommerce/Range";
 import { PaymentMethodManagementTypeEnum } from "../../../../../../definitions/pagopa/walletv3/PaymentMethodManagementType";
 import { PaymentMethodStatusEnum } from "../../../../../../definitions/pagopa/walletv3/PaymentMethodStatus";

@@ -5,13 +5,13 @@ import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 export const ReceiptFadeInOutAnimationView = memo(
   ({ children }: { children: ReactNode }) => (
     <Animated.View
-      entering={FadeIn.duration(200)}
-      exiting={FadeOut.duration(200)}
       style={{
         flex: 1,
         // for swipe actions visual effect
         marginHorizontal: IOVisualCostants.appMarginDefault * -1
       }}
+      exiting={FadeOut.duration(200)}
+      entering={FadeIn.duration(200)}
     >
       {children}
     </Animated.View>

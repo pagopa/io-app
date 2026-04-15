@@ -1,23 +1,22 @@
-import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
-import { act, fireEvent } from "@testing-library/react-native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { act, fireEvent } from "@testing-library/react-native";
+import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
+import { PreloadedState, createStore } from "redux";
 import I18n from "i18next";
-import { createStore, PreloadedState } from "redux";
-
-import { EmailAddress } from "../../../../../../definitions/backend/EmailAddress";
-import { ServicesPreferencesModeEnum } from "../../../../../../definitions/backend/ServicesPreferencesMode";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
-import { profileLoadSuccess } from "../../../common/store/actions";
 import {
   profileEmailSelector,
   profileNameSurnameSelector
 } from "../../../common/store/selectors";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import ProfileDataScreen from "../ProfileDataScreen";
+import { EmailAddress } from "../../../../../../definitions/backend/EmailAddress";
+import { profileLoadSuccess } from "../../../common/store/actions";
+import { ServicesPreferencesModeEnum } from "../../../../../../definitions/backend/ServicesPreferencesMode";
+import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 
 const profileWithoutEmail = {
   is_inbox_enabled: true,

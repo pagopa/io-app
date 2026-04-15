@@ -1,7 +1,6 @@
 import { BodySmall, H3, VStack } from "@pagopa/io-app-design-system";
 import { PropsWithChildren } from "react";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
-
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useIOSelector } from "../../../../store/hooks";
 import { logosForService } from "../../../services/common/utils";
@@ -19,11 +18,11 @@ const styles = StyleSheet.create({
 });
 
 export type MessageDetailsHeaderProps = PropsWithChildren<{
-  canNavigateToServiceDetails?: boolean;
   createdAt: Date | undefined;
   messageId: string;
   serviceId: ServiceId;
   subject: string;
+  canNavigateToServiceDetails?: boolean;
   thirdPartySenderDenomination?: string;
 }>;
 
@@ -37,7 +36,7 @@ const MessageDetailsHeaderContent = ({
     </H3>
     {/* eslint-disable i18next/no-literal-string */}
     {createdAt && (
-      <BodySmall testID="date" weight="Regular">
+      <BodySmall weight="Regular" testID="date">
         {`${new Intl.DateTimeFormat("it", {
           day: "2-digit",
           month: "short",
@@ -70,13 +69,13 @@ export const MessageDetailsHeader = ({
       <MessageDetailsHeaderContent {...rest} />
       {service && (
         <OrganizationHeader
-          canNavigateToServiceDetails={canNavigateToServiceDetails}
-          logoUri={logosForService(service) as ImageSourcePropType}
           messageId={messageId}
+          logoUri={logosForService(service) as ImageSourcePropType}
           organizationName={service.organization.name}
           serviceId={serviceId}
           serviceName={service.name}
           thirdPartySenderDenomination={thirdPartySenderDenomination}
+          canNavigateToServiceDetails={canNavigateToServiceDetails}
         />
       )}
     </VStack>

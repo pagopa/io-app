@@ -1,10 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-
-import { Action } from "../../../../store/actions/types";
-import { GlobalState } from "../../../../store/reducers/types";
-import { clearCache } from "../../../settings/common/store/actions";
-import { UIMessage } from "../../types";
 import {
   loadMessageById,
   loadNextPageMessages,
@@ -13,13 +8,19 @@ import {
   upsertMessageStatusAttributes,
   UpsertMessageStatusAttributesPayload
 } from "../actions";
+import { clearCache } from "../../../settings/common/store/actions";
+import { Action } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
+import { UIMessage } from "../../types";
 
 // State
 
 /**
  * An object containing all the fetched messages keyed by id.
  */
-export type PaginatedById = Readonly<Record<string, pot.Pot<UIMessage, Error>>>;
+export type PaginatedById = Readonly<{
+  [key: string]: pot.Pot<UIMessage, Error>;
+}>;
 
 const INITIAL_STATE: PaginatedById = {};
 
@@ -33,18 +34,18 @@ export const reducer = (
   action: Action
 ): PaginatedById => {
   switch (action.type) {
-    case getType(clearCache):
-      return INITIAL_STATE;
-    case getType(loadMessageById.failure):
     case getType(loadMessageById.request):
     case getType(loadMessageById.success):
+    case getType(loadMessageById.failure):
       return reduceLoadMessageById(state, action);
+    case getType(reloadAllMessages.success):
     case getType(loadNextPageMessages.success):
     case getType(loadPreviousPageMessages.success):
-    case getType(reloadAllMessages.success):
       return reduceLoadMessages(state, action.payload.messages);
     case getType(upsertMessageStatusAttributes.success):
       return reduceUpsertMessageStatusAttributes(state, action.payload);
+    case getType(clearCache):
+      return INITIAL_STATE;
 
     default:
       return state;
@@ -56,14 +57,6 @@ const reduceLoadMessageById = (
   action: Action
 ): PaginatedById => {
   switch (action.type) {
-    case getType(loadMessageById.failure):
-      return {
-        ...state,
-        [action.payload.id]: pot.toError(
-          state[action.payload.id] ?? pot.none,
-          action.payload.error
-        )
-      };
     case getType(loadMessageById.request):
       return {
         ...state,
@@ -73,6 +66,14 @@ const reduceLoadMessageById = (
       return {
         ...state,
         [action.payload.id]: pot.some(action.payload)
+      };
+    case getType(loadMessageById.failure):
+      return {
+        ...state,
+        [action.payload.id]: pot.toError(
+          state[action.payload.id] ?? pot.none,
+          action.payload.error
+        )
       };
     default:
       return state;

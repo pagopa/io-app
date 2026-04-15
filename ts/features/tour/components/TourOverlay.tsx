@@ -44,7 +44,6 @@ import Animated, {
   withTiming
 } from "react-native-reanimated";
 import { scheduleOnRN } from "react-native-worklets";
-
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { trackTourGuideAction } from "../analytics";
 import {
@@ -121,7 +120,7 @@ export const TourOverlay = () => {
   const [tooltipReady, setTooltipReady] = useState(false);
 
   const [tooltipConfig, setTooltipConfig] = useState<
-    undefined | { description: string; title: string }
+    { title: string; description: string } | undefined
   >(undefined);
 
   const opacity = useSharedValue(0);
@@ -156,7 +155,7 @@ export const TourOverlay = () => {
       m: TourItemMeasurement,
       generation: number
     ): Promise<
-      | { didScroll: boolean; measurement: TourItemMeasurement; stale: false }
+      | { measurement: TourItemMeasurement; didScroll: boolean; stale: false }
       | { stale: true }
     > => {
       const { height: windowHeight } = Dimensions.get("window");
@@ -219,7 +218,7 @@ export const TourOverlay = () => {
   const applyCutout = useCallback(
     (
       padded: TourItemMeasurement,
-      config: undefined | { description: string; title: string },
+      config: { title: string; description: string } | undefined,
       cornerRadius: number,
       onCommit: () => void,
       didScroll: boolean
@@ -456,45 +455,45 @@ export const TourOverlay = () => {
 
   return (
     <Animated.View
-      pointerEvents={isActive ? "auto" : "none"}
       ref={overlayAnimatedRef}
       style={[styles.container, animatedContainerStyle]}
+      pointerEvents={isActive ? "auto" : "none"}
     >
-      <Canvas pointerEvents="none" style={styles.overlay}>
+      <Canvas style={styles.overlay} pointerEvents="none">
         <Group layer={<Paint />}>
           <Rect
-            color={OVERLAY_COLOR}
-            height={SCREEN_HEIGHT}
-            width={SCREEN_WIDTH}
             x={0}
             y={0}
+            width={SCREEN_WIDTH}
+            height={SCREEN_HEIGHT}
+            color={OVERLAY_COLOR}
           />
           <Group blendMode="dstOut" opacity={cutoutOpacity}>
             <RoundedRect
-              color="black"
-              height={cutoutH}
-              r={cutoutR}
-              width={cutoutW}
               x={cutoutX}
               y={cutoutY}
+              width={cutoutW}
+              height={cutoutH}
+              r={cutoutR}
+              color="black"
             />
           </Group>
         </Group>
       </Canvas>
       {tooltipReady && tooltipConfig && (
         <TourTooltip
-          cutoutH={cutoutH}
-          cutoutW={cutoutW}
           cutoutX={cutoutX}
           cutoutY={cutoutY}
-          description={tooltipConfig.description}
-          onBack={handleBack}
-          onNext={handleNext}
-          onSkip={handleSkip}
-          opacity={cutoutOpacity}
-          stepIndex={stepIndex}
+          cutoutW={cutoutW}
+          cutoutH={cutoutH}
           title={tooltipConfig.title}
+          description={tooltipConfig.description}
+          stepIndex={stepIndex}
           totalSteps={items.length}
+          opacity={cutoutOpacity}
+          onNext={handleNext}
+          onBack={handleBack}
+          onSkip={handleSkip}
         />
       )}
     </Animated.View>

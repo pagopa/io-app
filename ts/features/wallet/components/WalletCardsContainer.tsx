@@ -3,13 +3,12 @@ import I18n from "i18next";
 import { useMemo } from "react";
 import { StyleSheet, View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
-
 import { useDebugInfo } from "../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../store/hooks";
-import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
 import { ItwEnvironmentAlert } from "../../itwallet/common/components/ItwEnvironmentAlert";
 import { ItwL2EngagementBanner } from "../../itwallet/common/components/ItwL2EngagementBanner";
 import { ItwWalletNotAvailableBanner } from "../../itwallet/common/components/ItwWalletNotAvailableBanner";
+import { ItwDiscoveryBannerStandalone } from "../../itwallet/common/components/discoveryBanner/ItwDiscoveryBannerStandalone";
 import {
   itwShouldRenderL2EngagementBannerForInactiveWalletSelector,
   itwShouldRenderWalletDiscoveryBannerSelector
@@ -24,9 +23,9 @@ import {
   shouldRenderWalletLoadingStateSelector
 } from "../store/selectors";
 import { withWalletCategoryFilter } from "../utils";
+import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletCardsCategoryContainer } from "./WalletCardsCategoryContainer";
 import { WalletCardsCategoryRetryErrorBanner } from "./WalletCardsCategoryRetryErrorBanner";
-import { WalletCardSkeleton } from "./WalletCardSkeleton";
 import { WalletEmptyScreenContent } from "./WalletEmptyScreenContent";
 
 /**
@@ -65,7 +64,7 @@ const WalletCardsContainer = () => {
       <>
         {shouldRenderL2EngagementBanner && <ItwL2EngagementBanner />}
         {shouldRenderItwDiscoveryBanner && <ItwDiscoveryBanner />}
-        <View style={styles.walletContent} testID="walletCardsContainerTestID">
+        <View testID="walletCardsContainerTestID" style={styles.walletContent}>
           {shouldRenderItwCardsContainer && <ItwWalletCardsContainer />}
           <OtherWalletCardsContainer />
         </View>
@@ -81,8 +80,8 @@ const WalletCardsContainer = () => {
 
   return (
     <Animated.View
-      layout={LinearTransition.duration(200)}
       style={styles.container}
+      layout={LinearTransition.duration(200)}
     >
       <ItwEnvironmentAlert />
       <ItwWalletNotAvailableBanner />
@@ -97,9 +96,9 @@ const WalletCardsContainer = () => {
  */
 const WalletCardsContainerSkeleton = () => (
   <>
-    <WalletCardSkeleton cardProps={{}} testID="walletCardSkeletonTestID_1" />
-    <WalletCardSkeleton cardProps={{}} testID="walletCardSkeletonTestID_2" />
-    <WalletCardSkeleton cardProps={{}} testID="walletCardSkeletonTestID_3" />
+    <WalletCardSkeleton testID="walletCardSkeletonTestID_1" cardProps={{}} />
+    <WalletCardSkeleton testID="walletCardSkeletonTestID_2" cardProps={{}} />
+    <WalletCardSkeleton testID="walletCardSkeletonTestID_3" cardProps={{}} />
   </>
 );
 
@@ -122,14 +121,14 @@ const OtherWalletCardsContainer = withWalletCategoryFilter("other", () => {
   return (
     <View>
       <ListItemHeader
-        label={I18n.t("features.wallet.cards.categories.other")}
         testID={"walletCardsCategoryOtherHeaderTestID"}
+        label={I18n.t("features.wallet.cards.categories.other")}
       />
       <View style={styles.cardsWrapper}>
         <WalletCardsCategoryContainer
-          cards={cards}
           key="cards_category_other"
           testID="otherWalletCardsContainerTestID"
+          cards={cards}
         />
       </View>
       <WalletCardsCategoryRetryErrorBanner />

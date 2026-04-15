@@ -5,7 +5,6 @@ jest.mock("@pagopa/io-react-native-cie", () => ({
 }));
 import * as CIE_UTILS from "@pagopa/io-react-native-cie";
 import { renderHook, waitFor } from "@testing-library/react-native";
-
 import { useIsNfcFeatureAvailable } from "../useIsNfcFeatureAvailable";
 
 const hasNfcMock = CIE_UTILS.CieUtils.hasNfcFeature as jest.Mock;

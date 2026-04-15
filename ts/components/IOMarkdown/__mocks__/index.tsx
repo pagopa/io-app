@@ -1,5 +1,4 @@
 import { Text, View } from "react-native";
-
 import { IOMarkdownProps } from "..";
 
 const IOMarkdown = (props: IOMarkdownProps) => (

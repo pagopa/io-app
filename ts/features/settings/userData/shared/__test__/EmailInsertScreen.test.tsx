@@ -1,14 +1,13 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent, waitFor } from "@testing-library/react-native";
-import I18n from "i18next";
-import { Alert } from "react-native";
 import { createStore } from "redux";
-
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { Alert } from "react-native";
+import I18n from "i18next";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 import EmailInsertScreen from "../screens/EmailInsertScreen";
+import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 
 jest.spyOn(Alert, "alert");
 

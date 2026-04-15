@@ -1,10 +1,9 @@
 import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
-
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { ServiceDetailsScreenBase } from "../types";
 import { getServiceActionsProps } from "../utils";
+import { ServiceDetailsScreenBase } from "../types";
 
 export type ServiceDetailsScreenDefaultProps = ServiceDetailsScreenBase;
 

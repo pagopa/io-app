@@ -2,23 +2,12 @@ import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-
-import { TagEnum } from "../../../../definitions/backend/MessageCategoryPN";
-import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/ThirdPartyMessageWithContent";
-import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
-import { backendClientManager } from "../../../api/BackendClientManager";
-import { apiUrlPrefix } from "../../../config";
-import { SagaCallReturnType } from "../../../types/utils";
-import { isTestEnv } from "../../../utils/environment";
-import { sessionTokenSelector } from "../../authentication/common/store/selectors";
-import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
-import { getKeyInfo } from "../../lollipop/saga";
+import { loadThirdPartyMessage } from "../store/actions";
+import { toSENDMessage } from "../../pn/store/types/transformers";
 import {
   trackPNNotificationLoadError,
   trackPNNotificationLoadSuccess
 } from "../../pn/analytics";
-import { toSENDMessage } from "../../pn/store/types/transformers";
-import { serviceDetailsByIdSelector } from "../../services/details/store/selectors";
 import {
   trackRemoteContentLoadFailure,
   trackRemoteContentLoadRequest,
@@ -27,9 +16,19 @@ import {
   trackUndefinedBearerToken,
   UndefinedBearerTokenPhase
 } from "../analytics";
-import { loadThirdPartyMessage } from "../store/actions";
-import { thirdPartyKind } from "../types/thirdPartyById";
+import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
+import { SagaCallReturnType } from "../../../types/utils";
 import { unknownToReason } from "../utils";
+import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/ThirdPartyMessageWithContent";
+import { TagEnum } from "../../../../definitions/backend/MessageCategoryPN";
+import { serviceDetailsByIdSelector } from "../../services/details/store/selectors";
+import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
+import { thirdPartyKind } from "../types/thirdPartyById";
+import { backendClientManager } from "../../../api/BackendClientManager";
+import { apiUrlPrefix } from "../../../config";
+import { sessionTokenSelector } from "../../authentication/common/store/selectors";
+import { isTestEnv } from "../../../utils/environment";
+import { getKeyInfo } from "../../lollipop/saga";
 
 export function* handleThirdPartyMessage(
   action: ActionType<typeof loadThirdPartyMessage.request>

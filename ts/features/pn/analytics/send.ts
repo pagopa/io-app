@@ -6,7 +6,7 @@ import {
   SendUserType
 } from "../../pushNotifications/analytics";
 
-export type SendActivationSource = "nurturing_bottomsheet" | "tos_bottomsheet";
+export type SendActivationSource = "tos_bottomsheet" | "nurturing_bottomsheet";
 
 export const trackSendActivationModalDialog = (
   flow: NotificationModalFlow,

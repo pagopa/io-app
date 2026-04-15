@@ -1,7 +1,5 @@
-import type { ComponentProps } from "react";
-
 import { render } from "@testing-library/react-native";
-
+import type { ComponentProps } from "react";
 import { FimsPrivacyInfo } from "../FimsPrivacyInfo";
 
 const privacyUrl = "https://example.com/privacy";

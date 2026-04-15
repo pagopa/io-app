@@ -1,11 +1,11 @@
-import { logoutFailure, logoutSuccess } from "../../../common/store/actions";
-import { setSecurityAdviceReadyToShow } from "../actions/securityAdviceActions";
 import { areTwoMinElapsedFromLastActivity } from "../actions/sessionRefreshActions";
+import { logoutFailure, logoutSuccess } from "../../../common/store/actions";
 import {
   automaticSessionRefreshInitialState,
   AutomaticSessionRefreshState,
   testableAutomaticSessionRefreshReducer
 } from "../reducers/sessionRefreshReducer";
+import { setSecurityAdviceReadyToShow } from "../actions/securityAdviceActions";
 
 describe("AutomaticSessionRefreshReducer", () => {
   if (!testableAutomaticSessionRefreshReducer) {

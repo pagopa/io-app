@@ -1,5 +1,5 @@
 import { mixpanelTrack } from "../../../../../mixpanel";
-import { buildEventProperties, FlowType } from "../../../../../utils/analytics";
+import { FlowType, buildEventProperties } from "../../../../../utils/analytics";
 
 export function trackBiometricActivationAccepted(flow: FlowType) {
   void mixpanelTrack(

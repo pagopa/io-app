@@ -12,10 +12,10 @@ const CUSTOM_SLOT_HEIGHT = 150;
 
 export const DSForceScrollDownViewCustomSlot = () => (
   <ForceScrollDownView
+    threshold={CUSTOM_SLOT_HEIGHT}
     contentContainerStyle={{
       paddingTop: IOVisualCostants.appMarginDefault
     }}
-    threshold={CUSTOM_SLOT_HEIGHT}
   >
     <VStack space={24}>
       <ContentWrapper>

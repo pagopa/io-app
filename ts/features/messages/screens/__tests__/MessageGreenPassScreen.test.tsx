@@ -1,12 +1,11 @@
-import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
-
-import * as hookSecondLevel from "../../../../hooks/useHeaderSecondLevel";
+import { fireEvent } from "@testing-library/react-native";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { MESSAGES_ROUTES } from "../../navigation/routes";
 import { MessageGreenPassScreen } from "../MessageGreenPassScreen";
+import { MESSAGES_ROUTES } from "../../navigation/routes";
+import * as hookSecondLevel from "../../../../hooks/useHeaderSecondLevel";
 
 const mockGoBack = jest.fn();
 jest.mock("@react-navigation/native", () => ({

@@ -1,18 +1,18 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-
-import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/walletv3/PaymentMethodsResponse";
 import { WalletCreateResponse } from "../../../../../../definitions/pagopa/walletv3/WalletCreateResponse";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
+
 import {
   paymentsOnboardingGetMethodsAction,
   paymentsStartOnboardingAction
 } from "../actions";
+import { PaymentMethodsResponse } from "../../../../../../definitions/pagopa/walletv3/PaymentMethodsResponse";
 
 export type PaymentsOnboardingState = {
-  paymentMethods: pot.Pot<PaymentMethodsResponse, NetworkError>;
   result: pot.Pot<WalletCreateResponse, NetworkError>;
+  paymentMethods: pot.Pot<PaymentMethodsResponse, NetworkError>;
   selectedPaymentMethodId?: string;
 };
 
@@ -27,15 +27,28 @@ const reducer = (
   action: Action
 ): PaymentsOnboardingState => {
   switch (action.type) {
-    case getType(paymentsOnboardingGetMethodsAction.cancel):
+    // START ONBOARDING ACTIONS
+    case getType(paymentsStartOnboardingAction.request):
       return {
         ...state,
-        paymentMethods: pot.none
+        selectedPaymentMethodId: action.payload.paymentMethodId,
+        result: pot.toLoading(pot.none)
       };
-    case getType(paymentsOnboardingGetMethodsAction.failure):
+    case getType(paymentsStartOnboardingAction.success):
       return {
         ...state,
-        paymentMethods: pot.toError(state.paymentMethods, action.payload)
+        result: pot.some(action.payload as WalletCreateResponse)
+      };
+    case getType(paymentsStartOnboardingAction.failure):
+      return {
+        ...state,
+        result: pot.toError(state.result, action.payload)
+      };
+    case getType(paymentsStartOnboardingAction.cancel):
+      return {
+        ...state,
+        selectedPaymentMethodId: undefined,
+        result: pot.none
       };
     // GET ONBOARDABLE PAYMENT METHODS LIST
     case getType(paymentsOnboardingGetMethodsAction.request):
@@ -48,28 +61,15 @@ const reducer = (
         ...state,
         paymentMethods: pot.some(action.payload)
       };
-    case getType(paymentsStartOnboardingAction.cancel):
+    case getType(paymentsOnboardingGetMethodsAction.failure):
       return {
         ...state,
-        selectedPaymentMethodId: undefined,
-        result: pot.none
+        paymentMethods: pot.toError(state.paymentMethods, action.payload)
       };
-    case getType(paymentsStartOnboardingAction.failure):
+    case getType(paymentsOnboardingGetMethodsAction.cancel):
       return {
         ...state,
-        result: pot.toError(state.result, action.payload)
-      };
-    // START ONBOARDING ACTIONS
-    case getType(paymentsStartOnboardingAction.request):
-      return {
-        ...state,
-        selectedPaymentMethodId: action.payload.paymentMethodId,
-        result: pot.toLoading(pot.none)
-      };
-    case getType(paymentsStartOnboardingAction.success):
-      return {
-        ...state,
-        result: pot.some(action.payload as WalletCreateResponse)
+        paymentMethods: pot.none
       };
   }
   return state;

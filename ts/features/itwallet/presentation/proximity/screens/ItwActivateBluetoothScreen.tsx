@@ -1,22 +1,21 @@
+import { Alert, Platform } from "react-native";
 import { ListItemInfo } from "@pagopa/io-app-design-system";
+import { useCallback, useEffect, useMemo } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
-import { useCallback, useEffect, useMemo } from "react";
-import { Alert, Platform } from "react-native";
-
 import { IOScrollViewActions } from "../../../../../components/ui/IOScrollView";
+import { ItwProximityMachineContext } from "../machine/provider";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { openBluetoothPreferences } from "../utils";
+import { selectIsBluetoothRequiredState } from "../machine/selectors";
 import { IOScrollViewWithListItems } from "../../../../../components/ui/IOScrollViewWithListItems";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import {
   trackItwProximityBluetoothActivation,
   trackItwProximityBluetoothActivationClose,
   trackItwProximityBluetoothActivationGoToSettings,
   trackItwProximityBluetoothNotActivated
 } from "../analytics";
-import { ItwProximityMachineContext } from "../machine/provider";
-import { selectIsBluetoothRequiredState } from "../machine/selectors";
-import { openBluetoothPreferences } from "../utils";
 
 export const ItwActivateBluetoothScreen = () => {
   const navigation = useIONavigation();
@@ -121,17 +120,17 @@ export const ItwActivateBluetoothScreen = () => {
 
   return (
     <IOScrollViewWithListItems
-      actions={actions}
+      title={I18n.t(
+        "features.itWallet.presentation.proximity.activateBluetooth.title"
+      )}
+      subtitle={I18n.t(
+        "features.itWallet.presentation.proximity.activateBluetooth.subtitle"
+      )}
       listItemHeaderLabel={I18n.t(
         "features.itWallet.presentation.proximity.activateBluetooth.listItems.title"
       )}
       renderItems={listItems}
-      subtitle={I18n.t(
-        "features.itWallet.presentation.proximity.activateBluetooth.subtitle"
-      )}
-      title={I18n.t(
-        "features.itWallet.presentation.proximity.activateBluetooth.title"
-      )}
+      actions={actions}
     />
   );
 };

@@ -1,11 +1,10 @@
-import { ITuple2, Tuple2 } from "@pagopa/ts-commons/lib/tuples";
 import * as O from "fp-ts/lib/Option";
-
-import { isNativeLoginEnabledSelector } from "..";
+import { Tuple2, ITuple2 } from "@pagopa/ts-commons/lib/tuples";
 import { BackendStatus } from "../../../../../../../definitions/content/BackendStatus";
 import { baseRawBackendStatus } from "../../../../../../store/reducers/__mock__/backendStatus";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { getAppVersion } from "../../../../../../utils/appVersion";
+import { isNativeLoginEnabledSelector } from "..";
 
 jest.mock("react-native-device-info", () => ({
   getReadableVersion: jest.fn().mockReturnValue("1.2.3.4"),

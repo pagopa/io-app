@@ -1,9 +1,11 @@
-import * as B from "fp-ts/lib/boolean";
 import { pipe } from "fp-ts/lib/function";
+import * as B from "fp-ts/lib/boolean";
 import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
-
-import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
+import { isTestEnv } from "../../../../utils/environment";
+import { Action } from "../../../../store/actions/types";
+import { UIMessageDetails } from "../../types";
+import { GlobalState } from "../../../../store/reducers/types";
 import {
   foldK,
   isError,
@@ -16,55 +18,55 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../../common/model/RemoteValue";
-import { isPagoPaSupportedSelector } from "../../../../common/versionInfo/store/reducers/versionInfo";
-import { Action } from "../../../../store/actions/types";
-import { GlobalState } from "../../../../store/reducers/types";
-import { isTestEnv } from "../../../../utils/environment";
-import {
-  isExpiredPaymentFromDetailV2Enum,
-  isOngoingPaymentFromDetailV2Enum,
-  isPaidPaymentFromDetailV2Enum,
-  isRevokedPaymentFromDetailV2Enum
-} from "../../../../utils/payment";
-import { isProfileEmailValidatedSelector } from "../../../settings/common/store/selectors";
-import { UIMessageDetails } from "../../types";
-import {
-  isMessagePaymentSpecificError,
-  isTimeoutOrGenericOrOngoingPaymentError,
-  MessagePaymentError
-} from "../../types/paymentErrors";
-import {
-  duplicateSetAndAdd,
-  duplicateSetAndRemove,
-  getRptIdStringFromPaymentData
-} from "../../utils";
 import {
   addUserSelectedPaymentRptId,
   cancelQueuedPaymentUpdates,
   reloadAllMessages,
   updatePaymentForMessage
 } from "../actions";
+import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
+import { isProfileEmailValidatedSelector } from "../../../settings/common/store/selectors";
+import { isPagoPaSupportedSelector } from "../../../../common/versionInfo/store/reducers/versionInfo";
+import {
+  duplicateSetAndAdd,
+  duplicateSetAndRemove,
+  getRptIdStringFromPaymentData
+} from "../../utils";
+import {
+  isExpiredPaymentFromDetailV2Enum,
+  isOngoingPaymentFromDetailV2Enum,
+  isPaidPaymentFromDetailV2Enum,
+  isRevokedPaymentFromDetailV2Enum
+} from "../../../../utils/payment";
+import {
+  isMessagePaymentSpecificError,
+  isTimeoutOrGenericOrOngoingPaymentError,
+  MessagePaymentError
+} from "../../types/paymentErrors";
 import { messagePaymentDataSelector } from "./detailsById";
 
 export type MultiplePaymentState = {
-  paymentStatusListById: Record<string, SinglePaymentState | undefined>;
+  paymentStatusListById: {
+    [key: string]: SinglePaymentState | undefined;
+  };
   userSelectedPayments: Set<string>;
 };
 
-export type PaymentStatistics = {
-  errorCount: number;
-  expiredCount: number;
-  ongoingCount: number;
-  paidCount: number;
-  paymentCount: number;
-  revokedCount: number;
-  unpaidCount: number;
+export type SinglePaymentState = {
+  [key: string]:
+    | RemoteValue<PaymentInfoResponse, MessagePaymentError>
+    | undefined;
 };
 
-export type SinglePaymentState = Record<
-  string,
-  RemoteValue<PaymentInfoResponse, MessagePaymentError> | undefined
->;
+export type PaymentStatistics = {
+  paymentCount: number;
+  unpaidCount: number;
+  paidCount: number;
+  errorCount: number;
+  expiredCount: number;
+  revokedCount: number;
+  ongoingCount: number;
+};
 
 const initialPaymentStatistics = (paymentCount: number): PaymentStatistics => ({
   paymentCount,
@@ -86,40 +88,6 @@ export const paymentsReducer = (
   action: Action
 ): MultiplePaymentState => {
   switch (action.type) {
-    case getType(addUserSelectedPaymentRptId):
-      return {
-        ...state,
-        userSelectedPayments: duplicateSetAndAdd(
-          state.userSelectedPayments,
-          action.payload
-        )
-      };
-    case getType(cancelQueuedPaymentUpdates): {
-      const messageId = action.payload.messageId;
-      const messagePayments = state.paymentStatusListById[messageId];
-      return messagePayments != null
-        ? {
-            ...state,
-            paymentStatusListById: {
-              ...state.paymentStatusListById,
-              [messageId]: purgePaymentsWithIncompleteData(messagePayments)
-            }
-          }
-        : state;
-    }
-    case getType(reloadAllMessages.request):
-      return initialState;
-    case getType(updatePaymentForMessage.failure):
-      return {
-        ...state,
-        paymentStatusListById: {
-          ...state.paymentStatusListById,
-          [action.payload.messageId]: {
-            ...state.paymentStatusListById[action.payload.messageId],
-            [action.payload.paymentId]: remoteError(action.payload.reason)
-          }
-        }
-      };
     case getType(updatePaymentForMessage.request):
       return {
         ...state,
@@ -146,6 +114,40 @@ export const paymentsReducer = (
           }
         }
       };
+    case getType(updatePaymentForMessage.failure):
+      return {
+        ...state,
+        paymentStatusListById: {
+          ...state.paymentStatusListById,
+          [action.payload.messageId]: {
+            ...state.paymentStatusListById[action.payload.messageId],
+            [action.payload.paymentId]: remoteError(action.payload.reason)
+          }
+        }
+      };
+    case getType(cancelQueuedPaymentUpdates): {
+      const messageId = action.payload.messageId;
+      const messagePayments = state.paymentStatusListById[messageId];
+      return messagePayments != null
+        ? {
+            ...state,
+            paymentStatusListById: {
+              ...state.paymentStatusListById,
+              [messageId]: purgePaymentsWithIncompleteData(messagePayments)
+            }
+          }
+        : state;
+    }
+    case getType(addUserSelectedPaymentRptId):
+      return {
+        ...state,
+        userSelectedPayments: duplicateSetAndAdd(
+          state.userSelectedPayments,
+          action.payload
+        )
+      };
+    case getType(reloadAllMessages.request):
+      return initialState;
   }
   return state;
 };

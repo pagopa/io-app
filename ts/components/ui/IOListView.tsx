@@ -1,11 +1,13 @@
 import {
-  hexToRgba,
   IOColors,
   IOSpacingScale,
   IOVisualCostants,
+  hexToRgba,
   useIOTheme
 } from "@pagopa/io-app-design-system";
+
 import { ComponentProps, ReactElement, useState } from "react";
+
 import {
   ColorValue,
   LayoutChangeEvent,
@@ -28,14 +30,14 @@ import {
 
 export type IOListViewActions = IOScrollViewActions;
 
-type IOListView<T> = ComponentProps<typeof Animated.FlatList<T>> &
-  ComponentProps<typeof IOScrollView> & {
-    animatedRef?: AnimatedRef<Animated.FlatList<T>>;
+type IOListView<T> = ComponentProps<typeof IOScrollView> &
+  ComponentProps<typeof Animated.FlatList<T>> & {
     data: Array<T>;
+    renderItem: (item: ListRenderItemInfo<T>) => ReactElement | null;
     keyExtractor: ((item: T, index: number) => string) | undefined;
-    loading?: boolean;
-    renderItem: (item: ListRenderItemInfo<T>) => null | ReactElement;
+    animatedRef?: AnimatedRef<Animated.FlatList<T>>;
     skeleton?: ReactElement;
+    loading?: boolean;
   };
 
 /* Extended gradient area above the actions */
@@ -153,36 +155,40 @@ export const IOListView = <T,>({
 
   return (
     <Animated.FlatList<T>
-      centerContent={centerContent}
-      contentContainerStyle={[
-        {
-          paddingBottom: excludeEndContentMargin
-            ? 0
-            : actions
-              ? safeBottomAreaHeight
-              : bottomMargin + contentEndMargin,
-          paddingHorizontal: includeContentMargins
-            ? IOVisualCostants.appMarginDefault
-            : 0,
-          ...(contentContainerStyle || {})
-        },
-        centerContent ? styles.centerContentWrapper : {}
-      ]}
-      data={data}
-      decelerationRate="normal"
+      ListHeaderComponent={ListHeaderComponent}
       ItemSeparatorComponent={ItemSeparatorComponent}
+      ref={animatedRef}
       keyExtractor={keyExtractor}
+      data={data}
+      renderItem={item =>
+        // If the refresh control is active, show the skeleton (if present) instead of the content
+        loading || refreshControlProps?.refreshing
+          ? (skeleton ?? null)
+          : renderItem(item)
+      }
+      testID={testID}
+      onScroll={handleScroll}
       ListEmptyComponent={
         (loading || refreshControlProps?.refreshing) && skeleton
           ? skeleton
           : ListEmptyComponent
       }
+      refreshing={refreshControlProps?.refreshing}
+      scrollEventThrottle={8}
+      snapToOffsets={
+        // If there is a refresh control, don't snap to offsets
+        // This is a react-native bug: https://github.com/facebook/react-native/issues/27324
+        RefreshControlComponent ? undefined : [0, snapOffset ?? 0]
+      }
+      snapToEnd={false}
+      decelerationRate="normal"
+      refreshControl={RefreshControlComponent}
+      centerContent={centerContent}
       ListFooterComponent={
         <>
           {ListFooterComponent}
           {actions && (
             <View
-              pointerEvents="box-none"
               style={[
                 styles.gradientBottomActions,
                 {
@@ -190,16 +196,17 @@ export const IOListView = <T,>({
                   paddingBottom: bottomMargin
                 }
               ]}
+              pointerEvents="box-none"
               {...(testID && { testID: `${testID}-actions` })}
             >
               <Animated.View
-                pointerEvents="none"
                 style={[
                   styles.gradientContainer,
                   debugMode && {
                     backgroundColor: hexToRgba(IOColors["error-500"], 0.15)
                   }
                 ]}
+                pointerEvents="none"
               >
                 <Animated.View
                   style={[
@@ -212,11 +219,11 @@ export const IOListView = <T,>({
                   ]}
                 >
                   <LinearGradient
-                    colors={colors}
-                    locations={locations}
                     style={{
                       height: gradientAreaHeight - safeBackgroundBlockHeight
                     }}
+                    locations={locations}
+                    colors={colors}
                   />
                 </Animated.View>
 
@@ -232,9 +239,9 @@ export const IOListView = <T,>({
                 />
               </Animated.View>
               <View
+                style={styles.buttonContainer}
                 onLayout={getActionBlockHeight}
                 pointerEvents="box-none"
-                style={styles.buttonContainer}
               >
                 {renderActionButtons(actions, extraBottomMargin)}
               </View>
@@ -242,25 +249,20 @@ export const IOListView = <T,>({
           )}
         </>
       }
-      ListHeaderComponent={ListHeaderComponent}
-      onScroll={handleScroll}
-      ref={animatedRef}
-      refreshControl={RefreshControlComponent}
-      refreshing={refreshControlProps?.refreshing}
-      renderItem={item =>
-        // If the refresh control is active, show the skeleton (if present) instead of the content
-        loading || refreshControlProps?.refreshing
-          ? (skeleton ?? null)
-          : renderItem(item)
-      }
-      scrollEventThrottle={8}
-      snapToEnd={false}
-      snapToOffsets={
-        // If there is a refresh control, don't snap to offsets
-        // This is a react-native bug: https://github.com/facebook/react-native/issues/27324
-        RefreshControlComponent ? undefined : [0, snapOffset ?? 0]
-      }
-      testID={testID}
+      contentContainerStyle={[
+        {
+          paddingBottom: excludeEndContentMargin
+            ? 0
+            : actions
+              ? safeBottomAreaHeight
+              : bottomMargin + contentEndMargin,
+          paddingHorizontal: includeContentMargins
+            ? IOVisualCostants.appMarginDefault
+            : 0,
+          ...(contentContainerStyle || {})
+        },
+        centerContent ? styles.centerContentWrapper : {}
+      ]}
     />
   );
 };

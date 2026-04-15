@@ -1,21 +1,20 @@
 import { ContentWrapper, H2, VSpacer } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { useState } from "react";
-
+import I18n from "i18next";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
-import { useIOSelector } from "../../../../store/hooks";
-import { itwIpzsPrivacyUrlSelector } from "../../common/store/selectors/remoteConfig";
+import { trackOpenItwTosAccepted } from "../analytics";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
   selectIsLoading
 } from "../../machine/eid/selectors";
-import { trackOpenItwTosAccepted } from "../analytics";
 import ItwPrivacyWebViewComponent from "../components/ItwPrivacyWebViewComponent";
+import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
+import { useIOSelector } from "../../../../store/hooks";
+import { itwIpzsPrivacyUrlSelector } from "../../common/store/selectors/remoteConfig";
 
 const ItwIpzsPrivacyScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -56,6 +55,8 @@ const ItwIpzsPrivacyScreen = () => {
   return (
     <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
       <IOScrollView
+        includeContentMargins={false}
+        contentContainerStyle={{ flexGrow: 1 }}
         actions={{
           type: "SingleButton",
           primary: {
@@ -68,13 +69,11 @@ const ItwIpzsPrivacyScreen = () => {
             onPress: handleContinuePress
           }
         }}
-        contentContainerStyle={{ flexGrow: 1 }}
-        includeContentMargins={false}
       >
         <ContentWrapper>
           <H2
-            accessibilityRole="header"
             accessible={true}
+            accessibilityRole="header"
             testID="screen-content-header-title"
           >
             {I18n.t(
@@ -90,11 +89,11 @@ const ItwIpzsPrivacyScreen = () => {
           <VSpacer size={16} />
         </ContentWrapper>
         <ItwPrivacyWebViewComponent
-          onError={onError}
-          onLoadEnd={onLoadEnd}
           source={{
             uri: privacyUrl ?? ""
           }}
+          onLoadEnd={onLoadEnd}
+          onError={onError}
         />
       </IOScrollView>
     </LoadingSpinnerOverlay>

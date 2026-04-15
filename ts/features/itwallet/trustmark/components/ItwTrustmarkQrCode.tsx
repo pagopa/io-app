@@ -1,12 +1,11 @@
 import { IOVisualCostants } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
-
+import I18n from "i18next";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
-import { ItwRetryableQRCode } from "../../common/components/ItwRetryableQRCode";
 import { ItwTrustmarkMachineContext } from "../machine/provider";
 import { selectFailure, selectTrustmarkUrl } from "../machine/selectors";
+import { ItwRetryableQRCode } from "../../common/components/ItwRetryableQRCode";
 
 /**
  * Component that renders the QR code of the trustmark
@@ -26,16 +25,16 @@ const ItwTrustmarkQrCode = () => {
   return (
     <View style={styles.container}>
       <ItwRetryableQRCode
-        accessibilityLabel={I18n.t("features.itWallet.trustmark.qrCode")}
+        shouldRetry={!!failure}
+        size="92%"
+        value={trustmarkUrl}
         correctionLevel="L"
-        onRetry={handleOnRetry}
+        accessibilityLabel={I18n.t("features.itWallet.trustmark.qrCode")}
         retryDescription={I18n.t(
           "features.itWallet.trustmark.failure.description"
         )}
         retryLabel={I18n.t("features.itWallet.trustmark.failure.action")}
-        shouldRetry={!!failure}
-        size="92%"
-        value={trustmarkUrl}
+        onRetry={handleOnRetry}
       />
     </View>
   );

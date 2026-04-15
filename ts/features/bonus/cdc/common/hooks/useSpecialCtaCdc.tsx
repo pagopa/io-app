@@ -1,15 +1,14 @@
-import { IOToast } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { useCallback, useMemo } from "react";
-
+import I18n from "i18next";
+import { IOToast } from "@pagopa/io-app-design-system";
 import { IOScrollViewActions } from "../../../../../components/ui/IOScrollView";
 import { useIOSelector } from "../../../../../store/hooks";
 import { isCdcAppVersionSupportedSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
-import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../../../store/reducers/persistedPreferences.ts";
-import { getDeviceId } from "../../../../../utils/device.ts";
-import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks";
 import * as analytics from "../../analytics";
+import { getDeviceId } from "../../../../../utils/device.ts";
 import { cdcWalletVisibilityConfigSelector } from "../store/selectors/remoteConfig.ts";
+import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../../../store/reducers/persistedPreferences.ts";
+import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks";
 
 const useCdcGoToService = () => {
   const cdcWalletConfig = useIOSelector(cdcWalletVisibilityConfigSelector);

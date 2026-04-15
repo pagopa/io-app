@@ -1,5 +1,4 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import _ from "lodash";
 import {
   createMigrate,
   MigrationManifest,
@@ -8,11 +7,11 @@ import {
   persistReducer
 } from "redux-persist";
 import { getType } from "typesafe-actions";
-
-import { Action } from "../../../../../store/actions/types";
-import { isDevEnv } from "../../../../../utils/environment";
-import { logoutFailure, logoutSuccess } from "../../../common/store/actions";
+import _ from "lodash";
 import { areTwoMinElapsedFromLastActivity } from "../actions/sessionRefreshActions";
+import { Action } from "../../../../../store/actions/types";
+import { logoutFailure, logoutSuccess } from "../../../common/store/actions";
+import { isDevEnv } from "../../../../../utils/environment";
 
 export type AutomaticSessionRefreshState = {
   areAlreadyTwoMinAfterLastActivity: boolean;
@@ -28,14 +27,14 @@ const AutomaticSessionRefreshReducer = (
   action: Action
 ): AutomaticSessionRefreshState => {
   switch (action.type) {
+    case getType(logoutSuccess):
+    case getType(logoutFailure):
+      return automaticSessionRefreshInitialState;
     case getType(areTwoMinElapsedFromLastActivity):
       return {
         ...state,
         areAlreadyTwoMinAfterLastActivity: action.payload.hasTwoMinPassed
       };
-    case getType(logoutFailure):
-    case getType(logoutSuccess):
-      return automaticSessionRefreshInitialState;
     default:
       return state;
   }

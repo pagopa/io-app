@@ -1,16 +1,15 @@
 import { createStore } from "redux";
-
-import { PaymentInfoResponse } from "../../../../../../definitions/backend/PaymentInfoResponse";
-import { Detail_v2Enum } from "../../../../../../definitions/backend/PaymentProblemJson";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
-import { NotificationPaymentInfo } from "../../../../../../definitions/pn/NotificationPaymentInfo";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { updatePaymentForMessage } from "../../../store/actions";
-import { toSpecificMessagePaymentError } from "../../../types/paymentErrors";
 import { MessagePaymentItem } from "../MessagePaymentItem";
+import { NotificationPaymentInfo } from "../../../../../../definitions/pn/NotificationPaymentInfo";
+import { Detail_v2Enum } from "../../../../../../definitions/backend/PaymentProblemJson";
+import { updatePaymentForMessage } from "../../../store/actions";
+import { PaymentInfoResponse } from "../../../../../../definitions/backend/PaymentInfoResponse";
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { toSpecificMessagePaymentError } from "../../../types/paymentErrors";
 
 describe("MessagePaymentItem component", () => {
   it("Should match the snapshot for a loading item", () => {
@@ -123,8 +122,8 @@ const renderComponent = (
   payment: NotificationPaymentInfo,
   paymentStatus:
     | "payable"
-    | "payable-without-expiration"
     | "processed"
+    | "payable-without-expiration"
     | undefined = undefined
 ) => {
   const rptId = `${payment.creditorTaxId}${payment.noticeCode}`;
@@ -144,11 +143,11 @@ const renderComponent = (
       <MessagePaymentItem
         index={0}
         messageId={messageId}
-        noticeNumber={payment.noticeCode}
         rptId={rptId}
+        noticeNumber={payment.noticeCode}
+        serviceId={"01J5X34VA7H1726CQNTG14GNDH" as ServiceId}
         sendOpeningSource={"not_set"}
         sendUserType={"not_set"}
-        serviceId={"01J5X34VA7H1726CQNTG14GNDH" as ServiceId}
       />
     ),
     "DUMMY",

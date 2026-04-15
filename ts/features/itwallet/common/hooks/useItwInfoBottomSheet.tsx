@@ -1,6 +1,5 @@
 import { H6, VSpacer, VStack } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
-
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { generateAccessibleLinkRule } from "../../../common/components/IOMarkdown/customRules";
@@ -9,16 +8,16 @@ import { generateAccessibleLinkRule } from "../../../common/components/IOMarkdow
  * The type of the content of the bottom sheet.
  */
 type ItwInfoFlowContentType = {
-  body: string;
   title?: string;
+  body: string;
 };
 
 /**
  * Type of the props of the hook.
  */
 type ItwInfoFlowProps = {
-  content: Array<ItwInfoFlowContentType>;
   title: string;
+  content: Array<ItwInfoFlowContentType>;
 };
 
 /**

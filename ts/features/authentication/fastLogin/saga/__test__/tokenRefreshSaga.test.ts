@@ -1,29 +1,29 @@
-import * as E from "fp-ts/lib/Either";
+import { put, call, takeLatest, take, delay } from "typed-redux-saga/macro";
 import * as O from "fp-ts/lib/Option";
-import { call, delay, put, take, takeLatest } from "typed-redux-saga/macro";
-
-import { fastLoginMaxRetries } from "../../../../../config";
-import NavigationService from "../../../../../navigation/NavigationService";
-import ROUTES from "../../../../../navigation/routes";
-import { getPin } from "../../../../../utils/keychain";
-import { dismissSupport } from "../../../../../utils/supportAssistance";
+import * as E from "fp-ts/lib/Either";
 import {
-  identificationFailure,
-  identificationRequest,
-  identificationSuccess
-} from "../../../../identification/store/actions";
-import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
-import { logoutRequest } from "../../../common/store/actions";
+  testableTokenRefreshSaga,
+  watchTokenRefreshSaga
+} from "../tokenRefreshSaga";
 import {
   askUserToRefreshSessionToken,
   refreshSessionToken,
   refreshTokenNoPinError,
   testable
 } from "../../store/actions/tokenRefreshActions";
+
+import { getPin } from "../../../../../utils/keychain";
+import { logoutRequest } from "../../../common/store/actions";
+import { dismissSupport } from "../../../../../utils/supportAssistance";
+import NavigationService from "../../../../../navigation/NavigationService";
+import ROUTES from "../../../../../navigation/routes";
+import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
+import { fastLoginMaxRetries } from "../../../../../config";
 import {
-  testableTokenRefreshSaga,
-  watchTokenRefreshSaga
-} from "../tokenRefreshSaga";
+  identificationFailure,
+  identificationRequest,
+  identificationSuccess
+} from "../../../../identification/store/actions";
 
 jest.mock("../../../../../navigation/NavigationService", () => ({
   navigate: jest.fn()

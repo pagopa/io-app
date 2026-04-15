@@ -1,45 +1,44 @@
-import I18n from "i18next";
 import { useCallback, useMemo, useRef } from "react";
 import { AccessibilityInfo } from "react-native";
-
-import { TagEnum as PaymentTagEnum } from "../../../../../definitions/backend/MessageCategoryPayment";
-import { TagEnum as SENDTagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import I18n from "i18next";
+import { isScreenReaderEnabledSelector } from "../../../../store/reducers/preferences";
 import {
   useIODispatch,
   useIOSelector,
   useIOStore
 } from "../../../../store/hooks";
-import { isScreenReaderEnabledSelector } from "../../../../store/reducers/preferences";
+import { UIMessage } from "../../types";
+import { TagEnum as PaymentTagEnum } from "../../../../../definitions/backend/MessageCategoryPayment";
+import { TagEnum as SENDTagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
+import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { MESSAGES_ROUTES } from "../../navigation/routes";
 import { isAndroid } from "../../../../utils/platform";
 import { logoForService } from "../../../services/home/utils";
-import { trackMessageSearchSelection } from "../../analytics";
-import { MESSAGES_ROUTES } from "../../navigation/routes";
-import { toggleScheduledMessageArchivingAction } from "../../store/actions/archiving";
 import {
   scheduledPreconditionStatusAction,
   toScheduledPayload
 } from "../../store/actions/preconditions";
 import { isPaymentMessageWithPaidNoticeSelector } from "../../store/reducers/allPaginated";
-import {
-  isArchivingDisabledSelector,
-  isArchivingInProcessingModeSelector,
-  isArchivingInSchedulingModeSelector,
-  isMessageScheduledForArchivingSelector
-} from "../../store/reducers/archiving";
-import { UIMessage } from "../../types";
+import { toggleScheduledMessageArchivingAction } from "../../store/actions/archiving";
 import { MessageListCategory } from "../../types/messageListCategory";
-import { convertDateToWordDistance } from "../../utils/convertDateToWordDistance";
-import { ListItemMessage, ListItemMessageProps } from "./DS/ListItemMessage";
+import {
+  isMessageScheduledForArchivingSelector,
+  isArchivingInSchedulingModeSelector,
+  isArchivingDisabledSelector,
+  isArchivingInProcessingModeSelector
+} from "../../store/reducers/archiving";
+import { trackMessageSearchSelection } from "../../analytics";
 import {
   accessibilityLabelForMessageItem,
   minDelayBetweenNavigationMilliseconds
 } from "./homeUtils";
+import { ListItemMessage, ListItemMessageProps } from "./DS/ListItemMessage";
 
 type WrappedListItemMessage = {
   index: number;
   message: UIMessage;
-  source: "SEARCH" | MessageListCategory;
+  source: MessageListCategory | "SEARCH";
 };
 
 export const WrappedListItemMessage = ({
@@ -192,6 +191,7 @@ export const WrappedListItemMessage = ({
   return (
     <ListItemMessage
       accessibilityLabel={accessibilityLabel}
+      tag={tag}
       avatarDouble={avatarDouble}
       formattedDate={messageDate}
       isRead={isRead}
@@ -204,7 +204,6 @@ export const WrappedListItemMessage = ({
       selected={isSelected}
       serviceLogos={serviceLogoUriSources}
       serviceName={serviceName}
-      tag={tag}
       testID={`wrapped_message_list_item_${index}`}
     />
   );

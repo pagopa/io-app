@@ -2,16 +2,14 @@ import { useFocusEffect } from "@react-navigation/native";
 import * as E from "fp-ts/lib/Either";
 import I18n from "i18next";
 import { useCallback, useLayoutEffect, useState } from "react";
-
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import {
-  isStartupLoaded,
-  StartupStatusEnum
+  StartupStatusEnum,
+  isStartupLoaded
 } from "../../../../../store/reducers/startup.ts";
-import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
-import { selectItwSpecsVersion } from "../../../common/store/selectors/environment.ts";
 import { trackItwRemoteStart } from "../analytics";
+import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
 import { ItwRemoteDeepLinkFailure } from "../components/ItwRemoteDeepLinkFailure.tsx";
 import { ItwRemoteLoadingScreen } from "../components/ItwRemoteLoadingScreen.tsx";
 import { ItwRemoteMachineContext } from "../machine/provider.tsx";
@@ -21,6 +19,7 @@ import {
   ItwRemoteFlowType,
   ItwRemoteRequestPayload
 } from "../utils/itwRemoteTypeUtils.ts";
+import { selectItwSpecsVersion } from "../../../common/store/selectors/environment.ts";
 
 export type ItwRemoteRequestValidationScreenNavigationParams =
   Partial<ItwRemoteRequestPayload> & {
@@ -72,12 +71,12 @@ const ItwRemoteRequestValidationScreen = ({ route }: ScreenProps) => {
 
   const flowType = route.params?.flowType ?? "same-device";
 
-  return <ContentView flowType={flowType} payload={payload.right} />;
+  return <ContentView payload={payload.right} flowType={flowType} />;
 };
 
 type ContentViewProps = {
-  flowType: ItwRemoteFlowType;
   payload: ItwRemoteRequestPayload;
+  flowType: ItwRemoteFlowType;
 };
 
 const ContentView = ({ payload, flowType }: ContentViewProps) => {

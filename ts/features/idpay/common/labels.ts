@@ -1,10 +1,11 @@
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
-
 import { StatusEnum } from "../../../../definitions/idpay/InstrumentDTO";
 
-type InstrumentStatusLabels = Record<StatusEnum, string>;
+type InstrumentStatusLabels = {
+  [key in StatusEnum]: string;
+};
 
 const instrumentStatusLabels: InstrumentStatusLabels = {
   [StatusEnum.ACTIVE]: I18n.t(
@@ -18,7 +19,9 @@ const instrumentStatusLabels: InstrumentStatusLabels = {
   )
 };
 
-type OperationTypeLabels = Record<string, string>;
+type OperationTypeLabels = {
+  [key: string]: string;
+};
 
 const circuitTypeLabels: OperationTypeLabels = {
   "00": "Bancomat",

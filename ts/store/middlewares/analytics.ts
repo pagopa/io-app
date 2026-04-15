@@ -1,13 +1,18 @@
 /* eslint-disable no-fallthrough */
 // disabled in order to allows comments between the switch
 import { getType } from "typesafe-actions";
-
-import { trackSessionCorrupted } from "../../features/authentication/activeSessionLogin/analytics";
+import { isTestEnv } from "../../utils/environment";
+import { isMixpanelInstanceInitialized, mixpanelTrack } from "../../mixpanel";
+import trackCgnAction from "../../features/bonus/cgn/analytics/index";
+import { loadAvailableBonuses } from "../../features/bonus/common/store/actions/availableBonusesTypes";
+import trackFciAction from "../../features/fci/analytics";
+import { fciEnvironmentSelector } from "../../features/fci/store/reducers/fciEnvironment";
+import trackZendesk from "../../features/zendesk/analytics/index";
 import {
-  trackLoginFailure,
-  trackLogoutFailure,
-  trackLogoutSuccess
-} from "../../features/authentication/common/analytics";
+  analyticsAuthenticationCompleted,
+  analyticsAuthenticationStarted
+} from "../actions/analytics";
+import { applicationChangeState } from "../actions/application";
 import {
   clearCurrentSession,
   idpLoginUrlChanged,
@@ -23,15 +28,7 @@ import {
   sessionInvalid
 } from "../../features/authentication/common/store/actions";
 import { cieAuthenticationError } from "../../features/authentication/login/cie/store/actions";
-import trackCgnAction from "../../features/bonus/cgn/analytics/index";
-import { loadAvailableBonuses } from "../../features/bonus/common/store/actions/availableBonusesTypes";
-import trackFciAction from "../../features/fci/analytics";
-import { fciEnvironmentSelector } from "../../features/fci/store/reducers/fciEnvironment";
-import { trackIdentificationAction } from "../../features/identification/analytics";
-import { updateOfflineAccessReason } from "../../features/itwallet/analytics/properties/propertyUpdaters";
-import { profileEmailValidationChanged } from "../../features/mailCheck/store/actions/profileEmailValidationChange";
-import { trackMessagesActionsPostDispatch } from "../../features/messages/analytics";
-import { trackServicesAction } from "../../features/services/common/analytics";
+import { contentMunicipalityLoad } from "../actions/content";
 import {
   profileFirstLogin,
   profileLoadFailure,
@@ -39,73 +36,34 @@ import {
   profileUpsert,
   removeAccountMotivation
 } from "../../features/settings/common/store/actions";
+import { profileEmailValidationChanged } from "../../features/mailCheck/store/actions/profileEmailValidationChange";
+import { searchMessagesEnabled } from "../actions/search";
+import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
 import {
   deleteUserDataProcessing,
   upsertUserDataProcessing
 } from "../../features/settings/common/store/actions/userDataProcessing";
-import trackZendesk from "../../features/zendesk/analytics/index";
-import { isMixpanelInstanceInitialized, mixpanelTrack } from "../../mixpanel";
 import { buildEventProperties } from "../../utils/analytics";
-import { isTestEnv } from "../../utils/environment";
+import { trackServicesAction } from "../../features/services/common/analytics";
+import { trackMessagesActionsPostDispatch } from "../../features/messages/analytics";
+import { trackIdentificationAction } from "../../features/identification/analytics";
+import { updateOfflineAccessReason } from "../../features/itwallet/analytics/properties/propertyUpdaters";
 import {
-  analyticsAuthenticationCompleted,
-  analyticsAuthenticationStarted
-} from "../actions/analytics";
-import { applicationChangeState } from "../actions/application";
-import { contentMunicipalityLoad } from "../actions/content";
-import { searchMessagesEnabled } from "../actions/search";
-import { Action, Dispatch, MiddlewareAPI } from "../actions/types";
+  trackLoginFailure,
+  trackLogoutFailure,
+  trackLogoutSuccess
+} from "../../features/authentication/common/analytics";
+import { trackSessionCorrupted } from "../../features/authentication/activeSessionLogin/analytics";
 import { trackContentAction } from "./contentAnalytics";
 
-const trackAction = (action: Action): ReadonlyArray<null> | void => {
+const trackAction = (action: Action): void | ReadonlyArray<null> => {
   switch (action.type) {
-    case getType(analyticsAuthenticationCompleted):
-    case getType(analyticsAuthenticationStarted):
-      return mixpanelTrack(
-        action.type,
-        buildEventProperties("TECH", undefined, {
-          flow: action.payload
-        })
-      );
-
     //
     // Application state actions
     //
     case getType(applicationChangeState):
       return mixpanelTrack("APP_STATE_CHANGE", {
         APPLICATION_STATE_NAME: action.payload
-      });
-
-    // Failures with reason as Error and optional description
-    case getType(cieAuthenticationError):
-      return mixpanelTrack(
-        action.type,
-        buildEventProperties("KO", undefined, action.payload)
-      );
-    case getType(clearCurrentSession):
-      return mixpanelTrack(
-        action.type,
-        buildEventProperties("TECH", undefined)
-      );
-    // track when a missing municipality is detected
-    case getType(contentMunicipalityLoad.failure):
-      return mixpanelTrack(action.type, {
-        reason: action.payload.error.message,
-        codice_catastale: action.payload.codiceCatastale
-      });
-    case getType(deleteUserDataProcessing.failure):
-      return mixpanelTrack(action.type, {
-        choice: action.payload.choice,
-        reason: action.payload.error.message
-      });
-    case getType(deleteUserDataProcessing.request):
-      return mixpanelTrack(action.type, { choice: action.payload });
-    case getType(deleteUserDataProcessing.success):
-    case getType(removeAccountMotivation):
-      return mixpanelTrack(action.type, action.payload);
-    case getType(idpLoginUrlChanged):
-      return mixpanelTrack(action.type, {
-        SPID_URL: action.payload.url
       });
     //
     // Authentication actions (with properties)
@@ -115,31 +73,45 @@ const trackAction = (action: Action): ReadonlyArray<null> | void => {
         SPID_IDP_ID: action.payload.id,
         SPID_IDP_NAME: action.payload.name
       });
-    // Failures with reason as Error
-    case getType(loadAvailableBonuses.failure):
-    case getType(profileLoadFailure):
 
+    case getType(idpLoginUrlChanged):
+      return mixpanelTrack(action.type, {
+        SPID_URL: action.payload.url
+      });
+
+    // dispatch to mixpanel when the email is validated
+    case getType(profileEmailValidationChanged):
+      return mixpanelTrack(action.type, { isEmailValidated: action.payload });
+    case getType(logoutFailure):
+      return trackLogoutFailure(action.payload.error.message);
+    case getType(upsertUserDataProcessing.failure):
+      return mixpanelTrack(action.type, {
+        reason: action.payload.error.message
+      });
+    // Failures with reason as Error and optional description
+    case getType(cieAuthenticationError):
+      return mixpanelTrack(
+        action.type,
+        buildEventProperties("KO", undefined, action.payload)
+      );
+    // Failures with reason as Error
+    case getType(sessionInformationLoadFailure):
+    case getType(profileLoadFailure):
     case getType(profileUpsert.failure):
     //  Bonus vacanze
-    case getType(sessionInformationLoadFailure):
+    case getType(loadAvailableBonuses.failure):
       return mixpanelTrack(action.type, {
         reason: action.payload.message
       });
-    case getType(loadAvailableBonuses.request):
-    case getType(loadAvailableBonuses.success):
-    case getType(profileFirstLogin):
-    // profile
-    case getType(profileLoadRequest):
-    case getType(profileUpsert.success):
-    // messages
-    case getType(searchMessagesEnabled):
-    //  profile First time Login
-    case getType(sessionExpired):
-
-    // other
-    case getType(sessionInformationLoadSuccess):
-    case getType(sessionInvalid):
-      return mixpanelTrack(action.type);
+    // track when a missing municipality is detected
+    case getType(contentMunicipalityLoad.failure):
+      return mixpanelTrack(action.type, {
+        reason: action.payload.error.message,
+        codice_catastale: action.payload.codiceCatastale
+      });
+    // download / delete profile
+    case getType(upsertUserDataProcessing.success):
+      return mixpanelTrack(action.type, action.payload);
     //
     // Actions (without properties)
     //
@@ -150,27 +122,54 @@ const trackAction = (action: Action): ReadonlyArray<null> | void => {
         reason: action.payload.error.message,
         flow: "auth"
       });
+
     case getType(loginSuccess):
       return mixpanelTrack(action.type, {
         idp: action.payload.idp
       });
-    case getType(logoutFailure):
-      return trackLogoutFailure(action.payload.error.message);
+    case getType(clearCurrentSession):
+      return mixpanelTrack(
+        action.type,
+        buildEventProperties("TECH", undefined)
+      );
+    case getType(analyticsAuthenticationStarted):
+    case getType(analyticsAuthenticationCompleted):
+      return mixpanelTrack(
+        action.type,
+        buildEventProperties("TECH", undefined, {
+          flow: action.payload
+        })
+      );
     case getType(logoutSuccess):
       return trackLogoutSuccess();
-
-    // dispatch to mixpanel when the email is validated
-    case getType(profileEmailValidationChanged):
-      return mixpanelTrack(action.type, { isEmailValidated: action.payload });
     case getType(sessionCorrupted):
       return trackSessionCorrupted();
-    case getType(upsertUserDataProcessing.failure):
+    case getType(sessionInformationLoadSuccess):
+    case getType(sessionExpired):
+    case getType(sessionInvalid):
+
+    // profile
+    case getType(profileUpsert.success):
+    case getType(profileLoadRequest):
+    // messages
+    case getType(searchMessagesEnabled):
+    //  profile First time Login
+    case getType(profileFirstLogin):
+    // other
+    case getType(loadAvailableBonuses.success):
+    case getType(loadAvailableBonuses.request):
+      return mixpanelTrack(action.type);
+
+    case getType(deleteUserDataProcessing.request):
+      return mixpanelTrack(action.type, { choice: action.payload });
+    case getType(removeAccountMotivation):
+    case getType(deleteUserDataProcessing.success):
+      return mixpanelTrack(action.type, action.payload);
+    case getType(deleteUserDataProcessing.failure):
       return mixpanelTrack(action.type, {
+        choice: action.payload.choice,
         reason: action.payload.error.message
       });
-    // download / delete profile
-    case getType(upsertUserDataProcessing.success):
-      return mixpanelTrack(action.type, action.payload);
   }
 };
 

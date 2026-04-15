@@ -4,11 +4,10 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { useIOSelector } from "../../../../store/hooks";
 import { messagePaymentDataSelector } from "../../store/reducers/detailsById";
 import { getRptIdStringFromPaymentData } from "../../utils";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { MessagePaymentItem } from "./MessagePaymentItem";
 
 type MessageDetailsPaymentProps = {
@@ -36,9 +35,9 @@ export const MessageDetailsPayment = ({
     <>
       <VSpacer size={16} />
       <ListItemHeader
-        iconColor={theme["italyBrand-default"]}
-        iconName={"productPagoPA"}
         label={I18n.t("features.messages.payments.title")}
+        iconName={"productPagoPA"}
+        iconColor={theme["italyBrand-default"]}
       />
       <MessagePaymentItem
         hideExpirationDate
@@ -46,9 +45,9 @@ export const MessageDetailsPayment = ({
         noSpaceOnTop
         noticeNumber={paymentData.noticeNumber}
         rptId={rptId}
+        serviceId={serviceId}
         sendOpeningSource={"not_set"}
         sendUserType={"not_set"}
-        serviceId={serviceId}
       />
     </>
   );

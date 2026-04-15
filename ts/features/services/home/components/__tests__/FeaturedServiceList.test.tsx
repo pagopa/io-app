@@ -1,16 +1,15 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
-import _ from "lodash";
 import { createStore } from "redux";
-
-import { FeaturedServices } from "../../../../../../definitions/services/FeaturedServices";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
+import _ from "lodash";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { getNetworkError, NetworkError } from "../../../../../utils/errors";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { FeaturedServiceList } from "../FeaturedServiceList";
+import { getNetworkError, NetworkError } from "../../../../../utils/errors";
+import { FeaturedServices } from "../../../../../../definitions/services/FeaturedServices";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 
 const MOCK_FEATURED_SERVICES: FeaturedServices = {
   services: [

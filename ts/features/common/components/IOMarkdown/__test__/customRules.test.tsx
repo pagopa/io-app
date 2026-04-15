@@ -1,6 +1,5 @@
 import { Body, IOToast, MdH1, MdH2, MdH3 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-
 import * as URL from "../../../../../utils/url";
 import { testable } from "../customRules";
 

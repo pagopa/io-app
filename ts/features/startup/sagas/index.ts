@@ -1,12 +1,11 @@
 import { delay, put, select } from "typed-redux-saga/macro";
-
-import { WAIT_INITIALIZE_SAGA } from "../../../sagas/startup";
 import { startApplicationInitialization } from "../../../store/actions/application";
-import { startupTransientError } from "../../../store/actions/startup";
 import {
   StartupTransientError,
   startupTransientErrorSelector
 } from "../../../store/reducers/startup";
+import { WAIT_INITIALIZE_SAGA } from "../../../sagas/startup";
+import { startupTransientError } from "../../../store/actions/startup";
 import {
   trackGetProfileEndpointTransientError,
   trackGetSessionEndpointTransientError
@@ -37,6 +36,17 @@ export function* handleApplicationStartupTransientError(
   }
 
   yield* handleRetry(kind, transientError);
+}
+
+function* handleRetry(
+  kind: StartupTransientErrorKind,
+  transientError: StartupTransientError
+) {
+  const updateErrorAction = getUpdateErrorAction(kind, transientError);
+
+  yield* put(updateErrorAction);
+  yield* delay(WAIT_INITIALIZE_SAGA);
+  yield* put(startApplicationInitialization());
 }
 
 function getUpdateErrorAction(
@@ -71,15 +81,4 @@ function* handleMaxRetriesReached(kind: StartupTransientErrorKind) {
       showError: true
     })
   );
-}
-
-function* handleRetry(
-  kind: StartupTransientErrorKind,
-  transientError: StartupTransientError
-) {
-  const updateErrorAction = getUpdateErrorAction(kind, transientError);
-
-  yield* put(updateErrorAction);
-  yield* delay(WAIT_INITIALIZE_SAGA);
-  yield* put(startApplicationInitialization());
 }

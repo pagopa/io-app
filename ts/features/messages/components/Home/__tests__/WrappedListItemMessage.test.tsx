@@ -1,22 +1,21 @@
-import { fireEvent } from "@testing-library/react-native";
 import { AccessibilityInfo } from "react-native";
 import { createStore } from "redux";
-
-import { MessageCategory } from "../../../../../../definitions/backend/MessageCategory";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
-import { applicationChangeState } from "../../../../../store/actions/application";
+import { fireEvent } from "@testing-library/react-native";
 import { appReducer } from "../../../../../store/reducers";
-import { GlobalState } from "../../../../../store/reducers/types";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { UIMessage } from "../../../types";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
-import { toggleScheduledMessageArchivingAction } from "../../../store/actions/archiving";
+import { WrappedListItemMessage } from "../WrappedListItemMessage";
+import { GlobalState } from "../../../../../store/reducers/types";
 import {
   scheduledPreconditionStatusAction,
   toScheduledPayload
 } from "../../../store/actions/preconditions";
-import { UIMessage } from "../../../types";
+import { MessageCategory } from "../../../../../../definitions/backend/MessageCategory";
+import { toggleScheduledMessageArchivingAction } from "../../../store/actions/archiving";
 import * as homeUtils from "../homeUtils";
-import { WrappedListItemMessage } from "../WrappedListItemMessage";
 
 const mockNavigate = jest.fn();
 jest.mock("@react-navigation/native", () => ({
@@ -250,7 +249,7 @@ const renderComponent = (
   index: number,
   message: UIMessage,
   isArchiving: boolean,
-  source: "ARCHIVE" | "INBOX" | "SEARCH",
+  source: "INBOX" | "ARCHIVE" | "SEARCH",
   screenReaderEnabled: boolean = false
 ) => {
   const paymentId: string = "00112233445566778899001122334";

@@ -1,5 +1,4 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
-
 import { InstitutionServicesResource } from "../../../../../../definitions/services/InstitutionServicesResource";
 import { NetworkError } from "../../../../../utils/errors";
 

@@ -6,8 +6,7 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { Fragment } from "react";
-import { StyleSheet, View } from "react-native";
-
+import { View, StyleSheet } from "react-native";
 import { Claim } from "../../../../../definitions/fims_sso/Claim";
 
 export const FimsClaimsList = ({ claims }: ClaimsListProps) => {
@@ -19,8 +18,8 @@ export const FimsClaimsList = ({ claims }: ClaimsListProps) => {
       {claims.map((claim, index) => (
         <Fragment key={index}>
           <ClaimListItem
-            iconColor={theme["icon-decorative"]}
             label={claim.display_name}
+            iconColor={theme["icon-decorative"]}
           />
           {index < claims.length - 1 && <Divider />}
         </Fragment>
@@ -32,13 +31,13 @@ export const FimsClaimsList = ({ claims }: ClaimsListProps) => {
 const ClaimListItem = ({ label, iconColor }: ClaimsListItemProps) => (
   <View style={styles.grantItem}>
     <H6>{label ?? ""}</H6>
-    <Icon color={iconColor} name="checkTickBig" size={24} />
+    <Icon name="checkTickBig" size={24} color={iconColor} />
   </View>
 );
-type ClaimsListItemProps = { iconColor: IOColors; label?: string };
 type ClaimsListProps = {
   claims: ReadonlyArray<Claim>;
 };
+type ClaimsListItemProps = { label?: string; iconColor: IOColors };
 
 const styles = StyleSheet.create({
   grantsList: {

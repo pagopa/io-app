@@ -4,14 +4,13 @@ import {
   nativeRequest
 } from "@pagopa/io-react-native-http-client";
 import { call, select } from "typed-redux-saga/macro";
-
 import { oidcProviderDomainSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { fimsPartialAbortUrl } from "../store/selectors";
 import {
   absoluteRedirectUrl,
   computeAndTrackAuthenticationError,
-  formatHttpClientResponseForMixPanel,
   handleFimsBackNavigation,
+  formatHttpClientResponseForMixPanel,
   handleFimsResourcesDeallocation
 } from "./sagaUtils";
 

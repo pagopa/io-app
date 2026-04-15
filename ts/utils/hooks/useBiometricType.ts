@@ -1,6 +1,5 @@
+import { useState, useEffect } from "react";
 import { BiometricsValidType } from "@pagopa/io-app-design-system";
-import { useEffect, useState } from "react";
-
 import { useIOSelector } from "../../store/hooks";
 import { isFingerprintEnabledSelector } from "../../store/reducers/persistedPreferences";
 import { getBiometricsType, isBiometricsValidType } from "../biometrics";

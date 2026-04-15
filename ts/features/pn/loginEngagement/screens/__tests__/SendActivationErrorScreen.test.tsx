@@ -1,11 +1,10 @@
-import { useNavigation } from "@react-navigation/native";
 import { fireEvent, render } from "@testing-library/react-native";
+import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
-
-import ROUTES from "../../../../../navigation/routes";
+import { SendActivationErrorScreen } from "../SendActivationErrorScreen";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import PN_ROUTES from "../../../navigation/routes";
-import { SendActivationErrorScreen } from "../SendActivationErrorScreen";
+import ROUTES from "../../../../../navigation/routes";
 
 const mockReplace = jest.fn();
 const mockDispatch = jest.fn();

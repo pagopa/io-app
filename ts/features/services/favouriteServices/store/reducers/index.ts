@@ -1,20 +1,18 @@
 import { PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
-
+import { Action } from "../../../../../store/actions/types";
 import type {
   FavouriteServicesSortType,
   FavouriteServiceType
 } from "../../../favouriteServices/types";
-
-import { differentProfileLoggedIn } from "../../../../../store/actions/crossSessions";
-import { Action } from "../../../../../store/actions/types";
-import createSecureStorage from "../../../../../store/storages/secureStorage";
-import { clearCurrentSession } from "../../../../authentication/common/store/actions";
 import {
   addFavouriteServiceSuccess,
   removeFavouriteService,
   setFavouriteServicesSortType
 } from "../../../favouriteServices/store/actions";
+import createSecureStorage from "../../../../../store/storages/secureStorage";
+import { clearCurrentSession } from "../../../../authentication/common/store/actions";
+import { differentProfileLoggedIn } from "../../../../../store/actions/crossSessions";
 
 export type FavouriteServicesState = {
   dataById: Record<string, FavouriteServiceType>;
@@ -40,10 +38,6 @@ const reducer = (
         }
       };
     }
-    case getType(clearCurrentSession):
-    case getType(differentProfileLoggedIn): {
-      return INITIAL_STATE;
-    }
     case getType(removeFavouriteService): {
       const { [action.payload.id]: _, ...rest } = state.dataById;
       return {
@@ -56,6 +50,10 @@ const reducer = (
         ...state,
         sortType: action.payload
       };
+    }
+    case getType(clearCurrentSession):
+    case getType(differentProfileLoggedIn): {
+      return INITIAL_STATE;
     }
     default:
       return state;

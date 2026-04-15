@@ -1,9 +1,8 @@
 import { getType } from "typesafe-actions";
-
-import { startApplicationInitialization } from "../../../../store/actions/application";
-import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { setMessageSagasRegisteredAction } from "../actions";
+import { Action } from "../../../../store/actions/types";
+import { startApplicationInitialization } from "../../../../store/actions/application";
 
 export type MessageSectionStatusType = {
   // This property is used to know if message's sagas have been
@@ -23,13 +22,13 @@ export const messageSectionStatusReducer = (
   action: Action
 ): MessageSectionStatusType => {
   switch (action.type) {
+    case getType(startApplicationInitialization):
+      return messageSectionStatusInitialState;
     case getType(setMessageSagasRegisteredAction): {
       return {
         messageSagasRegistered: true
       };
     }
-    case getType(startApplicationInitialization):
-      return messageSectionStatusInitialState;
     default:
       return state;
   }

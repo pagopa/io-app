@@ -3,14 +3,13 @@ import {
   RadioGroup,
   RadioItem
 } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { Alert, View } from "react-native";
-
-import { useDebugInfo } from "../../../../hooks/useDebugInfo";
+import I18n from "i18next";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { itwSetEnv } from "../../common/store/actions/environment";
-import { selectItwEnv } from "../../common/store/selectors/environment";
 import { EnvType, getEnv } from "../../common/utils/environment";
+import { selectItwEnv } from "../../common/store/selectors/environment";
+import { itwSetEnv } from "../../common/store/actions/environment";
+import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 
 export const ItwEnvironmentSection = () => {
   const dispatch = useIODispatch();
@@ -68,11 +67,11 @@ export const ItwEnvironmentSection = () => {
     <View>
       <ListItemHeader label="Environment" />
       <RadioGroup
-        items={envRadioItems()}
-        key="itw_environment"
-        onPress={toggleEnvironment}
-        selectedItem={selectedEnv}
         type="radioListItem"
+        key="itw_environment"
+        items={envRadioItems()}
+        selectedItem={selectedEnv}
+        onPress={toggleEnvironment}
       />
     </View>
   );

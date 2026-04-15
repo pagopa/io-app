@@ -1,17 +1,16 @@
 import I18n from "i18next";
-
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { setOfflineAccessReason } from "../../../ingress/store/actions";
-import { OfflineAccessReasonEnum } from "../../../ingress/store/reducer";
-import { itwOfflineAccessAvailableSelector } from "../../../itwallet/common/store/selectors";
+import { TokenRefreshState } from "../store/reducers/tokenRefreshReducer";
 import { logoutRequest } from "../../common/store/actions";
 import {
   askUserToRefreshSessionToken,
   clearTokenRefreshError
 } from "../store/actions/tokenRefreshActions";
-import { TokenRefreshState } from "../store/reducers/tokenRefreshReducer";
-import AskUserInteractionScreen from "./AskUserInteractionScreen";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { setOfflineAccessReason } from "../../../ingress/store/actions";
+import { OfflineAccessReasonEnum } from "../../../ingress/store/reducer";
+import { itwOfflineAccessAvailableSelector } from "../../../itwallet/common/store/selectors";
 import RefreshTokenLoadingScreen from "./RefreshTokenLoadingScreen";
+import AskUserInteractionScreen from "./AskUserInteractionScreen";
 
 const FastLoginModals = (
   tokenRefreshing: TokenRefreshState,
@@ -25,6 +24,11 @@ const FastLoginModals = (
   if (tokenRefreshing.kind === "no-pin-error") {
     return (
       <AskUserInteractionScreen
+        pictogram="time"
+        title={I18n.t("fastLogin.userInteraction.sessionExpired.noPin.title")}
+        subtitle={I18n.t(
+          "fastLogin.userInteraction.sessionExpired.noPin.subtitle"
+        )}
         action={{
           label: I18n.t(
             "fastLogin.userInteraction.sessionExpired.noPin.submitButtonTitle"
@@ -37,11 +41,6 @@ const FastLoginModals = (
             dispatch(logoutRequest({ withApiCall: false }));
           }
         }}
-        pictogram="time"
-        subtitle={I18n.t(
-          "fastLogin.userInteraction.sessionExpired.noPin.subtitle"
-        )}
-        title={I18n.t("fastLogin.userInteraction.sessionExpired.noPin.title")}
       />
     );
   }
@@ -54,11 +53,11 @@ const FastLoginModals = (
     return (
       <AskUserInteractionScreen
         pictogram="umbrella"
-        subtitle={I18n.t(
-          "fastLogin.userInteraction.sessionExpired.transientError.subtitle"
-        )}
         title={I18n.t(
           "fastLogin.userInteraction.sessionExpired.transientError.title"
+        )}
+        subtitle={I18n.t(
+          "fastLogin.userInteraction.sessionExpired.transientError.subtitle"
         )}
       />
     );
@@ -71,6 +70,13 @@ const FastLoginModals = (
   if (isFastLoginUserInteractionNeeded) {
     return (
       <AskUserInteractionScreen
+        pictogram="time"
+        title={I18n.t(
+          "fastLogin.userInteraction.sessionExpired.continueNavigation.title"
+        )}
+        subtitle={I18n.t(
+          "fastLogin.userInteraction.sessionExpired.continueNavigation.subtitle"
+        )}
         action={{
           label: I18n.t(
             "fastLogin.userInteraction.sessionExpired.continueNavigation.submitButtonTitle"
@@ -82,13 +88,6 @@ const FastLoginModals = (
             dispatch(askUserToRefreshSessionToken.success("yes"));
           }
         }}
-        pictogram="time"
-        subtitle={I18n.t(
-          "fastLogin.userInteraction.sessionExpired.continueNavigation.subtitle"
-        )}
-        title={I18n.t(
-          "fastLogin.userInteraction.sessionExpired.continueNavigation.title"
-        )}
       />
     );
   }

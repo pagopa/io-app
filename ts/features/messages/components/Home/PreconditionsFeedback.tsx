@@ -1,7 +1,7 @@
 import {
-  BodySmall,
   H3,
   IOPictograms,
+  BodySmall,
   Pictogram,
   useIOTheme,
   VSpacer
@@ -20,8 +20,8 @@ const styles = StyleSheet.create({
 
 type Props = {
   pictogram: IOPictograms;
-  subtitle?: string;
   title: string;
+  subtitle?: string;
 };
 
 export const PreconditionsFeedback = ({
@@ -45,8 +45,8 @@ export const PreconditionsFeedback = ({
         <>
           <VSpacer size={8} />
           <BodySmall
-            color={theme["textBody-tertiary"]}
             style={{ textAlign: "center" }}
+            color={theme["textBody-tertiary"]}
             weight="Regular"
           >
             {subtitle}

@@ -7,15 +7,15 @@ import {
   StateFrom,
   waitFor as waitForActor
 } from "xstate";
-
 import {
   ItwStatusAssertionMocks,
   ItwStoredCredentialsMocks
 } from "../../../common/utils/itwMocksUtils";
 import {
+  CredentialBundle,
+  CredentialMetadata,
   IssuerConfiguration,
-  RequestObject,
-  StoredCredential
+  RequestObject
 } from "../../../common/utils/itwTypesUtils";
 import { ItwTags } from "../../tags";
 import {
@@ -61,7 +61,7 @@ const T_REQUESTED_CREDENTIAL: RequestObject = {
   response_uri: "",
   state: ""
 };
-const T_STORED_STATUS_ASSERTION: StoredCredential["storedStatusAssertion"] = {
+const T_STORED_STATUS_ASSERTION: CredentialMetadata["storedStatusAssertion"] = {
   credentialStatus: "valid",
   statusAssertion: "abcdefghijklmnopqrstuvwxyz",
   parsedStatusAssertion: ItwStatusAssertionMocks.mdl
@@ -88,7 +88,6 @@ describe("itwCredentialIssuanceMachine", () => {
   const requestCredential = jest.fn();
   const obtainCredential = jest.fn();
   const obtainStatusAssertion = jest.fn();
-
   const isSessionExpired = jest.fn();
   const hasValidWalletInstanceAttestation = jest.fn();
   const isStatusError = jest.fn();
@@ -126,7 +125,7 @@ describe("itwCredentialIssuanceMachine", () => {
         ObtainCredentialActorInput
       >(obtainCredential),
       obtainStatusAssertion: fromPromise<
-        Array<StoredCredential>,
+        ReadonlyArray<CredentialBundle>,
         ObtainStatusAssertionActorInput
       >(obtainStatusAssertion)
     },
@@ -224,16 +223,19 @@ describe("itwCredentialIssuanceMachine", () => {
      */
 
     obtainCredential.mockImplementation(() =>
-      Promise.resolve({
-        credentials: [ItwStoredCredentialsMocks.mdl]
-      })
+      Promise.resolve([
+        { credential: "", metadata: ItwStoredCredentialsMocks.mdl }
+      ])
     );
 
     obtainStatusAssertion.mockImplementation(() =>
       Promise.resolve([
         {
-          ...ItwStoredCredentialsMocks.mdl,
-          storedStatusAssertion: T_STORED_STATUS_ASSERTION
+          credential: "",
+          metadata: {
+            ...ItwStoredCredentialsMocks.mdl,
+            storedStatusAssertion: T_STORED_STATUS_ASSERTION
+          }
         }
       ])
     );
@@ -269,8 +271,11 @@ describe("itwCredentialIssuanceMachine", () => {
       expect.objectContaining<Partial<Context>>({
         credentials: [
           {
-            ...ItwStoredCredentialsMocks.mdl,
-            storedStatusAssertion: T_STORED_STATUS_ASSERTION
+            credential: "",
+            metadata: {
+              ...ItwStoredCredentialsMocks.mdl,
+              storedStatusAssertion: T_STORED_STATUS_ASSERTION
+            }
           }
         ]
       })
@@ -286,9 +291,7 @@ describe("itwCredentialIssuanceMachine", () => {
       type: "add-to-wallet"
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual(
-      "DisplayingCredentialPreview"
-    );
+    await waitForActor(actor, snap => snap.matches("Completed"));
     expect(storeCredential).toHaveBeenCalledTimes(1);
     expect(navigateToWallet).toHaveBeenCalledTimes(1);
   });
@@ -360,12 +363,14 @@ describe("itwCredentialIssuanceMachine", () => {
       itwCredentialIssuanceMachine
     ).getSnapshot();
 
-    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+    const snapshot = _.merge(undefined, initialSnapshot, {
       value: "DisplayingCredentialPreview",
       context: {
-        credentials: [ItwStoredCredentialsMocks.mdl]
+        credentials: [
+          { credential: "", metadata: ItwStoredCredentialsMocks.mdl }
+        ]
       }
-    } as MachineSnapshot);
+    });
 
     const actor = createActor(mockedMachine, {
       snapshot
@@ -376,7 +381,7 @@ describe("itwCredentialIssuanceMachine", () => {
       "DisplayingCredentialPreview"
     );
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
-      credentials: [ItwStoredCredentialsMocks.mdl]
+      credentials: [{ credential: "", metadata: ItwStoredCredentialsMocks.mdl }]
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([]));
 

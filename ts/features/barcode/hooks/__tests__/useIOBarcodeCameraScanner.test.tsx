@@ -1,8 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import { Code } from "react-native-vision-camera";
-
-import { BarcodeFormat } from "../../types/IOBarcode";
 import { retrieveNextBarcode } from "../useIOBarcodeCameraScanner";
+import { BarcodeFormat } from "../../types/IOBarcode";
 
 describe("test retrieveNextBarcode function", () => {
   it("should return `O.none` because of an empty array as input", () => {

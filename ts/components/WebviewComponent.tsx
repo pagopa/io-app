@@ -1,4 +1,3 @@
-import I18n from "i18next";
 import { createRef, useEffect, useState } from "react";
 import WebView from "react-native-webview";
 import {
@@ -6,7 +5,7 @@ import {
   WebViewHttpErrorEvent,
   WebViewSourceUri
 } from "react-native-webview/lib/WebViewTypes";
-
+import I18n from "i18next";
 import { mixpanelTrack } from "../mixpanel";
 import { resetDebugData, setDebugData } from "../store/actions/debug";
 import { useIODispatch } from "../store/hooks";
@@ -14,8 +13,8 @@ import LoadingSpinnerOverlay from "./LoadingSpinnerOverlay";
 import { OperationResultScreenContent } from "./screens/OperationResultScreenContent";
 
 type Props = {
-  playgroundEnabled?: boolean;
   source: WebViewSourceUri;
+  playgroundEnabled?: boolean;
 };
 
 const WebviewComponent = ({ source, playgroundEnabled }: Props) => {
@@ -66,31 +65,31 @@ const WebviewComponent = ({ source, playgroundEnabled }: Props) => {
     <>
       {hasError && !playgroundEnabled ? (
         <OperationResultScreenContent
+          testID="webview-error"
+          pictogram="umbrella"
+          title={I18n.t("wallet.errors.GENERIC_ERROR")}
+          isHeaderVisible
+          subtitle={I18n.t("wallet.errors.GENERIC_ERROR_SUBTITLE")}
           action={{
             label: I18n.t("global.buttons.retry"),
             onPress: handleReload
           }}
-          isHeaderVisible
-          pictogram="umbrella"
-          subtitle={I18n.t("wallet.errors.GENERIC_ERROR_SUBTITLE")}
-          testID="webview-error"
-          title={I18n.t("wallet.errors.GENERIC_ERROR")}
         />
       ) : (
         <LoadingSpinnerOverlay isLoading={loading}>
           <WebView
-            allowsInlineMediaPlayback={true}
+            testID="webview"
             androidCameraAccessDisabled={true}
             androidMicrophoneAccessDisabled={true}
-            cacheEnabled={false}
+            allowsInlineMediaPlayback={true}
             mediaPlaybackRequiresUserAction={true}
-            onError={handleError}
-            onHttpError={handleError}
-            onLoadEnd={() => setLoading(false)}
-            ref={ref}
-            source={source}
+            cacheEnabled={false}
             style={{ flex: 1 }}
-            testID="webview"
+            ref={ref}
+            onLoadEnd={() => setLoading(false)}
+            onHttpError={handleError}
+            onError={handleError}
+            source={source}
           />
         </LoadingSpinnerOverlay>
       )}

@@ -1,9 +1,8 @@
-import { NavigationContext } from "@react-navigation/native";
-import { render } from "@testing-library/react-native";
+import { createStore } from "redux";
 import { PropsWithChildren } from "react";
 import { Provider } from "react-redux";
-import { createStore } from "redux";
-
+import { NavigationContext } from "@react-navigation/native";
+import { render } from "@testing-library/react-native";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 

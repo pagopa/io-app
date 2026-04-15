@@ -5,7 +5,6 @@ import {
   fromPromise,
   waitFor as waitForActor
 } from "xstate";
-
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import { ItwTags } from "../../../machine/tags";
 import {
@@ -13,8 +12,8 @@ import {
   GetCredentialTrustmarkUrlActorOutput,
   GetWalletAttestationActorOutput
 } from "../actors";
-import { type Context } from "../context";
 import { itwTrustmarkMachine } from "../machine";
+import { type Context } from "../context";
 
 const onInit = jest.fn();
 const storeWalletInstanceAttestation = jest.fn();

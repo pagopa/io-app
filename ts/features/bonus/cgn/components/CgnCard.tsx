@@ -1,17 +1,17 @@
 import {
-  BodySmall,
   H6,
   IOColors,
+  BodySmall,
   Tag,
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { Image, StyleSheet, View } from "react-native";
-
+import I18n from "i18next";
 import cgnLogo from "../../../../../img/bonus/cgn/cgn_logo.png";
 import eycaLogo from "../../../../../img/bonus/cgn/eyca_logo.png";
-import CgnCardShapeDarkMode from "../../../../../img/features/cgn/cgn-card-dark.svg";
 import CgnCardShapeLightMode from "../../../../../img/features/cgn/cgn-card.svg";
+import CgnCardShapeDarkMode from "../../../../../img/features/cgn/cgn-card-dark.svg";
+
 import { format } from "../../../../utils/dates";
 
 export type CgnCardProps = {
@@ -29,8 +29,8 @@ export const CgnCard = ({ expireDate, withEycaLogo }: CgnCardProps) => {
 
   const eycaLogoComponent = (
     <View
-      style={[styles.logoContainer, { bottom: 12, right: 12 }]}
       testID="cgnEycaLogoTestID"
+      style={[styles.logoContainer, { bottom: 12, right: 12 }]}
     >
       <Image
         accessibilityIgnoresInvertColors
@@ -42,8 +42,8 @@ export const CgnCard = ({ expireDate, withEycaLogo }: CgnCardProps) => {
 
   const cngLogoComponent = (
     <View
-      style={[styles.logoContainer, { top: 12, right: 12 }]}
       testID="cgnLogoTestID"
+      style={[styles.logoContainer, { top: 12, right: 12 }]}
     >
       <Image
         accessibilityIgnoresInvertColors
@@ -58,8 +58,8 @@ export const CgnCard = ({ expireDate, withEycaLogo }: CgnCardProps) => {
       {/* Offset to avoid overlap with the card cutted area */}
       <Tag
         testID="cgnExpiredTagTestID"
-        text={I18n.t("bonus.cgn.detail.status.badge.expired")}
         variant="error"
+        text={I18n.t("bonus.cgn.detail.status.badge.expired")}
       />
     </View>
   );
@@ -77,7 +77,7 @@ export const CgnCard = ({ expireDate, withEycaLogo }: CgnCardProps) => {
       </View>
       <View style={styles.content}>
         <View style={styles.header}>
-          <H6 color={textColor} numberOfLines={1} style={{ flexShrink: 1 }}>
+          <H6 color={textColor} style={{ flexShrink: 1 }} numberOfLines={1}>
             {I18n.t("bonus.cgn.name")}
           </H6>
           {isExpired && expiredTag}
@@ -85,7 +85,7 @@ export const CgnCard = ({ expireDate, withEycaLogo }: CgnCardProps) => {
         <BodySmall color={textColor} style={{ width: "70%" }}>
           {I18n.t("bonus.cgn.departmentName")}
         </BodySmall>
-        <BodySmall accessibilityLabel={accessibleExpireDate} color={textColor}>
+        <BodySmall color={textColor} accessibilityLabel={accessibleExpireDate}>
           {expireDate &&
             I18n.t("bonusCard.validUntil", {
               endDate: format(expireDate, "MM/YY")

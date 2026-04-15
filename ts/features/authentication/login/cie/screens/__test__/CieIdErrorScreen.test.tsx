@@ -1,8 +1,7 @@
 import { fireEvent, render } from "@testing-library/react-native";
-
-import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
-import * as useNavigateToLoginMethod from "../../../hooks/useNavigateToLoginMethod";
 import CieIdErrorScreen from "../CieIdErrorScreen";
+import * as useNavigateToLoginMethod from "../../../hooks/useNavigateToLoginMethod";
+import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 
 const mockReplace = jest.fn();
 const mockNavigate = jest.fn();

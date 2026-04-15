@@ -1,5 +1,4 @@
 import { getType } from "typesafe-actions";
-
 import { setDebugCurrentRouteName } from "../actions/debug";
 import { Action } from "../actions/types";
 import { GlobalState } from "./types";

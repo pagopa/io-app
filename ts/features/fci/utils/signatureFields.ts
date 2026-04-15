@@ -1,22 +1,21 @@
 import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import { contramap } from "fp-ts/lib/Ord";
 import * as RA from "fp-ts/lib/ReadonlyArray";
+import * as O from "fp-ts/lib/Option";
 import * as S from "fp-ts/lib/string";
 import * as N from "fp-ts/number";
-import I18n from "i18next";
+import { contramap } from "fp-ts/lib/Ord";
 import { PDFDocument, rgb } from "pdf-lib";
 import ReactNativeBlobUtil from "react-native-blob-util";
-
-import { TypeEnum as ClauseTypeEnum } from "../../../../definitions/fci/Clause";
-import { DocumentDetailView } from "../../../../definitions/fci/DocumentDetailView";
-import { DocumentToSign } from "../../../../definitions/fci/DocumentToSign";
-import { ExistingSignatureFieldAttrs } from "../../../../definitions/fci/ExistingSignatureFieldAttrs";
+import I18n from "i18next";
 import { SignatureField } from "../../../../definitions/fci/SignatureField";
+import { TypeEnum as ClauseTypeEnum } from "../../../../definitions/fci/Clause";
+import { DocumentToSign } from "../../../../definitions/fci/DocumentToSign";
+import { DocumentDetailView } from "../../../../definitions/fci/DocumentDetailView";
 import { SignatureFieldToBeCreatedAttrs } from "../../../../definitions/fci/SignatureFieldToBeCreatedAttrs";
-import { TranslationKeys } from "../../../i18n";
 import { SignatureFieldAttrType } from "../components/DocumentWithSignature";
+import { ExistingSignatureFieldAttrs } from "../../../../definitions/fci/ExistingSignatureFieldAttrs";
 import { savePath } from "../saga/networking/handleDownloadDocument";
+import { TranslationKeys } from "../../../i18n";
 
 const clausesEnumValues: Record<ClauseTypeEnum, TranslationKeys> = {
   [ClauseTypeEnum.REQUIRED]: "features.fci.signatureFields.required",
@@ -28,8 +27,8 @@ export const getClauseLabel = (clauseType: ClauseTypeEnum) =>
   I18n.t(clausesEnumValues[clauseType]);
 
 export type LIST_DATA_TYPE = {
-  data: ReadonlyArray<SignatureField>;
   title: string;
+  data: ReadonlyArray<SignatureField>;
 };
 
 /*
@@ -99,12 +98,12 @@ const byClausesType = pipe(
   N.Ord,
   contramap((signatureField: SignatureField) => {
     switch (signatureField.clause.type) {
-      case ClauseTypeEnum.OPTIONAL:
-        return 2;
-      case ClauseTypeEnum.REQUIRED:
-        return 1;
       case ClauseTypeEnum.UNFAIR:
         return 0;
+      case ClauseTypeEnum.REQUIRED:
+        return 1;
+      case ClauseTypeEnum.OPTIONAL:
+        return 2;
       default:
         return 3;
     }

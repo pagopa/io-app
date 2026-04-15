@@ -1,8 +1,7 @@
 import { render } from "@testing-library/react-native";
 import I18n from "i18next";
-
-import { formatAmountText } from "../../utils";
 import { ReceiptTotalAmount } from "../ReceiptTotalAmount";
+import { formatAmountText } from "../../utils";
 describe("ReceiptTotalAmount", () => {
   it("should render loading placeholder when loading is true", () => {
     const { getByTestId } = render(<ReceiptTotalAmount loading />);

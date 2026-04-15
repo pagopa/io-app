@@ -1,14 +1,13 @@
 import { call, put, select, take, takeLatest } from "typed-redux-saga/macro";
 import { getType } from "typesafe-actions";
-
+import { setOfflineAccessReason } from "../store/actions";
+import { offlineAccessReasonSelector } from "../store/selectors";
+import { OfflineAccessReasonEnum } from "../store/reducer";
 import { startupLoadSuccess } from "../../../store/actions/startup";
 import { StartupStatusEnum } from "../../../store/reducers/startup";
-import { setConnectionStatus } from "../../connectivity/store/actions";
 import { isConnectedSelector } from "../../connectivity/store/selectors";
+import { setConnectionStatus } from "../../connectivity/store/actions";
 import { itwOfflineAccessAvailableSelector } from "../../itwallet/common/store/selectors";
-import { setOfflineAccessReason } from "../store/actions";
-import { OfflineAccessReasonEnum } from "../store/reducer";
-import { offlineAccessReasonSelector } from "../store/selectors";
 
 /**
  * Handles the transition to offline mode during startup.
@@ -31,6 +30,19 @@ export function* evaluateOfflineSessionRefreshSaga() {
   ) {
     yield* put(startupLoadSuccess(StartupStatusEnum.OFFLINE));
   }
+}
+
+/**
+ * Watches for `setOfflineAccessReason` action.
+ *
+ * When triggered, it runs `evaluateOfflineSessionRefreshSaga` to determine if the app
+ * should transition to offline mode based on the updated offline access reason.
+ */
+export function* watchSessionRefreshInOfflineSaga() {
+  yield* takeLatest(
+    getType(setOfflineAccessReason),
+    evaluateOfflineSessionRefreshSaga
+  );
 }
 
 /**
@@ -61,17 +73,6 @@ export function* isDeviceOfflineWithWalletSaga() {
   return false;
 }
 
-export function* shouldExitForOfflineAccess() {
-  const isDeviceOfflineWithWallet = yield* call(isDeviceOfflineWithWalletSaga);
-
-  if (isDeviceOfflineWithWallet) {
-    return true;
-  }
-  const offlineAccessReason = yield* select(offlineAccessReasonSelector);
-
-  return offlineAccessReason === OfflineAccessReasonEnum.TIMEOUT;
-}
-
 /**
  * Prevents the saga from executing if the user opened the app while offline.
  *
@@ -84,15 +85,13 @@ export function* shouldExitForOfflineAccess() {
  *   If so, it also exits early to avoid further processing.
  *
  * @returns {boolean} - Returns `true` if the saga should exit early due to offline access conditions, otherwise `false`.
- */ /**
- * Watches for `setOfflineAccessReason` action.
- *
- * When triggered, it runs `evaluateOfflineSessionRefreshSaga` to determine if the app
- * should transition to offline mode based on the updated offline access reason.
- */
-export function* watchSessionRefreshInOfflineSaga() {
-  yield* takeLatest(
-    getType(setOfflineAccessReason),
-    evaluateOfflineSessionRefreshSaga
-  );
+ */ export function* shouldExitForOfflineAccess() {
+  const isDeviceOfflineWithWallet = yield* call(isDeviceOfflineWithWalletSaga);
+
+  if (isDeviceOfflineWithWallet) {
+    return true;
+  }
+  const offlineAccessReason = yield* select(offlineAccessReasonSelector);
+
+  return offlineAccessReason === OfflineAccessReasonEnum.TIMEOUT;
 }

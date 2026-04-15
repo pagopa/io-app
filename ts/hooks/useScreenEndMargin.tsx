@@ -2,8 +2,8 @@ import { IOSpacing, IOVisualCostants } from "@pagopa/io-app-design-system";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 type EndScreenSpacingValues = {
-  screenEndMargin: number;
   screenEndSafeArea: number;
+  screenEndMargin: number;
 };
 
 /**

@@ -2,11 +2,29 @@ import cieManager from "@pagopa/react-native-cie";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { SagaIterator } from "redux-saga";
 import { call, put, takeLatest } from "typed-redux-saga/macro";
-
+import { cieIsSupported, nfcIsEnabled } from "../store/actions";
 import { SagaCallReturnType } from "../../../../../types/utils";
 import { convertUnknownToError } from "../../../../../utils/errors";
 import { startTimer } from "../../../../../utils/timer";
-import { cieIsSupported, nfcIsEnabled } from "../store/actions";
+
+export function* watchCieAuthenticationSaga(): SagaIterator {
+  // Trigger a saga on nfcIsEnabled to check if NFC is enabled or not
+  yield* takeLatest(nfcIsEnabled.request, checkNfcEnablementSaga);
+  // check if the device is compliant with CIE authentication
+  yield* call(
+    checkCieAvailabilitySaga,
+    cieManager.isCIEAuthenticationSupported
+  );
+}
+
+// stop cie manager to listen nfc tags
+export function* stopCieManager(): SagaIterator {
+  try {
+    yield* call(cieManager.stopListeningNFC);
+  } catch {
+    // just ignore
+  }
+}
 
 /**
  * check if the device is compatible with CIE authentication
@@ -22,25 +40,6 @@ export function* checkCieAvailabilitySaga(
   } catch (e) {
     yield* put(cieIsSupported.failure(convertUnknownToError(e)));
   }
-}
-
-// stop cie manager to listen nfc tags
-export function* stopCieManager(): SagaIterator {
-  try {
-    yield* call(cieManager.stopListeningNFC);
-  } catch {
-    // just ignore
-  }
-}
-
-export function* watchCieAuthenticationSaga(): SagaIterator {
-  // Trigger a saga on nfcIsEnabled to check if NFC is enabled or not
-  yield* takeLatest(nfcIsEnabled.request, checkNfcEnablementSaga);
-  // check if the device is compliant with CIE authentication
-  yield* call(
-    checkCieAvailabilitySaga,
-    cieManager.isCIEAuthenticationSupported
-  );
 }
 const CIE_NFC_STATUS_INTERVAL = 1500 as Millisecond;
 /**

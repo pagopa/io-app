@@ -1,8 +1,7 @@
 import * as E from "fp-ts/lib/Either";
-import { constNull, pipe } from "fp-ts/lib/function";
 import * as TE from "fp-ts/lib/TaskEither";
+import { constNull, pipe } from "fp-ts/lib/function";
 import { ImageURISource, Linking } from "react-native";
-
 import { storeUrl, webStoreURL } from "./appVersion";
 import { clipboardSetStringWithFeedback } from "./clipboard";
 import { openMaps } from "./openMaps";
@@ -47,7 +46,7 @@ export const getUrlBasepath = (url: string): string => {
   );
 };
 
-export type ItemAction = "COPY" | "LINK" | "MAP";
+export type ItemAction = "MAP" | "COPY" | "LINK";
 /**
  * Return the function to:
  * - copy the value, if valueType is COPY
@@ -61,10 +60,10 @@ export function handleItemOnPress(
   onError: () => void = constNull
 ): () => void {
   switch (valueType) {
-    case "COPY":
-      return () => clipboardSetStringWithFeedback(value);
     case "MAP":
       return () => openMaps(value);
+    case "COPY":
+      return () => clipboardSetStringWithFeedback(value);
     default:
       return () => Linking.openURL(value).then(onSuccess).catch(onError);
   }

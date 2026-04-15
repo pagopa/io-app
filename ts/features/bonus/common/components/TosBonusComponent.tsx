@@ -7,12 +7,12 @@ import {
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
+
 import I18n from "i18next";
 import { FunctionComponent, useEffect, useState } from "react";
 import { BackHandler, ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import WebView from "react-native-webview";
-
 import { withLoadingSpinner } from "../../../../components/helpers/withLoadingSpinner";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../../utils/webview";
 
@@ -81,12 +81,12 @@ const TosBonusComponent: FunctionComponent<Props> = props => {
         <View style={styles.errorButtonsContainer}>
           <IOButton
             fullWidth
+            variant="outline"
             label={I18n.t("global.buttons.retry")}
             onPress={() => {
               setOnLoadEnd(false);
               setHasError(false);
             }}
-            variant="outline"
           />
         </View>
       </View>
@@ -103,8 +103,8 @@ const TosBonusComponent: FunctionComponent<Props> = props => {
         }}
       >
         <IconButton
-          accessibilityLabel={I18n.t("global.buttons.close")}
           color="neutral"
+          accessibilityLabel={I18n.t("global.buttons.close")}
           icon="closeLarge"
           onPress={props.onClose}
         />
@@ -116,12 +116,12 @@ const TosBonusComponent: FunctionComponent<Props> = props => {
             <WebView
               androidCameraAccessDisabled={true}
               androidMicrophoneAccessDisabled={true}
-              injectedJavaScript={closeInjectedScript(AVOID_ZOOM_JS)}
-              onError={handleError}
-              onLoadEnd={handleLoadEnd}
-              source={{ uri: props.tos_url }}
-              style={styles.flex2}
               textZoom={100}
+              style={styles.flex2}
+              onLoadEnd={handleLoadEnd}
+              onError={handleError}
+              source={{ uri: props.tos_url }}
+              injectedJavaScript={closeInjectedScript(AVOID_ZOOM_JS)}
             />
           </View>
         )}

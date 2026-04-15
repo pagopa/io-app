@@ -1,5 +1,4 @@
 import _ from "lodash";
-
 import { applicationChangeState } from "../../store/actions/application";
 import { appReducer } from "../../store/reducers";
 

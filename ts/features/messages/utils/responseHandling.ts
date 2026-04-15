@@ -1,7 +1,6 @@
 import { IResponseType } from "@pagopa/ts-commons/lib/requests";
 import * as E from "fp-ts/lib/Either";
 import { ValidationError } from "io-ts";
-
 import { Action } from "../../../store/actions/types";
 import { readablePrivacyReport } from "../../../utils/reporters";
 
@@ -9,7 +8,7 @@ export type ResponseType<T> =
   | IResponseType<200, T>
   | IResponseType<
       400 | 401 | 403 | 404 | 429 | 500,
-      undefined | { title?: string }
+      { title?: string } | undefined
     >;
 
 /**

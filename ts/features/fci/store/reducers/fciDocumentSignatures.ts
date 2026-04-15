@@ -1,8 +1,7 @@
 import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { updateAt } from "fp-ts/lib/ReadonlyArray";
+import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
-
 import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -24,8 +23,6 @@ const reducer = (
   action: Action
 ): FciDocumentSignaturesState => {
   switch (action.type) {
-    case getType(fciClearStateRequest):
-      return emptyState;
     case getType(fciUpdateDocumentSignaturesRequest):
       return {
         ...state,
@@ -45,6 +42,8 @@ const reducer = (
           )
         )
       };
+    case getType(fciClearStateRequest):
+      return emptyState;
   }
   return state;
 };

@@ -1,12 +1,11 @@
 import { render } from "@testing-library/react-native";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { CardBackground } from "../CardBackground.tsx";
 import { CardColorScheme } from "../types";
+import { CardBackground } from "../CardBackground.tsx";
 
 describe("CardBackground", () => {
   it.each([
@@ -45,8 +44,8 @@ describe("CardBackground", () => {
       const component = render(
         <Provider store={store}>
           <CardBackground
-            colorScheme={colorScheme as CardColorScheme}
             credentialType={credentialType}
+            colorScheme={colorScheme as CardColorScheme}
           />
         </Provider>
       ).toJSON();

@@ -1,7 +1,6 @@
 import { Alert } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import Animated, { LinearTransition } from "react-native-reanimated";
-
 import { usePaymentsMethodPspDetailsBottomSheet } from "./PaymentsMethodPspDetailsBottomSheet";
 import { PaymentsMethodPspPayPalBanner } from "./PaymentsMethodPspPayPalBanner";
 
@@ -26,12 +25,12 @@ export const PaymentsMethodPspDetailsAlert = ({
       <PaymentsMethodPspPayPalBanner />
       <Animated.View layout={LinearTransition.duration(200)}>
         <Alert
-          action={I18n.t("features.payments.details.pspAlert.action")}
           content={I18n.t("features.payments.details.pspAlert.description", {
             pspBusinessName
           })}
-          onPress={presentPspDetailsBottomSheet}
           variant="info"
+          action={I18n.t("features.payments.details.pspAlert.action")}
+          onPress={presentPspDetailsBottomSheet}
         />
         {pspDetailsBottomSheet}
       </Animated.View>

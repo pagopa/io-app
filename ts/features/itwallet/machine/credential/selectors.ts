@@ -1,9 +1,8 @@
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { StateFrom } from "xstate";
-
-import { CredentialFormat } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
+import { CredentialFormat } from "../../common/utils/itwTypesUtils";
 import { ItwCredentialIssuanceMachine } from "./machine";
 
 type MachineSnapshot = StateFrom<ItwCredentialIssuanceMachine>;
@@ -28,7 +27,7 @@ export const selectCredentialOption = (snapshot: MachineSnapshot) =>
   // we continue using the SD-JWT format to display credential details.
   O.fromNullable(
     snapshot.context.credentials?.find(
-      ({ format }) => format !== CredentialFormat.MDOC
+      ({ metadata }) => metadata.format !== CredentialFormat.MDOC
     )
   );
 

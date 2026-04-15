@@ -1,11 +1,10 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
-
-import { applicationChangeState } from "../../../../../../store/actions/application";
-import * as hooks from "../../../../../../store/hooks";
-import { appReducer } from "../../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
-import { cieLoginDisableUat, cieLoginEnableUat } from "../../store/actions";
+import { appReducer } from "../../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { cieLoginEnableUat, cieLoginDisableUat } from "../../store/actions";
+import * as hooks from "../../../../../../store/hooks";
 import CieLoginConfigScreenContent from "../CieLoginConfigScreenContent";
 
 jest.mock("../../../../../../store/hooks", () => ({

@@ -6,7 +6,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import { Platform, StyleSheet } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
-
 import { CircularProgress } from "../../../../../../components/ui/CircularProgress";
 import { ReadStatus } from "../types/ReadStatus";
 
@@ -37,19 +36,19 @@ export const ReadStatusComponent = ({
 }: ReadStatusComponentProps) => (
   <Animated.View layout={LinearTransition} style={styles.statusContainer}>
     <CircularProgress
-      progress={progress * 100}
-      radius={125}
       size={250}
-      strokeBgColor={IOColors["grey-100"]}
+      radius={125}
+      progress={progress * 100}
       strokeColor={IOColors[statusColorMap[status]]}
+      strokeBgColor={IOColors["grey-100"]}
       strokeWidth={8}
     >
       <>
         <Animated.View layout={LinearTransition}>
-          <Pictogram name={pictogramMap[status]} size={180} />
+          <Pictogram size={180} name={pictogramMap[status]} />
         </Animated.View>
         {status === "reading" && step && (
-          <IOText color="black" font="FiraCode" size={12} weight="Bold">
+          <IOText font="FiraCode" color="black" weight="Bold" size={12}>
             {step}
           </IOText>
         )}

@@ -1,16 +1,15 @@
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import * as E from "fp-ts/lib/Either";
-
 import { isDefined } from "../../../../../utils/guards";
 import {
-  parseClaims,
-  WellKnownClaim
+  WellKnownClaim,
+  parseClaims
 } from "../../../common/utils/itwClaimsUtils";
 import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUtils";
 import { validCredentialStatuses } from "../../../common/utils/itwCredentialUtils";
 import { getIoWallet } from "../../../common/utils/itwIoWallet";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import { ItwRemoteCredentialCombination } from "../analytics/utils/types";
 import {
   EnrichedPresentationDetails,
@@ -28,7 +27,7 @@ const isPresentationDetailSdJwt = <T extends PresentationDetails[number]>(
  * Note: although this list is unlikely to change, you should ensure to have
  * a fallback when dealing with this list to prevent unwanted behaviours
  */
-const credentialTypesByVct: Record<string, CredentialType> = {
+const credentialTypesByVct: { [vct: string]: CredentialType } = {
   personidentificationdata: CredentialType.PID,
   mdl: CredentialType.DRIVING_LICENSE,
   europeandisabilitycard: CredentialType.EUROPEAN_DISABILITY_CARD,
@@ -81,7 +80,7 @@ export const validateItwPresentationQrCodeParams = (
  */
 export const enrichPresentationDetails = (
   presentationDetails: PresentationDetails,
-  credentialsByType: Record<string, StoredCredential | undefined>
+  credentialsByType: Record<string, CredentialMetadata | undefined>
 ): EnrichedPresentationDetails =>
   presentationDetails
     .filter(isPresentationDetailSdJwt) // TODO: [SIW-3998] Support MDOC remote presentation
@@ -154,7 +153,7 @@ export const groupCredentialsByPurpose = (
  */
 export const getInvalidCredentials = (
   presentationDetails: PresentationDetails,
-  credentialsByType: Record<string, StoredCredential | undefined>
+  credentialsByType: Record<string, CredentialMetadata | undefined>
 ) =>
   presentationDetails
     .filter(isPresentationDetailSdJwt) // TODO: [SIW-3998] Support MDOC remote presentation

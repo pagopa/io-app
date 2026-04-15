@@ -1,25 +1,24 @@
-import { call, put, select } from "typed-redux-saga/macro";
+import { put, call, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-
 import { PaginatedPublicMessagesCollection } from "../../../../definitions/backend/PaginatedPublicMessagesCollection";
-import { backendClientManager } from "../../../api/BackendClientManager";
-import { apiUrlPrefix } from "../../../config";
-import { SagaCallReturnType } from "../../../types/utils";
-import { convertUnknownToError, getError } from "../../../utils/errors";
-import { sessionTokenSelector } from "../../authentication/common/store/selectors";
-import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
-import {
-  trackLoadNextPageMessagesFailure,
-  trackUndefinedBearerToken,
-  UndefinedBearerTokenPhase
-} from "../analytics";
 import {
   loadNextPageMessages,
   loadNextPageMessages as loadNextPageMessagesAction
 } from "../store/actions";
 import { toUIMessage } from "../store/reducers/transformers";
+import { SagaCallReturnType } from "../../../types/utils";
+import { convertUnknownToError, getError } from "../../../utils/errors";
+import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import { errorToReason, unknownToReason } from "../utils";
+import {
+  trackLoadNextPageMessagesFailure,
+  trackUndefinedBearerToken,
+  UndefinedBearerTokenPhase
+} from "../analytics";
 import { handleResponse } from "../utils/responseHandling";
+import { sessionTokenSelector } from "../../authentication/common/store/selectors";
+import { backendClientManager } from "../../../api/BackendClientManager";
+import { apiUrlPrefix } from "../../../config";
 
 export function* handleLoadNextPageMessages(
   action: ActionType<typeof loadNextPageMessages.request>

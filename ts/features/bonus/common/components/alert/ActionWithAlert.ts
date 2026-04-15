@@ -2,13 +2,13 @@ import { IOToast } from "@pagopa/io-app-design-system";
 import { Alert } from "react-native";
 
 type ConfirmConfig = {
+  title: string;
   body?: string;
+  confirmText: string;
   cancelText: string;
+  onConfirmAction: () => void;
   // optional, in case will show a toast with the feedback text when the action is executed
   completedFeedbackText?: string;
-  confirmText: string;
-  onConfirmAction: () => void;
-  title: string;
 };
 /**
  * A generic way to ask confirmation with {@link Alert.alert} for a specific action

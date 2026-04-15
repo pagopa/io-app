@@ -17,8 +17,8 @@ const styles = StyleSheet.create({
 
 export type EmptyStateProps = WithTestID<{
   pictogram: IOPictograms;
-  subtitle?: string;
   title: string;
+  subtitle?: string;
 }>;
 
 export const EmptyState = ({
@@ -28,7 +28,7 @@ export const EmptyState = ({
   testID
 }: EmptyStateProps) => (
   <View testID={testID}>
-    <VStack space={24} style={{ alignItems: "center" }}>
+    <VStack style={{ alignItems: "center" }} space={24}>
       <Pictogram name={pictogram} size={120} />
       <H6 accessibilityRole="header" style={styles.text}>
         {title}

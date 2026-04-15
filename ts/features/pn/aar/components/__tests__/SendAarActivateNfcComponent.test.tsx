@@ -1,6 +1,14 @@
 import { act, fireEvent, render, waitFor } from "@testing-library/react-native";
 import { Alert } from "react-native";
-
+import * as NFC_HOOK from "../../hooks/useIsNfcFeatureEnabled";
+import { SendAarActivateNfcComponent } from "../SendAarActivateNfcComponent";
+import * as Aar_SELECTOR from "../../store/selectors";
+import {
+  sendAarMockStateFactory,
+  sendAarMockStates
+} from "../../utils/testUtils";
+import { setAarFlowState } from "../../store/actions";
+import { sendAarFlowStates } from "../../utils/stateUtils";
 import {
   trackSendAarMandateCieNfcActivationContinue,
   trackSendAarMandateCieNfcActivationControlAlert,
@@ -8,15 +16,6 @@ import {
   trackSendAarMandateCieNfcActivationControlAlertGoToSettings,
   trackSendAarMandateCieNfcGoToSettings
 } from "../../analytics";
-import * as NFC_HOOK from "../../hooks/useIsNfcFeatureEnabled";
-import { setAarFlowState } from "../../store/actions";
-import * as Aar_SELECTOR from "../../store/selectors";
-import { sendAarFlowStates } from "../../utils/stateUtils";
-import {
-  sendAarMockStateFactory,
-  sendAarMockStates
-} from "../../utils/testUtils";
-import { SendAarActivateNfcComponent } from "../SendAarActivateNfcComponent";
 
 const mockDispatch = jest.fn();
 const mockOpenNFCSettings = jest.fn();

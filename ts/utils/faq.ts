@@ -35,35 +35,35 @@ export const FAQs: Record<
 };
 
 export type FAQsCategoriesType =
+  | "landing_SPID"
+  | "landing_CIE"
+  | "authentication_SPID"
   | "authentication_CIE"
   | "authentication_IPD_selection"
-  | "authentication_SPID"
-  | "bonus_available_list"
-  | "bonus_detail"
-  | "bonus_eligible"
-  | "bonus_eligible_discrepancies"
-  | "bonus_information"
-  | "landing_CIE"
-  | "landing_SPID"
+  | "profile"
+  | "privacy"
+  | "onboarding_pin"
+  | "onboarding_fingerprint"
+  | "unlock"
   | "messages"
   | "messages_detail"
-  | "onboarding_fingerprint"
-  | "onboarding_pin"
-  | "payment"
-  | "privacy"
-  | "profile"
-  | "services"
-  | "services_detail"
-  | "unlock"
   | "wallet"
   | "wallet_insert_notice_data"
   | "wallet_methods"
   | "wallet_methods_security"
-  | "wallet_transaction";
+  | "wallet_transaction"
+  | "payment"
+  | "services"
+  | "services_detail"
+  | "bonus_information"
+  | "bonus_eligible"
+  | "bonus_eligible_discrepancies"
+  | "bonus_detail"
+  | "bonus_available_list";
 
 export type FAQType = {
-  content: string;
   title: string;
+  content: string;
 };
 
 /**

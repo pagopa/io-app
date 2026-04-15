@@ -5,7 +5,6 @@ import Animated, {
   useAnimatedRef,
   useSharedValue
 } from "react-native-reanimated";
-
 import {
   IOScrollView,
   IOScrollViewActions
@@ -14,14 +13,14 @@ import { ButtonBlockProps } from "../../../../../components/ui/utils/buttons.ts"
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { useHeaderPropsByCredentialType } from "../../../common/utils/itwStyleUtils";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors/index.ts";
 
 export type CredentialCtaProps = ButtonBlockProps;
 
 export type ItwPresentationDetailsScreenBaseProps = {
+  credential: CredentialMetadata;
   children?: ReactNode;
-  credential: StoredCredential;
   ctaProps?: CredentialCtaProps;
 };
 
@@ -67,9 +66,9 @@ const ItwPresentationDetailsScreenBase = ({
 
   return (
     <IOScrollView
-      actions={actions}
       animatedRef={animatedScrollViewRef}
       includeContentMargins={false}
+      actions={actions}
     >
       {children}
     </IOScrollView>

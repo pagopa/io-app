@@ -1,5 +1,4 @@
 import { Pressable } from "react-native";
-
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { withWalletCardBaseComponent } from "../../../wallet/components/WalletCardBaseComponent";
 import { IDPayDetailsRoutes } from "../../details/navigation";

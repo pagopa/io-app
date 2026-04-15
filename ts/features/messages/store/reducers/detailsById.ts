@@ -1,9 +1,9 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import _ from "lodash";
 import { getType } from "typesafe-actions";
 
+import _ from "lodash";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
@@ -17,7 +17,9 @@ import { loadMessageDetails, reloadAllMessages } from "../actions";
 /**
  * A list of messages and pagination data.
  */
-export type DetailsById = Record<string, pot.Pot<UIMessageDetails, string>>;
+export type DetailsById = {
+  [id: string]: pot.Pot<UIMessageDetails, string>;
+};
 
 const INITIAL_STATE: DetailsById = {};
 
@@ -29,10 +31,16 @@ export const detailsByIdReducer = (
   action: Action
 ): DetailsById => {
   switch (action.type) {
-    case getType(clearCache):
-    // falls through
-    case getType(reloadAllMessages.request):
-      return INITIAL_STATE;
+    case getType(loadMessageDetails.request): {
+      const { id } = action.payload;
+      if (state[id]) {
+        return { ...state, [id]: pot.toLoading(state[id]) };
+      }
+      return { ...state, [action.payload.id]: pot.noneLoading };
+    }
+
+    case getType(loadMessageDetails.success):
+      return { ...state, [action.payload.id]: pot.some(action.payload) };
 
     case getType(loadMessageDetails.failure): {
       const { id, error } = action.payload;
@@ -47,16 +55,6 @@ export const detailsByIdReducer = (
         [action.payload.id]: pot.noneError(error.message || "UNKNOWN")
       };
     }
-    case getType(loadMessageDetails.request): {
-      const { id } = action.payload;
-      if (state[id]) {
-        return { ...state, [id]: pot.toLoading(state[id]) };
-      }
-      return { ...state, [action.payload.id]: pot.noneLoading };
-    }
-    case getType(loadMessageDetails.success):
-      return { ...state, [action.payload.id]: pot.some(action.payload) };
-
     case getType(populateStoresWithEphemeralAarMessageData): {
       const { iun, markdown, pnServiceID, subject } = action.payload;
       const messageData: UIMessageDetails = {
@@ -77,6 +75,10 @@ export const detailsByIdReducer = (
         return state;
       }
       return _.omit(state, action.payload.messageId);
+
+    case getType(clearCache):
+    case getType(reloadAllMessages.request):
+      return INITIAL_STATE;
 
     default:
       return state;

@@ -1,15 +1,14 @@
-import I18n from "i18next";
-import { createStore } from "redux";
 import { createActor } from "xstate";
-
-import { applicationChangeState } from "../../../../../../store/actions/application";
-import { appReducer } from "../../../../../../store/reducers";
-import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { createStore } from "redux";
+import I18n from "i18next";
 import { itwRemoteMachine } from "../../machine/machine";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { appReducer } from "../../../../../../store/reducers";
 import { ItwRemoteMachineContext } from "../../machine/provider";
-import { ITW_REMOTE_ROUTES } from "../../navigation/routes";
-import { ItwRemoteFlowType } from "../../utils/itwRemoteTypeUtils";
 import { ItwRemoteAuthResponseScreen } from "../ItwRemoteAuthResponseScreen";
+import { ITW_REMOTE_ROUTES } from "../../navigation/routes";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { ItwRemoteFlowType } from "../../utils/itwRemoteTypeUtils";
 
 describe("ItwRemoteAuthResponseScreen", () => {
   beforeEach(() => {

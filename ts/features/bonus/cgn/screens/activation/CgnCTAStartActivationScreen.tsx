@@ -1,24 +1,24 @@
 import { useNavigation } from "@react-navigation/native";
-import I18n from "i18next";
+
 import { FC, useEffect, useRef } from "react";
 import { Alert } from "react-native";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-
-import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
-import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
-import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import I18n from "i18next";
 import { isCGNEnabledSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
+import { ID_CGN_TYPE } from "../../../common/utils";
 import { loadAvailableBonuses } from "../../../common/store/actions/availableBonusesTypes";
 import {
   availableBonusTypesSelectorFromId,
   isAvailableBonusErrorSelector,
   supportedAvailableBonusSelector
 } from "../../../common/store/selectors";
-import { ID_CGN_TYPE } from "../../../common/utils";
 import { cgnActivationStart } from "../../store/actions/activation";
+import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 
 type Props = ReturnType<typeof mapDispatchToProps> &
   ReturnType<typeof mapStateToProps>;
@@ -52,12 +52,12 @@ const CgnCTAStartOnboardingComponent: FC<Props> = (props: Props) => {
   if (props.hasError) {
     return (
       <OperationResultScreenContent
+        pictogram="umbrella"
+        title={I18n.t("global.genericError")}
         action={{
           label: I18n.t("global.buttons.retry"),
           onPress: props.loadAvailableBonus
         }}
-        pictogram="umbrella"
-        title={I18n.t("global.genericError")}
       />
     );
   }

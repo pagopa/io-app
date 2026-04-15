@@ -12,7 +12,6 @@ import {
   take
 } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
-
 import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
 import { backendClientManager } from "../../../api/BackendClientManager";
 import { apiUrlPrefix } from "../../../config";
@@ -24,17 +23,17 @@ import { readablePrivacyReport } from "../../../utils/reporters";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
 import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import {
+  UndefinedBearerTokenPhase,
   trackMessagePaymentFailure,
-  trackUndefinedBearerToken,
-  UndefinedBearerTokenPhase
+  trackUndefinedBearerToken
 } from "../analytics";
 import {
   cancelQueuedPaymentUpdates,
   updatePaymentForMessage
 } from "../store/actions";
 import {
-  isMessagePaymentGenericError,
   MessagePaymentError,
+  isMessagePaymentGenericError,
   toGenericMessagePaymentError,
   toSpecificMessagePaymentError,
   toTimeoutMessagePaymentError

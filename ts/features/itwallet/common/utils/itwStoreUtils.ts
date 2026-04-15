@@ -1,14 +1,14 @@
 import { GlobalState } from "../../../../store/reducers/types";
 import { type CredentialIssuanceFailure } from "../../machine/credential/failure";
 import { type IssuanceFailure } from "../../machine/eid/failure";
-import { ProximityFailure } from "../../presentation/proximity/machine/failure.ts";
 import { RemoteFailure } from "../../presentation/remote/machine/failure.ts";
+import { ProximityFailure } from "../../presentation/proximity/machine/failure.ts";
 
 interface PollForStoreValueOptions<T> {
-  condition: (value: T) => boolean;
   getState: () => GlobalState;
-  interval?: number;
   selector: (state: GlobalState) => T;
+  condition: (value: T) => boolean;
+  interval?: number;
   timeout?: number;
 }
 
@@ -66,10 +66,10 @@ export const shouldSerializeReason = (failure: { reason?: unknown }) =>
  */
 export const serializeFailureReason = (
   failure:
-    | CredentialIssuanceFailure
     | IssuanceFailure
-    | ProximityFailure
+    | CredentialIssuanceFailure
     | RemoteFailure
+    | ProximityFailure
 ) => {
   const reason = !failure.reason
     ? "Reason not provided"

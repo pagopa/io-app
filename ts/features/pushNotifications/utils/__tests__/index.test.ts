@@ -1,12 +1,11 @@
+import { PermissionsAndroid, PermissionStatus } from "react-native";
 import PushNotificationIOS, {
   AuthorizationStatus,
   PushNotificationPermissions
 } from "@react-native-community/push-notification-ios";
 import * as Sentry from "@sentry/react-native";
-import { PermissionsAndroid, PermissionStatus } from "react-native";
-import NotificationsUtils from "react-native-notifications-utils";
 import PushNotification from "react-native-push-notification";
-
+import NotificationsUtils from "react-native-notifications-utils";
 import {
   AuthorizationStatus as AS,
   cancellAllLocalNotifications,

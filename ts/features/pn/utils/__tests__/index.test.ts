@@ -1,5 +1,4 @@
 import * as O from "fp-ts/lib/Option";
-
 import {
   canShowMorePaymentsLink,
   doesSENDMessageIncludeF24,
@@ -12,13 +11,13 @@ import {
   paymentsFromSendMessage,
   shouldUseBottomSheetForPayments
 } from "..";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
 import { GlobalState } from "../../../../store/reducers/types";
 import { CTAS } from "../../../../types/LocalizedCTAs";
-import { ATTACHMENT_CATEGORY } from "../../../messages/types/attachmentCategory";
-import { SendOpeningSource } from "../../../pushNotifications/analytics";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { NotificationPaymentInfo } from "../../../../../definitions/pn/NotificationPaymentInfo";
 import { PNMessage } from "../../store/types/types";
+import { SendOpeningSource } from "../../../pushNotifications/analytics";
+import { ATTACHMENT_CATEGORY } from "../../../messages/types/attachmentCategory";
 
 const navigateToServiceLink = () =>
   "ioit://services/service-detail?serviceId=optInServiceId&activate=true";
@@ -47,17 +46,17 @@ const getMockCTAs = () =>
   }) as CTAS;
 
 type IsPNOptInMessageTestInputType = {
+  testDescription: string;
   input: {
     CTAs: CTAS | undefined;
     serviceId: ServiceId | undefined;
     state: GlobalState;
   };
   output: {
+    isPNOptInMessage: boolean;
     cta1LinksToPNService: boolean;
     cta2LinksToPNService: boolean;
-    isPNOptInMessage: boolean;
   };
-  testDescription: string;
 };
 
 const isPNOptInMessageTestInput: Array<IsPNOptInMessageTestInputType> = [

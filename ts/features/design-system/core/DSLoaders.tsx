@@ -1,22 +1,22 @@
 import {
   H4,
-  hexToRgba,
   IOColors,
   LoadingSpinner,
   Pictogram,
   ProgressLoader,
-  useIOTheme,
-  VStack
+  VStack,
+  hexToRgba,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
+
 import { ReactNode, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
-
+import I18n from "i18next";
 import ActivityIndicator from "../../../components/ui/ActivityIndicator";
 import { CircularProgress } from "../../../components/ui/CircularProgress";
 import { LoadingIndicator } from "../../../components/ui/LoadingIndicator";
-import { DesignSystemScreen } from "../components/DesignSystemScreen";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 // Image dimension
 const imgDimension = 188;
@@ -40,8 +40,8 @@ const styles = StyleSheet.create({
 });
 
 type SpinnerViewerBox = {
-  children: ReactNode;
   name: string;
+  children: ReactNode;
   variant?: "default" | "primary";
 };
 
@@ -88,15 +88,15 @@ const CircularProgressViewerBox = () => {
 
   return (
     <CircularProgress
-      progress={10}
       radius={imgDimension / 2}
+      progress={10}
       size={imgDimension}
+      strokeWidth={circleBorderWidth}
       strokeBgColor={IOColors[theme["appBackground-tertiary"]]}
       strokeColor={IOColors[theme["interactiveElem-default"]]}
-      strokeWidth={circleBorderWidth}
     >
       <View style={styles.imgWrapper}>
-        <Pictogram name={"nfcScaniOS"} size={"100%"} />
+        <Pictogram size={"100%"} name={"nfcScaniOS"} />
       </View>
     </CircularProgress>
   );
@@ -116,17 +116,17 @@ export const DSLoaders = () => {
           <DSComponentViewerBox name="ActivityIndicator · Large size, primary color">
             <View style={{ alignItems: "flex-start" }}>
               <ActivityIndicator
+                animating={true}
+                size={"large"}
+                color={IOColors[theme["interactiveElem-default"]]}
+                accessible={true}
                 accessibilityHint={I18n.t(
                   "global.accessibility.activityIndicator.hint"
                 )}
                 accessibilityLabel={I18n.t(
                   "global.accessibility.activityIndicator.label"
                 )}
-                accessible={true}
-                animating={true}
-                color={IOColors[theme["interactiveElem-default"]]}
                 importantForAccessibility={"no-hide-descendants"}
-                size={"large"}
                 testID={"activityIndicator"}
               />
             </View>

@@ -1,9 +1,8 @@
 import { VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-
-import IOMarkdown from "../../../../components/IOMarkdown";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { WALLET_PAYMENT_SHOW_OTHER_CHANNELS_URL } from "../utils";
+import IOMarkdown from "../../../../components/IOMarkdown";
 
 export const usePaymentReversedInfoBottomSheet = () => {
   const getModalContent = () => (

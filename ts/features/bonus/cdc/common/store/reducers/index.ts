@@ -1,5 +1,4 @@
 import { combineReducers } from "redux";
-
 import cdcWalletReducer, {
   CdcWalletState
 } from "../../../wallet/store/reducers";

@@ -1,6 +1,5 @@
-import { CommonActions, StackActions } from "@react-navigation/native";
 import { call, take } from "typed-redux-saga/macro";
-
+import { CommonActions, StackActions } from "@react-navigation/native";
 import NavigationService from "../../../navigation/NavigationService";
 import ROUTES from "../../../navigation/routes";
 import { completeOnboarding } from "../store/actions";

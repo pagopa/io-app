@@ -1,6 +1,5 @@
 import { RenderAPI } from "@testing-library/react-native";
 import { createStore, Store } from "redux";
-
 import { Zendesk } from "../../../../../definitions/content/Zendesk";
 import { ZendeskCategories } from "../../../../../definitions/content/ZendeskCategories";
 import { ZendeskCategory } from "../../../../../definitions/content/ZendeskCategory";

@@ -3,8 +3,8 @@ import {
   itwOfflineAccessAvailableSelector,
   itwShouldRenderDiscoveryBannerSelector,
   itwShouldRenderInboxDiscoveryBannerSelector,
-  itwShouldRenderL2EngagementBannerForInactiveWalletSelector,
   itwShouldRenderL2EngagementBannerSelector,
+  itwShouldRenderL2EngagementBannerForInactiveWalletSelector,
   itwShouldRenderL3UpgradeBannerSelector,
   itwShouldRenderWalletDiscoveryBannerSelector,
   itwShouldRenderWalletReadyBannerSelector,
@@ -16,8 +16,8 @@ import * as ingressSelectors from "../../../../../ingress/store/selectors";
 import * as credentialsSelectors from "../../../../credentials/store/selectors";
 import * as lifecycleSelectors from "../../../../lifecycle/store/selectors";
 import * as walletInstanceSelectors from "../../../../walletInstance/store/selectors";
-import * as bannersSelectors from "../banners";
 import * as preferencesSelectors from "../preferences";
+import * as bannersSelectors from "../banners";
 import * as remoteConfigSelectors from "../remoteConfig";
 
 describe("isItwDiscoveryBannerRenderableSelector", () => {

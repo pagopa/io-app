@@ -1,5 +1,4 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
-
 import { StartupStatusEnum, StartupTransientError } from "../reducers/startup";
 
 export const startupLoadSuccess = createStandardAction(

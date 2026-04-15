@@ -1,7 +1,6 @@
-import cieSdk from "@pagopa/react-native-cie";
-import { act, renderHook } from "@testing-library/react-native";
 import { Platform } from "react-native";
-
+import { renderHook, act } from "@testing-library/react-native";
+import cieSdk from "@pagopa/react-native-cie";
 import { useIsNfcFeatureEnabled } from "../useIsNfcFeatureEnabled";
 
 const platforms: ReadonlyArray<typeof Platform.OS> = ["android", "ios"];

@@ -1,28 +1,27 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as Sentry from "@sentry/react-native";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import { constUndefined } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import { Platform } from "react-native";
 import PushNotification, {
   ReceivedNotification
 } from "react-native-push-notification";
-
-import * as PROFILEPROPERTIES from "../../../../mixpanelConfig/profileProperties";
-import { Store } from "../../../../store/actions/types";
-import { GlobalState } from "../../../../store/reducers/types";
-import * as MESSAGESANALYTICS from "../../../messages/analytics";
-import {
-  loadPreviousPageMessages,
-  reloadAllMessages
-} from "../../../messages/store/actions";
-import * as ANALYTICS from "../../analytics";
-import { newPushNotificationsToken } from "../../store/actions/installation";
-import { updateNotificationsPendingMessage } from "../../store/actions/pendingMessage";
+import { Platform } from "react-native";
 import {
   configurePushNotifications,
   testable
 } from "../configurePushNotification";
+import { Store } from "../../../../store/actions/types";
+import { newPushNotificationsToken } from "../../store/actions/installation";
+import * as ANALYTICS from "../../analytics";
+import * as MESSAGESANALYTICS from "../../../messages/analytics";
+import * as PROFILEPROPERTIES from "../../../../mixpanelConfig/profileProperties";
+import { GlobalState } from "../../../../store/reducers/types";
+import {
+  loadPreviousPageMessages,
+  reloadAllMessages
+} from "../../../messages/store/actions";
+import { updateNotificationsPendingMessage } from "../../store/actions/pendingMessage";
 
 jest.mock("@react-native-community/push-notification-ios", () => ({
   FetchResult: {

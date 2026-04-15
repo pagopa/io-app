@@ -1,4 +1,4 @@
-import { getLuminance, hexToRgb } from "../color";
+import { hexToRgb, getLuminance } from "../color";
 
 describe("hexToRgb", () => {
   it("should convert hex color to RGB object", () => {

@@ -1,13 +1,12 @@
-import I18n from "i18next";
 import { createStore } from "redux";
-
-import * as connectivitySelectors from "../../features/connectivity/store/selectors";
-import { OfflineAccessReasonEnum } from "../../features/ingress/store/reducer";
-import * as ingressSelectors from "../../features/ingress/store/selectors";
-import { applicationChangeState } from "../../store/actions/application";
+import I18n from "i18next";
 import { appReducer } from "../../store/reducers";
+import { applicationChangeState } from "../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../utils/testWrapper";
+import * as connectivitySelectors from "../../features/connectivity/store/selectors";
+import * as ingressSelectors from "../../features/ingress/store/selectors";
 import { useOfflineToastGuard } from "../useOfflineToastGuard.ts";
+import { OfflineAccessReasonEnum } from "../../features/ingress/store/reducer";
 
 const mockNavigate = jest.fn();
 

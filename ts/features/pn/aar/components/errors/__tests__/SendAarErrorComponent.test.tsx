@@ -1,18 +1,17 @@
 import { act, fireEvent } from "@testing-library/react-native";
 import { Text, View } from "react-native";
 import { createStore } from "redux";
-
-import * as debugHooks from "../../../../../../hooks/useDebugInfo";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import PN_ROUTES from "../../../../navigation/routes";
-import * as ANALYTICS from "../../../analytics";
 import * as FLOW_MANAGER from "../../../hooks/useSendAarFlowManager";
 import * as SELECTORS from "../../../store/selectors";
 import { sendAarMockStateFactory } from "../../../utils/testUtils";
 import { SendAarGenericErrorComponent } from "../../errors/SendAarErrorComponent";
+import * as debugHooks from "../../../../../../hooks/useDebugInfo";
+import * as ANALYTICS from "../../../analytics";
 import { useAarGenericErrorBottomSheet } from "../hooks/useAarGenericErrorBottomSheet";
 
 jest.mock("../hooks/useAarGenericErrorBottomSheet");

@@ -3,9 +3,12 @@ import * as E from "fp-ts/lib/Either";
 import { Platform } from "react-native";
 import { SagaIterator } from "redux-saga";
 import { call, put, select, take } from "typed-redux-saga/macro";
-
 import { PlatformEnum } from "../../../../definitions/backend/Platform";
 import { BackendClient } from "../../../api/backend";
+import {
+  canSkipTokenRegistrationSelector,
+  notificationsInstallationSelector
+} from "../store/reducers/installation";
 import { convertUnknownToError } from "../../../utils/errors";
 import {
   trackNotificationInstallationTokenNotChanged,
@@ -16,10 +19,6 @@ import {
   newPushNotificationsToken,
   pushNotificationsTokenUploaded
 } from "../store/actions/installation";
-import {
-  canSkipTokenRegistrationSelector,
-  notificationsInstallationSelector
-} from "../store/reducers/installation";
 
 export const notificationsPlatform: PlatformEnum =
   Platform.select<PlatformEnum>({
@@ -28,28 +27,6 @@ export const notificationsPlatform: PlatformEnum =
     android: "fcmv1" as PlatformEnum,
     default: "fcmv1" as PlatformEnum
   });
-
-export function* awaitForPushNotificationRegistration() {
-  // When this function is called, the push notification token may
-  // not be available yet. In such case, the code will wait for
-  // 'newPushNotificationsToken' action, which is dispatched as
-  // soon as the token becomes available. A do-while loop is used
-  // to be extra sure that the token has been stored inside redux
-  do {
-    const notificationsInstallation = yield* select(
-      notificationsInstallationSelector
-    );
-    if (notificationsInstallation.token) {
-      // The output object is re-created in order
-      // to have a non-optional 'token' instance
-      return {
-        ...notificationsInstallation,
-        token: notificationsInstallation.token
-      };
-    }
-    yield* take(newPushNotificationsToken);
-  } while (true);
-}
 
 export function* pushNotificationTokenUpload(
   createOrUpdateInstallation: ReturnType<
@@ -110,4 +87,26 @@ export function* pushNotificationTokenUpload(
       `${convertUnknownToError(e)}`
     );
   }
+}
+
+export function* awaitForPushNotificationRegistration() {
+  // When this function is called, the push notification token may
+  // not be available yet. In such case, the code will wait for
+  // 'newPushNotificationsToken' action, which is dispatched as
+  // soon as the token becomes available. A do-while loop is used
+  // to be extra sure that the token has been stored inside redux
+  do {
+    const notificationsInstallation = yield* select(
+      notificationsInstallationSelector
+    );
+    if (notificationsInstallation.token) {
+      // The output object is re-created in order
+      // to have a non-optional 'token' instance
+      return {
+        ...notificationsInstallation,
+        token: notificationsInstallation.token
+      };
+    }
+    yield* take(newPushNotificationsToken);
+  } while (true);
 }

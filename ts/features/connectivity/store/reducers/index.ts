@@ -1,5 +1,4 @@
 import { getType } from "typesafe-actions";
-
 import { Action } from "../../../../store/actions/types";
 import { setConnectionStatus } from "../actions";
 

@@ -6,8 +6,8 @@ import {
   paymentsOnboardingGetMethodsAction,
   paymentsStartOnboardingAction
 } from "../store/actions";
-import { handleGetPaymentMethods } from "./handleGetPaymentMethods";
 import { handleStartWalletOnboarding } from "./handleStartWalletOnboarding";
+import { handleGetPaymentMethods } from "./handleGetPaymentMethods";
 
 /**
  * Handle Wallet onboarding requests

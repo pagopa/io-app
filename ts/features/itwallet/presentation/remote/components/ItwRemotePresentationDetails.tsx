@@ -1,30 +1,29 @@
+import { memo, useMemo } from "react";
+import { View } from "react-native";
 import {
   Alert,
   ClaimsSelector,
   ListItemCheckbox,
   ListItemHeader,
-  useIOTheme,
   VSpacer,
-  VStack
+  VStack,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { memo, useMemo } from "react";
-import { View } from "react-native";
-
-import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils";
+import { selectPresentationDetails } from "../machine/selectors";
+import { ItwRemoteMachineContext } from "../machine/provider";
+import { EnrichedPresentationDetails } from "../utils/itwRemoteTypeUtils";
+import {
+  getCredentialTypeByVct,
+  groupCredentialsByPurpose
+} from "../utils/itwRemotePresentationUtils";
+import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { useClaimsDetailsBottomSheet } from "../../common/hooks/useClaimsDetailsBottomSheet";
 import {
   claimsSelectorHeaderGradientsByCredentialType,
   mapClaimsToClaimsSelectorItems
 } from "../../common/utils/itwClaimSelector";
-import { ItwRemoteMachineContext } from "../machine/provider";
-import { selectPresentationDetails } from "../machine/selectors";
-import {
-  getCredentialTypeByVct,
-  groupCredentialsByPurpose
-} from "../utils/itwRemotePresentationUtils";
-import { EnrichedPresentationDetails } from "../utils/itwRemoteTypeUtils";
 
 const RequestedCredentialsBlock = ({
   credentials
@@ -51,12 +50,12 @@ const RequestedCredentialsBlock = ({
 
           return (
             <ClaimsSelector
-              defaultExpanded
-              headerGradientColors={headerGradientColors}
-              items={mapClaimsToClaimsSelectorItems(c.claimsToDisplay, present)}
               key={c.id}
-              selectionEnabled={false}
               title={title}
+              items={mapClaimsToClaimsSelectorItems(c.claimsToDisplay, present)}
+              defaultExpanded
+              selectionEnabled={false}
+              headerGradientColors={headerGradientColors}
             />
           );
         })}
@@ -94,6 +93,11 @@ const ItwRemotePresentationDetails = () => {
       {required.map(({ purpose, credentials }) => (
         <View key={`required:${purpose}`}>
           <ListItemHeader
+            label={I18n.t(
+              "features.itWallet.presentation.selectiveDisclosure.requiredClaims"
+            )}
+            iconName="security"
+            iconColor={theme["icon-decorative"]}
             description={
               purpose
                 ? I18n.t("features.itWallet.presentation.remote.purpose", {
@@ -101,11 +105,6 @@ const ItwRemotePresentationDetails = () => {
                   })
                 : undefined
             }
-            iconColor={theme["icon-decorative"]}
-            iconName="security"
-            label={I18n.t(
-              "features.itWallet.presentation.selectiveDisclosure.requiredClaims"
-            )}
           />
           <RequestedCredentialsBlock credentials={credentials} />
         </View>
@@ -114,6 +113,11 @@ const ItwRemotePresentationDetails = () => {
       {optional.map(({ purpose, credentials }) => (
         <View key={`optional:${purpose}`}>
           <ListItemCheckbox
+            value={I18n.t(
+              "features.itWallet.presentation.selectiveDisclosure.optionalClaims"
+            )}
+            icon="security"
+            onValueChange={() => sendCredentialsToMachine(credentials)}
             description={
               purpose
                 ? I18n.t("features.itWallet.presentation.remote.purpose", {
@@ -121,19 +125,14 @@ const ItwRemotePresentationDetails = () => {
                   })
                 : undefined
             }
-            icon="security"
-            onValueChange={() => sendCredentialsToMachine(credentials)}
-            value={I18n.t(
-              "features.itWallet.presentation.selectiveDisclosure.optionalClaims"
-            )}
           />
           <RequestedCredentialsBlock credentials={credentials} />
           <VSpacer size={16} />
           <Alert
+            variant="info"
             content={I18n.t(
               "features.itWallet.presentation.selectiveDisclosure.optionalClaimsAlert"
             )}
-            variant="info"
           />
         </View>
       ))}

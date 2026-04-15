@@ -1,20 +1,19 @@
-import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { ReactNode } from "react";
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { View } from "react-native";
 import { createStore } from "redux";
-
 import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { MessageDetailsAttachments } from "../MessageDetailsAttachments";
+import { MESSAGES_ROUTES } from "../../../navigation/routes";
+import * as thirdPartySelectors from "../../../store/reducers/thirdPartyById";
 import {
   SendOpeningSource,
   SendUserType
 } from "../../../../pushNotifications/analytics";
-import { MESSAGES_ROUTES } from "../../../navigation/routes";
-import * as thirdPartySelectors from "../../../store/reducers/thirdPartyById";
-import { MessageDetailsAttachments } from "../MessageDetailsAttachments";
 
 jest.mock("../MessageDetailsAttachmentItem");
 
@@ -122,8 +121,8 @@ const renderScreen = (
     () => (
       <MessageDetailsAttachments
         banner={banner}
-        disabled={disabled}
         messageId={messageId}
+        disabled={disabled}
         sendOpeningSource={sendOpeningSource}
         sendUserType={sendUserType}
         serviceId={serviceId}

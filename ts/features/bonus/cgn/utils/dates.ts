@@ -1,5 +1,4 @@
 import I18n from "i18next";
-
 import { InitializedProfile } from "../../../../../definitions/backend/InitializedProfile";
 import { formatDateAsShortFormat } from "../../../../utils/dates";
 
@@ -24,14 +23,14 @@ export const getCgnUserAgeRange = (
   return "unrecognized";
 };
 
-type CGNBadgeStatus = "active" | "expired" | "revoked";
+type CGNBadgeStatus = "expired" | "active" | "revoked";
 
 const getStatusLabel = (status: CGNBadgeStatus) => {
   switch (status) {
-    case "active":
-      return I18n.t("bonus.cgn.detail.status.expiration.cgn");
     case "expired":
       return I18n.t("bonus.cgn.detail.status.date.expired");
+    case "active":
+      return I18n.t("bonus.cgn.detail.status.expiration.cgn");
     case "revoked":
       return I18n.t("bonus.cgn.detail.status.date.revoked");
   }

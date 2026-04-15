@@ -1,5 +1,4 @@
 import * as E from "fp-ts/lib/Either";
-
 import { IOReceivedNotification } from "../../../../../../definitions/pn/IOReceivedNotification";
 
 describe("FullReceivedNotification type", () => {

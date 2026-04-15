@@ -1,11 +1,10 @@
 import { NumberFromString } from "@pagopa/ts-commons/lib/numbers";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
-
 import {
-  AutomatedCriteriaDTO,
-  CodeEnum
+  CodeEnum,
+  AutomatedCriteriaDTO
 } from "../../../../../definitions/idpay/AutomatedCriteriaDTO";
 import { formatNumberCentsToAmount } from "../../../../utils/stringBuilder";
 
@@ -48,4 +47,4 @@ const getPDNDCriteriaDescription = (criteria: AutomatedCriteriaDTO) =>
     O.getOrElse(() => "-")
   );
 
-export { getPDNDCriteriaDescription, getPDNDCriteriaValueString };
+export { getPDNDCriteriaValueString, getPDNDCriteriaDescription };

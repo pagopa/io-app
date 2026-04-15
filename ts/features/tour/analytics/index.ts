@@ -1,7 +1,7 @@
 import { mixpanelTrack } from "../../../mixpanel";
 import { buildEventProperties } from "../../../utils/analytics";
 
-type TourGuideAction = "back" | "close" | "conclude" | "next" | "shown";
+type TourGuideAction = "shown" | "next" | "back" | "close" | "conclude";
 
 export const trackTourGuideAction = (
   tour_guide_id: string,

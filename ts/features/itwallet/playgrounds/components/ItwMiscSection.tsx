@@ -4,7 +4,6 @@ import {
   ListItemInfo
 } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
-
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { resetTourCompletedAction } from "../../../tour/store/actions";
 import { isTourCompletedSelector } from "../../../tour/store/selectors";
@@ -29,11 +28,11 @@ export const ItwMiscSection = () => {
         value={isTourCompleted ? "COMPLETED" : "NOT COMPLETED"}
       />
       <IOButton
-        color="danger"
-        disabled={!isTourCompleted}
-        label="Reset tour guide status"
-        onPress={resetTourGuide}
         variant="solid"
+        color="danger"
+        label="Reset tour guide status"
+        disabled={!isTourCompleted}
+        onPress={resetTourGuide}
       />
     </View>
   );

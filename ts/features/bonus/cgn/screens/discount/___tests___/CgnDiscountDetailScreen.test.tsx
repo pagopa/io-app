@@ -1,7 +1,6 @@
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { act, fireEvent, userEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
-
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
 import { DiscountCodeTypeEnum } from "../../../../../../../definitions/cgn/merchants/DiscountCodeType";
 import { Merchant } from "../../../../../../../definitions/cgn/merchants/Merchant";

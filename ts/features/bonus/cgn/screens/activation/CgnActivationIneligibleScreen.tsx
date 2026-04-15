@@ -1,9 +1,8 @@
-import I18n from "i18next";
 import { useCallback } from "react";
-
-import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
-import { useIODispatch } from "../../../../../store/hooks";
+import I18n from "i18next";
 import { cgnActivationCancel } from "../../store/actions/activation";
+import { useIODispatch } from "../../../../../store/hooks";
+import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 
 /**
  * Screen which is displayed when a user requested a CGN activation
@@ -14,14 +13,14 @@ const CgnActivationIneligibleScreen = () => {
   const onExit = useCallback(() => dispatch(cgnActivationCancel()), [dispatch]);
   return (
     <OperationResultScreenContent
+      pictogram="accessDenied"
+      title={I18n.t("bonus.cgn.activation.ineligible.title")}
+      subtitle={I18n.t("bonus.cgn.activation.ineligible.body")}
       action={{
         label: I18n.t("global.buttons.close"),
         accessibilityLabel: I18n.t("global.buttons.close"),
         onPress: onExit
       }}
-      pictogram="accessDenied"
-      subtitle={I18n.t("bonus.cgn.activation.ineligible.body")}
-      title={I18n.t("bonus.cgn.activation.ineligible.title")}
     />
   );
 };

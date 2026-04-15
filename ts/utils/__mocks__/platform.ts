@@ -3,9 +3,9 @@ let isIos = true;
 // eslint-disable-next-line functional/no-let
 let isAndroid = true;
 
-function test_setPlatform(p: "android" | "ios") {
+function test_setPlatform(p: "ios" | "android") {
   isIos = p === "ios";
   isAndroid = p === "android";
 }
 
-export { isAndroid, isIos, test_setPlatform };
+export { isIos, isAndroid, test_setPlatform };

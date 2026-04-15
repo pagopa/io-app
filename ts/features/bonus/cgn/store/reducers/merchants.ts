@@ -1,21 +1,8 @@
-import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-
-import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
-import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
-import { OfflineMerchants } from "../../../../../../definitions/cgn/merchants/OfflineMerchants";
-import { OnlineMerchants } from "../../../../../../definitions/cgn/merchants/OnlineMerchants";
-import { SearchResult } from "../../../../../../definitions/cgn/merchants/SearchResult";
-import {
-  remoteError,
-  remoteLoading,
-  remoteReady,
-  remoteUndefined,
-  RemoteValue
-} from "../../../../../common/model/RemoteValue";
+import { createSelector } from "reselect";
+import { NetworkError } from "../../../../../utils/errors";
 import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { NetworkError } from "../../../../../utils/errors";
 import {
   cgnMerchantsCount,
   cgnOfflineMerchants,
@@ -26,15 +13,27 @@ import {
   selectMerchantDiscount,
   setMerchantDiscountCode
 } from "../actions/merchants";
+import {
+  remoteError,
+  remoteLoading,
+  remoteReady,
+  remoteUndefined,
+  RemoteValue
+} from "../../../../../common/model/RemoteValue";
+import { OnlineMerchants } from "../../../../../../definitions/cgn/merchants/OnlineMerchants";
+import { OfflineMerchants } from "../../../../../../definitions/cgn/merchants/OfflineMerchants";
+import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
+import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
+import { SearchResult } from "../../../../../../definitions/cgn/merchants/SearchResult";
 
 export type CgnMerchantsState = {
   merchantsCount: RemoteValue<number, NetworkError>;
-  offlineMerchants: RemoteValue<OfflineMerchants["items"], NetworkError>;
-  onlineMerchants: RemoteValue<OnlineMerchants["items"], NetworkError>;
   searchMerchants: RemoteValue<SearchResult["items"], NetworkError>;
+  onlineMerchants: RemoteValue<OnlineMerchants["items"], NetworkError>;
+  offlineMerchants: RemoteValue<OfflineMerchants["items"], NetworkError>;
+  selectedMerchant: RemoteValue<Merchant, NetworkError>;
   selectedDiscount: RemoteValue<Discount, NetworkError>;
   selectedDiscountCode?: string;
-  selectedMerchant: RemoteValue<Merchant, NetworkError>;
 };
 
 const INITIAL_STATE: CgnMerchantsState = {
@@ -52,11 +51,6 @@ const reducer = (
   action: Action
 ): CgnMerchantsState => {
   switch (action.type) {
-    case getType(cgnMerchantsCount.failure):
-      return {
-        ...state,
-        merchantsCount: remoteError(action.payload)
-      };
     // Merchants count
     case getType(cgnMerchantsCount.request):
       return {
@@ -68,46 +62,12 @@ const reducer = (
         ...state,
         merchantsCount: remoteReady(action.payload.count)
       };
-
-    case getType(cgnOfflineMerchants.failure):
+    case getType(cgnMerchantsCount.failure):
       return {
         ...state,
-        offlineMerchants: remoteError(action.payload)
-      };
-    // Offline Merchants
-    case getType(cgnOfflineMerchants.request):
-      return {
-        ...state,
-        offlineMerchants: remoteLoading
-      };
-    case getType(cgnOfflineMerchants.success):
-      return {
-        ...state,
-        offlineMerchants: remoteReady(action.payload)
+        merchantsCount: remoteError(action.payload)
       };
 
-    case getType(cgnOnlineMerchants.failure):
-      return {
-        ...state,
-        onlineMerchants: remoteError(action.payload)
-      };
-    // Online Merchants
-    case getType(cgnOnlineMerchants.request):
-      return {
-        ...state,
-        onlineMerchants: remoteLoading
-      };
-    case getType(cgnOnlineMerchants.success):
-      return {
-        ...state,
-        onlineMerchants: remoteReady(action.payload)
-      };
-
-    case getType(cgnSearchMerchants.failure):
-      return {
-        ...state,
-        searchMerchants: remoteError(action.payload)
-      };
     // Search Merchants
     case getType(cgnSearchMerchants.request):
       return {
@@ -119,12 +79,46 @@ const reducer = (
         ...state,
         searchMerchants: remoteReady(action.payload)
       };
-
-    case getType(cgnSelectedMerchant.failure):
+    case getType(cgnSearchMerchants.failure):
       return {
         ...state,
-        selectedMerchant: remoteError(action.payload)
+        searchMerchants: remoteError(action.payload)
       };
+
+    // Offline Merchants
+    case getType(cgnOfflineMerchants.request):
+      return {
+        ...state,
+        offlineMerchants: remoteLoading
+      };
+    case getType(cgnOfflineMerchants.success):
+      return {
+        ...state,
+        offlineMerchants: remoteReady(action.payload)
+      };
+    case getType(cgnOfflineMerchants.failure):
+      return {
+        ...state,
+        offlineMerchants: remoteError(action.payload)
+      };
+
+    // Online Merchants
+    case getType(cgnOnlineMerchants.request):
+      return {
+        ...state,
+        onlineMerchants: remoteLoading
+      };
+    case getType(cgnOnlineMerchants.success):
+      return {
+        ...state,
+        onlineMerchants: remoteReady(action.payload)
+      };
+    case getType(cgnOnlineMerchants.failure):
+      return {
+        ...state,
+        onlineMerchants: remoteError(action.payload)
+      };
+
     // Selected Merchant detail
     case getType(cgnSelectedMerchant.request):
       return {
@@ -136,11 +130,10 @@ const reducer = (
         ...state,
         selectedMerchant: remoteReady(action.payload)
       };
-    // Reset discount code
-    case getType(resetMerchantDiscountCode):
+    case getType(cgnSelectedMerchant.failure):
       return {
         ...state,
-        selectedDiscountCode: undefined
+        selectedMerchant: remoteError(action.payload)
       };
     // Selected Discount detail
     case getType(selectMerchantDiscount):
@@ -153,6 +146,12 @@ const reducer = (
       return {
         ...state,
         selectedDiscountCode: action.payload
+      };
+    // Reset discount code
+    case getType(resetMerchantDiscountCode):
+      return {
+        ...state,
+        selectedDiscountCode: undefined
       };
   }
   return state;

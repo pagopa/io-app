@@ -1,8 +1,8 @@
 import { createActorContext } from "@xstate/react";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { ReactNode } from "react";
+import { pipe } from "fp-ts/lib/function";
 
+import { ReactNode } from "react";
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import {
   idPayApiBaseUrl,
@@ -13,12 +13,12 @@ import {
 } from "../../../../config";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { bpdTokenSelector } from "../../../authentication/common/store/selectors";
 import {
   isPagoPATestEnabledSelector,
   preferredLanguageSelector
 } from "../../../../store/reducers/persistedPreferences";
 import { fromLocaleToPreferredLanguage } from "../../../../utils/locale";
-import { bpdTokenSelector } from "../../../authentication/common/store/selectors";
 import { createIDPayClient } from "../../common/api/client";
 import { createActionsImplementation } from "./actions";
 import { createActorsImplementation } from "./actors";

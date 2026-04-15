@@ -1,5 +1,4 @@
 import * as E from "fp-ts/lib/Either";
-
 import {
   deriveCustomHandledLink,
   isHttpLink,

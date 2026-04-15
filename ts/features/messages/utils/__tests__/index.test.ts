@@ -1,5 +1,4 @@
 import { Dispatch } from "redux";
-
 import {
   duplicateSetAndAdd,
   duplicateSetAndRemove,
@@ -8,13 +7,13 @@ import {
   getRptIdStringFromPaymentData,
   initializeAndNavigateToWalletForPayment
 } from "..";
-import { ThirdPartyMessage } from "../../../../../definitions/backend/ThirdPartyMessage";
-import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
+import { PaymentData, UIMessageDetails } from "../../types";
 import NavigationService from "../../../../navigation/NavigationService";
 import ROUTES from "../../../../navigation/routes";
-import { startPaymentFlowWithRptIdWorkaround } from "../../../payments/checkout/tempWorkaround/pagoPaPaymentWorkaround";
 import { addUserSelectedPaymentRptId } from "../../store/actions";
-import { PaymentData, UIMessageDetails } from "../../types";
+import { startPaymentFlowWithRptIdWorkaround } from "../../../payments/checkout/tempWorkaround/pagoPaPaymentWorkaround";
+import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
+import { ThirdPartyMessage } from "../../../../../definitions/backend/ThirdPartyMessage";
 
 jest.mock(
   "../../../payments/checkout/tempWorkaround/pagoPaPaymentWorkaround",

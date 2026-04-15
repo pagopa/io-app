@@ -1,5 +1,4 @@
 import { URL } from "react-native-url-polyfill";
-
 import { AppDispatch } from "../../App";
 import { utmLinkSetParams } from "./store/actions";
 

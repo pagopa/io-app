@@ -1,21 +1,20 @@
 import * as E from "fp-ts/lib/Either";
 import { put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import {
-  walletHideCards,
-  walletRemoveCards,
-  walletRestoreCards
-} from "../../../wallet/store/actions/cards";
 import { WalletClient } from "../../common/api/client";
-import { mapWalletIdToCardKey } from "../../common/utils";
 import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
 import {
   paymentsDeleteMethodAction,
   paymentsGetMethodDetailsAction
 } from "../store/actions";
+import {
+  walletHideCards,
+  walletRemoveCards,
+  walletRestoreCards
+} from "../../../wallet/store/actions/cards";
+import { mapWalletIdToCardKey } from "../../common/utils";
 
 export function* handleDeleteWalletDetails(
   deleteWalletById: WalletClient["deleteIOPaymentWalletById"],

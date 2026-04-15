@@ -1,13 +1,12 @@
+import { View, StyleSheet } from "react-native";
 import {
   Badge,
-  BodySmall,
   Divider,
   H6,
-  HSpacer
+  HSpacer,
+  BodySmall
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { StyleSheet, View } from "react-native";
-
 import { SignatureRequestListView } from "../../../../definitions/fci/SignatureRequestListView";
 import { SignatureRequestStatusEnum } from "../../../../definitions/fci/SignatureRequestStatus";
 import TouchableDefaultOpacity from "../../../components/TouchableDefaultOpacity";
@@ -29,20 +28,20 @@ const SignatureRequestItem = (props: Props) => {
   const { item, onPress } = props;
   const renderStatusLabel = () => {
     switch (item.status) {
-      case SignatureRequestStatusEnum.SIGNED:
-        return (
-          <Badge
-            testID={"FciSignatureRequestItemBadgeSigned"}
-            text={I18n.t("features.fci.requests.signed")}
-            variant="highlight"
-          />
-        );
       case SignatureRequestStatusEnum.WAIT_FOR_SIGNATURE:
         return (
           <Badge
-            testID={"FciSignatureRequestItemBadgeInProgress"}
-            text={I18n.t("features.fci.requests.signingInProgress")}
             variant="default"
+            text={I18n.t("features.fci.requests.signingInProgress")}
+            testID={"FciSignatureRequestItemBadgeInProgress"}
+          />
+        );
+      case SignatureRequestStatusEnum.SIGNED:
+        return (
+          <Badge
+            variant="highlight"
+            text={I18n.t("features.fci.requests.signed")}
+            testID={"FciSignatureRequestItemBadgeSigned"}
           />
         );
       case SignatureRequestStatusEnum.WAIT_FOR_QTSP:
@@ -50,9 +49,9 @@ const SignatureRequestItem = (props: Props) => {
         return (
           <Badge
             outline
-            testID={"FciSignatureRequestItemBadgeNotAvailable"}
-            text={I18n.t("features.fci.requests.notAvailable")}
             variant="error"
+            text={I18n.t("features.fci.requests.notAvailable")}
+            testID={"FciSignatureRequestItemBadgeNotAvailable"}
           />
         );
     }
@@ -60,13 +59,13 @@ const SignatureRequestItem = (props: Props) => {
   return (
     <View>
       <TouchableDefaultOpacity
-        onPress={onPress}
         style={{ flexDirection: "row", paddingTop: 16, paddingBottom: 16 }}
+        onPress={onPress}
         testID={"FciSignatureRequestOnPress"}
       >
         <View style={{ flexDirection: "column", flex: 1 }}>
           <H6>{item.dossier_title}</H6>
-          <BodySmall numberOfLines={1} weight={"Regular"}>
+          <BodySmall weight={"Regular"} numberOfLines={1}>
             {I18n.t("features.fci.requests.itemSubtitle", {
               date: item.created_at.toLocaleDateString(),
               time: item.created_at.toLocaleTimeString(),

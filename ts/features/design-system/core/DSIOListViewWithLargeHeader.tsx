@@ -1,8 +1,7 @@
 import { ListItemHeader, ListItemInfo } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { useState } from "react";
 import { Alert } from "react-native";
-
+import I18n from "i18next";
 import { IOListViewWithLargeHeader } from "../../../components/ui/IOListViewWithLargeHeader";
 
 export const DSIOListViewWithLargeHeader = () => {
@@ -81,19 +80,20 @@ export const DSIOListViewWithLargeHeader = () => {
 
   return (
     <IOListViewWithLargeHeader
+      testID="io-list-view-large-header"
       data={renderItems}
-      headerActionsProp={{
-        showHelp: true
+      title={{
+        label: I18n.t("authentication.cie.nfc.title")
       }}
       keyExtractor={item => item.id}
+      subtitle={I18n.t("authentication.cie.nfc.subtitle")}
       ListHeaderComponent={
         <ListItemHeader
           label={I18n.t("authentication.cie.nfc.listItemTitle")}
         />
       }
-      refreshControlProps={{
-        onRefresh: pullAction,
-        refreshing
+      headerActionsProp={{
+        showHelp: true
       }}
       renderItem={({ item }) => (
         <ListItemInfo
@@ -101,10 +101,9 @@ export const DSIOListViewWithLargeHeader = () => {
           accessibilityLabel={`${item.label}; ${item.value}`}
         />
       )}
-      subtitle={I18n.t("authentication.cie.nfc.subtitle")}
-      testID="io-list-view-large-header"
-      title={{
-        label: I18n.t("authentication.cie.nfc.title")
+      refreshControlProps={{
+        onRefresh: pullAction,
+        refreshing
       }}
     />
   );

@@ -1,18 +1,17 @@
+import { useEffect, useState } from "react";
+import { Alert } from "react-native";
+import { Calendar } from "react-native-calendar-events";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as TE from "fp-ts/lib/TaskEither";
 import I18n from "i18next";
-import { useEffect, useState } from "react";
-import { Alert } from "react-native";
-import { Calendar } from "react-native-calendar-events";
-
-import { useIOSelector } from "../../../store/hooks";
-import { calendarEventByMessageIdSelector } from "../../../store/reducers/entities/calendarEvents/calendarEventsByMessageId";
-import { openAppSettings } from "../../../utils/appSettings";
 import {
   isEventInCalendar,
   requestCalendarPermission
 } from "../../../utils/calendar";
+import { openAppSettings } from "../../../utils/appSettings";
+import { useIOSelector } from "../../../store/hooks";
+import { calendarEventByMessageIdSelector } from "../../../store/reducers/entities/calendarEvents/calendarEventsByMessageId";
 import { useMessageCalendar } from "./useMessageCalendar";
 
 export const useMessageReminder = (

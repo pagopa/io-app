@@ -10,18 +10,17 @@ import {
 } from "@pagopa/io-app-design-system";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { useNavigation } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { ReactNode, useCallback } from "react";
 import { View } from "react-native";
-
-import { InitiativeDetailDTO } from "../../../../../definitions/idpay/InitiativeDetailDTO";
 import {
   InitiativeDTO,
   InitiativeRewardTypeEnum,
   VoucherStatusEnum
 } from "../../../../../definitions/idpay/InitiativeDTO";
+import { InitiativeDetailDTO } from "../../../../../definitions/idpay/InitiativeDetailDTO";
 import {
   RewardValueDTO,
   RewardValueTypeEnum
@@ -49,22 +48,22 @@ import {
 } from "./IdPayInitiativeRulesInfoBox";
 import { IdPayInitiativeStatusItem } from "./IdPayInitiativeStatusItem";
 
-export type BeneficiaryDetailsProps =
-  | {
-      beneficiaryDetails: InitiativeDetailDTO;
-      initiativeDetails: InitiativeDTO;
-      isLoading?: false;
-    }
-  | {
-      beneficiaryDetails?: never;
-      initiativeDetails?: never;
-      isLoading: true;
-    };
-
 type TableRow = WithTestID<{
   label: string;
-  value: ReactNode | string;
+  value: string | ReactNode;
 }>;
+
+export type BeneficiaryDetailsProps =
+  | {
+      isLoading?: false;
+      initiativeDetails: InitiativeDTO;
+      beneficiaryDetails: InitiativeDetailDTO;
+    }
+  | {
+      isLoading: true;
+      initiativeDetails?: never;
+      beneficiaryDetails?: never;
+    };
 
 const formatDate = (fmt: string) => (date: Date) => format(date, fmt);
 
@@ -262,8 +261,8 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
           <ListItemInfo
             key={row.testID}
             label={row.label}
-            testID={row.testID}
             value={row.value}
+            testID={row.testID}
           />
           {i !== data.length - 1 && <Divider />}
         </View>
@@ -318,20 +317,20 @@ const IdPayBeneficiaryDetailsContent = (props: BeneficiaryDetailsProps) => {
               initiativeDetails.voucherStatus !== VoucherStatusEnum.EXPIRED && (
                 <ListItemAction
                   icon="docAttach"
+                  variant="primary"
                   label={I18n.t(
                     "idpay.initiative.beneficiaryDetails.buttons.staticCode"
                   )}
                   onPress={handleGenerateStaticCode}
-                  variant="primary"
                 />
               )}
             <ListItemAction
               icon="security"
+              variant="primary"
               label={I18n.t(
                 "idpay.initiative.beneficiaryDetails.buttons.privacy"
               )}
               onPress={handlePrivacyLinkPress}
-              variant="primary"
             />
             {bottomSheet}
           </>
@@ -375,7 +374,7 @@ const BeneficiaryDetailsContentSkeleton = () => (
     {Array.from({ length: 3 }).map((_, i) => (
       <View key={i}>
         <VSpacer size={32} />
-        <IOSkeleton height={24} radius={4} shape="rectangle" width={"40%"} />
+        <IOSkeleton shape="rectangle" width={"40%"} height={24} radius={4} />
         <VSpacer size={8} />
         {Array.from({ length: 2 }).map((_, j) => (
           <View key={j}>

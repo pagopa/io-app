@@ -1,5 +1,4 @@
 import { Platform } from "react-native";
-
 import { platformSelect } from "..";
 
 describe("platformSelect", () => {

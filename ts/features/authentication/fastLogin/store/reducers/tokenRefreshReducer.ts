@@ -1,6 +1,4 @@
 import { Action, getType } from "typesafe-actions";
-
-import { isDevEnv } from "../../../../../utils/environment";
 import {
   askUserToRefreshSessionToken,
   clearPendingAction,
@@ -11,56 +9,57 @@ import {
   savePendingAction,
   showRefreshTokenLoader
 } from "../actions/tokenRefreshActions";
+import { isDevEnv } from "../../../../../utils/environment";
 
-export type FastLoginTokenRefreshState = {
-  pendingActions: Array<Action>;
-  tokenRefresh: TokenRefreshState;
-  userInteractionForSessionExpiredNeeded: boolean;
+type FastLoginUserInteractionChoiceNone = {
+  type: "none";
+};
+type FastLoginUserInteractionChoiceAccept = {
+  type: "accepted";
+  timestamp: number;
+};
+type FastLoginUserInteractionChoiceDecline = {
+  type: "declined";
+  timestamp: number;
 };
 export type FastLoginUserInteractionChoice =
   | FastLoginUserInteractionChoiceAccept
   | FastLoginUserInteractionChoiceDecline
   | FastLoginUserInteractionChoiceNone;
-export type TokenRefreshState =
-  | TokenRefreshErrorState
-  | TokenRefreshIdleState
-  | TokenRefreshNoPinErrorState
-  | TokenRefreshProgressState
-  | TokenRefreshSuccessState
-  | TokenRefreshTransientErrorState;
-type FastLoginUserInteractionChoiceAccept = {
-  timestamp: number;
-  type: "accepted";
-};
 
-type FastLoginUserInteractionChoiceDecline = {
-  timestamp: number;
-  type: "declined";
+type TokenRefreshIdleState = {
+  kind: "idle";
 };
-type FastLoginUserInteractionChoiceNone = {
-  type: "none";
+type TokenRefreshProgressState = {
+  kind: "in-progress";
 };
 type TokenRefreshErrorState = {
   kind: "error";
 };
-type TokenRefreshIdleState = {
-  kind: "idle";
+type TokenRefreshTransientErrorState = {
+  kind: "transient-error";
 };
 
 type TokenRefreshNoPinErrorState = {
   kind: "no-pin-error";
 };
 
-type TokenRefreshProgressState = {
-  kind: "in-progress";
-};
 type TokenRefreshSuccessState = {
   kind: "success";
   timestamp: number;
 };
+export type TokenRefreshState =
+  | TokenRefreshProgressState
+  | TokenRefreshErrorState
+  | TokenRefreshTransientErrorState
+  | TokenRefreshNoPinErrorState
+  | TokenRefreshSuccessState
+  | TokenRefreshIdleState;
 
-type TokenRefreshTransientErrorState = {
-  kind: "transient-error";
+export type FastLoginTokenRefreshState = {
+  userInteractionForSessionExpiredNeeded: boolean;
+  tokenRefresh: TokenRefreshState;
+  pendingActions: Array<Action>;
 };
 
 const FastLoginTokenRefreshHandlerInitialState: FastLoginTokenRefreshState = {
@@ -74,45 +73,10 @@ export const FastLoginTokenRefreshReducer = (
   action: Action
 ): FastLoginTokenRefreshState => {
   switch (action.type) {
-    case getType(askUserToRefreshSessionToken.request):
-      return {
-        ...state,
-        userInteractionForSessionExpiredNeeded: true
-      };
-    case getType(askUserToRefreshSessionToken.success):
-      return {
-        ...state,
-        userInteractionForSessionExpiredNeeded: false
-      };
     case getType(clearPendingAction):
       return {
         ...state,
         pendingActions: []
-      };
-    case getType(clearTokenRefreshError):
-      return {
-        ...state,
-        tokenRefresh: { kind: "idle" }
-      };
-    case getType(refreshSessionToken.failure):
-      return {
-        ...state,
-        tokenRefresh: { kind: "error" }
-      };
-    case getType(refreshSessionToken.success):
-      return {
-        ...state,
-        tokenRefresh: { kind: "success", timestamp: Date.now() }
-      };
-    case getType(refreshTokenNoPinError):
-      return {
-        ...state,
-        tokenRefresh: { kind: "no-pin-error" }
-      };
-    case getType(refreshTokenTransientError):
-      return {
-        ...state,
-        tokenRefresh: { kind: "transient-error" }
       };
     case getType(savePendingAction):
       const actionToSave = action as ReturnType<typeof savePendingAction>;
@@ -123,10 +87,45 @@ export const FastLoginTokenRefreshReducer = (
           actionToSave.payload.pendingAction
         ]
       };
+    case getType(askUserToRefreshSessionToken.request):
+      return {
+        ...state,
+        userInteractionForSessionExpiredNeeded: true
+      };
+    case getType(askUserToRefreshSessionToken.success):
+      return {
+        ...state,
+        userInteractionForSessionExpiredNeeded: false
+      };
     case getType(showRefreshTokenLoader):
       return {
         ...state,
         tokenRefresh: { kind: "in-progress" }
+      };
+    case getType(refreshSessionToken.success):
+      return {
+        ...state,
+        tokenRefresh: { kind: "success", timestamp: Date.now() }
+      };
+    case getType(refreshSessionToken.failure):
+      return {
+        ...state,
+        tokenRefresh: { kind: "error" }
+      };
+    case getType(refreshTokenTransientError):
+      return {
+        ...state,
+        tokenRefresh: { kind: "transient-error" }
+      };
+    case getType(refreshTokenNoPinError):
+      return {
+        ...state,
+        tokenRefresh: { kind: "no-pin-error" }
+      };
+    case getType(clearTokenRefreshError):
+      return {
+        ...state,
+        tokenRefresh: { kind: "idle" }
       };
     default:
       return state;

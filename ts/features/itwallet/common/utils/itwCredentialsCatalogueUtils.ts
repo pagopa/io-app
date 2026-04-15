@@ -2,15 +2,14 @@ import {
   CredentialsCatalogue,
   ItwVersion
 } from "@pagopa/io-react-native-wallet";
-
 import { Env } from "./environment";
 import { getIoWallet } from "./itwIoWallet";
 
-export type DigitalCredentialMetadata =
-  DigitalCredentialsCatalogue["credentials"][number];
-
 export type DigitalCredentialsCatalogue =
   CredentialsCatalogue.DigitalCredentialsCatalogue;
+
+export type DigitalCredentialMetadata =
+  DigitalCredentialsCatalogue["credentials"][number];
 
 /**
  * Fetch the Digital Credentials Catalogue.

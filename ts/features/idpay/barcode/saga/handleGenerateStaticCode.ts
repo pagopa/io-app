@@ -4,7 +4,6 @@ import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-
 import {
   CodeEnum,
   TransactionErrorDTO

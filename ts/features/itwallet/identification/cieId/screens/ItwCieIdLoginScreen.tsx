@@ -1,11 +1,10 @@
 import { isCieIdAvailable } from "@pagopa/io-react-native-cieid";
-import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { constNull, pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { memo, useCallback, useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { WebView, WebViewNavigation } from "react-native-webview";
-
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../../store/hooks";
@@ -119,22 +118,22 @@ const ItwCieIdLoginScreen = () => {
         webViewSource,
         O.fold(constNull, (url: string) => (
           <WebView
-            allowsInlineMediaPlayback
+            testID="cieid-webview"
+            cacheEnabled={false}
             androidCameraAccessDisabled
             androidMicrophoneAccessDisabled
-            cacheEnabled={false}
             javaScriptEnabled
-            mediaPlaybackRequiresUserAction
-            onError={handleAuthenticationFailure}
-            onHttpError={handleAuthenticationFailure}
-            onLoadEnd={onLoadEnd}
-            onNavigationStateChange={handleNavigationStateChange}
-            onShouldStartLoadWithRequest={handleShouldStartLoading}
+            textZoom={100}
             originWhitelist={originSchemasWhiteList}
             source={{ uri: url }}
-            testID="cieid-webview"
-            textZoom={100}
+            onError={handleAuthenticationFailure}
+            onHttpError={handleAuthenticationFailure}
+            onNavigationStateChange={handleNavigationStateChange}
+            onShouldStartLoadWithRequest={handleShouldStartLoading}
+            allowsInlineMediaPlayback
+            mediaPlaybackRequiresUserAction
             userAgent={defaultUserAgent}
+            onLoadEnd={onLoadEnd}
           />
         ))
       ),

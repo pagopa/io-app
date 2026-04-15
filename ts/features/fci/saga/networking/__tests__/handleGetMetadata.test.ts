@@ -1,13 +1,12 @@
-import { left, right } from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
+import { left, right } from "fp-ts/lib/Either";
 import { ActionType } from "typesafe-actions";
-
-import { Metadata } from "../../../../../../definitions/fci/Metadata";
 import { getNetworkError } from "../../../../../utils/errors";
-import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
-import { fciMetadataRequest } from "../../../store/actions";
 import { mockFciMetadata } from "../../../types/__mocks__/Metadata.mock";
+import { Metadata } from "../../../../../../definitions/fci/Metadata";
 import { handleGetMetadata } from "../handleGetMetadata";
+import { fciMetadataRequest } from "../../../store/actions";
+import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 
 const successResponse = {
   status: 200,

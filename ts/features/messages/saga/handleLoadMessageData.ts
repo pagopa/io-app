@@ -1,12 +1,11 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
-import * as B from "fp-ts/lib/boolean";
 import * as E from "fp-ts/lib/Either";
-import { constUndefined, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import * as B from "fp-ts/lib/boolean";
+import { constUndefined, pipe } from "fp-ts/lib/function";
 import { call, delay, put, race, select, take } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
-
 import { TagEnum } from "../../../../definitions/backend/MessageCategoryPN";
 import { RemoteContentDetails } from "../../../../definitions/backend/RemoteContentDetails";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
@@ -14,9 +13,7 @@ import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/Th
 import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
 import { isPnRemoteEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { isTestEnv } from "../../../utils/environment";
-import { isFIMSLink } from "../../fims/singleSignOn/utils";
 import { trackPNPushOpened } from "../../pn/analytics";
-import { getServiceDetails } from "../../services/common/saga/getServiceDetails";
 import {
   trackMessageDataLoadFailure,
   trackMessageDataLoadPending,
@@ -25,25 +22,28 @@ import {
   trackRemoteContentMessageDecodingWarning
 } from "../analytics";
 import {
+  RequestGetMessageDataActionType,
   cancelGetMessageDataAction,
   getMessageDataAction,
   loadMessageById,
   loadMessageDetails,
   loadThirdPartyMessage,
-  RequestGetMessageDataActionType,
   upsertMessageStatusAttributes
 } from "../store/actions";
-import { isLoadingOrUpdatingInbox } from "../store/reducers/allPaginated";
-import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
-import { MessageGetStatusFailurePhaseType } from "../store/reducers/messageGetStatus";
 import { getPaginatedMessageById } from "../store/reducers/paginatedById";
-import { thirdPartyFromIdSelector } from "../store/reducers/thirdPartyById";
 import { UIMessage, UIMessageDetails } from "../types";
+import { messageDetailsByIdSelector } from "../store/reducers/detailsById";
+import { thirdPartyFromIdSelector } from "../store/reducers/thirdPartyById";
+import { isLoadingOrUpdatingInbox } from "../store/reducers/allPaginated";
+import { MessageGetStatusFailurePhaseType } from "../store/reducers/messageGetStatus";
+
+import { isFIMSLink } from "../../fims/singleSignOn/utils";
 import { extractContentFromMessageSources } from "../utils";
 import {
   ctasFromLocalizedCTAs,
   localizedCTAsFromFrontMatter
 } from "../utils/ctas";
+import { getServiceDetails } from "../../services/common/saga/getServiceDetails";
 
 export function* handleLoadMessageData(
   action: ActionType<typeof getMessageDataAction.request>
@@ -52,173 +52,6 @@ export function* handleLoadMessageData(
     polling: call(loadMessageData, action.payload),
     cancelAction: take(cancelGetMessageDataAction)
   });
-}
-
-function* commonFailureHandling(
-  phase: MessageGetStatusFailurePhaseType,
-  loadingStartedFromPushNotification: boolean,
-  blockedFromPushNotificationOpt: boolean | undefined = undefined
-) {
-  yield* call(
-    trackMessageDataLoadFailure,
-    loadingStartedFromPushNotification,
-    phase
-  );
-  yield* put(
-    getMessageDataAction.failure({ blockedFromPushNotificationOpt, phase })
-  );
-}
-
-function* dispatchSuccessAction(
-  paginatedMessage: UIMessage,
-  messageDetails: UIMessageDetails,
-  thirdPartyMessage: ThirdPartyMessageWithContent | undefined
-) {
-  const isPNMessageCategory = paginatedMessage.category.tag === TagEnum.PN;
-  const containsPayment = pipe(
-    isPNMessageCategory,
-    B.fold(
-      () => pipe(messageDetails.paymentData, O.fromNullable, O.isSome),
-      constUndefined
-    )
-  );
-  const attachmentCount =
-    thirdPartyMessage?.third_party_message.attachments?.length ?? 0;
-
-  const isPnEnabled = yield* select(isPnRemoteEnabledSelector);
-
-  const serviceId = paginatedMessage.serviceId;
-  const hasFIMSCTA = computeHasFIMSCTA(
-    messageDetails,
-    serviceId,
-    thirdPartyMessage
-  );
-
-  const isFCIMessage = paginatedMessage.serviceName === "Firma con IO";
-  const hasFCICTA = isFCIMessage
-    ? computeHasFCICTA(messageDetails, serviceId, thirdPartyMessage)
-    : false;
-  const fciMessageType: "not_set" | "request" | "result" = isFCIMessage
-    ? hasFCICTA
-      ? "request"
-      : "result"
-    : "not_set";
-  const fciResult: "failure" | "not_set" | "success" =
-    isFCIMessage && !hasFCICTA
-      ? attachmentCount > 0
-        ? "success"
-        : "failure"
-      : "not_set";
-
-  yield* put(
-    getMessageDataAction.success({
-      containsAttachments: attachmentCount > 0,
-      containsPayment,
-      createdAt: paginatedMessage.createdAt,
-      fciMessageType,
-      fciResult,
-      firstTimeOpening: !paginatedMessage.isRead,
-      hasFIMSCTA,
-      hasRemoteContent: !!thirdPartyMessage,
-      isLegacyGreenPass: !!messageDetails.euCovidCertificate?.authCode,
-      isPNMessage: isPnEnabled && isPNMessageCategory,
-      messageId: paginatedMessage.id,
-      organizationFiscalCode: paginatedMessage.organizationFiscalCode,
-      organizationName: paginatedMessage.organizationName,
-      serviceId: paginatedMessage.serviceId,
-      serviceName: paginatedMessage.serviceName
-    })
-  );
-}
-
-function* getMessageDetails(messageId: string) {
-  const initialMessageDetailsPot = yield* select(
-    messageDetailsByIdSelector,
-    messageId
-  );
-  if (
-    !pot.isSome(initialMessageDetailsPot) ||
-    pot.isError(initialMessageDetailsPot)
-  ) {
-    yield* put(loadMessageDetails.request({ id: messageId }));
-
-    const outputAction = yield* take([
-      loadMessageDetails.success,
-      loadMessageDetails.failure
-    ]);
-    if (isActionOf(loadMessageDetails.failure, outputAction)) {
-      return undefined;
-    }
-
-    const finalMessageDetailsPot = yield* select(
-      messageDetailsByIdSelector,
-      messageId
-    );
-    return pot.toUndefined(finalMessageDetailsPot);
-  }
-
-  return pot.toUndefined(initialMessageDetailsPot);
-}
-
-function* getPaginatedMessage(messageId: string) {
-  const initialMessagePot = yield* select(getPaginatedMessageById, messageId);
-  if (!pot.isSome(initialMessagePot) || pot.isError(initialMessagePot)) {
-    yield* put(loadMessageById.request({ id: messageId }));
-
-    const outputAction = yield* take([
-      loadMessageById.success,
-      loadMessageById.failure
-    ]);
-    if (isActionOf(loadMessageById.failure, outputAction)) {
-      return undefined;
-    }
-
-    const finalMessagePot = yield* select(getPaginatedMessageById, messageId);
-    return pot.toUndefined(finalMessagePot);
-  }
-
-  return pot.toUndefined(initialMessagePot);
-}
-
-function* getThirdPartyDataMessage(
-  messageId: string,
-  isPNMessage: boolean,
-  service: ServiceDetails,
-  tag: string
-) {
-  // Third party data may change anytime, so we must retrieve them on every request
-
-  yield* put(
-    loadThirdPartyMessage.request({
-      id: messageId,
-      serviceId: service.id,
-      tag
-    })
-  );
-
-  const outputAction = yield* take([
-    loadThirdPartyMessage.success,
-    loadThirdPartyMessage.failure
-  ]);
-  if (isActionOf(loadThirdPartyMessage.failure, outputAction)) {
-    return undefined;
-  }
-
-  const thirdPartyMessagePot = yield* select(
-    thirdPartyFromIdSelector,
-    messageId
-  );
-
-  const thirdPartyMessageOrUndefined = pot.toUndefined(thirdPartyMessagePot);
-  yield* call(
-    decodeAndTrackThirdPartyMessageDetailsIfNeeded,
-    isPNMessage,
-    thirdPartyMessageOrUndefined,
-    service,
-    tag
-  );
-
-  return thirdPartyMessageOrUndefined;
 }
 
 function* loadMessageData({
@@ -336,6 +169,96 @@ function* loadMessageData({
   );
 }
 
+function* getPaginatedMessage(messageId: string) {
+  const initialMessagePot = yield* select(getPaginatedMessageById, messageId);
+  if (!pot.isSome(initialMessagePot) || pot.isError(initialMessagePot)) {
+    yield* put(loadMessageById.request({ id: messageId }));
+
+    const outputAction = yield* take([
+      loadMessageById.success,
+      loadMessageById.failure
+    ]);
+    if (isActionOf(loadMessageById.failure, outputAction)) {
+      return undefined;
+    }
+
+    const finalMessagePot = yield* select(getPaginatedMessageById, messageId);
+    return pot.toUndefined(finalMessagePot);
+  }
+
+  return pot.toUndefined(initialMessagePot);
+}
+
+function* getMessageDetails(messageId: string) {
+  const initialMessageDetailsPot = yield* select(
+    messageDetailsByIdSelector,
+    messageId
+  );
+  if (
+    !pot.isSome(initialMessageDetailsPot) ||
+    pot.isError(initialMessageDetailsPot)
+  ) {
+    yield* put(loadMessageDetails.request({ id: messageId }));
+
+    const outputAction = yield* take([
+      loadMessageDetails.success,
+      loadMessageDetails.failure
+    ]);
+    if (isActionOf(loadMessageDetails.failure, outputAction)) {
+      return undefined;
+    }
+
+    const finalMessageDetailsPot = yield* select(
+      messageDetailsByIdSelector,
+      messageId
+    );
+    return pot.toUndefined(finalMessageDetailsPot);
+  }
+
+  return pot.toUndefined(initialMessageDetailsPot);
+}
+
+function* getThirdPartyDataMessage(
+  messageId: string,
+  isPNMessage: boolean,
+  service: ServiceDetails,
+  tag: string
+) {
+  // Third party data may change anytime, so we must retrieve them on every request
+
+  yield* put(
+    loadThirdPartyMessage.request({
+      id: messageId,
+      serviceId: service.id,
+      tag
+    })
+  );
+
+  const outputAction = yield* take([
+    loadThirdPartyMessage.success,
+    loadThirdPartyMessage.failure
+  ]);
+  if (isActionOf(loadThirdPartyMessage.failure, outputAction)) {
+    return undefined;
+  }
+
+  const thirdPartyMessagePot = yield* select(
+    thirdPartyFromIdSelector,
+    messageId
+  );
+
+  const thirdPartyMessageOrUndefined = pot.toUndefined(thirdPartyMessagePot);
+  yield* call(
+    decodeAndTrackThirdPartyMessageDetailsIfNeeded,
+    isPNMessage,
+    thirdPartyMessageOrUndefined,
+    service,
+    tag
+  );
+
+  return thirdPartyMessageOrUndefined;
+}
+
 function* setMessageReadIfNeeded(paginatedMessage: UIMessage) {
   const userHadReadMessage = paginatedMessage.isRead;
   if (!userHadReadMessage) {
@@ -356,6 +279,83 @@ function* setMessageReadIfNeeded(paginatedMessage: UIMessage) {
   }
 
   return true;
+}
+
+function* dispatchSuccessAction(
+  paginatedMessage: UIMessage,
+  messageDetails: UIMessageDetails,
+  thirdPartyMessage: ThirdPartyMessageWithContent | undefined
+) {
+  const isPNMessageCategory = paginatedMessage.category.tag === TagEnum.PN;
+  const containsPayment = pipe(
+    isPNMessageCategory,
+    B.fold(
+      () => pipe(messageDetails.paymentData, O.fromNullable, O.isSome),
+      constUndefined
+    )
+  );
+  const attachmentCount =
+    thirdPartyMessage?.third_party_message.attachments?.length ?? 0;
+
+  const isPnEnabled = yield* select(isPnRemoteEnabledSelector);
+
+  const serviceId = paginatedMessage.serviceId;
+  const hasFIMSCTA = computeHasFIMSCTA(
+    messageDetails,
+    serviceId,
+    thirdPartyMessage
+  );
+
+  const isFCIMessage = paginatedMessage.serviceName === "Firma con IO";
+  const hasFCICTA = isFCIMessage
+    ? computeHasFCICTA(messageDetails, serviceId, thirdPartyMessage)
+    : false;
+  const fciMessageType: "request" | "result" | "not_set" = isFCIMessage
+    ? hasFCICTA
+      ? "request"
+      : "result"
+    : "not_set";
+  const fciResult: "success" | "failure" | "not_set" =
+    isFCIMessage && !hasFCICTA
+      ? attachmentCount > 0
+        ? "success"
+        : "failure"
+      : "not_set";
+
+  yield* put(
+    getMessageDataAction.success({
+      containsAttachments: attachmentCount > 0,
+      containsPayment,
+      createdAt: paginatedMessage.createdAt,
+      fciMessageType,
+      fciResult,
+      firstTimeOpening: !paginatedMessage.isRead,
+      hasFIMSCTA,
+      hasRemoteContent: !!thirdPartyMessage,
+      isLegacyGreenPass: !!messageDetails.euCovidCertificate?.authCode,
+      isPNMessage: isPnEnabled && isPNMessageCategory,
+      messageId: paginatedMessage.id,
+      organizationFiscalCode: paginatedMessage.organizationFiscalCode,
+      organizationName: paginatedMessage.organizationName,
+      serviceId: paginatedMessage.serviceId,
+      serviceName: paginatedMessage.serviceName
+    })
+  );
+}
+
+function* commonFailureHandling(
+  phase: MessageGetStatusFailurePhaseType,
+  loadingStartedFromPushNotification: boolean,
+  blockedFromPushNotificationOpt: boolean | undefined = undefined
+) {
+  yield* call(
+    trackMessageDataLoadFailure,
+    loadingStartedFromPushNotification,
+    phase
+  );
+  yield* put(
+    getMessageDataAction.failure({ blockedFromPushNotificationOpt, phase })
+  );
 }
 
 const decodeAndTrackThirdPartyMessageDetailsIfNeeded = (

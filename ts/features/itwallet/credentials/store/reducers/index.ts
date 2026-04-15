@@ -1,25 +1,34 @@
 import { createMigrate, PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
-
 import { Action } from "../../../../../store/actions/types";
-import createSecureStorage from "../../../../../store/storages/secureStorage";
 import { isDevEnv } from "../../../../../utils/environment";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
+import createSecureStorage from "../../../../../store/storages/secureStorage";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
-import { itwCredentialsRemove, itwCredentialsStore } from "../actions";
+import {
+  itwCredentialsRemove,
+  itwCredentialsStore,
+  itwCredentialsVaultMigrationComplete
+} from "../actions";
 import {
   CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION,
   itwCredentialsStateMigrations
 } from "./migrations";
 
+type CredentialsRecord = { [credentialKey: string]: CredentialMetadata };
+
 export type ItwCredentialsState = {
   credentials: CredentialsRecord;
+  // Credentials object before migration 8. Needed to handle migration outside of Redux Persist.
+  // Should be empty once migration is complete and can be removed in a future version.
+  legacyCredentials: {
+    [credentialKey: string]: CredentialMetadata & { credential: string };
+  };
 };
 
-type CredentialsRecord = Record<string, StoredCredential>;
-
 export const itwCredentialsInitialState: ItwCredentialsState = {
-  credentials: {}
+  credentials: {},
+  legacyCredentials: {}
 };
 
 const reducer = (
@@ -27,6 +36,21 @@ const reducer = (
   action: Action
 ): ItwCredentialsState => {
   switch (action.type) {
+    case getType(itwCredentialsStore): {
+      const addedCredentials = action.payload.reduce(
+        (acc, c) => ({ ...acc, [c.credentialId]: c }),
+        {} as CredentialsRecord
+      );
+
+      return {
+        ...state,
+        credentials: {
+          ...state.credentials,
+          ...addedCredentials
+        }
+      };
+    }
+
     case getType(itwCredentialsRemove): {
       const idsToRemove = new Set(action.payload.map(c => c.credentialId));
 
@@ -43,18 +67,15 @@ const reducer = (
       };
     }
 
-    case getType(itwCredentialsStore): {
-      const addedCredentials = action.payload.reduce(
-        (acc, c) => ({ ...acc, [c.credentialId]: c }),
-        {} as CredentialsRecord
-      );
-
+    case getType(itwCredentialsVaultMigrationComplete): {
+      const migrated = new Set(action.payload);
       return {
         ...state,
-        credentials: {
-          ...state.credentials,
-          ...addedCredentials
-        }
+        legacyCredentials: Object.fromEntries(
+          Object.entries(state.legacyCredentials).filter(
+            ([key]) => !migrated.has(key)
+          )
+        )
       };
     }
 

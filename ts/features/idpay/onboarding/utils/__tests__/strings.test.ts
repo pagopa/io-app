@@ -1,5 +1,4 @@
 import I18n from "i18next";
-
 import { CodeEnum } from "../../../../../../definitions/idpay/AutomatedCriteriaDTO";
 import { getPDNDCriteriaValueString } from "../strings";
 

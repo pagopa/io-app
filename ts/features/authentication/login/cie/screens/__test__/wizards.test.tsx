@@ -1,15 +1,14 @@
 import { fireEvent, render } from "@testing-library/react-native";
-
-import * as urlUtils from "../../../../../../utils/url";
-import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import CieIdWizard, { CIE_ID_LINK } from "../wizards/CieIdWizard";
 import CiePinWizard, { CIE_PIN_LINK } from "../wizards/CiePinWizard";
+import SpidWizard from "../wizards/SpidWizard";
 import IDActivationWizard, {
   ACTIVATE_CIE_URL,
   ACTIVATE_SPID_URL,
   REQUEST_CIE_URL
 } from "../wizards/IDActivationWizard";
-import SpidWizard from "../wizards/SpidWizard";
+import * as urlUtils from "../../../../../../utils/url";
+import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 
 const anyFunction = expect.any(Function);
 const mockNavigateToCieIdLoginScreen = jest.fn();

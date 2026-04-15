@@ -1,9 +1,7 @@
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
-
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
-import { OperationDTO } from "../../../../../../definitions/idpay/OperationDTO";
 import { TimelineDTO } from "../../../../../../definitions/idpay/TimelineDTO";
 import {
   OperationTypeEnum,
@@ -12,6 +10,7 @@ import {
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { idpayTimelinePageGet } from "../../store/actions";
 import { handleGetTimelinePage } from "../handleGetTimelinePage";
+import { OperationDTO } from "../../../../../../definitions/idpay/OperationDTO";
 
 const mockResponseSuccess = {
   // mock TimelineDTO

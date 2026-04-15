@@ -2,7 +2,6 @@ import { type DeepPartial } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
 import * as matchers from "redux-saga-test-plan/matchers";
 import { throwError } from "redux-saga-test-plan/providers";
-
 import { GlobalState } from "../../../../../store/reducers/types";
 import { ensureIntegrityServiceIsReady } from "../../../common/utils/itwIntegrityUtils";
 import { itwSetIntegrityServiceStatus } from "../../../issuance/store/actions";

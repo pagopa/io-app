@@ -1,27 +1,26 @@
 import * as O from "fp-ts/lib/Option";
 import { call, cancel, fork, put, select, take } from "typed-redux-saga/macro";
-
 import {
   analyticsAuthenticationCompleted,
   analyticsAuthenticationStarted
 } from "../../../../store/actions/analytics";
+import { loginSuccess } from "../store/actions";
 import { startupLoadSuccess } from "../../../../store/actions/startup";
-import { StartupStatusEnum } from "../../../../store/reducers/startup";
 import { ReduxSagaEffect } from "../../../../types/utils";
-import { isFastLoginEnabledSelector } from "../../fastLogin/store/selectors";
+import { StartupStatusEnum } from "../../../../store/reducers/startup";
 import {
   stopCieManager,
   watchCieAuthenticationSaga
 } from "../../login/cie/sagas/cie";
-import { IdpCIE, IdpCIE_ID } from "../../login/hooks/useNavigateToLoginMethod";
 import {
   trackCieIDLoginSuccess,
   trackCieLoginSuccess,
   trackLoginFlowStarting,
   trackSpidLoginSuccess
 } from "../analytics";
-import { loginSuccess } from "../store/actions";
 import { idpSelector } from "../store/selectors";
+import { IdpCIE, IdpCIE_ID } from "../../login/hooks/useNavigateToLoginMethod";
+import { isFastLoginEnabledSelector } from "../../fastLogin/store/selectors";
 import { watchTestLoginRequestSaga } from "./testLoginSaga";
 
 /**

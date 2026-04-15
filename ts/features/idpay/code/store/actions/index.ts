@@ -3,7 +3,6 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-
 import { CheckEnrollmentDTO } from "../../../../../../definitions/idpay/CheckEnrollmentDTO";
 import { GenerateCodeRespDTO } from "../../../../../../definitions/idpay/GenerateCodeRespDTO";
 import { NetworkError } from "../../../../../utils/errors";
@@ -59,8 +58,8 @@ export const idPayCodeCieBannerClose = createStandardAction(
 )<IdPayCodeCieBannerClosePayloadType>();
 
 export type IdPayCodeActions =
-  | ActionType<typeof idPayCodeCieBannerClose>
-  | ActionType<typeof idPayEnrollCode>
-  | ActionType<typeof idPayGenerateCode>
   | ActionType<typeof idPayGetCodeStatus>
-  | ActionType<typeof idPayResetCode>;
+  | ActionType<typeof idPayGenerateCode>
+  | ActionType<typeof idPayEnrollCode>
+  | ActionType<typeof idPayResetCode>
+  | ActionType<typeof idPayCodeCieBannerClose>;

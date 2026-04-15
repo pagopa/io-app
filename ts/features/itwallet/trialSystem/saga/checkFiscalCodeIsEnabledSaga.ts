@@ -1,6 +1,5 @@
 import { SagaIterator } from "redux-saga";
 import { call, select } from "typed-redux-saga/macro";
-
 import { apiUrlPrefix } from "../../../../config.ts";
 import { assert } from "../../../../utils/assert.ts";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";

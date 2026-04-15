@@ -1,12 +1,11 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { SagaIterator } from "redux-saga";
 import { all, call, put, select, takeLatest } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-
 import { apiUrlPrefix } from "../../../../config";
 import { pnMessagingServiceIdSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
@@ -19,7 +18,7 @@ import {
   trackPNServiceStatusChangeError,
   trackPNServiceStatusChangeSuccess
 } from "../../analytics";
-import { createPnClient, PnClient } from "../../api/client";
+import { PnClient, createPnClient } from "../../api/client";
 import { pnActivationUpsert, startPNPaymentStatusTracking } from "../actions";
 import { watchPaymentStatusForMixpanelTracking } from "./watchPaymentStatusSaga";
 
@@ -30,21 +29,6 @@ export function* tryLoadSENDPreferences() {
   }
 }
 const tooManyRequestsError = new Error("timeout -- too many requests");
-
-export function* watchPnSaga(bearerToken: string): SagaIterator {
-  const pnClient = createPnClient(apiUrlPrefix, bearerToken);
-
-  yield* takeLatest(
-    pnActivationUpsert.request,
-    handlePnActivation,
-    pnClient.upsertPNActivation
-  );
-
-  yield* takeLatest(
-    startPNPaymentStatusTracking,
-    watchPaymentStatusForMixpanelTracking
-  );
-}
 
 function* handlePnActivation(
   upsertPnActivation: PnClient["upsertPNActivation"],
@@ -122,6 +106,21 @@ function* reportPNServiceStatusOnFailure(
     O.getOrElse(() => predictedValue)
   );
   trackPNServiceStatusChangeError(isServiceActive, reason);
+}
+
+export function* watchPnSaga(bearerToken: string): SagaIterator {
+  const pnClient = createPnClient(apiUrlPrefix, bearerToken);
+
+  yield* takeLatest(
+    pnActivationUpsert.request,
+    handlePnActivation,
+    pnClient.upsertPNActivation
+  );
+
+  yield* takeLatest(
+    startPNPaymentStatusTracking,
+    watchPaymentStatusForMixpanelTracking
+  );
 }
 
 export const testable = isTestEnv

@@ -1,11 +1,10 @@
 import { useFocusEffect } from "@react-navigation/native";
-import {
-  allowScreenCaptureAsync,
-  preventScreenCaptureAsync
-} from "expo-screen-capture";
 import { useCallback, useMemo, useRef } from "react";
+import {
+  preventScreenCaptureAsync,
+  allowScreenCaptureAsync
+} from "expo-screen-capture";
 import { v4 as uuidv4 } from "uuid";
-
 import { isDevEnv } from "../environment";
 
 const activeTags = new Set<string>();

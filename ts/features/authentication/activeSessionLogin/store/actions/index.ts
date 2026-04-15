@@ -1,5 +1,4 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
-
 import { SpidIdp } from "../../../../../utils/idps";
 import { SpidLevel } from "../../../login/cie/utils";
 
@@ -37,10 +36,10 @@ export const setFastLoginOptSessionLogin = createStandardAction(
 export const consolidateActiveSessionLoginData = createStandardAction(
   "CONSOLIDATE_ACTIVE_SESSION_LOGIN_DATA"
 )<{
-  cieIDSelectedSecurityLevel?: SpidLevel;
-  fastLoginOptIn: boolean;
-  idp: SpidIdp;
   token: string;
+  idp: SpidIdp;
+  fastLoginOptIn: boolean;
+  cieIDSelectedSecurityLevel?: SpidLevel;
 }>();
 
 export const setFinishedActiveSessionLoginFlow = createStandardAction(
@@ -85,18 +84,18 @@ export const closeSessionExpirationBanner = createStandardAction(
 )();
 
 export type LoginInfoActions =
+  | ActionType<typeof setActiveSessionLoginLocalFlag>
+  | ActionType<typeof setActiveSessionLoginBlockingScreenHasBeenVisualized>
+  | ActionType<typeof setStartActiveSessionLogin>
+  | ActionType<typeof setRetryActiveSessionLogin>
+  | ActionType<typeof setIdpSelectedActiveSessionLogin>
   | ActionType<typeof activeSessionLoginFailure>
   | ActionType<typeof activeSessionLoginSuccess>
-  | ActionType<typeof closeSessionExpirationBanner>
   | ActionType<typeof consolidateActiveSessionLoginData>
-  | ActionType<typeof logoutBeforeSessionCorrupted>
-  | ActionType<typeof setActiveSessionLoginBlockingScreenHasBeenVisualized>
-  | ActionType<typeof setActiveSessionLoginLocalFlag>
-  | ActionType<typeof setCieIDSelectedSecurityLevelActiveSessionLogin>
   | ActionType<typeof setFastLoginOptSessionLogin>
-  | ActionType<typeof setFinalizeLoggedOutUserWithDifferentCF>
   | ActionType<typeof setFinishedActiveSessionLoginFlow>
-  | ActionType<typeof setIdpSelectedActiveSessionLogin>
   | ActionType<typeof setLoggedOutUserWithDifferentCF>
-  | ActionType<typeof setRetryActiveSessionLogin>
-  | ActionType<typeof setStartActiveSessionLogin>;
+  | ActionType<typeof logoutBeforeSessionCorrupted>
+  | ActionType<typeof setFinalizeLoggedOutUserWithDifferentCF>
+  | ActionType<typeof setCieIDSelectedSecurityLevelActiveSessionLogin>
+  | ActionType<typeof closeSessionExpirationBanner>;

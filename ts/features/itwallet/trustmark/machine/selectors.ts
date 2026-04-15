@@ -1,5 +1,4 @@
 import { StateFrom } from "xstate";
-
 import { ItwTrustmarkMachine } from "./machine";
 
 type MachineSnapshot = StateFrom<ItwTrustmarkMachine>;

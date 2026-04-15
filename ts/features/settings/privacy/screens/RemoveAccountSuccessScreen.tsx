@@ -1,10 +1,9 @@
-import I18n from "i18next";
 import { useMemo } from "react";
-
-import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import I18n from "i18next";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
-import { useIODispatch } from "../../../../store/hooks";
 import { logoutRequest } from "../../../authentication/common/store/actions";
+import { useIODispatch } from "../../../../store/hooks";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 
 /**
  * A screen to explain how the account removal works.
@@ -30,10 +29,10 @@ const RemoveAccountSuccess = () => {
 
   return (
     <OperationResultScreenContent
-      action={actions}
       pictogram="ended"
-      subtitle={I18n.t("profile.main.privacy.removeAccount.success.body")}
       title={I18n.t("profile.main.privacy.removeAccount.success.title")}
+      subtitle={I18n.t("profile.main.privacy.removeAccount.success.body")}
+      action={actions}
     />
   );
 };

@@ -1,5 +1,4 @@
 import { View } from "react-native";
-
 import { F24ListBottomSheetLinkProps } from "../F24ListBottomSheetLink";
 
 export const F24ListBottomSheetLink = ({

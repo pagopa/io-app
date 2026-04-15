@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
+import { PersistConfig, persistReducer } from "redux-persist";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
@@ -14,10 +14,10 @@ import {
 } from "../actions";
 
 export type IdPayCodeState = {
+  isOnboarded: pot.Pot<boolean, NetworkError>;
   code: pot.Pot<string, NetworkError>;
   enrollmentRequest: pot.Pot<void, NetworkError>;
   isIdPayInitiativeBannerClosed: Record<string, boolean>;
-  isOnboarded: pot.Pot<boolean, NetworkError>;
 };
 
 const INITIAL_STATE: IdPayCodeState = {
@@ -32,40 +32,33 @@ const reducer = (
   action: Action
 ): IdPayCodeState => {
   switch (action.type) {
-    case getType(idPayCodeCieBannerClose):
+    case getType(idPayGetCodeStatus.request):
       return {
         ...state,
-        isIdPayInitiativeBannerClosed: {
-          [action.payload.initiativeId]: true
-        }
+        isOnboarded: pot.toLoading(state.isOnboarded)
       };
-    case getType(idPayEnrollCode.failure):
+    case getType(idPayGetCodeStatus.success):
+      if (action.payload.isIdPayCodeEnabled !== undefined) {
+        return {
+          ...state,
+          isOnboarded: pot.some(action.payload.isIdPayCodeEnabled)
+        };
+      }
       return {
         ...state,
-        enrollmentRequest: pot.toError(state.enrollmentRequest, action.payload)
+        isOnboarded: pot.none
       };
-    case getType(idPayEnrollCode.request):
+    case getType(idPayGetCodeStatus.failure):
       return {
         ...state,
-        enrollmentRequest: pot.toLoading(state.enrollmentRequest)
+        isOnboarded: pot.toError(state.isOnboarded, action.payload)
       };
 
-    case getType(idPayEnrollCode.success):
-      return {
-        ...state,
-        enrollmentRequest: pot.some(undefined)
-      };
-    case getType(idPayGenerateCode.failure):
-      return {
-        ...state,
-        code: pot.toError(state.code, action.payload)
-      };
     case getType(idPayGenerateCode.request):
       return {
         ...state,
         code: pot.toLoading(state.code)
       };
-
     case getType(idPayGenerateCode.success):
       if (action.payload.idpayCode !== undefined) {
         return {
@@ -78,32 +71,39 @@ const reducer = (
         ...state,
         code: pot.none
       };
-    case getType(idPayGetCodeStatus.failure):
+    case getType(idPayGenerateCode.failure):
       return {
         ...state,
-        isOnboarded: pot.toError(state.isOnboarded, action.payload)
-      };
-    case getType(idPayGetCodeStatus.request):
-      return {
-        ...state,
-        isOnboarded: pot.toLoading(state.isOnboarded)
+        code: pot.toError(state.code, action.payload)
       };
 
-    case getType(idPayGetCodeStatus.success):
-      if (action.payload.isIdPayCodeEnabled !== undefined) {
-        return {
-          ...state,
-          isOnboarded: pot.some(action.payload.isIdPayCodeEnabled)
-        };
-      }
+    case getType(idPayEnrollCode.request):
       return {
         ...state,
-        isOnboarded: pot.none
+        enrollmentRequest: pot.toLoading(state.enrollmentRequest)
       };
+    case getType(idPayEnrollCode.success):
+      return {
+        ...state,
+        enrollmentRequest: pot.some(undefined)
+      };
+    case getType(idPayEnrollCode.failure):
+      return {
+        ...state,
+        enrollmentRequest: pot.toError(state.enrollmentRequest, action.payload)
+      };
+
     case getType(idPayResetCode):
       return {
         ...state,
         code: pot.none
+      };
+    case getType(idPayCodeCieBannerClose):
+      return {
+        ...state,
+        isIdPayInitiativeBannerClosed: {
+          [action.payload.initiativeId]: true
+        }
       };
   }
   return state;

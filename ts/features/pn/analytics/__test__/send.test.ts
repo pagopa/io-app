@@ -1,5 +1,5 @@
+import * as sendEvents from "../send";
 import type { SendActivationSource } from "../send";
-
 import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
 import {
@@ -7,7 +7,6 @@ import {
   SendOpeningSource,
   SendUserType
 } from "../../../pushNotifications/analytics";
-import * as sendEvents from "../send";
 
 const notificationModalFlowList: Array<NotificationModalFlow> = [
   "authentication",

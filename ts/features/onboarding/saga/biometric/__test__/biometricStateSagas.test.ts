@@ -1,12 +1,11 @@
 import { testSaga } from "redux-saga-test-plan";
-
-import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../../../store/actions/persistedPreferences";
 import {
   handleBiometricAvailable,
-  handleBiometricNotSupported,
+  hanldeMissingDevicePin,
   hanldeBiometricNotEnrolled,
-  hanldeMissingDevicePin
+  handleBiometricNotSupported
 } from "../biometricStateSagas";
+import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../../../store/actions/persistedPreferences";
 
 describe("biometricStateSagas", () => {
   it("should handleBiometricAvailable", () => {

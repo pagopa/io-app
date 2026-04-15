@@ -1,8 +1,8 @@
 import { PathConfigMap } from "@react-navigation/core";
 import { createStackNavigator } from "@react-navigation/stack";
-
 import { AppParamsList } from "../../../../navigation/params/AppParamsList";
 import { isGestureEnabled } from "../../../../utils/navigation";
+import CgnDetailScreen from "../screens/CgnDetailScreen";
 import CgnActivationCompletedScreen from "../screens/activation/CgnActivationCompletedScreen";
 import CgnActivationIneligibleScreen from "../screens/activation/CgnActivationIneligibleScreen";
 import CgnActivationLoadingScreen from "../screens/activation/CgnActivationLoadingScreen";
@@ -11,15 +11,14 @@ import CgnActivationTimeoutScreen from "../screens/activation/CgnActivationTimeo
 import CgnAlreadyActiveScreen from "../screens/activation/CgnAlreadyActiveScreen";
 import CgnCTAStartActivationScreen from "../screens/activation/CgnCTAStartActivationScreen";
 import CgnInformationScreen from "../screens/activation/CgnInformationScreen";
-import CgnDetailScreen from "../screens/CgnDetailScreen";
+import CGNDiscountExpiredScreen from "../screens/discount/CGNDiscountExpiredScreen";
 import CgnDiscountCodeScreen from "../screens/discount/CgnDiscountCodeScreen";
 import CgnDiscountDetailScreen from "../screens/discount/CgnDiscountDetailScreen";
-import CGNDiscountExpiredScreen from "../screens/discount/CGNDiscountExpiredScreen";
 import EycaActivationLoading from "../screens/eyca/activation/EycaActivationLoading";
 import CgnMerchantDetailScreen from "../screens/merchants/CgnMerchantDetailScreen";
 import CgnMerchantLandingWebview from "../screens/merchants/CgnMerchantLandingWebview";
-import CgnMerchantsCategoriesSelectionScreen from "../screens/merchants/CgnMerchantsCategoriesSelectionScreen";
 import { CgnMerchantSearchScreen } from "../screens/merchants/CgnMerchantSearchScreen";
+import CgnMerchantsCategoriesSelectionScreen from "../screens/merchants/CgnMerchantsCategoriesSelectionScreen";
 import CgnMerchantsListByCategory from "../screens/merchants/CgnMerchantsListByCategory";
 import {
   CgnActivationParamsList,
@@ -29,7 +28,7 @@ import {
 import CGN_ROUTES from "./routes";
 
 export const cgnLinkingOptions: PathConfigMap<
-  AppParamsList | CgnActivationParamsList
+  CgnActivationParamsList | AppParamsList
 > = {
   [CGN_ROUTES.DETAILS.MAIN]: {
     path: "cgn-details",
@@ -56,44 +55,44 @@ export const CgnActivationNavigator = () => (
     screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
   >
     <ActivationStack.Screen
-      component={CgnInformationScreen}
       name={CGN_ROUTES.ACTIVATION.INFORMATION_TOS}
       options={{ headerShown: false }}
+      component={CgnInformationScreen}
     />
     <ActivationStack.Screen
-      component={CgnActivationLoadingScreen}
       name={CGN_ROUTES.ACTIVATION.LOADING}
       options={{ headerShown: false }}
+      component={CgnActivationLoadingScreen}
     />
     <ActivationStack.Screen
-      component={CgnActivationPendingScreen}
       name={CGN_ROUTES.ACTIVATION.PENDING}
       options={{ headerShown: false }}
+      component={CgnActivationPendingScreen}
     />
     <ActivationStack.Screen
-      component={CgnAlreadyActiveScreen}
       name={CGN_ROUTES.ACTIVATION.EXISTS}
       options={{ headerShown: false }}
+      component={CgnAlreadyActiveScreen}
     />
     <ActivationStack.Screen
-      component={CgnActivationTimeoutScreen}
       name={CGN_ROUTES.ACTIVATION.TIMEOUT}
       options={{ headerShown: false }}
+      component={CgnActivationTimeoutScreen}
     />
     <ActivationStack.Screen
-      component={CgnActivationIneligibleScreen}
       name={CGN_ROUTES.ACTIVATION.INELIGIBLE}
       options={{ headerShown: false }}
+      component={CgnActivationIneligibleScreen}
     />
     <ActivationStack.Screen
-      component={CgnActivationCompletedScreen}
       name={CGN_ROUTES.ACTIVATION.COMPLETED}
       options={{ headerShown: false }}
+      component={CgnActivationCompletedScreen}
     />
     <ActivationStack.Screen
-      component={CgnCTAStartActivationScreen}
       name={CGN_ROUTES.ACTIVATION.CTA_START_CGN}
       options={{ headerShown: false }}
+      component={CgnCTAStartActivationScreen}
     />
   </ActivationStack.Navigator>
 );
@@ -106,50 +105,50 @@ export const CgnDetailsNavigator = () => (
     screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
   >
     <DetailStack.Screen
-      component={CgnDetailScreen}
       name={CGN_ROUTES.DETAILS.DETAILS}
       options={{ headerShown: true }}
+      component={CgnDetailScreen}
     />
     <DetailStack.Screen
-      component={CgnMerchantsCategoriesSelectionScreen}
       name={CGN_ROUTES.DETAILS.MERCHANTS.CATEGORIES}
       options={{ headerShown: true }}
+      component={CgnMerchantsCategoriesSelectionScreen}
     />
     <DetailStack.Screen
-      component={CgnMerchantsListByCategory}
       name={CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY}
       options={{ headerShown: true }}
+      component={CgnMerchantsListByCategory}
     />
     <DetailStack.Screen
-      component={CgnMerchantDetailScreen}
       name={CGN_ROUTES.DETAILS.MERCHANTS.DETAIL}
+      component={CgnMerchantDetailScreen}
     />
     <DetailStack.Screen
-      component={CgnMerchantLandingWebview}
       name={CGN_ROUTES.DETAILS.MERCHANTS.LANDING_WEBVIEW}
       options={{ headerShown: false }}
+      component={CgnMerchantLandingWebview}
     />
     <DetailStack.Screen
-      component={CgnDiscountDetailScreen}
       name={CGN_ROUTES.DETAILS.MERCHANTS.DISCOUNT}
+      component={CgnDiscountDetailScreen}
     />
     <DetailStack.Screen
-      component={CgnDiscountCodeScreen}
       name={CGN_ROUTES.DETAILS.MERCHANTS.DISCOUNT_CODE}
+      component={CgnDiscountCodeScreen}
       options={{
         presentation: "modal"
       }}
     />
     <DetailStack.Screen
-      component={CGNDiscountExpiredScreen}
       name={CGN_ROUTES.DETAILS.MERCHANTS.DISCOUNT_CODE_FAILURE}
+      component={CGNDiscountExpiredScreen}
       options={{
         headerShown: false
       }}
     />
     <DetailStack.Screen
-      component={CgnMerchantSearchScreen}
       name={CGN_ROUTES.DETAILS.MERCHANTS.SEARCH}
+      component={CgnMerchantSearchScreen}
       options={{
         headerShown: false
       }}
@@ -165,8 +164,8 @@ export const CgnEYCAActivationNavigator = () => (
     screenOptions={{ gestureEnabled: isGestureEnabled, headerShown: false }}
   >
     <EycaActivationStack.Screen
-      component={EycaActivationLoading}
       name={CGN_ROUTES.EYCA.ACTIVATION.LOADING}
+      component={EycaActivationLoading}
     />
   </EycaActivationStack.Navigator>
 );

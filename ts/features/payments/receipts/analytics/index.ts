@@ -3,16 +3,16 @@ import { buildEventProperties } from "../../../../utils/analytics";
 import { PaymentsAnalyticsReceiptUser } from "../../common/types/PaymentAnalytics";
 import { ReceiptsCategoryFilter } from "../types";
 
-export type HideReceiptTrigger = "swipe" | "tap";
+export type HideReceiptTrigger = "tap" | "swipe";
 
 type PaymentReceiptAnalyticsProps = {
-  first_time_opening: boolean;
-  organization_fiscal_code: string;
   organization_name: string;
   payment_status: string;
-  reason?: string;
-  trigger: HideReceiptTrigger;
+  first_time_opening: boolean;
   user: PaymentsAnalyticsReceiptUser;
+  organization_fiscal_code: string;
+  trigger: HideReceiptTrigger;
+  reason?: string;
 };
 
 export const trackPaymentsReceiptListing = () => {

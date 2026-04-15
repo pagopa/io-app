@@ -1,10 +1,9 @@
 import { createStore } from "redux";
-
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import { ShowMoreListItem, ShowMoreSection } from "../ShowMoreListItem";
+import { MESSAGES_ROUTES } from "../../../navigation/routes";
 
 describe("ShowMoreListItem", () => {
   it("should match snapshot, no data", () => {

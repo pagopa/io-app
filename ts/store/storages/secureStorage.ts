@@ -1,12 +1,12 @@
 import * as SecureStorage from "@pagopa/io-react-native-secure-storage";
 import { type SecureStorageError } from "@pagopa/io-react-native-secure-storage";
-import * as Sentry from "@sentry/react-native";
 import { type Storage } from "redux-persist";
+import * as Sentry from "@sentry/react-native";
 
 type SentryContext =
   | "SECURE_STORAGE_GET_ITEM_FAILURE"
-  | "SECURE_STORAGE_REMOVE_ITEM_FAILURE"
-  | "SECURE_STORAGE_SET_ITEM_FAILURE";
+  | "SECURE_STORAGE_SET_ITEM_FAILURE"
+  | "SECURE_STORAGE_REMOVE_ITEM_FAILURE";
 
 const trackExceptionOnSentry = (
   context: SentryContext,

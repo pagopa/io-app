@@ -2,7 +2,6 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useEffect } from "react";
-
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -119,19 +118,19 @@ const IdPayEnableMessageScreen = () => {
 
   return (
     <OperationResultScreenContent
+      pictogram="message"
+      title={I18n.t("idpay.onboarding.enableMessages.title")}
+      subtitle={I18n.t("idpay.onboarding.enableMessages.subtitle", {
+        initiativeName
+      })}
       action={{
         label: I18n.t("idpay.onboarding.enableMessages.confirmAction"),
         onPress: onActivate
       }}
-      pictogram="message"
       secondaryAction={{
         label: I18n.t("idpay.onboarding.enableMessages.cancelAction"),
         onPress: onCancel
       }}
-      subtitle={I18n.t("idpay.onboarding.enableMessages.subtitle", {
-        initiativeName
-      })}
-      title={I18n.t("idpay.onboarding.enableMessages.title")}
     />
   );
 };

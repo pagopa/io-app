@@ -5,7 +5,7 @@ import {
   RequestHeaderProducer,
   RequestHeaders
 } from "@pagopa/ts-commons/lib/requests";
-
+import { defaultRetryingFetch } from "../../../../utils/fetch";
 import {
   generateOtpDefaultDecoder,
   GenerateOtpT,
@@ -25,7 +25,6 @@ import {
   StartEycaActivationT
 } from "../../../../../definitions/cgn/requestTypes";
 import { withBearerToken as withToken } from "../../../../utils/api";
-import { defaultRetryingFetch } from "../../../../utils/fetch";
 
 const tokenHeaderProducer = ParamAuthorizationBearerHeaderProducer();
 
@@ -99,6 +98,14 @@ const startCgnUnsubscription: StartCgnUnsubscriptionT = {
   response_decoder: startCgnUnsubscriptionDefaultDecoder()
 };
 
+function ParamAuthorizationBearerHeaderProducer<
+  P extends { readonly Bearer: string }
+>(): RequestHeaderProducer<P, "Authorization"> {
+  return (p: P): RequestHeaders<"Authorization"> => ({
+    Authorization: `Bearer ${p.Bearer}`
+  });
+}
+
 //
 // A specific backend client to handle cgn requests
 //
@@ -138,12 +145,4 @@ export function BackendCGN(
       createFetchRequestForApi(startCgnUnsubscription, options)
     )
   };
-}
-
-function ParamAuthorizationBearerHeaderProducer<
-  P extends { readonly Bearer: string }
->(): RequestHeaderProducer<P, "Authorization"> {
-  return (p: P): RequestHeaders<"Authorization"> => ({
-    Authorization: `Bearer ${p.Bearer}`
-  });
 }

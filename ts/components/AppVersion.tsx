@@ -1,7 +1,6 @@
 import { BodySmall, useIOTheme } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { GestureResponderEvent, Pressable, View } from "react-native";
-
+import I18n from "i18next";
 import { WithTestID } from "../types/WithTestID";
 import { getAppVersion } from "../utils/appVersion";
 
@@ -16,9 +15,9 @@ const AppVersion = ({ onPress, testID }: AppVersion) => {
 
   return (
     <Pressable
-      accessibilityLabel={appVersionText}
       onPress={onPress}
       testID={testID}
+      accessibilityLabel={appVersionText}
     >
       <View
         style={{
@@ -29,9 +28,9 @@ const AppVersion = ({ onPress, testID }: AppVersion) => {
         }}
       >
         <BodySmall
-          color={theme["textBody-tertiary"]}
           numberOfLines={1}
           weight="Semibold"
+          color={theme["textBody-tertiary"]}
         >
           {appVersionText}
         </BodySmall>

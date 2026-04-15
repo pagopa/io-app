@@ -10,10 +10,10 @@ import {
   updateNotificationsPendingMessage
 } from "../actions/pendingMessage";
 
-export type PendingMessageState = null | Readonly<{
-  foreground: boolean;
+export type PendingMessageState = Readonly<{
   id: string;
-}>;
+  foreground: boolean;
+}> | null;
 
 const INITIAL_STATE: PendingMessageState = null;
 
@@ -22,10 +22,10 @@ export const pendingMessageReducer = (
   action: Action
 ): PendingMessageState => {
   switch (action.type) {
-    case getType(clearNotificationPendingMessage):
-      return INITIAL_STATE;
     case getType(updateNotificationsPendingMessage):
       return action.payload;
+    case getType(clearNotificationPendingMessage):
+      return INITIAL_STATE;
     default:
       return state;
   }

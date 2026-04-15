@@ -1,11 +1,10 @@
 import { createStore } from "redux";
-
-import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
-import { GlobalState } from "../../../../store/reducers/types";
+import { applicationChangeState } from "../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import PN_ROUTES from "../../navigation/routes";
 import { PaidPaymentScreen } from "../PaidPaymentScreen";
+import { GlobalState } from "../../../../store/reducers/types";
 
 describe("PaidPaymentScreen", () => {
   it("should match snapshot", () => {

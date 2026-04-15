@@ -1,23 +1,22 @@
-import * as O from "fp-ts/lib/Option";
 import {
   ActionType,
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-
+import * as O from "fp-ts/lib/Option";
 import { CreateFilledDocument } from "../../../../../definitions/fci/CreateFilledDocument";
 import { CreateSignatureBody } from "../../../../../definitions/fci/CreateSignatureBody";
 import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
-import { EnvironmentEnum } from "../../../../../definitions/fci/Environment";
 import { FilledDocumentDetailView } from "../../../../../definitions/fci/FilledDocumentDetailView";
-import { Metadata } from "../../../../../definitions/fci/Metadata";
 import { QtspClausesMetadataDetailView } from "../../../../../definitions/fci/QtspClausesMetadataDetailView";
 import { SignatureDetailView } from "../../../../../definitions/fci/SignatureDetailView";
 import { SignatureRequestDetailView } from "../../../../../definitions/fci/SignatureRequestDetailView";
-import { SignatureRequestList } from "../../../../../definitions/fci/SignatureRequestList";
 import { NetworkError } from "../../../../utils/errors";
-import { SignatureFieldAttrType } from "../../components/DocumentWithSignature";
+import { Metadata } from "../../../../../definitions/fci/Metadata";
+import { SignatureRequestList } from "../../../../../definitions/fci/SignatureRequestList";
 import { Document } from "../reducers/fciSignatureFieldDrawing";
+import { SignatureFieldAttrType } from "../../components/DocumentWithSignature";
+import { EnvironmentEnum } from "../../../../../definitions/fci/Environment";
 
 /**
  * get and handle the signatureRequest from id
@@ -140,7 +139,7 @@ export const fciDocumentSignatureFields = createAsyncAction(
   "FCI_DOCUMENT_SIGNATURE_FIELDS_REQUEST",
   "FCI_DOCUMENT_SIGNATURE_FIELDS_SUCCESS",
   "FCI_DOCUMENT_SIGNATURE_FIELDS_FAILURE"
-)<{ attrs: SignatureFieldAttrType; uri: string }, Document, Error>();
+)<{ uri: string; attrs: SignatureFieldAttrType }, Document, Error>();
 
 /**
  * Action to interact with the environment reducer.
@@ -150,21 +149,21 @@ export const fciEnvironmentSet = createStandardAction("FCI_ENVIRONMENT_SET")<
 >();
 
 export type FciActions =
-  | ActionType<typeof fciClearAllFiles>
-  | ActionType<typeof fciClearStateRequest>
-  | ActionType<typeof fciDocumentSignatureFields>
-  | ActionType<typeof fciDownloadPreview>
-  | ActionType<typeof fciDownloadPreviewClear>
-  | ActionType<typeof fciEndRequest>
-  | ActionType<typeof fciEnvironmentSet>
-  | ActionType<typeof fciLoadQtspClauses>
-  | ActionType<typeof fciLoadQtspFilledDocument>
-  | ActionType<typeof fciMetadataRequest>
-  | ActionType<typeof fciPollFilledDocument>
   | ActionType<typeof fciSignatureRequestFromId>
   | ActionType<typeof fciSignatureRequestRetryFromId>
-  | ActionType<typeof fciSignaturesListRequest>
+  | ActionType<typeof fciLoadQtspClauses>
+  | ActionType<typeof fciLoadQtspFilledDocument>
   | ActionType<typeof fciSigningRequest>
+  | ActionType<typeof fciClearStateRequest>
   | ActionType<typeof fciStartRequest>
+  | ActionType<typeof fciUpdateDocumentSignaturesRequest>
   | ActionType<typeof fciStartSigningRequest>
-  | ActionType<typeof fciUpdateDocumentSignaturesRequest>;
+  | ActionType<typeof fciEndRequest>
+  | ActionType<typeof fciDownloadPreview>
+  | ActionType<typeof fciDownloadPreviewClear>
+  | ActionType<typeof fciPollFilledDocument>
+  | ActionType<typeof fciClearAllFiles>
+  | ActionType<typeof fciMetadataRequest>
+  | ActionType<typeof fciSignaturesListRequest>
+  | ActionType<typeof fciDocumentSignatureFields>
+  | ActionType<typeof fciEnvironmentSet>;

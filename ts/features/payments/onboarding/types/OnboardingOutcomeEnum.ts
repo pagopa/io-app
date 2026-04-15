@@ -2,16 +2,16 @@ import { enumType } from "@pagopa/ts-commons/lib/types";
 import * as t from "io-ts";
 
 export enum WalletOnboardingOutcomeEnum {
-  ALREADY_ONBOARDED = "15",
-  AUTH_ERROR = "2",
-  BE_KO = "99",
-  BPAY_NOT_FOUND = "16",
-  CANCELED_BY_USER = "8",
-  GENERIC_ERROR = "1",
-  INVALID_SESSION = "14",
-  PSP_ERROR_ONBOARDING = "25",
   SUCCESS = "0",
-  TIMEOUT = "4"
+  GENERIC_ERROR = "1",
+  AUTH_ERROR = "2",
+  TIMEOUT = "4",
+  CANCELED_BY_USER = "8",
+  INVALID_SESSION = "14",
+  ALREADY_ONBOARDED = "15",
+  BPAY_NOT_FOUND = "16",
+  PSP_ERROR_ONBOARDING = "25",
+  BE_KO = "99"
 }
 
 export type WalletOnboardingOutcome = t.TypeOf<typeof WalletOnboardingOutcome>;

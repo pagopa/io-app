@@ -1,7 +1,6 @@
 jest.mock("../../../common/analytics");
 import * as E from "fp-ts/Either";
 import { expectSaga, testSaga } from "redux-saga-test-plan";
-
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import { trackExportSucceeded } from "../../../common/analytics";
 import { FimsHistoryClient } from "../../api/client";

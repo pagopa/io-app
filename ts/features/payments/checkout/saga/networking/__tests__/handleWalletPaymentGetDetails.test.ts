@@ -1,7 +1,6 @@
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
-
 import { PaymentRequestsGetResponse } from "../../../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RptId } from "../../../../../../../definitions/pagopa/ecommerce/RptId";
 import { getGenericError } from "../../../../../../utils/errors";

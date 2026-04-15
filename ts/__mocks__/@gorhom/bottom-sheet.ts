@@ -17,32 +17,32 @@ const BottomSheetBackdrop = NOOP;
 
 const BottomSheetComponent = (props: PropsWithChildren) => props.children;
 
-class BottomSheet extends Component<PropsWithChildren> {
-  close() {}
-  collapse() {}
-  expand() {}
-  forceClose() {}
-  render() {
-    return this.props.children;
-  }
-  snapToIndex() {}
-
-  snapToPosition() {}
-}
-
 class BottomSheetModal extends Component<PropsWithChildren> {
-  close() {}
-  collapse() {}
-  dismiss() {}
+  snapToIndex() {}
+  snapToPosition() {}
   expand() {}
+  collapse() {}
+  close() {}
   forceClose() {}
   present() {}
+  dismiss() {}
+
   render() {
     return this.props.children;
   }
-  snapToIndex() {}
+}
 
+class BottomSheet extends Component<PropsWithChildren> {
+  snapToIndex() {}
   snapToPosition() {}
+  expand() {}
+  collapse() {}
+  close() {}
+  forceClose() {}
+
+  render() {
+    return this.props.children;
+  }
 }
 
 const useBottomSheet = () => ({
@@ -98,26 +98,26 @@ const useBottomSheetDynamicSnapPoints = () => ({
 
 export default BottomSheet;
 export {
-  BottomSheetBackdrop,
-  BottomSheetModal,
-  BottomSheetModalProvider,
   BottomSheetComponent as BottomSheetView,
+  BottomSheetModalProvider,
+  BottomSheetModal,
+  BottomSheetBackdrop,
   useBottomSheet,
-  useBottomSheetDynamicSnapPoints,
-  useBottomSheetInternal,
   useBottomSheetModal,
-  useBottomSheetModalInternal,
   useBottomSheetAnimationConfigs as useBottomSheetSpringConfigs,
-  useBottomSheetAnimationConfigs as useBottomSheetTimingConfigs
+  useBottomSheetAnimationConfigs as useBottomSheetTimingConfigs,
+  useBottomSheetInternal,
+  useBottomSheetModalInternal,
+  useBottomSheetDynamicSnapPoints
 };
 export {
-  FlatList as BottomSheetFlashList,
-  FlatList as BottomSheetFlatList,
+  TextInput as BottomSheetTextInput,
   ScrollView as BottomSheetScrollView,
   SectionList as BottomSheetSectionList,
-  TextInput as BottomSheetTextInput,
+  FlatList as BottomSheetFlatList,
+  FlatList as BottomSheetFlashList,
   VirtualizedList as BottomSheetVirtualizedList,
-  TouchableHighlight,
   TouchableOpacity,
+  TouchableHighlight,
   TouchableWithoutFeedback
 } from "react-native";

@@ -6,7 +6,6 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { ComponentProps, useMemo } from "react";
 import { View } from "react-native";
-
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
@@ -18,8 +17,8 @@ import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selec
 import { ITW_ROUTES } from "../../navigation/routes";
 import { useItwEidLifecycleAlertTracking } from "../hooks/useItwEidLifecycleAlertTracking";
 import {
-  ItwJwtCredentialStatus,
-  StoredCredential
+  CredentialMetadata,
+  ItwJwtCredentialStatus
 } from "../utils/itwTypesUtils";
 
 const defaultLifecycleStatus: Array<ItwJwtCredentialStatus> = [
@@ -29,13 +28,13 @@ const defaultLifecycleStatus: Array<ItwJwtCredentialStatus> = [
 ];
 
 type Props = {
-  currentScreenName?: string;
   /**
    * The eID statuses that will render the alert.
    */
   lifecycleStatus?: Array<ItwJwtCredentialStatus>;
   navigation: ReturnType<typeof useIONavigation>;
   skipViewTracking?: boolean;
+  currentScreenName?: string;
 };
 
 /**
@@ -77,7 +76,7 @@ export const ItwEidLifecycleAlert = ({
     eid,
     eidStatus
   }: {
-    eid: StoredCredential;
+    eid: CredentialMetadata;
     eidStatus: ItwJwtCredentialStatus;
   }) => {
     const nameSpace = isItw ? "itw" : "documents";

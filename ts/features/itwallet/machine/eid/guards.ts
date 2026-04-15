@@ -1,20 +1,19 @@
-import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-
+import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import { useIOStore } from "../../../../store/hooks";
 import { profileFiscalCodeSelector } from "../../../settings/common/store/selectors";
+import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwSessionExpiredError } from "../../api/client";
+import { isWalletInstanceAttestationValid } from "../../common/utils/itwAttestationUtils";
+import { getFiscalCodeFromCredential } from "../../common/utils/itwClaimsUtils";
+import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
+import { isItwCredential } from "../../common/utils/itwCredentialUtils";
+import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
 import {
   itwIsL3EnabledSelector,
   itwIsSimplifiedActivationRequired
 } from "../../common/store/selectors/preferences";
-import { isWalletInstanceAttestationValid } from "../../common/utils/itwAttestationUtils";
-import { getFiscalCodeFromCredential } from "../../common/utils/itwClaimsUtils";
-import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
-import { isItwCredential } from "../../common/utils/itwCredentialUtils";
-import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
@@ -40,7 +39,7 @@ export const createEidIssuanceGuardsImplementation = (
       store.getState()
     );
 
-    const eidFiscalCode = getFiscalCodeFromCredential(context.eid);
+    const eidFiscalCode = getFiscalCodeFromCredential(context.eid?.metadata);
 
     return authenticatedUserFiscalCode === eidFiscalCode;
   },

@@ -3,30 +3,29 @@ import {
   IOVisualCostants,
   useIOToast
 } from "@pagopa/io-app-design-system";
-import { useRoute } from "@react-navigation/native";
-import I18n from "i18next";
 import { useCallback, useEffect } from "react";
 import { StyleSheet, View } from "react-native";
-
-import { helpCenterHowToDoWhenSessionIsExpiredUrl } from "../../../../config";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useRoute } from "@react-navigation/native";
+import I18n from "i18next";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { trackHelpCenterCtaTapped } from "../../../../utils/analytics";
 import { openWebUrl } from "../../../../utils/url";
-import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes";
-import {
-  closeSessionExpirationBanner,
-  setStartActiveSessionLogin
-} from "../../activeSessionLogin/store/actions";
-import { isActiveSessionLoginEnabledSelector } from "../../activeSessionLogin/store/selectors";
-import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
 import { formattedExpirationDateSelector } from "../../common/store/selectors";
+import { helpCenterHowToDoWhenSessionIsExpiredUrl } from "../../../../config";
+import { trackHelpCenterCtaTapped } from "../../../../utils/analytics";
 import {
   BANNER_ID,
   trackLoginExpirationBannerClosure,
   trackLoginExpirationBannerPrompt,
   trackLoginExpirationBannerTap
 } from "../analytics";
+import { isActiveSessionLoginEnabledSelector } from "../../activeSessionLogin/store/selectors";
+import {
+  closeSessionExpirationBanner,
+  setStartActiveSessionLogin
+} from "../../activeSessionLogin/store/actions";
+import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes";
+import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 
 type Props = {
   handleOnClose: () => void;
@@ -102,15 +101,15 @@ export const LoginExpirationBanner = ({ handleOnClose }: Props) => {
   return (
     <View style={styles.margins}>
       <Banner
-        action={action}
-        color="neutral"
-        content={content}
-        labelClose={I18n.t("global.buttons.close")}
-        onClose={closeHandler}
-        onPress={handleOnPress}
-        pictogramName="identityCheck"
         testID="loginExpirationBanner"
         title={title}
+        content={content}
+        action={action}
+        pictogramName="identityCheck"
+        color="neutral"
+        onClose={closeHandler}
+        labelClose={I18n.t("global.buttons.close")}
+        onPress={handleOnPress}
       />
     </View>
   );

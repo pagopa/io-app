@@ -1,5 +1,5 @@
-import { enumType } from "@pagopa/ts-commons/lib/types";
 import * as t from "io-ts";
+import { enumType } from "@pagopa/ts-commons/lib/types";
 
 export enum FaultCodeCategoryEnum {
   "PSP_PAYMENT_METHOD_NOT_AVAILABLE_ERROR" = "PSP_PAYMENT_METHOD_NOT_AVAILABLE_ERROR"

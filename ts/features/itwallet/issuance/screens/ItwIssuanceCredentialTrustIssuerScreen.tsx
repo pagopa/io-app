@@ -9,13 +9,10 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useCallback, useRef } from "react";
-
-import type { CredentialIssuanceMode } from "../../machine/credential/context";
-
 import IOMarkdown from "../../../../components/IOMarkdown";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
@@ -37,12 +34,13 @@ import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { ISSUER_MOCK_NAME } from "../../common/utils/itwMocksUtils";
 import {
-  RequestObject,
-  StoredCredential
+  CredentialMetadata,
+  RequestObject
 } from "../../common/utils/itwTypesUtils";
 import { generateItwIOMarkdownRules } from "../../common/utils/markdown";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import type { CredentialIssuanceMode } from "../../machine/credential/context";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
   selectCredentialTypeOption,
@@ -127,8 +125,8 @@ const ItwIssuanceCredentialTrustIssuer = (props: ScreenProps) => {
 
 type ContentViewProps = {
   credentialType: string;
-  eid: StoredCredential;
   requestedCredential: RequestObject;
+  eid: CredentialMetadata;
 };
 
 /**
@@ -194,6 +192,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
 
   return (
     <ForceScrollDownView
+      onThresholdCrossed={trackScrollToBottom}
       footerActions={{
         actions: {
           type: "TwoButtons",
@@ -208,7 +207,6 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
           }
         }
       }}
-      onThresholdCrossed={trackScrollToBottom}
     >
       <ContentWrapper>
         <VSpacer size={24} />
@@ -232,26 +230,26 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
         />
         <VSpacer size={24} />
         <ListItemHeader
-          iconColor={theme["icon-default"]}
-          iconName="security"
           label={I18n.t(
             "features.itWallet.issuance.credentialAuth.requiredClaims"
           )}
+          iconName="security"
+          iconColor={theme["icon-default"]}
         />
         <ItwRequestedClaimsList items={requiredClaims} />
         <VSpacer size={24} />
         <FeatureInfo
+          iconName="fornitori"
           body={I18n.t(
             "features.itWallet.issuance.credentialAuth.disclaimer.0"
           )}
-          iconName="fornitori"
         />
         <VSpacer size={24} />
         <FeatureInfo
+          iconName="trashcan"
           body={I18n.t(
             "features.itWallet.issuance.credentialAuth.disclaimer.1"
           )}
-          iconName="trashcan"
         />
         <VSpacer size={32} />
         <IOMarkdown

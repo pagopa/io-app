@@ -10,14 +10,13 @@ import {
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { useFocusEffect } from "@react-navigation/native";
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
-import I18n from "i18next";
+import { pipe } from "fp-ts/lib/function";
 import { useCallback, useState } from "react";
 import { View } from "react-native";
-
+import I18n from "i18next";
 import { PasswordLogin } from "../../../../../definitions/session_manager/PasswordLogin";
 import ActivityIndicator from "../../../../components/ui/ActivityIndicator";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
@@ -39,7 +38,7 @@ const VersionView = () => (
     testID="appVersionView"
   >
     <Body>{I18n.t("profile.main.appVersion")}</Body>
-    <Body numberOfLines={1} testID="appVersion" weight="Semibold">
+    <Body numberOfLines={1} weight="Semibold" testID="appVersion">
       {getAppVersion()}
     </Body>
   </View>
@@ -52,17 +51,17 @@ const LoadingView = () => {
     <View style={{ flex: 1 }}>
       <VSpacer size={40} />
       <ActivityIndicator
+        animating={true}
+        size={"large"}
+        color={IOColors[theme["interactiveElem-default"]]}
+        accessible={true}
         accessibilityHint={I18n.t(
           "global.accessibility.activityIndicator.hint"
         )}
         accessibilityLabel={I18n.t(
           "global.accessibility.activityIndicator.label"
         )}
-        accessible={true}
-        animating={true}
-        color={IOColors[theme["interactiveElem-default"]]}
         importantForAccessibility={"no-hide-descendants"}
-        size={"large"}
         testID={"activityIndicator"}
       />
       <VSpacer size={40} />
@@ -73,7 +72,7 @@ const LoadingView = () => {
 const ErrorView = (content: string) => (
   <View style={{ flex: 1 }} testID="errorView">
     <VSpacer size={16} />
-    <Alert content={content} variant="error" />
+    <Alert variant="error" content={content} />
     <VSpacer size={16} />
   </View>
 );
@@ -81,7 +80,7 @@ const ErrorView = (content: string) => (
 const SuccessfulView = () => (
   <View style={{ flex: 1 }} testID="successView">
     <VSpacer size={16} />
-    <Alert content={"Success"} variant="success" />
+    <Alert variant="success" content={"Success"} />
     <VSpacer size={16} />
   </View>
 );
@@ -177,30 +176,30 @@ const TestAuthenticationScreen = () => {
       }}
     >
       <TextInputValidation
-        disabled={isLoading}
-        errorMessage={`${I18n.t("global.username")} is invalid`}
-        icon="profile"
-        onChangeText={setUsername}
-        onValidate={isUsernameFieldValid}
         placeholder={I18n.t("global.username")}
+        value={username}
+        onChangeText={setUsername}
         testID={"usernameInput"}
+        icon="profile"
+        onValidate={isUsernameFieldValid}
+        errorMessage={`${I18n.t("global.username")} is invalid`}
+        disabled={isLoading}
         textInputProps={{
           inputMode: "text",
           returnKeyType: "done"
         }}
-        value={username}
       />
       <VSpacer size={16} />
       <TextInputPassword
-        disabled={isLoading}
-        icon="locked"
-        onChangeText={setPassword}
         placeholder={I18n.t("global.password")}
+        value={password}
+        onChangeText={setPassword}
         testID={"passwordInput"}
+        icon="locked"
+        disabled={isLoading}
         textInputProps={{
           returnKeyType: "done"
         }}
-        value={password}
       />
       <VSpacer size={16} />
       <VersionView />

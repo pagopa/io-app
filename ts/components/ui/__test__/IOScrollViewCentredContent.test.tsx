@@ -1,17 +1,16 @@
 import { constUndefined } from "fp-ts/lib/function";
 import { ComponentProps } from "react";
 import { createStore } from "redux";
-
 import ROUTES from "../../../navigation/routes";
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
-import { IOScrollViewActions } from "../IOScrollView";
 import {
   IOScrollViewCentredContent,
   IOScrollViewCentredContentProps
 } from "../IOScrollViewCentredContent";
+import { IOScrollViewActions } from "../IOScrollView";
 
 const actions: ReadonlyArray<IOScrollViewActions> = [
   {

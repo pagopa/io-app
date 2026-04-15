@@ -1,15 +1,14 @@
 import { PersistedState } from "redux-persist";
-
-import {
-  cieIDDisableTourGuide,
-  cieIDSetSelectedSecurityLevel,
-  cieLoginDisableUat,
-  cieLoginEnableUat
-} from "../actions";
 import {
   cieLoginInitialState,
   testableCieLoginReducer
 } from "../reducers/cieLogin";
+import {
+  cieLoginDisableUat,
+  cieLoginEnableUat,
+  cieIDDisableTourGuide,
+  cieIDSetSelectedSecurityLevel
+} from "../actions";
 
 describe("cieLoginReducer", () => {
   if (!testableCieLoginReducer) {

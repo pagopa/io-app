@@ -1,11 +1,8 @@
-import { testSaga } from "redux-saga-test-plan";
 import { Effect } from "redux-saga/effects";
+import { testSaga } from "redux-saga-test-plan";
 import { call, take } from "typed-redux-saga/macro";
-
 import { Detail_v2Enum } from "../../../../../definitions/backend/PaymentProblemJson";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
-import { serviceDetailsByIdSelector } from "../../../services/details/store/selectors";
-import { trackPaymentStatus } from "../../analytics";
 import {
   cancelPaymentStatusTracking,
   startPaymentStatusTracking,
@@ -13,15 +10,17 @@ import {
   UpdatePaymentForMessageSuccess
 } from "../../store/actions";
 import {
-  toGenericMessagePaymentError,
-  toSpecificMessagePaymentError,
-  toTimeoutMessagePaymentError
-} from "../../types/paymentErrors";
-import {
   handlePaymentStatusForAnalyticsTracking,
   paymentStatusFromPaymentUpdateResult,
   testable
 } from "../handlePaymentStatusForAnalyticsTracking";
+import { serviceDetailsByIdSelector } from "../../../services/details/store/selectors";
+import { trackPaymentStatus } from "../../analytics";
+import {
+  toGenericMessagePaymentError,
+  toSpecificMessagePaymentError,
+  toTimeoutMessagePaymentError
+} from "../../types/paymentErrors";
 
 const messageId = "01JWX68NS39VA6YVWX0R10E3VM";
 const paymentId = "01234567890123456789012345678901234567890";
@@ -38,7 +37,7 @@ describe("handlePaymentStatusForAnalyticsTracking", () => {
         .race({
           polling: call(testable!.trackPaymentUpdates),
           cancelAction: take(cancelPaymentStatusTracking)
-        } as unknown as Record<string, Effect>)
+        } as unknown as { [key: string]: Effect })
         .next({ cancelAction: cancelPaymentStatusTracking() })
         .isDone();
     });

@@ -3,7 +3,6 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-
 import { UserDataProcessing } from "../../../../../../definitions/backend/UserDataProcessing";
 import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/backend/UserDataProcessingChoice";
 
@@ -51,8 +50,8 @@ export const resetDeleteUserDataProcessing = createStandardAction(
 )();
 
 export type UserDataProcessingActions =
-  | ActionType<typeof deleteUserDataProcessing>
   | ActionType<typeof loadUserDataProcessing>
+  | ActionType<typeof upsertUserDataProcessing>
+  | ActionType<typeof deleteUserDataProcessing>
   | ActionType<typeof resetDeleteUserDataProcessing>
-  | ActionType<typeof resetUserDataProcessingRequest>
-  | ActionType<typeof upsertUserDataProcessing>;
+  | ActionType<typeof resetUserDataProcessingRequest>;

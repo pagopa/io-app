@@ -1,17 +1,17 @@
-import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
-import I18n from "i18next";
 import _ from "lodash";
 import { createStore } from "redux";
-
-import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
-import { ServiceId } from "../../../../../../definitions/services/ServiceId";
+import I18n from "i18next";
+import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import * as selectors from "../../../common/store/selectors/remoteConfig";
-import { FavouriteServiceType } from "../../../favouriteServices/types";
 import { FavouriteServiceButton } from "../FavouriteServiceButton";
+
+import * as selectors from "../../../common/store/selectors/remoteConfig";
+import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
+import { FavouriteServiceType } from "../../../favouriteServices/types";
 
 const serviceId = "serviceCgn" as ServiceId;
 

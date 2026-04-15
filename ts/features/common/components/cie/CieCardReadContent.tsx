@@ -22,23 +22,22 @@ import Animated, {
   useDerivedValue,
   withSpring
 } from "react-native-reanimated";
-
 import { CircularProgress } from "../../../../components/ui/CircularProgress";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { isDevEnv } from "../../../../utils/environment";
 import { platformSelect } from "../../utils";
 
 export type CieCardReadContentProps = {
+  progress?: number;
+  title: string;
+  subtitle?: string;
+  pictogram: IOPictograms;
+  primaryAction?: Omit<IOButtonBlockSpecificProps, "variant">;
+  secondaryAction?: Omit<IOButtonLinkSpecificProps, "variant">;
   /**
    * @platform iOS
    */
   hiddenProgressBar?: boolean;
-  pictogram: IOPictograms;
-  primaryAction?: Omit<IOButtonBlockSpecificProps, "variant">;
-  progress?: number;
-  secondaryAction?: Omit<IOButtonLinkSpecificProps, "variant">;
-  subtitle?: string;
-  title: string;
 };
 
 /**
@@ -48,11 +47,11 @@ const Title = ({ title }: Pick<CieCardReadContentProps, "title">) => (
   <View>
     {/* A11y live node */}
     <View
-      accessibilityLabel={title}
-      accessibilityLiveRegion="polite"
       accessible
-      importantForAccessibility="yes"
+      accessibilityLiveRegion="polite"
+      accessibilityLabel={title}
       style={{ position: "absolute", width: 1, height: 1, opacity: 0 }}
+      importantForAccessibility="yes"
     />
     {platformSelect({
       ios: <H4>{title}</H4>,
@@ -88,7 +87,7 @@ const Actions = (
     ios: (
       <VStack space={16}>
         {props.primaryAction ? (
-          <IOButton {...props.primaryAction} fullWidth={true} variant="solid" />
+          <IOButton {...props.primaryAction} variant="solid" fullWidth={true} />
         ) : null}
         {props.secondaryAction ? (
           <View style={{ alignSelf: "center" }}>
@@ -153,17 +152,7 @@ const LinearProgressBar = (
 
   return (
     <View
-      accessibilityLabel={a11yLabel}
-      accessibilityRole="progressbar"
-      accessibilityValue={{
-        min: 0,
-        max: 100,
-        now: progressPercent
-      }}
-      accessible={true}
       focusable
-      importantForAccessibility="yes"
-      onLayout={e => setWidth(e.nativeEvent.layout.width)}
       /* We set a fixed height to make the component focusable on Android */
       style={{
         width: "100%",
@@ -171,6 +160,16 @@ const LinearProgressBar = (
         justifyContent: "center",
         borderRadius: 4,
         backgroundColor
+      }}
+      onLayout={e => setWidth(e.nativeEvent.layout.width)}
+      importantForAccessibility="yes"
+      accessibilityLabel={a11yLabel}
+      accessible={true}
+      accessibilityRole="progressbar"
+      accessibilityValue={{
+        min: 0,
+        max: 100,
+        now: progressPercent
       }}
     >
       <Animated.View
@@ -226,14 +225,14 @@ const ContentAndroid = (props: CieCardReadContentProps) => {
       <ContentWrapper>
         <VStack space={24}>
           <CircularProgress
-            progress={(props.progress || 0) * 100}
-            radius={120}
             size={240}
-            strokeBgColor={IOColors["grey-200"]}
+            radius={120}
+            progress={(props.progress || 0) * 100}
             strokeColor={IOColors["blueIO-500"]}
+            strokeBgColor={IOColors["grey-200"]}
             strokeWidth={4}
           >
-            <Pictogram name={props.pictogram} size={180} />
+            <Pictogram size={180} name={props.pictogram} />
           </CircularProgress>
           <VStack space={8}>
             <Title title={props.title} />

@@ -3,20 +3,20 @@ import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
 
 type DefaultOnboardingEventProperties = {
-  initiativeId?: string;
   initiativeName?: string;
+  initiativeId?: string;
 };
 
 const mapIDPayDetailStatusToMixpanel = (
   status?: VoucherStatusEnum
-): "about_to_expire" | "expired" | "spent" | "valid" | undefined => {
+): "valid" | "about_to_expire" | "expired" | "spent" | undefined => {
   switch (status) {
     case VoucherStatusEnum.ACTIVE:
       return "valid";
-    case VoucherStatusEnum.EXPIRED:
-      return "expired";
     case VoucherStatusEnum.EXPIRING:
       return "about_to_expire";
+    case VoucherStatusEnum.EXPIRED:
+      return "expired";
     case VoucherStatusEnum.USED:
       return "spent";
     default:
@@ -112,7 +112,7 @@ export const trackIDPayDetailManualEntryConfirm = (
 
 export const trackIDPayDetailAuthorizationSummary = (
   props: DefaultOnboardingEventProperties & {
-    data_entry: "manual" | "qr_code";
+    data_entry: "qr_code" | "manual";
   }
 ) => {
   mixpanelTrack(
@@ -123,7 +123,7 @@ export const trackIDPayDetailAuthorizationSummary = (
 
 export const trackIDPayDetailAuthorizationConversion = (
   props: DefaultOnboardingEventProperties & {
-    data_entry: "manual" | "qr_code";
+    data_entry: "qr_code" | "manual";
   }
 ) => {
   mixpanelTrack(
@@ -134,7 +134,7 @@ export const trackIDPayDetailAuthorizationConversion = (
 
 export const trackIDPayDetailAuthorizationCancel = (
   props: DefaultOnboardingEventProperties & {
-    data_entry: "manual" | "qr_code";
+    data_entry: "qr_code" | "manual";
   }
 ) => {
   mixpanelTrack(
@@ -145,7 +145,7 @@ export const trackIDPayDetailAuthorizationCancel = (
 
 export const trackIDPayDetailAuthorizationUXSuccess = (
   props: DefaultOnboardingEventProperties & {
-    data_entry: "manual" | "qr_code";
+    data_entry: "qr_code" | "manual";
   }
 ) => {
   mixpanelTrack(
@@ -156,7 +156,7 @@ export const trackIDPayDetailAuthorizationUXSuccess = (
 
 export const trackIDPayDetailAuthorizationError = (
   props: DefaultOnboardingEventProperties & {
-    data_entry: "manual" | "qr_code";
+    data_entry: "qr_code" | "manual";
     reason?: string;
   }
 ) => {

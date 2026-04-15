@@ -15,7 +15,7 @@ export const itwUnverifiedCredentialsCounterReset = createStandardAction(
 )();
 
 export type ItwSecurePreferencesActions =
-  | ActionType<typeof itwOfflineAccessCounterReset>
   | ActionType<typeof itwOfflineAccessCounterUp>
-  | ActionType<typeof itwUnverifiedCredentialsCounterReset>
-  | ActionType<typeof itwUnverifiedCredentialsCounterUp>;
+  | ActionType<typeof itwOfflineAccessCounterReset>
+  | ActionType<typeof itwUnverifiedCredentialsCounterUp>
+  | ActionType<typeof itwUnverifiedCredentialsCounterReset>;

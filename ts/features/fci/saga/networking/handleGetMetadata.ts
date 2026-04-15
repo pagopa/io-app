@@ -1,14 +1,13 @@
-import * as E from "fp-ts/lib/Either";
 import { SagaIterator } from "redux-saga";
 import { call, put } from "typed-redux-saga/macro";
+import * as E from "fp-ts/lib/Either";
 import { ActionType } from "typesafe-actions";
-
-import { SagaCallReturnType } from "../../../../types/utils";
-import { getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { FciClient } from "../../api/backendFci";
 import { fciMetadataRequest } from "../../store/actions";
+import { getNetworkError } from "../../../../utils/errors";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
+import { SagaCallReturnType } from "../../../../types/utils";
 
 /*
  * A saga to load a QTSP metadata.

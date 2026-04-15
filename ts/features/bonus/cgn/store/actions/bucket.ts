@@ -3,15 +3,14 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-
-import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { NetworkError } from "../../../../../utils/errors";
+import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { DiscountBucketCodeResponse } from "../../types/DiscountBucketCodeResponse";
 
 type CgnCodeBucketPayload = {
   discountId: Discount["id"];
-  onError: () => void;
   onSuccess: () => void;
+  onError: () => void;
 };
 
 /**

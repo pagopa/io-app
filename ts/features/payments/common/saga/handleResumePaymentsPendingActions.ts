@@ -1,5 +1,4 @@
 import { put, select } from "typed-redux-saga/macro";
-
 import { clearPaymentsPendingActions } from "../store/actions";
 import { selectPagoPaPlatformPendingActions } from "../store/selectors";
 

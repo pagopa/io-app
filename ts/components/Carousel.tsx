@@ -1,9 +1,9 @@
 import { IOAppMargin, WithTestID } from "@pagopa/io-app-design-system";
 import {
-  forwardRef,
   JSXElementConstructor,
   ReactElement,
   Ref,
+  forwardRef,
   useCallback,
   useMemo
 } from "react";
@@ -17,38 +17,38 @@ import {
 
 const WINDOW_WIDTH = Dimensions.get("window").width;
 
-type Nullable<T> = null | T;
+type Nullable<T> = T | null;
 
-type Props<T> = Pick<
-  FlatListProps<T>,
-  | "contentContainerStyle"
-  | "decelerationRate"
-  | "initialScrollIndex"
-  | "keyExtractor"
-  | "onViewableItemsChanged"
-  | "pagingEnabled"
-  | "scrollEnabled"
-  | "snapToAlignment"
-  | "style"
-  | "viewabilityConfig"
-> & {
-  /**
-   * The component used to render the single item.
-   */
-  Component: JSXElementConstructor<T>;
+type Props<T> = {
   /**
    * The array used to build the carousel items.
    */
   data: Array<T>;
   /**
+   * The component used to render the single item.
+   */
+  Component: JSXElementConstructor<T>;
+  /**
    * The horizontal space between carousel items.
    */
-  itemsGap?: 0 | IOAppMargin;
+  itemsGap?: IOAppMargin | 0;
   /**
    * The number of items displayed simultaneously.
    */
   itemsPerTime?: number;
-};
+} & Pick<
+  FlatListProps<T>,
+  | "onViewableItemsChanged"
+  | "snapToAlignment"
+  | "decelerationRate"
+  | "pagingEnabled"
+  | "viewabilityConfig"
+  | "contentContainerStyle"
+  | "initialScrollIndex"
+  | "keyExtractor"
+  | "scrollEnabled"
+  | "style"
+>;
 
 /**
  * This component renders a carousel of elements from a given `data` entry and a `Component` of your choice.
@@ -107,24 +107,24 @@ function CarouselComponent<T extends Record<string, unknown>>(
 
   return (
     <FlatList
-      contentContainerStyle={contentContainerStyle}
-      data={data}
-      decelerationRate={decelerationRate}
-      getItemLayout={getItemLayout}
+      ref={ref}
       horizontal
+      testID={testID}
+      data={data}
+      style={[style, styles.box]}
+      snapToInterval={snapToInterval}
+      snapToAlignment={snapToAlignment}
+      decelerationRate={decelerationRate}
+      pagingEnabled={pagingEnabled}
+      viewabilityConfig={viewabilityConfig}
+      showsHorizontalScrollIndicator={false}
+      contentContainerStyle={contentContainerStyle}
       initialScrollIndex={initialScrollIndex}
+      scrollEnabled={scrollEnabled}
+      renderItem={renderItem}
+      getItemLayout={getItemLayout}
       keyExtractor={keyExtractor}
       onViewableItemsChanged={onViewableItemsChanged}
-      pagingEnabled={pagingEnabled}
-      ref={ref}
-      renderItem={renderItem}
-      scrollEnabled={scrollEnabled}
-      showsHorizontalScrollIndicator={false}
-      snapToAlignment={snapToAlignment}
-      snapToInterval={snapToInterval}
-      style={[style, styles.box]}
-      testID={testID}
-      viewabilityConfig={viewabilityConfig}
     />
   );
 }

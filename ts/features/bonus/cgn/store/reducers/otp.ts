@@ -1,6 +1,9 @@
 import { getType } from "typesafe-actions";
-
+import { Action } from "../../../../../store/actions/types";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { NetworkError } from "../../../../../utils/errors";
 import { Otp } from "../../../../../../definitions/cgn/Otp";
+import { cgnGenerateOtp, resetOtpState } from "../actions/otp";
 import {
   remoteError,
   remoteLoading,
@@ -8,10 +11,6 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../../../common/model/RemoteValue";
-import { Action } from "../../../../../store/actions/types";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { NetworkError } from "../../../../../utils/errors";
-import { cgnGenerateOtp, resetOtpState } from "../actions/otp";
 
 export type CgnOtpState = {
   data: RemoteValue<Otp, NetworkError>;
@@ -26,11 +25,6 @@ const reducer = (
   action: Action
 ): CgnOtpState => {
   switch (action.type) {
-    case getType(cgnGenerateOtp.failure):
-      return {
-        ...state,
-        data: remoteError(action.payload)
-      };
     case getType(cgnGenerateOtp.request):
       return {
         ...state,
@@ -40,6 +34,11 @@ const reducer = (
       return {
         ...state,
         data: remoteReady(action.payload)
+      };
+    case getType(cgnGenerateOtp.failure):
+      return {
+        ...state,
+        data: remoteError(action.payload)
       };
     case getType(resetOtpState):
       return {

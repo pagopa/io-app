@@ -1,11 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-
-import { Wallets } from "../../../../../../definitions/pagopa/walletv3/Wallets";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
-import { paymentsDeleteMethodAction } from "../../../details/store/actions";
 import { getPaymentsWalletUserMethods } from "../actions";
+import { Wallets } from "../../../../../../definitions/pagopa/walletv3/Wallets";
+import { paymentsDeleteMethodAction } from "../../../details/store/actions";
 
 export type PaymentsWalletState = {
   userMethods: pot.Pot<Wallets, NetworkError>;
@@ -20,11 +19,6 @@ const paymentsWalletReducer = (
   action: Action
 ): PaymentsWalletState => {
   switch (action.type) {
-    case getType(getPaymentsWalletUserMethods.failure):
-      return {
-        ...state,
-        userMethods: pot.toError(state.userMethods, action.payload)
-      };
     case getType(getPaymentsWalletUserMethods.request):
       return {
         ...state,
@@ -34,6 +28,11 @@ const paymentsWalletReducer = (
       return {
         ...state,
         userMethods: pot.some(action.payload)
+      };
+    case getType(getPaymentsWalletUserMethods.failure):
+      return {
+        ...state,
+        userMethods: pot.toError(state.userMethods, action.payload)
       };
 
     // If method removed with success, remove it from the current list

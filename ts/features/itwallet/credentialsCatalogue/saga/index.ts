@@ -1,5 +1,4 @@
 import { put, takeLatest } from "typed-redux-saga/macro";
-
 import { itwFetchCredentialsCatalogue } from "../store/actions";
 import { fetchCredentialsCatalogueSaga } from "./fetchCredentialsCatalogue";
 

@@ -12,19 +12,18 @@ import {
   StyleSheet,
   View
 } from "react-native";
-
 import { isScreenReaderEnabled } from "../../utils/accessibility";
 export type LightModalContextInterface = Readonly<{
   component: ReactNode;
-  hideModal: () => void;
-  onHiddenModal: () => void;
-  setOnHiddenModal: (callback: () => void) => void;
+  showModal: (component: ReactNode) => void;
+  showModalFadeInAnimation: (component: ReactNode) => void;
   showAnimatedModal: (
     component: ReactNode,
     animatedValue?: AnimationLightModal
   ) => void;
-  showModal: (component: ReactNode) => void;
-  showModalFadeInAnimation: (component: ReactNode) => void;
+  hideModal: () => void;
+  onHiddenModal: () => void;
+  setOnHiddenModal: (callback: () => void) => void;
 }>;
 
 export const LightModalContext = createContext<LightModalContextInterface>({
@@ -125,11 +124,11 @@ const FadeInAnimation = Animated.timing(fadeAnim, {
 });
 
 export type AnimationLightModal =
+  | typeof ScaleAnimation
+  | typeof TopBottomAnimation
   | typeof BottomTopAnimation
   | typeof LeftRightAnimation
-  | typeof RightLeftAnimation
-  | typeof ScaleAnimation
-  | typeof TopBottomAnimation;
+  | typeof RightLeftAnimation;
 
 export const LightModalConsumer = LightModalContext.Consumer;
 
@@ -137,23 +136,6 @@ export class LightModalProvider extends Component<
   PropsWithChildren<Props>,
   State
 > {
-  public hideModal = () => {
-    fadeAnim.setValue(0);
-    FadeInAnimation.stop();
-    this.setState(
-      {
-        component: null
-      },
-      () => {
-        this.state.onHiddenModal();
-      }
-    );
-  };
-
-  public setOnHiddenModal = (onHiddenModal: () => void) => {
-    this.setState({ onHiddenModal });
-  };
-
   public showAnimatedModal = async (
     childComponent: ReactNode,
     styledAnimation: AnimationLightModal = RightLeftAnimation
@@ -176,22 +158,6 @@ export class LightModalProvider extends Component<
     );
   };
 
-  public showModal = async (childComponent: ReactNode) => {
-    const isScreenReaderActive = await isScreenReaderEnabled();
-    const component = (
-      <View style={styles.container}>
-        {isScreenReaderActive ? (
-          <Modal>{childComponent}</Modal>
-        ) : (
-          childComponent
-        )}
-      </View>
-    );
-    this.setState({
-      component
-    });
-  };
-
   public showModalFadeInAnimation = async (childComponent: ReactNode) => {
     const isScreenReaderActive = await isScreenReaderEnabled();
     const component = (
@@ -211,6 +177,39 @@ export class LightModalProvider extends Component<
         FadeInAnimation.start();
       }
     );
+  };
+
+  public showModal = async (childComponent: ReactNode) => {
+    const isScreenReaderActive = await isScreenReaderEnabled();
+    const component = (
+      <View style={styles.container}>
+        {isScreenReaderActive ? (
+          <Modal>{childComponent}</Modal>
+        ) : (
+          childComponent
+        )}
+      </View>
+    );
+    this.setState({
+      component
+    });
+  };
+
+  public hideModal = () => {
+    fadeAnim.setValue(0);
+    FadeInAnimation.stop();
+    this.setState(
+      {
+        component: null
+      },
+      () => {
+        this.state.onHiddenModal();
+      }
+    );
+  };
+
+  public setOnHiddenModal = (onHiddenModal: () => void) => {
+    this.setState({ onHiddenModal });
   };
 
   public state = {

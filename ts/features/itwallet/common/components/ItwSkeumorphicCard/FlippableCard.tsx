@@ -1,4 +1,4 @@
-import { memo, ReactElement } from "react";
+import { ReactElement, memo } from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 import { createCSSAnimatedComponent } from "react-native-reanimated";
 
@@ -7,11 +7,11 @@ const CSSAnimatedView = createCSSAnimatedComponent(View);
 const DEFAULT_DURATION = 500;
 
 export type FlippableCardProps = {
-  BackComponent: ReactElement;
-  containerStyle?: StyleProp<ViewStyle>;
-  duration?: number;
   FrontComponent: ReactElement;
+  BackComponent: ReactElement;
+  duration?: number;
   isFlipped?: boolean;
+  containerStyle?: StyleProp<ViewStyle>;
 };
 
 /**

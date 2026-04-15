@@ -1,16 +1,15 @@
-import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { useEffect, useLayoutEffect } from "react";
+import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import { Alert } from "react-native";
-
+import I18n from "i18next";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import PaymentWebView from "../../common/components/PaymentWebView";
-import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
-import * as analytics from "../analytics";
 import { walletPaymentWebViewPayloadSelector } from "../store/selectors";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { WalletPaymentOutcomeEnum } from "../types/PaymentOutcomeEnum";
+import * as analytics from "../analytics";
+import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+import PaymentWebView from "../../common/components/PaymentWebView";
 
 const WalletPaymentWebViewScreen = () => {
   const payload = useIOSelector(walletPaymentWebViewPayloadSelector);
@@ -71,13 +70,13 @@ const WalletPaymentWebViewScreen = () => {
     navigation.setOptions({
       header: () => (
         <HeaderSecondLevel
+          title=""
+          type="singleAction"
           firstAction={{
             icon: "closeLarge",
             accessibilityLabel: I18n.t("global.buttons.close"),
             onPress: promptUserToClose
           }}
-          title=""
-          type="singleAction"
         />
       )
     });
@@ -87,8 +86,8 @@ const WalletPaymentWebViewScreen = () => {
     <PaymentWebView<WalletPaymentOutcomeEnum>
       cancelOutcome={WalletPaymentOutcomeEnum.IN_APP_BROWSER_CLOSED_BY_USER}
       errorOutcome={WalletPaymentOutcomeEnum.GENERIC_ERROR}
-      onCancel={promptUserToClose}
       onError={payload.onError}
+      onCancel={promptUserToClose}
       onSuccess={payload.onSuccess}
       url={payload.url}
     />

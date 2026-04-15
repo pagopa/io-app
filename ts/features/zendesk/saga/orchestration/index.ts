@@ -1,14 +1,12 @@
 import { CommonActions } from "@react-navigation/native";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-
 import NavigationService from "../../../../navigation/NavigationService";
 import {
   executeWorkUnit,
   withFailureHandling,
   withResetNavigationStack
 } from "../../../../sagas/workUnit";
-import { isLoggedIn } from "../../../authentication/common/store/utils/guards";
 import ZENDESK_ROUTES from "../../navigation/routes";
 import {
   getZendeskToken,
@@ -18,14 +16,7 @@ import {
   zendeskSupportFailure,
   zendeskSupportStart
 } from "../../store/actions";
-
-export function* zendeskSupport(
-  zendeskStart: ActionType<typeof zendeskSupportStart>
-) {
-  yield* call(withFailureHandling, () =>
-    withResetNavigationStack(() => zendeskSupportWorkUnit(zendeskStart))
-  );
-}
+import { isLoggedIn } from "../../../authentication/common/store/utils/guards";
 
 function* zendeskSupportWorkUnit(
   zendeskStart: ActionType<typeof zendeskSupportStart>
@@ -56,4 +47,12 @@ function* zendeskSupportWorkUnit(
     cancel: zendeskSupportCancel,
     failure: zendeskSupportFailure
   });
+}
+
+export function* zendeskSupport(
+  zendeskStart: ActionType<typeof zendeskSupportStart>
+) {
+  yield* call(withFailureHandling, () =>
+    withResetNavigationStack(() => zendeskSupportWorkUnit(zendeskStart))
+  );
 }

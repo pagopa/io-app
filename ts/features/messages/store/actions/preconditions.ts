@@ -1,7 +1,6 @@
 import { createStandardAction } from "typesafe-actions";
-
-import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
 import { ThirdPartyMessagePrecondition } from "../../../../../definitions/backend/ThirdPartyMessagePrecondition";
+import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
 
 // NPS stands for Next Precondition Status
 export type NPSError = {
@@ -12,17 +11,17 @@ export type NPSIdle = {
   nextStatus: "idle";
 };
 export type NPSLoadingContent = {
-  content: ThirdPartyMessagePrecondition;
   nextStatus: "loadingContent";
+  content: ThirdPartyMessagePrecondition;
   skipLoading: boolean;
 };
 export type NPSRetrievingData = {
   nextStatus: "retrievingData";
 };
 export type NPSScheduled = {
-  categoryTag: MessageCategory["tag"];
-  messageId: string;
   nextStatus: "scheduled";
+  messageId: string;
+  categoryTag: MessageCategory["tag"];
 };
 export type NPSShown = {
   nextStatus: "shown";

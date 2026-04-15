@@ -1,6 +1,5 @@
 import { createActorContext } from "@xstate/react";
 import { PropsWithChildren } from "react";
-
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector, useIOStore } from "../../../../../store/hooks.ts";
 import { selectItwEnv } from "../../../common/store/selectors/environment.ts";
@@ -22,8 +21,8 @@ export const ItwProximityMachineProvider = ({
   const env = getEnv(useIOSelector(selectItwEnv));
 
   const proximityMachine = itwProximityMachine.provide({
-    actions: createProximityActionsImplementation(navigation),
-    actors: createProximityActorsImplementation(env, store),
+    actions: createProximityActionsImplementation(navigation, store),
+    actors: createProximityActorsImplementation(env),
     guards: createProximityGuardsImplementation()
   });
 

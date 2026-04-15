@@ -1,21 +1,21 @@
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import Config from "react-native-config";
 
-export type Env = {
-  BYPASS_IDENTITY_MATCH: boolean;
-  GOOGLE_CLOUD_PROJECT_NUMBER: string;
-  ISSUANCE_REDIRECT_URI: string;
-  REDIRECT_URI: string;
-  type: EnvType;
-  VERIFIER_BASE_URL: string;
-  WALLET_EAA_PROVIDER_BASE_URL: ItwSpecsEnvVar;
-  WALLET_PID_PROVIDER_BASE_URL: ItwSpecsEnvVar;
-  WALLET_PROVIDER_BASE_URL: string;
-  WALLET_TA_BASE_URL: string;
-  X509_CERT_ROOT: string;
-};
-
 export type EnvType = "pre" | "prod";
+
+export type Env = {
+  type: EnvType;
+  WALLET_PROVIDER_BASE_URL: string;
+  WALLET_PID_PROVIDER_BASE_URL: ItwSpecsEnvVar;
+  WALLET_EAA_PROVIDER_BASE_URL: ItwSpecsEnvVar;
+  WALLET_TA_BASE_URL: string;
+  REDIRECT_URI: string;
+  GOOGLE_CLOUD_PROJECT_NUMBER: string;
+  VERIFIER_BASE_URL: string;
+  ISSUANCE_REDIRECT_URI: string;
+  X509_CERT_ROOT: string;
+  BYPASS_IDENTITY_MATCH: boolean;
+};
 
 /**
  * Wrapper for an env variable that has different values for each IT-Wallet specs version.

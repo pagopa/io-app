@@ -1,20 +1,19 @@
-import { fireEvent } from "@testing-library/react-native";
 import { RefreshControlProps } from "react-native";
 import { createStore } from "redux";
-
-import { pageSize } from "../../../../../config";
-import { applicationChangeState } from "../../../../../store/actions/application";
+import { fireEvent } from "@testing-library/react-native";
+import { MessageList } from "../MessageList";
+import { MessageListCategory } from "../../../types/messageListCategory";
 import { appReducer } from "../../../../../store/reducers";
-import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
+import { applicationChangeState } from "../../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
+import * as homeUtils from "../homeUtils";
 import {
   loadNextPageMessages,
   reloadAllMessages
 } from "../../../store/actions";
-import { MessageListCategory } from "../../../types/messageListCategory";
-import * as homeUtils from "../homeUtils";
-import { MessageList } from "../MessageList";
+import { pageSize } from "../../../../../config";
+import { mockAccessibilityInfo } from "../../../../../utils/testAccessibility";
 
 const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({

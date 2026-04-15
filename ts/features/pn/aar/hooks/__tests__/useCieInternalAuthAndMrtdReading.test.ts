@@ -1,15 +1,14 @@
+import { renderHook, act } from "@testing-library/react-native";
 import {
   CieManager,
   InternalAuthAndMrtdResponse,
   NfcError,
   NfcEvent
 } from "@pagopa/io-react-native-cie";
-import { act, renderHook } from "@testing-library/react-native";
-import { Platform } from "react-native";
 import HapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
-
+import { Platform } from "react-native";
 import {
   ReadStatus,
   useCieInternalAuthAndMrtdReading
@@ -227,7 +226,7 @@ describe("useCieInternalAuthAndMrtdReading", () => {
       platform: "android",
       it: 'shouldn\'t invoke "CieManager.setAlertMessage" when platform is android'
     }
-  ] as Array<{ it: string; platform: typeof Platform.OS }>)(
+  ] as Array<{ platform: typeof Platform.OS; it: string }>)(
     "$it",
     async ({ platform }) => {
       jest.replaceProperty(Platform, "OS", platform);
@@ -283,7 +282,7 @@ describe("useCieInternalAuthAndMrtdReading", () => {
       platform: "android",
       it: 'shouldn\'t invoke "CieManager.setCurrentAlertMessage" when platform is android'
     }
-  ] as Array<{ it: string; platform: typeof Platform.OS }>)(
+  ] as Array<{ platform: typeof Platform.OS; it: string }>)(
     "$it",
     ({ platform }) => {
       jest.replaceProperty(Platform, "OS", platform);

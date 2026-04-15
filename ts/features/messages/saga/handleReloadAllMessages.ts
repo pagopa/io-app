@@ -1,25 +1,24 @@
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-
-import { PaginatedPublicMessagesCollection } from "../../../../definitions/backend/PaginatedPublicMessagesCollection";
-import { backendClientManager } from "../../../api/BackendClientManager";
-import { apiUrlPrefix } from "../../../config";
+import {
+  reloadAllMessages,
+  reloadAllMessages as reloadAllMessagesAction
+} from "../store/actions";
 import { SagaCallReturnType } from "../../../types/utils";
+import { toUIMessage } from "../store/reducers/transformers";
+import { PaginatedPublicMessagesCollection } from "../../../../definitions/backend/PaginatedPublicMessagesCollection";
 import { getError } from "../../../utils/errors";
-import { sessionTokenSelector } from "../../authentication/common/store/selectors";
 import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
+import { errorToReason, unknownToReason } from "../utils";
 import {
   trackReloadAllMessagesFailure,
   trackUndefinedBearerToken,
   UndefinedBearerTokenPhase
 } from "../analytics";
-import {
-  reloadAllMessages,
-  reloadAllMessages as reloadAllMessagesAction
-} from "../store/actions";
-import { toUIMessage } from "../store/reducers/transformers";
-import { errorToReason, unknownToReason } from "../utils";
 import { handleResponse } from "../utils/responseHandling";
+import { backendClientManager } from "../../../api/BackendClientManager";
+import { apiUrlPrefix } from "../../../config";
+import { sessionTokenSelector } from "../../authentication/common/store/selectors";
 
 export function* handleReloadAllMessages(
   action: ActionType<typeof reloadAllMessages.request>

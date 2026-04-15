@@ -6,11 +6,11 @@ import { ActionType, createStandardAction } from "typesafe-actions";
 /**
  * Action types and action creator related to the Application.
  */
-type ApplicationInitializationPayload = void | {
+type ApplicationInitializationPayload = {
   handleSessionExpiration?: boolean;
-  isActiveLoginSuccess?: boolean;
   showIdentificationModalAtStartup?: boolean;
-};
+  isActiveLoginSuccess?: boolean;
+} | void;
 export const startApplicationInitialization = createStandardAction(
   "START_APPLICATION_INITIALIZATION"
 )<ApplicationInitializationPayload>();
@@ -27,6 +27,6 @@ export const applicationChangeState = createStandardAction(
 )<AppStateStatus>();
 
 export type ApplicationActions =
-  | ActionType<typeof applicationChangeState>
+  | ActionType<typeof startApplicationInitialization>
   | ActionType<typeof applicationInitialized>
-  | ActionType<typeof startApplicationInitialization>;
+  | ActionType<typeof applicationChangeState>;

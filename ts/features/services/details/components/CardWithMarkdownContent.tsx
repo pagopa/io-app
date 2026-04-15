@@ -1,18 +1,17 @@
+import { memo, ReactNode } from "react";
+import { StyleSheet, View } from "react-native";
+import { useLinkTo } from "@react-navigation/native";
 import {
   IOColors,
   IOVisualCostants,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import { useLinkTo } from "@react-navigation/native";
-import { memo, ReactNode } from "react";
-import { StyleSheet, View } from "react-native";
-
-import IOMarkdown from "../../../../components/IOMarkdown";
 import { LoadingSkeleton } from "../../../../components/ui/LoadingSkeleton";
-import { Markdown } from "../../../../components/ui/Markdown/Markdown";
-import { useIOSelector } from "../../../../store/hooks";
-import { isIOMarkdownEnabledForMessagesAndServicesSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import IOMarkdown from "../../../../components/IOMarkdown";
 import { generateMessagesAndServicesRules } from "../../../common/components/IOMarkdown/customRules";
+import { useIOSelector } from "../../../../store/hooks";
+import { Markdown } from "../../../../components/ui/Markdown/Markdown";
+import { isIOMarkdownEnabledForMessagesAndServicesSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 
 const CSS_STYLE = `
   body {

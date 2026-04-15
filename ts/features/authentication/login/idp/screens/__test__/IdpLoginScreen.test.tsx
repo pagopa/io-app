@@ -1,16 +1,15 @@
+import { createStore } from "redux";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { createStore } from "redux";
-
 import { applicationChangeState } from "../../../../../../store/actions/application";
-import * as IOHooks from "../../../../../../store/hooks";
 import { appReducer } from "../../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
-import * as useLollipopLoginSource from "../../../../../lollipop/hooks/useLollipopLoginSource";
-import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
-import * as commonStoreSelector from "../../../../common/store/selectors";
-import * as requestinfo from "../../store/selectors";
 import IdpLoginScreen from "../IdpLoginScreen";
+import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
+import * as requestinfo from "../../store/selectors";
+import * as IOHooks from "../../../../../../store/hooks";
+import * as commonStoreSelector from "../../../../common/store/selectors";
+import * as useLollipopLoginSource from "../../../../../lollipop/hooks/useLollipopLoginSource";
 
 jest.mock("@react-navigation/native", () => {
   const actualNav = jest.requireActual("@react-navigation/native");

@@ -1,11 +1,10 @@
 /* eslint-disable functional/no-let */
 import { runSaga } from "redux-saga";
-
-import * as analytics from "../analytics/navigation";
 import * as NavigationService from "../NavigationService";
+import * as analytics from "../analytics/navigation";
 import {
-  waitForMainNavigator,
-  waitForNavigatorServiceInitialization
+  waitForNavigatorServiceInitialization,
+  waitForMainNavigator
 } from "../saga/navigation";
 
 jest.mock("../NavigationService");

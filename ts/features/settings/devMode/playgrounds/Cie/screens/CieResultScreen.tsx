@@ -2,7 +2,6 @@ import { IOColors, IOText } from "@pagopa/io-app-design-system";
 import Clipboard from "@react-native-clipboard/clipboard";
 import { Alert, Platform, Share, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
 import { IOScrollView } from "../../../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationRouteProps } from "../../../../../../navigation/params/AppParamsList";
@@ -45,8 +44,9 @@ export function CieResultScreen({ route }: Props) {
   };
 
   return (
-    <SafeAreaView edges={["bottom"]} style={styles.container}>
+    <SafeAreaView style={styles.container} edges={["bottom"]}>
       <IOScrollView
+        contentContainerStyle={styles.contentContainer}
         actions={{
           type: "TwoButtons",
           primary: {
@@ -58,14 +58,13 @@ export function CieResultScreen({ route }: Props) {
             onPress: handleCopy
           }
         }}
-        contentContainerStyle={styles.contentContainer}
       >
-        <View pointerEvents="box-only" style={styles.content}>
+        <View style={styles.content} pointerEvents="box-only">
           <IOText
-            color={"grey-700"}
             font="FiraCode"
-            lineHeight={18}
             size={12}
+            lineHeight={18}
+            color={"grey-700"}
             weight="Medium"
           >
             {JSON.stringify(data, null, 2)}

@@ -1,10 +1,9 @@
 import ReactNativeBlobUtil from "react-native-blob-util";
 import { expectSaga } from "redux-saga-test-plan";
 import { cancel, fork } from "typed-redux-saga/macro";
-
-import { getNetworkError } from "../../../../../utils/errors";
-import { fciDownloadPreview } from "../../../store/actions";
 import { handleDownloadDocument } from "../handleDownloadDocument";
+import { fciDownloadPreview } from "../../../store/actions";
+import { getNetworkError } from "../../../../../utils/errors";
 
 const savePath = "/tmp/example.pdf";
 

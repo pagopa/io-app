@@ -4,7 +4,6 @@ import { NativeSyntheticEvent } from "react-native";
 import PagerView from "react-native-pager-view";
 import { OnPageSelectedEventData } from "react-native-pager-view/lib/typescript/PagerViewNativeComponent";
 import { createStore } from "redux";
-
 import { pageSize } from "../../../../../config";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
@@ -48,7 +47,7 @@ describe("PagerViewContainer", () => {
     expect(mockDispatch.mock.calls.length).toBe(0);
   });
   it("should not dispatch 'reloadAllMessages.request' when INBOX has (empty) data, should dispatch both 'setShownMessageCategoryAction('ARCHIVE')' when setting page 1 and 'reloadAllMessages.request'", () => {
-    const mockUseRefOutput: RefObject<null | PagerView> = {
+    const mockUseRefOutput: RefObject<PagerView | null> = {
       current: null
     };
     const { store } = renderComponent(
@@ -84,7 +83,7 @@ describe("PagerViewContainer", () => {
     );
   });
   it("should not dispatch 'reloadAllMessages.request' when INBOX has (empty) data, should dispatch 'setShownMessageCategoryAction('ARCHIVE')' when setting page 1 but no 'reloadAllMessages.request' when ARCHIVE has data", () => {
-    const mockUseRefOutput: RefObject<null | PagerView> = {
+    const mockUseRefOutput: RefObject<PagerView | null> = {
       current: null
     };
     const { store } = renderComponent(
@@ -115,7 +114,7 @@ describe("PagerViewContainer", () => {
   });
 
   it("should not dispatch 'reloadAllMessages.request' when ARCHIVE has (empty) data, should dispatch both 'setShownMessageCategoryAction('INBOX')' when setting page 0 and 'reloadAllMessages.request'", () => {
-    const mockUseRefOutput: RefObject<null | PagerView> = {
+    const mockUseRefOutput: RefObject<PagerView | null> = {
       current: null
     };
     const { store } = renderComponent(
@@ -151,7 +150,7 @@ describe("PagerViewContainer", () => {
     );
   });
   it("should not dispatch 'reloadAllMessages.request' when ARCHIVE has (empty) data, should dispatch 'setShownMessageCategoryAction('INBOX')' when setting page 0 but no 'reloadAllMessages.request' when INBOX has data", () => {
-    const mockUseRefOutput: RefObject<null | PagerView> = {
+    const mockUseRefOutput: RefObject<PagerView | null> = {
       current: null
     };
     const { store } = renderComponent(
@@ -186,7 +185,7 @@ const renderComponent = (
   shownCategory: MessageListCategory,
   inboxMessagePagePot: MessagePagePot,
   archiveMessagePagePot: MessagePagePot,
-  ref?: RefObject<null | PagerView>
+  ref?: RefObject<PagerView | null>
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const finalState = {

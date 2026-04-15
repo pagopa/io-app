@@ -1,7 +1,6 @@
 import { CommonActions } from "@react-navigation/native";
 import { SagaIterator } from "redux-saga";
 import { call } from "typed-redux-saga/macro";
-
 import NavigationService from "../../../../../../navigation/NavigationService";
 import ROUTES from "../../../../../../navigation/routes";
 import {

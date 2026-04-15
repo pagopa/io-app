@@ -1,8 +1,8 @@
 type ProfileErrorType =
-  | "PROFILE_EMAIL_IS_NOT_UNIQUE_ERROR"
   | "PROFILE_EMAIL_VALIDATION_ERROR"
   | "PROFILE_GENRIC_ERROR"
-  | "PROFILE_LOAD_ERROR";
+  | "PROFILE_LOAD_ERROR"
+  | "PROFILE_EMAIL_IS_NOT_UNIQUE_ERROR";
 export class ProfileError extends Error {
   public readonly type?: ProfileErrorType;
 

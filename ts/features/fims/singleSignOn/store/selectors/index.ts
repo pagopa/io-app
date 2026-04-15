@@ -2,14 +2,13 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as B from "fp-ts/lib/boolean";
 import { identity, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-
-import { Consent } from "../../../../../../definitions/fims_sso/Consent";
-import { isDebugModeEnabledSelector } from "../../../../../store/reducers/debug";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { isStrictNone } from "../../../../../utils/pot";
 import { getDomainFromUrl } from "../../saga/sagaUtils";
+import { Consent } from "../../../../../../definitions/fims_sso/Consent";
 import { foldFimsFlowStateK } from "../../utils";
 import { FimsErrorStateType } from "../reducers";
+import { isDebugModeEnabledSelector } from "../../../../../store/reducers/debug";
 
 export const fimsConsentsDataSelector = (state: GlobalState) =>
   state.features.fims.sso.ssoData;

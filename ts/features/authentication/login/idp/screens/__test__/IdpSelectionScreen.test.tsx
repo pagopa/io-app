@@ -1,18 +1,17 @@
+import { createStore } from "redux";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
-import { createStore } from "redux";
-
-import { applicationChangeState } from "../../../../../../store/actions/application";
-import { loadIdps } from "../../../../../../store/actions/content";
-import * as IOHooks from "../../../../../../store/hooks";
-import { appReducer } from "../../../../../../store/reducers";
-import * as idpsRemoteValue from "../../../../../../store/reducers/content.ts";
-import * as supportAssistance from "../../../../../../utils/supportAssistance";
-import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
-import * as analytics from "../../../../common/analytics/spidAnalytics";
-import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
-import { idpSelected } from "../../../../common/store/actions";
 import IdpSelectionScreen from "../IdpSelectionScreen";
+import { appReducer } from "../../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
+import * as IOHooks from "../../../../../../store/hooks";
+import { loadIdps } from "../../../../../../store/actions/content";
+import * as supportAssistance from "../../../../../../utils/supportAssistance";
+import * as analytics from "../../../../common/analytics/spidAnalytics";
+import { idpSelected } from "../../../../common/store/actions";
+import * as idpsRemoteValue from "../../../../../../store/reducers/content.ts";
 
 jest.mock("@react-navigation/native", () => {
   const actualNav = jest.requireActual("@react-navigation/native");

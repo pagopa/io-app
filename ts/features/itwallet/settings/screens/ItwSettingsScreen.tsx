@@ -4,7 +4,6 @@ import { TxtLinkNode } from "@textlint/ast-node-types";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { Alert, View } from "react-native";
-
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { linkNodeToReactNative } from "../../../../components/IOMarkdown/renderRules";
 import { Renderer } from "../../../../components/IOMarkdown/types";
@@ -17,11 +16,11 @@ import {
   trackItwStartActivation,
   trackItwStartDeactivation
 } from "../../analytics";
-import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum";
 import { ItwEidLifecycleAlert } from "../../common/components/ItwEidLifecycleAlert";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum";
 
 const MIXPANEL_SCREEN_NAME = ITW_SCREENVIEW_EVENTS.ITW_SETTINGS;
 
@@ -82,12 +81,12 @@ const ItwSettingsScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
+      title={{ label: I18n.t("features.itWallet.settings.manage.title") }}
+      description={I18n.t("features.itWallet.settings.manage.description")}
       actions={{
         type: "SingleButton",
         primary: ctaProps
       }}
-      description={I18n.t("features.itWallet.settings.manage.description")}
-      title={{ label: I18n.t("features.itWallet.settings.manage.title") }}
     >
       <ContentWrapper>
         <VStack space={8}>

@@ -1,11 +1,10 @@
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import { useEffect } from "react";
-
-import { profileFiscalCodeSelector } from "../features/settings/common/store/selectors";
-import { contentMunicipalityLoad } from "../store/actions/content";
+import { pipe } from "fp-ts/lib/function";
+import * as E from "fp-ts/lib/Either";
 import { useIODispatch, useIOSelector } from "../store/hooks";
+import { profileFiscalCodeSelector } from "../features/settings/common/store/selectors";
 import { CodiceCatastale } from "../types/MunicipalityCodiceCatastale";
+import { contentMunicipalityLoad } from "../store/actions/content";
 
 /**
  * A custom hook use to load content municipality when needed,

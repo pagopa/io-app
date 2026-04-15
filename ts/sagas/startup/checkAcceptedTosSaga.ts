@@ -1,23 +1,22 @@
-import { StackActions } from "@react-navigation/native";
 import { call, put, select, take } from "typed-redux-saga/macro";
 import { ActionType, getType } from "typesafe-actions";
-
+import { StackActions } from "@react-navigation/native";
 import { InitializedProfile } from "../../../definitions/backend/InitializedProfile";
+import { navigateToTosScreen } from "../../store/actions/navigation";
 import { tosAccepted } from "../../features/onboarding/store/actions";
 import { profileUpsert } from "../../features/settings/common/store/actions";
 import { isProfileFirstOnBoarding } from "../../features/settings/common/store/utils/guards";
-import { tosConfigSelector } from "../../features/tos/store/selectors";
-import NavigationService from "../../navigation/NavigationService";
-import { navigateToTosScreen } from "../../store/actions/navigation";
 import { ReduxSagaEffect } from "../../types/utils";
+import NavigationService from "../../navigation/NavigationService";
+import { tosConfigSelector } from "../../features/tos/store/selectors";
 
 export function* checkAcceptedTosSaga(
   userProfile: InitializedProfile
 ): Generator<
   ReduxSagaEffect,
   void,
-  | ActionType<(typeof profileUpsert)["failure"]>
   | ActionType<(typeof profileUpsert)["success"]>
+  | ActionType<(typeof profileUpsert)["failure"]>
 > {
   const tosVersion = (yield* select(tosConfigSelector)).tos_version;
   // The user has to explicitly accept the new version of ToS if:
@@ -53,7 +52,7 @@ export function* checkAcceptedTosSaga(
     if (userProfile.has_profile) {
       yield* put(profileUpsert.request({ accepted_tos_version: tosVersion }));
       const action = yield* take<
-        ActionType<typeof profileUpsert.failure | typeof profileUpsert.success>
+        ActionType<typeof profileUpsert.success | typeof profileUpsert.failure>
       >([profileUpsert.success, profileUpsert.failure]);
       // call checkAcceptedTosSaga until we don't receive profileUpsert.success
       // tos acceptance must be saved in IO backend

@@ -5,7 +5,6 @@ import {
   ListItemHeader
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import I18n from "i18next";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { LayoutChangeEvent, SectionList, SectionListData } from "react-native";
 import Animated, {
@@ -13,7 +12,7 @@ import Animated, {
   useSharedValue
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-
+import I18n from "i18next";
 import { NoticeListItem } from "../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import {
   OperationResultScreenContent,
@@ -183,8 +182,8 @@ const ReceiptListScreen = () => {
   const EmptyStateList = isEmpty ? (
     <ReceiptFadeInOutAnimationView>
       <OperationResultScreenContent
-        isHeaderVisible
         testID="PaymentsTransactionsEmptyList"
+        isHeaderVisible
         {...emptyProps}
       />
     </ReceiptFadeInOutAnimationView>
@@ -194,51 +193,51 @@ const ReceiptListScreen = () => {
 
   return (
     <AnimatedSectionList
+      refreshing={isRefreshing}
+      onRefresh={handleOnRefreshTransactionsList}
+      scrollIndicatorInsets={{ right: 0 }}
       contentContainerStyle={{
         paddingHorizontal: IOVisualCostants.appMarginDefault,
         minHeight: isEmpty ? "100%" : undefined,
         paddingBottom: insets.bottom + 24
       }}
-      ItemSeparatorComponent={Divider}
-      keyExtractor={(item: NoticeListItem, index: number) =>
-        `transaction_${item.eventId}${index}`
-      }
-      ListEmptyComponent={EmptyStateList}
-      ListFooterComponent={renderLoadingFooter}
-      ListHeaderComponent={
-        <ReceiptSectionListHeader
-          onCategorySelected={handleCategorySelected}
-          onLayout={getTitleHeight}
-          selectedCategory={noticeCategory}
-        />
-      }
       onEndReached={fetchNextPage}
       onEndReachedThreshold={0.25}
-      onRefresh={handleOnRefreshTransactionsList}
+      ListHeaderComponent={
+        <ReceiptSectionListHeader
+          onLayout={getTitleHeight}
+          selectedCategory={noticeCategory}
+          onCategorySelected={handleCategorySelected}
+        />
+      }
       onScroll={scrollHandler}
-      refreshing={isRefreshing}
-      renderItem={({ item }: { item: NoticeListItem }) => (
-        <ReceiptFadeInOutAnimationView>
-          <ReceiptListItemTransaction
-            onPress={() => handleNavigateToTransactionDetails(item)}
-            openedItemRef={openedItemRef}
-            transaction={item}
-          />
-        </ReceiptFadeInOutAnimationView>
-      )}
-      renderSectionHeader={({
-        section
-      }: {
-        section: SectionListData<NoticeListItem>;
-      }) => <ListItemHeader label={section.title} />}
-      scrollIndicatorInsets={{ right: 0 }}
+      stickySectionHeadersEnabled={false}
       sections={
         pot.isSome(transactionsPot) && groupedTransactions
           ? groupedTransactions
           : []
       }
-      stickySectionHeadersEnabled={false}
       testID="PaymentsTransactionsListTestID"
+      ItemSeparatorComponent={Divider}
+      renderSectionHeader={({
+        section
+      }: {
+        section: SectionListData<NoticeListItem>;
+      }) => <ListItemHeader label={section.title} />}
+      ListEmptyComponent={EmptyStateList}
+      ListFooterComponent={renderLoadingFooter}
+      keyExtractor={(item: NoticeListItem, index: number) =>
+        `transaction_${item.eventId}${index}`
+      }
+      renderItem={({ item }: { item: NoticeListItem }) => (
+        <ReceiptFadeInOutAnimationView>
+          <ReceiptListItemTransaction
+            openedItemRef={openedItemRef}
+            onPress={() => handleNavigateToTransactionDetails(item)}
+            transaction={item}
+          />
+        </ReceiptFadeInOutAnimationView>
+      )}
     />
   );
 };

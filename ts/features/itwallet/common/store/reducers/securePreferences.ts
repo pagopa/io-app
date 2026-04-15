@@ -1,14 +1,13 @@
 import { PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
-
 import { Action } from "../../../../../store/actions/types";
-import createSecureStorage from "../../../../../store/storages/secureStorage";
 import {
   itwOfflineAccessCounterReset,
   itwOfflineAccessCounterUp,
-  itwUnverifiedCredentialsCounterReset,
-  itwUnverifiedCredentialsCounterUp
+  itwUnverifiedCredentialsCounterUp,
+  itwUnverifiedCredentialsCounterReset
 } from "../actions/securePreferences";
+import createSecureStorage from "../../../../../store/storages/secureStorage";
 
 export type ItwSecurePreferencesState = {
   /**
@@ -33,30 +32,30 @@ const reducer = (
   action: Action
 ): ItwSecurePreferencesState => {
   switch (action.type) {
-    case getType(itwOfflineAccessCounterReset): {
-      return {
-        ...state,
-        offlineAccessCounter: 0
-      };
-    }
     case getType(itwOfflineAccessCounterUp): {
       return {
         ...state,
         offlineAccessCounter: state.offlineAccessCounter + 1
       };
     }
-
-    case getType(itwUnverifiedCredentialsCounterReset): {
+    case getType(itwOfflineAccessCounterReset): {
       return {
         ...state,
-        unverifiedCredentialsAccessCounter: 0
+        offlineAccessCounter: 0
       };
     }
+
     case getType(itwUnverifiedCredentialsCounterUp): {
       return {
         ...state,
         unverifiedCredentialsAccessCounter:
           state.unverifiedCredentialsAccessCounter + 1
+      };
+    }
+    case getType(itwUnverifiedCredentialsCounterReset): {
+      return {
+        ...state,
+        unverifiedCredentialsAccessCounter: 0
       };
     }
 

@@ -4,17 +4,15 @@ import {
   IOVisualCostants,
   ListItemAction,
   ListItemNav,
-  useIOToast,
-  VSpacer
+  VSpacer,
+  useIOToast
 } from "@pagopa/io-app-design-system";
-import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import I18n from "i18next";
 import {
+  useContext,
   ComponentProps,
   memo,
   useCallback,
-  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -27,7 +25,8 @@ import {
   Platform,
   ScrollView
 } from "react-native";
-
+import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
+import I18n from "i18next";
 import AppVersion from "../../../../components/AppVersion";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { LightModalContext } from "../../../../components/ui/LightModal";
@@ -35,35 +34,35 @@ import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPre
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { setDebugModeEnabled } from "../../../../store/actions/debug";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { isDebugModeEnabledSelector } from "../../../../store/reducers/debug";
+import { isDevEnv } from "../../../../utils/environment";
+import { itwLifecycleIsOperationalOrValid } from "../../../itwallet/lifecycle/store/selectors";
 import {
   appFeedbackEnabledSelector,
   appFeedbackUriConfigSelector
 } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { isDebugModeEnabledSelector } from "../../../../store/reducers/debug";
-import { isDevEnv } from "../../../../utils/environment";
 import { openWebUrl } from "../../../../utils/url";
-import { itwIsL3EnabledSelector } from "../../../itwallet/common/store/selectors/preferences";
-import { itwLifecycleIsOperationalOrValid } from "../../../itwallet/lifecycle/store/selectors";
-import { ITW_ROUTES } from "../../../itwallet/navigation/routes";
 import DeveloperModeSection from "../../devMode/components/DeveloperModeSection";
+import { ProfileMainScreenTopBanner } from "../components/ProfileMainScreenTopBanner";
+import { SETTINGS_ROUTES } from "../navigation/routes";
 import {
   trackPressLogoutCancelFromIO,
   trackPressLogoutConfirmFromIO,
   trackPressLogoutFromIO
 } from "../analytics";
-import { ProfileMainScreenTopBanner } from "../components/ProfileMainScreenTopBanner";
-import { SETTINGS_ROUTES } from "../navigation/routes";
+import { ITW_ROUTES } from "../../../itwallet/navigation/routes";
+import { itwIsL3EnabledSelector } from "../../../itwallet/common/store/selectors/preferences";
 
 const consecutiveTapRequired = 4;
 const RESET_COUNTER_TIMEOUT = 2000 as Millisecond;
 
-type ProfileNavListItem = Pick<
-  ComponentProps<typeof ListItemNav>,
-  "description" | "onPress" | "testID"
-> & {
-  isHidden?: boolean;
+type ProfileNavListItem = {
   value: string;
-};
+  isHidden?: boolean;
+} & Pick<
+  ComponentProps<typeof ListItemNav>,
+  "description" | "testID" | "onPress"
+>;
 
 const ListItem = memo(ListItemNav);
 
@@ -241,11 +240,11 @@ const ProfileMainScreenFC = () => {
 
       return (
         <ListItem
+          testID={testID}
           accessibilityLabel={accessibilityLabel}
+          value={value}
           description={description}
           onPress={onPress}
-          testID={testID}
-          value={value}
         />
       );
     },
@@ -261,33 +260,34 @@ const ProfileMainScreenFC = () => {
       <ProfileMainScreenTopBanner />
       <VSpacer size={16} />
       <FlatList
+        scrollEnabled={false}
+        keyExtractor={keyExtractor}
         contentContainerStyle={{
           paddingHorizontal: IOVisualCostants.appMarginDefault
         }}
         data={profileNavListItems}
-        ItemSeparatorComponent={Divider}
-        keyExtractor={keyExtractor}
         renderItem={renderProfileNavItem}
-        scrollEnabled={false}
+        ItemSeparatorComponent={Divider}
       />
       <VSpacer size={8} />
       <ContentWrapper>
         {appFeedbackEnabled && surveyUrl && (
           <ListItemAction
-            accessibilityLabel={feedbackLabel}
-            icon="message"
             label={feedbackLabel}
+            icon="message"
+            variant="primary"
+            testID="feedbackButton"
             onPress={() => {
               void openAuthenticationSession(surveyUrl, "");
             }}
-            testID="feedbackButton"
-            variant="primary"
+            accessibilityLabel={feedbackLabel}
           />
         )}
         <ListItemAction
-          accessibilityLabel={reviewLabel}
-          icon="starEmpty"
           label={reviewLabel}
+          icon="starEmpty"
+          variant="primary"
+          testID="reviewButton"
           onPress={() =>
             openWebUrl(
               Platform.select({
@@ -299,20 +299,19 @@ const ProfileMainScreenFC = () => {
               () => error(I18n.t("msgErrorUpdateApp"))
             )
           }
-          testID="reviewButton"
-          variant="primary"
+          accessibilityLabel={reviewLabel}
         />
         <ListItemAction
-          accessibilityLabel={logoutLabel}
-          icon="logout"
           label={logoutLabel}
-          onPress={onLogoutPress}
-          testID="logoutButton"
+          icon="logout"
           variant="danger"
+          testID="logoutButton"
+          onPress={onLogoutPress}
+          accessibilityLabel={logoutLabel}
         />
         <AppVersion
-          onPress={onTapAppVersion}
           testID="profileAppVersionButton"
+          onPress={onTapAppVersion}
         />
       </ContentWrapper>
       {/* Developer Section */}
@@ -331,16 +330,16 @@ const ProfileMainScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
+      testID="ProfileMainScreen"
+      title={{
+        label: I18n.t("global.buttons.settings")
+      }}
+      headerActionsProp={{ showHelp: true }}
       contextualHelpMarkdown={{
         title: "profile.main.contextualHelpTitle",
         body: "profile.main.contextualHelpContent"
       }}
       faqCategories={["profile"]}
-      headerActionsProp={{ showHelp: true }}
-      testID="ProfileMainScreen"
-      title={{
-        label: I18n.t("global.buttons.settings")
-      }}
     >
       <ProfileMainScreenFC />
     </IOScrollViewWithLargeHeader>

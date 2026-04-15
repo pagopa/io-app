@@ -7,43 +7,16 @@ import {
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-
-import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
-import { pnAarQRCodeRegexSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import { pipe } from "fp-ts/lib/function";
 import { GlobalState } from "../../../store/reducers/types";
+import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
 import { decodePosteDataMatrix } from "../../../utils/payment";
-import { selectItwSpecsVersion } from "../../itwallet/common/store/selectors/environment";
-import { validateItwPresentationQrCodeParams } from "../../itwallet/presentation/remote/utils/itwRemotePresentationUtils";
 import { ItwRemoteRequestPayload } from "../../itwallet/presentation/remote/utils/itwRemoteTypeUtils";
+import { validateItwPresentationQrCodeParams } from "../../itwallet/presentation/remote/utils/itwRemotePresentationUtils";
+import { selectItwSpecsVersion } from "../../itwallet/common/store/selectors/environment";
+import { pnAarQRCodeRegexSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { IOBarcodeType } from "./IOBarcode";
-
-export type DecodedIOBarcode = RuntimeDecodedIOBarcode | StaticDecodedIOBarcode;
-type IOBarcodeDecoderFn = IOBarcodeRuntimeDecoderFn | IOBarcodeStaticDecoderFn;
-type IOBarcodeRuntimeDecoderFn = (
-  state: GlobalState,
-  data: string
-) => O.Option<DecodedIOBarcode>;
-
-type IOBarcodeRuntimeDecodersType = {
-  [K in RuntimeDecodedIOBarcode["type"]]: IOBarcodeRuntimeDecoderFn;
-};
-// Barcode decoder function which is used to determine the type and content of a barcode
-type IOBarcodeStaticDecoderFn = (data: string) => O.Option<DecodedIOBarcode>;
-type IOBarcodeStaticDecodersType = {
-  [K in StaticDecodedIOBarcode["type"]]: IOBarcodeStaticDecoderFn;
-};
-
-type RuntimeDecodedIOBarcode =
-  | {
-      itwRemoteRequestPayload: ItwRemoteRequestPayload;
-      type: "ITW_REMOTE";
-    }
-  | {
-      qrCodeContent: string;
-      type: "SEND";
-    };
 
 // Discriminated barcode type
 // Represents the decoded content of a barcode that has been scanned
@@ -68,19 +41,45 @@ type RuntimeDecodedIOBarcode =
 //    };                                <--
 type StaticDecodedIOBarcode =
   | {
-      amount: AmountInEuroCents;
-      rptId: RptId;
       type: "PAGOPA";
+      rptId: RptId;
+      amount: AmountInEuroCents;
     }
   | {
+      type: "IDPAY";
       authUrl: string;
       trxCode: string;
-      type: "IDPAY";
     }
   | {
-      signatureRequestId: SignatureRequestDetailView["id"];
       type: "FCI";
+      signatureRequestId: SignatureRequestDetailView["id"];
     };
+type RuntimeDecodedIOBarcode =
+  | {
+      type: "SEND";
+      qrCodeContent: string;
+    }
+  | {
+      type: "ITW_REMOTE";
+      itwRemoteRequestPayload: ItwRemoteRequestPayload;
+    };
+export type DecodedIOBarcode = StaticDecodedIOBarcode | RuntimeDecodedIOBarcode;
+
+// Barcode decoder function which is used to determine the type and content of a barcode
+type IOBarcodeStaticDecoderFn = (data: string) => O.Option<DecodedIOBarcode>;
+type IOBarcodeRuntimeDecoderFn = (
+  state: GlobalState,
+  data: string
+) => O.Option<DecodedIOBarcode>;
+type IOBarcodeDecoderFn = IOBarcodeStaticDecoderFn | IOBarcodeRuntimeDecoderFn;
+
+type IOBarcodeStaticDecodersType = {
+  [K in StaticDecodedIOBarcode["type"]]: IOBarcodeStaticDecoderFn;
+};
+
+type IOBarcodeRuntimeDecodersType = {
+  [K in RuntimeDecodedIOBarcode["type"]]: IOBarcodeRuntimeDecoderFn;
+};
 
 const decodeIdPayBarcode: IOBarcodeStaticDecoderFn = (data: string) =>
   pipe(

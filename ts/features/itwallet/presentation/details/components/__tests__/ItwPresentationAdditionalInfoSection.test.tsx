@@ -1,19 +1,18 @@
 import { createStore } from "redux";
-
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
-import {
-  NewCredential,
-  newCredentials
-} from "../../../../common/utils/itwCredentialUtils";
 import {
   CredentialType,
   ItwStoredCredentialsMocks
 } from "../../../../common/utils/itwMocksUtils";
 import { ITW_ROUTES } from "../../../../navigation/routes";
 import { ItwPresentationAdditionalInfoSection } from "../ItwPresentationAdditionalInfoSection";
+import {
+  NewCredential,
+  newCredentials
+} from "../../../../common/utils/itwCredentialUtils";
 
 describe("ItwPresentationAdditionalInfoSection", () => {
   test.each(newCredentials)(

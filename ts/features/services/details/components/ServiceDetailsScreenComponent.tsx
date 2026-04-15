@@ -12,6 +12,22 @@ import {
   ServiceDetailsScreenPnProps
 } from "./ServiceDetailsScreenPn";
 
+type ServiceDetailsScreenCgn = {
+  kind: "cgn";
+} & ServiceDetailsScreenCgnProps;
+
+type ServiceDetailsScreenCdc = {
+  kind: "cdc";
+} & ServiceDetailsScreenCgnProps;
+
+type ServiceDetailsScreenDefault = {
+  kind?: "default";
+} & ServiceDetailsScreenDefaultProps;
+
+type ServiceDetailsScreenPn = {
+  kind: "pn";
+} & ServiceDetailsScreenPnProps;
+
 export type ServiceDetailsScreenComponent =
   | ServiceDetailsScreenCdc
   | ServiceDetailsScreenCgn
@@ -19,22 +35,6 @@ export type ServiceDetailsScreenComponent =
   | ServiceDetailsScreenPn;
 
 export type ServiceKind = ServiceDetailsScreenComponent["kind"];
-
-type ServiceDetailsScreenCdc = ServiceDetailsScreenCgnProps & {
-  kind: "cdc";
-};
-
-type ServiceDetailsScreenCgn = ServiceDetailsScreenCgnProps & {
-  kind: "cgn";
-};
-
-type ServiceDetailsScreenDefault = ServiceDetailsScreenDefaultProps & {
-  kind?: "default";
-};
-
-type ServiceDetailsScreenPn = ServiceDetailsScreenPnProps & {
-  kind: "pn";
-};
 
 /**
  * This component renders different types of service

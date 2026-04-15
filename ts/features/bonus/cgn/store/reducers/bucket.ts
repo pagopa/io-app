@@ -1,5 +1,7 @@
 import { getType } from "typesafe-actions";
-
+import { Action } from "../../../../../store/actions/types";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { NetworkError } from "../../../../../utils/errors";
 import {
   remoteError,
   remoteLoading,
@@ -7,11 +9,8 @@ import {
   remoteUndefined,
   RemoteValue
 } from "../../../../../common/model/RemoteValue";
-import { Action } from "../../../../../store/actions/types";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { NetworkError } from "../../../../../utils/errors";
-import { DiscountBucketCodeResponse } from "../../types/DiscountBucketCodeResponse";
 import { cgnCodeFromBucket, cgnCodeFromBucketReset } from "../actions/bucket";
+import { DiscountBucketCodeResponse } from "../../types/DiscountBucketCodeResponse";
 
 export type CgnBucketState = {
   data: RemoteValue<DiscountBucketCodeResponse, NetworkError>;
@@ -26,11 +25,6 @@ const reducer = (
   action: Action
 ): CgnBucketState => {
   switch (action.type) {
-    case getType(cgnCodeFromBucket.failure):
-      return {
-        ...state,
-        data: remoteError(action.payload)
-      };
     case getType(cgnCodeFromBucket.request):
       return {
         ...state,
@@ -40,6 +34,11 @@ const reducer = (
       return {
         ...state,
         data: remoteReady(action.payload)
+      };
+    case getType(cgnCodeFromBucket.failure):
+      return {
+        ...state,
+        data: remoteError(action.payload)
       };
     case getType(cgnCodeFromBucketReset):
       return {

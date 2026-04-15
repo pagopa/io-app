@@ -1,7 +1,8 @@
 import { URL as PolyfillURL } from "react-native-url-polyfill";
-
-import { createClient } from "../../../../definitions/itw/client";
 import { toFetchTimeout } from "../../../utils/fetch";
+import { createClient } from "../../../../definitions/itw/client";
+
+export class ItwSessionExpiredError extends Error {}
 
 /**
  * Authorization headers which contains the bearer token for the current session.
@@ -9,8 +10,6 @@ import { toFetchTimeout } from "../../../utils/fetch";
 type AuthHeaders = {
   Authorization?: string;
 };
-
-export class ItwSessionExpiredError extends Error {}
 
 /**
  * Adds the authorization headers to the request initialization object.

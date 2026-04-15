@@ -1,18 +1,18 @@
 import { IOBarcodeFormat } from "./IOBarcode";
 
-export type BarcodeFailure =
-  | {
-      content?: string;
-      format: IOBarcodeFormat;
-      reason: "UNKNOWN_CONTENT";
-    }
-  | {
-      reason: Exclude<BarcodeFailureType, "UNKNOWN_CONTENT">;
-    };
-
 export type BarcodeFailureType =
-  | "BARCODE_NOT_FOUND"
-  | "INVALID_FILE"
   | "UNEXPECTED"
+  | "INVALID_FILE"
+  | "BARCODE_NOT_FOUND"
   | "UNKNOWN_CONTENT"
   | "UNSUPPORTED_FORMAT";
+
+export type BarcodeFailure =
+  | {
+      reason: Exclude<BarcodeFailureType, "UNKNOWN_CONTENT">;
+    }
+  | {
+      reason: "UNKNOWN_CONTENT";
+      content?: string;
+      format: IOBarcodeFormat;
+    };

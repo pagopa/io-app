@@ -1,18 +1,17 @@
 import { fireEvent } from "@testing-library/react-native";
 import { Button } from "react-native";
 import { createStore } from "redux";
-
 import { applicationChangeState } from "../../../../store/actions/application";
 import * as useIO from "../../../../store/hooks";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
-import * as hooks from "../../../pushNotifications/hooks/usePushNotificationsBannerTracking";
 import { updateLandingScreenBannerVisibility } from "../../store/actions";
 import * as SELECTORS from "../../store/selectors";
 import { LandingScreenBannerId } from "../../utils/landingScreenBannerMap";
 import { LandingScreenBannerPicker } from "../LandingScreenBannerPicker";
+import * as hooks from "../../../pushNotifications/hooks/usePushNotificationsBannerTracking";
 
 jest.mock("../../utils/landingScreenBannerMap", () => ({
   get landingScreenBannerMap() {
@@ -43,7 +42,7 @@ jest.mock("../../store/reducer.ts", () => ({
 }));
 
 const MyComponent = ({ callback }: { callback: () => void }) => (
-  <Button onPress={callback} testID="button-test" title="TEST" />
+  <Button title="TEST" testID="button-test" onPress={callback} />
 );
 
 const bannerId = "TESTING" as LandingScreenBannerId;

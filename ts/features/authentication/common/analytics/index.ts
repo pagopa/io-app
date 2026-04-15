@@ -1,33 +1,57 @@
-import { IdpData } from "../../../../../definitions/content/IdpData";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/profileProperties";
 import { GlobalState } from "../../../../store/reducers/types";
-import { buildEventProperties, FlowType } from "../../../../utils/analytics";
+import { FlowType, buildEventProperties } from "../../../../utils/analytics";
+import { IdpCIE, IdpCIE_ID } from "../../login/hooks/useNavigateToLoginMethod";
+import { LoginSessionDuration } from "../../fastLogin/analytics/optinAnalytics";
 import { SpidLevel } from "../../../authentication/login/cie/utils";
 import { LoginType } from "../../activeSessionLogin/screens/analytics";
-import { LoginSessionDuration } from "../../fastLogin/analytics/optinAnalytics";
-import { IdpCIE, IdpCIE_ID } from "../../login/hooks/useNavigateToLoginMethod";
+import { IdpData } from "../../../../../definitions/content/IdpData";
 
 const SECURITY_LEVEL_MAP: Record<SpidLevel, "L2" | "L3"> = {
   SpidL2: "L2",
   SpidL3: "L3"
 };
 
-export async function loginCieWizardSelected(flow: LoginType = "auth") {
-  mixpanelTrack(
-    "LOGIN_CIE_WIZARD_SELECTED",
+export function trackLoginFlowStarting() {
+  void mixpanelTrack(
+    "LOGIN_START_FLOW",
+    buildEventProperties("UX", "screen_view")
+  );
+}
+export function trackLoginCiePinSelected(flow: LoginType = "auth") {
+  void mixpanelTrack(
+    "LOGIN_CIE_PIN_SELECTED",
     buildEventProperties("UX", "action", {
       flow
     })
   );
 }
-export async function trackCieBottomSheetScreenView(flow: LoginType = "auth") {
-  mixpanelTrack(
-    "LOGIN_CIE_IDENTIFICATION_MODE",
-    buildEventProperties("UX", "screen_view", {
+export function trackLoginCieIdSelected(
+  spidLevel: SpidLevel,
+  flow: LoginType = "auth"
+) {
+  void mixpanelTrack(
+    "LOGIN_CIEID_SELECTED",
+    buildEventProperties("UX", "action", {
+      security_level: SECURITY_LEVEL_MAP[spidLevel],
       flow
     })
   );
+}
+// This event must be send when user taps on cie login button
+export async function trackCieLoginSelected() {
+  mixpanelTrack("LOGIN_CIE_SELECTED", buildEventProperties("UX", "action"));
+}
+export async function trackCiePinLoginSelected(
+  state: GlobalState,
+  flow: LoginType = "auth"
+) {
+  trackLoginCiePinSelected(flow);
+  await updateMixpanelProfileProperties(state, {
+    property: "LOGIN_METHOD",
+    value: IdpCIE.id
+  });
 }
 export async function trackCieIDLoginSelected(
   state: GlobalState,
@@ -39,6 +63,54 @@ export async function trackCieIDLoginSelected(
     property: "LOGIN_METHOD",
     value: IdpCIE_ID.id
   });
+}
+export async function trackCieBottomSheetScreenView(flow: LoginType = "auth") {
+  mixpanelTrack(
+    "LOGIN_CIE_IDENTIFICATION_MODE",
+    buildEventProperties("UX", "screen_view", {
+      flow
+    })
+  );
+}
+export async function loginCieWizardSelected(flow: LoginType = "auth") {
+  mixpanelTrack(
+    "LOGIN_CIE_WIZARD_SELECTED",
+    buildEventProperties("UX", "action", {
+      flow
+    })
+  );
+}
+export function trackSpidLoginSelected() {
+  void mixpanelTrack(
+    "LOGIN_SPID_SELECTED",
+    buildEventProperties("UX", "action")
+  );
+}
+
+export function trackSpidLoginIdpSelection(flow: LoginType = "auth") {
+  void mixpanelTrack(
+    "LOGIN_SPID_IDP_SELECTION",
+    buildEventProperties("UX", "screen_view", {
+      flow
+    })
+  );
+}
+
+export function trackMethodInfo() {
+  void mixpanelTrack("LOGIN_METHOD_INFO", buildEventProperties("UX", "exit"));
+}
+
+export function trackCieLoginSuccess(
+  login_session: LoginSessionDuration,
+  flow: LoginType = "auth"
+) {
+  void mixpanelTrack(
+    "LOGIN_CIE_UX_SUCCESS",
+    buildEventProperties("UX", "confirm", {
+      login_session,
+      flow
+    })
+  );
 }
 // As in the `trackCieIDLoginSelected` event, there should be a `security_level` property;
 // however, this value might differ from the one selected before,
@@ -56,51 +128,30 @@ export function trackCieIDLoginSuccess(
     })
   );
 }
-// This event must be send when user taps on cie login button
-export async function trackCieLoginSelected() {
-  mixpanelTrack("LOGIN_CIE_SELECTED", buildEventProperties("UX", "action"));
-}
-export function trackCieLoginSuccess(
+
+export function trackSpidLoginSuccess(
   login_session: LoginSessionDuration,
+  idp: string,
   flow: LoginType = "auth"
 ) {
   void mixpanelTrack(
-    "LOGIN_CIE_UX_SUCCESS",
+    "LOGIN_SPID_UX_SUCCESS",
     buildEventProperties("UX", "confirm", {
       login_session,
+      idp,
       flow
     })
   );
 }
-export async function trackCiePinLoginSelected(
-  state: GlobalState,
-  flow: LoginType = "auth"
-) {
-  trackLoginCiePinSelected(flow);
-  await updateMixpanelProfileProperties(state, {
-    property: "LOGIN_METHOD",
-    value: IdpCIE.id
-  });
-}
-export function trackLoginCieIdSelected(
-  spidLevel: SpidLevel,
-  flow: LoginType = "auth"
-) {
+
+export function trackTosUserExit(flow: FlowType) {
   void mixpanelTrack(
-    "LOGIN_CIEID_SELECTED",
-    buildEventProperties("UX", "action", {
-      security_level: SECURITY_LEVEL_MAP[spidLevel],
-      flow
-    })
+    "TOS_USER_EXIT",
+    buildEventProperties("UX", "exit", undefined, flow)
   );
 }
-export function trackLoginCiePinSelected(flow: LoginType = "auth") {
-  void mixpanelTrack(
-    "LOGIN_CIE_PIN_SELECTED",
-    buildEventProperties("UX", "action", {
-      flow
-    })
-  );
+export function trackLoginUserExit() {
+  void mixpanelTrack("LOGIN_USER_EXIT", buildEventProperties("UX", "exit"));
 }
 
 export function trackLoginEnded(
@@ -124,10 +175,26 @@ export function trackLoginEnded(
   );
 }
 
+export function trackLoginInfoTap() {
+  void mixpanelTrack(
+    "LOGIN_START_FLOW_INFO",
+    buildEventProperties("UX", "action")
+  );
+}
+
+export function trackLoginInfoResourceTap(
+  resource_selected: "privacy_policy" | "manage_access" | "app_features"
+) {
+  void mixpanelTrack(
+    "LOGIN_START_FLOW_RESOURCES_TAP",
+    buildEventProperties("UX", "action", { resource_selected })
+  );
+}
+
 export function trackLoginFailure(props: {
-  flow: LoginType;
-  idp: keyof IdpData | undefined;
   reason: string;
+  idp: keyof IdpData | undefined;
+  flow: LoginType;
 }) {
   const { flow, ...rest } = props;
   void mixpanelTrack(
@@ -139,41 +206,6 @@ export function trackLoginFailure(props: {
   );
 }
 
-export function trackLoginFlowStarting() {
-  void mixpanelTrack(
-    "LOGIN_START_FLOW",
-    buildEventProperties("UX", "screen_view")
-  );
-}
-export function trackLoginInfoResourceTap(
-  resource_selected: "app_features" | "manage_access" | "privacy_policy"
-) {
-  void mixpanelTrack(
-    "LOGIN_START_FLOW_RESOURCES_TAP",
-    buildEventProperties("UX", "action", { resource_selected })
-  );
-}
-
-export function trackLoginInfoTap() {
-  void mixpanelTrack(
-    "LOGIN_START_FLOW_INFO",
-    buildEventProperties("UX", "action")
-  );
-}
-
-export function trackLoginUserExit() {
-  void mixpanelTrack("LOGIN_USER_EXIT", buildEventProperties("UX", "exit"));
-}
-export function trackLogoutFailure(
-  reason?: Error | string,
-  flow: LoginType = "auth"
-) {
-  void mixpanelTrack(
-    "LOGOUT_FAILURE",
-    buildEventProperties("TECH", "error", { reason, flow })
-  );
-}
-
 export function trackLogoutSuccess(flow: LoginType = "auth") {
   void mixpanelTrack(
     "LOGOUT_SUCCESS",
@@ -181,14 +213,13 @@ export function trackLogoutSuccess(flow: LoginType = "auth") {
   );
 }
 
-export function trackMethodInfo() {
-  void mixpanelTrack("LOGIN_METHOD_INFO", buildEventProperties("UX", "exit"));
-}
-
-export function trackSessionTokenFragmentFailure(reason: string) {
+export function trackLogoutFailure(
+  reason?: string | Error,
+  flow: LoginType = "auth"
+) {
   void mixpanelTrack(
-    "SESSION_TOKEN_FRAGMENT_FAILURE",
-    buildEventProperties("TECH", undefined, { reason })
+    "LOGOUT_FAILURE",
+    buildEventProperties("TECH", "error", { reason, flow })
   );
 }
 
@@ -199,40 +230,9 @@ export function trackSessionTokenSource(source: "fragment" | "queryParam") {
   );
 }
 
-export function trackSpidLoginIdpSelection(flow: LoginType = "auth") {
+export function trackSessionTokenFragmentFailure(reason: string) {
   void mixpanelTrack(
-    "LOGIN_SPID_IDP_SELECTION",
-    buildEventProperties("UX", "screen_view", {
-      flow
-    })
-  );
-}
-
-export function trackSpidLoginSelected() {
-  void mixpanelTrack(
-    "LOGIN_SPID_SELECTED",
-    buildEventProperties("UX", "action")
-  );
-}
-
-export function trackSpidLoginSuccess(
-  login_session: LoginSessionDuration,
-  idp: string,
-  flow: LoginType = "auth"
-) {
-  void mixpanelTrack(
-    "LOGIN_SPID_UX_SUCCESS",
-    buildEventProperties("UX", "confirm", {
-      login_session,
-      idp,
-      flow
-    })
-  );
-}
-
-export function trackTosUserExit(flow: FlowType) {
-  void mixpanelTrack(
-    "TOS_USER_EXIT",
-    buildEventProperties("UX", "exit", undefined, flow)
+    "SESSION_TOKEN_FRAGMENT_FAILURE",
+    buildEventProperties("TECH", undefined, { reason })
   );
 }

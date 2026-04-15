@@ -1,7 +1,6 @@
-import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import MockDate from "mockdate";
-
+import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
 import {
   DrivingPrivilegesCustomClaim,
   DrivingPrivilegesValueRaw,
@@ -15,8 +14,8 @@ import {
   SimpleDateClaim,
   SimpleListClaim
 } from "../itwClaimsUtils";
+import { CredentialMetadata } from "../itwTypesUtils";
 import { ItwStoredCredentialsMocks } from "../itwMocksUtils";
-import { StoredCredential } from "../itwTypesUtils";
 
 describe("getCredentialExpireDate", () => {
   it("should return undefined", () => {
@@ -151,7 +150,7 @@ describe("getFiscalCodeFromCredential", () => {
   });
 
   it("should return empty string when no tax code is found in the credential", () => {
-    const mockCredential: StoredCredential = {
+    const mockCredential: CredentialMetadata = {
       ...ItwStoredCredentialsMocks.eid,
       parsedCredential: {
         family_name: {
@@ -164,7 +163,7 @@ describe("getFiscalCodeFromCredential", () => {
   });
 
   it("should return empty string when the tax code uses an unexpected format", () => {
-    const mockCredential: StoredCredential = {
+    const mockCredential: CredentialMetadata = {
       ...ItwStoredCredentialsMocks.eid,
       parsedCredential: {
         tax_id_code: {
@@ -177,7 +176,7 @@ describe("getFiscalCodeFromCredential", () => {
   });
 
   it("should return the tax code when the credential is valid", () => {
-    const mockCredential: StoredCredential = {
+    const mockCredential: CredentialMetadata = {
       ...ItwStoredCredentialsMocks.eid,
       parsedCredential: {
         tax_id_code: {

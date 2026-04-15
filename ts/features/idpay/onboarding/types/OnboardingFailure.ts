@@ -1,14 +1,13 @@
 import { enumType } from "@pagopa/ts-commons/lib/types";
 import * as t from "io-ts";
-
 import { CodeEnum } from "../../../../../definitions/idpay/OnboardingErrorDTO";
 
 enum OnboardingStatusEnum {
-  NOT_ELIGIBLE = "NOT_ELIGIBLE",
-  SESSION_EXPIRED = "SESSION_EXPIRED"
+  SESSION_EXPIRED = "SESSION_EXPIRED",
+  NOT_ELIGIBLE = "NOT_ELIGIBLE"
 }
 
-export type OnboardingFailureEnum = CodeEnum | OnboardingStatusEnum;
+export type OnboardingFailureEnum = OnboardingStatusEnum | CodeEnum;
 export const OnboardingFailureEnum = {
   ...OnboardingStatusEnum,
   ...CodeEnum

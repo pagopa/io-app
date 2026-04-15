@@ -2,23 +2,22 @@ import { ListItemAction } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { memo, ReactNode, useMemo } from "react";
 import { View } from "react-native";
-
 import { useOfflineToastGuard } from "../../../../../hooks/useOfflineToastGuard.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { useFIMSRemoteServiceConfiguration } from "../../../../fims/common/hooks";
 import { useNotAvailableToastGuard } from "../../../common/hooks/useNotAvailableToastGuard.ts";
 import { itwIPatenteCtaConfigSelector } from "../../../common/store/selectors/remoteConfig.ts";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
 import { getCredentialDocumentNumber } from "../../../trustmark/utils";
 import { useItwRemoveCredentialWithConfirm } from "../hooks/useItwRemoveCredentialWithConfirm";
 import { useItwStartCredentialSupportRequest } from "../hooks/useItwStartCredentialSupportRequest.tsx";
 
-type IPatenteListItemActionProps = {
-  docNumber?: string;
+type ItwPresentationDetailFooterProps = {
+  credential: CredentialMetadata;
 };
 
-type ItwPresentationDetailFooterProps = {
-  credential: StoredCredential;
+type IPatenteListItemActionProps = {
+  docNumber?: string;
 };
 
 const ItwPresentationDetailsFooter = ({
@@ -38,28 +37,28 @@ const ItwPresentationDetailsFooter = ({
     <View>
       {credentialActions}
       <ListItemAction
-        accessibilityLabel={I18n.t(
-          "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
-        )}
+        testID="requestAssistanceActionTestID"
+        variant="primary"
         icon="message"
         label={I18n.t(
           "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
         )}
+        accessibilityLabel={I18n.t(
+          "features.itWallet.presentation.credentialDetails.actions.requestAssistance"
+        )}
         onPress={useNotAvailableToastGuard(startAndTrackSupportRequest)}
-        testID="requestAssistanceActionTestID"
-        variant="primary"
       />
       <ListItemAction
-        accessibilityLabel={I18n.t(
-          "features.itWallet.presentation.credentialDetails.actions.removeFromWallet"
-        )}
+        testID="removeCredentialActionTestID"
+        variant="danger"
         icon="trashcan"
         label={I18n.t(
           "features.itWallet.presentation.credentialDetails.actions.removeFromWallet"
         )}
+        accessibilityLabel={I18n.t(
+          "features.itWallet.presentation.credentialDetails.actions.removeFromWallet"
+        )}
         onPress={confirmAndRemoveCredential}
-        testID="removeCredentialActionTestID"
-        variant="danger"
       />
     </View>
   );
@@ -68,13 +67,13 @@ const ItwPresentationDetailsFooter = ({
 /**
  * Returns custom CTAs for a credential
  */
-const getCredentialActions = (credential: StoredCredential): ReactNode => {
+const getCredentialActions = (credential: CredentialMetadata): ReactNode => {
   const { credentialType, parsedCredential } = credential;
   const docNumber = getCredentialDocumentNumber(parsedCredential);
 
   return {
     mDL: [
-      <IPatenteListItemAction docNumber={docNumber} key="iPatenteActionMdl" />
+      <IPatenteListItemAction key="iPatenteActionMdl" docNumber={docNumber} />
     ],
     EuropeanHealthInsuranceCard: [],
     EuropeanDisabilityCard: []
@@ -106,11 +105,11 @@ const IPatenteListItemAction = ({ docNumber }: IPatenteListItemActionProps) => {
 
   return (
     <ListItemAction
+      testID="openIPatenteActionTestID"
+      variant="primary"
       icon="externalLink"
       label={label}
       onPress={startFimsAuthenticationFlow}
-      testID="openIPatenteActionTestID"
-      variant="primary"
     />
   );
 };

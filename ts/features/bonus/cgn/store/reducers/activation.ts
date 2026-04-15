@@ -1,24 +1,23 @@
-import { createSelector } from "reselect";
 // bonus reducer
 import { getType } from "typesafe-actions";
-
-import { CgnActivationDetail } from "../../../../../../definitions/cgn/CgnActivationDetail";
+import { createSelector } from "reselect";
 import { Action } from "../../../../../store/actions/types";
-import { GlobalState } from "../../../../../store/reducers/types";
 import {
   cgnActivationStatus,
   cgnRequestActivation
 } from "../actions/activation";
+import { CgnActivationDetail } from "../../../../../../definitions/cgn/CgnActivationDetail";
+import { GlobalState } from "../../../../../store/reducers/types";
 
 export enum CgnActivationProgressEnum {
+  "UNDEFINED" = "UNDEFINED",
+  "TIMEOUT" = "TIMEOUT", // number of polling exceeded
+  "PROGRESS" = "PROGRESS", // The request is started
+  "PENDING" = "PENDING", // Polling time exceeded
   "ERROR" = "ERROR", // There's an error
   "EXISTS" = "EXISTS", // Another bonus related to this user was found
   "INELIGIBLE" = "INELIGIBLE", // Another bonus related to this user was found
-  "PENDING" = "PENDING", // Polling time exceeded
-  "PROGRESS" = "PROGRESS", // The request is started
-  "SUCCESS" = "SUCCESS", // Activation has been completed
-  "TIMEOUT" = "TIMEOUT", // number of polling exceeded
-  "UNDEFINED" = "UNDEFINED"
+  "SUCCESS" = "SUCCESS" // Activation has been completed
 }
 
 export type ActivationState = {
@@ -35,14 +34,9 @@ const reducer = (
   action: Action
 ): ActivationState => {
   switch (action.type) {
-    case getType(cgnActivationStatus.failure):
-      return {
-        ...state,
-        status: CgnActivationProgressEnum.ERROR
-      };
     // bonus activation
-    case getType(cgnActivationStatus.request):
     case getType(cgnRequestActivation):
+    case getType(cgnActivationStatus.request):
       return {
         ...state,
         status: CgnActivationProgressEnum.PROGRESS
@@ -52,6 +46,11 @@ const reducer = (
         ...state,
         status: action.payload.status,
         value: action.payload.activation
+      };
+    case getType(cgnActivationStatus.failure):
+      return {
+        ...state,
+        status: CgnActivationProgressEnum.ERROR
       };
   }
   return state;

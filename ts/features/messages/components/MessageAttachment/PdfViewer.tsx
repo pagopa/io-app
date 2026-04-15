@@ -1,9 +1,9 @@
-import { IOColors } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { ComponentProps, useState } from "react";
+
 import { StyleSheet, View } from "react-native";
 import Pdf from "react-native-pdf";
-
+import { IOColors } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 
 const styles = StyleSheet.create({
@@ -18,8 +18,8 @@ type OwnProps = {
   onLoadComplete?: () => void;
 };
 
-type Props = Omit<ComponentProps<typeof Pdf>, "onLoadComplete" | "source"> &
-  OwnProps;
+type Props = OwnProps &
+  Omit<ComponentProps<typeof Pdf>, "source" | "onLoadComplete">;
 
 export const PdfViewer = ({
   style,
@@ -41,9 +41,9 @@ export const PdfViewer = ({
       loadingCaption={I18n.t("messageDetails.attachments.loading")}
     >
       <View
-        accessibilityLabel={I18n.t("messagePDFPreview.pdfAccessibility")}
-        accessible={true}
         style={{ flex: 1 }}
+        accessible={true}
+        accessibilityLabel={I18n.t("messagePDFPreview.pdfAccessibility")}
       >
         {/** Be aware that, in react-native-pdf 6.7.7, on Android, there
          * is a bug where onLoadComplete callback is not called. So,
@@ -52,14 +52,14 @@ export const PdfViewer = ({
          * has loaded */}
         <Pdf
           {...rest}
+          source={{ uri: downloadPath, cache: true }}
+          style={[styles.pdf, style]}
+          onPageChanged={commonOnLoadingCompleted}
+          onLoadComplete={commonOnLoadingCompleted}
           onError={(...args) => {
             setIsLoading(false);
             onError?.(...args);
           }}
-          onLoadComplete={commonOnLoadingCompleted}
-          onPageChanged={commonOnLoadingCompleted}
-          source={{ uri: downloadPath, cache: true }}
-          style={[styles.pdf, style]}
         />
       </View>
     </LoadingSpinnerOverlay>

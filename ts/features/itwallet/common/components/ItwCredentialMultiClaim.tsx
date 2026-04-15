@@ -1,19 +1,18 @@
-import { Divider } from "@pagopa/io-app-design-system";
 import { Fragment } from "react";
-
-import { HIDDEN_CLAIM_TEXT } from "../utils/constants.ts";
+import { Divider } from "@pagopa/io-app-design-system";
 import { ClaimDisplayFormat } from "../utils/itwClaimsUtils.ts";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils.ts";
-import { ItwCredentialClaim } from "./ItwCredentialClaim.tsx";
+import { HIDDEN_CLAIM_TEXT } from "../utils/constants.ts";
 import { ItwNestedClaimsListItem } from "./ItwNestedClaimsListItem.tsx";
+import { ItwCredentialClaim } from "./ItwCredentialClaim.tsx";
 
 interface ItwCredentialMultiClaimProps {
+  nestedClaims: Array<Array<ClaimDisplayFormat>>;
   claim: ClaimDisplayFormat;
-  credentialStatus?: ItwCredentialStatus;
-  credentialType?: string;
   hidden?: boolean;
   isPreview?: boolean;
-  nestedClaims: Array<Array<ClaimDisplayFormat>>;
+  credentialStatus?: ItwCredentialStatus;
+  credentialType?: string;
 }
 
 /**
@@ -116,14 +115,14 @@ export const ItwCredentialMultiClaim = ({
             <Fragment key={`${index}_${claim.id}_${claim.label}`}>
               {index > 0 && <Divider />}
               <ItwNestedClaimsListItem
-                credentialStatus={credentialStatus}
-                credentialType={credentialType}
-                hidden={hidden}
-                isPreview={isPreview}
-                itemClaims={singleItemClaims}
                 itemTitle={displaySummaryValue}
+                itemClaims={singleItemClaims}
                 summaryLabel={summaryLabel}
                 summaryValue={displaySummaryValue}
+                hidden={hidden}
+                isPreview={isPreview}
+                credentialStatus={credentialStatus}
+                credentialType={credentialType}
               />
             </Fragment>
           );
@@ -138,12 +137,12 @@ export const ItwCredentialMultiClaim = ({
           <Fragment key={`${index}_${nestedClaim.id}_${nestedClaim.label}`}>
             {index > 0 && <Divider />}
             <ItwCredentialClaim
+              key={nestedClaim.id}
               claim={nestedClaim}
-              credentialStatus={credentialStatus}
-              credentialType={credentialType}
               hidden={hidden}
               isPreview={isPreview}
-              key={nestedClaim.id}
+              credentialStatus={credentialStatus}
+              credentialType={credentialType}
             />
           </Fragment>
         ))}

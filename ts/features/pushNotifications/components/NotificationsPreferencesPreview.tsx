@@ -1,5 +1,4 @@
-import { ImageBackground, StyleSheet } from "react-native";
-
+import { StyleSheet, ImageBackground } from "react-native";
 import NotificationWhiteBg from "../../../../img/onboarding/notification_white.png";
 import { NotificationPreviewSample } from "./NotificationPreviewSample";
 
@@ -20,8 +19,8 @@ export const NotificationsPreferencesPreview = ({
   remindersEnabled
 }: Props) => (
   <ImageBackground
-    resizeMode="contain"
     source={NotificationWhiteBg}
+    resizeMode="contain"
     style={styles.container}
   >
     <NotificationPreviewSample

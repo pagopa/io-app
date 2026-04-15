@@ -1,22 +1,21 @@
 import { ListItemInfo } from "@pagopa/io-app-design-system";
-import { useFocusEffect } from "@react-navigation/native";
-import I18n from "i18next";
 import { useEffect, useMemo } from "react";
 import { Alert, Platform } from "react-native";
-
+import { useFocusEffect } from "@react-navigation/native";
+import I18n from "i18next";
 import { IOScrollViewActions } from "../../../../../components/ui/IOScrollView";
-import { IOScrollViewWithListItems } from "../../../../../components/ui/IOScrollViewWithListItems";
-import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { openAppSettings } from "../../../../../utils/appSettings";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { ItwProximityMachineContext } from "../machine/provider";
+import { selectIsPermissionsRequiredState } from "../machine/selectors";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import { IOScrollViewWithListItems } from "../../../../../components/ui/IOScrollViewWithListItems";
 import {
   trackItwProximityBluetoothAccess,
   trackItwProximityBluetoothAccessClose,
   trackItwProximityBluetoothAccessDenied,
   trackItwProximityBluetoothAccessGoToSettings
 } from "../analytics";
-import { ItwProximityMachineContext } from "../machine/provider";
-import { selectIsPermissionsRequiredState } from "../machine/selectors";
 
 export const ItwGrantPermissionsScreen = () => {
   const navigation = useIONavigation();
@@ -126,17 +125,17 @@ export const ItwGrantPermissionsScreen = () => {
 
   return (
     <IOScrollViewWithListItems
-      actions={actions}
+      title={I18n.t(
+        "features.itWallet.presentation.proximity.grantPermissions.title"
+      )}
+      subtitle={I18n.t(
+        "features.itWallet.presentation.proximity.grantPermissions.subtitle"
+      )}
       listItemHeaderLabel={I18n.t(
         "features.itWallet.presentation.proximity.grantPermissions.listItems.title"
       )}
       renderItems={listItems}
-      subtitle={I18n.t(
-        "features.itWallet.presentation.proximity.grantPermissions.subtitle"
-      )}
-      title={I18n.t(
-        "features.itWallet.presentation.proximity.grantPermissions.title"
-      )}
+      actions={actions}
     />
   );
 };

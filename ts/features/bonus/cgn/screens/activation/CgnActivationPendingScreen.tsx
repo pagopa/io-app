@@ -1,9 +1,8 @@
-import I18n from "i18next";
 import { useCallback } from "react";
-
-import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
-import { useIODispatch } from "../../../../../store/hooks";
+import I18n from "i18next";
 import { cgnActivationCancel } from "../../store/actions/activation";
+import { useIODispatch } from "../../../../../store/hooks";
+import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 
 /**
  * Screen which is displayed when a user requested a CGN activation
@@ -15,14 +14,14 @@ const CgnActivationPendingScreen = () => {
 
   return (
     <OperationResultScreenContent
+      pictogram="pending"
+      title={I18n.t("bonus.cgn.activation.pending.title")}
+      subtitle={I18n.t("bonus.cgn.activation.pending.body")}
       action={{
         label: I18n.t("global.buttons.close"),
         accessibilityLabel: I18n.t("global.buttons.close"),
         onPress: onExit
       }}
-      pictogram="pending"
-      subtitle={I18n.t("bonus.cgn.activation.pending.body")}
-      title={I18n.t("bonus.cgn.activation.pending.title")}
     />
   );
 };

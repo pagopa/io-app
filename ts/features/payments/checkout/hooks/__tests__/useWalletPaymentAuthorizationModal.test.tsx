@@ -3,7 +3,6 @@ import { render } from "@testing-library/react-native";
 import { Text } from "react-native";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-
 import { AmountEuroCents } from "../../../../../../definitions/pagopa/ecommerce/AmountEuroCents";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";

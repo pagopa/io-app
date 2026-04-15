@@ -1,6 +1,6 @@
 import { createClient } from "../../../../definitions/fci/client";
-import { defaultRetryingFetch } from "../../../utils/fetch";
 import { LollipopConfig } from "../../lollipop";
+import { defaultRetryingFetch } from "../../../utils/fetch";
 import { KeyInfo } from "../../lollipop/utils/crypto";
 import { lollipopFetch } from "../../lollipop/utils/fetch";
 

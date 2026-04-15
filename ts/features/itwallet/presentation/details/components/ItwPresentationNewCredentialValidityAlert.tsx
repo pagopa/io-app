@@ -1,6 +1,5 @@
 import { Alert } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-
 import { NewCredential } from "../../../common/utils/itwCredentialUtils";
 
 type Props = {
@@ -19,6 +18,6 @@ export const ItwPresentationNewCredentialValidityAlert = ({
   const content = I18n.t(`${i18nNs}.${credentialType}`);
 
   return (
-    <Alert content={content} testID="newCredentialAlertTestID" variant="info" />
+    <Alert testID="newCredentialAlertTestID" variant="info" content={content} />
   );
 };

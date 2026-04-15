@@ -1,9 +1,8 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import i18n from "i18next";
-
-import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import * as analytics from "../../analytics";
 import CieIdAuthUrlError from "../CieIdAuthUrlError";
+import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 
 const mockNavigate = jest.fn();
 const mockReplace = jest.fn();

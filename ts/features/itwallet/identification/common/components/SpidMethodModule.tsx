@@ -1,7 +1,6 @@
 import { ModuleNavigationAlt } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { useCallback } from "react";
-
 import { trackItWalletIDMethodSelected } from "../../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { useContinueWithBottomSheet } from "../hooks/useContinueWithBottomSheet";
@@ -27,6 +26,13 @@ export const SpidMethodModule = ({ isL3 }: Props) => {
     return (
       <>
         <ModuleNavigationAlt
+          testID="SpidMethodModuleTestIDL3"
+          title={I18n.t(
+            "features.itWallet.identification.modeSelection.mode.spid.title.l3"
+          )}
+          subtitle={I18n.t(
+            "features.itWallet.identification.modeSelection.mode.spid.subtitle.l3"
+          )}
           icon="spid"
           onPress={() => {
             trackItWalletIDMethodSelected({
@@ -35,13 +41,6 @@ export const SpidMethodModule = ({ isL3 }: Props) => {
             });
             spidBottomSheet.present();
           }}
-          subtitle={I18n.t(
-            "features.itWallet.identification.modeSelection.mode.spid.subtitle.l3"
-          )}
-          testID="SpidMethodModuleTestIDL3"
-          title={I18n.t(
-            "features.itWallet.identification.modeSelection.mode.spid.title.l3"
-          )}
         />
         {spidBottomSheet.bottomSheet}
       </>
@@ -50,15 +49,15 @@ export const SpidMethodModule = ({ isL3 }: Props) => {
 
   return (
     <ModuleNavigationAlt
-      icon="spid"
-      onPress={handleOnPress}
-      subtitle={I18n.t(
-        "features.itWallet.identification.modeSelection.mode.spid.subtitle.default"
-      )}
       testID="SpidMethodModuleTestIDL2"
       title={I18n.t(
         "features.itWallet.identification.modeSelection.mode.spid.title.default"
       )}
+      subtitle={I18n.t(
+        "features.itWallet.identification.modeSelection.mode.spid.subtitle.default"
+      )}
+      icon="spid"
+      onPress={handleOnPress}
     />
   );
 };

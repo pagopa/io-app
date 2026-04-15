@@ -2,18 +2,17 @@ import { IOButtonProps } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { useEffect } from "react";
 import { Platform } from "react-native";
-
-import { CieCardReadContent } from "../../../../common/components/cie/CieCardReadContent";
+import {
+  trackItWalletCardReadingClose,
+  trackItWalletCieCardReadingSuccess
+} from "../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
   selectIdentification
 } from "../../../machine/eid/selectors";
-import {
-  trackItWalletCardReadingClose,
-  trackItWalletCieCardReadingSuccess
-} from "../../analytics";
 import { CieManagerState } from "../hooks/useCieManager";
+import { CieCardReadContent } from "../../../../common/components/cie/CieCardReadContent";
 
 type ItwCieCardReadProgressContentProps = Exclude<
   CieManagerState,
@@ -76,38 +75,38 @@ export const ItwCieCardReadProgressContent = (
     case "idle": {
       return (
         <CieCardReadContent
-          pictogram="nfcScanAndroid"
           progress={0}
-          secondaryAction={cancelAction}
           title={I18n.t(
             `features.itWallet.identification.cie.readingCard.${platform}.idle.title`
           )}
+          pictogram="nfcScanAndroid"
+          secondaryAction={cancelAction}
         />
       );
     }
     case "reading": {
       return (
         <CieCardReadContent
-          pictogram="nfcScanAndroid"
           progress={props.progress}
-          secondaryAction={cancelAction}
-          subtitle={I18n.t(
-            `features.itWallet.identification.cie.readingCard.${platform}.reading.subtitle`
-          )}
           title={I18n.t(
             `features.itWallet.identification.cie.readingCard.${platform}.reading.title`
           )}
+          subtitle={I18n.t(
+            `features.itWallet.identification.cie.readingCard.${platform}.reading.subtitle`
+          )}
+          pictogram="nfcScanAndroid"
+          secondaryAction={cancelAction}
         />
       );
     }
     case "success":
       return (
         <CieCardReadContent
-          pictogram="success"
           progress={1}
           title={I18n.t(
             `features.itWallet.identification.cie.readingCard.${platform}.completed.title`
           )}
+          pictogram="success"
         />
       );
   }

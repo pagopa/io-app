@@ -1,14 +1,13 @@
 import { fireEvent, render } from "@testing-library/react-native";
-
-import { NotificationModalFlow } from "../../../../pushNotifications/analytics";
+import { SendEngagementOnFirstAppOpenScreen } from "../SendEngagementOnFirstAppOpenScreen";
 import {
   trackSendAcceptanceDialog,
   trackSendActivationModalDialog,
-  trackSendActivationModalDialogActivationDismissed,
   trackSendActivationModalDialogActivationStart,
+  trackSendActivationModalDialogActivationDismissed,
   trackSendNurturingDialog
 } from "../../../analytics/send";
-import { SendEngagementOnFirstAppOpenScreen } from "../SendEngagementOnFirstAppOpenScreen";
+import { NotificationModalFlow } from "../../../../pushNotifications/analytics";
 
 const testFlow: NotificationModalFlow = "access";
 

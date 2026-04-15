@@ -1,6 +1,5 @@
 import I18n from "i18next";
 import { ReactElement, useCallback, useEffect, useRef } from "react";
-
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
@@ -27,8 +26,8 @@ import {
 } from "../store/reducers/messageGetStatus";
 
 export type MessageRouterScreenRouteParams = {
-  fromNotification: boolean;
   messageId: string;
+  fromNotification: boolean;
 };
 
 type NavigationProps = IOStackNavigationRouteProps<
@@ -149,9 +148,9 @@ export const MessageRouterScreen = (props: NavigationProps): ReactElement => {
   if (isLoading) {
     return (
       <LoadingScreenContent
-        headerVisible
-        subtitle={I18n.t("messageDetails.pleaseWait")}
         title={I18n.t("messageDetails.loadingText")}
+        subtitle={I18n.t("messageDetails.pleaseWait")}
+        headerVisible
       />
     );
   }

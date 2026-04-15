@@ -2,9 +2,9 @@ import {
   ProductCategory,
   ProductCategoryEnum
 } from "../../../../../../definitions/cgn/merchants/ProductCategory";
-import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
-import { Locales, setLocale } from "../../../../../i18n";
+import { setLocale, Locales } from "../../../../../i18n";
 import { orderCategoriesByNameKey } from "../filters";
+import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
 
 const cases: ReadonlyArray<
   [

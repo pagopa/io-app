@@ -1,5 +1,4 @@
 import { SnapshotFrom } from "xstate";
-
 import { IdPayTags } from "../../common/machine/tags";
 import { idPayPaymentMachine } from "./machine";
 
@@ -25,4 +24,4 @@ export const areButtonsDisabledSelector = (snapshot: MachineSnapshot) =>
 
 export const dataEntrySelector = (
   snapshot: MachineSnapshot
-): "manual" | "qr_code" => snapshot.context.data_entry || "qr_code";
+): "qr_code" | "manual" => snapshot.context.data_entry || "qr_code";

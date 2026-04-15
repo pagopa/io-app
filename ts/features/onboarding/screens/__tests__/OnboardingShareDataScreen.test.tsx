@@ -1,12 +1,11 @@
 import { fireEvent } from "@testing-library/react-native";
-import I18n from "i18next";
 import { createStore } from "redux";
-
-import { applicationChangeState } from "../../../../store/actions/application";
-import { appReducer } from "../../../../store/reducers";
+import I18n from "i18next";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { trackMixPanelTrackingInfo } from "../../../settings/common/analytics/mixpanel/mixpanelAnalytics";
 import OnboardingShareDataScreen from "../OnboardingShareDataScreen";
+import { appReducer } from "../../../../store/reducers";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { trackMixPanelTrackingInfo } from "../../../settings/common/analytics/mixpanel/mixpanelAnalytics";
 
 jest.mock("../../../../store/hooks", () => {
   const original = jest.requireActual("../../../../store/hooks");

@@ -1,7 +1,6 @@
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-
 import { useIOStore } from "../../../../../store/hooks.ts";
 import { ItwSessionExpiredError } from "../../../api/client.ts";
 import { itwIsL3EnabledSelector } from "../../../common/store/selectors/preferences.ts";

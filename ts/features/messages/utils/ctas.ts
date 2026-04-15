@@ -1,10 +1,9 @@
 import * as E from "fp-ts/lib/Either";
-import { identity, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { Predicate } from "fp-ts/lib/Predicate";
+import { identity, pipe } from "fp-ts/lib/function";
 import FM from "front-matter";
 import { Linking } from "react-native";
-
 import { MessageBodyMarkdown } from "../../../../definitions/backend/MessageBodyMarkdown";
 import { ServiceId } from "../../../../definitions/backend/ServiceId";
 import { ServiceMetadata } from "../../../../definitions/services/ServiceMetadata";
@@ -12,26 +11,26 @@ import {
   deriveCustomHandledLink,
   isIoInternalLink
 } from "../../../components/ui/Markdown/handlers/link";
+import { trackCTAFrontMatterDecodingError } from "../analytics";
 import { localeFallback, Locales } from "../../../i18n";
 import {
   CTA,
   CTAS,
-  LocalizedCTALocales,
-  LocalizedCTAs
+  LocalizedCTAs,
+  LocalizedCTALocales
 } from "../../../types/LocalizedCTAs";
-import { isTestEnv } from "../../../utils/environment";
 import {
   getInternalRoute,
   handleInternalLink
 } from "../../../utils/internalLink";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
+import { isTestEnv } from "../../../utils/environment";
 import { isFIMSLink } from "../../fims/singleSignOn/utils";
-import { trackCTAFrontMatterDecodingError } from "../analytics";
 
 export type CTAActionType =
-  | "fims"
   | "io_handled_link"
   | "io_internal_link"
+  | "fims"
   | "none";
 
 export const handleCtaAction = (

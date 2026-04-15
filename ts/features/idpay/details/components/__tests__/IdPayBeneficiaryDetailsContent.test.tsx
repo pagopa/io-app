@@ -1,23 +1,22 @@
 import { within } from "@testing-library/react-native";
 import I18n from "i18next";
 import configureMockStore from "redux-mock-store";
-
 import {
   InitiativeDTO,
   InitiativeRewardTypeEnum,
   StatusEnum as InitiativeStatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
-import { RewardValueTypeEnum } from "../../../../../../definitions/idpay/RewardValueDTO";
 import { setLocale } from "../../../../../i18n";
-import { applicationChangeState } from "../../../../../store/actions/application";
+import {
+  IdPayBeneficiaryDetailsContent,
+  BeneficiaryDetailsProps
+} from "../IdPayBeneficiaryDetailsContent";
+import { RewardValueTypeEnum } from "../../../../../../definitions/idpay/RewardValueDTO";
 import { appReducer } from "../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../store/actions/application";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { IDPayDetailsRoutes } from "../../navigation";
-import {
-  BeneficiaryDetailsProps,
-  IdPayBeneficiaryDetailsContent
-} from "../IdPayBeneficiaryDetailsContent";
 
 setLocale("it");
 

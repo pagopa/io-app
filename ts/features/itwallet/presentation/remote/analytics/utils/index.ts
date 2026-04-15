@@ -45,15 +45,15 @@ export const getDismissalContextFromFailure = (
   failureType: RemoteFailureType
 ): ItwScreenFlowContext | undefined => {
   switch (failureType) {
+    case RemoteFailureType.WALLET_INACTIVE:
+      return {
+        screen_name: ITW_REMOTE_ERRORS_EVENTS.ITW_UPGRADE_L3_MANDATORY,
+        itw_flow: "not_available"
+      };
     case RemoteFailureType.MISSING_CREDENTIALS:
       return {
         screen_name:
           ITW_REMOTE_ERRORS_EVENTS.ITW_REMOTE_MANDATORY_CREDENTIAL_MISSING,
-        itw_flow: "not_available"
-      };
-    case RemoteFailureType.WALLET_INACTIVE:
-      return {
-        screen_name: ITW_REMOTE_ERRORS_EVENTS.ITW_UPGRADE_L3_MANDATORY,
         itw_flow: "not_available"
       };
     default:

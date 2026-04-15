@@ -1,5 +1,4 @@
 import { View } from "react-native";
-
 import { MessageFooterProps } from "../MessageFooter";
 
 export const MessageFooter = ({

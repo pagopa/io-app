@@ -1,5 +1,4 @@
 import * as Reselect from "reselect";
-
 import { GlobalState } from "../../../../store/reducers/types";
 import { LandingScreenBannerState } from "../reducer";
 import * as SELECTORS from "../selectors";
@@ -36,7 +35,7 @@ describe("unifiedRenderabilitySelectors", () => {
     jest.resetAllMocks();
   });
 
-  type UnifiedRenderabilityRes = Record<string, boolean>;
+  type UnifiedRenderabilityRes = { [key: string]: boolean };
   type UnifiedRenderability = ReturnType<
     typeof Reselect.createStructuredSelector<
       GlobalState,

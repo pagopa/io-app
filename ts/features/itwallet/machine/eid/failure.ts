@@ -1,7 +1,6 @@
 import { CryptoError } from "@pagopa/io-react-native-crypto";
 import { type IntegrityError } from "@pagopa/io-react-native-integrity";
 import { Errors, Trust } from "@pagopa/io-react-native-wallet";
-
 import {
   isAssertionGenerationError,
   isFederationError,
@@ -17,46 +16,46 @@ const {
 } = Errors;
 
 export enum IssuanceFailureType {
-  CIE_NOT_REGISTERED = "CIE_NOT_REGISTERED",
-  HARDWARE_KEY_INVALID = "HARDWARE_KEY_INVALID",
-  ISSUER_GENERIC = "ISSUER_GENERIC",
-  MRTD_CHALLENGE_INIT_ERROR = "MRTD_CHALLENGE_INIT_ERROR",
-  NOT_MATCHING_IDENTITY = "NOT_MATCHING_IDENTITY",
   UNEXPECTED = "UNEXPECTED",
   UNSUPPORTED_DEVICE = "UNSUPPORTED_DEVICE",
-  UNTRUSTED_ISS = "UNTRUSTED_ISS",
+  HARDWARE_KEY_INVALID = "HARDWARE_KEY_INVALID",
+  NOT_MATCHING_IDENTITY = "NOT_MATCHING_IDENTITY",
+  ISSUER_GENERIC = "ISSUER_GENERIC",
   WALLET_PROVIDER_GENERIC = "WALLET_PROVIDER_GENERIC",
-  WALLET_REVOCATION_ERROR = "WALLET_REVOCATION_ERROR"
+  WALLET_REVOCATION_ERROR = "WALLET_REVOCATION_ERROR",
+  UNTRUSTED_ISS = "UNTRUSTED_ISS",
+  CIE_NOT_REGISTERED = "CIE_NOT_REGISTERED",
+  MRTD_CHALLENGE_INIT_ERROR = "MRTD_CHALLENGE_INIT_ERROR"
 }
+
+/**
+ * Type that maps known reasons with the corresponding failure, in order to avoid unknowns as much as possible.
+ */
+export type ReasonTypeByFailure = {
+  [IssuanceFailureType.WALLET_PROVIDER_GENERIC]: Errors.WalletProviderResponseError;
+  [IssuanceFailureType.ISSUER_GENERIC]: Errors.IssuerResponseError;
+  [IssuanceFailureType.UNSUPPORTED_DEVICE]:
+    | IntegrityError
+    | CryptoError
+    | Errors.WalletProviderResponseError;
+  [IssuanceFailureType.HARDWARE_KEY_INVALID]: IntegrityError;
+  [IssuanceFailureType.NOT_MATCHING_IDENTITY]: string;
+  [IssuanceFailureType.WALLET_REVOCATION_ERROR]: unknown;
+  [IssuanceFailureType.UNTRUSTED_ISS]: Trust.Errors.FederationError;
+  [IssuanceFailureType.CIE_NOT_REGISTERED]: string;
+  [IssuanceFailureType.MRTD_CHALLENGE_INIT_ERROR]: Errors.IssuerResponseError;
+  [IssuanceFailureType.UNEXPECTED]: unknown;
+};
+
+type TypedIssuanceFailures = {
+  [K in IssuanceFailureType]: { type: K; reason: ReasonTypeByFailure[K] };
+};
 
 /*
  * Union type of failures with the reason properly typed.
  */
 export type IssuanceFailure =
   TypedIssuanceFailures[keyof TypedIssuanceFailures];
-
-/**
- * Type that maps known reasons with the corresponding failure, in order to avoid unknowns as much as possible.
- */
-export type ReasonTypeByFailure = {
-  [IssuanceFailureType.CIE_NOT_REGISTERED]: string;
-  [IssuanceFailureType.HARDWARE_KEY_INVALID]: IntegrityError;
-  [IssuanceFailureType.ISSUER_GENERIC]: Errors.IssuerResponseError;
-  [IssuanceFailureType.MRTD_CHALLENGE_INIT_ERROR]: Errors.IssuerResponseError;
-  [IssuanceFailureType.NOT_MATCHING_IDENTITY]: string;
-  [IssuanceFailureType.UNEXPECTED]: unknown;
-  [IssuanceFailureType.UNSUPPORTED_DEVICE]:
-    | CryptoError
-    | Errors.WalletProviderResponseError
-    | IntegrityError;
-  [IssuanceFailureType.UNTRUSTED_ISS]: Trust.Errors.FederationError;
-  [IssuanceFailureType.WALLET_PROVIDER_GENERIC]: Errors.WalletProviderResponseError;
-  [IssuanceFailureType.WALLET_REVOCATION_ERROR]: unknown;
-};
-
-type TypedIssuanceFailures = {
-  [K in IssuanceFailureType]: { reason: ReasonTypeByFailure[K]; type: K };
-};
 
 /**
  * Maps an event dispatched by the eID issuance machine to a failure object.

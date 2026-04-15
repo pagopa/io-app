@@ -1,8 +1,7 @@
-import { decode as decodeJwt } from "@pagopa/io-react-native-jwt";
-import { constNull, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/Option";
 import { StateFrom } from "xstate";
-
+import * as O from "fp-ts/Option";
+import { constNull, pipe } from "fp-ts/lib/function";
+import { decode as decodeJwt } from "@pagopa/io-react-native-jwt";
 import { RequestObject } from "../../../common/utils/itwTypesUtils";
 import { getRemoteCredentialCombination } from "../utils/itwRemotePresentationUtils";
 import { ItwRemoteMachine } from "./machine";

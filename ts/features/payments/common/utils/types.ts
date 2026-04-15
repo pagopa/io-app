@@ -1,14 +1,14 @@
-export type AlertVariant = "error" | "info" | "success" | "warning";
-
-export type ListItemTransactionStatus =
-  | "cancelled"
-  | "failure"
-  | "pending"
-  | "refunded"
-  | "reversal"
-  | "success";
+export type AlertVariant = "error" | "success" | "warning" | "info";
 
 export type PaymentsBackoffRetryValue = {
-  allowedRetryTimestamp?: number;
   retryCount: number;
+  allowedRetryTimestamp?: number;
 };
+
+export type ListItemTransactionStatus =
+  | "success"
+  | "failure"
+  | "pending"
+  | "cancelled"
+  | "refunded"
+  | "reversal";

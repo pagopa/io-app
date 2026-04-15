@@ -1,5 +1,4 @@
 import { ListItemHeader, VStack } from "@pagopa/io-app-design-system";
-
 import { CredentialType } from "../../itwallet/common/utils/itwMocksUtils";
 import { WalletCardsCategoryContainer } from "../../wallet/components/WalletCardsCategoryContainer";
 import { WalletCard, WalletCardCategory } from "../../wallet/types";
@@ -104,9 +103,9 @@ export const DSWallet = () => {
       <VStack space={blockMargin}>
         <DesignSystemSection title="With Documenti su IO">
           <ListItemHeader
-            iconColor="blueIO-500"
-            iconName="legalValue"
             label="Documenti"
+            iconName="legalValue"
+            iconColor="blueIO-500"
           />
           <WalletCardsCategoryContainer cards={cardsByCategory.itw} />
           <ListItemHeader label="Altro" />

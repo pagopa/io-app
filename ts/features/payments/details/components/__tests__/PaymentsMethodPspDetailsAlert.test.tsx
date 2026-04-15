@@ -1,6 +1,5 @@
 import { render } from "@testing-library/react-native";
 import I18n from "i18next";
-
 import { PaymentsMethodPspDetailsAlert } from "../PaymentsMethodPspDetailsAlert";
 
 jest.mock("../../../../../store/hooks", () => ({

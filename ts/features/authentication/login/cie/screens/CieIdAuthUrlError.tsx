@@ -1,15 +1,14 @@
+import { useCallback } from "react";
 import { Route, useRoute } from "@react-navigation/native";
 import i18n from "i18next";
-import { useCallback } from "react";
-
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
-import { setFinishedActiveSessionLoginFlow } from "../../../activeSessionLogin/store/actions";
-import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { trackCieIdNoWhitelistUrl } from "../analytics";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
+import { setFinishedActiveSessionLoginFlow } from "../../../activeSessionLogin/store/actions";
 
 export type UrlNotCompliant = { url: string };
 const CieIdAuthUrlError = () => {
@@ -40,14 +39,14 @@ const CieIdAuthUrlError = () => {
 
   return (
     <OperationResultScreenContent
+      pictogram="attention"
+      title={i18n.t("authentication.cieidUrlErrorScreen.title")}
+      subtitle={i18n.t("authentication.cieidUrlErrorScreen.description")}
       action={{
         label: i18n.t("global.buttons.close"),
         accessibilityLabel: i18n.t("global.buttons.close"),
         onPress: handleClose
       }}
-      pictogram="attention"
-      subtitle={i18n.t("authentication.cieidUrlErrorScreen.description")}
-      title={i18n.t("authentication.cieidUrlErrorScreen.title")}
     />
   );
 };

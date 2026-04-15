@@ -1,7 +1,6 @@
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
-
 import { FeaturedService } from "../../../../../../definitions/services/FeaturedService";
 import { FeaturedServices } from "../../../../../../definitions/services/FeaturedServices";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";

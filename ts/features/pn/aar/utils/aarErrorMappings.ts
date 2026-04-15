@@ -1,6 +1,5 @@
 import _ from "lodash";
 import { ComponentType } from "react";
-
 import { AARProblemJson } from "../../../../../definitions/pn/aar/AARProblemJson";
 import { isTestEnv } from "../../../../utils/environment";
 import {
@@ -71,14 +70,15 @@ export const getAarErrorBehaviour = (
 };
 
 type AarErrorBehaviour = {
-  Component: ComponentType;
   track: (reason: string) => void;
+  Component: ComponentType;
 };
 
-const specificBehavioursByStatus: Record<
-  number,
-  Partial<Record<SendAarErrorCodes, AarErrorBehaviour>>
-> = {
+const specificBehavioursByStatus: {
+  [status: number]: {
+    [errorCode in SendAarErrorCodes]?: AarErrorBehaviour;
+  };
+} = {
   [404]: {
     [sendAARProblemJsonErrorCodes.PN_MANDATE_NOTFOUND]: {
       track: trackSendAarMandateTtlExpiredError,

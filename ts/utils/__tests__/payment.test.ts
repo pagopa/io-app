@@ -1,7 +1,6 @@
-import { Tuple2 } from "@pagopa/ts-commons/lib/tuples";
 import * as O from "fp-ts/lib/Option";
+import { Tuple2 } from "@pagopa/ts-commons/lib/tuples";
 import I18n from "i18next";
-
 import {
   cleanTransactionDescription,
   decodePosteDataMatrix,

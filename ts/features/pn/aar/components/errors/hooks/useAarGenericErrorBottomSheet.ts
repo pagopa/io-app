@@ -1,6 +1,5 @@
 import { Optional } from "@pagopa/io-app-design-system";
 import { isFunction } from "lodash";
-
 import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
 import { sendAarErrorSupportBottomSheetComponent } from "../sendAarErrorSupportBottomSheetComponent";
 import {
@@ -10,9 +9,9 @@ import {
 
 type Props = {
   errorName: Optional<string>;
+  zendeskSecondLevelTag: SendAarZendeskSecondLevelTag;
   onCopyToClipboard?: () => void;
   onStartAssistance?: () => void;
-  zendeskSecondLevelTag: SendAarZendeskSecondLevelTag;
 };
 
 /**

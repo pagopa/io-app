@@ -1,14 +1,13 @@
 // CieConsentDataUsageScreen.test.tsx
 
 import { createStore } from "redux";
-
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import { runConsentScreenSuite } from "../../../../activeSessionLogin/shared/CieContentDataUsageCommonSuite";
 import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
-import * as loginUtils from "../../../../common/utils/login";
 import CieConsentDataUsageScreen from "../CieConsentDataUsageScreen";
+import * as loginUtils from "../../../../common/utils/login";
 
 jest.mock("react-native-webview", () => {
   const { View } = require("react-native");

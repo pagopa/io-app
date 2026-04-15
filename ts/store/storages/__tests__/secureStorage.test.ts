@@ -1,6 +1,5 @@
 import * as SecureStorage from "@pagopa/io-react-native-secure-storage";
 import * as Sentry from "@sentry/react-native";
-
 import createSecureStorage, { isValueNotFoundError } from "../secureStorage";
 
 jest.mock("@pagopa/io-react-native-secure-storage", () => ({

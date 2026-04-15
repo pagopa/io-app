@@ -4,7 +4,6 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
 import { call, fork, put, select } from "typed-redux-saga/macro";
-
 import { CdnBackendStatusClient } from "../api/backendPublic";
 import { contentRepoUrl } from "../config";
 import { backendStatusLoadSuccess } from "../store/actions/backendStatus";

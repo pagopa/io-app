@@ -7,7 +7,6 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { StyleSheet, View } from "react-native";
-
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../store/hooks";
@@ -16,23 +15,23 @@ import { trackShowCredentialsList } from "../../analytics";
 import { l2Credentials } from "../../common/utils/itwCredentialUtils.ts";
 import { itwCredentialsByPresenceSelector } from "../../credentials/store/selectors/index.ts";
 import { ITW_ROUTES } from "../../navigation/routes.ts";
-import { AsyncCredentialsCatalogue } from "../components/AsyncCredentialsCatalogueWrapper.tsx";
 import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingModuleCredentialsList.tsx";
+import { AsyncCredentialsCatalogue } from "../components/AsyncCredentialsCatalogueWrapper.tsx";
 
 const ItwCardOnboardingL2Screen = () => {
   useFocusEffect(trackShowCredentialsList);
 
   return (
     <IOScrollViewWithLargeHeader
-      contextualHelp={emptyContextualHelp}
-      description={I18n.t(
-        "features.itWallet.onboarding.restrictedMode.description"
-      )}
-      faqCategories={["wallet", "wallet_methods"]}
-      headerActionsProp={{ showHelp: true }}
       title={{
         label: I18n.t("features.itWallet.onboarding.restrictedMode.title")
       }}
+      description={I18n.t(
+        "features.itWallet.onboarding.restrictedMode.description"
+      )}
+      contextualHelp={emptyContextualHelp}
+      faqCategories={["wallet", "wallet_methods"]}
+      headerActionsProp={{ showHelp: true }}
     >
       <View style={styles.wrapper}>
         <ItwL2CredentialOnboardingSection />
@@ -59,17 +58,17 @@ const ItwL2CredentialOnboardingSection = () => {
         </AsyncCredentialsCatalogue>
         <Divider />
         <IOButton
-          accessibilityLabel={I18n.t("features.wallet.onboarding.cta.addBonus")}
+          testID="add-bonus-action-testID"
+          variant="link"
           label={I18n.t("features.wallet.onboarding.cta.addBonus")}
-          numberOfLines={2}
+          accessibilityLabel={I18n.t("features.wallet.onboarding.cta.addBonus")}
           onPress={() => {
             navigation.replace(ITW_ROUTES.MAIN, {
               screen: ITW_ROUTES.L3_ONBOARDING,
               params: { page: 1 }
             });
           }}
-          testID="add-bonus-action-testID"
-          variant="link"
+          numberOfLines={2}
         />
       </VStack>
     </View>

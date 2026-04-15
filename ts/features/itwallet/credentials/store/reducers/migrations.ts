@@ -2,15 +2,14 @@ import { SdJwt } from "@pagopa/io-react-native-wallet";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { MigrationManifest, PersistedState } from "redux-persist";
-
 import { extractVerification } from "../../../common/utils/itwCredentialUtils";
 import { IssuerConfiguration } from "../../../common/utils/itwTypesUtils";
 
-type AnyRecord = Record<string, any>;
-
 type MigrationState = PersistedState & Record<string, any>;
 
-export const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 8;
+type AnyRecord = Record<string, any>;
+
+export const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 9;
 
 export const itwCredentialsStateMigrations: MigrationManifest = {
   // Version 0
@@ -73,11 +72,11 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
     const { eid, credentials, ...other } = state;
 
     const credentialsByType = credentials.reduce(
-      (acc: Record<string, AnyRecord>, c: O.Option<AnyRecord>) => ({
+      (acc: { [type: string]: AnyRecord }, c: O.Option<AnyRecord>) => ({
         ...acc,
         ...mapCredential(c)
       }),
-      {} as Record<string, AnyRecord>
+      {} as { [type: string]: AnyRecord }
     );
 
     return {
@@ -233,5 +232,24 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
         ])
       )
     };
-  }
+  },
+
+  // Version 9
+  // Split `credentials` into two fields:
+  // - `legacyCredentials`: full copy of the pre-migration credentials (including
+  //   the `credential` JWT), used as a staging area for the async vault write
+  //   performed by handleItwCredentialsVaultMigrationSaga at boot time.
+  // - `credentials`: same entries but with `credential: undefined`, so Redux is
+  //   JWT-free immediately after upgrade.
+  "9": (state: MigrationState) => ({
+    ...state,
+    legacyCredentials: state.credentials,
+    credentials: Object.values<Record<string, any>>(state.credentials).reduce(
+      (acc, { credential: _, ...c }) => ({
+        ...acc,
+        [c.credentialId]: c
+      }),
+      {}
+    )
+  })
 };

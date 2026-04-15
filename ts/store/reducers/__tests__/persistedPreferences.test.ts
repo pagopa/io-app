@@ -1,21 +1,21 @@
-import {
-  logoutRequest,
-  logoutSuccess,
-  sessionExpired,
-  sessionInvalid
-} from "../../../features/authentication/common/store/actions";
-import { clearCache } from "../../../features/settings/common/store/actions";
-import { applicationChangeState } from "../../actions/application";
-import { differentProfileLoggedIn } from "../../actions/crossSessions";
-import { setMixpanelEnabled } from "../../actions/mixpanel";
-import { preferencesExperimentalDesignEnabled } from "../../actions/persistedPreferences";
+import { GlobalState } from "../types";
 import { appReducer } from "../index";
 import preferencesReducer, {
   initialPreferencesState,
   isExperimentalDesignEnabledSelector,
   isMixpanelEnabled
 } from "../persistedPreferences";
-import { GlobalState } from "../types";
+import { applicationChangeState } from "../../actions/application";
+import { setMixpanelEnabled } from "../../actions/mixpanel";
+import {
+  logoutRequest,
+  logoutSuccess,
+  sessionExpired,
+  sessionInvalid
+} from "../../../features/authentication/common/store/actions";
+import { differentProfileLoggedIn } from "../../actions/crossSessions";
+import { clearCache } from "../../../features/settings/common/store/actions";
+import { preferencesExperimentalDesignEnabled } from "../../actions/persistedPreferences";
 
 describe("persistedPreferences", () => {
   describe("isExperimentalDesignEnabledSelector", () => {

@@ -1,25 +1,24 @@
+import { call, put, select } from "typed-redux-saga/macro";
 import * as E from "fp-ts/lib/Either";
 import { never } from "io-ts";
-import { call, put, select } from "typed-redux-saga/macro";
-
-import { Action } from "../../../../../store/actions/types";
+import {
+  withRefreshApiCall,
+  handleSessionExpiredSaga,
+  ThirdPartyTokenError,
+  withThirdPartyRefreshApiCall,
+  utilsExport
+} from "../utils";
+import {
+  refreshSessionToken,
+  savePendingAction
+} from "../../store/actions/tokenRefreshActions";
 import {
   checkCurrentSession,
   logoutRequest,
   sessionExpired
 } from "../../../common/store/actions";
-import {
-  refreshSessionToken,
-  savePendingAction
-} from "../../store/actions/tokenRefreshActions";
 import { isFastLoginEnabledSelector } from "../../store/selectors";
-import {
-  handleSessionExpiredSaga,
-  ThirdPartyTokenError,
-  utilsExport,
-  withRefreshApiCall,
-  withThirdPartyRefreshApiCall
-} from "../utils";
+import { Action } from "../../../../../store/actions/types";
 
 const successResponse = E.right({ status: 200 });
 const unauthorizedResponse = E.right({ status: 401 });

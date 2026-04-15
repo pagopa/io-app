@@ -1,15 +1,14 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { getNetworkError } from "../../../../utils/errors";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
 import * as analytics from "../analytics";
 import useReceiptFailureSupportModal from "../hooks/useReceiptFailureSupportModal";
 import { walletReceiptPotSelector } from "../store/selectors";
 import { mapDownloadReceiptErrorToOutcomeProps } from "../utils";
+import { getNetworkError } from "../../../../utils/errors";
 
 const ReceiptDownloadErrorScreen = () => {
   const transactionReceiptPot = useIOSelector(walletReceiptPotSelector);

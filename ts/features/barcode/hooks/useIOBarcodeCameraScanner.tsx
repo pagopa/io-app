@@ -1,9 +1,9 @@
 import { IOColors, LoadingSpinner } from "@pagopa/io-app-design-system";
+import * as R from "fp-ts/ReadonlyRecord";
 import * as A from "fp-ts/lib/Array";
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as R from "fp-ts/ReadonlyRecord";
+import { pipe } from "fp-ts/lib/function";
 import {
   ReactNode,
   useCallback,
@@ -21,11 +21,7 @@ import {
   useCameraDevice,
   useCodeScanner
 } from "react-native-vision-camera";
-
-import { useIOStore } from "../../../store/hooks";
 import { AnimatedCameraMarker } from "../components/AnimatedCameraMarker";
-import { decodeIOBarcode } from "../types/decoders";
-import { BarcodeFailure } from "../types/failure";
 import {
   BarcodeFormat,
   IOBarcode,
@@ -33,8 +29,13 @@ import {
   IOBarcodeOrigin,
   IOBarcodeType
 } from "../types/IOBarcode";
+import { decodeIOBarcode } from "../types/decoders";
+import { BarcodeFailure } from "../types/failure";
+import { useIOStore } from "../../../store/hooks";
 
-type IOBarcodeFormatsType = Record<IOBarcodeFormat, BarcodeFormat>;
+type IOBarcodeFormatsType = {
+  [K in IOBarcodeFormat]: BarcodeFormat;
+};
 
 /**
  * Maps internal formats to external library formats
@@ -43,6 +44,41 @@ type IOBarcodeFormatsType = Record<IOBarcodeFormat, BarcodeFormat>;
 const IOBarcodeFormats: IOBarcodeFormatsType = {
   DATA_MATRIX: BarcodeFormat.DATA_MATRIX,
   QR_CODE: BarcodeFormat.QR_CODE
+};
+
+/**
+ * {@link useIOBarcodeCameraScanner} configuration
+ */
+export type IOBarcodeCameraScannerConfiguration = {
+  /**
+   * Accepted barcoded formats that can be detected. Leave empty to accept all formats.
+   * If the format is not supported it will return an UNSUPPORTED_FORMAT error
+   */
+  barcodeFormats?: Array<IOBarcodeFormat>;
+  /**
+   * Accepted barcode types that can be detected. Leave empty to accept all types.
+   * If the type is not supported it will return an UNKNOWN_CONTENT error
+   */
+  barcodeTypes?: Array<IOBarcodeType>;
+  /**
+   * Callback called when a barcode is successfully decoded
+   */
+  onBarcodeSuccess: (
+    barcodes: Array<IOBarcode>,
+    origin: IOBarcodeOrigin
+  ) => void;
+  /**
+   * Callback called when a barcode is not successfully decoded
+   */
+  onBarcodeError: (failure: BarcodeFailure, origin: IOBarcodeOrigin) => void;
+  /**
+   * Disables the barcode scanner
+   */
+  isDisabled?: boolean;
+  /**
+   * If true, the component displays a loading indicator and disables all interactions
+   */
+  isLoading?: boolean;
 };
 
 export type IOBarcodeCameraScanner = {
@@ -62,41 +98,6 @@ export type IOBarcodeCameraScanner = {
    * Toggles the torch states between "on" and "off"
    */
   toggleTorch: () => void;
-};
-
-/**
- * {@link useIOBarcodeCameraScanner} configuration
- */
-export type IOBarcodeCameraScannerConfiguration = {
-  /**
-   * Accepted barcoded formats that can be detected. Leave empty to accept all formats.
-   * If the format is not supported it will return an UNSUPPORTED_FORMAT error
-   */
-  barcodeFormats?: Array<IOBarcodeFormat>;
-  /**
-   * Accepted barcode types that can be detected. Leave empty to accept all types.
-   * If the type is not supported it will return an UNKNOWN_CONTENT error
-   */
-  barcodeTypes?: Array<IOBarcodeType>;
-  /**
-   * Disables the barcode scanner
-   */
-  isDisabled?: boolean;
-  /**
-   * If true, the component displays a loading indicator and disables all interactions
-   */
-  isLoading?: boolean;
-  /**
-   * Callback called when a barcode is not successfully decoded
-   */
-  onBarcodeError: (failure: BarcodeFailure, origin: IOBarcodeOrigin) => void;
-  /**
-   * Callback called when a barcode is successfully decoded
-   */
-  onBarcodeSuccess: (
-    barcodes: Array<IOBarcode>,
-    origin: IOBarcodeOrigin
-  ) => void;
 };
 
 /**
@@ -138,7 +139,7 @@ const convertFromIOBarcodeFormat = (format: IOBarcodeFormat): CodeType =>
 export const retrieveNextBarcode = (barcodes: Array<Code>): O.Option<Code> =>
   pipe(
     barcodes,
-    A.reduce({} as Partial<Record<BarcodeFormat, Code>>, (acc, next) =>
+    A.reduce({} as { [key in BarcodeFormat]?: Code }, (acc, next) =>
       pipe(acc, R.upsertAt(next.type.toString(), next))
     ),
     O.of,
@@ -270,11 +271,11 @@ export const useIOBarcodeCameraScanner = ({
     <View style={styles.cameraContainer} testID="BarcodeScannerCameraTestID">
       {device && (
         <Camera
+          style={styles.camera}
+          device={device}
           audio={false}
           codeScanner={codeScanner}
-          device={device}
           isActive={!isDisabled}
-          style={styles.camera}
           torch={isTorchOn ? "on" : "off"}
         />
       )}
@@ -308,7 +309,7 @@ const LoadingMarkerComponent = () => (
       justifyContent: "center"
     }}
   >
-    <LoadingSpinner color="white" size={48} />
+    <LoadingSpinner size={48} color="white" />
   </Animated.View>
 );
 

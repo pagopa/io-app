@@ -1,61 +1,11 @@
 import {
-  CredentialIssuance,
-  CredentialStatus,
-  RemotePresentation,
   SdJwt,
-  WalletInstance
+  WalletInstance,
+  RemotePresentation,
+  CredentialStatus,
+  CredentialIssuance
 } from "@pagopa/io-react-native-wallet";
-
 import { CredentialType } from "./itwMocksUtils.ts";
-
-export const enum CredentialFormat {
-  LEGACY_SD_JWT = "vc+sd-jwt",
-  MDOC = "mso_mdoc",
-  SD_JWT = "dc+sd-jwt"
-}
-
-/**
- * Alias for the AccessToken type
- */
-export type CredentialAccessToken = Awaited<
-  ReturnType<CredentialIssuance.IssuanceApi["authorizeAccess"]>
->["accessToken"];
-
-/**
- * Alias for the IssuerConfiguration type
- */
-export type IssuerConfiguration = CredentialIssuance.IssuerConfig;
-
-export type ItwAuthLevel = "L2" | "L3";
-
-// Combined status of a credential, that includes both the physical and the digital version
-export type ItwCredentialStatus =
-  | "expired"
-  | "expiring"
-  | "invalid"
-  | "unknown"
-  | "valid"
-  | ItwJwtCredentialStatus;
-
-// Digital credential status
-export type ItwJwtCredentialStatus = "jwtExpired" | "jwtExpiring" | "valid";
-
-/**
- * Alias for the SupportedCredentialConfiguration type
- */
-export type MdocSupportedCredentialConfiguration = Extract<
-  IssuerConfiguration["credential_configurations_supported"][string],
-  { format: "mso_mdoc" }
->;
-/**
- * Alias for the ParseCredential type
- */
-export type ParsedCredential = CredentialIssuance.ParsedCredential;
-
-/**
- * Alias for the ParsedStatusAssertion type
- */
-export type ParsedStatusAssertion = CredentialStatus.ParsedStatusAssertion;
 
 /**
  * Alias for RequestObject
@@ -68,14 +18,87 @@ export type RequestObject = RemotePresentation.RequestObject;
 export type RpEntityConfiguration = RemotePresentation.RelyingPartyConfig;
 
 /**
- * Type for a stored credential.
+ * Alias for the IssuerConfiguration type
  */
-export type StoredCredential = {
-  credential: string;
-  credentialId: string;
-  credentialType: string;
+export type IssuerConfiguration = CredentialIssuance.IssuerConfig;
+
+/**
+ * Alias for the SupportedCredentialConfiguration type
+ */
+export type MdocSupportedCredentialConfiguration = Extract<
+  IssuerConfiguration["credential_configurations_supported"][string],
+  { format: "mso_mdoc" }
+>;
+
+/**
+ * Alias for the AccessToken type
+ */
+export type CredentialAccessToken = Awaited<
+  ReturnType<CredentialIssuance.IssuanceApi["authorizeAccess"]>
+>["accessToken"];
+
+/**
+ * Alias for the ParseCredential type
+ */
+export type ParsedCredential = CredentialIssuance.ParsedCredential;
+
+/**
+ * Alias for the ParsedStatusAssertion type
+ */
+export type ParsedStatusAssertion = CredentialStatus.ParsedStatusAssertion;
+/**
+ * Alias for the WalletInstanceStatus type
+ */
+export type WalletInstanceStatus = WalletInstance.WalletInstanceStatus;
+
+/**
+ * Alias for the WalletInstanceRevocationReason type
+ */
+export type WalletInstanceRevocationReason =
+  WalletInstanceStatus["revocation_reason"];
+
+/**
+ * Alias for the Verification type
+ */
+export type Verification = NonNullable<
+  ReturnType<typeof SdJwt.getVerification>
+>;
+
+/**
+ * Slim version of Verification for storage.
+ * Only persists the fields actually used by the app.
+ * The `evidence` field is excluded as it's being dropped in spec v1.3.3.
+ */
+export type StoredVerification = Pick<
+  Verification,
+  "trust_framework" | "assurance_level"
+>;
+
+export type StoredStatusAssertion =
+  | {
+      credentialStatus: "valid";
+      statusAssertion: string;
+      parsedStatusAssertion: ParsedStatusAssertion;
+    }
+  | {
+      credentialStatus: "invalid" | "unknown";
+      // Error code that might contain more details on the invalid status, provided by the issuer
+      errorCode?: string;
+    };
+
+/**
+ * Credential's metadata for UI rendering and management.
+ * Represents the type for the stored credentials in the wallet.
+ * Does not include the actual credential cryptographic material.
+ */
+export type CredentialMetadata = {
+  keyTag: string;
   format: string;
+  parsedCredential: ParsedCredential;
+  credentialType: string;
+  credentialId: string;
   issuerConf: IssuerConfiguration;
+  storedStatusAssertion?: StoredStatusAssertion;
   /**
    * The SD-JWT issuance and expiration dates in ISO format.
    * These might be different from the underlying document's dates.
@@ -85,57 +108,51 @@ export type StoredCredential = {
     expiration: string;
     issuedAt?: string;
   };
-  keyTag: string;
-  parsedCredential: ParsedCredential;
   spec_version: string;
-  storedStatusAssertion?: StoredStatusAssertion;
   verification?: StoredVerification;
 };
 
-export type StoredStatusAssertion =
-  | {
-      credentialStatus: "invalid" | "unknown";
-      // Error code that might contain more details on the invalid status, provided by the issuer
-      errorCode?: string;
-    }
-  | {
-      credentialStatus: "valid";
-      parsedStatusAssertion: ParsedStatusAssertion;
-      statusAssertion: string;
-    };
-
 /**
- * Slim version of Verification for storage.
- * Only persists the fields actually used by the app.
- * The `evidence` field is excluded as it's being dropped in spec v1.3.3.
+ * Credentials's metadata along with the cryptographic material.
+ * Represents the type for the output of the credential issuance process before it is stored.
+ * Conveniently splitted in two parts for easier handling and storage optimization.
  */
-export type StoredVerification = Pick<
-  Verification,
-  "assurance_level" | "trust_framework"
->;
-/**
- * Alias for the Verification type
- */
-export type Verification = NonNullable<
-  ReturnType<typeof SdJwt.getVerification>
->;
+export type CredentialBundle = {
+  /**
+   * The credential's cryptographic material in SD-JWT/MDOC format.
+   */
+  credential: string;
 
-export type WalletInstanceAttestations = {
-  [CredentialFormat.MDOC]?: string;
-  [CredentialFormat.SD_JWT]?: string;
-  jwt: string;
+  /**
+   * The credential's metadata for UI rendering and management.
+   */
+  metadata: CredentialMetadata;
 };
 
-/**
- * Alias for the WalletInstanceRevocationReason type
- */
-export type WalletInstanceRevocationReason =
-  WalletInstanceStatus["revocation_reason"];
+// Digital credential status
+export type ItwJwtCredentialStatus = "valid" | "jwtExpired" | "jwtExpiring";
+// Combined status of a credential, that includes both the physical and the digital version
+export type ItwCredentialStatus =
+  | "unknown"
+  | "valid"
+  | "invalid"
+  | "expiring"
+  | "expired"
+  | ItwJwtCredentialStatus;
 
-/**
- * Alias for the WalletInstanceStatus type
- */
-export type WalletInstanceStatus = WalletInstance.WalletInstanceStatus;
+export type ItwAuthLevel = "L2" | "L3";
+
+export const enum CredentialFormat {
+  MDOC = "mso_mdoc",
+  SD_JWT = "dc+sd-jwt",
+  LEGACY_SD_JWT = "vc+sd-jwt"
+}
+
+export type WalletInstanceAttestations = {
+  jwt: string;
+  [CredentialFormat.SD_JWT]?: string;
+  [CredentialFormat.MDOC]?: string;
+};
 
 // A predefined list of credential types that are potentially multi-level.
 const MULTI_LEVEL_CREDENTIAL_TYPES = [
@@ -153,7 +170,7 @@ const MULTI_LEVEL_CREDENTIAL_TYPES = [
  * @returns `true` if the credential is multi-level, `false` otherwise.
  */
 export const isMultiLevelCredential = (
-  credential: StoredCredential
+  credential: CredentialMetadata
 ): boolean => {
   const { credentialType, parsedCredential } = credential;
   const isMultiLevel = MULTI_LEVEL_CREDENTIAL_TYPES.includes(

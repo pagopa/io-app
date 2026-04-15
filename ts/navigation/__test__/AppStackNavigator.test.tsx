@@ -1,17 +1,16 @@
-import { NavigationContainer, NavigationState } from "@react-navigation/native";
 import { render } from "@testing-library/react-native";
+import { NavigationContainer, NavigationState } from "@react-navigation/native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-
-import { AUTHENTICATION_ROUTES } from "../../features/authentication/common/navigation/routes";
-import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
 import { applicationChangeState } from "../../store/actions/application";
 import { appReducer } from "../../store/reducers";
-import { StartupStatusEnum } from "../../store/reducers/startup";
 import { GlobalState } from "../../store/reducers/types";
 import { AppStackNavigator, isMainNavigatorReady } from "../AppStackNavigator";
+import { StartupStatusEnum } from "../../store/reducers/startup";
+import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
 import ROUTES from "../routes";
+import { AUTHENTICATION_ROUTES } from "../../features/authentication/common/navigation/routes";
 
 // Mock Redux Hooks
 jest.mock("../../store/hooks", () => ({

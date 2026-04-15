@@ -1,10 +1,9 @@
+import * as E from "fp-ts/lib/Either";
+import * as t from "io-ts";
 import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { BasicResponseType } from "@pagopa/ts-commons/lib/requests";
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
-import * as t from "io-ts";
 import { call, fork, put } from "typed-redux-saga/macro";
-
+import { pipe } from "fp-ts/lib/function";
 import { VersionInfo } from "../../../../definitions/content/VersionInfo";
 import { ContentClient } from "../../../api/content";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
@@ -20,10 +19,6 @@ const VERSION_INFO_LOAD_INTERVAL = 60 * 60 * 1000;
 
 // retry loading version info every 10 seconds on error
 const VERSION_INFO_RETRY_INTERVAL = 10 * 1000;
-
-export default function* versionInfoSaga(): IterableIterator<ReduxSagaEffect> {
-  yield* fork(versionInfoWatcher);
-}
 
 function* versionInfoWatcher(): Generator<ReduxSagaEffect, void, any> {
   const contentClient = ContentClient();
@@ -62,4 +57,8 @@ function* versionInfoWatcher(): Generator<ReduxSagaEffect, void, any> {
       yield* put(versionInfoLoadFailure(convertUnknownToError(e)));
     }
   }
+}
+
+export default function* versionInfoSaga(): IterableIterator<ReduxSagaEffect> {
+  yield* fork(versionInfoWatcher);
 }

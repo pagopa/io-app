@@ -1,17 +1,18 @@
 import { createSelector, createStructuredSelector } from "reselect";
-
-import { landingScreenBannerOrderSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../store/reducers/types";
 import { renderabilitySelectorsFromBannerMap } from "../utils";
 import {
   LandingScreenBannerId,
   landingScreenBannerMap
 } from "../utils/landingScreenBannerMap";
+import { landingScreenBannerOrderSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 
 export const localBannerVisibilitySelector = (state: GlobalState) =>
   state.features.landingBanners;
 
-type StructuredSelectorOutput = Record<LandingScreenBannerId, boolean>;
+type StructuredSelectorOutput = {
+  [key in LandingScreenBannerId]: boolean;
+};
 
 //    unify them so that we have a single selector,
 //    which returns a map like { bannerId: renderable(T/F) }

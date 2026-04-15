@@ -1,9 +1,6 @@
+import { testSaga } from "redux-saga-test-plan";
 import { HttpClientSuccessResponse } from "@pagopa/io-react-native-http-client";
 import * as LoginUtils from "@pagopa/io-react-native-login-utils";
-import { testSaga } from "redux-saga-test-plan";
-
-import { fimsSignAndRetrieveInAppBrowserUrlAction } from "../../store/actions";
-import { fimsEphemeralSessionOniOSSelector } from "../../store/selectors";
 import {
   computeAndTrackInAppBrowserOpening,
   handleFimsAuthorizationOrImplicitCodeFlow,
@@ -12,11 +9,13 @@ import {
   redirectToRelyingPartyWithAuthorizationCodeFlow,
   RelyingPartyOutput
 } from "../handleFimsAuthorizationOrImplicitCodeFlow";
+import { fimsSignAndRetrieveInAppBrowserUrlAction } from "../../store/actions";
 import {
   computeAndTrackAuthenticationError,
   handleFimsBackNavigation,
   handleFimsResourcesDeallocation
 } from "../sagaUtils";
+import { fimsEphemeralSessionOniOSSelector } from "../../store/selectors";
 
 describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {
   describe("handleFimsAuthorizationOrImplicitCodeFlow", () => {

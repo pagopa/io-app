@@ -1,5 +1,4 @@
 import { View } from "react-native";
-
 import { MessagePaymentBottomSheetProps } from "../MessagePaymentBottomSheet";
 
 export const MessagePaymentBottomSheet = ({

@@ -1,5 +1,4 @@
 import * as mixpanelTrackModule from "../../../../mixpanel";
-import { TimeoutError } from "../../../../utils/errors";
 import {
   getZendeskConfig,
   getZendeskPaymentConfig,
@@ -10,6 +9,7 @@ import {
   zendeskSupportStart
 } from "../../store/actions";
 import trackZendesk from "../index";
+import { TimeoutError } from "../../../../utils/errors";
 
 // Mock the mixpanelTrack function
 jest.mock("../../../../mixpanel", () => ({

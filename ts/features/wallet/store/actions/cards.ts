@@ -1,5 +1,4 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
-
 import { WalletCard, WalletCardCategory, WalletCardType } from "../../types";
 
 export const walletUpsertCard =
@@ -28,10 +27,10 @@ export const walletRestoreCards = createStandardAction("WALLET_RESTORE_CARDS")<
 >();
 
 export type WalletCardsActions =
+  | ActionType<typeof walletUpsertCard>
   | ActionType<typeof walletAddCards>
-  | ActionType<typeof walletHideCards>
   | ActionType<typeof walletRemoveCards>
-  | ActionType<typeof walletRemoveCardsByCategory>
   | ActionType<typeof walletRemoveCardsByType>
-  | ActionType<typeof walletRestoreCards>
-  | ActionType<typeof walletUpsertCard>;
+  | ActionType<typeof walletRemoveCardsByCategory>
+  | ActionType<typeof walletHideCards>
+  | ActionType<typeof walletRestoreCards>;

@@ -1,6 +1,6 @@
+export type ThemeSimpleValue = undefined | number | string;
+
 // A generic recursive type for the theme
 export type Theme = {
-  [key: string]: Theme | ThemeSimpleValue;
+  [key: string]: ThemeSimpleValue | Theme;
 };
-
-export type ThemeSimpleValue = number | string | undefined;

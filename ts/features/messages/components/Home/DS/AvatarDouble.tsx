@@ -1,9 +1,9 @@
 import {
-  hexToRgba,
-  Icon,
   IOColors,
   IOSpacingScale,
   IOVisualCostants,
+  Icon,
+  hexToRgba,
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { useCallback, useRef, useState } from "react";
@@ -14,7 +14,6 @@ import {
   StyleSheet,
   View
 } from "react-native";
-
 import { addCacheTimestampToUri } from "../../../../../utils/image";
 
 type AvatarDoubleProps = {
@@ -119,8 +118,8 @@ export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
       >
         {imageSource === undefined ? (
           <Icon
-            color={theme["icon-decorative"]}
             name="institution"
+            color={theme["icon-decorative"]}
             size={"100%"}
           />
         ) : (
@@ -135,9 +134,9 @@ export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
           >
             <Image
               accessibilityIgnoresInvertColors
-              onError={onError}
               source={imageSource}
               style={styles.avatarImage}
+              onError={onError}
             />
           </View>
         )}
@@ -167,7 +166,7 @@ export const AvatarDouble = ({ backgroundLogoUri }: AvatarDoubleProps) => {
             }
           ]}
         >
-          <Icon color="blueItalia-500" name="productPagoPA" size={20} />
+          <Icon name="productPagoPA" color="blueItalia-500" size={20} />
         </View>
       </View>
     </View>

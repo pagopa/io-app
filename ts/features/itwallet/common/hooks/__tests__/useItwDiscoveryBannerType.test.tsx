@@ -1,11 +1,10 @@
-import { render } from "@testing-library/react-native";
-import { Text } from "react-native";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { appReducer } from "../../../../../store/reducers";
+import { render } from "@testing-library/react-native";
+import { Text } from "react-native";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { appReducer } from "../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../store/actions/application";
 import * as itwPreferencesSelectors from "../../../common/store/selectors/preferences";
 import { useItwDiscoveryBannerType } from "../useItwDiscoveryBannerType";
 

@@ -1,12 +1,11 @@
 import { fireEvent } from "@testing-library/react-native";
-import I18n from "i18next";
 import { createStore } from "redux";
-
-import { applicationChangeState } from "../../../../../../store/actions/application";
+import I18n from "i18next";
 import { appReducer } from "../../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
-import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 import CieUnexpectedErrorScreen from "../../screens/CieUnexpectedErrorScreen";
+import { AUTHENTICATION_ROUTES } from "../../../../common/navigation/routes";
 
 const mockNavigate = jest.fn();
 const mockReset = jest.fn();

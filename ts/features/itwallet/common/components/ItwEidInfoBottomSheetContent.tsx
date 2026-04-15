@@ -6,12 +6,11 @@ import {
   IOButton,
   VStack
 } from "@pagopa/io-app-design-system";
-import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { constNull, pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { Fragment, memo, useEffect } from "react";
 import { View } from "react-native";
-
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -27,7 +26,7 @@ import { trackCredentialDetail } from "../../presentation/details/analytics";
 import { ITW_PRESENTATION_DETAILS_SCREENVIEW_EVENTS } from "../../presentation/details/analytics/enum";
 import { useItwStatusIconColor } from "../hooks/useItwStatusIconColor";
 import { parseClaims, WellKnownClaim } from "../utils/itwClaimsUtils";
-import { StoredCredential } from "../utils/itwTypesUtils";
+import { CredentialMetadata } from "../utils/itwTypesUtils";
 import { ItwCredentialClaim } from "./ItwCredentialClaim";
 import { ItwEidLifecycleAlert } from "./ItwEidLifecycleAlert";
 
@@ -42,7 +41,7 @@ export const ItwEidInfoBottomSheetTitle = ({
 
   return (
     <HStack space={8} style={{ alignItems: "center" }}>
-      <Icon color={iconColor} name="legalValue" />
+      <Icon name="legalValue" color={iconColor} />
       <H4>
         {I18n.t(
           isExpired
@@ -65,7 +64,7 @@ const ItwEidInfoBottomSheetContent = ({
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
-  const Content = ({ credential }: { credential: StoredCredential }) => {
+  const Content = ({ credential }: { credential: CredentialMetadata }) => {
     const claims = parseClaims(credential.parsedCredential, {
       exclude: [WellKnownClaim.unique_id, WellKnownClaim.content]
     });
@@ -112,11 +111,11 @@ const ItwEidInfoBottomSheetContent = ({
           )}
         />
         <IOButton
-          color="danger"
           fullWidth
+          variant="solid"
+          color="danger"
           label={I18n.t("features.itWallet.walletRevocation.cta")}
           onPress={navigateToWalletRevocationScreen}
-          variant="solid"
         />
       </VStack>
     );

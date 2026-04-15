@@ -1,7 +1,6 @@
 import {
   Body,
   BodyMonospace,
-  BodySmall,
   ButtonText,
   Caption,
   Divider,
@@ -11,19 +10,19 @@ import {
   H4,
   H5,
   H6,
-  Hero,
   HStack,
+  Hero,
   IOColors,
   LabelMini,
+  BodySmall,
   MdH1,
   MdH2,
   MdH3,
-  useIOTheme,
   VSpacer,
-  VStack
+  VStack,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import { Alert, View } from "react-native";
-
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const linkOnPress = () => Alert.alert("onPress triggered");
@@ -208,13 +207,13 @@ export const BodySmallRow = () => {
       </HStack>
       <HStack space={typographicStyleMargin} style={{ flexWrap: "wrap" }}>
         <BodySmall weight="Semibold">Body small SB</BodySmall>
-        <BodySmall color={theme.errorText} weight="Semibold">
+        <BodySmall weight="Semibold" color={theme.errorText}>
           Body small SB
         </BodySmall>
         <View
           style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
         >
-          <BodySmall color={"white"} weight="Semibold">
+          <BodySmall weight="Semibold" color={"white"}>
             Body small SB
           </BodySmall>
         </View>
@@ -224,13 +223,13 @@ export const BodySmallRow = () => {
       </HStack>
       <HStack space={typographicStyleMargin} style={{ flexWrap: "wrap" }}>
         <BodySmall weight="Regular">Body small Regular</BodySmall>
-        <BodySmall color={theme.errorText} weight="Regular">
+        <BodySmall weight="Regular" color={theme.errorText}>
           Body small Regular
         </BodySmall>
         <View
           style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
         >
-          <BodySmall color={"white"} weight="Regular">
+          <BodySmall weight="Regular" color={"white"}>
             Body small Regular
           </BodySmall>
         </View>
@@ -258,26 +257,26 @@ export const LabelMiniRow = () => {
       </HStack>
       <HStack space={typographicStyleMargin}>
         <LabelMini weight="Semibold">Label mini SB</LabelMini>
-        <LabelMini color={theme.errorText} weight="Semibold">
+        <LabelMini weight="Semibold" color={theme.errorText}>
           Label mini SB
         </LabelMini>
         <View
           style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
         >
-          <LabelMini color={"white"} weight="Semibold">
+          <LabelMini weight="Semibold" color={"white"}>
             Label mini SB
           </LabelMini>
         </View>
       </HStack>
       <HStack space={typographicStyleMargin} style={{ flexWrap: "wrap" }}>
         <LabelMini weight="Regular">Label mini Regular</LabelMini>
-        <LabelMini color={theme.errorText} weight="Regular">
+        <LabelMini weight="Regular" color={theme.errorText}>
           Label mini Regular
         </LabelMini>
         <View
           style={{ backgroundColor: IOColors[theme["appBackground-accent"]] }}
         >
-          <LabelMini color={"white"} weight="Regular">
+          <LabelMini weight="Regular" color={"white"}>
             Label mini Regular
           </LabelMini>
         </View>

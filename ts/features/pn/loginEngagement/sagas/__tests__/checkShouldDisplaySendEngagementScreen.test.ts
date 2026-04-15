@@ -1,18 +1,17 @@
-import { StackActions } from "@react-navigation/native";
 import { expectSaga } from "redux-saga-test-plan";
 import { select } from "redux-saga/effects";
-
-import NavigationService from "../../../../../navigation/NavigationService";
-import { isPnRemoteEnabledSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
-import { setSecurityAdviceReadyToShow } from "../../../../authentication/fastLogin/store/actions/securityAdviceActions";
-import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
-import PN_ROUTES from "../../../navigation/routes";
-import { isPnServiceEnabled } from "../../../reminderBanner/reducer/bannerDismiss";
-import { hasSendEngagementScreenBeenDismissedSelector } from "../../store/reducers";
+import { StackActions } from "@react-navigation/native";
 import {
   checkShouldDisplaySendEngagementScreen,
   testable
 } from "../checkShouldDisplaySendEngagementScreen";
+import NavigationService from "../../../../../navigation/NavigationService";
+import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
+import PN_ROUTES from "../../../navigation/routes";
+import { hasSendEngagementScreenBeenDismissedSelector } from "../../store/reducers";
+import { isPnRemoteEnabledSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
+import { isPnServiceEnabled } from "../../../reminderBanner/reducer/bannerDismiss";
+import { setSecurityAdviceReadyToShow } from "../../../../authentication/fastLogin/store/actions/securityAdviceActions";
 
 const { handleNavigateToSendEngagementScreen } = testable!;
 

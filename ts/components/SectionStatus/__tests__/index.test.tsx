@@ -3,7 +3,6 @@ import { fireEvent } from "@testing-library/react-native";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import configureMockStore from "redux-mock-store";
-
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { Config } from "../../../../definitions/content/Config";
 import {
@@ -13,7 +12,7 @@ import {
 import { PersistedFeaturesState } from "../../../features/common/store/reducers";
 import { ItWalletState } from "../../../features/itwallet/common/store/reducers";
 import { CredentialType } from "../../../features/itwallet/common/utils/itwMocksUtils";
-import { StoredCredential } from "../../../features/itwallet/common/utils/itwTypesUtils";
+import { CredentialMetadata } from "../../../features/itwallet/common/utils/itwTypesUtils";
 import { ItwCredentialsState } from "../../../features/itwallet/credentials/store/reducers";
 import { setLocale } from "../../../i18n";
 import { SectionStatusKey } from "../../../store/reducers/backendStatus/sectionStatus";
@@ -65,7 +64,8 @@ const mockSectionStatusState = (
     features: {
       itWallet: {
         credentials: {
-          credentials: { [CredentialType.PID]: {} as StoredCredential }
+          credentials: { [CredentialType.PID]: {} as CredentialMetadata },
+          legacyCredentials: {}
         } as ItwCredentialsState,
         issuance: { integrityKeyTag: O.some("key-tag") }
       } as ItWalletState
@@ -187,7 +187,8 @@ describe("Section Status Component should return null", () => {
         features: {
           itWallet: {
             credentials: {
-              credentials: { [CredentialType.PID]: {} as StoredCredential }
+              credentials: { [CredentialType.PID]: {} as CredentialMetadata },
+              legacyCredentials: {}
             } as ItwCredentialsState,
             issuance: { integrityKeyTag: O.some("key-tag") }
           } as ItWalletState

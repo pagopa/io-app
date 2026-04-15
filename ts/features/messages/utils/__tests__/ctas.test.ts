@@ -1,18 +1,14 @@
-import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import * as E from "fp-ts/lib/Either";
-import FM from "front-matter";
+import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { Linking } from "react-native";
-
+import FM from "front-matter";
 import { CreatedMessageWithContent } from "../../../../../definitions/backend/CreatedMessageWithContent";
 import { FiscalCode } from "../../../../../definitions/backend/FiscalCode";
 import { MessageBodyMarkdown } from "../../../../../definitions/backend/MessageBodyMarkdown";
 import { MessageContent } from "../../../../../definitions/backend/MessageContent";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { TimeToLiveSeconds } from "../../../../../definitions/backend/TimeToLiveSeconds";
-import { ServiceMetadata } from "../../../../../definitions/services/ServiceMetadata";
-import { Locales, setLocale } from "../../../../i18n";
+import { setLocale, Locales } from "../../../../i18n";
 import { CTA, CTAS, LocalizedCTAs } from "../../../../types/LocalizedCTAs";
-import * as ANALYTICS from "../../analytics";
 import {
   ctasFromLocalizedCTAs,
   getMessageCTAs,
@@ -23,6 +19,9 @@ import {
   removeCTAsFromMarkdown,
   testable
 } from "../ctas";
+import * as ANALYTICS from "../../analytics";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceMetadata } from "../../../../../definitions/services/ServiceMetadata";
 
 const messageBody = `### this is a message
 

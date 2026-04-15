@@ -1,12 +1,11 @@
 import { createStore } from "redux";
-
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { loadMessageDetails } from "../../../store/actions";
 import { PaymentData, UIMessageDetails } from "../../../types";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MessageDetailsPayment } from "../MessageDetailsPayment";
+import { loadMessageDetails } from "../../../store/actions";
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 
 describe("MessageDetailsPayment", () => {
   it("Should match snapshot for no payment data", () => {

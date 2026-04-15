@@ -1,10 +1,7 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import { act } from "@testing-library/react-native";
 import { createStore, Store } from "redux";
 import configureMockStore from "redux-mock-store";
-
-import { SignatureRequestStatusEnum } from "../../../../../definitions/fci/SignatureRequestStatus";
-import mockedProfile from "../../../../__mocks__/initializedProfile";
+import * as pot from "@pagopa/ts-commons/lib/pot";
+import { act } from "@testing-library/react-native";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
@@ -15,11 +12,13 @@ import {
   fciSignatureRequestFromId,
   fciStartRequest
 } from "../../store/actions";
+import FciRouterScreen from "../FciRouterScreen";
 import {
   mockedError,
   mockSignatureRequestDetailView
 } from "../../types/__mocks__/SignatureRequestDetailView.mock";
-import FciRouterScreen from "../FciRouterScreen";
+import mockedProfile from "../../../../__mocks__/initializedProfile";
+import { SignatureRequestStatusEnum } from "../../../../../definitions/fci/SignatureRequestStatus";
 
 const now = new Date();
 

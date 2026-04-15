@@ -1,18 +1,13 @@
-import * as B from "fp-ts/lib/boolean";
 import {
   constFalse,
   constTrue,
   constUndefined,
   pipe
 } from "fp-ts/lib/function";
+import * as B from "fp-ts/lib/boolean";
 import { getType } from "typesafe-actions";
-
-import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
-import { TagEnum as SENDTagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
 import { ThirdPartyMessagePrecondition } from "../../../../../definitions/backend/ThirdPartyMessagePrecondition";
 import { Action } from "../../../../store/actions/types";
-import { isPnAppVersionSupportedSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { GlobalState } from "../../../../store/reducers/types";
 import {
   errorPreconditionStatusAction,
   idlePreconditionStatusAction,
@@ -22,6 +17,46 @@ import {
   shownPreconditionStatusAction,
   updateRequiredPreconditionStatusAction
 } from "../actions/preconditions";
+import { GlobalState } from "../../../../store/reducers/types";
+import { isPnAppVersionSupportedSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { TagEnum as SENDTagEnum } from "../../../../../definitions/backend/MessageCategoryPN";
+import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
+
+// MPS stands for Message Precondition Status
+type MPSError = {
+  state: "error";
+  messageId: string;
+  categoryTag: MessageCategory["tag"];
+  reason: string;
+};
+type MPSIdle = {
+  state: "idle";
+};
+type MPSLoadingContent = {
+  state: "loadingContent";
+  messageId: string;
+  categoryTag: MessageCategory["tag"];
+  content: ThirdPartyMessagePrecondition;
+};
+type MPSRetrievingData = {
+  state: "retrievingData";
+  messageId: string;
+  categoryTag: MessageCategory["tag"];
+};
+type MPSScheduled = {
+  state: "scheduled";
+  messageId: string;
+  categoryTag: MessageCategory["tag"];
+};
+type MPSShown = {
+  state: "shown";
+  messageId: string;
+  categoryTag: MessageCategory["tag"];
+  content: ThirdPartyMessagePrecondition;
+};
+type MPSUpdateRequired = {
+  state: "updateRequired";
+};
 
 export type MessagePreconditionStatus =
   | MPSError
@@ -31,42 +66,6 @@ export type MessagePreconditionStatus =
   | MPSScheduled
   | MPSShown
   | MPSUpdateRequired;
-// MPS stands for Message Precondition Status
-type MPSError = {
-  categoryTag: MessageCategory["tag"];
-  messageId: string;
-  reason: string;
-  state: "error";
-};
-type MPSIdle = {
-  state: "idle";
-};
-type MPSLoadingContent = {
-  categoryTag: MessageCategory["tag"];
-  content: ThirdPartyMessagePrecondition;
-  messageId: string;
-  state: "loadingContent";
-};
-type MPSRetrievingData = {
-  categoryTag: MessageCategory["tag"];
-  messageId: string;
-  state: "retrievingData";
-};
-type MPSScheduled = {
-  categoryTag: MessageCategory["tag"];
-  messageId: string;
-  state: "scheduled";
-};
-type MPSShown = {
-  categoryTag: MessageCategory["tag"];
-  content: ThirdPartyMessagePrecondition;
-  messageId: string;
-  state: "shown";
-};
-
-type MPSUpdateRequired = {
-  state: "updateRequired";
-};
 
 const INITIAL_STATE: MPSIdle = {
   state: "idle"

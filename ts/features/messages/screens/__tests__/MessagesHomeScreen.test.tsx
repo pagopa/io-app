@@ -1,12 +1,11 @@
 import { createStore } from "redux";
-
-import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
-import { mockAccessibilityInfo } from "../../../../utils/testAccessibility";
+import { applicationChangeState } from "../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import * as engagementHook from "../../../pushNotifications/hooks/useEngagementScreen";
 import { MESSAGES_ROUTES } from "../../navigation/routes";
 import { MessagesHomeScreen } from "../MessagesHomeScreen";
+import * as engagementHook from "../../../pushNotifications/hooks/useEngagementScreen";
+import { mockAccessibilityInfo } from "../../../../utils/testAccessibility";
 
 jest.mock("../../components/Home/PagerViewContainer");
 jest.mock("../../components/Home/Preconditions");

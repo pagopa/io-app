@@ -1,10 +1,9 @@
 import { createStore } from "redux";
-
+import PinScreen from "../PinScreen";
+import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
-import PinScreen from "../PinScreen";
 
 describe("PinScreen", () => {
   it("should render the PinScreen component", () => {

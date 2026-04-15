@@ -2,7 +2,6 @@
  * A reducer to store the organization names and fiscal codes
  */
 import { getType } from "typesafe-actions";
-
 import {
   logoutSuccess,
   sessionCorrupted,
@@ -13,8 +12,8 @@ import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 
 export type Organization = {
-  fiscalCode: string;
   name: string;
+  fiscalCode: string;
 };
 
 export type OrganizationsAllState = ReadonlyArray<Organization>;
@@ -47,8 +46,8 @@ const reducer = (
       }
       return state;
     case getType(logoutSuccess):
-    case getType(sessionCorrupted):
     case getType(sessionExpired):
+    case getType(sessionCorrupted):
       return INITIAL_STATE;
 
     default:

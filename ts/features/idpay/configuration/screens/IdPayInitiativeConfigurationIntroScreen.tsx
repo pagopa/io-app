@@ -1,17 +1,16 @@
 import {
   BodySmall,
   H6,
-  Icon,
   IOColors,
   IOIcons,
-  useIOTheme,
-  VSpacer
+  Icon,
+  VSpacer,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
-import I18n from "i18next";
 import { useCallback } from "react";
 import { View } from "react-native";
-
+import I18n from "i18next";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp";
@@ -56,6 +55,16 @@ export const IdPayInitiativeConfigurationIntroScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
+      contextualHelp={emptyContextualHelp}
+      headerActionsProp={{
+        showHelp: true
+      }}
+      title={{
+        label: I18n.t("idpay.configuration.intro.title"),
+        section: I18n.t("idpay.configuration.headerTitle")
+      }}
+      description={I18n.t("idpay.configuration.intro.body")}
+      includeContentMargins
       actions={{
         type: "SingleButton",
         primary: {
@@ -63,34 +72,24 @@ export const IdPayInitiativeConfigurationIntroScreen = () => {
           onPress: handleContinuePress
         }
       }}
-      contextualHelp={emptyContextualHelp}
-      description={I18n.t("idpay.configuration.intro.body")}
-      headerActionsProp={{
-        showHelp: true
-      }}
-      includeContentMargins
-      title={{
-        label: I18n.t("idpay.configuration.intro.title"),
-        section: I18n.t("idpay.configuration.headerTitle")
-      }}
     >
       <LoadingSpinnerOverlay isLoading={isLoading}>
         <H6>{I18n.t("idpay.configuration.intro.requiredData.title")}</H6>
         <VSpacer size={8} />
         <RequiredDataItem
           icon="creditCard"
+          title={I18n.t("idpay.configuration.intro.requiredData.ibanTitle")}
           subTitle={I18n.t(
             "idpay.configuration.intro.requiredData.ibanSubtitle"
           )}
-          title={I18n.t("idpay.configuration.intro.requiredData.ibanTitle")}
         />
         <RequiredDataItem
           icon="institution"
-          subTitle={I18n.t(
-            "idpay.configuration.intro.requiredData.instrumentSubtitle"
-          )}
           title={I18n.t(
             "idpay.configuration.intro.requiredData.instrumentTitle"
+          )}
+          subTitle={I18n.t(
+            "idpay.configuration.intro.requiredData.instrumentSubtitle"
           )}
         />
       </LoadingSpinnerOverlay>
@@ -100,8 +99,8 @@ export const IdPayInitiativeConfigurationIntroScreen = () => {
 
 type RequiredDataItemProps = {
   icon?: IOIcons;
-  subTitle: string;
   title: string;
+  subTitle: string;
 };
 
 const RequiredDataItem = (props: RequiredDataItemProps) => {
@@ -119,9 +118,9 @@ const RequiredDataItem = (props: RequiredDataItemProps) => {
       {!!props.icon && (
         <View style={{ marginEnd: 16 }}>
           <Icon
-            color={theme["interactiveElem-default"]}
             name={props.icon}
             size={24}
+            color={theme["interactiveElem-default"]}
           />
         </View>
       )}

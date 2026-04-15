@@ -1,6 +1,5 @@
 import { act, fireEvent, waitFor } from "@testing-library/react-native";
 import { createStore } from "redux";
-
 import { applicationChangeState } from "../../../../../store/actions/application";
 import * as USEIO_HOOKS from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
@@ -56,8 +55,8 @@ jest.mock("@react-navigation/native", () => {
 });
 const mockBottomSheet = (_props: {
   citizenName: string;
-  onIdentificationCancel?: () => void;
   onIdentificationSuccess?: () => void;
+  onIdentificationCancel?: () => void;
 }) => ({
   bottomSheet: <></>,
   present: mockPresent,

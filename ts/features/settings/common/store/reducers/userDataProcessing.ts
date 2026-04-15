@@ -1,11 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-
 import { UserDataProcessing } from "../../../../../../definitions/backend/UserDataProcessing";
 import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/backend/UserDataProcessingChoice";
-import { Action } from "../../../../../store/actions/types";
 import { computedProp } from "../../../../../types/utils";
 import { clearCache } from "../actions";
+import { Action } from "../../../../../store/actions/types";
 import {
   deleteUserDataProcessing,
   loadUserDataProcessing,
@@ -16,7 +15,7 @@ import {
 
 export type UserDataProcessingState = {
   [key in keyof typeof UserDataProcessingChoiceEnum]: pot.Pot<
-    undefined | UserDataProcessing,
+    UserDataProcessing | undefined,
     Error
   >;
 };
@@ -33,33 +32,6 @@ const userDataProcessingReducer = (
   action: Action
 ): UserDataProcessingState => {
   switch (action.type) {
-    case getType(clearCache):
-      return INITIAL_STATE;
-    case getType(deleteUserDataProcessing.failure):
-    // falls through
-    case getType(loadUserDataProcessing.failure):
-    case getType(upsertUserDataProcessing.failure):
-      return {
-        ...state,
-        ...computedProp(
-          action.payload.choice,
-          pot.toError({ ...state[action.payload.choice] }, action.payload.error)
-        )
-      };
-    case getType(deleteUserDataProcessing.request):
-    // falls through
-    case getType(upsertUserDataProcessing.request): {
-      const maybeValue = state[action.payload];
-      const prevValue = pot.isSome(maybeValue) ? maybeValue.value : undefined;
-
-      return {
-        ...state,
-        ...computedProp(
-          action.payload,
-          pot.toUpdating(state[action.payload], prevValue)
-        )
-      };
-    }
     case getType(loadUserDataProcessing.request): {
       return {
         ...state,
@@ -72,6 +44,43 @@ const userDataProcessingReducer = (
         ...computedProp(action.payload.choice, pot.some(action.payload.value))
       };
     }
+
+    case getType(deleteUserDataProcessing.failure):
+    case getType(upsertUserDataProcessing.failure):
+    case getType(loadUserDataProcessing.failure):
+      return {
+        ...state,
+        ...computedProp(
+          action.payload.choice,
+          pot.toError({ ...state[action.payload.choice] }, action.payload.error)
+        )
+      };
+
+    case getType(deleteUserDataProcessing.request):
+    case getType(upsertUserDataProcessing.request): {
+      const maybeValue = state[action.payload];
+      const prevValue = pot.isSome(maybeValue) ? maybeValue.value : undefined;
+
+      return {
+        ...state,
+        ...computedProp(
+          action.payload,
+          pot.toUpdating(state[action.payload], prevValue)
+        )
+      };
+    }
+    case getType(upsertUserDataProcessing.success): {
+      return {
+        ...state,
+        ...computedProp(action.payload.choice, pot.some(action.payload))
+      };
+    }
+    case getType(resetUserDataProcessingRequest): {
+      return {
+        ...state,
+        ...computedProp(action.payload, pot.none)
+      };
+    }
     case getType(resetDeleteUserDataProcessing): {
       const maybeValue = state[UserDataProcessingChoiceEnum.DELETE];
       const prevValue = pot.isSome(maybeValue) ? maybeValue.value : undefined;
@@ -81,18 +90,8 @@ const userDataProcessingReducer = (
         [UserDataProcessingChoiceEnum.DELETE]: pot.some(prevValue)
       };
     }
-    case getType(resetUserDataProcessingRequest): {
-      return {
-        ...state,
-        ...computedProp(action.payload, pot.none)
-      };
-    }
-    case getType(upsertUserDataProcessing.success): {
-      return {
-        ...state,
-        ...computedProp(action.payload.choice, pot.some(action.payload))
-      };
-    }
+    case getType(clearCache):
+      return INITIAL_STATE;
 
     default:
       return state;

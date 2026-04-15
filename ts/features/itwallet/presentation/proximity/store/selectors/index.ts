@@ -1,18 +1,17 @@
 import { createSelector } from "reselect";
-
 import { getCredentialStatus } from "../../../../common/utils/itwCredentialStatusUtils";
-import {
-  CredentialFormat,
-  ItwJwtCredentialStatus,
-  MdocSupportedCredentialConfiguration,
-  StoredCredential
-} from "../../../../common/utils/itwTypesUtils";
 import {
   itwCredentialsEidStatusSelector,
   makeSelectAllCredentials
 } from "../../../../credentials/store/selectors";
+import {
+  CredentialFormat,
+  CredentialMetadata,
+  ItwJwtCredentialStatus,
+  MdocSupportedCredentialConfiguration
+} from "../../../../common/utils/itwTypesUtils";
 
-type PresentableCredentialsByDocType = Record<string, StoredCredential>;
+type PresentableCredentialsByDocType = Record<string, CredentialMetadata>;
 
 /**
  * Returns the credentials object from the itw credentials state.
@@ -34,8 +33,8 @@ const itwCredentialsAsMdocSelector = makeSelectAllCredentials(
  */
 export const itwPresentableCredentialsByDocTypeSelector = createSelector(
   itwCredentialsAsMdocSelector,
-  (credentials): Record<string, StoredCredential> =>
-    Object.values(credentials).reduce<Record<string, StoredCredential>>(
+  (credentials): Record<string, CredentialMetadata> =>
+    Object.values(credentials).reduce<Record<string, CredentialMetadata>>(
       (acc, credential) => {
         const { credentialId, issuerConf } = credential;
 
@@ -55,7 +54,7 @@ export const itwPresentableCredentialsByDocTypeSelector = createSelector(
 /**
  * Checks if a given credential is expired based on its status.
  */
-const isExpiredPresentableCredential = (credential: StoredCredential) => {
+const isExpiredPresentableCredential = (credential: CredentialMetadata) => {
   const status = getCredentialStatus(credential);
   return status === "expired" || status === "jwtExpired";
 };

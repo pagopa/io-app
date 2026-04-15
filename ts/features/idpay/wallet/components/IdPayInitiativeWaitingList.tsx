@@ -1,33 +1,32 @@
+import { FlatList } from "react-native";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   Divider,
   ListItemHeader,
   ListItemInfo,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
 import { useState } from "react";
-import { FlatList } from "react-native";
-
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { idPayInitiativeWaitingListGet } from "../store/actions";
+import { idPayInitiativeWaitingListSelector } from "../store/reducers";
 import {
   StatusEnum as InitiativeOnboardingStatus,
   UserOnboardingStatusDTO
 } from "../../../../../definitions/idpay/UserOnboardingStatusDTO";
 import IOMarkdown from "../../../../components/IOMarkdown";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { isAndroid } from "../../../../utils/platform";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { trackIDPayOnWaitingListInfoButtonTap } from "../analytics";
-import { idPayInitiativeWaitingListGet } from "../store/actions";
-import { idPayInitiativeWaitingListSelector } from "../store/reducers";
 
 export const IdPayInitiativeWaitingList = () => {
   const dispatch = useIODispatch();
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);
   const [selectedInitiative, setSelectedInitiative] = useState<
-    undefined | UserOnboardingStatusDTO
+    UserOnboardingStatusDTO | undefined
   >();
 
   const { bottomSheet, present } = useIOBottomSheetModal({
@@ -85,11 +84,14 @@ export const IdPayInitiativeWaitingList = () => {
   return (
     <>
       <FlatList
+        ListHeaderComponent={renderListHeaderComponent}
         data={initiativeWaitingList}
         ItemSeparatorComponent={() => <Divider />}
-        ListHeaderComponent={renderListHeaderComponent}
         renderItem={({ item }) => (
           <ListItemInfo
+            icon="hourglass"
+            topElement={getInitiativeStatusBadge(item.status)}
+            value={item.initiativeName}
             endElement={
               item.status !== InitiativeOnboardingStatus.ON_WAITING_LIST
                 ? undefined
@@ -105,9 +107,6 @@ export const IdPayInitiativeWaitingList = () => {
                     }
                   }
             }
-            icon="hourglass"
-            topElement={getInitiativeStatusBadge(item.status)}
-            value={item.initiativeName}
           />
         )}
       />
@@ -120,6 +119,16 @@ const getInitiativeStatusBadge = (
   initiativeStatus: InitiativeOnboardingStatus
 ): ListItemInfo["topElement"] | undefined => {
   switch (initiativeStatus) {
+    case InitiativeOnboardingStatus.ON_WAITING_LIST:
+      return {
+        type: "badge",
+        componentProps: {
+          variant: "default",
+          text: I18n.t(
+            "idpay.wallet.initiativeOnboardedStatus.ON_WAITING_LIST.label"
+          )
+        }
+      };
     case InitiativeOnboardingStatus.ON_EVALUATION: {
       return {
         type: "badge",
@@ -131,16 +140,6 @@ const getInitiativeStatusBadge = (
         }
       };
     }
-    case InitiativeOnboardingStatus.ON_WAITING_LIST:
-      return {
-        type: "badge",
-        componentProps: {
-          variant: "default",
-          text: I18n.t(
-            "idpay.wallet.initiativeOnboardedStatus.ON_WAITING_LIST.label"
-          )
-        }
-      };
     default: {
       return undefined;
     }

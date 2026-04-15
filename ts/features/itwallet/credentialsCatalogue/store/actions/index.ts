@@ -1,5 +1,4 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
-
 import { NetworkError } from "../../../../../utils/errors";
 import { DigitalCredentialsCatalogue } from "../../../common/utils/itwCredentialsCatalogueUtils";
 

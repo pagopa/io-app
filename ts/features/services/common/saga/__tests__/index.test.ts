@@ -1,17 +1,16 @@
 import { testSaga } from "redux-saga-test-plan";
-
 import { watchServicesSaga } from "..";
 import { BackendClient } from "../../../../../api/backend";
+import { createServicesClient, ServicesClient } from "../../api/servicesClient";
 import { apiUrlPrefix } from "../../../../../config";
 import { watchServicesDetailsSaga } from "../../../details/saga";
-import { loadServicePreference } from "../../../details/store/actions/preference";
-import { watchFavouriteServicesSaga } from "../../../favouriteServices/saga";
 import { watchHomeSaga } from "../../../home/saga";
 import { watchInstitutionSaga } from "../../../institution/saga";
 import { watchSearchSaga } from "../../../search/saga";
-import { createServicesClient, ServicesClient } from "../../api/servicesClient";
-import { isFavouriteServicesEnabledSelector } from "../../store/selectors/remoteConfig";
+import { loadServicePreference } from "../../../details/store/actions/preference";
+import { watchFavouriteServicesSaga } from "../../../favouriteServices/saga";
 import { specialServicePreferencesSaga } from "../specialServicePreferencesSaga";
+import { isFavouriteServicesEnabledSelector } from "../../store/selectors/remoteConfig";
 
 describe("index", () => {
   describe("watchServicesSaga", () => {

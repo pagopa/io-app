@@ -1,12 +1,11 @@
 import * as O from "fp-ts/lib/Option";
-
 import {
   addEvery,
   capitalize,
-  capitalizeTextName,
-  formatBytesWithUnit,
   isStringNullyOrEmpty,
-  maybeNotNullyString
+  maybeNotNullyString,
+  formatBytesWithUnit,
+  capitalizeTextName
 } from "../strings";
 
 describe("capitalize", () => {
@@ -40,15 +39,15 @@ describe("isStringNullyOrEmpty", () => {
     expect(isStringNullyOrEmpty("hello")).toBeFalsy();
   });
 
-  it("should return true for a whitespace-only string", () => {
+  it("should return true", () => {
     expect(isStringNullyOrEmpty("    ")).toBeTruthy();
   });
 
-  it("should return true for an empty string", () => {
+  it("should return true", () => {
     expect(isStringNullyOrEmpty("")).toBeTruthy();
   });
 
-  it("should return true for null", () => {
+  it("should return true", () => {
     expect(isStringNullyOrEmpty(null)).toBeTruthy();
   });
 });
@@ -62,15 +61,15 @@ describe("maybeNotNullyString", () => {
     expect(maybeNotNullyString("hello")).toEqual(O.some("hello"));
   });
 
-  it("should return none for a whitespace-only string", () => {
+  it("should return none", () => {
     expect(maybeNotNullyString("    ")).toEqual(O.none);
   });
 
-  it("should return none for an empty string", () => {
+  it("should return none", () => {
     expect(maybeNotNullyString("")).toEqual(O.none);
   });
 
-  it("should return none for null", () => {
+  it("should return none", () => {
     expect(maybeNotNullyString(null)).toEqual(O.none);
   });
 });
@@ -106,7 +105,7 @@ describe("formatBytesWithUnit", () => {
     expect(formatBytesWithUnit(1345001000200123)).toEqual("1.3 TB");
   });
 
-  it("should format bytes with the correct unit (B) when input is zero", () => {
+  it("should format bytes with the correct unit (B)", () => {
     expect(formatBytesWithUnit(0)).toEqual("0 B");
   });
 

@@ -1,32 +1,31 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-import * as O from "fp-ts/lib/Option";
-import I18n from "i18next";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import { expectSaga, testSaga } from "redux-saga-test-plan";
-import * as matchers from "redux-saga-test-plan/matchers";
 import { Effect } from "redux-saga/effects";
+import * as matchers from "redux-saga-test-plan/matchers";
 import { call, take } from "typed-redux-saga/macro";
-
+import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
+import {
+  handleDownloadAttachment,
+  testable
+} from "../handleDownloadAttachment";
+import {
+  cancelPreviousAttachmentDownload,
+  downloadAttachment
+} from "../../store/actions";
+import { mockPdfAttachment } from "../../__mocks__/attachment";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
-import { getKeyInfo } from "../../../lollipop/saga";
 import {
   lollipopKeyTagSelector,
   lollipopPublicKeySelector
 } from "../../../lollipop/store/reducers/lollipop";
 import { KeyInfo } from "../../../lollipop/utils/crypto";
 import { downloadAarAttachmentSaga } from "../../../pn/aar/saga/downloadAarAttachmentSaga";
-import { mockPdfAttachment } from "../../__mocks__/attachment";
-import * as analytics from "../../analytics";
-import {
-  cancelPreviousAttachmentDownload,
-  downloadAttachment
-} from "../../store/actions";
 import { thirdPartyMessageSelector } from "../../store/reducers/thirdPartyById";
-import {
-  handleDownloadAttachment,
-  testable
-} from "../handleDownloadAttachment";
+import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
+import { getKeyInfo } from "../../../lollipop/saga";
+import * as analytics from "../../analytics";
 
 const messageId = "01JTT75QYSHWBTNTFM3CZZ17SH";
 const savePath = "/tmp/attachment.pdf";

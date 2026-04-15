@@ -1,11 +1,11 @@
-import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
-import { MessageAttachment } from "../../messages/components/MessageAttachment/MessageAttachment";
 import { PnParamsList } from "../navigation/params";
+import { MessageAttachment } from "../../messages/components/MessageAttachment/MessageAttachment";
+import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 
 export type MessageAttachmentScreenRouteParams = Readonly<{
-  attachmentId: string;
   messageId: string;
+  attachmentId: string;
 }>;
 
 type MessageAttachmentScreenProps = IOStackNavigationRouteProps<

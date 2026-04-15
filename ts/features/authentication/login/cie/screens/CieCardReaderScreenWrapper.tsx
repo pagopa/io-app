@@ -7,7 +7,6 @@
  */
 import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import CieCardReaderScreen from "./CieCardReaderScreen";
@@ -25,9 +24,9 @@ export const CieCardReaderScreenWrapper = () => {
   return (
     <CieCardReaderScreen
       blueColorName={IOColors[theme["interactiveElem-default"]]}
-      headerHeight={0}
       navigation={navigation}
       route={route}
+      headerHeight={0}
     />
   );
 };

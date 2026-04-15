@@ -1,9 +1,9 @@
 import { useState } from "react";
 
 type ConfirmationChecks = {
-  areFulfilled: boolean;
-  setValue: (atIndex: number, value: boolean) => void;
   values: ReadonlyArray<boolean>;
+  setValue: (atIndex: number, value: boolean) => void;
+  areFulfilled: boolean;
 };
 
 /**

@@ -1,5 +1,4 @@
 import { PublicKey } from "@pagopa/io-react-native-crypto";
-
 import { verifyLollipopSamlRequestTask } from "../login";
 
 const jwkPublicKey: PublicKey = {

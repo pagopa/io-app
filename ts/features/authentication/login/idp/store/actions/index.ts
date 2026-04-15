@@ -1,6 +1,5 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ActionType, createStandardAction } from "typesafe-actions";
-
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { ErrorType, NativeLoginRequestInfo } from "../types";
 
 export const setNativeLoginRequestInfo = createStandardAction(
@@ -18,8 +17,8 @@ export const setStandardLoginInLoadingState = createStandardAction(
 export const resetSpidLoginState = createStandardAction("RESET_LOGIN_STATE")();
 
 export type SpidConfigActions =
-  | ActionType<typeof incrementNativeLoginNativeAttempts>
-  | ActionType<typeof resetSpidLoginState>
   | ActionType<typeof setNativeLoginRequestInfo>
+  | ActionType<typeof incrementNativeLoginNativeAttempts>
+  | ActionType<typeof setStandardLoginRequestState>
   | ActionType<typeof setStandardLoginInLoadingState>
-  | ActionType<typeof setStandardLoginRequestState>;
+  | ActionType<typeof resetSpidLoginState>;

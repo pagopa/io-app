@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 
 /**

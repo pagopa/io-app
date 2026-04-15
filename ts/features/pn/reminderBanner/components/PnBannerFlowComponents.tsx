@@ -5,9 +5,8 @@ import {
   H6,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { Dimensions, Image, View } from "react-native";
-
+import I18n from "i18next";
 import landingHeroImage from "../../../../../img/features/pn/activationLandingHero.png";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import {
@@ -23,39 +22,39 @@ import { openWebUrl } from "../../../../utils/url";
 import LoadingComponent from "../../../fci/components/LoadingComponent";
 import { sendBannerMixpanelEvents } from "../../analytics/activationReminderBanner";
 import {
-  pnBannerFlowStateEnum,
-  PnBannerFlowStateKey
+  PnBannerFlowStateKey,
+  pnBannerFlowStateEnum
 } from "../screens/PnReminderBannerFlow";
 
 // ---------------------------- COMPONENT TYPES ---------------------------
 
+type SuccessFlowStateKeys = Extract<
+  PnBannerFlowStateKey,
+  "SUCCESS_ACTIVATION" | "ALREADY_ACTIVE"
+>;
+type SuccessFlowStateProps = { flowState: SuccessFlowStateKeys };
+
 type ErrorFlowStateKeys =
-  | "MISSING-SID"
   | Extract<
       PnBannerFlowStateKey,
       "FAILURE_ACTIVATION" | "FAILURE_DETAILS_FETCH"
-    >;
+    >
+  | "MISSING-SID";
 type ErrorFlowStateProps = {
   flowState: ErrorFlowStateKeys;
 };
-
 type LoadingStateProps = {
   loadingState: "LOADING-ACTIVATION" | "LOADING-DATA";
 };
-type SuccessFlowStateKeys = Extract<
-  PnBannerFlowStateKey,
-  "ALREADY_ACTIVE" | "SUCCESS_ACTIVATION"
->;
-type SuccessFlowStateProps = { flowState: SuccessFlowStateKeys };
 
 // ---------------------------- COMPONENTS ---------------------------
 
 const LoadingScreen = ({ loadingState }: LoadingStateProps) => (
   <LoadingComponent
+    testID={`loading-${loadingState}`}
     captionTitle={I18n.t(
       `features.pn.reminderBanner.activationFlow.${loadingState}.title`
     )}
-    testID={`loading-${loadingState}`}
   />
 );
 
@@ -72,19 +71,19 @@ const SuccessScreen = ({ flowState }: SuccessFlowStateProps) => {
 
   return (
     <OperationResultScreenContent
+      testID={`success-${flowState}`}
+      title={I18n.t(
+        `features.pn.reminderBanner.activationFlow.${flowState}.title`
+      )}
+      subtitle={I18n.t(
+        `features.pn.reminderBanner.activationFlow.${flowState}.body`
+      )}
       action={{
         testID: "success-cta",
         label: I18n.t("global.buttons.close"),
         onPress: () => navigation.navigate(...navigateHomeParams)
       }}
       pictogram="success"
-      subtitle={I18n.t(
-        `features.pn.reminderBanner.activationFlow.${flowState}.body`
-      )}
-      testID={`success-${flowState}`}
-      title={I18n.t(
-        `features.pn.reminderBanner.activationFlow.${flowState}.title`
-      )}
     />
   );
 };
@@ -96,19 +95,19 @@ const ErrorScreen = ({ flowState }: ErrorFlowStateProps) => {
   });
   return (
     <OperationResultScreenContent
+      testID={`error-${flowState}`}
+      title={I18n.t(
+        `features.pn.reminderBanner.activationFlow.${flowState}.title`
+      )}
+      subtitle={I18n.t(
+        `features.pn.reminderBanner.activationFlow.${flowState}.body`
+      )}
       action={{
         testID: "error-cta",
         label: I18n.t("global.buttons.close"),
         onPress: () => navigation.navigate(...navigateHomeParams)
       }}
       pictogram="umbrella"
-      subtitle={I18n.t(
-        `features.pn.reminderBanner.activationFlow.${flowState}.body`
-      )}
-      testID={`error-${flowState}`}
-      title={I18n.t(
-        `features.pn.reminderBanner.activationFlow.${flowState}.title`
-      )}
     />
   );
 };
@@ -125,18 +124,18 @@ const CtaScreen = ({
   return (
     <IOScrollView
       actions={scrollViewAction}
-      contentContainerStyle={{ paddingHorizontal: 0 }}
       testID={`cta-${pnBannerFlowStateEnum.WAITING_USER_INPUT}`}
+      contentContainerStyle={{ paddingHorizontal: 0 }}
     >
       <Image
-        accessibilityIgnoresInvertColors={true}
-        resizeMethod="scale"
-        resizeMode="contain"
         source={landingHeroImage}
         style={{
           width: screenWidth,
           height: screenWidth * (3 / 4)
         }}
+        resizeMethod="scale"
+        accessibilityIgnoresInvertColors={true}
+        resizeMode="contain"
       />
       <VSpacer size={24} />
       <ContentWrapper>
@@ -179,14 +178,14 @@ const Paragraph4 = () => {
         </Body>
         {I18n.t(`${ctaScreenBaseI18nKey}.paragraph4.readAndUnderstood`)}
         <Body
+          testID="privacy-url"
           asLink={true}
           onPress={() => openWebUrl(privacyUrl)}
-          testID="privacy-url"
         >
           {I18n.t(`${ctaScreenBaseI18nKey}.paragraph4.privacyInfo`)}
         </Body>
         {I18n.t(`${ctaScreenBaseI18nKey}.paragraph4.andThe`)}
-        <Body asLink={true} onPress={() => openWebUrl(tosUrl)} testID="tos-url">
+        <Body testID="tos-url" asLink={true} onPress={() => openWebUrl(tosUrl)}>
           {I18n.t(`${ctaScreenBaseI18nKey}.paragraph4.TOS`)}
         </Body>
       </Body>

@@ -1,12 +1,12 @@
-import { RouteProp, useRoute } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { RouteProp, useRoute } from "@react-navigation/native";
 
 import { NetworkError } from "../../../../utils/errors";
+import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
 import { WalletPaymentFailureDetail } from "../components/WalletPaymentFailureDetail";
 import { PaymentsCheckoutParamsList } from "../navigation/params";
 import { FaultCodeCategoryEnum } from "../types/PaymentSlowdownErrorProblemJson";
-import { WalletPaymentFailure } from "../types/WalletPaymentFailure";
 
 const GENERIC_ERROR_FAULT_CODE_DETAIL = "PAYMENT_SLOWDOWN_ERROR";
 

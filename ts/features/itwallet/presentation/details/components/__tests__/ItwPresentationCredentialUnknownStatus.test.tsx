@@ -2,10 +2,9 @@ import { act, fireEvent, render } from "@testing-library/react-native";
 import { PropsWithChildren, ReactElement } from "react";
 import { Provider } from "react-redux";
 import { createStore } from "redux";
-
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
-import { StoredCredential } from "../../../../common/utils/itwTypesUtils";
+import { CredentialMetadata } from "../../../../common/utils/itwTypesUtils";
 import { itwCredentialIssuanceMachine } from "../../../../machine/credential/machine";
 import { ItwCredentialIssuanceMachineContext } from "../../../../machine/credential/provider";
 import { ItwPresentationCredentialUnknownStatus } from "../ItwPresentationCredentialUnknownStatus";
@@ -25,7 +24,7 @@ describe("ItwPresentationCredentialUnknownStatus", () => {
     storedStatusAssertion: {
       credentialStatus: "unknown"
     }
-  } as StoredCredential;
+  } as CredentialMetadata;
 
   it("should match snapshot when the status assertion can be retried", () => {
     const component = renderComponent(
@@ -52,7 +51,7 @@ describe("ItwPresentationCredentialUnknownStatus", () => {
             {
               credentialType: "mDL",
               storedStatusAssertion: { credentialStatus: "unknown" }
-            } as StoredCredential
+            } as CredentialMetadata
           }
         />
       );

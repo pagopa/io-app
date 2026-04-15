@@ -1,6 +1,6 @@
+import { StyleSheet, View } from "react-native";
 import { IOColors } from "@pagopa/io-app-design-system";
 import { ReactNode } from "react";
-import { StyleSheet, View } from "react-native";
 
 const styles = StyleSheet.create({
   container: {

@@ -1,28 +1,27 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import * as E from "fp-ts/lib/Either";
 import { SagaIterator } from "redux-saga";
 import {
   call,
-  cancelled,
-  delay,
   put,
   race,
-  select,
-  take
+  cancelled,
+  take,
+  delay,
+  select
 } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-
-import { FilledDocumentDetailView } from "../../../../../definitions/fci/FilledDocumentDetailView";
-import { SagaCallReturnType } from "../../../../types/utils";
-import { getNetworkError } from "../../../../utils/errors";
+import * as E from "fp-ts/lib/Either";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
-import { FciClient } from "../../api/backendFci";
 import {
   fciLoadQtspFilledDocument,
   fciPollFilledDocument
 } from "../../store/actions";
+import { getNetworkError } from "../../../../utils/errors";
+import { FilledDocumentDetailView } from "../../../../../definitions/fci/FilledDocumentDetailView";
 import { fciPollFilledDocumentReadySelector } from "../../store/reducers/fciPollFilledDocument";
+import { FciClient } from "../../api/backendFci";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
+import { SagaCallReturnType } from "../../../../types/utils";
 
 // Polling frequency timeout
 const POLLING_FREQ_TIMEOUT = 2000 as Millisecond;
@@ -30,16 +29,6 @@ const POLLING_FREQ_TIMEOUT = 2000 as Millisecond;
 // Polling time threshold (10 seconds)
 // If the polling time exceeds this threshold, the polling is stopped
 const POLLING_TIME_THRESHOLD = (10 * 2000) as Millisecond;
-
-export function* filledDocumentPollWatcher(
-  filledDocumentUrl: FilledDocumentDetailView["filled_document_url"]
-) {
-  yield* race({
-    task: call(watchFciPollSaga, filledDocumentUrl),
-    cancel: take(fciPollFilledDocument.cancel),
-    delay: delay(POLLING_TIME_THRESHOLD)
-  });
-}
 
 /*
  * A saga to post filled Document.
@@ -133,4 +122,14 @@ export function* watchFciPollSaga(
       }
     }
   }
+}
+
+export function* filledDocumentPollWatcher(
+  filledDocumentUrl: FilledDocumentDetailView["filled_document_url"]
+) {
+  yield* race({
+    task: call(watchFciPollSaga, filledDocumentUrl),
+    cancel: take(fciPollFilledDocument.cancel),
+    delay: delay(POLLING_TIME_THRESHOLD)
+  });
 }

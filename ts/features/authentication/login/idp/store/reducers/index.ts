@@ -1,15 +1,14 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Action } from "../../../../../../store/actions/types";
+import { StandardLoginRequestInfo, NativeLoginRequestInfo } from "../types";
 import {
   incrementNativeLoginNativeAttempts,
-  resetSpidLoginState,
+  setStandardLoginRequestState,
   setNativeLoginRequestInfo,
   setStandardLoginInLoadingState,
-  setStandardLoginRequestState
+  resetSpidLoginState
 } from "../actions";
-import { NativeLoginRequestInfo, StandardLoginRequestInfo } from "../types";
 
 export type SpidLoginState = {
   nativeLogin: {
@@ -39,19 +38,6 @@ export const spidLoginReducer = (
   action: Action
 ): SpidLoginState => {
   switch (action.type) {
-    case getType(incrementNativeLoginNativeAttempts):
-      return {
-        ...state,
-        nativeLogin: {
-          ...state.nativeLogin,
-          requestInfo: {
-            requestState: "LOADING",
-            nativeAttempts: state.nativeLogin.requestInfo.nativeAttempts + 1
-          }
-        }
-      };
-    case getType(resetSpidLoginState):
-      return spidLoginInitialState;
     case getType(setNativeLoginRequestInfo):
       return {
         ...state,
@@ -60,14 +46,14 @@ export const spidLoginReducer = (
           requestInfo: action.payload
         }
       };
-    case getType(setStandardLoginInLoadingState):
+    case getType(incrementNativeLoginNativeAttempts):
       return {
         ...state,
-        standardLogin: {
-          ...state.standardLogin,
+        nativeLogin: {
+          ...state.nativeLogin,
           requestInfo: {
-            ...state.standardLogin.requestInfo,
-            requestState: pot.noneLoading
+            requestState: "LOADING",
+            nativeAttempts: state.nativeLogin.requestInfo.nativeAttempts + 1
           }
         }
       };
@@ -82,6 +68,19 @@ export const spidLoginReducer = (
           }
         }
       };
+    case getType(setStandardLoginInLoadingState):
+      return {
+        ...state,
+        standardLogin: {
+          ...state.standardLogin,
+          requestInfo: {
+            ...state.standardLogin.requestInfo,
+            requestState: pot.noneLoading
+          }
+        }
+      };
+    case getType(resetSpidLoginState):
+      return spidLoginInitialState;
     default:
       return state;
   }

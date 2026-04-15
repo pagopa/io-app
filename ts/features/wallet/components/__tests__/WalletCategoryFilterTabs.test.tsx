@@ -1,7 +1,6 @@
 import { fireEvent } from "@testing-library/react-native";
 import { AnyAction, Dispatch } from "redux";
 import configureMockStore from "redux-mock-store";
-
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import * as hooks from "../../../../store/hooks";

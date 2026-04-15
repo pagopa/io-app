@@ -1,12 +1,11 @@
 import { createStore } from "redux";
-
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
-import { mockAccessibilityInfo } from "../../../../utils/testAccessibility";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import { MessageFooter } from "../MessageFooter";
 import * as standardPayments from "../../../messages/store/reducers/payments";
 import * as payments from "../../store/reducers/payments";
-import { MessageFooter } from "../MessageFooter";
+import { mockAccessibilityInfo } from "../../../../utils/testAccessibility";
 
 describe("MessageFooter", () => {
   beforeEach(() => {
@@ -61,12 +60,12 @@ const renderScreen = (
   return renderScreenWithNavigationStoreContext(
     () => (
       <MessageFooter
-        isCancelled={isCancelled}
-        maxVisiblePaymentCount={maxVisiblePaymentCount}
         messageId={messageId}
-        onMeasure={() => void 0}
+        maxVisiblePaymentCount={maxVisiblePaymentCount}
+        isCancelled={isCancelled}
         payments={undefined}
         presentPaymentsBottomSheetRef={mockRef}
+        onMeasure={() => void 0}
         sendOpeningSource={"aar"}
         sendUserType={"recipient"}
       />

@@ -1,6 +1,5 @@
 import { SagaIterator } from "redux-saga";
 import { put, select, takeLatest } from "typed-redux-saga/macro";
-
 import {
   fimsAcceptConsentsAction,
   fimsCancelOrAbortAction,
@@ -9,13 +8,13 @@ import {
 } from "../store/actions";
 import {
   fimsCtaTextSelector,
-  fimsEphemeralSessionOniOSSelector,
-  fimsRelyingPartyUrlIfFastLoginSelector
+  fimsRelyingPartyUrlIfFastLoginSelector,
+  fimsEphemeralSessionOniOSSelector
 } from "../store/selectors";
 import { handleFimsAbortOrCancel } from "./handleFimsAbortOrCancel";
-import { handleFimsAcceptedConsents } from "./handleFIMSAcceptedConsents";
-import { handleFimsAuthorizationOrImplicitCodeFlow } from "./handleFimsAuthorizationOrImplicitCodeFlow";
 import { handleFimsGetConsentsList } from "./handleFimsGetConsentsList";
+import { handleFimsAuthorizationOrImplicitCodeFlow } from "./handleFimsAuthorizationOrImplicitCodeFlow";
+import { handleFimsAcceptedConsents } from "./handleFIMSAcceptedConsents";
 
 export function* watchFimsSSOSaga(): SagaIterator {
   yield* takeLatest(

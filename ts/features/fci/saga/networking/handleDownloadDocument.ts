@@ -1,13 +1,12 @@
-import ReactNativeBlobUtil from "react-native-blob-util";
-import RNFS from "react-native-fs";
-import { call, cancelled, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-
+import RNFS from "react-native-fs";
+import ReactNativeBlobUtil from "react-native-blob-util";
+import { call, cancelled, put } from "typed-redux-saga/macro";
 import { fetchTimeout } from "../../../../config";
 import { getNetworkError } from "../../../../utils/errors";
-import { trackFciDocOpeningFailure } from "../../analytics";
-import { getFileNameFromUrl } from "../../components/DocumentViewer";
 import { fciDownloadPreview } from "../../store/actions";
+import { getFileNameFromUrl } from "../../components/DocumentViewer";
+import { trackFciDocOpeningFailure } from "../../analytics";
 
 export const FciDownloadPreviewDirectoryPath =
   RNFS.CachesDirectoryPath + "/fci";

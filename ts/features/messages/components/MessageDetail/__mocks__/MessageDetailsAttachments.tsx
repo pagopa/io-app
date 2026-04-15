@@ -1,5 +1,4 @@
 import { View } from "react-native";
-
 import { MessageDetailsAttachmentsProps } from "../MessageDetailsAttachments";
 
 export const MessageDetailsAttachments = ({

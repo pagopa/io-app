@@ -12,7 +12,6 @@ import { ViewProps } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import WebView, { WebViewMessageEvent } from "react-native-webview";
 import { WebViewSource } from "react-native-webview/lib/WebViewTypes";
-
 import { NOTIFY_LINK_CLICK_SCRIPT } from "../../../../../components/ui/Markdown/script";
 import { WebViewMessage } from "../../../../../components/ui/Markdown/types";
 import { FlowType } from "../../../../../utils/analytics";
@@ -24,14 +23,14 @@ import {
 import TosWebviewErrorComponent from "../../components/TosWebviewErrorComponent";
 import { trackToSWebViewError, trackToSWebViewErrorRetry } from "../analytics";
 
-type Props = Pick<ViewProps, "testID"> & {
-  flow: FlowType;
+type Props = {
+  webViewSource: WebViewSource;
   handleLoadEnd: () => void;
   handleReload: () => void;
   onAcceptTos?: () => void;
   shouldRenderFooter?: boolean;
-  webViewSource: WebViewSource;
-};
+  flow: FlowType;
+} & Pick<ViewProps, "testID">;
 
 const TosWebviewComponent: FunctionComponent<Props> = ({
   handleLoadEnd,
@@ -92,23 +91,25 @@ const TosWebviewComponent: FunctionComponent<Props> = ({
         <WebView
           androidCameraAccessDisabled={true}
           androidMicrophoneAccessDisabled={true}
-          injectedJavaScript={closeInjectedScript(
-            AVOID_ZOOM_JS + NOTIFY_LINK_CLICK_SCRIPT
-          )}
-          onError={handleError}
-          onHttpError={handleError}
-          onLoadEnd={handleLoadEnd}
-          onMessage={handleWebViewMessage}
-          source={webViewSource}
+          textZoom={100}
           style={{
             flex: 1,
             backgroundColor: IOColors[theme["appBackground-primary"]]
           }}
-          textZoom={100}
+          onLoadEnd={handleLoadEnd}
+          onError={handleError}
+          onHttpError={handleError}
+          source={webViewSource}
+          onMessage={handleWebViewMessage}
+          injectedJavaScript={closeInjectedScript(
+            AVOID_ZOOM_JS + NOTIFY_LINK_CLICK_SCRIPT
+          )}
         />
       </SafeAreaView>
       {showFooter && (
         <FooterActions
+          transparent
+          onMeasure={handleFooterActionsMeasurements}
           actions={{
             type: "SingleButton",
             primary: {
@@ -117,8 +118,6 @@ const TosWebviewComponent: FunctionComponent<Props> = ({
               testID: "AcceptToSButton"
             }
           }}
-          onMeasure={handleFooterActionsMeasurements}
-          transparent
         />
       )}
     </>

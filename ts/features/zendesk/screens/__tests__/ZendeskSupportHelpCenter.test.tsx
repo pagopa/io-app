@@ -1,13 +1,12 @@
-import { RenderAPI } from "@testing-library/react-native";
 import { createStore, Store } from "redux";
-
-import { isLoading } from "../../../../common/model/RemoteValue";
-import ROUTES from "../../../../navigation/routes";
-import { applicationChangeState } from "../../../../store/actions/application";
+import { RenderAPI } from "@testing-library/react-native";
 import { appReducer } from "../../../../store/reducers";
+import { applicationChangeState } from "../../../../store/actions/application";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import ROUTES from "../../../../navigation/routes";
 import ZendeskSupportHelpCenter from "../ZendeskSupportHelpCenter";
+import { isLoading } from "../../../../common/model/RemoteValue";
 
 jest.useFakeTimers();
 

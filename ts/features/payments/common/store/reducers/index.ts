@@ -1,6 +1,5 @@
 import { combineReducers } from "redux";
 import { PersistPartial } from "redux-persist";
-
 import paymentReducer, {
   PaymentsCheckoutState
 } from "../../../checkout/store/reducers";
@@ -10,16 +9,16 @@ import detailsReducer, {
 import historyReducer, {
   PaymentsHistoryState
 } from "../../../history/store/reducers";
-import homeReducer, { PaymentsHomeState } from "../../../home/store/reducers";
 import onboardingReducer, {
   PaymentsOnboardingState
 } from "../../../onboarding/store/reducers";
-import receiptReducer, {
-  ReceiptTransactionState
-} from "../../../receipts/store/reducers";
+import homeReducer, { PaymentsHomeState } from "../../../home/store/reducers";
 import paymentsWalletReducer, {
   PaymentsWalletState
 } from "../../../wallet/store/reducers";
+import receiptReducer, {
+  ReceiptTransactionState
+} from "../../../receipts/store/reducers";
 import paymentsPagoPaPlatformReducer, {
   PaymentsPagoPaPlatformState
 } from "./pagoPaPlatformReducer";
@@ -28,15 +27,15 @@ import paymentsBackoffRetryReducer, {
 } from "./paymentsBackoffRetryReducer";
 
 export type PaymentsState = {
-  checkout: PaymentsCheckoutState;
+  onboarding: PaymentsOnboardingState;
   details: PaymentsMethodDetailsState & PersistPartial;
+  checkout: PaymentsCheckoutState;
   history: PaymentsHistoryState & PersistPartial;
   home: PaymentsHomeState & PersistPartial;
-  onboarding: PaymentsOnboardingState;
+  wallet: PaymentsWalletState;
+  receipt: ReceiptTransactionState;
   pagoPaPlatform: PaymentsPagoPaPlatformState;
   paymentsBackoffRetry: PaymentsBackoffRetryState;
-  receipt: ReceiptTransactionState;
-  wallet: PaymentsWalletState;
 };
 
 const paymentsReducer = combineReducers({

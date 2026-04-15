@@ -1,34 +1,33 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { readableReport } from "@pagopa/ts-commons/lib/reporters";
-import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-import PushNotificationIOS from "@react-native-community/push-notification-ios";
-import { captureMessage } from "@sentry/react-native";
 import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
+import PushNotificationIOS from "@react-native-community/push-notification-ios";
+import { captureMessage } from "@sentry/react-native";
+import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { Platform } from "react-native";
 import PushNotification, {
   ReceivedNotification
 } from "react-native-push-notification";
-
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { maximumItemsFromAPI, pageSize } from "../../../config";
-import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
-import { Store } from "../../../store/actions/types";
-import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
-import { GlobalState } from "../../../store/reducers/types";
-import { isTestEnv } from "../../../utils/environment";
-import { isLoadingOrUpdating } from "../../../utils/pot";
-import {
-  trackMessageNotificationParsingFailure,
-  trackMessageNotificationTap
-} from "../../messages/analytics";
 import {
   loadPreviousPageMessages,
   reloadAllMessages
 } from "../../messages/store/actions";
-import { isArchivingInProcessingModeSelector } from "../../messages/store/reducers/archiving";
-import { trackNewPushNotificationsTokenGenerated } from "../analytics";
+import {
+  trackMessageNotificationParsingFailure,
+  trackMessageNotificationTap
+} from "../../messages/analytics";
 import { newPushNotificationsToken } from "../store/actions/installation";
 import { updateNotificationsPendingMessage } from "../store/actions/pendingMessage";
+import { isLoadingOrUpdating } from "../../../utils/pot";
+import { isArchivingInProcessingModeSelector } from "../../messages/store/reducers/archiving";
+import { GlobalState } from "../../../store/reducers/types";
+import { trackNewPushNotificationsTokenGenerated } from "../analytics";
+import { isTestEnv } from "../../../utils/environment";
+import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
+import { Store } from "../../../store/actions/types";
+import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
 
 /**
  * Helper type used to validate the notification payload.
@@ -241,7 +240,7 @@ const handleTrackingOfTokenGeneration = (userAnalyticsOptIn: boolean) =>
   );
 
 const handleTrackingOfDecodingFailure = (
-  reason: string | t.Errors,
+  reason: t.Errors | string,
   userAnalyticsOptIn: boolean
 ) =>
   trackMessageNotificationParsingFailure(

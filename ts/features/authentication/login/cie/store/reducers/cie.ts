@@ -3,9 +3,8 @@
  */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-
-import { Action } from "../../../../../../store/actions/types";
 import { cieIsSupported, nfcIsEnabled } from "../actions";
+import { Action } from "../../../../../../store/actions/types";
 
 export type CieState = {
   isCieSupported: pot.Pot<boolean, Error>;
@@ -22,25 +21,25 @@ export function cieReducer(
   action: Action
 ): CieState {
   switch (action.type) {
-    case getType(cieIsSupported.failure):
-      return {
-        ...state,
-        isCieSupported: pot.toError(state.isCieSupported, action.payload)
-      };
     case getType(cieIsSupported.success):
       return {
         ...state,
         isCieSupported: pot.some(action.payload)
       };
-    case getType(nfcIsEnabled.failure):
+    case getType(cieIsSupported.failure):
       return {
         ...state,
-        isNfcEnabled: pot.toError(state.isNfcEnabled, action.payload)
+        isCieSupported: pot.toError(state.isCieSupported, action.payload)
       };
     case getType(nfcIsEnabled.success):
       return {
         ...state,
         isNfcEnabled: pot.some(action.payload)
+      };
+    case getType(nfcIsEnabled.failure):
+      return {
+        ...state,
+        isNfcEnabled: pot.toError(state.isNfcEnabled, action.payload)
       };
 
     default:

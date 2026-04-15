@@ -1,5 +1,4 @@
 import I18n from "i18next";
-
 import BpayLogo from "../../../img/wallet/payment-methods/bpay_logo_full.svg";
 import PaypalLogo from "../../../img/wallet/payment-methods/paypal/paypal_logo_ext.svg";
 import { BankLogoOrSkeleton } from "../../features/payments/common/components/utils/BankLogoOrLoadingSkeleton";
@@ -7,12 +6,12 @@ export type LogoPaymentExtendedProps = {
   dimensions: { height: number; width: number };
 } & (
   | {
-      abiCode: string | undefined;
       icon?: never;
+      abiCode: string | undefined;
       imageA11yLabel?: string;
     }
   | {
-      icon: "bpay" | "payPal";
+      icon: "payPal" | "bpay";
     }
 );
 
@@ -20,20 +19,20 @@ export const LogoPaymentExtended = (props: LogoPaymentExtendedProps) => {
   const { height, width } = props.dimensions;
   if ("icon" in props) {
     switch (props.icon) {
-      case "bpay":
+      case "payPal":
         return (
-          <BpayLogo
-            accessibilityLabel={I18n.t("wallet.onboarding.bancomatPay.name")}
+          <PaypalLogo
             accessible={true}
+            accessibilityLabel={I18n.t("wallet.onboarding.paypal.name")}
             height={height}
             width={width}
           />
         );
-      case "payPal":
+      case "bpay":
         return (
-          <PaypalLogo
-            accessibilityLabel={I18n.t("wallet.onboarding.paypal.name")}
+          <BpayLogo
             accessible={true}
+            accessibilityLabel={I18n.t("wallet.onboarding.bancomatPay.name")}
             height={height}
             width={width}
           />
@@ -43,9 +42,9 @@ export const LogoPaymentExtended = (props: LogoPaymentExtendedProps) => {
 
   return (
     <BankLogoOrSkeleton
-      abiCode={props.abiCode}
-      dimensions={props.dimensions}
       imageA11yLabel={props.imageA11yLabel}
+      dimensions={props.dimensions}
+      abiCode={props.abiCode}
     />
   );
 };

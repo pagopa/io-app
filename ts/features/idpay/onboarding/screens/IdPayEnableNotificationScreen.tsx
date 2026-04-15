@@ -1,14 +1,12 @@
 import { Badge, IOToast, VSpacer } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { useCallback } from "react";
 import { View } from "react-native";
-
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIOSelector } from "../../../../store/hooks";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { areNotificationPermissionsEnabledSelector } from "../../../pushNotifications/store/reducers/environment";
 import { openSystemNotificationSettingsScreen } from "../../../pushNotifications/utils";
 import {
@@ -19,6 +17,7 @@ import {
 } from "../analytics";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
 import { selectInitiative } from "../machine/selectors";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 
 const IdPayEnableNotificationScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
@@ -63,22 +62,6 @@ const IdPayEnableNotificationScreen = () => {
 
   return (
     <OperationResultScreenContent
-      action={{
-        label: I18n.t("idpay.onboarding.enableNotification.action"),
-        onPress: () => {
-          trackIDPayOnboardingNotificationAccepted({
-            initiativeId
-          });
-          openSystemNotificationSettingsScreen();
-        }
-      }}
-      pictogram="activate"
-      secondaryAction={{
-        label: I18n.t("idpay.onboarding.enableNotification.deny"),
-        onPress: handleClosePress
-      }}
-      subtitle={I18n.t("idpay.onboarding.enableNotification.subtitle")}
-      title={I18n.t("idpay.onboarding.enableNotification.title")}
       topElement={
         <View style={{ alignItems: "center" }}>
           <VSpacer size={8} />
@@ -89,6 +72,22 @@ const IdPayEnableNotificationScreen = () => {
           <VSpacer size={8} />
         </View>
       }
+      pictogram="activate"
+      title={I18n.t("idpay.onboarding.enableNotification.title")}
+      subtitle={I18n.t("idpay.onboarding.enableNotification.subtitle")}
+      action={{
+        label: I18n.t("idpay.onboarding.enableNotification.action"),
+        onPress: () => {
+          trackIDPayOnboardingNotificationAccepted({
+            initiativeId
+          });
+          openSystemNotificationSettingsScreen();
+        }
+      }}
+      secondaryAction={{
+        label: I18n.t("idpay.onboarding.enableNotification.deny"),
+        onPress: handleClosePress
+      }}
     />
   );
 };

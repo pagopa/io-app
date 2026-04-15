@@ -1,9 +1,8 @@
-import * as B from "fp-ts/boolean";
-import * as E from "fp-ts/Either";
 import { pipe } from "fp-ts/lib/function";
-import * as T from "io-ts";
 import { ImageURISource, Platform } from "react-native";
-
+import * as B from "fp-ts/boolean";
+import * as T from "io-ts";
+import * as E from "fp-ts/Either";
 import { toAndroidCacheTimestamp } from "./dates";
 
 /**

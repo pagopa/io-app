@@ -6,9 +6,8 @@ import {
   useNavigation,
   useRoute
 } from "@react-navigation/native";
-import I18n from "i18next";
 import { useCallback, useMemo } from "react";
-
+import I18n from "i18next";
 import { InstrumentTypeEnum } from "../../../../../definitions/idpay/InstrumentDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
@@ -21,14 +20,14 @@ import { IdPayCodeRoutes } from "../../code/navigation/routes";
 import { IdPayDiscountInstrumentEnrollmentSwitch } from "../components/IdPayDiscountInstrumentEnrollmentSwitch";
 import { IdPayConfigurationParamsList } from "../navigation/params";
 import {
-  idpayDiscountInitiativeInstrumentsSelector,
   idPayIsLoadingInitiativeInstrumentSelector,
+  idpayDiscountInitiativeInstrumentsSelector,
   isLoadingDiscountInitiativeInstrumentsSelector
 } from "../store";
 import {
-  idpayInitiativeInstrumentDelete,
   idPayInitiativeInstrumentsRefreshStart,
-  idPayInitiativeInstrumentsRefreshStop
+  idPayInitiativeInstrumentsRefreshStop,
+  idpayInitiativeInstrumentDelete
 } from "../store/actions";
 
 export type IdPayDiscountInstrumentsScreenRouteParams = {
@@ -108,7 +107,10 @@ export const IdPayDiscountInstrumentsScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
-      contextualHelp={emptyContextualHelp}
+      includeContentMargins
+      title={{
+        label: I18n.t("idpay.configuration.instruments.paymentMethods.header")
+      }}
       description={I18n.t(
         "idpay.configuration.instruments.paymentMethods.body",
         {
@@ -116,10 +118,7 @@ export const IdPayDiscountInstrumentsScreen = () => {
         }
       )}
       headerActionsProp={{ showHelp: true }}
-      includeContentMargins
-      title={{
-        label: I18n.t("idpay.configuration.instruments.paymentMethods.header")
-      }}
+      contextualHelp={emptyContextualHelp}
     >
       <LoadingSpinnerOverlay
         isLoading={isLoadingInstruments}
@@ -127,10 +126,10 @@ export const IdPayDiscountInstrumentsScreen = () => {
       >
         <IdPayDiscountInstrumentEnrollmentSwitch
           instrumentType={InstrumentTypeEnum.IDPAYCODE}
-          isLoading={pot.isLoading(isLoadingIdPayCodeInstrument)}
-          onPressAction={presentCieBottomSheet}
           onValueChange={handleCieValueChange}
+          onPressAction={presentCieBottomSheet}
           status={idPayCodeInstrument?.status}
+          isLoading={pot.isLoading(isLoadingIdPayCodeInstrument)}
           value={!!idPayCodeInstrument}
         />
         <Divider />

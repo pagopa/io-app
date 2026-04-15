@@ -20,7 +20,6 @@ import {
   View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
 import { useHeaderSecondLevel } from "../../../../../../hooks/useHeaderSecondLevel";
 import { useScreenEndMargin } from "../../../../../../hooks/useScreenEndMargin";
 import { ReadStatusComponent } from "../components/ReadStatusComponent";
@@ -141,27 +140,27 @@ export const CieMrtdScreen = () => {
         </View>
         <View style={styles.inputContainer}>
           <ListItemSwitch
-            disabled={status !== "idle"}
             label="Use base64 encoding"
             onSwitchValueChange={toggleEncodingSwitch}
             value={isBase64Encoding}
+            disabled={status !== "idle"}
           />
           <ListItemHeader label="Insert card CAN" />
           <OTPInput
             accessibilityLabel="CAN text input field"
-            length={CAN_PIN_LENGTH}
-            onValueChange={onCanChanged}
             value={can}
+            onValueChange={onCanChanged}
+            length={CAN_PIN_LENGTH}
           />
         </View>
         <VSpacer size={16} />
         <IOButton
-          disabled={can.length < CAN_PIN_LENGTH}
+          variant="solid"
           label={status === "reading" ? "Stop" : "Start reading"}
+          disabled={can.length < CAN_PIN_LENGTH}
           onPress={() =>
             status === "reading" ? handleStopReading() : handleStartReading()
           }
-          variant="solid"
         />
         <VSpacer size={16} />
       </KeyboardAvoidingView>

@@ -1,14 +1,13 @@
 import * as O from "fp-ts/lib/Option";
 import { createStore } from "redux";
-
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
-import * as device from "../../../../../utils/device";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import PN_ROUTES from "../../../navigation/routes";
-import * as analytics from "../../analytics";
 import { SendQRScanFlowScreen } from "../SendQRScanFlowScreen";
+import PN_ROUTES from "../../../navigation/routes";
+import * as device from "../../../../../utils/device";
+import * as analytics from "../../analytics";
 
 jest.mock("../../components/SendQRScanFlowHandlerComponent");
 

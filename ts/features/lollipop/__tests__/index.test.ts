@@ -1,13 +1,12 @@
+import URLParse from "url-parse";
+import * as TE from "fp-ts/lib/TaskEither";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import * as global from "@pagopa/io-react-native-crypto";
-import * as TE from "fp-ts/lib/TaskEither";
-import URLParse from "url-parse";
-
 import {
-  chainSignPromises,
+  toSignatureComponents,
   getSignAlgorithm,
-  handleRegenerateEphemeralKey,
-  toSignatureComponents
+  chainSignPromises,
+  handleRegenerateEphemeralKey
 } from "..";
 
 jest.mock("react-native-device-info", () => ({

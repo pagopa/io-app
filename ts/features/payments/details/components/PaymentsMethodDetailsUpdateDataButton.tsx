@@ -1,6 +1,5 @@
 import { FooterActions, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-
 import { WalletInfo } from "../../../../../definitions/pagopa/walletv3/WalletInfo";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { isPaymentMethodExpired } from "../../common/utils";
@@ -46,6 +45,7 @@ const PaymentsMethodDetailsUpdateDataButton = ({
       <>
         <VSpacer size={24} />
         <FooterActions
+          fixed
           actions={{
             type: "SingleButton",
             primary: {
@@ -53,7 +53,6 @@ const PaymentsMethodDetailsUpdateDataButton = ({
               onPress: handleUpdatePress
             }
           }}
-          fixed
         />
       </>
     )

@@ -1,19 +1,18 @@
 import { createStackNavigator } from "@react-navigation/stack";
-
-import { isGestureEnabled } from "../../../../utils/navigation";
-import { IdPayFeatureFlagGuard } from "../../common/components/IdPayFeatureFlagGuard";
 import {
   IdPayBeneficiaryDetailsScreen,
   IdPayBeneficiaryDetailsScreenParams
 } from "../screens/IdPayBeneficiaryDetailsScreen";
+import { isGestureEnabled } from "../../../../utils/navigation";
 import {
   IdPayInitiativeDetailsScreen,
   IdPayInitiativeDetailsScreenParams
 } from "../screens/IdPayInitiativeDetailsScreen";
 import {
-  IdPayOperationsListScreen,
-  IdPayOperationsListScreenParams
+  IdPayOperationsListScreenParams,
+  IdPayOperationsListScreen
 } from "../screens/IdPayOperationsListScreen";
+import { IdPayFeatureFlagGuard } from "../../common/components/IdPayFeatureFlagGuard";
 
 export const IDPayDetailsRoutes = {
   IDPAY_DETAILS_MAIN: "IDPAY_DETAILS_MAIN",
@@ -23,9 +22,9 @@ export const IDPayDetailsRoutes = {
 } as const;
 
 export type IDPayDetailsParamsList = {
-  [IDPayDetailsRoutes.IDPAY_DETAILS_BENEFICIARY]: IdPayBeneficiaryDetailsScreenParams;
   [IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING]: IdPayInitiativeDetailsScreenParams;
   [IDPayDetailsRoutes.IDPAY_DETAILS_TIMELINE]: IdPayOperationsListScreenParams;
+  [IDPayDetailsRoutes.IDPAY_DETAILS_BENEFICIARY]: IdPayBeneficiaryDetailsScreenParams;
 };
 
 const Stack = createStackNavigator<IDPayDetailsParamsList>();
@@ -37,16 +36,16 @@ export const IDpayDetailsNavigator = () => (
       screenOptions={{ gestureEnabled: isGestureEnabled }}
     >
       <Stack.Screen
-        component={IdPayInitiativeDetailsScreen}
         name={IDPayDetailsRoutes.IDPAY_DETAILS_MONITORING}
+        component={IdPayInitiativeDetailsScreen}
       />
       <Stack.Screen
-        component={IdPayOperationsListScreen}
         name={IDPayDetailsRoutes.IDPAY_DETAILS_TIMELINE}
+        component={IdPayOperationsListScreen}
       />
       <Stack.Screen
-        component={IdPayBeneficiaryDetailsScreen}
         name={IDPayDetailsRoutes.IDPAY_DETAILS_BENEFICIARY}
+        component={IdPayBeneficiaryDetailsScreen}
       />
     </Stack.Navigator>
   </IdPayFeatureFlagGuard>

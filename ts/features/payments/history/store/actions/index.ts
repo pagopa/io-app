@@ -1,7 +1,6 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
-
-import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { WalletPaymentOutcome } from "../../../checkout/types/PaymentOutcomeEnum";
+import { RptId } from "../../../../../../definitions/pagopa/ecommerce/RptId";
 import { PaymentAnalyticsBrowserType } from "../../../common/types/PaymentAnalytics";
 
 export const storeNewPaymentAttemptAction = createStandardAction(
@@ -25,8 +24,8 @@ export const removeExpiredPaymentsOngoingFailedAction = createStandardAction(
 )<ReadonlyArray<RptId>>();
 
 export type PaymentsHistoryActions =
-  | ActionType<typeof removeExpiredPaymentsOngoingFailedAction>
   | ActionType<typeof storeNewPaymentAttemptAction>
-  | ActionType<typeof storePaymentIsOnboardedAction>
   | ActionType<typeof storePaymentOutcomeToHistory>
-  | ActionType<typeof storePaymentsBrowserTypeAction>;
+  | ActionType<typeof storePaymentsBrowserTypeAction>
+  | ActionType<typeof storePaymentIsOnboardedAction>
+  | ActionType<typeof removeExpiredPaymentsOngoingFailedAction>;

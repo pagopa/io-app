@@ -2,8 +2,8 @@ import { NfcError } from "@pagopa/io-react-native-cie";
 
 // Custom error for webview
 export type WebViewError = {
-  message: string;
   name: "WEBVIEW_ERROR";
+  message: string;
 };
 
 // Utiltiy that verifies if the failure is an NfcError

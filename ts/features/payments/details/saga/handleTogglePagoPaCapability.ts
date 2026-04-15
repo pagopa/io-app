@@ -2,18 +2,17 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import { put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-
 import { WalletApplication } from "../../../../../definitions/pagopa/walletv3/WalletApplication";
 import { WalletApplicationStatusEnum } from "../../../../../definitions/pagopa/walletv3/WalletApplicationStatus";
 import { getGenericError, getNetworkError } from "../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../utils/reporters";
 import { WalletClient } from "../../common/api/client";
-import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
 import {
   paymentsGetMethodDetailsAction,
   paymentsTogglePagoPaCapabilityAction
 } from "../store/actions";
 import { selectPaymentMethodDetails } from "../store/selectors";
+import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSessionToken";
 
 /**
  * Handle the remote call to toggle the Wallet pagopa capability
@@ -86,7 +85,7 @@ export function* handleTogglePagoPaCapability(
 
 const updatePagoPaApplicationStatus = (
   application: WalletApplication
-): undefined | WalletApplicationStatusEnum => {
+): WalletApplicationStatusEnum | undefined => {
   if (application.name === "PAGOPA") {
     return application.status === WalletApplicationStatusEnum.DISABLED
       ? WalletApplicationStatusEnum.ENABLED

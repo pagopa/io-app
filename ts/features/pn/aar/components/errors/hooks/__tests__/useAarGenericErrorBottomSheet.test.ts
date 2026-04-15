@@ -1,11 +1,10 @@
 import { act, render, renderHook } from "@testing-library/react-native";
-
-import * as SendAarErrorSupportBottomSheetComponentModule from "../../sendAarErrorSupportBottomSheetComponent";
-import { useAarGenericErrorBottomSheet } from "../useAarGenericErrorBottomSheet";
 import {
   SendAarZendeskSecondLevelTag,
   useAarStartSendZendeskSupport
 } from "../useAarStartSendZendeskSupport";
+import { useAarGenericErrorBottomSheet } from "../useAarGenericErrorBottomSheet";
+import * as SendAarErrorSupportBottomSheetComponentModule from "../../sendAarErrorSupportBottomSheetComponent";
 
 const errorNames = ["ANY_ERROR", "GENERIC_ERROR", "SOME_ERROR", undefined];
 

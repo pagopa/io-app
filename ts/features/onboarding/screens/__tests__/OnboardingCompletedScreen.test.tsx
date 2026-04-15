@@ -1,18 +1,17 @@
-import { CommonActions, StackActions } from "@react-navigation/native";
-import { fireEvent } from "@testing-library/react-native";
-import I18n from "i18next";
-import configureMockStore from "redux-mock-store";
 import { testSaga } from "redux-saga-test-plan";
-
-import NavigationService from "../../../../navigation/NavigationService";
-import ROUTES from "../../../../navigation/routes";
-import { applicationChangeState } from "../../../../store/actions/application";
+import { fireEvent } from "@testing-library/react-native";
+import configureMockStore from "redux-mock-store";
+import { CommonActions, StackActions } from "@react-navigation/native";
+import I18n from "i18next";
+import { completeOnboardingSaga } from "../../saga/completeOnboardingSaga";
+import OnboardingCompletedScreen from "../OnboardingCompletedScreen";
 import { appReducer } from "../../../../store/reducers";
+import { applicationChangeState } from "../../../../store/actions/application";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { completeOnboardingSaga } from "../../saga/completeOnboardingSaga";
+import ROUTES from "../../../../navigation/routes";
 import { completeOnboarding } from "../../store/actions";
-import OnboardingCompletedScreen from "../OnboardingCompletedScreen";
+import NavigationService from "../../../../navigation/NavigationService";
 
 describe("Given the OnboardingCompletedScreen", () => {
   describe("when the user taps on the continue button", () => {

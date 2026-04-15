@@ -1,11 +1,10 @@
 import MockDate from "mockdate";
-
 import { ItwStoredCredentialsMocks } from "../../../../../common/utils/itwMocksUtils";
-import { StoredCredential } from "../../../../../common/utils/itwTypesUtils";
 import {
   areAllPresentableCredentialsExpired,
   shouldBlockProximityQrCodeSelector
 } from "../index";
+import { CredentialMetadata } from "../../../../../common/utils/itwTypesUtils";
 
 describe("proximity selectors", () => {
   afterEach(() => {
@@ -15,7 +14,7 @@ describe("proximity selectors", () => {
   it("detects when all presentable credentials are expired", () => {
     MockDate.set(new Date(2024, 0, 20));
 
-    const expiredMdl: StoredCredential = {
+    const expiredMdl: CredentialMetadata = {
       ...ItwStoredCredentialsMocks.mdl,
       jwt: {
         expiration: "2024-01-10T00:00:00Z"
@@ -38,7 +37,7 @@ describe("proximity selectors", () => {
   it("does not block when at least one presentable credential is valid", () => {
     MockDate.set(new Date(2024, 0, 20));
 
-    const validMdl: StoredCredential = {
+    const validMdl: CredentialMetadata = {
       ...ItwStoredCredentialsMocks.mdl,
       jwt: {
         expiration: "2025-01-20T00:00:00Z"
@@ -62,7 +61,7 @@ describe("proximity selectors", () => {
   it("blocks when PID is expired and all presentable credentials are expired", () => {
     MockDate.set(new Date(2024, 0, 20));
 
-    const expiredMdl: StoredCredential = {
+    const expiredMdl: CredentialMetadata = {
       ...ItwStoredCredentialsMocks.mdl,
       jwt: {
         expiration: "2024-01-10T00:00:00Z"

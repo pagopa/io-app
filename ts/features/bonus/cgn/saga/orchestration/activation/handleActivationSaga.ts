@@ -3,15 +3,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { call, put, race, take } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
-
 import NavigationService from "../../../../../../navigation/NavigationService";
-import CGN_ROUTES from "../../../navigation/routes";
-import {
-  cgnActivationCancel,
-  cgnActivationStatus
-} from "../../../store/actions/activation";
-import { CgnActivationProgressEnum } from "../../../store/reducers/activation";
-import { cgnActivationSaga } from "../../networking/activation/getBonusActivationSaga";
 import {
   navigateToCgnActivationCompleted,
   navigateToCgnActivationIneligible,
@@ -20,13 +12,20 @@ import {
   navigateToCgnActivationTimeout,
   navigateToCgnAlreadyActive
 } from "../navigation/actions";
+import CGN_ROUTES from "../../../navigation/routes";
+import {
+  cgnActivationCancel,
+  cgnActivationStatus
+} from "../../../store/actions/activation";
+import { CgnActivationProgressEnum } from "../../../store/reducers/activation";
+import { cgnActivationSaga } from "../../networking/activation/getBonusActivationSaga";
 
 const mapEnumToNavigation = new Map<CgnActivationProgressEnum, () => void>([
-  [CgnActivationProgressEnum.EXISTS, navigateToCgnAlreadyActive],
-  [CgnActivationProgressEnum.INELIGIBLE, navigateToCgnActivationIneligible],
-  [CgnActivationProgressEnum.PENDING, navigateToCgnActivationPending],
   [CgnActivationProgressEnum.SUCCESS, navigateToCgnActivationCompleted],
-  [CgnActivationProgressEnum.TIMEOUT, navigateToCgnActivationTimeout]
+  [CgnActivationProgressEnum.PENDING, navigateToCgnActivationPending],
+  [CgnActivationProgressEnum.TIMEOUT, navigateToCgnActivationTimeout],
+  [CgnActivationProgressEnum.INELIGIBLE, navigateToCgnActivationIneligible],
+  [CgnActivationProgressEnum.EXISTS, navigateToCgnAlreadyActive]
 ]);
 
 type CgnActivationType = ReturnType<typeof cgnActivationSaga>;

@@ -7,12 +7,12 @@ import {
   ITW_REMOTE_TECH_EVENTS
 } from "./enum";
 import {
-  ItwL3UpgradeTrigger,
-  ItwRemoteCredentialCombination,
   ItwRemoteDataShare,
   ItwRemoteFailure,
+  ItwRemoteMissingCredential,
   ItwRemoteInvalidCredential,
-  ItwRemoteMissingCredential
+  ItwL3UpgradeTrigger,
+  ItwRemoteCredentialCombination
 } from "./utils/types";
 
 // Screen view events

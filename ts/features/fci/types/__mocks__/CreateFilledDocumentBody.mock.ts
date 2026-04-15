@@ -1,5 +1,4 @@
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-
 import { CreateFilledDocument } from "../../../../../definitions/fci/CreateFilledDocument";
 import { FilledDocumentDetailView } from "../../../../../definitions/fci/FilledDocumentDetailView";
 

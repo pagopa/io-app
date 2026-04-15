@@ -1,29 +1,28 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
-import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { appReducer } from "../../../../../store/reducers";
-import { GlobalState } from "../../../../../store/reducers/types";
 import { mockPdfAttachment } from "../../../__mocks__/attachment";
 import {
-  clearRequestedAttachmentDownload,
-  downloadAttachment,
   DownloadAttachmentCancel,
   DownloadAttachmentError,
   DownloadAttachmentRequest,
   DownloadAttachmentSuccess,
+  clearRequestedAttachmentDownload,
+  downloadAttachment,
   removeCachedAttachment
 } from "../../actions";
 import {
-  downloadedMessageAttachmentSelector,
   Downloads,
-  downloadsReducer,
   INITIAL_STATE,
+  downloadedMessageAttachmentSelector,
+  downloadsReducer,
+  requestedDownloadErrorSelector,
   isDownloadingMessageAttachmentSelector,
-  isRequestedAttachmentDownloadSelector,
-  requestedDownloadErrorSelector
+  isRequestedAttachmentDownloadSelector
 } from "../downloads";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { appReducer } from "../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { ThirdPartyAttachment } from "../../../../../../definitions/backend/ThirdPartyAttachment";
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
 
 const path = "/path/attachment.pdf";
 

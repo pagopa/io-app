@@ -1,15 +1,14 @@
-import { H2, VSpacer } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { memo } from "react";
+import { H2, VSpacer } from "@pagopa/io-app-design-system";
 import { LayoutChangeEvent, View } from "react-native";
-
+import I18n from "i18next";
 import { ReceiptsCategoryFilter } from "../types";
 import { ReceiptFilterTabs } from "./ReceiptFilterTabs";
 
 type Props = {
-  onCategorySelected: (category: ReceiptsCategoryFilter) => void;
   onLayout: (event: LayoutChangeEvent) => void;
   selectedCategory: ReceiptsCategoryFilter;
+  onCategorySelected: (category: ReceiptsCategoryFilter) => void;
 };
 
 export const ReceiptSectionListHeader = memo(
@@ -23,8 +22,8 @@ export const ReceiptSectionListHeader = memo(
       </H2>
       <VSpacer size={16} />
       <ReceiptFilterTabs
-        onCategorySelected={onCategorySelected}
         selectedCategory={selectedCategory}
+        onCategorySelected={onCategorySelected}
       />
     </View>
   ),

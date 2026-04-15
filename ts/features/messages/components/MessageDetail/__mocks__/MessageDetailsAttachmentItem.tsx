@@ -1,5 +1,4 @@
 import { Pressable, View } from "react-native";
-
 import { MessageDetailsAttachmentItemProps } from "../MessageDetailsAttachmentItem";
 
 export const MessageDetailsAttachmentItem = ({

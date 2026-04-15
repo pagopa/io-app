@@ -9,7 +9,6 @@ import {
 import * as AR from "fp-ts/lib/Array";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import I18n from "i18next";
 import {
   ComponentProps,
   forwardRef,
@@ -21,7 +20,7 @@ import Animated, {
   useAnimatedRef,
   useSharedValue
 } from "react-native-reanimated";
-
+import I18n from "i18next";
 import { BonusAvailable } from "../../../../../definitions/content/BonusAvailable";
 import { BonusAvailableContent } from "../../../../../definitions/content/BonusAvailableContent";
 import IOMarkdown from "../../../../components/IOMarkdown";
@@ -36,19 +35,17 @@ import { maybeNotNullyString } from "../../../../utils/strings";
 import { getRemoteLocale } from "../../../messages/utils/ctas";
 import TosBonusComponent from "./TosBonusComponent";
 
-export type BonusInformationComponentRef = {
-  scrollTo: (y: number) => void;
-};
-
 type OwnProps = {
-  bonus: BonusAvailable;
-  imageStyle?: StyleProp<ImageStyle>;
   onBack?: () => void;
-  onCancel?: () => void;
+  bonus: BonusAvailable;
   onConfirm?: () => void;
+  onCancel?: () => void;
   primaryCtaText: string;
   secondaryAction?: SecondaryAction;
+  imageStyle?: StyleProp<ImageStyle>;
 };
+
+type SecondaryAction = { type: "back"; text: string };
 
 type Props = OwnProps &
   Pick<
@@ -56,11 +53,13 @@ type Props = OwnProps &
     "contextualHelp" | "contextualHelpMarkdown" | "faqCategories"
   >;
 
-type SecondaryAction = { text: string; type: "back" };
+export type BonusInformationComponentRef = {
+  scrollTo: (y: number) => void;
+};
 
 const getTosFooter = (
   maybeBonusTos: O.Option<string>,
-  maybeRegulationUrl: O.Option<{ name: string; url: string }>,
+  maybeRegulationUrl: O.Option<{ url: string; name: string }>,
   handleModalPress: (tos: string) => void,
   ctaText: string
 ) =>
@@ -81,9 +80,9 @@ const getTosFooter = (
                 </Body>
                 <Body
                   asLink
+                  weight={"Semibold"}
                   numberOfLines={1}
                   onPress={() => handleModalPress(bT)}
-                  weight={"Semibold"}
                 >
                   {I18n.t("bonus.tos.title")}
                 </Body>
@@ -154,7 +153,7 @@ const BonusInformationComponent = forwardRef((props: Props, ref) => {
   };
 
   const handleModalPress = (tos: string) =>
-    showModal(<TosBonusComponent onClose={hideModal} tos_url={tos} />);
+    showModal(<TosBonusComponent tos_url={tos} onClose={hideModal} />);
 
   // bonus rules url should be the first one in the urls list
   const maybeRegulationUrl = pipe(
@@ -191,14 +190,14 @@ const BonusInformationComponent = forwardRef((props: Props, ref) => {
 
   return (
     <IOScrollView
-      actions={actions}
       animatedRef={animatedScrollViewRef}
+      includeContentMargins={false}
+      snapOffset={imageHeight}
       headerConfig={{
         type: "base",
         title: bonusTypeLocalizedContent.title
       }}
-      includeContentMargins={false}
-      snapOffset={imageHeight}
+      actions={actions}
     >
       {O.isSome(maybeHeroImage) && (
         <>

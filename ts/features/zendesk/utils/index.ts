@@ -1,13 +1,13 @@
-import { PublicSession } from "../../../../definitions/session_manager/PublicSession";
-import { isReady } from "../../../common/model/RemoteValue";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../navigation/params/AppParamsList";
 import { isPanicModeActive } from "../../../utils/supportAssistance";
+import { isReady } from "../../../common/model/RemoteValue";
 import ZENDESK_ROUTES from "../navigation/routes";
-import { type ZendeskAssistanceType } from "../store/actions";
 import { ZendeskConfig } from "../store/reducers";
+import { PublicSession } from "../../../../definitions/session_manager/PublicSession";
+import { type ZendeskAssistanceType } from "../store/actions";
 
 export const handleContactSupport = (
   navigation: IOStackNavigationProp<AppParamsList>,
@@ -40,9 +40,9 @@ export const handleContactSupport = (
   }
 };
 
-type DefaultTokenType = Exclude<TokenType, "zendeskToken">;
-
 type TokenType = keyof PublicSession;
+
+type DefaultTokenType = Exclude<TokenType, "zendeskToken">;
 
 /**
  *

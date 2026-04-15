@@ -1,8 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
-
 import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
 import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { ServiceMetadata } from "../../../../../../definitions/services/ServiceMetadata";
@@ -14,8 +13,8 @@ import { EnabledChannels } from "../../../../../utils/profile";
 import { ServiceKind } from "../../components/ServiceDetailsScreenComponent";
 import { ServiceMetadataInfo } from "../../types";
 import {
-  isServicePreferenceResponseSuccess,
-  WithServiceID
+  WithServiceID,
+  isServicePreferenceResponseSuccess
 } from "../../types/ServicePreferenceResponse";
 
 export const servicesDetailsSelector = (state: GlobalState) =>

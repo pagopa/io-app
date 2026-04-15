@@ -1,7 +1,6 @@
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useRef, useEffect, useLayoutEffect } from "react";
 import { View } from "react-native";
 import PagerView from "react-native-pager-view";
-
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { WalletPaymentHeader } from "../components/WalletPaymentHeader";
@@ -28,10 +27,10 @@ const WalletPaymentMakeScreen = () => {
 
   return (
     <PagerView
+      style={{ flex: 1 }}
       initialPage={0}
       ref={ref}
       scrollEnabled={false}
-      style={{ flex: 1 }}
     >
       <View key="1" style={{ flex: 1 }}>
         <WalletPaymentPickMethodScreen />

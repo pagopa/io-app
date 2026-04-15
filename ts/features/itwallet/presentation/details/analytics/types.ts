@@ -1,5 +1,11 @@
 import { MixPanelCredential } from "../../../analytics/utils/types";
 
+export type TrackCredentialDetail = {
+  credential: MixPanelCredential; // MixPanelCredential
+  credential_status: string; // ItwPg
+  credential_type?: "multiple" | "unique";
+};
+
 /**
  * Actions that can trigger the eID reissuing flow.
  * This type represents the user action that was performed immediately before
@@ -10,9 +16,3 @@ import { MixPanelCredential } from "../../../analytics/utils/types";
 export enum ItwEidReissuingTrigger {
   ADD_CREDENTIAL = "add_credential"
 }
-
-export type TrackCredentialDetail = {
-  credential: MixPanelCredential; // MixPanelCredential
-  credential_status: string; // ItwPg
-  credential_type?: "multiple" | "unique";
-};

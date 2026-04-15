@@ -1,8 +1,7 @@
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { SafeAreaView } from "react-native-safe-area-context";
-
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -10,12 +9,12 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { areNotificationPermissionsEnabledSelector } from "../../../pushNotifications/store/reducers/environment";
 import { isLoadingSelector } from "../../common/machine/selectors";
+import { trackIDPayOnboardingSuccess } from "../analytics";
+import { IdPayOnboardingMachineContext } from "../machine/provider";
 import {
   idPayInitiativeWaitingListGet,
   setIdPayOnboardingSucceeded
 } from "../../wallet/store/actions";
-import { trackIDPayOnboardingSuccess } from "../analytics";
-import { IdPayOnboardingMachineContext } from "../machine/provider";
 import { selectInitiative } from "../machine/selectors";
 
 const IdPayCompletionScreen = () => {
@@ -69,14 +68,14 @@ const IdPayCompletionScreen = () => {
 
   return (
     <OperationResultScreenContent
+      pictogram="success"
+      title={I18n.t("idpay.onboarding.success.requestSent.title")}
+      subtitle={I18n.t("idpay.onboarding.success.requestSent.subtitle")}
       action={{
         label: I18n.t("idpay.onboarding.success.button.continue"),
         accessibilityLabel: I18n.t("idpay.onboarding.success.button.continue"),
         onPress: handleClosePress
       }}
-      pictogram="success"
-      subtitle={I18n.t("idpay.onboarding.success.requestSent.subtitle")}
-      title={I18n.t("idpay.onboarding.success.requestSent.title")}
     />
   );
 };

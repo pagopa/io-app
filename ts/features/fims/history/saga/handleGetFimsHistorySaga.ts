@@ -3,14 +3,13 @@ import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
-
-import { preferredLanguageSelector } from "../../../../store/reducers/persistedPreferences";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
-import { trackHistoryFailure } from "../../common/analytics";
-import { preferredLanguageToString } from "../../common/utils";
 import { FimsHistoryClient } from "../api/client";
 import { fimsHistoryGet } from "../store/actions";
+import { trackHistoryFailure } from "../../common/analytics";
+import { preferredLanguageSelector } from "../../../../store/reducers/persistedPreferences";
+import { preferredLanguageToString } from "../../common/utils";
 
 export function* handleGetFimsHistorySaga(
   getFimsHistory: FimsHistoryClient["getAccessHistory"],
@@ -65,7 +64,7 @@ export const extractFimsHistoryResponseAction = (
 
 const trackFailureIfNeeded = (
   action: ActionType<
-    typeof fimsHistoryGet.failure | typeof fimsHistoryGet.success
+    typeof fimsHistoryGet.success | typeof fimsHistoryGet.failure
   >
 ) => {
   if (isActionOf(fimsHistoryGet.failure, action)) {

@@ -1,8 +1,6 @@
 import { ComponentType } from "react";
-
 import { useIOSelector } from "../../../store/hooks";
 import { GlobalState } from "../../../store/reducers/types";
-import { CdcWalletCard } from "../../bonus/cdc/wallet/components/CdcWalletCard";
 import { CgnWalletCard } from "../../bonus/cgn/components/CgnWalletCard";
 import { IdPayWalletCard } from "../../idpay/wallet/components/IdPayWalletCard";
 import { ItwCredentialWalletCard } from "../../itwallet/wallet/components/ItwCredentialWalletCard";
@@ -11,6 +9,7 @@ import { WalletCardBaseComponent } from "../components/WalletCardBaseComponent";
 import { WalletCardSkeleton } from "../components/WalletCardSkeleton";
 import { shouldRenderWalletCategorySelector } from "../store/selectors";
 import { WalletCard, WalletCardCategoryFilter, WalletCardType } from "../types";
+import { CdcWalletCard } from "../../bonus/cdc/wallet/components/CdcWalletCard";
 
 /**
  * Wallet card component mapper which translates a WalletCardType to a
@@ -20,7 +19,7 @@ import { WalletCard, WalletCardCategoryFilter, WalletCardType } from "../types";
  */
 export const walletCardComponentMapper: Record<
   WalletCardType,
-  undefined | WalletCardBaseComponent<any>
+  WalletCardBaseComponent<any> | undefined
 > = {
   cgn: CgnWalletCard,
   idPay: IdPayWalletCard,
@@ -44,10 +43,10 @@ export const renderWalletCardFn = (
   const Component = walletCardComponentMapper[type];
   return Component ? (
     <Component
-      cardProps={cardProps}
-      isStacked={stacked}
       key={key}
       testID={`walletCardTestID_${category}_${type}_${key}`}
+      cardProps={cardProps}
+      isStacked={stacked}
     />
   ) : null;
 };

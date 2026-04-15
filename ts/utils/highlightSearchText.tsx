@@ -12,9 +12,9 @@ export function highlightSearchText({
   searchText,
   estimatedTextLengthToDisplay
 }: {
-  estimatedTextLengthToDisplay?: number;
-  searchText: string;
   text: string;
+  searchText: string;
+  estimatedTextLengthToDisplay?: number;
 }): Array<HighlightChunk> {
   const textLowerCase = text.toLowerCase();
   const searchTextLowerCase = searchText.toLowerCase();

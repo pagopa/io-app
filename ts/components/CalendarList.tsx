@@ -1,16 +1,15 @@
+import { Calendar } from "react-native-calendar-events";
 import {
   ContentWrapper,
   RadioGroup,
   RadioItem
 } from "@pagopa/io-app-design-system";
-import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
+import * as A from "fp-ts/lib/Array";
 import * as O from "fp-ts/lib/Option";
-import { Calendar } from "react-native-calendar-events";
-
+import { convertLocalCalendarName } from "../utils/calendar";
 import { useIOSelector } from "../store/hooks";
 import { preferredCalendarSelector } from "../store/reducers/persistedPreferences";
-import { convertLocalCalendarName } from "../utils/calendar";
 
 type CalendarListProps = {
   calendars: Array<Calendar>;

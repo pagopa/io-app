@@ -1,10 +1,9 @@
 import { createStore } from "redux";
-
-import { applicationChangeState } from "../../../../store/actions/application";
+import { Timeline, TimelineItemProps, TimelineProps } from "../Timeline";
 import { appReducer } from "../../../../store/reducers";
+import { applicationChangeState } from "../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import PN_ROUTES from "../../navigation/routes";
-import { Timeline, TimelineItemProps, TimelineProps } from "../Timeline";
 
 const defaultProps: TimelineProps = {
   data: [

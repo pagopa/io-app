@@ -3,23 +3,22 @@ import {
   Divider,
   ListItemInfo
 } from "@pagopa/io-app-design-system";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import I18n from "i18next";
+import { pipe } from "fp-ts/lib/function";
 import { ComponentProps, useCallback, useMemo } from "react";
-
+import I18n from "i18next";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../store/hooks";
-import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
-import { FAQsCategoriesType } from "../../../../utils/faq";
-import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 import {
   hasProfileEmailSelector,
   profileEmailSelector,
   profileFiscalCodeSelector,
   profileNameSurnameSelector
 } from "../../common/store/selectors";
+import { useIOSelector } from "../../../../store/hooks";
+import { FAQsCategoriesType } from "../../../../utils/faq";
+import { SETTINGS_ROUTES } from "../../common/navigation/routes";
+import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
 
 type EndElementProps = ComponentProps<typeof ListItemInfo>["endElement"];
 
@@ -95,13 +94,13 @@ const ProfileDataScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
-      contextualHelpMarkdown={contextualHelpMarkdown}
-      description={I18n.t("profile.data.subtitle")}
-      faqCategories={FAQ_CATEGORIES}
-      headerActionsProp={{ showHelp: true }}
       title={{
         label: I18n.t("profile.data.title")
       }}
+      description={I18n.t("profile.data.subtitle")}
+      headerActionsProp={{ showHelp: true }}
+      contextualHelpMarkdown={contextualHelpMarkdown}
+      faqCategories={FAQ_CATEGORIES}
     >
       <ContentWrapper>
         {/* Show name and surname */}
@@ -109,9 +108,9 @@ const ProfileDataScreen = () => {
           <>
             <ListItemInfo
               label={I18n.t("profile.data.list.nameSurname")}
-              testID="name-surname"
               // accessibilityLabel={I18n.t("profile.data.list.nameSurname")}
               value={nameSurname}
+              testID="name-surname"
             />
             <Divider />
           </>
@@ -120,22 +119,22 @@ const ProfileDataScreen = () => {
         {fiscalCode && (
           <>
             <ListItemInfo
-              endElement={showFiscalCode}
               label={I18n.t("profile.data.list.fiscalCode")}
               // accessibilityLabel={I18n.t("profile.data.list.fiscalCode")}
               testID="show-fiscal-code"
               value={fiscalCode}
+              endElement={showFiscalCode}
             />
             <Divider />
           </>
         )}
         {/* Insert or edit email */}
         <ListItemInfo
-          endElement={editEmail}
           label={I18n.t("profile.data.list.email")}
-          testID="insert-or-edit-email"
           // accessibilityLabel={I18n.t("profile.data.list.email")}
           value={email}
+          endElement={editEmail}
+          testID="insert-or-edit-email"
         />
       </ContentWrapper>
     </IOScrollViewWithLargeHeader>

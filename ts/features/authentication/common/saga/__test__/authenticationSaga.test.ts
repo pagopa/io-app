@@ -1,32 +1,31 @@
 import { createMockTask } from "@redux-saga/testing-utils";
-import * as O from "fp-ts/Option";
 import { Task } from "redux-saga";
 import { testSaga } from "redux-saga-test-plan";
-
+import * as O from "fp-ts/Option";
+import { authenticationSaga } from "../authenticationSaga";
+import { startupLoadSuccess } from "../../../../../store/actions/startup";
+import { StartupStatusEnum } from "../../../../../store/reducers/startup";
 import {
   analyticsAuthenticationCompleted,
   analyticsAuthenticationStarted
 } from "../../../../../store/actions/analytics";
-import { startupLoadSuccess } from "../../../../../store/actions/startup";
-import { StartupStatusEnum } from "../../../../../store/reducers/startup";
-import * as selectors from "../../../fastLogin/store/selectors";
+import { watchTestLoginRequestSaga } from "../testLoginSaga";
 import {
   stopCieManager,
   watchCieAuthenticationSaga
 } from "../../../login/cie/sagas/cie";
-import {
-  IdpCIE,
-  IdpCIE_ID
-} from "../../../login/hooks/useNavigateToLoginMethod";
+import { loginSuccess } from "../../store/actions";
+import * as storeSelectors from "../../store/selectors";
+import * as selectors from "../../../fastLogin/store/selectors";
 import {
   trackCieIDLoginSuccess,
   trackCieLoginSuccess,
   trackSpidLoginSuccess
 } from "../../analytics";
-import { loginSuccess } from "../../store/actions";
-import * as storeSelectors from "../../store/selectors";
-import { authenticationSaga } from "../authenticationSaga";
-import { watchTestLoginRequestSaga } from "../testLoginSaga";
+import {
+  IdpCIE,
+  IdpCIE_ID
+} from "../../../login/hooks/useNavigateToLoginMethod";
 
 const aSessionToken = "mock-session-token";
 

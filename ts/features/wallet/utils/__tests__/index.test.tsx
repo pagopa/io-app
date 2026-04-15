@@ -1,6 +1,5 @@
 import { Body } from "@pagopa/io-app-design-system";
 import configureMockStore from "redux-mock-store";
-
 import { withWalletCategoryFilter } from "..";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";

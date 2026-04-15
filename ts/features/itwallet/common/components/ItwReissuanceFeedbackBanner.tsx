@@ -1,16 +1,15 @@
 import { Banner } from "@pagopa/io-app-design-system";
-import { useFocusEffect, useRoute } from "@react-navigation/native";
-import I18n from "i18next";
 import { memo, useCallback, useMemo } from "react";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { View } from "react-native";
-
+import I18n from "i18next";
 import { openWebUrl } from "../../../../utils/url";
+import { IT_WALLET_SURVEY_EID_REISSUANCE_SUCCESS } from "../utils/constants.ts";
 import {
   trackItwSurveyRequest,
   trackItwSurveyRequestAccepted
 } from "../../analytics";
 import { TrackQualtricsSurvey } from "../../analytics/utils/types.ts";
-import { IT_WALLET_SURVEY_EID_REISSUANCE_SUCCESS } from "../utils/constants.ts";
 
 const ItwReissuanceFeedbackBanner = () => {
   const { name: routeName } = useRoute();
@@ -36,14 +35,14 @@ const ItwReissuanceFeedbackBanner = () => {
   return (
     <View style={{ marginTop: 24 }}>
       <Banner
-        action={I18n.t("features.itWallet.feedback.reissuance.banner.action")}
-        color="neutral"
-        content={I18n.t("features.itWallet.feedback.reissuance.banner.content")}
-        labelClose={I18n.t("global.buttons.close")}
-        onPress={handleOnPress}
-        pictogramName="feedback"
         testID="itwFeedbackBannerTestID"
         title={I18n.t("features.itWallet.feedback.reissuance.banner.title")}
+        content={I18n.t("features.itWallet.feedback.reissuance.banner.content")}
+        action={I18n.t("features.itWallet.feedback.reissuance.banner.action")}
+        pictogramName="feedback"
+        color="neutral"
+        onPress={handleOnPress}
+        labelClose={I18n.t("global.buttons.close")}
       />
     </View>
   );

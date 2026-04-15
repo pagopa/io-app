@@ -1,11 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { constUndefined, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/Option";
-
-import { isLoading } from "../../../../../common/model/RemoteValue";
+import { constUndefined, pipe } from "fp-ts/lib/function";
 import { remoteConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { potFoldWithDefault } from "../../../../../utils/pot";
+import { isLoading } from "../../../../../common/model/RemoteValue";
 
 export const fimsHistoryPotSelector = (state: GlobalState) =>
   state.features.fims.history.consentsList;
@@ -16,7 +15,7 @@ export const isFimsHistoryLoadingSelector = (state: GlobalState) =>
 export const fimsHistoryToUndefinedSelector = (state: GlobalState) =>
   pot.toUndefined(state.features.fims.history.consentsList);
 
-export type FimsHistoryErrorState = "ALERT_ONLY" | "FULL_KO";
+export type FimsHistoryErrorState = "FULL_KO" | "ALERT_ONLY";
 export const fimsHistoryErrorSelector = (
   state: GlobalState
 ): FimsHistoryErrorState | undefined =>

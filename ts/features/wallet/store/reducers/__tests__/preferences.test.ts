@@ -1,5 +1,4 @@
 import { createStore } from "redux";
-
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { walletSetCategoryFilter } from "../../actions/preferences";

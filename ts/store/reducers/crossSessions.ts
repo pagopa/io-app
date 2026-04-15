@@ -2,20 +2,19 @@
  * this state / reducer represents and handles all those data should be kept across multiple users sessions
  */
 import { FiscalCode, NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import { createSelector } from "reselect";
-import sha from "sha.js";
 import { isActionOf } from "typesafe-actions";
-
-import { setProfileHashedFiscalCode } from "../actions/crossSessions";
+import { createSelector } from "reselect";
+import * as O from "fp-ts/lib/Option";
+import sha from "sha.js";
+import { pipe } from "fp-ts/lib/function";
 import { Action } from "../actions/types";
+import { setProfileHashedFiscalCode } from "../actions/crossSessions";
 import { GlobalState } from "./types";
 
+type HashedFiscalCode = NonEmptyString | undefined;
 export type CrossSessionsState = {
   hashedFiscalCode: HashedFiscalCode;
 };
-type HashedFiscalCode = NonEmptyString | undefined;
 
 const INITIAL_STATE: CrossSessionsState = {
   hashedFiscalCode: undefined

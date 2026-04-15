@@ -3,7 +3,6 @@ import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
-
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -104,16 +103,16 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
         <>
           <View style={styles.idWrapper}>
             <GuidedTour
-              cutoutStyle={{ cornerRadius: 16 }}
-              description={I18n.t("features.itWallet.tour.id.description")}
               groupId={ITW_TOUR_GROUP_ID}
               index={ITW_TOUR_STEP_ID}
               title={I18n.t("features.itWallet.tour.id.title")}
+              description={I18n.t("features.itWallet.tour.id.description")}
+              cutoutStyle={{ cornerRadius: 16 }}
             >
               <ItwWalletIdStatus
-                onPress={handleNavigateToItwId}
-                pidExpiration={eidExpiration}
                 pidStatus={eidStatus}
+                pidExpiration={eidExpiration}
+                onPress={handleNavigateToItwId}
               />
             </GuidedTour>
           </View>
@@ -123,6 +122,10 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
     }
     return (
       <ListItemHeader
+        testID={"walletCardsCategoryItwHeaderTestID"}
+        iconName={"legalValue"}
+        iconColor={iconColor}
+        label={I18n.t("features.wallet.cards.categories.itw")}
         endElement={{
           type: "buttonLink",
           componentProps: {
@@ -136,10 +139,6 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
             testID: "walletCardsCategoryItwActiveBadgeTestID"
           }
         }}
-        iconColor={iconColor}
-        iconName={"legalValue"}
-        label={I18n.t("features.wallet.cards.categories.itw")}
-        testID={"walletCardsCategoryItwHeaderTestID"}
       />
     );
   }, [
@@ -169,15 +168,15 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
       </VStack>
       <View style={styles.cardsWrapper}>
         <GuidedTour
-          description={I18n.t("features.itWallet.tour.credentials.description")}
           groupId={ITW_TOUR_GROUP_ID}
           index={ITW_TOUR_STEP_CREDENTIALS}
           title={I18n.t("features.itWallet.tour.credentials.title")}
+          description={I18n.t("features.itWallet.tour.credentials.description")}
         >
           <WalletCardsCategoryContainer
-            cards={cards}
             key={`cards_category_itw`}
             testID={`itwWalletCardsContainerTestID`}
+            cards={cards}
           />
         </GuidedTour>
       </View>

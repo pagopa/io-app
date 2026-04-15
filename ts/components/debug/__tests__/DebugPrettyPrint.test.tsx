@@ -2,7 +2,6 @@ import { render } from "@testing-library/react-native";
 import _ from "lodash";
 import { Provider } from "react-redux";
 import configureMockStore from "redux-mock-store";
-
 import { applicationChangeState } from "../../../store/actions/application";
 import { appReducer } from "../../../store/reducers";
 import { GlobalState } from "../../../store/reducers/types";
@@ -33,7 +32,7 @@ const renderComponent = (isDebugModeEnabled: boolean) => {
 
   return render(
     <Provider store={store}>
-      <DebugPrettyPrint data={{ item: "value" }} title="Some title" />
+      <DebugPrettyPrint title="Some title" data={{ item: "value" }} />
     </Provider>
   );
 };

@@ -1,5 +1,5 @@
-import { enumType } from "@pagopa/ts-commons/lib/types";
 import * as t from "io-ts";
+import { enumType } from "@pagopa/ts-commons/lib/types";
 
 enum FaultCodeCategoryEnum {
   "PAYMENT_GENERIC_ERROR_AFTER_USER_CANCELLATION" = "PAYMENT_GENERIC_ERROR_AFTER_USER_CANCELLATION"

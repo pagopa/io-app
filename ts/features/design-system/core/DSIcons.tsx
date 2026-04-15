@@ -1,36 +1,34 @@
 import {
   H4,
   HStack,
-  Icon,
-  IconContained,
   IOBiometricIcons,
   IOCategoryIcons,
-  IOIcons,
   IOIconSizeScale,
+  IOIcons,
   IOIconsNew,
   IONavIcons,
   IOProductIcons,
   IOSystemIcons,
+  Icon,
+  IconContained,
   SVGIconProps,
-  useIOTheme,
-  VStack
+  VStack,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
-import { JSX, useCallback } from "react";
 import { FlatList, ListRenderItemInfo, StyleSheet, View } from "react-native";
-
-import { DesignSystemScreen } from "../components/DesignSystemScreen";
+import { JSX, useCallback } from "react";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
 import { DSIconViewerBox, iconItemGutter } from "../components/DSIconViewerBox";
+import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
-type IconSetObject = Record<
-  string,
-  ({ size, style }: SVGIconProps) => JSX.Element
->;
 // Filter the main object, removing already displayed icons in the other sets
 type IconSubsetObject = Record<
   string,
   ({ size, style }: SVGIconProps) => JSX.Element
 >;
+interface IconSetObject {
+  [key: string]: ({ size, style }: SVGIconProps) => JSX.Element;
+}
 const filterIconSet = (
   iconSubsetObject: IconSubsetObject,
   iconSetObject: IconSetObject
@@ -109,12 +107,12 @@ export const DSIcons = () => {
       <View style={styles.gridItem}>
         {item ? (
           <DSIconViewerBox
-            fullWidth
-            image={
-              <Icon color={iconColor} name={item as IOIcons} size="100%" />
-            }
             name={item}
             size="small"
+            fullWidth
+            image={
+              <Icon name={item as IOIcons} color={iconColor} size="100%" />
+            }
             withDot={IOIconsNewKeys.has(item)}
           />
         ) : null}
@@ -128,15 +126,15 @@ export const DSIcons = () => {
       <VStack space={sectionMargin}>
         {/* General Set */}
         <FlatList
+          scrollEnabled={false}
+          data={filteredIOIconKeys}
+          keyExtractor={keyExtractor}
+          renderItem={renderGeneralIconItem}
+          numColumns={iconGridNumColumns}
           columnWrapperStyle={styles.gridColumnWrapper}
           contentContainerStyle={styles.gridContentContainer}
-          data={filteredIOIconKeys}
           initialNumToRender={30}
-          keyExtractor={keyExtractor}
           maxToRenderPerBatch={30}
-          numColumns={iconGridNumColumns}
-          renderItem={renderGeneralIconItem}
-          scrollEnabled={false}
           windowSize={5}
         />
 
@@ -146,16 +144,16 @@ export const DSIcons = () => {
           <View style={styles.itemsWrapper}>
             {Object.entries(IONavIcons).map(([iconItemName]) => (
               <DSIconViewerBox
-                image={
-                  <Icon
-                    color={theme["icon-default"]}
-                    name={iconItemName as IONavIcons}
-                    size="100%"
-                  />
-                }
                 key={iconItemName}
                 name={iconItemName}
                 size="medium"
+                image={
+                  <Icon
+                    name={iconItemName as IONavIcons}
+                    color={theme["icon-default"]}
+                    size="100%"
+                  />
+                }
               />
             ))}
           </View>
@@ -167,16 +165,16 @@ export const DSIcons = () => {
           <View style={styles.itemsWrapper}>
             {Object.entries(IOBiometricIcons).map(([iconItemName]) => (
               <DSIconViewerBox
-                image={
-                  <Icon
-                    color={theme["icon-default"]}
-                    name={iconItemName as IOBiometricIcons}
-                    size="100%"
-                  />
-                }
                 key={iconItemName}
                 name={iconItemName}
                 size="medium"
+                image={
+                  <Icon
+                    name={iconItemName as IOBiometricIcons}
+                    color={theme["icon-default"]}
+                    size="100%"
+                  />
+                }
               />
             ))}
           </View>
@@ -188,16 +186,16 @@ export const DSIcons = () => {
           <View style={styles.itemsWrapper}>
             {Object.entries(IOCategoryIcons).map(([iconItemName]) => (
               <DSIconViewerBox
-                image={
-                  <Icon
-                    color={theme["icon-default"]}
-                    name={iconItemName as IOCategoryIcons}
-                    size="100%"
-                  />
-                }
                 key={iconItemName}
                 name={iconItemName}
                 size="medium"
+                image={
+                  <Icon
+                    name={iconItemName as IOCategoryIcons}
+                    color={theme["icon-default"]}
+                    size="100%"
+                  />
+                }
               />
             ))}
           </View>
@@ -209,16 +207,16 @@ export const DSIcons = () => {
           <View style={styles.itemsWrapper}>
             {Object.entries(IOProductIcons).map(([iconItemName]) => (
               <DSIconViewerBox
-                image={
-                  <Icon
-                    color={theme["icon-default"]}
-                    name={iconItemName as IOProductIcons}
-                    size="100%"
-                  />
-                }
                 key={iconItemName}
                 name={iconItemName}
                 size="medium"
+                image={
+                  <Icon
+                    name={iconItemName as IOProductIcons}
+                    color={theme["icon-default"]}
+                    size="100%"
+                  />
+                }
               />
             ))}
           </View>
@@ -230,16 +228,16 @@ export const DSIcons = () => {
           <View style={styles.itemsWrapper}>
             {Object.entries(IOSystemIcons).map(([iconItemName]) => (
               <DSIconViewerBox
-                image={
-                  <Icon
-                    color={theme["icon-default"]}
-                    name={iconItemName as IOSystemIcons}
-                    size="100%"
-                  />
-                }
                 key={iconItemName}
                 name={iconItemName}
                 size="medium"
+                image={
+                  <Icon
+                    name={iconItemName as IOSystemIcons}
+                    color={theme["icon-default"]}
+                    size="100%"
+                  />
+                }
               />
             ))}
           </View>
@@ -250,11 +248,11 @@ export const DSIcons = () => {
           <H4 color={theme["textHeading-default"]}>IconContained</H4>
           <DSComponentViewerBox name="IconContained · Tonal variant, neutral color">
             <HStack space={8}>
-              <IconContained color="neutral" icon="device" variant="tonal" />
+              <IconContained icon="device" variant="tonal" color="neutral" />
               <IconContained
-                color="neutral"
                 icon="institution"
                 variant="tonal"
+                color="neutral"
               />
             </HStack>
           </DSComponentViewerBox>
@@ -266,15 +264,15 @@ export const DSIcons = () => {
           <View style={styles.itemsWrapper}>
             {IOIconSizes.map(size => (
               <DSIconViewerBox
+                key={`iconSize-${size}`}
+                name={`${size}`}
                 image={
                   <Icon
-                    color={theme["icon-default"]}
                     name="creditCard"
+                    color={theme["icon-default"]}
                     size={size}
                   />
                 }
-                key={`iconSize-${size}`}
-                name={`${size}`}
               />
             ))}
           </View>

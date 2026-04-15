@@ -1,32 +1,18 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { IResponseType } from "@pagopa/ts-commons/lib/requests";
-import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
-import * as t from "io-ts";
+
 import { expectSaga, testSaga } from "redux-saga-test-plan";
 import sha from "sha.js";
 import { getType } from "typesafe-actions";
-
+import { IResponseType } from "@pagopa/ts-commons/lib/requests";
+import * as t from "io-ts";
+import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { AppVersion } from "../../../../../../definitions/backend/AppVersion";
-import { EmailAddress } from "../../../../../../definitions/backend/EmailAddress";
-import { InitializedProfile } from "../../../../../../definitions/backend/InitializedProfile";
-import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
-import { PushNotificationsContentTypeEnum } from "../../../../../../definitions/backend/PushNotificationsContentType";
-import { ReminderStatusEnum } from "../../../../../../definitions/backend/ReminderStatus";
-import { ServicesPreferencesModeEnum } from "../../../../../../definitions/backend/ServicesPreferencesMode";
-import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/backend/UserDataProcessingChoice";
-import { UserDataProcessingStatusEnum } from "../../../../../../definitions/backend/UserDataProcessingStatus";
-import mockedProfile from "../../../../../__mocks__/initializedProfile";
 import {
   differentProfileLoggedIn,
   setProfileHashedFiscalCode
 } from "../../../../../store/actions/crossSessions";
-import { navigateToRemoveAccountSuccess } from "../../../../../store/actions/navigation";
-import { appReducer } from "../../../../../store/reducers";
-import { isDifferentFiscalCodeSelector } from "../../../../../store/reducers/crossSessions";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { getAppVersion } from "../../../../../utils/appVersion";
 import {
   loadBonusBeforeRemoveAccount,
   profileLoadFailure,
@@ -35,14 +21,28 @@ import {
   removeAccountMotivation,
   startEmailValidation
 } from "../../store/actions";
-import { upsertUserDataProcessing } from "../../store/actions/userDataProcessing";
+import { appReducer } from "../../../../../store/reducers";
+import { isDifferentFiscalCodeSelector } from "../../../../../store/reducers/crossSessions";
 import { profileSelector } from "../../store/selectors";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { getAppVersion } from "../../../../../utils/appVersion";
+import mockedProfile from "../../../../../__mocks__/initializedProfile";
 import {
   loadProfile,
   profileSagaTestable,
   upsertAppVersionSaga,
   watchProfile
 } from "../profile";
+import { upsertUserDataProcessing } from "../../store/actions/userDataProcessing";
+import { navigateToRemoveAccountSuccess } from "../../../../../store/actions/navigation";
+import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/backend/UserDataProcessingChoice";
+import { UserDataProcessingStatusEnum } from "../../../../../../definitions/backend/UserDataProcessingStatus";
+import { EmailAddress } from "../../../../../../definitions/backend/EmailAddress";
+import { InitializedProfile } from "../../../../../../definitions/backend/InitializedProfile";
+import { PushNotificationsContentTypeEnum } from "../../../../../../definitions/backend/PushNotificationsContentType";
+import { ReminderStatusEnum } from "../../../../../../definitions/backend/ReminderStatus";
+import { ServicesPreferencesModeEnum } from "../../../../../../definitions/backend/ServicesPreferencesMode";
+import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
 
 const hash = (value: string): string =>
   sha("sha256").update(value).digest("hex");

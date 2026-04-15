@@ -1,15 +1,15 @@
-import { refreshSessionToken } from "../../../fastLogin/store/actions/tokenRefreshActions";
+import authenticationReducer, { INITIAL_STATE } from "../reducers";
 import {
-  clearCurrentSession,
-  logoutFailure,
   logoutRequest,
   logoutSuccess,
-  resetAuthenticationState,
-  sessionExpired,
+  logoutFailure,
   sessionInformationLoadSuccess,
-  sessionInvalid
+  sessionExpired,
+  sessionInvalid,
+  clearCurrentSession,
+  resetAuthenticationState
 } from "../actions";
-import authenticationReducer, { INITIAL_STATE } from "../reducers";
+import { refreshSessionToken } from "../../../fastLogin/store/actions/tokenRefreshActions";
 
 const mockError = {
   error: "Network error",

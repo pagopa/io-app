@@ -1,8 +1,7 @@
 import { render } from "@testing-library/react-native";
 import { useDispatch } from "react-redux";
-
-import { logoutRequest } from "../../../../authentication/common/store/actions";
 import LogoutScreen from "../LogoutScreen";
+import { logoutRequest } from "../../../../authentication/common/store/actions";
 
 jest.mock("react-redux", () => ({
   useDispatch: jest.fn()

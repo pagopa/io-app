@@ -1,18 +1,17 @@
 import _ from "lodash";
 import {
+  StateFrom,
   createActor,
   fromCallback,
   fromPromise,
-  StateFrom,
   waitFor
 } from "xstate";
-
+import { ItwProximityMachine, itwProximityMachine } from "../machine";
+import { ProximityFailureType } from "../failure";
 import {
   ProximityDetails,
   VerifierRequest
 } from "../../utils/itwProximityTypeUtils";
-import { ProximityFailureType } from "../failure";
-import { ItwProximityMachine, itwProximityMachine } from "../machine";
 
 type MachineSnapshot = StateFrom<ItwProximityMachine>;
 
@@ -21,6 +20,7 @@ const T_PROXIMITY_DETAILS = [] as unknown as ProximityDetails;
 const T_VERIFIER_REQUEST = {} as VerifierRequest;
 
 describe("itwProximityMachine", () => {
+  const onInit = jest.fn();
   const navigateToGrantPermissionsScreen = jest.fn();
   const navigateToBluetoothActivationScreen = jest.fn();
   const navigateToQrCodeScreen = jest.fn();
@@ -40,6 +40,7 @@ describe("itwProximityMachine", () => {
 
   const mockedMachine = itwProximityMachine.provide({
     actions: {
+      onInit,
       navigateToGrantPermissionsScreen,
       navigateToBluetoothActivationScreen,
       navigateToQrCodeScreen,

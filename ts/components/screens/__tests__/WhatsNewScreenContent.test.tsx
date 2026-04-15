@@ -1,6 +1,5 @@
-import { Body } from "@pagopa/io-app-design-system";
 import { fireEvent, render } from "@testing-library/react-native";
-
+import { Body } from "@pagopa/io-app-design-system";
 import {
   WhatsNewScreenContent,
   WhatsNewScreenContentProps

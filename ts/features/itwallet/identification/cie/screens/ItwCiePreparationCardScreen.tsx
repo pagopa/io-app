@@ -1,5 +1,4 @@
 import I18n from "i18next";
-
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { ItwCiePreparationScreenContent } from "../components/ItwCiePreparationScreenContent";
@@ -29,6 +28,11 @@ export const ItwCiePreparationCardScreen = () => {
 
   return (
     <ItwCiePreparationScreenContent
+      title={I18n.t(`features.itWallet.identification.cie.prepare.card.title`)}
+      description={I18n.t(
+        `features.itWallet.identification.cie.prepare.card.description`
+      )}
+      imageSrc={require("../../../../../../img/features/itWallet/identification/cie_card.png")}
       actions={{
         type: "SingleButton",
         primary: {
@@ -38,12 +42,7 @@ export const ItwCiePreparationCardScreen = () => {
           onPress: () => machineRef.send({ type: "next" })
         }
       }}
-      description={I18n.t(
-        `features.itWallet.identification.cie.prepare.card.description`
-      )}
       goBack={dismissalDialog.show}
-      imageSrc={require("../../../../../../img/features/itWallet/identification/cie_card.png")}
-      title={I18n.t(`features.itWallet.identification.cie.prepare.card.title`)}
     />
   );
 };

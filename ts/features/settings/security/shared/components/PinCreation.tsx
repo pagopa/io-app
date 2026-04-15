@@ -10,7 +10,6 @@ import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import I18n from "i18next";
 import { useCallback, useRef, useState } from "react";
 import { FlatList, Alert as NativeAlert, View } from "react-native";
-
 import { Carousel } from "../../../../../components/Carousel";
 import { defaultPin } from "../../../../../config";
 import { isValidPinNumber } from "../../../../../features/authentication/fastLogin/utils/pinPolicy";
@@ -27,8 +26,8 @@ import { PinString } from "../../../../../types/PinString";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { getFlowType } from "../../../../../utils/analytics";
 import { PIN_LENGTH_SIX } from "../../../../../utils/constants";
-import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
 import { isDevEnv } from "../../../../../utils/environment";
+import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture";
 import { useOnboardingAbortAlert } from "../../../../onboarding/hooks/useOnboardingAbortAlert";
@@ -51,7 +50,7 @@ export type Props = {
   isOnboarding?: boolean;
 };
 
-type PinMode = "confirmation" | "creation";
+type PinMode = "creation" | "confirmation";
 /**
  * The Pin Creation component is used in both the onboarding
  * process and the profile settings.
@@ -65,7 +64,7 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
   const [pinConfirmation, setPinConfirmation] = useState("");
   const pinModeRef = useRef<PinMode>("creation");
   const { handleSubmit } = useCreatePin({ isOnboarding });
-  const pinRef = useRef<null | string>(null);
+  const pinRef = useRef<string | null>(null);
   const carouselRef = useRef<FlatList>(null);
   const titleCreationRef = useRef<View>(null);
   const titleConfirmationRef = useRef<View>(null);
@@ -226,7 +225,7 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
   ];
 
   return (
-    <View style={{ flex: 1 }} testID="pin-creation-screen">
+    <View testID="pin-creation-screen" style={{ flex: 1 }}>
       <View style={{ flex: 1, justifyContent: "center" }}>
         {!isDeviceScreenSmall && (
           <View style={{ alignSelf: "center" }}>
@@ -235,27 +234,27 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
           </View>
         )}
         <Carousel
-          Component={PinCarouselItem}
-          data={data}
           ref={carouselRef}
-          scrollEnabled={false}
-          style={{ flexGrow: 0 }}
           testID="pin-creation-carousel"
+          style={{ flexGrow: 0 }}
+          data={data}
+          Component={PinCarouselItem}
+          scrollEnabled={false}
         />
         <VSpacer size={40} />
         <ContentWrapper>
           <NumberPad
-            deleteAccessibilityLabel={I18n.t("global.buttons.delete")}
-            onDeletePress={onDeletePress}
             onNumberPress={handlePinChange}
+            onDeletePress={onDeletePress}
             variant="neutral"
+            deleteAccessibilityLabel={I18n.t("global.buttons.delete")}
           />
           <VSpacer />
           <View style={{ alignSelf: "center" }}>
             <IOButton
-              label={I18n.t("onboarding.pin.policy.title")}
-              onPress={present}
               variant="link"
+              onPress={present}
+              label={I18n.t("onboarding.pin.policy.title")}
             />
           </View>
           {bottomSheet}
@@ -264,9 +263,9 @@ export const PinCreation = ({ isOnboarding = false }: Props) => {
       {isDevEnv && (
         <View style={{ alignSelf: "center" }}>
           <IOButton
+            variant="outline"
             label={`Enter Pin: ${defaultPin} (DevEnv Only)`}
             onPress={insertValidPin}
-            variant="outline"
           />
         </View>
       )}

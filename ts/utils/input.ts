@@ -1,11 +1,10 @@
-import { PatternString } from "@pagopa/ts-commons/lib/strings";
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import I18n from "i18next";
+import * as E from "fp-ts/lib/Either";
 import * as t from "io-ts";
 import * as _ from "lodash";
-
+import { PatternString } from "@pagopa/ts-commons/lib/strings";
+import { pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import { CreditCard } from "../types/pagopa";
 import { CreditCardDetector, SupportedBrand } from "./creditCard";
 import { isStringNullyOrEmpty } from "./strings";
@@ -74,10 +73,10 @@ export const isValidSecurityCode = (
   );
 
 export type CreditCardState = Readonly<{
-  expirationDate: O.Option<string>;
-  holder: O.Option<string>;
   pan: O.Option<string>;
+  expirationDate: O.Option<string>;
   securityCode: O.Option<string>;
+  holder: O.Option<string>;
 }>;
 
 export type CreditCardStateKeys = keyof CreditCardState;

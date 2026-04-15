@@ -1,6 +1,5 @@
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-
+import { pipe } from "fp-ts/lib/function";
 import { GlobalState } from "../../../../store/reducers/types";
 import { itwAuthLevelSelector } from "../../common/store/selectors/preferences";
 import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";

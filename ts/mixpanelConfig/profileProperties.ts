@@ -1,15 +1,9 @@
-import * as Sentry from "@sentry/react-native";
 import * as O from "fp-ts/lib/Option";
-
-import { idpSelector } from "../features/authentication/common/store/selectors";
+import * as Sentry from "@sentry/react-native";
+import { getPeople, isMixpanelInstanceInitialized } from "../mixpanel.ts";
+import { GlobalState } from "../store/reducers/types";
 import { LoginSessionDuration } from "../features/authentication/fastLogin/analytics/optinAnalytics";
-import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
-import {
-  booleanOrUndefinedToPNServiceStatus,
-  PNServiceStatus
-} from "../features/pn/analytics/index.ts";
-import { isPnServiceEnabled } from "../features/pn/reminderBanner/reducer/bannerDismiss.ts";
-import { checkNotificationPermissions } from "../features/pushNotifications/utils";
+import { BiometricsType, getBiometricsType } from "../utils/biometrics";
 import {
   getNotificationPermissionType,
   getNotificationTokenType,
@@ -18,14 +12,19 @@ import {
   NotificationTokenType,
   ServiceConfigurationTrackingType
 } from "../features/settings/common/analytics/index.ts";
+import { idpSelector } from "../features/authentication/common/store/selectors";
 import { tosVersionSelector } from "../features/settings/common/store/selectors/index.ts";
-import { getPeople, isMixpanelInstanceInitialized } from "../mixpanel.ts";
+import { checkNotificationPermissions } from "../features/pushNotifications/utils";
+import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
 import {
   fontPreferenceSelector,
   themePreferenceSelector
 } from "../store/reducers/persistedPreferences.ts";
-import { GlobalState } from "../store/reducers/types";
-import { BiometricsType, getBiometricsType } from "../utils/biometrics";
+import {
+  booleanOrUndefinedToPNServiceStatus,
+  PNServiceStatus
+} from "../features/pn/analytics/index.ts";
+import { isPnServiceEnabled } from "../features/pn/reminderBanner/reducer/bannerDismiss.ts";
 import {
   cdcStatusHandler,
   cgnStatusHandler,
@@ -42,9 +41,10 @@ import {
 
 type ProfileProperties = {
   BIOMETRIC_TECHNOLOGY: BiometricsType;
-  CDC_STATUS: number;
   CGN_STATUS: TrackCgnStatus;
+  CDC_STATUS: number;
   FONT_PREFERENCE: string;
+  THEME_PREFERENCE: string;
   LOGIN_METHOD: string;
   LOGIN_SESSION: LoginSessionDuration;
   NOTIFICATION_CONFIGURATION: NotificationPreferenceConfiguration;
@@ -53,7 +53,6 @@ type ProfileProperties = {
   SAVED_PAYMENT_METHOD: number;
   SEND_STATUS: PNServiceStatus;
   SERVICE_CONFIGURATION: ServiceConfigurationTrackingType;
-  THEME_PREFERENCE: string;
   TOS_ACCEPTED_VERSION: number | string;
   TRACKING: MixpanelOptInTrackingType;
   WELFARE_STATUS: ReadonlyArray<string>;

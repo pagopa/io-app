@@ -6,15 +6,15 @@ import {
 } from "../../common/types/PaymentAnalytics";
 
 type PaymentHomeAnalyticsProps = {
-  add_entry_point: PaymentsAnalyticsHomeAddWalletEntryPoint;
   payments_home_status: PaymentsAnalyticsHomeStatus;
   saved_payment_method: number;
   wallet_item: "payment_method";
+  add_entry_point: PaymentsAnalyticsHomeAddWalletEntryPoint;
 };
 
 type PaymentMethodAnalyticsProps = {
   payment_method_selected: string;
-  payment_method_status: "invalid" | "valid";
+  payment_method_status: "valid" | "invalid";
   source: "payments" | "wallet";
 };
 

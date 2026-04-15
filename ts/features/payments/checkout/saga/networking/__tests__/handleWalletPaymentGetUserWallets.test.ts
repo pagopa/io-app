@@ -1,14 +1,13 @@
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
-
-import { WalletClientStatusEnum } from "../../../../../../../definitions/pagopa/ecommerce/WalletClientStatus";
-import { Wallets } from "../../../../../../../definitions/pagopa/ecommerce/Wallets";
-import { WalletStatusEnum } from "../../../../../../../definitions/pagopa/ecommerce/WalletStatus";
-import { getGenericError } from "../../../../../../utils/errors";
-import { readablePrivacyReport } from "../../../../../../utils/reporters";
 import { paymentsGetPaymentUserMethodsAction } from "../../../store/actions/networking";
 import { handleWalletPaymentGetUserWallets } from "../handleWalletPaymentGetUserWallets";
+import { Wallets } from "../../../../../../../definitions/pagopa/ecommerce/Wallets";
+import { getGenericError } from "../../../../../../utils/errors";
+import { readablePrivacyReport } from "../../../../../../utils/reporters";
+import { WalletStatusEnum } from "../../../../../../../definitions/pagopa/ecommerce/WalletStatus";
+import { WalletClientStatusEnum } from "../../../../../../../definitions/pagopa/ecommerce/WalletClientStatus";
 
 describe("Test handleWalletPaymentGetUserWallets saga", () => {
   const T_SESSION_TOKEN = "ABCD";

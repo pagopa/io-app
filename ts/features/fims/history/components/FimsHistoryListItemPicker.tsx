@@ -23,13 +23,13 @@ export const FimsHistoryListItemPicker = ({
     default: LoadingFimsHistoryListItem,
     noneError: _ => <FimsHistoryFailureListItem item={item} />,
     some: data => (
-      <FimsHistorySuccessListItem consent={item} serviceData={data} />
+      <FimsHistorySuccessListItem serviceData={data} consent={item} />
     ),
     someError: data => (
-      <FimsHistorySuccessListItem consent={item} serviceData={data} />
+      <FimsHistorySuccessListItem serviceData={data} consent={item} />
     ),
     someLoading: data => (
-      <FimsHistorySuccessListItem consent={item} serviceData={data} />
+      <FimsHistorySuccessListItem serviceData={data} consent={item} />
     )
   });
 };

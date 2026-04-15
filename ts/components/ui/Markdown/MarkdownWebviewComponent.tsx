@@ -6,25 +6,24 @@ import { LegacyRef } from "react";
 import { StyleProp, ViewStyle } from "react-native";
 import { WebView } from "react-native-webview";
 import { WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
-
-import { handleInternalLink } from "../../../utils/internalLink";
 import { AVOID_ZOOM_JS, closeInjectedScript } from "../../../utils/webview";
+import { handleInternalLink } from "../../../utils/internalLink";
 import { handleLinkMessage, isIoInternalLink } from "./handlers/link";
 import { WebViewMessage } from "./types";
 
 type Props = {
+  injectedJavascript: string;
   handleLoadEnd: () => void;
   html: string;
-  injectedJavascript: string;
-  letUserZoom?: boolean;
-  onLinkClicked?: (url: string) => void;
-  setHtmlBodyHeight: (h: number) => void;
-  setLoadingFalse: () => void;
-  shouldHandleLink?: (link: string) => boolean;
-  testID?: string;
   webviewKey: number;
   webViewRef: LegacyRef<WebView>;
+  setLoadingFalse: () => void;
+  setHtmlBodyHeight: (h: number) => void;
+  shouldHandleLink?: (link: string) => boolean;
+  onLinkClicked?: (url: string) => void;
+  letUserZoom?: boolean;
   webViewStyle?: StyleProp<ViewStyle>;
+  testID?: string;
 };
 
 export const MarkdownWebviewComponent = (props: Props) => {
@@ -68,25 +67,25 @@ export const MarkdownWebviewComponent = (props: Props) => {
   };
   return (
     <WebView
-      accessible={false}
       androidCameraAccessDisabled={true}
       androidMicrophoneAccessDisabled={true}
+      testID={props.testID}
+      accessible={false}
+      key={props.webviewKey}
+      textZoom={100}
+      ref={props.webViewRef}
+      scrollEnabled={false}
+      overScrollMode={"never"}
+      style={props.webViewStyle}
+      originWhitelist={["*"]}
+      source={{ html: props.html, baseUrl: "" }}
+      javaScriptEnabled={true}
       injectedJavaScript={closeInjectedScript(
         props.injectedJavascript + (props.letUserZoom ? "" : AVOID_ZOOM_JS)
       )}
-      javaScriptEnabled={true}
-      key={props.webviewKey}
       onLoadEnd={props.handleLoadEnd}
       onMessage={handleWebViewMessage}
-      originWhitelist={["*"]}
-      overScrollMode={"never"}
-      ref={props.webViewRef}
-      scrollEnabled={false}
       showsVerticalScrollIndicator={false}
-      source={{ html: props.html, baseUrl: "" }}
-      style={props.webViewStyle}
-      testID={props.testID}
-      textZoom={100}
     />
   );
 };

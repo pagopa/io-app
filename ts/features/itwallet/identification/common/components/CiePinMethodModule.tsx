@@ -1,7 +1,6 @@
 import { Badge, ModuleNavigationAlt } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { useCallback } from "react";
-
 import { trackItWalletIDMethodSelected } from "../../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { useContinueWithBottomSheet } from "../hooks/useContinueWithBottomSheet";
@@ -40,7 +39,13 @@ export const CiePinMethodModule = ({
     return (
       <>
         <ModuleNavigationAlt
-          badge={!isReissuanceMode ? badgeProps : undefined}
+          testID="CiePinMethodModuleTestIDL3"
+          title={I18n.t(
+            "features.itWallet.identification.modeSelection.mode.ciePin.title"
+          )}
+          subtitle={I18n.t(
+            "features.itWallet.identification.modeSelection.mode.ciePin.subtitle.l3"
+          )}
           icon="fiscalCodeIndividual"
           onPress={() => {
             trackItWalletIDMethodSelected({
@@ -49,13 +54,7 @@ export const CiePinMethodModule = ({
             });
             ciePinBottomSheet.present();
           }}
-          subtitle={I18n.t(
-            "features.itWallet.identification.modeSelection.mode.ciePin.subtitle.l3"
-          )}
-          testID="CiePinMethodModuleTestIDL3"
-          title={I18n.t(
-            "features.itWallet.identification.modeSelection.mode.ciePin.title"
-          )}
+          badge={!isReissuanceMode ? badgeProps : undefined}
         />
         {ciePinBottomSheet.bottomSheet}
       </>
@@ -64,16 +63,16 @@ export const CiePinMethodModule = ({
 
   return (
     <ModuleNavigationAlt
-      badge={isReissuanceMode ? badgeProps : undefined}
-      icon="fiscalCodeIndividual"
-      onPress={handleOnPress}
-      subtitle={I18n.t(
-        "features.itWallet.identification.modeSelection.mode.ciePin.subtitle.default"
-      )}
       testID="CiePinMethodModuleTestIDL2"
       title={I18n.t(
         "features.itWallet.identification.modeSelection.mode.ciePin.title"
       )}
+      subtitle={I18n.t(
+        "features.itWallet.identification.modeSelection.mode.ciePin.subtitle.default"
+      )}
+      icon="fiscalCodeIndividual"
+      onPress={handleOnPress}
+      badge={isReissuanceMode ? badgeProps : undefined}
     />
   );
 };

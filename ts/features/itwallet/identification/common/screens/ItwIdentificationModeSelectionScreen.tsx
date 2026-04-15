@@ -9,7 +9,6 @@ import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
-
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
@@ -33,18 +32,18 @@ import { CieIdMethodModule } from "../components/CieIdMethodModule";
 import { CiePinMethodModule } from "../components/CiePinMethodModule";
 import { SpidMethodModule } from "../components/SpidMethodModule";
 
+export type ItwIdentificationNavigationParams = {
+  eidReissuing?: boolean;
+  level?: EidIssuanceLevel;
+  credentialType?: string;
+  animationEnabled?: boolean;
+};
+
 export type ItwIdentificationModeSelectionScreenProps =
   IOStackNavigationRouteProps<
     ItwParamsList,
     "ITW_IDENTIFICATION_MODE_SELECTION"
   >;
-
-export type ItwIdentificationNavigationParams = {
-  animationEnabled?: boolean;
-  credentialType?: string;
-  eidReissuing?: boolean;
-  level?: EidIssuanceLevel;
-};
 
 export const ItwIdentificationModeSelectionScreen = ({
   route
@@ -157,38 +156,38 @@ export const ItwIdentificationModeSelectionScreen = ({
 
   return (
     <IOScrollViewWithLargeHeader
-      description={description}
-      goBack={params.eidReissuing ? dismissalDialog.show : undefined}
-      headerActionsProp={{ showHelp: true }}
       title={{ section, label: title }}
+      description={description}
+      headerActionsProp={{ showHelp: true }}
+      goBack={params.eidReissuing ? dismissalDialog.show : undefined}
     >
       <ContentWrapper>
         <VSpacer size={8} />
         <VStack space={16}>
           {isReissuanceMode && isL3 ? (
             <GroupedMethodList
-              isCieIdDisabled={isCieIdDisabled}
               isCiePinDisabled={isCiePinDisabled}
+              isCieIdDisabled={isCieIdDisabled}
               isSpidDisabled={isSpidDisabled}
             />
           ) : (
             <DefaultMethodList
-              isCieIdDisabled={isCieIdDisabled}
               isCiePinDisabled={isCiePinDisabled}
-              isL3={isL3}
+              isCieIdDisabled={isCieIdDisabled}
               isSpidDisabled={isSpidDisabled}
+              isL3={isL3}
             />
           )}
           {!isReissuanceMode && isL3 && (
             <View style={styles.noCieButtonContainer}>
               <IOButton
+                variant="link"
+                textAlign="center"
                 label={I18n.t(
                   "features.itWallet.identification.modeSelection.noCieCta"
                 )}
                 onPress={handleNoCiePress}
                 testID="noCieButtonTestID"
-                textAlign="center"
-                variant="link"
               />
             </View>
           )}
@@ -199,8 +198,8 @@ export const ItwIdentificationModeSelectionScreen = ({
 };
 
 type GroupedMethodListProps = {
-  isCieIdDisabled: boolean;
   isCiePinDisabled: boolean;
+  isCieIdDisabled: boolean;
   isSpidDisabled: boolean;
 };
 
@@ -213,6 +212,9 @@ const GroupedMethodList = ({
     {(!isCiePinDisabled || !isCieIdDisabled) && (
       <VStack space={8}>
         <ListItemHeader
+          label={I18n.t(
+            "features.itWallet.identification.modeSelection.frequency.every12Months"
+          )}
           endElement={{
             type: "badge",
             componentProps: {
@@ -224,9 +226,6 @@ const GroupedMethodList = ({
               testID: "CiePinReissuanceBadgeTestID"
             }
           }}
-          label={I18n.t(
-            "features.itWallet.identification.modeSelection.frequency.every12Months"
-          )}
         />
         <VStack space={16}>
           {!isCiePinDisabled && <CiePinMethodModule isL3 isReissuanceMode />}
@@ -248,10 +247,10 @@ const GroupedMethodList = ({
 );
 
 type DefaultMethodListProps = {
-  isCieIdDisabled: boolean;
   isCiePinDisabled: boolean;
-  isL3: boolean;
+  isCieIdDisabled: boolean;
   isSpidDisabled: boolean;
+  isL3: boolean;
 };
 
 const DefaultMethodList = ({

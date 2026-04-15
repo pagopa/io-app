@@ -1,5 +1,4 @@
 import * as t from "io-ts";
-
 import {
   WalletInfoDetails1,
   WalletInfoDetails2,

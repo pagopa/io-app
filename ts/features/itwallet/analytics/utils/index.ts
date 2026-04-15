@@ -1,9 +1,9 @@
 import { ItwJwtCredentialStatus } from "../../common/utils/itwTypesUtils";
 import {
-  ITW_ANALYTICS_CREDENTIALS,
-  ItwAnalyticsCredential
+  ItwAnalyticsCredential,
+  ITW_ANALYTICS_CREDENTIALS
 } from "../properties/propertyTypes";
-import { CREDENTIALS_MAP, ItwPIDStatus, MixPanelCredential } from "./types";
+import { ItwPIDStatus, MixPanelCredential, CREDENTIALS_MAP } from "./types";
 
 /**
  * Maps an PID status to its corresponding Mixpanel tracking status.
@@ -12,12 +12,12 @@ export const mapPIDStatusToMixpanel = (
   status: ItwJwtCredentialStatus | undefined
 ): ItwPIDStatus => {
   switch (status) {
+    case "valid":
+      return "valid";
     case "jwtExpired":
       return "expired";
     case "jwtExpiring":
       return "expiring";
-    case "valid":
-      return "valid";
     default:
       return "not_available";
   }

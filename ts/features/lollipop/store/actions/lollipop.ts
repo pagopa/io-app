@@ -39,9 +39,9 @@ export const lollipopSetSupportedDevice = createStandardAction(
 
 export type LollipopActions = ActionType<
   | typeof lollipopKeyTagSave
-  | typeof lollipopRemoveEphemeralPublicKey
+  | typeof lollipopSetPublicKey
   | typeof lollipopRemovePublicKey
   | typeof lollipopSetEphemeralPublicKey
-  | typeof lollipopSetPublicKey
+  | typeof lollipopRemoveEphemeralPublicKey
   | typeof lollipopSetSupportedDevice
 >;

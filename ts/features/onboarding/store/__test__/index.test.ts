@@ -1,7 +1,7 @@
-import { sessionExpired } from "../../../authentication/common/store/actions";
 import { fingerprintAcknowledged } from "../actions";
-import reducer, { OnboardingState } from "../reducers";
+import { sessionExpired } from "../../../authentication/common/store/actions";
 import { isFingerprintAcknowledgedSelector } from "../selectors";
+import reducer, { OnboardingState } from "../reducers";
 
 describe("onboarding reducer", () => {
   const INITIAL_STATE: OnboardingState = {

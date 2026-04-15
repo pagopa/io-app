@@ -1,8 +1,7 @@
-import { fireEvent, render } from "@testing-library/react-native";
 import React from "react";
-
-import { SpidIdp } from "../../../../../../utils/idps";
+import { fireEvent, render } from "@testing-library/react-native";
 import IdpsGrid from "../../components/IdpsGrid";
+import { SpidIdp } from "../../../../../../utils/idps";
 
 describe("IdpsGrid", () => {
   const mockIdps: Array<SpidIdp> = [

@@ -1,5 +1,4 @@
 import { Action, combineReducers } from "redux";
-
 import eycaActivationReducer, { EycaActivationState } from "./activation";
 import eycaDetailsReducer, { EycaDetailsState } from "./details";
 

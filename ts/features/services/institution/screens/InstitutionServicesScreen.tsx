@@ -8,12 +8,11 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import I18n from "i18next";
 import { useCallback, useEffect, useMemo } from "react";
 import { ListRenderItemInfo, RefreshControl } from "react-native";
-import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-
+import Animated, { useAnimatedRef } from "react-native-reanimated";
+import I18n from "i18next";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { ServiceMinified } from "../../../../../definitions/services/ServiceMinified";
 import {
@@ -22,10 +21,8 @@ import {
 } from "../../../../hooks/useHeaderSecondLevel";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
-import { getListItemAccessibilityLabelCount } from "../../../../utils/accessibility";
-import * as analytics from "../../common/analytics";
-import { ServiceListSkeleton } from "../../common/components/ServiceListSkeleton";
 import { ServicesHeaderSection } from "../../common/components/ServicesHeaderSection";
+import { ServiceListSkeleton } from "../../common/components/ServiceListSkeleton";
 import { useFirstRender } from "../../common/hooks/useFirstRender";
 import { ServicesParamsList } from "../../common/navigation/params";
 import { SERVICES_ROUTES } from "../../common/navigation/routes";
@@ -33,6 +30,8 @@ import { getLogoForInstitution } from "../../common/utils";
 import { InstitutionServicesFailure } from "../components/InstitutionServicesFailure";
 import { useServicesFetcher } from "../hooks/useServicesFetcher";
 import { paginatedServicesGet } from "../store/actions";
+import { getListItemAccessibilityLabelCount } from "../../../../utils/accessibility";
+import * as analytics from "../../common/analytics";
 
 export type InstitutionServicesScreenRouteParams = {
   institutionId: string;
@@ -165,10 +164,10 @@ export const InstitutionServicesScreen = ({
     return (
       <ServicesHeaderSection
         logoUri={getLogoForInstitution(institutionId)}
+        title={institutionName}
         subTitle={I18n.t("services.institution.header.subtitle", {
           count: data?.count ?? 0
         })}
-        title={institutionName}
       />
     );
   }, [data?.count, isFirstRender, isLoading, institutionId, institutionName]);
@@ -194,20 +193,20 @@ export const InstitutionServicesScreen = ({
 
   return (
     <Animated.FlatList
+      ItemSeparatorComponent={Divider}
+      ListEmptyComponent={ListEmptyComponent}
+      ListHeaderComponent={ListHeaderComponent}
+      ListHeaderComponentStyle={{
+        marginBottom: 16,
+        marginHorizontal: -IOVisualCostants.appMarginDefault
+      }}
+      ListFooterComponent={ListFooterComponent}
       contentContainerStyle={{
         flexGrow: 1,
         paddingBottom: insets.bottom,
         paddingHorizontal: IOVisualCostants.appMarginDefault
       }}
       data={data?.services}
-      ItemSeparatorComponent={Divider}
-      ListEmptyComponent={ListEmptyComponent}
-      ListFooterComponent={ListFooterComponent}
-      ListHeaderComponent={ListHeaderComponent}
-      ListHeaderComponentStyle={{
-        marginBottom: 16,
-        marginHorizontal: -IOVisualCostants.appMarginDefault
-      }}
       onEndReached={handleEndReached}
       onEndReachedThreshold={0.1}
       ref={animatedFlatListRef}

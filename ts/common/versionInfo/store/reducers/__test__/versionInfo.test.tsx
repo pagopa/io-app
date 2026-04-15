@@ -1,6 +1,5 @@
 import DeviceInfo from "react-native-device-info";
 import { createStore } from "redux";
-
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { IOVersionInfo } from "../../../types/IOVersionInfo";
@@ -11,8 +10,8 @@ import {
 import { mockIoVersionInfo } from "../__mock__/ioVersionInfo";
 import { minAppVersionAppVersionTestCases } from "../__mock__/testVersion";
 import {
-  isAppSupportedSelector,
-  isPagoPaSupportedSelector
+  isPagoPaSupportedSelector,
+  isAppSupportedSelector
 } from "../versionInfo";
 
 describe("versionInfo selectors", () => {

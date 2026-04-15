@@ -8,7 +8,6 @@ import Animated, {
   withSpring,
   WithSpringConfig
 } from "react-native-reanimated";
-
 import FocusAwareStatusBar from "../../../components/ui/FocusAwareStatusBar";
 
 const CARDS = [
@@ -56,22 +55,22 @@ export const DSItwBrandExploration = () => {
         }}
       />
       <FocusAwareStatusBar
-        backgroundColor={SCREEN_BGs.hero}
         barStyle={"dark-content"}
+        backgroundColor={SCREEN_BGs.hero}
       />
       <Animated.ScrollView
-        contentContainerStyle={{ backgroundColor: SCREEN_BGs.hero }}
         ref={scrollRef}
-        showsVerticalScrollIndicator={false}
         style={styles.container}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ backgroundColor: SCREEN_BGs.hero }}
       >
         <View style={styles.heroSection}>
           <View style={styles.cardsContainer}>
             {cardsWithBuffer.map((card, index) => (
               <Card
+                key={card.id}
                 color={card.color}
                 index={index}
-                key={card.id}
                 scrollOffset={scrollOffset}
                 totalCards={cardsWithBuffer.length}
               />
@@ -99,8 +98,8 @@ export const DSItwBrandExploration = () => {
 interface CardProps {
   color: string;
   index: number;
-  scrollOffset: SharedValue<number>;
   totalCards: number;
+  scrollOffset: SharedValue<number>;
 }
 
 const Card = ({ color, index, scrollOffset, totalCards }: CardProps) => {

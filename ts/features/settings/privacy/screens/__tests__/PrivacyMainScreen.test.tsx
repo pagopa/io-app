@@ -1,18 +1,17 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { fireEvent, within } from "@testing-library/react-native";
-import I18n from "i18next";
-import { Alert } from "react-native";
+import { within, fireEvent } from "@testing-library/react-native";
 import configureMockStore from "redux-mock-store";
-
+import { Alert } from "react-native";
+import I18n from "i18next";
 import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/backend/UserDataProcessingChoice";
-import { UserDataProcessingStatusEnum } from "../../../../../../definitions/backend/UserDataProcessingStatus";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
-import * as hooks from "../../../../../utils/hooks/usePrevious";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 import PrivacyMainScreen from "../PrivacyMainScreen";
+import { UserDataProcessingStatusEnum } from "../../../../../../definitions/backend/UserDataProcessingStatus";
+import * as hooks from "../../../../../utils/hooks/usePrevious";
+import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 
 jest.spyOn(Alert, "alert");
 

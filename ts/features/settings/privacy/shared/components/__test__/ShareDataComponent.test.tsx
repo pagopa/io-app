@@ -1,13 +1,12 @@
 import { fireEvent } from "@testing-library/react-native";
-import I18n from "i18next";
 import { createStore } from "redux";
-
-import { applicationChangeState } from "../../../../../../store/actions/application";
-import { appReducer } from "../../../../../../store/reducers";
-import { GlobalState } from "../../../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import I18n from "i18next";
 import { openWebUrl } from "../../../../../../utils/url";
 import { ShareDataComponent } from "../ShareDataComponent";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { appReducer } from "../../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../../store/actions/application";
 
 const mockPresentFn = jest.fn();
 const mockTrackInfo = jest.fn();

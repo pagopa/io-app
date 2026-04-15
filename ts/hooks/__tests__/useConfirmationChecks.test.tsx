@@ -1,6 +1,5 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import { Text, TouchableOpacity, View } from "react-native";
-
 import { useConfirmationChecks } from "../useConfirmationChecks";
 
 const UNFULLFILLED_CHECK_TEST = "Unfullfilled checks";

@@ -1,12 +1,12 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PersistConfig, persistReducer } from "redux-persist";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
+import { Action } from "../../../../../store/actions/types";
+import { NetworkError } from "../../../../../utils/errors";
 
 import { WalletApplicationStatusEnum } from "../../../../../../definitions/pagopa/walletv3/WalletApplicationStatus";
 import { WalletInfo } from "../../../../../../definitions/pagopa/walletv3/WalletInfo";
-import { Action } from "../../../../../store/actions/types";
-import { NetworkError } from "../../../../../utils/errors";
 import {
   paymentsGetMethodDetailsAction,
   paymentsPayPalBannerSetIsClosedAction,
@@ -14,8 +14,8 @@ import {
 } from "../actions";
 
 export type PaymentsMethodDetailsState = {
-  isWalletPayPalBannerClosed: boolean;
   walletDetails: pot.Pot<WalletInfo, NetworkError>;
+  isWalletPayPalBannerClosed: boolean;
 };
 
 const INITIAL_STATE: PaymentsMethodDetailsState = {
@@ -28,16 +28,6 @@ const reducer = (
   action: Action
 ): PaymentsMethodDetailsState => {
   switch (action.type) {
-    case getType(paymentsGetMethodDetailsAction.cancel):
-      return {
-        ...state,
-        walletDetails: pot.none
-      };
-    case getType(paymentsGetMethodDetailsAction.failure):
-      return {
-        ...state,
-        walletDetails: pot.toError(state.walletDetails, action.payload)
-      };
     // GET METHOD DETAILS
     case getType(paymentsGetMethodDetailsAction.request):
       return {
@@ -48,6 +38,16 @@ const reducer = (
       return {
         ...state,
         walletDetails: pot.some(action.payload)
+      };
+    case getType(paymentsGetMethodDetailsAction.failure):
+      return {
+        ...state,
+        walletDetails: pot.toError(state.walletDetails, action.payload)
+      };
+    case getType(paymentsGetMethodDetailsAction.cancel):
+      return {
+        ...state,
+        walletDetails: pot.none
       };
     case getType(paymentsPayPalBannerSetIsClosedAction):
       return {

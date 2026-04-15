@@ -1,11 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
-
-import { InstrumentTypeEnum } from "../../../../../../definitions/idpay/InstrumentDTO";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { idpayDiscountInitiativeInstrumentsSelector } from "../../../configuration/store";
-import { idpayInitiativeIdSelector } from "../../../details/store";
 import { IdPayCodeState } from "../reducers";
+import { idpayDiscountInitiativeInstrumentsSelector } from "../../../configuration/store";
+import { InstrumentTypeEnum } from "../../../../../../definitions/idpay/InstrumentDTO";
+import { idpayInitiativeIdSelector } from "../../../details/store";
 
 const idPayCodeStateSelector = (state: GlobalState): IdPayCodeState =>
   state.features.idPay.code;

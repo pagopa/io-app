@@ -1,14 +1,13 @@
 import { renderHook } from "@testing-library/react-native";
-
-import {
-  trackSendAarMandateCieCanCodeError,
-  trackSendAarMandateCieCardReading,
-  trackSendAarMandateCieCardReadingError,
-  trackSendAarMandateCieCardReadingFailure,
-  trackSendAarMandateCieCardReadingSuccess
-} from "../../analytics";
 import { CieReadState, ReadStatus } from "../useCieInternalAuthAndMrtdReading";
 import { useTrackCieReadingEvents } from "../useTrackCieReadingEvents";
+import {
+  trackSendAarMandateCieCardReading,
+  trackSendAarMandateCieCardReadingError,
+  trackSendAarMandateCieCardReadingSuccess,
+  trackSendAarMandateCieCanCodeError,
+  trackSendAarMandateCieCardReadingFailure
+} from "../../analytics";
 
 jest.mock("../../analytics", () => ({
   trackSendAarMandateCieCardReading: jest.fn(),

@@ -1,5 +1,4 @@
 import * as t from "io-ts";
-
 import { GatewayFaultPaymentProblemJson } from "../../../../../definitions/pagopa/ecommerce/GatewayFaultPaymentProblemJson";
 import { PartyConfigurationFaultPaymentProblemJson } from "../../../../../definitions/pagopa/ecommerce/PartyConfigurationFaultPaymentProblemJson";
 import { PaymentCanceledStatusFaultPaymentProblemJson } from "../../../../../definitions/pagopa/ecommerce/PaymentCanceledStatusFaultPaymentProblemJson";
@@ -10,9 +9,9 @@ import { ValidationFaultPaymentDataErrorProblemJson } from "../../../../../defin
 import { ValidationFaultPaymentUnavailableProblemJson } from "../../../../../definitions/pagopa/ecommerce/ValidationFaultPaymentUnavailableProblemJson";
 import { ValidationFaultPaymentUnknownProblemJson } from "../../../../../definitions/pagopa/ecommerce/ValidationFaultPaymentUnknownProblemJson";
 import { PaymentGenericErrorAfterUserCancellationProblemJson } from "./PaymentGenericErrorAfterUserCancellationProblemJson";
-import { PaymentSlowdownErrorProblemJson } from "./PaymentSlowdownErrorProblemJson";
 import { PaymentVerifyGenericErrorProblemJson } from "./PaymentVerifyGenericErrorProblemJson";
 import { PspPaymentMethodNotAvailableProblemJson } from "./PspPaymentMethodNotAvailableProblemJson";
+import { PaymentSlowdownErrorProblemJson } from "./PaymentSlowdownErrorProblemJson";
 
 export type WalletPaymentFailure = t.TypeOf<typeof WalletPaymentFailure>;
 export const WalletPaymentFailure = t.union([

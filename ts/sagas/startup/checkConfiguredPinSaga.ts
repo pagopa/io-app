@@ -1,16 +1,17 @@
-import { CommonActions } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import { call, select, take } from "typed-redux-saga/macro";
-
-import { isFastLoginEnabledSelector } from "../../features/authentication/fastLogin/store/selectors";
-import { isValidPinNumber } from "../../features/authentication/fastLogin/utils/pinPolicy";
-import { createPinSuccess } from "../../features/settings/security/store/actions/pinset";
-import NavigationService from "../../navigation/NavigationService";
-import ROUTES from "../../navigation/routes";
+import { call, take, select } from "typed-redux-saga/macro";
+import { CommonActions } from "@react-navigation/native";
 import { navigateToOnboardingPinScreenAction } from "../../store/actions/navigation";
+import { createPinSuccess } from "../../features/settings/security/store/actions/pinset";
+
 import { PinString } from "../../types/PinString";
 import { ReduxSagaEffect } from "../../types/utils";
+
 import { getPin } from "../../utils/keychain";
+import NavigationService from "../../navigation/NavigationService";
+import { isFastLoginEnabledSelector } from "../../features/authentication/fastLogin/store/selectors";
+import { isValidPinNumber } from "../../features/authentication/fastLogin/utils/pinPolicy";
+import ROUTES from "../../navigation/routes";
 
 export function* checkConfiguredPinSaga(): Generator<
   ReduxSagaEffect,

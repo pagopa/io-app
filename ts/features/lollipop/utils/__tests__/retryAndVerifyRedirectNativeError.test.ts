@@ -1,9 +1,8 @@
+import * as E from "fp-ts/lib/Either";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { LoginUtilsError } from "@pagopa/io-react-native-login-utils";
-import * as E from "fp-ts/lib/Either";
-
-import { AppDispatch } from "../../../../App";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../login";
+import { AppDispatch } from "../../../../App";
 
 const jwkPublicKey: PublicKey = {
   crv: "P-256",

@@ -2,7 +2,6 @@ import { ContentWrapper, H1, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { useCallback } from "react";
 import { StyleSheet } from "react-native";
-
 import { AnimatedImage } from "../../../../components/AnimatedImage.tsx";
 import IOMarkdown from "../../../../components/IOMarkdown/index.tsx";
 import { IOScrollView } from "../../../../components/ui/IOScrollView.tsx";
@@ -11,15 +10,15 @@ import { useIOSelector } from "../../../../store/hooks.ts";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp.ts";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 import { tosConfigSelector } from "../../../tos/store/selectors/index.ts";
-import { trackOpenItwTos } from "../../analytics";
 import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum.ts";
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
+import { trackItWalletActivationStart, trackItwIntroBack } from "../analytics";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog.tsx";
 import { itwIsActivationDisabledSelector } from "../../common/store/selectors/remoteConfig.ts";
 import { generateItwIOMarkdownRules } from "../../common/utils/markdown.tsx";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider.tsx";
 import { selectIsLoading } from "../../machine/eid/selectors.ts";
-import { trackItWalletActivationStart, trackItwIntroBack } from "../analytics";
+import { trackOpenItwTos } from "../../analytics";
 
 /**
  * This is the component that shows the information about the discovery process
@@ -85,6 +84,8 @@ export const ItwDiscoveryInfoLegacyComponent = () => {
 
   return (
     <IOScrollView
+      testID="itwDiscoveryInfoLegacyComponentTestID"
+      includeContentMargins={false}
       actions={{
         type: "SingleButton",
         primary: {
@@ -95,8 +96,6 @@ export const ItwDiscoveryInfoLegacyComponent = () => {
           onPress: handleContinuePress
         }
       }}
-      includeContentMargins={false}
-      testID="itwDiscoveryInfoLegacyComponentTestID"
     >
       <AnimatedImage
         source={require("../../../../../img/features/itWallet/discovery/diw_hero.png")}

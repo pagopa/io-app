@@ -1,15 +1,14 @@
-import { fireEvent, render } from "@testing-library/react-native";
+import { render, fireEvent } from "@testing-library/react-native";
+import { Text, Button } from "react-native";
 import I18n from "i18next";
-import { Button, Text } from "react-native";
-
-import * as navigationHooks from "../../../../../navigation/params/AppParamsList";
-import * as hooks from "../../../../../store/hooks";
-import { PinString } from "../../../../../types/PinString";
+import { useCreatePin } from "../useCreatePin";
 import * as keychain from "../../../../../utils/keychain";
 import * as analytics from "../../../common/analytics";
+import * as hooks from "../../../../../store/hooks";
+import * as navigationHooks from "../../../../../navigation/params/AppParamsList";
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
 import { createPinSuccess } from "../../store/actions/pinset";
-import { useCreatePin } from "../useCreatePin";
+import { PinString } from "../../../../../types/PinString";
 
 jest.mock("../../../../../utils/keychain", () => ({
   setPin: jest.fn()
@@ -61,8 +60,8 @@ const TestComponent = ({
     <>
       <Text testID="title">Test</Text>
       <Button
-        onPress={() => handleSubmit("1234" as PinString)}
         title="submit"
+        onPress={() => handleSubmit("1234" as PinString)}
       />
     </>
   );

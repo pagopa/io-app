@@ -1,10 +1,9 @@
 import { RouteProp, useRoute } from "@react-navigation/native";
-
 import { withAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
 import { PnParamsList } from "../../navigation/params";
 import PN_ROUTES from "../../navigation/routes";
-import { trackSendAarFailure } from "../analytics";
 import { SendQRScanFlowHandlerComponent } from "../components/SendQRScanFlowHandlerComponent";
+import { trackSendAarFailure } from "../analytics";
 
 export type SendQRScanFlowScreenProps = {
   aarUrl: string;

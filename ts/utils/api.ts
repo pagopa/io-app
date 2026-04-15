@@ -1,8 +1,8 @@
+import { Omit } from "@pagopa/ts-commons/lib/types";
 import {
   RequestHeaderProducer,
   RequestHeaders
 } from "@pagopa/ts-commons/lib/requests";
-import { Omit } from "@pagopa/ts-commons/lib/types";
 
 // withBearerToken injects the field 'Bearer' with value token into the parameter P
 // of the f function

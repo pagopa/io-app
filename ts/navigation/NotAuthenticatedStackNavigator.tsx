@@ -1,6 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { Platform } from "react-native";
-
 import AuthenticationNavigator from "../features/authentication/common/navigation/AuthenticationNavigator";
 import { AUTHENTICATION_ROUTES } from "../features/authentication/common/navigation/routes";
 import { ZendeskStackNavigator } from "../features/zendesk/navigation/navigator";
@@ -14,8 +13,8 @@ const NotAuthenticatedStackNavigator = () => (
     screenOptions={{ gestureEnabled: false, headerShown: false }}
   >
     <Stack.Screen
-      component={AuthenticationNavigator}
       name={AUTHENTICATION_ROUTES.MAIN}
+      component={AuthenticationNavigator}
     />
 
     <Stack.Group
@@ -26,8 +25,8 @@ const NotAuthenticatedStackNavigator = () => (
       }}
     >
       <Stack.Screen
-        component={ZendeskStackNavigator}
         name={ZENDESK_ROUTES.MAIN}
+        component={ZendeskStackNavigator}
       />
     </Stack.Group>
   </Stack.Navigator>

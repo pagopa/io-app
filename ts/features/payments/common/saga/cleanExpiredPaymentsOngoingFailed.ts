@@ -1,9 +1,8 @@
 import { SagaIterator } from "redux-saga";
-import { put, select } from "typed-redux-saga/macro";
-
-import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
+import { select, put } from "typed-redux-saga/macro";
 import { removeExpiredPaymentsOngoingFailedAction } from "../../history/store/actions";
 import { selectPaymentsOngoingFailed } from "../../history/store/selectors";
+import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
 
 const PAYMENT_ONGOING_RPTID_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
 

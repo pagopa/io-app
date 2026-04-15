@@ -1,16 +1,15 @@
 import { expectSaga } from "redux-saga-test-plan";
 import { select } from "typed-redux-saga/macro";
-
 import { progressSelector as identificationStatusSelector } from "../../../../identification/store/selectors";
-import { setOfflineAccessReason } from "../../../../ingress/store/actions";
-import { OfflineAccessReasonEnum } from "../../../../ingress/store/reducer";
-import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
 import { itwUpdateWalletInstanceStatus } from "../../../walletInstance/store/actions";
 import {
   itwOfflineAccessCounterReset,
   itwOfflineAccessCounterUp
 } from "../../store/actions/securePreferences";
 import { watchItwOfflineAccess } from "../offlineAccess";
+import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
+import { setOfflineAccessReason } from "../../../../ingress/store/actions";
+import { OfflineAccessReasonEnum } from "../../../../ingress/store/reducer";
 
 describe("watchItwOfflineAccess", () => {
   it("should reset offline access counter on wallet instance status update", async () => {

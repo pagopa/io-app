@@ -20,7 +20,6 @@ import {
 } from "react";
 import { Alert, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
 import { LandingCardComponent } from "../../../../../components/LandingCardComponent";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import SectionStatusComponent from "../../../../../components/SectionStatus";
@@ -28,25 +27,18 @@ import { helpCenterHowToDoWhenSessionIsExpiredUrl } from "../../../../../config"
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { startupLoadSuccess } from "../../../../../store/actions/startup";
 import {
   useIODispatch,
   useIOSelector,
   useIOStore
 } from "../../../../../store/hooks";
 import { continueWithRootOrJailbreakSelector } from "../../../../../store/reducers/persistedPreferences";
-import { StartupStatusEnum } from "../../../../../store/reducers/startup";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { trackHelpCenterCtaTapped } from "../../../../../utils/analytics";
-import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
 import { isTablet } from "../../../../../utils/device";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { openWebUrl } from "../../../../../utils/url";
-import { identificationRequest } from "../../../../identification/store/actions";
-import { setOfflineAccessReason } from "../../../../ingress/store/actions";
-import { OfflineAccessReasonEnum } from "../../../../ingress/store/reducer";
-import { itwOfflineAccessAvailableSelector } from "../../../../itwallet/common/store/selectors";
 import {
   loginCieWizardSelected,
   trackCieBottomSheetScreenView,
@@ -61,6 +53,14 @@ import {
   sessionCorrupted,
   sessionExpired
 } from "../../../common/store/actions";
+
+import { startupLoadSuccess } from "../../../../../store/actions/startup";
+import { StartupStatusEnum } from "../../../../../store/reducers/startup";
+import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
+import { identificationRequest } from "../../../../identification/store/actions";
+import { setOfflineAccessReason } from "../../../../ingress/store/actions";
+import { OfflineAccessReasonEnum } from "../../../../ingress/store/reducer";
+import { itwOfflineAccessAvailableSelector } from "../../../../itwallet/common/store/selectors";
 import {
   isSessionCorruptedSelector,
   isSessionExpiredSelector
@@ -121,40 +121,36 @@ export const LandingScreen = () => {
     component: (
       <View>
         <ModuleNavigation
-          icon="fiscalCodeIndividual"
-          onPress={handleNavigateToCiePinScreen}
-          subtitle={I18n.t(
-            "authentication.landing.cie_bottom_sheet.module_cie_pin.subtitle"
-          )}
-          testID="bottom-sheet-login-with-cie-pin"
           title={I18n.t(
             "authentication.landing.cie_bottom_sheet.module_cie_pin.title"
           )}
+          subtitle={I18n.t(
+            "authentication.landing.cie_bottom_sheet.module_cie_pin.subtitle"
+          )}
+          icon="fiscalCodeIndividual"
+          testID="bottom-sheet-login-with-cie-pin"
+          onPress={handleNavigateToCiePinScreen}
         />
         <VSpacer size={8} />
         <ModuleNavigation
+          title={I18n.t(
+            "authentication.landing.cie_bottom_sheet.module_cie_id.title"
+          )}
+          subtitle={I18n.t(
+            "authentication.landing.cie_bottom_sheet.module_cie_id.subtitle"
+          )}
+          icon="device"
+          testID="bottom-sheet-login-with-cie-id"
           badge={{
             variant: "highlight",
             text: I18n.t(
               "authentication.landing.cie_bottom_sheet.module_cie_id.badge"
             )
           }}
-          icon="device"
           onPress={handleNavigateToCieIdLoginScreen}
-          subtitle={I18n.t(
-            "authentication.landing.cie_bottom_sheet.module_cie_id.subtitle"
-          )}
-          testID="bottom-sheet-login-with-cie-id"
-          title={I18n.t(
-            "authentication.landing.cie_bottom_sheet.module_cie_id.title"
-          )}
         />
         <VSpacer size={24} />
         <Banner
-          action={I18n.t(
-            "authentication.landing.cie_bottom_sheet.help_banner.action"
-          )}
-          color="turquoise"
           onPress={() => {
             void loginCieWizardSelected();
 
@@ -162,10 +158,14 @@ export const LandingScreen = () => {
               screen: AUTHENTICATION_ROUTES.CIE_ID_WIZARD
             });
           }}
-          pictogramName="help"
           testID="bottom-sheet-login-wizards"
+          pictogramName="help"
+          color="turquoise"
           title={I18n.t(
             "authentication.landing.cie_bottom_sheet.help_banner.title"
+          )}
+          action={I18n.t(
+            "authentication.landing.cie_bottom_sheet.help_banner.action"
           )}
         />
         <VSpacer />
@@ -340,6 +340,14 @@ export const LandingScreen = () => {
       <SafeAreaView style={{ flex: 1 }} testID="LandingScreen">
         {isSessionExpired || isSessionCorrupted ? (
           <LandingSessionExpiredComponent
+            ref={accessibilityFirstFocuseViewRef}
+            pictogramName={"identityCheck"}
+            title={I18n.t(
+              `authentication.landing.${sessionIssueLocalizationKey}.title`
+            )}
+            content={I18n.t(
+              `authentication.landing.${sessionIssueLocalizationKey}.body`
+            )}
             buttonLink={{
               label: I18n.t(
                 `authentication.landing.${sessionIssueLocalizationKey}.linkButtonLabel`
@@ -359,59 +367,51 @@ export const LandingScreen = () => {
                 });
               }
             }}
-            content={I18n.t(
-              `authentication.landing.${sessionIssueLocalizationKey}.body`
-            )}
-            pictogramName={"identityCheck"}
-            ref={accessibilityFirstFocuseViewRef}
-            title={I18n.t(
-              `authentication.landing.${sessionIssueLocalizationKey}.title`
-            )}
           />
         ) : (
           <Carousel
+            ref={accessibilityFirstFocuseViewRef}
             carouselCards={carouselCards}
             dotEasterEggCallback={navigateToCieUatSelectionScreen}
-            ref={accessibilityFirstFocuseViewRef}
           />
         )}
 
         <SectionStatusComponent sectionKey={"login"} />
         <ContentWrapper>
           <IOButton
-            color={isCieUatEnabled ? "danger" : "primary"}
             fullWidth
-            icon="cieLetter"
+            variant="solid"
+            color={isCieUatEnabled ? "danger" : "primary"}
             label={I18n.t("authentication.landing.loginCie")}
+            icon="cieLetter"
             onPress={navigateToCiePinScreen}
             testID="landing-button-login-cie"
-            variant="solid"
           />
           <VSpacer size={SPACE_BETWEEN_BUTTONS} />
           <IOButton
-            color="primary"
             fullWidth
-            icon="spid"
+            variant="solid"
+            color="primary"
             // if CIE is not supported, since the new DS has not a
             // "semi-enabled" state, we leave the button enabled
             // but we navigate to the CIE unsupported info screen.
             label={I18n.t("authentication.landing.loginSpid")}
+            icon="spid"
             onPress={() => {
               void trackSpidLoginSelected();
               navigateToIdpSelection();
             }}
             testID="landing-button-login-spid"
-            variant="solid"
           />
           <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
           {itwOfflineAccessAvailable && isSessionExpired && (
             <View style={{ alignSelf: "center" }}>
               <IOButton
+                variant="link"
                 accessibilityRole="link"
                 color="primary"
                 label={I18n.t("authentication.landing.show_wallet")}
                 onPress={navigateToWallet}
-                variant="link"
               />
               <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
             </View>

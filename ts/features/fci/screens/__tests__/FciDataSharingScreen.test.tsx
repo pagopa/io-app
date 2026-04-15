@@ -1,22 +1,21 @@
+import configureMockStore from "redux-mock-store";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-import configureMockStore from "redux-mock-store";
-
-import mockedProfile from "../../../../__mocks__/initializedProfile";
-import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
+import { applicationChangeState } from "../../../../store/actions/application";
 import { GlobalState } from "../../../../store/reducers/types";
-import { capitalize } from "../../../../utils/strings";
+import { FCI_ROUTES } from "../../navigation/routes";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import FciDataSharingScreen from "../valid/FciDataSharingScreen";
 import {
   profileEmailSelector,
   profileFiscalCodeSelector,
   profileNameSelector,
   profileSelector
 } from "../../../settings/common/store/selectors";
-import { FCI_ROUTES } from "../../navigation/routes";
-import FciDataSharingScreen from "../valid/FciDataSharingScreen";
+import { capitalize } from "../../../../utils/strings";
+import mockedProfile from "../../../../__mocks__/initializedProfile";
 
 describe("Test FciDataSharing screen", () => {
   beforeEach(() => {

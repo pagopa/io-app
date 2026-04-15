@@ -1,15 +1,14 @@
 import { ListItemInfo } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { useMemo } from "react";
-
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
 import { IOScrollViewWithListItems } from "../../../../components/ui/IOScrollViewWithListItems";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../../store/actions/persistedPreferences";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { getFlowType } from "../../../../utils/analytics";
-import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
 import { FAQsCategoriesType } from "../../../../utils/faq";
+import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { isProfileFirstOnBoardingSelector } from "../../../settings/common/store/selectors";
 import { useOnboardingAbortAlert } from "../../hooks/useOnboardingAbortAlert";
@@ -97,15 +96,15 @@ const MissingDeviceBiometricScreen = () => {
 
   return (
     <IOScrollViewWithListItems
-      actions={actions}
+      title={I18n.t("onboarding.biometric.available.title")}
+      subtitle={`${I18n.t(
+        "onboarding.biometric.available.body.text"
+      )}\n\n${I18n.t("onboarding.biometric.available.body.notEnrolled.text")}`}
       listItemHeaderLabel={I18n.t(
         "onboarding.biometric.available.body.notEnrolled.label"
       )}
       renderItems={listItems}
-      subtitle={`${I18n.t(
-        "onboarding.biometric.available.body.text"
-      )}\n\n${I18n.t("onboarding.biometric.available.body.notEnrolled.text")}`}
-      title={I18n.t("onboarding.biometric.available.title")}
+      actions={actions}
     />
   );
 };

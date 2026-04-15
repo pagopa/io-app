@@ -1,32 +1,31 @@
 import { PersistPartial } from "redux-persist";
 import { isActionOf } from "typesafe-actions";
-
-import { Action } from "../../../../../store/actions/types";
-import {
-  consolidateActiveSessionLoginData,
-  setFinalizeLoggedOutUserWithDifferentCF
-} from "../../../activeSessionLogin/store/actions";
-import { refreshSessionToken } from "../../../fastLogin/store/actions/tokenRefreshActions";
 import {
   clearCurrentSession,
   idpSelected,
-  loginFailure,
   loginSuccess,
   logoutFailure,
-  logoutRequest,
   logoutSuccess,
   resetAuthenticationState,
-  sessionCorrupted,
   sessionExpired,
   sessionInformationLoadSuccess,
-  sessionInvalid
+  sessionInvalid,
+  logoutRequest,
+  loginFailure,
+  sessionCorrupted
 } from "../actions";
+import { Action } from "../../../../../store/actions/types";
+import { refreshSessionToken } from "../../../fastLogin/store/actions/tokenRefreshActions";
 import { AuthenticationState, LoggedOutWithoutIdp } from "../models";
 import {
   isLoggedIn,
   isLoggedOutWithIdp,
   isSessionExpired
 } from "../utils/guards";
+import {
+  consolidateActiveSessionLoginData,
+  setFinalizeLoggedOutUserWithDifferentCF
+} from "../../../activeSessionLogin/store/actions";
 
 // Here we mix the plain AuthenticationState with the keys added by redux-persist
 type PersistedAuthenticationState = AuthenticationState & PersistPartial;

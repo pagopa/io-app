@@ -1,11 +1,11 @@
-import * as AR from "fp-ts/lib/Array";
-import { pipe } from "fp-ts/lib/function";
 /**
  * A reducer for the Installation state.
  * @flow
  */
 import { getType } from "typesafe-actions";
 
+import * as AR from "fp-ts/lib/Array";
+import { pipe } from "fp-ts/lib/function";
 import {
   appVersionHistory,
   previousInstallationDataDeleteSuccess
@@ -16,8 +16,8 @@ import { GlobalState } from "./types";
 export const MAX_APP_VERSION_HISTORY_SIZE = 10;
 
 export type InstallationState = Readonly<{
-  appVersionHistory: Array<string>;
   isFirstRunAfterInstall: boolean;
+  appVersionHistory: Array<string>;
 }>;
 
 export const INSTALLATION_INITIAL_STATE: InstallationState = {
@@ -40,6 +40,8 @@ const reducer = (
   action: Action
 ): InstallationState => {
   switch (action.type) {
+    case getType(previousInstallationDataDeleteSuccess):
+      return { ...state, isFirstRunAfterInstall: false };
     case getType(appVersionHistory):
       // avoid duplicated elements
       if (state.appVersionHistory.includes(action.payload)) {
@@ -52,8 +54,6 @@ const reducer = (
           AR.takeRight(MAX_APP_VERSION_HISTORY_SIZE)
         )
       };
-    case getType(previousInstallationDataDeleteSuccess):
-      return { ...state, isFirstRunAfterInstall: false };
     default:
       return state;
   }

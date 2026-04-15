@@ -2,7 +2,6 @@ import { IOPictograms } from "@pagopa/io-app-design-system";
 import { EmailString } from "@pagopa/ts-commons/lib/strings";
 import I18n from "i18next";
 import { Linking } from "react-native";
-
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import {
   OperationResultScreenContent,
@@ -14,12 +13,12 @@ import { WithTestID } from "../../../types/WithTestID";
 import {
   addTicketCustomField,
   assistanceToolRemoteConfig,
-  defaultZendeskBonusesCategory,
   resetCustomFields,
-  zendeskBonusAndInitiativeCategoryId,
   zendeskCategoryId,
   zendeskFCICategory,
-  zendeskFciId
+  zendeskFciId,
+  defaultZendeskBonusesCategory,
+  zendeskBonusAndInitiativeCategoryId
 } from "../../../utils/supportAssistance";
 import {
   zendeskSelectedCategory,
@@ -29,14 +28,14 @@ import {
 import { fciSignatureRequestIdSelector } from "../store/reducers/fciSignatureRequest";
 
 export type Props = WithTestID<{
-  assistance?: boolean;
+  title: string;
+  subTitle: string;
+  pictogram: IOPictograms;
   email?: EmailString;
+  retry?: boolean;
+  assistance?: boolean;
   onPress: () => void;
   onPressAssistance?: () => void;
-  pictogram: IOPictograms;
-  retry?: boolean;
-  subTitle: string;
-  title: string;
 }>;
 const SignatureStatusComponent = ({
   title,
@@ -148,11 +147,11 @@ const SignatureStatusComponent = ({
   return (
     <OperationResultScreenContent
       isHeaderVisible={false}
-      onSubtitleLinkPress={url => Linking.openURL(url)}
-      pictogram={pictogram}
-      subtitle={composedSubtitle}
-      testID={testID}
       title={title}
+      subtitle={composedSubtitle}
+      pictogram={pictogram}
+      testID={testID}
+      onSubtitleLinkPress={url => Linking.openURL(url)}
       {...operationResultActions()}
     />
   );

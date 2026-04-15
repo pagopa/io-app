@@ -1,6 +1,5 @@
-import I18n from "i18next";
 import { useCallback, useLayoutEffect } from "react";
-
+import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
@@ -30,21 +29,21 @@ export const ServiceDetailsFailure = ({
 
   return (
     <OperationResultScreenContent
+      pictogram="umbrella"
+      title={I18n.t("services.details.failure.title")}
+      subtitle={I18n.t("services.details.failure.subtitle")}
       action={{
         label: I18n.t("services.details.failure.back"),
         accessibilityLabel: I18n.t("services.details.failure.back"),
         onPress: handleBack,
         testID: "service-details-failure-back"
       }}
-      pictogram="umbrella"
       secondaryAction={{
         label: I18n.t("services.details.failure.retry"),
         accessibilityLabel: I18n.t("services.details.failure.retry"),
         onPress: handleRetry,
         testID: "service-details-failure-retry"
       }}
-      subtitle={I18n.t("services.details.failure.subtitle")}
-      title={I18n.t("services.details.failure.title")}
     />
   );
 };

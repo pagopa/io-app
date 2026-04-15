@@ -1,21 +1,20 @@
 import { getType } from "typesafe-actions";
-
-import { applicationInitialized } from "../../../../store/actions/application";
 import { Action } from "../../../../store/actions/types";
-import { GlobalState } from "../../../../store/reducers/types";
 import {
   setEngagementScreenShown,
   setPushPermissionsRequestDuration,
   updateSystemNotificationsEnabled
 } from "../actions/environment";
+import { GlobalState } from "../../../../store/reducers/types";
 import { notificationsInfoScreenConsent } from "../actions/profileNotificationPermissions";
+import { applicationInitialized } from "../../../../store/actions/application";
 
 export type EnvironmentState = {
   applicationInitialized: boolean;
-  engagementScreenShownThisSession: boolean;
   onboardingInstructionsShown: boolean;
-  pushNotificationPermissionsRequestDuration?: number;
   systemNotificationsEnabled: boolean;
+  pushNotificationPermissionsRequestDuration?: number;
+  engagementScreenShownThisSession: boolean;
 };
 
 export const INITIAL_STATE = {
@@ -35,18 +34,18 @@ export const environmentReducer = (
       return { ...state, applicationInitialized: true };
     case getType(notificationsInfoScreenConsent):
       return { ...state, onboardingInstructionsShown: true };
-    case getType(setEngagementScreenShown):
-      return {
-        ...state,
-        engagementScreenShownThisSession: true
-      };
+    case getType(updateSystemNotificationsEnabled):
+      return { ...state, systemNotificationsEnabled: action.payload };
     case getType(setPushPermissionsRequestDuration):
       return {
         ...state,
         pushNotificationPermissionsRequestDuration: action.payload
       };
-    case getType(updateSystemNotificationsEnabled):
-      return { ...state, systemNotificationsEnabled: action.payload };
+    case getType(setEngagementScreenShown):
+      return {
+        ...state,
+        engagementScreenShownThisSession: true
+      };
   }
   return state;
 };

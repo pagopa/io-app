@@ -1,5 +1,4 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
-
 import { BonusesAvailable } from "../../../../../../definitions/content/BonusesAvailable";
 
 /**

@@ -1,11 +1,11 @@
+import { TourState, tourInitialState } from "../../reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { tourInitialState, TourState } from "../../reducers";
 import {
+  isTourActiveSelector,
   activeGroupIdSelector,
   activeStepIndexSelector,
-  isTourActiveSelector,
-  isTourCompletedSelector,
-  tourItemsForActiveGroupSelector
+  tourItemsForActiveGroupSelector,
+  isTourCompletedSelector
 } from "../index";
 
 jest.mock("@react-native-async-storage/async-storage", () =>

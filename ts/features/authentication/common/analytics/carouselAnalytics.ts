@@ -1,8 +1,28 @@
 import { JSX } from "react";
-
 import { LandingCardComponent } from "../../../../components/LandingCardComponent";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
+
+function trackCarouselMessageScreen() {
+  void mixpanelTrack(
+    "LOGIN_CAROUSEL_2",
+    buildEventProperties("UX", "screen_view")
+  );
+}
+
+function trackCarouselPaymentMethodScreen() {
+  void mixpanelTrack(
+    "LOGIN_CAROUSEL_3",
+    buildEventProperties("UX", "screen_view")
+  );
+}
+
+function trackCarouselPaymentScreen() {
+  void mixpanelTrack(
+    "LOGIN_CAROUSEL_4",
+    buildEventProperties("UX", "screen_view")
+  );
+}
 
 export function trackCarousel(
   index: number,
@@ -26,25 +46,4 @@ export function trackCarousel(
       break;
     }
   }
-}
-
-function trackCarouselMessageScreen() {
-  void mixpanelTrack(
-    "LOGIN_CAROUSEL_2",
-    buildEventProperties("UX", "screen_view")
-  );
-}
-
-function trackCarouselPaymentMethodScreen() {
-  void mixpanelTrack(
-    "LOGIN_CAROUSEL_3",
-    buildEventProperties("UX", "screen_view")
-  );
-}
-
-function trackCarouselPaymentScreen() {
-  void mixpanelTrack(
-    "LOGIN_CAROUSEL_4",
-    buildEventProperties("UX", "screen_view")
-  );
 }

@@ -1,5 +1,4 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
-
 import { TourItem } from "../../types";
 
 export const registerTourItemAction =
@@ -28,11 +27,11 @@ export const resetTourCompletedAction = createStandardAction(
 )<{ groupId: string }>();
 
 export type TourActions =
-  | ActionType<typeof completeTourAction>
-  | ActionType<typeof nextTourStepAction>
-  | ActionType<typeof prevTourStepAction>
   | ActionType<typeof registerTourItemAction>
-  | ActionType<typeof resetTourCompletedAction>
+  | ActionType<typeof unregisterTourItemAction>
   | ActionType<typeof startTourAction>
   | ActionType<typeof stopTourAction>
-  | ActionType<typeof unregisterTourItemAction>;
+  | ActionType<typeof nextTourStepAction>
+  | ActionType<typeof prevTourStepAction>
+  | ActionType<typeof completeTourAction>
+  | ActionType<typeof resetTourCompletedAction>;

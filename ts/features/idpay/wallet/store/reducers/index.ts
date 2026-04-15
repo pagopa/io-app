@@ -2,37 +2,36 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-
 import { StatusEnum as InitiativeStatus } from "../../../../../../definitions/idpay/InitiativeDTO";
 import { StatusEnum as InstrumentInitiativeStatus } from "../../../../../../definitions/idpay/InitiativesStatusDTO";
 import { InitiativesWithInstrumentDTO } from "../../../../../../definitions/idpay/InitiativesWithInstrumentDTO";
-import { ListUsersOnboardingStatusDTO } from "../../../../../../definitions/idpay/ListUsersOnboardingStatusDTO";
 import { WalletDTO } from "../../../../../../definitions/idpay/WalletDTO";
 import { Action } from "../../../../../store/actions/types";
 import { isIdPayEnabledSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
 import {
+  idPayInitiativeWaitingListGet,
   idPayInitiativesFromInstrumentGet,
+  idPayWalletGet,
   idpayInitiativesInstrumentDelete,
   idpayInitiativesInstrumentEnroll,
-  idPayInitiativeWaitingListGet,
-  idPayWalletGet,
   setIdPayOnboardingSucceeded
 } from "../actions";
+import { ListUsersOnboardingStatusDTO } from "../../../../../../definitions/idpay/ListUsersOnboardingStatusDTO";
 
 export type IdPayWalletState = {
   initiatives: pot.Pot<WalletDTO, NetworkError>;
-  initiativesAwaitingStatusUpdate: Record<string, boolean>;
   initiativesWithInstrument: pot.Pot<
     InitiativesWithInstrumentDTO,
     NetworkError
   >;
-  initiativeWaitingList: pot.Pot<ListUsersOnboardingStatusDTO, NetworkError>;
+  initiativesAwaitingStatusUpdate: Record<string, boolean>;
   // structure: {initiativeId: is waiting for response to pair/unpair api call}
   // this will be populated on selection and reset when not loading and
   // we have a response from BE
   onboardingSucceeded: boolean;
+  initiativeWaitingList: pot.Pot<ListUsersOnboardingStatusDTO, NetworkError>;
 };
 
 const INITIAL_STATE: IdPayWalletState = {
@@ -48,13 +47,14 @@ const reducer = (
   action: Action
 ): IdPayWalletState => {
   switch (action.type) {
-    case getType(idPayInitiativesFromInstrumentGet.failure):
+    case getType(idPayWalletGet.request):
+      return { ...state, initiatives: pot.toLoading(state.initiatives) };
+    case getType(idPayWalletGet.success):
+      return { ...state, initiatives: pot.some(action.payload) };
+    case getType(idPayWalletGet.failure):
       return {
         ...state,
-        initiativesWithInstrument: pot.toError(
-          state.initiativesWithInstrument,
-          action.payload
-        )
+        initiatives: pot.toError(state.initiatives, action.payload)
       };
     // Initiatives with instrument
     case getType(idPayInitiativesFromInstrumentGet.request):
@@ -102,16 +102,13 @@ const reducer = (
         initiativesWithInstrument: pot.some(action.payload),
         initiativesAwaitingStatusUpdate: initiativesToKeepInLoadingState
       };
-    case getType(idpayInitiativesInstrumentDelete.failure):
-    case getType(idpayInitiativesInstrumentDelete.success):
-    case getType(idpayInitiativesInstrumentEnroll.failure):
-    case getType(idpayInitiativesInstrumentEnroll.success):
+    case getType(idPayInitiativesFromInstrumentGet.failure):
       return {
         ...state,
-        initiativesAwaitingStatusUpdate: {
-          ...state.initiativesAwaitingStatusUpdate,
-          [action.payload.initiativeId]: false
-        }
+        initiativesWithInstrument: pot.toError(
+          state.initiativesWithInstrument,
+          action.payload
+        )
       };
     // initiative pairing
     case getType(idpayInitiativesInstrumentDelete.request):
@@ -123,13 +120,21 @@ const reducer = (
           [action.payload.initiativeId]: true
         }
       };
-    case getType(idPayInitiativeWaitingListGet.failure):
+    case getType(idpayInitiativesInstrumentDelete.success):
+    case getType(idpayInitiativesInstrumentEnroll.success):
+    case getType(idpayInitiativesInstrumentDelete.failure):
+    case getType(idpayInitiativesInstrumentEnroll.failure):
       return {
         ...state,
-        initiativeWaitingList: pot.toError(
-          state.initiativeWaitingList,
-          action.payload
-        )
+        initiativesAwaitingStatusUpdate: {
+          ...state.initiativesAwaitingStatusUpdate,
+          [action.payload.initiativeId]: false
+        }
+      };
+    case getType(setIdPayOnboardingSucceeded):
+      return {
+        ...state,
+        onboardingSucceeded: action.payload
       };
     case getType(idPayInitiativeWaitingListGet.request):
       return {
@@ -138,19 +143,13 @@ const reducer = (
       };
     case getType(idPayInitiativeWaitingListGet.success):
       return { ...state, initiativeWaitingList: pot.some(action.payload) };
-    case getType(idPayWalletGet.failure):
+    case getType(idPayInitiativeWaitingListGet.failure):
       return {
         ...state,
-        initiatives: pot.toError(state.initiatives, action.payload)
-      };
-    case getType(idPayWalletGet.request):
-      return { ...state, initiatives: pot.toLoading(state.initiatives) };
-    case getType(idPayWalletGet.success):
-      return { ...state, initiatives: pot.some(action.payload) };
-    case getType(setIdPayOnboardingSucceeded):
-      return {
-        ...state,
-        onboardingSucceeded: action.payload
+        initiativeWaitingList: pot.toError(
+          state.initiativeWaitingList,
+          action.payload
+        )
       };
   }
   return state;
@@ -221,12 +220,12 @@ export const idPayInitiativeFromInstrumentPotSelector = (
       const isAwaitingUpdate = initiativesAwaitingUpdate[initiativeId];
 
       switch (isAwaitingUpdate) {
-        case false:
-          return pot.someLoading(isItemActive);
-        case true:
-          return pot.someLoading(isItemActive);
         case undefined:
           return pot.some(isItemActive);
+        case true:
+          return pot.someLoading(isItemActive);
+        case false:
+          return pot.someLoading(isItemActive);
         default:
           return pot.none;
       }

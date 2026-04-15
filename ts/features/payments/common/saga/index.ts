@@ -1,23 +1,22 @@
 import { SagaIterator } from "redux-saga";
 import { fork, select, takeLatest } from "typed-redux-saga/macro";
-
-import { walletApiBaseUrl, walletApiUatBaseUrl } from "../../../../config";
 import { isPagoPATestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
+import { walletApiBaseUrl, walletApiUatBaseUrl } from "../../../../config";
+import { watchPaymentsOnboardingSaga } from "../../onboarding/saga";
 import { watchPaymentsCheckoutSaga } from "../../checkout/saga";
 import { watchPaymentsMethodDetailsSaga } from "../../details/saga";
-import { watchPaymentsOnboardingSaga } from "../../onboarding/saga";
-import { watchPaymentsReceiptSaga } from "../../receipts/saga";
 import { watchPaymentsWalletSaga } from "../../wallet/saga";
+import { watchPaymentsReceiptSaga } from "../../receipts/saga";
+import { paymentsGetPagoPaPlatformSessionTokenAction } from "../store/actions";
 import {
   createPagoPaClient,
   createPaymentClient,
   createTransactionClient,
   createWalletClient
 } from "../api/client";
-import { paymentsGetPagoPaPlatformSessionTokenAction } from "../store/actions";
-import { cleanExpiredPaymentsOngoingFailed } from "./cleanExpiredPaymentsOngoingFailed";
 import { handlePaymentsSessionToken } from "./handlePaymentsSessionToken";
 import { handleResumePaymentsPendingActions } from "./handleResumePaymentsPendingActions";
+import { cleanExpiredPaymentsOngoingFailed } from "./cleanExpiredPaymentsOngoingFailed";
 
 export function* watchPaymentsSaga(walletToken: string): SagaIterator {
   const isPagoPATestEnabled = yield* select(isPagoPATestEnabledSelector);

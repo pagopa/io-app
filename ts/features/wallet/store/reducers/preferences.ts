@@ -1,14 +1,13 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import _ from "lodash";
 import {
-  createMigrate,
   MigrationManifest,
   PersistConfig,
   PersistedState,
+  createMigrate,
   persistReducer
 } from "redux-persist";
 import { getType } from "typesafe-actions";
-
 import { Action } from "../../../../store/actions/types";
 import { isDevEnv } from "../../../../utils/environment";
 import { WalletCardCategoryFilter } from "../../types";

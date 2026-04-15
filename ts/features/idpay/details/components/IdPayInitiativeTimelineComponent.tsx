@@ -12,7 +12,6 @@ import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
 import { ComponentProps, Fragment } from "react";
 import { View } from "react-native";
-
 import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 import {
   AppParamsList,
@@ -71,11 +70,11 @@ const IdPayInitiativeTimelineComponent = ({
     if (isError) {
       return (
         <BannerErrorState
+          label={I18n.t("features.wallet.home.otherMethods.error.banner.label")}
+          icon="warningFilled"
           actionText={I18n.t(
             "features.payments.methods.error.banner.retryButton"
           )}
-          icon="warningFilled"
-          label={I18n.t("features.wallet.home.otherMethods.error.banner.label")}
           onPress={fetchTimelineData}
         />
       );
@@ -94,12 +93,12 @@ const IdPayInitiativeTimelineComponent = ({
         {timeline.slice(0, size).map((operation, index) => (
           <Fragment key={operation.operationId}>
             <IdPayTimelineOperationListItem
-              onPress={() => detailsBottomSheet.present(operation)}
               operation={operation}
               pressable={
                 initiative?.initiativeRewardType !==
                 InitiativeRewardTypeEnum.EXPENSE
               }
+              onPress={() => detailsBottomSheet.present(operation)}
             />
             {index < size - 1 && index !== timeline.length - 1 ? (
               <Divider />
@@ -127,10 +126,10 @@ const IdPayInitiativeTimelineComponent = ({
     <View testID="IDPayTimelineTestID">
       <VSpacer size={16} />
       <ListItemHeader
-        endElement={showAllCta}
         label={I18n.t(
           "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperations"
         )}
+        endElement={showAllCta}
       />
       {renderTimelineContent()}
       {detailsBottomSheet.bottomSheet}
@@ -150,7 +149,7 @@ const TimelineHeaderComponent = ({
       )}
     </H6>
     {onShowMorePress && (
-      <Body asLink onPress={onShowMorePress} weight="Semibold">
+      <Body weight="Semibold" asLink onPress={onShowMorePress}>
         {I18n.t(
           "idpay.initiative.details.initiativeDetailsScreen.configured.settings.showMore"
         )}
@@ -171,7 +170,7 @@ const TimelineComponentSkeleton = ({ size = 3 }: Pick<Props, "size">) => (
 );
 
 const EmptyTimelineComponent = () => (
-  <BodySmall testID="IDPayEmptyTimelineTestID" weight="Regular">
+  <BodySmall weight="Regular" testID="IDPayEmptyTimelineTestID">
     {I18n.t(
       "idpay.initiative.details.initiativeDetailsScreen.configured.yourOperationsSubtitle"
     )}

@@ -1,19 +1,18 @@
 import {
-  delay,
   put,
-  race,
   select,
-  take,
-  takeLatest
+  takeLatest,
+  delay,
+  race,
+  take
 } from "typed-redux-saga/macro";
-
-import { applicationInitialized } from "../../../../../store/actions/application";
-import { clearPendingAction } from "../../store/actions/tokenRefreshActions";
-import { fastLoginPendingActionsSelector } from "../../store/selectors";
 import {
   testableHandleApplicationInitialized,
   watchPendingActionsSaga
 } from "../pendingActionsSaga";
+import { applicationInitialized } from "../../../../../store/actions/application";
+import { clearPendingAction } from "../../store/actions/tokenRefreshActions";
+import { fastLoginPendingActionsSelector } from "../../store/selectors";
 
 jest.mock("../../store/selectors", () => ({
   fastLoginPendingActionsSelector: jest.fn()

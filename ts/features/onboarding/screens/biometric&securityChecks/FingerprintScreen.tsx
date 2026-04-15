@@ -1,7 +1,6 @@
 import { Banner, Body, H2, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { ComponentProps, useMemo } from "react";
-
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { preferenceFingerprintIsEnabledSaveSuccess } from "../../../../store/actions/persistedPreferences";
@@ -11,8 +10,8 @@ import {
   BiometriActivationUserType,
   mayUserActivateBiometric
 } from "../../../../utils/biometrics";
-import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
 import { FAQsCategoriesType } from "../../../../utils/faq";
+import { ContextualHelpPropsMarkdown } from "../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { isProfileFirstOnBoardingSelector } from "../../../settings/common/store/selectors";
 import {
@@ -113,8 +112,8 @@ const FingerprintScreen = () => {
       <Body>{I18n.t("onboarding.biometric.available.body.text")}</Body>
       <VSpacer size={24} />
       <Banner
-        color="neutral"
         content={I18n.t("onboarding.biometric.available.settings")}
+        color="neutral"
         pictogramName="settings"
       />
     </IOScrollView>

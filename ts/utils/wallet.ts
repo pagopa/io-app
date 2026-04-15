@@ -1,7 +1,7 @@
 import * as E from "fp-ts/lib/Either";
-import I18n from "i18next";
 import * as t from "io-ts";
 import { Alert } from "react-native";
+import I18n from "i18next";
 /*
     Contains utility functions to check conditions
     used across project (currently just in CardComponent)

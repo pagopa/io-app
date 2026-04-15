@@ -1,7 +1,6 @@
 import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
-
 import { PreferredLanguageEnum } from "../../../../../../definitions/backend/PreferredLanguage";
 import { OperationDTO } from "../../../../../../definitions/idpay/OperationDTO";
 import { StatusEnum } from "../../../../../../definitions/idpay/TransactionDetailDTO";

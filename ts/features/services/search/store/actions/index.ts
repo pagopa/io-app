@@ -1,5 +1,4 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
-
 import { InstitutionsResource } from "../../../../../../definitions/services/InstitutionsResource";
 import { ScopeTypeEnum } from "../../../../../../definitions/services/ScopeType";
 import { NetworkError } from "../../../../../utils/errors";
@@ -7,8 +6,8 @@ import { NetworkError } from "../../../../../utils/errors";
 export type SearchPaginatedInstitutionsGetPayload = {
   limit: number;
   offset: number;
-  scope?: ScopeTypeEnum;
   search?: string;
+  scope?: ScopeTypeEnum;
   sessionId?: string;
 };
 

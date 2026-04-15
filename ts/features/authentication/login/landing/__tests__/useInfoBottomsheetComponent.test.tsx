@@ -1,13 +1,12 @@
 import { fireEvent } from "@testing-library/react-native";
-import I18n from "i18next";
 import { createStore } from "redux";
-
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { useIOSelector } from "../../../../../store/hooks";
-import { appReducer } from "../../../../../store/reducers";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import I18n from "i18next";
 import * as urlUtils from "../../../../../utils/url";
+import { useIOSelector } from "../../../../../store/hooks";
 import { useInfoBottomsheetComponent } from "../hooks/useInfoBottomsheetComponent";
+import { appReducer } from "../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 
 jest.mock("../../../../../store/hooks", () => ({
   useIOSelector: jest.fn(),

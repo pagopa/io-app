@@ -1,14 +1,13 @@
 import { IOColors, IOSkeleton } from "@pagopa/io-app-design-system";
 import { useEffect, useState } from "react";
 import { Image } from "react-native";
-
 import { getBankLogosCdnUri } from "../../../../../components/ui/utils/strings";
 
 type BankLogoOrSkeletonProps = {
   abiCode?: string;
   dimensions: { height: number; width: number };
-  imageA11yLabel?: string;
   placeHolderColor?: IOColors;
+  imageA11yLabel?: string;
 };
 
 /**
@@ -50,8 +49,8 @@ export const BankLogoOrSkeleton = ({
   return imageUrl !== undefined ? (
     <Image
       accessibilityIgnoresInvertColors
-      accessibilityLabel={imageA11yLabel}
       accessible
+      accessibilityLabel={imageA11yLabel}
       source={{ uri: imageUrl }}
       style={{
         height,
@@ -62,9 +61,9 @@ export const BankLogoOrSkeleton = ({
   ) : (
     <IOSkeleton
       color={IOColors[placeHolderColor]}
-      height={height}
-      radius={8}
       shape="rectangle"
+      radius={8}
+      height={height}
       width={width}
     />
   );

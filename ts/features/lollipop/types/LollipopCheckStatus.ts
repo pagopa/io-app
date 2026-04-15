@@ -11,6 +11,6 @@ import * as O from "fp-ts/lib/Option";
 // Untrusted means that LolliPOP signature checking has failed
 // and the user cannot proceed with the login
 export type LollipopCheckStatus = {
-  status: "checking" | "none" | "trusted" | "untrusted";
+  status: "none" | "checking" | "trusted" | "untrusted";
   url: O.Option<string>;
 };

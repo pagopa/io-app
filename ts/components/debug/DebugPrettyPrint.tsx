@@ -5,16 +5,15 @@ for development purposes. Please, Don't REMOVE it, thank you!
 import {
   BodySmall,
   HStack,
-  IconButton,
   IOColors,
   IOText,
+  IconButton,
   useIOToast
 } from "@pagopa/io-app-design-system";
 import { useMemo, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import RNFS from "react-native-fs";
 import Share from "react-native-share";
-
 import { Prettify } from "../../types/helpers";
 import { clipboardSetStringWithFeedback } from "../../utils/clipboard";
 import { debugInfoReplacer } from "./utils";
@@ -31,10 +30,10 @@ type ExpandableProps =
     };
 
 type Props = Prettify<
-  ExpandableProps & {
-    data: any;
+  {
     title: string;
-  }
+    data: any;
+  } & ExpandableProps
 >;
 
 /**
@@ -53,12 +52,12 @@ export const DebugPrettyPrint = withDebugEnabled(
       }
 
       return (
-        <View pointerEvents="box-only" style={styles.content}>
+        <View style={styles.content} pointerEvents="box-only">
           <IOText
-            color={"grey-700"}
             font="FiraCode"
-            lineHeight={18}
             size={12}
+            lineHeight={18}
+            color={"grey-700"}
             weight="Medium"
           >
             {JSON.stringify(
@@ -95,35 +94,35 @@ export const DebugPrettyPrint = withDebugEnabled(
     };
 
     return (
-      <View style={styles.container} testID="DebugPrettyPrintTestID">
+      <View testID="DebugPrettyPrintTestID" style={styles.container}>
         <View style={styles.header}>
-          <BodySmall color="white" weight="Semibold">
+          <BodySmall weight="Semibold" color="white">
             {title}
           </BodySmall>
           <HStack space={16}>
             <IconButton
-              accessibilityLabel="share"
-              color="contrast"
               icon={"shareiOs"}
+              accessibilityLabel="share"
               iconSize={20}
               onPress={shareData}
+              color="contrast"
             />
             <IconButton
-              accessibilityLabel="copy"
-              color="contrast"
               icon={"copy"}
+              accessibilityLabel="copy"
               iconSize={20}
               onPress={() =>
                 clipboardSetStringWithFeedback(JSON.stringify(data, null, 2))
               }
+              color="contrast"
             />
             {expandable && (
               <IconButton
-                accessibilityLabel="show"
-                color="contrast"
                 icon={expanded ? "eyeHide" : "eyeShow"}
+                accessibilityLabel="show"
                 iconSize={24}
                 onPress={() => setExpanded(_ => !_)}
+                color="contrast"
               />
             )}
           </HStack>

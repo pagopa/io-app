@@ -1,9 +1,8 @@
-import { JSX } from "react";
 import { Text } from "react-native";
-
+import { JSX } from "react";
 import { LandingCardComponent } from "../../../../../components/LandingCardComponent";
-import { mixpanelTrack } from "../../../../../mixpanel";
 import { trackCarousel } from "../carouselAnalytics";
+import { mixpanelTrack } from "../../../../../mixpanel";
 
 jest.mock("../../../../../mixpanel", () => ({
   mixpanelTrack: jest.fn()
@@ -12,12 +11,12 @@ jest.mock("../../../../../mixpanel", () => ({
 describe("trackCarousel", () => {
   const createLandingCard = (key: string) => (
     <LandingCardComponent
-      accessibilityLabel={"label"}
-      content={"content"}
-      id={0}
       key={key}
-      pictogramName={"hello"}
+      id={0}
       title={"title"}
+      content={"content"}
+      accessibilityLabel={"label"}
+      pictogramName={"hello"}
     />
   );
 

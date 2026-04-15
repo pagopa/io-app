@@ -1,17 +1,16 @@
-import { fireEvent, waitFor } from "@testing-library/react-native";
 import { constUndefined } from "fp-ts/lib/function";
-import { AppState, AppStateStatus } from "react-native";
 import { createStore } from "redux";
-
+import { AppState, AppStateStatus } from "react-native";
+import { fireEvent, waitFor } from "@testing-library/react-native";
 import ROUTES from "../../../../navigation/routes";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
-import { mockAccessibilityInfo } from "../../../../utils/testAccessibility";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import { OnboardingNotificationsInfoScreenConsent } from "../OnboardingNotificationsInfoScreenConsent";
+import * as notification from "../../utils";
 import * as analytics from "../../analytics";
 import { notificationsInfoScreenConsent } from "../../store/actions/profileNotificationPermissions";
-import * as notification from "../../utils";
-import { OnboardingNotificationsInfoScreenConsent } from "../OnboardingNotificationsInfoScreenConsent";
+import { mockAccessibilityInfo } from "../../../../utils/testAccessibility";
 
 const mockDispatch = jest.fn();
 jest.mock("react-redux", () => ({

@@ -13,12 +13,11 @@ import {
 } from "react-native";
 import WebView from "react-native-webview";
 import { filterXSS } from "xss";
-
-import { remarkProcessor } from "../../../utils/markdown";
 import { closeInjectedScript } from "../../../utils/webview";
-import { LoadingSkeleton } from "./../LoadingSkeleton";
+import { remarkProcessor } from "../../../utils/markdown";
 import { MarkdownWebviewComponent } from "./MarkdownWebviewComponent";
 import { NOTIFY_BODY_HEIGHT_SCRIPT, NOTIFY_LINK_CLICK_SCRIPT } from "./script";
+import { LoadingSkeleton } from "./../LoadingSkeleton";
 import { convertOldDemoMarkdownTag, generateHtml } from "./utils";
 
 export type MarkdownProps = {
@@ -43,8 +42,8 @@ export type MarkdownProps = {
    */
   shouldHandleLink?: (url: string) => boolean;
   testID?: string;
-  useCustomSortedList?: boolean;
   webViewStyle?: StyleProp<ViewStyle>;
+  useCustomSortedList?: boolean;
 };
 
 type InternalState = {
@@ -170,28 +169,28 @@ export const Markdown = (props: MarkdownProps) => {
         <ScrollView nestedScrollEnabled={false} style={containerStyle}>
           <View style={containerStyle}>
             <MarkdownWebviewComponent
-              handleLoadEnd={handleLoadEnd}
-              html={html}
               injectedJavascript={NOTIFY_LINK_CLICK_SCRIPT}
-              letUserZoom={props.letUserZoom}
-              onLinkClicked={props.onLinkClicked}
-              setHtmlBodyHeight={(inputHtmlBodyHeight: number) =>
-                setInternalState(currentInternalState => ({
-                  ...currentInternalState,
-                  htmlBodyHeight: inputHtmlBodyHeight
-                }))
-              }
+              handleLoadEnd={handleLoadEnd}
+              shouldHandleLink={props.shouldHandleLink}
+              html={html}
+              webviewKey={webviewKey}
+              webViewRef={webViewRef}
               setLoadingFalse={() =>
                 setInternalState(currentInternalState => ({
                   ...currentInternalState,
                   isLoading: false
                 }))
               }
-              shouldHandleLink={props.shouldHandleLink}
-              testID={props.testID}
-              webviewKey={webviewKey}
-              webViewRef={webViewRef}
+              setHtmlBodyHeight={(inputHtmlBodyHeight: number) =>
+                setInternalState(currentInternalState => ({
+                  ...currentInternalState,
+                  htmlBodyHeight: inputHtmlBodyHeight
+                }))
+              }
               webViewStyle={props.webViewStyle}
+              onLinkClicked={props.onLinkClicked}
+              letUserZoom={props.letUserZoom}
+              testID={props.testID}
             />
           </View>
         </ScrollView>

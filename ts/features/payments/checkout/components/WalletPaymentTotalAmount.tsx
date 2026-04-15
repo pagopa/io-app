@@ -5,14 +5,13 @@ import {
   IOSkeleton,
   useIOTheme
 } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { View } from "react-native";
-
+import I18n from "i18next";
 import { formatNumberCurrencyCentsOrDefault } from "../../../idpay/common/utils/strings";
 
 type TotalAmountSectionProps = {
-  loading?: boolean;
   totalAmount?: number;
+  loading?: boolean;
 };
 
 export const WalletPaymentTotalAmount = ({
@@ -37,7 +36,7 @@ export const WalletPaymentTotalAmount = ({
         </H6>
         {loading && (
           <View>
-            <IOSkeleton height={34} radius={8} shape="rectangle" width={72} />
+            <IOSkeleton shape="rectangle" width={72} height={34} radius={8} />
           </View>
         )}
         {!loading && <H3>{formatNumberCurrencyCentsOrDefault(totalAmount)}</H3>}

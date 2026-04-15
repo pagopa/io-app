@@ -1,5 +1,4 @@
 import * as E from "fp-ts/lib/Either";
-
 import { CodiceCatastale } from "../MunicipalityCodiceCatastale";
 
 const validCodiceCatastale = "L719";

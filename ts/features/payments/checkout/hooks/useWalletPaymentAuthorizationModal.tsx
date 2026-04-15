@@ -1,38 +1,37 @@
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as TE from "fp-ts/lib/TaskEither";
-import { useCallback, useEffect, useState } from "react";
+import { pipe } from "fp-ts/lib/function";
+import { useState, useCallback, useEffect } from "react";
 import URLParse from "url-parse";
-
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { isPaymentsWebViewFlowEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { WALLET_WEBVIEW_OUTCOME_SCHEMA } from "../../common/utils/const";
 import {
   storePaymentOutcomeToHistory,
   storePaymentsBrowserTypeAction
 } from "../../history/store/actions";
-import { PaymentsCheckoutRoutes } from "../navigation/routes";
 import {
-  paymentsStartPaymentAuthorizationAction,
-  WalletPaymentAuthorizePayload
+  WalletPaymentAuthorizePayload,
+  paymentsStartPaymentAuthorizationAction
 } from "../store/actions/networking";
-import { paymentStartWebViewFlow } from "../store/actions/orchestration";
 import { walletPaymentAuthorizationUrlSelector } from "../store/selectors/transaction";
 import {
   WalletPaymentOutcome,
   WalletPaymentOutcomeEnum
 } from "../types/PaymentOutcomeEnum";
+import { isPaymentsWebViewFlowEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { PaymentsCheckoutRoutes } from "../navigation/routes";
+import { paymentStartWebViewFlow } from "../store/actions/orchestration";
 
 type Props = {
   onAuthorizationOutcome: (outcome: WalletPaymentOutcome) => void;
 };
 
 type WalletPaymentAuthorizationModal = {
-  isError: boolean;
   isLoading: boolean;
+  isError: boolean;
   isPendingAuthorization: boolean;
   startPaymentAuthorizaton: (payload: WalletPaymentAuthorizePayload) => void;
 };

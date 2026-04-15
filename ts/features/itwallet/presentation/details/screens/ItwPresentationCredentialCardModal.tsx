@@ -8,7 +8,6 @@ import I18n from "i18next";
 import { memo, useCallback, useLayoutEffect, useState } from "react";
 import { StyleSheet, useWindowDimensions, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import { useMaxBrightness } from "../../../../../utils/brightness.ts";
@@ -22,8 +21,8 @@ import { FlipGestureDetector } from "../../../common/components/ItwSkeumorphicCa
 import { itwSetClaimValuesHidden } from "../../../common/store/actions/preferences.ts";
 import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
 import {
-  ItwCredentialStatus,
-  StoredCredential
+  CredentialMetadata,
+  ItwCredentialStatus
 } from "../../../common/utils/itwTypesUtils.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList.ts";
@@ -32,7 +31,7 @@ import { ItwPresentationCredentialCardFlipButton } from "../components/ItwPresen
 import { ItwPresentationCredentialCardHideValuesButton } from "../components/ItwPresentationCredentialCardHideValuesButton.tsx";
 
 export type ItwPresentationCredentialCardModalNavigationParams = {
-  credential: StoredCredential;
+  credential: CredentialMetadata;
   status: ItwCredentialStatus;
 };
 
@@ -77,13 +76,13 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
     navigation.setOptions({
       header: () => (
         <HeaderSecondLevel
+          title={""}
+          type="singleAction"
           firstAction={{
             icon: "closeLarge",
             accessibilityLabel: I18n.t("global.buttons.close"),
             onPress: () => navigation.goBack()
           }}
-          title={""}
-          type="singleAction"
         />
       )
     });
@@ -105,8 +104,8 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
     >
       {/* Card area fills the space between header and footer, centering the card */}
       <View
-        onLayout={e => setCardAreaHeight(e.nativeEvent.layout.height)}
         style={styles.cardArea}
+        onLayout={e => setCardAreaHeight(e.nativeEvent.layout.height)}
       >
         {cardAreaHeight > 0 && (
           <View
@@ -116,14 +115,14 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
             }}
           >
             <FlipGestureDetector
-              direction={"leftright"}
               isFlipped={isFlipped}
               setIsFlipped={setFlipped}
+              direction={"leftright"}
             >
               <ItwSkeumorphicCard
                 credential={credential}
-                isFlipped={isFlipped}
                 status={status}
+                isFlipped={isFlipped}
                 valuesHidden={valuesHidden}
               />
             </FlipGestureDetector>
@@ -131,9 +130,9 @@ const ItwPresentationCredentialCardModal = ({ route, navigation }: Props) => {
         )}
       </View>
       <ItwPresentationCredentialCardFlipButton
-        fullScreen={true}
-        handleOnPress={() => setFlipped(_ => !_)}
         isFlipped={isFlipped}
+        handleOnPress={() => setFlipped(_ => !_)}
+        fullScreen={true}
       />
       <VSpacer size={12} />
       <ItwPresentationCredentialCardHideValuesButton

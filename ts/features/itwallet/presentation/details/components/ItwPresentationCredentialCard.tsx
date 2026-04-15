@@ -4,9 +4,9 @@ import {
   VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
+
 import { PropsWithChildren, useCallback, useState } from "react";
 import { StyleSheet, View } from "react-native";
-
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { getMixPanelCredential } from "../../../analytics/utils/index.ts";
@@ -14,7 +14,7 @@ import { ItwSkeumorphicCard } from "../../../common/components/ItwSkeumorphicCar
 import { FlipGestureDetector } from "../../../common/components/ItwSkeumorphicCard/FlipGestureDetector.tsx";
 import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
 import { useThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
 import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
@@ -23,7 +23,7 @@ import { useItwDisplayCredentialStatus } from "../hooks/useItwDisplayCredentialS
 import { ItwPresentationCredentialCardFlipButton } from "./ItwPresentationCredentialCardFlipButton.tsx";
 
 type Props = {
-  credential: StoredCredential;
+  credential: CredentialMetadata;
 };
 
 /**
@@ -69,17 +69,17 @@ const ItwPresentationCredentialCard = ({ credential }: Props) => {
           <ItwSkeumorphicCard
             credential={credential}
             isFlipped={isFlipped}
-            onPress={handleCardPress}
             status={status}
             valuesHidden={valuesHidden}
+            onPress={handleCardPress}
           />
         </FlipGestureDetector>
       </CardContainer>
       <VSpacer size={8} />
       <ContentWrapper style={styles.centeredLayout}>
         <ItwPresentationCredentialCardFlipButton
-          handleOnPress={handleFlipButtonPress}
           isFlipped={isFlipped}
+          handleOnPress={handleFlipButtonPress}
         />
       </ContentWrapper>
     </VStack>

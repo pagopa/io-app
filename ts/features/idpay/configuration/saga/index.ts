@@ -1,27 +1,26 @@
-import { channel, SagaIterator } from "redux-saga";
+import { SagaIterator, channel } from "redux-saga";
 import {
+  takeLatest,
+  takeEvery,
   call,
-  put,
   race,
   take,
-  takeEvery,
-  takeLatest
+  put
 } from "typed-redux-saga/macro";
-
 import { PreferredLanguageEnum } from "../../../../../definitions/backend/PreferredLanguage";
 import { IDPayClient } from "../../common/api/client";
 import {
-  idpayInitiativeInstrumentDelete,
-  idpayInitiativeInstrumentsGet,
   IdPayInitiativeInstrumentsGetPayloadType,
   idPayInitiativeInstrumentsRefreshStart,
-  idPayInitiativeInstrumentsRefreshStop
+  idPayInitiativeInstrumentsRefreshStop,
+  idpayInitiativeInstrumentDelete,
+  idpayInitiativeInstrumentsGet
 } from "../store/actions";
-import { handleDeleteInitiativeInstruments } from "./handleDeleteInitiativeInstrument";
 import {
   handleGetInitiativeInstruments,
   handleInitiativeInstrumentsRefresh
 } from "./handleGetInitiativeInstruments";
+import { handleDeleteInitiativeInstruments } from "./handleDeleteInitiativeInstrument";
 
 /**
  * Handle IDPAY initiative requests

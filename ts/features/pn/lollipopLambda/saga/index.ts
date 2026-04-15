@@ -1,4 +1,3 @@
-import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
 import { Either, isLeft, left, right } from "fp-ts/lib/Either";
 import {
   call,
@@ -8,20 +7,20 @@ import {
   take,
   takeLatest
 } from "typed-redux-saga/macro";
+import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
 import { ActionType } from "typesafe-actions";
-
 import { apiUrlPrefix } from "../../../../config";
-import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
-import { SagaCallReturnType } from "../../../../types/utils";
-import { isTestEnv } from "../../../../utils/environment";
-import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { KeyInfo } from "../../../lollipop/utils/crypto";
-import { unknownToReason } from "../../../messages/utils";
 import {
   createSendLollipopLambdaClient,
   SendLollipopLambdaClient
 } from "../api";
 import { sendLollipopLambdaAction } from "../store/actions";
+import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
+import { SagaCallReturnType } from "../../../../types/utils";
+import { unknownToReason } from "../../../messages/utils";
+import { isTestEnv } from "../../../../utils/environment";
 
 export function* watchSendLollipopLambda(
   sessionToken: string,
@@ -38,6 +37,16 @@ export function* watchSendLollipopLambda(
     raceLollipopLambdaWithCancellation,
     lollipopLambdaClient
   );
+}
+
+function* raceLollipopLambdaWithCancellation(
+  client: SendLollipopLambdaClient,
+  action: ActionType<typeof sendLollipopLambdaAction.request>
+) {
+  yield* race({
+    task: call(lollipopLambdaSaga, client, action),
+    cancel: take(sendLollipopLambdaAction.cancel)
+  });
 }
 
 function* lollipopLambdaSaga(
@@ -96,16 +105,6 @@ function* lollipopLambdaSaga(
       })
     );
   }
-}
-
-function* raceLollipopLambdaWithCancellation(
-  client: SendLollipopLambdaClient,
-  action: ActionType<typeof sendLollipopLambdaAction.request>
-) {
-  yield* race({
-    task: call(lollipopLambdaSaga, client, action),
-    cancel: take(sendLollipopLambdaAction.cancel)
-  });
 }
 
 const buildLambdaLollipopRequest = (

@@ -24,16 +24,15 @@ import {
   useDerivedValue,
   useSharedValue
 } from "react-native-reanimated";
-
 import { useItWalletTheme } from "../utils/theme";
 import { ItwBrandedSkiaBorder } from "./ItwBrandedSkiaBorder";
 import { ItwSkiaBrandedGradientVariant } from "./ItwBrandedSkiaGradient";
 
 type ItwIridescentBorderProps = {
-  backgroundVariant?: "gradient" | "solid";
-  borderRadius?: number;
-  borderThickness?: number;
   variant?: ItwSkiaBrandedGradientVariant;
+  borderThickness?: number;
+  borderRadius?: number;
+  backgroundVariant?: "solid" | "gradient";
 };
 
 const brandedBoxGradientColors = ["#FFFFFF", "#FBFDFF", "#F6FBFF", "#F2F9FF"];
@@ -59,7 +58,7 @@ export const ItwBrandedBox = ({
   const shouldUseGradientBackground =
     isLightMode && backgroundVariant === "gradient";
 
-  const [size, setSize] = useState<{ height: number; width: number }>({
+  const [size, setSize] = useState<{ width: number; height: number }>({
     width: 0,
     height: 0
   });
@@ -122,6 +121,12 @@ export const ItwBrandedBox = ({
       >
         <SkiaRadialGradient
           c={vec((size.width ?? 0) / 2, (size.height ?? 0) / 2)}
+          r={lightSize / 2}
+          /* There are many stops because it's an easing gradient. */
+          positions={[
+            0, 0.081, 0.155, 0.225, 0.29, 0.353, 0.412, 0.471, 0.529, 0.588,
+            0.647, 0.71, 0.775, 0.845, 0.919, 1
+          ]}
           colors={[
             "rgba(255,255,255,1)",
             "rgba(255,255,255,0.987)",
@@ -140,12 +145,6 @@ export const ItwBrandedBox = ({
             "rgba(255,255,255,0.01)",
             "rgba(255,255,255,0)"
           ]}
-          /* There are many stops because it's an easing gradient. */
-          positions={[
-            0, 0.081, 0.155, 0.225, 0.29, 0.353, 0.412, 0.471, 0.529, 0.588,
-            0.647, 0.71, 0.775, 0.845, 0.919, 1
-          ]}
-          r={lightSize / 2}
         />
       </SkiaCircle>
     </SkiaGroup>
@@ -169,10 +168,10 @@ export const ItwBrandedBox = ({
     >
       {shouldUseGradientBackground && (
         <LinearGradient
-          colors={brandedBoxGradientColors}
-          end={{ x: 0.5, y: 1 }}
           pointerEvents="none"
+          colors={brandedBoxGradientColors}
           start={{ x: 0.5, y: 0 }}
+          end={{ x: 0.5, y: 1 }}
           style={StyleSheet.absoluteFill}
         />
       )}
@@ -190,12 +189,12 @@ export const ItwBrandedBox = ({
 
         {/* Animated gradient border */}
         <ItwBrandedSkiaBorder
-          borderRadius={borderRadius}
-          height={size.height}
-          themeType={themeType}
-          thickness={borderThickness}
-          variant={variant}
           width={size.width}
+          height={size.height}
+          variant={variant}
+          thickness={borderThickness}
+          borderRadius={borderRadius}
+          themeType={themeType}
         />
       </Canvas>
 

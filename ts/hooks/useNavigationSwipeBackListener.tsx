@@ -1,7 +1,6 @@
 import { EventListenerCallback } from "@react-navigation/native";
 import { StackNavigationEventMap } from "@react-navigation/stack/lib/typescript/src/types";
-import { useCallback, useEffect, useState } from "react";
-
+import { useState, useCallback, useEffect } from "react";
 import { useIONavigation } from "../navigation/params/AppParamsList";
 
 /**

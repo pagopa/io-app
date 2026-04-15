@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-
 import {
   trackSendAarMandateCieCanCodeError,
   trackSendAarMandateCieCardReading,
@@ -29,11 +28,11 @@ export const useTrackCieReadingEvents = (readState: CieReadState) => {
       case ReadStatus.IDLE:
         trackSendAarMandateCieCardReading();
         break;
-      case ReadStatus.READING:
-        // No events should be tracked
-        break;
       case ReadStatus.SUCCESS:
         trackSendAarMandateCieCardReadingSuccess();
+        break;
+      case ReadStatus.READING:
+        // No events should be tracked
         break;
       case "TAG_LOST":
         trackSendAarMandateCieCardReadingError();

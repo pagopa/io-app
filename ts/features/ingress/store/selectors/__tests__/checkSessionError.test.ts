@@ -1,5 +1,5 @@
-import { GlobalState } from "../../../../../store/reducers/types";
 import { checkSessionErrorSelector } from "../index";
+import { GlobalState } from "../../../../../store/reducers/types";
 
 describe("checkSessionErrorSelector", () => {
   it("should select hasError from ingress checkSession state", () => {

@@ -2,22 +2,21 @@ import { applyMiddleware, createStore } from "redux";
 import createSagaMiddleware from "redux-saga";
 import { put, takeLatest } from "typed-redux-saga";
 import { ActionType } from "typesafe-actions";
-
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
-import { applicationChangeState } from "../../../../../store/actions/application";
 import * as USEIO from "../../../../../store/hooks";
-import { appReducer } from "../../../../../store/reducers";
 import * as SID_SELECTOR from "../../../../../store/reducers/backendStatus/remoteConfig";
-import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import * as PREFERENCES_FETCHER from "../../../hooks/usePnPreferencesFetcher";
-import PN_ROUTES from "../../../navigation/routes";
-import { pnActivationUpsert } from "../../../store/actions";
 import * as LOADING_PN_ACTIVATION from "../../../store/reducers/activation";
+import * as PREFERENCES_FETCHER from "../../../hooks/usePnPreferencesFetcher";
 import {
   PNActivationBannerFlowScreen,
   pnBannerFlowStateEnum
 } from "../PnReminderBannerFlow";
+import { pnActivationUpsert } from "../../../store/actions";
+import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { GlobalState } from "../../../../../store/reducers/types";
+import PN_ROUTES from "../../../navigation/routes";
 
 jest.mock("../../../analytics/activationReminderBanner", () => {
   const actual = jest.requireActual(
@@ -156,6 +155,12 @@ describe("loading screens + error interop", () => {
         const component = renderComponent();
         expect(component.toJSON()).toMatchSnapshot();
         switch (loadingState) {
+          case "both":
+            expect(component.getByTestId(`loading-LOADING-DATA`)).toBeDefined();
+            break;
+          case "data":
+            expect(component.getByTestId(`loading-LOADING-DATA`)).toBeDefined();
+            break;
           case "activation":
             // activation requires the preferences to not be in error.
             expect(
@@ -165,12 +170,6 @@ describe("loading screens + error interop", () => {
                   : "loading-LOADING-ACTIVATION"
               )
             ).toBeDefined();
-            break;
-          case "both":
-            expect(component.getByTestId(`loading-LOADING-DATA`)).toBeDefined();
-            break;
-          case "data":
-            expect(component.getByTestId(`loading-LOADING-DATA`)).toBeDefined();
             break;
         }
       });

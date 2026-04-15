@@ -1,5 +1,4 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
-
 import { WalletCardsActions } from "./cards";
 import { WalletPlaceholdersActions } from "./placeholders";
 import { WalletPreferencesActions } from "./preferences";
@@ -9,10 +8,10 @@ import { WalletPreferencesActions } from "./preferences";
  */
 export const walletUpdate = createStandardAction("WALLET_UPDATE")();
 
+type WalletBaseActions = ActionType<typeof walletUpdate>;
+
 export type WalletActions =
   | WalletBaseActions
   | WalletCardsActions
-  | WalletPlaceholdersActions
-  | WalletPreferencesActions;
-
-type WalletBaseActions = ActionType<typeof walletUpdate>;
+  | WalletPreferencesActions
+  | WalletPlaceholdersActions;

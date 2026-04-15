@@ -4,21 +4,6 @@ import { Context, ValidationError } from "io-ts";
 import { Reporter } from "io-ts/lib/Reporter";
 
 /**
- * Translates validation errors to more readable messages.
- */
-export function errorsToReadableMessages(
-  es: ReadonlyArray<ValidationError>
-): ReadonlyArray<string> {
-  return es.map(e => getMessage(e.value, e.context));
-}
-
-export function readablePrivacyReport(
-  errors: ReadonlyArray<ValidationError>
-): string {
-  return errorsToReadableMessages(errors).join("\n");
-}
-
-/**
  * Translate a context to a more readable path.
  *
  * e.g.:
@@ -44,8 +29,23 @@ function getMessage(_: unknown, context: Context): string {
   return `some value at [root${getContextPath(context)}`;
 }
 
+/**
+ * Translates validation errors to more readable messages.
+ */
+export function errorsToReadableMessages(
+  es: ReadonlyArray<ValidationError>
+): ReadonlyArray<string> {
+  return es.map(e => getMessage(e.value, e.context));
+}
+
 function success(): ReadonlyArray<string> {
   return ["No errors!"];
+}
+
+export function readablePrivacyReport(
+  errors: ReadonlyArray<ValidationError>
+): string {
+  return errorsToReadableMessages(errors).join("\n");
 }
 
 /**

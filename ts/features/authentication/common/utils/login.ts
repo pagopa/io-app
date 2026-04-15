@@ -1,36 +1,35 @@
-import { PublicKey } from "@pagopa/io-react-native-crypto";
-import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
 import { WebViewNavigation } from "react-native-webview/lib/WebViewTypes";
 import URLParse from "url-parse";
-
-import { IdpData } from "../../../../../definitions/content/IdpData";
+import * as O from "fp-ts/lib/Option";
+import * as E from "fp-ts/lib/Either";
+import { PublicKey } from "@pagopa/io-react-native-crypto";
+import { trackLoginSpidError } from "../analytics/spidAnalytics";
 import { spidRelayState } from "../../../../config";
+import { IdpData } from "../../../../../definitions/content/IdpData";
+import { isStringNullyOrEmpty } from "../../../../utils/strings";
 import { getAppVersion } from "../../../../utils/appVersion";
 import { isLocalEnv } from "../../../../utils/environment";
-import { isStringNullyOrEmpty } from "../../../../utils/strings";
 import { LoginType } from "../../activeSessionLogin/screens/analytics";
 import {
   trackSessionTokenFragmentFailure,
   trackSessionTokenSource
 } from "../analytics";
-import { trackLoginSpidError } from "../analytics/spidAnalytics";
 /**
  * Helper functions for handling the SPID login flow through a webview.
  */
-
-type LoginFailure = {
-  errorCode?: string;
-  errorMessage?: string;
-  success: false;
-};
-
-type LoginResult = LoginFailure | LoginSuccess;
 
 type LoginSuccess = {
   success: true;
   token: string;
 };
+
+type LoginFailure = {
+  success: false;
+  errorCode?: string;
+  errorMessage?: string;
+};
+
+type LoginResult = LoginSuccess | LoginFailure;
 
 export const getEitherLoginResult = (
   result: LoginResult

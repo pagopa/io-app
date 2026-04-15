@@ -1,10 +1,9 @@
 import { createStore } from "redux";
-
-import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
-import { applicationChangeState } from "../../store/actions/application";
-import { appReducer } from "../../store/reducers";
-import { renderScreenWithNavigationStoreContext } from "../../utils/testWrapper";
 import IOMarkdown from "../IOMarkdown";
+import { appReducer } from "../../store/reducers";
+import { applicationChangeState } from "../../store/actions/application";
+import { renderScreenWithNavigationStoreContext } from "../../utils/testWrapper";
+import { MESSAGES_ROUTES } from "../../features/messages/navigation/routes";
 
 const markdownString: string = `
 # Main Title

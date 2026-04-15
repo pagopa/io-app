@@ -8,11 +8,11 @@ import {
 import { buildEventProperties } from "../../../utils/analytics";
 
 export type NotificationModalFlow =
-  | "access"
   | "authentication"
-  | "send_notification_opening";
+  | "send_notification_opening"
+  | "access";
 export type SendOpeningSource = "aar" | "message" | "not_set";
-export type SendUserType = "mandatory" | "not_set" | "recipient";
+export type SendUserType = "recipient" | "mandatory" | "not_set";
 
 export const trackNotificationInstallationTokenNotChanged = () =>
   void mixpanelTrack(

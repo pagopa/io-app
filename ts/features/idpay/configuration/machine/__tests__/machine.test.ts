@@ -1,7 +1,6 @@
 import { waitFor } from "@testing-library/react-native";
 import * as O from "fp-ts/lib/Option";
 import { createActor, fromCallback, fromPromise } from "xstate";
-
 import {
   CheckIbanStatusEnum,
   IbanDTO
@@ -20,10 +19,10 @@ import { TypeEnum } from "../../../../../../definitions/pagopa/Wallet";
 import { Wallet } from "../../../../../types/pagopa";
 import { IdPayTags } from "../../../common/machine/tags";
 import { ConfigurationMode } from "../../types";
-import { InitiativeFailureType } from "../../types/failure";
 import { Context, InitialContext } from "../context";
 import { IdPayConfigurationEvents } from "../events";
 import { idPayConfigurationMachine } from "../machine";
+import { InitiativeFailureType } from "../../types/failure";
 
 export const T_INITIATIVE_ID = "123456";
 export const T_IBAN = "IT60X0542811101000000123456";
@@ -120,7 +119,7 @@ describe("IDPay configuration machine", () => {
       getIbanList: fromPromise<IbanListDTO>(getIbanList),
       enrollIban: fromPromise<
         undefined,
-        { iban: IbanDTO | IbanPutDTO; initiativeId: string }
+        { initiativeId: string; iban: IbanDTO | IbanPutDTO }
       >(enrollIban),
       getWalletInstruments:
         fromPromise<ReadonlyArray<Wallet>>(getWalletInstruments),

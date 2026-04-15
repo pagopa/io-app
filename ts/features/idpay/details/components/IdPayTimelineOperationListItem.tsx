@@ -5,11 +5,14 @@ import {
   WithTestID
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-
 import {
   IbanOperationDTO,
   OperationTypeEnum as IbanOperationTypeEnum
 } from "../../../../../definitions/idpay/IbanOperationDTO";
+import {
+  OperationTypeEnum as UnsubscribeOperationTypeEnum,
+  UnsubscribeOperationDTO
+} from "../../../../../definitions/idpay/UnsubscribeOperationDTO";
 import {
   InstrumentOperationDTO,
   OperationTypeEnum as InstrumentOperationTypeEnum,
@@ -43,10 +46,6 @@ import {
   StatusEnum as TransactionStatusEnum
 } from "../../../../../definitions/idpay/TransactionOperationDTO";
 import {
-  UnsubscribeOperationDTO,
-  OperationTypeEnum as UnsubscribeOperationTypeEnum
-} from "../../../../../definitions/idpay/UnsubscribeOperationDTO";
-import {
   getAccessibleAmountText,
   hoursAndMinutesToAccessibilityReadableFormat
 } from "../../../../utils/accessibility";
@@ -59,13 +58,13 @@ const emptyAmountTransaction = {
 };
 
 type TimelineOperationListItemProps = WithTestID<
-  | { isLoading: true; onPress?: never; operation?: never; pressable?: never }
   | {
       isLoading?: false;
-      onPress?: () => void;
       operation: OperationListDTO;
       pressable?: boolean;
+      onPress?: () => void;
     }
+  | { isLoading: true; operation?: never; onPress?: never; pressable?: never }
 >;
 
 export const IdPayTimelineOperationListItem = (
@@ -76,12 +75,12 @@ export const IdPayTimelineOperationListItem = (
   if (isLoading) {
     return (
       <ListItemTransaction
-        isLoading={true}
-        subtitle=""
         title=""
+        subtitle=""
         transaction={{
           badge: { text: "", variant: "highlight" }
         }}
+        isLoading={true}
       />
     );
   }
@@ -99,25 +98,25 @@ export const IdPayTimelineOperationListItem = (
 
 const getOperationProps = (operation: OperationListDTO) => {
   switch (operation.operationType) {
-    case IbanOperationTypeEnum.ADD_IBAN:
-      return getIbanOperationProps(operation);
+    case TransactionOperationTypeEnum.TRANSACTION:
+    case TransactionOperationTypeEnum.REVERSAL:
+      return getTransactionOperationProps(operation);
     case InstrumentOperationTypeEnum.ADD_INSTRUMENT:
     case InstrumentOperationTypeEnum.DELETE_INSTRUMENT:
     case RejectedInstrumentOperationTypeEnum.REJECTED_ADD_INSTRUMENT:
     case RejectedInstrumentOperationTypeEnum.REJECTED_DELETE_INSTRUMENT:
       return getInstrumentOperationProps(operation);
+    case IbanOperationTypeEnum.ADD_IBAN:
+      return getIbanOperationProps(operation);
     case OnboardingOperationTypeEnum.ONBOARDING:
       return getOnboardingOperationProps(operation);
-    case ReadmittedOperationTypeEnum.READMITTED:
-      return getReadmittedOperationProps(operation);
     case RefundOperationTypeEnum.PAID_REFUND:
     case RefundOperationTypeEnum.REJECTED_REFUND:
       return getRefundOperationProps(operation);
     case SuspendOperationTypeEnum.SUSPENDED:
       return getSuspendOperationProps(operation);
-    case TransactionOperationTypeEnum.REVERSAL:
-    case TransactionOperationTypeEnum.TRANSACTION:
-      return getTransactionOperationProps(operation);
+    case ReadmittedOperationTypeEnum.READMITTED:
+      return getReadmittedOperationProps(operation);
     case UnsubscribeOperationTypeEnum.UNSUBSCRIBED:
       return getUnsubscribedOperationProps(operation);
   }
@@ -148,7 +147,7 @@ const getTransactionOperationProps = (
   const isReversal = operationType === TransactionOperationTypeEnum.REVERSAL;
 
   const paymentLogoIcon: ListItemTransactionLogo = brand || (
-    <Icon color="grey-300" name={iconName} testID="genericLogoTestID" />
+    <Icon name={iconName} color="grey-300" testID="genericLogoTestID" />
   );
 
   const title: string =
@@ -241,8 +240,8 @@ const getInstrumentOperationProps = (
     if (instrumentType === InstrumentTypeEnum.IDPAYCODE) {
       return (
         <Icon
-          color="grey-300"
           name={"fiscalCodeIndividual"}
+          color="grey-300"
           testID="fiscalCodeLogoTestID"
         />
       );
@@ -250,8 +249,8 @@ const getInstrumentOperationProps = (
     return (
       brand || (
         <Icon
-          color="grey-300"
           name={"creditCard"}
+          color="grey-300"
           testID="creditCardLogoTestID"
         />
       )
@@ -281,7 +280,7 @@ const getIbanOperationProps = (
   operation: IbanOperationDTO
 ): ListItemTransaction => ({
   paymentLogoIcon: (
-    <Icon color="grey-300" name={"institution"} testID="ibanLogoTestID" />
+    <Icon name={"institution"} color="grey-300" testID="ibanLogoTestID" />
   ),
   title: I18n.t(
     `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.ADD_IBAN`
@@ -294,7 +293,7 @@ const getOnboardingOperationProps = (
   operation: OnboardingOperationDTO
 ): ListItemTransaction => ({
   paymentLogoIcon: (
-    <Icon color="grey-300" name={"checkTick"} testID="onboardingLogoTestID" />
+    <Icon name={"checkTick"} color="grey-300" testID="onboardingLogoTestID" />
   ),
   title: I18n.t(
     `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.ONBOARDING`
@@ -310,7 +309,7 @@ const getRefundOperationProps = (
   const isRejected = operationType === RefundOperationTypeEnum.REJECTED_REFUND;
 
   const paymentLogoIcon = (
-    <Icon color="grey-300" name={"refund"} testID="refundLogoTestID" />
+    <Icon name={"refund"} color="grey-300" testID="refundLogoTestID" />
   );
   const title = I18n.t(
     `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.REFUND`
@@ -346,7 +345,7 @@ const getSuspendOperationProps = (
   operation: SuspendOperationDTO
 ): ListItemTransaction => ({
   paymentLogoIcon: (
-    <Icon color="grey-300" name={"notice"} testID="creditCardLogoTestID" />
+    <Icon name={"notice"} color="grey-300" testID="creditCardLogoTestID" />
   ),
   title: I18n.t(
     `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.SUSPENDED`
@@ -360,8 +359,8 @@ const getReadmittedOperationProps = (
 ): ListItemTransaction => ({
   paymentLogoIcon: (
     <Icon
-      color="grey-300"
       name={"checkTickBig"}
+      color="grey-300"
       testID="creditCardLogoTestID"
     />
   ),
@@ -375,7 +374,7 @@ const getUnsubscribedOperationProps = (
   operation: UnsubscribeOperationDTO
 ): ListItemTransaction => ({
   paymentLogoIcon: (
-    <Icon color="grey-300" name={"closeSmall"} testID="creditCardLogoTestID" />
+    <Icon name={"closeSmall"} color="grey-300" testID="creditCardLogoTestID" />
   ),
   title: I18n.t(
     `idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.operationDescriptions.UNSUBSCRIBED`

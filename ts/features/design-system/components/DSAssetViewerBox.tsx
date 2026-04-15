@@ -1,6 +1,4 @@
-import { hexToRgba, IOColors, useIOTheme } from "@pagopa/io-app-design-system";
-/* Fake Transparent BG */
-import { ReactNode } from "react";
+import { IOColors, hexToRgba, useIOTheme } from "@pagopa/io-app-design-system";
 import {
   ImageBackground,
   ImageSourcePropType,
@@ -10,6 +8,8 @@ import {
   View
 } from "react-native";
 
+/* Fake Transparent BG */
+import { ReactNode } from "react";
 import FakeTransparentBg from "../../../../img/utils/transparent-background-pattern.png";
 
 export const assetItemGutter = 16;
@@ -86,20 +86,20 @@ const styles = StyleSheet.create({
 });
 
 type DSAssetViewerBoxProps = {
-  colorMode?: "dark" | "light";
-  image: ReactNode;
   name: string;
-  size?: "medium" | "small";
-  spacing?: "large" | "small";
+  image: ReactNode;
   /* "bleed" shows the pictogram without padding
   "hasBleed" shows the pictgram label on top right */
-  type?: "bleed" | "hasBleed" | "raster" | "vector";
+  type?: "vector" | "raster" | "bleed" | "hasBleed";
+  spacing?: "small" | "large";
+  size?: "small" | "medium";
+  colorMode?: "light" | "dark";
 };
 
 export const renderRasterImage = (image: ImageSourcePropType) => (
   <NativeImage
-    resizeMode={"contain"}
     source={image}
+    resizeMode={"contain"}
     style={styles.image}
     testID={"rasterImage"}
   />
@@ -144,8 +144,8 @@ export const DSAssetViewerBox = ({
         ]}
       >
         <ImageBackground
-          source={FakeTransparentBg}
           style={styles.fakeTransparentBg}
+          source={FakeTransparentBg}
         />
         {image}
         {type === "raster" ||
@@ -171,8 +171,8 @@ export const DSAssetViewerBox = ({
       >
         {name && (
           <Text
-            ellipsizeMode="tail"
             numberOfLines={1}
+            ellipsizeMode="tail"
             style={[
               styles.assetLabel,
               { color: IOColors[theme["textBody-tertiary"]] }

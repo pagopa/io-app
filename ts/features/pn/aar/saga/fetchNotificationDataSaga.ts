@@ -1,25 +1,16 @@
-import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import * as E from "fp-ts/lib/Either";
+import { readableReportSimplified } from "@pagopa/ts-commons/lib/reporters";
 import { call, put, select } from "typed-redux-saga/macro";
-
 import { MessageBodyMarkdown } from "../../../../../definitions/backend/MessageBodyMarkdown";
 import { MessageSubject } from "../../../../../definitions/backend/MessageSubject";
-import { ThirdPartyMessage } from "../../../../../definitions/pn/aar/ThirdPartyMessage";
 import { pnMessagingServiceIdSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { isPnTestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../../types/utils";
 import { isTestEnv } from "../../../../utils/environment";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
-import { unknownToReason } from "../../../messages/utils";
-import { SendUserType } from "../../../pushNotifications/analytics";
 import { getServiceDetails } from "../../../services/common/saga/getServiceDetails";
 import { profileFiscalCodeSelector } from "../../../settings/common/store/selectors";
-import { trackPNNotificationLoadSuccess } from "../../analytics";
-import {
-  aarProblemJsonAnalyticsReport,
-  trackSendAarFailure
-} from "../analytics";
 import { SendAarClient } from "../api/client";
 import {
   EphemeralAarMessageDataActionPayload,
@@ -28,6 +19,14 @@ import {
 } from "../store/actions";
 import { currentAarFlowData } from "../store/selectors";
 import { SendAarFailurePhase, sendAarFlowStates } from "../utils/stateUtils";
+import { trackPNNotificationLoadSuccess } from "../../analytics";
+import { SendUserType } from "../../../pushNotifications/analytics";
+import { ThirdPartyMessage } from "../../../../../definitions/pn/aar/ThirdPartyMessage";
+import {
+  aarProblemJsonAnalyticsReport,
+  trackSendAarFailure
+} from "../analytics";
+import { unknownToReason } from "../../../messages/utils";
 
 const sendAarFailurePhase: SendAarFailurePhase = "Fetch Notification";
 

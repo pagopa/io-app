@@ -1,12 +1,8 @@
-import { Optional } from "@pagopa/io-app-design-system";
+import { createSelector } from "reselect";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { createSelector } from "reselect";
-
+import { Optional } from "@pagopa/io-app-design-system";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { format } from "../../../../../utils/dates";
-import { SpidIdp } from "../../../../../utils/idps";
-import { AuthenticationState, AuthenticationStateWithIdp } from "../models";
 import {
   isLoggedIn,
   isLoggedInWithSessionInfo,
@@ -15,6 +11,9 @@ import {
   isSessionCorrupted,
   isSessionExpired
 } from "../utils/guards";
+import { SpidIdp } from "../../../../../utils/idps";
+import { format } from "../../../../../utils/dates";
+import { AuthenticationState, AuthenticationStateWithIdp } from "../models";
 
 export const authenticationStateSelector = (
   state: GlobalState
@@ -53,7 +52,7 @@ export const fimsTokenSelector = (state: GlobalState): string | undefined =>
  */
 export const ioBackendAuthenticationHeaderSelector = createSelector(
   sessionTokenSelector,
-  (token): Record<string, string> => ({ Authorization: `Bearer ${token}` })
+  (token): { [key: string]: string } => ({ Authorization: `Bearer ${token}` })
 );
 
 export const sessionInfoSelector = createSelector(

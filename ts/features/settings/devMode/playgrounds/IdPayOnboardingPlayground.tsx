@@ -12,14 +12,13 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { Button, ScrollView, View } from "react-native";
-
+import { IdPayOnboardingRoutes } from "../../../idpay/onboarding/navigation/routes";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { isDevEnv } from "../../../../utils/environment";
-import { IdPayOnboardingRoutes } from "../../../idpay/onboarding/navigation/routes";
 
 const IdPayOnboardingPlayground = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -55,8 +54,8 @@ const IdPayOnboardingPlayground = () => {
       <TextInput
         accessibilityLabel="ID dell'iniziativa"
         onChangeText={text => setServiceId(text)}
-        placeholder="Service ID"
         value={serviceId ?? ""}
+        placeholder="Service ID"
       />
       <VSpacer size={16} />
       <Button onPress={handleServiceSubmit} title="Start onboarding" />
@@ -68,8 +67,8 @@ const IdPayOnboardingPlayground = () => {
           {testServices.map(srv => (
             <TestServiceItem
               key={srv.serviceId}
-              onPress={() => navigateToIDPayOnboarding(srv.serviceId)}
               service={srv}
+              onPress={() => navigateToIDPayOnboarding(srv.serviceId)}
             />
           ))}
         </>
@@ -80,8 +79,8 @@ const IdPayOnboardingPlayground = () => {
 };
 
 type TestService = {
-  label: string;
   serviceId: string;
+  label: string;
   willFail?: boolean;
 };
 
@@ -182,8 +181,8 @@ const testServices: ReadonlyArray<TestService> = [
 ];
 
 type TestServiceItemProps = {
-  onPress: () => void;
   service: TestService;
+  onPress: () => void;
 };
 
 const TestServiceItem = (props: TestServiceItemProps) => {

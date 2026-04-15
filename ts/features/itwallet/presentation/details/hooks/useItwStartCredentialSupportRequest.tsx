@@ -1,23 +1,22 @@
 import { useCallback } from "react";
-
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { getMixPanelCredential } from "../../../analytics/utils/index.ts";
 import {
   useItwZendeskSupport,
   ZendeskSubcategoryValue
 } from "../../../common/hooks/useItwZendeskSupport";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { trackWalletCredentialSupport } from "../analytics";
 
 /**
  *
- * @param {StoredCredential} credential A valid wallet credential
+ * @param {CredentialMetadata} credential A valid wallet credential
  * @returns A utility function which tracks and starts the IT Wallet support request with the
  *          correct Zendesk metadata (category, subcategory, error code when available).
  */
 export const useItwStartCredentialSupportRequest = (
-  credential: StoredCredential
+  credential: CredentialMetadata
 ) => {
   const { startItwZendeskSupport } = useItwZendeskSupport();
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);

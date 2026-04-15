@@ -1,5 +1,4 @@
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-
 import {
   SignatureDetailView,
   StatusEnum as SignatureRequestStatus

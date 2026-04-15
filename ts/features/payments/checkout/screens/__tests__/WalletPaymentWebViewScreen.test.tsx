@@ -1,15 +1,14 @@
 import { RenderAPI } from "@testing-library/react-native";
-import I18n from "i18next";
 import { WebView } from "react-native-webview";
 import { createStore } from "redux";
-
+import I18n from "i18next";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { WALLET_WEBVIEW_OUTCOME_SCHEMA } from "../../../common/utils/const";
-import { PaymentsCheckoutRoutes } from "../../navigation/routes";
 import WalletPaymentWebViewScreen from "../WalletPaymentWebViewScreen";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { PaymentsCheckoutRoutes } from "../../navigation/routes";
 
 const mockSetOptions = jest.fn();
 const mockNavigate = {

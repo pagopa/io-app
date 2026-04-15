@@ -1,25 +1,23 @@
+import I18n from "i18next";
+import { useCallback, useMemo, useRef } from "react";
 import {
   IOVisualCostants,
   ListItemHeader,
   ListItemNav
 } from "@pagopa/io-app-design-system";
-import { useFocusEffect } from "@react-navigation/native";
-import I18n from "i18next";
-import { useCallback, useMemo, useRef } from "react";
 import { Alert, ListRenderItemInfo, StyleSheet, View } from "react-native";
-
-import type { FavouriteServiceType } from "../types";
-
-import ListItemSwipeAction from "../../../../components/ListItemSwipeAction";
-import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
+import { useFocusEffect } from "@react-navigation/native";
 import { IOListViewWithLargeHeader } from "../../../../components/ui/IOListViewWithLargeHeader";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import * as analytics from "../../common/analytics";
 import { SERVICES_ROUTES } from "../../common/navigation/routes";
-import { useSortFavouriteServicesBottomSheet } from "../hooks/useSortFavouriteServicesBottomSheet";
-import { removeFavouriteService } from "../store/actions";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { sortedFavouriteServicesSelector } from "../store/selectors";
+import ListItemSwipeAction from "../../../../components/ListItemSwipeAction";
+import { removeFavouriteService } from "../store/actions";
+import type { FavouriteServiceType } from "../types";
+import { useSortFavouriteServicesBottomSheet } from "../hooks/useSortFavouriteServicesBottomSheet";
+import * as analytics from "../../common/analytics";
 
 const styles = StyleSheet.create({
   listItemWrapper: {
@@ -48,6 +46,7 @@ export const FavouriteServicesScreen = () => {
 
     return (
       <ListItemHeader
+        label=""
         endElement={{
           type: "buttonLink",
           componentProps: {
@@ -58,7 +57,6 @@ export const FavouriteServicesScreen = () => {
             }
           }
         }}
-        label=""
       />
     );
   }, [present, sortedServices.length]);
@@ -66,6 +64,9 @@ export const FavouriteServicesScreen = () => {
   const ListEmptyComponent = useCallback(
     () => (
       <OperationResultScreenContent
+        pictogram="empty"
+        title={I18n.t("services.favouriteServices.emptyList.title")}
+        subtitle={I18n.t("services.favouriteServices.emptyList.subtitle")}
         action={{
           label: I18n.t("services.favouriteServices.emptyList.searchAction"),
           icon: "search",
@@ -74,9 +75,6 @@ export const FavouriteServicesScreen = () => {
             navigation.navigate(SERVICES_ROUTES.SEARCH);
           }
         }}
-        pictogram="empty"
-        subtitle={I18n.t("services.favouriteServices.emptyList.subtitle")}
-        title={I18n.t("services.favouriteServices.emptyList.title")}
       />
     ),
     [navigation]
@@ -88,9 +86,10 @@ export const FavouriteServicesScreen = () => {
     ({ item }: ListRenderItemInfo<FavouriteServiceType>) => (
       <View style={styles.listItemWrapper}>
         <ListItemSwipeAction
-          accessibilityLabel={I18n.t("services.favouriteServices.remove")}
-          color="contrast"
           icon="starOff"
+          color="contrast"
+          openedItemRef={openedItemRef}
+          accessibilityLabel={I18n.t("services.favouriteServices.remove")}
           onRightActionPressed={({
             triggerSwipeAction,
             resetSwipePosition
@@ -128,9 +127,9 @@ export const FavouriteServicesScreen = () => {
               ]
             );
           }}
-          openedItemRef={openedItemRef}
         >
           <ListItemNav
+            value={item.name}
             description={item.institution.name}
             onPress={() => {
               analytics.trackServiceSelected({
@@ -146,7 +145,6 @@ export const FavouriteServicesScreen = () => {
                 }
               });
             }}
-            value={item.name}
           />
         </ListItemSwipeAction>
       </View>
@@ -157,13 +155,13 @@ export const FavouriteServicesScreen = () => {
   return (
     <>
       <IOListViewWithLargeHeader
-        data={sortedServices}
         headerActionsProp={{ showHelp: true }}
+        title={{ label: I18n.t("services.favouriteServices.title") }}
         keyExtractor={service => service.id}
+        data={sortedServices}
+        renderItem={renderItem}
         ListEmptyComponent={ListEmptyComponent}
         ListHeaderComponent={ListHeaderComponent}
-        renderItem={renderItem}
-        title={{ label: I18n.t("services.favouriteServices.title") }}
       />
       {bottomSheet}
     </>

@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-
+import { testable } from "../configureStoreAndPersistor";
 import {
   isReady,
   remoteError,
@@ -7,7 +7,6 @@ import {
   remoteReady,
   remoteUndefined
 } from "../../common/model/RemoteValue";
-import { testable } from "../configureStoreAndPersistor";
 
 jest.mock("redux-persist", () => ({
   createMigrate: jest.fn(),

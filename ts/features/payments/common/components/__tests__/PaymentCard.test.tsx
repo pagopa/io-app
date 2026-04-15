@@ -1,7 +1,6 @@
 import { render } from "@testing-library/react-native";
 import { format } from "date-fns";
 import I18n from "i18next";
-
 import { PaymentCard } from "../PaymentCard";
 
 describe("PaymentCard", () => {
@@ -13,7 +12,7 @@ describe("PaymentCard", () => {
   it(`should render credit card data`, () => {
     const tDate = new Date();
     const { queryByText } = render(
-      <PaymentCard brand="mastercard" expireDate={tDate} hpan="1234" />
+      <PaymentCard brand="mastercard" hpan="1234" expireDate={tDate} />
     );
 
     expect(queryByText("Mastercard •••• 1234")).not.toBeNull();

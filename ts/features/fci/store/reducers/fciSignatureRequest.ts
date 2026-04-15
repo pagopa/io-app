@@ -1,16 +1,15 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-
 import { DocumentDetailView } from "../../../../../definitions/fci/DocumentDetailView";
-import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
-import { IssuerEnvironmentEnum } from "../../../../../definitions/fci/IssuerEnvironment";
 import { SignatureRequestDetailView } from "../../../../../definitions/fci/SignatureRequestDetailView";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { NetworkError } from "../../../../utils/errors";
+import { fciSignatureRequestFromId, fciClearStateRequest } from "../actions";
+import { DocumentToSign } from "../../../../../definitions/fci/DocumentToSign";
 import { QtspDocumentToSign } from "../../utils/signature";
-import { fciClearStateRequest, fciSignatureRequestFromId } from "../actions";
+import { IssuerEnvironmentEnum } from "../../../../../definitions/fci/IssuerEnvironment";
 
 export type FciSignatureRequestState = pot.Pot<
   SignatureRequestDetailView,
@@ -24,14 +23,14 @@ const reducer = (
   action: Action
 ): FciSignatureRequestState => {
   switch (action.type) {
-    case getType(fciClearStateRequest):
-      return emptyState;
-    case getType(fciSignatureRequestFromId.failure):
-      return pot.toError(state, action.payload);
     case getType(fciSignatureRequestFromId.request):
       return pot.toLoading(state);
     case getType(fciSignatureRequestFromId.success):
       return pot.some(action.payload);
+    case getType(fciSignatureRequestFromId.failure):
+      return pot.toError(state, action.payload);
+    case getType(fciClearStateRequest):
+      return emptyState;
   }
 
   return state;

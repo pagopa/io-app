@@ -1,18 +1,17 @@
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { toUpper } from "lodash";
 import { put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-
 import { preferredLanguageSelector } from "../../../../../store/reducers/persistedPreferences";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { PaymentClient } from "../../../common/api/client";
-import { withPaymentsSessionToken } from "../../../common/utils/withPaymentsSessionToken";
-import { paymentAnalyticsDataSelector } from "../../../history/store/selectors";
-import * as analytics from "../../analytics";
 import { paymentsCalculatePaymentFeesAction } from "../../store/actions/networking";
+import { withPaymentsSessionToken } from "../../../common/utils/withPaymentsSessionToken";
+import * as analytics from "../../analytics";
+import { paymentAnalyticsDataSelector } from "../../../history/store/selectors";
 
 export function* handleWalletPaymentCalculateFees(
   calculateFees: PaymentClient["calculateFeesForIO"],

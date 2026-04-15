@@ -1,6 +1,5 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
   createMigrate,
   MigrationManifest,
@@ -10,7 +9,7 @@ import {
   persistReducer
 } from "redux-persist";
 import { v4 as uuid } from "uuid";
-
+import { pipe } from "fp-ts/lib/function";
 import { Action } from "../../../store/actions/types";
 import { isDevEnv } from "../../../utils/environment";
 import lollipopReducer, { LollipopState } from "./reducers/lollipop";
@@ -58,7 +57,7 @@ const migrations: MigrationManifest = {
   // to
   // { keyTag: O.Option<string>; _persist: ... }
   "0": (state: PersistedState): PersistedLollipopState => {
-    type PreviousPersistedLollipopState = PersistPartial & { keyTag?: string };
+    type PreviousPersistedLollipopState = { keyTag?: string } & PersistPartial;
     const castedPeviousState =
       state as unknown as PreviousPersistedLollipopState;
     return {

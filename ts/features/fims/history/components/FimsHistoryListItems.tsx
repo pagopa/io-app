@@ -8,22 +8,21 @@ import {
   useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { View } from "react-native";
-
-import { Access } from "../../../../../definitions/fims_history/Access";
+import I18n from "i18next";
 import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
+import { Access } from "../../../../../definitions/fims_history/Access";
 import { dateToAccessibilityReadableFormat } from "../../../../utils/accessibility";
 import { FimsHistorySharedStyles } from "../utils/styles";
 
 // ------- TYPES
 
+export type FimsHistorySuccessListItemProps = {
+  serviceData: ServiceDetails;
+  consent: Access;
+};
 export type FimsHistoryBaseListItemProps = {
   item: Access;
-};
-export type FimsHistorySuccessListItemProps = {
-  consent: Access;
-  serviceData: ServiceDetails;
 };
 
 // --------- LISTITEMS
@@ -37,7 +36,7 @@ export const FimsHistorySuccessListItem = ({
   return (
     <View style={defaultListItemStyles}>
       <View style={{ flexDirection: "row" }}>
-        <Icon name="calendar" size={16} />
+        <Icon size={16} name="calendar" />
         <HSpacer size={4} />
         <Caption color={theme["textBody-tertiary"]}>
           {/* eslint-disable i18next/no-literal-string */}
@@ -53,7 +52,7 @@ export const FimsHistorySuccessListItem = ({
 
       <H6>{serviceData.organization.name}</H6>
       {/* TODO: Dark mode: Replace with theme values */}
-      <BodySmall color="grey-700" weight="Regular">
+      <BodySmall weight="Regular" color="grey-700">
         {consent.redirect?.display_name}
       </BodySmall>
     </View>
@@ -87,7 +86,7 @@ export const FimsHistoryFailureListItem = ({
             flexDirection: "row"
           }}
         >
-          <Icon color="grey-300" name="calendar" size={16} />
+          <Icon name="calendar" size={16} color="grey-300" />
           <HSpacer size={4} />
           <Caption color={theme["textBody-tertiary"]}>
             {/* eslint-disable-next-line i18next/no-literal-string */}
@@ -96,12 +95,12 @@ export const FimsHistoryFailureListItem = ({
         </View>
         <VSpacer size={4} />
         {/* TODO: Dark mode: Replace with theme values */}
-        <BodySmall color="error-600" weight="Semibold">
+        <BodySmall weight="Semibold" color="error-600">
           {I18n.t("FIMS.history.errorStates.dataUnavailable")}
         </BodySmall>
       </View>
       {/* TODO: Dark mode: Replace with theme values */}
-      <Icon color="error-600" name="errorFilled" />
+      <Icon name="errorFilled" color="error-600" />
     </View>
   );
 };

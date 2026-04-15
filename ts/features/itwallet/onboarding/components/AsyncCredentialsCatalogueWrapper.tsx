@@ -5,7 +5,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { PropsWithChildren } from "react";
-
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { itwFetchCredentialsCatalogue } from "../../credentialsCatalogue/store/actions";
 import {
@@ -27,7 +26,7 @@ export const AsyncCredentialsCatalogue = ({ children }: PropsWithChildren) => {
   );
 
   const loadingContent = Array.from({ length: 5 }).map((_, i) => (
-    <ModuleCredential isLoading key={`loading-item-${i}`} />
+    <ModuleCredential key={`loading-item-${i}`} isLoading />
   ));
 
   const content = () => {
@@ -42,11 +41,11 @@ export const AsyncCredentialsCatalogue = ({ children }: PropsWithChildren) => {
     if (isCatalogueUnavailable) {
       return (
         <BannerErrorState
-          actionText={I18n.t(
-            "features.itWallet.credentialsCatalogue.failure.action"
-          )}
           label={I18n.t(
             "features.itWallet.credentialsCatalogue.failure.content"
+          )}
+          actionText={I18n.t(
+            "features.itWallet.credentialsCatalogue.failure.action"
           )}
           onPress={() => dispatch(itwFetchCredentialsCatalogue.request())}
         />

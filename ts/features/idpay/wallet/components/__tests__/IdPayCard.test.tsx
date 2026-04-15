@@ -1,19 +1,19 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import configureMockStore from "redux-mock-store";
+import { IdPayCard, IdPayCardProps } from "../IdPayCard";
+import { appReducer } from "../../../../../store/reducers";
 
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { GlobalState } from "../../../../../store/reducers/types";
+import { IDPayDetailsRoutes } from "../../../details/navigation";
+import { WalletDTO } from "../../../../../../definitions/idpay/WalletDTO";
 import {
   InitiativeDTO,
   InitiativeRewardTypeEnum,
   StatusEnum
 } from "../../../../../../definitions/idpay/InitiativeDTO";
-import { WalletDTO } from "../../../../../../definitions/idpay/WalletDTO";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { appReducer } from "../../../../../store/reducers";
-import { GlobalState } from "../../../../../store/reducers/types";
 import { formatNumberCentsToAmount } from "../../../../../utils/stringBuilder";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { IDPayDetailsRoutes } from "../../../details/navigation";
-import { IdPayCard, IdPayCardProps } from "../IdPayCard";
 
 const IDPAY_INITIATIVE_ID_MOCK = "1";
 const IDPAY_INITIATIVE_NAME = "18 app";

@@ -1,14 +1,13 @@
-import { fireEvent } from "@testing-library/react-native";
 import { ComponentProps } from "react";
-import { ScrollView } from "react-native";
 import { createStore } from "redux";
-
-import { LandingCardComponent } from "../../../../../components/LandingCardComponent";
-import { applicationChangeState } from "../../../../../store/actions/application";
+import { ScrollView } from "react-native";
+import { fireEvent } from "@testing-library/react-native";
+import { Carousel, CarouselProps } from "../Carousel";
 import { appReducer } from "../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { trackCarousel } from "../../analytics/carouselAnalytics";
-import { Carousel, CarouselProps } from "../Carousel";
+import { LandingCardComponent } from "../../../../../components/LandingCardComponent";
 
 jest.mock("../../analytics/carouselAnalytics", () => ({
   trackCarousel: jest.fn()

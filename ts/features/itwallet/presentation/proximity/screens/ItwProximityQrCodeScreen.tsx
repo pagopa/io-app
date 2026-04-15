@@ -15,7 +15,6 @@ import I18n from "i18next";
 import { useEffect } from "react";
 import { StyleSheet, useWindowDimensions, View } from "react-native";
 import QRCode from "react-native-qrcode-skia";
-
 import ItwIcon from "../../../../../../img/features/itWallet/brand/itw_icon.svg";
 import {
   IOScrollView,
@@ -46,14 +45,14 @@ import { shouldBlockProximityQrCodeSelector } from "../store/selectors";
 const QR_CODE_LOGO_SIZE = 52;
 
 type StatusBoxProps = {
-  action?: React.ReactNode;
+  iconName: "warningFilled" | "qrCode";
   description: string;
-  iconName: "qrCode" | "warningFilled";
+  action?: React.ReactNode;
 };
 
 const StatusBox = ({ iconName, description, action }: StatusBoxProps) => (
   <View style={styles.statusBox}>
-    <Icon color="grey-700" name={iconName} size={24} />
+    <Icon name={iconName} size={24} color="grey-700" />
     <Body style={styles.statusDescription}>{description}</Body>
     {action}
   </View>
@@ -161,19 +160,19 @@ export const ItwProximityQrCodeScreen = () => {
     if (failure !== undefined) {
       return (
         <StatusBox
-          action={
-            <View style={styles.retryActionContainer}>
-              <IOButton
-                label={I18n.t("global.buttons.retry")}
-                onPress={handleRetry}
-                variant="link"
-              />
-            </View>
-          }
+          iconName="warningFilled"
           description={I18n.t(
             "features.itWallet.presentation.qrCode.error.message"
           )}
-          iconName="warningFilled"
+          action={
+            <View style={styles.retryActionContainer}>
+              <IOButton
+                variant="link"
+                label={I18n.t("global.buttons.retry")}
+                onPress={handleRetry}
+              />
+            </View>
+          }
         />
       );
     }
@@ -181,27 +180,27 @@ export const ItwProximityQrCodeScreen = () => {
     if (shouldBlockProximityPresentation) {
       return (
         <StatusBox
+          iconName="qrCode"
           description={I18n.t(
             "features.itWallet.presentation.qrCode.error.invalid"
           )}
-          iconName="qrCode"
         />
       );
     }
 
     if (isLoading || !qrCodeString) {
-      return <IOSkeleton radius={16} shape="square" size={qrCodeSize} />;
+      return <IOSkeleton shape="square" size={qrCodeSize} radius={16} />;
     }
 
     return (
       <QRCode
         color={qrCodeColor}
-        errorCorrectionLevel="H"
-        logo={<ItwIcon height={QR_CODE_LOGO_SIZE} width={QR_CODE_LOGO_SIZE} />}
-        logoAreaSize={QR_CODE_LOGO_SIZE + 8}
-        shapeOptions={{ shape: "rounded", eyePatternShape: "rounded" }}
-        size={qrCodeSize}
         value={qrCodeString}
+        size={qrCodeSize}
+        errorCorrectionLevel="H"
+        shapeOptions={{ shape: "rounded", eyePatternShape: "rounded" }}
+        logoAreaSize={QR_CODE_LOGO_SIZE + 8}
+        logo={<ItwIcon width={QR_CODE_LOGO_SIZE} height={QR_CODE_LOGO_SIZE} />}
       />
     );
   };
@@ -209,14 +208,14 @@ export const ItwProximityQrCodeScreen = () => {
   return (
     <IOScrollView actions={scrollViewActions}>
       <ItwBrandedBox
-        backgroundVariant={"gradient"}
         variant={isFailure ? "error" : "default"}
+        backgroundVariant={"gradient"}
       >
         <VStack space={16}>
           <View style={styles.logoContainer}>
-            <ItWalletLogo height={28} width={134} />
+            <ItWalletLogo width={134} height={28} />
             {shouldBlockProximityPresentation && (
-              <Icon color={theme.errorIcon} name="errorFilled" size={20} />
+              <Icon name="errorFilled" size={20} color={theme.errorIcon} />
             )}
           </View>
 
@@ -233,11 +232,11 @@ export const ItwProximityQrCodeScreen = () => {
         <>
           <VSpacer size={24} />
           <Alert
+            testID="itwExpiredBannerTestID"
+            variant="error"
             content={I18n.t(
               "features.itWallet.presentation.qrCode.banner.invalid"
             )}
-            testID="itwExpiredBannerTestID"
-            variant="error"
           />
         </>
       )}

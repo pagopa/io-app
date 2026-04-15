@@ -1,11 +1,10 @@
 import { entries } from "lodash";
-
-import { Locales, setLocale } from "../../i18n";
 import {
   formatIntegerNumber,
   formatNumberAmount,
   formatNumberWithNoDigits
 } from "../stringBuilder";
+import { setLocale, Locales } from "../../i18n";
 
 const valuesEN = {
   "10.00": 10,
@@ -58,7 +57,7 @@ const valuesIT2 = {
   "1.001": 1000.5
 };
 
-describe("amountBuilder IT locale", () => {
+describe("amountBuilder", () => {
   it("should render amounts correctly for IT language", async () => {
     setLocale("it" as Locales);
     entries(valuesIT).forEach(([k, v]) =>

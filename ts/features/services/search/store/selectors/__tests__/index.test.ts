@@ -1,5 +1,4 @@
 import { Action, createStore } from "redux";
-
 import {
   isErrorPaginatedInstitutionsSelector,
   isLoadingPaginatedInstitutionsSelector,

@@ -1,8 +1,6 @@
 import { createSelector } from "reselect";
-
-import type { FavouriteServiceType } from "../../types";
-
 import { GlobalState } from "../../../../../store/reducers/types";
+import type { FavouriteServiceType } from "../../types";
 
 export const favouriteServicesSelector = (state: GlobalState) =>
   state.features.services.favouriteServices.dataById;

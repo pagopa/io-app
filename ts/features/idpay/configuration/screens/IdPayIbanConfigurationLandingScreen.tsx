@@ -5,7 +5,6 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp";
@@ -27,9 +26,9 @@ export const IdPayIbanConfigurationLandingScreen = () => {
       <ContentWrapper>
         <IOButton
           fullWidth
+          variant="solid"
           label={I18n.t("idpay.configuration.iban.landing.modal.button")}
           onPress={() => dismiss()}
-          variant="solid"
         />
         <VSpacer size={32} />
       </ContentWrapper>
@@ -46,16 +45,16 @@ export const IdPayIbanConfigurationLandingScreen = () => {
   return (
     <>
       <OperationResultScreenContent
+        pictogram="ibanCard"
+        title={I18n.t("idpay.configuration.iban.landing.header")}
+        isHeaderVisible
+        subtitle={I18n.t("idpay.configuration.iban.landing.body")}
+        // TODO: We should manage this link in a cleaner way, not included in the markdown
+        onSubtitleLinkPress={() => present()}
         action={{
           label: I18n.t("global.buttons.continue"),
           onPress: () => machine.send({ type: "next" })
         }}
-        isHeaderVisible
-        // TODO: We should manage this link in a cleaner way, not included in the markdown
-        onSubtitleLinkPress={() => present()}
-        pictogram="ibanCard"
-        subtitle={I18n.t("idpay.configuration.iban.landing.body")}
-        title={I18n.t("idpay.configuration.iban.landing.header")}
       />
       {bottomSheet}
     </>

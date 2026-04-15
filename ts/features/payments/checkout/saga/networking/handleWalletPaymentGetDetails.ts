@@ -1,14 +1,13 @@
 import * as E from "fp-ts/lib/Either";
 import { put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-
-import { FaultCodeCategoryEnum as EcommerceFaultCodeCategoryEnum } from "../../../../../../definitions/pagopa/ecommerce/GatewayFaultPaymentProblemJson";
 import { getGenericError, getNetworkError } from "../../../../../utils/errors";
 import { readablePrivacyReport } from "../../../../../utils/reporters";
 import { PaymentClient } from "../../../common/api/client";
-import { withPaymentsSessionToken } from "../../../common/utils/withPaymentsSessionToken";
 import { paymentsGetPaymentDetailsAction } from "../../store/actions/networking";
+import { withPaymentsSessionToken } from "../../../common/utils/withPaymentsSessionToken";
 import { FaultCodeCategoryEnum as VerifyFaultCodeCategoryEnum } from "../../types/PaymentVerifyGenericErrorProblemJson";
+import { FaultCodeCategoryEnum as EcommerceFaultCodeCategoryEnum } from "../../../../../../definitions/pagopa/ecommerce/GatewayFaultPaymentProblemJson";
 
 const PAYMENT_VERIFY_GENERIC_ERROR_CODE_DETAIL = "PAYMENT_VERIFY_GENERIC_ERROR";
 

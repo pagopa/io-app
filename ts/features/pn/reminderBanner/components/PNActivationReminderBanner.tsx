@@ -1,9 +1,8 @@
 import { Banner, IOVisualCostants } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import I18n from "i18next";
 import { useCallback, useRef } from "react";
 import { StyleSheet, View } from "react-native";
-
+import I18n from "i18next";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
@@ -48,15 +47,15 @@ export const PNActivationReminderBanner = ({ handleOnClose }: Props) => {
   return (
     <View style={styles.margins}>
       <Banner
-        action={I18n.t("features.pn.reminderBanner.cta")}
-        color="turquoise"
-        content={I18n.t("features.pn.reminderBanner.body")}
-        labelClose={I18n.t("global.buttons.close")}
-        onClose={closeHandler}
-        onPress={navigateToActivationFlow}
-        pictogramName="savingMoney"
         testID="pn-banner"
         title={I18n.t("features.pn.reminderBanner.title")}
+        content={I18n.t("features.pn.reminderBanner.body")}
+        action={I18n.t("features.pn.reminderBanner.cta")}
+        color="turquoise"
+        onPress={navigateToActivationFlow}
+        pictogramName="savingMoney"
+        onClose={closeHandler}
+        labelClose={I18n.t("global.buttons.close")}
       />
     </View>
   );

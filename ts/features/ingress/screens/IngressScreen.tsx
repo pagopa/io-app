@@ -9,11 +9,8 @@ import I18n from "i18next";
 import { isEqual } from "lodash";
 import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { AccessibilityInfo, View } from "react-native";
-
 import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
 import { PublicSession } from "../../../../definitions/session_manager/PublicSession";
-import { versionInfoDataSelector } from "../../../common/versionInfo/store/reducers/versionInfo";
-import { IOVersionInfo } from "../../../common/versionInfo/types/IOVersionInfo";
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import ModalSectionStatusComponent from "../../../components/SectionStatus/modal";
@@ -44,6 +41,8 @@ import {
 import { setIsBlockingScreen, setOfflineAccessReason } from "../store/actions";
 import { OfflineAccessReasonEnum } from "../store/reducer";
 import { checkSessionErrorSelector } from "../store/selectors";
+import { versionInfoDataSelector } from "../../../common/versionInfo/store/reducers/versionInfo";
+import { IOVersionInfo } from "../../../common/versionInfo/types/IOVersionInfo";
 
 const TIMEOUT_CHANGE_LABEL = (5 * 1000) as Millisecond;
 const TIMEOUT_BLOCKING_SCREEN = (25 * 1000) as Millisecond;
@@ -92,8 +91,8 @@ export const IngressScreen = () => {
   const [showBlockingScreen, setShowBlockingScreen] = useState(false);
   const [showBanner, setShowBanner] = useState(false);
   const [content, setContent] = useState<{
-    subtitle?: string;
     title: string;
+    subtitle?: string;
   }>({
     title: I18n.t("startup.title")
   });
@@ -199,6 +198,9 @@ export const IngressScreen = () => {
         trackingAction={trackIngressServicesSlowDown}
       />
       <LoadingScreenContent
+        testID="ingress-screen-loader-id"
+        title={content.title}
+        subtitle={content.subtitle}
         animatedPictogramSource="waiting"
         banner={
           isOfflineAccessAvailable && showBanner
@@ -215,9 +217,6 @@ export const IngressScreen = () => {
               }
             : undefined
         }
-        subtitle={content.subtitle}
-        testID="ingress-screen-loader-id"
-        title={content.title}
       />
     </>
   );
@@ -240,10 +239,10 @@ const IngressScreenNoInternetConnection = memo(() => {
 
   return (
     <OperationResultScreenContent
-      pictogram="lostConnection"
-      subtitle={I18n.t("startup.connection_lost.description")}
       testID="device-connection-lost-id"
+      pictogram="lostConnection"
       title={I18n.t("startup.connection_lost.title")}
+      subtitle={I18n.t("startup.connection_lost.description")}
     />
   );
 });

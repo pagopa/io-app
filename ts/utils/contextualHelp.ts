@@ -1,20 +1,19 @@
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
-
 import { ScreenCHData } from "../../definitions/content/ScreenCHData";
 import { ContextualHelpData } from "../features/zendesk/screens/ZendeskSupportHelpCenter";
 import { TranslationKeys } from "../i18n";
 
 export type ContextualHelpProps = {
-  body: string;
   title: string;
+  body: string;
 };
 
 export type ContextualHelpPropsMarkdown = {
-  body: TranslationKeys;
   title: TranslationKeys;
+  body: TranslationKeys;
 };
 
 /**

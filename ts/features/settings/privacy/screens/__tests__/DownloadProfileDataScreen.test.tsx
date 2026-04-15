@@ -1,16 +1,15 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
-
-import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/backend/UserDataProcessingChoice";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { applicationChangeState } from "../../../../../store/actions/application";
-import * as hooks from "../../../../../store/hooks";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { SETTINGS_ROUTES } from "../../../common/navigation/routes";
-import { upsertUserDataProcessing } from "../../../common/store/actions/userDataProcessing";
-import * as selectors from "../../../common/store/selectors/userDataProcessing";
 import DownloadProfileDataScreen from "../DownloadProfileDataScreen";
+import * as hooks from "../../../../../store/hooks";
+import * as selectors from "../../../common/store/selectors/userDataProcessing";
+import { upsertUserDataProcessing } from "../../../common/store/actions/userDataProcessing";
+import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/backend/UserDataProcessingChoice";
 
 jest.mock("../../../../../store/hooks", () => ({
   useIODispatch: jest.fn(),

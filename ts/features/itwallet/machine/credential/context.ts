@@ -1,56 +1,12 @@
 import { CryptoContext } from "@pagopa/io-react-native-jwt";
-
-import { DigitalCredentialMetadata } from "../../common/utils/itwCredentialsCatalogueUtils";
 import {
+  CredentialBundle,
   IssuerConfiguration,
   RequestObject,
-  StoredCredential,
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
+import { DigitalCredentialMetadata } from "../../common/utils/itwCredentialsCatalogueUtils";
 import { CredentialIssuanceFailure } from "./failure";
-
-export type Context = {
-  clientId: string | undefined;
-  codeVerifier: string | undefined;
-  /**
-   * Obtained credentials from the issuer.
-   */
-  credentials: Array<StoredCredential> | undefined;
-  /**
-   * The credentials catalogue as a dictionary, with an entry for each credential type.
-   */
-  credentialsCatalogue: Record<string, DigitalCredentialMetadata> | undefined;
-  /**
-   * The type of the credential being issued.
-   */
-  credentialType: string | undefined;
-  /**
-   * The failure that occurred during the credential issuance process, if any.
-   */
-  failure: CredentialIssuanceFailure | undefined;
-  /**
-   * Flag to indicate if the user has access to the L3 features.
-   */
-  isItWalletValid: boolean;
-  /**
-   * Credential request data
-   */
-  issuerConf: IssuerConfiguration | undefined;
-  /**
-   * The mode for the credential issuance process. It does not change how the credentials are requested,
-   * but it is needed to determine how the machine should behave.
-   */
-  mode: CredentialIssuanceMode;
-  requestedCredential: RequestObject | undefined;
-  /**
-   * The wallet instance attestation of the wallet. If expired, it will be requested a new one.
-   */
-  walletInstanceAttestation: undefined | WalletInstanceAttestations;
-  /**
-   * The WIA crypto context, which contains the necessary cryptographic information for the issuance.
-   */
-  wiaCryptoContext: CryptoContext | undefined;
-};
 
 /**
  * The mode for the credential issuance process.
@@ -61,6 +17,49 @@ export type Context = {
  * - "upgrade": for upgrading an existing credential to a the new format
  */
 export type CredentialIssuanceMode = "issuance" | "reissuance" | "upgrade";
+
+export type Context = {
+  /**
+   * The mode for the credential issuance process. It does not change how the credentials are requested,
+   * but it is needed to determine how the machine should behave.
+   */
+  mode: CredentialIssuanceMode;
+  /**
+   * Flag to indicate if the user has access to the L3 features.
+   */
+  isItWalletValid: boolean;
+  /**
+   * The type of the credential being issued.
+   */
+  credentialType: string | undefined;
+  /**
+   * The WIA crypto context, which contains the necessary cryptographic information for the issuance.
+   */
+  wiaCryptoContext: CryptoContext | undefined;
+  /**
+   * The wallet instance attestation of the wallet. If expired, it will be requested a new one.
+   */
+  walletInstanceAttestation: WalletInstanceAttestations | undefined;
+  /**
+   * Credential request data
+   */
+  issuerConf: IssuerConfiguration | undefined;
+  clientId: string | undefined;
+  codeVerifier: string | undefined;
+  requestedCredential: RequestObject | undefined;
+  /**
+   * Obtained credentials from the issuer.
+   */
+  credentials: ReadonlyArray<CredentialBundle> | undefined;
+  /**
+   * The failure that occurred during the credential issuance process, if any.
+   */
+  failure: CredentialIssuanceFailure | undefined;
+  /**
+   * The credentials catalogue as a dictionary, with an entry for each credential type.
+   */
+  credentialsCatalogue: Record<string, DigitalCredentialMetadata> | undefined;
+};
 
 export const InitialContext: Context = {
   mode: "issuance",

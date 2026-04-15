@@ -1,21 +1,20 @@
 import "react-native";
+import { Provider } from "react-redux";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { fireEvent } from "@testing-library/react-native";
+import { Store, createStore } from "redux";
 import I18n from "i18next";
-import { Provider } from "react-redux";
-import { createStore, Store } from "redux";
-
-import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
+import { applicationChangeState } from "../../../../store/actions/application";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { FCI_ROUTES } from "../../navigation/routes";
-import { fciSignatureRequestFromId } from "../../store/actions";
-import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
 import DocumentWithSignature, {
   SignatureFieldAttrType
 } from "../DocumentWithSignature";
+import { fciSignatureRequestFromId } from "../../store/actions";
+import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
 
 type Props = {
   attrs: SignatureFieldAttrType;

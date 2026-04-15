@@ -1,25 +1,24 @@
 import { ECKey, RSAKey } from "@pagopa/io-react-native-crypto";
 import MockDate from "mockdate";
 import URLParse from "url-parse";
-
 import { LollipopConfig } from "../..";
-import { getError } from "../../../../utils/errors";
-import { KeyInfo } from "../../utils/crypto";
 import {
-  CustomContentBaseSignature,
-  customContentSignatureBases,
+  SignatureConfigForgeInput,
   CutsomContentToSignInput,
-  SignatureConfigForgeInput
+  customContentSignatureBases,
+  CustomContentBaseSignature
 } from "../../utils/fetch";
-import { brokenMockSigner, mockSigner } from "../__mocks__/mockSigners";
+import { KeyInfo } from "../../utils/crypto";
 import { constants } from "../constants";
 import {
-  generateSignature,
-  generateSignatureBase,
   generateSignatureInput,
-  toSignatureHeaderValue
+  generateSignatureBase,
+  toSignatureHeaderValue,
+  generateSignature
 } from "../signature";
 import { SignatureConfig } from "../types/SignatureConfig";
+import { brokenMockSigner, mockSigner } from "../__mocks__/mockSigners";
+import { getError } from "../../../../utils/errors";
 
 const testHeaders: Record<any, string> = {
   "": ""
@@ -170,7 +169,7 @@ describe(`Test generate signature base`, () => {
   });
 });
 
-describe(`Test generate signature base with content-digest header`, () => {
+describe(`Test generate signature base`, () => {
   it(`with "${constants.HEADERS.CONTENT_DIGEST}" for config ${JSON.stringify(
     testConfig
   )}`, () => {
@@ -187,7 +186,7 @@ describe(`Test generate signature base with content-digest header`, () => {
   });
 });
 
-describe(`Test generate signature base with custom headers and content-digest`, () => {
+describe(`Test generate signature base`, () => {
   it(`with "${constants.HEADERS.CONTENT_DIGEST}" for config ${JSON.stringify(
     testCustomHeadersConfig
   )}`, () => {

@@ -6,19 +6,16 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as A from "fp-ts/lib/Array";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import I18n from "i18next";
+import { pipe } from "fp-ts/lib/function";
 import _, { capitalize } from "lodash";
-import { useEffect, useMemo, useState } from "react";
-
+import { useState, useEffect, useMemo } from "react";
+import I18n from "i18next";
 import { WalletInfo } from "../../../../../definitions/pagopa/ecommerce/WalletInfo";
-import { WalletStatusEnum } from "../../../../../definitions/pagopa/ecommerce/WalletStatus";
 import { PaymentMethodResponse } from "../../../../../definitions/pagopa/walletv3/PaymentMethodResponse";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { centsToAmount } from "../../../../utils/stringBuilder";
 import { UIWalletInfoDetails } from "../../common/types/UIWalletInfoDetails";
-import { getPaymentLogoFromWalletDetails } from "../../common/utils";
 import { selectPaymentMethodAction } from "../store/actions/orchestration";
 import { walletPaymentAmountSelector } from "../store/selectors";
 import {
@@ -28,6 +25,8 @@ import {
   walletPaymentSelectedWalletIdOptionSelector,
   walletRecentPaymentMethodSelector
 } from "../store/selectors/paymentMethods";
+import { getPaymentLogoFromWalletDetails } from "../../common/utils";
+import { WalletStatusEnum } from "../../../../../definitions/pagopa/ecommerce/WalletStatus";
 
 const CheckoutPaymentMethodsList = () => {
   const dispatch = useIODispatch();
@@ -168,10 +167,10 @@ const CheckoutPaymentMethodsList = () => {
     <>
       {shouldShowWarningBanner && (
         <Alert
-          action={I18n.t("wallet.payment.methodSelection.alert.cta")}
           content={I18n.t("wallet.payment.methodSelection.alert.body")}
-          onPress={() => setShouldShowWarningBanner(false)}
           variant="warning"
+          onPress={() => setShouldShowWarningBanner(false)}
+          action={I18n.t("wallet.payment.methodSelection.alert.cta")}
         />
       )}
       {!_.isEmpty(recentPaymentMethodListItem) && (
@@ -180,10 +179,10 @@ const CheckoutPaymentMethodsList = () => {
         />
       )}
       <RadioGroup<string>
+        type="radioListItem"
+        selectedItem={selectedWalletId || selectedPaymentMethodId}
         items={recentPaymentMethodListItem}
         onPress={handleOnSelectRecentPaymentMethod}
-        selectedItem={selectedWalletId || selectedPaymentMethodId}
-        type="radioListItem"
       />
       {!_.isEmpty(userPaymentMethodListItems) && (
         <ListItemHeader
@@ -191,10 +190,10 @@ const CheckoutPaymentMethodsList = () => {
         />
       )}
       <RadioGroup<string>
+        type="radioListItem"
+        selectedItem={selectedWalletId}
         items={userPaymentMethodListItems}
         onPress={handleSelectUserWallet}
-        selectedItem={selectedWalletId}
-        type="radioListItem"
       />
       {!_.isEmpty(allPaymentMethodListItems) && (
         <ListItemHeader
@@ -202,10 +201,10 @@ const CheckoutPaymentMethodsList = () => {
         />
       )}
       <RadioGroup<string>
+        type="radioListItem"
+        selectedItem={!selectedWalletId ? selectedPaymentMethodId : undefined}
         items={allPaymentMethodListItems}
         onPress={handleSelectPaymentMethod}
-        selectedItem={!selectedWalletId ? selectedPaymentMethodId : undefined}
-        type="radioListItem"
       />
     </>
   );
@@ -268,6 +267,7 @@ const mapUserWalletToRadioItem = (
 
 const CheckoutPaymentMethodsListSkeleton = () => (
   <RadioGroup<string>
+    type="radioListItem"
     items={Array.from({ length: 10 }, (_, id) => ({
       id: id.toString(),
       disabled: true,
@@ -275,7 +275,6 @@ const CheckoutPaymentMethodsListSkeleton = () => (
       value: ""
     }))}
     onPress={() => null}
-    type="radioListItem"
   />
 );
 

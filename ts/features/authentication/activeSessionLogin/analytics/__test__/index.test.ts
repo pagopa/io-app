@@ -1,13 +1,13 @@
-import { helpCenterHowToDoWhenSessionIsExpiredUrl } from "../../../../../config";
-import * as mixpanel from "../../../../../mixpanel";
-import * as analyticsUtils from "../../../../../utils/analytics";
-import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import {
-  BANNER_ID,
-  trackLoginExpirationBannerClosure,
   trackLoginExpirationBannerPrompt,
-  trackLoginExpirationBannerTap
+  trackLoginExpirationBannerTap,
+  trackLoginExpirationBannerClosure,
+  BANNER_ID
 } from "../../analytics";
+import { helpCenterHowToDoWhenSessionIsExpiredUrl } from "../../../../../config";
+import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
+import * as analyticsUtils from "../../../../../utils/analytics";
+import * as mixpanel from "../../../../../mixpanel";
 
 jest.mock("../../../../../mixpanel", () => ({
   mixpanelTrack: jest.fn()

@@ -1,12 +1,12 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import { pipe } from "fp-ts/lib/function";
 import { createSelector } from "reselect";
-
 import { BonusAvailable } from "../../../../../../definitions/content/BonusAvailable";
 import { BonusesAvailable } from "../../../../../../definitions/content/BonusesAvailable";
-import { BonusVisibilityEnum } from "../../../../../../definitions/content/BonusVisibility";
 import { GlobalState } from "../../../../../store/reducers/types";
+
+import { BonusVisibilityEnum } from "../../../../../../definitions/content/BonusVisibility";
 import { mapBonusIdFeatureFlag } from "../../utils";
 import { AvailableBonusTypesState } from "../reducers/availableBonusesTypes";
 

@@ -8,12 +8,11 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/core";
 import { RouteProp } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import I18n from "i18next";
+import { pipe } from "fp-ts/lib/function";
 import { useRef } from "react";
 import { ActivityIndicator } from "react-native";
-
+import I18n from "i18next";
 import { OperationListDTO } from "../../../../../definitions/idpay/OperationListDTO";
 import { IOListViewWithLargeHeader } from "../../../../components/ui/IOListViewWithLargeHeader";
 import customVariables from "../../../../theme/variables";
@@ -32,14 +31,14 @@ type IdPayOperationsListScreenRouteProps = RouteProp<
 
 const TimelineLoader = () => (
   <ActivityIndicator
-    accessibilityHint={I18n.t("global.accessibility.activityIndicator.hint")}
-    accessibilityLabel={I18n.t("global.accessibility.activityIndicator.label")}
-    accessible={true}
     animating={true}
-    color={customVariables.brandPrimary}
-    importantForAccessibility={"no-hide-descendants"}
     size={"large"}
     style={{ padding: 12 }}
+    color={customVariables.brandPrimary}
+    accessible={true}
+    accessibilityHint={I18n.t("global.accessibility.activityIndicator.hint")}
+    accessibilityLabel={I18n.t("global.accessibility.activityIndicator.label")}
+    importantForAccessibility={"no-hide-descendants"}
     testID={"activityIndicator"}
   />
 );
@@ -92,21 +91,23 @@ export const IdPayOperationsListScreen = () => {
       }).format(date)
     ),
     O.fold(
-      () => <IOSkeleton height={18} radius={4} shape="rectangle" width={70} />,
+      () => <IOSkeleton shape="rectangle" height={18} width={70} radius={4} />,
       dateString => <Body weight="Semibold">{dateString}</Body>
     )
   );
 
   return (
     <IOListViewWithLargeHeader
-      contentContainerStyle={{
-        paddingBottom: 120,
-        paddingHorizontal: customVariables.contentPadding
-      }}
+      skeleton={<IdPayTimelineOperationListItem isLoading />}
       data={timeline}
-      ItemSeparatorComponent={() => <Divider />}
+      loading={isFirstLoading}
       keyExtractor={item => item.operationId}
-      ListFooterComponent={isUpdating ? <TimelineLoader /> : null}
+      renderItem={({ item }) => (
+        <IdPayTimelineOperationListItem
+          operation={item}
+          onPress={() => showOperationDetailsBottomSheet(item)}
+        />
+      )}
       ListHeaderComponent={
         <>
           <Body>
@@ -119,18 +120,16 @@ export const IdPayOperationsListScreen = () => {
           <VSpacer size={16} />
         </>
       }
-      loading={isFirstLoading}
+      contentContainerStyle={{
+        paddingBottom: 120,
+        paddingHorizontal: customVariables.contentPadding
+      }}
+      ItemSeparatorComponent={() => <Divider />}
       onEndReached={fetchNextPage}
       onEndReachedThreshold={0.5}
       onRefresh={refresh}
       refreshing={isRefreshing}
-      renderItem={({ item }) => (
-        <IdPayTimelineOperationListItem
-          onPress={() => showOperationDetailsBottomSheet(item)}
-          operation={item}
-        />
-      )}
-      skeleton={<IdPayTimelineOperationListItem isLoading />}
+      ListFooterComponent={isUpdating ? <TimelineLoader /> : null}
       title={{
         label: I18n.t(
           "idpay.initiative.details.initiativeDetailsScreen.configured.operationsList.title"

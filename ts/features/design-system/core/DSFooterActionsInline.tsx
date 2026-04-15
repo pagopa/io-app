@@ -28,16 +28,16 @@ export const DSFooterActionsInline = () => {
         </ContentWrapper>
       </ScrollView>
       <FooterActionsInline
-        endAction={{
-          color: "primary",
-          onPress: () => Alert.alert("Button pressed"),
-          label: "Solid button"
-        }}
         onMeasure={handleFooterActionsInlineMeasurements}
         startAction={{
           color: "primary",
           label: "Outline button",
           onPress: () => Alert.alert("Button pressed")
+        }}
+        endAction={{
+          color: "primary",
+          onPress: () => Alert.alert("Button pressed"),
+          label: "Solid button"
         }}
       />
     </View>

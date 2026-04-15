@@ -1,5 +1,4 @@
 import * as O from "fp-ts/lib/Option";
-
 import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
 import { OnboardingFailureEnum } from "../types/OnboardingFailure";
@@ -85,7 +84,7 @@ export const trackIDPayOnboardingFailure = (
 
 export const trackIDPayOnboardingErrorHelp = (
   props: DefaultOnboardingEventProperties & {
-    flow: "authorization" | "onboarding";
+    flow: "onboarding" | "authorization";
     reason: O.Option<OnboardingFailureEnum>;
   }
 ) => {

@@ -4,27 +4,26 @@
  */
 import {
   IOColors,
-  IOPictograms,
   IOPictogramSizeScale,
+  IOPictograms,
   Pictogram
 } from "@pagopa/io-app-design-system";
 import { PureComponent } from "react";
 import { Animated, Easing, StyleSheet, View } from "react-native";
-
 import { CircularProgress } from "../../../../../components/ui/CircularProgress";
 import { isDevEnv } from "../../../../../utils/environment";
 
 export enum ReadingState {
-  "completed" = "completed",
-  "error" = "error",
   "reading" = "reading",
+  "error" = "error",
+  "completed" = "completed",
   "waiting_card" = "waiting_card"
 }
 
 type CieCardReadingAnimationProps = Readonly<{
-  circleColor: string;
-  pictogramName: IOPictograms;
   readingState: ReadingState;
+  pictogramName: IOPictograms;
+  circleColor: string;
 }>;
 
 type State = Readonly<{
@@ -49,8 +48,8 @@ export default class CieCardReadingAnimation extends PureComponent<
   CieCardReadingAnimationProps,
   State
 > {
-  private progressAnimatedValue: Animated.Value;
   private progressAnimation?: Animated.CompositeAnimation;
+  private progressAnimatedValue: Animated.Value;
 
   constructor(props: CieCardReadingAnimationProps) {
     super(props);
@@ -61,68 +60,6 @@ export default class CieCardReadingAnimation extends PureComponent<
     this.progressAnimatedValue = new Animated.Value(0);
     this.createAnimation();
   }
-
-  public componentDidUpdate(
-    prevCieCardReadingAnimationProps: CieCardReadingAnimationProps
-  ) {
-    // If we start reading the card, start the animation
-    if (
-      prevCieCardReadingAnimationProps.readingState !== ReadingState.reading &&
-      this.props.readingState === ReadingState.reading
-    ) {
-      this.startAnimation();
-    }
-    // If we are not reading the card, stop the animation
-    if (
-      this.progressAnimation !== undefined &&
-      prevCieCardReadingAnimationProps.readingState === ReadingState.reading &&
-      this.props.readingState !== ReadingState.reading
-    ) {
-      this.progressAnimation.stop();
-    }
-  }
-
-  public componentWillUnmount() {
-    this.stopAnimation();
-  }
-
-  public render() {
-    return (
-      <View accessible={false} style={{ alignSelf: "center" }}>
-        <CircularProgress
-          progress={
-            this.props.readingState === ReadingState.completed
-              ? 100
-              : this.state.progressBarValue
-          }
-          radius={imgSize / 2}
-          size={imgSize}
-          strokeBgColor={IOColors["grey-100"]}
-          strokeColor={
-            this.props.readingState === ReadingState.error
-              ? IOColors["grey-100"]
-              : this.props.circleColor
-          }
-          strokeWidth={circleBorderWidth}
-        >
-          {/* Use a `View` to translate the Pictogram to simulate the
-          `Bleed` variant effect */}
-          <View style={styles.imgTranslated}>
-            <Pictogram name={this.props.pictogramName} size={"100%"} />
-          </View>
-        </CircularProgress>
-      </View>
-    );
-  }
-
-  private addAnimationListener = () => {
-    if (this.progressAnimatedValue === undefined) {
-      return;
-    }
-    this.progressAnimatedValue.addListener(anim => {
-      this.setState({ progressBarValue: anim.value });
-    });
-  };
 
   private createAnimation() {
     // Two animation: the first fills the progress with the primary
@@ -165,6 +102,15 @@ export default class CieCardReadingAnimation extends PureComponent<
     });
   };
 
+  private addAnimationListener = () => {
+    if (this.progressAnimatedValue === undefined) {
+      return;
+    }
+    this.progressAnimatedValue.addListener(anim => {
+      this.setState({ progressBarValue: anim.value });
+    });
+  };
+
   private stopAnimation = () => {
     if (
       this.progressAnimation === undefined ||
@@ -175,6 +121,59 @@ export default class CieCardReadingAnimation extends PureComponent<
     this.progressAnimation.stop();
     this.progressAnimatedValue.removeAllListeners();
   };
+
+  public componentDidUpdate(
+    prevCieCardReadingAnimationProps: CieCardReadingAnimationProps
+  ) {
+    // If we start reading the card, start the animation
+    if (
+      prevCieCardReadingAnimationProps.readingState !== ReadingState.reading &&
+      this.props.readingState === ReadingState.reading
+    ) {
+      this.startAnimation();
+    }
+    // If we are not reading the card, stop the animation
+    if (
+      this.progressAnimation !== undefined &&
+      prevCieCardReadingAnimationProps.readingState === ReadingState.reading &&
+      this.props.readingState !== ReadingState.reading
+    ) {
+      this.progressAnimation.stop();
+    }
+  }
+
+  public componentWillUnmount() {
+    this.stopAnimation();
+  }
+
+  public render() {
+    return (
+      <View style={{ alignSelf: "center" }} accessible={false}>
+        <CircularProgress
+          size={imgSize}
+          radius={imgSize / 2}
+          progress={
+            this.props.readingState === ReadingState.completed
+              ? 100
+              : this.state.progressBarValue
+          }
+          strokeWidth={circleBorderWidth}
+          strokeColor={
+            this.props.readingState === ReadingState.error
+              ? IOColors["grey-100"]
+              : this.props.circleColor
+          }
+          strokeBgColor={IOColors["grey-100"]}
+        >
+          {/* Use a `View` to translate the Pictogram to simulate the
+          `Bleed` variant effect */}
+          <View style={styles.imgTranslated}>
+            <Pictogram size={"100%"} name={this.props.pictogramName} />
+          </View>
+        </CircularProgress>
+      </View>
+    );
+  }
 }
 
 export const testableCieCardReadingAnimation = isDevEnv

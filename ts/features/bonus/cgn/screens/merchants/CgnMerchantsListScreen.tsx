@@ -1,10 +1,9 @@
 import { Badge, H6, HSpacer, ListItemNav } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-
+import I18n from "i18next";
 import { Merchant } from "../../../../../../definitions/cgn/merchants/Merchant";
 import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/OfflineMerchant";
 import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
@@ -74,9 +73,9 @@ export const CgnMerchantsListScreen = () => {
           : item.name) + getListItemAccessibilityLabelCount(data.length, index);
     return (
       <ListItemNav
-        accessibilityLabel={accessibilityLabel}
         key={item.id}
         onPress={() => onItemPress(item.id)}
+        accessibilityLabel={accessibilityLabel}
         value={
           <View
             style={{ flexDirection: "row", justifyContent: "space-between" }}
@@ -93,12 +92,12 @@ export const CgnMerchantsListScreen = () => {
               >
                 <Badge
                   accessible={false}
+                  variant="cgn"
                   text={
                     item?.numberOfNewDiscounts
                       ? item.numberOfNewDiscounts.toString()
                       : I18n.t("bonus.cgn.merchantsList.news")
                   }
-                  variant="cgn"
                 />
               </View>
             )}
@@ -115,12 +114,12 @@ export const CgnMerchantsListScreen = () => {
 
   const ListEmptyComponent = (
     <OperationResultScreenContent
+      title={I18n.t("wallet.payment.outcome.GENERIC_ERROR.title")}
+      pictogram="umbrella"
       action={{
         label: I18n.t("global.buttons.retry"),
         onPress: initLoadingLists
       }}
-      pictogram="umbrella"
-      title={I18n.t("wallet.payment.outcome.GENERIC_ERROR.title")}
     />
   );
 
@@ -130,6 +129,6 @@ export const CgnMerchantsListScreen = () => {
     refreshControlProps,
     ListFooterComponent: <></>,
     ListEmptyComponent,
-    skeleton: <CgnMerchantListSkeleton count={10} hasIcons />
+    skeleton: <CgnMerchantListSkeleton hasIcons count={10} />
   };
 };

@@ -1,15 +1,14 @@
+import { call, take, select, fork, cancel } from "typed-redux-saga/macro";
 import { CommonActions, StackActions } from "@react-navigation/native";
-import { call, cancel, fork, select, take } from "typed-redux-saga/macro";
-
+import NavigationService from "../../navigation/NavigationService";
+import { itwLifecycleIsValidSelector } from "../../features/itwallet/lifecycle/store/selectors";
+import { profileFiscalCodeSelector } from "../../features/settings/common/store/selectors";
+import { selectFiscalCodeFromEid } from "../../features/itwallet/credentials/store/selectors";
+import { itwLifecycleIdentityCheckCompleted } from "../../features/itwallet/lifecycle/store/actions";
+import { watchItwLifecycleSaga } from "../../features/itwallet/lifecycle/saga";
+import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
 import { selectItwEnv } from "../../features/itwallet/common/store/selectors/environment";
 import { getEnv } from "../../features/itwallet/common/utils/environment";
-import { selectFiscalCodeFromEid } from "../../features/itwallet/credentials/store/selectors";
-import { watchItwLifecycleSaga } from "../../features/itwallet/lifecycle/saga";
-import { itwLifecycleIdentityCheckCompleted } from "../../features/itwallet/lifecycle/store/actions";
-import { itwLifecycleIsValidSelector } from "../../features/itwallet/lifecycle/store/selectors";
-import { ITW_ROUTES } from "../../features/itwallet/navigation/routes";
-import { profileFiscalCodeSelector } from "../../features/settings/common/store/selectors";
-import NavigationService from "../../navigation/NavigationService";
 
 /**
  * When IT Wallet is valid, this saga checks whether the stored eID was issued

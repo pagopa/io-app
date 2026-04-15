@@ -1,19 +1,18 @@
-import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
-
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { fireEvent } from "@testing-library/react-native";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
-import * as IO_BOTTOM_SHEET from "../../../../utils/hooks/bottomSheet";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import { F24ListBottomSheetLink } from "../F24ListBottomSheetLink";
+import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import PN_ROUTES from "../../navigation/routes";
 import {
   SendOpeningSource,
   SendUserType
 } from "../../../pushNotifications/analytics";
 import * as ANALYTICS from "../../analytics";
-import PN_ROUTES from "../../navigation/routes";
-import { F24ListBottomSheetLink } from "../F24ListBottomSheetLink";
+import * as IO_BOTTOM_SHEET from "../../../../utils/hooks/bottomSheet";
 
 const numberToThirdPartyAttachment = (index: number) =>
   ({
@@ -107,9 +106,9 @@ const renderComponent = (
       <F24ListBottomSheetLink
         f24List={f24List}
         messageId={"01HS94671EXDWDESDJB3NCBYPM"}
+        serviceId={"01JKAGWVQRFE1P8QAHZS743M90" as ServiceId}
         sendOpeningSource={openingSource}
         sendUserType={userType}
-        serviceId={"01JKAGWVQRFE1P8QAHZS743M90" as ServiceId}
       />
     ),
     PN_ROUTES.MESSAGE_DETAILS,

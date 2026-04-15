@@ -6,19 +6,16 @@ import {
 import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
-import { flow, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import I18n from "i18next";
+import { flow, pipe } from "fp-ts/lib/function";
 import { useEffect, useRef, useState } from "react";
 import { InputAccessoryView, Keyboard, Platform, View } from "react-native";
-
+import I18n from "i18next";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../store/hooks";
-import { isScreenReaderEnabledSelector } from "../../../../store/reducers/preferences";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
@@ -29,20 +26,22 @@ import * as analytics from "../analytics";
 import { usePagoPaPayment } from "../hooks/usePagoPaPayment";
 import { PaymentsCheckoutParamsList } from "../navigation/params";
 import { TextInputValidationRefProps } from "../types";
+import { useIOSelector } from "../../../../store/hooks";
+import { isScreenReaderEnabledSelector } from "../../../../store/reducers/preferences";
 
 export type WalletPaymentInputFiscalCodeScreenNavigationParams = {
   paymentNoticeNumber: O.Option<PaymentNoticeNumberFromString>;
-};
-
-type InputState = {
-  fiscalCode: O.Option<OrganizationFiscalCode>;
-  fiscalCodeText: string;
 };
 
 type WalletPaymentInputFiscalCodeRouteProps = RouteProp<
   PaymentsCheckoutParamsList,
   "PAYMENT_CHECKOUT_INPUT_FISCAL_CODE"
 >;
+
+type InputState = {
+  fiscalCodeText: string;
+  fiscalCode: O.Option<OrganizationFiscalCode>;
+};
 
 const WalletPaymentInputFiscalCodeScreen = () => {
   const { params } = useRoute<WalletPaymentInputFiscalCodeRouteProps>();
@@ -111,6 +110,14 @@ const WalletPaymentInputFiscalCodeScreen = () => {
   return (
     <>
       <IOScrollViewWithLargeHeader
+        title={{
+          label: I18n.t("wallet.payment.manual.fiscalCode.title")
+        }}
+        description={I18n.t("wallet.payment.manual.fiscalCode.subtitle")}
+        ignoreAccessibilityCheck
+        canGoback
+        headerActionsProp={{ showHelp: true }}
+        contextualHelp={emptyContextualHelp}
         actions={
           Platform.OS === "android"
             ? {
@@ -122,30 +129,25 @@ const WalletPaymentInputFiscalCodeScreen = () => {
               }
             : undefined
         }
-        canGoback
-        contextualHelp={emptyContextualHelp}
-        description={I18n.t("wallet.payment.manual.fiscalCode.subtitle")}
-        headerActionsProp={{ showHelp: true }}
-        ignoreAccessibilityCheck
-        includeContentMargins
         ref={textInputWrapperRef}
-        title={{
-          label: I18n.t("wallet.payment.manual.fiscalCode.title")
-        }}
+        includeContentMargins
       >
         {showInput && (
           <TextInputValidation
-            accessibilityErrorLabel={I18n.t(
-              "wallet.payment.manual.fiscalCode.a11y"
-            )}
+            testID="fiscalCodeInput"
+            validationMode="onContinue"
+            ref={textInputRef}
+            placeholder={I18n.t("wallet.payment.manual.fiscalCode.placeholder")}
             accessibilityLabel={I18n.t(
               "wallet.payment.manual.fiscalCode.placeholder"
             )}
-            autoFocus
-            counterLimit={11}
             errorMessage={I18n.t(
               "wallet.payment.manual.fiscalCode.validationError"
             )}
+            accessibilityErrorLabel={I18n.t(
+              "wallet.payment.manual.fiscalCode.a11y"
+            )}
+            value={inputState.fiscalCodeText}
             icon="fiscalCodeIndividual"
             onChangeText={value =>
               setInputState({
@@ -154,17 +156,14 @@ const WalletPaymentInputFiscalCodeScreen = () => {
               })
             }
             onValidate={validateOrganizationFiscalCode}
-            placeholder={I18n.t("wallet.payment.manual.fiscalCode.placeholder")}
-            ref={textInputRef}
-            testID="fiscalCodeInput"
+            counterLimit={11}
             textInputProps={{
               keyboardType: "number-pad",
               inputMode: "numeric",
               returnKeyType: "done",
               inputAccessoryViewID: "fiscalCodeInputAccessoryView"
             }}
-            validationMode="onContinue"
-            value={inputState.fiscalCodeText}
+            autoFocus
           />
         )}
       </IOScrollViewWithLargeHeader>
@@ -173,9 +172,9 @@ const WalletPaymentInputFiscalCodeScreen = () => {
           <View style={{ padding: 20 }}>
             <IOButton
               fullWidth
+              variant="solid"
               label={I18n.t("global.buttons.continue")}
               onPress={handleContinueClick}
-              variant="solid"
             />
           </View>
         </InputAccessoryView>

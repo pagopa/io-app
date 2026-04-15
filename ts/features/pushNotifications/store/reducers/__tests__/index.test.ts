@@ -1,7 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { omit } from "lodash";
 import { PersistedState } from "redux-persist";
-
 import {
   NOTIFICATIONS_STORE_VERSION,
   notificationsPersistConfig,

@@ -1,9 +1,7 @@
-import { ITuple2, Tuple2 } from "@pagopa/ts-commons/lib/tuples";
 import * as O from "fp-ts/lib/Option";
+import { Tuple2, ITuple2 } from "@pagopa/ts-commons/lib/tuples";
 import { DeepPartial } from "redux";
-
 import { BackendStatus } from "../../../../../../definitions/content/BackendStatus";
-import { Config } from "../../../../../../definitions/content/Config";
 import { baseRawBackendStatus } from "../../../../../store/reducers/__mock__/backendStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { getAppVersion } from "../../../../../utils/appVersion";
@@ -17,6 +15,7 @@ import {
   isSecurityAdviceReadyToShow,
   tokenRefreshSelector
 } from "../selectors";
+import { Config } from "../../../../../../definitions/content/Config";
 
 jest.mock("react-native-device-info", () => ({
   getReadableVersion: jest.fn().mockReturnValue("1.2.3.4"),

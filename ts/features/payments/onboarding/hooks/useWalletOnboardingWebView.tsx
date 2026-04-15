@@ -1,22 +1,21 @@
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
 import * as TE from "fp-ts/lib/TaskEither";
+import { pipe } from "fp-ts/lib/function";
 import { useCallback, useEffect, useState } from "react";
 import { Platform } from "react-native";
 import URLParse from "url-parse";
-
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { PaymentsCheckoutRoutes } from "../../checkout/navigation/routes";
-import { storePaymentIsOnboardedAction } from "../../history/store/actions";
 import * as analytics from "../analytics";
 import {
   contextualOnboardingStartWebViewFlow,
   paymentsStartOnboardingAction
 } from "../store/actions";
 import { selectPaymentOnboardingRequestResult } from "../store/selectors";
+import { storePaymentIsOnboardedAction } from "../../history/store/actions";
 import {
   WalletOnboardingOutcome,
   WalletOnboardingOutcomeEnum
@@ -24,22 +23,22 @@ import {
 import { ONBOARDING_CALLBACK_URL_SCHEMA } from "../utils";
 
 export type WalletOnboardingOutcomeParams = {
-  orderId?: string;
   outcome: WalletOnboardingOutcome;
-  transactionId?: string;
   walletId?: string;
-};
-
-type WalletOnboardingWebView = {
-  isError: boolean;
-  isLoading: boolean;
-  isPendingOnboarding: boolean;
-  startContextualOnboarding: (url: string) => void;
-  startOnboarding: (paymentMethodId: string) => void;
+  orderId?: string;
+  transactionId?: string;
 };
 
 type WalletOnboardingWebViewProps = {
   onOnboardingOutcome: (params: WalletOnboardingOutcomeParams) => void;
+};
+
+type WalletOnboardingWebView = {
+  isLoading: boolean;
+  isError: boolean;
+  isPendingOnboarding: boolean;
+  startOnboarding: (paymentMethodId: string) => void;
+  startContextualOnboarding: (url: string) => void;
 };
 
 /**

@@ -1,6 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
-
 import {
   calculateTotalAmount,
   filterTransactionsByIdAndGetIndex,

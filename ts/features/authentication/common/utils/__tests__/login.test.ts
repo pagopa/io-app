@@ -1,6 +1,5 @@
-import { PublicKey } from "@pagopa/io-react-native-crypto";
 import * as O from "fp-ts/lib/Option";
-
+import { PublicKey } from "@pagopa/io-react-native-crypto";
 import {
   extractLoginResult,
   getIntentFallbackUrl,

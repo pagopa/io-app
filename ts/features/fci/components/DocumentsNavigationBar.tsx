@@ -38,14 +38,14 @@ const styles = StyleSheet.create({
 export type IndicatorPositionEnum = "left" | "right";
 
 type Props = WithTestID<{
-  disabled?: boolean;
-  iconLeftDisabled?: boolean;
-  iconRightDisabled?: boolean;
-  indicatorPosition: IndicatorPositionEnum;
-  onNext: () => void;
-  onPrevious: () => void;
-  titleLeft: string;
   titleRight: string;
+  titleLeft: string;
+  iconRightDisabled?: boolean;
+  iconLeftDisabled?: boolean;
+  disabled?: boolean;
+  indicatorPosition: IndicatorPositionEnum;
+  onPrevious: () => void;
+  onNext: () => void;
 }>;
 
 const renderNavigationComponent = (
@@ -55,22 +55,22 @@ const renderNavigationComponent = (
   <HStack space={8}>
     {/* button left */}
     <IconButton
-      accessibilityLabel={I18n.t("global.buttons.previous")}
+      onPress={onPrevious}
       disabled={iconLeftDisabled}
+      testID={"DocumentsNavigationBarLeftButtonTestID"}
       icon="chevronLeft"
       iconSize={24}
-      onPress={onPrevious}
-      testID={"DocumentsNavigationBarLeftButtonTestID"}
+      accessibilityLabel={I18n.t("global.buttons.previous")}
     />
     <H6>{title}</H6>
     {/* button right */}
     <IconButton
-      accessibilityLabel={I18n.t("global.buttons.next")}
+      onPress={onNext}
       disabled={iconRightDisabled}
+      testID={"DocumentsNavigationBarRightButtonTestID"}
       icon="chevronRight"
       iconSize={24}
-      onPress={onNext}
-      testID={"DocumentsNavigationBarRightButtonTestID"}
+      accessibilityLabel={I18n.t("global.buttons.next")}
     />
   </HStack>
 );

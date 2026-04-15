@@ -1,11 +1,10 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-
 import {
   incrementNativeLoginNativeAttempts,
-  resetSpidLoginState,
+  setStandardLoginRequestState,
   setNativeLoginRequestInfo,
   setStandardLoginInLoadingState,
-  setStandardLoginRequestState
+  resetSpidLoginState
 } from "../actions";
 import { spidLoginReducer, SpidLoginState } from "../reducers";
 import { ErrorType } from "../types";

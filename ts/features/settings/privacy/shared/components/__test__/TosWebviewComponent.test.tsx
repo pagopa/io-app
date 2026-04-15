@@ -1,4 +1,6 @@
 import { fireEvent, render } from "@testing-library/react-native";
+// import WebView from "react-native-webview";
+import renderer from "react-test-renderer";
 // import * as O from "fp-ts/lib/Option";
 // import {
 //   WebViewErrorEvent,
@@ -7,11 +9,8 @@ import { fireEvent, render } from "@testing-library/react-native";
 // } from "react-native-webview/lib/WebViewTypes";
 // import I18n from "i18next";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-// import WebView from "react-native-webview";
-import renderer from "react-test-renderer";
-
-import { FlowType } from "../../../../../../utils/analytics";
 import TosWebviewComponent from "../TosWebviewComponent";
+import { FlowType } from "../../../../../../utils/analytics";
 // import * as urlUtils from "../../../ts/utils/url";
 
 beforeAll(() => {
@@ -45,12 +44,12 @@ describe("TosWebviewComponent", () => {
           >
             <TosWebviewComponent
               flow="firstOnboarding"
-              handleLoadEnd={() => undefined}
-              handleReload={() => undefined} // TODO
               shouldRenderFooter={true}
               webViewSource={{
                 html: "<html><head></head><body></body></html>"
               }}
+              handleLoadEnd={() => undefined}
+              handleReload={() => undefined} // TODO
             />
           </SafeAreaProvider>
         )
@@ -223,12 +222,12 @@ describe("TosWebviewComponent", () => {
 });
 
 type CurrentTestConfiguration = {
-  flow?: FlowType;
-  onLoaded?: () => void;
-  onReload?: () => void;
-  onRightButton?: () => void;
-  onWebViewMessageReceived?: (event: any) => void;
   shouldRenderFooter?: boolean;
+  onRightButton?: () => void;
+  onReload?: () => void;
+  onLoaded?: () => void;
+  onWebViewMessageReceived?: (event: any) => void;
+  flow?: FlowType;
 };
 
 const commonSetup = ({
@@ -242,11 +241,11 @@ const commonSetup = ({
     <SafeAreaProvider>
       <TosWebviewComponent
         flow={flow}
+        shouldRenderFooter={shouldRenderFooter}
+        webViewSource={{ html: "<html><head></head><body></body></html>" }}
         handleLoadEnd={onLoaded}
         handleReload={onReload}
         onAcceptTos={onRightButton}
-        shouldRenderFooter={shouldRenderFooter}
-        webViewSource={{ html: "<html><head></head><body></body></html>" }}
       />
     </SafeAreaProvider>
   );

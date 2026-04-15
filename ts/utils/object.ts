@@ -1,9 +1,9 @@
 import * as A from "fp-ts/Array";
-import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/Option";
+import { pipe } from "fp-ts/lib/function";
 
 export const findFirstCaseInsensitive =
-  <T>(obj: Record<string, T>) =>
+  <T>(obj: { [key: string]: T }) =>
   (key: string): O.Option<[string, T]> =>
     pipe(
       obj,

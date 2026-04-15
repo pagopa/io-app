@@ -1,9 +1,8 @@
 import { format, subDays, subYears } from "date-fns";
-import I18n from "i18next";
 import MockDate from "mockdate";
-
-import { formatDateAsLocal } from "../../../../utils/dates";
+import I18n from "i18next";
 import { convertDateToWordDistance } from "../convertDateToWordDistance";
+import { formatDateAsLocal } from "../../../../utils/dates";
 
 describe("convertDateToWordDistance", () => {
   it("should be in H:mm format", () => {

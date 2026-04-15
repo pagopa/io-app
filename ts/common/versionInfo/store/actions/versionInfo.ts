@@ -1,5 +1,4 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
-
 import { IOVersionInfo } from "../../types/IOVersionInfo";
 
 export const versionInfoLoadFailure = createStandardAction(

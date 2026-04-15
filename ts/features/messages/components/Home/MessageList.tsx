@@ -1,12 +1,11 @@
 import { Divider } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { forwardRef, useCallback, useMemo } from "react";
 import { FlatList, RefreshControl, StyleSheet } from "react-native";
 import {
   useSafeAreaFrame,
   useSafeAreaInsets
 } from "react-native-safe-area-context";
-
+import I18n from "i18next";
 import {
   useIODispatch,
   useIOSelector,
@@ -82,7 +81,7 @@ export const MessageList = forwardRef<FlatList, MessageListProps>(
       [loadingList, messageList, store]
     );
     const getItemLayoutCallback = useCallback(
-      (_: ArrayLike<number | UIMessage> | null | undefined, index: number) =>
+      (_: ArrayLike<UIMessage | number> | null | undefined, index: number) =>
         layoutInfo[index],
       [layoutInfo]
     );
@@ -114,27 +113,17 @@ export const MessageList = forwardRef<FlatList, MessageListProps>(
     }, [category, dispatch, store]);
     return (
       <FlatList
+        ref={ref}
         contentContainerStyle={styles.contentContainer}
         data={
           (messageList ?? loadingList) as Readonly<Array<number | UIMessage>>
         }
-        getItemLayout={getItemLayoutCallback}
-        ItemSeparatorComponent={messageList ? () => <Divider /> : undefined}
         ListEmptyComponent={<EmptyList category={category} />}
-        ListFooterComponent={<Footer category={category} />}
+        ItemSeparatorComponent={messageList ? () => <Divider /> : undefined}
         ListHeaderComponent={
           category === "INBOX" ? <LandingScreenBannerPicker /> : undefined
         }
-        onEndReached={onEndReachedCallback}
-        onEndReachedThreshold={0.1}
-        ref={ref}
-        refreshControl={
-          <RefreshControl
-            onRefresh={onRefreshCallback}
-            refreshing={isRefreshing}
-            testID={`custom_refresh_control_${category.toLowerCase()}`}
-          />
-        }
+        getItemLayout={getItemLayoutCallback}
         renderItem={({ index, item }) => {
           if (typeof item === "number") {
             return (
@@ -152,6 +141,16 @@ export const MessageList = forwardRef<FlatList, MessageListProps>(
             );
           }
         }}
+        ListFooterComponent={<Footer category={category} />}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={onRefreshCallback}
+            testID={`custom_refresh_control_${category.toLowerCase()}`}
+          />
+        }
+        onEndReached={onEndReachedCallback}
+        onEndReachedThreshold={0.1}
         testID={`message_list_${category.toLowerCase()}`}
       />
     );

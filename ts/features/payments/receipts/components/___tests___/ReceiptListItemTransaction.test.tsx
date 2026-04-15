@@ -1,7 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { fireEvent, render } from "@testing-library/react-native";
 import { JSX } from "react";
-
 import { NoticeListItem } from "../../../../../../definitions/pagopa/biz-events/NoticeListItem";
 import { ReceiptListItemTransaction } from "../ReceiptListItemTransaction";
 
@@ -57,8 +56,8 @@ describe("ReceiptListItemTransaction", () => {
     const mockOnPress = jest.fn();
     const { getByText } = renderWithNavigation(
       <ReceiptListItemTransaction
-        onPress={mockOnPress}
         transaction={mockTransaction}
+        onPress={mockOnPress}
       />
     );
 

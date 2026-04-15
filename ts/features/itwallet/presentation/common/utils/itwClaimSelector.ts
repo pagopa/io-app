@@ -1,13 +1,12 @@
-import { ClaimsSelector, ListItemInfo } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+import { ClaimsSelector, ListItemInfo } from "@pagopa/io-app-design-system";
 import { ComponentProps } from "react";
-
 import { getNestedItemSummary } from "../../../common/components/ItwCredentialMultiClaim";
 import {
   ClaimDisplayFormat,
-  drivingPrivilegeToClaims,
   getClaimDisplayValue,
-  getSafeText
+  getSafeText,
+  drivingPrivilegeToClaims
 } from "../../../common/utils/itwClaimsUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 
@@ -15,10 +14,9 @@ import { CredentialType } from "../../../common/utils/itwMocksUtils";
  * Defines gradient color schemes for different credential types
  * to be used in the header of the {@link ClaimsSelector} component.
  */
-export const claimsSelectorHeaderGradientsByCredentialType: Record<
-  string,
-  Array<string>
-> = {
+export const claimsSelectorHeaderGradientsByCredentialType: {
+  [type: string]: Array<string>;
+} = {
   [CredentialType.PID]: ["#ECECEC", "#CEE2F2"],
   [CredentialType.DRIVING_LICENSE]: ["#ECECEC", "#FADCF5"],
   [CredentialType.EUROPEAN_DISABILITY_CARD]: ["#ECECEC", "#E8EEF4"],
@@ -76,6 +74,9 @@ export const mapClaimsToClaimsSelectorItems = (
     const id = c.id;
 
     switch (renderAs) {
+      case "image":
+        return [{ id, value, description, type: "image" }];
+
       case "drivingPrivileges":
         return value.map((p, idx) => ({
           id: `${idx}_${description}_${p.driving_privilege}`,
@@ -92,18 +93,6 @@ export const mapClaimsToClaimsSelectorItems = (
             )
           )
         }));
-
-      case "image":
-        return [{ id, value, description, type: "image" }];
-
-      case "list":
-        return [
-          {
-            id,
-            description,
-            value: value.map(getSafeText).join(", ")
-          }
-        ];
 
       case "nestedObject":
         // Nested objects are rendered inline at the same level as other claims,
@@ -137,6 +126,15 @@ export const mapClaimsToClaimsSelectorItems = (
           };
         });
       }
+
+      case "list":
+        return [
+          {
+            id,
+            description,
+            value: value.map(getSafeText).join(", ")
+          }
+        ];
 
       case "text":
       default:

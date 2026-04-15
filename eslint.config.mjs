@@ -47,7 +47,8 @@ export default defineConfig([
   // Pagopa base config: @eslint/js recommended, typescript-eslint strict+stylistic,
   // eslint-plugin-prettier, perfectionist.
   // Vitest block is excluded — project uses Jest.
-  ...pagopaConfig.filter(config => !config.plugins?.vitest),
+  // Perfectionist block is excluded — sorting rules are deferred to a follow-up PR.
+  ...pagopaConfig.filter(config => !config.plugins?.vitest && !config.plugins?.perfectionist),
 
   {
     files: ["**/*.ts", "**/*.tsx"],

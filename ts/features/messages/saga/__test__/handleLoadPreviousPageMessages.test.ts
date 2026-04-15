@@ -2,20 +2,20 @@ import * as E from "fp-ts/lib/Either";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 
-import { BackendClient } from "../../../../api/__mocks__/backend";
-import { backendClientManager } from "../../../../api/BackendClientManager";
-import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
-import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
+import {
+  loadPreviousPageMessages as action,
+  loadPreviousPageMessages
+} from "../../store/actions";
 import {
   apiPayload,
   defaultRequestPayload,
   successLoadPreviousPageMessagesPayload
 } from "../../__mocks__/messages";
-import {
-  loadPreviousPageMessages as action,
-  loadPreviousPageMessages
-} from "../../store/actions";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { handleLoadPreviousPageMessages } from "../handleLoadPreviousPageMessages";
+import { BackendClient } from "../../../../api/__mocks__/backend";
+import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
+import { backendClientManager } from "../../../../api/BackendClientManager";
 
 // Mock the backendClientManager
 jest.mock("../../../../api/BackendClientManager");

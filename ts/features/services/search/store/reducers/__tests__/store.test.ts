@@ -1,6 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createStore } from "redux";
-
 import { InstitutionsResource } from "../../../../../../../definitions/services/InstitutionsResource";
 import { OrganizationFiscalCode } from "../../../../../../../definitions/services/OrganizationFiscalCode";
 import { applicationChangeState } from "../../../../../../store/actions/application";

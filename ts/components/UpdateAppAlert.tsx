@@ -4,7 +4,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { useEffect } from "react";
-
 import { useStartSupportRequest } from "../hooks/useStartSupportRequest";
 import { useIONavigation } from "../navigation/params/AppParamsList";
 import { useOnFirstRender } from "../utils/hooks/useOnFirstRender";
@@ -28,6 +27,10 @@ export const UpdateAppAlert = ({ mixPanelTracking }: Props) => {
 
   return (
     <OperationResultScreenContent
+      isHeaderVisible={true}
+      title={I18n.t("FIMS.updateApp.header")}
+      subtitle={I18n.t("FIMS.updateApp.body")}
+      pictogram="updateOS"
       action={{
         label: I18n.t("btnUpdateApp"),
         onPress: () => {
@@ -38,15 +41,11 @@ export const UpdateAppAlert = ({ mixPanelTracking }: Props) => {
         },
         testID: "primary-update-app"
       }}
-      isHeaderVisible={true}
-      pictogram="updateOS"
       secondaryAction={{
         label: I18n.t("global.buttons.close"),
         onPress: navigation.goBack,
         testID: "secondary-update-app"
       }}
-      subtitle={I18n.t("FIMS.updateApp.body")}
-      title={I18n.t("FIMS.updateApp.header")}
     />
   );
 };
@@ -59,6 +58,8 @@ const useOnlySupportRequestHeader = () => {
     navigation.setOptions({
       header: () => (
         <HeaderSecondLevel
+          title=""
+          type="singleAction"
           firstAction={{
             icon: "help" as HeaderActionProps["icon"],
             onPress: startSupportRequest,
@@ -66,8 +67,6 @@ const useOnlySupportRequestHeader = () => {
               "global.accessibility.contextualHelp.open.label"
             )
           }}
-          title=""
-          type="singleAction"
         />
       )
     });

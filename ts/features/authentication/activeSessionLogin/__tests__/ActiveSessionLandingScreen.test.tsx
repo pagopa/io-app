@@ -1,11 +1,10 @@
-import { act, fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
-
+import { act, fireEvent } from "@testing-library/react-native";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
+import { ActiveSessionLandingScreen } from "../screens/ActiveSessionLandingScreen";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
-import { ActiveSessionLandingScreen } from "../screens/ActiveSessionLandingScreen";
 
 const mockNavigateToCieIdLoginScreen = jest.fn();
 const mockNavigate = jest.fn();

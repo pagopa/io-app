@@ -1,6 +1,6 @@
 import { IOBarcode, IOBarcodeType } from "../types/IOBarcode";
 
-export type IOBarcodesByType = Partial<Record<IOBarcodeType, Array<IOBarcode>>>;
+export type IOBarcodesByType = { [type in IOBarcodeType]?: Array<IOBarcode> };
 
 export const getIOBarcodesByType = (
   barcodes: Array<IOBarcode>

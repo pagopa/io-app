@@ -1,11 +1,10 @@
 import { testSaga } from "redux-saga-test-plan";
-
-import { applicationChangeState } from "../../../../store/actions/application";
-import { checkAndUpdateNotificationPermissionsIfNeeded } from "../common";
 import {
   checkNotificationPermissionsOnAppForegroundState,
   notificationPermissionsListener
 } from "../notificationPermissionsListener";
+import { checkAndUpdateNotificationPermissionsIfNeeded } from "../common";
+import { applicationChangeState } from "../../../../store/actions/application";
 
 describe("notificationPermissionsListener", () => {
   it("Should get and update system permissions and start listening for 'applicationChangeState' action with 'takeLatest'", () => {

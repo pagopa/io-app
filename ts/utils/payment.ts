@@ -3,7 +3,6 @@ import { ITuple2, Tuple2 } from "@pagopa/ts-commons/lib/tuples";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-
 import { Detail_v2Enum } from "../../definitions/backend/PaymentProblemJson";
 import { maybeNotNullyString } from "./strings";
 
@@ -68,15 +67,15 @@ export const cleanTransactionDescription = (description: string): string => {
       );
 };
 
-export type DetailV2Keys = keyof typeof Detail_v2Enum;
-
 export type ErrorTypes =
-  | "DUPLICATED"
-  | "EXPIRED"
-  | "NOT_FOUND"
-  | "ONGOING"
   | "REVOKED"
+  | "EXPIRED"
+  | "ONGOING"
+  | "DUPLICATED"
+  | "NOT_FOUND"
   | "UNCOVERED";
+
+export type DetailV2Keys = keyof typeof Detail_v2Enum;
 
 /**
  * This function is used to convert the raw error code to the main error type.
@@ -91,16 +90,16 @@ export const getV2ErrorMainType = (
   }
 
   switch (error) {
-    case "PAA_PAGAMENTO_ANNULLATO":
-      return "REVOKED";
-    case "PAA_PAGAMENTO_DUPLICATO":
-    case "PPT_PAGAMENTO_DUPLICATO":
-      return "DUPLICATED";
     case "PAA_PAGAMENTO_IN_CORSO":
     case "PPT_PAGAMENTO_IN_CORSO":
       return "ONGOING";
+    case "PAA_PAGAMENTO_ANNULLATO":
+      return "REVOKED";
     case "PAA_PAGAMENTO_SCADUTO":
       return "EXPIRED";
+    case "PAA_PAGAMENTO_DUPLICATO":
+    case "PPT_PAGAMENTO_DUPLICATO":
+      return "DUPLICATED";
     case "PAA_PAGAMENTO_SCONOSCIUTO":
       return "NOT_FOUND";
     default:

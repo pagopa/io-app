@@ -1,14 +1,13 @@
-import { differenceInDays } from "date-fns";
+import { createSelector } from "reselect";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { createSelector } from "reselect";
-
-import { apiLoginUrlPrefix } from "../../../../../config";
+import { differenceInDays } from "date-fns";
 import { remoteConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { isMinAppVersionSupported } from "../../../../../store/reducers/featureFlagWithMinAppVersionStatus";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { sessionInfoSelector } from "../../../common/store/selectors";
 import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
+import { apiLoginUrlPrefix } from "../../../../../config";
 
 export const isActiveSessionLoginLocallyEnabledSelector = (
   state: GlobalState

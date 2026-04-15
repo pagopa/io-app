@@ -14,7 +14,11 @@ import Animated, {
   withTiming
 } from "react-native-reanimated";
 
-export type BonusCardCounter = BaseProps & LoadingProps;
+type CounterType = "Value" | "ValueWithProgress";
+
+type BaseProps = {
+  type: CounterType;
+};
 
 type AmountProps = {
   type: "Value";
@@ -22,19 +26,13 @@ type AmountProps = {
 };
 
 type AmountWithProgressProps = {
+  type: "ValueWithProgress";
+  value: string;
   /**
    * Progress bar value, expressed in a range from 0 to 1
    */
   progress: number;
-  type: "ValueWithProgress";
-  value: string;
 };
-
-type BaseProps = {
-  type: CounterType;
-};
-
-type CounterType = "Value" | "ValueWithProgress";
 
 type LoadingProps =
   | { isLoading: true; label?: string; skeletonColor: ColorValue }
@@ -43,14 +41,16 @@ type LoadingProps =
       | AmountWithProgressProps
     ));
 
+export type BonusCardCounter = BaseProps & LoadingProps;
+
 const BonusCardCounter = (props: BonusCardCounter) => {
   const isDark = useIOThemeContext().themeType === "dark";
 
   if (props.isLoading) {
     return (
       <BonusCardCounterSkeleton
-        skeletonColor={props.skeletonColor}
         type={props.type}
+        skeletonColor={props.skeletonColor}
       />
     );
   }
@@ -61,9 +61,9 @@ const BonusCardCounter = (props: BonusCardCounter) => {
       testID="BonusCardCounterTestID"
     >
       <LabelMini
-        color={isDark ? "white" : "blueItalia-850"}
-        style={{ textAlign: "center" }}
         weight="Regular"
+        style={{ textAlign: "center" }}
+        color={isDark ? "white" : "blueItalia-850"}
       >
         {props.label}
       </LabelMini>
@@ -123,8 +123,8 @@ const BonusCardCounterSkeleton = ({
   type,
   skeletonColor
 }: {
-  skeletonColor: ColorValue;
   type: CounterType;
+  skeletonColor: ColorValue;
 }) => (
   <View
     style={[styles.container, { alignItems: "center" }]}
@@ -132,28 +132,28 @@ const BonusCardCounterSkeleton = ({
   >
     <IOSkeleton
       color={skeletonColor}
-      height={16}
-      radius={16}
       shape="rectangle"
+      height={16}
       width={64}
+      radius={16}
     />
     <VSpacer size={8} />
     <IOSkeleton
       color={skeletonColor}
-      height={24}
-      radius={24}
       shape="rectangle"
+      height={24}
       width={100}
+      radius={24}
     />
     {type === "ValueWithProgress" && (
       <>
         <VSpacer size={8} />
         <IOSkeleton
           color={skeletonColor}
-          height={6}
-          radius={8}
           shape="rectangle"
+          height={6}
           width={110}
+          radius={8}
         />
       </>
     )}

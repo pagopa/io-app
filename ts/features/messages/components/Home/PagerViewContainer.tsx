@@ -1,23 +1,22 @@
-import { useFocusEffect } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
 import { forwardRef, useCallback, useRef } from "react";
 import { FlatList, NativeSyntheticEvent } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import PagerView from "react-native-pager-view";
 import { OnPageSelectedEventData } from "react-native-pager-view/lib/typescript/PagerViewNativeComponent";
-
-import SectionStatusComponent from "../../../../components/SectionStatus";
-import { pageSize } from "../../../../config";
-import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPressWhenScreenActive";
 import { useIODispatch, useIOStore } from "../../../../store/hooks";
-import { GlobalState } from "../../../../store/reducers/types";
-import { trackAutoRefresh, trackMessagesPage } from "../../analytics";
 import { setShownMessageCategoryAction } from "../../store/actions";
+import { GlobalState } from "../../../../store/reducers/types";
+import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPressWhenScreenActive";
 import {
   messageCountForCategorySelector,
   shownMessageCategorySelector
 } from "../../store/reducers/allPaginated";
 import { foldK as foldMessageListCategory } from "../../types/messageListCategory";
-import { ArchiveRestoreBar } from "./ArchiveRestoreBar";
+import SectionStatusComponent from "../../../../components/SectionStatus";
+import { trackAutoRefresh, trackMessagesPage } from "../../analytics";
+import { pageSize } from "../../../../config";
+import { MessageList } from "./MessageList";
 import {
   getInitialReloadAllMessagesActionIfNeeded,
   getLoadPreviousPageMessagesActionIfAllowed,
@@ -25,7 +24,7 @@ import {
   messageViewPageIndexToListCategory,
   trackMessagePageOnFocusEventIfAllowed
 } from "./homeUtils";
-import { MessageList } from "./MessageList";
+import { ArchiveRestoreBar } from "./ArchiveRestoreBar";
 
 export const PagerViewContainer = forwardRef<PagerView>((_, ref) => {
   const dispatch = useIODispatch();

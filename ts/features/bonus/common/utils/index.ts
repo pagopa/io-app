@@ -10,6 +10,6 @@ export const ID_CDC_TYPE = 4;
  */
 export const mapBonusIdFeatureFlag = () =>
   new Map<number, boolean>([
-    [ID_CDC_TYPE, cdcEnabled],
-    [ID_CGN_TYPE, true]
+    [ID_CGN_TYPE, true],
+    [ID_CDC_TYPE, cdcEnabled]
   ]);

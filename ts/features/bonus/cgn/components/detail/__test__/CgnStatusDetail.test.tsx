@@ -1,16 +1,15 @@
 import { render } from "@testing-library/react-native";
 import I18n from "i18next";
-
 import { Card } from "../../../../../../../definitions/cgn/Card";
 import { StatusEnum as CgnActivatedStatusEnum } from "../../../../../../../definitions/cgn/CardActivated";
-import { StatusEnum as CgnExpiredStatusEnum } from "../../../../../../../definitions/cgn/CardExpired";
-import { StatusEnum as CgnPendingStatusEnum } from "../../../../../../../definitions/cgn/CardPending";
 import {
   CardRevoked,
   StatusEnum as CgnRevokedStatusEnum
 } from "../../../../../../../definitions/cgn/CardRevoked";
-import { formatDateAsShortFormat } from "../../../../../../utils/dates";
+import { StatusEnum as CgnExpiredStatusEnum } from "../../../../../../../definitions/cgn/CardExpired";
+import { StatusEnum as CgnPendingStatusEnum } from "../../../../../../../definitions/cgn/CardPending";
 import CgnStatusDetail from "../CgnStatusDetail";
+import { formatDateAsShortFormat } from "../../../../../../utils/dates";
 
 const cgnStatusActivated: Card = {
   status: CgnActivatedStatusEnum.ACTIVATED,

@@ -14,12 +14,12 @@ import { forwardRef } from "react";
 import { ScrollView, useWindowDimensions, View } from "react-native";
 
 type Props = {
-  accessibilityHint?: string;
-  accessibilityLabel?: string;
-  content: string;
   id: number;
   pictogramName: IOPictograms;
   title: string;
+  content: string;
+  accessibilityLabel?: string;
+  accessibilityHint?: string;
 };
 
 const VERTICAL_SPACING = 16;
@@ -37,14 +37,14 @@ export const LandingCardComponent = forwardRef<View, Props>(
         contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
       >
         <ContentWrapper
-          accessibilityHint={accessibilityHint}
-          accessibilityLabel={accessibilityLabel}
-          accessible={true}
           ref={ref}
           style={{ width: screenWidth }}
+          accessible={true}
+          accessibilityLabel={accessibilityLabel}
+          accessibilityHint={accessibilityHint}
         >
           <VStack space={VERTICAL_SPACING} style={{ alignItems: "center" }}>
-            <Pictogram name={pictogramName} size={180} />
+            <Pictogram size={180} name={pictogramName} />
             <H3 importantForAccessibility="no" style={{ textAlign: "center" }}>
               {title}
             </H3>

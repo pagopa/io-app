@@ -1,26 +1,25 @@
+import { Fragment } from "react";
 import { Divider, ListItemInfo } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { Fragment } from "react";
-
-import { useIOSelector } from "../../../../store/hooks.ts";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet.tsx";
-import { trackItwCredentialQualificationDetail } from "../../analytics";
-import { getMixPanelCredential } from "../../analytics/utils/index.ts";
-import { CREDENTIALS_MAP } from "../../analytics/utils/types.ts";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ClaimDisplayFormat } from "../utils/itwClaimsUtils";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils.ts";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet.tsx";
+import { trackItwCredentialQualificationDetail } from "../../analytics";
+import { CREDENTIALS_MAP } from "../../analytics/utils/types.ts";
+import { getMixPanelCredential } from "../../analytics/utils/index.ts";
+import { useIOSelector } from "../../../../store/hooks.ts";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialClaim } from "./ItwCredentialClaim.tsx";
 
 type ItwNestedClaimsListItemProps = {
-  credentialStatus?: ItwCredentialStatus;
-  credentialType?: string;
-  hidden?: boolean;
-  isPreview?: boolean;
-  itemClaims: Array<ClaimDisplayFormat>;
   itemTitle?: string;
   summaryLabel?: string;
   summaryValue?: string;
+  itemClaims: Array<ClaimDisplayFormat>;
+  hidden?: boolean;
+  isPreview?: boolean;
+  credentialStatus?: ItwCredentialStatus;
+  credentialType?: string;
 };
 
 /**
@@ -55,10 +54,10 @@ export const ItwNestedClaimsListItem = ({
             {index > 0 && <Divider />}
             <ItwCredentialClaim
               claim={claim}
-              credentialStatus={credentialStatus}
-              credentialType={credentialType}
               hidden={hidden}
               isPreview={isPreview}
+              credentialStatus={credentialStatus}
+              credentialType={credentialType}
             />
           </Fragment>
         ))}
@@ -79,6 +78,8 @@ export const ItwNestedClaimsListItem = ({
   return (
     <>
       <ListItemInfo
+        label={summaryLabel}
+        value={summaryValue}
         endElement={{
           type: "buttonLink",
           componentProps: {
@@ -87,8 +88,6 @@ export const ItwNestedClaimsListItem = ({
             accessibilityLabel: I18n.t("global.buttons.show")
           }
         }}
-        label={summaryLabel}
-        value={summaryValue}
       />
       {itemBottomSheet.bottomSheet}
     </>

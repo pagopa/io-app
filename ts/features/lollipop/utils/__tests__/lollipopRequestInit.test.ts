@@ -1,10 +1,9 @@
-import { PublicKey } from "@pagopa/io-react-native-crypto";
 import MockDate from "mockdate";
-
+import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { LollipopConfig } from "../..";
-import { getUnixTimestamp } from "../../httpSignature/signature";
 import { KeyInfo } from "../crypto";
 import { lollipopRequestInit } from "../fetch";
+import { getUnixTimestamp } from "../../httpSignature/signature";
 
 const publicKey: PublicKey = {
   crv: "P-256",

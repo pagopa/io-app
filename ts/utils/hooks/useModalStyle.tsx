@@ -7,8 +7,8 @@ import { ColorValue, ViewStyle } from "react-native";
 
 type ModalStyleProps = {
   backdrop: {
-    backgroundColor: ColorValue;
     opacity: number;
+    backgroundColor: ColorValue;
   };
   modal: {
     backgroundColor: ColorValue;

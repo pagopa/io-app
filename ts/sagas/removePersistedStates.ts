@@ -1,5 +1,5 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { call } from "typed-redux-saga/macro";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // After making the states non-persistent
 // because it is no longer necessary, the states

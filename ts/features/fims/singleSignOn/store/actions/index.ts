@@ -1,10 +1,9 @@
-import { HttpClientSuccessResponse } from "@pagopa/io-react-native-http-client";
 import {
   ActionType,
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-
+import { HttpClientSuccessResponse } from "@pagopa/io-react-native-http-client";
 import { Consent } from "../../../../../../definitions/fims_sso/Consent";
 import { FimsErrorStateType } from "../reducers";
 
@@ -42,8 +41,8 @@ export const fimsSignAndRetrieveInAppBrowserUrlAction = createAsyncAction(
 )<HttpClientSuccessResponse, void, FimsErrorStateType>();
 
 export type FimsSSOActions =
+  | ActionType<typeof fimsGetConsentsListAction>
   | ActionType<typeof fimsAcceptConsentsAction>
   | ActionType<typeof fimsAcceptConsentsFailureAction>
-  | ActionType<typeof fimsCancelOrAbortAction>
-  | ActionType<typeof fimsGetConsentsListAction>
-  | ActionType<typeof fimsSignAndRetrieveInAppBrowserUrlAction>;
+  | ActionType<typeof fimsSignAndRetrieveInAppBrowserUrlAction>
+  | ActionType<typeof fimsCancelOrAbortAction>;

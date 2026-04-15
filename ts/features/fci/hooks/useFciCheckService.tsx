@@ -1,23 +1,22 @@
 import { Body, FooterActionsInline } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import I18n from "i18next";
 import { ComponentProps } from "react";
-
+import I18n from "i18next";
 import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { upsertServicePreference } from "../../services/details/store/actions/preference";
-import { servicePreferencePotByIdSelector } from "../../services/details/store/selectors";
 import { isServicePreferenceResponseSuccess } from "../../services/details/types/ServicePreferenceResponse";
 import {
-  trackFciBottomsheetMessagePermissionAccepted,
-  trackFciBottomsheetMessagePermissionDeclined,
+  trackFciUxConversion,
   trackFciBottomsheetMessagePermissionRequest,
-  trackFciUxConversion
+  trackFciBottomsheetMessagePermissionAccepted,
+  trackFciBottomsheetMessagePermissionDeclined
 } from "../analytics";
 import { fciStartSigningRequest } from "../store/actions";
 import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
 import { fciMetadataServiceIdSelector } from "../store/reducers/fciMetadata";
+import { servicePreferencePotByIdSelector } from "../../services/details/store/selectors";
 
 /**
  * A hook that returns a function to present the abort signature flow bottom sheet
@@ -81,8 +80,8 @@ export const useFciCheckService = () => {
     snapPoint: [320],
     footer: (
       <FooterActionsInline
-        endAction={confirmButtonProps}
         startAction={cancelButtonProps}
+        endAction={confirmButtonProps}
       />
     )
   });

@@ -1,8 +1,7 @@
 import { v4 as uuid } from "uuid";
-
 import { createClient } from "../../../../../definitions/pn/lollipop-lambda/client";
-import { KeyInfo } from "../../../lollipop/utils/crypto";
 import { lollipopFetch } from "../../../lollipop/utils/fetch";
+import { KeyInfo } from "../../../lollipop/utils/crypto";
 
 export const createSendLollipopLambdaClient = (
   baseUrl: string,

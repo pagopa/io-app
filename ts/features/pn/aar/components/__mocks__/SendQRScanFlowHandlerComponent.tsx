@@ -1,5 +1,4 @@
 import { View } from "react-native";
-
 import { SendQRScanHandlerScreenProps } from "../SendQRScanFlowHandlerComponent";
 
 export const SendQRScanFlowHandlerComponent = ({

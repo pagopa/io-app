@@ -1,14 +1,13 @@
-import * as A from "fp-ts/lib/Array";
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
-import * as S from "fp-ts/lib/string";
-import * as TE from "fp-ts/lib/TaskEither";
 import * as t from "io-ts";
-import ReactNativeBlobUtil from "react-native-blob-util";
 import sha from "sha.js";
-
-import { DocumentToSign } from "../../../../definitions/fci/DocumentToSign";
+import * as A from "fp-ts/lib/Array";
+import { pipe } from "fp-ts/lib/function";
+import * as TE from "fp-ts/lib/TaskEither";
+import * as E from "fp-ts/lib/Either";
+import * as S from "fp-ts/lib/string";
+import ReactNativeBlobUtil from "react-native-blob-util";
 import { QtspClauses } from "../../../../definitions/fci/QtspClauses";
+import { DocumentToSign } from "../../../../definitions/fci/DocumentToSign";
 import { constants } from "../../lollipop/httpSignature/constants";
 import { savePath } from "../saga/networking/handleDownloadDocument";
 
@@ -16,8 +15,8 @@ export const QtspDocumentToSign = t.type({
   url: t.string
 });
 
-export type QtspDocumentToSign = DocumentToSign &
-  t.TypeOf<typeof QtspDocumentToSign>;
+export type QtspDocumentToSign = t.TypeOf<typeof QtspDocumentToSign> &
+  DocumentToSign;
 
 const getFileDigest = (url: string) =>
   pipe(

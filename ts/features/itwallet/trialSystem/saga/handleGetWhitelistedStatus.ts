@@ -1,6 +1,5 @@
 import { SagaIterator } from "redux-saga";
 import { call, put } from "typed-redux-saga/macro";
-
 import { ItWalletClient } from "../../api/client.ts";
 import { itwSetFiscalCodeWhitelisted } from "../../common/store/actions/preferences.ts";
 

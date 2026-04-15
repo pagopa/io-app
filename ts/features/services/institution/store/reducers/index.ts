@@ -1,10 +1,9 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
-
-import { InstitutionServicesResource } from "../../../../../../definitions/services/InstitutionServicesResource";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
-import { paginatedServicesGet, WithInstitutionID } from "../actions";
+import { InstitutionServicesResource } from "../../../../../../definitions/services/InstitutionServicesResource";
+import { WithInstitutionID, paginatedServicesGet } from "../actions";
 
 export type InstitutionState = {
   paginatedServices: pot.Pot<
@@ -22,16 +21,6 @@ const reducer = (
   action: Action
 ): InstitutionState => {
   switch (action.type) {
-    case getType(paginatedServicesGet.cancel):
-      return {
-        ...state,
-        paginatedServices: pot.none
-      };
-    case getType(paginatedServicesGet.failure):
-      return {
-        ...state,
-        paginatedServices: pot.toError(state.paginatedServices, action.payload)
-      };
     case getType(paginatedServicesGet.request):
       if (action.payload.offset === 0) {
         return {
@@ -68,6 +57,16 @@ const reducer = (
           ...action.payload,
           services: [...currentServices, ...action.payload.services]
         })
+      };
+    case getType(paginatedServicesGet.failure):
+      return {
+        ...state,
+        paginatedServices: pot.toError(state.paginatedServices, action.payload)
+      };
+    case getType(paginatedServicesGet.cancel):
+      return {
+        ...state,
+        paginatedServices: pot.none
       };
   }
   return state;

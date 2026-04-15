@@ -1,13 +1,12 @@
-import { IOButton } from "@pagopa/io-app-design-system";
-import * as rnCieId from "@pagopa/io-react-native-cieid";
 import { fireEvent, render } from "@testing-library/react-native";
 import { View } from "react-native";
-
-import { withStore } from "../../../../../utils/jest/withStore";
-import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
+import { IOButton } from "@pagopa/io-app-design-system";
+import * as rnCieId from "@pagopa/io-react-native-cieid";
+import useNavigateToLoginMethod from "../useNavigateToLoginMethod";
 import * as fastLoginSelector from "../../../fastLogin/store/selectors";
 import { Identifier } from "../../optIn/screens/OptInScreen";
-import useNavigateToLoginMethod from "../useNavigateToLoginMethod";
+import { withStore } from "../../../../../utils/jest/withStore";
+import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 
 const IS_UAT = false;
 const SPID_L2 = "SpidL2";
@@ -138,22 +137,22 @@ const TestComponent = withStore(() => {
   return (
     <View>
       <IOButton
-        label=" Navigate to Cie + Pin"
-        onPress={navigateToCiePinInsertion}
+        variant="solid"
         testID="navigate-to-cie-pin"
-        variant="solid"
+        onPress={navigateToCiePinInsertion}
+        label=" Navigate to Cie + Pin"
       />
       <IOButton
-        label=" Navigate to CieID"
-        onPress={() => navigateToCieIdLoginScreen(SPID_L2)}
+        variant="solid"
         testID="navigate-to-cie-id"
-        variant="solid"
+        onPress={() => navigateToCieIdLoginScreen(SPID_L2)}
+        label=" Navigate to CieID"
       />
       <IOButton
-        label=" Navigate to IDP selection"
-        onPress={navigateToIdpSelection}
-        testID="navigate-to-idp-selection"
         variant="solid"
+        testID="navigate-to-idp-selection"
+        onPress={navigateToIdpSelection}
+        label=" Navigate to IDP selection"
       />
     </View>
   );

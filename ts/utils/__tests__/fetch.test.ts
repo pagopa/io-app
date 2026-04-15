@@ -1,15 +1,15 @@
-import { DeferredPromise } from "@pagopa/ts-commons/lib/promises";
 import { MaxRetries, RetryAborted } from "@pagopa/ts-commons/lib/tasks";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import * as Mockttp from "mockttp";
-import { CompletedRequest, MaybePromise } from "mockttp";
+import { DeferredPromise } from "@pagopa/ts-commons/lib/promises";
 import {
   CallbackResponseMessageResult,
   CallbackResponseResult
 } from "mockttp/dist/rules/requests/request-handlers";
+import * as Mockttp from "mockttp";
+import { CompletedRequest, MaybePromise } from "mockttp";
 
-import { fetchMaxRetries } from "../../config";
 import { constantPollingFetch, defaultRetryingFetch } from "../fetch";
+import { fetchMaxRetries } from "../../config";
 const mockServer = Mockttp.getLocal();
 
 const TEST_PATH = "/transient-error";

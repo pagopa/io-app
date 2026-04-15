@@ -1,5 +1,5 @@
-import { enumType } from "@pagopa/ts-commons/lib/types";
 import * as t from "io-ts";
+import { enumType } from "@pagopa/ts-commons/lib/types";
 
 export enum FaultCodeCategoryEnum {
   "PAYMENT_VERIFY_GENERIC_ERROR" = "PAYMENT_VERIFY_GENERIC_ERROR"

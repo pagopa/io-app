@@ -1,6 +1,5 @@
 import { render } from "@testing-library/react-native";
 import { Text } from "react-native";
-
 import {
   DrivingPrivilegesClaim,
   FiscalCodeClaim,
@@ -12,8 +11,8 @@ describe("CardClaim", () => {
   it("should return null if claim is not decoded correctly", () => {
     const { queryByTestId } = render(
       <CardClaim
-        claim={{ name: "test", value: undefined }}
         testID="claimTestID"
+        claim={{ name: "test", value: undefined }}
       />
     );
 
@@ -23,8 +22,8 @@ describe("CardClaim", () => {
   it("should render correctly if claim is successfully decoded", () => {
     const { queryByText, queryByTestId } = render(
       <CardClaim
-        claim={{ name: "test", value: "Some string" }}
         testID="claimTestID"
+        claim={{ name: "test", value: "Some string" }}
       />
     );
 
@@ -38,10 +37,10 @@ describe("CardClaimRenderer", () => {
     const { queryByTestId, queryByText } = render(
       <CardClaimRenderer
         claim={{ name: "test", value: "Some string" }}
+        is={FiscalCodeClaim.is}
         component={() => (
           <Text testID="claimTestID">This should not be rendered!</Text>
         )}
-        is={FiscalCodeClaim.is}
       />
     );
 
@@ -53,8 +52,8 @@ describe("CardClaimRenderer", () => {
     const { queryByTestId, queryByText } = render(
       <CardClaimRenderer
         claim={{ name: "test", value: "Some string" }}
-        component={decoded => <Text testID="claimTestID">{decoded}</Text>}
         is={StringClaim.is}
+        component={decoded => <Text testID="claimTestID">{decoded}</Text>}
       />
     );
 
@@ -70,6 +69,7 @@ describe("CardClaimRenderer", () => {
           value:
             '[{"driving_privilege":"AM","issue_date":"1935-01-23","expiry_date":"2035-02-16","restrictions_conditions":""},{"driving_privilege":"B","issue_date":"1935-01-23","expiry_date":"2035-02-16","restrictions_conditions":""}]'
         }}
+        is={DrivingPrivilegesClaim.is}
         component={decoded =>
           decoded.map(p => (
             <Text
@@ -80,7 +80,6 @@ describe("CardClaimRenderer", () => {
             </Text>
           ))
         }
-        is={DrivingPrivilegesClaim.is}
       />
     );
 

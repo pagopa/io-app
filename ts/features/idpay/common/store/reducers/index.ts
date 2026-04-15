@@ -1,12 +1,6 @@
 import { combineReducers } from "redux";
 import { PersistPartial } from "redux-persist";
 
-import { barcodeReducer } from "../../../barcode/store/reducers/barcodeReducer";
-import { staticCodeReducer } from "../../../barcode/store/reducers/staticCodeReducer";
-import {
-  IdPayBarcodeState,
-  IdPayStaticCodeState
-} from "../../../barcode/store/types";
 import codePersistor, { IdPayCodeState } from "../../../code/store/reducers";
 import configurationReducer, {
   IdPayInitiativeConfigurationState
@@ -15,22 +9,29 @@ import initiativeDetailsReducer, {
   IdPayInitiativeState
 } from "../../../details/store/index";
 import timelineReducer, { IdPayTimelineState } from "../../../timeline/store";
-import unsubscriptionReducer, {
-  IdPayUnsubscriptionState
-} from "../../../unsubscription/store/reducers";
 import walletReducer, {
   IdPayWalletState
 } from "../../../wallet/store/reducers/index";
 
+import { barcodeReducer } from "../../../barcode/store/reducers/barcodeReducer";
+import { staticCodeReducer } from "../../../barcode/store/reducers/staticCodeReducer";
+import unsubscriptionReducer, {
+  IdPayUnsubscriptionState
+} from "../../../unsubscription/store/reducers";
+import {
+  IdPayBarcodeState,
+  IdPayStaticCodeState
+} from "../../../barcode/store/types";
+
 export type IDPayState = {
-  barcode: IdPayBarcodeState;
-  code: IdPayCodeState & PersistPartial;
-  configuration: IdPayInitiativeConfigurationState;
-  initiative: IdPayInitiativeState;
-  staticCode: IdPayStaticCodeState;
-  timeline: IdPayTimelineState;
-  unsubscription: IdPayUnsubscriptionState;
   wallet: IdPayWalletState;
+  initiative: IdPayInitiativeState;
+  timeline: IdPayTimelineState;
+  configuration: IdPayInitiativeConfigurationState;
+  code: IdPayCodeState & PersistPartial;
+  barcode: IdPayBarcodeState;
+  staticCode: IdPayStaticCodeState;
+  unsubscription: IdPayUnsubscriptionState;
 };
 
 const idPayReducer = combineReducers({

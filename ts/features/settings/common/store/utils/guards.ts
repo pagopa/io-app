@@ -1,5 +1,4 @@
 import * as O from "fp-ts/lib/Option";
-
 import { EmailAddress } from "../../../../../../definitions/backend/EmailAddress";
 import { InitializedProfile } from "../../../../../../definitions/backend/InitializedProfile";
 import { ServicesPreferencesModeEnum } from "../../../../../../definitions/backend/ServicesPreferencesMode";

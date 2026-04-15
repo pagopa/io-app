@@ -18,7 +18,6 @@ import {
 } from "react";
 import { Platform, ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-
 import {
   AnimatedPictogram,
   IOAnimatedPictograms,
@@ -27,26 +26,26 @@ import {
 
 type ButtonProps = Pick<
   IOButtonProps,
-  "accessibilityLabel" | "icon" | "label" | "onPress" | "testID"
+  "label" | "accessibilityLabel" | "onPress" | "testID" | "icon"
 >;
 
 type OperationResultScreenContentProps = WithTestID<{
-  action?: ButtonProps;
-  disableAnimatedPictogram?: boolean;
-  isHeaderVisible?: boolean;
-  onSubtitleLinkPress?: (url: string) => void;
-  pictogram: IOAnimatedPictograms | IOPictograms;
-  secondaryAction?: ButtonProps;
-  subtitle?: string;
+  pictogram: IOPictograms | IOAnimatedPictograms;
   title: string;
+  subtitle?: string;
+  onSubtitleLinkPress?: (url: string) => void;
   topElement?: ReactNode;
+  action?: ButtonProps;
+  secondaryAction?: ButtonProps;
+  isHeaderVisible?: boolean;
+  disableAnimatedPictogram?: boolean;
 }>;
 
 /**
  * Check if a pictogram has an animated version or not
  */
 const hasAnimatedVersion = (
-  pictogram: IOAnimatedPictograms | IOPictograms
+  pictogram: IOPictograms | IOAnimatedPictograms
 ): pictogram is IOAnimatedPictograms => pictogram in IOAnimatedPictogramsAssets;
 
 const OperationResultScreenContent = forwardRef<
@@ -75,9 +74,9 @@ const OperationResultScreenContent = forwardRef<
     return (
       <SafeAreaView
         edges={isHeaderVisible ? ["bottom"] : undefined}
-        ref={ref}
         style={{ flexGrow: 1 }}
         testID={testID}
+        ref={ref}
       >
         <ScrollView
           alwaysBounceVertical={false}
@@ -107,8 +106,8 @@ const OperationResultScreenContent = forwardRef<
               <VSpacer size={8} />
               <IOMarkdownLite
                 content={subtitle}
-                onLinkPress={onSubtitleLinkPress}
                 textAlign="center"
+                onLinkPress={onSubtitleLinkPress}
               />
             </>
           )}

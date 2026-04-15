@@ -4,9 +4,8 @@ import {
   Tag,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { Alert } from "react-native";
-
+import I18n from "i18next";
 import {
   BonusCardScreenComponent,
   defaultBonusCardColors
@@ -14,14 +13,14 @@ import {
 
 const DSBonusCardScreen = () => (
   <BonusCardScreenComponent
-    actions={{
-      type: "SingleButton",
-      primary: {
-        label: "Autorizza una transazione",
-        accessibilityLabel: "Autorizza una transazione",
-        onPress: () => Alert.alert("Autorizzata!")
+    logoUris={[
+      {
+        uri: "https://vtlogo.com/wp-content/uploads/2021/08/18app-vector-logo.png"
       }
-    }}
+    ]}
+    name="18app"
+    organizationName="Ministero della Cultura"
+    status={<Tag variant="info" text={I18n.t("bonusCard.paused")} />}
     cardColors={defaultBonusCardColors}
     counters={[
       {
@@ -43,14 +42,14 @@ const DSBonusCardScreen = () => (
       },
       accessibilityLabel: "info"
     }}
-    logoUris={[
-      {
-        uri: "https://vtlogo.com/wp-content/uploads/2021/08/18app-vector-logo.png"
+    actions={{
+      type: "SingleButton",
+      primary: {
+        label: "Autorizza una transazione",
+        accessibilityLabel: "Autorizza una transazione",
+        onPress: () => Alert.alert("Autorizzata!")
       }
-    ]}
-    name="18app"
-    organizationName="Ministero della Cultura"
-    status={<Tag text={I18n.t("bonusCard.paused")} variant="info" />}
+    }}
   >
     <VSpacer size={16} />
     <ContentWrapper>

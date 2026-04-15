@@ -1,7 +1,6 @@
 import { HttpClientSuccessResponse } from "@pagopa/io-react-native-http-client";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-
 import reducer, {
   FIMS_SSO_ERROR_TAGS,
   FimsErrorStateType,

@@ -1,5 +1,4 @@
 import { Alert } from "react-native";
-
 import { actionWithAlert } from "../ActionWithAlert";
 
 describe("ActionWithAlert", () => {

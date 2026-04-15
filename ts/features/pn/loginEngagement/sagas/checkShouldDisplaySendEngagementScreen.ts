@@ -1,4 +1,3 @@
-import { StackActions } from "@react-navigation/native";
 import {
   call,
   cancel,
@@ -9,20 +8,20 @@ import {
   take,
   takeEvery
 } from "typed-redux-saga/macro";
+import { StackActions } from "@react-navigation/native";
 import { v4 as uuidv4 } from "uuid";
-
 import NavigationService from "../../../../navigation/NavigationService";
+import PN_ROUTES from "../../navigation/routes";
+import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 import {
   isPnRemoteEnabledSelector as isSendRemoteEnabledSelector,
   pnMessagingServiceIdSelector as sendServiceIdSelector
 } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { isTestEnv } from "../../../../utils/environment";
-import { setSecurityAdviceReadyToShow } from "../../../authentication/fastLogin/store/actions/securityAdviceActions";
-import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
-import { loadServicePreference } from "../../../services/details/store/actions/preference";
-import PN_ROUTES from "../../navigation/routes";
-import { isPnServiceEnabled as isSendServiceEnabledSelector } from "../../reminderBanner/reducer/bannerDismiss";
 import { hasSendEngagementScreenBeenDismissedSelector } from "../store/reducers";
+import { isPnServiceEnabled as isSendServiceEnabledSelector } from "../../reminderBanner/reducer/bannerDismiss";
+import { loadServicePreference } from "../../../services/details/store/actions/preference";
+import { setSecurityAdviceReadyToShow } from "../../../authentication/fastLogin/store/actions/securityAdviceActions";
+import { isTestEnv } from "../../../../utils/environment";
 
 export function* checkShouldDisplaySendEngagementScreen(
   isFirstOnboarding: boolean

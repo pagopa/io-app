@@ -1,32 +1,31 @@
-import { CommonActions, StackActions } from "@react-navigation/native";
 import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
-
+import { CommonActions, StackActions } from "@react-navigation/native";
+import {
+  identifyMixpanelSaga,
+  watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel,
+  resetMixpanelSaga,
+  initMixpanel,
+  handleSetMixpanelEnabled,
+  askMixpanelOptIn,
+  testable
+} from "../mixpanel";
 import {
   sessionExpired,
   sessionInvalid
 } from "../../features/authentication/common/store/actions";
-import { setIsMixpanelInitialized } from "../../features/mixpanel/store/actions";
 import {
   identifyMixpanel,
   initializeMixPanel,
   resetMixpanel,
   terminateMixpanel
 } from "../../mixpanel";
-import { updateMixpanelProfileProperties } from "../../mixpanelConfig/profileProperties";
-import NavigationService from "../../navigation/NavigationService";
-import ROUTES from "../../navigation/routes";
 import { setMixpanelEnabled } from "../../store/actions/mixpanel";
 import { isMixpanelEnabled } from "../../store/reducers/persistedPreferences";
-import {
-  askMixpanelOptIn,
-  handleSetMixpanelEnabled,
-  identifyMixpanelSaga,
-  initMixpanel,
-  resetMixpanelSaga,
-  testable,
-  watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel
-} from "../mixpanel";
+import NavigationService from "../../navigation/NavigationService";
+import ROUTES from "../../navigation/routes";
+import { updateMixpanelProfileProperties } from "../../mixpanelConfig/profileProperties";
+import { setIsMixpanelInitialized } from "../../features/mixpanel/store/actions";
 
 describe("mixpanel", () => {
   describe("watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel", () => {

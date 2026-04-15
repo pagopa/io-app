@@ -1,16 +1,15 @@
 import { createStore, Store } from "redux";
-
-import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
+import { applicationChangeState } from "../../../../store/actions/application";
 import { GlobalState } from "../../../../store/reducers/types";
-import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import FciDocumentsScreen from "../valid/FciDocumentsScreen";
 import { FCI_ROUTES } from "../../navigation/routes";
+import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
 import {
   fciDownloadPreview,
   fciSignatureRequestFromId
 } from "../../store/actions";
-import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
-import FciDocumentsScreen from "../valid/FciDocumentsScreen";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 
 describe("Test FciDocuments screen", () => {
   beforeEach(() => {

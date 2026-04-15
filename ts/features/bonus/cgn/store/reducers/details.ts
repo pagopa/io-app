@@ -1,15 +1,14 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { constUndefined } from "fp-ts/lib/function";
-import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-
-import { Card } from "../../../../../../definitions/cgn/Card";
-import { CardPending } from "../../../../../../definitions/cgn/CardPending";
+import { createSelector } from "reselect";
+import { constUndefined } from "fp-ts/lib/function";
 import { Action } from "../../../../../store/actions/types";
+import { cgnDetails } from "../actions/details";
+import { Card } from "../../../../../../definitions/cgn/Card";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { NetworkError } from "../../../../../utils/errors";
+import { CardPending } from "../../../../../../definitions/cgn/CardPending";
 import { isStrictSome } from "../../../../../utils/pot";
-import { cgnDetails } from "../actions/details";
 import { cgnUnsubscribe } from "../actions/unsubscribe";
 
 export type CgnDetailsState = {
@@ -25,17 +24,6 @@ const reducer = (
   action: Action
 ): CgnDetailsState => {
   switch (action.type) {
-    // This action is fired when the user is not elegible to have a CGN or it doesn't have it onboarded
-    case getType(cgnDetails.cancel):
-      return {
-        ...state,
-        information: pot.none
-      };
-    case getType(cgnDetails.failure):
-      return {
-        ...state,
-        information: pot.toError(state.information, action.payload)
-      };
     // bonus activation
     case getType(cgnDetails.request):
       return {
@@ -46,6 +34,17 @@ const reducer = (
       return {
         ...state,
         information: pot.some(action.payload)
+      };
+    case getType(cgnDetails.failure):
+      return {
+        ...state,
+        information: pot.toError(state.information, action.payload)
+      };
+    // This action is fired when the user is not elegible to have a CGN or it doesn't have it onboarded
+    case getType(cgnDetails.cancel):
+      return {
+        ...state,
+        information: pot.none
       };
     case getType(cgnUnsubscribe.success):
       return INITIAL_STATE;

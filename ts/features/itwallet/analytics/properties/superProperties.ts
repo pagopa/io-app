@@ -47,7 +47,7 @@ export const buildItwSuperProperties = (
 
 const offlineReasonHandler = (
   state: GlobalState
-): "not_available" | OfflineAccessReasonEnum => {
+): OfflineAccessReasonEnum | "not_available" => {
   const offlineAccessReason = offlineAccessReasonSelector(state);
   return offlineAccessReason ? offlineAccessReason : "not_available";
 };

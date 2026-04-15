@@ -1,6 +1,6 @@
 import { PersistPartial } from "redux-persist";
-
 import { VersionInfoState } from "../../common/versionInfo/store/reducers/versionInfo";
+
 import { PersistedAuthenticationState } from "../../features/authentication/common/store/reducers";
 import { CieState } from "../../features/authentication/login/cie/store/reducers/cie";
 import { BonusState } from "../../features/bonus/common/store/reducers";
@@ -31,33 +31,33 @@ import { StartupState } from "./startup";
 
 export type GlobalState = Readonly<{
   appState: AppState;
-  assistanceTools: AssistanceToolsState;
-  authentication: PersistedAuthenticationState;
-  backendInfo: BackedInfoState;
-  bonus: BonusState;
-  cie: CieState;
-  content: ContentState;
-  crossSessions: CrossSessionsState;
-  debug: PersistedDebugState;
-  emailValidation: EmailValidationState;
-  entities: PersistedEntitiesState;
-  features: PersistedFeaturesState;
-  identification: PersistedIdentificationState;
-  installation: InstallationState;
-  lollipop: PersistedLollipopState;
   navigation: NavigationState;
+  authentication: PersistedAuthenticationState;
+  remoteConfig: RemoteConfigState;
+  statusMessages: StatusMessagesState;
+  sectionStatus: SectionStatusState;
+  backendInfo: BackedInfoState;
+  versionInfo: VersionInfoState;
+  entities: PersistedEntitiesState;
   notifications: PersistedNotificationsState;
   onboarding: OnboardingState;
-  persistedPreferences: PersistedPreferencesState;
-  preferences: PreferencesState;
   profile: ProfileState;
-  remoteConfig: RemoteConfigState;
-  search: SearchState;
-  sectionStatus: SectionStatusState;
-  startup: StartupState;
-  statusMessages: StatusMessagesState;
   userDataProcessing: UserDataProcessingState;
-  versionInfo: VersionInfoState;
+  preferences: PreferencesState;
+  persistedPreferences: PersistedPreferencesState;
+  content: ContentState;
+  identification: PersistedIdentificationState;
+  installation: InstallationState;
+  debug: PersistedDebugState;
+  search: SearchState;
+  emailValidation: EmailValidationState;
+  cie: CieState;
+  bonus: BonusState;
+  features: PersistedFeaturesState;
+  crossSessions: CrossSessionsState;
+  assistanceTools: AssistanceToolsState;
+  startup: StartupState;
+  lollipop: PersistedLollipopState;
 }>;
 
 export type PersistedGlobalState = GlobalState & PersistPartial;

@@ -5,10 +5,9 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
-import I18n from "i18next";
 import { useEffect } from "react";
 import { View } from "react-native";
-
+import I18n from "i18next";
 import { InitiativeRewardTypeEnum } from "../../../../../definitions/idpay/InitiativeDTO";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
@@ -127,6 +126,13 @@ const IdPayUnsubscriptionConfirmationScreen = () => {
     ),
     footer: (
       <FooterActionsInline
+        startAction={{
+          color: "primary",
+          label: I18n.t("global.buttons.cancel"),
+          onPress: () => {
+            confirmModal.dismiss();
+          }
+        }}
         endAction={{
           color: "danger",
           label: I18n.t("idpay.unsubscription.button.continue"),
@@ -135,19 +141,21 @@ const IdPayUnsubscriptionConfirmationScreen = () => {
             handleConfirmPress();
           }
         }}
-        startAction={{
-          color: "primary",
-          label: I18n.t("global.buttons.cancel"),
-          onPress: () => {
-            confirmModal.dismiss();
-          }
-        }}
       />
     )
   });
 
   const body = (
     <IOScrollViewWithLargeHeader
+      goBack={handleClosePress}
+      contextualHelp={emptyContextualHelp}
+      headerActionsProp={{
+        showHelp: true
+      }}
+      title={{
+        label: I18n.t("idpay.unsubscription.title", { initiativeName })
+      }}
+      description={I18n.t("idpay.unsubscription.subtitle")}
       actions={{
         type: "SingleButton",
         primary: {
@@ -156,23 +164,14 @@ const IdPayUnsubscriptionConfirmationScreen = () => {
           disabled: !checks.areFulfilled
         }
       }}
-      contextualHelp={emptyContextualHelp}
-      description={I18n.t("idpay.unsubscription.subtitle")}
-      goBack={handleClosePress}
-      headerActionsProp={{
-        showHelp: true
-      }}
       includeContentMargins
-      title={{
-        label: I18n.t("idpay.unsubscription.title", { initiativeName })
-      }}
     >
       {unsubscriptionChecks.map((item, index) => (
         <ListItemCheckbox
-          description={item.subtitle}
           key={index}
-          onValueChange={value => checks.setValue(index, value)}
           value={item.title}
+          description={item.subtitle}
+          onValueChange={value => checks.setValue(index, value)}
         />
       ))}
     </IOScrollViewWithLargeHeader>

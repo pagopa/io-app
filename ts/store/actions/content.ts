@@ -1,13 +1,12 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
-
 import { ContextualHelp } from "../../../definitions/content/ContextualHelp";
 import { Municipality as MunicipalityMetadata } from "../../../definitions/content/Municipality";
-import { SpidIdps } from "../../../definitions/content/SpidIdps";
 import { CodiceCatastale } from "../../types/MunicipalityCodiceCatastale";
+import { SpidIdps } from "../../../definitions/content/SpidIdps";
 
 type MunicipalityFailure = {
-  codiceCatastale: string;
   error: Error;
+  codiceCatastale: string;
 };
 
 export const contentMunicipalityLoad = createAsyncAction(

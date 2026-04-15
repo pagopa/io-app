@@ -1,5 +1,4 @@
 import { useLinkTo } from "@react-navigation/native";
-
 import { handleInternalLink } from "../utils/internalLink";
 
 /**

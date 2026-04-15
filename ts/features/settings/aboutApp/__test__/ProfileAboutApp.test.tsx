@@ -1,13 +1,12 @@
 import { fireEvent } from "@testing-library/react-native";
-import I18n from "i18next";
 import { createStore } from "redux";
-
-import { applicationChangeState } from "../../../../store/actions/application";
-import { appReducer } from "../../../../store/reducers";
-import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import I18n from "i18next";
 import { openWebUrl } from "../../../../utils/url";
-import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 import ProfileAboutApp from "../screens/ProfileAboutApp";
+import { appReducer } from "../../../../store/reducers";
+import { applicationChangeState } from "../../../../store/actions/application";
+import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
+import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 
 jest.mock("../../../../utils/url");
 

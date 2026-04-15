@@ -4,7 +4,6 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { JSX, useCallback, useEffect, useMemo, useState } from "react";
 import { GestureResponderEvent } from "react-native";
-
 import { LevelEnum } from "../../definitions/content/StatusMessage";
 import IOMarkdown from "../components/IOMarkdown";
 import { useIOAlertVisible } from "../components/StatusMessages/IOAlertVisibleContext";
@@ -12,9 +11,9 @@ import { AUTHENTICATION_ROUTES } from "../features/authentication/common/navigat
 import { isConnectedSelector } from "../features/connectivity/store/selectors";
 import { OfflineAccessReasonEnum } from "../features/ingress/store/reducer";
 import { offlineAccessReasonSelector } from "../features/ingress/store/selectors";
+import { trackItwOfflineBottomSheet } from "../features/itwallet/wallet/analytics";
 import { useOfflineAlertDetailModal } from "../features/itwallet/common/hooks/useOfflineAlertDetailModal";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
-import { trackItwOfflineBottomSheet } from "../features/itwallet/wallet/analytics";
 import { useAppRestartAction } from "../features/itwallet/wallet/hooks/useAppRestartAction";
 import { mixpanelTrack } from "../mixpanel";
 import { useIOSelector } from "../store/hooks";
@@ -33,9 +32,9 @@ import { openWebUrl } from "../utils/url";
 // This is a list of routes where the offline alert should not be shown
 const blackListOfflineAlertRoutes = new Set<string>([
   AUTHENTICATION_ROUTES.LANDING,
-  ITW_ROUTES.PRESENTATION.CREDENTIAL_ATTACHMENT,
   ITW_ROUTES.PRESENTATION.CREDENTIAL_CARD_MODAL,
-  ITW_ROUTES.PRESENTATION.CREDENTIAL_FISCAL_CODE_MODAL
+  ITW_ROUTES.PRESENTATION.CREDENTIAL_FISCAL_CODE_MODAL,
+  ITW_ROUTES.PRESENTATION.CREDENTIAL_ATTACHMENT
 ]);
 
 const statusVariantMap: Record<LevelEnum, AlertEdgeToEdgeProps["variant"]> = {
@@ -46,12 +45,12 @@ const statusVariantMap: Record<LevelEnum, AlertEdgeToEdgeProps["variant"]> = {
 
 type AlertActionProps =
   | {
-      action?: never;
-      onPress?: never;
-    }
-  | {
       action?: string;
       onPress: (event: GestureResponderEvent) => void;
+    }
+  | {
+      action?: never;
+      onPress?: never;
     };
 
 type AlertProps = {
@@ -189,48 +188,11 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
     }
 
     switch (derivedConnectivityState) {
-      case "back_online":
-        setBottomSheet(undefined);
-        setConnectivityAlert({
-          variant: "success",
-          content: I18n.t("global.offline.connectionRestored")
-        });
-
-        void mixpanelTrack(
-          "ONLINE_BANNER",
-          buildEventProperties("TECH", undefined, {
-            screen: currentRoute
-          })
-        );
-
-        /**
-         * Removes the "back online" alert after 3 seconds only if the app is not
-         * in the offline mode
-         */
-        setTimeout(() => {
-          setAlertVisible(false);
-          setConnectivityAlert(undefined);
-        }, 3000);
-        break;
-      case "blacklisted":
-      // falls through
       case "initial":
+      case "blacklisted":
         setAlertVisible(false);
         setBottomSheet(undefined);
         setConnectivityAlert(undefined);
-        break;
-
-      case "mini_app_back_online":
-        setBottomSheet(undefined);
-        setConnectivityAlert({
-          variant: "success",
-          content: I18n.t(
-            `features.itWallet.offline.back_online.alert.content`
-          ),
-          action: I18n.t(`features.itWallet.offline.back_online.alert.action`),
-          onPress: handleAppRestart
-        });
-        setAlertVisible(true);
         break;
 
       case "mini_app_device_offline":
@@ -244,6 +206,19 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
             `features.itWallet.offline.device_offline.alert.action`
           ),
           onPress: openItwOfflineBottomSheet
+        });
+        setAlertVisible(true);
+        break;
+
+      case "mini_app_back_online":
+        setBottomSheet(undefined);
+        setConnectivityAlert({
+          variant: "success",
+          content: I18n.t(
+            `features.itWallet.offline.back_online.alert.content`
+          ),
+          action: I18n.t(`features.itWallet.offline.back_online.alert.action`),
+          onPress: handleAppRestart
         });
         setAlertVisible(true);
         break;
@@ -304,6 +279,30 @@ export const useStatusAlertProps = (): AlertProps | undefined => {
             screen: currentRoute
           })
         );
+        break;
+
+      case "back_online":
+        setBottomSheet(undefined);
+        setConnectivityAlert({
+          variant: "success",
+          content: I18n.t("global.offline.connectionRestored")
+        });
+
+        void mixpanelTrack(
+          "ONLINE_BANNER",
+          buildEventProperties("TECH", undefined, {
+            screen: currentRoute
+          })
+        );
+
+        /**
+         * Removes the "back online" alert after 3 seconds only if the app is not
+         * in the offline mode
+         */
+        setTimeout(() => {
+          setAlertVisible(false);
+          setConnectivityAlert(undefined);
+        }, 3000);
         break;
 
       case "online":

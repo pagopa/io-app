@@ -6,7 +6,6 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { memo, useEffect, useRef, useState } from "react";
 import { AccessibilityInfo, View } from "react-native";
-
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import ModalSectionStatusComponent from "../../../../components/SectionStatus/modal";
@@ -109,14 +108,14 @@ export const IdPayFailToRetryScreen = () => {
         trackingAction={trackIngressServicesSlowDown}
       />
       <LoadingScreenContent
-        animatedPictogramSource="waiting"
+        testID="ingress-screen-loader-id"
+        title={contentTitle}
         subtitle={
           showSubtitle
             ? I18n.t("idpay.onboarding.failToRetry.slowDownSubtitle")
             : undefined
         }
-        testID="ingress-screen-loader-id"
-        title={contentTitle}
+        animatedPictogramSource="waiting"
       />
     </>
   );
@@ -162,12 +161,15 @@ const IngressScreenBlockingError = memo(() => {
 
   return (
     <OperationResultScreenContent
+      ref={operationRef}
+      testID="device-blocking-screen-id"
+      pictogram="time"
+      title={I18n.t("startup.slowdowns_results_screen.title")}
+      subtitle={I18n.t("idpay.onboarding.failToRetry.failureSubtitle")}
       action={{
         label: I18n.t("global.buttons.back"),
         onPress: () => machine.send({ type: "close" })
       }}
-      pictogram="time"
-      ref={operationRef}
       secondaryAction={
         websiteUrl === ""
           ? undefined
@@ -176,9 +178,6 @@ const IngressScreenBlockingError = memo(() => {
               onPress: handleNavigateToWebsite
             }
       }
-      subtitle={I18n.t("idpay.onboarding.failToRetry.failureSubtitle")}
-      testID="device-blocking-screen-id"
-      title={I18n.t("startup.slowdowns_results_screen.title")}
     />
   );
 });

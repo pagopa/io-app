@@ -1,20 +1,19 @@
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { SagaIterator } from "redux-saga";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-
-import { Environment } from "../../../../../definitions/fci/Environment";
-import { SagaCallReturnType } from "../../../../types/utils";
-import { getNetworkError } from "../../../../utils/errors";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { readablePrivacyReport } from "../../../../utils/reporters";
-import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { FciClient } from "../../api/backendFci";
 import {
   fciEnvironmentSet,
   fciSignatureRequestFromId
 } from "../../store/actions";
+import { getNetworkError } from "../../../../utils/errors";
+import { SagaCallReturnType } from "../../../../types/utils";
+import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
+import { Environment } from "../../../../../definitions/fci/Environment";
 import { FciHeaders } from "../../utils/fciHeaders";
 
 /*

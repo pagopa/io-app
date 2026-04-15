@@ -8,7 +8,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
-
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent.tsx";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
@@ -44,11 +43,11 @@ export const ItwProximityClaimsDisclosureScreen = () => {
     <ContentView proximityDetails={proximityDetails} />
   ) : (
     <LoadingScreenContent
-      subtitle={I18n.t(
-        "features.itWallet.presentation.proximity.loadingScreen.subtitle"
-      )}
       title={I18n.t(
         "features.itWallet.presentation.proximity.loadingScreen.title"
+      )}
+      subtitle={I18n.t(
+        "features.itWallet.presentation.proximity.loadingScreen.subtitle"
       )}
     />
   );
@@ -138,16 +137,16 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
           </VStack>
           <ItwProximityPresentationDetails data={proximityDetails} />
           <FeatureInfo
+            iconName="fornitori"
             body={I18n.t(
               "features.itWallet.presentation.proximity.selectiveDisclosure.disclaimer.0"
             )}
-            iconName="fornitori"
           />
           <FeatureInfo
+            iconName="trashcan"
             body={I18n.t(
               "features.itWallet.presentation.proximity.selectiveDisclosure.disclaimer.1"
             )}
-            iconName="trashcan"
           />
           <IOMarkdownLite
             content={I18n.t(

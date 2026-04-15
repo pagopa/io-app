@@ -1,5 +1,4 @@
 import { createSelector } from "reselect";
-
 import { GlobalState } from "../../../../../../store/reducers/types";
 
 export const spidLoginSelector = (state: GlobalState) =>

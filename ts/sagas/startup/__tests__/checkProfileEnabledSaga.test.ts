@@ -1,10 +1,11 @@
-import { NonNegativeInteger } from "@pagopa/ts-commons/lib/numbers";
 import { expectSaga } from "redux-saga-test-plan";
+
+import { NonNegativeInteger } from "@pagopa/ts-commons/lib/numbers";
 import { getType } from "typesafe-actions";
 
-import mockedProfile from "../../../__mocks__/initializedProfile";
-import { profileUpsert } from "../../../features/settings/common/store/actions";
 import { startApplicationInitialization } from "../../../store/actions/application";
+import { profileUpsert } from "../../../features/settings/common/store/actions";
+import mockedProfile from "../../../__mocks__/initializedProfile";
 import { checkProfileEnabledSaga } from "../checkProfileEnabledSaga";
 
 describe("checkProfileEnabledSaga", () => {

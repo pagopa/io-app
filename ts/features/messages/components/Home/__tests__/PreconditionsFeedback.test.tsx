@@ -1,5 +1,4 @@
 import { createStore } from "redux";
-
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
@@ -25,8 +24,8 @@ const renderComponent = (subtitle: string | undefined = undefined) => {
     () => (
       <PreconditionsFeedback
         pictogram="umbrella"
-        subtitle={subtitle}
         title="The title"
+        subtitle={subtitle}
       />
     ),
     MESSAGES_ROUTES.MESSAGES_HOME,

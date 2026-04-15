@@ -1,13 +1,12 @@
-import I18n from "i18next";
 import { useEffect } from "react";
 import { AccessibilityInfo } from "react-native";
-
-import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import { useIOSelector } from "../../../../store/hooks";
+import I18n from "i18next";
+import { profileNameSelector } from "../../../settings/common/store/selectors";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { trackIdpAuthenticationSuccessScreen } from "../../../settings/common/analytics";
-import { profileNameSelector } from "../../../settings/common/store/selectors";
+import { useIOSelector } from "../../../../store/hooks";
 import { loggedInIdpSelector } from "../store/selectors";
+import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 
 export const IdpSuccessfulAuthentication = () => {
   const idp = useIOSelector(loggedInIdpSelector);
@@ -33,10 +32,10 @@ export const IdpSuccessfulAuthentication = () => {
 
   return (
     <OperationResultScreenContent
-      isHeaderVisible
-      pictogram="success"
       testID="idp-successful-authentication"
+      pictogram="success"
       title={contentTitle}
+      isHeaderVisible
     />
   );
 };

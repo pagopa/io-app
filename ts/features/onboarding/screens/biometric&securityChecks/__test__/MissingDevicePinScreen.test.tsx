@@ -1,11 +1,10 @@
-import I18n from "i18next";
 import { createStore } from "redux";
-
-import ROUTES from "../../../../../navigation/routes";
+import I18n from "i18next";
+import MissingDevicePinScreen from "../MissingDevicePinScreen";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import MissingDevicePinScreen from "../MissingDevicePinScreen";
+import ROUTES from "../../../../../navigation/routes";
 
 jest.mock("../../../../../store/hooks", () => {
   const original = jest.requireActual("../../../../../store/hooks");

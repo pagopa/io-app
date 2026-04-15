@@ -1,9 +1,9 @@
-import * as O from "fp-ts/lib/Option";
 /**
  * A reducer for the Search
  */
 import { getType } from "typesafe-actions";
 
+import * as O from "fp-ts/lib/Option";
 import {
   disableSearch,
   searchMessagesEnabled,
@@ -13,9 +13,9 @@ import { Action } from "../actions/types";
 import { GlobalState } from "./types";
 
 export type SearchState = Readonly<{
+  searchText: O.Option<string>;
   isSearchEnabled: boolean;
   isSearchMessagesEnabled: boolean;
-  searchText: O.Option<string>;
 }>;
 
 const INITIAL_STATE: SearchState = {
@@ -39,9 +39,6 @@ const reducer = (
   action: Action
 ): SearchState => {
   switch (action.type) {
-    case getType(disableSearch):
-      return INITIAL_STATE;
-
     case getType(searchMessagesEnabled):
       return {
         ...state,
@@ -51,6 +48,9 @@ const reducer = (
 
     case getType(updateSearchText):
       return { ...state, searchText: action.payload };
+
+    case getType(disableSearch):
+      return INITIAL_STATE;
 
     default:
       return state;

@@ -1,18 +1,17 @@
 import React from "react";
 import { createStore } from "redux";
-
-import { Access } from "../../../../../../definitions/fims_history/Access";
 import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
+import { Access } from "../../../../../../definitions/fims_history/Access";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { FIMS_ROUTES } from "../../../common/navigation";
 import {
   FimsHistoryBaseListItemProps,
   FimsHistoryFailureListItem,
   FimsHistorySuccessListItem,
   FimsHistorySuccessListItemProps
 } from "../FimsHistoryListItems";
+import { FIMS_ROUTES } from "../../../common/navigation";
 
 const mockServiceDetails = { organization: { name: "TEST" } } as ServiceDetails;
 const mockAccess: Access = {
@@ -47,8 +46,8 @@ describe("FimsHistoryListItems", () => {
 });
 
 type ListItemProps =
-  | FimsHistoryBaseListItemProps
-  | FimsHistorySuccessListItemProps;
+  | FimsHistorySuccessListItemProps
+  | FimsHistoryBaseListItemProps;
 const renderComponent = (
   componentProps: ListItemProps,
   Component: React.ComponentType<any>

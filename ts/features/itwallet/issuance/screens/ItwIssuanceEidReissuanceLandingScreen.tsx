@@ -1,7 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback } from "react";
-
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import {
   IOStackNavigationProp,
@@ -38,6 +37,13 @@ export const ItwIssuanceEidReissuanceLandingScreen = () => {
   if (hasValidEid) {
     return (
       <OperationResultScreenContent
+        title={I18n.t(
+          "features.itWallet.reissuanceLandingScreen.notNecessary.title"
+        )}
+        subtitle={I18n.t(
+          "features.itWallet.reissuanceLandingScreen.notNecessary.subtitle"
+        )}
+        pictogram="success"
         action={{
           label: I18n.t(
             "features.itWallet.reissuanceLandingScreen.notNecessary.primaryAction"
@@ -48,17 +54,10 @@ export const ItwIssuanceEidReissuanceLandingScreen = () => {
               params: { newMethodAdded: false }
             })
         }}
-        pictogram="success"
         secondaryAction={{
           label: I18n.t("global.buttons.cancel"),
           onPress: () => navigation.goBack()
         }}
-        subtitle={I18n.t(
-          "features.itWallet.reissuanceLandingScreen.notNecessary.subtitle"
-        )}
-        title={I18n.t(
-          "features.itWallet.reissuanceLandingScreen.notNecessary.title"
-        )}
       />
     );
   }
@@ -70,6 +69,13 @@ export const ItwIssuanceEidReissuanceLandingScreen = () => {
   if (canActivateItWallet && !isItWalletValid) {
     return (
       <OperationResultScreenContent
+        title={I18n.t(
+          "features.itWallet.reissuanceLandingScreen.itWalletActivation.title"
+        )}
+        subtitle={I18n.t(
+          "features.itWallet.reissuanceLandingScreen.itWalletActivation.subtitle"
+        )}
+        pictogram="itWallet"
         action={{
           label: I18n.t(
             "features.itWallet.reissuanceLandingScreen.itWalletActivation.primaryAction"
@@ -80,17 +86,10 @@ export const ItwIssuanceEidReissuanceLandingScreen = () => {
               params: { level: "l3" }
             })
         }}
-        pictogram="itWallet"
         secondaryAction={{
           label: I18n.t("global.buttons.cancel"),
           onPress: () => navigation.goBack()
         }}
-        subtitle={I18n.t(
-          "features.itWallet.reissuanceLandingScreen.itWalletActivation.subtitle"
-        )}
-        title={I18n.t(
-          "features.itWallet.reissuanceLandingScreen.itWalletActivation.title"
-        )}
       />
     );
   }

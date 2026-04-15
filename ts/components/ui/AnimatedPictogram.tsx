@@ -18,13 +18,11 @@ import {
   useSharedValue
 } from "react-native-reanimated";
 
-import accessDenied from "../../../assets/animated-pictograms/AccessDenied.json";
-import accessDeniedDark from "../../../assets/animated-pictograms/AccessDeniedDark.json";
-import attention from "../../../assets/animated-pictograms/Attention.json";
-import attentionDark from "../../../assets/animated-pictograms/AttentionDark.json";
 /* Animated Pictograms */
 import empty from "../../../assets/animated-pictograms/Empty.json";
 import emptyDark from "../../../assets/animated-pictograms/EmptyDark.json";
+import accessDenied from "../../../assets/animated-pictograms/AccessDenied.json";
+import accessDeniedDark from "../../../assets/animated-pictograms/AccessDeniedDark.json";
 import fatalError from "../../../assets/animated-pictograms/FatalError.json";
 import fatalErrorDark from "../../../assets/animated-pictograms/FatalErrorDark.json";
 import lock from "../../../assets/animated-pictograms/Lock.json";
@@ -41,6 +39,8 @@ import umbrella from "../../../assets/animated-pictograms/Umbrella.json";
 import umbrellaDark from "../../../assets/animated-pictograms/UmbrellaDark.json";
 import waiting from "../../../assets/animated-pictograms/Waiting.json";
 import waitingDark from "../../../assets/animated-pictograms/WaitingDark.json";
+import attention from "../../../assets/animated-pictograms/Attention.json";
+import attentionDark from "../../../assets/animated-pictograms/AttentionDark.json";
 import welcome from "../../../assets/animated-pictograms/Welcome.json";
 import welcomeDark from "../../../assets/animated-pictograms/WelcomeDark.json";
 
@@ -77,17 +77,17 @@ export const IOAnimatedPictogramsAssetsDark: Record<
   welcome: welcomeDark
 } as const;
 
+export type IOAnimatedPictograms = keyof typeof IOAnimatedPictogramsAssets;
+
 export type AnimatedPictogram = {
-  loop?: boolean;
   name: IOAnimatedPictograms;
   size: IOPictogramSizeScale;
+  loop?: boolean;
 };
-
-export type IOAnimatedPictograms = keyof typeof IOAnimatedPictogramsAssets;
 
 const pictogramsMap: Record<
   IOAnimatedPictograms,
-  { loop: boolean; static: IOPictograms }
+  { static: IOPictograms; loop: boolean }
 > = {
   welcome: { static: "hello", loop: false },
   empty: { static: "empty", loop: false },

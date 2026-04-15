@@ -1,5 +1,4 @@
 import I18n from "i18next";
-
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard.ts";
@@ -17,12 +16,12 @@ const RevocationLoadingScreen = () => {
 
   return (
     <LoadingScreenContent
-      subtitle={I18n.t(
-        "features.itWallet.walletRevocation.loadingScreen.subtitle"
-      )}
       title={I18n.t("features.itWallet.walletRevocation.loadingScreen.title", {
         name: isItwL3 ? "IT-Wallet" : "Documenti su IO"
       })}
+      subtitle={I18n.t(
+        "features.itWallet.walletRevocation.loadingScreen.subtitle"
+      )}
     />
   );
 };
@@ -41,6 +40,11 @@ export const ItwLifecycleWalletRevocationScreen = () => {
 
   return (
     <OperationResultScreenContent
+      pictogram="attention"
+      title={I18n.t("features.itWallet.walletRevocation.confirmScreen.title")}
+      subtitle={I18n.t(
+        "features.itWallet.walletRevocation.confirmScreen.subtitle"
+      )}
       action={{
         label: I18n.t(
           "features.itWallet.walletRevocation.confirmScreen.action"
@@ -50,16 +54,11 @@ export const ItwLifecycleWalletRevocationScreen = () => {
         ),
         onPress: handleRevokeWalletInstance
       }}
-      pictogram="attention"
       secondaryAction={{
         label: I18n.t("global.buttons.cancel"),
         accessibilityLabel: I18n.t("global.buttons.cancel"),
         onPress: () => machineRef.send({ type: "close" })
       }}
-      subtitle={I18n.t(
-        "features.itWallet.walletRevocation.confirmScreen.subtitle"
-      )}
-      title={I18n.t("features.itWallet.walletRevocation.confirmScreen.title")}
     />
   );
 };

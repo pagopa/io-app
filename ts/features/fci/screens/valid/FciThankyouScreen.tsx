@@ -1,10 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
-
 import { TypeEnum as ClauseTypeEnum } from "../../../../../definitions/fci/Clause";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { getNetworkErrorMessage, NetworkError } from "../../../../utils/errors";
 import {
   trackFciDocSignatureFailure,
   trackFciDocSignatureFailureAction,
@@ -19,8 +17,9 @@ import {
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
 import { fciSignatureSelector } from "../../store/reducers/fciSignature";
-import { fciSignatureRequestIdSelector } from "../../store/reducers/fciSignatureRequest";
 import { getClausesCountByTypes } from "../../utils/signatureFields";
+import { fciSignatureRequestIdSelector } from "../../store/reducers/fciSignatureRequest";
+import { getNetworkErrorMessage, NetworkError } from "../../../../utils/errors";
 
 const FciThankyouScreen = () => {
   const fciCreateSignatureSelector = useIOSelector(fciSignatureSelector);
@@ -33,7 +32,7 @@ const FciThankyouScreen = () => {
     <LoadingComponent testID={"FciTypLoadingScreenTestID"} />
   );
 
-  const ErrorComponent = ({ error }: { error: Error | NetworkError }) => {
+  const ErrorComponent = ({ error }: { error: NetworkError | Error }) => {
     // eslint-disable-next-line functional/no-let
     let errorMessage: string;
     if ("kind" in error) {
@@ -44,7 +43,8 @@ const FciThankyouScreen = () => {
     trackFciDocSignatureFailure(errorMessage);
     return (
       <SignatureStatusComponent
-        assistance={true}
+        title={I18n.t("features.fci.errors.generic.signing.title")}
+        subTitle={I18n.t("features.fci.errors.generic.signing.subTitle")}
         onPress={() => {
           trackFciDocSignatureFailureAction(
             errorMessage,
@@ -55,6 +55,10 @@ const FciThankyouScreen = () => {
             dispatch(fciSignatureRequestRetryFromId(signatureRequestId));
           }
         }}
+        pictogram={"umbrella"}
+        retry={true}
+        assistance={true}
+        testID="FciTypErrorScreenTestID"
         onPressAssistance={() => {
           trackFciDocSignatureFailureAction(
             errorMessage,
@@ -62,27 +66,22 @@ const FciThankyouScreen = () => {
             I18n.t("features.fci.errors.buttons.assistance")
           );
         }}
-        pictogram={"umbrella"}
-        retry={true}
-        subTitle={I18n.t("features.fci.errors.generic.signing.subTitle")}
-        testID="FciTypErrorScreenTestID"
-        title={I18n.t("features.fci.errors.generic.signing.title")}
       />
     );
   };
 
   const SuccessComponent = () => (
     <OperationResultScreenContent
+      isHeaderVisible={false}
+      title={I18n.t("features.fci.thankYouPage.title")}
+      subtitle={I18n.t("features.fci.thankYouPage.content")}
+      pictogram={"success"}
+      testID={"FciTypSuccessTestID"}
       action={{
         onPress: () => dispatch(fciEndRequest()),
         label: I18n.t("features.fci.thankYouPage.cta"),
         testID: "FciTypCloseButton"
       }}
-      isHeaderVisible={false}
-      pictogram={"success"}
-      subtitle={I18n.t("features.fci.thankYouPage.content")}
-      testID={"FciTypSuccessTestID"}
-      title={I18n.t("features.fci.thankYouPage.title")}
     />
   );
 

@@ -21,7 +21,6 @@ import I18n from "i18next";
 import { JSX } from "react";
 import { StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
-
 import { TransactionBarCodeResponse } from "../../../../../definitions/idpay/TransactionBarCodeResponse";
 import { TransactionErrorDTO } from "../../../../../definitions/idpay/TransactionErrorDTO";
 import { useIOSelector } from "../../../../store/hooks";
@@ -34,15 +33,15 @@ import {
   trackIDPayStaticCodeGenerationSuccess
 } from "../analytics";
 
-type IDPayFailureSupportModal = {
-  bottomSheet: JSX.Element;
-  present: () => void;
-};
-
 type Props = {
   initiativeId: string;
   initiativeName: string;
   onDismiss: () => void;
+};
+
+type IDPayFailureSupportModal = {
+  bottomSheet: JSX.Element;
+  present: () => void;
 };
 
 export const useIDPayStaticCodeModal = (
@@ -69,36 +68,36 @@ export const useIDPayStaticCodeModal = (
   const StaticCodeSkeleton = () => (
     <View testID="idpay-static-code-skeleton">
       <IOSkeleton
-        height={h2FontSize}
-        radius={4}
         shape="rectangle"
         width="80%"
+        height={h2FontSize}
+        radius={4}
       />
       <VSpacer size={16} />
       <IOSkeleton
-        height={bodyFontSize}
-        radius={4}
         shape="rectangle"
         width="100%"
+        height={bodyFontSize}
+        radius={4}
       />
       <VSpacer size={8} />
       <IOSkeleton
-        height={bodyFontSize}
-        radius={4}
         shape="rectangle"
         width="75%"
+        height={bodyFontSize}
+        radius={4}
       />
       <VSpacer size={24} />
       <View style={styles.barcodeContainer}>
         <IconPlaceholder />
-        <IOSkeleton height={120} radius={4} shape="rectangle" width="100%" />
+        <IOSkeleton shape="rectangle" width="100%" height={120} radius={4} />
         <VSpacer size={12} />
         <View style={{ alignItems: "center" }}>
           <IOSkeleton
-            height={h3FontSize}
-            radius={4}
             shape="rectangle"
             width="50%"
+            height={h3FontSize}
+            radius={4}
           />
         </View>
       </View>
@@ -129,8 +128,8 @@ export const useIDPayStaticCodeModal = (
             <IOText
               color={theme["textBody-default"]}
               font="FiraCode"
-              lineHeight={h3LineHeight}
               size={h3FontSize}
+              lineHeight={h3LineHeight}
               weight="Medium"
             >
               {barcode.trxCode}
@@ -204,6 +203,7 @@ export const useIDPayStaticCodeModal = (
           <ContentWrapper>
             <IOButton
               fullWidth
+              variant="solid"
               label={I18n.t(
                 "idpay.initiative.beneficiaryDetails.staticCodeModal.footer"
               )}
@@ -214,7 +214,6 @@ export const useIDPayStaticCodeModal = (
                 });
                 clipboardSetStringWithFeedback(barcode.trxCode);
               }}
-              variant="solid"
             />
             <VSpacer size={32} />
           </ContentWrapper>

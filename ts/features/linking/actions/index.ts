@@ -5,5 +5,5 @@ export const storeLinkingUrl =
 export const clearLinkingUrl = createStandardAction("CLEAR_LINKING_URL")();
 
 export type BackgroundLinkingActions = ActionType<
-  typeof clearLinkingUrl | typeof storeLinkingUrl
+  typeof storeLinkingUrl | typeof clearLinkingUrl
 >;
