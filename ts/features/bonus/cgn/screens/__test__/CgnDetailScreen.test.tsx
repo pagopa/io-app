@@ -133,8 +133,10 @@ describe("CgnDetailScreen", () => {
     const discountCTA = getByText(I18n.t("bonus.cgn.detail.cta.discover"));
     expect(discountCTA).toBeTruthy();
     fireEvent.press(discountCTA);
-    // Merchant screen title used to verify that the navigation to the merchant screen is working 
-    expect(getByText(I18n.t("bonus.cgn.merchantsList.screenTitle"))).toBeTruthy();
+    // Merchant screen title used to verify that the navigation to the merchant screen is working
+    expect(
+      getByText(I18n.t("bonus.cgn.merchantsList.screenTitle"))
+    ).toBeTruthy();
   });
 
   it("should render profile name on footer if provided", () => {
