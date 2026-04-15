@@ -175,9 +175,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
 });
 
 const styles = StyleSheet.create({
-  idWrapper: {
-    marginHorizontal: 8
-  },
+  idWrapper: {},
   cardsWrapper: {
     marginHorizontal: -8
   }

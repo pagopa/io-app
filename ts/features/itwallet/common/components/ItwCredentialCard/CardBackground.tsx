@@ -18,14 +18,67 @@ import Animated, {
   withTiming
 } from "react-native-reanimated";
 import { useIOSelector } from "../../../../../store/hooks";
-import { adjustColorHsl, hexToHsl } from "../../../../../utils/color";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { CredentialType } from "../../utils/itwMocksUtils";
+import {
+  CardBackgroundConfig,
+  getCredentialCardConfig
+} from "./credentialCardConfig";
 import { CardColorScheme } from "./types";
 
 type ItwCredentialCardBackgroundProps = {
   credentialType: string;
   colorScheme: CardColorScheme;
+};
+
+/**
+ * Computes the Skia LinearGradient start/end vectors for a given angle
+ * (CSS convention: 0° = bottom→top, 90° = left→right) and canvas dimensions.
+ * The resulting line passes through the center and is long enough to cover
+ * all four corners of the rectangle.
+ */
+const getGradientVectors = (
+  angle: number,
+  width: number,
+  height: number
+): { start: ReturnType<typeof vec>; end: ReturnType<typeof vec> } => {
+  const rad = (angle * Math.PI) / 180;
+  const dx = Math.sin(rad);
+  const dy = -Math.cos(rad);
+  const cx = width / 2;
+  const cy = height / 2;
+  // Minimum half-length that covers every corner when projected on the direction
+  const d = Math.abs(cx * dx) + Math.abs(cy * dy);
+  return {
+    start: vec(cx - dx * d, cy - dy * d),
+    end: vec(cx + dx * d, cy + dy * d)
+  };
+};
+
+const L3Background = ({
+  bg,
+  width,
+  height
+}: {
+  bg: CardBackgroundConfig;
+  width: number;
+  height: number;
+}) => {
+  if (bg.type === "solid") {
+    return <Rect x={0} y={0} width={width} height={height} color={bg.color} />;
+  }
+
+  const { start, end } = getGradientVectors(bg.angle, width, height);
+  return (
+    <Rect x={0} y={0} width={width} height={height}>
+      <LinearGradient
+        start={start}
+        end={end}
+        colors={bg.colors}
+        positions={bg.positions}
+      />
+    </Rect>
+  );
 };
 
 export const CardBackground = ({
@@ -51,9 +104,9 @@ export const CardBackground = ({
     }
   }, [image, loadingOverlayOpacity, size, withL3Design]);
 
-  const gradientColors = withL3Design
-    ? credentialGradientColors[credentialType]
-    : legacyCredentialGradientColors[credentialType];
+  const config = getCredentialCardConfig(credentialType);
+  const legacyGradientColors = legacyCredentialGradientColors[credentialType];
+  const SvgLayer = withL3Design ? config.svgLayer : undefined;
 
   return (
     <View
@@ -91,15 +144,11 @@ export const CardBackground = ({
             )}
           </Image>
         ) : withL3Design ? (
-          <Rect x={0} y={0} width={size.width} height={size.height}>
-            <LinearGradient
-              start={vec(0, 0)}
-              end={vec(size.width, size.height)}
-              colors={
-                gradientColors ?? [IOColors["grey-100"], IOColors["grey-200"]]
-              }
-            />
-          </Rect>
+          <L3Background
+            bg={config.background}
+            width={size.width}
+            height={size.height}
+          />
         ) : (
           <RoundedRect
             x={0}
@@ -112,12 +161,20 @@ export const CardBackground = ({
               start={vec(0, 0)}
               end={vec(size.width, size.height)}
               colors={
-                gradientColors ?? [IOColors["grey-100"], IOColors["grey-200"]]
+                legacyGradientColors ?? [
+                  IOColors["grey-100"],
+                  IOColors["grey-200"]
+                ]
               }
             />
           </RoundedRect>
         )}
       </Canvas>
+      {SvgLayer && (
+        <View style={StyleSheet.absoluteFillObject} pointerEvents="none">
+          <SvgLayer width="100%" height="100%" />
+        </View>
+      )}
     </View>
   );
 };
@@ -135,59 +192,3 @@ const legacyCredentialGradientColors: { [type: string]: Array<string> } = {
   [CredentialType.EDUCATION_DIPLOMA]: ["#F2F1CE", "#ECECEC"],
   [CredentialType.EDUCATION_ATTENDANCE]: ["#F2F1CE", "#ECECEC"]
 };
-
-// Gradient colors per credential type.
-// Convention: first color is the darker/more saturated one — it is used as
-// the base for auto-deriving border and title colors.
-export const credentialGradientColors: { [type: string]: Array<string> } = {
-  [CredentialType.PID]: ["#EAF6FF", "#F6FBFF"],
-  [CredentialType.DRIVING_LICENSE]: ["#F0CFDF", "#FAF0F5"],
-  [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: ["#C5E2F5", "#EBF6FD"],
-  [CredentialType.EUROPEAN_DISABILITY_CARD]: ["#C8DFF0", "#E8F3FA"],
-  [CredentialType.EDUCATION_DEGREE]: ["#F2F1CE", "#ECECEC"],
-  [CredentialType.EDUCATION_ENROLLMENT]: ["#E0F2CE", "#ECECEC"],
-  [CredentialType.RESIDENCY]: ["#F2E4CE", "#ECECEC"]
-};
-
-// Returns the darker of the two gradient colors (lower HSL lightness),
-// used as the base for deriving border and title colors.
-const getDarkerGradientColor = (colors: Array<string>): string => {
-  const { l: l0 } = hexToHsl(colors[0]);
-  const { l: l1 } = hexToHsl(colors[1]);
-  return l0 <= l1 ? colors[0] : colors[1];
-};
-
-export const credentialBackgroundColors: { [type: string]: string } =
-  Object.fromEntries(
-    Object.entries(credentialGradientColors).map(([type, colors]) => [
-      type,
-      getDarkerGradientColor(colors)
-    ])
-  );
-
-// Border and title colors are automatically derived from the darker gradient
-// color using HSL adjustments that preserve the original hue:
-//   border: L -0.2765, S -0.1991
-//   title:  L -0.6627, S -0.2248
-const derivedColors = Object.fromEntries(
-  Object.entries(credentialGradientColors).map(([type]) => {
-    const base = credentialBackgroundColors[type];
-    return [
-      type,
-      {
-        border: adjustColorHsl(base, -0.2765, -0.1991),
-        title: adjustColorHsl(base, -0.6627, -0.2248)
-      }
-    ];
-  })
-);
-
-export const credentialBorderColors: { [type: string]: string } =
-  Object.fromEntries(
-    Object.entries(derivedColors).map(([type, c]) => [type, c.border])
-  );
-
-export const credentialTitleColors: { [type: string]: string } =
-  Object.fromEntries(
-    Object.entries(derivedColors).map(([type, c]) => [type, c.title])
-  );

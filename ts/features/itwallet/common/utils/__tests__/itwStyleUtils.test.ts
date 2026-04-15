@@ -6,8 +6,7 @@ describe("getThemeColorByCredentialType", () => {
     expect(
       getThemeColorByCredentialType(
         CredentialType.DRIVING_LICENSE,
-        false,
-        "#FFFFFF"
+        false
       )
     ).toEqual({
       backgroundColor: "#744C63",
@@ -19,7 +18,7 @@ describe("getThemeColorByCredentialType", () => {
 
   it("should use the redesigned PID palette when L3 is enabled", () => {
     expect(
-      getThemeColorByCredentialType(CredentialType.PID, true, "#FFFFFF")
+      getThemeColorByCredentialType(CredentialType.PID, true)
     ).toEqual({
       backgroundColor: "#EAF6FF",
       textColor: "#115486",

@@ -4,14 +4,10 @@ import { StatusBarStyle } from "react-native";
 import { HeaderSecondLevelHookProps } from "../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../store/hooks";
 import { getLuminance } from "../../../../utils/color";
-import {
-  credentialBackgroundColors,
-  credentialTitleColors
-} from "../components/ItwCredentialCard/CardBackground";
+import { getCredentialCardConfig, getCredentialBackgroundColor } from "../components/ItwCredentialCard/credentialCardConfig";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { getCredentialNameFromType } from "./itwCredentialUtils";
 import { CredentialType } from "./itwMocksUtils";
-import { useItWalletTheme } from "./theme";
 
 export type CredentialTheme = {
   backgroundColor: string;
@@ -72,14 +68,13 @@ const getLegacyThemeColorByCredentialType = (
 
 export const getThemeColorByCredentialType = (
   credentialType: string,
-  withL3Design: boolean,
-  themedBackgroundColor: string
+  withL3Design: boolean
 ): CredentialTheme => {
+  const cardConfig = getCredentialCardConfig(credentialType);
   const colors = withL3Design
     ? {
-        backgroundColor:
-          credentialBackgroundColors[credentialType] ?? themedBackgroundColor,
-        textColor: credentialTitleColors[credentialType] ?? IOColors.black
+        backgroundColor: getCredentialBackgroundColor(cardConfig),
+        textColor: cardConfig.titleColor
       }
     : getLegacyThemeColorByCredentialType(credentialType);
 
@@ -95,17 +90,11 @@ export const getThemeColorByCredentialType = (
 export const useThemeColorByCredentialType = (
   credentialType: string
 ): CredentialTheme => {
-  const theme = useItWalletTheme();
   const withL3Design = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   return useMemo(
-    () =>
-      getThemeColorByCredentialType(
-        credentialType,
-        withL3Design,
-        theme["header-background"]
-      ),
-    [credentialType, theme, withL3Design]
+    () => getThemeColorByCredentialType(credentialType, withL3Design),
+    [credentialType, withL3Design]
   );
 };
 

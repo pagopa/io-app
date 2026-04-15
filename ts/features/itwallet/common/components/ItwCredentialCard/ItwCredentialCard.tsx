@@ -25,11 +25,8 @@ import { itwShouldUpgradeCredentialSelector } from "../../store/selectors";
 import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
 import { CredentialType } from "../../utils/itwMocksUtils";
 import { ItWalletIdLogo } from "../ItWalletIdLogo";
-import {
-  CardBackground,
-  credentialBorderColors,
-  credentialTitleColors
-} from "./CardBackground";
+import { CardBackground } from "./CardBackground";
+import { getCredentialCardConfig } from "./credentialCardConfig";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
 import { CardColorScheme } from "./types";
 
@@ -79,6 +76,7 @@ export const ItwCredentialCard = ({
   const theme = useThemeColorByCredentialType(credentialType);
   const withL3Design = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const borderColorMap = useBorderColorByStatus();
+  const cardConfig = getCredentialCardConfig(credentialType);
 
   const statusTagProps = useMemo<Tag | undefined>(() => {
     if (needsItwUpgrade) {
@@ -96,7 +94,7 @@ export const ItwCredentialCard = ({
     // should not appear faded. Only the "expired" status should be displayed with reduced opacity.
     const isValid = [...validCredentialStatuses, "jwtExpired"].includes(status);
     const baseColor = withL3Design
-      ? credentialTitleColors[credentialType] ?? theme.textColor
+      ? cardConfig.titleColor
       : theme.textColor;
 
     if (needsItwUpgrade) {
@@ -128,12 +126,9 @@ export const ItwCredentialCard = ({
       titleOpacity: 0.5,
       colorScheme: "faded"
     };
-  }, [withL3Design, theme, credentialType, status, needsItwUpgrade]);
+  }, [withL3Design, theme, cardConfig, status, needsItwUpgrade]);
 
-  const hasCredentialBorderColor =
-    withL3Design &&
-    status === "valid" &&
-    !!credentialBorderColors[credentialType];
+  const hasCredentialBorderColor = withL3Design && status === "valid";
 
   const appBackgroundColor = IOColors[ioTheme["appBackground-primary"]];
 
@@ -155,7 +150,7 @@ export const ItwCredentialCard = ({
           <HStack space={16}>
             {credentialType === CredentialType.PID && withL3Design ? (
               <View style={{ flex: 1 }}>
-                <ItWalletIdLogo width={103} height={24} />
+                <ItWalletIdLogo width={130} height={30} />
               </View>
             ) : (
               <IOText
@@ -185,18 +180,19 @@ export const ItwCredentialCard = ({
             )}
           </HStack>
         </View>
-        <DigitalVersionBadge
-          credentialType={credentialType}
-          colorScheme={colorScheme}
-        />
+        {!withL3Design && (
+          <DigitalVersionBadge
+            credentialType={credentialType}
+            colorScheme={colorScheme}
+          />
+        )}
         <View
           style={[
             styles.border,
             {
               borderColor:
                 withL3Design && status === "valid"
-                  ? credentialBorderColors[credentialType] ??
-                    borderColorMap[status]
+                  ? cardConfig.borderColor
                   : borderColorMap[status]
             }
           ]}
