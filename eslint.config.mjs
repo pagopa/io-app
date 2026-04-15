@@ -130,14 +130,12 @@ export default defineConfig([
 
       // GENERAL JS SAFETY
       "no-case-declarations": "off",
-      "no-inner-declarations": "off",
       "no-underscore-dangle": "error",
       "no-throw-literal": "error",
       "no-console": "error",
       "no-caller": "error",
       "no-void": "off",
       "no-duplicate-imports": "error",
-      "no-unused-expressions": "off",
 
       // TYPESCRIPT
       "@typescript-eslint/no-unused-vars": "off",
