@@ -1,7 +1,7 @@
 import {
+  CredentialMetadata,
   ItwCredentialStatus,
-  ItwJwtCredentialStatus,
-  StoredCredential
+  ItwJwtCredentialStatus
 } from "../../../common/utils/itwTypesUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 
@@ -57,7 +57,7 @@ export const getItwDisplayCredentialStatus = (
 };
 
 export const shouldShowMdlUpdateDigitalCredential = (
-  credential: StoredCredential,
+  credential: CredentialMetadata,
   status?: ItwCredentialStatus
 ) => {
   if (credential.credentialType !== CredentialType.DRIVING_LICENSE) {
