@@ -191,10 +191,8 @@ export default defineConfig([
 
       // REACT NATIVE
       "react-native/no-unused-styles": "error",
-      "react-native/split-platform-components": "off",
       "react-native/no-inline-styles": "off",
       "react-native/no-color-literals": "error",
-      "react-native/no-raw-text": "off",
       "react-native/no-single-element-style-arrays": "warn",
 
       // ACCESSIBILITY
