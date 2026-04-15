@@ -1,12 +1,11 @@
 /* eslint-disable no-console */
-import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { exec } from "child_process";
-import * as E from "fp-ts/lib/Either";
-import { pipe } from "fp-ts/lib/function";
-import { Errors } from "io-ts";
-import * as semver from "semver";
 import * as util from "util";
-
+import * as E from "fp-ts/lib/Either";
+import { Errors } from "io-ts";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+import * as semver from "semver";
+import { pipe } from "fp-ts/lib/function";
 import { slackPostMessage } from "../common/slack/postMessage";
 import { generateSlackMessage } from "./generateSlackMessage";
 import { initOutdatedStats } from "./types/defaultValues";

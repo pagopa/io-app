@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 import * as fs from "fs-extra";
-
 import { slackPostMessage } from "../common/slack/postMessage";
 
 const destinationChannel = "#prod_io";

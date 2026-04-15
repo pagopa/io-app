@@ -1,10 +1,12 @@
 const keyOfGroupBySeverity = ["major", "minor", "patch", "unknown"] as const;
+type KeyOfGroupBySeverity = (typeof keyOfGroupBySeverity)[number];
+
 /**
  * Group the outdated library, grouped by severity
  */
-export type GroupBySeverity = Record<KeyOfGroupBySeverity, number>;
-
-type KeyOfGroupBySeverity = (typeof keyOfGroupBySeverity)[number];
+export type GroupBySeverity = {
+  [k in KeyOfGroupBySeverity]: number;
+};
 
 /**
  * Return true if at least one of the severity type is !== 0
@@ -17,7 +19,7 @@ export const anyOutdated = (severity: GroupBySeverity) =>
  * Convert a string to {@link KeyOfGroupBySeverity},  in order to be used in a typesafe way
  * @param plain
  */
-export const getSeverityType = (plain: null | string): KeyOfGroupBySeverity => {
+export const getSeverityType = (plain: string | null): KeyOfGroupBySeverity => {
   if (
     plain !== null &&
     keyOfGroupBySeverity.includes(plain as KeyOfGroupBySeverity)
