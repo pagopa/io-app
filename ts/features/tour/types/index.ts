@@ -1,3 +1,7 @@
+export type TourCutoutStyle = {
+  cornerRadius?: number;
+};
+
 export type TourItem = { groupId: string; index: number };
 
 export type TourItemMeasurement = {

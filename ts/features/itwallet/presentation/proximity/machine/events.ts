@@ -57,8 +57,14 @@ export type ProximityEvents =
   | DeviceDocumentRequestReceived
   | DeviceError
   | Dismiss
+  | QrCodeString
   | Retry
   | Start;
+
+export type QrCodeString = {
+  payload: string;
+  type: "qr-code-string";
+};
 
 export type Retry = {
   type: "retry";

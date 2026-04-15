@@ -8,9 +8,9 @@ import { SendAarActivateNfcScreen } from "../aar/screen/SendAarActivateNfcScreen
 import { SendAarCanEducationalScreen } from "../aar/screen/SendAarCanEducationalScreen";
 import { SendAarCieCanInsertionScreen } from "../aar/screen/SendAarCieCanInsertionScreen";
 import { SendAarCieCardReadingEducationalScreen } from "../aar/screen/SendAarCieCardReadingEducationalScreen";
-import { SendAARCieCardReadingScreen } from "../aar/screen/SendAARCieCardReadingScreen";
+import { SendAarCieCardReadingScreen } from "../aar/screen/SendAarCieCardReadingScreen";
 import { SendAarDelegationProposalScreen } from "../aar/screen/SendAarDelegationProposalScreen";
-import { SendAARErrorScreen } from "../aar/screen/SendAARErrorScreen";
+import { SendAarErrorScreen } from "../aar/screen/SendAarErrorScreen";
 import { SendEngagementScreen } from "../aar/screen/SendEngagementScreen";
 import { SendQRScanFlowScreen } from "../aar/screen/SendQRScanFlowScreen";
 import { SendActivationErrorScreen } from "../loginEngagement/screens/SendActivationErrorScreen";
@@ -81,7 +81,7 @@ export const PnStackNavigator = () => (
         name={PN_ROUTES.QR_SCAN_FLOW}
       />
       <Stack.Screen
-        component={SendAARErrorScreen}
+        component={SendAarErrorScreen}
         name={PN_ROUTES.SEND_AAR_ERROR}
         options={hiddenHeader}
       />
@@ -103,7 +103,7 @@ export const PnStackNavigator = () => (
         name={PN_ROUTES.SEND_AAR_CIE_CARD_READING_EDUCATIONAL}
       />
       <Stack.Screen
-        component={SendAARCieCardReadingScreen}
+        component={SendAarCieCardReadingScreen}
         name={PN_ROUTES.SEND_AAR_CIE_CARD_READING}
         options={hiddenHeader}
       />

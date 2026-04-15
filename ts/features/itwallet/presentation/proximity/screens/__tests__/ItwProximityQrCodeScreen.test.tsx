@@ -5,6 +5,7 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { ProximityFailureType } from "../../machine/failure";
 import { itwProximityMachine } from "../../machine/machine";
 import { ItwProximityMachineContext } from "../../machine/provider";
 import { ItwPresentationTags } from "../../machine/tags";
@@ -90,7 +91,7 @@ const buildSnapshot = (
     case "blocked":
       return {
         ...initialSnapshot,
-        value: { DeviceCommunication: "DisplayQrCode" },
+        value: { Presentation: "DisplayQrCode" },
         tags: new Set([ItwPresentationTags.Presenting]),
         context: {
           ...initialSnapshot.context,
@@ -101,7 +102,7 @@ const buildSnapshot = (
     case "displayQrCode":
       return {
         ...initialSnapshot,
-        value: { DeviceCommunication: "DisplayQrCode" },
+        value: { Presentation: "DisplayQrCode" },
         tags: new Set([ItwPresentationTags.Presenting]),
         context: {
           ...initialSnapshot.context,
@@ -112,18 +113,21 @@ const buildSnapshot = (
     case "error":
       return {
         ...initialSnapshot,
-        value: { GenerateQRCode: "QRCodeGenerationError" },
-        tags: new Set([ItwPresentationTags.Presenting]),
+        value: { Presentation: "Starting" },
+        tags: new Set([ItwPresentationTags.Loading]),
         context: {
           ...initialSnapshot.context,
-          isQRCodeGenerationError: true
+          failure: {
+            type: ProximityFailureType.UNEXPECTED,
+            reason: new Error("test error")
+          }
         }
       };
 
     case "loading":
       return {
         ...initialSnapshot,
-        value: { GenerateQRCode: "StartingProximityFlow" },
+        value: { Presentation: "Starting" },
         tags: new Set([ItwPresentationTags.Loading]),
         context: { ...initialSnapshot.context }
       };

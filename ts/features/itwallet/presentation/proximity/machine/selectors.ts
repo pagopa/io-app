@@ -1,4 +1,3 @@
-import * as O from "fp-ts/Option";
 import { StateFrom } from "xstate";
 
 import { ItwProximityMachine } from "./machine";
@@ -21,24 +20,21 @@ export const selectIsBluetoothRequiredState = (snapshot: MachineSnapshot) =>
 export const selectQRCodeString = (snapshot: MachineSnapshot) =>
   snapshot.context.qrCodeString;
 
-export const selectIsQRCodeGenerationError = (snapshot: MachineSnapshot) =>
-  !!snapshot.context.isQRCodeGenerationError;
-
 export const selectShouldPresentQRCodeBottomSheet = (
   snapshot: MachineSnapshot
 ) => snapshot.hasTag(ItwPresentationTags.Presenting);
 
-export const selectFailureOption = (snapshot: MachineSnapshot) =>
-  O.fromNullable(snapshot.context.failure);
+export const selectFailure = (snapshot: MachineSnapshot) =>
+  snapshot.context.failure;
 
 export const selectProximityDetails = (snapshot: MachineSnapshot) =>
   snapshot.context.proximityDetails;
 
 export const isInitialLoadingSelector = (snapshot: MachineSnapshot) =>
-  snapshot.matches({ DeviceCommunication: { SendingDocuments: "Initial" } });
+  snapshot.matches({ Presentation: { SendingDocuments: "Initial" } });
 
 export const isReminderLoadingSelector = (snapshot: MachineSnapshot) =>
-  snapshot.matches({ DeviceCommunication: { SendingDocuments: "Reminder" } });
+  snapshot.matches({ Presentation: { SendingDocuments: "Reminder" } });
 
 export const hasGivenConsentSelector = (snapshot: MachineSnapshot) =>
   snapshot.context.hasGivenConsent;

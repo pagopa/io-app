@@ -50,7 +50,7 @@ export const CieInternalAuthMrtdScreen = () => {
   const [event, setEvent] = useState<NfcEvent>();
   const [challenge, setChallenge] = useState<string>("");
   const [can, setCan] = useState<string>("");
-  const [aar, setAAR] = useState<string>("");
+  const [aar, setAar] = useState<string>("");
 
   const [isBase64Encoding, setIsBase64Encoding] = useState(false);
   const [useSENDChallenge, setUseSENDChallenge] = useState(false);
@@ -198,7 +198,7 @@ export const CieInternalAuthMrtdScreen = () => {
               <TextInput
                 accessibilityLabel="AAR"
                 disabled={false}
-                onChangeText={setAAR}
+                onChangeText={setAar}
                 placeholder={"AAR"}
                 value={aar}
               />

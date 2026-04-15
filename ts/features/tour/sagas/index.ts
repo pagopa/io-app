@@ -1,7 +1,12 @@
 import { put, select, takeEvery } from "typed-redux-saga/macro";
-import { getType } from "typesafe-actions";
 
-import { completeTourAction, nextTourStepAction } from "../store/actions";
+import { isTestEnv } from "../../../utils/environment";
+import { trackTourGuideAction } from "../analytics";
+import {
+  completeTourAction,
+  nextTourStepAction,
+  startTourAction
+} from "../store/actions";
 import {
   activeGroupIdSelector,
   activeStepIndexSelector,
@@ -9,7 +14,8 @@ import {
 } from "../store/selectors";
 
 export function* watchTourSaga() {
-  yield* takeEvery(getType(nextTourStepAction), handleNextStep);
+  yield* takeEvery(startTourAction, handleStartTour);
+  yield* takeEvery(nextTourStepAction, handleNextStep);
 }
 
 function* handleNextStep() {
@@ -21,3 +27,11 @@ function* handleNextStep() {
     yield* put(completeTourAction({ groupId }));
   }
 }
+
+function* handleStartTour(action: ReturnType<typeof startTourAction>) {
+  yield trackTourGuideAction(action.payload.groupId, "shown");
+}
+
+export const testable = isTestEnv
+  ? { handleStartTour, handleNextStep }
+  : undefined;

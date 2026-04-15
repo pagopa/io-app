@@ -6,7 +6,7 @@ import { isPnTestEnabledSelector } from "../../../../../store/reducers/persisted
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
 import {
   aarProblemJsonAnalyticsReport,
-  trackSendAARFailure,
+  trackSendAarFailure,
   trackSendAarMandateRetryError
 } from "../../analytics";
 import { setAarFlowState } from "../../store/actions";
@@ -14,7 +14,7 @@ import {
   testable as errorMappingsTestable,
   getAarErrorBehaviour
 } from "../../utils/aarErrorMappings";
-import { sendAARFlowStates } from "../../utils/stateUtils";
+import { sendAarFlowStates } from "../../utils/stateUtils";
 import {
   sendAarMockStateFactory,
   sendAarMockStates
@@ -34,7 +34,7 @@ describe("createAarMandateSaga", () => {
   });
 
   sendAarMockStates
-    .filter(state => state.type !== sendAARFlowStates.creatingMandate)
+    .filter(state => state.type !== sendAarFlowStates.creatingMandate)
     .forEach(state => {
       it(`should early exit and track failure if not in creatingMandate state -- state: ${state.type}`, () => {
         testSaga(
@@ -45,7 +45,7 @@ describe("createAarMandateSaga", () => {
         )
           .next()
           .call(
-            trackSendAARFailure,
+            trackSendAarFailure,
             "Create Mandate",
             `Called in wrong state (${state.type})`,
             undefined
@@ -69,11 +69,11 @@ describe("createAarMandateSaga", () => {
       .next(false)
       .call(withRefreshApiCall, createAarMandateMock(), mockAction)
       .next(failureDecodingResponse)
-      .call(trackSendAARFailure, "Create Mandate", failureReason, undefined)
+      .call(trackSendAarFailure, "Create Mandate", failureReason, undefined)
       .next()
       .put(
         setAarFlowState({
-          type: sendAARFlowStates.ko,
+          type: sendAarFlowStates.ko,
           previousState: currentState,
           debugData: {
             phase: "Create Mandate",
@@ -140,11 +140,11 @@ describe("createAarMandateSaga", () => {
       .next(true)
       .call(withRefreshApiCall, createAarMandateMock(), mockAction)
       .next(mandateResponse)
-      .call(trackSendAARFailure, "Create Mandate", errorReason, undefined)
+      .call(trackSendAarFailure, "Create Mandate", errorReason, undefined)
       .next()
       .put(
         setAarFlowState({
-          type: sendAARFlowStates.ko,
+          type: sendAarFlowStates.ko,
           previousState: currentState,
           debugData: {
             phase: "Create Mandate",
@@ -173,7 +173,7 @@ describe("createAarMandateSaga", () => {
       .call(withRefreshApiCall, createAarMandateMock(), mockAction)
       .next(mandateResponse)
       .call(
-        trackSendAARFailure,
+        trackSendAarFailure,
         "Create Mandate",
         "Fast login expiration",
         undefined
@@ -208,7 +208,7 @@ describe("createAarMandateSaga", () => {
         .next(true)
         .call(withRefreshApiCall, createAarMandateMock(), mockAction)
         .next(mandateResponse)
-        .call(trackSendAARFailure, "Create Mandate", errorReason, responseValue)
+        .call(trackSendAarFailure, "Create Mandate", errorReason, responseValue)
         .next()
         .call(getAarErrorBehaviour, responseValue)
         .next(aarGenericBehaviour)
@@ -216,7 +216,7 @@ describe("createAarMandateSaga", () => {
         .next()
         .put(
           setAarFlowState({
-            type: sendAARFlowStates.ko,
+            type: sendAarFlowStates.ko,
             previousState: currentState,
             error: responseValue,
             debugData: {
@@ -258,7 +258,7 @@ describe("createAarMandateSaga", () => {
       .next(true)
       .call(withRefreshApiCall, createAarMandateMock(), mockAction)
       .next(mandateResponse)
-      .call(trackSendAARFailure, "Create Mandate", errorReason, responseValue)
+      .call(trackSendAarFailure, "Create Mandate", errorReason, responseValue)
       .next()
       .call(getAarErrorBehaviour, responseValue)
       .next(specificBehavioursByStatus[409][errorCode])
@@ -266,7 +266,7 @@ describe("createAarMandateSaga", () => {
       .next()
       .put(
         setAarFlowState({
-          type: sendAARFlowStates.ko,
+          type: sendAarFlowStates.ko,
           previousState: currentState,
           error: responseValue,
           debugData: {

@@ -1,9 +1,4 @@
-import {
-  Banner,
-  ListItemHeader,
-  VSpacer,
-  VStack
-} from "@pagopa/io-app-design-system";
+import { ListItemHeader, VStack } from "@pagopa/io-app-design-system";
 
 import { CredentialType } from "../../itwallet/common/utils/itwMocksUtils";
 import { WalletCardsCategoryContainer } from "../../wallet/components/WalletCardsCategoryContainer";
@@ -99,7 +94,7 @@ export const DSWallet = () => {
       ...acc,
       [card.category]: [...(acc[card.category] || []), card]
     }),
-    {} as Record<WalletCardCategory, ReadonlyArray<WalletCard>>
+    {} as { [category in WalletCardCategory]: ReadonlyArray<WalletCard> }
   );
 
   const blockMargin = 48;
@@ -108,36 +103,21 @@ export const DSWallet = () => {
     <DesignSystemScreen title={"Wallet"}>
       <VStack space={blockMargin}>
         <DesignSystemSection title="With Documenti su IO">
-          <WalletCardsCategoryContainer
-            cards={cardsByCategory.itw}
-            header={
-              <ListItemHeader
-                iconColor="blueIO-500"
-                iconName="legalValue"
-                label="Documenti"
-              />
-            }
+          <ListItemHeader
+            iconColor="blueIO-500"
+            iconName="legalValue"
+            label="Documenti"
           />
+          <WalletCardsCategoryContainer cards={cardsByCategory.itw} />
+          <ListItemHeader label="Altro" />
           <WalletCardsCategoryContainer
             cards={[
               ...cardsByCategory.payment,
               ...cardsByCategory.cgn,
               ...cardsByCategory.bonus
             ]}
-            header={<ListItemHeader label="Altro" />}
-            topElement={
-              <>
-                <Banner
-                  color="turquoise"
-                  content="Categories can have a top element!"
-                  pictogramName="idea"
-                />
-                <VSpacer size={16} />
-              </>
-            }
           />
         </DesignSystemSection>
-
         <DesignSystemSection title="Without Documenti su IO">
           <WalletCardsCategoryContainer
             cards={[

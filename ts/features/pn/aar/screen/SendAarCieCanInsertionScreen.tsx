@@ -1,23 +1,34 @@
-import { OTPInput, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, OTPInput, VSpacer, VStack } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import i18n from "i18next";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Keyboard, KeyboardAvoidingView, Platform, View } from "react-native";
+import {
+  Image,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  View
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
+import cieCanEducationalSource from "../../../../../img/features/pn/cieCanEducational.png";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useHardwareBackButtonWhenFocused } from "../../../../hooks/useHardwareBackButton";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { PnParamsList } from "../../navigation/params";
 import PN_ROUTES from "../../navigation/routes";
 import { trackSendAarMandateCieCanEnter } from "../analytics";
 import { setAarFlowState } from "../store/actions";
-import { currentAARFlowData } from "../store/selectors";
-import { sendAARFlowStates } from "../utils/stateUtils";
+import {
+  aarAdresseeDenominationSelector,
+  currentAarFlowData
+} from "../store/selectors";
+import { sendAarFlowStates } from "../utils/stateUtils";
 
 export const CIE_CAN_LENGTH = 6;
 
@@ -26,25 +37,30 @@ export type SendAarCieCanInsertionScreenProps = IOStackNavigationRouteProps<
   typeof PN_ROUTES.SEND_AAR_CIE_CAN_INSERTION
 >;
 
+const { width, height, uri } = Image.resolveAssetSource(
+  cieCanEducationalSource
+);
+const aspectRatio = width / height;
+
 export const SendAarCieCanInsertionScreen = ({
   navigation
 }: SendAarCieCanInsertionScreenProps) => {
   const dispatch = useIODispatch();
   const [can, setCan] = useState("");
   const canPadViewRef = useRef<View>(null);
-  const currentAarState = useIOSelector(currentAARFlowData);
+  const currentAarState = useIOSelector(currentAarFlowData);
   const headerHeight = useHeaderHeight();
   const isFocused = useIsFocused();
 
   useEffect(() => {
     switch (currentAarState.type) {
-      case sendAARFlowStates.cieCanAdvisory: {
+      case sendAarFlowStates.cieCanAdvisory: {
         navigation.replace(PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL, {
           animationTypeForReplace: "pop"
         });
         break;
       }
-      case sendAARFlowStates.cieScanningAdvisory: {
+      case sendAarFlowStates.cieScanningAdvisory: {
         navigation.replace(PN_ROUTES.SEND_AAR_CIE_CARD_READING_EDUCATIONAL, {
           animationTypeForReplace: "push"
         });
@@ -73,14 +89,14 @@ export const SendAarCieCanInsertionScreen = ({
 
       if (
         value.length === CIE_CAN_LENGTH &&
-        currentAarState.type === sendAARFlowStates.cieCanInsertion
+        currentAarState.type === sendAarFlowStates.cieCanInsertion
       ) {
         Keyboard.dismiss();
 
         dispatch(
           setAarFlowState({
             ...currentAarState,
-            type: sendAARFlowStates.cieScanningAdvisory,
+            type: sendAarFlowStates.cieScanningAdvisory,
             can: value
           })
         );
@@ -90,11 +106,11 @@ export const SendAarCieCanInsertionScreen = ({
   );
 
   const handleGoBack = useCallback(() => {
-    if (currentAarState.type === sendAARFlowStates.cieCanInsertion) {
+    if (currentAarState.type === sendAarFlowStates.cieCanInsertion) {
       dispatch(
         setAarFlowState({
           ...currentAarState,
-          type: sendAARFlowStates.cieCanAdvisory
+          type: sendAarFlowStates.cieCanAdvisory
         })
       );
     }
@@ -104,6 +120,42 @@ export const SendAarCieCanInsertionScreen = ({
     handleGoBack();
     return true;
   });
+
+  const denomination = useIOSelector(aarAdresseeDenominationSelector);
+
+  const CanLocationBottomSheetContent = () => (
+    <VStack space={24}>
+      <Body>
+        {i18n.t("features.pn.aar.flow.cieCanInsertion.bottomSheet.info", {
+          denomination
+        })}
+      </Body>
+      <Image
+        accessibilityIgnoresInvertColors
+        source={{
+          uri
+        }}
+        style={{
+          aspectRatio
+        }}
+      />
+    </VStack>
+  );
+
+  const { bottomSheet, present: presentCanLocationBottomSheet } =
+    useIOBottomSheetModal({
+      title: i18n.t("features.pn.aar.flow.cieCanInsertion.bottomSheet.title"),
+      component: <CanLocationBottomSheetContent />
+    });
+
+  const handleDescriptionLinkPress = useCallback(
+    (url: string) => {
+      if (url === "internal://can-location") {
+        presentCanLocationBottomSheet();
+      }
+    },
+    [presentCanLocationBottomSheet]
+  );
 
   return (
     <SafeAreaView edges={["bottom"]} style={{ flex: 1 }}>
@@ -131,6 +183,7 @@ export const SendAarCieCanInsertionScreen = ({
           goBack={handleGoBack}
           headerActionsProp={{ showHelp: true }}
           includeContentMargins
+          onDescriptionLinkPress={handleDescriptionLinkPress}
           title={{
             label: i18n.t("features.pn.aar.flow.cieCanInsertion.title")
           }}
@@ -153,6 +206,7 @@ export const SendAarCieCanInsertionScreen = ({
           />
         </IOScrollViewWithLargeHeader>
       </KeyboardAvoidingView>
+      {bottomSheet}
     </SafeAreaView>
   );
 };

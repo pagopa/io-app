@@ -1,5 +1,4 @@
 import { WithTestID } from "@pagopa/io-app-design-system";
-import { useMemo } from "react";
 import { Platform, StyleSheet } from "react-native";
 import Animated, {
   FadeInDown,
@@ -11,10 +10,7 @@ import { WalletCard } from "../types";
 import { renderWalletCardFn } from "../utils";
 
 export type WalletCardsCategoryContainerProps = WithTestID<{
-  bottomElement?: React.ReactElement;
   cards: ReadonlyArray<WalletCard>;
-  header?: React.ReactElement;
-  topElement?: React.ReactElement;
 }>;
 
 // The item layout animation has a bug on Android for a FlatList that doesn't have a fixed height [https://github.com/software-mansion/react-native-reanimated/issues/5728]
@@ -30,55 +26,26 @@ const itemLayoutAnimation =
  */
 export const WalletCardsCategoryContainer = ({
   cards,
-  header,
-  topElement,
-  bottomElement,
   testID
-}: WalletCardsCategoryContainerProps) => {
-  const headerComponent = useMemo(
-    () => (
-      <>
-        {header}
-        {topElement}
-      </>
-    ),
-    [header, topElement]
-  );
-
-  return (
-    <Animated.FlatList
-      contentContainerStyle={styles.container}
-      data={cards}
-      entering={FadeInDown.duration(150)}
-      exiting={FadeOutDown.duration(150)}
-      itemLayoutAnimation={itemLayoutAnimation}
-      layout={LinearTransition.duration(200)}
-      ListFooterComponent={bottomElement}
-      ListFooterComponentStyle={styles.listFooter}
-      ListHeaderComponent={headerComponent}
-      ListHeaderComponentStyle={styles.listHeader}
-      renderItem={({ index, item }) =>
-        renderWalletCardFn(item, index < cards.length - 1)
-      }
-      scrollEnabled={false}
-      style={styles.cardList}
-      testID={testID}
-    />
-  );
-};
+}: WalletCardsCategoryContainerProps) => (
+  <Animated.FlatList
+    contentContainerStyle={styles.container}
+    data={cards}
+    entering={FadeInDown.duration(150)}
+    exiting={FadeOutDown.duration(150)}
+    itemLayoutAnimation={itemLayoutAnimation}
+    layout={LinearTransition.duration(200)}
+    renderItem={({ index, item }) =>
+      renderWalletCardFn(item, index < cards.length - 1)
+    }
+    scrollEnabled={false}
+    testID={testID}
+  />
+);
 
 const styles = StyleSheet.create({
   container: {
     display: "flex",
     flexDirection: "column"
-  },
-  listHeader: {
-    marginHorizontal: 8
-  },
-  listFooter: {
-    marginHorizontal: 8
-  },
-  cardList: {
-    marginHorizontal: -8
   }
 });

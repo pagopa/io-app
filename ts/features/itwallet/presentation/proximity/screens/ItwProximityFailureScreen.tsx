@@ -1,6 +1,4 @@
 import { Body, VSpacer } from "@pagopa/io-app-design-system";
-import { constNull, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 
 import {
@@ -16,19 +14,15 @@ import { trackItwProximityUnofficialVerifierBottomSheet } from "../analytics/ind
 import { useItwProximityEventsTracking } from "../hooks/useItwProximityEventsTracking";
 import { ProximityFailure, ProximityFailureType } from "../machine/failure.ts";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
-import { selectFailureOption } from "../machine/selectors.ts";
+import { selectFailure } from "../machine/selectors.ts";
 
 export const ItwProximityFailureScreen = () => {
-  const failureOption =
-    ItwProximityMachineContext.useSelector(selectFailureOption);
+  const failure = ItwProximityMachineContext.useSelector(selectFailure);
 
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
-  return pipe(
-    failureOption,
-    O.fold(constNull, failure => <ContentView failure={failure} />)
-  );
+  return !!failure && <ContentView failure={failure} />;
 };
 
 type ContentViewProps = { failure: ProximityFailure };

@@ -7,14 +7,14 @@ import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils
 import { unknownToReason } from "../../../messages/utils";
 import {
   aarProblemJsonAnalyticsReport,
-  trackSendAARFailure
+  trackSendAarFailure
 } from "../analytics";
-import { SendAARClient } from "../api/client";
+import { SendAarClient } from "../api/client";
 import { testAarAcceptMandate, testAarCreateMandate } from "../store/actions";
 import { sendMandateIdSelector } from "../store/reducers/tempAarMandate";
 
 export function* testAarAcceptMandateSaga(
-  sendAARClient: SendAARClient,
+  sendAarClient: SendAarClient,
   sessionToken: string,
   action: ReturnType<typeof testAarAcceptMandate.request>
 ) {
@@ -23,7 +23,7 @@ export function* testAarAcceptMandateSaga(
     if (mandateId == null) {
       throw Error(`Accept mandate: nullish mandateid (${mandateId})`);
     }
-    const acceptAarMandateRequest = sendAARClient.acceptAARMandate({
+    const acceptAarMandateRequest = sendAarClient.acceptAARMandate({
       Bearer: `Bearer ${sessionToken}`,
       mandateId,
       body: {
@@ -44,7 +44,7 @@ export function* testAarAcceptMandateSaga(
     const result = (yield* call(
       withRefreshApiCall,
       acceptAarMandateRequest
-    )) as unknown as SagaCallReturnType<typeof sendAARClient.acceptAARMandate>;
+    )) as unknown as SagaCallReturnType<typeof sendAarClient.acceptAARMandate>;
 
     if (E.isLeft(result)) {
       const reason = `Accept mandate decoding failure (${readableReportSimplified(
@@ -65,24 +65,24 @@ export function* testAarAcceptMandateSaga(
           status,
           value
         )})`;
-        yield* call(trackSendAARFailure, "Playground", reason, value);
+        yield* call(trackSendAarFailure, "Playground", reason, value);
         yield* put(testAarAcceptMandate.failure(reason));
         return;
     }
   } catch (e) {
     const reason = unknownToReason(e);
-    yield* call(trackSendAARFailure, "Playground", reason, undefined);
+    yield* call(trackSendAarFailure, "Playground", reason, undefined);
     yield* put(testAarAcceptMandate.failure(reason));
   }
 }
 
 export function* testAarCreateMandateSaga(
-  sendAARClient: SendAARClient,
+  sendAarClient: SendAarClient,
   sessionToken: string,
   action: ReturnType<typeof testAarCreateMandate.request>
 ) {
   try {
-    const createAARMandateRequest = sendAARClient.createAARMandate({
+    const createAarMandateRequest = sendAarClient.createAARMandate({
       Bearer: `Bearer ${sessionToken}`,
       body: {
         aarQrCodeValue: action.payload
@@ -91,8 +91,8 @@ export function* testAarCreateMandateSaga(
     });
     const result = (yield* call(
       withRefreshApiCall,
-      createAARMandateRequest
-    )) as unknown as SagaCallReturnType<typeof sendAARClient.createAARMandate>;
+      createAarMandateRequest
+    )) as unknown as SagaCallReturnType<typeof sendAarClient.createAARMandate>;
 
     if (E.isLeft(result)) {
       const reason = `Create mandate decoding failure (${readableReportSimplified(
@@ -113,13 +113,13 @@ export function* testAarCreateMandateSaga(
           status,
           value
         )})`;
-        yield* call(trackSendAARFailure, "Playground", reason, value);
+        yield* call(trackSendAarFailure, "Playground", reason, value);
         yield* put(testAarCreateMandate.failure(reason));
         return;
     }
   } catch (e) {
     const reason = unknownToReason(e);
-    yield* call(trackSendAARFailure, "Playground", reason, undefined);
+    yield* call(trackSendAarFailure, "Playground", reason, undefined);
     yield* put(testAarCreateMandate.failure(reason));
   }
 }

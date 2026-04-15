@@ -12,7 +12,7 @@ export const walletPaymentSetCurrentStep = createStandardAction(
 )<WalletPaymentStepEnum>();
 
 export type OnPaymentSuccessAction =
-  | "showAARMessage"
+  | "showAarMessage"
   | "showHome"
   | "showTransaction";
 

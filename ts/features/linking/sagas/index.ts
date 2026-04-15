@@ -6,7 +6,7 @@ import {
 } from "../../../utils/deepLinkUtils";
 import { cgnEycaStatus } from "../../bonus/cgn/store/actions/eyca/details";
 import { initiateAarFlow } from "../../pn/aar/store/actions";
-import { isSendAARLink } from "../../pn/aar/utils/deepLinking";
+import { isSendAarLink } from "../../pn/aar/utils/deepLinking";
 import { walletUpdate } from "../../wallet/store/actions";
 import { clearLinkingUrl } from "../actions";
 import { trackIOOpenedFromUniversalAppLink } from "../analytics";
@@ -16,8 +16,8 @@ export function* handleStoredLinkingUrlIfNeeded() {
   const storedLinkingUrl = yield* select(storedLinkingUrlSelector);
   if (storedLinkingUrl !== undefined) {
     trackIOOpenedFromUniversalAppLink(storedLinkingUrl);
-    const shouldNavigateToAAR = yield* select(isSendAARLink, storedLinkingUrl);
-    if (shouldNavigateToAAR) {
+    const shouldNavigateToAar = yield* select(isSendAarLink, storedLinkingUrl);
+    if (shouldNavigateToAar) {
       yield* put(clearLinkingUrl());
       yield* put(initiateAarFlow({ aarUrl: storedLinkingUrl }));
 

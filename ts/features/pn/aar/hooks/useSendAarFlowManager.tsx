@@ -4,13 +4,13 @@ import { useCallback } from "react";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { PnParamsList } from "../../navigation/params";
-import { trackSendAARToSAccepted } from "../analytics";
+import { trackSendAarToSAccepted } from "../analytics";
 import { setAarFlowState, terminateAarFlow } from "../store/actions";
-import { currentAARFlowData } from "../store/selectors";
+import { currentAarFlowData } from "../store/selectors";
 import {
-  AARFlowState,
+  AarFlowState,
   maybeIunFromAarFlowState,
-  sendAARFlowStates
+  sendAarFlowStates
 } from "../utils/stateUtils";
 
 export type SendAarFlowHandlerType = {
@@ -18,7 +18,7 @@ export type SendAarFlowHandlerType = {
 };
 
 type SendAarFlowManager = {
-  currentFlowData: AARFlowState;
+  currentFlowData: AarFlowState;
   goToNextState: () => void;
   terminateFlow: () => void;
 };
@@ -26,7 +26,7 @@ type SendAarFlowManager = {
 export const useSendAarFlowManager = (): SendAarFlowManager => {
   const navigation = useNavigation<IOStackNavigationProp<PnParamsList>>();
   const dispatch = useIODispatch();
-  const currentFlowData = useIOSelector(currentAARFlowData);
+  const currentFlowData = useIOSelector(currentAarFlowData);
 
   const handleTerminateFlow = useCallback(() => {
     dispatch(
@@ -37,11 +37,11 @@ export const useSendAarFlowManager = (): SendAarFlowManager => {
 
   const goToNextState = () => {
     switch (currentFlowData.type) {
-      case sendAARFlowStates.displayingAARToS:
-        trackSendAARToSAccepted();
+      case sendAarFlowStates.displayingAarToS:
+        trackSendAarToSAccepted();
         dispatch(
           setAarFlowState({
-            type: sendAARFlowStates.fetchingQRData,
+            type: sendAarFlowStates.fetchingQRData,
             qrCode: currentFlowData.qrCode
           })
         );

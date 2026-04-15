@@ -4,7 +4,7 @@ import { createClient } from "../../../../../definitions/pn/aar/client";
 import { KeyInfo } from "../../../lollipop/utils/crypto";
 import { lollipopFetch } from "../../../lollipop/utils/fetch";
 
-export const createSendAARClientWithLollipop = (
+export const createSendAarClientWithLollipop = (
   baseUrl: string,
   keyInfo: KeyInfo = {}
 ) =>
@@ -13,4 +13,4 @@ export const createSendAARClientWithLollipop = (
     fetchApi: lollipopFetch({ nonce: uuid() }, keyInfo)
   });
 
-export type SendAARClient = ReturnType<typeof createSendAARClientWithLollipop>;
+export type SendAarClient = ReturnType<typeof createSendAarClientWithLollipop>;

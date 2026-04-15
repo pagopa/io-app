@@ -10,8 +10,8 @@ import {
 } from "../../analytics";
 import * as NFC_HOOK from "../../hooks/useIsNfcFeatureEnabled";
 import { setAarFlowState } from "../../store/actions";
-import * as AAR_SELECTOR from "../../store/selectors";
-import { sendAARFlowStates } from "../../utils/stateUtils";
+import * as Aar_SELECTOR from "../../store/selectors";
+import { sendAarFlowStates } from "../../utils/stateUtils";
 import {
   sendAarMockStateFactory,
   sendAarMockStates
@@ -54,7 +54,7 @@ const mockAndroidNfcActivationState =
 describe("SendAarActivateNfcComponent", () => {
   it("should match the snapshot", () => {
     jest
-      .spyOn(AAR_SELECTOR, "currentAARFlowData")
+      .spyOn(Aar_SELECTOR, "currentAarFlowData")
       .mockReturnValue(mockAndroidNfcActivationState);
     const component = render(<SendAarActivateNfcComponent />);
 
@@ -66,7 +66,7 @@ describe("SendAarActivateNfcComponent", () => {
     aarState => {
       beforeAll(() => {
         jest
-          .spyOn(AAR_SELECTOR, "currentAARFlowData")
+          .spyOn(Aar_SELECTOR, "currentAarFlowData")
           .mockReturnValue(aarState);
         jest.spyOn(NFC_HOOK, "useIsNfcFeatureEnabled").mockReturnValue({
           isChecking: false,
@@ -176,11 +176,11 @@ describe("SendAarActivateNfcComponent", () => {
     'Scenario -> NFC ENABLED with state.type = "$type"',
     aarState => {
       const isAndroidNFCActivation =
-        aarState.type === sendAARFlowStates.androidNFCActivation;
+        aarState.type === sendAarFlowStates.androidNFCActivation;
 
       beforeAll(() => {
         jest
-          .spyOn(AAR_SELECTOR, "currentAARFlowData")
+          .spyOn(Aar_SELECTOR, "currentAarFlowData")
           .mockReturnValue(aarState);
         jest.spyOn(NFC_HOOK, "useIsNfcFeatureEnabled").mockReturnValue({
           isChecking: false,
@@ -209,7 +209,7 @@ describe("SendAarActivateNfcComponent", () => {
             expect(mockDispatch).toHaveBeenCalledWith(
               setAarFlowState({
                 ...mockAndroidNfcActivationState,
-                type: sendAARFlowStates.cieScanning
+                type: sendAarFlowStates.cieScanning
               })
             );
           } else {

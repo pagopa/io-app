@@ -18,7 +18,7 @@ import {
   trackSendQRCodeScanRedirectConfirmed,
   trackSendQRCodeScanRedirectDismissed
 } from "../analytics";
-import { SendAARInitialFlowScreen } from "../screen/SendAARInitialFlowScreen";
+import { SendAarInitialFlowScreen } from "../screen/SendAarInitialFlowScreen";
 
 export type SendQRScanHandlerScreenProps = {
   aarUrl: string;
@@ -30,7 +30,7 @@ export const SendQRScanFlowHandlerComponent = ({
   const aAREnabled = useIOSelector(isAarRemoteEnabled);
 
   return aAREnabled ? (
-    <SendAARInitialFlowScreen qrCode={aarUrl} />
+    <SendAarInitialFlowScreen qrCode={aarUrl} />
   ) : (
     <SendQrScanRedirect aarUrl={aarUrl} />
   );

@@ -1,4 +1,3 @@
-import * as E from "fp-ts/Either";
 import { SagaIterator } from "redux-saga";
 import { call, put } from "typed-redux-saga/macro";
 
@@ -19,13 +18,13 @@ export function* handleGetWhitelistedStatus(
     const response = yield* call(client.isFiscalCodeWhitelisted, {
       Bearer: sessionToken
     });
-    if (E.isRight(response) && response.right.status === 200) {
+    // eslint-disable-next-line no-underscore-dangle
+    if (response._tag === "Right" && response.right.status === 200) {
       const { whitelisted } = response.right.value;
       yield* put(itwSetFiscalCodeWhitelisted(whitelisted));
-    } else {
-      yield* put(itwSetFiscalCodeWhitelisted(false));
     }
+    // Non-200 responses (e.g. BE downtime): preserve the last known persisted value.
   } catch (e) {
-    yield* put(itwSetFiscalCodeWhitelisted(false));
+    // Network/unexpected errors: preserve the last known persisted value.
   }
 }

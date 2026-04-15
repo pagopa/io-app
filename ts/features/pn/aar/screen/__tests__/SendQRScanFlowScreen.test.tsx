@@ -20,31 +20,31 @@ describe("SendQRScanFlowScreen", () => {
   });
 
   it("should match snapshot when no app update is required", () => {
-    const spiedOnMockedTrackSendAARFailure = jest
-      .spyOn(analytics, "trackSendAARFailure")
+    const spiedOnMockedTrackSendAarFailure = jest
+      .spyOn(analytics, "trackSendAarFailure")
       .mockImplementation();
     jest
       .spyOn(device, "getDeviceAppVersion")
       .mockImplementation(() => "2.0.0.0");
     const screen = renderScreen(mockAarUrl);
     expect(screen.toJSON()).toMatchSnapshot();
-    expect(spiedOnMockedTrackSendAARFailure.mock.calls.length).toBe(0);
+    expect(spiedOnMockedTrackSendAarFailure.mock.calls.length).toBe(0);
   });
   it("should match snapshot when an app update is required", () => {
-    const spiedOnMockedTrackSendAARFailure = jest
-      .spyOn(analytics, "trackSendAARFailure")
+    const spiedOnMockedTrackSendAarFailure = jest
+      .spyOn(analytics, "trackSendAarFailure")
       .mockImplementation();
     jest
       .spyOn(device, "getDeviceAppVersion")
       .mockImplementation(() => "1.0.0.0");
     const screen = renderScreen(mockAarUrl);
     expect(screen.toJSON()).toMatchSnapshot();
-    expect(spiedOnMockedTrackSendAARFailure.mock.calls.length).toBe(1);
-    expect(spiedOnMockedTrackSendAARFailure.mock.calls[0].length).toBe(3);
-    expect(spiedOnMockedTrackSendAARFailure.mock.calls[0][0]).toBe(
+    expect(spiedOnMockedTrackSendAarFailure.mock.calls.length).toBe(1);
+    expect(spiedOnMockedTrackSendAarFailure.mock.calls[0].length).toBe(3);
+    expect(spiedOnMockedTrackSendAarFailure.mock.calls[0][0]).toBe(
       "Entry Point"
     );
-    expect(spiedOnMockedTrackSendAARFailure.mock.calls[0][1]).toBe(
+    expect(spiedOnMockedTrackSendAarFailure.mock.calls[0][1]).toBe(
       "App update required"
     );
   });

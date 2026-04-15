@@ -3,7 +3,7 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import { withAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";
 import { PnParamsList } from "../../navigation/params";
 import PN_ROUTES from "../../navigation/routes";
-import { trackSendAARFailure } from "../analytics";
+import { trackSendAarFailure } from "../analytics";
 import { SendQRScanFlowHandlerComponent } from "../components/SendQRScanFlowHandlerComponent";
 
 export type SendQRScanFlowScreenProps = {
@@ -21,7 +21,7 @@ export const SendQRScanFlowScreen = () => {
     "send",
     {
       onLanding: () =>
-        trackSendAARFailure("Entry Point", "App update required", undefined),
+        trackSendAarFailure("Entry Point", "App update required", undefined),
       onConfirm: () => undefined
     }
   );

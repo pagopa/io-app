@@ -15,7 +15,7 @@ import {
   lollipopPublicKeySelector
 } from "../../../lollipop/store/reducers/lollipop";
 import { KeyInfo } from "../../../lollipop/utils/crypto";
-import { downloadAARAttachmentSaga } from "../../../pn/aar/saga/downloadAARAttachmentSaga";
+import { downloadAarAttachmentSaga } from "../../../pn/aar/saga/downloadAarAttachmentSaga";
 import { mockPdfAttachment } from "../../__mocks__/attachment";
 import * as analytics from "../../analytics";
 import {
@@ -70,7 +70,7 @@ describe("handleDownloadAttachment", () => {
         .call(getKeyInfo)
         .next(keyInfo)
         .call(testable!.computeThirdPartyMessageData, messageId)
-        .next({ ephemeralAARThirdPartyMessage: false, mandateId: undefined })
+        .next({ ephemeralAarThirdPartyMessage: false, mandateId: undefined })
         .race({
           polling: call(
             testable!.downloadAttachmentWorker,
@@ -79,7 +79,7 @@ describe("handleDownloadAttachment", () => {
             downloadAttachmentRequest
           ),
           cancelAction: take(cancelPreviousAttachmentDownload)
-        } as unknown as Record<string, Effect>)
+        } as unknown as { [key: string]: Effect })
         .next(cancelPreviousAttachmentDownload())
         .isDone();
     });
@@ -91,7 +91,7 @@ describe("handleDownloadAttachment", () => {
         .call(getKeyInfo)
         .next(keyInfo)
         .call(testable!.computeThirdPartyMessageData, messageId)
-        .next({ ephemeralAARThirdPartyMessage: false, mandateId: undefined })
+        .next({ ephemeralAarThirdPartyMessage: false, mandateId: undefined })
         .race({
           polling: call(
             testable!.downloadAttachmentWorker,
@@ -100,7 +100,7 @@ describe("handleDownloadAttachment", () => {
             downloadAttachmentRequest
           ),
           cancelAction: take(cancelPreviousAttachmentDownload)
-        } as unknown as Record<string, Effect>)
+        } as unknown as { [key: string]: Effect })
         .next({ polling: true })
         .isDone();
     });
@@ -112,17 +112,17 @@ describe("handleDownloadAttachment", () => {
         .call(getKeyInfo)
         .next(keyInfo)
         .call(testable!.computeThirdPartyMessageData, messageId)
-        .next({ ephemeralAARThirdPartyMessage: true, mandateId })
+        .next({ ephemeralAarThirdPartyMessage: true, mandateId })
         .race({
           polling: call(
-            downloadAARAttachmentSaga,
+            downloadAarAttachmentSaga,
             sessionToken,
             keyInfo,
             mandateId,
             downloadAttachmentRequest
           ),
           cancelAction: take(cancelPreviousAttachmentDownload)
-        } as unknown as Record<string, Effect>)
+        } as unknown as { [key: string]: Effect })
         .next(cancelPreviousAttachmentDownload())
         .isDone();
     });
@@ -134,17 +134,17 @@ describe("handleDownloadAttachment", () => {
         .call(getKeyInfo)
         .next(keyInfo)
         .call(testable!.computeThirdPartyMessageData, messageId)
-        .next({ ephemeralAARThirdPartyMessage: true, mandateId })
+        .next({ ephemeralAarThirdPartyMessage: true, mandateId })
         .race({
           polling: call(
-            downloadAARAttachmentSaga,
+            downloadAarAttachmentSaga,
             sessionToken,
             keyInfo,
             mandateId,
             downloadAttachmentRequest
           ),
           cancelAction: take(cancelPreviousAttachmentDownload)
-        } as unknown as Record<string, Effect>)
+        } as unknown as { [key: string]: Effect })
         .next({ polling: true })
         .isDone();
     });
@@ -156,7 +156,7 @@ describe("handleDownloadAttachment", () => {
         .select(thirdPartyMessageSelector, messageId)
         .next(undefined)
         .returns({
-          ephemeralAARThirdPartyMessage: false,
+          ephemeralAarThirdPartyMessage: false,
           mandateId: undefined
         });
     });
@@ -168,7 +168,7 @@ describe("handleDownloadAttachment", () => {
           kind: "TPM"
         })
         .returns({
-          ephemeralAARThirdPartyMessage: false,
+          ephemeralAarThirdPartyMessage: false,
           mandateId: undefined
         });
     });
@@ -180,7 +180,7 @@ describe("handleDownloadAttachment", () => {
           kind: "AAR"
         })
         .returns({
-          ephemeralAARThirdPartyMessage: true,
+          ephemeralAarThirdPartyMessage: true,
           mandateId: undefined
         });
     });
@@ -193,7 +193,7 @@ describe("handleDownloadAttachment", () => {
           mandateId
         })
         .returns({
-          ephemeralAARThirdPartyMessage: true,
+          ephemeralAarThirdPartyMessage: true,
           mandateId
         });
     });

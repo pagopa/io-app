@@ -16,7 +16,7 @@ const managerSpy = jest.spyOn(FLOW_MANAGER, "useSendAarFlowManager");
 const mockOpenWebUrl = jest.spyOn(URL_UTILS, "openWebUrl").mockImplementation();
 const mockDelegateUrl = "https://www.test.io";
 
-describe("SendAARTosComponent", () => {
+describe("SendAarTosComponent", () => {
   const mockGoNextState = jest.fn();
   const mockTerminateFlow = jest.fn();
 
@@ -32,12 +32,12 @@ describe("SendAARTosComponent", () => {
     jest.clearAllMocks();
   });
 
-  it("goes to open url when the button is pressed and calls trackSendAARAccessDeniedDelegateInfo", () => {
+  it("goes to open url when the button is pressed and calls trackSendAarAccessDeniedDelegateInfo", () => {
     jest
-      .spyOn(SELECTORS, "sendAARDelegateUrlSelector")
+      .spyOn(SELECTORS, "sendAarDelegateUrlSelector")
       .mockImplementation(_state => mockDelegateUrl);
-    const spiedOnMockedTrackSendAARAccessDeniedDelegateInfo = jest
-      .spyOn(ANALYTICS, "trackSendAARAccessDeniedDelegateInfo")
+    const spiedOnMockedTrackSendAarAccessDeniedDelegateInfo = jest
+      .spyOn(ANALYTICS, "trackSendAarAccessDeniedDelegateInfo")
       .mockImplementation();
 
     const { getByTestId } = renderComponent();
@@ -50,15 +50,15 @@ describe("SendAARTosComponent", () => {
     expect(mockOpenWebUrl).toHaveBeenCalledWith(mockDelegateUrl);
 
     expect(
-      spiedOnMockedTrackSendAARAccessDeniedDelegateInfo.mock.calls.length
+      spiedOnMockedTrackSendAarAccessDeniedDelegateInfo.mock.calls.length
     ).toBe(1);
     expect(
-      spiedOnMockedTrackSendAARAccessDeniedDelegateInfo.mock.calls[0].length
+      spiedOnMockedTrackSendAarAccessDeniedDelegateInfo.mock.calls[0].length
     ).toBe(0);
   });
-  it("quits out of the flow on secondary button press and calls trackSendAARAccessDeniedDismissed", () => {
-    const spiedOnMockedTrackSendAARAccessDeniedDismissed = jest
-      .spyOn(ANALYTICS, "trackSendAARAccessDeniedDismissed")
+  it("quits out of the flow on secondary button press and calls trackSendAarAccessDeniedDismissed", () => {
+    const spiedOnMockedTrackSendAarAccessDeniedDismissed = jest
+      .spyOn(ANALYTICS, "trackSendAarAccessDeniedDismissed")
       .mockImplementation();
 
     const { getByTestId } = renderComponent();
@@ -69,10 +69,10 @@ describe("SendAARTosComponent", () => {
     expect(mockTerminateFlow).toHaveBeenCalledTimes(1);
 
     expect(
-      spiedOnMockedTrackSendAARAccessDeniedDismissed.mock.calls.length
+      spiedOnMockedTrackSendAarAccessDeniedDismissed.mock.calls.length
     ).toBe(1);
     expect(
-      spiedOnMockedTrackSendAARAccessDeniedDismissed.mock.calls[0].length
+      spiedOnMockedTrackSendAarAccessDeniedDismissed.mock.calls[0].length
     ).toBe(0);
   });
   it("should match snapshot", () => {

@@ -4,7 +4,7 @@ import { MessageBodyMarkdown } from "../../../../../definitions/backend/MessageB
 import { MessageSubject } from "../../../../../definitions/backend/MessageSubject";
 import { ThirdPartyMessage } from "../../../../../definitions/pn/aar/ThirdPartyMessage";
 import { EphemeralAarMessageDataActionPayload } from "../store/actions";
-import { AARFlowState, RecipientInfo, sendAARFlowStates } from "./stateUtils";
+import { AarFlowState, RecipientInfo, sendAarFlowStates } from "./stateUtils";
 
 const iun = "000000000001";
 const recipientInfo: RecipientInfo = {
@@ -18,11 +18,11 @@ const verificationCode = "validation_code";
 const can = "123456";
 
 export const sendAarMockStateFactory: {
-  [K in AARFlowState["type"]]: () => Extract<AARFlowState, { type: K }>;
+  [K in AarFlowState["type"]]: () => Extract<AarFlowState, { type: K }>;
 } = {
   none: () => ({ type: "none" }),
-  displayingAARToS: () => ({
-    type: "displayingAARToS",
+  displayingAarToS: () => ({
+    type: "displayingAarToS",
     qrCode
   }),
   fetchingQRData: () => ({
@@ -133,7 +133,7 @@ export const sendAarMockStateFactory: {
   })
 };
 
-export const sendAarStateNames = Object.values(sendAARFlowStates);
+export const sendAarStateNames = Object.values(sendAarFlowStates);
 export const sendAarMockStates = sendAarStateNames.map(t =>
   sendAarMockStateFactory[t]()
 );

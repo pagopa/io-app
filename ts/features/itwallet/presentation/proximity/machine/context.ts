@@ -7,7 +7,7 @@ import { ProximityFailure } from "./failure";
 
 export type Context = {
   /**
-   * The string used to generate the QR Code
+   * The failure of the proximity presentation machine
    */
   failure?: ProximityFailure;
   /**
@@ -15,11 +15,6 @@ export type Context = {
    * to share their credentials with the Relying Party
    */
   hasGivenConsent?: boolean;
-  /**
-   * A boolean value indicating whether an error occurs
-   * during the `qrCodeString` generation process
-   */
-  isQRCodeGenerationError?: boolean;
   /**
    * The details of the proximity presentation containing the localized claims grouped by credential type
    */

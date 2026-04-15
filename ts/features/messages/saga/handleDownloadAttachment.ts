@@ -19,7 +19,7 @@ import { getError } from "../../../utils/errors";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
 import { getKeyInfo } from "../../lollipop/saga";
 import { KeyInfo } from "../../lollipop/utils/crypto";
-import { downloadAARAttachmentSaga } from "../../pn/aar/saga/downloadAARAttachmentSaga";
+import { downloadAarAttachmentSaga } from "../../pn/aar/saga/downloadAarAttachmentSaga";
 import {
   trackThirdPartyMessageAttachmentBadFormat,
   trackThirdPartyMessageAttachmentDownloadFailed,
@@ -38,7 +38,7 @@ import {
   pdfSavePath,
   restrainRetryAfterIntervalInMilliseconds
 } from "../utils/attachments";
-import { isEphemeralAARThirdPartyMessage } from "../utils/thirdPartyById";
+import { isEphemeralAarThirdPartyMessage } from "../utils/thirdPartyById";
 import { handleRequestInit } from "./handleRequestInit";
 
 /**
@@ -58,7 +58,7 @@ export function* handleDownloadAttachment(
   }
 
   const messageId = action.payload.messageId;
-  const { ephemeralAARThirdPartyMessage, mandateId } = yield* call(
+  const { ephemeralAarThirdPartyMessage, mandateId } = yield* call(
     computeThirdPartyMessageData,
     messageId
   );
@@ -69,9 +69,9 @@ export function* handleDownloadAttachment(
   // and/or which one it is, on PN attachments - or manually by the
   // user on generic attachments).
   yield* race({
-    polling: ephemeralAARThirdPartyMessage
+    polling: ephemeralAarThirdPartyMessage
       ? call(
-          downloadAARAttachmentSaga,
+          downloadAarAttachmentSaga,
           sessionToken,
           keyInfo,
           mandateId,
@@ -85,22 +85,22 @@ export function* handleDownloadAttachment(
 function* computeThirdPartyMessageData(messageId: string): Generator<
   ReduxSagaEffect,
   {
-    ephemeralAARThirdPartyMessage: boolean;
+    ephemeralAarThirdPartyMessage: boolean;
     mandateId: string | undefined;
   }
 > {
   const thirdPartyMessage = yield* select(thirdPartyMessageSelector, messageId);
   if (
     thirdPartyMessage != null &&
-    isEphemeralAARThirdPartyMessage(thirdPartyMessage)
+    isEphemeralAarThirdPartyMessage(thirdPartyMessage)
   ) {
     return {
-      ephemeralAARThirdPartyMessage: true,
+      ephemeralAarThirdPartyMessage: true,
       mandateId: thirdPartyMessage.mandateId
     };
   }
   return {
-    ephemeralAARThirdPartyMessage: false,
+    ephemeralAarThirdPartyMessage: false,
     mandateId: undefined
   };
 }

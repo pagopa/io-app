@@ -29,7 +29,7 @@ import { defaultRetryingFetch } from "../../../../utils/fetch";
 
 const tokenHeaderProducer = ParamAuthorizationBearerHeaderProducer();
 
-const BASE_URL = "/api/v1/cgn";
+const BASE_URL = "/api/cgn-card/v1";
 
 const startCgnActivation: StartCgnActivationT = {
   method: "post",

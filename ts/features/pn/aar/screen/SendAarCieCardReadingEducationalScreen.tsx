@@ -20,9 +20,9 @@ import { useIsNfcFeatureEnabled } from "../hooks/useIsNfcFeatureEnabled";
 import { setAarFlowState } from "../store/actions";
 import {
   aarAdresseeDenominationSelector,
-  currentAARFlowData
+  currentAarFlowData
 } from "../store/selectors";
-import { sendAARFlowStates } from "../utils/stateUtils";
+import { sendAarFlowStates } from "../utils/stateUtils";
 
 const { width, height, uri } = Image.resolveAssetSource(
   cieScanningEducationalSource
@@ -39,23 +39,23 @@ export const SendAarCieCardReadingEducationalScreen = ({
   navigation
 }: SendAarCieCardReadingEducationalScreenProps) => {
   const dispatch = useIODispatch();
-  const currentAarState = useIOSelector(currentAARFlowData);
+  const currentAarState = useIOSelector(currentAarFlowData);
   const denomination = useIOSelector(aarAdresseeDenominationSelector);
   const { isChecking, isNfcEnabled } = useIsNfcFeatureEnabled();
 
   useEffect(() => {
     switch (currentAarState.type) {
-      case sendAARFlowStates.androidNFCActivation: {
+      case sendAarFlowStates.androidNFCActivation: {
         navigation.replace(PN_ROUTES.SEND_AAR_NFC_ACTIVATION);
         break;
       }
-      case sendAARFlowStates.cieCanInsertion: {
+      case sendAarFlowStates.cieCanInsertion: {
         navigation.replace(PN_ROUTES.SEND_AAR_CIE_CAN_INSERTION, {
           animationTypeForReplace: "pop"
         });
         break;
       }
-      case sendAARFlowStates.cieScanning: {
+      case sendAarFlowStates.cieScanning: {
         const { type: _, ...params } = currentAarState;
 
         navigation.replace(PN_ROUTES.SEND_AAR_CIE_CARD_READING, {
@@ -76,11 +76,11 @@ export const SendAarCieCardReadingEducationalScreen = ({
   );
 
   const handleGoBack = () => {
-    if (currentAarState.type === sendAARFlowStates.cieScanningAdvisory) {
+    if (currentAarState.type === sendAarFlowStates.cieScanningAdvisory) {
       dispatch(
         setAarFlowState({
           ...currentAarState,
-          type: sendAARFlowStates.cieCanInsertion
+          type: sendAarFlowStates.cieCanInsertion
         })
       );
     }
@@ -88,15 +88,15 @@ export const SendAarCieCardReadingEducationalScreen = ({
 
   const handleGoNext = async () => {
     trackSendAarMandateCieCardReadingDisclaimerContinue();
-    if (currentAarState.type === sendAARFlowStates.cieScanningAdvisory) {
+    if (currentAarState.type === sendAarFlowStates.cieScanningAdvisory) {
       const isNfcActive = await isNfcEnabled();
 
       dispatch(
         setAarFlowState({
           ...currentAarState,
           type: isNfcActive
-            ? sendAARFlowStates.cieScanning
-            : sendAARFlowStates.androidNFCActivation
+            ? sendAarFlowStates.cieScanning
+            : sendAarFlowStates.androidNFCActivation
         })
       );
     }

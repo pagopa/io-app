@@ -11,7 +11,7 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
 import { SignatureRequestDetailView } from "../../../../definitions/fci/SignatureRequestDetailView";
-import { pnAARQRCodeRegexSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import { pnAarQRCodeRegexSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../store/reducers/types";
 import { decodePosteDataMatrix } from "../../../utils/payment";
 import { selectItwSpecsVersion } from "../../itwallet/common/store/selectors/environment";
@@ -26,16 +26,14 @@ type IOBarcodeRuntimeDecoderFn = (
   data: string
 ) => O.Option<DecodedIOBarcode>;
 
-type IOBarcodeRuntimeDecodersType = Record<
-  RuntimeDecodedIOBarcode["type"],
-  IOBarcodeRuntimeDecoderFn
->;
+type IOBarcodeRuntimeDecodersType = {
+  [K in RuntimeDecodedIOBarcode["type"]]: IOBarcodeRuntimeDecoderFn;
+};
 // Barcode decoder function which is used to determine the type and content of a barcode
 type IOBarcodeStaticDecoderFn = (data: string) => O.Option<DecodedIOBarcode>;
-type IOBarcodeStaticDecodersType = Record<
-  StaticDecodedIOBarcode["type"],
-  IOBarcodeStaticDecoderFn
->;
+type IOBarcodeStaticDecodersType = {
+  [K in StaticDecodedIOBarcode["type"]]: IOBarcodeStaticDecoderFn;
+};
 
 type RuntimeDecodedIOBarcode =
   | {
@@ -157,13 +155,13 @@ const decodeItwRemoteBarcode: IOBarcodeRuntimeDecoderFn = (
     }))
   );
 
-const decodeSENDAARBarcode: IOBarcodeRuntimeDecoderFn = (
+const decodeSENDAarBarcode: IOBarcodeRuntimeDecoderFn = (
   state: GlobalState,
   data: string
 ) =>
   pipe(
     state,
-    pnAARQRCodeRegexSelector,
+    pnAarQRCodeRegexSelector,
     O.fromNullable,
     O.map(aarQRCodeRegexString => new RegExp(aarQRCodeRegexString, "i")),
     O.filter(aarQRCodeRegExp => aarQRCodeRegExp.test(data)),
@@ -190,7 +188,7 @@ const StaticIOBarcodeDecoders: IOBarcodeStaticDecodersType = {
 };
 
 const RuntimeIOBarcodeDecoders: IOBarcodeRuntimeDecodersType = {
-  SEND: decodeSENDAARBarcode,
+  SEND: decodeSENDAarBarcode,
   ITW_REMOTE: decodeItwRemoteBarcode
 };
 

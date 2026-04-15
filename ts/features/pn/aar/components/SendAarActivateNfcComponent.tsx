@@ -14,12 +14,12 @@ import {
 } from "../analytics";
 import { useIsNfcFeatureEnabled } from "../hooks/useIsNfcFeatureEnabled";
 import { setAarFlowState } from "../store/actions";
-import { currentAARFlowData } from "../store/selectors";
-import { sendAARFlowStates } from "../utils/stateUtils";
+import { currentAarFlowData } from "../store/selectors";
+import { sendAarFlowStates } from "../utils/stateUtils";
 
 export const SendAarActivateNfcComponent = () => {
   const dispatch = useIODispatch();
-  const currentAarData = useIOSelector(currentAARFlowData);
+  const currentAarData = useIOSelector(currentAarFlowData);
   const { isNfcEnabled, openNFCSettings } = useIsNfcFeatureEnabled();
 
   const onContinue = useCallback(async () => {
@@ -54,11 +54,11 @@ export const SendAarActivateNfcComponent = () => {
       return;
     }
 
-    if (currentAarData.type === sendAARFlowStates.androidNFCActivation) {
+    if (currentAarData.type === sendAarFlowStates.androidNFCActivation) {
       dispatch(
         setAarFlowState({
           ...currentAarData,
-          type: sendAARFlowStates.cieScanning
+          type: sendAarFlowStates.cieScanning
         })
       );
     }

@@ -2,24 +2,24 @@ import I18n from "i18next";
 
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { useIOSelector } from "../../../../../store/hooks";
-import { sendAARDelegateUrlSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
+import { sendAarDelegateUrlSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { openWebUrl } from "../../../../../utils/url";
 import {
-  trackSendAARAccessDeniedDelegateInfo,
-  trackSendAARAccessDeniedDismissed
+  trackSendAarAccessDeniedDelegateInfo,
+  trackSendAarAccessDeniedDismissed
 } from "../../analytics";
 import { useSendAarFlowManager } from "../../hooks/useSendAarFlowManager";
 
 export const SendAarNotAddresseeKoComponent = () => {
   const { terminateFlow } = useSendAarFlowManager();
-  const delegateUrl = useIOSelector(sendAARDelegateUrlSelector);
+  const delegateUrl = useIOSelector(sendAarDelegateUrlSelector);
 
   const handlePrimaryButton = () => {
-    trackSendAARAccessDeniedDelegateInfo();
+    trackSendAarAccessDeniedDelegateInfo();
     openWebUrl(delegateUrl);
   };
   const handleSecondaryAction = () => {
-    trackSendAARAccessDeniedDismissed();
+    trackSendAarAccessDeniedDismissed();
     terminateFlow();
   };
 

@@ -20,7 +20,7 @@ import { useIsNfcFeatureAvailable } from "../hooks/useIsNfcFeatureAvailable";
 import { useSendAarDelegationProposalScreenBottomSheet } from "../hooks/useSendAarDelegationProposalScreenBottomSheet";
 import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
 import { setAarFlowState } from "../store/actions";
-import { AarStatesByName, sendAARFlowStates } from "../utils/stateUtils";
+import { AarStatesByName, sendAarFlowStates } from "../utils/stateUtils";
 
 export const SendAarDelegationProposalScreen = () => {
   const { terminateFlow, currentFlowData } = useSendAarFlowManager();
@@ -37,13 +37,13 @@ export const SendAarDelegationProposalScreen = () => {
 
   useEffect(() => {
     switch (type) {
-      case sendAARFlowStates.cieCanAdvisory: {
+      case sendAarFlowStates.cieCanAdvisory: {
         hideAll();
         navigation.replace(PN_ROUTES.SEND_AAR_CIE_CAN_EDUCATIONAL);
         break;
       }
-      case sendAARFlowStates.ko:
-      case sendAARFlowStates.nfcNotSupportedFinal: {
+      case sendAarFlowStates.ko:
+      case sendAarFlowStates.nfcNotSupportedFinal: {
         hideAll();
         navigation.replace(PN_ROUTES.SEND_AAR_ERROR);
         break;
@@ -52,7 +52,7 @@ export const SendAarDelegationProposalScreen = () => {
   }, [hideAll, navigation, type]);
 
   switch (type) {
-    case sendAARFlowStates.notAddressee:
+    case sendAarFlowStates.notAddressee:
       return (
         <DelegationProposalContent
           notAdresseeData={currentFlowData}
@@ -92,7 +92,7 @@ const DelegationProposalContent = ({
   const handleIdentificationSuccess = useCallback(() => {
     dispatch(
       setAarFlowState({
-        type: sendAARFlowStates.creatingMandate,
+        type: sendAarFlowStates.creatingMandate,
         iun: notAdresseeData.iun,
         recipientInfo: notAdresseeData.recipientInfo,
         qrCode: notAdresseeData.qrCode
@@ -115,7 +115,7 @@ const DelegationProposalContent = ({
       dispatch(
         setAarFlowState({
           ...notAdresseeData,
-          type: sendAARFlowStates.nfcNotSupportedFinal
+          type: sendAarFlowStates.nfcNotSupportedFinal
         })
       );
     }
@@ -142,7 +142,10 @@ const DelegationProposalContent = ({
           onPress: handleClose,
           testID: "close-button"
         }}
-        subtitle={i18n.t("features.pn.aar.flow.delegated.notAdressee.subtitle")}
+        subtitle={i18n.t(
+          "features.pn.aar.flow.delegated.notAdressee.subtitle",
+          { name: denomination }
+        )}
         testID="delegationProposal"
         title={i18n.t("features.pn.aar.flow.delegated.notAdressee.title", {
           name: denomination

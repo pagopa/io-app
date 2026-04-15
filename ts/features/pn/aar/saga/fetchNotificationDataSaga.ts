@@ -18,29 +18,29 @@ import { profileFiscalCodeSelector } from "../../../settings/common/store/select
 import { trackPNNotificationLoadSuccess } from "../../analytics";
 import {
   aarProblemJsonAnalyticsReport,
-  trackSendAARFailure
+  trackSendAarFailure
 } from "../analytics";
-import { SendAARClient } from "../api/client";
+import { SendAarClient } from "../api/client";
 import {
   EphemeralAarMessageDataActionPayload,
   populateStoresWithEphemeralAarMessageData,
   setAarFlowState
 } from "../store/actions";
-import { currentAARFlowData } from "../store/selectors";
-import { SendAARFailurePhase, sendAARFlowStates } from "../utils/stateUtils";
+import { currentAarFlowData } from "../store/selectors";
+import { SendAarFailurePhase, sendAarFlowStates } from "../utils/stateUtils";
 
-const sendAARFailurePhase: SendAARFailurePhase = "Fetch Notification";
+const sendAarFailurePhase: SendAarFailurePhase = "Fetch Notification";
 
 export function* fetchAarDataSaga(
-  fetchData: SendAARClient["getAARNotification"],
+  fetchData: SendAarClient["getAARNotification"],
   sessionToken: string,
   action: ReturnType<typeof setAarFlowState>
 ) {
-  const currentState = yield* select(currentAARFlowData);
-  if (currentState.type !== sendAARFlowStates.fetchingNotificationData) {
+  const currentState = yield* select(currentAarFlowData);
+  if (currentState.type !== sendAarFlowStates.fetchingNotificationData) {
     yield* call(
-      trackSendAARFailure,
-      sendAARFailurePhase,
+      trackSendAarFailure,
+      sendAarFailurePhase,
       `Called in wrong state (${currentState.type})`,
       undefined
     );
@@ -70,8 +70,8 @@ export function* fetchAarDataSaga(
     const { status, value } = result.right;
     if (status === 401) {
       yield* call(
-        trackSendAARFailure,
-        sendAARFailurePhase,
+        trackSendAarFailure,
+        sendAarFailurePhase,
         "Fast login expiration",
         undefined
       );
@@ -82,14 +82,14 @@ export function* fetchAarDataSaga(
         status,
         value
       )})`;
-      yield* call(trackSendAARFailure, sendAARFailurePhase, reason, value);
+      yield* call(trackSendAarFailure, sendAarFailurePhase, reason, value);
       yield* put(
         setAarFlowState({
-          type: sendAARFlowStates.ko,
+          type: sendAarFlowStates.ko,
           previousState: currentState,
           error: value,
           debugData: {
-            phase: sendAARFailurePhase,
+            phase: sendAarFailurePhase,
             reason
           }
         })
@@ -110,7 +110,7 @@ export function* fetchAarDataSaga(
     yield* put(populateStoresWithEphemeralAarMessageData(payload));
     yield* put(
       setAarFlowState({
-        type: sendAARFlowStates.displayingNotificationData,
+        type: sendAarFlowStates.displayingNotificationData,
         notification: value,
         recipientInfo: { ...currentState.recipientInfo },
         mandateId: currentState.mandateId,
@@ -120,13 +120,13 @@ export function* fetchAarDataSaga(
     );
   } catch (e: unknown) {
     const reason = `An error was thrown (${unknownToReason(e)})`;
-    yield* call(trackSendAARFailure, sendAARFailurePhase, reason, undefined);
+    yield* call(trackSendAarFailure, sendAarFailurePhase, reason, undefined);
     yield* put(
       setAarFlowState({
-        type: sendAARFlowStates.ko,
+        type: sendAarFlowStates.ko,
         previousState: currentState,
         debugData: {
-          phase: sendAARFailurePhase,
+          phase: sendAarFailurePhase,
           reason
         }
       })

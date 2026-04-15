@@ -16,7 +16,7 @@ import {
   GenericCieValidationErrorComponent,
   UnrelatedCieComponent
 } from "../components/errors/SendAarCieValidationErrorComponent";
-import { SendAarGenericErrorComponent } from "../components/errors/SendAARErrorComponent";
+import { SendAarGenericErrorComponent } from "../components/errors/SendAarErrorComponent";
 import { SendAarPendingDelegationErrorComponent } from "../components/errors/SendAarPendingDelegationErrorComponent";
 
 const cieErrors = {
@@ -37,12 +37,12 @@ const mandateCreationErrors = {
 const deliveryErrors = {
   PN_DELIVERY_MANDATENOTFOUND: "PN_DELIVERY_MANDATENOTFOUND"
 } as const;
-const sendAarProblemJsonErrorCodes = {
+const sendAARProblemJsonErrorCodes = {
   ...cieErrors,
   ...deliveryErrors,
   ...mandateCreationErrors
 } as const;
-type SendAarErrorCodes = keyof typeof sendAarProblemJsonErrorCodes;
+type SendAarErrorCodes = keyof typeof sendAARProblemJsonErrorCodes;
 
 // -------------- BEHAVIOUR MAPPING LOGIC --------------
 const isCieErrorCode = (code: string): code is keyof typeof cieErrors =>
@@ -80,23 +80,23 @@ const specificBehavioursByStatus: Record<
   Partial<Record<SendAarErrorCodes, AarErrorBehaviour>>
 > = {
   [404]: {
-    [sendAarProblemJsonErrorCodes.PN_MANDATE_NOTFOUND]: {
+    [sendAARProblemJsonErrorCodes.PN_MANDATE_NOTFOUND]: {
       track: trackSendAarMandateTtlExpiredError,
       Component: CieValidationExpiredTtlComponent
     }
   },
   [409]: {
-    [sendAarProblemJsonErrorCodes.PN_MANDATE_ALREADYEXISTS]: {
+    [sendAARProblemJsonErrorCodes.PN_MANDATE_ALREADYEXISTS]: {
       track: trackSendAarMandateRetryError,
       Component: SendAarPendingDelegationErrorComponent
     }
   },
   [422]: {
-    [sendAarProblemJsonErrorCodes.CIE_EXPIRED_ERROR]: {
+    [sendAARProblemJsonErrorCodes.CIE_EXPIRED_ERROR]: {
       track: trackSendAarMandateCieExpiredError,
       Component: CieExpiredComponent
     },
-    [sendAarProblemJsonErrorCodes.CIE_NOT_RELATED_TO_DELEGATOR_ERROR]: {
+    [sendAARProblemJsonErrorCodes.CIE_NOT_RELATED_TO_DELEGATOR_ERROR]: {
       track: trackSendAarMandateCieNotRelatedToDelegatorError,
       Component: UnrelatedCieComponent
     }
@@ -123,7 +123,7 @@ export const isAarAttachmentTtlError = (
 export const testable = isTestEnv
   ? {
       cieErrors,
-      sendAarProblemJsonErrorCodes,
+      sendAARProblemJsonErrorCodes,
       specificBehavioursByStatus,
       aarGenericBehaviour
     }

@@ -79,7 +79,11 @@ export const EmailNotificationBanner = () => {
         trackIDPayOnboardingEmailActivationError();
         return;
       }
-      if (pot.isSome(profile)) {
+      if (
+        pot.isSome(prevProfile) &&
+        pot.isSome(profile) &&
+        prevProfile.value.is_email_enabled !== profile.value.is_email_enabled
+      ) {
         dispatch(setIdPayOnboardingSucceeded(false));
         IOToast.hideAll();
         IOToast.success(

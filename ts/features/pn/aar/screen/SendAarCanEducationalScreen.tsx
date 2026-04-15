@@ -23,9 +23,9 @@ import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
 import { setAarFlowState } from "../store/actions";
 import {
   aarAdresseeDenominationSelector,
-  currentAARFlowData
+  currentAarFlowData
 } from "../store/selectors";
-import { sendAARFlowStates } from "../utils/stateUtils";
+import { sendAarFlowStates } from "../utils/stateUtils";
 
 const { width, height, uri } = Image.resolveAssetSource(
   cieCanEducationalSource
@@ -41,12 +41,12 @@ export const SendAarCanEducationalScreen = ({
   navigation
 }: SendAarCanEducationalScreenProps) => {
   const dispatch = useIODispatch();
-  const currentAarState = useIOSelector(currentAARFlowData);
+  const currentAarState = useIOSelector(currentAarFlowData);
   const { terminateFlow } = useSendAarFlowManager();
   const denomination = useIOSelector(aarAdresseeDenominationSelector);
 
   useEffect(() => {
-    if (currentAarState.type === sendAARFlowStates.cieCanInsertion) {
+    if (currentAarState.type === sendAarFlowStates.cieCanInsertion) {
       navigation.replace(PN_ROUTES.SEND_AAR_CIE_CAN_INSERTION, {
         animationTypeForReplace: "push"
       });
@@ -90,11 +90,11 @@ export const SendAarCanEducationalScreen = ({
   const handleGoNext = () => {
     trackSendAarMandateCiePreparationContinue();
 
-    if (currentAarState.type === sendAARFlowStates.cieCanAdvisory) {
+    if (currentAarState.type === sendAarFlowStates.cieCanAdvisory) {
       dispatch(
         setAarFlowState({
           ...currentAarState,
-          type: sendAARFlowStates.cieCanInsertion
+          type: sendAarFlowStates.cieCanInsertion
         })
       );
     }

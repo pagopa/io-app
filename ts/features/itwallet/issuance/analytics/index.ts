@@ -208,6 +208,15 @@ export const trackItwIdRequestFederationFailed = (
   );
 };
 
+export const trackItwIssuanceFromMsgFailure = (
+  credential: MixPanelCredential
+) => {
+  void mixpanelTrack(
+    ITW_ISSUANCE_ERRORS_EVENTS.ITW_CREDENTIAL_ISSUING_FROM_MSG_FAILURE,
+    buildEventProperties("KO", "screen_view", { credential })
+  );
+};
+
 // Exit events
 
 export const trackItwExit = ({ exit_page, credential }: ItwExit) => {

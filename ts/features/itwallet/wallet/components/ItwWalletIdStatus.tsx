@@ -74,7 +74,7 @@ export const ItwWalletIdStatus = ({
       onPressOut={onPressOut}
       testID={"itwWalletIdStatusTestID"}
     >
-      <Animated.View style={[styles.container, scaleAnimatedStyle]}>
+      <Animated.View style={scaleAnimatedStyle}>
         {/* Branded Box with animated border and light effect */}
         <ItwBrandedBox variant={borderVariantByPidStatus[pidStatus]}>
           {/* Background Image  */}
@@ -135,9 +135,6 @@ export const ItwWalletIdStatus = ({
 };
 
 const styles = StyleSheet.create({
-  container: {
-    marginHorizontal: -8
-  },
   backgroundImage: {
     position: "absolute",
     right: -1

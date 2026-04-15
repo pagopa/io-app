@@ -8,7 +8,7 @@ import { trackIOOpenedFromUniversalAppLink } from "../features/linking/analytics
 import { resetMessageArchivingAction } from "../features/messages/store/actions/archiving";
 import { isArchivingDisabledSelector } from "../features/messages/store/reducers/archiving";
 import { initiateAarFlow } from "../features/pn/aar/store/actions";
-import { isSendAARLink } from "../features/pn/aar/utils/deepLinking";
+import { isSendAarLink } from "../features/pn/aar/utils/deepLinking";
 import { processUtmLink } from "../features/utmLink";
 import { walletUpdate } from "../features/wallet/store/actions";
 import { GlobalState } from "../store/reducers/types";
@@ -44,7 +44,7 @@ export const linkingSubscription =
 
       if (isLoggedIn(state.authentication)) {
         // only when logged in we can navigate to the AAR screen.
-        if (isSendAARLink(state, url)) {
+        if (isSendAarLink(state, url)) {
           dispatch(initiateAarFlow({ aarUrl: url }));
         }
 

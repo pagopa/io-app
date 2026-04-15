@@ -10,7 +10,7 @@ import { MessageBodyMarkdown } from "../../../../../../definitions/backend/Messa
 import { MessageSubject } from "../../../../../../definitions/backend/MessageSubject";
 import { MandateCreationResponse } from "../../../../../../definitions/pn/aar/MandateCreationResponse";
 import { ThirdPartyMessage } from "../../../../../../definitions/pn/aar/ThirdPartyMessage";
-import { AARFlowState, AARFlowStateName } from "../../utils/stateUtils";
+import { AarFlowState, AarFlowStateName } from "../../utils/stateUtils";
 
 export type EphemeralAarMessageDataActionPayload = {
   fiscalCode: string;
@@ -25,7 +25,7 @@ export type InitiateAarFlowPayload = {
   aarUrl: string;
 };
 export type TerminateAarFlowPayload = {
-  currentFlowState?: AARFlowStateName;
+  currentFlowState?: AarFlowStateName;
   messageId?: string;
 };
 
@@ -33,7 +33,7 @@ export const initiateAarFlow =
   createStandardAction("INITIATE_AAR_FLOW")<InitiateAarFlowPayload>();
 
 export const setAarFlowState =
-  createStandardAction("SET_AAR_FLOW_STATE")<AARFlowState>();
+  createStandardAction("SET_AAR_FLOW_STATE")<AarFlowState>();
 
 export const terminateAarFlow =
   createStandardAction("TERMINATE_AAR_FLOW")<TerminateAarFlowPayload>();
@@ -56,7 +56,7 @@ export const testAarClearData = createStandardAction(
   "TEST_AAR_CLEAR_DATA"
 )<void>();
 
-export type AARFlowStateActions = ActionType<
+export type AarFlowStateActions = ActionType<
   | typeof initiateAarFlow
   | typeof populateStoresWithEphemeralAarMessageData
   | typeof setAarFlowState

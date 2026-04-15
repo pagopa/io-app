@@ -7,16 +7,16 @@ import PN_ROUTES from "../../navigation/routes";
 import { initiateAarFlow, terminateAarFlow } from "../store/actions";
 import {
   currentAarFlowIunSelector,
-  currentAARFlowStateType
+  currentAarFlowStateType
 } from "../store/selectors";
-import { sendAARFlowStates } from "../utils/stateUtils";
+import { sendAarFlowStates } from "../utils/stateUtils";
 
 export function* initiateAarFlowSaga(
   action: ReturnType<typeof initiateAarFlow>
 ) {
   const aarUrl = action.payload.aarUrl;
-  const currentFlowState = yield* select(currentAARFlowStateType);
-  if (currentFlowState !== sendAARFlowStates.none) {
+  const currentFlowState = yield* select(currentAarFlowStateType);
+  if (currentFlowState !== sendAarFlowStates.none) {
     const maybeIunFromAarFlowState = yield* select(currentAarFlowIunSelector);
     yield* put(terminateAarFlow({ messageId: maybeIunFromAarFlowState }));
     yield* call(

@@ -12,7 +12,7 @@ import {
   tempAarMandateReducer,
   TempAarMandateState
 } from "../../aar/store/reducers/tempAarMandate";
-import { AARFlowState } from "../../aar/utils/stateUtils";
+import { AarFlowState } from "../../aar/utils/stateUtils";
 import {
   persistedSendLoginEngagementReducer,
   type SENDLoginEngagementState
@@ -31,7 +31,7 @@ import { PNMessage } from "../types/types";
 import { pnActivationReducer, PnActivationState } from "./activation";
 
 export type PnState = {
-  aarFlow: AARFlowState;
+  aarFlow: AarFlowState;
   activation: PnActivationState;
   bannerDismiss: PersistPartial & PnBannerDismissState;
   loginEngagement: PersistPartial & SENDLoginEngagementState;

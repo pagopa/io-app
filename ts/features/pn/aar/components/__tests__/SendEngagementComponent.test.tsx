@@ -1,5 +1,7 @@
+import { IOMaxFontSizeMultiplier } from "@pagopa/io-app-design-system";
 import { fireEvent } from "@testing-library/react-native";
 import * as O from "fp-ts/lib/Option";
+import { Dimensions } from "react-native";
 import { createStore } from "redux";
 
 import { applicationChangeState } from "../../../../../store/actions/application";
@@ -78,6 +80,63 @@ describe("SendEngagmentComponent", () => {
       component.getByText(markdownLinkPattern(testPrivacyUrl))
     ).toBeTruthy();
     expect(component.getByText(markdownLinkPattern(testTOSUrl))).toBeTruthy();
+  });
+
+  describe("Pictogram visibility based on screen size and font scale", () => {
+    // IOMaxFontSizeMultiplier = 1.5
+    // MIN_HEIGHT_TO_SHOW_FULL_RENDER = 800
+    // Pictogram should be visible when: height >= 800 AND fontScale <= IOMaxFontSizeMultiplier
+
+    it("should SHOW pictogram on large screen with max allowed font scale (height >= MIN_HEIGHT_TO_SHOW_FULL_RENDER, fontScale <= IOMaxFontSizeMultiplier)", () => {
+      jest.spyOn(Dimensions, "get").mockReturnValue({
+        width: 414,
+        height: 896,
+        scale: 1,
+        fontScale: IOMaxFontSizeMultiplier
+      });
+
+      const component = renderComponent(
+        false,
+        () => undefined,
+        () => undefined
+      );
+
+      expect(component.queryByTestId("pictogram-test")).toBeTruthy();
+    });
+
+    it("should HIDE pictogram on small screen even with default font (height < MIN_HEIGHT_TO_SHOW_FULL_RENDER, fontScale <= IOMaxFontSizeMultiplier)", () => {
+      jest.spyOn(Dimensions, "get").mockReturnValue({
+        width: 375,
+        height: 667,
+        scale: 1,
+        fontScale: IOMaxFontSizeMultiplier
+      });
+
+      const component = renderComponent(
+        false,
+        () => undefined,
+        () => undefined
+      );
+
+      expect(component.queryByTestId("pictogram-test")).toBeNull();
+    });
+
+    it("should HIDE pictogram on large screen with too large font (height >= MIN_HEIGHT_TO_SHOW_FULL_RENDER, fontScale > IOMaxFontSizeMultiplier)", () => {
+      jest.spyOn(Dimensions, "get").mockReturnValue({
+        width: 414,
+        height: 896,
+        scale: 2,
+        fontScale: IOMaxFontSizeMultiplier + 0.01
+      });
+
+      const component = renderComponent(
+        false,
+        () => undefined,
+        () => undefined
+      );
+
+      expect(component.queryByTestId("pictogram-test")).toBeNull();
+    });
   });
 });
 

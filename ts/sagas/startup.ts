@@ -86,7 +86,7 @@ import { checkAcknowledgedFingerprintSaga } from "../features/onboarding/saga/bi
 import { completeOnboardingSaga } from "../features/onboarding/saga/completeOnboardingSaga";
 import { watchAbortOnboardingSaga } from "../features/onboarding/saga/watchAbortOnboardingSaga";
 import { watchPaymentsSaga } from "../features/payments/common/saga";
-import { watchAarFlowSaga } from "../features/pn/aar/saga/watchAARFlowSaga";
+import { watchAarFlowSaga } from "../features/pn/aar/saga/watchAarFlowSaga";
 import { checkShouldDisplaySendEngagementScreen } from "../features/pn/loginEngagement/sagas/checkShouldDisplaySendEngagementScreen";
 import { watchSendLollipopLambda } from "../features/pn/lollipopLambda/saga";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";

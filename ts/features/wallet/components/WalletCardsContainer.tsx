@@ -65,7 +65,7 @@ const WalletCardsContainer = () => {
       <>
         {shouldRenderL2EngagementBanner && <ItwL2EngagementBanner />}
         {shouldRenderItwDiscoveryBanner && <ItwDiscoveryBanner />}
-        <View style={styles.content} testID="walletCardsContainerTestID">
+        <View style={styles.walletContent} testID="walletCardsContainerTestID">
           {shouldRenderItwCardsContainer && <ItwWalletCardsContainer />}
           <OtherWalletCardsContainer />
         </View>
@@ -120,18 +120,20 @@ const OtherWalletCardsContainer = withWalletCategoryFilter("other", () => {
   }
 
   return (
-    <WalletCardsCategoryContainer
-      bottomElement={<WalletCardsCategoryRetryErrorBanner />}
-      cards={cards}
-      header={
-        <ListItemHeader
-          label={I18n.t("features.wallet.cards.categories.other")}
-          testID={"walletCardsCategoryOtherHeaderTestID"}
+    <View>
+      <ListItemHeader
+        label={I18n.t("features.wallet.cards.categories.other")}
+        testID={"walletCardsCategoryOtherHeaderTestID"}
+      />
+      <View style={styles.cardsWrapper}>
+        <WalletCardsCategoryContainer
+          cards={cards}
+          key="cards_category_other"
+          testID="otherWalletCardsContainerTestID"
         />
-      }
-      key="cards_category_other"
-      testID="otherWalletCardsContainerTestID"
-    />
+      </View>
+      <WalletCardsCategoryRetryErrorBanner />
+    </View>
   );
 });
 
@@ -147,8 +149,11 @@ const styles = StyleSheet.create({
     gap: 16,
     marginTop: 16
   },
-  content: {
+  walletContent: {
     flex: 1,
     gap: 8
+  },
+  cardsWrapper: {
+    marginHorizontal: -8
   }
 });

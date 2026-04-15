@@ -8,10 +8,11 @@ import {
   IOSkeleton,
   IOVisualCostants,
   useIOThemeContext,
-  VSpacer
+  VSpacer,
+  VStack
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { StyleSheet, useWindowDimensions, View } from "react-native";
 import QRCode from "react-native-qrcode-skia";
 
@@ -20,20 +21,24 @@ import {
   IOScrollView,
   IOScrollViewActions
 } from "../../../../../components/ui/IOScrollView.tsx";
+import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { useMaxBrightness } from "../../../../../utils/brightness.ts";
 import { emptyContextualHelp } from "../../../../../utils/contextualHelp.ts";
 import { ItWalletLogo } from "../../../common/components/ItWalletLogo.tsx";
-import { ItwBrandedBox } from "../../../common/components/ItwBrandedBox.tsx";
+import {
+  ITW_BRANDED_BOX_PADDING,
+  ItwBrandedBox
+} from "../../../common/components/ItwBrandedBox.tsx";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
 import {
+  selectFailure,
   selectIsBluetoothRequiredState,
   selectIsLoading,
   selectIsPermissionsRequiredState,
-  selectIsQRCodeGenerationError,
   selectQRCodeString
 } from "../machine/selectors.ts";
 import { shouldBlockProximityQrCodeSelector } from "../store/selectors";
@@ -55,7 +60,6 @@ const StatusBox = ({ iconName, description, action }: StatusBoxProps) => (
 );
 
 export const ItwProximityQrCodeScreen = () => {
-  const [isRetrying, setIsRetrying] = useState(false);
   const { themeType, theme } = useIOThemeContext();
   const { width } = useWindowDimensions();
 
@@ -64,9 +68,8 @@ export const ItwProximityQrCodeScreen = () => {
   const qrCodeString =
     ItwProximityMachineContext.useSelector(selectQRCodeString);
   const isLoading = ItwProximityMachineContext.useSelector(selectIsLoading);
-  const isProximityError = ItwProximityMachineContext.useSelector(
-    selectIsQRCodeGenerationError
-  );
+  const failure = ItwProximityMachineContext.useSelector(selectFailure);
+
   const isPermissionsRequired = ItwProximityMachineContext.useSelector(
     selectIsPermissionsRequiredState
   );
@@ -76,6 +79,16 @@ export const ItwProximityQrCodeScreen = () => {
   const shouldBlockProximityPresentation = useIOSelector(
     shouldBlockProximityQrCodeSelector
   );
+
+  useDebugInfo({
+    isLoading,
+    failure,
+    isPermissionsRequired,
+    isBluetoothRequired,
+    shouldBlockProximityPresentation,
+    qrCodeString
+  });
+
   // Auto-start only on the initial mount. When the flow is closing, the machine
   // transitions back to Idle briefly before unmount, and we must not restart it.
   useEffect(() => {
@@ -87,7 +100,8 @@ export const ItwProximityQrCodeScreen = () => {
   }, [machineRef]);
 
   const isDark = themeType === "dark";
-  const qrCodeSize = width - IOVisualCostants.appMarginDefault * 3;
+  const qrCodeSize =
+    width - IOVisualCostants.appMarginDefault * 2 - ITW_BRANDED_BOX_PADDING * 2;
   const qrCodeColor: IOColors = isDark ? "white" : "black";
 
   useMaxBrightness({ useSmoothTransition: true });
@@ -116,7 +130,6 @@ export const ItwProximityQrCodeScreen = () => {
   }, [isPermissionsRequired, isBluetoothRequired, navigation]);
 
   const handleRetry = () => {
-    setIsRetrying(true);
     machineRef.send({ type: "retry" });
   };
 
@@ -141,25 +154,17 @@ export const ItwProximityQrCodeScreen = () => {
         }
       : undefined;
 
-  const showStatusContent =
-    isProximityError || shouldBlockProximityPresentation;
+  const isFailure = !!failure || shouldBlockProximityPresentation;
+  const showStatusContent = !!isLoading || isFailure;
 
   const renderQrCodeContent = () => {
-    if (isProximityError) {
+    if (failure !== undefined) {
       return (
         <StatusBox
           action={
-            <View
-              style={[
-                styles.retryActionContainer,
-                isRetrying && styles.retryActionContainerLoading
-              ]}
-            >
-              {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-              {/* @ts-ignore */}
+            <View style={styles.retryActionContainer}>
               <IOButton
                 label={I18n.t("global.buttons.retry")}
-                loading={isRetrying}
                 onPress={handleRetry}
                 variant="link"
               />
@@ -205,24 +210,24 @@ export const ItwProximityQrCodeScreen = () => {
     <IOScrollView actions={scrollViewActions}>
       <ItwBrandedBox
         backgroundVariant={"gradient"}
-        variant={showStatusContent ? "error" : "default"}
+        variant={isFailure ? "error" : "default"}
       >
-        <View style={styles.logoContainer}>
-          <ItWalletLogo height={28} width={134} />
-          {shouldBlockProximityPresentation && (
-            <Icon color={theme.errorIcon} name="errorFilled" size={20} />
-          )}
-        </View>
-        {!showStatusContent && (
-          <>
-            <VSpacer size={8} />
+        <VStack space={16}>
+          <View style={styles.logoContainer}>
+            <ItWalletLogo height={28} width={134} />
+            {shouldBlockProximityPresentation && (
+              <Icon color={theme.errorIcon} name="errorFilled" size={20} />
+            )}
+          </View>
+
+          {!showStatusContent && (
             <BodySmall style={styles.centeredText}>
               {I18n.t("features.itWallet.presentation.qrCode.instruction")}
             </BodySmall>
-          </>
-        )}
-        <VSpacer size={16} />
-        {renderQrCodeContent()}
+          )}
+
+          {renderQrCodeContent()}
+        </VStack>
       </ItwBrandedBox>
       {shouldBlockProximityPresentation && (
         <>
@@ -264,8 +269,5 @@ const styles = StyleSheet.create({
   },
   retryActionContainer: {
     marginTop: 0
-  },
-  retryActionContainerLoading: {
-    marginTop: -4
   }
 });

@@ -1,4 +1,3 @@
-import * as E from "fp-ts/Either";
 import { testSaga } from "redux-saga-test-plan";
 
 import { mockItWalletClient } from "../../../api/__mocks__/client.ts";
@@ -6,13 +5,21 @@ import { ItWalletClient } from "../../../api/client.ts";
 import { itwSetFiscalCodeWhitelisted } from "../../../common/store/actions/preferences";
 import { handleGetWhitelistedStatus } from "../handleGetWhitelistedStatus";
 
+type MockResponse = Awaited<
+  ReturnType<ItWalletClient["isFiscalCodeWhitelisted"]>
+>;
+
 describe("handleGetWhitelistedStatus Saga", () => {
   it("should dispatch itwSetFiscalCodeWhitelisted(true) on success response with whitelisted true", () => {
     const sessionToken = "mock-session-token";
-    const response = E.right({
-      status: 200,
-      value: { whitelisted: true }
-    });
+    const response: MockResponse = {
+      _tag: "Right",
+      right: {
+        status: 200,
+        value: { whitelisted: true, fiscalCode: "mock-fiscal-code" },
+        headers: {}
+      }
+    };
 
     testSaga(
       handleGetWhitelistedStatus,
@@ -31,10 +38,14 @@ describe("handleGetWhitelistedStatus Saga", () => {
 
   it("should dispatch itwSetFiscalCodeWhitelisted(false) on success response with whitelisted false", () => {
     const sessionToken = "mock-session-token";
-    const response = E.right({
-      status: 200,
-      value: { whitelisted: false }
-    });
+    const response: MockResponse = {
+      _tag: "Right",
+      right: {
+        status: 200,
+        value: { whitelisted: false, fiscalCode: "mock-fiscal-code" },
+        headers: {}
+      }
+    };
 
     testSaga(
       handleGetWhitelistedStatus,
@@ -51,9 +62,16 @@ describe("handleGetWhitelistedStatus Saga", () => {
       .isDone();
   });
 
-  it("should dispatch itwSetFiscalCodeWhitelisted(false) on error", () => {
+  it("should not dispatch anything on non-200 response", () => {
     const sessionToken = "mock-session-token";
-    const error = new Error("Something went wrong");
+    const response: MockResponse = {
+      _tag: "Right",
+      right: {
+        status: 500,
+        value: {},
+        headers: {}
+      }
+    };
 
     testSaga(
       handleGetWhitelistedStatus,
@@ -64,9 +82,23 @@ describe("handleGetWhitelistedStatus Saga", () => {
       .call(mockItWalletClient.isFiscalCodeWhitelisted!, {
         Bearer: sessionToken
       })
-      .next(error)
-      .put(itwSetFiscalCodeWhitelisted(false))
+      .next(response)
+      .isDone();
+  });
+
+  it("should not dispatch anything on network error", () => {
+    const sessionToken = "mock-session-token";
+
+    testSaga(
+      handleGetWhitelistedStatus,
+      mockItWalletClient as ItWalletClient,
+      sessionToken
+    )
       .next()
+      .call(mockItWalletClient.isFiscalCodeWhitelisted!, {
+        Bearer: sessionToken
+      })
+      .throw(new Error("Network error"))
       .isDone();
   });
 });

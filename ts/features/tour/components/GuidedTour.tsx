@@ -12,9 +12,11 @@ import {
   activeStepIndexSelector,
   tourItemsForActiveGroupSelector
 } from "../store/selectors";
+import { TourCutoutStyle } from "../types";
 import { useTourContext } from "./TourProvider";
 
-type GuidedTourProps = {
+export type GuidedTourProps = {
+  cutoutStyle?: TourCutoutStyle;
   description: string;
   groupId: string;
   index: number;
@@ -46,7 +48,8 @@ export const GuidedTour = (props: PropsWithChildren<GuidedTourProps>) => {
   useEffect(() => {
     registerItem(props.groupId, props.index, animatedRef, {
       title: props.title,
-      description: props.description
+      description: props.description,
+      cutoutStyle: props.cutoutStyle
     });
 
     return () => {
@@ -59,6 +62,7 @@ export const GuidedTour = (props: PropsWithChildren<GuidedTourProps>) => {
     props.index,
     props.title,
     props.description,
+    props.cutoutStyle,
     animatedRef
   ]);
 

@@ -9,12 +9,14 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIOSelector } from "../../../../store/hooks";
+import { getMixPanelCredential } from "../../analytics/utils";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import {
   itwCredentialsEidStatusSelector,
   itwCredentialStatusSelector
 } from "../../credentials/store/selectors";
+import { trackItwIssuanceFromMsgFailure } from "../../issuance/analytics";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
@@ -87,11 +89,19 @@ export const ItwIssuanceCredentialLandingScreen = ({
       return;
     }
 
-    // ITW active, proceed to credential issuance
-    navigation.replace(ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER, {
-      animationEnabled: false,
-      credentialType
-    });
+    if (isItwValid) {
+      // ITW active, proceed to credential issuance
+      navigation.replace(ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER, {
+        animationEnabled: false,
+        credentialType
+      });
+      return;
+    }
+
+    // No branch handled this state — track the error
+    trackItwIssuanceFromMsgFailure(
+      getMixPanelCredential(credentialType, isWhitelisted)
+    );
   }, [
     navigation,
     isItwValid,
@@ -176,5 +186,15 @@ export const ItwIssuanceCredentialLandingScreen = ({
     );
   }
 
-  return null;
+  return (
+    <OperationResultScreenContent
+      action={{
+        label: I18n.t(`features.itWallet.issuance.landingError.action`),
+        onPress: () => navigation.popToTop()
+      }}
+      pictogram="umbrella"
+      subtitle={I18n.t(`features.itWallet.issuance.landingError.body`)}
+      title={I18n.t(`features.itWallet.issuance.landingError.title`)}
+    />
+  );
 };

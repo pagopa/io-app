@@ -1,17 +1,17 @@
 import { ThirdPartyMessageUnion } from "../../types/thirdPartyById";
-import { isEphemeralAARThirdPartyMessage } from "../thirdPartyById";
+import { isEphemeralAarThirdPartyMessage } from "../thirdPartyById";
 
-describe("isEphemeralAARThirdPartyMessage", () => {
+describe("isEphemeralAarThirdPartyMessage", () => {
   it("should return true if the message is an ephemeral AAR third party message", () => {
     const message = {
       kind: "AAR"
     } as unknown as ThirdPartyMessageUnion;
-    expect(isEphemeralAARThirdPartyMessage(message)).toBe(true);
+    expect(isEphemeralAarThirdPartyMessage(message)).toBe(true);
   });
-  it("should return false if the message is not an ephemeral AAR third party message", () => {
+  it("should return false if the message is not an ephemeral Aar third party message", () => {
     const message = {
       kind: "TPM"
     } as unknown as ThirdPartyMessageUnion;
-    expect(isEphemeralAARThirdPartyMessage(message)).toBe(false);
+    expect(isEphemeralAarThirdPartyMessage(message)).toBe(false);
   });
 });

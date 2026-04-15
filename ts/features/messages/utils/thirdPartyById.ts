@@ -1,10 +1,10 @@
 import {
-  EphemeralAARThirdPartyMessage,
+  EphemeralAarThirdPartyMessage,
   thirdPartyKind,
   ThirdPartyMessageUnion
 } from "../types/thirdPartyById";
 
-export const isEphemeralAARThirdPartyMessage = (
+export const isEphemeralAarThirdPartyMessage = (
   message: ThirdPartyMessageUnion
-): message is EphemeralAARThirdPartyMessage =>
+): message is EphemeralAarThirdPartyMessage =>
   message.kind === thirdPartyKind.AAR;
