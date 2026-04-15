@@ -164,11 +164,8 @@ export const migrations: MigrationManifest = {
   },
 
   // Added flag to switch between the hardcoded values and the catalogue for the list of credentials
-  "12": (state: PersistedState): PersistedState => _.set(
-      state,
-      "credentialsCatalogue.isEnabledForCredentialsList",
-      false
-    )
+  "12": (state: PersistedState): PersistedState =>
+    _.set(state, "credentialsCatalogue.isEnabledForCredentialsList", false)
 };
 
 const itwPersistConfig: PersistConfig = {
