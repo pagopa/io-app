@@ -32,15 +32,13 @@ import {
   itwCredentialsEidStatusSelector
 } from "../../credentials/store/selectors";
 import { ItwDiscoveryBanner } from "../../discovery/components/ItwDiscoveryBanner.tsx";
-import { ItwWalletIdCard } from "./ItwWalletIdCard";
-import { ITW_ROUTES } from "../../navigation/routes.ts";
 import { useItwGuidedTour } from "../../tour/hooks/useItwGuidedTour.ts";
 import {
   ITW_TOUR_GROUP_ID,
   ITW_TOUR_STEP_CREDENTIALS,
   ITW_TOUR_STEP_ID
 } from "../../tour/utils/constants.ts";
-import { ItwWalletIdStatus } from "./ItwWalletIdStatus.tsx";
+import { ItwWalletIdCard } from "./ItwWalletIdCard";
 
 const LIFECYCLE_STATUS: Array<ItwJwtCredentialStatus> = [
   "jwtExpiring",
@@ -93,18 +91,20 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   );
 
   const headerCard = useMemo(
-    () => (isNewItwRenderable ?
-      <View style={styles.idWrapper}>
-        <GuidedTour
-          groupId={ITW_TOUR_GROUP_ID}
-          index={ITW_TOUR_STEP_ID}
-          title={I18n.t("features.itWallet.tour.id.title")}
-          description={I18n.t("features.itWallet.tour.id.description")}
-          cutoutStyle={{ cornerRadius: 16 }}>
+    () =>
+      isNewItwRenderable ? (
+        <View style={styles.idWrapper}>
+          <GuidedTour
+            groupId={ITW_TOUR_GROUP_ID}
+            index={ITW_TOUR_STEP_ID}
+            title={I18n.t("features.itWallet.tour.id.title")}
+            description={I18n.t("features.itWallet.tour.id.description")}
+            cutoutStyle={{ cornerRadius: 16 }}
+          >
             <ItwWalletIdCard />
           </GuidedTour>
         </View>
-      : undefined),
+      ) : undefined,
     [isNewItwRenderable]
   );
 
@@ -136,46 +136,47 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
 
   return (
     <>
-    <View style={styles.cardsWrapper}>
-      <GuidedTour
-        groupId={ITW_TOUR_GROUP_ID}
-        index={ITW_TOUR_STEP_CREDENTIALS}
-        title={I18n.t("features.itWallet.tour.credentials.title")}
-        description={I18n.t("features.itWallet.tour.credentials.description")}
-      >
-      <WalletCardsCategoryContainer
-        key={`cards_category_itw`}
-        testID={`itwWalletCardsContainerTestID`}
-        cards={cards}
-        headerCard={headerCard}
-        header={legacyHeader}
-        topElement={
-          <VStack space={16}>
-            {shouldRenderUpgradeBanner && <ItwDiscoveryBanner flow="wallet" />}
-            {shouldRenderL2EngagementBanner && <ItwL2EngagementBanner />}
-            <ItwWalletReadyBanner />
-            {!shouldHideEidAlert && (
-              <ItwEidLifecycleAlert
-                lifecycleStatus={LIFECYCLE_STATUS}
-                navigation={navigation}
-              />
-            )}
-            {/* Dummy view to add space in case there is another component */}
-            <View />
-          </VStack>
-        }
-      />
-
-      </GuidedTour>
-    </View>
-  {eidInfoBottomSheet.bottomSheet}
-</>
-);
+      <View style={styles.cardsWrapper}>
+        <GuidedTour
+          groupId={ITW_TOUR_GROUP_ID}
+          index={ITW_TOUR_STEP_CREDENTIALS}
+          title={I18n.t("features.itWallet.tour.credentials.title")}
+          description={I18n.t("features.itWallet.tour.credentials.description")}
+        >
+          <WalletCardsCategoryContainer
+            key={`cards_category_itw`}
+            testID={`itwWalletCardsContainerTestID`}
+            cards={cards}
+            headerCard={headerCard}
+            header={legacyHeader}
+            topElement={
+              <VStack space={16}>
+                {shouldRenderUpgradeBanner && (
+                  <ItwDiscoveryBanner flow="wallet" />
+                )}
+                {shouldRenderL2EngagementBanner && <ItwL2EngagementBanner />}
+                <ItwWalletReadyBanner />
+                {!shouldHideEidAlert && (
+                  <ItwEidLifecycleAlert
+                    lifecycleStatus={LIFECYCLE_STATUS}
+                    navigation={navigation}
+                  />
+                )}
+                {/* Dummy view to add space in case there is another component */}
+                <View />
+              </VStack>
+            }
+          />
+        </GuidedTour>
+      </View>
+      {eidInfoBottomSheet.bottomSheet}
+    </>
+  );
 });
 
 const styles = StyleSheet.create({
   idWrapper: {
-    marginHorizontal: -8
+    marginHorizontal: 8
   },
   cardsWrapper: {
     marginHorizontal: -8
