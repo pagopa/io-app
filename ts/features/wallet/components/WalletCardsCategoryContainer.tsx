@@ -5,16 +5,11 @@ import Animated, {
   FadeOutDown,
   LinearTransition
 } from "react-native-reanimated";
-import { useMemo } from "react";
 import { WalletCard } from "../types";
 import { renderWalletCardFn } from "../utils";
 
 export type WalletCardsCategoryContainerProps = WithTestID<{
   cards: ReadonlyArray<WalletCard>;
-  headerCard?: React.ReactElement;
-  header?: React.ReactElement;
-  topElement?: React.ReactElement;
-  bottomElement?: React.ReactElement;
 }>;
 
 // The item layout animation has a bug on Android for a FlatList that doesn't have a fixed height [https://github.com/software-mansion/react-native-reanimated/issues/5728]
@@ -30,82 +25,26 @@ const itemLayoutAnimation =
  */
 export const WalletCardsCategoryContainer = ({
   cards,
-  headerCard,
-  header,
-  topElement,
-  bottomElement,
   testID
-}: WalletCardsCategoryContainerProps) => {
-  const headerCardComponent = useMemo(() => {
-    if (!headerCard) {
-      return null;
+}: WalletCardsCategoryContainerProps) => (
+  <Animated.FlatList
+    testID={testID}
+    scrollEnabled={false}
+    data={cards}
+    renderItem={({ index, item }) =>
+      renderWalletCardFn(item, index < cards.length - 1)
     }
-    const isStacked = cards.length > 0;
-    return (
-      <Animated.View
-        style={[
-          styles.headerCardContainer,
-          isStacked && styles.headerCardContainerStacked
-        ]}
-        layout={LinearTransition.duration(200)}
-      >
-        {headerCard}
-      </Animated.View>
-    );
-  }, [headerCard, cards.length]);
-
-  const headerComponent = useMemo(
-    () => (
-      <>
-        {headerCardComponent}
-        {header}
-        {topElement}
-      </>
-    ),
-    [headerCardComponent, header, topElement]
-  );
-
-  return (
-    <Animated.FlatList
-      testID={testID}
-      scrollEnabled={false}
-      data={cards}
-      renderItem={({ index, item }) =>
-        renderWalletCardFn(item, index < cards.length - 1)
-      }
-      itemLayoutAnimation={itemLayoutAnimation}
-      layout={LinearTransition.duration(200)}
-      contentContainerStyle={styles.container}
-      style={styles.cardList}
-      entering={FadeInDown.duration(150)}
-      exiting={FadeOutDown.duration(150)}
-      ListHeaderComponent={headerComponent}
-      ListHeaderComponentStyle={styles.listHeader}
-      ListFooterComponent={bottomElement}
-      ListFooterComponentStyle={styles.listFooter}
-    />
-  );
-};
+    itemLayoutAnimation={itemLayoutAnimation}
+    layout={LinearTransition.duration(200)}
+    contentContainerStyle={styles.container}
+    entering={FadeInDown.duration(150)}
+    exiting={FadeOutDown.duration(150)}
+  />
+);
 
 const styles = StyleSheet.create({
   container: {
     display: "flex",
     flexDirection: "column"
-  },
-  listHeader: {
-    marginHorizontal: 8
-  },
-  listFooter: {
-    marginHorizontal: 8
-  },
-  cardList: {
-    marginHorizontal: -8
-  },
-  headerCardContainer: {
-    aspectRatio: 16 / 10,
-    marginHorizontal: -8
-  },
-  headerCardContainerStacked: {
-    aspectRatio: 16 / 3
   }
 });

@@ -148,7 +148,7 @@ export const ItwCredentialCard = ({
           <HStack space={16}>
             {credentialType === CredentialType.PID && withL3Design ? (
               <View style={{ flex: 1 }}>
-                <ItWalletIdLogo width={130} height={30} />
+                <ItWalletIdLogo width={117} height={27} />
               </View>
             ) : (
               <IOText

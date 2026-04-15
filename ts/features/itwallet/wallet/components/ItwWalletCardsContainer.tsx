@@ -1,4 +1,4 @@
-import { ListItemHeader, VStack } from "@pagopa/io-app-design-system";
+import { ListItemHeader, VSpacer, VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
@@ -22,8 +22,8 @@ import { useItwPendingReviewRequest } from "../../common/hooks/useItwPendingRevi
 import { useItwStatusIconColor } from "../../common/hooks/useItwStatusIconColor.ts";
 import {
   itwShouldHideEidLifecycleAlert,
-  itwShouldRenderNewItWalletSelector,
   itwShouldRenderL2EngagementBannerSelector,
+  itwShouldRenderNewItWalletSelector,
   itwShouldRenderUpgradeBannerSelector
 } from "../../common/store/selectors";
 import { ItwJwtCredentialStatus } from "../../common/utils/itwTypesUtils.ts";
@@ -38,7 +38,7 @@ import {
   ITW_TOUR_STEP_CREDENTIALS,
   ITW_TOUR_STEP_ID
 } from "../../tour/utils/constants.ts";
-import { ItwWalletIdCard } from "./ItwWalletIdCard";
+import { ItwWalletIdCard } from "./ItwWalletIdCard.tsx";
 
 const LIFECYCLE_STATUS: Array<ItwJwtCredentialStatus> = [
   "jwtExpiring",
@@ -90,52 +90,63 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
     )
   );
 
-  const headerCard = useMemo(
-    () =>
-      isNewItwRenderable ? (
-        <View style={styles.idWrapper}>
-          <GuidedTour
-            groupId={ITW_TOUR_GROUP_ID}
-            index={ITW_TOUR_STEP_ID}
-            title={I18n.t("features.itWallet.tour.id.title")}
-            description={I18n.t("features.itWallet.tour.id.description")}
-            cutoutStyle={{ cornerRadius: 16 }}
-          >
-            <ItwWalletIdCard />
-          </GuidedTour>
-        </View>
-      ) : undefined,
-    [isNewItwRenderable]
-  );
-
-  const legacyHeader = useMemo(
-    () =>
-      !isNewItwRenderable ? (
-        <ListItemHeader
-          testID={"walletCardsCategoryItwHeaderTestID"}
-          iconName={"legalValue"}
-          iconColor={iconColor}
-          label={I18n.t("features.wallet.cards.categories.itw")}
-          endElement={{
-            type: "buttonLink",
-            componentProps: {
-              accessibilityLabel: I18n.t(
-                "features.itWallet.presentation.bottomSheets.eidInfo.triggerLabel"
-              ),
-              label: I18n.t(
-                "features.itWallet.presentation.bottomSheets.eidInfo.triggerLabel"
-              ),
-              onPress: eidInfoBottomSheet.present,
-              testID: "walletCardsCategoryItwActiveBadgeTestID"
-            }
-          }}
-        />
-      ) : undefined,
-    [isNewItwRenderable, iconColor, eidInfoBottomSheet.present]
-  );
+  const sectionHeader = useMemo((): React.ReactElement => {
+    if (isNewItwRenderable) {
+      return (
+        <>
+          <View style={styles.idWrapper}>
+            <GuidedTour
+              groupId={ITW_TOUR_GROUP_ID}
+              index={ITW_TOUR_STEP_ID}
+              title={I18n.t("features.itWallet.tour.id.title")}
+              description={I18n.t("features.itWallet.tour.id.description")}
+            >
+              <ItwWalletIdCard />
+            </GuidedTour>
+          </View>
+          <VSpacer size={16} />
+        </>
+      );
+    }
+    return (
+      <ListItemHeader
+        testID={"walletCardsCategoryItwHeaderTestID"}
+        iconName={"legalValue"}
+        iconColor={iconColor}
+        label={I18n.t("features.wallet.cards.categories.itw")}
+        endElement={{
+          type: "buttonLink",
+          componentProps: {
+            accessibilityLabel: I18n.t(
+              "features.itWallet.presentation.bottomSheets.eidInfo.triggerLabel"
+            ),
+            label: I18n.t(
+              "features.itWallet.presentation.bottomSheets.eidInfo.triggerLabel"
+            ),
+            onPress: eidInfoBottomSheet.present,
+            testID: "walletCardsCategoryItwActiveBadgeTestID"
+          }
+        }}
+      />
+    );
+  }, [iconColor, isNewItwRenderable, eidInfoBottomSheet.present]);
 
   return (
-    <>
+    <View>
+      {sectionHeader}
+      <VStack space={16}>
+        {shouldRenderUpgradeBanner && <ItwDiscoveryBanner flow="wallet" />}
+        {shouldRenderL2EngagementBanner && <ItwL2EngagementBanner />}
+        <ItwWalletReadyBanner />
+        {!shouldHideEidAlert && (
+          <ItwEidLifecycleAlert
+            lifecycleStatus={LIFECYCLE_STATUS}
+            navigation={navigation}
+          />
+        )}
+        {/* Dummy view to add space in case there is another component */}
+        <View />
+      </VStack>
       <View style={styles.cardsWrapper}>
         <GuidedTour
           groupId={ITW_TOUR_GROUP_ID}
@@ -147,35 +158,18 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
             key={`cards_category_itw`}
             testID={`itwWalletCardsContainerTestID`}
             cards={cards}
-            headerCard={headerCard}
-            header={legacyHeader}
-            topElement={
-              <VStack space={16}>
-                {shouldRenderUpgradeBanner && (
-                  <ItwDiscoveryBanner flow="wallet" />
-                )}
-                {shouldRenderL2EngagementBanner && <ItwL2EngagementBanner />}
-                <ItwWalletReadyBanner />
-                {!shouldHideEidAlert && (
-                  <ItwEidLifecycleAlert
-                    lifecycleStatus={LIFECYCLE_STATUS}
-                    navigation={navigation}
-                  />
-                )}
-                {/* Dummy view to add space in case there is another component */}
-                <View />
-              </VStack>
-            }
           />
         </GuidedTour>
       </View>
       {eidInfoBottomSheet.bottomSheet}
-    </>
+    </View>
   );
 });
 
 const styles = StyleSheet.create({
-  idWrapper: {},
+  idWrapper: {
+    marginHorizontal: -8
+  },
   cardsWrapper: {
     marginHorizontal: -8
   }
