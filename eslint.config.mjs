@@ -81,6 +81,8 @@ export default defineConfig([
     },
 
     rules: {
+      // OVERWRITTEN RULES FROM PAGOPA/ESLINT-CONFIG
+      //
       // Converting `type = {}` to `interface {}` breaks assignability to
       // `Record<string, unknown>` — TypeScript requires an explicit index
       // signature on interfaces, whereas type aliases satisfy it structurally.
@@ -109,12 +111,8 @@ export default defineConfig([
       // Force 'no-shadow` as warning, not error
       "@typescript-eslint/no-shadow": "warn",
 
-      "react/react-in-jsx-scope": "off",
-      "react/jsx-uses-react": "off",
-      "no-case-declarations": "off",
-      "no-inner-declarations": "off",
+      // CODE STYLE
       curly: "error",
-
       "spaced-comment": [
         "error",
         "always",
@@ -124,17 +122,23 @@ export default defineConfig([
           }
         }
       ],
-
       "one-var": ["error", "never"],
       "object-shorthand": "error",
+      quotes: "off",
+      "max-classes-per-file": ["error", 1],
+
+      // GENERAL JS SAFETY
+      "no-case-declarations": "off",
+      "no-inner-declarations": "off",
       "no-underscore-dangle": "error",
       "no-throw-literal": "error",
       "no-console": "error",
       "no-caller": "error",
       "no-void": "off",
       "no-duplicate-imports": "error",
-      quotes: "off",
-      "max-classes-per-file": ["error", 1],
+      "no-unused-expressions": "off",
+
+      // TYPESCRIPT
       "@typescript-eslint/no-unused-vars": "off",
       "@typescript-eslint/no-require-imports": [
         "error",
@@ -152,43 +156,53 @@ export default defineConfig([
       "@typescript-eslint/explicit-module-boundary-types": "off",
       "@typescript-eslint/no-inferrable-types": "off",
       "@typescript-eslint/no-explicit-any": "off",
-
       "@typescript-eslint/array-type": [
         "error",
         {
           default: "generic"
         }
       ],
-
       "@typescript-eslint/await-thenable": "error",
       "@typescript-eslint/consistent-type-assertions": "error",
       "@typescript-eslint/dot-notation": "error",
-
       "@typescript-eslint/no-floating-promises": "error",
-      "no-unused-expressions": "off",
       "@typescript-eslint/prefer-function-type": "error",
       "@typescript-eslint/restrict-plus-operands": "error",
       "@typescript-eslint/unified-signatures": "error",
+
+      // REACT
+      "react/react-in-jsx-scope": "off",
+      "react/jsx-uses-react": "off",
       "react/prop-types": "off",
       "react/display-name": "off",
       "react/jsx-key": "error",
-
       "react/jsx-no-bind": [
         "error",
         {
           allowArrowFunctions: true
         }
       ],
-
       "react/no-unstable-nested-components": [
         "off",
         {
           allowAsProps: true
         }
       ],
-
       "react/no-direct-mutation-state": "off",
       "react/require-render-return": "off",
+
+      // REACT NATIVE
+      "react-native/no-unused-styles": "error",
+      "react-native/split-platform-components": "off",
+      "react-native/no-inline-styles": "off",
+      "react-native/no-color-literals": "error",
+      "react-native/no-raw-text": "off",
+      "react-native/no-single-element-style-arrays": "warn",
+
+      // ACCESSIBILITY
+      "react-native-a11y/has-accessibility-hint": "off",
+
+      // FUNCTIONAL PROGRAMMING
       "functional/no-let": "error",
       "functional/immutable-data": [
         "error",
@@ -201,17 +215,13 @@ export default defineConfig([
           ]
         }
       ],
+
+      // CODE QUALITY (SONARJS)
       "sonarjs/no-small-switch": "off",
       "sonarjs/no-duplicate-string": "off",
       "sonarjs/no-nested-template-literals": "warn",
-      "react-native/no-unused-styles": "error",
-      "react-native/split-platform-components": "off",
-      "react-native/no-inline-styles": "off",
-      "react-native/no-color-literals": "error",
-      "react-native/no-raw-text": "off",
-      "react-native/no-single-element-style-arrays": "warn",
-      "react-native-a11y/has-accessibility-hint": "off",
 
+      // INTERNATIONALISATION
       "i18next/no-literal-string": [
         "error",
         {
@@ -244,8 +254,10 @@ export default defineConfig([
         }
       ],
 
+      // REDUX SAGA
       "typed-redux-saga/delegate-effects": "error",
 
+      // IMPORTS
       "no-restricted-imports": [
         "error",
         {
