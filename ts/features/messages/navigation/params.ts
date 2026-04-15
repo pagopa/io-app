@@ -9,10 +9,10 @@ import { MessageRouterScreenRouteParams } from "../screens/MessageRouterScreen";
 import { MESSAGES_ROUTES } from "./routes";
 
 export type MessagesParamsList = {
-  [MESSAGES_ROUTES.MESSAGE_ROUTER]: MessageRouterScreenRouteParams;
   [MESSAGES_ROUTES.MESSAGE_DETAIL]: MessageDetailsScreenRouteParams;
   [MESSAGES_ROUTES.MESSAGE_DETAIL_ATTACHMENT]: MessageAttachmentScreenRouteParams;
   [MESSAGES_ROUTES.MESSAGE_DETAIL_CALENDAR]: MessageCalendarScreenRouteParams;
   [MESSAGES_ROUTES.MESSAGE_GREEN_PASS]: undefined;
+  [MESSAGES_ROUTES.MESSAGE_ROUTER]: MessageRouterScreenRouteParams;
   [PN_ROUTES.MAIN]: NavigatorScreenParams<PnParamsList>;
 };

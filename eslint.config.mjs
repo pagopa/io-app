@@ -274,16 +274,6 @@ export default defineConfig([
     }
   },
   {
-    // Navigation param lists are intentionally grouped by feature area.
-    // Alphabetical sorting destroys that structure without any TypeScript
-    // benefit (type member order is irrelevant to the type system).
-    files: ["**/navigation/**/*.ts", "**/navigation/params/*.ts"],
-    rules: {
-      "perfectionist/sort-object-types": "off",
-      "perfectionist/sort-interfaces": "off"
-    }
-  },
-  {
     files: [
       "**/*.test.ts",
       "**/*.test.tsx",
