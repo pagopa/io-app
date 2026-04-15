@@ -31,7 +31,6 @@ type IssuerDynamicErrorBottomSheetContentConfig = {
 type UseItwIssuerDynamicErrorBottomSheetParams = {
   credential: StoredCredential;
   localizedMessage: { title: string; description: string };
-  onTrackPressCta: () => void;
   status?: ItwCredentialStatus;
 };
 
@@ -81,7 +80,6 @@ export const getIssuerDynamicErrorBottomSheetContentConfig = (
 export const useItwIssuerDynamicErrorBottomSheet = ({
   credential,
   localizedMessage,
-  onTrackPressCta,
   status
 }: UseItwIssuerDynamicErrorBottomSheetParams) => {
   const navigation = useIONavigation();
@@ -96,7 +94,6 @@ export const useItwIssuerDynamicErrorBottomSheet = ({
   );
 
   const handleUpdateCredential = () => {
-    onTrackPressCta();
     if (status) {
       trackCredentialRenewStart(
         getMixPanelCredential(credential.credentialType, isItwL3),

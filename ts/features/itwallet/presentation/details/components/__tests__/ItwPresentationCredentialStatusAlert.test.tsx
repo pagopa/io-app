@@ -265,7 +265,7 @@ describe("ItwPresentationCredentialStatusAlert", () => {
     });
   });
 
-  it("tracks the bottom sheet CTA from the invalid status update action", () => {
+  it("tracks renew start from the invalid status update action", () => {
     mockBottomSheetModal();
 
     const selectorMock: ReturnType<
@@ -288,14 +288,11 @@ describe("ItwPresentationCredentialStatusAlert", () => {
 
     fireEvent.press(component.getByText("Aggiorna il documento digitale"));
 
-    expect(mockTrackItwCredentialBottomSheetAction).toHaveBeenCalledWith({
-      credential: "ITW_PG_V2",
-      credential_status: "not_valid"
-    });
     expect(mockTrackCredentialRenewStart).toHaveBeenCalledWith("ITW_PG_V2", {
       credential_status: "not_valid",
       position: "bottom_sheet"
     });
+    expect(mockTrackItwCredentialBottomSheetAction).not.toHaveBeenCalled();
   });
 
   it("tracks credential deletion from the issuer error bottom sheet with status and position", () => {

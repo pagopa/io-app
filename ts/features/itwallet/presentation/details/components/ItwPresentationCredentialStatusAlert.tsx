@@ -367,8 +367,7 @@ const IssuerDynamicErrorAlert = ({
   const bottomSheet = useItwIssuerDynamicErrorBottomSheet({
     credential,
     localizedMessage,
-    status,
-    onTrackPressCta: () => onTrack("press_cta")
+    status
   });
 
   const handleAlertPress = useAlertPressHandler(onTrack, bottomSheet);
