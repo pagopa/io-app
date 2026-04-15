@@ -4291,15 +4291,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-http-client@npm:1.0.5":
-  version: 1.0.5
-  resolution: "@pagopa/io-react-native-http-client@npm:1.0.5"
-  dependencies:
-    auto-changelog: ^2.4.0
+"@pagopa/io-react-native-http-client@npm:1.1.1":
+  version: 1.1.1
+  resolution: "@pagopa/io-react-native-http-client@npm:1.1.1"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 80e5cc7b0c2887b311923699970b48df048b8870ed168588cb607b98f14f36b1a69f794ffc59c367b358ac55494d6d619e086a5cce43653a7570b2ed9b670fb9
+  checksum: 3f857dd16c58d17d18699336e439611982650e2d71c69d12376038f415fb1becc2a780789e2def818c2661df8fa93ed378ca67573a68352937c3f7e2ee36570a
   languageName: node
   linkType: hard
 
@@ -4313,15 +4311,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-iso18013@npm:^0.6.0":
-  version: 0.6.0
-  resolution: "@pagopa/io-react-native-iso18013@npm:0.6.0"
+"@pagopa/io-react-native-iso18013@npm:^0.8.1":
+  version: 0.8.1
+  resolution: "@pagopa/io-react-native-iso18013@npm:0.8.1"
   dependencies:
     zod: ^3.25.67
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 45867ff4adde249ba3ee5baaa46d5c75c36262e0bd3cc0d834f9152f288a12c53af46bbc5df6ec8a1e4123491ca8f3a92998998ea6b8aa7f5b6cd660934a5896
+  checksum: 0a3c558cfef0289aabef8cdd034d6e0f80b8f160205fbeadf30729639f4b42afc81564518bb7cafe09158cf171c5c40316c886baa9a11c63553bf45c32682b0f
   languageName: node
   linkType: hard
 
@@ -13365,9 +13363,9 @@ __metadata:
     "@pagopa/io-react-native-cie": 1.3.5-rc.2
     "@pagopa/io-react-native-cieid": 0.4.0
     "@pagopa/io-react-native-crypto": ^1.2.3
-    "@pagopa/io-react-native-http-client": 1.0.5
+    "@pagopa/io-react-native-http-client": 1.1.1
     "@pagopa/io-react-native-integrity": ^0.3.2
-    "@pagopa/io-react-native-iso18013": ^0.6.0
+    "@pagopa/io-react-native-iso18013": ^0.8.1
     "@pagopa/io-react-native-jwt": ^2.1.0
     "@pagopa/io-react-native-login-utils": 1.2.0
     "@pagopa/io-react-native-secure-storage": ^0.2.1
