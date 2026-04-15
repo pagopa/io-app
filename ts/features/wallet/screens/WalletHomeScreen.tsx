@@ -26,14 +26,11 @@ import { itwMixPanelCredentialDetailsSelector } from "../../itwallet/analytics/s
 import { useItwEidFeedbackBottomSheet } from "../../itwallet/common/hooks/useItwEidFeedbackBottomSheet.tsx";
 import { itwSetPidReissuingSurveyHidden } from "../../itwallet/common/store/actions/preferences.ts";
 import { itwIsL3EnabledSelector } from "../../itwallet/common/store/selectors/preferences.ts";
-import { ITW_ROUTES } from "../../itwallet/navigation/routes";
-import { ITW_PROXIMITY_ROUTES } from "../../itwallet/presentation/proximity/navigation/routes";
-import {
-  trackItwProximityShowQrCode,
-  trackItwShowQrCode
-} from "../../itwallet/presentation/proximity/analytics";
-import { hasPresentableCredentialsSelector } from "../../itwallet/presentation/proximity/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../itwallet/lifecycle/store/selectors";
+import { ITW_ROUTES } from "../../itwallet/navigation/routes";
+import { trackItwProximityShowQrCode } from "../../itwallet/presentation/proximity/analytics";
+import { ITW_PROXIMITY_ROUTES } from "../../itwallet/presentation/proximity/navigation/routes";
+import { hasPresentableCredentialsSelector } from "../../itwallet/presentation/proximity/store/selectors";
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
 import { walletUpdate } from "../store/actions";
@@ -179,8 +176,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
           icon: "productITWallet",
           iconPosition: "end",
           onPress: () => {
-            trackItwProximityShowQrCode();
-            trackItwShowQrCode({
+            trackItwProximityShowQrCode({
               credential: "general",
               position: "WALLET_HOME"
             });

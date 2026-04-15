@@ -8,8 +8,8 @@ import {
 import {
   ItwProximityFailure,
   ItwProximityGenericFailure,
-  ItwQrCode,
-  ItwShowQrCode,
+  ItwProximityQrCode,
+  ItwProximityShowQrCode,
   ItwStartReissuingPID
 } from "./types";
 
@@ -50,10 +50,13 @@ export const trackItwProximityBluetoothNotActivated = () => {
   );
 };
 
-export const trackItwProximityQrCode = () => {
+export const trackItwProximityQrCode = ({
+  source,
+  qr_code_status
+}: ItwProximityQrCode) => {
   void mixpanelTrack(
     ITW_PROXIMITY_SCREENVIEW_EVENTS.ITW_PROXIMITY_QR_CODE,
-    buildEventProperties("UX", "screen_view")
+    buildEventProperties("UX", "screen_view", { source, qr_code_status })
   );
 };
 
@@ -78,19 +81,15 @@ export const trackItwProximityUnofficialVerifierBottomSheet = () => {
   );
 };
 
-export const trackItwQRCode = ({ source, qr_code_status }: ItwQrCode) => {
-  void mixpanelTrack(
-    ITW_PROXIMITY_SCREENVIEW_EVENTS.ITW_QR_CODE,
-    buildEventProperties("UX", "screen_view", { source, qr_code_status })
-  );
-};
-
 // Actions events
 
-export const trackItwProximityShowQrCode = () => {
+export const trackItwProximityShowQrCode = ({
+  credential,
+  position
+}: ItwProximityShowQrCode) => {
   void mixpanelTrack(
     ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_SHOW_QR_CODE,
-    buildEventProperties("UX", "action")
+    buildEventProperties("UX", "action", { credential, position })
   );
 };
 
@@ -139,20 +138,6 @@ export const trackItwProximityQrCodeLoadingRetry = () => {
 export const trackItwProximityContinuePresentation = () => {
   void mixpanelTrack(
     ITW_PROXIMITY_ACTIONS_EVENTS.ITW_PROXIMITY_UX_CONVERSION,
-    buildEventProperties("UX", "action")
-  );
-};
-
-export const trackItwShowQrCode = ({ credential, position }: ItwShowQrCode) => {
-  void mixpanelTrack(
-    ITW_PROXIMITY_ACTIONS_EVENTS.ITW_SHOW_QR_CODE,
-    buildEventProperties("UX", "action", { credential, position })
-  );
-};
-
-export const trackItwQRCodeLoadingRetry = () => {
-  void mixpanelTrack(
-    ITW_PROXIMITY_ACTIONS_EVENTS.ITW_QR_CODE_LOADING_RETRY,
     buildEventProperties("UX", "action")
   );
 };
@@ -220,14 +205,5 @@ export const trackItwProximityUnofficialVerifier = ({
   void mixpanelTrack(
     ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_UNOFFICIAL_VERIFIER,
     buildEventProperties("KO", "screen_view", { reason, type })
-  );
-};
-
-export const trackItwQRCodeLoadingFailure = ({
-  reason
-}: ItwProximityFailure) => {
-  void mixpanelTrack(
-    ITW_PROXIMITY_ERRORS_EVENTS.ITW_QR_CODE_LOADING_FAILURE,
-    buildEventProperties("KO", "screen_view", { reason })
   );
 };

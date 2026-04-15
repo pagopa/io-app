@@ -32,8 +32,8 @@ import { ItWalletLogo } from "../../../common/components/ItWalletLogo.tsx";
 import { ItwBrandedBox } from "../../../common/components/ItwBrandedBox.tsx";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import {
-  trackItwQRCode,
-  trackItwQRCodeLoadingRetry,
+  trackItwProximityQrCode,
+  trackItwProximityQrCodeLoadingRetry,
   trackItwStartReissuingPID
 } from "../analytics/index.ts";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
@@ -129,7 +129,7 @@ export const ItwProximityQrCodeScreen = ({
             ? "generation_failed"
             : "valid";
 
-        trackItwQRCode({
+        trackItwProximityQrCode({
           source,
           qr_code_status: qrCodeStatus
         });
@@ -155,7 +155,7 @@ export const ItwProximityQrCodeScreen = ({
 
   const handleRetry = () => {
     setIsRetrying(true);
-    trackItwQRCodeLoadingRetry();
+    trackItwProximityQrCodeLoadingRetry();
     machineRef.send({ type: "retry" });
   };
 
