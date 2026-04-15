@@ -15,6 +15,11 @@ import { ItwPresentationTags } from "../../machine/tags";
 import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
 import { ItwProximityParamsList } from "../../navigation/ItwProximityParamsList";
 import { ProximityFailureType } from "../../machine/failure";
+import { trackItwProximityQrCode } from "../../analytics";
+
+jest.mock("../../analytics", () => ({
+  trackItwProximityQrCode: jest.fn()
+}));
 
 jest.mock("react-native-qrcode-skia", () => {
   const React = jest.requireActual("react");
@@ -31,6 +36,10 @@ jest.mock("../../store/selectors", () => ({
 }));
 
 describe("ItwProximityQrCodeScreen", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("should render loading skeleton when machine is loading", () => {
     expect(
       renderComponent({ machineState: "loading" }, { source: "WALLET_HOME" })
@@ -55,6 +64,32 @@ describe("ItwProximityQrCodeScreen", () => {
     ).toMatchSnapshot();
   });
 
+  it("should track qr code screen view with valid status", () => {
+    renderComponent(
+      {
+        machineState: "displayQrCode",
+        qrCodeString: "mock-qr-code-string"
+      },
+      { source: "WALLET_HOME" }
+    );
+
+    expect(trackItwProximityQrCode).toHaveBeenCalledTimes(1);
+    expect(trackItwProximityQrCode).toHaveBeenCalledWith({
+      source: "WALLET_HOME",
+      qr_code_status: "valid"
+    });
+  });
+
+  it("should track qr code screen view with generation_failed status", () => {
+    renderComponent({ machineState: "error" }, { source: "WALLET_HOME" });
+
+    expect(trackItwProximityQrCode).toHaveBeenCalledTimes(1);
+    expect(trackItwProximityQrCode).toHaveBeenCalledWith({
+      source: "WALLET_HOME",
+      qr_code_status: "generation_failed"
+    });
+  });
+
   describe("when credentials are expired", () => {
     beforeEach(() => {
       mockShouldBlockProximityQrCodeSelector.mockReturnValue(true);
@@ -68,6 +103,16 @@ describe("ItwProximityQrCodeScreen", () => {
       expect(
         renderComponent({ machineState: "blocked" }, { source: "WALLET_HOME" })
       ).toMatchSnapshot();
+    });
+
+    it("should track qr code screen view with PID_expired status", () => {
+      renderComponent({ machineState: "blocked" }, { source: "WALLET_HOME" });
+
+      expect(trackItwProximityQrCode).toHaveBeenCalledTimes(1);
+      expect(trackItwProximityQrCode).toHaveBeenCalledWith({
+        source: "WALLET_HOME",
+        qr_code_status: "PID_expired"
+      });
     });
   });
 });

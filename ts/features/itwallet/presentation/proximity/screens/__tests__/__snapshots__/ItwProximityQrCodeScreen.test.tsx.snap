@@ -3950,7 +3950,7 @@ exports[`ItwProximityQrCodeScreen when credentials are expired should render blo
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={4}
+                handlerTag={1}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
