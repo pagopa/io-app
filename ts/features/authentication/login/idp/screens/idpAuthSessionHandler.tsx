@@ -13,8 +13,6 @@ import { useCallback, useEffect, useMemo } from "react";
 import { AppState, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import I18n from "i18next";
-import { mixpanelTrack } from "../../../../../mixpanel";
-
 import {
   Body,
   H6,
@@ -22,6 +20,8 @@ import {
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { mixpanelTrack } from "../../../../../mixpanel";
+
 import { IdpData } from "../../../../../../definitions/content/IdpData";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";

@@ -7,6 +7,7 @@ import { dirname } from "path";
 import pagopaConfig from "@pagopa/eslint-config";
 import tseslint from "typescript-eslint";
 import reactNativeConfig from "@react-native/eslint-config/flat";
+import importPlugin from "eslint-plugin-import";
 import functional from "eslint-plugin-functional";
 import sonarjs from "eslint-plugin-sonarjs";
 import i18Next from "eslint-plugin-i18next";
@@ -48,7 +49,9 @@ export default defineConfig([
   // eslint-plugin-prettier, perfectionist.
   // Vitest block is excluded — project uses Jest.
   // Perfectionist block is excluded — sorting rules are deferred to a follow-up PR.
-  ...pagopaConfig.filter(config => !config.plugins?.vitest && !config.plugins?.perfectionist),
+  ...pagopaConfig.filter(
+    config => !config.plugins?.vitest && !config.plugins?.perfectionist
+  ),
 
   {
     files: ["**/*.ts", "**/*.tsx"],
@@ -71,6 +74,9 @@ export default defineConfig([
     },
 
     plugins: {
+      // Remove `import` plugin once we adopt
+      // `perfectionist/sort-imports` rules
+      import: importPlugin,
       functional,
       sonarjs,
       i18next: i18Next,
@@ -132,6 +138,9 @@ export default defineConfig([
       "no-caller": "error",
       "no-void": "off",
       "no-duplicate-imports": "error",
+      // Remove the following `import` rule
+      // once we adopt `perfectionist/sort-imports`
+      "import/order": "error",
 
       // TYPESCRIPT
       // Downgraded to warn — existing shadows are widespread and non-critical
