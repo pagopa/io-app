@@ -7,10 +7,8 @@ import { dirname } from "path";
 import pagopaConfig from "@pagopa/eslint-config";
 import tseslint from "typescript-eslint";
 import reactNativeConfig from "@react-native/eslint-config/flat";
-import importPlugin from "eslint-plugin-import";
 import functional from "eslint-plugin-functional";
 import sonarjs from "eslint-plugin-sonarjs";
-import stylisticEslintPluginJs from "@stylistic/eslint-plugin-js";
 import i18Next from "eslint-plugin-i18next";
 import js from "@eslint/js";
 
@@ -72,10 +70,8 @@ export default defineConfig([
     },
 
     plugins: {
-      import: importPlugin,
       functional,
       sonarjs,
-      "@stylistic/js": stylisticEslintPluginJs,
       i18next: i18Next,
       "typed-redux-saga": { rules: { "delegate-effects": delegateEffectsRule } }
     },
@@ -93,9 +89,6 @@ export default defineConfig([
       // Auto-fix corrupts multi-line property values (see comment below)
       "perfectionist/sort-objects": "off",
 
-      // IE8-era catch variable shadowing rule, irrelevant for this project
-      "no-catch-shadow": "off",
-
       // Rules from tseslint.strict / pagopa config that require widespread
       // refactoring incompatible with the current codebase
       "max-lines-per-function": "off",
@@ -110,9 +103,6 @@ export default defineConfig([
       // Incorrectly fires on mapped types (`[P in ...]`) — only meant for
       // plain index signatures (`[key: string]: V`) which should use Record<K,V>
       "@typescript-eslint/consistent-indexed-object-style": "off",
-
-      // Force 'no-shadow` as warning, not error
-      "@typescript-eslint/no-shadow": "warn",
 
       // CODE STYLE
       curly: "error",
@@ -132,6 +122,8 @@ export default defineConfig([
       "max-classes-per-file": ["error", 1],
 
       // GENERAL JS SAFETY
+      // Deprecated since ESLint 5.1.0 — overrides @react-native/eslint-config warn
+      "no-catch-shadow": "off",
       "no-case-declarations": "off",
       "no-underscore-dangle": "error",
       "no-throw-literal": "error",
@@ -141,6 +133,8 @@ export default defineConfig([
       "no-duplicate-imports": "error",
 
       // TYPESCRIPT
+      // Downgraded to warn — existing shadows are widespread and non-critical
+      "@typescript-eslint/no-shadow": "warn",
       "@typescript-eslint/no-require-imports": [
         "error",
         {
@@ -168,7 +162,6 @@ export default defineConfig([
       // REACT
       "react/jsx-uses-react": "off",
       "react/prop-types": "off",
-      "react/jsx-key": "error",
       // Less relevant rule with contemporary React with hooks
       "react/jsx-no-bind": [
         "error",
