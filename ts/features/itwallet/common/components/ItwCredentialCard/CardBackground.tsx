@@ -10,7 +10,7 @@ import {
   vec
 } from "@shopify/react-native-skia";
 import { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { Image as RNImage, StyleSheet, View } from "react-native";
 import Animated, {
   Easing,
   useAnimatedStyle,
@@ -106,7 +106,7 @@ export const CardBackground = ({
 
   const config = getCredentialCardConfig(credentialType);
   const legacyGradientColors = legacyCredentialGradientColors[credentialType];
-  const SvgLayer = withL3Design ? config.svgLayer : undefined;
+  const watermarkLayer = withL3Design ? config.watermarkLayer : undefined;
 
   return (
     <View
@@ -170,9 +170,13 @@ export const CardBackground = ({
           </RoundedRect>
         )}
       </Canvas>
-      {SvgLayer && (
+      {watermarkLayer && size.width > 0 && size.height > 0 && (
         <View style={StyleSheet.absoluteFillObject} pointerEvents="none">
-          <SvgLayer width="100%" height="100%" />
+          <RNImage
+            source={watermarkLayer}
+            style={{ width: size.width, height: size.height }}
+            resizeMode="stretch"
+          />
         </View>
       )}
     </View>

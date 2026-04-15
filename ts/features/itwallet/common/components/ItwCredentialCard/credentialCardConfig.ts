@@ -1,9 +1,4 @@
-import { ComponentType } from "react";
-import { SvgProps } from "react-native-svg";
-import PidWatermark from "../../../../../../img/features/itWallet/cards/cardWatermarks/itw_pid_watermark.svg";
-import MdlWatermark from "../../../../../../img/features/itWallet/cards/cardWatermarks/itw_mdl_watermark.svg";
-import DcWatermark from "../../../../../../img/features/itWallet/cards/cardWatermarks/itw_dc_watermark.svg";
-import TsWatermark from "../../../../../../img/features/itWallet/cards/cardWatermarks/itw_ts_watermark.svg";
+import { ImageSourcePropType } from "react-native";
 import { CredentialType } from "../../utils/itwMocksUtils";
 
 export type SolidCardBackground = {
@@ -53,10 +48,10 @@ export type CredentialCardConfig = {
    */
   borderColor: string;
   /**
-   * Optional SVG component rendered as a decorative layer
+   * Optional PNG image rendered as a watermark layer
    * over the gradient background.
    */
-  svgLayer?: ComponentType<SvgProps>;
+  watermarkLayer?: ImageSourcePropType;
 };
 
 /**
@@ -74,7 +69,7 @@ export const DEFAULT_CREDENTIAL_CARD_CONFIG: CredentialCardConfig = {
 /**
  * Per-credential static card configuration.
  * Background, title color and border color are set explicitly here.
- * An optional `svgLayer` SVG component can be provided to render a
+ * An optional `watermarkLayer` PNG image can be provided to render a
  * watermark overlay on top of the background.
  * ADD MORE CONFIGURATIONS HERE IF NEEDED, ONLY FOR STATIC CREDENTIALS
  */
@@ -90,7 +85,7 @@ export const credentialCardConfigs: Partial<
     },
     titleColor: "#115486",
     borderColor: "#4F99E2",
-    svgLayer: PidWatermark as ComponentType<SvgProps>
+    watermarkLayer: require("../../../../../../img/features/itWallet/cards/cardWatermarks/itw_pid_watermark.png")
   },
   [CredentialType.DRIVING_LICENSE]: {
     background: {
@@ -101,7 +96,7 @@ export const credentialCardConfigs: Partial<
     },
     titleColor: "#652035",
     borderColor: "#D674A9",
-    svgLayer: MdlWatermark as ComponentType<SvgProps>
+    watermarkLayer: require("../../../../../../img/features/itWallet/cards/cardWatermarks/itw_mdl_watermark.png")
   },
   [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: {
     background: {
@@ -112,7 +107,7 @@ export const credentialCardConfigs: Partial<
     },
     titleColor: "#032D5C",
     borderColor: "#449DCF",
-    svgLayer: TsWatermark as ComponentType<SvgProps>
+    watermarkLayer: require("../../../../../../img/features/itWallet/cards/cardWatermarks/itw_ts_watermark.png")
   },
   [CredentialType.EUROPEAN_DISABILITY_CARD]: {
     background: {
@@ -121,7 +116,7 @@ export const credentialCardConfigs: Partial<
     },
     titleColor: "#17406F",
     borderColor: "#6B9BB6",
-    svgLayer: DcWatermark as ComponentType<SvgProps>
+    watermarkLayer: require("../../../../../../img/features/itWallet/cards/cardWatermarks/itw_dc_watermark.png")
   }
 };
 
