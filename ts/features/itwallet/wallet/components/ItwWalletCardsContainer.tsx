@@ -1,13 +1,15 @@
 import { ListItemHeader, VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { GuidedTour } from "../../../tour/components/GuidedTour.tsx";
+import { useGuidedTourRegion } from "../../../tour/components/useGuidedTourRegion";
+import { TourItemMeasurement } from "../../../tour/types";
 import { WalletCardsCategoryContainer } from "../../../wallet/components/WalletCardsCategoryContainer";
 import { selectWalletCardsByCategory } from "../../../wallet/store/selectors";
 import { withWalletCategoryFilter } from "../../../wallet/utils";
@@ -66,6 +68,25 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const iconColor = useItwStatusIconColor(isEidExpired);
 
   useItwPendingReviewRequest();
+
+  const idCardRef = useRef<View>(null);
+  const [idCardMeasurement, setIdCardMeasurement] = useState<
+    TourItemMeasurement | undefined
+  >(undefined);
+
+  const idCardRegion = useCallback(
+    () => idCardMeasurement,
+    [idCardMeasurement]
+  );
+
+  useGuidedTourRegion({
+    groupId: ITW_TOUR_GROUP_ID,
+    index: ITW_TOUR_STEP_ID,
+    title: I18n.t("features.itWallet.tour.id.title"),
+    description: I18n.t("features.itWallet.tour.id.description"),
+    region: idCardRegion
+  });
+
   useItwGuidedTour();
 
   useDebugInfo({
@@ -94,15 +115,18 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
     if (isNewItwRenderable) {
       const isStacked = cards.length > 0;
       return (
-        <View style={[styles.idWrapper, isStacked && styles.idWrapperStacked]}>
-          <GuidedTour
-            groupId={ITW_TOUR_GROUP_ID}
-            index={ITW_TOUR_STEP_ID}
-            title={I18n.t("features.itWallet.tour.id.title")}
-            description={I18n.t("features.itWallet.tour.id.description")}
-          >
-            <ItwWalletIdCard />
-          </GuidedTour>
+        <View
+          ref={idCardRef}
+          style={[styles.idWrapper, isStacked && styles.idWrapperStacked]}
+          onLayout={() => {
+            idCardRef.current?.measureInWindow((x, y, width, height) => {
+              if (width !== 0 || height !== 0) {
+                setIdCardMeasurement({ x, y, width, height });
+              }
+            });
+          }}
+        >
+          <ItwWalletIdCard />
         </View>
       );
     }
