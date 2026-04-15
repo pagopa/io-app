@@ -6,7 +6,8 @@ import {
   activeSessionLoginFailure,
   consolidateActiveSessionLoginData,
   setRetryActiveSessionLogin,
-  setStartActiveSessionLogin
+  setStartActiveSessionLogin,
+  setNavigateAfterFinishedActiveSessionLoginFlow
 } from "../store/actions";
 import {
   isActiveSessionFastLoginEnabledSelector,
@@ -18,6 +19,7 @@ import { startApplicationInitialization } from "../../../../store/actions/applic
 import { analyticsAuthenticationStarted } from "../../../../store/actions/analytics";
 import {
   handleActiveSessionLoginSaga,
+  handleNavigateAfterFinishedActiveSessionLoginFlow,
   watchActiveSessionLoginSaga
 } from "../saga";
 import { watchCieAuthenticationSaga } from "../../login/cie/sagas/cie";
@@ -97,6 +99,11 @@ describe("watchActiveSessionLoginSaga", () => {
           getType(setRetryActiveSessionLogin)
         ],
         handleActiveSessionLoginSaga
+      )
+      .next()
+      .takeLatest(
+        getType(setNavigateAfterFinishedActiveSessionLoginFlow),
+        handleNavigateAfterFinishedActiveSessionLoginFlow
       )
       .next()
       .isDone();

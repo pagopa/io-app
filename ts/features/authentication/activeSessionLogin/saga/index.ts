@@ -54,12 +54,14 @@ export function* watchActiveSessionLoginSaga() {
 
   yield* takeLatest(
     getType(setNavigateAfterFinishedActiveSessionLoginFlow),
-    function* () {
-      yield* call(NavigationService.navigate, ROUTES.MAIN, {
-        screen: MESSAGES_ROUTES.MESSAGES_HOME
-      });
-    }
+    handleNavigateAfterFinishedActiveSessionLoginFlow
   );
+}
+
+export function* handleNavigateAfterFinishedActiveSessionLoginFlow() {
+  yield* call(NavigationService.navigate, ROUTES.MAIN, {
+    screen: MESSAGES_ROUTES.MESSAGES_HOME
+  });
 }
 
 export function* activeSessionLoginNavigation() {
