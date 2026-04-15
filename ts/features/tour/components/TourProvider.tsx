@@ -18,7 +18,7 @@ import {
   registerTourItemAction,
   unregisterTourItemAction
 } from "../store/actions";
-import { TourItemMeasurement } from "../types";
+import { TourCutoutStyle, TourItemMeasurement } from "../types";
 import { TourOverlay } from "./TourOverlay";
 
 type TourItemConfig = {
@@ -26,6 +26,7 @@ type TourItemConfig = {
   regionProvider?: () => TourItemMeasurement | undefined;
   title: string;
   description: string;
+  cutoutStyle?: TourCutoutStyle;
 };
 
 type ScrollRef = {
@@ -39,14 +40,22 @@ type TourContextValue = {
     groupId: string,
     index: number,
     viewRef: AnimatedRef<Animated.View>,
-    config: { title: string; description: string }
+    config: {
+      title: string;
+      description: string;
+      cutoutStyle?: TourCutoutStyle;
+    }
   ) => void;
   unregisterItem: (groupId: string, index: number) => void;
   registerRegion: (
     groupId: string,
     index: number,
     regionProvider: () => TourItemMeasurement | undefined,
-    config: { title: string; description: string }
+    config: {
+      title: string;
+      description: string;
+      cutoutStyle?: TourCutoutStyle;
+    }
   ) => void;
   unregisterRegion: (groupId: string, index: number) => void;
   getMeasurement: (
@@ -57,6 +66,7 @@ type TourContextValue = {
     groupId: string,
     index: number
   ) => { title: string; description: string } | undefined;
+  getCutoutStyle: (groupId: string, index: number) => { cornerRadius?: number };
   /** Returns true if the item is region-based (no ref tracking needed). */
   isRegionItem: (groupId: string, index: number) => boolean;
   registerScrollRef: (
@@ -110,13 +120,18 @@ export const TourProvider = ({ children }: PropsWithChildren) => {
       groupId: string,
       index: number,
       viewRef: AnimatedRef<Animated.View>,
-      config: { title: string; description: string }
+      config: {
+        title: string;
+        description: string;
+        cutoutStyle?: TourCutoutStyle;
+      }
     ) => {
       dispatch(registerTourItemAction({ groupId, index }));
       itemsRef.current.set(makeKey(groupId, index), {
         ref: viewRef,
         title: config.title,
-        description: config.description
+        description: config.description,
+        cutoutStyle: config.cutoutStyle
       });
     },
     [dispatch]
@@ -135,13 +150,18 @@ export const TourProvider = ({ children }: PropsWithChildren) => {
       groupId: string,
       index: number,
       regionProvider: () => TourItemMeasurement | undefined,
-      config: { title: string; description: string }
+      config: {
+        title: string;
+        description: string;
+        cutoutStyle?: TourCutoutStyle;
+      }
     ) => {
       dispatch(registerTourItemAction({ groupId, index }));
       itemsRef.current.set(makeKey(groupId, index), {
         regionProvider,
         title: config.title,
-        description: config.description
+        description: config.description,
+        cutoutStyle: config.cutoutStyle
       });
     },
     [dispatch]
@@ -201,6 +221,13 @@ export const TourProvider = ({ children }: PropsWithChildren) => {
     return { title: item.title, description: item.description };
   }, []);
 
+  const getCutoutStyle = useCallback((groupId: string, index: number) => {
+    const item = itemsRef.current.get(makeKey(groupId, index));
+    return {
+      cornerRadius: item?.cutoutStyle?.cornerRadius
+    };
+  }, []);
+
   const registerScrollRef = useCallback(
     (
       groupId: string,
@@ -235,6 +262,7 @@ export const TourProvider = ({ children }: PropsWithChildren) => {
         unregisterRegion,
         getMeasurement,
         getConfig,
+        getCutoutStyle,
         isRegionItem,
         registerScrollRef,
         unregisterScrollRef,

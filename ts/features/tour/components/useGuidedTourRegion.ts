@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { TourItemMeasurement } from "../types";
+import { TourCutoutStyle, TourItemMeasurement } from "../types";
 import { useTourContext } from "./TourProvider";
 
 type UseGuidedTourRegionConfig = {
@@ -8,6 +8,7 @@ type UseGuidedTourRegionConfig = {
   title: string;
   description: string;
   region: () => TourItemMeasurement | undefined;
+  cutoutStyle?: TourCutoutStyle;
 };
 
 /**
@@ -26,12 +27,17 @@ export const useGuidedTourRegion = ({
   index,
   title,
   description,
-  region
+  region,
+  cutoutStyle
 }: UseGuidedTourRegionConfig) => {
   const { registerRegion, unregisterRegion } = useTourContext();
 
   useEffect(() => {
-    registerRegion(groupId, index, region, { title, description });
+    registerRegion(groupId, index, region, {
+      title,
+      description,
+      cutoutStyle
+    });
 
     return () => {
       unregisterRegion(groupId, index);
@@ -43,6 +49,7 @@ export const useGuidedTourRegion = ({
     index,
     title,
     description,
-    region
+    region,
+    cutoutStyle
   ]);
 };
