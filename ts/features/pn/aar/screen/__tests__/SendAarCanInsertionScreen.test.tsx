@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/cognitive-complexity */
 import { act, fireEvent, waitFor } from "@testing-library/react-native";
 import _ from "lodash";
 import { RefObject } from "react";
@@ -13,7 +12,7 @@ import PN_ROUTES from "../../../navigation/routes";
 import { trackSendAarMandateCieCanEnter } from "../../analytics";
 import { setAarFlowState } from "../../store/actions";
 import * as AAR_SELECTORS from "../../store/selectors";
-import { sendAARFlowStates } from "../../utils/stateUtils";
+import { sendAarFlowStates } from "../../utils/stateUtils";
 import { sendAarMockStates } from "../../utils/testUtils";
 import {
   CIE_CAN_LENGTH,
@@ -35,11 +34,21 @@ jest.mock("../../../../../store/hooks", () => ({
 }));
 
 jest.mock("i18next", () => ({
-  t: (path: string) => path
+  t: (path: string, params?: Record<string, string>) => {
+    if (params?.denomination) {
+      return `${path} ${params.denomination}`;
+    }
+    return path;
+  }
 }));
 
 describe("SendAarCieCanInsertionScreen", () => {
-  beforeEach(jest.clearAllMocks);
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest
+      .spyOn(AAR_SELECTORS, "aarAdresseeDenominationSelector")
+      .mockReturnValue("Mario Rossi");
+  });
 
   it("should match the snapshot", () => {
     const component = renderComponent();
@@ -77,10 +86,10 @@ describe("SendAarCieCanInsertionScreen", () => {
 
   sendAarMockStates.forEach(aarState => {
     const isCieCanInsertion =
-      aarState.type === sendAARFlowStates.cieCanInsertion;
+      aarState.type === sendAarFlowStates.cieCanInsertion;
     const isCieScanningAdvisory =
-      aarState.type === sendAARFlowStates.cieScanningAdvisory;
-    const isCieCanAdvisory = aarState.type === sendAARFlowStates.cieCanAdvisory;
+      aarState.type === sendAarFlowStates.cieScanningAdvisory;
+    const isCieCanAdvisory = aarState.type === sendAarFlowStates.cieCanAdvisory;
     const shouldNavigate = isCieCanAdvisory || isCieScanningAdvisory;
 
     it(`${
@@ -88,7 +97,7 @@ describe("SendAarCieCanInsertionScreen", () => {
     } dispatch "setAarFlowState" with type: "cieCanAdvisory" when current aar state has type: "${
       aarState.type
     }"`, () => {
-      jest.spyOn(AAR_SELECTORS, "currentAARFlowData").mockReturnValue(aarState);
+      jest.spyOn(AAR_SELECTORS, "currentAarFlowData").mockReturnValue(aarState);
       const { getByLabelText } = renderComponent();
 
       const backButton = getByLabelText("global.buttons.back");
@@ -102,7 +111,7 @@ describe("SendAarCieCanInsertionScreen", () => {
         expect(mockDispatch).toHaveBeenCalledWith(
           setAarFlowState({
             ...aarState,
-            type: sendAARFlowStates.cieCanAdvisory
+            type: sendAarFlowStates.cieCanAdvisory
           })
         );
       } else {
@@ -119,7 +128,7 @@ describe("SendAarCieCanInsertionScreen", () => {
         aarState.type
       }" and can is: "${can}"`, () => {
         jest
-          .spyOn(AAR_SELECTORS, "currentAARFlowData")
+          .spyOn(AAR_SELECTORS, "currentAarFlowData")
           .mockReturnValue(aarState);
         const spyOnKeyboardDismiss = jest.spyOn(Keyboard, "dismiss");
         const { UNSAFE_getByType } = renderComponent();
@@ -138,7 +147,7 @@ describe("SendAarCieCanInsertionScreen", () => {
           expect(mockDispatch).toHaveBeenCalledWith(
             setAarFlowState({
               ...aarState,
-              type: sendAARFlowStates.cieScanningAdvisory,
+              type: sendAarFlowStates.cieScanningAdvisory,
               can
             })
           );
@@ -153,7 +162,7 @@ describe("SendAarCieCanInsertionScreen", () => {
     it(`${
       shouldNavigate ? "should" : "should not"
     } replace, and never navigate when type is: ${aarState.type}`, () => {
-      jest.spyOn(AAR_SELECTORS, "currentAARFlowData").mockReturnValue(aarState);
+      jest.spyOn(AAR_SELECTORS, "currentAarFlowData").mockReturnValue(aarState);
       renderComponent();
       if (isCieCanAdvisory) {
         expect(mockReplace).toHaveBeenCalledTimes(1);

@@ -1,5 +1,4 @@
 import { WithTestID } from "@pagopa/io-app-design-system";
-import { useMemo } from "react";
 import { Platform, StyleSheet } from "react-native";
 import Animated, {
   FadeInDown,

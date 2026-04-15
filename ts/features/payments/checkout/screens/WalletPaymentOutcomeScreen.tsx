@@ -183,8 +183,8 @@ const WalletPaymentOutcomeScreen = () => {
       outcome === WalletPaymentOutcomeEnum.SUCCESS
         ? "COMPLETED"
         : outcome === WalletPaymentOutcomeEnum.DUPLICATE_ORDER
-        ? "DUPLICATED"
-        : undefined;
+          ? "DUPLICATED"
+          : undefined;
     const rptId = paymentOngoingHistory?.rptId;
 
     if (kind && rptId) {
@@ -193,6 +193,7 @@ const WalletPaymentOutcomeScreen = () => {
     trackOutcomeScreen();
   });
 
+  // eslint-disable-next-line complexity
   const trackOutcomeScreen = () => {
     if (outcome === WalletPaymentOutcomeEnum.SUCCESS) {
       analytics.trackPaymentOutcomeSuccess({

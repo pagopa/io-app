@@ -73,7 +73,7 @@ export const fciDocumentsWithUrlSelector = (
             ({
               ...documents.find(dd => dd.document_id === d.id),
               url: d.url
-            } as QtspDocumentToSign)
+            }) as QtspDocumentToSign
         )
       ),
       []

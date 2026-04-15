@@ -2,11 +2,12 @@ import { ListItemHeader, VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { GuidedTour } from "../../../tour/components/GuidedTour.tsx";
 import { WalletCardsCategoryContainer } from "../../../wallet/components/WalletCardsCategoryContainer";
 import { selectWalletCardsByCategory } from "../../../wallet/store/selectors";
 import { withWalletCategoryFilter } from "../../../wallet/utils";
@@ -32,6 +33,14 @@ import {
 } from "../../credentials/store/selectors";
 import { ItwDiscoveryBanner } from "../../discovery/components/ItwDiscoveryBanner.tsx";
 import { ItwWalletIdCard } from "./ItwWalletIdCard";
+import { ITW_ROUTES } from "../../navigation/routes.ts";
+import { useItwGuidedTour } from "../../tour/hooks/useItwGuidedTour.ts";
+import {
+  ITW_TOUR_GROUP_ID,
+  ITW_TOUR_STEP_CREDENTIALS,
+  ITW_TOUR_STEP_ID
+} from "../../tour/utils/constants.ts";
+import { ItwWalletIdStatus } from "./ItwWalletIdStatus.tsx";
 
 const LIFECYCLE_STATUS: Array<ItwJwtCredentialStatus> = [
   "jwtExpiring",
@@ -59,6 +68,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const iconColor = useItwStatusIconColor(isEidExpired);
 
   useItwPendingReviewRequest();
+  useItwGuidedTour();
 
   useDebugInfo({
     itw: {
@@ -83,7 +93,18 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   );
 
   const headerCard = useMemo(
-    () => (isNewItwRenderable ? <ItwWalletIdCard /> : undefined),
+    () => (isNewItwRenderable ?
+      <View style={styles.idWrapper}>
+        <GuidedTour
+          groupId={ITW_TOUR_GROUP_ID}
+          index={ITW_TOUR_STEP_ID}
+          title={I18n.t("features.itWallet.tour.id.title")}
+          description={I18n.t("features.itWallet.tour.id.description")}
+          cutoutStyle={{ cornerRadius: 16 }}>
+            <ItwWalletIdCard />
+          </GuidedTour>
+        </View>
+      : undefined),
     [isNewItwRenderable]
   );
 
@@ -115,6 +136,13 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
 
   return (
     <>
+    <View style={styles.cardsWrapper}>
+      <GuidedTour
+        groupId={ITW_TOUR_GROUP_ID}
+        index={ITW_TOUR_STEP_CREDENTIALS}
+        title={I18n.t("features.itWallet.tour.credentials.title")}
+        description={I18n.t("features.itWallet.tour.credentials.description")}
+      >
       <WalletCardsCategoryContainer
         key={`cards_category_itw`}
         testID={`itwWalletCardsContainerTestID`}
@@ -137,7 +165,19 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
           </VStack>
         }
       />
-      {eidInfoBottomSheet.bottomSheet}
-    </>
-  );
+
+      </GuidedTour>
+    </View>
+  {eidInfoBottomSheet.bottomSheet}
+</>
+);
+});
+
+const styles = StyleSheet.create({
+  idWrapper: {
+    marginHorizontal: -8
+  },
+  cardsWrapper: {
+    marginHorizontal: -8
+  }
 });
