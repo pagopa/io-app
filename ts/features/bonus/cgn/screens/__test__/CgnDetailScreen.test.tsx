@@ -26,6 +26,8 @@ import { cgnActivationStart } from "../../store/actions/activation";
 import { cgnDetails } from "../../store/actions/details";
 import { cgnEycaStatus } from "../../store/actions/eyca/details";
 import CgnDetailScreen from "../CgnDetailScreen";
+import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
+import * as urlUtils from "../../../../../utils/url";
 
 jest.mock("../../components/CgnAnimatedBackground", () => ({
   CgnAnimatedBackground: () => null
@@ -37,7 +39,7 @@ jest.mock("../../../../../utils/hooks/useOnFocus", () => ({
 
 jest.mock("../../../../../store/hooks", () => ({
   ...jest.requireActual("../../../../../store/hooks"),
-  useIODispatch: jest.fn()
+  useIODispatch: jest.fn().mockReturnValue(jest.fn())
 }));
 
 jest.mock("../../../../../hooks/useHardwareBackButton", () => ({
@@ -94,6 +96,10 @@ const revokedCard: Card = {
 };
 
 describe("CgnDetailScreen", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    (useIODispatch as jest.Mock).mockReturnValue(jest.fn());
+  });
   it("should render the error screen when cgn details request fails", () => {
     const state = appReducer(
       buildBaseState(),
@@ -124,7 +130,11 @@ describe("CgnDetailScreen", () => {
     const { getAllByText, getByText } = renderComponent(state);
     expect(getAllByText(I18n.t("bonus.cgn.name"))).toBeTruthy();
     expect(getByText(I18n.t("bonus.cgn.departmentName"))).toBeTruthy();
-    expect(getByText(I18n.t("bonus.cgn.detail.cta.discover"))).toBeTruthy();
+    const discountCTA = getByText(I18n.t("bonus.cgn.detail.cta.discover"));
+    expect(discountCTA).toBeTruthy();
+    fireEvent.press(discountCTA);
+    // Merchant screen title used to verify that the navigation to the merchant screen is working 
+    expect(getByText(I18n.t("bonus.cgn.merchantsList.screenTitle"))).toBeTruthy();
   });
 
   it("should render profile name on footer if provided", () => {
@@ -205,5 +215,62 @@ describe("CgnDetailScreen", () => {
     fireEvent.press(getByText(I18n.t("bonus.cgn.detail.empty.activateCta")));
     expect(mockDispatch).toHaveBeenCalledWith(loadAvailableBonuses.request());
     expect(mockDispatch).toHaveBeenCalledWith(cgnActivationStart());
+  });
+
+  it("should pass loadCGN to useActionOnFocus", () => {
+    const mockDispatch = jest.fn();
+    (useIODispatch as jest.Mock).mockReturnValue(mockDispatch);
+
+    const state = buildBaseState(true, activatedCard);
+    renderComponent(state);
+
+    expect(useActionOnFocus).toHaveBeenCalled();
+    const loadCGN = (useActionOnFocus as jest.Mock).mock.calls[0][0];
+    loadCGN();
+    expect(mockDispatch).toHaveBeenCalledWith(cgnDetails.request());
+    expect(mockDispatch).toHaveBeenCalledWith(cgnEycaStatus.request());
+  });
+
+  it("should call openWebUrl when EYCA discounts CTA is pressed", () => {
+    const openWebUrlSpy = jest
+      .spyOn(urlUtils, "openWebUrl")
+      .mockImplementation(jest.fn());
+
+    const state = buildBaseState(true, activatedCard);
+    const eycaState = appReducer(
+      state,
+      cgnEycaStatus.success({
+        status: "FOUND",
+        card: {
+          activation_date: new Date("2020-03-04"),
+          expiration_date: new Date("2037-02-20"),
+          status: ActivatedStatusEnum.ACTIVATED,
+          card_number: "W413-K096-O814-Z223" as CcdbNumber
+        }
+      })
+    );
+    const { getByText } = renderComponent(eycaState);
+    const eycaButton = getByText(
+      I18n.t("bonus.cgn.detail.cta.eyca.showEycaDiscounts")
+    );
+    fireEvent.press(eycaButton);
+
+    expect(openWebUrlSpy).toHaveBeenCalled();
+    openWebUrlSpy.mockRestore();
+  });
+
+  it("should dispatch loadCGN on retry when error screen is shown", () => {
+    const mockDispatch = jest.fn();
+    (useIODispatch as jest.Mock).mockReturnValue(mockDispatch);
+
+    const state = appReducer(
+      buildBaseState(),
+      cgnDetails.failure(getGenericError(new Error("cgn error")))
+    );
+    const { getByText } = renderComponent(state);
+    fireEvent.press(getByText(I18n.t("global.buttons.retry")));
+
+    expect(mockDispatch).toHaveBeenCalledWith(cgnDetails.request());
+    expect(mockDispatch).toHaveBeenCalledWith(cgnEycaStatus.request());
   });
 });
