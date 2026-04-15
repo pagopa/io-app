@@ -18,7 +18,9 @@ import { ITW_ROUTES } from "../../navigation/routes";
 import { useItwEidLifecycleAlertTracking } from "../hooks/useItwEidLifecycleAlertTracking";
 import {
   ItwJwtCredentialStatus,
-  StoredCredential
+  StoredCredential,
+  CredentialMetadata,
+  ItwJwtCredentialStatus
 } from "../utils/itwTypesUtils";
 
 const defaultLifecycleStatus: Array<ItwJwtCredentialStatus> = [
@@ -75,7 +77,7 @@ export const ItwEidLifecycleAlert = ({
     eid,
     eidStatus
   }: {
-    eid: StoredCredential;
+    eid: CredentialMetadata;
     eidStatus: ItwJwtCredentialStatus;
   }) => {
     const nameSpace = isItw ? "itw" : "documents";
