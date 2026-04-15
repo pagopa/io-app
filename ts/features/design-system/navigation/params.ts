@@ -37,6 +37,7 @@ export type DesignSystemParamsList = {
     .route]: undefined;
   [DESIGN_SYSTEM_ROUTES.FOUNDATION.COLOR.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.FOUNDATION.HAPTIC_FEEDBACK.route]: undefined;
+  [DESIGN_SYSTEM_ROUTES.FOUNDATION.HAPTIC_FEEDBACK_PULSAR.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.FOUNDATION.ICONS.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.FOUNDATION.LAYOUT.route]: undefined;
   [DESIGN_SYSTEM_ROUTES.FOUNDATION.LOADERS.route]: undefined;
