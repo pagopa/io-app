@@ -18,8 +18,8 @@ import { trackItwCredentialDelete } from "../analytics";
  * Hook that shows a confirmation dialog and, if confirmed, removes a credential from the wallet
  */
 export const useItwRemoveCredentialWithConfirm = (
-  position: ItwCredentialActionPosition = "screen",
-  credential: CredentialMetadata
+  credential: CredentialMetadata,
+  position: ItwCredentialActionPosition = "screen"
 ) => {
   const dispatch = useIODispatch();
   const toast = useIOToast();
