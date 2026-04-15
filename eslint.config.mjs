@@ -216,11 +216,6 @@ export default defineConfig([
         }
       ],
 
-      // CODE QUALITY (SONARJS)
-      "sonarjs/no-small-switch": "off",
-      "sonarjs/no-duplicate-string": "off",
-      "sonarjs/no-nested-template-literals": "warn",
-
       // INTERNATIONALISATION
       "i18next/no-literal-string": [
         "error",
