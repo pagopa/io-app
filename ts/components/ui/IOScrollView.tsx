@@ -43,29 +43,33 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue
 } from "react-native-reanimated";
-import { WithTestID } from "../../types/WithTestID";
+import { GuidedTour } from "../../features/tour/components/GuidedTour";
 import { useFooterActionsMargin } from "../../hooks/useFooterActionsMargin";
+import { WithTestID } from "../../types/WithTestID";
 import { useIOAlertVisible } from "../StatusMessages/IOAlertVisibleContext";
-import { ButtonBlockProps } from "./utils/buttons";
+import {
+  ButtonBlockProps,
+  ButtonBlockWithTourGuideProps
+} from "./utils/buttons";
 
 type ButtonLinkProps = Omit<IOButtonLinkSpecificProps, "color" | "variant">;
 
 export type IOScrollViewActions =
   | {
       type: "SingleButton";
-      primary: ButtonBlockProps;
+      primary: ButtonBlockWithTourGuideProps;
       secondary?: never;
       tertiary?: never;
     }
   | {
       type: "TwoButtons";
-      primary: ButtonBlockProps;
+      primary: ButtonBlockWithTourGuideProps;
       secondary: ButtonLinkProps;
       tertiary?: never;
     }
   | {
       type: "ThreeButtons";
-      primary: ButtonBlockProps;
+      primary: ButtonBlockWithTourGuideProps;
       secondary: ButtonBlockProps;
       tertiary: ButtonLinkProps;
     };
@@ -398,9 +402,14 @@ export const renderActionButtons = (
 
   return (
     <>
-      {primaryAction && (
-        <IOButton variant="solid" fullWidth {...primaryAction} />
-      )}
+      {primaryAction &&
+        (primaryAction.tourGuideProps ? (
+          <GuidedTour {...primaryAction.tourGuideProps}>
+            <IOButton variant="solid" fullWidth {...primaryAction} />
+          </GuidedTour>
+        ) : (
+          <IOButton variant="solid" fullWidth {...primaryAction} />
+        ))}
 
       {type === "TwoButtons" && (
         <View
