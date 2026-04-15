@@ -108,7 +108,9 @@ describe("credential card config", () => {
       CredentialType.RESIDENCY
     ];
     fallbackTypes.forEach(type => {
-      expect(getCredentialCardConfig(type)).toEqual(DEFAULT_CREDENTIAL_CARD_CONFIG);
+      expect(getCredentialCardConfig(type)).toEqual(
+        DEFAULT_CREDENTIAL_CARD_CONFIG
+      );
     });
   });
 

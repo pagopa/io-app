@@ -93,9 +93,7 @@ export const ItwCredentialCard = ({
     // Include "jwtExpired" as a valid status because credentials with this state
     // should not appear faded. Only the "expired" status should be displayed with reduced opacity.
     const isValid = [...validCredentialStatuses, "jwtExpired"].includes(status);
-    const baseColor = withL3Design
-      ? cardConfig.titleColor
-      : theme.textColor;
+    const baseColor = withL3Design ? cardConfig.titleColor : theme.textColor;
 
     if (needsItwUpgrade) {
       return {

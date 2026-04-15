@@ -4,7 +4,10 @@ import { StatusBarStyle } from "react-native";
 import { HeaderSecondLevelHookProps } from "../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../store/hooks";
 import { getLuminance } from "../../../../utils/color";
-import { getCredentialCardConfig, getCredentialBackgroundColor } from "../components/ItwCredentialCard/credentialCardConfig";
+import {
+  getCredentialCardConfig,
+  getCredentialBackgroundColor
+} from "../components/ItwCredentialCard/credentialCardConfig";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { getCredentialNameFromType } from "./itwCredentialUtils";
 import { CredentialType } from "./itwMocksUtils";

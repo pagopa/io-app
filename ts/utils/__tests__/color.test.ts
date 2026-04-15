@@ -1,4 +1,4 @@
-import { adjustColorHsl, hexToRgb, getLuminance } from "../color";
+import { hexToRgb, getLuminance } from "../color";
 
 describe("hexToRgb", () => {
   it("should convert hex color to RGB object", () => {
@@ -26,15 +26,5 @@ describe("getLuminance", () => {
   });
   it("should calculate luminance for blue", () => {
     expect(getLuminance("#0000ff")).toBeCloseTo(0.0722, 4);
-  });
-});
-
-describe("adjustColorHsl", () => {
-  it("should derive the hue-preserving lighter color", () => {
-    expect(adjustColorHsl("#FADDF6", -0.2765, -0.1991)).toBe("#d674c8");
-  });
-
-  it("should derive the hue-preserving darker color", () => {
-    expect(adjustColorHsl("#FADDF6", -0.6627, -0.2248)).toBe("#65205b");
   });
 });

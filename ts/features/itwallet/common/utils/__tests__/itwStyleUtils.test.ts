@@ -4,10 +4,7 @@ import { getThemeColorByCredentialType } from "../itwStyleUtils";
 describe("getThemeColorByCredentialType", () => {
   it("should keep the legacy mDL theme when L3 is disabled", () => {
     expect(
-      getThemeColorByCredentialType(
-        CredentialType.DRIVING_LICENSE,
-        false
-      )
+      getThemeColorByCredentialType(CredentialType.DRIVING_LICENSE, false)
     ).toEqual({
       backgroundColor: "#744C63",
       textColor: "#652035",
@@ -17,9 +14,7 @@ describe("getThemeColorByCredentialType", () => {
   });
 
   it("should use the redesigned PID palette when L3 is enabled", () => {
-    expect(
-      getThemeColorByCredentialType(CredentialType.PID, true)
-    ).toEqual({
+    expect(getThemeColorByCredentialType(CredentialType.PID, true)).toEqual({
       backgroundColor: "#EAF6FF",
       textColor: "#115486",
       statusBarStyle: "dark-content",
