@@ -24,7 +24,6 @@ import {
 const mockTrackItwCredentialTapBanner = jest.fn();
 const mockTrackItwCredentialBottomSheet = jest.fn();
 const mockTrackItwCredentialBottomSheetAction = jest.fn();
-const mockTrackCredentialRenewStart = jest.fn();
 const mockBottomSheetPresent = jest.fn();
 const mockBottomSheetDismiss = jest.fn();
 const mockNavigate = jest.fn();
@@ -42,12 +41,6 @@ jest.mock("../../analytics", () => ({
     mockTrackItwCredentialBottomSheet(properties),
   trackItwCredentialBottomSheetAction: (properties: unknown) =>
     mockTrackItwCredentialBottomSheetAction(properties)
-}));
-
-jest.mock("../../../../analytics", () => ({
-  ...jest.requireActual("../../../../analytics"),
-  trackCredentialRenewStart: (credential: unknown, properties: unknown) =>
-    mockTrackCredentialRenewStart(credential, properties)
 }));
 
 jest.mock("../../../../../../utils/url", () => ({
@@ -262,7 +255,7 @@ describe("ItwPresentationCredentialStatusAlert", () => {
     });
   });
 
-  it("tracks renew start from the expired or invalid bottom sheet update CTA", () => {
+  it("tracks the bottom sheet CTA from the invalid status update action", () => {
     mockBottomSheetModal();
 
     const selectorMock: ReturnType<
@@ -276,15 +269,19 @@ describe("ItwPresentationCredentialStatusAlert", () => {
       .spyOn(selectors, "itwCredentialStatusSelector")
       .mockImplementation(() => selectorMock);
 
-    const component = renderComponent();
+    const component = renderComponent({
+      storedStatusAssertion: {
+        credentialStatus: "invalid",
+        errorCode: "credential_invalid"
+      }
+    });
 
     fireEvent.press(component.getByText("Aggiorna il documento digitale"));
 
-    expect(mockTrackCredentialRenewStart).toHaveBeenCalledWith("ITW_PG_V2", {
-      credential_status: "not_valid",
-      position: "bottom_sheet"
+    expect(mockTrackItwCredentialBottomSheetAction).toHaveBeenCalledWith({
+      credential: "ITW_PG_V2",
+      credential_status: "not_valid"
     });
-    expect(mockTrackItwCredentialBottomSheetAction).not.toHaveBeenCalled();
   });
 });
 
