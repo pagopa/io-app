@@ -203,6 +203,7 @@ jest.mock("react-native/Libraries/TurboModule/TurboModuleRegistry", () => {
     getEnforcing: name => {
       // List of TurboModules libraries to mock.
       const modulesToMock = [
+        "IoReactNativeHttpClient",
         "RNDocumentPicker",
         "RNHapticFeedback",
         "RNCWebViewModule",
