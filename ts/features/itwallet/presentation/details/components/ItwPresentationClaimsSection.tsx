@@ -4,9 +4,9 @@ import {
   IconButton,
   useIOTheme
 } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { Fragment, useMemo } from "react";
 import { View } from "react-native";
-import I18n from "i18next";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import { ItwCredentialClaim } from "../../../common/components/ItwCredentialClaim.tsx";
 import { ItwIssuanceMetadata } from "../../../common/components/ItwIssuanceMetadata.tsx";
@@ -18,10 +18,10 @@ import {
   WellKnownClaim
 } from "../../../common/utils/itwClaimsUtils.ts";
 import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUtils.ts";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
 
 type ItwPresentationClaimsSectionProps = {
-  credential: StoredCredential;
+  credential: CredentialMetadata;
 };
 
 export const ItwPresentationClaimsSection = ({
