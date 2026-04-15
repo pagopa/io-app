@@ -18,9 +18,7 @@ import { ITW_ROUTES } from "../../navigation/routes";
 import { useItwEidLifecycleAlertTracking } from "../hooks/useItwEidLifecycleAlertTracking";
 import {
   ItwJwtCredentialStatus,
-  StoredCredential,
-  CredentialMetadata,
-  ItwJwtCredentialStatus
+  CredentialMetadata
 } from "../utils/itwTypesUtils";
 
 const defaultLifecycleStatus: Array<ItwJwtCredentialStatus> = [
