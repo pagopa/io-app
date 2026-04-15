@@ -33,6 +33,12 @@ jest.mock("react-native-haptic-feedback", () => ({
   trigger: jest.fn()
 }));
 
+jest.mock("react-native-pulsar", () => ({
+  Presets: {
+    System: new Proxy({}, { get: () => jest.fn() })
+  }
+}));
+
 // eslint-disable-next-line functional/immutable-data
 global.CanvasKit = {
   MakeCanvas: jest.fn(),
@@ -172,6 +178,7 @@ jest.mock("react-native/Libraries/TurboModule/TurboModuleRegistry", () => {
     getEnforcing: name => {
       // List of TurboModules libraries to mock.
       const modulesToMock = [
+        "IoReactNativeHttpClient",
         "RNDocumentPicker",
         "RNHapticFeedback",
         "RNCWebViewModule",
@@ -200,7 +207,9 @@ jest.mock(
     };
   }
 );
-jest.spyOn(AppState, "addEventListener").mockImplementation(() => ({remove: jest.fn()}));
+jest
+  .spyOn(AppState, "addEventListener")
+  .mockImplementation(() => ({ remove: jest.fn() }));
 
 jest.mock("mixpanel-react-native", () => ({
   __esModule: true,
