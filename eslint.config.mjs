@@ -124,6 +124,8 @@ export default defineConfig([
       ],
       "one-var": ["error", "never"],
       "object-shorthand": "error",
+      // TODO: Remove this property once the migration
+      // from class components is completed
       "max-classes-per-file": ["error", 1],
 
       // GENERAL JS SAFETY
