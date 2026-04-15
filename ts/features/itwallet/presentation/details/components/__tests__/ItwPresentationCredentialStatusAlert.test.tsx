@@ -33,6 +33,10 @@ describe("ItwPresentationCredentialStatusAlert", () => {
     MockDate.set(new Date(2025, 1, 1));
   });
 
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   afterAll(() => {
     MockDate.reset();
   });
@@ -98,9 +102,54 @@ describe("ItwPresentationCredentialStatusAlert", () => {
       expect(result).toBe(expected);
     }
   );
+
+  it("should render static copy and double CTA for the expired mDL status", () => {
+    const selectorMock: ReturnType<
+      typeof selectors.itwCredentialStatusSelector
+    > = {
+      status: "expired",
+      message: mockMessage
+    };
+
+    jest
+      .spyOn(selectors, "itwCredentialStatusSelector")
+      .mockImplementation(() => selectorMock);
+
+    const component = renderComponent();
+
+    expect(component.getByText("Quali documenti devo preparare?")).toBeTruthy();
+    expect(component.getByText("Hai già rinnovato il documento?")).toBeTruthy();
+    expect(component.getByText("Aggiorna il documento digitale")).toBeTruthy();
+    expect(component.getByText("Rimuovi dal Portafoglio")).toBeTruthy();
+  });
+
+  it("should render only the double CTA for the invalid mDL status", () => {
+    const selectorMock: ReturnType<
+      typeof selectors.itwCredentialStatusSelector
+    > = {
+      status: "invalid",
+      message: mockMessage
+    };
+
+    jest
+      .spyOn(selectors, "itwCredentialStatusSelector")
+      .mockImplementation(() => selectorMock);
+
+    const component = renderComponent({
+      storedStatusAssertion: {
+        credentialStatus: "invalid",
+        errorCode: "credential_invalid"
+      }
+    });
+
+    expect(component.queryByText("Quali documenti devo preparare?")).toBeNull();
+    expect(component.queryByText("Hai già rinnovato il documento?")).toBeNull();
+    expect(component.getByText("Aggiorna il documento digitale")).toBeTruthy();
+    expect(component.getByText("Rimuovi dal Portafoglio")).toBeTruthy();
+  });
 });
 
-function renderComponent() {
+function renderComponent(credentialOverride: Partial<StoredCredential> = {}) {
   const mockedMdl: StoredCredential = {
     credential: "",
     credentialType: "mDL",
@@ -117,12 +166,13 @@ function renderComponent() {
     },
     spec_version: "1.0.0"
   };
+  const credential: StoredCredential = { ...mockedMdl, ...credentialOverride };
 
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
       <ItwCredentialIssuanceMachineProvider>
-        <ItwPresentationCredentialStatusAlert credential={mockedMdl} />
+        <ItwPresentationCredentialStatusAlert credential={credential} />
       </ItwCredentialIssuanceMachineProvider>
     ),
     ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,

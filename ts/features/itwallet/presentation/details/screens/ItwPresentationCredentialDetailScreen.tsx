@@ -63,6 +63,7 @@ import {
   CredentialCtaProps,
   ItwPresentationDetailsScreenBase
 } from "../components/ItwPresentationDetailsScreenBase.tsx";
+import { shouldShowMdlUpdateDigitalCredential } from "../utils";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -191,9 +192,10 @@ export const ItwPresentationCredentialDetail = ({
     () => getMixPanelCredential(credential.credentialType, isL3Credential),
     [credential.credentialType, isL3Credential]
   );
-  const shouldShowMdlUpdateCta =
-    credential.credentialType === CredentialType.DRIVING_LICENSE &&
-    (status === "expired" || status === "invalid");
+  const shouldShowMdlUpdateCta = shouldShowMdlUpdateDigitalCredential(
+    credential,
+    status
+  );
 
   useDebugInfo(credential);
   usePreventScreenCapture();
