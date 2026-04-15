@@ -1,12 +1,13 @@
 import {
+  AuthorizationDetail,
   createCryptoContextFor,
   ItwVersion
 } from "@pagopa/io-react-native-wallet";
 import { type IdentificationContext } from "../../machine/eid/context";
 import {
   CredentialAccessToken,
-  IssuerConfiguration,
-  StoredCredential
+  CredentialBundle,
+  IssuerConfiguration
 } from "./itwTypesUtils";
 import {
   DPOP_KEYTAG,
@@ -20,13 +21,20 @@ import { AuthorizedCredentialMetadata } from "./itwCredentialIssuanceUtils";
 
 const CREDENTIAL_TYPE = "PersonIdentificationData";
 
-type StartAuthFlowParams = {
+type StartAuthFlow = (params: {
   env: Env;
   itwVersion: ItwVersion;
   walletAttestation: string;
   identification: IdentificationContext;
   withMRTDPoP: boolean;
-};
+}) => Promise<{
+  authUrl: string;
+  issuerConf: IssuerConfiguration;
+  clientId: string;
+  codeVerifier: string;
+  credentialDefinition: AuthorizationDetail;
+  redirectUri: string;
+}>;
 
 /**
  * Function to start the authentication flow. It must be invoked before
@@ -40,13 +48,13 @@ type StartAuthFlowParams = {
  * @param withMRTDPoP - Whether to use MRTD PoP proof or not.
  * @returns Authentication params to use when completing the flow.
  */
-const startAuthFlow = async ({
+const startAuthFlow: StartAuthFlow = async ({
   env,
   itwVersion,
   walletAttestation,
   identification,
   withMRTDPoP
-}: StartAuthFlowParams) => {
+}) => {
   const ioWallet = getIoWallet(itwVersion);
 
   const idpHint = getIdpHint(identification, env);
@@ -89,14 +97,16 @@ const startAuthFlow = async ({
   };
 };
 
-export type CompleteAuthFlowParams = {
+export type CompleteAuthFlow = (args: {
   callbackUrl: string;
   itwVersion: ItwVersion;
   issuerConf: IssuerConfiguration;
   codeVerifier: string;
   walletAttestation: string;
   redirectUri: string;
-};
+}) => Promise<{
+  accessToken: CredentialAccessToken;
+}>;
 
 /**
  * Function to complete the authentication flow. It must be invoked after `startAuthFlow`
@@ -106,14 +116,14 @@ export type CompleteAuthFlowParams = {
  * @param callbackUrl - The callback url from which the code to get the access token is extracted.
  * @returns The access token with the authorized credentials.
  */
-const completeAuthFlow = async ({
+const completeAuthFlow: CompleteAuthFlow = async ({
   callbackUrl,
   codeVerifier,
   issuerConf,
   walletAttestation,
   redirectUri,
   itwVersion
-}: CompleteAuthFlowParams) => {
+}) => {
   const ioWallet = getIoWallet(itwVersion);
   const { code } =
     await ioWallet.CredentialIssuance.completeUserAuthorizationWithQueryMode(
@@ -139,26 +149,26 @@ const completeAuthFlow = async ({
   return { accessToken };
 };
 
-export type PidIssuanceParams = {
+export type GetPid = (args: {
   itwVersion: ItwVersion;
   issuerConf: IssuerConfiguration;
   accessToken: CredentialAccessToken;
   clientId: string;
   authorizedCredential: AuthorizedCredentialMetadata;
-};
+}) => Promise<CredentialBundle>;
 
 /**
- * Function to get the PID, parse it and return it in {@link StoredCredential} format.
+ * Function to get the PID, parse it and return it in {@link CredentialBundle} format.
  * It must be called after `startAuthFlow` and `completeAuthFlow`.
  * @returns The stored credential.
  */
-const getPid = async ({
+const getPid: GetPid = async ({
   itwVersion,
   issuerConf,
   clientId,
   accessToken,
   authorizedCredential
-}: PidIssuanceParams): Promise<StoredCredential> => {
+}) => {
   const ioWallet = getIoWallet(itwVersion);
 
   const {
@@ -196,20 +206,26 @@ const getPid = async ({
     );
 
   return {
-    parsedCredential,
-    issuerConf,
-    keyTag,
-    credentialType: CREDENTIAL_TYPE,
-    credentialId: credential_configuration_id,
-    format,
     credential,
-    jwt: {
-      expiration: expiration.toISOString(),
-      issuedAt: issuedAt?.toISOString()
-    },
-    spec_version: ioWallet.version,
-    verification: extractVerification({ format, credential, parsedCredential }),
-    walletUnitAttestationId
+    metadata: {
+      parsedCredential,
+      issuerConf,
+      keyTag,
+      credentialType: CREDENTIAL_TYPE,
+      credentialId: credential_configuration_id,
+      format,
+      jwt: {
+        expiration: expiration.toISOString(),
+        issuedAt: issuedAt?.toISOString()
+      },
+      spec_version: itwVersion,
+      verification: extractVerification({
+        format,
+        credential,
+        parsedCredential
+      }),
+      walletUnitAttestationId
+    }
   };
 };
 

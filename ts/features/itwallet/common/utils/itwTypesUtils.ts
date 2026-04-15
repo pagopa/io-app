@@ -87,11 +87,12 @@ export type StoredStatusAssertion =
     };
 
 /**
- * Type for a stored credential.
+ * Credential's metadata for UI rendering and management.
+ * Represents the type for the stored credentials in the wallet.
+ * Does not include the actual credential cryptographic material.
  */
-export type StoredCredential = {
+export type CredentialMetadata = {
   keyTag: string;
-  credential: string;
   format: string;
   parsedCredential: ParsedCredential;
   credentialType: string;
@@ -115,6 +116,23 @@ export type StoredCredential = {
    * Only credentials issued with the newer IT-Wallet specs contain this field.
    */
   walletUnitAttestationId?: string;
+};
+
+/**
+ * Credentials's metadata along with the cryptographic material.
+ * Represents the type for the output of the credential issuance process before it is stored.
+ * Conveniently splitted in two parts for easier handling and storage optimization.
+ */
+export type CredentialBundle = {
+  /**
+   * The credential's cryptographic material in SD-JWT/MDOC format.
+   */
+  credential: string;
+
+  /**
+   * The credential's metadata for UI rendering and management.
+   */
+  metadata: CredentialMetadata;
 };
 
 // Digital credential status
@@ -158,7 +176,7 @@ const MULTI_LEVEL_CREDENTIAL_TYPES = [
  * @returns `true` if the credential is multi-level, `false` otherwise.
  */
 export const isMultiLevelCredential = (
-  credential: StoredCredential
+  credential: CredentialMetadata
 ): boolean => {
   const { credentialType, parsedCredential } = credential;
   const isMultiLevel = MULTI_LEVEL_CREDENTIAL_TYPES.includes(

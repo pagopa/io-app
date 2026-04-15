@@ -1,7 +1,9 @@
 import {
   CredentialAccessToken,
+  CredentialBundle,
+  CredentialMetadata,
   IssuerConfiguration,
-  StoredCredential
+  WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
 import { EidIssuanceMode } from "../eid/context";
 import { Input } from "./input";
@@ -10,15 +12,15 @@ export type Context = {
   /**
    * The wallet instance attestation obtained during the PID upgrade
    */
-  walletInstanceAttestation: string;
+  walletInstanceAttestation: WalletInstanceAttestations | undefined;
   /**
    * The upgrade PID credential
    */
-  pid: StoredCredential;
+  pid: CredentialBundle | undefined;
   /**
    * Credentials that must be upgraded to L3
    */
-  credentials: ReadonlyArray<StoredCredential>;
+  credentials: ReadonlyArray<CredentialMetadata>;
   /**
    * The index of the current credential being processed
    */
@@ -26,25 +28,28 @@ export type Context = {
   /**
    * Credentials that failed the upgrade process
    */
-  failedCredentials: ReadonlyArray<StoredCredential>;
+  failedCredentials: ReadonlyArray<CredentialMetadata>;
   /**
    * The issuance mode considered by the credential upgrade machine.
    * - "upgrade": upgrade from Documenti su IO to IT Wallet, upgrading also owned credentials.
    * - "reissuance": reissuing the eID on Documenti su IO, reissuing also owned credentials.
    */
   issuanceMode: EidIssuanceMode;
-  integrityKeyTag: string;
-  issuerConf?: IssuerConfiguration;
-  accessToken?: CredentialAccessToken;
-  clientId?: string;
+  integrityKeyTag: string | undefined;
+  issuerConf: IssuerConfiguration | undefined;
+  accessToken: CredentialAccessToken | undefined;
+  clientId: string | undefined;
 };
 
 export const getInitialContext = (input: Input): Context => ({
-  walletInstanceAttestation: input.walletInstanceAttestation,
-  pid: input.pid,
+  walletInstanceAttestation: undefined,
+  pid: undefined,
   credentials: input.credentials,
   credentialIndex: -1,
   failedCredentials: [],
   issuanceMode: input.issuanceMode,
-  integrityKeyTag: input.integrityKeyTag
+  integrityKeyTag: undefined,
+  issuerConf: undefined,
+  accessToken: undefined,
+  clientId: undefined
 });

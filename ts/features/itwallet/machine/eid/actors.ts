@@ -7,10 +7,6 @@ import { assert } from "../../../../utils/assert";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import * as cieUtils from "../../../authentication/login/cie/utils/cie";
 import { trackItwRequest } from "../../analytics";
-import {
-  trackWalletInstanceRenewalFailure,
-  trackWalletInstanceRenewalSuccess
-} from "../../issuance/analytics";
 import { Env } from "../../common/utils/environment";
 import {
   getWalletInstanceAttestation,
@@ -18,26 +14,35 @@ import {
   registerWalletInstance
 } from "../../common/utils/itwAttestationUtils";
 import { isAssertionGenerationError } from "../../common/utils/itwFailureUtils";
+import { getIoWallet } from "../../common/utils/itwIoWallet";
 import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
 import { revokeCurrentWalletInstance } from "../../common/utils/itwRevocationUtils";
 import {
   CredentialAccessToken,
-  StoredCredential,
+  CredentialBundle,
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
 import * as mrtdUtils from "../../common/utils/mrtd";
+import { itwCredentialsReplaceByType } from "../../credentials/store/actions";
+import { CredentialsVault } from "../../credentials/utils/vault";
+import {
+  trackWalletInstanceRenewalFailure,
+  trackWalletInstanceRenewalSuccess
+} from "../../issuance/analytics";
 import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
-import { itwSetWalletInstanceRenewalError } from "../../walletInstance/store/actions";
-import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
-import { getIoWallet } from "../../common/utils/itwIoWallet";
-import { generateKeysWithWalletUnitAttestation } from "../../common/utils/itwCredentialIssuanceUtils";
-import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../common/utils/itwStoreUtils";
+import {
+  itwSetWalletInstanceRenewalError,
+  itwWalletUnitAttestationsStore
+} from "../../walletInstance/store/actions";
+import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
 import { createCredentialUpgradeActionsImplementation } from "../upgrade/actions";
 import { createCredentialUpgradeActorsImplementation } from "../upgrade/actors";
 import { itwCredentialUpgradeMachine } from "../upgrade/machine";
 import { createCommonActorsImplementation } from "../utils/actors";
+import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../common/utils/itwStoreUtils";
+import { generateKeysWithWalletUnitAttestation } from "../../common/utils/itwCredentialIssuanceUtils";
 import type {
   AuthenticationContext,
   CieContext,
@@ -60,7 +65,7 @@ export type RequestEidActorParams = {
 };
 
 export type RequestEidActorOutput = {
-  credential: StoredCredential;
+  credential: CredentialBundle;
   walletUnitAttestations: Record<string, string>;
 };
 
@@ -83,6 +88,11 @@ export type ValidateMrtdPoPChallengeActorParams = {
 
 export type GetWalletAttestationActorParams = {
   integrityKeyTag: string | undefined;
+};
+
+export type StoreEidCredentialActorParams = {
+  eid: CredentialBundle | undefined;
+  walletUnitAttestations?: Record<string, string>;
 };
 
 /**
@@ -230,6 +240,10 @@ export const createEidIssuanceActorsImplementation = (
       sessionToken,
       integrityKeyTag.value
     );
+
+    // Removes all credentials stored in the secure storage, as they are all linked
+    // to the revoked wallet instance
+    await CredentialsVault.clear();
   }),
 
   startAuthFlow: fromPromise<AuthenticationContext, StartAuthFlowActorParams>(
@@ -369,6 +383,27 @@ export const createEidIssuanceActorsImplementation = (
             ? { [walletUnitAttestationId]: walletUnitAttestation }
             : {}
       };
+    }
+  ),
+
+  storeEidCredential: fromPromise<void, StoreEidCredentialActorParams>(
+    async ({ input }) => {
+      const { eid, walletUnitAttestations } = input;
+      assert(eid, "eID credential is undefined");
+
+      // Waits for the credential store/replace to complete before proceeding
+      await new Promise<void>((resolve, reject) => {
+        store.dispatch(
+          itwCredentialsReplaceByType([eid], {
+            onComplete: resolve,
+            onError: reject
+          })
+        );
+      });
+
+      if (walletUnitAttestations) {
+        store.dispatch(itwWalletUnitAttestationsStore(walletUnitAttestations));
+      }
     }
   ),
 
