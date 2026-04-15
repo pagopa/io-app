@@ -31,7 +31,7 @@ export const ItwMiscSection = () => {
     {
       label: "Lista credenziali da catalogo",
       description:
-        "Ottiene la lista delle credenziali disponibili dal catalogo invece di usare una lista fissa.",
+        "Se abilitato, la lista delle credenziali disponibili è ottenuta dal catalogo; altrimenti è una lista fissa.",
       value: isCatalogueEnabledForCredentialsList,
       onSwitchValueChange: value =>
         dispatch(itwSetCatalogueEnabledForCredentialsList(value))

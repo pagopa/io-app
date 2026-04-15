@@ -18,7 +18,7 @@ export type CredentialsListEntry = {
   name: string;
 };
 
-const EMPTY_ARRAY = [] as ReadonlyArray<CredentialsListEntry>;
+const EMPTY_ARRAY: ReadonlyArray<CredentialsListEntry> = [];
 
 /**
  * Hardcoded list of all obtainable credentials. When the credentials catalogue is not enabled,
