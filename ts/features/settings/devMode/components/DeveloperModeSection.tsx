@@ -579,9 +579,8 @@ const DeveloperTestEnvironmentSection = ({
       onSwitchValueChange: onActiveSessionLoginToggle
     },
     {
-      label: "activate FCI L3 test environment",
-      description:
-        "attivando questo flag durante una richiesta di firma, se non possiedi il livello di sicurezza L3 verrà attivato il flusso di login a sessione attiva",
+      label: I18n.t("features.fci.requestL3.localFlag.title"),
+      description: I18n.t("features.fci.requestL3.localFlag.description"),
       value: fciL3LocalFeatureFlag,
       onSwitchValueChange: onFciSecurityLevelLocalFlagToggleChange
     }

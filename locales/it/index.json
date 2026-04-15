@@ -2872,6 +2872,12 @@
       "signatureFieldInfo": {
         "title": "Cosa sono le clausole vessatorie?",
         "subTitle": "Sono delle clausole che segnalano condizioni particolari a cui prestare attenzione e che devono essere accettate. Devono inoltre essere, per legge, facilmente identificabili per far sì che chi firma sia informato del loro contenuto prima di apporre la firma."
+      },
+      "requestL3": {
+        "localFlag": {
+          "title": "Attivazione check L3 per il flusso di firma",
+          "description": "Attivando questo toggle attivi il check L3 per il flusso di firma, che prevede una nuova login L3 per gli utenti che non possiedono il livello di autenticazione L3 (CIE + PIN)"
+        }
       }
     },
     "wallet": {
