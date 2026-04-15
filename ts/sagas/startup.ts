@@ -77,7 +77,7 @@ import { checkAcknowledgedFingerprintSaga } from "../features/onboarding/saga/bi
 import { completeOnboardingSaga } from "../features/onboarding/saga/completeOnboardingSaga";
 import { watchAbortOnboardingSaga } from "../features/onboarding/saga/watchAbortOnboardingSaga";
 import { watchPaymentsSaga } from "../features/payments/common/saga";
-import { watchAarFlowSaga } from "../features/pn/aar/saga/watchAARFlowSaga";
+import { watchAarFlowSaga } from "../features/pn/aar/saga/watchAarFlowSaga";
 import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { notificationPermissionsListener } from "../features/pushNotifications/sagas/notificationPermissionsListener";
 import { profileAndSystemNotificationsPermissions } from "../features/pushNotifications/sagas/profileAndSystemNotificationsPermissions";
