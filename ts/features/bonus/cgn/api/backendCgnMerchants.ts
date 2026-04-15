@@ -22,7 +22,7 @@ import {
 import { tokenHeaderProducer, withBearerToken } from "../../../../utils/api";
 import { defaultRetryingFetch } from "../../../../utils/fetch";
 
-const BASE_URL = "/api/v1/cgn/operator-search";
+const BASE_URL = "/api/cgn-search/v1";
 
 const getMerchantsCount: CountT = {
   method: "get",
