@@ -7,8 +7,6 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent.tsx";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
@@ -41,25 +39,17 @@ export const ItwProximityClaimsDisclosureScreen = () => {
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
-  return pipe(
-    proximityDetails,
-    O.fromNullable,
-    O.fold(
-      // If proximityDetails is not present in the context, we can safely assume that the loading phase is still in progress.
-      // An undefined proximityDetails cannot be stored in the context, as any failure causes the machine to transition
-      // to the Failure state.
-      () => (
-        <LoadingScreenContent
-          title={I18n.t(
-            "features.itWallet.presentation.proximity.loadingScreen.title"
-          )}
-          subtitle={I18n.t(
-            "features.itWallet.presentation.proximity.loadingScreen.subtitle"
-          )}
-        />
-      ),
-      details => <ContentView proximityDetails={details} />
-    )
+  return proximityDetails ? (
+    <ContentView proximityDetails={proximityDetails} />
+  ) : (
+    <LoadingScreenContent
+      title={I18n.t(
+        "features.itWallet.presentation.proximity.loadingScreen.title"
+      )}
+      subtitle={I18n.t(
+        "features.itWallet.presentation.proximity.loadingScreen.subtitle"
+      )}
+    />
   );
 };
 
