@@ -166,23 +166,26 @@ export default defineConfig([
       "@typescript-eslint/restrict-plus-operands": "error",
 
       // REACT
-      "react/react-in-jsx-scope": "off",
       "react/jsx-uses-react": "off",
       "react/prop-types": "off",
-      "react/display-name": "off",
       "react/jsx-key": "error",
+      // Less relevant rule with contemporary React with hooks
       "react/jsx-no-bind": [
         "error",
         {
           allowArrowFunctions: true
         }
       ],
+      // It could highlight performance issues,
+      // with some noise on trivial cases
       "react/no-unstable-nested-components": [
         "off",
         {
           allowAsProps: true
         }
       ],
+      // TODO: Remove these two properties once the migration
+      // from class components is completed
       "react/no-direct-mutation-state": "off",
       "react/require-render-return": "off",
 
