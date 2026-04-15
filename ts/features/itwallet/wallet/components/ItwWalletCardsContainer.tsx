@@ -1,4 +1,4 @@
-import { ListItemHeader, VSpacer, VStack } from "@pagopa/io-app-design-system";
+import { ListItemHeader, VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
@@ -92,20 +92,18 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
 
   const sectionHeader = useMemo((): React.ReactElement => {
     if (isNewItwRenderable) {
+      const isStacked = cards.length > 0;
       return (
-        <>
-          <View style={styles.idWrapper}>
-            <GuidedTour
-              groupId={ITW_TOUR_GROUP_ID}
-              index={ITW_TOUR_STEP_ID}
-              title={I18n.t("features.itWallet.tour.id.title")}
-              description={I18n.t("features.itWallet.tour.id.description")}
-            >
-              <ItwWalletIdCard />
-            </GuidedTour>
-          </View>
-          <VSpacer size={16} />
-        </>
+        <View style={[styles.idWrapper, isStacked && styles.idWrapperStacked]}>
+          <GuidedTour
+            groupId={ITW_TOUR_GROUP_ID}
+            index={ITW_TOUR_STEP_ID}
+            title={I18n.t("features.itWallet.tour.id.title")}
+            description={I18n.t("features.itWallet.tour.id.description")}
+          >
+            <ItwWalletIdCard />
+          </GuidedTour>
+        </View>
       );
     }
     return (
@@ -129,7 +127,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
         }}
       />
     );
-  }, [iconColor, isNewItwRenderable, eidInfoBottomSheet.present]);
+  }, [iconColor, isNewItwRenderable, eidInfoBottomSheet.present, cards.length]);
 
   return (
     <View>
@@ -147,20 +145,24 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
         {/* Dummy view to add space in case there is another component */}
         <View />
       </VStack>
-      <View style={styles.cardsWrapper}>
-        <GuidedTour
-          groupId={ITW_TOUR_GROUP_ID}
-          index={ITW_TOUR_STEP_CREDENTIALS}
-          title={I18n.t("features.itWallet.tour.credentials.title")}
-          description={I18n.t("features.itWallet.tour.credentials.description")}
-        >
-          <WalletCardsCategoryContainer
-            key={`cards_category_itw`}
-            testID={`itwWalletCardsContainerTestID`}
-            cards={cards}
-          />
-        </GuidedTour>
-      </View>
+      {cards.length > 0 && (
+        <View style={styles.cardsWrapper}>
+          <GuidedTour
+            groupId={ITW_TOUR_GROUP_ID}
+            index={ITW_TOUR_STEP_CREDENTIALS}
+            title={I18n.t("features.itWallet.tour.credentials.title")}
+            description={I18n.t(
+              "features.itWallet.tour.credentials.description"
+            )}
+          >
+            <WalletCardsCategoryContainer
+              key={`cards_category_itw`}
+              testID={`itwWalletCardsContainerTestID`}
+              cards={cards}
+            />
+          </GuidedTour>
+        </View>
+      )}
       {eidInfoBottomSheet.bottomSheet}
     </View>
   );
@@ -168,7 +170,11 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
 
 const styles = StyleSheet.create({
   idWrapper: {
-    marginHorizontal: -8
+    marginHorizontal: -8,
+    aspectRatio: 16 / 10
+  },
+  idWrapperStacked: {
+    aspectRatio: 16 / 3
   },
   cardsWrapper: {
     marginHorizontal: -8
