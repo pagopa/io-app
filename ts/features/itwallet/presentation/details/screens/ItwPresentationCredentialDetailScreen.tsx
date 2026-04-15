@@ -31,8 +31,8 @@ import {
 import { WellKnownClaim } from "../../../common/utils/itwClaimsUtils.ts";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import {
-  isMultiLevelCredential,
-  StoredCredential
+  CredentialMetadata,
+  isMultiLevelCredential
 } from "../../../common/utils/itwTypesUtils.ts";
 import {
   itwCredentialSelector,
@@ -170,7 +170,7 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
 };
 
 type ItwPresentationCredentialDetailProps = {
-  credential: StoredCredential;
+  credential: CredentialMetadata;
 };
 
 /**

@@ -10,8 +10,8 @@ import { getMixPanelCredential } from "../../../analytics/utils";
 import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import {
-  ItwCredentialStatus,
-  StoredCredential
+  CredentialMetadata,
+  ItwCredentialStatus
 } from "../../../common/utils/itwTypesUtils";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes";
@@ -29,7 +29,7 @@ type IssuerDynamicErrorBottomSheetContentConfig = {
 };
 
 type UseItwIssuerDynamicErrorBottomSheetParams = {
-  credential: StoredCredential;
+  credential: CredentialMetadata;
   localizedMessage: { title: string; description: string };
   status?: ItwCredentialStatus;
 };
@@ -45,7 +45,7 @@ type UseItwIssuerDynamicErrorBottomSheetParams = {
  * - any other mDL status falls back to the single remove action
  */
 export const getIssuerDynamicErrorBottomSheetContentConfig = (
-  credential: StoredCredential,
+  credential: CredentialMetadata,
   status?: ItwCredentialStatus
 ): IssuerDynamicErrorBottomSheetContentConfig => {
   const { credentialType } = credential;
