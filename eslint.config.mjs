@@ -172,6 +172,7 @@ export default defineConfig([
       // REACT
       "react/jsx-uses-react": "off",
       "react/prop-types": "off",
+      "react/jsx-key": "error",
       // Less relevant rule with contemporary React with hooks
       "react/jsx-no-bind": [
         "error",
@@ -200,6 +201,9 @@ export default defineConfig([
 
       // ACCESSIBILITY
       "react-native-a11y/has-accessibility-hint": "off",
+
+      // SONAR
+      "sonarjs/no-nested-template-literals": "warn",
 
       // FUNCTIONAL PROGRAMMING
       "functional/no-let": "error",
