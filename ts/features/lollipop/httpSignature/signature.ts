@@ -16,7 +16,7 @@ function getHttpSignatureHeaderParameterFromConfig(
   config: SignatureConfig
 ): string {
   // eslint-disable-next-line functional/no-let
-  let returnString = "";
+  let returnString: string;
   switch (headerParameter.toLowerCase()) {
     case "@method":
       returnString = config.signatureComponents.method;
@@ -115,7 +115,9 @@ function generateSignatureBase(
 
     return { signatureBase: baseString, signatureInput };
   } catch (e) {
-    throw new Error(`Error creating signature base: ${getError(e).message}`);
+    throw new Error(`Error creating signature base: ${getError(e).message}`, {
+      cause: e
+    });
   }
 }
 

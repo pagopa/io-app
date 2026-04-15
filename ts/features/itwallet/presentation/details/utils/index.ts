@@ -1,7 +1,9 @@
 import {
   ItwCredentialStatus,
-  ItwJwtCredentialStatus
+  ItwJwtCredentialStatus,
+  StoredCredential
 } from "../../../common/utils/itwTypesUtils";
+import { CredentialType } from "../../../common/utils/itwMocksUtils";
 
 const EXCLUDED_CREDENTIAL_STATUSES: ReadonlyArray<ItwCredentialStatus> = [
   "expired",
@@ -52,4 +54,23 @@ export const getItwDisplayCredentialStatus = (
 
   // Default: eid valid and online → keep real status
   return credentialStatus;
+};
+
+export const shouldShowMdlUpdateDigitalCredential = (
+  credential: StoredCredential,
+  status?: ItwCredentialStatus
+) => {
+  if (credential.credentialType !== CredentialType.DRIVING_LICENSE) {
+    return false;
+  }
+
+  if (status === "expired") {
+    return true;
+  }
+
+  return (
+    status === "invalid" &&
+    credential.storedStatusAssertion?.credentialStatus === "invalid" &&
+    credential.storedStatusAssertion.errorCode === "credential_invalid"
+  );
 };

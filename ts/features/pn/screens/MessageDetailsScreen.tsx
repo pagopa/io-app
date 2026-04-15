@@ -24,12 +24,12 @@ import {
 } from "../../pushNotifications/analytics";
 import { profileFiscalCodeSelector } from "../../settings/common/store/selectors";
 import {
-  trackSendAARFailure,
+  trackSendAarFailure,
   trackSendAarNotificationClosure
 } from "../aar/analytics";
-import { SendAARMessageDetailBottomSheetComponent } from "../aar/components/SendAARMessageDetailBottomSheetComponent";
+import { SendAarMessageDetailBottomSheetComponent } from "../aar/components/SendAarMessageDetailBottomSheetComponent";
 import { terminateAarFlow } from "../aar/store/actions";
-import { sendAARFlowStates } from "../aar/utils/stateUtils";
+import { sendAarFlowStates } from "../aar/utils/stateUtils";
 import { trackPNUxSuccess } from "../analytics";
 import { MessageDetails } from "../components/MessageDetails";
 import { PnParamsList } from "../navigation/params";
@@ -170,7 +170,7 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
         dispatch(
           terminateAarFlow({
             messageId,
-            currentFlowState: sendAARFlowStates.displayingNotificationData
+            currentFlowState: sendAarFlowStates.displayingNotificationData
           })
         );
       }
@@ -192,7 +192,7 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
         sendUserType
       );
     } else if (isAarMessage) {
-      trackSendAARFailure(
+      trackSendAarFailure(
         "Show Notification",
         "Screen rendering with undefined SEND message",
         undefined
@@ -243,7 +243,7 @@ export const MessageDetailsScreen = ({ route }: MessageDetailsRouteProps) => {
         sendUserType={sendUserType}
       />
       {isAarMessage && (
-        <SendAARMessageDetailBottomSheetComponent
+        <SendAarMessageDetailBottomSheetComponent
           aarBottomSheetRef={aarBottomSheetRef}
           sendUserType={sendUserType}
         />
