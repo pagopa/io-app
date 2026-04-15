@@ -47,6 +47,7 @@ import { fciDocumentSignaturesSelector } from "../store/reducers/fciDocumentSign
 import { KeyInfo } from "../../lollipop/utils/crypto";
 import { createFciClient } from "../api/backendFci";
 import { spidLevelShortSelector } from "../../authentication/common/store/selectors";
+import { fciSecurityLevelLocalFeatureFlagSelector } from "../store/reducers/fciSecurityLevelReducer";
 import { handleGetSignatureRequestById } from "./networking/handleGetSignatureRequestById";
 import { handleGetQtspMetadata } from "./networking/handleGetQtspMetadata";
 import { handleCreateFilledDocument } from "./networking/handleCreateFilledDocument";
@@ -176,39 +177,50 @@ function* watchFciQtspClausesSaga(): SagaIterator {
   }
 }
 
+function* standardFciFlowStartSaga(): SagaIterator {
+  yield* call(
+    NavigationService.dispatchNavigationAction,
+    StackActions.replace(FCI_ROUTES.MAIN, {
+      screen: FCI_ROUTES.DOCUMENTS,
+      params: {
+        attrs: undefined
+      }
+    })
+  );
+  // when the user start signing flow
+  // start a request to get the QTSP metadata
+  // this is needed to get the document_url
+  // that will be used to create the filled document
+  yield* put(fciLoadQtspClauses.request());
+
+  // start a request to get the metadata
+  // this is needed to get the service_id
+  yield* put(fciMetadataRequest.request());
+}
+
 /**
  * Handle the FCI start requests saga
  * TODO (POC): For production, consider refactoring to separate saga
  */
 function* watchFciStartSaga(): SagaIterator {
   const spidLevel = yield* select(spidLevelShortSelector);
+  const l3LocalFlag = yield* select(fciSecurityLevelLocalFeatureFlagSelector);
 
-  if (spidLevel === "L3") {
-    yield* call(
-      NavigationService.dispatchNavigationAction,
-      StackActions.replace(FCI_ROUTES.MAIN, {
-        screen: FCI_ROUTES.DOCUMENTS,
-        params: {
-          attrs: undefined
-        }
-      })
-    );
-    // when the user start signing flow
-    // start a request to get the QTSP metadata
-    // this is needed to get the document_url
-    // that will be used to create the filled document
-    yield* put(fciLoadQtspClauses.request());
-
-    // start a request to get the metadata
-    // this is needed to get the service_id
-    yield* put(fciMetadataRequest.request());
+  if (!l3LocalFlag) {
+    yield* call(standardFciFlowStartSaga);
+    return;
   } else {
+    if (spidLevel === "L3") {
+      yield* call(standardFciFlowStartSaga);
+      return;
+    }
     yield* call(
       NavigationService.dispatchNavigationAction,
       StackActions.push(FCI_ROUTES.MAIN, {
         screen: FCI_ROUTES.FCI_LOGIN_L3
       })
     );
+    return;
   }
 }
 

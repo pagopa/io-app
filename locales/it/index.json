@@ -2801,6 +2801,10 @@
           "title": "NFC non disponibile",
           "subTitle": "Per firmare i documenti è necessario un dispositivo con NFC. Verifica le impostazioni del tuo dispositivo o usa un altro telefono."
         },
+        "localFlag": {
+          "title": "Attivazione check L3 per il flusso di firma",
+          "description": "Attivando questo toggle attivi il check L3 per il flusso di firma, che prevede una nuova login L3 per gli utenti che non possiedono il livello di autenticazione L3 (CIE + PIN)"
+        },
         "title": "Conferma la tua identità per firmare i documenti",
         "subtitle": "È un passaggio di sicurezza necessario per associare la firma alla tua identità (o per emettere la richiesta di firma?)\nTi servirà la Carta di Identità Elettronica.",
         "secondaryAction": "Cosa devo fare?"
@@ -2881,12 +2885,6 @@
       "signatureFieldInfo": {
         "title": "Cosa sono le clausole vessatorie?",
         "subTitle": "Sono delle clausole che segnalano condizioni particolari a cui prestare attenzione e che devono essere accettate. Devono inoltre essere, per legge, facilmente identificabili per far sì che chi firma sia informato del loro contenuto prima di apporre la firma."
-      },
-      "requestL3": {
-        "localFlag": {
-          "title": "Attivazione check L3 per il flusso di firma",
-          "description": "Attivando questo toggle attivi il check L3 per il flusso di firma, che prevede una nuova login L3 per gli utenti che non possiedono il livello di autenticazione L3 (CIE + PIN)"
-        }
       }
     },
     "wallet": {
