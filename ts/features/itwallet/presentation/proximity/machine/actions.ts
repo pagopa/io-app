@@ -1,10 +1,7 @@
 import { ActionArgs } from "xstate";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { serializeFailureReason } from "../../../common/utils/itwStoreUtils";
-import {
-  trackItwProximityQrCode,
-  trackItwProximityQrCodeLoadingFailure
-} from "../analytics";
+import { trackItwProximityQrCodeLoadingFailure } from "../analytics";
 import { ITW_PROXIMITY_ROUTES } from "../navigation/routes";
 import { Context } from "./context";
 import { ProximityEvents } from "./events";
