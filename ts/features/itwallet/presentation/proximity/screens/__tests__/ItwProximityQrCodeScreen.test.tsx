@@ -14,6 +14,7 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import { ItwPresentationTags } from "../../machine/tags";
 import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
 import { ItwProximityParamsList } from "../../navigation/ItwProximityParamsList";
+import { ProximityFailureType } from "../../machine/failure";
 
 jest.mock("react-native-qrcode-skia", () => {
   const React = jest.requireActual("react");
@@ -122,7 +123,7 @@ const buildSnapshot = (
     case "loading":
       return {
         ...initialSnapshot,
-        value: { GenerateQRCode: "StartingProximityFlow" },
+        value: { Presentation: "Starting" },
         tags: new Set([ItwPresentationTags.Loading]),
         context: { ...initialSnapshot.context }
       };
@@ -130,7 +131,7 @@ const buildSnapshot = (
     case "displayQrCode":
       return {
         ...initialSnapshot,
-        value: { DeviceCommunication: "DisplayQrCode" },
+        value: { Presentation: "DisplayQrCode" },
         tags: new Set([ItwPresentationTags.Presenting]),
         context: {
           ...initialSnapshot.context,
@@ -141,18 +142,21 @@ const buildSnapshot = (
     case "error":
       return {
         ...initialSnapshot,
-        value: { GenerateQRCode: "QRCodeGenerationError" },
-        tags: new Set([ItwPresentationTags.Presenting]),
+        value: { Presentation: "Starting" },
+        tags: new Set([ItwPresentationTags.Loading]),
         context: {
           ...initialSnapshot.context,
-          isQRCodeGenerationError: true
+          failure: {
+            type: ProximityFailureType.UNEXPECTED,
+            reason: new Error("test error")
+          }
         }
       };
 
     case "blocked":
       return {
         ...initialSnapshot,
-        value: { DeviceCommunication: "DisplayQrCode" },
+        value: { Presentation: "DisplayQrCode" },
         tags: new Set([ItwPresentationTags.Presenting]),
         context: {
           ...initialSnapshot.context,

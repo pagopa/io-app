@@ -1,17 +1,17 @@
 import {
-  AARFlowState,
-  isValidAARStateTransition,
+  AarFlowState,
+  isValidAarStateTransition,
   maybeIunFromAarFlowState,
-  sendAARFlowStates,
-  validAARStatusTransitions
+  sendAarFlowStates,
+  validAarStatusTransitions
 } from "../stateUtils";
 import { sendAarMockStates, sendAarStateNames } from "../testUtils";
 
 function splitAllowedFromNotallowedTransitions(
-  ...aarAllowedTransitions: Array<AARFlowState["type"]>
+  ...aarAllowedTransitions: Array<AarFlowState["type"]>
 ) {
   return sendAarStateNames.reduce<
-    [Array<AARFlowState["type"]>, Array<AARFlowState["type"]>]
+    [Array<AarFlowState["type"]>, Array<AarFlowState["type"]>]
   >(
     ([allowed, notAllowed], stateName) => {
       const isAllowed = aarAllowedTransitions.includes(stateName);
@@ -25,74 +25,74 @@ function splitAllowedFromNotallowedTransitions(
 }
 
 describe("stateUtils", () => {
-  describe("isValidAARStateTransition", () => {
+  describe("isValidAarStateTransition", () => {
     const sendAllowedTransitions: Array<
-      [AARFlowState["type"], Array<AARFlowState["type"]>]
+      [AarFlowState["type"], Array<AarFlowState["type"]>]
     > = [
-      [sendAARFlowStates.none, [sendAARFlowStates.displayingAARToS]],
-      [sendAARFlowStates.displayingAARToS, [sendAARFlowStates.fetchingQRData]],
+      [sendAarFlowStates.none, [sendAarFlowStates.displayingAarToS]],
+      [sendAarFlowStates.displayingAarToS, [sendAarFlowStates.fetchingQRData]],
       [
-        sendAARFlowStates.fetchingQRData,
+        sendAarFlowStates.fetchingQRData,
         [
-          sendAARFlowStates.fetchingNotificationData,
-          sendAARFlowStates.notAddresseeFinal,
-          sendAARFlowStates.notAddressee,
-          sendAARFlowStates.ko
+          sendAarFlowStates.fetchingNotificationData,
+          sendAarFlowStates.notAddresseeFinal,
+          sendAarFlowStates.notAddressee,
+          sendAarFlowStates.ko
         ]
       ],
       [
-        sendAARFlowStates.fetchingNotificationData,
-        [sendAARFlowStates.displayingNotificationData, sendAARFlowStates.ko]
+        sendAarFlowStates.fetchingNotificationData,
+        [sendAarFlowStates.displayingNotificationData, sendAarFlowStates.ko]
       ],
-      [sendAARFlowStates.displayingNotificationData, []],
-      [sendAARFlowStates.notAddresseeFinal, []],
+      [sendAarFlowStates.displayingNotificationData, []],
+      [sendAarFlowStates.notAddresseeFinal, []],
       [
-        sendAARFlowStates.ko,
+        sendAarFlowStates.ko,
         [
-          sendAARFlowStates.fetchingQRData,
-          sendAARFlowStates.fetchingNotificationData,
-          sendAARFlowStates.cieCanAdvisory
+          sendAarFlowStates.fetchingQRData,
+          sendAarFlowStates.fetchingNotificationData,
+          sendAarFlowStates.cieCanAdvisory
         ]
       ],
       [
-        sendAARFlowStates.notAddressee,
+        sendAarFlowStates.notAddressee,
         [
-          sendAARFlowStates.creatingMandate,
-          sendAARFlowStates.nfcNotSupportedFinal
+          sendAarFlowStates.creatingMandate,
+          sendAarFlowStates.nfcNotSupportedFinal
         ]
       ],
       [
-        sendAARFlowStates.creatingMandate,
-        [sendAARFlowStates.cieCanAdvisory, sendAARFlowStates.ko]
+        sendAarFlowStates.creatingMandate,
+        [sendAarFlowStates.cieCanAdvisory, sendAarFlowStates.ko]
       ],
-      [sendAARFlowStates.cieCanAdvisory, [sendAARFlowStates.cieCanInsertion]],
+      [sendAarFlowStates.cieCanAdvisory, [sendAarFlowStates.cieCanInsertion]],
       [
-        sendAARFlowStates.cieCanInsertion,
+        sendAarFlowStates.cieCanInsertion,
         [
-          sendAARFlowStates.cieCanAdvisory,
-          sendAARFlowStates.cieScanningAdvisory
+          sendAarFlowStates.cieCanAdvisory,
+          sendAarFlowStates.cieScanningAdvisory
         ]
       ],
       [
-        sendAARFlowStates.cieScanningAdvisory,
+        sendAarFlowStates.cieScanningAdvisory,
         [
-          sendAARFlowStates.cieCanInsertion,
-          sendAARFlowStates.androidNFCActivation,
-          sendAARFlowStates.cieScanning
+          sendAarFlowStates.cieCanInsertion,
+          sendAarFlowStates.androidNFCActivation,
+          sendAarFlowStates.cieScanning
         ]
       ],
-      [sendAARFlowStates.androidNFCActivation, [sendAARFlowStates.cieScanning]],
+      [sendAarFlowStates.androidNFCActivation, [sendAarFlowStates.cieScanning]],
       [
-        sendAARFlowStates.cieScanning,
+        sendAarFlowStates.cieScanning,
         [
-          sendAARFlowStates.cieScanningAdvisory,
-          sendAARFlowStates.cieCanAdvisory,
-          sendAARFlowStates.validatingMandate
+          sendAarFlowStates.cieScanningAdvisory,
+          sendAarFlowStates.cieCanAdvisory,
+          sendAarFlowStates.validatingMandate
         ]
       ],
       [
-        sendAARFlowStates.validatingMandate,
-        [sendAARFlowStates.fetchingNotificationData, sendAARFlowStates.ko]
+        sendAarFlowStates.validatingMandate,
+        [sendAarFlowStates.fetchingNotificationData, sendAarFlowStates.ko]
       ]
     ];
 
@@ -105,13 +105,13 @@ describe("stateUtils", () => {
 
         allowed.forEach(nextStep => {
           it(`should allow the transition from "${currentStep}" to "${nextStep}"`, () => {
-            expect(isValidAARStateTransition(currentStep, nextStep)).toBe(true);
+            expect(isValidAarStateTransition(currentStep, nextStep)).toBe(true);
           });
         });
 
         notAllowed.forEach(nextStep => {
           it(`should deny the transition from "${currentStep}" to "${nextStep}"`, () => {
-            expect(isValidAARStateTransition(currentStep, nextStep)).toBe(
+            expect(isValidAarStateTransition(currentStep, nextStep)).toBe(
               false
             );
           });
@@ -121,22 +121,22 @@ describe("stateUtils", () => {
   });
   describe("snapshots", () => {
     it("validTransitions", () => {
-      expect(validAARStatusTransitions).toMatchSnapshot();
+      expect(validAarStatusTransitions).toMatchSnapshot();
     });
     it("flowStates", () => {
-      expect(sendAARFlowStates).toMatchSnapshot();
+      expect(sendAarFlowStates).toMatchSnapshot();
     });
   });
   describe("maybeIunFromAarFlowState", () => {
     it("should handle all the possible states", () => {
       sendAarMockStates.forEach(state => {
         switch (state.type) {
-          case sendAARFlowStates.notAddresseeFinal:
-          case sendAARFlowStates.fetchingNotificationData:
-          case sendAARFlowStates.displayingNotificationData:
+          case sendAarFlowStates.notAddresseeFinal:
+          case sendAarFlowStates.fetchingNotificationData:
+          case sendAarFlowStates.displayingNotificationData:
             expect(maybeIunFromAarFlowState(state)).toBe(state.iun);
             break;
-          case sendAARFlowStates.ko:
+          case sendAarFlowStates.ko:
             expect(maybeIunFromAarFlowState(state)).toBe(
               maybeIunFromAarFlowState(state.previousState)
             );

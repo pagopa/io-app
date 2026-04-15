@@ -17,6 +17,8 @@ import {
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { trackItwIssuanceFromMsgFailure } from "../../issuance/analytics";
+import { getMixPanelCredential } from "../../analytics/utils";
 
 export type ItwIssuanceCredentialLandingScreenNavigationParams = {
   credentialType: string;
@@ -86,11 +88,19 @@ export const ItwIssuanceCredentialLandingScreen = ({
       return;
     }
 
-    // ITW active, proceed to credential issuance
-    navigation.replace(ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER, {
-      animationEnabled: false,
-      credentialType
-    });
+    if (isItwValid) {
+      // ITW active, proceed to credential issuance
+      navigation.replace(ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER, {
+        animationEnabled: false,
+        credentialType
+      });
+      return;
+    }
+
+    // No branch handled this state — track the error
+    trackItwIssuanceFromMsgFailure(
+      getMixPanelCredential(credentialType, isWhitelisted)
+    );
   }, [
     navigation,
     isItwValid,
@@ -175,5 +185,15 @@ export const ItwIssuanceCredentialLandingScreen = ({
     );
   }
 
-  return null;
+  return (
+    <OperationResultScreenContent
+      pictogram="umbrella"
+      title={I18n.t(`features.itWallet.issuance.landingError.title`)}
+      subtitle={I18n.t(`features.itWallet.issuance.landingError.body`)}
+      action={{
+        label: I18n.t(`features.itWallet.issuance.landingError.action`),
+        onPress: () => navigation.popToTop()
+      }}
+    />
+  );
 };

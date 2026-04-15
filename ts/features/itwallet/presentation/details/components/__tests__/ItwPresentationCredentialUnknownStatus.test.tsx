@@ -1,13 +1,13 @@
-import { createStore } from "redux";
 import { act, fireEvent, render } from "@testing-library/react-native";
-import { Provider } from "react-redux";
 import { PropsWithChildren, ReactElement } from "react";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
+import { CredentialMetadata } from "../../../../common/utils/itwTypesUtils";
 import { itwCredentialIssuanceMachine } from "../../../../machine/credential/machine";
 import { ItwCredentialIssuanceMachineContext } from "../../../../machine/credential/provider";
 import { ItwPresentationCredentialUnknownStatus } from "../ItwPresentationCredentialUnknownStatus";
-import { StoredCredential } from "../../../../common/utils/itwTypesUtils";
 
 jest.mock("@react-navigation/native", () => ({
   ...jest.requireActual("@react-navigation/native"),
@@ -24,7 +24,7 @@ describe("ItwPresentationCredentialUnknownStatus", () => {
     storedStatusAssertion: {
       credentialStatus: "unknown"
     }
-  } as StoredCredential;
+  } as CredentialMetadata;
 
   it("should match snapshot when the status assertion can be retried", () => {
     const component = renderComponent(
@@ -51,7 +51,7 @@ describe("ItwPresentationCredentialUnknownStatus", () => {
             {
               credentialType: "mDL",
               storedStatusAssertion: { credentialStatus: "unknown" }
-            } as StoredCredential
+            } as CredentialMetadata
           }
         />
       );

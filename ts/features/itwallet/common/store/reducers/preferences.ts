@@ -14,7 +14,7 @@ import {
   itwDisableItwActivation
 } from "../actions/preferences";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
-import { ItwAuthLevel, StoredCredential } from "../../utils/itwTypesUtils.ts";
+import { CredentialMetadata, ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
 
 export type ItwPreferencesState = {
   // Indicates whether the user should see the modal to review the app.
@@ -35,7 +35,7 @@ export type ItwPreferencesState = {
   // the reissuing flow only for the first time
   isPidReissuingSurveyHidden?: boolean;
   // Credential that failed to upgrade by type
-  credentialUpgradeFailed?: ReadonlyArray<StoredCredential["credentialType"]>;
+  credentialUpgradeFailed?: ReadonlyArray<CredentialMetadata["credentialType"]>;
   // Indicates whether the IT-Wallet activation should be disabled
   // because the user's device does not support NFC
   isItwActivationDisabled?: boolean;

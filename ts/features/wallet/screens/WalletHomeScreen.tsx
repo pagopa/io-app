@@ -31,6 +31,10 @@ import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { trackItwProximityShowQrCode } from "../../itwallet/presentation/proximity/analytics";
 import { ITW_PROXIMITY_ROUTES } from "../../itwallet/presentation/proximity/navigation/routes";
 import { hasPresentableCredentialsSelector } from "../../itwallet/presentation/proximity/store/selectors";
+import {
+  ITW_TOUR_GROUP_ID,
+  ITW_TOUR_STEP_QR_BUTTON
+} from "../../itwallet/tour/utils/constants.ts";
 import { WalletCardsContainer } from "../components/WalletCardsContainer";
 import { WalletCategoryFilterTabs } from "../components/WalletCategoryFilterTabs";
 import { walletUpdate } from "../store/actions";
@@ -186,6 +190,12 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
                 source: "WALLET_HOME"
               }
             });
+          },
+          tourGuideProps: {
+            groupId: ITW_TOUR_GROUP_ID,
+            index: ITW_TOUR_STEP_QR_BUTTON,
+            title: I18n.t("features.itWallet.tour.qrCode.title"),
+            description: I18n.t("features.itWallet.tour.qrCode.description")
           }
         }
       : undefined;

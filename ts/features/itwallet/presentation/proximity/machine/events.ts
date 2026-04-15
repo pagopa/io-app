@@ -27,6 +27,11 @@ export type Retry = {
   type: "retry";
 };
 
+export type QrCodeString = {
+  type: "qr-code-string";
+  payload: string;
+};
+
 export type DeviceConnecting = {
   type: "device-connecting";
 };
@@ -62,6 +67,7 @@ export type ProximityEvents =
   | Close
   | Dismiss
   | Retry
+  | QrCodeString
   | DeviceConnecting
   | DeviceConnected
   | DeviceDisconnected
