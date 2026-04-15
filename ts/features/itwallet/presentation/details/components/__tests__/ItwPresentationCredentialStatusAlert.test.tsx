@@ -24,6 +24,8 @@ import {
 const mockTrackItwCredentialTapBanner = jest.fn();
 const mockTrackItwCredentialBottomSheet = jest.fn();
 const mockTrackItwCredentialBottomSheetAction = jest.fn();
+const mockTrackItwCredentialDelete = jest.fn();
+const mockTrackCredentialRenewStart = jest.fn();
 const mockBottomSheetPresent = jest.fn();
 const mockBottomSheetDismiss = jest.fn();
 const mockNavigate = jest.fn();
@@ -40,7 +42,15 @@ jest.mock("../../analytics", () => ({
   trackItwCredentialBottomSheet: (properties: unknown) =>
     mockTrackItwCredentialBottomSheet(properties),
   trackItwCredentialBottomSheetAction: (properties: unknown) =>
-    mockTrackItwCredentialBottomSheetAction(properties)
+    mockTrackItwCredentialBottomSheetAction(properties),
+  trackItwCredentialDelete: (credential: unknown, properties: unknown) =>
+    mockTrackItwCredentialDelete(credential, properties)
+}));
+
+jest.mock("../../../../analytics", () => ({
+  ...jest.requireActual("../../../../analytics"),
+  trackCredentialRenewStart: (credential: unknown, properties: unknown) =>
+    mockTrackCredentialRenewStart(credential, properties)
 }));
 
 jest.mock("../../../../../../utils/url", () => ({
@@ -281,6 +291,39 @@ describe("ItwPresentationCredentialStatusAlert", () => {
     expect(mockTrackItwCredentialBottomSheetAction).toHaveBeenCalledWith({
       credential: "ITW_PG_V2",
       credential_status: "not_valid"
+    });
+    expect(mockTrackCredentialRenewStart).toHaveBeenCalledWith("ITW_PG_V2", {
+      credential_status: "not_valid",
+      position: "bottom_sheet"
+    });
+  });
+
+  it("tracks credential deletion from the issuer error bottom sheet with status and position", () => {
+    mockBottomSheetModal();
+
+    const selectorMock: ReturnType<
+      typeof selectors.itwCredentialStatusSelector
+    > = {
+      status: "invalid",
+      message: mockMessage
+    };
+
+    jest
+      .spyOn(selectors, "itwCredentialStatusSelector")
+      .mockImplementation(() => selectorMock);
+
+    const component = renderComponent({
+      storedStatusAssertion: {
+        credentialStatus: "invalid",
+        errorCode: "credential_invalid"
+      }
+    });
+
+    fireEvent.press(component.getByText("Rimuovi dal Portafoglio"));
+
+    expect(mockTrackItwCredentialDelete).toHaveBeenCalledWith("ITW_PG_V2", {
+      credential_status: "not_valid",
+      position: "bottom_sheet"
     });
   });
 });
