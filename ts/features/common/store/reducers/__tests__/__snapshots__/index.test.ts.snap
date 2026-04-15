@@ -151,6 +151,10 @@ exports[`featuresPersistor should match snapshot 1`] = `
         "kind": "PotNone",
       },
     },
+    "debug": {
+      "credentialStatusOverrides": {},
+      "savedCredentials": undefined,
+    },
     "environment": {
       "env": "prod",
       "itWalletSpecsVersion": "1.0.0",
