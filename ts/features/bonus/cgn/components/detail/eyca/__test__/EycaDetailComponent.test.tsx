@@ -170,11 +170,23 @@ describe("EycaDetailComponent", () => {
     const eycaNumber = component.queryByTestId("eyca-card-number");
     expect(eycaNumber).toBeNull();
   });
+
+  it("Should show loading spinner when eyca activation is loading", () => {
+    const store = mockEYCAState(eycaCardPending, undefined, true);
+    const component = getComponent(store);
+
+    const pendingComponent = component.queryByTestId("eyca-pending-component");
+    expect(pendingComponent).toBeNull();
+
+    const errorComponent = component.queryByTestId("eyca-error-component");
+    expect(errorComponent).toBeNull();
+  });
 });
 
 const mockEYCAState = (
   card?: EycaCard,
-  activation?: CgnEycaActivationStatus
+  activation?: CgnEycaActivationStatus,
+  activationLoading?: boolean
 ) => {
   // eslint-disable-next-line functional/no-let
   let globalState = appReducer(undefined, applicationChangeState("active"));
@@ -184,7 +196,9 @@ const mockEYCAState = (
       cgnEycaStatus.success({ status: "FOUND", card })
     );
   }
-  if (activation) {
+  if (activationLoading) {
+    globalState = appReducer(globalState, cgnEycaActivation.request());
+  } else if (activation) {
     globalState = appReducer(
       globalState,
       cgnEycaActivation.success(activation)
