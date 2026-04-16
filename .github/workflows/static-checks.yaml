@@ -86,7 +86,8 @@ jobs:
           if [ "${{ github.event_name }}" = "pull_request" ]; then
             echo "Checking if lockfile or critical files changed..."
 
-            CHANGED_FILES=$(git diff --name-only origin/${{ github.base_ref }}...HEAD)
+            CHANGED_FILES=$(git diff --name-only -- '*.ts' '*.tsx' '*.js' '*.jsx' '*.json' \
+            origin/${{ github.base_ref }}...HEAD | wc -l)
 
             echo "$CHANGED_FILES"
 
