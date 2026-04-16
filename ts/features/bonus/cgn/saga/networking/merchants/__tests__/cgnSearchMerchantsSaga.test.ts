@@ -20,10 +20,10 @@ describe("cgnSearchMerchantsSaga", () => {
   const requestAction = cgnSearchMerchants.request(
     "merchant-id" as NonEmptyString
   );
+  const fetchMerchantsCount = jest.fn();
 
   it("should dispatch success action on successful API call", () => {
-    const getMerchantsCount = jest.fn();
-    testSaga(cgnSearchMerchantsSaga, getMerchantsCount, requestAction)
+    testSaga(cgnSearchMerchantsSaga, fetchMerchantsCount, requestAction)
       .next()
       .next(E.right({ status: 200, value: { items } }))
       .put(cgnSearchMerchants.success(items))
@@ -32,11 +32,10 @@ describe("cgnSearchMerchantsSaga", () => {
   });
 
   it("should dispatch failure action on API error", () => {
-    const getMerchantsCount = jest.fn();
     const leftResponse = E.left([]);
     const expectedError = new Error(readableReport([]));
 
-    testSaga(cgnSearchMerchantsSaga, getMerchantsCount, requestAction)
+    testSaga(cgnSearchMerchantsSaga, fetchMerchantsCount, requestAction)
       .next()
       .next(leftResponse)
       .put(cgnSearchMerchants.failure(getGenericError(expectedError)))
@@ -45,8 +44,7 @@ describe("cgnSearchMerchantsSaga", () => {
   });
 
   it("should not dispatch success or failure on 401 response", () => {
-    const getMerchantsCount = jest.fn();
-    testSaga(cgnSearchMerchantsSaga, getMerchantsCount, requestAction)
+    testSaga(cgnSearchMerchantsSaga, fetchMerchantsCount, requestAction)
       .next()
       .next(E.right({ status: 401 }))
       .next()
@@ -54,10 +52,9 @@ describe("cgnSearchMerchantsSaga", () => {
   });
 
   it("should throw an error on network failure", () => {
-    const getMerchantsCount = jest.fn();
     const networkError = new Error("Network error");
 
-    testSaga(cgnSearchMerchantsSaga, getMerchantsCount, requestAction)
+    testSaga(cgnSearchMerchantsSaga, fetchMerchantsCount, requestAction)
       .next()
       .throw(networkError)
       .put(cgnSearchMerchants.failure(getGenericError(networkError)))

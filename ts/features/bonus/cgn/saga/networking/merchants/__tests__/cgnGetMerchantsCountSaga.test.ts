@@ -12,9 +12,9 @@ import { cgnGetMerchantsCountSaga } from "../cgnGetMerchantsCountSaga";
 describe("cgnGetMerchantsCountSaga", () => {
   const countResult: CountResult = { count: 42 };
   const requestAction = cgnMerchantsCount.request();
+  const getMerchantsCount = jest.fn();
 
   it("should dispatch success action on successful API call", () => {
-    const getMerchantsCount = jest.fn();
     testSaga(cgnGetMerchantsCountSaga, getMerchantsCount, requestAction)
       .next()
       .next(E.right({ status: 200, value: countResult }))
@@ -24,7 +24,6 @@ describe("cgnGetMerchantsCountSaga", () => {
   });
 
   it("should dispatch failure action on API error", () => {
-    const getMerchantsCount = jest.fn();
     const leftResponse = E.left([]);
     const expectedError = new Error(readableReport([]));
 
@@ -37,7 +36,6 @@ describe("cgnGetMerchantsCountSaga", () => {
   });
 
   it("should not dispatch success or failure on 401 response", () => {
-    const getMerchantsCount = jest.fn();
     testSaga(cgnGetMerchantsCountSaga, getMerchantsCount, requestAction)
       .next()
       .next(E.right({ status: 401 }))
@@ -46,7 +44,6 @@ describe("cgnGetMerchantsCountSaga", () => {
   });
 
   it("should throw an error on network failure", () => {
-    const getMerchantsCount = jest.fn();
     const networkError = new Error("Network error");
 
     testSaga(cgnGetMerchantsCountSaga, getMerchantsCount, requestAction)
