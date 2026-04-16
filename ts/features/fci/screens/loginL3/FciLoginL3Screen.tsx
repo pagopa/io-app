@@ -1,6 +1,6 @@
 import i18n from "i18next";
 import { useEffect } from "react";
-import { Body, HeaderSecondLevel } from "@pagopa/io-app-design-system";
+import { Body, HeaderSecondLevel, IOToast } from "@pagopa/io-app-design-system";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import {
@@ -60,8 +60,7 @@ export const FciLoginL3Screen = () => {
   };
 
   const onNavigateToHelpCenter = () => {
-    // eslint-disable-next-line no-console
-    console.log("navigate to help center");
+    IOToast.info(i18n.t("features.fci.requestL3.toast"));
   };
 
   return (
