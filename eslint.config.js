@@ -32,7 +32,7 @@ module.exports = defineConfig([
     "**/*.typegen.ts"
   ]),
   {
-    files: ["**/*.ts", "**/*.tsx"],
+    files: "**/*.{ts,tsx}",
     extends: [
       js.configs.recommended,
       ...tseslint.configs.recommended,
@@ -248,7 +248,7 @@ module.exports = defineConfig([
     }
   },
   {
-    files: ["**/*.test.ts", "**/*.test.tsx"],
+    files: "**/*.test.{ts,tsx}",
 
     rules: {
       "@typescript-eslint/no-non-null-assertion": "off",
@@ -260,16 +260,11 @@ module.exports = defineConfig([
   },
   {
     files: [
-      "**/design-system/**/*.ts",
-      "**/design-system/**/*.tsx",
-      "**/playgrounds/**/*.ts",
-      "**/playgrounds/**/*.tsx",
-      "**/devMode/**/*.ts",
-      "**/devMode/**/*.tsx",
-      "**/debug/**/*.ts",
-      "**/debug/**/*.tsx",
-      "**/__mocks__/**/*.ts",
-      "**/__mocks__/**/*.tsx"
+      "**/design-system/**/*.{ts,tsx}",
+      "**/playgrounds/**/*.{ts,tsx}",
+      "**/devMode/**/*.{ts,tsx}",
+      "**/debug/**/*.{ts,tsx}",
+      "**/__mocks__/**/*.{ts,tsx}"
     ],
 
     rules: {

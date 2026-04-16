@@ -230,6 +230,7 @@ type TrackErrorParams = {
   identification?: IdentificationContext;
 };
 
+// oxlint-disable-next-line complexity
 const trackError = ({
   failure,
   isL3,

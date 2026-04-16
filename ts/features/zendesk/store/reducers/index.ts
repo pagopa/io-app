@@ -63,6 +63,7 @@ const INITIAL_STATE: ZendeskState = {
   zendeskSubcategoriesErrorMap: remoteUndefined
 };
 
+// oxlint-disable-next-line complexity
 const reducer = (
   state: ZendeskState = INITIAL_STATE,
   action: Action

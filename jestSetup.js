@@ -156,11 +156,6 @@ jest.mock("react-native-permissions", () =>
   require("react-native-permissions/mock")
 );
 
-const mockSubscription = {
-  callback: jest.fn(),
-  remove: jest.fn()
-};
-
 jest.mock("react-native", () => {
   const RN = jest.requireActual("react-native"); // use original implementation, which comes with mocks out of the box
 

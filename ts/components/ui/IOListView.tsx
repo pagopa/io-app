@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
  * @param {boolean} [includeContentMargins=true] Include horizontal screen margins
  * @param {boolean} [debugMode=false] Enable debug mode. Only for testing purposes
  */
+// oxlint-disable-next-line complexity
 export const IOListView = <T,>({
   headerConfig,
   data,

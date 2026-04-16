@@ -1,4 +1,3 @@
-/* eslint-disable complexity */
 import { PersistPartial } from "redux-persist";
 import { isActionOf } from "typesafe-actions";
 import {
@@ -37,6 +36,7 @@ export const INITIAL_STATE: LoggedOutWithoutIdp = {
   reason: "NOT_LOGGED_IN"
 };
 
+// oxlint-disable-next-line complexity
 const authenticationReducer = (
   state: AuthenticationState = INITIAL_STATE,
   action: Action

@@ -1,4 +1,3 @@
-/* eslint-disable complexity */
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
@@ -50,6 +49,7 @@ const INITIAL_STATE: ReceiptTransactionState = {
   needsHomeListRefresh: false
 };
 
+// oxlint-disable-next-line complexity
 const reducer = (
   state: ReceiptTransactionState = INITIAL_STATE,
   action: Action

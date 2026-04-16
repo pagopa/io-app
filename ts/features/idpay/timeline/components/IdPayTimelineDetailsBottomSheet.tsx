@@ -82,6 +82,7 @@ const useIdPayTimelineDetailsBottomSheet = (
     return pipe(
       detailsPot,
       pot.toOption,
+      // oxlint-disable-next-line eslint-plugin-react(jsx-key) -- O.map is fp-ts Option map, not Array.map; key prop is not needed
       O.map(details => {
         switch (details.operationType) {
           case TransactionOperationTypeEnum.TRANSACTION:

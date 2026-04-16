@@ -31,7 +31,7 @@ import { cgnCategories } from "../store/actions/categories";
 export type TrackCgnStatus = "active" | "not_active";
 
 const trackCgnAction =
-  // eslint-disable-next-line complexity
+  // oxlint-disable-next-line complexity
   (action: Action): void => {
     switch (action.type) {
       case getType(cgnActivationStart):

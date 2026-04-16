@@ -1,18 +1,17 @@
-/* eslint-disable */
-
 import { Pot } from "@pagopa/ts-commons/lib/pot";
+// oxlint-disable-next-line no-restricted-imports
 import { Effect } from "redux-saga/effects";
 import { PayloadAC, PayloadMetaAC } from "typesafe-actions/dist/type-helpers";
 
 export type SagaCallReturnType<
-  T extends (...args: any[]) => any,
+  T extends (...args: Array<any>) => any,
   R = ReturnType<T>
 > =
   R extends Generator<infer _, infer B0, infer _>
     ? B0
-    : R extends Iterator<infer B | Effect>
+    : R extends Iterator<(infer B) | Effect>
       ? B
-      : R extends IterableIterator<infer B1 | Effect>
+      : R extends IterableIterator<(infer B1) | Effect>
         ? B1
         : R extends Promise<infer B2>
           ? B2
@@ -53,14 +52,14 @@ export type XOR<T, U> = T | U extends object
   ? (Without<T, U> & U) | (Without<U, T> & T)
   : T | U;
 
-type Values<T extends {}> = T[keyof T];
+type Values<T extends Record<string, unknown>> = T[keyof T];
 
-type Tuplize<T extends any[]> = Pick<
+type Tuplize<T extends Array<any>> = Pick<
   T,
-  Exclude<keyof T, Extract<keyof any[], string> | number>
+  Exclude<keyof T, Extract<keyof Array<any>, string> | number>
 >;
 
-type _OneOf<T extends {}> = Values<{
+type _OneOf<T extends Record<string, unknown>> = Values<{
   [K in keyof T]: T[K] & {
     [M in Values<{ [L in keyof Omit<T, K>]: keyof T[L] }>]?: undefined;
   };
@@ -69,7 +68,7 @@ type _OneOf<T extends {}> = Values<{
 /**
  * Ensure that the types T extends any[] are mutually exclusive
  */
-export type OneOf<T extends any[]> = _OneOf<Tuplize<T>>;
+export type OneOf<T extends Array<any>> = _OneOf<Tuplize<T>>;
 
 /**
  * Create an object with the passed key and value, enforcing type safety.
