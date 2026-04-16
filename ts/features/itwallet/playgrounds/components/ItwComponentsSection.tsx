@@ -17,15 +17,15 @@ import { ItwEngagementBanner } from "../../common/components/ItwEngagementBanner
 import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../common/components/ItwSkeumorphicCard/FlipGestureDetector";
 import { getCredentialStatusObject } from "../../common/utils/itwCredentialStatusUtils";
+import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
 import {
-  ItwStoredCredentialsMocks,
-  CredentialType
+  CredentialType,
+  ItwStoredCredentialsMocks
 } from "../../common/utils/itwMocksUtils";
 import {
-  StoredCredential,
+  CredentialMetadata,
   ItwCredentialStatus
 } from "../../common/utils/itwTypesUtils";
-import { ItwCredentialCard } from "../../common/components/ItwCredentialCard/ItwCredentialCard";
 import { ItwRequestedClaimsList } from "../../issuance/components/ItwRequestedClaimsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwPresentationCredentialCardFlipButton } from "../../presentation/details/components/ItwPresentationCredentialCardFlipButton";
@@ -152,7 +152,7 @@ const ItwSkeumorphicCredentialSection = () => {
 
   const L2Credentials = Object.entries(ItwStoredCredentialsMocks)
     .filter(([key]) => key !== "L3")
-    .map(([_, value]) => value as StoredCredential)
+    .map(([_, value]) => value as CredentialMetadata)
     .filter(({ credentialType }) =>
       credentialsWithCard.includes(credentialType)
     );
@@ -183,7 +183,7 @@ const ItwSkeumorphicCredentialItem = ({
   credential,
   valuesHidden
 }: {
-  credential: StoredCredential;
+  credential: CredentialMetadata;
   valuesHidden: boolean;
 }) => {
   const navigation = useIONavigation();

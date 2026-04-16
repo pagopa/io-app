@@ -8,7 +8,7 @@ import { useIOSelector } from "../../../../../store/hooks";
 import { trackCredentialDetail } from "../analytics";
 import { mapPIDStatusToMixpanel } from "../../../analytics/utils";
 import { PoweredByItWalletText } from "../../../common/components/PoweredByItWalletText";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import {
   itwCredentialsEidSelector,
   itwCredentialsEidStatusSelector
@@ -33,7 +33,7 @@ export const ItwPresentationPidDetailScreen = () => {
     }, [maybeEidStatus])
   );
 
-  const getContent = (credential: StoredCredential) => (
+  const getContent = (credential: CredentialMetadata) => (
     <ItwPresentationDetailsScreenBase credential={credential} headerTransparent>
       <ItwPresentationDetailsHeader credential={credential} />
 

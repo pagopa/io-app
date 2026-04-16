@@ -13498,6 +13498,7 @@ __metadata:
     react-native-pager-view: ^7.0.1
     react-native-pdf: 7.0.3
     react-native-permissions: ^5.3.0
+    react-native-pulsar: ^1.0.2
     react-native-push-notification: ^8.1.1
     react-native-qrcode-skia: ^0.4.0
     react-native-qrcode-svg: ^6.3.12
@@ -19106,6 +19107,17 @@ __metadata:
     react-native-windows:
       optional: true
   checksum: 0896ed6919062a57b79c54d3de0d14a515ada9be87b5f65295e728ee23706430d99d45e48b8d45caad2d8f5eb42d1bd53cb213ff645ebec2117c94aadd35bfe8
+  languageName: node
+  linkType: hard
+
+"react-native-pulsar@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "react-native-pulsar@npm:1.0.2"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-worklets: "*"
+  checksum: fe28e05155951064edbfb6eb900b024567579e3a193829f7f9b9df772fdcee8521cbed6dea6a7bc252cab99117577407ba0e065994ccb0b87ce25b83a31ce937
   languageName: node
   linkType: hard
 

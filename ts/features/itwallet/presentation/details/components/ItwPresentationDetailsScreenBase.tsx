@@ -14,13 +14,13 @@ import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { isScreenReaderEnabledSelector } from "../../../../../store/reducers/preferences";
 import { useHeaderPropsByCredentialType } from "../../../common/utils/itwStyleUtils";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 
 export type CredentialCtaProps = ButtonBlockProps;
 
 export type ItwPresentationDetailsScreenBaseProps = {
-  credential: StoredCredential;
+  credential: CredentialMetadata;
   children?: ReactNode;
   ctaProps?: CredentialCtaProps;
   headerTransparent?: boolean;

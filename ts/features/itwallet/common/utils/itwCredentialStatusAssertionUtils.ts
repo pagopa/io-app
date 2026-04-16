@@ -5,9 +5,10 @@ import {
 import { isAfter } from "date-fns";
 import * as t from "io-ts";
 import {
+  CredentialBundle,
   CredentialFormat,
-  IssuerConfiguration,
-  StoredCredential
+  CredentialMetadata,
+  IssuerConfiguration
 } from "./itwTypesUtils";
 import { WIA_KEYTAG } from "./itwCryptoContextUtils";
 import { getIoWallet } from "./itwIoWallet";
@@ -16,7 +17,7 @@ import { Env } from "./environment";
 const fetchIssuerConfShared = createIssuerConfSharedFetch();
 
 export const getCredentialStatusAssertion = async (
-  credential: StoredCredential,
+  { credential, metadata }: CredentialBundle,
   env: Env,
   itwVersion: ItwVersion
 ) => {
@@ -29,20 +30,20 @@ export const getCredentialStatusAssertion = async (
   }
 
   // Legacy credentials carry the legacy Issuer configuration, which is incompatible with the new API.
-  // In this scenario the new configuration is fetched and used instead of `credential.issuerConf`.
+  // In this scenario the new configuration is fetched and used instead of `metadata.issuerConf`.
   const issuerConf =
-    credential.format === CredentialFormat.LEGACY_SD_JWT
+    metadata.format === CredentialFormat.LEGACY_SD_JWT
       ? await fetchIssuerConfShared(env, itwVersion)
-      : credential.issuerConf;
+      : metadata.issuerConf;
 
-  const credentialCryptoContext = createCryptoContextFor(credential.keyTag);
+  const credentialCryptoContext = createCryptoContextFor(metadata.keyTag);
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
 
   const rawStatusAssertion =
     await ioWallet.CredentialStatus.statusAssertion.get(
       issuerConf,
-      credential.credential,
-      credential.format as CredentialFormat,
+      credential,
+      metadata.format as CredentialFormat,
       { credentialCryptoContext, wiaCryptoContext }
     );
 
@@ -50,8 +51,8 @@ export const getCredentialStatusAssertion = async (
     await ioWallet.CredentialStatus.statusAssertion.verifyAndParse(
       issuerConf,
       rawStatusAssertion,
-      credential.credential,
-      credential.format as CredentialFormat
+      credential,
+      metadata.format as CredentialFormat
     );
 
   return {
@@ -63,7 +64,7 @@ export const getCredentialStatusAssertion = async (
 export const shouldRequestStatusAssertion = ({
   storedStatusAssertion,
   jwt
-}: StoredCredential) => {
+}: CredentialMetadata) => {
   // Skip status assertion check for expired JWTs to avoid credential_not_found errors with 0.7 credentials
   if (isAfter(new Date(), new Date(jwt.expiration))) {
     return false;

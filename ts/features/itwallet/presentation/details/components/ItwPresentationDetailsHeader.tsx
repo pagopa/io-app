@@ -20,7 +20,7 @@ import {
 } from "../../../common/utils/itwCredentialUtils.ts";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { useThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
 import { itwCredentialsCatalogueByTypesSelector } from "../../../credentialsCatalogue/store/selectors";
 import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
@@ -28,7 +28,7 @@ import { useItwDisplayCredentialStatus } from "../hooks/useItwDisplayCredentialS
 import { ItwPresentationCredentialCard } from "./ItwPresentationCredentialCard.tsx";
 
 type ItwPresentationDetailsHeaderProps = {
-  credential: StoredCredential;
+  credential: CredentialMetadata;
 };
 
 const credentialsWithSkeumorphicCard: ReadonlyArray<string> = [

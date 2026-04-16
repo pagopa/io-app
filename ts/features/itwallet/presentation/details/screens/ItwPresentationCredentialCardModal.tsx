@@ -21,8 +21,8 @@ import { FlipGestureDetector } from "../../../common/components/ItwSkeumorphicCa
 import { itwSetClaimValuesHidden } from "../../../common/store/actions/preferences.ts";
 import { itwIsClaimValueHiddenSelector } from "../../../common/store/selectors/preferences.ts";
 import {
-  ItwCredentialStatus,
-  StoredCredential
+  CredentialMetadata,
+  ItwCredentialStatus
 } from "../../../common/utils/itwTypesUtils.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList.ts";
@@ -31,7 +31,7 @@ import { ItwPresentationCredentialCardFlipButton } from "../components/ItwPresen
 import { ItwPresentationCredentialCardHideValuesButton } from "../components/ItwPresentationCredentialCardHideValuesButton.tsx";
 
 export type ItwPresentationCredentialCardModalNavigationParams = {
-  credential: StoredCredential;
+  credential: CredentialMetadata;
   status: ItwCredentialStatus;
 };
 
