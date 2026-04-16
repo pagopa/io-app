@@ -2531,8 +2531,8 @@
               "bottomSheet": {
                 "title": "Cosa ti serve?",
                 "featureInfos": [
-                  "La Carta di Identità Elettronica di {{name}}",
-                  "Il codice a 6 cifre (CAN) che trovi stampato sul fronte della carta, in basso a destra."
+                  "Tieni a portata di mano la Carta di Identità Elettronica (CIE) di {{name}}",
+                  "Non puoi accedere alla notifica con copie o screenshot del documento"
                 ]
               }
             },
