@@ -12,7 +12,11 @@ import edatL3 from "../../__mocks__/L3/edatL3.json";
 import statusAssertion from "../../__mocks__/statusAssertion.json";
 import ts from "../../__mocks__/ts.json";
 import { DigitalCredentialMetadata } from "./itwCredentialsCatalogueUtils";
-import { ParsedStatusAssertion, StoredCredential } from "./itwTypesUtils";
+import {
+  IssuerConfiguration,
+  ParsedStatusAssertion,
+  StoredCredential
+} from "./itwTypesUtils";
 
 export const ISSUER_MOCK_NAME = "Istituto Poligrafico e Zecca dello Stato";
 
@@ -26,6 +30,7 @@ export enum CredentialType {
   EUROPEAN_DISABILITY_CARD = "EuropeanDisabilityCard",
   DRIVING_LICENSE = "mDL",
   PID = "PersonIdentificationData",
+  AGE_VERIFICATION = "age_verification",
   EDUCATION_DEGREE = "education_degree",
   EDUCATION_ENROLLMENT = "education_enrollment",
   RESIDENCY = "residency",
@@ -78,4 +83,82 @@ export const ItwCredentialFromCatalogueMocks: DigitalCredentialMetadata = {
     }
   ],
   formats: []
+};
+
+export const ItwAgeVerificationCredentialFromCatalogueMock: DigitalCredentialMetadata =
+  {
+    name: "Età certificata",
+    description: "Attestazione digitale anonima che certifica la maggiore età.",
+    purposes: [],
+    version: "1.0",
+    credential_type: CredentialType.AGE_VERIFICATION,
+    legal_type: "pub-eaa",
+    validity_info: {
+      max_validity_days: 90,
+      status_methods: [],
+      allowed_states: []
+    },
+    issuers: [],
+    authentic_sources: [
+      {
+        organization_name: "IT-Wallet ID",
+        organization_code: "it_wallet_id",
+        id: "it_wallet_id",
+        organization_country: "IT",
+        organization_type: "public",
+        user_information:
+          "### Cos'è\n\nEtà certificata è l'attestazione digitale anonima che certifica la tua maggiore età (in Italia, 18 anni). Contiene solo informazioni sulla tua soglia d'età, nient'altro.\n\n### A cosa serve\n\nTi serve accedere a servizi riservati agli adulti senza condividere dati personali."
+      }
+    ],
+    formats: []
+  };
+
+const AGE_VERIFICATION_CREDENTIAL_ID = "dc_sd_jwt_age_verification";
+
+export const createItwAgeVerificationCredentialMock = (
+  pid?: StoredCredential
+): StoredCredential => {
+  const now = new Date();
+  const expiration = new Date(now);
+  expiration.setDate(expiration.getDate() + 90);
+  const issuerConf =
+    pid?.issuerConf ?? ItwStoredCredentialsMocks.L3.res.issuerConf;
+
+  return {
+    keyTag: "mock_age_verification_keytag",
+    credential: "mock_age_verification_credential",
+    format: "dc+sd-jwt",
+    credentialType: CredentialType.AGE_VERIFICATION,
+    credentialId: AGE_VERIFICATION_CREDENTIAL_ID,
+    issuerConf: {
+      ...issuerConf,
+      federation_entity: {
+        ...issuerConf.federation_entity,
+        organization_name: ISSUER_MOCK_NAME
+      },
+      credential_configurations_supported: {
+        ...issuerConf.credential_configurations_supported,
+        [AGE_VERIFICATION_CREDENTIAL_ID]: {
+          scope: CredentialType.AGE_VERIFICATION,
+          format: "dc+sd-jwt",
+          authentic_source: "IT-Wallet ID"
+        } as IssuerConfiguration["credential_configurations_supported"][string]
+      }
+    },
+    parsedCredential: {
+      age_over_18: {
+        value: "18+",
+        name: {
+          "it-IT": "Età certificata",
+          "en-US": "Age verification"
+        }
+      }
+    },
+    jwt: {
+      expiration: expiration.toISOString(),
+      issuedAt: now.toISOString()
+    },
+    spec_version: pid?.spec_version ?? "1.0.0",
+    verification: pid?.verification
+  };
 };

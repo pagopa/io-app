@@ -66,6 +66,11 @@ export const useThemeColorByCredentialType = (
           backgroundColor: "#F2E4CE",
           textColor: IOColors.black
         };
+      case CredentialType.AGE_VERIFICATION:
+        return {
+          backgroundColor: "#CDD2FC",
+          textColor: IOColors.black
+        };
     }
   }, [credentialType, theme, withL3Design]);
 

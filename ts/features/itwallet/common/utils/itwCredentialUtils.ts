@@ -28,6 +28,7 @@ export const availableCredentials = [
 
 // New credentials that can be actively requested and obtained by the user
 export const newCredentials = [
+  CredentialType.AGE_VERIFICATION,
   CredentialType.EDUCATION_DEGREE,
   CredentialType.EDUCATION_ENROLLMENT,
   CredentialType.RESIDENCY
@@ -70,6 +71,9 @@ export const itwGetCredentialNameByCredentialType = (
     isItwCredential
       ? "features.itWallet.credentialName.pid"
       : "features.itWallet.credentialName.eid"
+  ),
+  [CredentialType.AGE_VERIFICATION]: I18n.t(
+    "features.itWallet.credentialName.ageVerification"
   ),
   [CredentialType.EDUCATION_DEGREE]: I18n.t(
     "features.itWallet.credentialName.ed"

@@ -25,6 +25,11 @@ import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/ac
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors";
+import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
+import {
+  createItwAgeVerificationCredentialMock,
+  ItwAgeVerificationCredentialFromCatalogueMock
+} from "../../common/utils/itwMocksUtils";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";
 
@@ -45,7 +50,36 @@ export const createCredentialIssuanceActionsImplementation = (
     return {
       isItWalletValid: itwLifecycleIsITWalletValidSelector(state),
       walletInstanceAttestation: itwWalletInstanceAttestationSelector(state),
-      credentialsCatalogue: itwCredentialsCatalogueByTypesSelector(state)
+      credentialsCatalogue: {
+        ...itwCredentialsCatalogueByTypesSelector(state),
+        [ItwAgeVerificationCredentialFromCatalogueMock.credential_type]:
+          ItwAgeVerificationCredentialFromCatalogueMock
+      }
+    };
+  }),
+
+  setMockRequestedCredential: assign<
+    Context,
+    CredentialIssuanceEvents,
+    unknown,
+    CredentialIssuanceEvents,
+    any
+  >(() => ({
+    requestedCredential: {} as Context["requestedCredential"]
+  })),
+
+  setMockCredential: assign<
+    Context,
+    CredentialIssuanceEvents,
+    unknown,
+    CredentialIssuanceEvents,
+    any
+  >(() => {
+    const eidOption = itwCredentialsEidSelector(store.getState());
+    const eid = "value" in eidOption ? eidOption.value : undefined;
+
+    return {
+      credentials: [createItwAgeVerificationCredentialMock(eid)]
     };
   }),
 

@@ -3090,6 +3090,7 @@
         "mdl": "Patente di guida",
         "dc": "Carta Europea della Disabilità",
         "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia",
+        "ageVerification": "Età certificata",
         "ed": "Titoli accademici",
         "ee": "Iscrizioni accademiche",
         "res": "Attestato di residenza",
@@ -3588,6 +3589,16 @@
         "credentialIntro": {
           "subtitle": "Leggi con attenzione cosa troverai."
         },
+        "ageVerification": {
+          "credentialAuth": {
+            "title": "Continua per aggiungere {{credentialName}}",
+            "subtitle": "La conferma che sei maggiorenne si basa sulla data di nascita nel tuo IT-Wallet ID.",
+            "disclaimer": {
+              "0": "La tua età sarà trattata solo per le finalità descritte in Informativa Privacy.",
+              "1": "Sarà condivisa solo per il tempo necessario al rilascio dell’attestazione anonima."
+            }
+          }
+        },
         "credentialPreview": {
           "loading": "Attendi ancora qualche secondo, senza uscire dall’app",
           "title": "{{credential}}: ecco l'anteprima dei tuoi dati",
@@ -3839,6 +3850,12 @@
               "title": "Carta europea della disabilità su IO: documento in scadenza",
               "content": "Puoi richiedere il rinnovo della tua Carta europea della disabilità (CED) contattando l'ente che l'ha emessa.\n\nVerifica le modalità e i documenti richiesti sul sito ufficiale dell'INPS, oppure contattando la tua ASL locale, poiché il rinnovo può variare in base al tipo di disabilità e alle normative del tuo territorio."
             }
+          },
+          "age_verification": {
+            "expiring": {
+              "title": "Età certificata in scadenza",
+              "content": "La tua Età certificata è valida per 90 giorni. Al termine della validità potrai rinnovarla presentando di nuovo il tuo IT-Wallet ID."
+            }
           }
         },
         "credentialDetails": {
@@ -3859,6 +3876,13 @@
           "fiscalCode": {
             "label": "Il tuo Codice Fiscale",
             "action": "Premi per ingrandire e visualizzare il codice a barre a tutto schermo"
+          },
+          "ageVerification": {
+            "subtitle": "Anagrafe Nazionale della Popolazione Residente - ANPR",
+            "usageBanner": {
+              "title": "Dove usare Età certificata?",
+              "content": "Puoi usarla per accedere a servizi online destinati agli adulti: dimostri la tua maggiore età e la tua identità resta anonima."
+            }
           },
           "status": {
             "valid": "Valida",
@@ -3897,6 +3921,7 @@
           },
           "newCredentialValidityAlert": {
             "content": {
+              "age_verification": "La tua Età certificata è valida per 90 giorni e include 30 utilizzi.",
               "education_degree": "I tuoi titoli accademici digitali hanno piena validità ufficiale.",
               "education_enrollment": "Le tue iscrizioni accademiche digitali hanno piena validità ufficiale.",
               "residency": "Il tuo attestato di residenza digitale ha piena validità ufficiale.",

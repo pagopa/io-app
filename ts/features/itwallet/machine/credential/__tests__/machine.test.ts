@@ -8,6 +8,7 @@ import {
   waitFor as waitForActor
 } from "xstate";
 import {
+  CredentialType,
   ItwStatusAssertionMocks,
   ItwStoredCredentialsMocks
 } from "../../../common/utils/itwMocksUtils";
@@ -81,6 +82,8 @@ describe("itwCredentialIssuanceMachine", () => {
   const trackAddCredential = jest.fn();
   const trackCredentialIssuingDataShare = jest.fn();
   const trackCredentialIssuingDataShareAccepted = jest.fn();
+  const setMockRequestedCredential = jest.fn();
+  const setMockCredential = jest.fn();
 
   const verifyTrustFederation = jest.fn();
   const getWalletAttestation = jest.fn();
@@ -110,7 +113,9 @@ describe("itwCredentialIssuanceMachine", () => {
       trackStartAddCredential,
       trackAddCredential,
       trackCredentialIssuingDataShare,
-      trackCredentialIssuingDataShareAccepted
+      trackCredentialIssuingDataShareAccepted,
+      setMockRequestedCredential: assign(setMockRequestedCredential),
+      setMockCredential: assign(setMockCredential)
     },
     actors: {
       verifyTrustFederation: fromPromise<void>(verifyTrustFederation),
@@ -735,5 +740,46 @@ describe("itwCredentialIssuanceMachine", () => {
       snapshot.matches("CredentialIntroduction")
     );
     expect(navigateToCredentialIntroductionScreen).toHaveBeenCalledTimes(1);
+  });
+
+  // TODO: Remove this test when the mocked flow for age verification will be removed
+  it("should use the mocked issuance flow for age verification", async () => {
+    hasCredentialIntroContent.mockImplementation(() => true);
+    setMockRequestedCredential.mockImplementation(() => ({
+      requestedCredential: T_REQUESTED_CREDENTIAL
+    }));
+    setMockCredential.mockImplementation(() => ({
+      credentials: [ItwStoredCredentialsMocks.mdl]
+    }));
+
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    actor.send({
+      type: "select-credential",
+      credentialType: CredentialType.AGE_VERIFICATION,
+      mode: "issuance"
+    });
+
+    await waitFor(() =>
+      expect(navigateToCredentialIntroductionScreen).toHaveBeenCalledTimes(1)
+    );
+
+    actor.send({ type: "continue" });
+
+    expect(actor.getSnapshot().value).toStrictEqual("DisplayingTrustIssuer");
+    expect(setMockRequestedCredential).toHaveBeenCalledTimes(1);
+    expect(verifyTrustFederation).not.toHaveBeenCalled();
+    expect(getWalletAttestation).not.toHaveBeenCalled();
+    expect(requestCredential).not.toHaveBeenCalled();
+
+    actor.send({ type: "confirm-trust-data" });
+
+    expect(actor.getSnapshot().value).toStrictEqual(
+      "DisplayingCredentialPreview"
+    );
+    expect(setMockCredential).toHaveBeenCalledTimes(1);
+    expect(obtainCredential).not.toHaveBeenCalled();
+    expect(obtainStatusAssertion).not.toHaveBeenCalled();
   });
 });

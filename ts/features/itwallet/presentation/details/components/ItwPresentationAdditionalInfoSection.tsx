@@ -6,6 +6,7 @@ import { useIOSelector } from "../../../../../store/hooks";
 import { ItwPresentationNewCredentialValidityAlert } from "./ItwPresentationNewCredentialValidityAlert";
 import { ItwPresentationFiscalCode } from "./ItwPresentationFiscalCode.tsx";
 import { ItwPresentationWalletUpgradeMDLDetailsBanner } from "./ItwPresentationWalletUpgradeMDLDetailsBanner";
+import { ItwPresentationAgeVerificationUsageBanner } from "./ItwPresentationAgeVerificationUsageBanner";
 
 type Props = {
   credential: StoredCredential;
@@ -29,6 +30,8 @@ const ItwPresentationAdditionalInfoSection = ({ credential }: Props) => {
           credentialType={credential.credentialType}
         />
       );
+    case CredentialType.AGE_VERIFICATION:
+      return <ItwPresentationAgeVerificationUsageBanner />;
     case CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD:
       return <ItwPresentationFiscalCode />;
     case CredentialType.DRIVING_LICENSE:

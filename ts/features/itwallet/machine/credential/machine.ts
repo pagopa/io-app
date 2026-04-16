@@ -1,4 +1,5 @@
 import { and, assign, fromPromise, not, setup } from "xstate";
+import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import {
@@ -31,6 +32,8 @@ export const itwCredentialIssuanceMachine = setup({
      */
 
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
+    setMockRequestedCredential: notImplemented,
+    setMockCredential: notImplemented,
 
     /**
      * Navigation actions
@@ -145,9 +148,17 @@ export const itwCredentialIssuanceMachine = setup({
     CredentialIntroduction: {
       entry: "navigateToCredentialIntroductionScreen",
       on: {
-        continue: {
-          target: "TrustFederationVerification"
-        },
+        continue: [
+          {
+            guard: ({ context }) =>
+              context.credentialType === CredentialType.AGE_VERIFICATION,
+            target: "DisplayingTrustIssuer",
+            actions: "setMockRequestedCredential"
+          },
+          {
+            target: "TrustFederationVerification"
+          }
+        ],
         back: {
           target: "Idle",
           actions: "navigateToCardOnboardingScreen"
@@ -248,10 +259,21 @@ export const itwCredentialIssuanceMachine = setup({
         actions: "navigateToTrustIssuerScreen"
       },
       on: {
-        "confirm-trust-data": {
-          actions: "trackCredentialIssuingDataShareAccepted",
-          target: "Issuance"
-        },
+        "confirm-trust-data": [
+          {
+            guard: ({ context }) =>
+              context.credentialType === CredentialType.AGE_VERIFICATION,
+            actions: [
+              "trackCredentialIssuingDataShareAccepted",
+              "setMockCredential"
+            ],
+            target: "DisplayingCredentialPreview"
+          },
+          {
+            actions: "trackCredentialIssuingDataShareAccepted",
+            target: "Issuance"
+          }
+        ],
         close: {
           target: "Completed",
           actions: "closeIssuance"
