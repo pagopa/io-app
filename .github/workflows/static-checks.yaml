@@ -5,6 +5,7 @@ on:
   - workflow_call
 jobs:
   configure:
+    name: Compute shard matrix
     runs-on: ubuntu-latest
     outputs:
       shard_matrix: ${{ steps.set-matrix.outputs.matrix }}
