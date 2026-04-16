@@ -218,7 +218,7 @@ const getPid: GetPid = async ({
         expiration: expiration.toISOString(),
         issuedAt: issuedAt?.toISOString()
       },
-      spec_version: itwVersion,
+      spec_version: ioWallet.version,
       verification: extractVerification({
         format,
         credential,
