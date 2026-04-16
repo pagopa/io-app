@@ -16,6 +16,8 @@ import { format } from "../../../../../utils/dates";
 import { AuthenticationState, AuthenticationStateWithIdp } from "../models";
 import { SpidLevel } from "../../../../../../definitions/session_manager/SpidLevel";
 
+export type SpidLevelShort = "L1" | "L2" | "L3";
+
 export const authenticationStateSelector = (
   state: GlobalState
 ): AuthenticationState => state.authentication;
@@ -92,7 +94,7 @@ export const spidLevelSelector = (state: GlobalState): SpidLevel | undefined =>
  */
 export const extractSpidLevel = (
   spidLevel?: SpidLevel
-): "L1" | "L2" | "L3" | undefined => {
+): SpidLevelShort | undefined => {
   if (spidLevel) {
     if (spidLevel.includes("L1")) {
       return "L1";
@@ -112,7 +114,7 @@ export const extractSpidLevel = (
 
 export const spidLevelFromSessionInfoSelector = (
   state: GlobalState
-): "L1" | "L2" | "L3" | undefined => {
+): SpidLevelShort | undefined => {
   const spidLevel = spidLevelSelector(state);
   return extractSpidLevel(spidLevel);
 };

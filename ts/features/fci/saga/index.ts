@@ -48,6 +48,7 @@ import { KeyInfo } from "../../lollipop/utils/crypto";
 import { createFciClient } from "../api/backendFci";
 import { spidLevelFromSessionInfoSelector } from "../../authentication/common/store/selectors";
 import { fciSecurityLevelLocalFeatureFlagSelector } from "../store/reducers/fciSecurityLevelReducer";
+import { isTestEnv } from "../../../utils/environment";
 import { handleGetSignatureRequestById } from "./networking/handleGetSignatureRequestById";
 import { handleGetQtspMetadata } from "./networking/handleGetQtspMetadata";
 import { handleCreateFilledDocument } from "./networking/handleCreateFilledDocument";
@@ -352,3 +353,17 @@ function* watchFciEndSaga(): SagaIterator {
     CommonActions.navigate(ROUTES.MAIN)
   );
 }
+
+export const testable = isTestEnv
+  ? {
+      watchIdentificationPinResetSaga,
+      watchFciQtspClausesSaga,
+      standardFciFlowStartSaga,
+      watchFciStartSaga,
+      watchFciSignatureRequestRetrySaga,
+      clearFciDownloadPreview,
+      watchFciSigningRequestSaga,
+      clearAllFciFiles,
+      watchFciEndSaga
+    }
+  : undefined;

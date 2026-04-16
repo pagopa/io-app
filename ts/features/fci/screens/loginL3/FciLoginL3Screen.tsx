@@ -66,20 +66,23 @@ export const FciLoginL3Screen = () => {
 
   return (
     <WhatsNewScreenContent
+      testID="FciLoginL3ScreenContent"
       pictogram="identityCheck"
       title={i18n.t("features.fci.requestL3.title")}
       action={{
         label: i18n.t("global.buttons.continue"),
         fullWidth: true,
-        onPress: onPressContinue
+        onPress: onPressContinue,
+        testID: "FciLoginL3ContinueButton"
       }}
       secondaryAction={{
         label: i18n.t("features.fci.requestL3.secondaryAction"),
         icon: "instruction",
-        onPress: onNavigateToHelpCenter
+        onPress: onNavigateToHelpCenter,
+        testID: "FciLoginL3HelpButton"
       }}
     >
-      <Body style={{ textAlign: "center" }}>
+      <Body style={{ textAlign: "center" }} testID="FciLoginL3SubtitleText">
         {i18n.t("features.fci.requestL3.subtitle")}
       </Body>
     </WhatsNewScreenContent>

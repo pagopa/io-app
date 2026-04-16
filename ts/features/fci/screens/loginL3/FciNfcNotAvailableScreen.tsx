@@ -6,7 +6,11 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import { fciEndRequest } from "../../store/actions";
 
-// TODO: add tests for this screen and check if we can use screen from AAR flow to avoid code duplication
+/**
+ * This screen is a copy of SendAarNfcNotSupportedComponent. It is a "temporary screen".
+ * No tests have been added because, once the copy has been reviewed, we will be able to
+ * remove it and use the “original screen,” which already has tests.
+ */
 export const FciNfcNotAvailableScreen = () => {
   const { setOptions } = useIONavigation();
   const dispatch = useIODispatch();

@@ -42,7 +42,7 @@ export type ActiveSessionLoginState = {
     hasBlockingScreenBeenVisualized: boolean;
     showSessionExpirationBanner: boolean;
   };
-  flow?: "FCI";
+  flow?: "FCI"; // We can extend this type with other flows in the future if needed
 };
 
 export const activeSessionLoginInitialState: ActiveSessionLoginState = {
