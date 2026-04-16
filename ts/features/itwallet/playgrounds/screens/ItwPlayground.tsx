@@ -13,6 +13,7 @@ import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { ItwComponentsSection } from "../components/ItwComponentsSection";
 import { ItwEnvironmentSection } from "../components/ItwEnvironmentSection";
 import { ItwIdentificationScreensSection } from "../components/ItwIdentificationScreensSection";
+import { ItwIso18013Section } from "../components/ItwIso18013Section";
 import { ItwL3ScreensSection } from "../components/ItwL3ScreensSection";
 import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
 import { ItwMiscSection } from "../components/ItwMiscSection";
@@ -69,6 +70,7 @@ const ItwPlayground = () => {
             <>
               <ItwL3ScreensSection />
               <ItwIdentificationScreensSection />
+              <ItwIso18013Section />
             </>
           )}
           {page === 3 && <ItwComponentsSection />}
