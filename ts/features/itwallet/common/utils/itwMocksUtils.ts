@@ -13,9 +13,10 @@ import statusAssertion from "../../__mocks__/statusAssertion.json";
 import ts from "../../__mocks__/ts.json";
 import { DigitalCredentialMetadata } from "./itwCredentialsCatalogueUtils";
 import {
+  CredentialBundle,
+  CredentialMetadata,
   IssuerConfiguration,
-  ParsedStatusAssertion,
-  StoredCredential
+  ParsedStatusAssertion
 } from "./itwTypesUtils";
 
 export const ISSUER_MOCK_NAME = "Istituto Poligrafico e Zecca dello Stato";
@@ -39,19 +40,19 @@ export enum CredentialType {
 }
 
 export const ItwStoredCredentialsMocks = {
-  eid: eid as unknown as StoredCredential,
-  dc: dc as unknown as StoredCredential,
-  mdl: mdl as unknown as StoredCredential,
-  ts: ts as unknown as StoredCredential,
+  eid: eid as unknown as CredentialMetadata,
+  dc: dc as unknown as CredentialMetadata,
+  mdl: mdl as unknown as CredentialMetadata,
+  ts: ts as unknown as CredentialMetadata,
   L3: {
-    mdl: mdlL3 as unknown as StoredCredential,
-    ts: tsL3 as unknown as StoredCredential,
-    dc: dcL3 as unknown as StoredCredential,
-    ed: edL3 as unknown as StoredCredential,
-    ee: eeL3 as unknown as StoredCredential,
-    res: resL3 as unknown as StoredCredential,
-    edip: edipL3 as unknown as StoredCredential,
-    edat: edatL3 as unknown as StoredCredential
+    mdl: mdlL3 as unknown as CredentialMetadata,
+    ts: tsL3 as unknown as CredentialMetadata,
+    dc: dcL3 as unknown as CredentialMetadata,
+    ed: edL3 as unknown as CredentialMetadata,
+    ee: eeL3 as unknown as CredentialMetadata,
+    res: resL3 as unknown as CredentialMetadata,
+    edip: edipL3 as unknown as CredentialMetadata,
+    edat: edatL3 as unknown as CredentialMetadata
   }
 };
 
@@ -116,8 +117,8 @@ export const ItwAgeVerificationCredentialFromCatalogueMock: DigitalCredentialMet
 const AGE_VERIFICATION_CREDENTIAL_ID = "dc_sd_jwt_age_verification";
 
 export const createItwAgeVerificationCredentialMock = (
-  pid?: StoredCredential
-): StoredCredential => {
+  pid?: CredentialMetadata
+): CredentialBundle => {
   const now = new Date();
   const expiration = new Date(now);
   expiration.setDate(expiration.getDate() + 90);
@@ -125,52 +126,54 @@ export const createItwAgeVerificationCredentialMock = (
     pid?.issuerConf ?? ItwStoredCredentialsMocks.L3.res.issuerConf;
 
   return {
-    keyTag: "mock_age_verification_keytag",
     credential: "mock_age_verification_credential",
-    format: "dc+sd-jwt",
-    credentialType: CredentialType.AGE_VERIFICATION,
-    credentialId: AGE_VERIFICATION_CREDENTIAL_ID,
-    issuerConf: {
-      ...issuerConf,
-      federation_entity: {
-        ...issuerConf.federation_entity,
-        organization_name: ISSUER_MOCK_NAME
-      },
-      credential_configurations_supported: {
-        ...issuerConf.credential_configurations_supported,
-        [AGE_VERIFICATION_CREDENTIAL_ID]: {
-          scope: CredentialType.AGE_VERIFICATION,
-          format: "dc+sd-jwt",
-          authentic_source: "IT-Wallet ID"
-        } as IssuerConfiguration["credential_configurations_supported"][string]
-      }
-    },
-    parsedCredential: {
-      age_over_18: {
-        value: "18+",
-        name: {
-          "it-IT": "Età certificata",
-          "en-US": "Age verification"
+    metadata: {
+      keyTag: "mock_age_verification_keytag",
+      format: "dc+sd-jwt",
+      credentialType: CredentialType.AGE_VERIFICATION,
+      credentialId: AGE_VERIFICATION_CREDENTIAL_ID,
+      issuerConf: {
+        ...issuerConf,
+        federation_entity: {
+          ...issuerConf.federation_entity,
+          organization_name: ISSUER_MOCK_NAME
+        },
+        credential_configurations_supported: {
+          ...issuerConf.credential_configurations_supported,
+          [AGE_VERIFICATION_CREDENTIAL_ID]: {
+            scope: CredentialType.AGE_VERIFICATION,
+            format: "dc+sd-jwt",
+            authentic_source: "IT-Wallet ID"
+          } as IssuerConfiguration["credential_configurations_supported"][string]
         }
-      }
-    },
-    jwt: {
-      expiration: expiration.toISOString(),
-      issuedAt: now.toISOString()
-    },
-    storedStatusAssertion: {
-      credentialStatus: "valid",
-      statusAssertion: "mock_age_verification_status_assertion",
-      parsedStatusAssertion: {
-        credential_status_type: "0x00",
-        credential_hash_alg: "sha-256",
-        iss: "mock_age_verification_issuer",
-        credential_hash: "mock_age_verification_hash",
-        exp: Math.floor(expiration.getTime() / 1000),
-        iat: Math.floor(now.getTime() / 1000)
-      }
-    },
-    spec_version: pid?.spec_version ?? "1.0.0",
-    verification: pid?.verification
+      },
+      parsedCredential: {
+        age_over_18: {
+          value: "18+",
+          name: {
+            "it-IT": "Età certificata",
+            "en-US": "Age verification"
+          }
+        }
+      },
+      jwt: {
+        expiration: expiration.toISOString(),
+        issuedAt: now.toISOString()
+      },
+      storedStatusAssertion: {
+        credentialStatus: "valid",
+        statusAssertion: "mock_age_verification_status_assertion",
+        parsedStatusAssertion: {
+          credential_status_type: "0x00",
+          credential_hash_alg: "sha-256",
+          iss: "mock_age_verification_issuer",
+          credential_hash: "mock_age_verification_hash",
+          exp: Math.floor(expiration.getTime() / 1000),
+          iat: Math.floor(now.getTime() / 1000)
+        }
+      },
+      spec_version: pid?.spec_version ?? "1.0.0",
+      verification: pid?.verification
+    }
   };
 };

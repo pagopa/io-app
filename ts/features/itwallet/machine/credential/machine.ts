@@ -1,7 +1,7 @@
 import { and, assign, fromPromise, not, setup } from "xstate";
-import { CredentialType } from "../../common/utils/itwMocksUtils";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { CredentialBundle } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
+import { CredentialType } from "../../common/utils/itwMocksUtils";
 import {
   GetWalletAttestationActorOutput,
   ObtainCredentialActorInput,
@@ -78,7 +78,7 @@ export const itwCredentialIssuanceMachine = setup({
       ObtainCredentialActorInput
     >(notImplemented),
     obtainStatusAssertion: fromPromise<
-      Array<StoredCredential>,
+      ReadonlyArray<CredentialBundle>,
       ObtainStatusAssertionActorInput
     >(notImplemented)
   },
@@ -298,7 +298,7 @@ export const itwCredentialIssuanceMachine = setup({
             onDone: {
               target: "ObtainingStatusAssertion",
               actions: assign(({ event }) => ({
-                credentials: event.output.credentials
+                credentials: event.output
               }))
             },
             onError: {
@@ -343,6 +343,7 @@ export const itwCredentialIssuanceMachine = setup({
       entry: "navigateToCredentialPreviewScreen",
       on: {
         "add-to-wallet": {
+          target: "Completed",
           actions: ["storeCredential", "navigateToWallet", "trackAddCredential"]
         },
         close: {
