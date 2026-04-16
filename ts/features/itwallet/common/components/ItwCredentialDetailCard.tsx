@@ -1,12 +1,13 @@
 import { useIOThemeContext } from "@pagopa/io-app-design-system";
 import { Canvas } from "@shopify/react-native-skia";
 import { PropsWithChildren, useState } from "react";
-import { LayoutChangeEvent, StyleSheet, View } from "react-native";
+import { Image, LayoutChangeEvent, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { borderVariantByStatus } from "../utils/itwCredentialUtils";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils";
-import { useThemeColorByCredentialType } from "../utils/itwStyleUtils";
 import { ItwBrandedSkiaBorder } from "./ItwBrandedSkiaBorder";
+import { CredentialCardSkiaBackground } from "./ItwCredentialCard/CredentialCardBackground";
+import { getCredentialCardConfig } from "./ItwCredentialCard/credentialCardConfig";
 
 type ItwCredentialDetailCardProps = PropsWithChildren<{
   credentialType: string;
@@ -19,9 +20,10 @@ export const ItwCredentialDetailCard = ({
   children
 }: ItwCredentialDetailCardProps) => {
   const safeAreaInsets = useSafeAreaInsets();
-  const { backgroundColor } = useThemeColorByCredentialType(credentialType);
   const { themeType } = useIOThemeContext();
   const [size, setSize] = useState({ width: 0, height: 0 });
+  const { background, detailWatermarkLayer } =
+    getCredentialCardConfig(credentialType);
 
   // Extend the card well above the screen so the top border is never visible at rest.
   // The negative marginTop pulls the card up, hiding the extra paddingTop above the screen.
@@ -34,12 +36,15 @@ export const ItwCredentialDetailCard = ({
   };
 
   return (
-    <View
-      style={[styles.container, { paddingTop, backgroundColor }]}
-      onLayout={handleOnLayout}
-    >
-      {/* Skia canvas for the ITW branded gradient border */}
+    <View style={[styles.container, { paddingTop }]} onLayout={handleOnLayout}>
       <Canvas style={StyleSheet.absoluteFill}>
+        {size.width > 0 && size.height > 0 && (
+          <CredentialCardSkiaBackground
+            bg={background}
+            width={size.width}
+            height={size.height}
+          />
+        )}
         <ItwBrandedSkiaBorder
           width={size.width}
           height={size.height}
@@ -49,7 +54,16 @@ export const ItwCredentialDetailCard = ({
         />
       </Canvas>
 
-      {/* Card content */}
+      {detailWatermarkLayer && size.width > 0 && size.height > 0 && (
+        <View style={StyleSheet.absoluteFillObject} pointerEvents="none">
+          <Image
+            accessibilityIgnoresInvertColors
+            source={detailWatermarkLayer}
+            style={{ width: size.width, height: size.height }}
+            resizeMode="stretch"
+          />
+        </View>
+      )}
       <View style={styles.content}>{children}</View>
     </View>
   );

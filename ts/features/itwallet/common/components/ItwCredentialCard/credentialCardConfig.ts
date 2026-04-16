@@ -52,6 +52,11 @@ export type CredentialCardConfig = {
    * over the gradient background.
    */
   watermarkLayer?: ImageSourcePropType;
+  /**
+   * Optional PNG image rendered as a watermark layer
+   * in the credential detail header.
+   */
+  detailWatermarkLayer?: ImageSourcePropType;
 };
 
 /**
@@ -85,7 +90,8 @@ export const credentialCardConfigs: Partial<
     },
     titleColor: "#115486",
     borderColor: "#4F99E2",
-    watermarkLayer: require("../../../../../../img/features/itWallet/cards/cardWatermarks/itw_pid_watermark.png")
+    watermarkLayer: require("../../../../../../img/features/itWallet/cards/cardWatermarks/itw_pid_watermark.png"),
+    detailWatermarkLayer: require("../../../../../../img/features/itWallet/cards/detailWatermarks/itw_pid_detail_watermark.png")
   },
   [CredentialType.DRIVING_LICENSE]: {
     background: {
@@ -96,7 +102,8 @@ export const credentialCardConfigs: Partial<
     },
     titleColor: "#652035",
     borderColor: "#D674A9",
-    watermarkLayer: require("../../../../../../img/features/itWallet/cards/cardWatermarks/itw_mdl_watermark.png")
+    watermarkLayer: require("../../../../../../img/features/itWallet/cards/cardWatermarks/itw_mdl_watermark.png"),
+    detailWatermarkLayer: require("../../../../../../img/features/itWallet/cards/detailWatermarks/itw_mdl_detail_watermark.png")
   },
   [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: {
     background: {

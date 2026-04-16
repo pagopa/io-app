@@ -2,6 +2,7 @@ import {
   Body,
   ContentWrapper,
   H2,
+  IOColors,
   Tag,
   makeFontStyleObject,
   useIOExperimentalDesign
@@ -85,7 +86,13 @@ const ItwPresentationDetailsHeader = ({
         credentialStatus={displayStatus}
       >
         <ItwAvatar width={48} height={48} />
-        <H2 style={{ paddingTop: 16, textAlign: "center", color: textColor }}>
+        <H2
+          style={{
+            paddingTop: 16,
+            textAlign: "center",
+            color: IOColors["blueIO-850"]
+          }}
+        >
           {getCredentialNameFromType(
             credential.credentialType,
             "",
@@ -94,7 +101,12 @@ const ItwPresentationDetailsHeader = ({
         </H2>
         {authSource && (
           <Body
-            style={{ textAlign: "center", marginHorizontal: 32, paddingTop: 4 }}
+            style={{
+              textAlign: "center",
+              marginHorizontal: 32,
+              paddingTop: 4,
+              color: IOColors["blueIO-850"]
+            }}
           >
             {authSource}
           </Body>

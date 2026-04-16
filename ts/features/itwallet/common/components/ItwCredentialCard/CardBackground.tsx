@@ -4,7 +4,6 @@ import {
   Canvas,
   Image,
   LinearGradient,
-  Rect,
   RoundedRect,
   useImage,
   vec
@@ -20,65 +19,13 @@ import Animated, {
 import { useIOSelector } from "../../../../../store/hooks";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { CredentialType } from "../../utils/itwMocksUtils";
-import {
-  CardBackgroundConfig,
-  getCredentialCardConfig
-} from "./credentialCardConfig";
+import { getCredentialCardConfig } from "./credentialCardConfig";
+import { CredentialCardSkiaBackground } from "./CredentialCardBackground";
 import { CardColorScheme } from "./types";
 
 type ItwCredentialCardBackgroundProps = {
   credentialType: string;
   colorScheme: CardColorScheme;
-};
-
-/**
- * Computes the Skia LinearGradient start/end vectors for a given angle
- * (CSS convention: 0° = bottom→top, 90° = left→right) and canvas dimensions.
- * The resulting line passes through the center and is long enough to cover
- * all four corners of the rectangle.
- */
-const getGradientVectors = (
-  angle: number,
-  width: number,
-  height: number
-): { start: ReturnType<typeof vec>; end: ReturnType<typeof vec> } => {
-  const rad = (angle * Math.PI) / 180;
-  const dx = Math.sin(rad);
-  const dy = -Math.cos(rad);
-  const cx = width / 2;
-  const cy = height / 2;
-  // Minimum half-length that covers every corner when projected on the direction
-  const d = Math.abs(cx * dx) + Math.abs(cy * dy);
-  return {
-    start: vec(cx - dx * d, cy - dy * d),
-    end: vec(cx + dx * d, cy + dy * d)
-  };
-};
-
-const L3Background = ({
-  bg,
-  width,
-  height
-}: {
-  bg: CardBackgroundConfig;
-  width: number;
-  height: number;
-}) => {
-  if (bg.type === "solid") {
-    return <Rect x={0} y={0} width={width} height={height} color={bg.color} />;
-  }
-
-  const { start, end } = getGradientVectors(bg.angle, width, height);
-  return (
-    <Rect x={0} y={0} width={width} height={height}>
-      <LinearGradient
-        start={start}
-        end={end}
-        colors={bg.colors}
-        positions={bg.positions}
-      />
-    </Rect>
-  );
 };
 
 export const CardBackground = ({
@@ -144,7 +91,7 @@ export const CardBackground = ({
             )}
           </Image>
         ) : withL3Design ? (
-          <L3Background
+          <CredentialCardSkiaBackground
             bg={config.background}
             width={size.width}
             height={size.height}
