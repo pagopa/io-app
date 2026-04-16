@@ -12,7 +12,7 @@ import {
 import { assert } from "../../../../utils/assert.ts";
 import { trackItWalletIntroScreen } from "../../analytics";
 import {
-  StoredCredential,
+  CredentialBundle,
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
@@ -22,6 +22,7 @@ import {
   InitMrtdPoPChallengeActorParams,
   type RequestEidActorParams,
   StartAuthFlowActorParams,
+  StoreEidCredentialActorParams,
   ValidateMrtdPoPChallengeActorParams
 } from "./actors";
 import {
@@ -83,7 +84,6 @@ export const itwEidIssuanceMachine = setup({
     cleanupIntegrityKeyTag: notImplemented,
     storeWalletInstanceAttestation: notImplemented,
     storeAuthLevel: notImplemented,
-    storeEidCredential: notImplemented,
     storeCredentialUpgradeFailures: notImplemented,
     handleSessionExpired: notImplemented,
     resetWalletInstance: notImplemented,
@@ -103,8 +103,14 @@ export const itwEidIssuanceMachine = setup({
      * Context manipulation
      */
 
+    setCieIdIdentificationL2: assign(() => ({
+      identification: {
+        mode: "cieId",
+        level: "L2"
+      }
+    })),
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
-    loadPidIntoContext: notImplemented,
+
     /**
      * Save the final redirect url in the machine context for later reuse.
      * This action is the same for the three identification methods.
@@ -179,7 +185,10 @@ export const itwEidIssuanceMachine = setup({
      * PID issuance actors
      */
 
-    requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
+    requestEid: fromPromise<CredentialBundle, RequestEidActorParams>(
+      notImplemented
+    ),
+    storeEidCredential: fromPromise<void, StoreEidCredentialActorParams>(
       notImplemented
     ),
 
@@ -195,7 +204,8 @@ export const itwEidIssuanceMachine = setup({
     isOperationAborted: notImplemented,
     hasIntegrityKeyTag: ({ context }) => context.integrityKeyTag !== undefined,
     hasValidWalletInstanceAttestation: notImplemented,
-    hasLegacyCredentials: ({ context }) => context.legacyCredentials.length > 0,
+    hasCredentialsToUpgrade: ({ context }) =>
+      context.credentialsToUpgrade.length > 0,
     isNFCEnabled: ({ context }) => context.cieContext?.isNFCEnabled || false,
     isReissuance: ({ context }) => context.mode === "reissuance",
     isUpgrade: ({ context }) => context.mode === "upgrade",
@@ -482,8 +492,7 @@ export const itwEidIssuanceMachine = setup({
       ],
       always: [
         {
-          guard: "hasLegacyCredentials",
-          actions: "loadPidIntoContext",
+          guard: "hasCredentialsToUpgrade",
           target: "#itwEidIssuanceMachine.CredentialsUpgrade"
         },
         {
@@ -517,12 +526,7 @@ export const itwEidIssuanceMachine = setup({
                 guard: ({ event }) => event.mode === "cieId",
                 actions: [
                   "trackIdentificationMethodSelected",
-                  assign(({ context }) => ({
-                    identification: {
-                      mode: "cieId",
-                      level: context.level === "l2" ? "L2" : "L3"
-                    }
-                  }))
+                  "setCieIdIdentificationL2"
                 ],
                 target: "#itwEidIssuanceMachine.UserIdentification.CieID"
               }
@@ -645,7 +649,7 @@ export const itwEidIssuanceMachine = setup({
               tags: [ItwTags.Loading],
               invoke: {
                 src: "startAuthFlow",
-                // eslint-disable-next-line sonarjs/no-identical-functions
+
                 input: ({ context }) => ({
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
@@ -867,12 +871,8 @@ export const itwEidIssuanceMachine = setup({
               {
                 guard: ({ event }) => event.mode === "cieId",
                 actions: [
-                  assign(() => ({
-                    identification: {
-                      mode: "cieId",
-                      level: "L3"
-                    }
-                  }))
+                  "trackIdentificationMethodSelected",
+                  "setCieIdIdentificationL2"
                 ],
                 target: "#itwEidIssuanceMachine.UserIdentification.CieID"
               }
@@ -1121,15 +1121,32 @@ export const itwEidIssuanceMachine = setup({
         DisplayingPreview: {
           on: {
             "add-to-wallet": {
-              actions: [
-                "storeEidCredential",
-                "trackWalletInstanceCreation",
-                "freezeSimplifiedActivationRequirements"
-              ],
-              target: "Completed"
+              target: "StoringCredential"
             },
             close: {
               actions: ["closeIssuance"]
+            }
+          }
+        },
+        StoringCredential: {
+          description:
+            "This state stores the obtained credential in the secure storage and redux",
+          tags: [ItwTags.Loading],
+          invoke: {
+            src: "storeEidCredential",
+            input: ({ context }) => ({
+              eid: context.eid
+            }),
+            onDone: {
+              target: "Completed",
+              actions: [
+                "trackWalletInstanceCreation",
+                "freezeSimplifiedActivationRequirements"
+              ]
+            },
+            onError: {
+              target: "#itwEidIssuanceMachine.Failure",
+              actions: "setFailure"
             }
           }
         },
@@ -1140,7 +1157,7 @@ export const itwEidIssuanceMachine = setup({
       onDone: [
         {
           guard: and([
-            "hasLegacyCredentials",
+            "hasCredentialsToUpgrade",
             or(["isReissuance", "isUpgrade"])
           ]),
           target: "#itwEidIssuanceMachine.CredentialsUpgrade"
@@ -1170,18 +1187,10 @@ export const itwEidIssuanceMachine = setup({
             id: "credentialUpgradeMachine",
             src: "credentialUpgradeMachine",
             input: ({ context }) => {
-              assert(context.eid, "PID must be defined for credential upgrade");
-              assert(
-                context.walletInstanceAttestation,
-                "Wallet instance attestation must be defined"
-              );
               assert(context.mode, "Issuance mode must be defined");
 
               return {
-                pid: context.eid,
-                walletInstanceAttestation:
-                  context.walletInstanceAttestation?.jwt,
-                credentials: context.legacyCredentials,
+                credentials: context.credentialsToUpgrade,
                 issuanceMode: context.mode
               };
             },

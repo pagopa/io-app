@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable max-classes-per-file */
 /**
  * This configuration was taken from the official library;

@@ -32,6 +32,12 @@ jest.mock("react-native-haptic-feedback", () => ({
   trigger: jest.fn()
 }));
 
+jest.mock("react-native-pulsar", () => ({
+  Presets: {
+    System: new Proxy({}, { get: () => jest.fn() })
+  }
+}));
+
 // eslint-disable-next-line functional/immutable-data
 global.CanvasKit = {
   MakeCanvas: jest.fn(),
@@ -131,6 +137,17 @@ jest.mock("@gorhom/bottom-sheet", () => {
 
 jest.mock("@sentry/react-native");
 
+jest.mock("@pagopa/io-app-design-system", () => {
+  const actual = jest.requireActual("@pagopa/io-app-design-system");
+  const React = require("react");
+  const { Text } = require("react-native");
+  return {
+    ...actual,
+    IOMarkdown: ({ content }) => React.createElement(Text, null, content),
+    IOMarkdownLite: ({ content }) => React.createElement(Text, null, content)
+  };
+});
+
 jest.mock("react-native-device-info", () => mockRNDeviceInfo);
 
 jest.mock("react-native-pdf", () => jest.fn());
@@ -171,6 +188,7 @@ jest.mock("react-native/Libraries/TurboModule/TurboModuleRegistry", () => {
     getEnforcing: name => {
       // List of TurboModules libraries to mock.
       const modulesToMock = [
+        "IoReactNativeHttpClient",
         "RNDocumentPicker",
         "RNHapticFeedback",
         "RNCWebViewModule",
@@ -199,7 +217,9 @@ jest.mock(
     };
   }
 );
-jest.spyOn(AppState, "addEventListener").mockImplementation(() => ({remove: jest.fn()}));
+jest
+  .spyOn(AppState, "addEventListener")
+  .mockImplementation(() => ({ remove: jest.fn() }));
 
 jest.mock("mixpanel-react-native", () => ({
   __esModule: true,

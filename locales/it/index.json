@@ -47,6 +47,7 @@
       "minusSymbol": "meno",
       "reload": "Ricarica",
       "search": "Cerca",
+      "cieReadingProgress": "Lettura {{percentage}}% completata",
       "dateFormat": "DD MMMM YYYY",
       "alert": "Avviso",
       "activityIndicator": {
@@ -320,14 +321,7 @@
             "title": "Elimina il tuo profilo",
             "description": "Puoi esercitare il tuo diritto alla cancellazione del tuo profilo IO in qualsiasi momento.",
             "banner": "Il tuo profilo sarà eliminato definitivamente entro 30 giorni dalla richiesta.",
-            "body": {
-              "p1": "Se decidi di proseguire non potrai più recuperare i messaggi o le preferenze che hai impostato nell'app.",
-              "p2": {
-                "firstPart": "Eventuali bonus o sconti ottenuti tramite l'app IO ",
-                "lastPart": "non saranno più accessibili."
-              },
-              "p3": "Potrai entrare di nuovo su IO in qualsiasi momento, effettuando una nuova registrazione tramite SPID o CIE."
-            },
+            "body": "Se decidi di proseguire non potrai più recuperare i messaggi o le preferenze che hai impostato nell'app.\n\nEventuali bonus o sconti ottenuti tramite l'app IO **non saranno più accessibili.**\n\nPotrai entrare di nuovo su IO in qualsiasi momento, effettuando una nuova registrazione tramite SPID o CIE.",
             "cta": "Procedi con l’eliminazione"
           },
           "details": {
@@ -354,23 +348,7 @@
           "description": "Ricevi una copia dei dati associati al tuo profilo IO",
           "a11y": "Fatto. Hai richiesto una copia dei tuoi dati.",
           "detail": {
-            "bulletList": {
-              "title": "I dati sono:",
-              "item1": "il tuo codice fiscale;",
-              "item2": "l’indirizzo email da te indicato e, nel caso, la conferma della sua validazione;",
-              "item3": "il testo dei Messaggi che hai ricevuto;",
-              "item4": "le tue preferenze di notifica."
-            },
-            "paragraph1": "Le informazioni saranno scaricate in formato YAML, un formato standard che in informatica consente lo scambio di dati fra applicazioni diverse.",
-            "paragraph2": {
-              "part1": "Riceverai un ",
-              "part2": "messaggio su IO ",
-              "part3": "in cui sono presenti un link e una password validi per 15 giorni."
-            },
-            "paragraph3": {
-              "part1": "Per maggiori informazioni consulta l’",
-              "link": "Informativa privacy di IO."
-            }
+            "body": "**I dati sono:**\n- il tuo codice fiscale;\n- l’indirizzo email da te indicato e, nel caso, la conferma della sua validazione;\n- il testo dei Messaggi che hai ricevuto;\n- le tue preferenze di notifica.\n\nLe informazioni saranno scaricate in formato YAML, un formato standard che in informatica consente lo scambio di dati fra applicazioni diverse.\n\nRiceverai un **messaggio su IO** in cui sono presenti un link e una password validi per 15 giorni.\n\nPer maggiori informazioni consulta l’**[Informativa privacy di IO.](privacy://policy)**"
           },
           "alert": {
             "oldRequest": "Abbiamo già preso in carico una richiesta di esportazione dei dati.",
@@ -446,8 +424,7 @@
         "description": "Per saperne di più sull'app IO",
         "subtitle": "Qui puoi trovare ulteriori dettagli sull'app IO e scoprire di più sul suo utilizzo.",
         "paragraphTitle": "Cos’è IO?",
-        "paragraphBody1": "IO, l’app dei servizi pubblici, ",
-        "paragraphBody2": "ti offre un unico canale per interagire facilmente con gli Enti, locali e nazionali (Comuni, Regioni, agenzie centrali), direttamente dal tuo dispositivo. Grazie a IO, sono le singole amministrazioni a contattarti in modo puntuale e personalizzato, consentendoti di gestire operazioni legate a uno specifico servizio - come avvisi, pagamenti, scadenze e notifiche - in tutta semplicità e sicurezza.",
+        "paragraphBody": "**IO, l’app dei servizi pubblici**, ti offre un unico canale per interagire facilmente con gli Enti, locali e nazionali (Comuni, Regioni, agenzie centrali), direttamente dal tuo dispositivo. Grazie a IO, sono le singole amministrazioni a contattarti in modo puntuale e personalizzato, consentendoti di gestire operazioni legate a uno specifico servizio - come avvisi, pagamenti, scadenze e notifiche - in tutta semplicità e sicurezza.",
         "bannerBody": "Vuoi saperne di più?",
         "bannerButton": "Vai al sito di IO"
       },
@@ -966,26 +943,19 @@
     },
     "unlockmodal": {
       "title": "Cosa significa?",
-      "description1_1": "Se hai bloccato l’accesso a IO per motivi di sicurezza, per poter rientrare in app devi prima sbloccarlo.",
-      "description1_2": "In alternativa, è possibile entrare in app utilizzando un accesso con il",
-      "description1_3": "livello massimo di sicurezza.",
-      "description1_4": "Questo tipo di autenticazione richiede un nome utente, una password e un supporto fisico, come ad esempio la CIE.",
+      "description": "Se hai bloccato l’accesso a IO per motivi di sicurezza, per poter rientrare in app devi prima sbloccarlo.\nIn alternativa, è possibile entrare in app utilizzando un accesso con il **livello massimo di sicurezza.** Questo tipo di autenticazione richiede un nome utente, una password e un supporto fisico, come ad esempio la CIE.",
       "title2": "Vuoi sbloccare l’accesso a IO?",
       "listitem1": "Assicurati di aver messo in sicurezza la tua identità digitale, modificando le credenziali di accesso con il tuo Identity Provider.",
       "listitem2_1": "Accedi a IO dal web, utilizzando le tue credenziali SPID o CIE.",
       "listitem2_2": "Vai al sito",
-      "listitem3_1": "Vai alla sezione",
-      "listitem3_2": "Sblocca l'accesso a IO",
-      "listitem3_3": "e segui i passaggi indicati. Quando richiesto inserisci il",
-      "listitem3_4": "codice di ripristino",
-      "listitem3_5": "per confermare l’operazione."
+      "listitem3": "Vai alla sezione *Sblocca l’accesso a IO* e segui i passaggi indicati. Quando richiesto inserisci il **codice di ripristino** per confermare l’operazione."
     }
   },
   "email": {
     "cduScreens": {
       "validateMail": {
         "title": "È questa la tua email?",
-        "subtitle": "Per continuare a usare l’app, devi confermare che la tua email è",
+        "subtitle": "Per continuare a usare l’app, devi confermare che la tua email è **{{email}}**",
         "editButton": "No, modifica",
         "validateButton": "Sì, conferma",
         "help": {
@@ -994,8 +964,7 @@
       },
       "emailAlreadyTaken": {
         "title": "Modifica la tua email",
-        "subtitleStart": "Il tuo indirizzo email",
-        "subtitleEnd": "è già in uso su IO, devi inserirne uno diverso per continuare a usare l’app.",
+        "subtitle": "Il tuo indirizzo email **{{email}}** è già in uso su IO, devi inserirne uno diverso per continuare a usare l’app.",
         "editButton": "Modifica email",
         "help": {
           "body": "Il tuo indirizzo email risulta già in uso su IO, è necessario inserirne uno diverso per continuare a utilizzare l’app."
@@ -1068,10 +1037,7 @@
       },
       "policy": {
         "title": "Come scegliere il codice?",
-        "description": "Il codice di sblocco è composto da 6 cifre e ti servirà per accedere a IO e autorizzare alcune operazioni in app.",
-        "bulletListTitle": "Scegli un codice difficile da indovinare e che non contenga:",
-        "firstItem": "un unico numero ripetuto (es. 000000)",
-        "secondItem": "elenco di numeri ordinati (es. 123456 o 654321)"
+        "body": "Il codice di sblocco è composto da 6 cifre e ti servirà per accedere a IO e autorizzare alcune operazioni in app.\n\nScegli un codice difficile da indovinare e che non contenga:\n- un unico numero ripetuto (es. 000000)\n- elenco di numeri ordinati (es. 123456 o 654321)"
       },
       "success": {
         "message": "Hai modificato il codice!"
@@ -1198,7 +1164,7 @@
       "cardGeneric": "Carta",
       "a11y": {
         "credit": {
-          "hpan": "{{circuit}} che termina con {{spacedHpan}}"
+          "hpan": "Carta {{circuit}} che termina con {{spacedHpan}}"
         },
         "paypal": {
           "owner": "account: {{email}}"
@@ -1748,19 +1714,12 @@
       }
     },
     "banner": {
-      "content1": "Questo è un",
-      "content2": "messaggio dinamico:",
-      "content3": "il suo contenuto potrebbe cambiare nel tempo per darti informazioni sempre aggiornate.",
+      "content": "Questo è un messaggio dinamico: il suo contenuto potrebbe cambiare nel tempo per darti informazioni sempre aggiornate.",
       "action": "Scopri di più"
     },
     "bottomSheet": {
       "title": "Cos'è un messaggio dinamico?",
-      "body": "È un messaggio che l'ente può modificare dopo averlo inviato. In questo modo, le informazioni che contiene saranno sempre corrette.\n\nUn ente può modificare le informazioni di un messaggio dinamico solo in casi specifici, per esempio per cambiare un'informazione vecchia o aggiornare un allegato non più valido.\n\nSe deve comunicarti nuove informazioni o aggiornamenti importanti, ti invierà un nuovo messaggio.",
-      "bodyPt1": "È un messaggio che l'ente può modificare ",
-      "bodyPt2": "dopo averlo inviato",
-      "bodyPt3": ". In questo modo, le informazioni che contiene saranno sempre corrette.\n\nUn ente può modificare le informazioni di un messaggio dinamico solo ",
-      "bodyPt4": "in casi specifici",
-      "bodyPt5": ", per esempio per cambiare un'informazione vecchia o aggiornare un allegato non più valido.\n\nSe deve comunicarti nuove informazioni o aggiornamenti importanti, ti invierà un nuovo messaggio."
+      "body": "È un messaggio che l'ente può modificare **dopo averlo inviato**. In questo modo, le informazioni che contiene saranno sempre corrette.\n\nUn ente può modificare le informazioni di un messaggio dinamico solo **in casi specifici**, per esempio per cambiare un'informazione vecchia o aggiornare un allegato non più valido.\n\nSe deve comunicarti nuove informazioni o aggiornamenti importanti, ti invierà un nuovo messaggio."
     },
     "footer": {
       "contacts": "Contatta il mittente",
@@ -1828,7 +1787,7 @@
   },
   "send_email_messages": {
     "title": "Inoltro dei messaggi via email",
-    "subtitle": "Vuoi che IO inoltri un’anteprima dei messaggi all’indirizzo",
+    "subtitle": "Vuoi che IO inoltri un’anteprima dei messaggi all’indirizzo **{{email}}**?",
     "switch": {
       "title": "Invia un’anteprima via email",
       "subtitle": "Riceverai un'anteprima del messaggio al tuo indirizzo email, se il servizio lo consente."
@@ -1847,10 +1806,7 @@
         "quickConfig": {
           "title": "Usa configurazione rapida",
           "successAlert": "Hai abilitato la configurazione rapida",
-          "body": {
-            "text1": "Ti contatteranno solo gli enti che hanno qualcosa di importante da dirti.",
-            "text2": "Potrai sempre disattivare le comunicazioni dei servizi che non ti interessano."
-          }
+          "body": "Ti contatteranno solo gli enti che hanno qualcosa di importante da dirti. **Potrai sempre disattivare le comunicazioni dei servizi che non ti interessano.**"
         },
         "manualConfig": {
           "title": "Configura manualmente",
@@ -2384,28 +2340,10 @@
       "aar": {
         "serviceActivation": {
           "failure": "Non riusciamo ad attivare il servizio SEND",
-          "feature1": {
-            "part1": "Attiva SEND su IO e ricevi in app le ",
-            "part2": "comunicazioni a valore legale",
-            "part3": " che ti inviano gli enti"
-          },
-          "feature2": {
-            "part1": "Se leggi la comunicazione online in tempo, ",
-            "part2": "eviti la raccomandata e risparmi"
-          },
-          "feature3": {
-            "part1": "Puoi pagare direttamente in app: è ",
-            "part2": "facile e veloce"
-          },
-          "footer": {
-            "part1": "Premendo ",
-            "part2": "Attiva SEND su IO",
-            "part3": " dichiari di aver letto e compreso l’",
-            "part4": "Informativa Privacy",
-            "part5": " e i ",
-            "part6": "Termini e Condizioni d’uso",
-            "part7": "."
-          },
+          "feature1": "Attiva SEND su IO e ricevi in app le **comunicazioni a valore legale** che ti inviano gli enti",
+          "feature2": "Se leggi la comunicazione online in tempo, **eviti la raccomandata e risparmi**",
+          "feature3": "Puoi pagare direttamente in app: è **facile e veloce**",
+          "footer": "Premendo **Attiva SEND su IO** dichiari di aver letto e compreso l’**[Informativa Privacy]({{privacyUrl}})** e i **[Termini e Condizioni d’uso]({{tosUrl}})**.",
           "headerAction": "Chiudi",
           "primaryAction": "Attiva SEND su IO",
           "serviceActivated": "Hai attivato SEND su IO",
@@ -2414,15 +2352,7 @@
         "flow": {
           "aarTos": {
             "title": "Stai per aprire la notifica SEND",
-            "body": {
-              "firstPart": "Le notifiche SEND sono comunicazioni a valore legale inviate da un ente, come esiti di pratiche, rimborsi o multe.\n\nPremendo ",
-              "goToNotification": "Vai alla notifica SEND",
-              "youDeclareThat": " dichiari di aver letto e compreso l’",
-              "privacy": "Informativa Privacy",
-              "andThe": " e i ",
-              "tos": "Termini e Condizioni d’uso",
-              "lineEnding": "."
-            },
+            "body": "Le notifiche SEND sono comunicazioni a valore legale inviate da un ente, come esiti di pratiche, rimborsi o multe.\n\nPremendo **Vai alla notifica SEND** dichiari di aver letto e compreso l’**[Informativa Privacy]({{privacyUrl}})** e i **[Termini e Condizioni d’uso]({{tosUrl}})**.",
             "primaryAction": "Vai alla notifica SEND",
             "secondaryAction": "Chiudi"
           },
@@ -2498,14 +2428,17 @@
             "title": "Vuoi chiudere la notifica SEND?",
             "paragraph1": "Conserva il codice QR, ti servirà per rileggere la notifica in app",
             "paragraph2": "Puoi inquadrarlo oppure caricare una sua foto su IO",
-            "paragraph3": "Tutte le tue notifiche sono disponibili sul sito di SEND - Notifiche Digitali",
-            "link": "Vai sul sito di SEND",
+            "paragraph3": "Tutte le tue notifiche sono disponibili sul sito di SEND - Notifiche Digitali\n\n**[Vai sul sito di SEND]({{url}})**",
             "primaryAction": "Torna alla notifica",
             "secondaryAction": "Chiudi la notifica"
           },
           "cieCanInsertion": {
             "title": "Inserisci il codice a 6 cifre che trovi in basso a destra della CIE",
-            "description": "È il codice a 6 cifre (CAN) che trovi stampato sul fronte della Carta di Identità Elettronica, in basso a destra."
+            "description": "È il codice a 6 cifre (CAN) che trovi stampato sul fronte della Carta di Identità Elettronica, in basso a destra. [Dove lo trovo?](internal://can-location)",
+            "bottomSheet": {
+              "title": "Dove trovo il codice CAN?",
+              "info": "Lo trovi stampato sul fronte della Carta di Identità Elettronica (CIE) di {{denomination}}, in basso a destra."
+            }
           },
           "cieScanningAdvisory": {
             "title": "Posiziona la CIE su una superficie stabile per la lettura",
@@ -2593,7 +2526,7 @@
             "notAdressee": {
               "infoAlert": "Stai aiutando un’altra persona ad accedere a una notifica SEND.",
               "title": "Vuoi aprire la notifica SEND di {{name}}?",
-              "subtitle": "Se la persona che ha ricevuto la comunicazione ti ha chiesto di farlo, puoi aprire questa notifica SEND per suo conto.",
+              "subtitle": "Per aprire la notifica per suo conto, tieni a portata di mano la Carta di Identità Elettronica (CIE) di {{name}}.",
               "primaryAction": "Apri notifica SEND",
               "bottomSheet": {
                 "title": "Cosa ti serve?",
@@ -2939,6 +2872,12 @@
       "signatureFieldInfo": {
         "title": "Cosa sono le clausole vessatorie?",
         "subTitle": "Sono delle clausole che segnalano condizioni particolari a cui prestare attenzione e che devono essere accettate. Devono inoltre essere, per legge, facilmente identificabili per far sì che chi firma sia informato del loro contenuto prima di apporre la firma."
+      },
+      "requestL3": {
+        "localFlag": {
+          "title": "Attivazione check L3 per il flusso di firma",
+          "description": "Attivando questo toggle attivi il check L3 per il flusso di firma, che prevede una nuova login L3 per gli utenti che non possiedono il livello di autenticazione L3 (CIE + PIN)"
+        }
       }
     },
     "wallet": {
@@ -2980,7 +2919,7 @@
       "onboarding": {
         "title": "Cosa vuoi aggiungere al Portafoglio?",
         "sections": {
-          "itw": "Documenti su IO",
+          "itw": "Documenti",
           "other": "Altro"
         },
         "l3-sections": {
@@ -3004,6 +2943,10 @@
         "cta": {
           "addBonus": "Vuoi aggiungere un bonus o un metodo di pagamento?",
           "addRestricted": "Aggiungi documenti con funzionalità ridotte"
+        },
+        "no-nfc-banner": {
+          "content": "Il tuo dispositivo non supporta i documenti IT-Wallet. Puoi aggiungere solo alcuni documenti digitali con funzionalità ridotte.",
+          "cta": "Scopri di più"
         }
       }
     },
@@ -3156,7 +3099,9 @@
         "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia",
         "ed": "Titoli accademici",
         "ee": "Iscrizioni accademiche",
-        "res": "Attestato di residenza"
+        "res": "Attestato di residenza",
+        "edip": "Diplomi",
+        "edat": "Frequenza scolastica"
       },
       "wallet": {
         "active": "Attivo",
@@ -3190,7 +3135,8 @@
         "email": "Scrivi una mail",
         "website": "Visita il sito",
         "additionalDataTitle": "Dati aggiuntivi",
-        "errorCode": "Codice errore"
+        "errorCode": "Codice errore",
+        "visitHelpCenter": "Visita il centro di assistenza"
       },
       "generic": {
         "error": {
@@ -3350,15 +3296,19 @@
           "action": "Vai al Portafoglio"
         },
         "nfcNotSupported": {
-          "title": "IT-Wallet richiede un dispositivo con tecnologia NFC",
-          "subtitle": "Il tuo dispositivo non è dotato di tecnologia NFC, necessaria per il funzionamento dei portafogli digitali.",
+          "title": "Il tuo dispositivo non ha NFC",
+          "subtitle": "Il portafoglio IT-Wallet richiede la tecnologia NFC. Senza NFC puoi aggiungere solo alcuni documenti digitali, con funzionalità ridotte.",
           "actions": {
-            "continue": "Continua senza IT-Wallet",
-            "cancel": "Non ora",
-            "l3": {
-              "continue": "Scopri di più",
-              "cancel": "Chiudi"
-            }
+            "continue": "Scopri di più",
+            "cancel": "Chiudi"
+          }
+        },
+        "continueWithoutItw": {
+          "title": "Continua con Documenti su IO",
+          "subtitle": "Il tuo dispositivo non ha la tecnologia NFC. Senza NFC puoi aggiungere solo alcuni documenti digitali, con funzionalità ridotte.",
+          "actions": {
+            "continue": "Continua",
+            "cancel": "Chiudi"
           }
         },
         "ipzsPrivacy": {
@@ -3706,6 +3656,11 @@
         "credentialResult": {
           "toast": "Fatto!"
         },
+        "landingError": {
+          "title": "Qualcosa non va",
+          "body": "Si è verificato un problema, riprova più tardi.",
+          "action": "Chiudi"
+        },
         "notMatchingIdentityError": {
           "title": "Identità non riconosciuta",
           "body": "Attiva Documenti su IO con la stessa identità utilizzata per accedere all’app IO. Verifica le credenziali di accesso e riprova.",
@@ -3747,13 +3702,11 @@
         "walletInstanceNotActive": {
           "documentiSuIo": {
             "title": "Attiva Documenti su IO per continuare",
-            "body": "Per aggiungere i tuoi documenti al Portafoglio è necessario attivare ",
-            "bodyBold": "Documenti su IO"
+            "subtitle": "Per aggiungere i tuoi documenti al Portafoglio è necessario attivare **Documenti su IO**"
           },
           "itWallet": {
             "title": "Ottieni IT-Wallet per continuare",
-            "body": "Per aggiungere nuovi documenti al tuo Portafoglio di IO ottieni IT-Wallet: ti basta avere con te la Carta di Identità Elettronica (CIE).",
-            "bodyBold": ""
+            "subtitle": "Per aggiungere nuovi documenti al tuo Portafoglio di IO ottieni IT-Wallet: ti basta avere con te la Carta di Identità Elettronica (CIE)."
           },
           "primaryAction": "Inizia",
           "secondaryAction": "Non ora"
@@ -3779,8 +3732,7 @@
         },
         "mdlMessageExpired": {
           "title": "Richiesta scaduta",
-          "subtitleStart": "Questa richiesta non è più valida ma puoi aggiungere di nuovo la tua ",
-          "subtitleBold": "Patente su IO.",
+          "subtitle": "Questa richiesta non è più valida ma puoi aggiungere di nuovo la tua **Patente su IO.**",
           "primaryAction": "Aggiungi di nuovo"
         },
         "mrtdChallengeInitError": {
@@ -3804,16 +3756,15 @@
         "moreInfo": "More info",
         "error": {
           "title": "Il tuo dispositivo non supporta Documenti su IO",
-          "body": "Per conoscere i requisiti di sicurezza necessari per questa funzionalità premi ",
-          "primaryAction": "Scopri di più",
+          "subtitle": "Per conoscere i requisiti di sicurezza necessari per questa funzionalità premi **[Scopri di più]({{faqUrl}})**",
           "secondaryAction": "Chiudi"
         }
       },
       "hardwareKeyInvalid": {
         "error": {
           "title": "Non puoi proseguire con la richiesta",
-          "body": "Una verifica di sicurezza sul tuo dispositivo non è andata a buon fine. Leggi i consigli per risolvere il problema o contatta l’assistenza.",
-          "primaryAction": "Leggi cosa fare"
+          "body": "Una verifica di sicurezza sul tuo dispositivo non è andata a buon fine. Per sapere cosa puoi fare per risolvere il problema contatta l'assistenza.",
+          "primaryAction": "Contatta l’assistenza"
         }
       },
       "reissuanceLandingScreen": {
@@ -3883,6 +3834,9 @@
             }
           },
           "mDL": {
+            "expired": {
+              "content": "###### Quali documenti devo preparare?\n\nLa Patente di guida (in scadenza o scaduta), un documento di identità, il Codice Fiscale e una foto recente (formato tessera).\n\n###### Hai già rinnovato il documento?\n\nSe hai già rinnovato la Patente fisica, aggiorna il documento digitale per ottenerlo anche su IO."
+            },
             "expiring": {
               "title": "Patente su IO: documento in scadenza",
               "content": "Rinnova la tua Patente di guida presso gli uffici della Motorizzazione Civile o un ente abilitato del tuo territorio.\n\nÈ necessaria una visita medica con un medico autorizzato e provvedere al pagamento dei bollettini che ti saranno indicati.\n\n###### Quali documenti devo preparare?\n\nLa Patente di guida (in scadenza o scaduta), un documento di identità, il Codice Fiscale e una foto recente (formato tessera).",
@@ -3960,7 +3914,9 @@
             "content": {
               "education_degree": "I tuoi titoli accademici digitali hanno piena validità ufficiale.",
               "education_enrollment": "Le tue iscrizioni accademiche digitali hanno piena validità ufficiale.",
-              "residency": "Il tuo attestato di residenza digitale ha piena validità ufficiale."
+              "residency": "Il tuo attestato di residenza digitale ha piena validità ufficiale.",
+              "education_diploma": "I tuoi Diplomi digitali hanno piena validità ufficiale.",
+              "education_attendance": "La tua iscrizione scolastica digitale ha piena validità ufficiale."
             }
           },
           "discoverItWallet": "Scopri IT-Wallet",
@@ -3970,21 +3926,23 @@
           "trustmark": "Mostra certificato di autenticità",
           "openPdf": "Mostra documento",
           "shareButton": "Salva o condividi",
-          "showQRCode": "Mostra QR Code di verifica"
+          "showQRCode": "Mostra codice QR"
         },
         "eid": {
           "verificationExpired": {
             "title": "Conferma la tua identità",
-            "contentStart": "È un passaggio necessario per continuare a usare ",
-            "contentBold": "Documenti su IO ",
-            "contentEnd": "senza limitazioni.",
+            "subtitle": "È un passaggio necessario per continuare a usare **Documenti su IO** senza limitazioni.",
             "primaryAction": "Inizia"
           }
         },
         "statusAssertionUnknown": {
-          "title": "Non siamo riusciti a caricare {{credentialName}}",
-          "content": "Chiudi e riapri l'app per riprovare.",
-          "primaryAction": "Ho capito"
+          "title": "Non riusciamo a caricare {{credentialName}}",
+          "content": "Riprova. Se il problema persiste, dovrai aggiornare il documento digitale.",
+          "retryFailure": {
+            "title": "Qualcosa non va",
+            "content": "Non riusciamo a caricare {{credentialName}}.\nAggiorna il documento digitale per continuare.",
+            "primaryAction": "Aggiorna documento digitale"
+          }
         },
         "selectiveDisclosure": {
           "title": "Dati richiesti",
@@ -4226,6 +4184,19 @@
             "subtitle": "La verifica è stata completata con successo."
           }
         },
+        "qrCode": {
+          "instruction": "Mostra questo codice QR a chi verifica i tuoi documenti digitali",
+          "error": {
+            "message": "Abbiamo avuto un problema nel generare il QR Code.",
+            "invalid": "Non puoi far verificare i tuoi documenti digitali."
+          },
+          "banner": {
+            "invalid": "Conferma la tua identità per continuare a usare i tuoi documenti senza limitazioni."
+          },
+          "reissue": {
+            "cta": "Conferma identità"
+          }
+        },
         "itWalletId": {
           "description": "È il tuo pass digitale per dimostrare chi sei, accedere ai servizi online e ottenere nuovi documenti.",
           "listItemHeader": "Dati del mio IT-Wallet ID",
@@ -4411,6 +4382,16 @@
           "description": "Potrai ottenere IT-Wallet in qualsiasi altro momento, andando in Impostazioni > IT-Wallet.",
           "confirm": "Sì, rinuncia",
           "cancel": "Indietro"
+        },
+        "l2_banner": {
+          "title": "I tuoi documenti digitali appariranno qui",
+          "description": "Al momento puoi aggiungere solo alcuni documenti, con funzionalità ridotte.",
+          "cta": "Aggiungi documento"
+        },
+        "reactivation": {
+          "title": "Riattiva i tuoi documenti digitali su IO",
+          "description": "Per ragioni di sicurezza, se cambi dispositivo o rimuovi l’app, devi aggiungere di nuovo i tuoi documenti al Portafoglio.",
+          "confirm": "Inizia"
         }
       },
       "settings": {
@@ -4454,6 +4435,13 @@
             "action": "Esci dall'ambiente di test"
           }
         },
+        "itwSpecsVersion": {
+          "description": "Cambia la versione delle specifiche tecniche. Questa azione reimposta lo stato di IT-Wallet.",
+          "alert": {
+            "title": "IT-Wallet v{{itwVersion}}",
+            "content": "Stai per cambiare la versione delle specifiche tecniche utilizzate.\nQuesta funzionalità è sperimentale e potrebbe causare malfunzionamenti di IT-Wallet."
+          }
+        },
         "walletL3": {
           "alert": {
             "title": "Disattiva IT-Wallet L3",
@@ -4471,6 +4459,24 @@
         "restrictedMode": {
           "title": "Documenti con funzionalità ridotte",
           "description": "Puoi ottenere una versione digitale dei seguenti documenti utilizzabile solo dal vivo e senza le funzionalità evolute di IT-Wallet"
+        }
+      },
+      "tour": {
+        "id": {
+          "title": "Il tuo IT-Wallet ID",
+          "description": "Il cuore del tuo Portafoglio IT-Wallet: abilita l’aggiunta di documenti per identificarti e accedere ai servizi."
+        },
+        "credentials": {
+          "title": "I tuoi documenti digitali",
+          "description": "Premi su un documento per visualizzare i dettagli o gestirlo nel Portafoglio.  "
+        },
+        "addCredential": {
+          "title": "Aggiungi un documento",
+          "description": "Premi “+” o “Aggiungi documento” per scegliere un documento digitale da aggiungere al Portafoglio."
+        },
+        "qrCode": {
+          "title": "Mostra il codice QR a chi verifica",
+          "description": "Chi verifica i tuoi documenti dal vivo usa un’app ufficiale per scansionare questo codice QR. "
         }
       }
     },
@@ -4607,9 +4613,7 @@
       },
       "onboarding": {
         "header": "Ecco il tuo codice!",
-        "body1": "Ti servirà per autorizzare le spese effettuate con la tua carta d’identità elettronica:",
-        "bodyBold": "memorizzalo in un luogo sicuro",
-        "bodyCta": "Come funziona?",
+        "body": "Ti servirà per autorizzare le spese effettuate con la tua carta d’identità elettronica: **memorizzalo in un luogo sicuro**",
         "banner": {
           "header": "E se lo dimentichi?",
           "body": "Puoi reimpostare il codice in ogni momento da Impostazioni > Sicurezza."
@@ -4887,10 +4891,7 @@
         "pleaseWait": "Un attimo di pazienza...",
         "requestSent": {
           "title": "La tua richiesta è stata inviata!",
-          "subtitleStart": "Riceverai un ",
-          "subtitleBoldStart": "messaggio su IO ",
-          "subtitleCenter": "quando l’esito della tua richiesta sarà disponibile.\n\nPuoi verificare lo stato della tua richiesta dalla sezione ",
-          "subtitleEnd": "Servizi"
+          "subtitle": "Riceverai un **messaggio su IO** quando l’esito della tua richiesta sarà disponibile.\n\nPuoi verificare lo stato della tua richiesta dalla sezione **Servizi**"
         },
         "button": {
           "continue": "Ok, chiudi"
@@ -5139,8 +5140,7 @@
         "title": "IBAN associato",
         "landing": {
           "header": "Aggiungi un IBAN al tuo Profilo",
-          "body": "Salva i dati del tuo conto e ottieni più facilmente i rimborsi a te previsti.",
-          "bodyLink": "Scopri di più",
+          "body": "Salva i dati del tuo conto e ottieni più facilmente i rimborsi a te previsti.\n\n**[Scopri di più](info://details)**",
           "modal": {
             "title": "Cosa significa?",
             "content": "Aggiungendo il tuo IBAN al Profilo dell’app IO, potrai aderire più facilmente alle iniziative, ed evitare d’inserire ogni volta i dati del tuo conto.\n\nIl tuo IBAN verrà conservato da PagoPA S.p.A. e, con il tuo consenso, potrà essere utilizzato dagli Enti promotori delle iniziative che prevedono un rimborso.\n\nL’IBAN non verrà utilizzato per altre finalità e potrai modificarlo in ogni momento, o rimuoverlo se non hai iniziative in corso.\nPuoi farlo dalle impostazioni dell'app.",
@@ -5498,13 +5498,10 @@
       "subtitle": "IO condividerà con ",
       "subtitle2": " i dati necessari alla tua autenticazione su ",
       "requiredData": "Dati richiesti",
-      "privacy1": "Per maggiori informazioni, leggi ",
-      "privacyCta": "l’Informativa sulla Privacy ",
+      "privacy": "Per maggiori informazioni, leggi **[l’Informativa sulla Privacy]({{privacyUrl}})**",
       "bottomSheet": {
         "title": "Servizi di terze parti tramite IO: come funziona",
-        "body": "Per consentirti di accedere a un servizio esterno senza autenticarti ogni volta, l'app IO condivide alcuni tuoi dati con l'ente che lo eroga.",
-        "body2": "I tuoi dati sono al sicuro e saranno trattati solo per le finalità indicate dall’ente e consultabili nell’",
-        "bodyPrivacy": "Informativa sulla Privacy."
+        "body": "Per consentirti di accedere a un servizio esterno senza autenticarti ogni volta, l’app IO condivide alcuni tuoi dati con l’ente che lo eroga.\n\nI tuoi dati sono al sicuro e saranno trattati solo per le finalità indicate dall’ente e consultabili nell’**[Informativa sulla Privacy.]({{privacyUrl}})**"
       }
     }
   },

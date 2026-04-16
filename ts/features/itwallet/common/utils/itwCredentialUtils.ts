@@ -6,9 +6,10 @@ import I18n from "i18next";
 import { isBefore } from "date-fns";
 import { CredentialType } from "./itwMocksUtils";
 import {
+  CredentialBundle,
   CredentialFormat,
+  CredentialMetadata,
   ItwCredentialStatus,
-  StoredCredential,
   StoredVerification
 } from "./itwTypesUtils";
 
@@ -38,7 +39,11 @@ export type NewCredential = (typeof newCredentials)[number];
 export type L2Credential = (typeof l2Credentials)[number];
 
 // Credentials that will be available in the future
-export const upcomingCredentials = [] as ReadonlyArray<string>;
+// TODO: [SIW-3923] remove once IPZS releases new credentials in PROD
+export const upcomingCredentials = [
+  CredentialType.EDUCATION_DIPLOMA,
+  CredentialType.EDUCATION_ATTENDANCE
+] as ReadonlyArray<string>;
 
 export const isUpcomingCredential = (type: string): boolean =>
   upcomingCredentials.includes(type);
@@ -73,7 +78,13 @@ export const itwGetCredentialNameByCredentialType = (
   [CredentialType.EDUCATION_ENROLLMENT]: I18n.t(
     "features.itWallet.credentialName.ee"
   ),
-  [CredentialType.RESIDENCY]: I18n.t("features.itWallet.credentialName.res")
+  [CredentialType.RESIDENCY]: I18n.t("features.itWallet.credentialName.res"),
+  [CredentialType.EDUCATION_DIPLOMA]: I18n.t(
+    "features.itWallet.credentialName.edip"
+  ),
+  [CredentialType.EDUCATION_ATTENDANCE]: I18n.t(
+    "features.itWallet.credentialName.edat"
+  )
 });
 
 export const getCredentialNameFromType = (
@@ -140,20 +151,22 @@ export const validCredentialStatuses: Array<ItwCredentialStatus> = [
   "jwtExpiring"
 ];
 
+type ExtractVerification = (args: {
+  format: CredentialMetadata["format"];
+  parsedCredential: CredentialMetadata["parsedCredential"];
+  credential: CredentialBundle["credential"];
+}) => StoredVerification | undefined;
+
 /**
  * Extracts the verification object from a stored credential based on its format.
- * Only persists `trust_framework` and `assurance_level`, excluding `evidence`
- * which is being dropped in spec v1.3.3.
  * @param credential - The stored credential fields needed to extract verification
- * @returns The slim verification object or undefined if extraction fails
+ * @returns The verification object or undefined if extraction fails
  */
-export const extractVerification = ({
+export const extractVerification: ExtractVerification = ({
   format,
-  credential,
-  parsedCredential
-}: Pick<StoredCredential, "format" | "credential" | "parsedCredential">):
-  | StoredVerification
-  | undefined => {
+  parsedCredential,
+  credential
+}) => {
   try {
     const verification = (() => {
       switch (format) {
@@ -183,13 +196,11 @@ export const extractVerification = ({
  * `"it_l2+document_proof"` indicates that the credential has been issued with
  * a substantial authentication (SPID, CieID) plus an MRTD PoP verification,
  *
- * @param storedCredential - The stored credential to check
+ * @param metadata - The metadata of the credential to check
  * @returns boolean indicating if the credential is an ITW credential (L3)
  */
-export const isItwCredential = (
-  storedCredential: StoredCredential
-): boolean => {
-  const verification = storedCredential.verification;
+export const isItwCredential = (metadata: CredentialMetadata): boolean => {
+  const verification = metadata.verification;
   return (
     verification?.assurance_level === "high" ||
     verification?.trust_framework === "it_l2+document_proof"

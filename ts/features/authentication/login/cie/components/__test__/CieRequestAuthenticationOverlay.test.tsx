@@ -33,8 +33,9 @@ jest.mock("@pagopa/io-react-native-login-utils", () => ({
 }));
 
 jest.mock("../../../../../../components/helpers/withLoadingSpinner", () => ({
-  withLoadingSpinner: (Component: any) => (props: any) =>
+  withLoadingSpinner: (Component: any) => (props: any) => (
     <Component {...props} />
+  )
 }));
 
 jest.mock("../../../../../../features/lollipop/utils/login", () => ({

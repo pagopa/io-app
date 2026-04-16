@@ -10,6 +10,7 @@ import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import * as preferencesSelectors from "../../../common/store/selectors/preferences";
 import * as credentialsSelectors from "../../../credentials/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes";
+import * as issuanceAnalytics from "../../../issuance/analytics";
 import { ItwIssuanceCredentialLandingScreen } from "../ItwIssuanceCredentialLandingScreen";
 
 const mockReplace = jest.fn();
@@ -213,6 +214,56 @@ describe("ItwIssuanceCredentialLandingScreen", () => {
       expect(mockReplace).not.toHaveBeenCalled();
     });
   });
+
+  describe("Landing error screen", () => {
+    it("renders the error screen as fallback", () => {
+      mockSelectors({
+        credentialStatus: undefined,
+        pidStatus: undefined,
+        isItwValid: true
+      });
+
+      const { getByText } = renderComponent();
+
+      expect(
+        getByText(I18n.t(`features.itWallet.issuance.landingError.title`))
+      ).toBeTruthy();
+    });
+
+    it("primary action navigates to CTA message", () => {
+      mockSelectors({
+        credentialStatus: undefined,
+        pidStatus: undefined,
+        isItwValid: true
+      });
+
+      const { getByText } = renderComponent();
+
+      fireEvent.press(
+        getByText(I18n.t(`features.itWallet.issuance.landingError.action`))
+      );
+
+      expect(mockPopToTop).toHaveBeenCalled();
+    });
+
+    it("does not track failure analytics when navigation occurs", () => {
+      const trackSpy = jest.spyOn(
+        issuanceAnalytics,
+        "trackItwIssuanceFromMsgFailure"
+      );
+
+      mockSelectors({
+        credentialStatus: undefined,
+        pidStatus: undefined,
+        isItwValid: true
+      });
+
+      renderComponent();
+
+      expect(mockReplace).toHaveBeenCalled();
+      expect(trackSpy).not.toHaveBeenCalled();
+    });
+  });
 });
 
 type MockSelectorOptions = {
@@ -237,7 +288,7 @@ const mockSelectors = ({
   jest
     .spyOn(credentialsSelectors, "itwCredentialStatusSelector")
     .mockImplementation(
-      () => ({ status: credentialStatus, message: undefined } as any)
+      () => ({ status: credentialStatus, message: undefined }) as any
     );
   jest
     .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")

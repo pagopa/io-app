@@ -51,7 +51,6 @@ describe("identification actions", () => {
   });
 
   it("should create an identificationSuccess action", () => {
-    // eslint-disable-next-line @typescript-eslint/no-shadow
     const payload = { isBiometric: true };
     const action = actions.identificationSuccess(payload);
     expect(action).toEqual({ type: "IDENTIFICATION_SUCCESS", payload });
