@@ -45,6 +45,9 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "qtspClauses": {
       "kind": "PotNone",
     },
+    "securityLevel": {
+      "localFeatureFlag": false,
+    },
     "signature": {
       "kind": "PotNone",
     },
@@ -145,6 +148,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "banners": {},
     "credentials": {
       "credentials": {},
+      "legacyCredentials": {},
     },
     "credentialsCatalogue": {
       "catalogue": {

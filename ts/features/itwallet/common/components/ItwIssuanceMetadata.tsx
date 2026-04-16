@@ -15,10 +15,10 @@ import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
 import { isItwCredential } from "../utils/itwCredentialUtils.ts";
 import { getAuthSource, getItwAuthSource } from "../utils/itwMetadataUtils.ts";
 import { CredentialType } from "../utils/itwMocksUtils";
-import { StoredCredential } from "../utils/itwTypesUtils";
+import { CredentialMetadata } from "../utils/itwTypesUtils.ts";
 
 type ItwIssuanceMetadataProps = {
-  credential: StoredCredential;
+  credential: CredentialMetadata;
   isPreview?: boolean;
 };
 
