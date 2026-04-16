@@ -199,13 +199,13 @@ export default defineConfig([
       "react-native/no-unused-styles": "error",
       "react-native/no-inline-styles": "off",
       "react-native/no-color-literals": "error",
-      "react-native/no-single-element-style-arrays": "warn",
+      "react-native/no-single-element-style-arrays": "error",
 
       // ACCESSIBILITY
       "react-native-a11y/has-accessibility-hint": "off",
 
       // SONAR
-      "sonarjs/no-nested-template-literals": "warn",
+      "sonarjs/no-nested-template-literals": "error",
 
       // FUNCTIONAL PROGRAMMING
       "functional/no-let": "error",
