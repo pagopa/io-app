@@ -45,13 +45,6 @@ export const ItwCredentialDetailCard = ({
             height={size.height}
           />
         )}
-        <ItwBrandedSkiaBorder
-          width={size.width}
-          height={size.height}
-          borderRadius={24}
-          themeType={themeType}
-          variant={borderVariantByStatus[credentialStatus]}
-        />
       </Canvas>
 
       {detailWatermarkLayer && size.width > 0 && size.height > 0 && (
@@ -64,6 +57,17 @@ export const ItwCredentialDetailCard = ({
           />
         </View>
       )}
+
+      <Canvas style={StyleSheet.absoluteFill} pointerEvents="none">
+        <ItwBrandedSkiaBorder
+          width={size.width}
+          height={size.height}
+          borderRadius={24}
+          themeType={themeType}
+          variant={borderVariantByStatus[credentialStatus]}
+        />
+      </Canvas>
+
       <View style={styles.content}>{children}</View>
     </View>
   );

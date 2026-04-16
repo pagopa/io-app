@@ -76,6 +76,7 @@ export const DEFAULT_CREDENTIAL_CARD_CONFIG: CredentialCardConfig = {
  * Background, title color and border color are set explicitly here.
  * An optional `watermarkLayer` PNG image can be provided to render a
  * watermark overlay on top of the background.
+ * TODO: these configurations are tentative, will be updated once the design will be finalized
  * ADD MORE CONFIGURATIONS HERE IF NEEDED, ONLY FOR STATIC CREDENTIALS
  */
 export const credentialCardConfigs: Partial<
@@ -114,7 +115,8 @@ export const credentialCardConfigs: Partial<
     },
     titleColor: "#032D5C",
     borderColor: "#449DCF",
-    watermarkLayer: require("../../../../../../img/features/itWallet/cards/cardWatermarks/itw_ts_watermark.png")
+    watermarkLayer: require("../../../../../../img/features/itWallet/cards/cardWatermarks/itw_ts_watermark.png"),
+    detailWatermarkLayer: require("../../../../../../img/features/itWallet/cards/detailWatermarks/itw_ts_detail_watermark.png")
   },
   [CredentialType.EUROPEAN_DISABILITY_CARD]: {
     background: {
@@ -123,7 +125,8 @@ export const credentialCardConfigs: Partial<
     },
     titleColor: "#17406F",
     borderColor: "#6B9BB6",
-    watermarkLayer: require("../../../../../../img/features/itWallet/cards/cardWatermarks/itw_dc_watermark.png")
+    watermarkLayer: require("../../../../../../img/features/itWallet/cards/cardWatermarks/itw_dc_watermark.png"),
+    detailWatermarkLayer: require("../../../../../../img/features/itWallet/cards/detailWatermarks/itw_dc_detail_watermark.png")
   }
 };
 
