@@ -158,6 +158,18 @@ export const createItwAgeVerificationCredentialMock = (
       expiration: expiration.toISOString(),
       issuedAt: now.toISOString()
     },
+    storedStatusAssertion: {
+      credentialStatus: "valid",
+      statusAssertion: "mock_age_verification_status_assertion",
+      parsedStatusAssertion: {
+        credential_status_type: "0x00",
+        credential_hash_alg: "sha-256",
+        iss: "mock_age_verification_issuer",
+        credential_hash: "mock_age_verification_hash",
+        exp: Math.floor(expiration.getTime() / 1000),
+        iat: Math.floor(now.getTime() / 1000)
+      }
+    },
     spec_version: pid?.spec_version ?? "1.0.0",
     verification: pid?.verification
   };

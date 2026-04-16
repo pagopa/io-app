@@ -1,5 +1,9 @@
 import { shouldRequestStatusAssertion } from "../itwCredentialStatusAssertionUtils";
-import { CredentialType, ItwStatusAssertionMocks } from "../itwMocksUtils";
+import {
+  createItwAgeVerificationCredentialMock,
+  CredentialType,
+  ItwStatusAssertionMocks
+} from "../itwMocksUtils";
 import { StoredCredential } from "../itwTypesUtils";
 
 describe("shouldRequestStatusAssertion", () => {
@@ -84,5 +88,20 @@ describe("shouldRequestStatusAssertion", () => {
     jest.setSystemTime(new Date("2026-02-24T10:30:00+00:00"));
 
     expect(shouldRequestStatusAssertion(baseMockCredential)).toEqual(false);
+  });
+
+  it("return false for the age verification mock credential", () => {
+    expect(
+      shouldRequestStatusAssertion(createItwAgeVerificationCredentialMock())
+    ).toEqual(false);
+  });
+
+  it("return false for age verification even when the status assertion is missing", () => {
+    expect(
+      shouldRequestStatusAssertion({
+        ...baseMockCredential,
+        credentialType: CredentialType.AGE_VERIFICATION
+      })
+    ).toEqual(false);
   });
 });

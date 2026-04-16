@@ -9,6 +9,7 @@ import {
   IssuerConfiguration,
   StoredCredential
 } from "./itwTypesUtils";
+import { CredentialType } from "./itwMocksUtils";
 import { WIA_KEYTAG } from "./itwCryptoContextUtils";
 import { getIoWallet } from "./itwIoWallet";
 import { Env } from "./environment";
@@ -61,9 +62,15 @@ export const getCredentialStatusAssertion = async (
 };
 
 export const shouldRequestStatusAssertion = ({
+  credentialType,
   storedStatusAssertion,
   jwt
 }: StoredCredential) => {
+  // TODO remove this condition when the backend will be implemented, as age verification credentials should always request a status assertion to determine their validity status
+  if (credentialType === CredentialType.AGE_VERIFICATION) {
+    return false;
+  }
+
   // Skip status assertion check for expired JWTs to avoid credential_not_found errors with 0.7 credentials
   if (isAfter(new Date(), new Date(jwt.expiration))) {
     return false;

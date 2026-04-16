@@ -1,6 +1,9 @@
 import MockDate from "mockdate";
 import { getCredentialStatus } from "../itwCredentialStatusUtils";
-import { ItwStoredCredentialsMocks } from "../itwMocksUtils";
+import {
+  createItwAgeVerificationCredentialMock,
+  ItwStoredCredentialsMocks
+} from "../itwMocksUtils";
 import { StoredCredential } from "../itwTypesUtils";
 
 const options: Parameters<typeof getCredentialStatus>[1] = {
@@ -90,6 +93,25 @@ describe("getCredentialStatus", () => {
       expect(getCredentialStatus(mockCredential, options)).toEqual(
         "jwtExpired"
       );
+    });
+
+    it("should return jwtExpired for an expired age verification credential", () => {
+      MockDate.set(new Date(2024, 0, 20));
+
+      expect(
+        getCredentialStatus(
+          {
+            ...createItwAgeVerificationCredentialMock(),
+            jwt: {
+              expiration: "2024-01-10T00:00:00Z"
+            },
+            storedStatusAssertion: {
+              credentialStatus: "unknown"
+            }
+          },
+          options
+        )
+      ).toEqual("jwtExpired");
     });
   });
 
@@ -308,6 +330,25 @@ describe("getCredentialStatus", () => {
         }
       };
       expect(getCredentialStatus(mockCredential, options)).toEqual("unknown");
+    });
+
+    it("should return valid for the age verification mock when the status assertion could not be fetched", () => {
+      MockDate.set(new Date(2024, 0, 20));
+
+      expect(
+        getCredentialStatus(
+          {
+            ...createItwAgeVerificationCredentialMock(),
+            jwt: {
+              expiration: "2025-01-20T00:00:00Z"
+            },
+            storedStatusAssertion: {
+              credentialStatus: "unknown"
+            }
+          },
+          options
+        )
+      ).toEqual("valid");
     });
   });
 });

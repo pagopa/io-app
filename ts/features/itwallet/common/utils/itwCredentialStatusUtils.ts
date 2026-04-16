@@ -3,6 +3,7 @@ import { differenceInCalendarDays } from "date-fns";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { getCredentialExpireDate } from "./itwClaimsUtils";
+import { CredentialType } from "./itwMocksUtils";
 import { ItwCredentialStatus, StoredCredential } from "./itwTypesUtils";
 
 const DEFAULT_EXPIRING_DAYS = 30;
@@ -74,6 +75,13 @@ export const getCredentialStatus = (
 
   if (documentExpireDays <= expiringDays) {
     return "expiring";
+  }
+  // TODO remove this condition when the backend will be implemented
+  if (
+    credential.credentialType === CredentialType.AGE_VERIFICATION &&
+    statusAssertion?.credentialStatus === "unknown"
+  ) {
+    return "valid";
   }
 
   // We could not determine the status of the credential.
