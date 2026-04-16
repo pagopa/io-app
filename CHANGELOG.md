@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.29.0-canary.8141](https://github.com/pagopa/io-app/compare/3.29.0-rc.0...3.29.0-canary.8141) (2026-04-16)
+
+
+### Features
+
+* [[IEL-452](https://pagopa.atlassian.net/browse/IEL-452)] add local FF to manage L3 login on FCI flow ([#8026](https://github.com/pagopa/io-app/issues/8026)) ([c080100](https://github.com/pagopa/io-app/commit/c080100d03285619bbae57dd11373c8c6775df21))
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-4062](https://pagopa.atlassian.net/browse/SIW-4062)] Add mtc tracking ([#7948](https://github.com/pagopa/io-app/issues/7948)) ([b1b9c9a](https://github.com/pagopa/io-app/commit/b1b9c9a53e193a2e8fc7d277e7970ce95e7ecee8))
+* [[IOPLT-1769](https://pagopa.atlassian.net/browse/IOPLT-1769)] Fix android issue on SafeAreaProvider null child error ([9dd782d](https://github.com/pagopa/io-app/commit/9dd782db1c70227a125f61bf259f346afbcb6eb3))
+
 ## [3.29.0-rc.0](https://github.com/pagopa/io-app/compare/3.28.0-rc.7...3.29.0-rc.0) (2026-04-15)
 
 
