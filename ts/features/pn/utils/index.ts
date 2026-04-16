@@ -24,7 +24,7 @@ export const getNotificationStatusInfo = (status: NotificationStatus) =>
 export const getNotificationStatusAccessibilityLabel = (
   historyItem: NotificationStatusHistoryElement
 ) =>
-  `${format(historyItem.activeFrom, "DD MMMM, HH:mm")}, ${getNotificationStatusInfo(historyItem.status)}`;
+  `${format(historyItem.activeFrom, "D MMMM, HH:mm")}, ${getNotificationStatusInfo(historyItem.status)}`;
 
 export const notificationStatusToTimelineStatus = (
   status: NotificationStatus
