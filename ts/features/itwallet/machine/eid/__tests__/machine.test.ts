@@ -11,7 +11,6 @@ import { idps } from "../../../../../utils/idps";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import {
   CredentialAccessToken,
-  CredentialBundle,
   CredentialMetadata,
   WalletInstanceAttestations
 } from "../../../common/utils/itwTypesUtils";

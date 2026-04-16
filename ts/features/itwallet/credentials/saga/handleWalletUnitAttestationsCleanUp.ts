@@ -1,7 +1,7 @@
 import { put, select } from "typed-redux-saga/macro";
 import { itwWalletUnitAttestationsSelector } from "../../walletInstance/store/selectors";
 import { itwWalletUnitAttestationsRemoveById } from "../../walletInstance/store/actions";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsByTypeSelector } from "../store/selectors";
 
 /**
@@ -12,7 +12,7 @@ export function* handleWalletUnitAttestationsCleanUp() {
   const allCredentialsByType = yield* select(itwCredentialsByTypeSelector);
   const allCredentials = Object.values(
     allCredentialsByType
-  ).flatMap<StoredCredential>(Object.values);
+  ).flatMap<CredentialMetadata>(Object.values);
   const walletUnitAttestationIds = Object.keys(
     yield* select(itwWalletUnitAttestationsSelector)
   );
