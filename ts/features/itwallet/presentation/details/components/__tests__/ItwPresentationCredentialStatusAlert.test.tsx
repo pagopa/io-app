@@ -8,6 +8,7 @@ import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import * as bottomSheet from "../../../../../../utils/hooks/bottomSheet.tsx";
+import * as itwAnalytics from "../../../../analytics";
 import {
   CredentialMetadata,
   ItwCredentialStatus
@@ -20,12 +21,8 @@ import {
   ItwPresentationCredentialStatusAlert,
   deriveCredentialAlertType
 } from "../ItwPresentationCredentialStatusAlert";
+import * as detailsAnalytics from "../../analytics";
 
-const mockTrackItwCredentialTapBanner = jest.fn();
-const mockTrackItwCredentialBottomSheet = jest.fn();
-const mockTrackItwCredentialBottomSheetAction = jest.fn();
-const mockTrackItwCredentialDelete = jest.fn();
-const mockTrackCredentialRenewStart = jest.fn();
 const mockBottomSheetPresent = jest.fn();
 const mockBottomSheetDismiss = jest.fn();
 const mockNavigate = jest.fn();
@@ -35,23 +32,9 @@ jest.mock("../../../../../../navigation/params/AppParamsList", () => ({
   useIONavigation: jest.fn()
 }));
 
-jest.mock("../../analytics", () => ({
-  ...jest.requireActual("../../analytics"),
-  trackItwCredentialTapBanner: (properties: unknown) =>
-    mockTrackItwCredentialTapBanner(properties),
-  trackItwCredentialBottomSheet: (properties: unknown) =>
-    mockTrackItwCredentialBottomSheet(properties),
-  trackItwCredentialBottomSheetAction: (properties: unknown) =>
-    mockTrackItwCredentialBottomSheetAction(properties),
-  trackItwCredentialDelete: (credential: unknown, properties: unknown) =>
-    mockTrackItwCredentialDelete(credential, properties)
-}));
+jest.mock("../../analytics");
 
-jest.mock("../../../../analytics", () => ({
-  ...jest.requireActual("../../../../analytics"),
-  trackCredentialRenewStart: (credential: unknown, properties: unknown) =>
-    mockTrackCredentialRenewStart(credential, properties)
-}));
+jest.mock("../../../../analytics");
 
 jest.mock("../../../../../../utils/url", () => ({
   openWebUrl: jest.fn()
@@ -227,14 +210,16 @@ describe("ItwPresentationCredentialStatusAlert", () => {
       )
     );
 
-    expect(mockTrackItwCredentialTapBanner).toHaveBeenCalledWith({
+    expect(detailsAnalytics.trackItwCredentialTapBanner).toHaveBeenCalledWith({
       credential: "ITW_PG_V2",
       credential_status: "expiring"
     });
-    expect(mockTrackItwCredentialBottomSheet).toHaveBeenCalledWith({
-      credential: "ITW_PG_V2",
-      credential_status: "expiring"
-    });
+    expect(detailsAnalytics.trackItwCredentialBottomSheet).toHaveBeenCalledWith(
+      {
+        credential: "ITW_PG_V2",
+        credential_status: "expiring"
+      }
+    );
   });
 
   it("tracks the informational bottom sheet CTA for the expiring status alert", () => {
@@ -259,7 +244,9 @@ describe("ItwPresentationCredentialStatusAlert", () => {
       )
     );
 
-    expect(mockTrackItwCredentialBottomSheetAction).toHaveBeenCalledWith({
+    expect(
+      detailsAnalytics.trackItwCredentialBottomSheetAction
+    ).toHaveBeenCalledWith({
       credential: "ITW_PG_V2",
       credential_status: "expiring"
     });
@@ -288,11 +275,16 @@ describe("ItwPresentationCredentialStatusAlert", () => {
 
     fireEvent.press(component.getByText("Aggiorna il documento digitale"));
 
-    expect(mockTrackCredentialRenewStart).toHaveBeenCalledWith("ITW_PG_V2", {
-      credential_status: "not_valid",
-      position: "bottom_sheet"
-    });
-    expect(mockTrackItwCredentialBottomSheetAction).not.toHaveBeenCalled();
+    expect(itwAnalytics.trackCredentialRenewStart).toHaveBeenCalledWith(
+      "ITW_PG_V2",
+      {
+        credential_status: "not_valid",
+        position: "bottom_sheet"
+      }
+    );
+    expect(
+      detailsAnalytics.trackItwCredentialBottomSheetAction
+    ).not.toHaveBeenCalled();
   });
 
   it("tracks credential deletion from the issuer error bottom sheet with status and position", () => {
@@ -318,10 +310,13 @@ describe("ItwPresentationCredentialStatusAlert", () => {
 
     fireEvent.press(component.getByText("Rimuovi dal Portafoglio"));
 
-    expect(mockTrackItwCredentialDelete).toHaveBeenCalledWith("ITW_PG_V2", {
-      credential_status: "not_valid",
-      position: "bottom_sheet"
-    });
+    expect(detailsAnalytics.trackItwCredentialDelete).toHaveBeenCalledWith(
+      "ITW_PG_V2",
+      {
+        credential_status: "not_valid",
+        position: "bottom_sheet"
+      }
+    );
   });
 });
 
