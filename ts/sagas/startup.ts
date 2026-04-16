@@ -303,6 +303,13 @@ export function* initializeApplicationSaga(
       ? previousSessionToken
       : yield* call(authenticationSaga);
 
+  if (isActiveLoginSuccessProp) {
+    // If the user is logging in from the active session login flow, we can be sure that the session is valid
+    // and we can directly navigate him to the home screen, skipping all the checks about pending background
+    // actions and session expiration blocking screen.
+    yield* call(activeSessionLoginNavigation);
+  }
+
   // BE CAREFUL where you get lollipop keyInfo.
   // They MUST be placed after authenticationSaga, because they are regenerated with each login attempt.
   // Get keyInfo for lollipop
@@ -721,25 +728,18 @@ export function* initializeApplicationSaga(
   // Watch for checking the user email notifications preferences
   yield* fork(watchEmailNotificationPreferencesSaga);
 
-  if (isActiveLoginSuccessProp) {
-    // If the user is logging in from the active session login flow, we can be sure that the session is valid
-    // and we can directly navigate him to the home screen, skipping all the checks about pending background
-    // actions and session expiration blocking screen.
-    yield* call(activeSessionLoginNavigation);
-  } else {
-    // Check if we have any pending background action to be handled
-    const isHandlingBackgroundActions = yield* call(
-      maybeHandlePendingBackgroundActions,
-      true
-    );
-    const showSessionExpirationBlockingScreen = yield* select(
-      showSessionExpirationBlockingScreenSelector
-    );
-    if (!isHandlingBackgroundActions && showSessionExpirationBlockingScreen) {
-      yield* call(navigateToActiveSessionLogin);
-    } else if (!isHandlingBackgroundActions) {
-      yield* fork(checkShouldDisplaySendEngagementScreen, isFirstOnboarding);
-    }
+  // Check if we have any pending background action to be handled
+  const isHandlingBackgroundActions = yield* call(
+    maybeHandlePendingBackgroundActions,
+    true
+  );
+  const showSessionExpirationBlockingScreen = yield* select(
+    showSessionExpirationBlockingScreenSelector
+  );
+  if (!isHandlingBackgroundActions && showSessionExpirationBlockingScreen) {
+    yield* call(navigateToActiveSessionLogin);
+  } else if (!isHandlingBackgroundActions) {
+    yield* fork(checkShouldDisplaySendEngagementScreen, isFirstOnboarding);
   }
 
   yield* put(

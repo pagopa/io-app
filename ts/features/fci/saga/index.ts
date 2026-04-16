@@ -200,7 +200,6 @@ function* standardFciFlowStartSaga(): SagaIterator {
 
 /**
  * Handle the FCI start requests saga
- * TODO (POC): For production, consider refactoring to separate saga
  */
 function* watchFciStartSaga(): SagaIterator {
   const spidLevel = yield* select(spidLevelFromSessionInfoSelector);
@@ -345,8 +344,6 @@ function* clearAllFciFiles(action: ActionType<typeof fciClearAllFiles>) {
 /**
  * Handle the FCI abort requests saga
  */
-// add parameter to handle the navigation to the NFC not available screen
-// in case of user with SPID level < L3 and NFC not available
 function* watchFciEndSaga(): SagaIterator {
   yield* put(fciClearStateRequest());
   yield* put(fciClearAllFiles({ path: FciDownloadPreviewDirectoryPath }));

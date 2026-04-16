@@ -141,7 +141,6 @@ export function* handleActiveSessionLoginSaga(): Generator<
 
     if (isDataComplete) {
       const state = (yield* select()) as GlobalState;
-
       yield* call(
         updateLoginSessionProfileAndSuperProperties,
         state,
@@ -157,6 +156,7 @@ export function* handleActiveSessionLoginSaga(): Generator<
           cieIDSelectedSecurityLevel
         })
       );
+
       yield* put(analyticsAuthenticationCompleted("reauth"));
 
       yield* put(
