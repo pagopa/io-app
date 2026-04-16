@@ -86,22 +86,35 @@ export const spidLevelSelector = (state: GlobalState): SpidLevel | undefined =>
     : undefined;
 
 /**
- * Maps SPID level URIs to their short form (L1, L2, L3)
+ * This function extracts the SPID level (L1, L2, L3) from the full SPID level string
+ * (e.g., "https://www.spid.gov.it/SpidL1") and returns it in a shorter format.
+ * If the input is undefined or does not contain a valid SPID level, it returns undefined.
  */
-const SPID_LEVEL_SHORT_MAP: Record<SpidLevel, "L1" | "L2" | "L3"> = {
-  "https://www.spid.gov.it/SpidL1": "L1",
-  "https://www.spid.gov.it/SpidL2": "L2",
-  "https://www.spid.gov.it/SpidL3": "L3"
+export const extractSpidLevel = (
+  spidLevel?: SpidLevel
+): "L1" | "L2" | "L3" | undefined => {
+  if (spidLevel) {
+    if (spidLevel.includes("L1")) {
+      return "L1";
+    } else if (spidLevel.includes("L2")) {
+      return "L2";
+    } else if (spidLevel.includes("L3")) {
+      return "L3";
+    }
+    return undefined;
+  }
+  return undefined;
 };
 
 /**
- * Returns the short SPID level (L1, L2, L3) from the session info
+ * Returns the SPID level (L1, L2, L3) from the session info
  */
-export const spidLevelShortSelector = (
+
+export const spidLevelFromSessionInfoSelector = (
   state: GlobalState
 ): "L1" | "L2" | "L3" | undefined => {
   const spidLevel = spidLevelSelector(state);
-  return spidLevel ? SPID_LEVEL_SHORT_MAP[spidLevel] : undefined;
+  return extractSpidLevel(spidLevel);
 };
 
 export const walletTokenSelector = (state: GlobalState): string | undefined =>
