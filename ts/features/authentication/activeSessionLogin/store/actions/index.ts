@@ -88,11 +88,6 @@ export const setActiveSessionLoginFlow = createStandardAction(
   "SET_ACTIVE_SESSION_LOGIN_FLOW"
 )<ActiveSessionLoginState["flow"]>();
 
-export const setNavigateAfterFinishedActiveSessionLoginFlow =
-  createStandardAction(
-    "SET_NAVIGATE_AFTER_FINISHED_ACTIVE_SESSION_LOGIN_FLOW"
-  )();
-
 export type LoginInfoActions =
   | ActionType<typeof setActiveSessionLoginLocalFlag>
   | ActionType<typeof setActiveSessionLoginBlockingScreenHasBeenVisualized>
@@ -109,5 +104,4 @@ export type LoginInfoActions =
   | ActionType<typeof setFinalizeLoggedOutUserWithDifferentCF>
   | ActionType<typeof setCieIDSelectedSecurityLevelActiveSessionLogin>
   | ActionType<typeof closeSessionExpirationBanner>
-  | ActionType<typeof setActiveSessionLoginFlow>
-  | ActionType<typeof setNavigateAfterFinishedActiveSessionLoginFlow>;
+  | ActionType<typeof setActiveSessionLoginFlow>;

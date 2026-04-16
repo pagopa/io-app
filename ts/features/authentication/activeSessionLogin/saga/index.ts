@@ -13,8 +13,6 @@ import {
   activeSessionLoginFailure,
   activeSessionLoginSuccess,
   consolidateActiveSessionLoginData,
-  setActiveSessionLoginFlow,
-  setNavigateAfterFinishedActiveSessionLoginFlow,
   setRetryActiveSessionLogin,
   setStartActiveSessionLogin
 } from "../store/actions";
@@ -43,43 +41,28 @@ import {
 import NavigationService from "../../../../navigation/NavigationService";
 import ROUTES from "../../../../navigation/routes";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
-import { fciSignatureRequestIdSelector } from "../../../fci/store/reducers/fciSignatureRequest";
-import { fciSignatureRequestRetryFromId } from "../../../fci/store/actions";
 
 export function* watchActiveSessionLoginSaga() {
   yield* takeLatest(
     [getType(setStartActiveSessionLogin), getType(setRetryActiveSessionLogin)],
     handleActiveSessionLoginSaga
   );
-
-  yield* takeLatest(
-    getType(setNavigateAfterFinishedActiveSessionLoginFlow),
-    handleNavigateAfterFinishedActiveSessionLoginFlow
-  );
 }
 
-export function* handleNavigateAfterFinishedActiveSessionLoginFlow() {
-  yield* call(NavigationService.navigate, ROUTES.MAIN, {
-    screen: MESSAGES_ROUTES.MESSAGES_HOME
-  });
-}
-
-export function* activeSessionLoginNavigation() {
+export function* handleNavigateAfterFinishedStandardActiveSessionLoginFlow(
+  isActiveLoginSuccessProp?: boolean
+) {
   const activeSessionLoginFlow = yield* select(activeSessionLoginFlowSelector);
-  yield* put(setActiveSessionLoginFlow(undefined));
-  switch (activeSessionLoginFlow) {
-    case "FCI":
-      const signatureRequestId = yield* select(fciSignatureRequestIdSelector);
-      if (signatureRequestId) {
-        yield* put(fciSignatureRequestRetryFromId(signatureRequestId));
-      } else {
-        yield* put(setNavigateAfterFinishedActiveSessionLoginFlow());
-      }
-      break;
-    default:
-      yield* put(setNavigateAfterFinishedActiveSessionLoginFlow());
-      break;
+
+  if (isActiveLoginSuccessProp && activeSessionLoginFlow !== "FCI") {
+    // If the user is logging in from the active session login flow, we can be sure that the session is valid
+    // and we can directly navigate him to the home screen, skipping all the checks about pending background
+    // actions and session expiration blocking screen.
+    yield* call(NavigationService.navigate, ROUTES.MAIN, {
+      screen: MESSAGES_ROUTES.MESSAGES_HOME
+    });
   }
+  return;
 }
 
 export function* handleActiveSessionLoginSaga(): Generator<

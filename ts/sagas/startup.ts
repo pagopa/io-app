@@ -20,7 +20,7 @@ import { UserDataProcessingStatusEnum } from "../../definitions/backend/UserData
 import { BackendClient } from "../api/backend";
 import { apiUrlPrefix, zendeskEnabled } from "../config";
 import {
-  activeSessionLoginNavigation,
+  handleNavigateAfterFinishedStandardActiveSessionLoginFlow,
   watchActiveSessionLoginSaga
 } from "../features/authentication/activeSessionLogin/saga";
 import { authenticationSaga } from "../features/authentication/common/saga/authenticationSaga";
@@ -43,7 +43,10 @@ import {
 import { shouldTrackLevelSecurityMismatchSaga } from "../features/authentication/login/cie/sagas/trackLevelSecuritySaga";
 import { userFromSuccessLoginSelector } from "../features/authentication/loginInfo/store/selectors";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
-import { watchFciSaga } from "../features/fci/saga";
+import {
+  navigateAfterFinishedFciActiveSessionLoginFlowSaga,
+  watchFciSaga
+} from "../features/fci/saga";
 import { watchFimsSaga } from "../features/fims/common/saga";
 import { startAndReturnIdentificationResult } from "../features/identification/sagas";
 import {
@@ -303,12 +306,10 @@ export function* initializeApplicationSaga(
       ? previousSessionToken
       : yield* call(authenticationSaga);
 
-  if (isActiveLoginSuccessProp) {
-    // If the user is logging in from the active session login flow, we can be sure that the session is valid
-    // and we can directly navigate him to the home screen, skipping all the checks about pending background
-    // actions and session expiration blocking screen.
-    yield* call(activeSessionLoginNavigation);
-  }
+  yield* call(
+    handleNavigateAfterFinishedStandardActiveSessionLoginFlow,
+    isActiveLoginSuccessProp
+  );
 
   // BE CAREFUL where you get lollipop keyInfo.
   // They MUST be placed after authenticationSaga, because they are regenerated with each login attempt.
@@ -383,6 +384,11 @@ export function* initializeApplicationSaga(
 
   // watch FCI saga
   yield* fork(watchFciSaga, sessionToken, keyInfo);
+
+  yield* call(
+    navigateAfterFinishedFciActiveSessionLoginFlowSaga,
+    isActiveLoginSuccessProp
+  );
 
   // whether we asked the user to login again
   const isSessionRefreshed = previousSessionToken !== sessionToken; // Needs further investigation

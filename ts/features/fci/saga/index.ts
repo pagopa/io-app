@@ -16,6 +16,7 @@ import {
   identificationSuccess
 } from "../../identification/store/actions";
 import {
+  fciSignatureRequestIdSelector,
   fciSignatureRequestSelector,
   FciSignatureRequestState
 } from "../store/reducers/fciSignatureRequest";
@@ -49,6 +50,8 @@ import { createFciClient } from "../api/backendFci";
 import { spidLevelFromSessionInfoSelector } from "../../authentication/common/store/selectors";
 import { fciSecurityLevelLocalFeatureFlagSelector } from "../store/reducers/fciSecurityLevelReducer";
 import { isTestEnv } from "../../../utils/environment";
+import { activeSessionLoginFlowSelector } from "../../authentication/activeSessionLogin/store/selectors";
+import { setActiveSessionLoginFlow } from "../../authentication/activeSessionLogin/store/actions";
 import { handleGetSignatureRequestById } from "./networking/handleGetSignatureRequestById";
 import { handleGetQtspMetadata } from "./networking/handleGetQtspMetadata";
 import { handleCreateFilledDocument } from "./networking/handleCreateFilledDocument";
@@ -352,6 +355,23 @@ function* watchFciEndSaga(): SagaIterator {
     NavigationService.dispatchNavigationAction,
     CommonActions.navigate(ROUTES.MAIN)
   );
+}
+
+export function* navigateAfterFinishedFciActiveSessionLoginFlowSaga(
+  isActiveLoginSuccessProp: boolean
+): SagaIterator {
+  const signatureRequestId = yield* select(fciSignatureRequestIdSelector);
+  const activeSessionLoginFlow = yield* select(activeSessionLoginFlowSelector);
+  yield* put(setActiveSessionLoginFlow(undefined));
+
+  if (
+    isActiveLoginSuccessProp &&
+    signatureRequestId &&
+    activeSessionLoginFlow === "FCI"
+  ) {
+    yield* put(fciSignatureRequestRetryFromId(signatureRequestId));
+  }
+  return;
 }
 
 export const testable = isTestEnv

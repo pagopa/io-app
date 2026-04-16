@@ -1,6 +1,10 @@
 import i18n from "i18next";
 import { useEffect } from "react";
-import { Body, HeaderSecondLevel, IOToast } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  HeaderSecondLevel,
+  useIOToast
+} from "@pagopa/io-app-design-system";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
 import {
@@ -22,6 +26,7 @@ export const FciLoginL3Screen = () => {
   const navigation = useIONavigation();
   const isNfcAvailable = useIsNfcFeatureAvailable();
   const { setOptions } = useIONavigation();
+  const { info } = useIOToast();
 
   useEffect(() => {
     setOptions({
@@ -59,8 +64,11 @@ export const FciLoginL3Screen = () => {
     }
   };
 
+  // actually this action just shows a toast, but when the article is available, it will navigate to the help center
+  // TODO: add link to the article on help center when available
+  // Jira ref: https://pagopa.atlassian.net/browse/IEL-462
   const onNavigateToHelpCenter = () => {
-    IOToast.info(i18n.t("features.fci.requestL3.toast"));
+    info(i18n.t("features.fci.requestL3.toast"));
   };
 
   return (

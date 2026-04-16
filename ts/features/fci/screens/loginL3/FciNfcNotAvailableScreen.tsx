@@ -1,4 +1,4 @@
-import { FeatureInfo, VSpacer } from "@pagopa/io-app-design-system";
+import { FeatureInfo, useIOToast, VSpacer } from "@pagopa/io-app-design-system";
 import i18n from "i18next";
 import { useEffect } from "react";
 import { IOScrollViewCentredContent } from "../../../../components/ui/IOScrollViewCentredContent";
@@ -10,10 +10,12 @@ import { fciEndRequest } from "../../store/actions";
  * This screen is a copy of SendAarNfcNotSupportedComponent. It is a "temporary screen".
  * No tests have been added because, once the copy has been reviewed, we will be able to
  * remove it and use the “original screen,” which already has tests.
+ * Jira ref: https://pagopa.atlassian.net/browse/IEL-462
  */
 export const FciNfcNotAvailableScreen = () => {
   const { setOptions } = useIONavigation();
   const dispatch = useIODispatch();
+  const { info } = useIOToast();
 
   useEffect(() => {
     setOptions({ headerShown: true });
@@ -37,7 +39,7 @@ export const FciNfcNotAvailableScreen = () => {
           icon: "instruction",
           testID: "help-center-cta",
           onPress: () => {
-            dispatch(fciEndRequest());
+            info(i18n.t("features.fci.requestL3.toast"));
           },
           label: i18n.t("features.pn.aar.flow.delegated.nfcNotSupported.cta")
         }

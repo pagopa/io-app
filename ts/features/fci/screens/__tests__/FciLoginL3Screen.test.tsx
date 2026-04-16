@@ -22,6 +22,21 @@ jest.mock("../../../pn/aar/hooks/useIsNfcFeatureAvailable");
 const mockIsNfcAvailable =
   require("../../../pn/aar/hooks/useIsNfcFeatureAvailable").useIsNfcFeatureAvailable;
 
+const mockToastInfo = jest.fn();
+
+jest.mock("@pagopa/io-app-design-system", () => {
+  const actual = jest.requireActual("@pagopa/io-app-design-system");
+  return {
+    ...actual,
+    useIOToast: () => ({
+      info: mockToastInfo,
+      success: jest.fn(),
+      error: jest.fn(),
+      warning: jest.fn()
+    })
+  };
+});
+
 describe("FciLoginL3Screen", () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -98,7 +113,8 @@ describe("FciLoginL3Screen", () => {
     act(() => {
       fireEvent.press(helpButton);
     });
-    // The console.log is called, but we don't test console output
+
+    expect(mockToastInfo).toHaveBeenCalled();
   });
 });
 
