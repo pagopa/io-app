@@ -1177,7 +1177,8 @@ export const itwEidIssuanceMachine = setup({
           invoke: {
             src: "storeEidCredential",
             input: ({ context }) => ({
-              eid: context.eid
+              eid: context.eid,
+              walletUnitAttestations: context.walletUnitAttestations
             }),
             onDone: {
               target: "Completed",
