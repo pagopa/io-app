@@ -739,12 +739,15 @@ export function* initializeApplicationSaga(
     maybeHandlePendingBackgroundActions,
     true
   );
+
   const showSessionExpirationBlockingScreen = yield* select(
     showSessionExpirationBlockingScreenSelector
   );
+
   if (!isHandlingBackgroundActions && showSessionExpirationBlockingScreen) {
     yield* call(navigateToActiveSessionLogin);
   } else if (!isHandlingBackgroundActions) {
+    // Check if should navigate to the send activation screen
     yield* fork(checkShouldDisplaySendEngagementScreen, isFirstOnboarding);
   }
 
