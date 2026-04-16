@@ -190,6 +190,15 @@ export const trackItwCredentialReissuingFailed = (
   );
 };
 
+export const trackItwAlreadyHasCredential = (
+  credential: MixPanelCredential
+) => {
+  void mixpanelTrack(
+    ITW_ISSUANCE_ERRORS_EVENTS.ITW_ALREADY_HAS_CREDENTIAL,
+    buildEventProperties("KO", "screen_view", { credential })
+  );
+};
+
 export const trackMrtdPoPChallengeInfoFailed = (
   properties: TrackGetChallengeInfoFailure
 ) => {
