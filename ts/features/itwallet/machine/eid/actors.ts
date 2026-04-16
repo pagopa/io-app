@@ -408,8 +408,8 @@ export const createEidIssuanceActorsImplementation = (
   ),
 
   credentialUpgradeMachine: itwCredentialUpgradeMachine.provide({
-    actors: createCredentialUpgradeActorsImplementation(env, itwVersion, store),
-    actions: createCredentialUpgradeActionsImplementation(store)
+    actions: createCredentialUpgradeActionsImplementation(store),
+    actors: createCredentialUpgradeActorsImplementation(env, itwVersion, store)
   }),
 
   ...createCommonActorsImplementation(store)

@@ -125,10 +125,10 @@ export const itwCredentialUpgradeMachine = setup({
         input: ({ context }) => ({
           pid: context.pid,
           credential: context.credentials[context.credentialIndex],
-          accessToken: context.accessToken!,
-          issuerConf: context.issuerConf!,
-          clientId: context.clientId!,
-          integrityKeyTag: context.integrityKeyTag!,
+          accessToken: context.accessToken,
+          issuerConf: context.issuerConf,
+          clientId: context.clientId,
+          integrityKeyTag: context.integrityKeyTag,
           issuanceMode: context.issuanceMode
         }),
         onDone: {

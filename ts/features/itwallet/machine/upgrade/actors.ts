@@ -36,10 +36,9 @@ export type RequestAccessTokenOutput = {
 };
 
 export type UpgradeCredentialParams = {
-  accessToken: CredentialAccessToken;
   credential: CredentialMetadata;
-  integrityKeyTag: string;
-} & RequestAccessTokenOutput;
+  integrityKeyTag: string | undefined;
+} & Partial<RequestAccessTokenOutput>;
 
 export type UpgradeCredentialOutput = {
   credentialType: string;
@@ -139,6 +138,10 @@ export const createCredentialUpgradeActorsImplementation = (
 
     const sessionToken = sessionTokenSelector(store.getState());
     assert(sessionToken, "sessionToken is undefined");
+    assert(
+      issuerConf && clientId && accessToken && integrityKeyTag,
+      "Some of the required parameters for credential upgrade are undefined"
+    );
 
     // The Wallet Unit Attestation makes use of the integrity service
     if (getIoWallet(itwVersion).WalletUnitAttestation.isSupported) {

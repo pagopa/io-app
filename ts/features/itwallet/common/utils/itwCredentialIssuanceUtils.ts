@@ -261,6 +261,13 @@ type RequestAndParseCredential = (
   args: RequestAndParseCredentialParams & AuthorizedCredentialMetadata
 ) => Promise<CredentialBundle>;
 
+/**
+ * Utility function that requests and parses an already authorized credential. For this reason,
+ * the function requires the Issuer's access token with the authorization details. Key generation MUST
+ * be handled outside the function by calling {@link generateKeysWithWalletUnitAttestation}.
+ *
+ * @returns The credential bundle with the newly obtained credential
+ */
 const requestAndParseCredential: RequestAndParseCredential = async ({
   issuerConf,
   credentialType,
@@ -344,12 +351,24 @@ export type AuthorizedCredentialMetadata = {
   walletUnitAttestationId?: string;
 };
 
+type GenerateKeysWithWalletUnitAttestation = (
+  accessToken: CredentialAccessToken,
+  params: {
+    env: Env;
+    itwVersion: ItwVersion;
+    hardwareKeyTag: string;
+    sessionToken: string;
+  }
+) => Promise<ReadonlyArray<AuthorizedCredentialMetadata>>;
+
 /**
  * Create the keys and the WUA for each credential to request. The exact credentials are taken from the authorization details
  * of the Issuer's access token, that contains the list of authorized credential identifiers. At present we always receive one
  * credential identifier, so we can generate one key/WUA per authorization detail.
  *
  * If the WUA is not supported, only the keys are generated.
+ *
+ * This function MUST be called before {@link requestAndParseCredential} because key generation is a preliminary step.
  *
  * @param accessToken The Issuer access token with the authorization details
  * @param params.env Environment variables
@@ -358,49 +377,37 @@ export type AuthorizedCredentialMetadata = {
  * @param params.sessionToken The session token for the Wallet Provider API
  * @returns The authorization details enriched with the generated keys and WUA if supported
  */
-export const generateKeysWithWalletUnitAttestation = async (
-  accessToken: CredentialAccessToken,
-  {
-    env,
-    itwVersion,
-    hardwareKeyTag,
-    sessionToken
-  }: {
-    env: Env;
-    itwVersion: ItwVersion;
-    hardwareKeyTag: string;
-    sessionToken: string;
-  }
-): Promise<Array<AuthorizedCredentialMetadata>> => {
-  const ioWallet = getIoWallet(itwVersion);
+export const generateKeysWithWalletUnitAttestation: GenerateKeysWithWalletUnitAttestation =
+  async (accessToken, { env, itwVersion, hardwareKeyTag, sessionToken }) => {
+    const ioWallet = getIoWallet(itwVersion);
 
-  return Promise.all(
-    accessToken.authorization_details.map(async authDetails => {
-      const keyTag = uuidv4().toString();
+    return Promise.all(
+      accessToken.authorization_details.map(async authDetails => {
+        const keyTag = uuidv4().toString();
 
-      // If the WUA is supported, keys are generated via the KeyAttestationCryptoContext
-      // and sent to the Wallet Provider to get the Wallet Unit Attestation
-      if (ioWallet.WalletUnitAttestation.isSupported) {
-        const walletUnitAttestation = await getWalletUnitAttestation(
-          env,
-          itwVersion,
-          [keyTag],
-          hardwareKeyTag,
-          sessionToken
-        );
-        // Unique ID to correlate multiple keys to the same WUA (ex. batch issuance)
-        const walletUnitAttestationId = uuidv4().toString();
-        return {
-          keyTag,
-          authDetails,
-          walletUnitAttestation,
-          walletUnitAttestationId
-        };
-      }
+        // If the WUA is supported, keys are generated via the KeyAttestationCryptoContext
+        // and sent to the Wallet Provider to get the Wallet Unit Attestation
+        if (ioWallet.WalletUnitAttestation.isSupported) {
+          const walletUnitAttestation = await getWalletUnitAttestation(
+            env,
+            itwVersion,
+            [keyTag],
+            hardwareKeyTag,
+            sessionToken
+          );
+          // Unique ID to correlate multiple keys to the same WUA (ex. batch issuance)
+          const walletUnitAttestationId = uuidv4().toString();
+          return {
+            keyTag,
+            authDetails,
+            walletUnitAttestation,
+            walletUnitAttestationId
+          };
+        }
 
-      // If the WUA is not supported, only generate the cryptographic key
-      await generate(keyTag);
-      return { keyTag, authDetails };
-    })
-  );
-};
+        // If the WUA is not supported, only generate the cryptographic key
+        await generate(keyTag);
+        return { keyTag, authDetails };
+      })
+    );
+  };

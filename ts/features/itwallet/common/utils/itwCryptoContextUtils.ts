@@ -22,7 +22,7 @@ export const regenerateCryptoKey = (keyTag: string) =>
  * In contrast to the standard CryptoContext the key must not be generated outside,
  * as `generateKeyWithAttestation` handles key generation with attestation on Android.
  *
- * @param keyTag The tag to reference the cryptographic key
+ * @param keyTag - The tag to reference the cryptographic key
  * @returns KeyAttestationCryptoContext
  */
 export const createKeyAttestationCryptoContextFor = (
