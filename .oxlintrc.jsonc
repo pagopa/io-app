@@ -246,35 +246,77 @@
         "react-native/no-color-literals": "error",
         "react-native/no-raw-text": "off",
         "react-native/no-single-element-style-arrays": "warn",
-        // TODO: Re-enable when eslint-plugin-i18next fixes context.getSourceCode() for oxlint compatibility
-        // See: https://github.com/edvardchen/eslint-plugin-i18next/issues/151
-        // "i18next/no-literal-string": [
-        //   "error",
-        //   {
-        //     "mode": "jsx-only",
-        //     "jsx-attributes": {
-        //       "include": [
-        //         "accessibilityLabel",
-        //         "accessibilityHint",
-        //         "placeholder",
-        //         "title",
-        //         "alt"
-        //       ],
-        //       "exclude": []
-        //     },
-        //     "jsx-components": {
-        //       "include": [],
-        //       "exclude": ["Trans"]
-        //     },
-        //     "words": {
-        //       "exclude": ["\\s+", "[0-9!-/:-@\\[-`{-~]+", "[•·]+", "."]
-        //     },
-        //     "object-properties": {
-        //       "include": [],
-        //       "exclude": ["testID"]
-        //     }
-        //   }
-        // ],
+        // NOTE: oxlint's jsPlugin bridge does not expose TypeScript parserServices
+        // (esTreeNodeToTSNodeMap / program) to ESLint plugins. The i18next rule
+        // normally uses the TypeScript type checker to skip string literals that
+        // are typed as specific string literal types (e.g. discriminant unions
+        // like "TwoButtons" | "SingleButton", locale codes, format strings).
+        // Without the type checker those are false positives, so we suppress
+        // them explicitly via object-properties.exclude and callees.exclude.
+        // See: https://github.com/oxc-project/oxc/issues (jsPlugin TS support)
+        "i18next/no-literal-string": [
+          "error",
+          {
+            "mode": "jsx-only",
+            "jsx-attributes": {
+              "include": [
+                "accessibilityLabel",
+                "accessibilityHint",
+                "placeholder",
+                "title",
+                "alt"
+              ],
+              "exclude": []
+            },
+            "jsx-components": {
+              "include": [],
+              "exclude": ["Trans"]
+            },
+            "words": {
+              "exclude": ["\\s+", "[0-9!-/:-@\\[-`{-~]+", "[•·]+", "."]
+            },
+            // Exclude object property keys whose values are typed string literal
+            // unions (discriminants, icon ids, layout configs). Without TS type
+            // info these would be false positives.
+            "object-properties": {
+              "include": [],
+              "exclude": [
+                "testID",
+                "type", // discriminant fields (e.g. "TwoButtons" | "SingleButton")
+                "pictogram", // icon identifier strings
+                "position", // analytics / layout config strings
+                "color" // color variant config strings
+              ]
+            },
+            // callees.exclude overrides the plugin defaults (lodash _.defaults is
+            // shallow), so the default list must be repeated here alongside the
+            // project-specific additions.
+            // Default exclusions: i18n helpers, DOM APIs, common array methods.
+            // Added: functions whose string args are typed literal types and
+            // would be false positives without the TS type checker.
+            "callees": {
+              "exclude": [
+                "i18n(ext)?",
+                "t",
+                "require",
+                "addEventListener",
+                "removeEventListener",
+                "postMessage",
+                "getElementById",
+                "dispatch",
+                "commit",
+                "includes",
+                "indexOf",
+                "endsWith",
+                "startsWith",
+                "formatNumberCentsToAmount", // alignment arg is a typed literal
+                "getOrFallback", // locale code arg is a typed literal
+                "getAccessibleExpirationDate", // status arg is a typed enum
+                "toString" // date format string arg (e.g. "DD/MM/YY")
+              ]
+            }
+          }
+        ],
         "no-restricted-imports": [
           "error",
           {
@@ -321,9 +363,8 @@
         "eslint-plugin-sonarjs",
         // Local compat plugin: wraps ESLint rules not yet natively in oxlint + custom delegate-effects rule
         // Source: scripts/eslint/oxlint-compat-plugin.js (installed as a local package)
-        "eslint-plugin-oxlint-compat"
-        // TODO: Re-enable when eslint-plugin-i18next is compatible with oxlint
-        // "eslint-plugin-i18next"
+        "eslint-plugin-oxlint-compat",
+        "eslint-plugin-i18next"
       ],
       "env": {
         "es2026": true
@@ -380,23 +421,23 @@
         "typescript/no-non-null-assertion": "off",
         "typescript/no-require-imports": "off",
         "typescript/unbound-method": "off",
-        "typescript/no-misused-spread": "off"
+        "typescript/no-misused-spread": "off",
+        "i18next/no-literal-string": "off"
       },
       "plugins": ["typescript"]
+    },
+    {
+      "files": [
+        "**/design-system/**/*.{ts,tsx}",
+        "**/playgrounds/**/*.{ts,tsx}",
+        "**/devMode/**/*.{ts,tsx}",
+        "**/debug/**/*.{ts,tsx}",
+        "**/__mocks__/**/*.{ts,tsx}"
+      ],
+      "rules": {
+        "i18next/no-literal-string": "off"
+      },
+      "jsPlugins": ["eslint-plugin-i18next"]
     }
-    // TODO: Re-enable when eslint-plugin-i18next is compatible with oxlint
-    // {
-    //   "files": [
-    //     "**/design-system/**/*.{ts,tsx}",
-    //     "**/playgrounds/**/*.{ts,tsx}",
-    //     "**/devMode/**/*.{ts,tsx}",
-    //     "**/debug/**/*.{ts,tsx}",
-    //     "**/__mocks__/**/*.{ts,tsx}"
-    //   ],
-    //   "rules": {
-    //     "i18next/no-literal-string": "off"
-    //   },
-    //   "jsPlugins": ["eslint-plugin-i18next"]
-    // }
   ]
 }
