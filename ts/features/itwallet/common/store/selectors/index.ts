@@ -101,6 +101,7 @@ export const itwShouldRenderL3UpgradeBannerSelector = (state: GlobalState) =>
  */
 export const itwShouldUpgradeCredentialSelector =
   (credentialType: string, issuedAt?: string) => (state: GlobalState) => {
+    // TODO: remove this guard when Age Verification has a backend-managed upgrade/reissuing flow.
     if (credentialType === CredentialType.AGE_VERIFICATION) {
       return false;
     }
