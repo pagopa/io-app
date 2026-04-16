@@ -183,6 +183,7 @@ describe("itwCredentialUpgradeMachine", () => {
           RequestAccessTokenOutput,
           RequestAccessTokenParams
         >(mockRequestAccessToken),
+        loadContext: fromPromise<LoadContextOutput>(mockLoadContext),
         upgradeCredential: fromPromise<
           UpgradeCredentialOutput,
           UpgradeCredentialParams

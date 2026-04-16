@@ -2498,7 +2498,7 @@ describe("itwEidIssuanceMachine", () => {
     requestEid.mockImplementationOnce(() => Promise.reject({}));
     requestEid.mockImplementationOnce(() =>
       Promise.resolve({
-        credential: ItwStoredCredentialsMocks.eid,
+        credential: { credential: "", metadata: ItwStoredCredentialsMocks.eid },
         walletUnitAttestations: T_WUA
       })
     );
