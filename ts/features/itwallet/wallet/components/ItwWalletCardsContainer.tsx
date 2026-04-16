@@ -1,8 +1,12 @@
-import { ListItemHeader, VStack } from "@pagopa/io-app-design-system";
+import {
+  IOVisualCostants,
+  ListItemHeader,
+  VStack
+} from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo, useRef, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
@@ -49,7 +53,7 @@ const LIFECYCLE_STATUS: Array<ItwJwtCredentialStatus> = [
 
 export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const navigation = useIONavigation();
-
+  const { width: screenWidth } = Dimensions.get("window");
   const isNewItwRenderable = useIOSelector(itwShouldRenderNewItWalletSelector);
   const shouldHideEidAlert = useIOSelector(itwShouldHideEidLifecycleAlert);
   const shouldRenderUpgradeBanner = useIOSelector(
@@ -67,7 +71,8 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const isEidExpired = eidStatus === "jwtExpired";
   const iconColor = useItwStatusIconColor(isEidExpired);
 
-  useItwPendingReviewRequest();
+  const idCardHorizontalInset =
+    IOVisualCostants.appMarginDefault + styles.idWrapper.marginHorizontal;
 
   const idCardRef = useRef<View>(null);
   const [idCardMeasurement, setIdCardMeasurement] = useState<
@@ -75,8 +80,16 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   >(undefined);
 
   const idCardRegion = useCallback(
-    () => idCardMeasurement,
-    [idCardMeasurement]
+    () =>
+      idCardMeasurement
+        ? {
+            x: idCardHorizontalInset,
+            y: idCardMeasurement.y,
+            width: screenWidth - 2 * idCardHorizontalInset,
+            height: idCardMeasurement.height
+          }
+        : undefined,
+    [idCardMeasurement, idCardHorizontalInset, screenWidth]
   );
 
   useGuidedTourRegion({
@@ -86,6 +99,8 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
     description: I18n.t("features.itWallet.tour.id.description"),
     region: idCardRegion
   });
+
+  useItwPendingReviewRequest();
 
   useItwGuidedTour();
 
@@ -99,7 +114,6 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
 
   const eidInfoBottomSheet = useIOBottomSheetModal({
     title: <ItwEidInfoBottomSheetTitle isExpired={isEidExpired} />,
-    // Navigation does not seem to work when the bottom sheet's component is not inline
     component: <ItwEidInfoBottomSheetContent navigation={navigation} />
   });
 
