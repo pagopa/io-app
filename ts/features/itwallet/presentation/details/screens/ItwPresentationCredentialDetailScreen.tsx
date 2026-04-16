@@ -30,8 +30,8 @@ import {
 import { WellKnownClaim } from "../../../common/utils/itwClaimsUtils.ts";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import {
-  isMultiLevelCredential,
-  StoredCredential
+  CredentialMetadata,
+  isMultiLevelCredential
 } from "../../../common/utils/itwTypesUtils.ts";
 import {
   itwCredentialSelector,
@@ -62,6 +62,7 @@ import {
   CredentialCtaProps,
   ItwPresentationDetailsScreenBase
 } from "../components/ItwPresentationDetailsScreenBase.tsx";
+import { shouldShowMdlUpdateDigitalCredential } from "../utils";
 
 export type ItwPresentationCredentialDetailNavigationParams = {
   credentialType: string;
@@ -168,7 +169,7 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
 };
 
 type ItwPresentationCredentialDetailProps = {
-  credential: StoredCredential;
+  credential: CredentialMetadata;
 };
 
 /**
@@ -190,9 +191,10 @@ export const ItwPresentationCredentialDetail = ({
     () => getMixPanelCredential(credential.credentialType, isL3Credential),
     [credential.credentialType, isL3Credential]
   );
-  const shouldShowMdlUpdateCta =
-    credential.credentialType === CredentialType.DRIVING_LICENSE &&
-    (status === "expired" || status === "invalid");
+  const shouldShowMdlUpdateCta = shouldShowMdlUpdateDigitalCredential(
+    credential,
+    status
+  );
 
   useDebugInfo(credential);
   usePreventScreenCapture();
