@@ -192,6 +192,10 @@ export const useItwProximityFlow = () => {
     setStatus(PROXIMITY_STATUS.READY);
   }, []);
 
+  useEffect(() => {
+    void init();
+  }, [init]);
+
   const startFlow = useCallback(
     async (
       engagementModes?: ReadonlyArray<ISO18013_5.EngagementMode>,
@@ -396,7 +400,6 @@ export const useItwProximityFlow = () => {
     nfcSessionSecondsLeft,
     nfcCooldownSecondsLeft,
     isNfcEnabled: isNfcEnabled.current,
-    init,
     startFlow,
     closeFlow,
     sendDocument,

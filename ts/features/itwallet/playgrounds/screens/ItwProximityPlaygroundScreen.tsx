@@ -1,7 +1,9 @@
-import { Body, IOButton } from "@pagopa/io-app-design-system";
+import { Body, IOButton, VStack } from "@pagopa/io-app-design-system";
 import { ISO18013_5 } from "@pagopa/io-react-native-iso18013";
-import { Platform, ScrollView, StyleSheet } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
+import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { QrCodeImage } from "../../../../components/QrCodeImage";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import {
   PROXIMITY_STATUS,
@@ -60,7 +62,6 @@ export const ItwProximityPlaygroundScreen = () => {
     nfcSessionSecondsLeft,
     nfcCooldownSecondsLeft,
     isNfcEnabled,
-    init,
     startFlow,
     closeFlow,
     sendDocument,
@@ -75,103 +76,107 @@ export const ItwProximityPlaygroundScreen = () => {
   });
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      {status === PROXIMITY_STATUS.IDLE && (
-        <IOButton label="Start Proximity flow" onPress={init} />
-      )}
-      {status === PROXIMITY_STATUS.READY && (
-        <>
-          <IOButton
-            label={"Start QRCODE->BLE"}
-            onPress={() => startFlow(["qrcode"], ["ble"])}
-          />
-          <IOButton
-            label={"Start QRCODE->NFC"}
-            onPress={() => startFlow(["qrcode"], ["nfc"])}
-            disabled={isNfcUnavailable}
-          />
-          <IOButton
-            label={"Start NFC->BLE"}
-            onPress={() => startFlow(["nfc"], ["ble"])}
-            disabled={isNfcUnavailable}
-          />
-          <IOButton
-            label={"Start NFC->NFC"}
-            onPress={() => startFlow(["nfc"], ["nfc"])}
-            disabled={isNfcUnavailable}
-          />
-          <IOButton
-            label={"Start QRCODE+NFC->BLE+NFC"}
-            onPress={() => startFlow(["qrcode", "nfc"], ["ble", "nfc"])}
-            disabled={isNfcUnavailable}
-          />
-          {isNfcUnavailable && (
-            <Body>NFC unavailable — please wait {nfcCooldownSecondsLeft}s</Body>
-          )}
-        </>
-      )}
-      {status === PROXIMITY_STATUS.ENGAGEMENT && qrCode && (
-        <QrCodeImage value={qrCode} size={200} />
-      )}
-      {status === PROXIMITY_STATUS.ENGAGEMENT && isNfcEnabled && (
-        <>
-          <Body>
-            NFC engagement active, tap the back of both devices toward each
-            other and hold them together
-          </Body>
-          {Platform.OS === "ios" &&
-            nfcSessionSecondsLeft !== null &&
-            nfcSessionSecondsLeft > 0 && (
-              <Body>Session expires in {nfcSessionSecondsLeft}s</Body>
-            )}
-        </>
-      )}
-      {status === PROXIMITY_STATUS.PRESENTING && request && (
-        <>
-          <IOButton
-            label="Send document (base64)"
-            onPress={() => sendDocument(request, MDL_BASE64)}
-          />
-          <IOButton
-            label="Send document (base64url)"
-            onPress={() => sendDocument(request, MDL_BASE64URL)}
-          />
-          <IOButton
-            label="Send broken document"
-            onPress={() => sendDocument(request, MDL_BASE64.slice(0, -10))}
-          />
-          <IOButton
-            label={`Send error ${ISO18013_5.ErrorCode.CBOR_DECODING} (${ISO18013_5.ErrorCode[ISO18013_5.ErrorCode.CBOR_DECODING]})`}
-            onPress={() => sendError(ISO18013_5.ErrorCode.CBOR_DECODING)}
-          />
-          <IOButton
-            label={`Send error ${ISO18013_5.ErrorCode.SESSION_ENCRYPTION} (${ISO18013_5.ErrorCode[ISO18013_5.ErrorCode.SESSION_ENCRYPTION]})`}
-            onPress={() => sendError(ISO18013_5.ErrorCode.SESSION_ENCRYPTION)}
-          />
-          <IOButton
-            label={`Send error ${ISO18013_5.ErrorCode.SESSION_TERMINATED} (${ISO18013_5.ErrorCode[ISO18013_5.ErrorCode.SESSION_TERMINATED]})`}
-            onPress={() => sendError(ISO18013_5.ErrorCode.SESSION_TERMINATED)}
-          />
-        </>
-      )}
+    <LoadingSpinnerOverlay
+      isLoading={status === PROXIMITY_STATUS.IDLE}
+      loadingOpacity={1}
+    >
+      <IOScrollView
+        contentContainerStyle={styles.container}
+        centerContent={true}
+      >
+        {/* Top section */}
 
-      {(status === PROXIMITY_STATUS.ENGAGEMENT ||
-        status === PROXIMITY_STATUS.PRESENTING ||
-        status === PROXIMITY_STATUS.ERROR) && (
-        <IOButton
-          label={"Close Engagement"}
-          onPress={() => closeFlow(status === PROXIMITY_STATUS.PRESENTING)}
-        />
-      )}
-    </ScrollView>
+        <View style={{ flex: 1, alignItems: "center" }}>
+          {status === PROXIMITY_STATUS.ENGAGEMENT && qrCode && (
+            <QrCodeImage value={qrCode} size={"80%"} />
+          )}
+          {status === PROXIMITY_STATUS.ENGAGEMENT && isNfcEnabled && (
+            <>
+              <Body>
+                NFC engagement active, tap the back of both devices toward each
+                other and hold them together
+              </Body>
+              {Platform.OS === "ios" &&
+                nfcSessionSecondsLeft !== null &&
+                nfcSessionSecondsLeft > 0 && (
+                  <Body>Session expires in {nfcSessionSecondsLeft}s</Body>
+                )}
+            </>
+          )}
+        </View>
+
+        {/* Buttons */}
+
+        <VStack space={8}>
+          {status === PROXIMITY_STATUS.READY && (
+            <>
+              {isNfcUnavailable && (
+                <Body>
+                  NFC unavailable — please wait {nfcCooldownSecondsLeft}s
+                </Body>
+              )}
+              {START_FLOW_OPTIONS.map(
+                ({ label, engagementModes, retrievalMethods, needsNfc }) => (
+                  <IOButton
+                    fullWidth
+                    key={label}
+                    label={label}
+                    onPress={() => startFlow(engagementModes, retrievalMethods)}
+                    disabled={needsNfc && isNfcUnavailable}
+                  />
+                )
+              )}
+            </>
+          )}
+          {status === PROXIMITY_STATUS.PRESENTING && request && (
+            <>
+              <IOButton
+                label="Send document (base64)"
+                onPress={() => sendDocument(request, MDL_BASE64)}
+              />
+              <IOButton
+                label="Send document (base64url)"
+                onPress={() => sendDocument(request, MDL_BASE64URL)}
+              />
+              <IOButton
+                label="Send broken document"
+                onPress={() => sendDocument(request, MDL_BASE64.slice(0, -10))}
+              />
+              <IOButton
+                label={`Send error ${ISO18013_5.ErrorCode.CBOR_DECODING} (${ISO18013_5.ErrorCode[ISO18013_5.ErrorCode.CBOR_DECODING]})`}
+                onPress={() => sendError(ISO18013_5.ErrorCode.CBOR_DECODING)}
+              />
+              <IOButton
+                label={`Send error ${ISO18013_5.ErrorCode.SESSION_ENCRYPTION} (${ISO18013_5.ErrorCode[ISO18013_5.ErrorCode.SESSION_ENCRYPTION]})`}
+                onPress={() =>
+                  sendError(ISO18013_5.ErrorCode.SESSION_ENCRYPTION)
+                }
+              />
+              <IOButton
+                label={`Send error ${ISO18013_5.ErrorCode.SESSION_TERMINATED} (${ISO18013_5.ErrorCode[ISO18013_5.ErrorCode.SESSION_TERMINATED]})`}
+                onPress={() =>
+                  sendError(ISO18013_5.ErrorCode.SESSION_TERMINATED)
+                }
+              />
+            </>
+          )}
+
+          {(status === PROXIMITY_STATUS.ENGAGEMENT ||
+            status === PROXIMITY_STATUS.PRESENTING ||
+            status === PROXIMITY_STATUS.ERROR) && (
+            <IOButton
+              label={"Close Engagement"}
+              onPress={() => closeFlow(status === PROXIMITY_STATUS.PRESENTING)}
+            />
+          )}
+        </VStack>
+      </IOScrollView>
+    </LoadingSpinnerOverlay>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "center",
-    alignItems: "center",
-    paddingVertical: 16,
-    paddingHorizontal: 24
+    paddingTop: 16
   }
 });

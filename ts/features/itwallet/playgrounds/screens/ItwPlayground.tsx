@@ -40,7 +40,7 @@ const ItwPlayground = () => {
   );
 
   return (
-    <VStack space={16} style={{ flex: 1 }}>
+    <VStack space={16}>
       <TabNavigation
         tabAlignment="start"
         selectedIndex={page}
@@ -48,6 +48,7 @@ const ItwPlayground = () => {
       >
         <TabItem label="Environment" accessibilityLabel="Environment" />
         <TabItem label="Issuance" accessibilityLabel="Issuance" />
+        <TabItem label="ISO-18013" accessibilityLabel="ISO-18013" />
         <TabItem label="Screens" accessibilityLabel="Screens" />
         <TabItem label="Components" accessibilityLabel="Components" />
       </TabNavigation>
@@ -66,14 +67,14 @@ const ItwPlayground = () => {
             </>
           )}
           {page === 1 && <ItwPidIssuanceSection />}
-          {page === 2 && (
+          {page === 2 && <ItwIso18013Section />}
+          {page === 3 && (
             <>
               <ItwL3ScreensSection />
               <ItwIdentificationScreensSection />
-              <ItwIso18013Section />
             </>
           )}
-          {page === 3 && <ItwComponentsSection />}
+          {page === 4 && <ItwComponentsSection />}
         </ContentWrapper>
       </ScrollView>
     </VStack>
