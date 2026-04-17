@@ -14,5 +14,12 @@
 	<array>
 		<string>TAG</string>
 	</array>
+	<key>com.apple.developer.nfc.hce</key>
+	<true/>
+	<key>com.apple.developer.nfc.hce.iso7816.select-identifier-prefixes</key>
+	<array>
+		<string>A0000002480400</string>
+		<string>D2760000850101</string>
+	</array>
 </dict>
 </plist>
