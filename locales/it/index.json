@@ -47,6 +47,7 @@
       "minusSymbol": "meno",
       "reload": "Ricarica",
       "search": "Cerca",
+      "cieReadingProgress": "Lettura {{percentage}}% completata",
       "dateFormat": "DD MMMM YYYY",
       "alert": "Avviso",
       "activityIndicator": {
@@ -3649,6 +3650,11 @@
         "credentialResult": {
           "toast": "Fatto!"
         },
+        "landingError": {
+          "title": "Qualcosa non va",
+          "body": "Si è verificato un problema, riprova più tardi.",
+          "action": "Chiudi"
+        },
         "notMatchingIdentityError": {
           "title": "Identità non riconosciuta",
           "body": "Attiva Documenti su IO con la stessa identità utilizzata per accedere all’app IO. Verifica le credenziali di accesso e riprova.",
@@ -3822,6 +3828,9 @@
             }
           },
           "mDL": {
+            "expired": {
+              "content": "###### Quali documenti devo preparare?\n\nLa Patente di guida (in scadenza o scaduta), un documento di identità, il Codice Fiscale e una foto recente (formato tessera).\n\n###### Hai già rinnovato il documento?\n\nSe hai già rinnovato la Patente fisica, aggiorna il documento digitale per ottenerlo anche su IO."
+            },
             "expiring": {
               "title": "Patente su IO: documento in scadenza",
               "content": "Rinnova la tua Patente di guida presso gli uffici della Motorizzazione Civile o un ente abilitato del tuo territorio.\n\nÈ necessaria una visita medica con un medico autorizzato e provvedere al pagamento dei bollettini che ti saranno indicati.\n\n###### Quali documenti devo preparare?\n\nLa Patente di guida (in scadenza o scaduta), un documento di identità, il Codice Fiscale e una foto recente (formato tessera).",
@@ -4444,6 +4453,24 @@
         "restrictedMode": {
           "title": "Documenti con funzionalità ridotte",
           "description": "Puoi ottenere una versione digitale dei seguenti documenti utilizzabile solo dal vivo e senza le funzionalità evolute di IT-Wallet"
+        }
+      },
+      "tour": {
+        "id": {
+          "title": "Il tuo IT-Wallet ID",
+          "description": "Il cuore del tuo Portafoglio IT-Wallet: abilita l’aggiunta di documenti per identificarti e accedere ai servizi."
+        },
+        "credentials": {
+          "title": "I tuoi documenti digitali",
+          "description": "Premi su un documento per visualizzare i dettagli o gestirlo nel Portafoglio.  "
+        },
+        "addCredential": {
+          "title": "Aggiungi un documento",
+          "description": "Premi “+” o “Aggiungi documento” per scegliere un documento digitale da aggiungere al Portafoglio."
+        },
+        "qrCode": {
+          "title": "Mostra il codice QR a chi verifica",
+          "description": "Chi verifica i tuoi documenti dal vivo usa un’app ufficiale per scansionare questo codice QR. "
         }
       }
     },
