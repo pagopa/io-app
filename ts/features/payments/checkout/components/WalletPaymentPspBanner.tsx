@@ -85,7 +85,7 @@ const WalletPaymentPspBanner = () => {
           title={bannerConfig.title?.[localeFallback]}
           content={bannerConfig.description[localeFallback]}
           action={bannerConfig.action?.label[localeFallback] ?? ""}
-          onPress={handleBannerPress}
+          onPress={() => void handleBannerPress()}
           onClose={handleBannerClose}
           labelClose={I18n.t("global.buttons.close")}
         />

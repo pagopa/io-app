@@ -74,7 +74,7 @@ const UpdateAppModal: FC = () => {
         action={{
           label: actionLabel,
           accessibilityLabel: actionLabel,
-          onPress: openAppStore
+          onPress: () => void openAppStore()
         }}
       />
       {/* Temporary, to be replaced after this Jira task (IOPID-1799) has been closed  */}

@@ -170,6 +170,8 @@ export default defineConfig([
       "@typescript-eslint/dot-notation": "error",
       "@typescript-eslint/no-floating-promises": "error",
       "@typescript-eslint/restrict-plus-operands": "error",
+      "@typescript-eslint/no-misused-promises": "error",
+      "@typescript-eslint/strict-boolean-expressions": "warn",
 
       // REACT
       "react/jsx-uses-react": "off",

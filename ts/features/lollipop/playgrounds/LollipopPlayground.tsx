@@ -130,7 +130,9 @@ const LollipopPlayground = () => {
     <ScrollView>
       <ContentWrapper>
         <LollipopPlaygroundContent
-          onSignButtonPress={body => onSignButtonPress(body, state.doSignBody)}
+          onSignButtonPress={body =>
+            void onSignButtonPress(body, state.doSignBody)
+          }
           onCheckBoxPress={v => {
             setState({
               ...state,

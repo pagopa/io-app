@@ -29,11 +29,16 @@ const contentClient = ContentClient();
 function getContextualHelpData(): Promise<
   t.Validation<BasicResponseType<ContextualHelp>>
 > {
-  return new Promise((resolve, _) =>
-    contentClient
-      .getContextualHelp()
-      .then(resolve, e => resolve(E.left([{ context: [], value: e }])))
-  );
+  return new Promise((resolve, _) => {
+    void contentClient.getContextualHelp().then(
+      value => {
+        resolve(value);
+      },
+      e => {
+        resolve(E.left([{ context: [], value: e }]));
+      }
+    );
+  });
 }
 
 /**

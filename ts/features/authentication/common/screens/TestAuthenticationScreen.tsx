@@ -170,7 +170,7 @@ const TestAuthenticationScreen = () => {
           label: I18n.t("global.buttons.confirm"),
           accessibilityLabel: I18n.t("global.buttons.confirm"),
           disabled: isConfirmButtonDisabled(username, password, isLoading),
-          onPress: handlePressLoginButton,
+          onPress: () => void handlePressLoginButton(),
           testID: "confirmButton"
         }
       }}

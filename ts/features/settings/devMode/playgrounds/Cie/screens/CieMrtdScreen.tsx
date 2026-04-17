@@ -159,7 +159,9 @@ export const CieMrtdScreen = () => {
           label={status === "reading" ? "Stop" : "Start reading"}
           disabled={can.length < CAN_PIN_LENGTH}
           onPress={() =>
-            status === "reading" ? handleStopReading() : handleStartReading()
+            void (status === "reading"
+              ? handleStopReading()
+              : handleStartReading())
           }
         />
         <VSpacer size={16} />

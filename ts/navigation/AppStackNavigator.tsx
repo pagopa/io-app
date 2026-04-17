@@ -196,7 +196,7 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
         NavigationService.setNavigationReady();
         routeNameRef.current = navigationRef.current?.getCurrentRoute()?.name;
       }}
-      onStateChange={async state => {
+      onStateChange={state => {
         if (isMainNavigatorReady(state)) {
           setMainNavigatorReady();
         }

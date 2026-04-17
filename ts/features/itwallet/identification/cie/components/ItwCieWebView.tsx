@@ -160,7 +160,7 @@ export const ItwCieAuthenticationWebview = ({
       {authenticationUrl && (
         <ItwCieWebView
           source={{ uri: authenticationUrl }}
-          onMessage={handleMessage}
+          onMessage={event => void handleMessage(event)}
           onShouldStartLoadWithRequest={handleShouldStartLoadWithRequest}
           onWebViewError={onWebViewError}
         />

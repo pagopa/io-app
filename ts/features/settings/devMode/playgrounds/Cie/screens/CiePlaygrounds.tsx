@@ -127,7 +127,7 @@ export const CiePlaygrounds = () => {
             <ListItemNav
               value="Open NFC Settings"
               icon="coggle"
-              onPress={() => CieUtils.openNfcSettings()}
+              onPress={() => void CieUtils.openNfcSettings()}
             />
           </>
         )}
@@ -137,7 +137,7 @@ export const CiePlaygrounds = () => {
             <ListItemNav
               value="View logs"
               icon="docAttach"
-              onPress={obtainLogs}
+              onPress={() => void obtainLogs()}
             />
           </>
         )}

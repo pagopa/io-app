@@ -121,7 +121,7 @@ const ReceiptPreviewScreen = () => {
               label: I18n.t(
                 "features.payments.transactions.receipt.shareButton"
               ),
-              onPress: handleOnShare
+              onPress: () => void handleOnShare()
             }
           }}
         />

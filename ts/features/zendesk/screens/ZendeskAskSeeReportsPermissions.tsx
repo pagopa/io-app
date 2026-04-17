@@ -85,7 +85,7 @@ const ZendeskAskSeeReportsPermissions = (props: Props) => {
   ];
 
   /* Remove items that have no value associated with them */
-  const items = permissionItems.filter(it => it.value);
+  const items = permissionItems.filter(it => it.value != null);
 
   const renderPermissionItem = ({
     item

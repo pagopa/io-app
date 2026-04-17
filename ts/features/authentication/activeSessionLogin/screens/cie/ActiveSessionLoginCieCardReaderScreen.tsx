@@ -379,7 +379,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
               <IOButton
                 variant="solid"
                 label={I18n.t("authentication.cie.nfc.retry")}
-                onPress={() => startCie(isCieUatEnabled)}
+                onPress={() => void startCie(isCieUatEnabled)}
               />
             </View>
             <VSpacer size={24} />

@@ -413,19 +413,21 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
       });
   }
 
-  public async componentDidMount() {
+  public componentDidMount() {
     const startCie = Platform.select({
       ios: this.startCieiOS,
       default: this.startCieAndroid
     });
-    await startCie(this.props.isCieUatEnabled);
+    void startCie(this.props.isCieUatEnabled);
   }
 
-  public async componentWillUnmount() {
-    await cieManager.stopListeningNFC().catch(() => {
-      // Ignore errors on stop listening NFC
-    });
-    cieManager.removeAllListeners();
+  public componentWillUnmount() {
+    void cieManager
+      .stopListeningNFC()
+      .catch(() => {
+        // Ignore errors on stop listening NFC
+      })
+      .then(() => cieManager.removeAllListeners());
   }
 
   private handleCancel = () =>
@@ -453,7 +455,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
             <IOButton
               variant="solid"
               label={I18n.t("authentication.cie.nfc.retry")}
-              onPress={() => this.startCieiOS(this.props.isCieUatEnabled)}
+              onPress={() => void this.startCieiOS(this.props.isCieUatEnabled)}
             />
           </View>
           <VSpacer size={24} />

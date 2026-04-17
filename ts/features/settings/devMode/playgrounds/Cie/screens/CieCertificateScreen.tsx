@@ -127,7 +127,9 @@ export const CieCertificateReadingScreen = () => {
           label={status === "reading" ? "Stop reading" : "Start reading"}
           disabled={code.length !== 8}
           onPress={() =>
-            status === "reading" ? handleStopReading() : handleStartReading()
+            void (status === "reading"
+              ? handleStopReading()
+              : handleStartReading())
           }
         />
         <VSpacer size={16} />

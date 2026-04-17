@@ -68,7 +68,7 @@ export const MessageDetailsReminderExpiring = ({
           ? I18n.t("features.messages.alert.removeReminder")
           : I18n.t("features.messages.alert.addReminder")
       }
-      onPress={() => upsertReminder(dueDate, title, preferredCalendar)}
+      onPress={() => void upsertReminder(dueDate, title, preferredCalendar)}
       content={I18n.t("features.messages.alert.content", {
         date: formatDateAsShortFormat(dueDate),
         time: new Intl.DateTimeFormat("it", {

@@ -105,7 +105,7 @@ export const MessageCalendarScreen = () => {
           action={{
             label: I18n.t("global.buttons.retry"),
             accessibilityLabel: I18n.t("global.buttons.retry"),
-            onPress: fetchCalendars
+            onPress: () => void fetchCalendars()
           }}
         />
       </>

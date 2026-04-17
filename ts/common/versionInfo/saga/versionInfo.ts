@@ -26,11 +26,16 @@ function* versionInfoWatcher(): Generator<ReduxSagaEffect, void, any> {
   function getVersionInfo(): Promise<
     t.Validation<BasicResponseType<VersionInfo>>
   > {
-    return new Promise((resolve, _) =>
-      contentClient
-        .getVersionInfo()
-        .then(resolve, e => resolve(E.left([{ context: [], value: e }])))
-    );
+    return new Promise((resolve, _) => {
+      void contentClient.getVersionInfo().then(
+        value => {
+          resolve(value);
+        },
+        e => {
+          resolve(E.left([{ context: [], value: e }]));
+        }
+      );
+    });
   }
 
   while (true) {
