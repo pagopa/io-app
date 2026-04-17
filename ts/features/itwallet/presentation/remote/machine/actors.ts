@@ -1,37 +1,36 @@
-import { fromPromise } from "xstate";
-import * as O from "fp-ts/lib/Option";
 import { ItwVersion, RemotePresentation } from "@pagopa/io-react-native-wallet";
+import * as O from "fp-ts/lib/Option";
+import { fromPromise } from "xstate";
+import { useIOStore } from "../../../../../store/hooks";
+import { assert } from "../../../../../utils/assert";
+import { IO_UNIVERSAL_LINK_PREFIX } from "../../../../../utils/navigation";
+import { sessionTokenSelector } from "../../../../authentication/common/store/selectors";
+import { Env } from "../../../common/utils/environment";
+import { getAttestation } from "../../../common/utils/itwAttestationUtils";
+import { WIA_KEYTAG } from "../../../common/utils/itwCryptoContextUtils";
+import { getIoWallet } from "../../../common/utils/itwIoWallet";
+import { pollForStoreValue } from "../../../common/utils/itwStoreUtils";
+import {
+  CredentialFormat,
+  CredentialMetadata,
+  RequestObject,
+  WalletInstanceAttestations
+} from "../../../common/utils/itwTypesUtils";
+import { CredentialsVault } from "../../../credentials/utils/vault";
+import {
+  itwIntegrityKeyTagSelector,
+  itwIntegrityServiceStatusSelector
+} from "../../../issuance/store/selectors";
+import {
+  enrichPresentationDetails,
+  getInvalidCredentials
+} from "../utils/itwRemotePresentationUtils";
 import {
   DcqlQuery,
   EnrichedPresentationDetails,
   ItwRemoteRequestPayload,
   RelyingPartyConfiguration
 } from "../utils/itwRemoteTypeUtils";
-import {
-  CredentialFormat,
-  RequestObject,
-  StoredCredential,
-  WalletInstanceAttestations
-} from "../../../common/utils/itwTypesUtils";
-import { Env } from "../../../common/utils/environment";
-import { getAttestation } from "../../../common/utils/itwAttestationUtils";
-import { useIOStore } from "../../../../../store/hooks";
-import {
-  enrichPresentationDetails,
-  getInvalidCredentials
-} from "../utils/itwRemotePresentationUtils";
-import { assert } from "../../../../../utils/assert";
-import { IO_UNIVERSAL_LINK_PREFIX } from "../../../../../utils/navigation";
-import {
-  itwIntegrityKeyTagSelector,
-  itwIntegrityServiceStatusSelector
-} from "../../../issuance/store/selectors";
-import { sessionTokenSelector } from "../../../../authentication/common/store/selectors";
-import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors";
-import { WIA_KEYTAG } from "../../../common/utils/itwCryptoContextUtils";
-import { getIoWallet } from "../../../common/utils/itwIoWallet";
-import { pollForStoreValue } from "../../../common/utils/itwStoreUtils";
-import { itwCredentialsAllSelector } from "../../../credentials/store/selectors";
 import { InvalidCredentialsStatusError } from "./failure";
 
 type CredentialsSdJwt = Array<RemotePresentation.Credential4Dcql>;
@@ -46,11 +45,15 @@ export type GetRequestObjectInput = Partial<{
   qrCodePayload: ItwRemoteRequestPayload;
 }>;
 export type GetRequestObjectOutput = string;
+
 export type GetPresentationDetailsInput = Partial<{
+  walletInstanceAttestation: WalletInstanceAttestations;
+  credentials: Record<string, CredentialMetadata>;
   rpConf: RelyingPartyConfiguration;
   qrCodePayload: ItwRemoteRequestPayload;
   requestObjectEncodedJwt: string;
 }>;
+
 export type GetPresentationDetailsOutput = {
   requestObject: RequestObject;
   presentationDetails: EnrichedPresentationDetails;
@@ -135,11 +138,28 @@ export const createRemoteActorsImplementation = (
     GetPresentationDetailsOutput,
     GetPresentationDetailsInput
   >(async ({ input }) => {
-    const { rpConf, qrCodePayload, requestObjectEncodedJwt } = input;
+    const {
+      rpConf,
+      qrCodePayload,
+      requestObjectEncodedJwt,
+      credentials,
+      walletInstanceAttestation
+    } = input;
+
     assert(
-      rpConf && qrCodePayload && requestObjectEncodedJwt,
-      "Missing required getPresentationDetails actor params"
+      walletInstanceAttestation,
+      "Missing required input walletInstanceAttestation"
     );
+    assert(credentials, "Missing required input credentials");
+    assert(qrCodePayload, "Missing required input QR Code payload");
+    assert(
+      requestObjectEncodedJwt,
+      "Missing required input requestObjectEncodedJwt"
+    );
+    assert(rpConf, "Missing required input rpConf");
+
+    const wiaSdJwt = walletInstanceAttestation[CredentialFormat.SD_JWT];
+    assert(wiaSdJwt, "Missing Wallet Attestation in SD-JWT format");
 
     const ioWallet = getIoWallet(itwVersion);
     const { client_id, state } = qrCodePayload;
@@ -156,18 +176,25 @@ export const createRemoteActorsImplementation = (
 
     assert(requestObject.dcql_query, "Missing required DCQL query");
 
-    const globalState = store.getState();
-    const credentials = itwCredentialsAllSelector(globalState);
-    const wiaSdJwt =
-      itwWalletInstanceAttestationSelector(globalState)?.[
-        CredentialFormat.SD_JWT
-      ];
-
-    assert(wiaSdJwt, "Missing Wallet Attestation in SD-JWT format");
+    // Retrieve all credentials from the vault to prepare them for the DCQL evaluation.
+    // The evaluation will require the full credential.
+    const credentialsData = await Promise.all(
+      Object.values(credentials).map(async c => {
+        const credential = await CredentialsVault.get(c.credentialId);
+        assert(
+          credential,
+          `Credential with id ${c.credentialId} not found in secure storage`
+        );
+        return {
+          keyTag: c.keyTag,
+          credential
+        };
+      })
+    );
 
     // Prepare credentials to evaluate the Relying Party request
     const credentialsSdJwt = prepareCredentialsForDcqlEvaluation([
-      ...Object.values(credentials),
+      ...credentialsData,
       {
         keyTag: WIA_KEYTAG,
         credential: wiaSdJwt.endsWith("~") ? wiaSdJwt : `${wiaSdJwt}~`
@@ -274,5 +301,5 @@ export const createRemoteActorsImplementation = (
 };
 
 const prepareCredentialsForDcqlEvaluation = (
-  credentials: Array<Pick<StoredCredential, "keyTag" | "credential">>
+  credentials: Array<{ keyTag: string; credential: string }>
 ): CredentialsSdJwt => credentials.map(c => [c.keyTag, c.credential]);

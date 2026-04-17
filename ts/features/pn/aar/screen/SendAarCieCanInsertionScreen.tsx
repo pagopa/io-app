@@ -1,22 +1,33 @@
-import { OTPInput, VSpacer } from "@pagopa/io-app-design-system";
+import { Body, OTPInput, VSpacer, VStack } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useHeaderHeight } from "@react-navigation/elements";
 import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import i18n from "i18next";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Keyboard, KeyboardAvoidingView, Platform, View } from "react-native";
+import {
+  Image,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  View
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useHardwareBackButtonWhenFocused } from "../../../../hooks/useHardwareBackButton";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { PnParamsList } from "../../navigation/params";
 import PN_ROUTES from "../../navigation/routes";
 import { trackSendAarMandateCieCanEnter } from "../analytics";
 import { setAarFlowState } from "../store/actions";
-import { currentAarFlowData } from "../store/selectors";
 import { sendAarFlowStates } from "../utils/stateUtils";
+import {
+  aarAdresseeDenominationSelector,
+  currentAarFlowData
+} from "../store/selectors";
+import cieCanEducationalSource from "../../../../../img/features/pn/cieCanEducational.png";
 
 export const CIE_CAN_LENGTH = 6;
 
@@ -24,6 +35,11 @@ export type SendAarCieCanInsertionScreenProps = IOStackNavigationRouteProps<
   PnParamsList,
   typeof PN_ROUTES.SEND_AAR_CIE_CAN_INSERTION
 >;
+
+const { width, height, uri } = Image.resolveAssetSource(
+  cieCanEducationalSource
+);
+const aspectRatio = width / height;
 
 export const SendAarCieCanInsertionScreen = ({
   navigation
@@ -104,6 +120,42 @@ export const SendAarCieCanInsertionScreen = ({
     return true;
   });
 
+  const denomination = useIOSelector(aarAdresseeDenominationSelector);
+
+  const CanLocationBottomSheetContent = () => (
+    <VStack space={24}>
+      <Body>
+        {i18n.t("features.pn.aar.flow.cieCanInsertion.bottomSheet.info", {
+          denomination
+        })}
+      </Body>
+      <Image
+        source={{
+          uri
+        }}
+        style={{
+          aspectRatio
+        }}
+        accessibilityIgnoresInvertColors
+      />
+    </VStack>
+  );
+
+  const { bottomSheet, present: presentCanLocationBottomSheet } =
+    useIOBottomSheetModal({
+      title: i18n.t("features.pn.aar.flow.cieCanInsertion.bottomSheet.title"),
+      component: <CanLocationBottomSheetContent />
+    });
+
+  const handleDescriptionLinkPress = useCallback(
+    (url: string) => {
+      if (url === "internal://can-location") {
+        presentCanLocationBottomSheet();
+      }
+    },
+    [presentCanLocationBottomSheet]
+  );
+
   return (
     <SafeAreaView style={{ flex: 1 }} edges={["bottom"]}>
       <KeyboardAvoidingView
@@ -121,6 +173,7 @@ export const SendAarCieCanInsertionScreen = ({
           description={i18n.t(
             "features.pn.aar.flow.cieCanInsertion.description"
           )}
+          onDescriptionLinkPress={handleDescriptionLinkPress}
           headerActionsProp={{ showHelp: true }}
           contextualHelp={{
             title: i18n.t(
@@ -152,6 +205,7 @@ export const SendAarCieCanInsertionScreen = ({
           />
         </IOScrollViewWithLargeHeader>
       </KeyboardAvoidingView>
+      {bottomSheet}
     </SafeAreaView>
   );
 };
