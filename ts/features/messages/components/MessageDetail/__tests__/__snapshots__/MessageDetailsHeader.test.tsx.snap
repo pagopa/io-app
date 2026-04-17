@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`MessageDetailsHeader component should match the snapshot with a valid thirdPartySenderDenomination 1`] = `
 <View

@@ -1,5 +1,10 @@
 name: Actions to setup environment for all workflows
 description: "This action collects the steps to setup any job"
+inputs:
+  generate-api:
+    description: "Whether to generate API clients and upload the artifact"
+    required: false
+    default: "true"
 runs:
   using: "composite"
   steps:    
@@ -22,12 +27,15 @@ runs:
           ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           ${{ runner.os }}-yarn-
     - name: Install dependencies
+      if: steps.yarn-cache.outputs.cache-hit != 'true'
       run: yarn install --frozen-lockfile
       shell: bash
     - id: generate-api-client
+      if: inputs.generate-api == 'true'
       run: yarn generate
       shell: bash
     - id: upload-clients-artifact
+      if: inputs.generate-api == 'true'
       uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
       with:
         name: api-client
