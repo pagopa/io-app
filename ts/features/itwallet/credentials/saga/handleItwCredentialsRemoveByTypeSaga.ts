@@ -1,6 +1,5 @@
 import { deleteKey } from "@pagopa/io-react-native-crypto";
 import { call, put, select, all } from "typed-redux-saga/macro";
-import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { walletRemoveCards } from "../../../wallet/store/actions/cards";
 import { trackItwVaultCredentialRemoveFailed } from "../analytics";
 import {
@@ -37,15 +36,11 @@ export function* handleItwCredentialsRemoveByTypeSaga(
         yield* call(CredentialsVault.removeAll, credentialIds);
       } catch (e) {
         const error = e instanceof Error ? e : new Error("Unknown error");
-        const isMixpanelEnabled = yield* select(isMixpanelEnabledSelector);
 
-        trackItwVaultCredentialRemoveFailed(
-          {
-            credential_ids: credentialIds,
-            reason: error.message
-          },
-          isMixpanelEnabled
-        );
+        trackItwVaultCredentialRemoveFailed({
+          credential_ids: credentialIds,
+          reason: error.message
+        });
 
         throw error;
       }

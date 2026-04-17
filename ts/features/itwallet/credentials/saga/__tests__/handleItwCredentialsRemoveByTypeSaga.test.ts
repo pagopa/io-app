@@ -1,7 +1,5 @@
 import * as ioCrypto from "@pagopa/io-react-native-crypto";
-import { DeepPartial } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
-import { GlobalState } from "../../../../../store/reducers/types";
 import { walletRemoveCards } from "../../../../wallet/store/actions/cards";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
@@ -40,13 +38,7 @@ const baseCredential: CredentialMetadata = {
   spec_version: "1.0.0"
 };
 
-const makeState = (
-  credentials: Record<string, CredentialMetadata>,
-  isMixpanelEnabled: boolean | null = true
-): DeepPartial<GlobalState> => ({
-  persistedPreferences: {
-    isMixpanelEnabled
-  },
+const makeState = (credentials: Record<string, CredentialMetadata>) => ({
   features: {
     itWallet: {
       credentials: { credentials }
@@ -108,13 +100,10 @@ describe("handleItwCredentialsRemoveByTypeSaga", () => {
       .not.put.actionType(walletRemoveCards.toString())
       .run()
       .then(() => {
-        expect(mockTrackRemoveFailed).toHaveBeenCalledWith(
-          {
-            credential_ids: [credential.credentialId],
-            reason: "vault error"
-          },
-          true
-        );
+        expect(mockTrackRemoveFailed).toHaveBeenCalledWith({
+          credential_ids: [credential.credentialId],
+          reason: "vault error"
+        });
         expect(mockDeleteKey).not.toHaveBeenCalled();
       });
   });

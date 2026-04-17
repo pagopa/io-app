@@ -22,7 +22,7 @@ type TrackVaultOrphanedCredentialsProps = {
 /**
  * The pre-initialization Mixpanel queue is keyed by event id. Deriving the id
  * from stable vault identifiers keeps repeated startup retries from enqueuing
- * duplicate copies of the same logical event.
+ * duplicate copies of the same logical boot-time event.
  */
 const buildEnqueuedEventId = (
   eventName: string,
@@ -30,15 +30,15 @@ const buildEnqueuedEventId = (
 ) => [eventName, ...parts.filter(part => part.length > 0)].join(":");
 
 /**
- * Vault events can be emitted while the app is still booting, before Mixpanel
- * has been initialized. In that case we enqueue them unless tracking has been
+ * Migration/coherence events can run during boot, before Mixpanel has been
+ * initialized. In that case we enqueue them unless tracking has been
  * explicitly disabled by the user.
  */
-const trackVaultEvent = (
+const trackBootTimeVaultEvent = (
   eventName: string,
   properties: Record<string, unknown>,
   isMixpanelEnabled: boolean | null,
-  eventId: string
+  eventId?: string
 ) => {
   if (isMixpanelInstanceInitialized()) {
     void mixpanelTrack(eventName, properties);
@@ -46,14 +46,14 @@ const trackVaultEvent = (
   }
 
   if (isMixpanelEnabled !== false) {
-    enqueueMixpanelEvent(eventName, eventId, properties);
+    enqueueMixpanelEvent(eventName, eventId || eventName, properties);
   }
 };
 
-export const trackItwVaultCredentialStoreFailed = (
-  { credential_ids, reason }: TrackVaultFailureProps,
-  isMixpanelEnabled: boolean | null
-) => {
+export const trackItwVaultCredentialStoreFailed = ({
+  credential_ids,
+  reason
+}: TrackVaultFailureProps) => {
   const eventName =
     ITW_CREDENTIALS_ERRORS_EVENTS.ITW_VAULT_CREDENTIAL_STORE_FAILED;
   const properties = buildEventProperties("KO", "error", {
@@ -61,18 +61,13 @@ export const trackItwVaultCredentialStoreFailed = (
     reason
   });
 
-  trackVaultEvent(
-    eventName,
-    properties,
-    isMixpanelEnabled,
-    buildEnqueuedEventId(eventName, credential_ids.join(","), reason)
-  );
+  void mixpanelTrack(eventName, properties);
 };
 
-export const trackItwVaultCredentialRemoveFailed = (
-  { credential_ids, reason }: TrackVaultFailureProps,
-  isMixpanelEnabled: boolean | null
-) => {
+export const trackItwVaultCredentialRemoveFailed = ({
+  credential_ids,
+  reason
+}: TrackVaultFailureProps) => {
   const eventName =
     ITW_CREDENTIALS_ERRORS_EVENTS.ITW_VAULT_CREDENTIAL_REMOVE_FAILED;
   const properties = buildEventProperties("KO", "error", {
@@ -80,12 +75,7 @@ export const trackItwVaultCredentialRemoveFailed = (
     reason
   });
 
-  trackVaultEvent(
-    eventName,
-    properties,
-    isMixpanelEnabled,
-    buildEnqueuedEventId(eventName, credential_ids.join(","), reason)
-  );
+  void mixpanelTrack(eventName, properties);
 };
 
 export const trackItwVaultMigrationFailed = (
@@ -98,7 +88,7 @@ export const trackItwVaultMigrationFailed = (
     reason
   });
 
-  trackVaultEvent(
+  trackBootTimeVaultEvent(
     eventName,
     properties,
     isMixpanelEnabled,
@@ -114,7 +104,7 @@ export const trackItwVaultCoherenceCheckFailed = (
     ITW_CREDENTIALS_ERRORS_EVENTS.ITW_VAULT_COHERENCE_CHECK_FAILED;
   const properties = buildEventProperties("KO", "error", { reason });
 
-  trackVaultEvent(
+  trackBootTimeVaultEvent(
     eventName,
     properties,
     isMixpanelEnabled,
@@ -133,7 +123,7 @@ export const trackItwVaultOrphanedCredentialsFound = (
     origin
   });
 
-  trackVaultEvent(
+  trackBootTimeVaultEvent(
     eventName,
     properties,
     isMixpanelEnabled,
@@ -147,7 +137,7 @@ export const trackItwVaultMigrationRequest = (
   const eventName = ITW_CREDENTIALS_TECH_EVENTS.ITW_VAULT_MIGRATION_REQUEST;
   const properties = buildEventProperties("TECH", undefined);
 
-  trackVaultEvent(eventName, properties, isMixpanelEnabled, eventName);
+  trackBootTimeVaultEvent(eventName, properties, isMixpanelEnabled);
 };
 
 export const trackItwVaultMigrationSuccess = (
@@ -156,5 +146,5 @@ export const trackItwVaultMigrationSuccess = (
   const eventName = ITW_CREDENTIALS_TECH_EVENTS.ITW_VAULT_MIGRATION_SUCCESS;
   const properties = buildEventProperties("TECH", undefined);
 
-  trackVaultEvent(eventName, properties, isMixpanelEnabled, eventName);
+  trackBootTimeVaultEvent(eventName, properties, isMixpanelEnabled);
 };

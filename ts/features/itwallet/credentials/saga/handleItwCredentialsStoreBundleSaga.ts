@@ -1,5 +1,4 @@
-import { call, put, select } from "typed-redux-saga/macro";
-import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../../store/reducers/persistedPreferences";
+import { call, put } from "typed-redux-saga/macro";
 import { trackItwVaultCredentialStoreFailed } from "../analytics";
 import {
   itwCredentialsStore,
@@ -29,17 +28,13 @@ export function* handleItwCredentialsStoreBundleSaga(
       );
     } catch (e) {
       const error = e instanceof Error ? e : new Error("Unknown error");
-      const isMixpanelEnabled = yield* select(isMixpanelEnabledSelector);
 
-      trackItwVaultCredentialStoreFailed(
-        {
-          credential_ids: credentials.map(
-            ({ metadata }) => metadata.credentialId
-          ),
-          reason: error.message
-        },
-        isMixpanelEnabled
-      );
+      trackItwVaultCredentialStoreFailed({
+        credential_ids: credentials.map(
+          ({ metadata }) => metadata.credentialId
+        ),
+        reason: error.message
+      });
 
       throw error;
     }

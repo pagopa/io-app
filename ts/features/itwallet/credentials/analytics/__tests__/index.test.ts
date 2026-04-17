@@ -25,10 +25,10 @@ describe("credentials analytics", () => {
     {
       name: "trackItwVaultCredentialStoreFailed",
       track: () =>
-        trackItwVaultCredentialStoreFailed(
-          { credential_ids: credentialIds, reason },
-          true
-        ),
+        trackItwVaultCredentialStoreFailed({
+          credential_ids: credentialIds,
+          reason
+        }),
       eventName:
         ITW_CREDENTIALS_ERRORS_EVENTS.ITW_VAULT_CREDENTIAL_STORE_FAILED,
       properties: {
@@ -42,10 +42,10 @@ describe("credentials analytics", () => {
     {
       name: "trackItwVaultCredentialRemoveFailed",
       track: () =>
-        trackItwVaultCredentialRemoveFailed(
-          { credential_ids: credentialIds, reason },
-          true
-        ),
+        trackItwVaultCredentialRemoveFailed({
+          credential_ids: credentialIds,
+          reason
+        }),
       eventName:
         ITW_CREDENTIALS_ERRORS_EVENTS.ITW_VAULT_CREDENTIAL_REMOVE_FAILED,
       properties: {
@@ -144,14 +144,12 @@ describe("credentials analytics", () => {
     {
       name: "trackItwVaultCredentialStoreFailed",
       track: () =>
-        trackItwVaultCredentialStoreFailed(
-          { credential_ids: credentialIds, reason },
-          null
-        ),
+        trackItwVaultCredentialStoreFailed({
+          credential_ids: credentialIds,
+          reason
+        }),
       eventName:
         ITW_CREDENTIALS_ERRORS_EVENTS.ITW_VAULT_CREDENTIAL_STORE_FAILED,
-      eventId:
-        "ITW_VAULT_CREDENTIAL_STORE_FAILED:credential-1,credential-2:Vault failure",
       properties: {
         event_category: "KO",
         event_type: "error",
@@ -160,6 +158,44 @@ describe("credentials analytics", () => {
         reason
       }
     },
+    {
+      name: "trackItwVaultCredentialRemoveFailed",
+      track: () =>
+        trackItwVaultCredentialRemoveFailed({
+          credential_ids: credentialIds,
+          reason
+        }),
+      eventName:
+        ITW_CREDENTIALS_ERRORS_EVENTS.ITW_VAULT_CREDENTIAL_REMOVE_FAILED,
+      properties: {
+        event_category: "KO",
+        event_type: "error",
+        flow: undefined,
+        credential_ids: credentialIds,
+        reason
+      }
+    }
+  ])(
+    "$name does not enqueue when Mixpanel is not initialized",
+    ({ track, eventName, properties }) => {
+      jest
+        .spyOn(Mixpanel, "isMixpanelInstanceInitialized")
+        .mockReturnValue(false);
+      const spiedOnMixpanelTrack = jest
+        .spyOn(Mixpanel, "mixpanelTrack")
+        .mockImplementation();
+      const spiedOnEnqueueMixpanelEvent = jest
+        .spyOn(Mixpanel, "enqueueMixpanelEvent")
+        .mockImplementation();
+
+      track();
+
+      expect(spiedOnMixpanelTrack).toHaveBeenCalledWith(eventName, properties);
+      expect(spiedOnEnqueueMixpanelEvent).not.toHaveBeenCalled();
+    }
+  );
+
+  it.each([
     {
       name: "trackItwVaultMigrationRequest",
       track: () => trackItwVaultMigrationRequest(null),
@@ -195,7 +231,7 @@ describe("credentials analytics", () => {
     }
   );
 
-  it("does nothing when Mixpanel is not initialized and tracking is disabled", () => {
+  it("does not enqueue boot-time events when Mixpanel is not initialized and tracking is disabled", () => {
     jest
       .spyOn(Mixpanel, "isMixpanelInstanceInitialized")
       .mockReturnValue(false);
@@ -206,10 +242,7 @@ describe("credentials analytics", () => {
       .spyOn(Mixpanel, "enqueueMixpanelEvent")
       .mockImplementation();
 
-    trackItwVaultCredentialStoreFailed(
-      { credential_ids: credentialIds, reason },
-      false
-    );
+    trackItwVaultMigrationRequest(false);
 
     expect(spiedOnMixpanelTrack).not.toHaveBeenCalled();
     expect(spiedOnEnqueueMixpanelEvent).not.toHaveBeenCalled();
