@@ -72,6 +72,8 @@ export function* handleItwCredentialsVaultCoherenceSaga() {
       yield* call(CredentialsVault.removeAll, orphanedInVault);
     }
   } catch (e) {
+    // This repair step is best-effort at boot: track the failure and let the
+    // app continue, so the next launch can retry the cleanup.
     const reason = e instanceof Error ? e.message : String(e);
     trackItwVaultCoherenceCheckFailed(reason, isMixpanelEnabled);
   }

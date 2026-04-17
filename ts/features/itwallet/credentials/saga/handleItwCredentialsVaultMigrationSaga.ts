@@ -45,6 +45,8 @@ export function* handleItwCredentialsVaultMigrationSaga() {
   const isMixpanelEnabled = yield* select(isMixpanelEnabledSelector);
   trackItwVaultMigrationRequest(isMixpanelEnabled);
 
+  // Collect one result per credential so a single vault write failure does not
+  // prevent successful entries from being removed from `legacyCredentials`.
   const results: ReadonlyArray<VaultMigrationResult> = yield* call(() =>
     Promise.all(
       entries.map(async c => {

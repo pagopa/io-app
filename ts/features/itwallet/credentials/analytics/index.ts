@@ -19,11 +19,21 @@ type TrackVaultOrphanedCredentialsProps = {
   origin: "redux" | "vault";
 };
 
+/**
+ * The pre-initialization Mixpanel queue is keyed by event id. Deriving the id
+ * from stable vault identifiers keeps repeated startup retries from enqueuing
+ * duplicate copies of the same logical event.
+ */
 const buildEnqueuedEventId = (
   eventName: string,
   ...parts: ReadonlyArray<string>
 ) => [eventName, ...parts.filter(part => part.length > 0)].join(":");
 
+/**
+ * Vault events can be emitted while the app is still booting, before Mixpanel
+ * has been initialized. In that case we enqueue them unless tracking has been
+ * explicitly disabled by the user.
+ */
 const trackVaultEvent = (
   eventName: string,
   properties: Record<string, unknown>,
