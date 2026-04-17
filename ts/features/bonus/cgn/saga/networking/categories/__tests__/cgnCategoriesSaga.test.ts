@@ -82,5 +82,5 @@ describe("cgnCategoriesSaga", () => {
       )
       .next()
       .isDone();
-  });   
+  });
 });
