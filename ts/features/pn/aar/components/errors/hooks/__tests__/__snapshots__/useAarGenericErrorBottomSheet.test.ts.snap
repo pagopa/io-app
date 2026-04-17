@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notifica_send_qr" should match the snapshot for error: "ANY_ERROR" 1`] = `
 [

@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`TourStepIndicator rendering dots matches snapshot for 3 steps at index 0 1`] = `
 <View

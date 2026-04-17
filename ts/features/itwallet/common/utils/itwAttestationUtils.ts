@@ -3,14 +3,21 @@ import {
   createCryptoContextFor
 } from "@pagopa/io-react-native-wallet";
 import { createItWalletFetch } from "../../api/client";
-import { regenerateCryptoKey, WIA_KEYTAG } from "./itwCryptoContextUtils";
+import { getAppVersion } from "../../../../utils/appVersion";
+import { assert } from "../../../../utils/assert";
+import {
+  createKeyAttestationCryptoContextFor,
+  regenerateCryptoKey,
+  WIA_KEYTAG
+} from "./itwCryptoContextUtils";
 import {
   generateIntegrityHardwareKeyTag,
   getIntegrityContext
 } from "./itwIntegrityUtils";
 import { WalletInstanceAttestations } from "./itwTypesUtils.ts";
 import { Env } from "./environment.ts";
-import { getIoWallet } from "./itwIoWallet.ts";
+import { WALLET_SOLUTION_ID } from "./constants";
+import { getIoWallet } from "./itwIoWallet";
 
 /**
  * Getter for the integrity hardware keytag to be used for an {@link IntegrityContext}.
@@ -58,7 +65,7 @@ export const registerWalletInstance = async (
  * @param sessionToken - the session token to use for the API calls
  * @return the wallet attestation in multiple formats
  */
-export const getAttestation = async (
+export const getWalletInstanceAttestation = async (
   { WALLET_PROVIDER_BASE_URL }: Env,
   itwVersion: ItwVersion,
   hardwareKeyTag: string,
@@ -75,22 +82,26 @@ export const getAttestation = async (
     WALLET_PROVIDER_BASE_URL
   );
 
-  const attestations = await ioWallet.WalletInstanceAttestation.getAttestation({
-    wiaCryptoContext,
-    integrityContext,
-    walletProviderBaseUrl: WALLET_PROVIDER_BASE_URL,
-    appFetch
-  });
+  const attestations = await ioWallet.WalletInstanceAttestation.getAttestation(
+    {
+      walletSolutionId: WALLET_SOLUTION_ID,
+      walletProviderBaseUrl: WALLET_PROVIDER_BASE_URL,
+      walletSolutionVersion: getAppVersion()
+    },
+    {
+      wiaCryptoContext,
+      integrityContext,
+      appFetch
+    }
+  );
 
-  return attestations
-    .filter(({ type }) => type === "wallet_instance_attestation")
-    .reduce(
-      (acc, { format, attestation }) => ({
-        ...acc,
-        [format]: attestation
-      }),
-      {} as WalletInstanceAttestations
-    );
+  return attestations.reduce(
+    (acc, { format, attestation }) => ({
+      ...acc,
+      [format]: attestation
+    }),
+    {} as WalletInstanceAttestations
+  );
 };
 
 /**
@@ -165,7 +176,7 @@ export const getCurrentWalletInstanceStatus = (
         WALLET_PROVIDER_BASE_URL
       )
     });
-    // eslint-disable-next-line sonarjs/no-useless-catch
+     
   } catch (e) {
     // TODO: Replace Sentry capture exception with a new logging solution
     // Sentry.captureException(e, {
@@ -175,4 +186,41 @@ export const getCurrentWalletInstanceStatus = (
     // });
     throw e;
   }
+};
+
+export const getWalletUnitAttestation = async (
+  { WALLET_PROVIDER_BASE_URL }: Env,
+  itwVersion: ItwVersion,
+  keyTags: ReadonlyArray<string>,
+  hardwareKeyTag: string,
+  sessionToken: string
+) => {
+  const ioWallet = getIoWallet(itwVersion);
+
+  assert(
+    ioWallet.WalletUnitAttestation.isSupported,
+    `Wallet Unit Attestation is not supported by IT-Wallet v${itwVersion}`
+  );
+
+  const integrityContext = getIntegrityContext(hardwareKeyTag);
+  const appFetch = createItWalletFetch(
+    sessionToken,
+    WALLET_PROVIDER_BASE_URL,
+    WALLET_PROVIDER_BASE_URL
+  );
+
+  const { attestation } = await ioWallet.WalletUnitAttestation.getAttestation(
+    {
+      walletSolutionId: WALLET_SOLUTION_ID,
+      walletProviderBaseUrl: WALLET_PROVIDER_BASE_URL,
+      walletSolutionVersion: getAppVersion()
+    },
+    {
+      keysToAttest: keyTags.map(createKeyAttestationCryptoContextFor),
+      integrityContext,
+      appFetch
+    }
+  );
+
+  return attestation;
 };

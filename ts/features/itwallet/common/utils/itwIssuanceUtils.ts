@@ -1,16 +1,13 @@
-import { generate } from "@pagopa/io-react-native-crypto";
 import {
   AuthorizationDetail,
   createCryptoContextFor,
   ItwVersion
 } from "@pagopa/io-react-native-wallet";
-import { type CryptoContext } from "@pagopa/io-react-native-jwt";
-import { v4 as uuidv4 } from "uuid";
 import { type IdentificationContext } from "../../machine/eid/context";
 import {
   CredentialAccessToken,
-  IssuerConfiguration,
-  StoredCredential
+  CredentialBundle,
+  IssuerConfiguration
 } from "./itwTypesUtils";
 import {
   DPOP_KEYTAG,
@@ -20,16 +17,24 @@ import {
 import { extractVerification } from "./itwCredentialUtils";
 import { Env } from "./environment";
 import { getIoWallet } from "./itwIoWallet";
+import { AuthorizedCredentialMetadata } from "./itwCredentialIssuanceUtils";
 
 const CREDENTIAL_TYPE = "PersonIdentificationData";
 
-type StartAuthFlowParams = {
+type StartAuthFlow = (params: {
   env: Env;
   itwVersion: ItwVersion;
   walletAttestation: string;
   identification: IdentificationContext;
   withMRTDPoP: boolean;
-};
+}) => Promise<{
+  authUrl: string;
+  issuerConf: IssuerConfiguration;
+  clientId: string;
+  codeVerifier: string;
+  credentialDefinition: AuthorizationDetail;
+  redirectUri: string;
+}>;
 
 /**
  * Function to start the authentication flow. It must be invoked before
@@ -43,13 +48,13 @@ type StartAuthFlowParams = {
  * @param withMRTDPoP - Whether to use MRTD PoP proof or not.
  * @returns Authentication params to use when completing the flow.
  */
-const startAuthFlow = async ({
+const startAuthFlow: StartAuthFlow = async ({
   env,
   itwVersion,
   walletAttestation,
   identification,
   withMRTDPoP
-}: StartAuthFlowParams) => {
+}) => {
   const ioWallet = getIoWallet(itwVersion);
 
   const idpHint = getIdpHint(identification, env);
@@ -92,19 +97,16 @@ const startAuthFlow = async ({
   };
 };
 
-export type CompleteAuthFlowParams = {
+export type CompleteAuthFlow = (args: {
   callbackUrl: string;
   itwVersion: ItwVersion;
   issuerConf: IssuerConfiguration;
-  clientId: string;
   codeVerifier: string;
   walletAttestation: string;
   redirectUri: string;
-};
-
-export type CompleteAuthFlowResult = Awaited<
-  ReturnType<typeof completeAuthFlow>
->;
+}) => Promise<{
+  accessToken: CredentialAccessToken;
+}>;
 
 /**
  * Function to complete the authentication flow. It must be invoked after `startAuthFlow`
@@ -112,16 +114,16 @@ export type CompleteAuthFlowResult = Awaited<
  * The rest of the parameters are those obtained from `startAuthFlow` + the wallet attestation.
  * @param walletAttestation - The wallet attestation.
  * @param callbackUrl - The callback url from which the code to get the access token is extracted.
- * @returns Authentication tokens.
+ * @returns The access token with the authorized credentials.
  */
-const completeAuthFlow = async ({
+const completeAuthFlow: CompleteAuthFlow = async ({
   callbackUrl,
   codeVerifier,
   issuerConf,
   walletAttestation,
   redirectUri,
   itwVersion
-}: CompleteAuthFlowParams) => {
+}) => {
   const ioWallet = getIoWallet(itwVersion);
   const { code } =
     await ioWallet.CredentialIssuance.completeUserAuthorizationWithQueryMode(
@@ -144,50 +146,54 @@ const completeAuthFlow = async ({
     }
   );
 
-  return { accessToken, dPoPContext: dPopCryptoContext };
+  return { accessToken };
 };
 
-export type PidIssuanceParams = {
+export type GetPid = (args: {
   itwVersion: ItwVersion;
   issuerConf: IssuerConfiguration;
   accessToken: CredentialAccessToken;
   clientId: string;
-  dPoPContext: CryptoContext;
-  credentialDefinition: AuthorizationDetail;
-};
+  authorizedCredential: AuthorizedCredentialMetadata;
+}) => Promise<CredentialBundle>;
 
 /**
- * Function to get the PID, parse it and return it in {@link StoredCredential} format.
+ * Function to get the PID, parse it and return it in {@link CredentialBundle} format.
  * It must be called after `startAuthFlow` and `completeAuthFlow`.
  * @returns The stored credential.
  */
-const getPid = async ({
+const getPid: GetPid = async ({
   itwVersion,
   issuerConf,
   clientId,
   accessToken,
-  dPoPContext,
-  credentialDefinition
-}: PidIssuanceParams): Promise<StoredCredential> => {
+  authorizedCredential
+}) => {
   const ioWallet = getIoWallet(itwVersion);
-  const credentialKeyTag = uuidv4().toString();
-  await generate(credentialKeyTag);
-  const credentialCryptoContext = createCryptoContextFor(credentialKeyTag);
 
-  const credentialIdentifierDefinition = getCredentialIdentifierFromAccessToken(
-    accessToken,
-    credentialDefinition
-  );
+  const {
+    keyTag,
+    authDetails: { credential_configuration_id, credential_identifiers },
+    walletUnitAttestationId,
+    walletUnitAttestation
+  } = authorizedCredential;
+
+  const credentialCryptoContext = createCryptoContextFor(keyTag);
+  const dPopCryptoContext = createCryptoContextFor(DPOP_KEYTAG);
 
   const { credential, format } =
     await ioWallet.CredentialIssuance.obtainCredential(
       issuerConf,
       accessToken,
       clientId,
-      credentialIdentifierDefinition,
+      {
+        credential_configuration_id,
+        credential_identifier: credential_identifiers[0]
+      },
       {
         credentialCryptoContext,
-        dPopCryptoContext: dPoPContext
+        walletUnitAttestation,
+        dPopCryptoContext
       }
     );
 
@@ -195,65 +201,35 @@ const getPid = async ({
     await ioWallet.CredentialIssuance.verifyAndParseCredential(
       issuerConf,
       credential,
-      credentialIdentifierDefinition.credential_configuration_id,
+      credential_configuration_id,
       { credentialCryptoContext, ignoreMissingAttributes: true }
     );
 
   return {
-    parsedCredential,
-    issuerConf,
-    keyTag: credentialKeyTag,
-    credentialType: CREDENTIAL_TYPE,
-    credentialId: credentialIdentifierDefinition.credential_configuration_id,
-    format,
     credential,
-    jwt: {
-      expiration: expiration.toISOString(),
-      issuedAt: issuedAt?.toISOString()
-    },
-    spec_version: ioWallet.version,
-    verification: extractVerification({ format, credential, parsedCredential })
+    metadata: {
+      parsedCredential,
+      issuerConf,
+      keyTag,
+      credentialType: CREDENTIAL_TYPE,
+      credentialId: credential_configuration_id,
+      format,
+      jwt: {
+        expiration: expiration.toISOString(),
+        issuedAt: issuedAt?.toISOString()
+      },
+      spec_version: ioWallet.version,
+      verification: extractVerification({
+        format,
+        credential,
+        parsedCredential
+      }),
+      walletUnitAttestationId
+    }
   };
 };
 
 export { startAuthFlow, completeAuthFlow, getPid };
-
-/**
- * This function extracts the first credential identifier from the access token. The token might contain
- * more than one identifier, and for each one of them the Wallet should call `Credential.Issuance.ObtainCredential`.
- * Currently only one identifier is returned, so it is safe to extract the first.
- * @param accessToken The token received from the Issuer's token endpoint
- * @param authorizationDetail The initial authorization request for a certain credential
- * @returns `credential_configuration_id` and `credential_identifier`
- */
-function getCredentialIdentifierFromAccessToken(
-  accessToken: CredentialAccessToken,
-  authorizationDetail: AuthorizationDetail
-) {
-  if (authorizationDetail.type !== "openid_credential") {
-    throw new Error(
-      `Unsupported authorization detail type: ${authorizationDetail.type}`
-    );
-  }
-
-  const accessTokenAuthDetail = accessToken.authorization_details.find(
-    authDetails =>
-      authDetails.credential_configuration_id ===
-      authorizationDetail.credential_configuration_id
-  );
-
-  if (!accessTokenAuthDetail) {
-    throw new Error(
-      `The requested credential configuration ID "${authorizationDetail.credential_configuration_id}" was not found in the access token`
-    );
-  }
-
-  return {
-    credential_configuration_id:
-      accessTokenAuthDetail.credential_configuration_id,
-    credential_identifier: accessTokenAuthDetail.credential_identifiers[0]
-  };
-}
 
 /**
  * Consts for the IDP hints in test for SPID and CIE and in production for CIE.
