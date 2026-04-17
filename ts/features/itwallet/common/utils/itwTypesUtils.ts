@@ -110,6 +110,12 @@ export type CredentialMetadata = {
   };
   spec_version: string;
   verification?: StoredVerification;
+  /**
+   * The ID of the Wallet Unit Attestation that contains the credential attested key.
+   * The corresponding attestation is stored in `walletInstace.walletUnitAttestations`.
+   * Only credentials issued with the newer IT-Wallet specs contain this field.
+   */
+  walletUnitAttestationId?: string;
 };
 
 /**
