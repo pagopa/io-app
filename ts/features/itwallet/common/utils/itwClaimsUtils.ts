@@ -13,7 +13,7 @@ import I18n from "i18next";
 import { addPadding } from "@pagopa/io-react-native-jwt";
 import { Locales } from "../../../../i18n";
 import { JsonFromString } from "./ItwCodecUtils";
-import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
+import { ParsedCredential, CredentialMetadata } from "./itwTypesUtils";
 
 /**
  *
@@ -691,7 +691,7 @@ export const extractClaim =
  * @returns the fiscal code
  */
 export const getFiscalCodeFromCredential = (
-  credential: StoredCredential | undefined
+  credential: CredentialMetadata | undefined
 ) =>
   pipe(
     O.fromNullable(credential?.parsedCredential),
@@ -706,7 +706,7 @@ export const getFiscalCodeFromCredential = (
  * @returns the first name
  */
 export const getFirstNameFromCredential = (
-  credential: StoredCredential | undefined
+  credential: CredentialMetadata | undefined
 ) =>
   pipe(
     O.fromNullable(credential?.parsedCredential),
@@ -720,7 +720,7 @@ export const getFirstNameFromCredential = (
  * @returns the family name
  */
 export const getFamilyNameFromCredential = (
-  credential: StoredCredential | undefined
+  credential: CredentialMetadata | undefined
 ) =>
   pipe(
     O.fromNullable(credential?.parsedCredential),

@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`MessageDetailsContent component should match snapshot when user type is mandatory, does not have a valid Aar Adressee denomination, doesn't have a valid sender denomination, with the abstract disabled by feature flag 1`] = `
 <View
