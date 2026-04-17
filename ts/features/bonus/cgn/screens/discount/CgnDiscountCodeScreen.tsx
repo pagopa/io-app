@@ -9,7 +9,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { Second } from "@pagopa/ts-commons/lib/units";
 import { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { Platform, StyleSheet, View } from "react-native";
 import Barcode from "react-native-barcode-builder";
 import I18n from "i18next";
 import { Otp } from "../../../../../../definitions/cgn/Otp";
@@ -109,7 +109,7 @@ const CgnDiscountCodeScreen = () => {
         <IOScrollView
           headerConfig={{
             title: I18n.t(`bonus.cgn.merchantDetail.discount.title`),
-            ignoreSafeAreaMargin: true,
+            ignoreSafeAreaMargin: Platform.OS === "ios",
             type: "singleAction",
             firstAction: {
               icon: "closeLarge",
