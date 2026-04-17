@@ -110,7 +110,8 @@ const parseAndPrintError = (
     | typeof ISO18013_5.ModuleErrorSchema
     | typeof ISO18013_7.ModuleErrorSchema
     | typeof CBOR.ModuleErrorSchema
-    | typeof COSE.ModuleErrorSchema,
+    | typeof COSE.ModuleErrorSchema
+    | typeof ISO18013_5.OnErrorPayloadSchema,
   error: unknown,
   prefix?: string
 ) => {
@@ -142,7 +143,6 @@ export enum PROXIMITY_STATUS {
 
 export const useItwProximityFlow = () => {
   const [status, setStatus] = useState<PROXIMITY_STATUS>(PROXIMITY_STATUS.IDLE);
-  const [error, setError] = useState<string | null>(null);
   const [qrCode, setQrCode] = useState<string | null>(null);
   const [request, setRequest] = useState<
     ISO18013_5.VerifierRequest["request"] | null
@@ -335,7 +335,11 @@ export const useItwProximityFlow = () => {
         if (!data || !data.error) {
           throw new Error("No error data received");
         }
-        setError(ISO18013_5.OnErrorPayloadSchema.parse(data.error));
+        parseAndPrintError(
+          ISO18013_5.OnErrorPayloadSchema,
+          data.error,
+          "Error event: "
+        );
       } catch (e) {
         parseAndPrintError(ISO18013_5.ModuleErrorSchema, e, "onError error: ");
       } finally {
@@ -394,7 +398,6 @@ export const useItwProximityFlow = () => {
 
   return {
     status,
-    error,
     qrCode,
     request,
     nfcSessionSecondsLeft,
