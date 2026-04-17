@@ -64,4 +64,18 @@ describe("cgnOfflineMerchantsSaga", () => {
       .next()
       .isDone();
   });
+
+  it("should throw an error if API returns unexpected status", () => {
+    const unexpectedStatus = 500;
+    testSaga(cgnOfflineMerchantsSaga, getOfflineMerchants, requestAction)
+      .next()
+      .next(E.right({ status: unexpectedStatus }))
+      .put(
+        cgnOfflineMerchants.failure(
+          getGenericError(new Error(`Response in status ${unexpectedStatus}`))
+        )
+      )
+      .next()
+      .isDone();
+  });
 });

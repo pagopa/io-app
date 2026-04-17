@@ -65,4 +65,18 @@ describe("cgnMerchantDetail", () => {
       .next()
       .isDone();
   });
+
+  it("should throw an error if API returns unexpected status", () => {
+    const unexpectedStatus = 500;
+    testSaga(cgnMerchantDetail, getMerchantsDetail, requestAction)
+      .next()
+      .next(E.right({ status: unexpectedStatus }))
+      .put(
+        cgnSelectedMerchant.failure(
+          getGenericError(new Error(`Response in status ${unexpectedStatus}`))
+        )
+      )
+      .next()
+      .isDone();
+  });
 });

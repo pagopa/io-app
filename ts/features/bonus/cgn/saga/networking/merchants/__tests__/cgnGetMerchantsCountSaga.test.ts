@@ -53,4 +53,18 @@ describe("cgnGetMerchantsCountSaga", () => {
       .next()
       .isDone();
   });
+
+  it("should throw an error if API returns unexpected status", () => {
+    const unexpectedStatus = 500;
+    testSaga(cgnGetMerchantsCountSaga, getMerchantsCount, requestAction)
+      .next()
+      .next(E.right({ status: unexpectedStatus }))
+      .put(
+        cgnSearchMerchants.failure(
+          getGenericError(new Error(`Response in status ${unexpectedStatus}`))
+        )
+      )
+      .next()
+      .isDone();
+  });
 });
