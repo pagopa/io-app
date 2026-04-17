@@ -1,19 +1,22 @@
-const { defineConfig, globalIgnores } = require("eslint/config");
+import { defineConfig, globalIgnores } from "eslint/config";
+import { fixupConfigRules } from "@eslint/compat";
+import { FlatCompat } from "@eslint/eslintrc";
+import { createRequire } from "module";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+import pagopaConfig from "@pagopa/eslint-config";
+import tseslint from "typescript-eslint";
+import reactNativeConfig from "@react-native/eslint-config/flat";
+import importPlugin from "eslint-plugin-import";
+import functional from "eslint-plugin-functional";
+import sonarjs from "eslint-plugin-sonarjs";
+import i18Next from "eslint-plugin-i18next";
+import js from "@eslint/js";
 
-const { fixupConfigRules } = require("@eslint/compat");
-
-const tseslint = require("typescript-eslint");
-const reactNativeConfig = require("@react-native/eslint-config/flat");
-const importPlugin = require("eslint-plugin-import");
-const functional = require("eslint-plugin-functional");
-const sonarjs = require("eslint-plugin-sonarjs");
-const stylisticEslintPluginJs = require("@stylistic/eslint-plugin-js");
-const i18Next = require("eslint-plugin-i18next");
-const js = require("@eslint/js");
-const prettierConfig = require("eslint-config-prettier");
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const require = createRequire(import.meta.url);
 const delegateEffectsRule = require("./scripts/eslint/delegate-effects.js");
-
-const { FlatCompat } = require("@eslint/eslintrc");
 
 const compat = new FlatCompat({
   baseDirectory: __dirname,
@@ -21,7 +24,17 @@ const compat = new FlatCompat({
   allConfig: js.configs.all
 });
 
-module.exports = defineConfig([
+// @typescript-eslint is already registered by pagopaConfig (via typescript-eslint).
+// Strip it from @react-native/eslint-config/flat to avoid "Cannot redefine plugin" errors.
+const reactNativeConfigWithoutTsPlugin = reactNativeConfig.map(config => {
+  if (config.plugins?.["@typescript-eslint"]) {
+    const { "@typescript-eslint": _removed, ...rest } = config.plugins;
+    return { ...config, plugins: rest };
+  }
+  return config;
+});
+
+export default defineConfig([
   globalIgnores([
     "**/*.js",
     "**/*.cjs",
@@ -31,14 +44,20 @@ module.exports = defineConfig([
     "definitions/*",
     "**/*.typegen.ts"
   ]),
+
+  // Pagopa base config: @eslint/js recommended, typescript-eslint strict+stylistic,
+  // eslint-plugin-prettier, perfectionist.
+  // Vitest block is excluded — project uses Jest.
+  // Perfectionist block is excluded — sorting rules are deferred to a follow-up PR.
+  ...pagopaConfig.filter(
+    config => !config.plugins?.vitest && !config.plugins?.perfectionist
+  ),
+
   {
     files: ["**/*.ts", "**/*.tsx"],
     extends: [
-      js.configs.recommended,
-      ...tseslint.configs.recommended,
-      ...reactNativeConfig,
-      ...fixupConfigRules(compat.extends("plugin:react-native-a11y/all")),
-      prettierConfig
+      ...reactNativeConfigWithoutTsPlugin,
+      ...fixupConfigRules(compat.extends("plugin:react-native-a11y/all"))
     ],
 
     languageOptions: {
@@ -55,23 +74,47 @@ module.exports = defineConfig([
     },
 
     plugins: {
+      // Remove `import` plugin once we adopt
+      // `perfectionist/sort-imports` rules
       import: importPlugin,
       functional,
       sonarjs,
-      "@stylistic/js": stylisticEslintPluginJs,
       i18next: i18Next,
       "typed-redux-saga": { rules: { "delegate-effects": delegateEffectsRule } }
     },
 
     rules: {
-      "react/react-in-jsx-scope": "off",
-      "react/jsx-uses-react": "off",
-      "comma-dangle": ["error", "never"],
-      "no-case-declarations": "off",
-      "no-inner-declarations": "off",
-      "prefer-const": "error",
-      curly: "error",
+      // START: OVERWRITTEN RULES FROM PAGOPA/ESLINT-CONFIG
+      //
+      // Converting `type = {}` to `interface {}` breaks assignability to
+      // `Record<string, unknown>` — TypeScript requires an explicit index
+      // signature on interfaces, whereas type aliases satisfy it structurally.
+      // This affects analytics helpers, navigation param lists, and any other
+      // type used as a generic record argument throughout the codebase.
+      "@typescript-eslint/consistent-type-definitions": "off",
 
+      // Auto-fix corrupts multi-line property values (see comment below)
+      "perfectionist/sort-objects": "off",
+
+      // Rules from tseslint.strict / pagopa config that require widespread
+      // refactoring incompatible with the current codebase
+      "max-lines-per-function": "off",
+      "@typescript-eslint/no-invalid-void-type": "off",
+      "@typescript-eslint/no-empty-function": "off",
+      "@typescript-eslint/no-dynamic-delete": "off",
+      "@typescript-eslint/no-non-null-assertion": "off",
+      "@typescript-eslint/no-unused-vars": "off",
+      "@typescript-eslint/no-inferrable-types": "off",
+      "@typescript-eslint/no-explicit-any": "off",
+
+      // Incorrectly fires on mapped types (`[P in ...]`) — only meant for
+      // plain index signatures (`[key: string]: V`) which should use Record<K,V>
+      "@typescript-eslint/consistent-indexed-object-style": "off",
+
+      // END: OVERWRITTEN RULES FROM PAGOPA/ESLINT-CONFIG
+
+      // CODE STYLE
+      curly: "error",
       "spaced-comment": [
         "error",
         "always",
@@ -81,30 +124,29 @@ module.exports = defineConfig([
           }
         }
       ],
-
-      radix: "error",
       "one-var": ["error", "never"],
       "object-shorthand": "error",
-      "no-var": "error",
-      "no-param-reassign": "error",
+      // TODO: Remove this property once the migration
+      // from class components is completed
+      "max-classes-per-file": ["error", 1],
+
+      // GENERAL JS SAFETY
+      // Deprecated since ESLint 5.1.0 — overrides @react-native/eslint-config warn
+      "no-catch-shadow": "off",
+      "no-case-declarations": "off",
       "no-underscore-dangle": "error",
-      "no-undef-init": "error",
       "no-throw-literal": "error",
-      "no-new-wrappers": "error",
-      "no-eval": "error",
       "no-console": "error",
       "no-caller": "error",
-      "no-bitwise": "error",
       "no-void": "off",
       "no-duplicate-imports": "error",
-      quotes: "off",
-      eqeqeq: ["error", "smart"],
-      "max-classes-per-file": ["error", 1],
-      "guard-for-in": "error",
-      complexity: "error",
-      "arrow-body-style": "error",
+      // Remove the following `import` rule
+      // once we adopt `perfectionist/sort-imports`
       "import/order": "error",
-      "@typescript-eslint/no-unused-vars": "off",
+
+      // TYPESCRIPT
+      // Downgraded to warn — existing shadows are widespread and non-critical
+      "@typescript-eslint/no-shadow": "warn",
       "@typescript-eslint/no-require-imports": [
         "error",
         {
@@ -118,47 +160,54 @@ module.exports = defineConfig([
           ]
         }
       ],
-      "@typescript-eslint/explicit-module-boundary-types": "off",
-      "@typescript-eslint/no-inferrable-types": "off",
-      "@typescript-eslint/no-explicit-any": "off",
-
       "@typescript-eslint/array-type": [
         "error",
         {
           default: "generic"
         }
       ],
-
       "@typescript-eslint/await-thenable": "error",
-      "@typescript-eslint/consistent-type-assertions": "error",
       "@typescript-eslint/dot-notation": "error",
-
       "@typescript-eslint/no-floating-promises": "error",
-      "no-unused-expressions": "off",
-      "@typescript-eslint/no-unused-expressions": ["error"],
-      "@typescript-eslint/prefer-function-type": "error",
       "@typescript-eslint/restrict-plus-operands": "error",
-      "@typescript-eslint/unified-signatures": "error",
-      "react/prop-types": "off",
-      "react/display-name": "off",
-      "react/jsx-key": "error",
 
+      // REACT
+      "react/jsx-uses-react": "off",
+      "react/prop-types": "off",
+      "react/jsx-key": "error",
+      // Less relevant rule with contemporary React with hooks
       "react/jsx-no-bind": [
         "error",
         {
           allowArrowFunctions: true
         }
       ],
-
+      // It could highlight performance issues,
+      // with some noise on trivial cases
       "react/no-unstable-nested-components": [
         "off",
         {
           allowAsProps: true
         }
       ],
-
+      // TODO: Remove these two properties once the migration
+      // from class components is completed
       "react/no-direct-mutation-state": "off",
       "react/require-render-return": "off",
+
+      // REACT NATIVE
+      "react-native/no-unused-styles": "error",
+      "react-native/no-inline-styles": "off",
+      "react-native/no-color-literals": "error",
+      "react-native/no-single-element-style-arrays": "error",
+
+      // ACCESSIBILITY
+      "react-native-a11y/has-accessibility-hint": "off",
+
+      // SONAR
+      "sonarjs/no-nested-template-literals": "error",
+
+      // FUNCTIONAL PROGRAMMING
       "functional/no-let": "error",
       "functional/immutable-data": [
         "error",
@@ -171,17 +220,8 @@ module.exports = defineConfig([
           ]
         }
       ],
-      "sonarjs/no-small-switch": "off",
-      "sonarjs/no-duplicate-string": "off",
-      "sonarjs/no-nested-template-literals": "warn",
-      "react-native/no-unused-styles": "error",
-      "react-native/split-platform-components": "off",
-      "react-native/no-inline-styles": "off",
-      "react-native/no-color-literals": "error",
-      "react-native/no-raw-text": "off",
-      "react-native/no-single-element-style-arrays": "warn",
-      "react-native-a11y/has-accessibility-hint": "off",
 
+      // INTERNATIONALISATION
       "i18next/no-literal-string": [
         "error",
         {
@@ -214,8 +254,10 @@ module.exports = defineConfig([
         }
       ],
 
+      // REDUX SAGA
       "typed-redux-saga/delegate-effects": "error",
 
+      // IMPORTS
       "no-restricted-imports": [
         "error",
         {
@@ -248,7 +290,12 @@ module.exports = defineConfig([
     }
   },
   {
-    files: ["**/*.test.ts", "**/*.test.tsx"],
+    files: [
+      "**/*.test.ts",
+      "**/*.test.tsx",
+      "**/__tests__/**/*.ts",
+      "**/__tests__/**/*.tsx"
+    ],
 
     rules: {
       "@typescript-eslint/no-non-null-assertion": "off",

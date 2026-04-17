@@ -1,5 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { createStore } from "redux";
+import { useState } from "react";
 import { ServiceId } from "../../../../../definitions/backend/ServiceId";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { useIODispatch } from "../../../../store/hooks";
@@ -26,8 +27,6 @@ jest.mock("react", () => ({
   ...jest.requireActual("react"),
   useState: jest.fn()
 }));
-// eslint-disable-next-line import/order
-import { useState } from "react";
 
 type PreferencePotState = pot.Pot<
   ServicePreferenceResponse,
