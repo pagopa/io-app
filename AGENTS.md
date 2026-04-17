@@ -36,23 +36,23 @@ Every feature lives under `ts/features/<feature>/` and is self-contained:
 - `README.md` — Purpose & guideline for the feature
 - `machine/` — XState machine files (only for complex multi-step flows)
 
-## Boundaries
+## Guidelines
 
 - Never edit anything under `definitions/`. Run `yarn generate` to update them.
-- Avoid `fp-ts` in new code; use native TypeScript equivalents.
+- Never use `fp-ts` in new code; always use native TypeScript equivalents.
 - Always import from `typed-redux-saga/macro`, not bare `redux-saga/effects`.
-- The `tsc:noemit` check must pass. No `@ts-ignore` without a comment explaining why.
-- No hardcoded user-facing strings:  every string must have an `I18n.t(...)` key.
-- No magic numbers or hardcoded values.
-- All UI components must come from **`@pagopa/io-app-design-system`** first. Only build custom components when the design system has no suitable primitive.
-- Use `useIOTheme()` to access semantic color tokens. Never use raw hex values.
+- The `tsc:noemit` check must pass. Never add `@ts-ignore` without a comment explaining why.
+- Never use hardcoded user-facing strings: every string must have an `I18n.t(...)` key.
+- Never use magic numbers or hardcoded values. Use enums, string literals, or well documented constants.
+- Always use **`@pagopa/io-app-design-system`** components first. Only build custom components when the design system has no suitable primitive.
+- Always use `useIOTheme()` to access semantic color tokens. Never use raw hex values.
 - All interactive elements must have accessible labels.
-- Use Mixpanel for event tracking. Each feature's `analytics/` folder should esport typed track functions.
+- Use Mixpanel for event tracking. Each feature's `analytics/` folder should export typed track functions.
 
 ## Navigation
 
-- Add new routes to both the feature's `navigation/params.ts` and `navigation/routes.ts`, then register the navigator in `ts/navigation/params/AppParamsList.ts` and the root navigator.
-- Access navigation and route params with the typed hook `useIONavigation()`.
+- Always add new routes to both the feature's `navigation/params.ts` and `navigation/routes.ts`, then register the navigator in `ts/navigation/params/AppParamsList.ts` and the root navigator.
+- Always access navigation and route params with the typed hook `useIONavigation()`.
 
 ## Redux
 
@@ -66,14 +66,14 @@ Every feature lives under `ts/features/<feature>/` and is self-contained:
 
 - `machine.ts` must be **pure and portable**, it contains no React, Redux, or navigation imports;
 - All side-effects (navigation, Redux dispatch, toasts) are injected via the provider.
-- Prefer nested states for complex flows with sub-steps
+- Always use nested states for complex flows with sub-steps.
 - Define fully-typed context with JSDoc comments and an initial state
 - Define events as tagged union types with kebab-case type names
 - Use absolute state IDs for cross-hierarchy transitions (e.g. `#myMachine.Failure`)
 
 ## Testing
 
-- Add tests for new behavior — cover success, failure, and edge cases.
+- Add tests for new behavior: cover success, failure, and edge cases.
 - Add non regressions tests when fixing bugs.
 - Co-locate tests in `__tests__/` next to implementation
 - Use `renderScreenWithNavigationStoreContext` for screens
@@ -82,6 +82,14 @@ Every feature lives under `ts/features/<feature>/` and is self-contained:
 - Use `test.each` to avoid repeating similar tests across multiple scenarios
 - Define scenario arrays with descriptive names and use `$name` interpolation in test titles
 - Derive initial state from `appReducer(undefined, applicationChangeState("active"))` for realistic defaults.
+
+## Documentation
+
+- Always document exported functions, shared utilities, and public APIs to ensure cross-feature clarity.
+- Never write redundant "echo" comments that simply repeat the function or variable name.
+- Always prioritize explaining business logic constraints and side effects over obvious implementation steps.
+- Never leave JSDoc blocks unmaintained; outdated documentation is considered a critical code smell.
+- Never add comments to self-explanatory code; if it needs a "novel" to explain, refactor the logic instead.
 
 ## Commits
 
@@ -92,18 +100,17 @@ Every feature lives under `ts/features/<feature>/` and is self-contained:
 
 ## Pull requests
 
-Before pushing,perform a self-review of your changes:
-1. Review the full diff and verify every change is intentional and related to the task — remove any unrelated changes.
-2. Confirm the code follows the project's coding standards and boundaries described in this file.
-3. Run `yarn tsc:noEmit` and `yarn lint` and fix any failures.
-4. Run relevant individual tests and confirm they pass.
-Before pushing, always rebase your branch onto the master branch to avoid merge conflicts and ensure CI runs against up-to-date code.
-If there are conflicts, resolve them and continue the rebase. If the rebase is too complex, ask the user for guidance.
+Before pushing:
+1. Review the full diff. Keep only intentional, task-related changes. Remove anything unrelated.
+2. Ensure the code follows project standards and architectural boundaries.
+3. Run yarn `tsc:noEmit`, `yarn lint`, and all relevant tests. Fix all issues. Do not proceed if anything fails.
+4. Rebase your branch onto master. Resolve all conflicts. If conflicts are complex, stop and ask for guidance.
 
-Then push the branch to the remote and open the PR creation page in the browser with title and body pre-filled:
-- title: conventional commit, under 70 chars, include issue number in between square brackets (e.g. `feat: [ABC-000] title`)
-- body: use the template at `.github/PULL_REQUEST_TEMPLATE.md`. Be short and concise, explain what changed and why. Add steps to test the PR, avoid abvious explanations. If the PR fixes a bug, add steps to reproduce it.
-    ```
-    gh pr create --web --title <title> --body <body>
-    ```
-The --web flag opens the browser so the user can review and submit.
+Then push the branch to the remote and open the PR creation page in the browser with title and body pre-filled.
+```
+gh pr create --web --title <title> --body <body>
+```
+- Use title format `type: [ISSUE-ID] short description`, under 70 characters, using conventional commit types.
+- Always use `.github/PULL_REQUEST_TEMPLATE.md`. Clearly explain what changed and why. Do not open the PR if incomplete.
+- Provide clear steps to verify the changes, expected behavior, and relevant edge cases. Add "Steps to Reproduce" for bugs.
+- Always use `--web` to review the PR in the browser, then stop immediately after it opens.
