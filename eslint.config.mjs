@@ -177,6 +177,7 @@ export default defineConfig([
       "react/jsx-uses-react": "off",
       "react/prop-types": "off",
       "react/jsx-key": "error",
+      "react/jsx-no-constructed-context-values": "error",
       // Less relevant rule with contemporary React with hooks
       "react/jsx-no-bind": [
         "error",
@@ -304,7 +305,8 @@ export default defineConfig([
       "@typescript-eslint/no-shadow": "off",
       "@typescript-eslint/no-require-imports": "off",
       "i18next/no-literal-string": "off",
-      "no-restricted-imports": "off"
+      "no-restricted-imports": "off",
+      "react/jsx-no-constructed-context-values": "off"
     }
   },
   {

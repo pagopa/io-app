@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useState } from "react";
+import React, { PropsWithChildren, useMemo, useState } from "react";
 
 type IOAlertVisibleContext = {
   isAlertVisible: boolean;
@@ -25,8 +25,12 @@ export const IOAlertVisibleContextProvider = ({
   children
 }: PropsWithChildren<IOAlertVisibleContextProviderProps>) => {
   const [isAlertVisible, setAlertVisible] = useState(false);
+  const contextValue = useMemo(
+    () => ({ isAlertVisible, setAlertVisible }),
+    [isAlertVisible, setAlertVisible]
+  );
   return (
-    <IOAlertVisibleContext.Provider value={{ isAlertVisible, setAlertVisible }}>
+    <IOAlertVisibleContext.Provider value={contextValue}>
       {children}
     </IOAlertVisibleContext.Provider>
   );

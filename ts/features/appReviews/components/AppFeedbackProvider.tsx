@@ -11,6 +11,7 @@ import {
   PropsWithChildren,
   useContext,
   useEffect,
+  useMemo,
   useState
 } from "react";
 import { Alert } from "react-native";
@@ -113,8 +114,13 @@ export const AppFeedbackProvider = ({ children }: PropsWithChildren) => {
     }
   }, [appFeedbackEnabled, canAskFeedback, dispatch, present, topic]);
 
+  const contextValue = useMemo(
+    () => ({ requestFeedback: setTopic }),
+    [setTopic]
+  );
+
   return (
-    <AppFeedbackContext.Provider value={{ requestFeedback: setTopic }}>
+    <AppFeedbackContext.Provider value={contextValue}>
       {children}
       {bottomSheet}
     </AppFeedbackContext.Provider>
