@@ -3,6 +3,7 @@ import type {
   CredentialIssuance
 } from "@pagopa/io-react-native-wallet";
 import type {
+  CredentialAccessToken,
   CredentialBundle,
   CredentialMetadata,
   IssuerConfiguration,
@@ -144,6 +145,15 @@ export type Context = {
    * The credential type that triggered the eID issuance flow.
    */
   credentialType: string | undefined;
+  /**
+   * The access token obtained from the Issuer. If the session with the Wallet Provider expires
+   * before requesting the credential, this token is used to retry the request.
+   */
+  accessToken: CredentialAccessToken | undefined;
+  /**
+   * An optional dictionary of Wallet Unit Attestations generated for the issuance.
+   */
+  walletUnitAttestations?: Record<string, string>;
 };
 
 export const InitialContext: Context = {
@@ -159,5 +169,6 @@ export const InitialContext: Context = {
   failure: undefined,
   credentialsToUpgrade: [],
   failedCredentials: undefined,
-  credentialType: undefined
+  credentialType: undefined,
+  accessToken: undefined
 };
