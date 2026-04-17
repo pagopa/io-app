@@ -1,7 +1,7 @@
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import {
-  StoredCredential,
+  CredentialMetadata,
   ItwCredentialStatus
 } from "../../common/utils/itwTypesUtils";
 import {
@@ -21,7 +21,7 @@ export type ItwDebugState = {
    * Used to restore the real data when overrides are cleared.
    * Keyed by credentialId.
    */
-  savedCredentials: Record<string, StoredCredential> | undefined;
+  savedCredentials: Record<string, CredentialMetadata> | undefined;
 };
 
 const initialState: ItwDebugState = {
@@ -62,7 +62,7 @@ const reducer = (
       if (state.savedCredentials !== undefined) {
         return state;
       }
-      const record = action.payload.reduce<Record<string, StoredCredential>>(
+      const record = action.payload.reduce<Record<string, CredentialMetadata>>(
         (acc, c) => ({ ...acc, [c.credentialId]: c }),
         {}
       );

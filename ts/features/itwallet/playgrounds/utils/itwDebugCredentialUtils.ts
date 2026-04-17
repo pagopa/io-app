@@ -4,7 +4,7 @@ import { CredentialType } from "../../common/utils/itwMocksUtils";
 import {
   ItwCredentialStatus,
   ItwJwtCredentialStatus,
-  StoredCredential
+  CredentialMetadata
 } from "../../common/utils/itwTypesUtils";
 
 const EXPIRING_DAYS = 15;
@@ -44,9 +44,9 @@ export const getAvailableStatusOverrides = (
  * imported by production code.
  */
 export const applyStatusToCredential = (
-  credential: StoredCredential,
+  credential: CredentialMetadata,
   status: ItwCredentialStatus
-): StoredCredential => {
+): CredentialMetadata => {
   const now = new Date();
 
   switch (status) {
@@ -109,7 +109,7 @@ export const applyStatusToCredential = (
                   expiringDate.getDate()
                 )
               }
-        } as StoredCredential["parsedCredential"]
+        } as CredentialMetadata["parsedCredential"]
       };
     }
 

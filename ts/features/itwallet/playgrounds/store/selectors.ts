@@ -1,6 +1,6 @@
 import { GlobalState } from "../../../../store/reducers/types";
 import {
-  StoredCredential,
+  CredentialMetadata,
   ItwCredentialStatus
 } from "../../common/utils/itwTypesUtils";
 
@@ -11,5 +11,5 @@ export const itwDebugCredentialStatusOverridesSelector = (
 
 export const itwDebugSavedCredentialsSelector = (
   state: GlobalState
-): Record<string, StoredCredential> | undefined =>
+): Record<string, CredentialMetadata> | undefined =>
   state.features.itWallet.debug?.savedCredentials;
