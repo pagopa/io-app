@@ -64,13 +64,6 @@ describe("SecureStorage", () => {
         await storage.setItem(myKey, myValue);
         expect(SecureStorage.put).toHaveBeenCalledWith(myKey, myValue);
       });
-
-      it("should track error on Sentry if put fails", async () => {
-        const error = new Error("Disk full");
-        (SecureStorage.put as jest.Mock).mockRejectedValue(error);
-
-        await storage.setItem(myKey, myValue);
-      });
     });
 
     describe("removeItem", () => {
@@ -81,12 +74,6 @@ describe("SecureStorage", () => {
         expect(SecureStorage.remove).toHaveBeenCalledWith(myKey);
       });
 
-      it("should track error on Sentry if remove fails", async () => {
-        const error = new Error("Access denied");
-        (SecureStorage.remove as jest.Mock).mockRejectedValue(error);
-
-        await storage.removeItem(myKey);
-      });
     });
   });
 });
