@@ -14,6 +14,7 @@ import {
 } from "../../common/utils/itwFailureUtils";
 import { getIoWallet } from "../../common/utils/itwIoWallet";
 import {
+  CredentialAccessToken,
   CredentialBundle,
   CredentialFormat
 } from "../../common/utils/itwTypesUtils";
@@ -27,10 +28,19 @@ import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwSetWalletInstanceRenewalError } from "../../walletInstance/store/actions";
 import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
+import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../common/utils/itwStoreUtils";
+import { createCommonActorsImplementation } from "../utils/actors";
 import { Context } from "./context";
 
 export type GetWalletAttestationActorOutput = Awaited<
-  ReturnType<typeof itwAttestationUtils.getAttestation>
+  ReturnType<typeof itwAttestationUtils.getWalletInstanceAttestation>
+>;
+
+export type ObtainAccessTokenActorInput = Partial<
+  Omit<
+    Parameters<credentialIssuanceUtils.CompleteAuthFlow>[0],
+    "env" | "itwVersion" | "pid"
+  >
 >;
 
 export type RequestCredentialActorInput = Partial<
@@ -45,9 +55,10 @@ export type ObtainCredentialActorInput = Partial<
   Parameters<credentialIssuanceUtils.ObtainCredential>[0]
 >;
 
-export type ObtainCredentialActorOutput = Awaited<
-  ReturnType<typeof credentialIssuanceUtils.obtainCredential>
->;
+export type ObtainCredentialActorOutput = {
+  credentials: ReadonlyArray<CredentialBundle>;
+  walletUnitAttestations: Record<string, string>;
+};
 
 export type ObtainStatusAssertionActorInput = Pick<Context, "credentials">;
 
@@ -98,7 +109,7 @@ export const createCredentialIssuanceActorsImplementation = (
       assert(O.isSome(integrityKeyTag), "integriyKeyTag is not present");
 
       try {
-        return await itwAttestationUtils.getAttestation(
+        return await itwAttestationUtils.getWalletInstanceAttestation(
           env,
           itwVersion,
           integrityKeyTag.value,
@@ -133,7 +144,12 @@ export const createCredentialIssuanceActorsImplementation = (
         );
 
         return await itwAttestationUtils
-          .getAttestation(env, itwVersion, newHardwareKeyTag, sessionToken)
+          .getWalletInstanceAttestation(
+            env,
+            itwVersion,
+            newHardwareKeyTag,
+            sessionToken
+          )
           .then(attestation => {
             // Track the successful renewal in Mixpanel
             trackWalletInstanceRenewalSuccess();
@@ -173,27 +189,22 @@ export const createCredentialIssuanceActorsImplementation = (
     });
   });
 
-  const obtainCredential = fromPromise<
-    ObtainCredentialActorOutput,
-    ObtainCredentialActorInput
+  const obtainAccessToken = fromPromise<
+    CredentialAccessToken,
+    ObtainAccessTokenActorInput
   >(async ({ input }) => {
     const {
-      credentialType,
-      requestedCredential,
+      codeVerifier,
       issuerConf,
       walletInstanceAttestation,
-      clientId,
-      codeVerifier
+      requestedCredential
     } = input;
-
     const eid = itwCredentialsEidSelector(store.getState());
 
-    assert(credentialType, "credentialType is undefined");
+    assert(codeVerifier, "codeVerifier is undefined");
+    assert(issuerConf, "issuerConf is undefined");
     assert(walletInstanceAttestation, "walletInstanceAttestation is undefined");
     assert(requestedCredential, "requestedCredential is undefined");
-    assert(issuerConf, "issuerConf is undefined");
-    assert(clientId, "clientId is undefined");
-    assert(codeVerifier, "codeVerifier is undefined");
     assert(O.isSome(eid), "eID is undefined");
 
     // Retrieve the PID credential from the vault
@@ -205,17 +216,73 @@ export const createCredentialIssuanceActorsImplementation = (
       credential: pidCredential
     };
 
-    return await credentialIssuanceUtils.obtainCredential({
+    const { accessToken } = await credentialIssuanceUtils.completeAuthFlow({
       env,
       itwVersion,
-      credentialType,
+      codeVerifier,
+      issuerConf,
       walletInstanceAttestation,
       requestedCredential,
-      issuerConf,
-      clientId,
-      codeVerifier,
       pid
     });
+    return accessToken;
+  });
+
+  // To ensure a smooth experience when the session token expires, it is important to keep this actor
+  // retriable: it must fail as early as possible when `generateKeysWithWalletUnitAttestation` is
+  // rejected for session expired, so it can be reentered and retried from where it failed.
+  const obtainCredential = fromPromise<
+    ObtainCredentialActorOutput,
+    ObtainCredentialActorInput
+  >(async ({ input }) => {
+    const { credentialType, accessToken, issuerConf, clientId } = input;
+    const state = store.getState();
+    const sessionToken = sessionTokenSelector(state);
+    const integrityKeyTag = itwIntegrityKeyTagSelector(state);
+
+    assert(credentialType, "credentialType is undefined");
+    assert(issuerConf, "issuerConf is undefined");
+    assert(clientId, "clientId is undefined");
+    assert(sessionToken, "sessionToken is undefined");
+    assert(accessToken, "accessToken is undefined");
+    assert(O.isSome(integrityKeyTag), "integriyKeyTag is undefined");
+
+    // The Wallet Unit Attestation makes use of the integrity service
+    if (getIoWallet(itwVersion).WalletUnitAttestation.isSupported) {
+      await ensureIntegrityServiceIsStoreReadyOrThrow(store);
+    }
+
+    const authorizedCredentials =
+      await credentialIssuanceUtils.generateKeysWithWalletUnitAttestation(
+        accessToken,
+        {
+          env,
+          itwVersion,
+          hardwareKeyTag: integrityKeyTag.value,
+          sessionToken
+        }
+      );
+
+    const credentials = await credentialIssuanceUtils.obtainCredential({
+      authorizedCredentials,
+      env,
+      itwVersion,
+      accessToken,
+      credentialType,
+      issuerConf,
+      clientId
+    });
+
+    return {
+      credentials,
+      walletUnitAttestations: authorizedCredentials.reduce(
+        (acc, c) =>
+          c.walletUnitAttestationId && c.walletUnitAttestation
+            ? { ...acc, [c.walletUnitAttestationId]: c.walletUnitAttestation }
+            : acc,
+        {} as Record<string, string>
+      )
+    };
   });
 
   const obtainStatusAssertion = fromPromise<
@@ -260,8 +327,10 @@ export const createCredentialIssuanceActorsImplementation = (
   return {
     verifyTrustFederation,
     getWalletAttestation,
+    obtainAccessToken,
     requestCredential,
     obtainCredential,
-    obtainStatusAssertion
+    obtainStatusAssertion,
+    ...createCommonActorsImplementation(store)
   };
 };

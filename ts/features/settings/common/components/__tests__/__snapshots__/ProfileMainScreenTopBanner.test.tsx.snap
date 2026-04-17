@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`ProfileMainScreenTopBanner should match snapshot for all possible results of settingsBannerToShowSelector: Appearance Settings banner 1`] = `
 <View

@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.29.0-rc.1](https://github.com/pagopa/io-app/compare/3.29.0-rc.0...3.29.0-rc.1) (2026-04-16)
+
+
+### Features
+
+* [[IEL-452](https://pagopa.atlassian.net/browse/IEL-452)] add local FF to manage L3 login on FCI flow ([#8026](https://github.com/pagopa/io-app/issues/8026)) ([c080100](https://github.com/pagopa/io-app/commit/c080100d03285619bbae57dd11373c8c6775df21))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] remove duplicated `spec_version` and `verification` from credential object ([#8030](https://github.com/pagopa/io-app/issues/8030)) ([37f0a62](https://github.com/pagopa/io-app/commit/37f0a62f8f66479e910620c63102d6d18a3a4e34))
+
+
+### Chores
+
+* [[IEL-000](https://pagopa.atlassian.net/browse/IEL-000)] Remove freddi301 from CODEOWNERS ([#8033](https://github.com/pagopa/io-app/issues/8033)) ([8674f96](https://github.com/pagopa/io-app/commit/8674f96917df065128ea280ac3e7b08c7c394a20))
+* [[IEL-406](https://pagopa.atlassian.net/browse/IEL-406)] updated Send Aar Delegation Bottomsheet ([#8008](https://github.com/pagopa/io-app/issues/8008)) ([c68bbc7](https://github.com/pagopa/io-app/commit/c68bbc7bcaaa55d0dae6e9a95218f5efd60bd7bc))
+* [[IEL-408](https://pagopa.atlassian.net/browse/IEL-408)] updated copy for Insert Cie Can Screen ([#8012](https://github.com/pagopa/io-app/issues/8012)) ([34c0700](https://github.com/pagopa/io-app/commit/34c0700261a9e5714bca8d07d51908e55c0649f9))
+* **IT-Wallet:** [[SIW-4061](https://pagopa.atlassian.net/browse/SIW-4061)] Add new credential reissuing bottomsheet and cta analytics ([#7943](https://github.com/pagopa/io-app/issues/7943)) ([a88f2c0](https://github.com/pagopa/io-app/commit/a88f2c083db53ccf494e3ec604b3c598b1a556e4))
+* [[IOPLT-1762](https://pagopa.atlassian.net/browse/IOPLT-1762)] Use `setup-composite` to save time on tests via GH actions ([#8009](https://github.com/pagopa/io-app/issues/8009)) ([8b41cba](https://github.com/pagopa/io-app/commit/8b41cbaf9d99903a7185d088883f3f53cf698da1))
+* **IT-Wallet:** [[SIW-4062](https://pagopa.atlassian.net/browse/SIW-4062)] Add mtc tracking ([#7948](https://github.com/pagopa/io-app/issues/7948)) ([b1b9c9a](https://github.com/pagopa/io-app/commit/b1b9c9a53e193a2e8fc7d277e7970ce95e7ecee8))
+
 ## [3.29.0-rc.0](https://github.com/pagopa/io-app/compare/3.28.0-rc.7...3.29.0-rc.0) (2026-04-15)
 
 
