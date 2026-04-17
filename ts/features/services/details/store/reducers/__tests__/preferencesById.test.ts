@@ -29,13 +29,13 @@ const getServicePreferenceResponseSuccess = (id = serviceId) =>
       can_access_message_read_status: false,
       settings_version: 0
     }
-  } as ServicePreferenceResponse);
+  }) as ServicePreferenceResponse;
 
 const getServicePreferenceError = (id = serviceId) =>
   ({
     id,
     ...getNetworkError(new Error("GenericError"))
-  } as WithServiceID<NetworkError>);
+  }) as WithServiceID<NetworkError>;
 
 const getUpdatingResponse = (id = serviceId) =>
   ({
@@ -45,7 +45,7 @@ const getUpdatingResponse = (id = serviceId) =>
     email: true,
     can_access_message_read_status: true,
     settings_version: 0
-  } as WithServiceID<ServicePreference>);
+  }) as WithServiceID<ServicePreference>;
 
 describe("preferencesById reducer", () => {
   it("should have initial state", () => {

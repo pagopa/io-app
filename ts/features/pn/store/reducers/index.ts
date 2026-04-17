@@ -7,7 +7,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { isUserSelectedPaymentSelector } from "../../../messages/store/reducers/payments";
 import { thirdPartyFromIdSelector } from "../../../messages/store/reducers/thirdPartyById";
 import { aarFlowReducer } from "../../aar/store/reducers";
-import { AARFlowState } from "../../aar/utils/stateUtils";
+import { AarFlowState } from "../../aar/utils/stateUtils";
 import {
   persistedPnBannerDismissReducer,
   PnBannerDismissState
@@ -32,7 +32,7 @@ import { pnActivationReducer, PnActivationState } from "./activation";
 export type PnState = {
   activation: PnActivationState;
   bannerDismiss: PnBannerDismissState & PersistPartial;
-  aarFlow: AARFlowState;
+  aarFlow: AarFlowState;
   loginEngagement: SENDLoginEngagementState & PersistPartial;
   lollipopLambda: SENDLollipopLambdaState;
   tempAarMandate: TempAarMandateState;

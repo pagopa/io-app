@@ -124,7 +124,6 @@ describe("PrivacyMainScreen", () => {
       [UserDataProcessingChoiceEnum.DELETE]: pot.none
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const IOToast = require("@pagopa/io-app-design-system").IOToast;
     const toastSpy = jest.spyOn(IOToast, "error").mockImplementation(jest.fn());
 

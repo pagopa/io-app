@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
 <View
@@ -232,6 +232,13 @@ exports[`SendEngagmentComponent should match snapshot when loading 1`] = `
                         }
                       >
                         <View>
+                          <View
+                            style={
+                              {
+                                "height": 24,
+                              }
+                            }
+                          />
                           <Text
                             allowFontScaling={true}
                             dynamicTypeRamp="title2"
@@ -1988,6 +1995,13 @@ exports[`SendEngagmentComponent should match snapshot when not loading 1`] = `
                         }
                       >
                         <View>
+                          <View
+                            style={
+                              {
+                                "height": 24,
+                              }
+                            }
+                          />
                           <Text
                             allowFontScaling={true}
                             dynamicTypeRamp="title2"

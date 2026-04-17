@@ -54,7 +54,6 @@ export function* handleLoadMessageData(
   });
 }
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 function* loadMessageData({
   messageId,
   fromPushNotification

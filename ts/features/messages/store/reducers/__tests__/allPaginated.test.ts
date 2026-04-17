@@ -159,7 +159,6 @@ describe("allPaginated reducer", () => {
         fromUserAction: false
       });
 
-      // eslint-disable-next-line sonarjs/no-identical-functions
       it("should reset only the Archive state to loading", () => {
         expect(
           pot.isLoading(reducer(undefined, actionRequest).inbox.data)
@@ -203,7 +202,7 @@ describe("allPaginated reducer", () => {
           );
           expect(reducer(initialState, action).inbox.data).toEqual(pot.none);
         });
-        // eslint-disable-next-line sonarjs/no-identical-functions
+
         it("should set the Archive lastRequest to 'none'", () => {
           expect(reducer(initialState, action).archive.lastRequest).toEqual(
             O.none
@@ -222,7 +221,6 @@ describe("allPaginated reducer", () => {
         fromUserAction: false
       });
 
-      // eslint-disable-next-line sonarjs/no-identical-functions
       it("should reset only the Inbox state to loading", () => {
         expect(
           pot.isLoading(reducer(undefined, actionRequest).inbox.data)
@@ -267,7 +265,7 @@ describe("allPaginated reducer", () => {
           );
           expect(reducer(initialState, action).archive.data).toEqual(pot.none);
         });
-        // eslint-disable-next-line sonarjs/no-identical-functions
+
         it("should set the Inbox lastRequest to 'none'", () => {
           expect(reducer(initialState, action).inbox.lastRequest).toEqual(
             O.none
@@ -288,7 +286,6 @@ describe("allPaginated reducer", () => {
         fromUserAction: false
       });
 
-      // eslint-disable-next-line sonarjs/no-identical-functions
       it("should reset only the Archive state to loading", () => {
         expect(
           pot.isLoading(reducer(undefined, actionRequest).inbox.data)
@@ -361,7 +358,6 @@ describe("allPaginated reducer", () => {
           });
         });
 
-        // eslint-disable-next-line sonarjs/no-identical-functions
         it("should set the Archive lastRequest to 'none'", () => {
           expect(reducer(initialState, action).archive.lastRequest).toEqual(
             O.none
@@ -380,7 +376,6 @@ describe("allPaginated reducer", () => {
         fromUserAction: false
       });
 
-      // eslint-disable-next-line sonarjs/no-identical-functions
       it("should reset only the Inbox state to loading", () => {
         expect(
           pot.isLoading(reducer(undefined, actionRequest).inbox.data)
@@ -454,7 +449,6 @@ describe("allPaginated reducer", () => {
           });
         });
 
-        // eslint-disable-next-line sonarjs/no-identical-functions
         it("should set the Inbox lastRequest to 'none'", () => {
           expect(reducer(initialState, action).inbox.lastRequest).toEqual(
             O.none
@@ -1816,7 +1810,7 @@ const generateAllPaginatedDataStateForCategory = (
         }
       }
     }
-  } as GlobalState);
+  }) as GlobalState;
 
 const readonlyNonEmptyMessageList: ReadonlyArray<UIMessage> = [{} as UIMessage];
 const nonEmptyMessagePage = {

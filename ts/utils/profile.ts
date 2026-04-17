@@ -160,8 +160,8 @@ export function getProfileChannelsforServicesList(
           ? channels
           : channels.concat(channelOfInterest)
         : enableListedServices
-        ? channels.filter(item => item !== channelOfInterest)
-        : channels;
+          ? channels.filter(item => item !== channelOfInterest)
+          : channels;
 
     if (updatedBlockedChannels.length !== 0) {
       // eslint-disable-next-line functional/immutable-data

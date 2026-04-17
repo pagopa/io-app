@@ -77,8 +77,8 @@ export const mixpanelOptInHandler = (
   return isMixpanelEnabledResult === undefined
     ? "not set"
     : isMixpanelEnabledResult
-    ? "accepted"
-    : "declined";
+      ? "accepted"
+      : "declined";
 };
 
 export const paymentsWalletUserMethodsNumberFromPotSelector = createSelector(

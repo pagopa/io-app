@@ -336,4 +336,4 @@ const generateMockedGlobalState = (
         notificationServiceId: pnServiceId
       }
     })
-  } as GlobalState);
+  }) as GlobalState;

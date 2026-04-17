@@ -6,3 +6,7 @@ export type TourItemMeasurement = {
   width: number;
   height: number;
 };
+
+export type TourCutoutStyle = {
+  cornerRadius?: number;
+};

@@ -10,6 +10,7 @@ import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { NotificationStatusHistory } from "../../../../definitions/pn/NotificationStatusHistory";
 import { formatDateAsDay, formatDateAsMonth } from "../../../utils/dates";
 import {
+  getNotificationStatusAccessibilityLabel,
   getNotificationStatusInfo,
   notificationStatusToTimelineStatus
 } from "../utils";
@@ -49,7 +50,8 @@ const generateTimelineData = (
       minute: "2-digit"
     }).format(historyItem.activeFrom),
     description: getNotificationStatusInfo(historyItem.status),
-    status: notificationStatusToTimelineStatus(historyItem.status)
+    status: notificationStatusToTimelineStatus(historyItem.status),
+    accessibilityLabel: getNotificationStatusAccessibilityLabel(historyItem)
   }));
 
 export const TimelineListItem = ({

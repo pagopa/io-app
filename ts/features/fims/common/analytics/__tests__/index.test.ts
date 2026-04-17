@@ -1,4 +1,3 @@
-/* eslint-disable sonarjs/cognitive-complexity */
 import {
   computeAndTrackDataShare,
   computeAndTrackDataShareAccepted,

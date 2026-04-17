@@ -123,7 +123,6 @@ describe("error screens", () => {
   }
 });
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 describe("loading screens + error interop", () => {
   beforeEach(() => {
     jest

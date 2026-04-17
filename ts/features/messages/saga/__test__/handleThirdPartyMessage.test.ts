@@ -93,7 +93,6 @@ describe("handleThirdPartyMessage", () => {
     });
   });
 
-  // eslint-disable-next-line sonarjs/cognitive-complexity
   describe("testable.trackSuccess", () => {
     const generateMessages = (attachmentCount: number | undefined) => {
       const thirdPartyMessage = {

@@ -1,0 +1,325 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`TourStepIndicator rendering dots matches snapshot for 3 steps at index 0 1`] = `
+<View
+  accessibilityLabel="Fase 1 di 3"
+  accessible={true}
+  style={
+    {
+      "alignItems": "center",
+      "columnGap": 8,
+      "flexDirection": "row",
+    }
+  }
+>
+  <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {},
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "borderCurve": "continuous",
+          "borderRadius": 20,
+        },
+        {
+          "backgroundColor": "#0B3EE3",
+          "borderColor": "transparent",
+          "borderWidth": 0,
+          "height": 4,
+          "transitionDuration": "200ms",
+          "transitionProperty": [
+            "width",
+            "height",
+            "backgroundColor",
+          ],
+          "width": 16,
+        },
+      ]
+    }
+    style={
+      [
+        {
+          "borderCurve": "continuous",
+          "borderRadius": 20,
+        },
+        {
+          "backgroundColor": "#0B3EE3",
+          "borderColor": "transparent",
+          "borderWidth": 0,
+          "height": 4,
+          "width": 16,
+        },
+      ]
+    }
+  />
+  <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {},
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "borderCurve": "continuous",
+          "borderRadius": 20,
+        },
+        {
+          "backgroundColor": "transparent",
+          "borderColor": "#636B82",
+          "borderWidth": 1,
+          "height": 8,
+          "transitionDuration": "200ms",
+          "transitionProperty": [
+            "width",
+            "height",
+            "backgroundColor",
+          ],
+          "width": 8,
+        },
+      ]
+    }
+    style={
+      [
+        {
+          "borderCurve": "continuous",
+          "borderRadius": 20,
+        },
+        {
+          "backgroundColor": "transparent",
+          "borderColor": "#636B82",
+          "borderWidth": 1,
+          "height": 8,
+          "width": 8,
+        },
+      ]
+    }
+  />
+  <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {},
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "borderCurve": "continuous",
+          "borderRadius": 20,
+        },
+        {
+          "backgroundColor": "transparent",
+          "borderColor": "#636B82",
+          "borderWidth": 1,
+          "height": 8,
+          "transitionDuration": "200ms",
+          "transitionProperty": [
+            "width",
+            "height",
+            "backgroundColor",
+          ],
+          "width": 8,
+        },
+      ]
+    }
+    style={
+      [
+        {
+          "borderCurve": "continuous",
+          "borderRadius": 20,
+        },
+        {
+          "backgroundColor": "transparent",
+          "borderColor": "#636B82",
+          "borderWidth": 1,
+          "height": 8,
+          "width": 8,
+        },
+      ]
+    }
+  />
+</View>
+`;
+
+exports[`TourStepIndicator rendering dots matches snapshot for 3 steps at index 2 (last) 1`] = `
+<View
+  accessibilityLabel="Fase 3 di 3"
+  accessible={true}
+  style={
+    {
+      "alignItems": "center",
+      "columnGap": 8,
+      "flexDirection": "row",
+    }
+  }
+>
+  <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {},
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "borderCurve": "continuous",
+          "borderRadius": 20,
+        },
+        {
+          "backgroundColor": "transparent",
+          "borderColor": "#636B82",
+          "borderWidth": 1,
+          "height": 8,
+          "transitionDuration": "200ms",
+          "transitionProperty": [
+            "width",
+            "height",
+            "backgroundColor",
+          ],
+          "width": 8,
+        },
+      ]
+    }
+    style={
+      [
+        {
+          "borderCurve": "continuous",
+          "borderRadius": 20,
+        },
+        {
+          "backgroundColor": "transparent",
+          "borderColor": "#636B82",
+          "borderWidth": 1,
+          "height": 8,
+          "width": 8,
+        },
+      ]
+    }
+  />
+  <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {},
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "borderCurve": "continuous",
+          "borderRadius": 20,
+        },
+        {
+          "backgroundColor": "transparent",
+          "borderColor": "#636B82",
+          "borderWidth": 1,
+          "height": 8,
+          "transitionDuration": "200ms",
+          "transitionProperty": [
+            "width",
+            "height",
+            "backgroundColor",
+          ],
+          "width": 8,
+        },
+      ]
+    }
+    style={
+      [
+        {
+          "borderCurve": "continuous",
+          "borderRadius": 20,
+        },
+        {
+          "backgroundColor": "transparent",
+          "borderColor": "#636B82",
+          "borderWidth": 1,
+          "height": 8,
+          "width": 8,
+        },
+      ]
+    }
+  />
+  <View
+    collapsable={false}
+    jestAnimatedProps={
+      {
+        "value": {},
+      }
+    }
+    jestAnimatedStyle={
+      {
+        "value": {},
+      }
+    }
+    jestInlineStyle={
+      [
+        {
+          "borderCurve": "continuous",
+          "borderRadius": 20,
+        },
+        {
+          "backgroundColor": "#0B3EE3",
+          "borderColor": "transparent",
+          "borderWidth": 0,
+          "height": 4,
+          "transitionDuration": "200ms",
+          "transitionProperty": [
+            "width",
+            "height",
+            "backgroundColor",
+          ],
+          "width": 16,
+        },
+      ]
+    }
+    style={
+      [
+        {
+          "borderCurve": "continuous",
+          "borderRadius": 20,
+        },
+        {
+          "backgroundColor": "#0B3EE3",
+          "borderColor": "transparent",
+          "borderWidth": 0,
+          "height": 4,
+          "width": 16,
+        },
+      ]
+    }
+  />
+</View>
+`;

@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`CiePinMethodModule renders correctly for L2 issuance 1`] = `
 <View
@@ -670,6 +670,56 @@ exports[`CiePinMethodModule renders correctly for L3 1`] = `
             }
           }
         >
+          <View
+            accessible={true}
+            style={
+              [
+                {
+                  "alignItems": "center",
+                  "borderCurve": "continuous",
+                  "flexDirection": "row",
+                  "justifyContent": "center",
+                  "overflow": "hidden",
+                },
+                {
+                  "borderRadius": 36,
+                  "paddingHorizontal": 12,
+                  "paddingVertical": 6,
+                },
+                {
+                  "backgroundColor": "rgba(97,220,223,0.2)",
+                },
+              ]
+            }
+            testID="CiePinRecommendedBadgeTestID"
+          >
+            <Text
+              allowFontScaling={true}
+              ellipsizeMode="tail"
+              maxFontSizeMultiplier={1.5}
+              numberOfLines={1}
+              style={
+                [
+                  {},
+                  {
+                    "color": "#61DCDF",
+                    "fontFamily": "Titillio",
+                    "fontSize": 12,
+                    "fontStyle": "normal",
+                    "fontWeight": "600",
+                    "lineHeight": 16,
+                  },
+                  {
+                    "alignSelf": "center",
+                    "letterSpacing": 0.5,
+                    "textTransform": "uppercase",
+                  },
+                ]
+              }
+            >
+              consigliato
+            </Text>
+          </View>
           <View>
             <Text
               allowFontScaling={true}

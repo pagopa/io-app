@@ -306,12 +306,12 @@ const commonSetup = ({
     profilePotType === "someUpdating"
       ? pot.someUpdating(testProfile, testProfile)
       : profilePotType === "noneUpdating"
-      ? pot.noneUpdating(testProfile)
-      : profilePotType === "someError"
-      ? pot.someError(testProfile, new Error(""))
-      : profilePotType === "noneError"
-      ? pot.noneError(new Error(""))
-      : pot.some(testProfile);
+        ? pot.noneUpdating(testProfile)
+        : profilePotType === "someError"
+          ? pot.someError(testProfile, new Error(""))
+          : profilePotType === "noneError"
+            ? pot.noneError(new Error(""))
+            : pot.some(testProfile);
   const testState = {
     ...globalState,
     remoteConfig: O.some({

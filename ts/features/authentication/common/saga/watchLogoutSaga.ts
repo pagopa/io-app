@@ -21,7 +21,6 @@ import {
 } from "../../../messages/analytics";
 import { setMainNavigatorReady } from "../../../../navigation/NavigationService";
 
-// eslint-disable-next-line sonarjs/cognitive-complexity
 export function* logoutSaga({ payload }: ActionType<typeof logoutRequest>) {
   const sessionToken = yield* select(bareSessionTokenSelector);
 

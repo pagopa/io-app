@@ -105,7 +105,7 @@ describe("Preconditions", () => {
       .spyOn(messagePrecondition, "preconditionsRequireAppUpdateSelector")
       .mockImplementation(_ => false);
     const mockModalPresent = jest.fn();
-    // eslint-disable-next-line sonarjs/no-identical-functions
+
     jest.spyOn(bottomSheet, "useIOBottomSheetModal").mockImplementation(_ => ({
       present: mockModalPresent,
       dismiss: () => undefined,

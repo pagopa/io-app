@@ -12,7 +12,7 @@ import * as URLUTILS from "../../../../../utils/url";
 import { NOTIFICATIONS_ROUTES } from "../../../../pushNotifications/navigation/routes";
 import PN_ROUTES from "../../../navigation/routes";
 import * as ANALYTICS from "../../analytics";
-import * as INITIAL_FLOW from "../../screen/SendAARInitialFlowScreen";
+import * as INITIAL_FLOW from "../../screen/SendAarInitialFlowScreen";
 import { SendQRScanFlowHandlerComponent } from "../SendQRScanFlowHandlerComponent";
 
 const sendNotificationServiceId = "01G40DWQGKY5GRWSNM4303VNRP" as ServiceId;
@@ -88,8 +88,8 @@ describe("SendQRScanFlowHandlerComponent", () => {
         shouldNavigateToEngagementScreen
           ? "navigate to service engagment screen"
           : shouldNavigateToNotificationPermissionsScreen
-          ? "navigate to notification permissions screen"
-          : "popToTop"
+            ? "navigate to notification permissions screen"
+            : "popToTop"
       } when SEND service is ${
         sendServiceActive ? "" : "not "
       }active and notifications permissions are ${
@@ -179,7 +179,7 @@ describe("SendQRScanFlowHandlerComponent", () => {
 describe("SendQRScanFlowHandlerComponent - AAR enabled", () => {
   const componentMock = jest.fn();
   const componentSpy = jest
-    .spyOn(INITIAL_FLOW, "SendAARInitialFlowScreen")
+    .spyOn(INITIAL_FLOW, "SendAarInitialFlowScreen")
     .mockImplementation(componentMock);
 
   beforeEach(() => {

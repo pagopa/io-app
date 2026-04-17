@@ -117,7 +117,6 @@ describe("ServicesPreferenceScreen", () => {
 
   it("should call trackServiceConfigurationScreen on first render", () => {
     const spy =
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
       require("../../../common/analytics").trackServiceConfigurationScreen;
     renderComponent();
     expect(spy).toHaveBeenCalledWith("mock-flow");
