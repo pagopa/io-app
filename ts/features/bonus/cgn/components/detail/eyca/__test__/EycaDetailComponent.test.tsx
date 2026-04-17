@@ -188,25 +188,22 @@ const mockEYCAState = (
   activation?: CgnEycaActivationStatus,
   activationLoading?: boolean
 ) => {
-  // eslint-disable-next-line functional/no-let
-  let globalState = appReducer(undefined, applicationChangeState("active"));
-  if (card) {
-    globalState = appReducer(
-      globalState,
-      cgnEycaStatus.success({ status: "FOUND", card })
-    );
-  }
-  if (activationLoading) {
-    globalState = appReducer(globalState, cgnEycaActivation.request());
-  } else if (activation) {
-    globalState = appReducer(
-      globalState,
-      cgnEycaActivation.success(activation)
-    );
-  }
+  const baseState = appReducer(undefined, applicationChangeState("active"));
+
+  const withCard = card
+    ? appReducer(baseState, cgnEycaStatus.success({ status: "FOUND", card }))
+    : baseState;
+
+  const withActivation = activationLoading
+    ? appReducer(withCard, cgnEycaActivation.request())
+    : activation
+      ? appReducer(withCard, cgnEycaActivation.success(activation))
+      : withCard;
+
   const mockStore = configureMockStore<GlobalState>();
+
   return mockStore({
-    ...globalState
+    ...withActivation
   } as GlobalState);
 };
 
