@@ -1,6 +1,9 @@
+import { DeepPartial } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
+import { GlobalState } from "../../../../../store/reducers/types";
 import { ItwStoredCredentialsMocks } from "../../../common/utils/itwMocksUtils";
 import { CredentialBundle } from "../../../common/utils/itwTypesUtils";
+import { trackItwVaultCredentialStoreFailed } from "../../analytics";
 import {
   itwCredentialsStore,
   itwCredentialsStoreBundle
@@ -11,8 +14,20 @@ import { handleItwCredentialsStoreBundleSaga } from "../handleItwCredentialsStor
 jest.mock("../../utils/vault", () => ({
   CredentialsVault: { storeAll: jest.fn() }
 }));
+jest.mock("../../analytics", () => ({
+  trackItwVaultCredentialStoreFailed: jest.fn()
+}));
 
 const mockStoreAll = jest.mocked(CredentialsVault.storeAll);
+const mockTrackStoreFailed = jest.mocked(trackItwVaultCredentialStoreFailed);
+
+const makeState = (
+  isMixpanelEnabled: boolean | null = true
+): DeepPartial<GlobalState> => ({
+  persistedPreferences: {
+    isMixpanelEnabled
+  }
+});
 
 const makeBundle = (
   overrides: Partial<CredentialBundle> = {}
@@ -48,10 +63,23 @@ describe("handleItwCredentialsStoreBundleSaga", () => {
 
   it("does not dispatch itwCredentialsStore if vault throws", () => {
     mockStoreAll.mockRejectedValue(new Error("vault error"));
-    const action = itwCredentialsStoreBundle(makeBundle(), {});
+    const payload = makeBundle();
+    const action = itwCredentialsStoreBundle(payload, {});
 
     return expectSaga(handleItwCredentialsStoreBundleSaga, action)
+      .withState(makeState())
       .not.put.actionType(itwCredentialsStore.toString())
-      .run();
+      .run()
+      .then(() => {
+        expect(mockTrackStoreFailed).toHaveBeenCalledWith(
+          {
+            credential_ids: payload.map(
+              ({ metadata }) => metadata.credentialId
+            ),
+            reason: "vault error"
+          },
+          true
+        );
+      });
   });
 });

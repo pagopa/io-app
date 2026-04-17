@@ -1,4 +1,6 @@
-import { call, put } from "typed-redux-saga/macro";
+import { call, put, select } from "typed-redux-saga/macro";
+import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../../store/reducers/persistedPreferences";
+import { trackItwVaultCredentialStoreFailed } from "../analytics";
 import {
   itwCredentialsStore,
   itwCredentialsStoreBundle
@@ -16,21 +18,37 @@ export function* handleItwCredentialsStoreBundleSaga(
   const { onComplete, onError } = action.meta;
 
   try {
-    yield* call(() =>
-      CredentialsVault.storeAll(
-        credentials.map(({ metadata, credential }) => ({
-          credentialId: metadata.credentialId,
-          credential
-        }))
-      )
-    );
+    try {
+      yield* call(() =>
+        CredentialsVault.storeAll(
+          credentials.map(({ metadata, credential }) => ({
+            credentialId: metadata.credentialId,
+            credential
+          }))
+        )
+      );
+    } catch (e) {
+      const error = e instanceof Error ? e : new Error("Unknown error");
+      const isMixpanelEnabled = yield* select(isMixpanelEnabledSelector);
+
+      trackItwVaultCredentialStoreFailed(
+        {
+          credential_ids: credentials.map(
+            ({ metadata }) => metadata.credentialId
+          ),
+          reason: error.message
+        },
+        isMixpanelEnabled
+      );
+
+      throw error;
+    }
 
     // If all credentials are stored successfully, we can dispatch the action to add them to the store and wallet
     yield* put(itwCredentialsStore(credentials.map(({ metadata: m }) => m)));
 
     onComplete?.();
   } catch (e) {
-    // TODO [SIW-4080] Log failure to Mixpanel
     onError?.(e instanceof Error ? e : new Error("Unknown error"));
   }
 }
