@@ -6,6 +6,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
+import { isRouteInNavigationState } from "../../../../utils/navigation";
 import { checkCurrentSession } from "../../../authentication/common/store/actions";
 import {
   trackItWalletIDMethodSelected,
@@ -237,7 +238,12 @@ export const createEidIssuanceActionsImplementation = (
   closeIssuance: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
-    if (navigation.canGoBack()) {
+    const isWalletInNavigationState = isRouteInNavigationState(
+      navigation.getState(),
+      ROUTES.WALLET_HOME
+    );
+
+    if (!isWalletInNavigationState && navigation.canGoBack()) {
       navigation.goBack();
       return;
     }
