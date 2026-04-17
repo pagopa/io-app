@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`MessageDetailsScrollViewAdditionalSpace Should match snapshot with button and a single CTA 1`] = `
 <View

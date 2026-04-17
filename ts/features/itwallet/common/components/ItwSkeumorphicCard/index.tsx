@@ -22,8 +22,8 @@ import {
   validCredentialStatuses
 } from "../../utils/itwCredentialUtils";
 import {
-  ItwCredentialStatus,
-  StoredCredential
+  CredentialMetadata,
+  ItwCredentialStatus
 } from "../../utils/itwTypesUtils";
 import {
   ItwBrandedSkiaBorder,
@@ -35,7 +35,7 @@ import { CardWidthContext } from "./CardWidthContext";
 import { FlippableCard } from "./FlippableCard";
 
 export type ItwSkeumorphicCardProps = {
-  credential: StoredCredential;
+  credential: CredentialMetadata;
   status: ItwCredentialStatus;
   valuesHidden: boolean;
   isFlipped?: boolean;
