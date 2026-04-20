@@ -49,16 +49,16 @@ export const createRemoteGuardsImplementation = (
   isSessionExpired: ({ event }: GuardArgs) =>
     "error" in event && event.error instanceof ItwSessionExpiredError,
 
-  isOpenIdFederationClient: ({ context }: GuardArgs) => 
-    // Valid OpenID Federation clients:
-    // - openid_federation:https://rp.example
-    // - https://rp.example (no prefix)
-     (
-      !!context.payload?.client_id.startsWith(
-        ClientIdPrefix.OPENID_FEDERATION
-      ) || !!context.payload?.client_id.startsWith("https://")
-    )
-  ,
+  /**
+   * Valid OpenID Federation clients:
+   * - `openid_federation:https://rp.example`
+   * - `https://rp.example` (no prefix)
+   */
+  isOpenIdFederationClient: ({ context }: GuardArgs) =>
+    !!(
+      context.payload?.client_id.startsWith(ClientIdPrefix.OPENID_FEDERATION) ||
+      context.payload?.client_id.startsWith("https://")
+    ),
 
   isX509HashClient: ({ context }: GuardArgs) =>
     !!context.payload?.client_id.startsWith(ClientIdPrefix.X509_HASH)
