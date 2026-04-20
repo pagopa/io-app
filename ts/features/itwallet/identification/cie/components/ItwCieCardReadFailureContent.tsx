@@ -316,10 +316,8 @@ const trackError = ({
   }
 
   trackItWalletCieCardReadingUnexpectedFailure({
-    reason: {
-      origin: origin ?? "ITW_CIE_CARD_READING",
-      name: failure.name ?? "UNEXPECTED_ERROR"
-    },
+    reason: failure.name ?? "UNEXPECTED_ERROR",
+    origin: origin ?? "ITW_CIE_CARD_READING",
     cie_reading_progress: progress,
     itw_flow,
     ITW_ID_method: identification?.mode
