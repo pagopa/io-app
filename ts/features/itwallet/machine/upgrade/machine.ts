@@ -1,5 +1,8 @@
-import { assign, fromPromise, setup } from "xstate";
+import { assign, fromCallback, fromPromise, setup } from "xstate";
+import { ItwSessionExpiredError } from "../../api/client";
 import {
+  RequestAccessTokenOutput,
+  RequestAccessTokenParams,
   LoadContextOutput,
   UpgradeCredentialOutput,
   UpgradeCredentialParams
@@ -42,16 +45,24 @@ export const itwCredentialUpgradeMachine = setup({
 
         return [...context.failedCredentials, failedCredential];
       }
-    })
+    }),
+    handleSessionExpired: notImplemented
   },
   actors: {
+    requestAccessToken: fromPromise<
+      RequestAccessTokenOutput,
+      RequestAccessTokenParams
+    >(notImplemented),
     loadContext: fromPromise<LoadContextOutput>(notImplemented),
     upgradeCredential: fromPromise<
       UpgradeCredentialOutput,
       UpgradeCredentialParams
-    >(notImplemented)
+    >(notImplemented),
+    waitForSessionRefresh: fromCallback(notImplemented)
   },
   guards: {
+    isSessionExpired: ({ event }) =>
+      "error" in event && event.error instanceof ItwSessionExpiredError,
     hasMoreCredentials: ({ context }) =>
       context.credentialIndex < context.credentials.length - 1
   }
@@ -68,7 +79,8 @@ export const itwCredentialUpgradeMachine = setup({
           target: "Checking",
           actions: assign(({ event }) => ({
             pid: event.output.pid,
-            walletInstanceAttestation: event.output.walletInstanceAttestation
+            walletInstanceAttestation: event.output.walletInstanceAttestation,
+            integrityKeyTag: event.output.integrityKeyTag
           }))
         }
       }
@@ -78,18 +90,16 @@ export const itwCredentialUpgradeMachine = setup({
         {
           guard: "hasMoreCredentials",
           actions: "pickNextCredential",
-          target: "UpgradeCredential"
+          target: "RequestAccessToken"
         },
         {
           target: "Completed"
         }
       ]
     },
-    UpgradeCredential: {
-      description:
-        "This state upgrades the credential and stores it in the secure vault, then dispatches metadata to the Redux store",
+    RequestAccessToken: {
       invoke: {
-        src: "upgradeCredential",
+        src: "requestAccessToken",
         input: ({ context }) => ({
           pid: context.pid,
           walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
@@ -97,13 +107,53 @@ export const itwCredentialUpgradeMachine = setup({
           issuanceMode: context.issuanceMode
         }),
         onDone: {
-          actions: ["storeCredential"],
-          target: "Checking"
+          target: "UpgradeCredential",
+          actions: assign(({ event }) => event.output)
         },
         onError: {
           actions: ["setFailedCredential"],
           target: "Checking"
         }
+      }
+    },
+    UpgradeCredential: {
+      description:
+        "Obtain the credential(s) with the WUA if supported. This state is retried when the session expires, so it must contain the minimal retriable logic to obtain the credential",
+      invoke: {
+        src: "upgradeCredential",
+        id: "upgradeCredential",
+        input: ({ context }) => ({
+          pid: context.pid,
+          credential: context.credentials[context.credentialIndex],
+          accessToken: context.accessToken,
+          issuerConf: context.issuerConf,
+          clientId: context.clientId,
+          integrityKeyTag: context.integrityKeyTag,
+          issuanceMode: context.issuanceMode
+        }),
+        onDone: {
+          actions: ["storeCredential"],
+          target: "Checking"
+        },
+        onError: [
+          {
+            guard: "isSessionExpired",
+            actions: "handleSessionExpired",
+            target: "WaitingForSessionRefresh"
+          },
+          {
+            actions: ["setFailedCredential"],
+            target: "Checking"
+          }
+        ]
+      }
+    },
+    WaitingForSessionRefresh: {
+      invoke: {
+        src: "waitForSessionRefresh"
+      },
+      on: {
+        "session-refresh-complete": { target: "UpgradeCredential" }
       }
     },
     Completed: {

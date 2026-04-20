@@ -1,5 +1,4 @@
 import { configure } from "@testing-library/react-native";
-import "@testing-library/jest-native/extend-expect";
 
 /**
  * Default value for includeHiddenElements query option for all queries.
