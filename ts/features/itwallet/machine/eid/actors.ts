@@ -7,37 +7,42 @@ import { assert } from "../../../../utils/assert";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import * as cieUtils from "../../../authentication/login/cie/utils/cie";
 import { trackItwRequest } from "../../analytics";
-import {
-  trackWalletInstanceRenewalFailure,
-  trackWalletInstanceRenewalSuccess
-} from "../../issuance/analytics";
 import { Env } from "../../common/utils/environment";
 import {
-  getAttestation,
+  getWalletInstanceAttestation,
   getIntegrityHardwareKeyTag,
   registerWalletInstance
 } from "../../common/utils/itwAttestationUtils";
 import { isAssertionGenerationError } from "../../common/utils/itwFailureUtils";
+import { getIoWallet } from "../../common/utils/itwIoWallet";
 import * as issuanceUtils from "../../common/utils/itwIssuanceUtils";
 import { revokeCurrentWalletInstance } from "../../common/utils/itwRevocationUtils";
-import { pollForStoreValue } from "../../common/utils/itwStoreUtils";
 import {
-  StoredCredential,
+  CredentialAccessToken,
+  CredentialBundle,
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
 import * as mrtdUtils from "../../common/utils/mrtd";
-import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
+import { itwCredentialsReplaceByType } from "../../credentials/store/actions";
+import { CredentialsVault } from "../../credentials/utils/vault";
 import {
-  itwIntegrityKeyTagSelector,
-  itwIntegrityServiceStatusSelector
-} from "../../issuance/store/selectors";
-import { itwSetWalletInstanceRenewalError } from "../../walletInstance/store/actions";
-import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
+  trackWalletInstanceRenewalFailure,
+  trackWalletInstanceRenewalSuccess
+} from "../../issuance/analytics";
+import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
+import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
-import { getIoWallet } from "../../common/utils/itwIoWallet";
+import {
+  itwSetWalletInstanceRenewalError,
+  itwWalletUnitAttestationsStore
+} from "../../walletInstance/store/actions";
+import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
 import { createCredentialUpgradeActionsImplementation } from "../upgrade/actions";
 import { createCredentialUpgradeActorsImplementation } from "../upgrade/actors";
 import { itwCredentialUpgradeMachine } from "../upgrade/machine";
+import { createCommonActorsImplementation } from "../utils/actors";
+import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../common/utils/itwStoreUtils";
+import { generateKeysWithWalletUnitAttestation } from "../../common/utils/itwCredentialIssuanceUtils";
 import type {
   AuthenticationContext,
   CieContext,
@@ -46,11 +51,22 @@ import type {
   MrtdPoPContext
 } from "./context";
 
-export type RequestEidActorParams = {
-  identification: IdentificationContext | undefined;
+export type RequestAccessTokenActorParams = {
   walletInstanceAttestation: string | undefined;
   authenticationContext: AuthenticationContext | undefined;
+};
+
+export type RequestEidActorParams = {
+  identification: IdentificationContext | undefined;
+  authenticationContext: AuthenticationContext | undefined;
   level: EidIssuanceLevel | undefined;
+  integrityKeyTag: string | undefined;
+  accessToken: CredentialAccessToken | undefined;
+};
+
+export type RequestEidActorOutput = {
+  credential: CredentialBundle;
+  walletUnitAttestations: Record<string, string>;
 };
 
 export type StartAuthFlowActorParams = {
@@ -72,6 +88,11 @@ export type ValidateMrtdPoPChallengeActorParams = {
 
 export type GetWalletAttestationActorParams = {
   integrityKeyTag: string | undefined;
+};
+
+export type StoreEidCredentialActorParams = {
+  eid: CredentialBundle | undefined;
+  walletUnitAttestations?: Record<string, string>;
 };
 
 /**
@@ -132,20 +153,8 @@ export const createEidIssuanceActorsImplementation = (
     store.dispatch(itwLifecycleStoresReset());
 
     // Await the integrity preparation before requesting the integrity key tag
-    const integrityServiceStatus = await pollForStoreValue({
-      getState: store.getState,
-      selector: itwIntegrityServiceStatusSelector,
-      condition: value => value !== undefined
-    }).catch(() => {
-      throw new Error("Integrity service status check timed out");
-    });
+    await ensureIntegrityServiceIsStoreReadyOrThrow(store);
 
-    // If the integrity service preparation is not ready (still undefined) or in an error state after 10 seconds the user will be prompted with an error,
-    // he will need to retry.
-    assert(
-      integrityServiceStatus === "ready",
-      `Integrity service status is ${integrityServiceStatus}`
-    );
     const hardwareKeyTag = await getIntegrityHardwareKeyTag();
     await registerWalletInstance(env, itwVersion, hardwareKeyTag, sessionToken);
 
@@ -161,7 +170,7 @@ export const createEidIssuanceActorsImplementation = (
     assert(input.integrityKeyTag, "integrityKeyTag is undefined");
 
     try {
-      return await getAttestation(
+      return await getWalletInstanceAttestation(
         env,
         itwVersion,
         input.integrityKeyTag,
@@ -194,7 +203,7 @@ export const createEidIssuanceActorsImplementation = (
         { isRenewal: true }
       );
 
-      return await getAttestation(
+      return await getWalletInstanceAttestation(
         env,
         itwVersion,
         newHardwareKeyTag,
@@ -232,6 +241,10 @@ export const createEidIssuanceActorsImplementation = (
       sessionToken,
       integrityKeyTag.value
     );
+
+    // Removes all credentials stored in the secure storage, as they are all linked
+    // to the revoked wallet instance
+    await CredentialsVault.clear();
   }),
 
   startAuthFlow: fromPromise<AuthenticationContext, StartAuthFlowActorParams>(
@@ -302,41 +315,103 @@ export const createEidIssuanceActorsImplementation = (
     return callbackUrl;
   }),
 
-  requestEid: fromPromise<StoredCredential, RequestEidActorParams>(
+  requestAccessToken: fromPromise<
+    CredentialAccessToken,
+    RequestAccessTokenActorParams
+  >(async ({ input }) => {
+    assert(
+      input.walletInstanceAttestation,
+      "walletInstanceAttestation is undefined"
+    );
+    assert(
+      input.authenticationContext,
+      "authenticationContext must exist when the identification mode is ciePin"
+    );
+
+    const { accessToken } = await issuanceUtils.completeAuthFlow({
+      ...input.authenticationContext,
+      itwVersion,
+      walletAttestation: input.walletInstanceAttestation
+    });
+    return accessToken;
+  }),
+
+  // To ensure a smooth experience when the session token expires, it is important to keep this actor
+  // retriable: it must fail as early as possible when `generateKeysWithWalletUnitAttestation` is
+  // rejected for session expired, so it can be reentered and retried from where it failed.
+  requestEid: fromPromise<RequestEidActorOutput, RequestEidActorParams>(
     async ({ input }) => {
       assert(input.identification, "identification is undefined");
-      assert(
-        input.walletInstanceAttestation,
-        "walletInstanceAttestation is undefined"
-      );
+      assert(input.integrityKeyTag, "integrityKeyTag is undefined");
+      assert(input.accessToken, "accessToken is undefined");
+      assert(input.authenticationContext, "authenticationContext is undefined");
 
-      // At this point, the authorization flow has already started and just needs to be completed
-      assert(
-        input.authenticationContext,
-        "authenticationContext must exist when the identification mode is ciePin"
-      );
+      const sessionToken = sessionTokenSelector(store.getState());
+      assert(sessionToken, "sessionToken is undefined");
 
-      const authParams = await issuanceUtils.completeAuthFlow({
-        ...input.authenticationContext,
-        itwVersion,
-        walletAttestation: input.walletInstanceAttestation
-      });
+      // The Wallet Unit Attestation makes use of the integrity service
+      if (getIoWallet(itwVersion).WalletUnitAttestation.isSupported) {
+        await ensureIntegrityServiceIsStoreReadyOrThrow(store);
+      }
+
+      // Take the first element as only one credential is authorized during PID issuance
+      const [authorizedCredential] =
+        await generateKeysWithWalletUnitAttestation(input.accessToken, {
+          env,
+          itwVersion,
+          hardwareKeyTag: input.integrityKeyTag,
+          sessionToken
+        });
 
       trackItwRequest(
         input.identification.mode,
         input.level === "l3" ? "L3" : "L2"
       );
 
-      return issuanceUtils.getPid({
+      const credential = await issuanceUtils.getPid({
+        authorizedCredential,
         itwVersion,
-        ...authParams,
+        accessToken: input.accessToken,
         ...input.authenticationContext
       });
+
+      const { walletUnitAttestationId, walletUnitAttestation } =
+        authorizedCredential;
+      return {
+        credential,
+        walletUnitAttestations:
+          walletUnitAttestationId && walletUnitAttestation
+            ? { [walletUnitAttestationId]: walletUnitAttestation }
+            : {}
+      };
+    }
+  ),
+
+  storeEidCredential: fromPromise<void, StoreEidCredentialActorParams>(
+    async ({ input }) => {
+      const { eid, walletUnitAttestations } = input;
+      assert(eid, "eID credential is undefined");
+
+      // Waits for the credential store/replace to complete before proceeding
+      await new Promise<void>((resolve, reject) => {
+        store.dispatch(
+          itwCredentialsReplaceByType([eid], {
+            onComplete: resolve,
+            onError: reject
+          })
+        );
+      });
+
+      if (walletUnitAttestations) {
+        store.dispatch(itwWalletUnitAttestationsStore(walletUnitAttestations));
+      }
     }
   ),
 
   credentialUpgradeMachine: itwCredentialUpgradeMachine.provide({
-    actors: createCredentialUpgradeActorsImplementation(env, itwVersion),
-    actions: createCredentialUpgradeActionsImplementation(store)
-  })
+    actions: createCredentialUpgradeActionsImplementation(store),
+    actors: createCredentialUpgradeActorsImplementation(env, itwVersion, store)
+  }),
+
+  ...createCommonActorsImplementation(store)
 });

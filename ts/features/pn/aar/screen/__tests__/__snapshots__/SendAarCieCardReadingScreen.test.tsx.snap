@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`SendAarCieCardReadingScreen should match the snapshot for the flowType = "androidNFCActivation" 1`] = `
 <View

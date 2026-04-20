@@ -1,5 +1,4 @@
 import { deleteKey } from "@pagopa/io-react-native-crypto";
-import * as Sentry from "@sentry/react-native";
 import { call, put, select, all } from "typed-redux-saga/macro";
 import { walletRemoveCards } from "../../../wallet/store/actions/cards";
 import {
@@ -7,6 +6,7 @@ import {
   itwCredentialsRemoveByType
 } from "../store/actions";
 import { itwCredentialsListByTypeSelector } from "../store/selectors";
+import { CredentialsVault } from "../utils/vault";
 
 /**
  * This saga handles the credential removal action and ensures the consistency
@@ -16,12 +16,13 @@ import { itwCredentialsListByTypeSelector } from "../store/selectors";
  *
  * @param itwCredentialsRemoveByType
  */
-export function* handleItwCredentialsRemoveSaga(
+export function* handleItwCredentialsRemoveByTypeSaga(
   action: ReturnType<typeof itwCredentialsRemoveByType>
 ) {
-  try {
-    const credentialType = action.payload;
+  const credentialType = action.payload;
+  const { onComplete, onError } = action.meta;
 
+  try {
     // We first select all credentials of the same type to get their keytag,
     // THEN dispatch the action to remove them from the store
     const sameTypeCredentials = yield* select(
@@ -29,11 +30,18 @@ export function* handleItwCredentialsRemoveSaga(
     );
 
     if (sameTypeCredentials.length > 0) {
+      // Remove from vault first; only proceed with Redux/key cleanup on success
+      yield* call(
+        CredentialsVault.removeAll,
+        sameTypeCredentials.map(c => c.credentialId)
+      );
       yield* put(itwCredentialsRemove(sameTypeCredentials));
       yield* put(walletRemoveCards([`ITW_${credentialType}`]));
       yield* all(sameTypeCredentials.map(c => call(deleteKey, c.keyTag)));
     }
+    onComplete?.();
   } catch (e) {
-    Sentry.captureException(e);
+    // TODO [SIW-4080] Log failures to Mixpanel
+    onError?.(e instanceof Error ? e : new Error("Unknown error"));
   }
 }

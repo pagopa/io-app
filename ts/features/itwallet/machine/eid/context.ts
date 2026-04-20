@@ -3,8 +3,10 @@ import type {
   CredentialIssuance
 } from "@pagopa/io-react-native-wallet";
 import type {
+  CredentialAccessToken,
+  CredentialBundle,
+  CredentialMetadata,
   IssuerConfiguration,
-  StoredCredential,
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
 import { IssuanceFailure } from "./failure";
@@ -114,15 +116,26 @@ export type Context = {
   /** The MRTD PoP context used during the issuance process. */
   mrtdContext: MrtdPoPContext | undefined;
   /** The obtained PID credential */
-  eid: StoredCredential | undefined;
+  eid: CredentialBundle | undefined;
   /** The failure that occurred during the issuance process, if any. */
   failure: IssuanceFailure | undefined;
   /** The credentials that need to be upgraded to the new format. */
-  legacyCredentials: ReadonlyArray<StoredCredential>;
+  credentialsToUpgrade: ReadonlyArray<CredentialMetadata>;
   /** Credentials that failed the upgrade process. */
-  failedCredentials: ReadonlyArray<StoredCredential> | undefined;
+  failedCredentials: ReadonlyArray<CredentialMetadata> | undefined;
   /** The credential type that triggered the eID issuance flow. */
   credentialType: string | undefined;
+  /**
+   * The access token obtained from the Issuer. If the session with the Wallet
+   * Provider expires before requesting the credential, this token is used to
+   * retry the request.
+   */
+  accessToken: CredentialAccessToken | undefined;
+  /**
+   * An optional dictionary of Wallet Unit Attestations generated for the
+   * issuance.
+   */
+  walletUnitAttestations?: Record<string, string>;
 };
 
 export const InitialContext: Context = {
@@ -136,7 +149,8 @@ export const InitialContext: Context = {
   mrtdContext: undefined,
   eid: undefined,
   failure: undefined,
-  legacyCredentials: [],
+  credentialsToUpgrade: [],
   failedCredentials: undefined,
-  credentialType: undefined
+  credentialType: undefined,
+  accessToken: undefined
 };

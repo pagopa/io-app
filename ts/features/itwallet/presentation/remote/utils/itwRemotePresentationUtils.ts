@@ -1,15 +1,15 @@
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import * as E from "fp-ts/lib/Either";
+import { isDefined } from "../../../../../utils/guards";
 import {
   WellKnownClaim,
   parseClaims
 } from "../../../common/utils/itwClaimsUtils";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUtils";
 import { validCredentialStatuses } from "../../../common/utils/itwCredentialUtils";
-import { isDefined } from "../../../../../utils/guards";
-import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import { getIoWallet } from "../../../common/utils/itwIoWallet";
+import { CredentialType } from "../../../common/utils/itwMocksUtils";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import { ItwRemoteCredentialCombination } from "../analytics/utils/types";
 import {
   EnrichedPresentationDetails,
@@ -85,7 +85,7 @@ export const validateItwPresentationQrCodeParams = (
  */
 export const enrichPresentationDetails = (
   presentationDetails: PresentationDetails,
-  credentialsByType: Record<string, StoredCredential | undefined>
+  credentialsByType: Record<string, CredentialMetadata | undefined>
 ): EnrichedPresentationDetails =>
   presentationDetails
     .filter(isPresentationDetailSdJwt) // TODO: [SIW-3998] Support MDOC remote presentation
@@ -157,7 +157,7 @@ export const groupCredentialsByPurpose = (
 /** Return a list of credential types that have an invalid status. */
 export const getInvalidCredentials = (
   presentationDetails: PresentationDetails,
-  credentialsByType: Record<string, StoredCredential | undefined>
+  credentialsByType: Record<string, CredentialMetadata | undefined>
 ) =>
   presentationDetails
     .filter(isPresentationDetailSdJwt) // TODO: [SIW-3998] Support MDOC remote presentation

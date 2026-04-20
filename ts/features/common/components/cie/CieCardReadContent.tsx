@@ -14,6 +14,7 @@ import {
   VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { useEffect, useState } from "react";
 import { AccessibilityInfo, View } from "react-native";
 import Animated, {
@@ -138,6 +139,10 @@ const LinearProgressBar = (
     width: animatedWidth.value
   }));
 
+  const a11yLabel = I18n.t("global.accessibility.cieReadingProgress", {
+    percentage: progressPercent
+  });
+
   return (
     <View
       focusable
@@ -151,7 +156,7 @@ const LinearProgressBar = (
       }}
       onLayout={e => setWidth(e.nativeEvent.layout.width)}
       importantForAccessibility="yes"
-      accessibilityLabel={`${progressPercent}%`}
+      accessibilityLabel={a11yLabel}
       accessible={true}
       accessibilityRole="progressbar"
       accessibilityValue={{
@@ -202,7 +207,10 @@ const ContentAndroid = (props: CieCardReadContentProps) => {
   const stepped = Math.floor(progressPercent / announceStep) * announceStep;
 
   useEffect(() => {
-    AccessibilityInfo.announceForAccessibility(`${stepped}%`);
+    const announcement = I18n.t("global.accessibility.cieReadingProgress", {
+      percentage: stepped
+    });
+    AccessibilityInfo.announceForAccessibility(announcement);
   }, [stepped]);
 
   return (

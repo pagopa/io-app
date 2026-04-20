@@ -14,6 +14,7 @@ import {
   StyleSheet,
   View
 } from "react-native";
+import LinearGradient from "react-native-linear-gradient";
 import {
   Extrapolation,
   interpolate,
@@ -23,7 +24,6 @@ import {
   useDerivedValue,
   useSharedValue
 } from "react-native-reanimated";
-import LinearGradient from "react-native-linear-gradient";
 import { useItWalletTheme } from "../utils/theme";
 import { ItwBrandedSkiaBorder } from "./ItwBrandedSkiaBorder";
 import { ItwSkiaBrandedGradientVariant } from "./ItwBrandedSkiaGradient";
@@ -202,10 +202,12 @@ export const ItwBrandedBox = ({
   );
 };
 
+export const ITW_BRANDED_BOX_PADDING = 16;
+
 const styles = StyleSheet.create({
   container: {
     borderCurve: "continuous",
-    padding: 16,
+    padding: ITW_BRANDED_BOX_PADDING,
     gap: 6,
     overflow: "hidden"
   }

@@ -1,5 +1,5 @@
 import {
-  StoredCredential,
+  CredentialMetadata,
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
 import { TrustmarkFailure } from "./failure";
@@ -10,7 +10,7 @@ export type Context = {
   /** The wallet instance attestation to be used to get the trustmark */
   walletInstanceAttestation?: WalletInstanceAttestations;
   /** The credential to get the trustmark for */
-  credential?: StoredCredential;
+  credential?: CredentialMetadata;
   /** The expiration date of the trustmark */
   expirationDate?: Date;
   /** The expiration time inseconds of the trustmark */

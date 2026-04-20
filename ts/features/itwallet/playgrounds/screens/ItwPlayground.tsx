@@ -15,6 +15,7 @@ import { ItwEnvironmentSection } from "../components/ItwEnvironmentSection";
 import { ItwIdentificationScreensSection } from "../components/ItwIdentificationScreensSection";
 import { ItwL3ScreensSection } from "../components/ItwL3ScreensSection";
 import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
+import { ItwMiscSection } from "../components/ItwMiscSection";
 import { ItwPidIssuanceSection } from "../components/ItwPidIssuanceSection";
 import { ItwSpecsVersionSection } from "../components/ItwSpecsVersionSection";
 
@@ -61,6 +62,7 @@ const ItwPlayground = () => {
               <ItwEnvironmentSection />
               <ItwLifecycleSection />
               <ItwSpecsVersionSection />
+              <ItwMiscSection />
             </>
           )}
           {page === 1 && <ItwPidIssuanceSection />}
