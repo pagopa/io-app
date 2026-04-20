@@ -6,6 +6,7 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { ComponentProps, useMemo } from "react";
 import { View } from "react-native";
+import { useRoute } from "@react-navigation/native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
@@ -34,7 +35,6 @@ type Props = {
   lifecycleStatus?: Array<ItwJwtCredentialStatus>;
   navigation: ReturnType<typeof useIONavigation>;
   skipViewTracking?: boolean;
-  currentScreenName?: string;
 };
 
 /**
@@ -43,9 +43,9 @@ type Props = {
 export const ItwEidLifecycleAlert = ({
   lifecycleStatus = defaultLifecycleStatus,
   navigation,
-  skipViewTracking,
-  currentScreenName
+  skipViewTracking
 }: Props) => {
+  const { name: currentScreenName } = useRoute();
   const eidOption = useIOSelector(itwCredentialsEidSelector);
   const isItw = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const maybeEidStatus = useIOSelector(itwCredentialsEidStatusSelector);

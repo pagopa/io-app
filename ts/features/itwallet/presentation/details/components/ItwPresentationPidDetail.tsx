@@ -47,11 +47,7 @@ export const ItwPresentationPidDetail = ({ credential }: Props) => {
 
   return (
     <View>
-      <ItwEidLifecycleAlert
-        navigation={navigation}
-        currentScreenName={ITW_ROUTES.PRESENTATION.PID_DETAIL}
-        skipViewTracking={false}
-      />
+      <ItwEidLifecycleAlert navigation={navigation} skipViewTracking={false} />
       {claims.length > 0 && (
         <ListItemHeader label={listItemHeaderLabel} endElement={endElement} />
       )}
