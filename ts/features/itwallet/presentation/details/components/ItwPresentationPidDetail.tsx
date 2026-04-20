@@ -7,7 +7,6 @@ import { useIONavigation } from "../../../../../navigation/params/AppParamsList"
 import { ItwCredentialClaim } from "../../../common/components/ItwCredentialClaim";
 import { ItwEidLifecycleAlert } from "../../../common/components/ItwEidLifecycleAlert";
 import { ItwIssuanceMetadata } from "../../../common/components/ItwIssuanceMetadata";
-import { ITW_ROUTES } from "../../../navigation/routes";
 import {
   parseClaims,
   WellKnownClaim
