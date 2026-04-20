@@ -18,5 +18,13 @@ module.exports = {
   globalSetup: "./jestGlobalSetup.js",
   setupFilesAfterEnv: ["./jestAfterEnvSetup.js"],
   collectCoverage: true,
+  coverageReporters: ["lcov", "text"],
+  coveragePathIgnorePatterns: [
+    "<rootDir>/ts/@types/",
+    "<rootDir>/ts/theme/",
+    "<rootDir>/ts/features/design-system/",
+    "<rootDir>/ts/features/.*/playgrounds/",
+    "<rootDir>/ts/features/settings/devMode/"
+  ],
   testPathIgnorePatterns: [".*fiscal-code.test.ts$"]
 };
