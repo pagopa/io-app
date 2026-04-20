@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.29.0-rc.2](https://github.com/pagopa/io-app/compare/3.29.0-rc.1...3.29.0-rc.2) (2026-04-17)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-3600](https://pagopa.atlassian.net/browse/SIW-3600)] Add Wallet Unit Attestation with resumable issuance machine ([#7983](https://github.com/pagopa/io-app/issues/7983)) ([7d5484d](https://github.com/pagopa/io-app/commit/7d5484dfcc04fd80d949fbc3995c54f53ae1c025))
+
+
+### Bug Fixes
+
+* [[IEG-2792](https://pagopa.atlassian.net/browse/IEG-2792)] CGN discount code sheet action position on Android ([#7966](https://github.com/pagopa/io-app/issues/7966)) ([1b2760a](https://github.com/pagopa/io-app/commit/1b2760ac2660206e14d54c7af0fcf37b708d8554))
+* [[IOPLT-1779](https://pagopa.atlassian.net/browse/IOPLT-1779)] Fix `codecov` setup ([#8039](https://github.com/pagopa/io-app/issues/8039)) ([00e3da8](https://github.com/pagopa/io-app/commit/00e3da8282bc159e598093e1d59e858f1a425ff2))
+
+
+### Chores
+
+* [[IEL-357](https://pagopa.atlassian.net/browse/IEL-357)] Improve timeline items accessibility ([#8031](https://github.com/pagopa/io-app/issues/8031)) ([dd825c7](https://github.com/pagopa/io-app/commit/dd825c7b110fa179546aadf02b947e0f8d9c8d1d))
+* [[IEL-407](https://pagopa.atlassian.net/browse/IEL-407)] Change copy on AAR screen ([#8011](https://github.com/pagopa/io-app/issues/8011)) ([e2d13ff](https://github.com/pagopa/io-app/commit/e2d13ff79e3afde3f6892a0e291f2c600d7546ed))
+* [[IEL-410](https://pagopa.atlassian.net/browse/IEL-410)] Change copy on AAR screen ([#8013](https://github.com/pagopa/io-app/issues/8013)) ([3302b68](https://github.com/pagopa/io-app/commit/3302b681babe5c8ced87ebee78b70fd55fafec5f))
+* [[IEL-442](https://pagopa.atlassian.net/browse/IEL-442)] Updated copy for send AAR nfc error ([#8034](https://github.com/pagopa/io-app/issues/8034)) ([81284a7](https://github.com/pagopa/io-app/commit/81284a76403525dab5370ea7c5976dcd7577229b))
+* [[IOCOM-3101](https://pagopa.atlassian.net/browse/IOCOM-3101)] io-react-native-http-client version bump ([#8036](https://github.com/pagopa/io-app/issues/8036)) ([3bb2d9d](https://github.com/pagopa/io-app/commit/3bb2d9d8d54fa57dced8d8b3eaea83242542f025))
+* [[IOPLT-1758](https://pagopa.atlassian.net/browse/IOPLT-1758)] Update `jest` to `30.x` ([#8001](https://github.com/pagopa/io-app/issues/8001)) ([550d282](https://github.com/pagopa/io-app/commit/550d282675038c6a0c39ed079bdc76ade0721f80))
+
 ## [3.29.0-rc.1](https://github.com/pagopa/io-app/compare/3.29.0-rc.0...3.29.0-rc.1) (2026-04-16)
 
 
