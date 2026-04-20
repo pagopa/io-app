@@ -16,7 +16,6 @@ jest.mock("../../utils/vault", () => ({
   CredentialsVault: { removeAll: jest.fn() }
 }));
 jest.mock("@pagopa/io-react-native-crypto", () => ({ deleteKey: jest.fn() }));
-jest.mock("@sentry/react-native", () => ({ captureException: jest.fn() }));
 
 const mockRemoveAll = jest.mocked(CredentialsVault.removeAll);
 const mockDeleteKey = jest.mocked(ioCrypto.deleteKey);

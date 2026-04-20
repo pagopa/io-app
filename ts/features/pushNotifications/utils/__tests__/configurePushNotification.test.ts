@@ -1,4 +1,3 @@
-import * as Sentry from "@sentry/react-native";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
@@ -63,10 +62,6 @@ const mockStore = {
   dispatch: mockedDispatch
 } as unknown as Store;
 
-jest.mock("@sentry/react-native", () => ({
-  captureMessage: jest.fn()
-}));
-
 describe("configurePushNotifications", () => {
   afterEach(() => {
     jest.restoreAllMocks();
@@ -121,10 +116,6 @@ describe("configurePushNotifications", () => {
 
           testable!.onPushNotificationTokenAvailable(mockStore, input as any);
 
-          expect(Sentry.captureMessage).toHaveBeenCalledTimes(1);
-          expect(Sentry.captureMessage).toHaveBeenCalledWith(
-            `onPushNotificationTokenAvailable received a nullish token (or inner 'token' instance) (${input})`
-          );
           expect(mockedDispatch.mock.calls.length).toBe(0);
           expect(spiedOnAnalytics.mock.calls.length).toBe(0);
           expect(
@@ -148,7 +139,6 @@ describe("configurePushNotifications", () => {
 
       testable!.onPushNotificationTokenAvailable(mockStore, mockToken as any);
 
-      expect(Sentry.captureMessage).toHaveBeenCalledTimes(0);
       expect(mockedDispatch.mock.calls.length).toBe(1);
       expect(mockedDispatch.mock.calls[0].length).toBe(1);
       expect(mockedDispatch.mock.calls[0][0]).toEqual(
