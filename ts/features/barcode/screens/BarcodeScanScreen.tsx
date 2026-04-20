@@ -192,7 +192,12 @@ const BarcodeScanScreen = () => {
         });
         break;
       case "ITW_CREDENTIAL_OFFER":
-        navigation.navigate(ITW_ROUTES.MAIN, {
+        /**
+         * Use replace so BARCODE_SCAN is removed from the parent stack.
+         * This lets the offer flow close with goBack and return directly
+         * to the screen shown before the scanner.
+         */
+        navigation.replace(ITW_ROUTES.MAIN, {
           screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER.INTRO,
           params: {
             itwCredentialOfferUri: barcode.itwCredentialOfferUri
