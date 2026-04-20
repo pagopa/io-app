@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.29.0-canary.8210](https://github.com/pagopa/io-app/compare/3.29.0-rc.2...3.29.0-canary.8210) (2026-04-20)
+
+
+### Chores
+
+* [[IEG-2805](https://pagopa.atlassian.net/browse/IEG-2805)] Add emilio-dimari as CODEOWNERS ([#8041](https://github.com/pagopa/io-app/issues/8041)) ([3ff551f](https://github.com/pagopa/io-app/commit/3ff551faf57358ab9ce9613317d31518d50e7d76))
+* [[IOPLT-1769](https://pagopa.atlassian.net/browse/IOPLT-1769)] Fix android issue on SafeAreaProvider null child error ([9dd782d](https://github.com/pagopa/io-app/commit/9dd782db1c70227a125f61bf259f346afbcb6eb3))
+
 ## [3.29.0-rc.2](https://github.com/pagopa/io-app/compare/3.29.0-rc.1...3.29.0-rc.2) (2026-04-17)
 
 
