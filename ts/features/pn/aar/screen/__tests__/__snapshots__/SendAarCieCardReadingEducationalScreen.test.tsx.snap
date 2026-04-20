@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`SendAarCieCardReadingEducationalScreen should match the snapshot 1`] = `
 <View
@@ -304,7 +304,7 @@ exports[`SendAarCieCardReadingEducationalScreen should match the snapshot 1`] = 
                                 }
                               />
                               <Text>
-                                Dovrai poggiare il retro del telefono sulla carta e tenerlo fermo per la lettura.
+                                Dovrai avvicinare il telefono alla carta e tenerlo fermo per la lettura. Rimuovi eventuali cover.
                               </Text>
                             </View>
                             <View

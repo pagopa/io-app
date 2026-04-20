@@ -7,10 +7,10 @@ import { openWebUrl } from "../../../../../utils/url";
 import { useSendAarFlowManager } from "../../hooks/useSendAarFlowManager";
 import { setAarFlowState } from "../../store/actions";
 import {
-  currentAARFlowStateAssistanceErrorCode,
-  currentAARFlowStateErrorDebugInfoSelector
+  currentAarFlowStateAssistanceErrorCode,
+  currentAarFlowStateErrorDebugInfoSelector
 } from "../../store/selectors";
-import { sendAARFlowStates } from "../../utils/stateUtils";
+import { sendAarFlowStates } from "../../utils/stateUtils";
 import {
   trackSendAarMandateCieErrorCac,
   trackSendAarMandateCieErrorClosure,
@@ -26,7 +26,7 @@ export const CieExpiredComponent = () => {
   const { terminateFlow } = useSendAarFlowManager();
   const helpCenterUrl = useIOSelector(sendAarInAppDelegationUrlSelector);
   const assistanceErrorCode = useIOSelector(
-    currentAARFlowStateAssistanceErrorCode
+    currentAarFlowStateAssistanceErrorCode
   );
 
   return (
@@ -61,13 +61,13 @@ export const UnrelatedCieComponent = () => {
   const dispatch = useIODispatch();
   const { currentFlowData, terminateFlow } = useSendAarFlowManager();
   const assistanceErrorCode =
-    useIOSelector(currentAARFlowStateAssistanceErrorCode) ?? "";
+    useIOSelector(currentAarFlowStateAssistanceErrorCode) ?? "";
 
   const handleRetry = () => {
     trackSendAarMandateCieErrorRetry(assistanceErrorCode);
     if (
       currentFlowData.type === "ko" &&
-      currentFlowData.previousState.type === sendAARFlowStates.validatingMandate
+      currentFlowData.previousState.type === sendAarFlowStates.validatingMandate
     ) {
       const {
         mandateId,
@@ -77,7 +77,7 @@ export const UnrelatedCieComponent = () => {
       } = currentFlowData.previousState;
       dispatch(
         setAarFlowState({
-          type: sendAARFlowStates.cieCanAdvisory,
+          type: sendAarFlowStates.cieCanAdvisory,
           iun,
           mandateId,
           recipientInfo,
@@ -112,7 +112,7 @@ export const UnrelatedCieComponent = () => {
 export const CieValidationExpiredTtlComponent = () => {
   const { terminateFlow } = useSendAarFlowManager();
   const assistanceErrorCode =
-    useIOSelector(currentAARFlowStateAssistanceErrorCode) ?? "";
+    useIOSelector(currentAarFlowStateAssistanceErrorCode) ?? "";
 
   return (
     <OperationResultScreenContent
@@ -133,9 +133,9 @@ export const CieValidationExpiredTtlComponent = () => {
 };
 export const GenericCieValidationErrorComponent = () => {
   const { terminateFlow } = useSendAarFlowManager();
-  const debugInfo = useIOSelector(currentAARFlowStateErrorDebugInfoSelector);
+  const debugInfo = useIOSelector(currentAarFlowStateErrorDebugInfoSelector);
   const assistanceErrorCode = useIOSelector(
-    currentAARFlowStateAssistanceErrorCode
+    currentAarFlowStateAssistanceErrorCode
   );
   const { bottomSheet, present } = useAarGenericErrorBottomSheet({
     errorName: assistanceErrorCode,

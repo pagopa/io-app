@@ -1,6 +1,4 @@
 import { fireEvent, render } from "@testing-library/react-native";
-// import WebView from "react-native-webview";
-import renderer from "react-test-renderer";
 // import * as O from "fp-ts/lib/Option";
 // import {
 //   WebViewErrorEvent,
@@ -24,37 +22,35 @@ afterAll(() => {
 describe("TosWebviewComponent", () => {
   describe("The snapshot for the TosWebviewComponent", () => {
     it("Should render correctly with bottom footer and a basic placeholding HTML", () => {
-      const tree = renderer
-        .create(
-          <SafeAreaProvider
-            initialMetrics={{
-              frame: {
-                width: 320,
-                height: 640,
-                x: 0,
-                y: 0
-              },
-              insets: {
-                left: 0,
-                right: 0,
-                bottom: 0,
-                top: 0
-              }
+      const { toJSON } = render(
+        <SafeAreaProvider
+          initialMetrics={{
+            frame: {
+              width: 320,
+              height: 640,
+              x: 0,
+              y: 0
+            },
+            insets: {
+              left: 0,
+              right: 0,
+              bottom: 0,
+              top: 0
+            }
+          }}
+        >
+          <TosWebviewComponent
+            flow="firstOnboarding"
+            shouldRenderFooter={true}
+            webViewSource={{
+              html: "<html><head></head><body></body></html>"
             }}
-          >
-            <TosWebviewComponent
-              flow="firstOnboarding"
-              shouldRenderFooter={true}
-              webViewSource={{
-                html: "<html><head></head><body></body></html>"
-              }}
-              handleLoadEnd={() => undefined}
-              handleReload={() => undefined} // TODO
-            />
-          </SafeAreaProvider>
-        )
-        .toJSON();
-      expect(tree).toMatchSnapshot();
+            handleLoadEnd={() => undefined}
+            handleReload={() => undefined} // TODO
+          />
+        </SafeAreaProvider>
+      );
+      expect(toJSON()).toMatchSnapshot();
     });
   });
   describe("When rendering with the shouldRenderFooter set to false", () => {

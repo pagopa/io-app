@@ -13,7 +13,7 @@ import {
   SendAarActivateNfcScreenProps
 } from "../SendAarActivateNfcScreen";
 import { sendAarMockStates } from "../../utils/testUtils";
-import { sendAARFlowStates } from "../../utils/stateUtils";
+import { sendAarFlowStates } from "../../utils/stateUtils";
 import * as AAR_SELECTORS from "../../store/selectors";
 import {
   trackSendAarMandateCieReadingClosureAlert,
@@ -55,12 +55,12 @@ describe("SendAarActivateNfcScreen", () => {
   });
 
   sendAarMockStates.forEach(aarState => {
-    const isCieScanning = aarState.type === sendAARFlowStates.cieScanning;
+    const isCieScanning = aarState.type === sendAarFlowStates.cieScanning;
 
     it(`${
       isCieScanning ? "should" : "should not"
     } invoke "navigation.replace" for state.type = "${aarState.type}"`, () => {
-      jest.spyOn(AAR_SELECTORS, "currentAARFlowData").mockReturnValue(aarState);
+      jest.spyOn(AAR_SELECTORS, "currentAarFlowData").mockReturnValue(aarState);
       const spyOnAlert = jest.spyOn(Alert, "alert");
 
       renderComponent();
@@ -80,7 +80,7 @@ describe("SendAarActivateNfcScreen", () => {
     });
 
     it(`should never call any non-replace navigation action when type is "${aarState.type}"`, () => {
-      jest.spyOn(AAR_SELECTORS, "currentAARFlowData").mockReturnValue(aarState);
+      jest.spyOn(AAR_SELECTORS, "currentAarFlowData").mockReturnValue(aarState);
       renderComponent();
 
       expect(mockShouldNeverCall).not.toHaveBeenCalled();

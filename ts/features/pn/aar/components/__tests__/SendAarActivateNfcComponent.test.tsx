@@ -3,13 +3,13 @@ import { act, fireEvent, render, waitFor } from "@testing-library/react-native";
 import { Alert } from "react-native";
 import * as NFC_HOOK from "../../hooks/useIsNfcFeatureEnabled";
 import { SendAarActivateNfcComponent } from "../SendAarActivateNfcComponent";
-import * as AAR_SELECTOR from "../../store/selectors";
+import * as Aar_SELECTOR from "../../store/selectors";
 import {
   sendAarMockStateFactory,
   sendAarMockStates
 } from "../../utils/testUtils";
 import { setAarFlowState } from "../../store/actions";
-import { sendAARFlowStates } from "../../utils/stateUtils";
+import { sendAarFlowStates } from "../../utils/stateUtils";
 import {
   trackSendAarMandateCieNfcActivationContinue,
   trackSendAarMandateCieNfcActivationControlAlert,
@@ -50,7 +50,7 @@ const mockAndroidNfcActivationState =
 describe("SendAarActivateNfcComponent", () => {
   it("should match the snapshot", () => {
     jest
-      .spyOn(AAR_SELECTOR, "currentAARFlowData")
+      .spyOn(Aar_SELECTOR, "currentAarFlowData")
       .mockReturnValue(mockAndroidNfcActivationState);
     const component = render(<SendAarActivateNfcComponent />);
 
@@ -62,7 +62,7 @@ describe("SendAarActivateNfcComponent", () => {
     aarState => {
       beforeAll(() => {
         jest
-          .spyOn(AAR_SELECTOR, "currentAARFlowData")
+          .spyOn(Aar_SELECTOR, "currentAarFlowData")
           .mockReturnValue(aarState);
         jest.spyOn(NFC_HOOK, "useIsNfcFeatureEnabled").mockReturnValue({
           isChecking: false,
@@ -174,11 +174,11 @@ describe("SendAarActivateNfcComponent", () => {
     'Scenario -> NFC ENABLED with state.type = "$type"',
     aarState => {
       const isAndroidNFCActivation =
-        aarState.type === sendAARFlowStates.androidNFCActivation;
+        aarState.type === sendAarFlowStates.androidNFCActivation;
 
       beforeAll(() => {
         jest
-          .spyOn(AAR_SELECTOR, "currentAARFlowData")
+          .spyOn(Aar_SELECTOR, "currentAarFlowData")
           .mockReturnValue(aarState);
         jest.spyOn(NFC_HOOK, "useIsNfcFeatureEnabled").mockReturnValue({
           isChecking: false,
@@ -207,7 +207,7 @@ describe("SendAarActivateNfcComponent", () => {
             expect(mockDispatch).toHaveBeenCalledWith(
               setAarFlowState({
                 ...mockAndroidNfcActivationState,
-                type: sendAARFlowStates.cieScanning
+                type: sendAarFlowStates.cieScanning
               })
             );
           } else {

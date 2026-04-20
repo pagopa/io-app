@@ -16,13 +16,13 @@ const mockFetch: typeof fetch = async (input, init) => {
       : typeof input === "string"
         ? input
         : input.toString();
-  if (url.endsWith("/api/v1/cgn/operator-search/count")) {
+  if (url.endsWith("/api/cgn-search/v1/count")) {
     return new Response(JSON.stringify({ count: merchantList.length }), {
       status: 200,
       headers: { "Content-Type": "application/json" }
     });
   }
-  if (url.endsWith("/api/v1/cgn/operator-search/search")) {
+  if (url.endsWith("/api/cgn-search/v1/search")) {
     const body = JSON.parse(init?.body as string);
     if (body.token === "merchant") {
       return new Response(JSON.stringify({ items: merchantList }), {

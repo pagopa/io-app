@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`SendAarCanEducationalScreen should match the snapshot 1`] = `
 <View
@@ -304,7 +304,7 @@ exports[`SendAarCanEducationalScreen should match the snapshot 1`] = `
                                 }
                               />
                               <Text>
-                                Dovrai usarla e inserire il suo codice a 6 cifre (CAN) che trovi stampato sul fronte in basso a destra.
+                                Dovrai inserire il codice a 6 cifre (CAN) che trovi sul fronte in basso a destra e poi avvicinare il tuo telefono alla carta.
                               </Text>
                             </View>
                             <View

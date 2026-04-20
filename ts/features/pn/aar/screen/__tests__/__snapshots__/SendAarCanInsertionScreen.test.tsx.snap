@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`SendAarCieCanInsertionScreen should match the snapshot 1`] = `
 <View
@@ -317,7 +317,7 @@ exports[`SendAarCieCanInsertionScreen should match the snapshot 1`] = `
                                   }
                                 />
                                 <Text>
-                                  È il codice a 6 cifre (CAN) che trovi stampato sul fronte della Carta di Identità Elettronica, in basso a destra.
+                                  È il codice che trovi sul fronte della Carta di Identità Elettronica, in basso a destra (CAN). [Dove lo trovo?](internal://can-location)
                                 </Text>
                               </View>
                               <View
@@ -649,6 +649,92 @@ exports[`SendAarCieCanInsertionScreen should match the snapshot 1`] = `
                             </View>
                           </RCTScrollView>
                         </View>
+                        <Modal
+                          accessible={false}
+                          backdropComponent={[Function]}
+                          backgroundStyle={
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            }
+                          }
+                          enableDismissOnClose={true}
+                          enableDynamicSizing={true}
+                          footerComponent={[Function]}
+                          handleComponent={[Function]}
+                          importantForAccessibility="yes"
+                          maxDynamicContentSize={1334}
+                          onDismiss={[Function]}
+                          style={
+                            {
+                              "borderCurve": "continuous",
+                              "borderTopLeftRadius": 24,
+                              "borderTopRightRadius": 24,
+                              "overflow": "hidden",
+                            }
+                          }
+                        >
+                          <RCTScrollView
+                            overScrollMode="never"
+                            style={
+                              {
+                                "paddingHorizontal": 24,
+                              }
+                            }
+                          >
+                            <View>
+                              <View
+                                style={
+                                  {
+                                    "display": "flex",
+                                    "flexDirection": "column",
+                                    "gap": 24,
+                                  }
+                                }
+                              >
+                                <Text
+                                  allowFontScaling={true}
+                                  dynamicTypeRamp="body"
+                                  maxFontSizeMultiplier={1.5}
+                                  style={
+                                    [
+                                      {},
+                                      {
+                                        "color": "#555C70",
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "400",
+                                        "lineHeight": 24,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  Lo trovi stampato sul fronte della Carta di Identità Elettronica (CIE) di Mario Rossi, in basso a destra.
+                                </Text>
+                                <Image
+                                  accessibilityIgnoresInvertColors={true}
+                                  source={
+                                    {
+                                      "uri": undefined,
+                                    }
+                                  }
+                                  style={
+                                    {
+                                      "aspectRatio": NaN,
+                                    }
+                                  }
+                                />
+                              </View>
+                              <View
+                                style={
+                                  {
+                                    "height": 0,
+                                  }
+                                }
+                              />
+                            </View>
+                          </RCTScrollView>
+                        </Modal>
                       </RNCSafeAreaView>
                     </View>
                     <View

@@ -15,7 +15,7 @@ import {
 import * as NFC_HOOK from "../../hooks/useIsNfcFeatureEnabled";
 import { setAarFlowState } from "../../store/actions";
 import * as AAR_SELECTORS from "../../store/selectors";
-import { sendAARFlowStates } from "../../utils/stateUtils";
+import { sendAarFlowStates } from "../../utils/stateUtils";
 import {
   sendAarMockStateFactory,
   sendAarMockStates
@@ -48,7 +48,7 @@ describe("SendAarCieCardReadingEducationalScreen", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     jest
-      .spyOn(AAR_SELECTORS, "currentAARFlowData")
+      .spyOn(AAR_SELECTORS, "currentAarFlowData")
       .mockReturnValue(mockCieScanningAdvisoryState);
     jest
       .spyOn(AAR_SELECTORS, "aarAdresseeDenominationSelector")
@@ -87,7 +87,7 @@ describe("SendAarCieCardReadingEducationalScreen", () => {
     expect(mockDispatch).toHaveBeenCalledWith(
       setAarFlowState({
         ...mockCieScanningAdvisoryState,
-        type: sendAARFlowStates.cieCanInsertion
+        type: sendAarFlowStates.cieCanInsertion
       })
     );
   });
@@ -113,7 +113,7 @@ describe("SendAarCieCardReadingEducationalScreen", () => {
     expect(mockDispatch).toHaveBeenCalledWith(
       setAarFlowState({
         ...mockCieScanningAdvisoryState,
-        type: sendAARFlowStates.cieCanInsertion
+        type: sendAarFlowStates.cieCanInsertion
       })
     );
     expect(mockReplace).not.toHaveBeenCalled();
@@ -150,8 +150,8 @@ describe("SendAarCieCardReadingEducationalScreen", () => {
           setAarFlowState({
             ...mockCieScanningAdvisoryState,
             type: nfcEnabled
-              ? sendAARFlowStates.cieScanning
-              : sendAARFlowStates.androidNFCActivation
+              ? sendAarFlowStates.cieScanning
+              : sendAarFlowStates.androidNFCActivation
           })
         );
         expect(mockReplace).not.toHaveBeenCalled();
@@ -163,7 +163,7 @@ describe("SendAarCieCardReadingEducationalScreen", () => {
     'should not update the aar state when the back button is pressed for the type: "$type"',
     currentAarState => {
       jest
-        .spyOn(AAR_SELECTORS, "currentAARFlowData")
+        .spyOn(AAR_SELECTORS, "currentAarFlowData")
         .mockReturnValue(currentAarState);
 
       const { getByLabelText } = renderComponent();
@@ -182,7 +182,7 @@ describe("SendAarCieCardReadingEducationalScreen", () => {
     'should not update the aar state when the hardware back button is pressed for the type: "$type"',
     currentAarState => {
       jest
-        .spyOn(AAR_SELECTORS, "currentAARFlowData")
+        .spyOn(AAR_SELECTORS, "currentAarFlowData")
         .mockReturnValue(currentAarState);
       const spyOnUseHardwareBackButton = jest.spyOn(
         USE_HARDWARE_BACK_BUTTON,
@@ -205,7 +205,7 @@ describe("SendAarCieCardReadingEducationalScreen", () => {
     'should not update the aar state when the primary action is pressed for type: "$type"',
     currentAarState => {
       jest
-        .spyOn(AAR_SELECTORS, "currentAARFlowData")
+        .spyOn(AAR_SELECTORS, "currentAarFlowData")
         .mockReturnValue(currentAarState);
       const { getByTestId } = renderComponent();
 
@@ -223,13 +223,13 @@ describe("SendAarCieCardReadingEducationalScreen", () => {
     const shouldNavigate =
       currentAarState.type in
       [
-        sendAARFlowStates.cieCanInsertion,
-        sendAARFlowStates.androidNFCActivation,
-        sendAARFlowStates.cieScanning
+        sendAarFlowStates.cieCanInsertion,
+        sendAarFlowStates.androidNFCActivation,
+        sendAarFlowStates.cieScanning
       ];
     it(`should never call any non-replace navigation action when type is "${currentAarState.type}"`, () => {
       jest
-        .spyOn(AAR_SELECTORS, "currentAARFlowData")
+        .spyOn(AAR_SELECTORS, "currentAarFlowData")
         .mockReturnValue(currentAarState);
       renderComponent();
 
@@ -239,13 +239,13 @@ describe("SendAarCieCardReadingEducationalScreen", () => {
       currentAarState.type
     }"`, () => {
       jest
-        .spyOn(AAR_SELECTORS, "currentAARFlowData")
+        .spyOn(AAR_SELECTORS, "currentAarFlowData")
         .mockReturnValue(currentAarState);
       renderComponent();
 
       if (shouldNavigate) {
         switch (currentAarState.type) {
-          case sendAARFlowStates.cieCanInsertion:
+          case sendAarFlowStates.cieCanInsertion:
             expect(mockReplace).toHaveBeenCalledTimes(1);
             expect(mockReplace).toHaveBeenCalledWith(
               PN_ROUTES.SEND_AAR_CIE_CAN_INSERTION,
@@ -254,13 +254,13 @@ describe("SendAarCieCardReadingEducationalScreen", () => {
               }
             );
             break;
-          case sendAARFlowStates.androidNFCActivation:
+          case sendAarFlowStates.androidNFCActivation:
             expect(mockReplace).toHaveBeenCalledTimes(1);
             expect(mockReplace).toHaveBeenCalledWith(
               PN_ROUTES.SEND_AAR_NFC_ACTIVATION
             );
             break;
-          case sendAARFlowStates.cieScanning:
+          case sendAarFlowStates.cieScanning:
             expect(mockReplace).toHaveBeenCalledTimes(1);
             const { type: _T, ...params } = currentAarState;
             expect(mockReplace).toHaveBeenCalledWith(

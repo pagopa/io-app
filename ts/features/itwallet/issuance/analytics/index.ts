@@ -190,6 +190,15 @@ export const trackItwCredentialReissuingFailed = (
   );
 };
 
+export const trackItwAlreadyHasCredential = (
+  credential: MixPanelCredential
+) => {
+  void mixpanelTrack(
+    ITW_ISSUANCE_ERRORS_EVENTS.ITW_ALREADY_HAS_CREDENTIAL,
+    buildEventProperties("KO", "screen_view", { credential })
+  );
+};
+
 export const trackMrtdPoPChallengeInfoFailed = (
   properties: TrackGetChallengeInfoFailure
 ) => {
@@ -205,6 +214,15 @@ export const trackItwIdRequestFederationFailed = (
   void mixpanelTrack(
     ITW_ISSUANCE_ERRORS_EVENTS.ITW_ID_REQUEST_FEDERATION_FAILED,
     buildEventProperties("KO", "error", properties)
+  );
+};
+
+export const trackItwIssuanceFromMsgFailure = (
+  credential: MixPanelCredential
+) => {
+  void mixpanelTrack(
+    ITW_ISSUANCE_ERRORS_EVENTS.ITW_CREDENTIAL_ISSUING_FROM_MSG_FAILURE,
+    buildEventProperties("KO", "screen_view", { credential })
   );
 };
 
