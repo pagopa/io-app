@@ -176,7 +176,6 @@ export const getCurrentWalletInstanceStatus = (
         WALLET_PROVIDER_BASE_URL
       )
     });
-     
   } catch (e) {
     // TODO: Replace Sentry capture exception with a new logging solution
     // Sentry.captureException(e, {

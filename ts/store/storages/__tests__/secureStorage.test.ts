@@ -73,7 +73,6 @@ describe("SecureStorage", () => {
         await storage.removeItem(myKey);
         expect(SecureStorage.remove).toHaveBeenCalledWith(myKey);
       });
-
     });
   });
 });
