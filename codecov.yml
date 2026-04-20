@@ -26,5 +26,13 @@ comment:
   behavior: default
   require_changes: false
 
+ignore:
+  - "ts/@types"
+  - "ts/__mocks__"
+  - "ts/theme"
+  - "ts/features/design-system"
+  - "ts/features/**/playgrounds"
+  - "ts/features/settings/devMode"
+
 github_checks:
   annotations: false
