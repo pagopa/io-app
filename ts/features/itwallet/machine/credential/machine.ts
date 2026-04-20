@@ -113,10 +113,13 @@ export const itwCredentialIssuanceMachine = setup({
       on: {
         "start-credential-offer": {
           target: "CredentialOfferValidation",
-          actions: assign(({ event }) => ({
-            credentialOfferUri: event.itwCredentialOfferUri,
-            mode: "issuance"
-          }))
+          actions: [
+            "onInit",
+            assign(({ event }) => ({
+              credentialOfferUri: event.itwCredentialOfferUri,
+              mode: "issuance"
+            }))
+          ]
         },
         "select-credential": {
           target: "EvaluateFlow",
@@ -143,12 +146,24 @@ export const itwCredentialIssuanceMachine = setup({
             resolvedCredentialOffer: {
               offer: event.output.offer,
               grantDetails: event.output.grantDetails
-            }
+            },
+            credentialType:
+              event.output.grantDetails.authorizationCodeGrant.scope
           }))
         },
         onError: {
           target: "#itwCredentialIssuanceMachine.Failure",
           actions: "setFailure"
+        }
+      },
+      on: {
+        close: {
+          target: "Idle",
+          actions: assign({
+            credentialOfferUri: undefined,
+            resolvedCredentialOffer: undefined,
+            credentialType: undefined
+          })
         }
       }
     },
@@ -156,12 +171,15 @@ export const itwCredentialIssuanceMachine = setup({
       on: {
         "confirm-credential-offer": {
           target: "EvaluateFlow",
-          actions: assign(({ context }) => ({
-            credentialType:
-              context.resolvedCredentialOffer?.grantDetails
-                .authorizationCodeGrant.scope,
-            mode: "issuance"
-          }))
+          actions: assign({ mode: "issuance" as const })
+        },
+        close: {
+          target: "Idle",
+          actions: assign({
+            credentialOfferUri: undefined,
+            resolvedCredentialOffer: undefined,
+            credentialType: undefined
+          })
         }
       }
     },
@@ -175,6 +193,7 @@ export const itwCredentialIssuanceMachine = setup({
         {
           guard: and([
             ({ context }) => context.mode === "issuance",
+            ({ context }) => !context.resolvedCredentialOffer,
             "hasCredentialIntroContent"
           ]),
           target: "CredentialIntroduction",
