@@ -24,7 +24,8 @@ import {
   CredentialStatusAssertionFailure,
   ItwCredentialDetails,
   TrackSaveCredentialSuccess,
-  TrackItwDeactivation
+  TrackItwDeactivation,
+  TrackStartCredentialUpgradeProperties
 } from "./utils/types";
 
 // Screen view events
@@ -252,6 +253,16 @@ export const trackStartCredentialUpgrade = (credential: MixPanelCredential) => {
   void mixpanelTrack(
     ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_START_REISSUING,
     buildEventProperties("UX", "action", { credential })
+  );
+};
+
+export const trackCredentialRenewStart = (
+  credential: MixPanelCredential,
+  properties?: TrackStartCredentialUpgradeProperties
+) => {
+  void mixpanelTrack(
+    ITW_ACTIONS_EVENTS.ITW_CREDENTIAL_RENEW_START,
+    buildEventProperties("UX", "action", { credential, ...properties })
   );
 };
 

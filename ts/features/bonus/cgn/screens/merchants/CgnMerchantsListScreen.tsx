@@ -69,8 +69,8 @@ export const CgnMerchantsListScreen = () => {
             count: item.numberOfNewDiscounts
           })
         : item.newDiscounts
-        ? `${item.name} ${I18n.t("bonus.cgn.merchantsList.news")}`
-        : item.name) + getListItemAccessibilityLabelCount(data.length, index);
+          ? `${item.name} ${I18n.t("bonus.cgn.merchantsList.news")}`
+          : item.name) + getListItemAccessibilityLabelCount(data.length, index);
     return (
       <ListItemNav
         key={item.id}

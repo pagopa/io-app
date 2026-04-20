@@ -13,7 +13,7 @@ import I18n from "i18next";
 import { addPadding } from "@pagopa/io-react-native-jwt";
 import { Locales } from "../../../../i18n";
 import { JsonFromString } from "./ItwCodecUtils";
-import { ParsedCredential, StoredCredential } from "./itwTypesUtils";
+import { ParsedCredential, CredentialMetadata } from "./itwTypesUtils";
 
 /**
  *
@@ -38,6 +38,7 @@ export enum WellKnownClaim {
    * the credential expiration or to know if the credential is expired
    */
   expiry_date = "expiry_date",
+  date_of_expiry = "date_of_expiry",
   /**
    * Claim used to display a QR Code for the Disability Card. It must be excluded from the common claims list
    * and rendered using a {@link QRCodeImage} (currently used for the European Disability Card)
@@ -604,8 +605,10 @@ export const ClaimValue = t.union([
 export const getCredentialExpireDate = (
   credential: ParsedCredential
 ): Date | undefined => {
-  // A credential could contain its expiration date in `expiry_date`
-  const expireDate = credential[WellKnownClaim.expiry_date];
+  // A credential could contain its expiration date in `expiry_date` or `date_of_expiry`
+  const expireDate =
+    credential[WellKnownClaim.expiry_date] ||
+    credential[WellKnownClaim.date_of_expiry];
 
   if (!expireDate?.value) {
     return undefined;
@@ -649,7 +652,8 @@ export const extractFiscalCode = (s: string) =>
 export const getSafeText = (text: string) => truncate(text, { length: 128 });
 
 export const isExpirationDateClaim = (claim: ClaimDisplayFormat) =>
-  claim.id === WellKnownClaim.expiry_date;
+  claim.id === WellKnownClaim.expiry_date ||
+  claim.id === WellKnownClaim.date_of_expiry;
 
 /**
  *
@@ -687,7 +691,7 @@ export const extractClaim =
  * @returns the fiscal code
  */
 export const getFiscalCodeFromCredential = (
-  credential: StoredCredential | undefined
+  credential: CredentialMetadata | undefined
 ) =>
   pipe(
     O.fromNullable(credential?.parsedCredential),
@@ -702,7 +706,7 @@ export const getFiscalCodeFromCredential = (
  * @returns the first name
  */
 export const getFirstNameFromCredential = (
-  credential: StoredCredential | undefined
+  credential: CredentialMetadata | undefined
 ) =>
   pipe(
     O.fromNullable(credential?.parsedCredential),
@@ -716,7 +720,7 @@ export const getFirstNameFromCredential = (
  * @returns the family name
  */
 export const getFamilyNameFromCredential = (
-  credential: StoredCredential | undefined
+  credential: CredentialMetadata | undefined
 ) =>
   pipe(
     O.fromNullable(credential?.parsedCredential),

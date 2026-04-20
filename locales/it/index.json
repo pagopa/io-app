@@ -47,6 +47,7 @@
       "minusSymbol": "meno",
       "reload": "Ricarica",
       "search": "Cerca",
+      "cieReadingProgress": "Lettura {{percentage}}% completata",
       "dateFormat": "DD MMMM YYYY",
       "alert": "Avviso",
       "activityIndicator": {
@@ -273,7 +274,6 @@
       "forgetCurrentSession": "Dimentica sessione corrente",
       "clearAsyncStorage": "Cancella contenuto di AsyncStorage",
       "dumpAsyncStorage": "Scarica contenuto di AsyncStorage",
-      "sentryTestEvent": "Invia Exception a Sentry",
       "contextualHelpTitle": "Cosa puoi fare nella sezione Impostazioni",
       "contextualHelpContent": "**Nella sezione Impostazioni puoi gestire i tuoi dati e le preferenze.**\nIn particolare qui puoi gestire le tue preferenze, la tua privacy e il tuo account. In questa sezione puoi inoltre accedere a i tuoi documenti in versione digitale, selezionando le card che compaiono nella parte alta della schermata.",
       "developerModeOn": "Modalità sviluppatore attivata",
@@ -1163,7 +1163,7 @@
       "cardGeneric": "Carta",
       "a11y": {
         "credit": {
-          "hpan": "{{circuit}} che termina con {{spacedHpan}}"
+          "hpan": "Carta {{circuit}} che termina con {{spacedHpan}}"
         },
         "paypal": {
           "owner": "account: {{email}}"
@@ -2433,11 +2433,15 @@
           },
           "cieCanInsertion": {
             "title": "Inserisci il codice a 6 cifre che trovi in basso a destra della CIE",
-            "description": "È il codice a 6 cifre (CAN) che trovi stampato sul fronte della Carta di Identità Elettronica, in basso a destra."
+            "description": "È il codice che trovi sul fronte della Carta di Identità Elettronica, in basso a destra (CAN). [Dove lo trovo?](internal://can-location)",
+            "bottomSheet": {
+              "title": "Dove trovo il codice CAN?",
+              "info": "Lo trovi stampato sul fronte della Carta di Identità Elettronica (CIE) di {{denomination}}, in basso a destra."
+            }
           },
           "cieScanningAdvisory": {
             "title": "Posiziona la CIE su una superficie stabile per la lettura",
-            "description": "Dovrai poggiare il retro del telefono sulla carta e tenerlo fermo per la lettura.",
+            "description": "Dovrai avvicinare il telefono alla carta e tenerlo fermo per la lettura. Rimuovi eventuali cover.",
             "primaryAction": "Inizia lettura CIE"
           },
           "androidNfcActivation": {
@@ -2506,7 +2510,7 @@
           },
           "cieCanAdvisory": {
             "title": "Prepara la Carta di Identità Elettronica (CIE) di {{denomination}}",
-            "description": "Dovrai usarla e inserire il suo codice a 6 cifre (CAN) che trovi stampato sul fronte in basso a destra.",
+            "description": "Dovrai inserire il codice a 6 cifre (CAN) che trovi sul fronte in basso a destra e poi avvicinare il tuo telefono alla carta.",
             "alert": {
               "title": "Vuoi interrompere l’apertura della notifica?",
               "message": "Puoi aprire la notifica SEND in qualsiasi altro momento, dovrai però ripartire dal codice QR.",
@@ -2521,13 +2525,13 @@
             "notAdressee": {
               "infoAlert": "Stai aiutando un’altra persona ad accedere a una notifica SEND.",
               "title": "Vuoi aprire la notifica SEND di {{name}}?",
-              "subtitle": "Se la persona che ha ricevuto la comunicazione ti ha chiesto di farlo, puoi aprire questa notifica SEND per suo conto.",
+              "subtitle": "Per aprire la notifica per suo conto, tieni a portata di mano la Carta di Identità Elettronica (CIE) di {{name}}.",
               "primaryAction": "Apri notifica SEND",
               "bottomSheet": {
                 "title": "Cosa ti serve?",
                 "featureInfos": [
-                  "La Carta di Identità Elettronica di {{name}}",
-                  "Il codice a 6 cifre (CAN) che trovi stampato sul fronte della carta, in basso a destra."
+                  "Tieni a portata di mano la Carta di Identità Elettronica (CIE) di {{name}}",
+                  "Non puoi accedere alla notifica con copie o screenshot del documento"
                 ]
               }
             },
@@ -2536,7 +2540,7 @@
               "body": "Controlla che il sistema operativo sia aggiornato oppure scopri cosa fare.",
               "featureInfoText": [
                 "Per leggere la CIE è necessario un dispositivo con chip NFC.",
-                "È richiesto un sistema operativo Android 6.0 o iOS 13 o superiori."
+                "È richiesto un sistema operativo Android 8 o iOS 15.1 o superiori."
               ],
               "cta": "Cosa posso fare?"
             },
@@ -2867,6 +2871,12 @@
       "signatureFieldInfo": {
         "title": "Cosa sono le clausole vessatorie?",
         "subTitle": "Sono delle clausole che segnalano condizioni particolari a cui prestare attenzione e che devono essere accettate. Devono inoltre essere, per legge, facilmente identificabili per far sì che chi firma sia informato del loro contenuto prima di apporre la firma."
+      },
+      "requestL3": {
+        "localFlag": {
+          "title": "Attivazione check L3 per il flusso di firma",
+          "description": "Attivando questo toggle attivi il check L3 per il flusso di firma, che prevede una nuova login L3 per gli utenti che non possiedono il livello di autenticazione L3 (CIE + PIN)"
+        }
       }
     },
     "wallet": {
@@ -2908,7 +2918,7 @@
       "onboarding": {
         "title": "Cosa vuoi aggiungere al Portafoglio?",
         "sections": {
-          "itw": "Documenti su IO",
+          "itw": "Documenti",
           "other": "Altro"
         },
         "l3-sections": {
@@ -2932,6 +2942,10 @@
         "cta": {
           "addBonus": "Vuoi aggiungere un bonus o un metodo di pagamento?",
           "addRestricted": "Aggiungi documenti con funzionalità ridotte"
+        },
+        "no-nfc-banner": {
+          "content": "Il tuo dispositivo non supporta i documenti IT-Wallet. Puoi aggiungere solo alcuni documenti digitali con funzionalità ridotte.",
+          "cta": "Scopri di più"
         }
       }
     },
@@ -3084,7 +3098,9 @@
         "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia",
         "ed": "Titoli accademici",
         "ee": "Iscrizioni accademiche",
-        "res": "Attestato di residenza"
+        "res": "Attestato di residenza",
+        "edip": "Diplomi",
+        "edat": "Frequenza scolastica"
       },
       "wallet": {
         "active": "Attivo",
@@ -3118,7 +3134,8 @@
         "email": "Scrivi una mail",
         "website": "Visita il sito",
         "additionalDataTitle": "Dati aggiuntivi",
-        "errorCode": "Codice errore"
+        "errorCode": "Codice errore",
+        "visitHelpCenter": "Visita il centro di assistenza"
       },
       "generic": {
         "error": {
@@ -3278,15 +3295,19 @@
           "action": "Vai al Portafoglio"
         },
         "nfcNotSupported": {
-          "title": "IT-Wallet richiede un dispositivo con tecnologia NFC",
-          "subtitle": "Il tuo dispositivo non è dotato di tecnologia NFC, necessaria per il funzionamento dei portafogli digitali.",
+          "title": "Il tuo dispositivo non ha NFC",
+          "subtitle": "Il portafoglio IT-Wallet richiede la tecnologia NFC. Senza NFC puoi aggiungere solo alcuni documenti digitali, con funzionalità ridotte.",
           "actions": {
-            "continue": "Continua senza IT-Wallet",
-            "cancel": "Non ora",
-            "l3": {
-              "continue": "Scopri di più",
-              "cancel": "Chiudi"
-            }
+            "continue": "Scopri di più",
+            "cancel": "Chiudi"
+          }
+        },
+        "continueWithoutItw": {
+          "title": "Continua con Documenti su IO",
+          "subtitle": "Il tuo dispositivo non ha la tecnologia NFC. Senza NFC puoi aggiungere solo alcuni documenti digitali, con funzionalità ridotte.",
+          "actions": {
+            "continue": "Continua",
+            "cancel": "Chiudi"
           }
         },
         "ipzsPrivacy": {
@@ -3634,6 +3655,11 @@
         "credentialResult": {
           "toast": "Fatto!"
         },
+        "landingError": {
+          "title": "Qualcosa non va",
+          "body": "Si è verificato un problema, riprova più tardi.",
+          "action": "Chiudi"
+        },
         "notMatchingIdentityError": {
           "title": "Identità non riconosciuta",
           "body": "Attiva Documenti su IO con la stessa identità utilizzata per accedere all’app IO. Verifica le credenziali di accesso e riprova.",
@@ -3736,8 +3762,8 @@
       "hardwareKeyInvalid": {
         "error": {
           "title": "Non puoi proseguire con la richiesta",
-          "body": "Una verifica di sicurezza sul tuo dispositivo non è andata a buon fine. Leggi i consigli per risolvere il problema o contatta l’assistenza.",
-          "primaryAction": "Leggi cosa fare"
+          "body": "Una verifica di sicurezza sul tuo dispositivo non è andata a buon fine. Per sapere cosa puoi fare per risolvere il problema contatta l'assistenza.",
+          "primaryAction": "Contatta l’assistenza"
         }
       },
       "reissuanceLandingScreen": {
@@ -3807,6 +3833,9 @@
             }
           },
           "mDL": {
+            "expired": {
+              "content": "###### Quali documenti devo preparare?\n\nLa Patente di guida (in scadenza o scaduta), un documento di identità, il Codice Fiscale e una foto recente (formato tessera).\n\n###### Hai già rinnovato il documento?\n\nSe hai già rinnovato la Patente fisica, aggiorna il documento digitale per ottenerlo anche su IO."
+            },
             "expiring": {
               "title": "Patente su IO: documento in scadenza",
               "content": "Rinnova la tua Patente di guida presso gli uffici della Motorizzazione Civile o un ente abilitato del tuo territorio.\n\nÈ necessaria una visita medica con un medico autorizzato e provvedere al pagamento dei bollettini che ti saranno indicati.\n\n###### Quali documenti devo preparare?\n\nLa Patente di guida (in scadenza o scaduta), un documento di identità, il Codice Fiscale e una foto recente (formato tessera).",
@@ -3884,7 +3913,9 @@
             "content": {
               "education_degree": "I tuoi titoli accademici digitali hanno piena validità ufficiale.",
               "education_enrollment": "Le tue iscrizioni accademiche digitali hanno piena validità ufficiale.",
-              "residency": "Il tuo attestato di residenza digitale ha piena validità ufficiale."
+              "residency": "Il tuo attestato di residenza digitale ha piena validità ufficiale.",
+              "education_diploma": "I tuoi Diplomi digitali hanno piena validità ufficiale.",
+              "education_attendance": "La tua iscrizione scolastica digitale ha piena validità ufficiale."
             }
           },
           "discoverItWallet": "Scopri IT-Wallet",
@@ -3894,7 +3925,7 @@
           "trustmark": "Mostra certificato di autenticità",
           "openPdf": "Mostra documento",
           "shareButton": "Salva o condividi",
-          "showQRCode": "Mostra QR Code di verifica"
+          "showQRCode": "Mostra codice QR"
         },
         "eid": {
           "verificationExpired": {
@@ -3904,9 +3935,13 @@
           }
         },
         "statusAssertionUnknown": {
-          "title": "Non siamo riusciti a caricare {{credentialName}}",
-          "content": "Chiudi e riapri l'app per riprovare.",
-          "primaryAction": "Ho capito"
+          "title": "Non riusciamo a caricare {{credentialName}}",
+          "content": "Riprova. Se il problema persiste, dovrai aggiornare il documento digitale.",
+          "retryFailure": {
+            "title": "Qualcosa non va",
+            "content": "Non riusciamo a caricare {{credentialName}}.\nAggiorna il documento digitale per continuare.",
+            "primaryAction": "Aggiorna documento digitale"
+          }
         },
         "selectiveDisclosure": {
           "title": "Dati richiesti",
@@ -4148,6 +4183,19 @@
             "subtitle": "La verifica è stata completata con successo."
           }
         },
+        "qrCode": {
+          "instruction": "Mostra questo codice QR a chi verifica i tuoi documenti digitali",
+          "error": {
+            "message": "Abbiamo avuto un problema nel generare il QR Code.",
+            "invalid": "Non puoi far verificare i tuoi documenti digitali."
+          },
+          "banner": {
+            "invalid": "Conferma la tua identità per continuare a usare i tuoi documenti senza limitazioni."
+          },
+          "reissue": {
+            "cta": "Conferma identità"
+          }
+        },
         "itWalletId": {
           "description": "È il tuo pass digitale per dimostrare chi sei, accedere ai servizi online e ottenere nuovi documenti.",
           "listItemHeader": "Dati del mio IT-Wallet ID",
@@ -4333,6 +4381,16 @@
           "description": "Potrai ottenere IT-Wallet in qualsiasi altro momento, andando in Impostazioni > IT-Wallet.",
           "confirm": "Sì, rinuncia",
           "cancel": "Indietro"
+        },
+        "l2_banner": {
+          "title": "I tuoi documenti digitali appariranno qui",
+          "description": "Al momento puoi aggiungere solo alcuni documenti, con funzionalità ridotte.",
+          "cta": "Aggiungi documento"
+        },
+        "reactivation": {
+          "title": "Riattiva i tuoi documenti digitali su IO",
+          "description": "Per ragioni di sicurezza, se cambi dispositivo o rimuovi l’app, devi aggiungere di nuovo i tuoi documenti al Portafoglio.",
+          "confirm": "Inizia"
         }
       },
       "settings": {
@@ -4400,6 +4458,24 @@
         "restrictedMode": {
           "title": "Documenti con funzionalità ridotte",
           "description": "Puoi ottenere una versione digitale dei seguenti documenti utilizzabile solo dal vivo e senza le funzionalità evolute di IT-Wallet"
+        }
+      },
+      "tour": {
+        "id": {
+          "title": "Il tuo IT-Wallet ID",
+          "description": "Il cuore del tuo Portafoglio IT-Wallet: abilita l’aggiunta di documenti per identificarti e accedere ai servizi."
+        },
+        "credentials": {
+          "title": "I tuoi documenti digitali",
+          "description": "Premi su un documento per visualizzare i dettagli o gestirlo nel Portafoglio.  "
+        },
+        "addCredential": {
+          "title": "Aggiungi un documento",
+          "description": "Premi “+” o “Aggiungi documento” per scegliere un documento digitale da aggiungere al Portafoglio."
+        },
+        "qrCode": {
+          "title": "Mostra il codice QR a chi verifica",
+          "description": "Chi verifica i tuoi documenti dal vivo usa un’app ufficiale per scansionare questo codice QR. "
         }
       }
     },

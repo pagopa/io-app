@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSelector' returns 'true' 1`] = `
 <View

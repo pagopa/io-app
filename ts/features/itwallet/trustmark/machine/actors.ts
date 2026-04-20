@@ -5,18 +5,18 @@ import { useIOStore } from "../../../../store/hooks";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { assert } from "../../../../utils/assert";
 import * as itwAttestationUtils from "../../common/utils/itwAttestationUtils";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
 import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import * as itwTrustmarkUtils from "../utils";
 import { Env } from "../../common/utils/environment";
+import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 
 export type GetWalletAttestationActorOutput = Awaited<
-  ReturnType<typeof itwAttestationUtils.getAttestation>
+  ReturnType<typeof itwAttestationUtils.getWalletInstanceAttestation>
 >;
 
 export type GetCredentialTrustmarkUrlActorInput = {
   walletInstanceAttestation?: string;
-  credential?: StoredCredential;
+  credential?: CredentialMetadata;
 };
 
 export type GetCredentialTrustmarkUrlActorOutput = Awaited<
@@ -48,7 +48,7 @@ export const createItwTrustmarkActorsImplementation = (
       /**
        * Get the wallet instance attestation
        */
-      return await itwAttestationUtils.getAttestation(
+      return await itwAttestationUtils.getWalletInstanceAttestation(
         env,
         itwVersion,
         integrityKeyTag.value,

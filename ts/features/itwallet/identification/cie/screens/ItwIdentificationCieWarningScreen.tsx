@@ -1,5 +1,5 @@
 import I18n from "i18next";
-import { useMemo } from "react";
+import { useLayoutEffect, useMemo } from "react";
 import { Linking } from "react-native";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
@@ -14,9 +14,16 @@ import {
 } from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
 import { CieWarningType } from "../utils/types";
+import {
+  trackItwFallbackL2Flow,
+  trackItwFallbackL2FlowExit,
+  trackItwFallbackL2FlowStart,
+  trackItwUserWithoutL3Requirements
+} from "../../analytics";
 
 export type ItwIdentificationCieWarningScreenNavigationParams = {
   type: CieWarningType;
+  routeName: string;
 };
 
 type ScreenProps = IOStackNavigationRouteProps<
@@ -31,7 +38,7 @@ const cieFaqUrls: Record<CieWarningType, string> = {
 };
 
 export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
-  const { type } = params.route.params;
+  const { type, routeName } = params.route.params;
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const credentialMachineRef =
     ItwCredentialIssuanceMachineContext.useActorRef();
@@ -49,14 +56,34 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
 
   const sectionKey = isCieRequired ? "ko-no-cie" : "l2-fallback";
 
+  useLayoutEffect(() => {
+    if (sectionKey === "ko-no-cie") {
+      trackItwUserWithoutL3Requirements({
+        screen_name: routeName,
+        reason,
+        position: "screen"
+      });
+    } else {
+      trackItwFallbackL2Flow({
+        fallback_reason: "user_without_cie"
+      });
+    }
+  }, [reason, routeName, sectionKey]);
+
   const handlePrimaryActionPress = () => {
-    trackItwKoStateAction({
-      reason,
-      cta_category: "custom_1",
-      cta_id: I18n.t(
-        `features.itWallet.identification.cie.warning.${type}.${sectionKey}.primaryAction`
-      )
-    });
+    if (sectionKey === "ko-no-cie") {
+      trackItwKoStateAction({
+        reason,
+        cta_category: "custom_1",
+        cta_id: I18n.t(
+          `features.itWallet.identification.cie.warning.${type}.${sectionKey}.primaryAction`
+        )
+      });
+    } else {
+      trackItwFallbackL2FlowStart({
+        fallback_reason: "user_without_cie"
+      });
+    }
     if (isCieRequired) {
       void Linking.openURL(cieFaqUrls[type]);
     } else if (credentialType) {
@@ -69,13 +96,20 @@ export const ItwIdentificationCieWarningScreen = (params: ScreenProps) => {
   };
 
   const handleSecondaryActionPress = () => {
-    trackItwKoStateAction({
-      reason,
-      cta_category: "custom_2",
-      cta_id: I18n.t(
-        `features.itWallet.identification.cie.warning.${type}.${sectionKey}.secondaryAction`
-      )
-    });
+    if (sectionKey === "ko-no-cie") {
+      trackItwKoStateAction({
+        reason,
+        cta_category: "custom_2",
+        cta_id: I18n.t(
+          `features.itWallet.identification.cie.warning.${type}.${sectionKey}.secondaryAction`
+        )
+      });
+    } else {
+      trackItwFallbackL2FlowExit({
+        fallback_reason: "user_without_cie"
+      });
+    }
+
     machineRef.send({
       type: "close"
     });

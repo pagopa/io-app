@@ -222,7 +222,7 @@ describe("MessageDetailsFooter component", () => {
 
     const showMoreDataAction = component.getByTestId("show-more-data-action");
     fireEvent.press(showMoreDataAction);
-    expect(mockPresentBottomSheet).toBeCalledTimes(1);
+    expect(mockPresentBottomSheet).toHaveBeenCalledTimes(1);
   });
 
   it("should call present function when the 'Contacts' action is pressed", () => {
@@ -247,7 +247,7 @@ describe("MessageDetailsFooter component", () => {
 
     const contactsAction = component.getByTestId("contacts-action");
     fireEvent.press(contactsAction);
-    expect(mockPresentBottomSheet).toBeCalledTimes(1);
+    expect(mockPresentBottomSheet).toHaveBeenCalledTimes(1);
   });
 });
 

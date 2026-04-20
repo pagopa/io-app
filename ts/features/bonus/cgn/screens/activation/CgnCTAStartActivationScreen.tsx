@@ -1,12 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
 
-import { FC, useEffect, useRef } from "react";
+import { FC, useCallback, useEffect, useRef } from "react";
 import { Alert } from "react-native";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
 import I18n from "i18next";
 import { isCGNEnabledSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
-import { GlobalState } from "../../../../../store/reducers/types";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { useActionOnFocus } from "../../../../../utils/hooks/useOnFocus";
 import { ID_CGN_TYPE } from "../../../common/utils";
 import { loadAvailableBonuses } from "../../../common/store/actions/availableBonusesTypes";
@@ -20,19 +18,29 @@ import LoadingScreenContent from "../../../../../components/screens/LoadingScree
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 
-type Props = ReturnType<typeof mapDispatchToProps> &
-  ReturnType<typeof mapStateToProps>;
-
 /**
  * this is a dummy screen reachable only from a message CTA
  */
-const CgnCTAStartOnboardingComponent: FC<Props> = (props: Props) => {
+const CgnCTAStartOnboardingComponent: FC = () => {
+  const dispatch = useIODispatch();
   const isFirstRender = useRef<boolean>(true);
 
-  // load available bonus when component is focused
-  useActionOnFocus(props.loadAvailableBonus);
+  const availableBonus = useIOSelector(supportedAvailableBonusSelector);
+  const cgnBonus = useIOSelector(
+    availableBonusTypesSelectorFromId(ID_CGN_TYPE)
+  );
+  const hasError = useIOSelector(isAvailableBonusErrorSelector);
 
-  const { availableBonus, startCgn, cgnBonus } = props;
+  const loadAvailableBonus = useCallback(() => {
+    dispatch(loadAvailableBonuses.request());
+  }, [dispatch]);
+
+  const startCgn = useCallback(() => {
+    dispatch(cgnActivationStart());
+  }, [dispatch]);
+
+  // load available bonus when component is focused
+  useActionOnFocus(loadAvailableBonus);
 
   useEffect(() => {
     // cgnActivationStart navigate to ToS screen that needs cgb bonus from available bonus list
@@ -49,14 +57,14 @@ const CgnCTAStartOnboardingComponent: FC<Props> = (props: Props) => {
     transparent: true
   });
 
-  if (props.hasError) {
+  if (hasError) {
     return (
       <OperationResultScreenContent
         pictogram="umbrella"
         title={I18n.t("global.genericError")}
         action={{
           label: I18n.t("global.buttons.retry"),
-          onPress: props.loadAvailableBonus
+          onPress: loadAvailableBonus
         }}
       />
     );
@@ -68,35 +76,20 @@ const CgnCTAStartOnboardingComponent: FC<Props> = (props: Props) => {
 /**
  * this is a dummy screen reachable only from a message CTA
  */
-const CgnCTAStartOnboardingScreen = (props: Props) => {
+const CgnCTAStartOnboardingScreen = () => {
   const navigation = useNavigation();
-  if (!props.isCgnEnabled) {
+  const isCgnEnabled = useIOSelector(isCGNEnabledSelector);
+
+  if (isCgnEnabled) {
+    return <CgnCTAStartOnboardingComponent />;
+  } else {
     Alert.alert(
       I18n.t("bonus.cgn.name"),
       I18n.t("bonus.state.completed.description")
     );
     navigation.goBack();
     return null;
-  } else {
-    return <CgnCTAStartOnboardingComponent {...props} />;
   }
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  startCgn: () => {
-    dispatch(cgnActivationStart());
-  },
-  loadAvailableBonus: () => dispatch(loadAvailableBonuses.request())
-});
-
-const mapStateToProps = (globalState: GlobalState) => ({
-  availableBonus: supportedAvailableBonusSelector(globalState),
-  cgnBonus: availableBonusTypesSelectorFromId(ID_CGN_TYPE)(globalState),
-  isCgnEnabled: isCGNEnabledSelector(globalState),
-  hasError: isAvailableBonusErrorSelector(globalState)
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CgnCTAStartOnboardingScreen);
+export default CgnCTAStartOnboardingScreen;

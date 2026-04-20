@@ -184,7 +184,6 @@
       "forgetCurrentSession": "Aktuelle Sitzung löschen",
       "clearAsyncStorage": "Inhalt von AsyncStorage löschen",
       "dumpAsyncStorage": "AsyncStorage-Inhalt herunterladen",
-      "sentryTestEvent": "Teile Fehler",
       "contextualHelpTitle": "Was du in deinem Profil machen kannst",
       "developerModeOn": "Entwicklermodus aktiviert",
       "cache": {
@@ -944,7 +943,7 @@
       "cardGeneric": "Karte",
       "a11y": {
         "credit": {
-          "hpan": "{{circuit}} mit der Endung {{spacedHpan}}"
+          "hpan": "Karte {{circuit}} mit der Endung {{spacedHpan}}"
         },
         "paypal": {
           "owner": "Konto: {{email}}"
