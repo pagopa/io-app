@@ -27,6 +27,9 @@ comment:
   require_changes: false
 
 ignore:
+  - "ts/@types"
+  - "ts/__mocks__"
+  - "ts/theme"
   - "ts/features/design-system"
   - "ts/features/**/playgrounds"
   - "ts/features/settings/devMode"
