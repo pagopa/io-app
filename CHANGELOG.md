@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.29.0-canary.8209](https://github.com/pagopa/io-app/compare/3.29.0-rc.2...3.29.0-canary.8209) (2026-04-20)
+
 ## [3.29.0-rc.2](https://github.com/pagopa/io-app/compare/3.29.0-rc.1...3.29.0-rc.2) (2026-04-17)
 
 
