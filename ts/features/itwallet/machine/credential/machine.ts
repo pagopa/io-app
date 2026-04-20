@@ -10,6 +10,8 @@ import {
   ObtainCredentialActorInput,
   ObtainCredentialActorOutput,
   ObtainStatusAssertionActorInput,
+  ProcessCredentialOfferActorInput,
+  ProcessCredentialOfferActorOutput,
   RequestCredentialActorInput,
   RequestCredentialActorOutput
 } from "./actors";
@@ -86,6 +88,10 @@ export const itwCredentialIssuanceMachine = setup({
       ReadonlyArray<CredentialBundle>,
       ObtainStatusAssertionActorInput
     >(notImplemented),
+    processCredentialOffer: fromPromise<
+      ProcessCredentialOfferActorOutput,
+      ProcessCredentialOfferActorInput
+    >(notImplemented),
     waitForSessionRefresh: fromCallback(notImplemented)
   },
   guards: {
@@ -105,6 +111,13 @@ export const itwCredentialIssuanceMachine = setup({
         "Waits for a credential selection in order to proceed with the issuance",
       tags: [ItwTags.Loading],
       on: {
+        "start-credential-offer": {
+          target: "CredentialOfferValidation",
+          actions: assign(({ event }) => ({
+            credentialOfferUri: event.itwCredentialOfferUri,
+            mode: "issuance"
+          }))
+        },
         "select-credential": {
           target: "EvaluateFlow",
           actions: [
@@ -114,6 +127,40 @@ export const itwCredentialIssuanceMachine = setup({
               mode: event.mode
             }))
           ]
+        }
+      }
+    },
+    CredentialOfferValidation: {
+      tags: [ItwTags.Loading],
+      invoke: {
+        src: "processCredentialOffer",
+        input: ({ context }) => ({
+          credentialOfferUri: context.credentialOfferUri!
+        }),
+        onDone: {
+          target: "CredentialOfferResolved",
+          actions: assign(({ event }) => ({
+            resolvedCredentialOffer: {
+              offer: event.output.offer,
+              grantDetails: event.output.grantDetails
+            }
+          }))
+        },
+
+        // TODO: better handle different error cases (e.g. invalid offer, network error, etc.) and map them to specific failure states
+        onError: {}
+      }
+    },
+    CredentialOfferResolved: {
+      on: {
+        "confirm-credential-offer": {
+          target: "EvaluateFlow",
+          actions: assign(({ context }) => ({
+            credentialType:
+              context.resolvedCredentialOffer?.grantDetails
+                .authorizationCodeGrant.scope,
+            mode: "issuance"
+          }))
         }
       }
     },

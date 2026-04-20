@@ -59,6 +59,7 @@ import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredential
 import { ItwOfflineWalletScreen } from "../wallet/screens/ItwOfflineWalletScreen";
 import { ItwCardOnboardingL3Screen } from "../onboarding/screens/ItwCardOnboardingL3Screen.tsx";
 import { ItwCardOnboardingL2Screen } from "../onboarding/screens/ItwCardOnboardingL2Screen.tsx";
+import { ItwIssuanceCredentialOfferIntroScreen } from "../issuance/offer/screens/ItwIssuanceCredentialOfferIntro";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -266,6 +267,10 @@ const InnerNavigator = memo(() => {
         name={ITW_ROUTES.ISSUANCE.UPGRADE_CREDENTIALS}
         component={ItwIssuanceUpgradeCredentialsScreen}
         options={hiddenHeader}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER.INTRO}
+        component={ItwIssuanceCredentialOfferIntroScreen}
       />
       {/* CREDENTIAL PRESENTATION */}
       <Stack.Screen

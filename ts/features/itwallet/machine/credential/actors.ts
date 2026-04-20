@@ -1,6 +1,10 @@
-import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
+import {
+  CredentialOffer,
+  IoWallet,
+  ItwVersion
+} from "@pagopa/io-react-native-wallet";
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
@@ -29,7 +33,6 @@ import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwSetWalletInstanceRenewalError } from "../../walletInstance/store/actions";
 import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
 import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../common/utils/itwStoreUtils";
-import { createCommonActorsImplementation } from "../utils/actors";
 import { Context } from "./context";
 
 export type GetWalletAttestationActorOutput = Awaited<
@@ -61,6 +64,15 @@ export type ObtainCredentialActorOutput = {
 };
 
 export type ObtainStatusAssertionActorInput = Pick<Context, "credentials">;
+
+export type ProcessCredentialOfferActorInput = {
+  credentialOfferUri: string;
+};
+
+export type ProcessCredentialOfferActorOutput = {
+  offer: CredentialOffer.CredentialOffer;
+  grantDetails: CredentialOffer.ExtractGrantDetailsResult;
+};
 
 /**
  * Creates the actors for the eid issuance machine
@@ -324,6 +336,24 @@ export const createCredentialIssuanceActorsImplementation = (
     );
   });
 
+  const processCredentialOffer = fromPromise<
+    ProcessCredentialOfferActorOutput,
+    ProcessCredentialOfferActorInput
+  >(async ({ input }) => {
+    assert(input.credentialOfferUri, "credentialOfferUri is undefined");
+
+    // TODO - handle different versions. Hardcoded for a first implementation
+    const wallet = new IoWallet({ version: "1.3.3" });
+
+    const offer = await wallet.CredentialsOffer.resolveCredentialOffer(
+      input.credentialOfferUri
+    );
+
+    const grantDetails = wallet.CredentialsOffer.extractGrantDetails(offer);
+
+    return { offer, grantDetails };
+  });
+
   return {
     verifyTrustFederation,
     getWalletAttestation,
@@ -331,6 +361,6 @@ export const createCredentialIssuanceActorsImplementation = (
     requestCredential,
     obtainCredential,
     obtainStatusAssertion,
-    ...createCommonActorsImplementation(store)
+    processCredentialOffer
   };
 };
