@@ -2480,7 +2480,8 @@
           },
           "cieScanning": {
             "idle": {
-              "title": "Poggia il retro del telefono sulla CIE",
+              "title": "Posiziona il retro del telefono sulla CIE",
+              "subtitle": "Fai scorrere il telefono sulla carta. Un suono o una vibrazione indicano che la carta è stata rilevata. Se la lettura non parte con il retro, prova con il lato anteriore del telefono.",
               "status": "Posiziona il telefono sulla CIE per iniziare la lettura."
             },
             "reading": {
