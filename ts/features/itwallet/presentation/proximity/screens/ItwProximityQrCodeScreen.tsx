@@ -13,7 +13,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { StyleSheet, useWindowDimensions, View } from "react-native";
 import QRCode from "react-native-qrcode-skia";
 import ItwIcon from "../../../../../../img/features/itWallet/brand/itw_icon.svg";
@@ -134,21 +134,22 @@ export const ItwProximityQrCodeScreen = ({
     supportRequest: true
   });
 
+  const qrCodeStatus = useMemo(() => {
+    if (shouldBlockProximityPresentation) {
+      return "PID_expired";
+    }
+    if (failure) {
+      return "generation_failed";
+    }
+    return "valid";
+  }, [shouldBlockProximityPresentation, failure]);
+
   useFocusEffect(
     useCallback(() => {
       if (source) {
-        const qrCodeStatus = shouldBlockProximityPresentation
-          ? "PID_expired"
-          : failure
-            ? "generation_failed"
-            : "valid";
-
-        trackItwProximityQrCode({
-          source,
-          qr_code_status: qrCodeStatus
-        });
+        trackItwProximityQrCode({ source, qr_code_status: qrCodeStatus });
       }
-    }, [source, failure, shouldBlockProximityPresentation])
+    }, [source, qrCodeStatus])
   );
 
   // When the screen is removed (back button), dismiss the proximity machine
