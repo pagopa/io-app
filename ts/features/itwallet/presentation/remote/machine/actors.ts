@@ -175,7 +175,11 @@ export const createRemoteActorsImplementation = (
         }
       );
 
-    if (ioWallet.RemotePresentation.verifyAuthRequestCertificateChain) {
+    // Optional certificate chain validation, if supported by the specs version
+    if (
+      requestObject.x5c &&
+      ioWallet.RemotePresentation.verifyAuthRequestCertificateChain
+    ) {
       await ioWallet.RemotePresentation.verifyAuthRequestCertificateChain(
         requestObjectEncodedJwt,
         { caRootCert: env.X509_CERT_ROOT }
