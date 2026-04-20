@@ -3,6 +3,8 @@ import { type CredentialIssuanceFailure } from "../../machine/credential/failure
 import { type IssuanceFailure } from "../../machine/eid/failure";
 import { RemoteFailure } from "../../presentation/remote/machine/failure.ts";
 import { ProximityFailure } from "../../presentation/proximity/machine/failure.ts";
+import { itwIntegrityServiceStatusSelector } from "../../issuance/store/selectors";
+import { useIOStore } from "../../../../store/hooks";
 
 interface PollForStoreValueOptions<T> {
   getState: () => GlobalState;
@@ -111,4 +113,30 @@ const mapFailureReason = (reason: unknown, origin?: string) => {
   }
 
   return reason;
+};
+
+/**
+ * Convenience function that wraps {@link pollForStoreValue} to check for the integrity service readiness.
+ * This functions is meant to be used primarily in machine actors.
+ * @param store The Redux store instance.
+ * @throws Error if the integrity service is not ready within the timeout period.
+ */
+export const ensureIntegrityServiceIsStoreReadyOrThrow = async (
+  store: ReturnType<typeof useIOStore>
+): Promise<void> => {
+  const integrityServiceStatus = await pollForStoreValue({
+    getState: store.getState,
+    selector: itwIntegrityServiceStatusSelector,
+    condition: value => value !== undefined
+  }).catch(() => {
+    throw new Error("Integrity service status check timed out");
+  });
+
+  // If the integrity service preparation is not ready (still undefined) or in an error state
+  // after 10 seconds the user will be prompted with an error, he will need to retry.
+  if (integrityServiceStatus !== "ready") {
+    throw new Error(
+      `Integrity service is not ready. Current status: ${integrityServiceStatus}`
+    );
+  }
 };
