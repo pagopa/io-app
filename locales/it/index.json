@@ -2434,7 +2434,7 @@
           },
           "cieCanInsertion": {
             "title": "Inserisci il codice a 6 cifre che trovi in basso a destra della CIE",
-            "description": "È il codice a 6 cifre (CAN) che trovi stampato sul fronte della Carta di Identità Elettronica, in basso a destra. [Dove lo trovo?](internal://can-location)",
+            "description": "È il codice che trovi sul fronte della Carta di Identità Elettronica, in basso a destra (CAN). [Dove lo trovo?](internal://can-location)",
             "bottomSheet": {
               "title": "Dove trovo il codice CAN?",
               "info": "Lo trovi stampato sul fronte della Carta di Identità Elettronica (CIE) di {{denomination}}, in basso a destra."
@@ -2442,7 +2442,7 @@
           },
           "cieScanningAdvisory": {
             "title": "Posiziona la CIE su una superficie stabile per la lettura",
-            "description": "Dovrai poggiare il retro del telefono sulla carta e tenerlo fermo per la lettura.",
+            "description": "Dovrai avvicinare il telefono alla carta e tenerlo fermo per la lettura. Rimuovi eventuali cover.",
             "primaryAction": "Inizia lettura CIE"
           },
           "androidNfcActivation": {
@@ -2511,7 +2511,7 @@
           },
           "cieCanAdvisory": {
             "title": "Prepara la Carta di Identità Elettronica (CIE) di {{denomination}}",
-            "description": "Dovrai usarla e inserire il suo codice a 6 cifre (CAN) che trovi stampato sul fronte in basso a destra.",
+            "description": "Dovrai inserire il codice a 6 cifre (CAN) che trovi sul fronte in basso a destra e poi avvicinare il tuo telefono alla carta.",
             "alert": {
               "title": "Vuoi interrompere l’apertura della notifica?",
               "message": "Puoi aprire la notifica SEND in qualsiasi altro momento, dovrai però ripartire dal codice QR.",
@@ -2531,8 +2531,8 @@
               "bottomSheet": {
                 "title": "Cosa ti serve?",
                 "featureInfos": [
-                  "La Carta di Identità Elettronica di {{name}}",
-                  "Il codice a 6 cifre (CAN) che trovi stampato sul fronte della carta, in basso a destra."
+                  "Tieni a portata di mano la Carta di Identità Elettronica (CIE) di {{name}}",
+                  "Non puoi accedere alla notifica con copie o screenshot del documento"
                 ]
               }
             },
@@ -2541,7 +2541,7 @@
               "body": "Controlla che il sistema operativo sia aggiornato oppure scopri cosa fare.",
               "featureInfoText": [
                 "Per leggere la CIE è necessario un dispositivo con chip NFC.",
-                "È richiesto un sistema operativo Android 6.0 o iOS 13 o superiori."
+                "È richiesto un sistema operativo Android 8 o iOS 15.1 o superiori."
               ],
               "cta": "Cosa posso fare?"
             },

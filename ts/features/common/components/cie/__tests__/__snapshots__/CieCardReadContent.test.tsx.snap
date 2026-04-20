@@ -1,13 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`CieCardReadContent when the Platform is "android" should match the snapshot when the input props are: {
-  title: 'Title 2',
-  pictogram: 'empty',
-  secondaryAction: {
-    label: 'Close',
-    onPress: [Function: bound fn] { [length]: 1, [name]: 'bound fn' }
-  }
-} 1`] = `
+exports[`CieCardReadContent when the Platform is "android" should match the snapshot when the input props are: {\\n  title: 'Title 2',\\n  pictogram: 'empty',\\n  secondaryAction: {\\n    label: 'Close',\\n    onPress: [Function: bound fn] { [length]: 1, [name]: 'bound fn' }\\n  }\\n} 1`] = `
 <View
   style={
     {
@@ -518,19 +511,7 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
 </View>
 `;
 
-exports[`CieCardReadContent when the Platform is "android" should match the snapshot when the input props are: {
-  title: 'Title 3',
-  pictogram: 'message',
-  hiddenProgressBar: true,
-  primaryAction: {
-    label: 'Open',
-    onPress: [Function: bound fn] { [length]: 1, [name]: 'bound fn' }
-  },
-  secondaryAction: {
-    label: 'Close',
-    onPress: [Function: bound fn] { [length]: 1, [name]: 'bound fn' }
-  }
-} 1`] = `
+exports[`CieCardReadContent when the Platform is "android" should match the snapshot when the input props are: {\\n  title: 'Title 3',\\n  pictogram: 'message',\\n  hiddenProgressBar: true,\\n  primaryAction: {\\n    label: 'Open',\\n    onPress: [Function: bound fn] { [length]: 1, [name]: 'bound fn' }\\n  },\\n  secondaryAction: {\\n    label: 'Close',\\n    onPress: [Function: bound fn] { [length]: 1, [name]: 'bound fn' }\\n  }\\n} 1`] = `
 <View
   style={
     {
@@ -1263,12 +1244,7 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
 </View>
 `;
 
-exports[`CieCardReadContent when the Platform is "android" should match the snapshot when the input props are: {
-  title: 'Title',
-  subtitle: 'Subtitle',
-  pictogram: 'success',
-  progress: 1
-} 1`] = `
+exports[`CieCardReadContent when the Platform is "android" should match the snapshot when the input props are: {\\n  title: 'Title',\\n  subtitle: 'Subtitle',\\n  pictogram: 'success',\\n  progress: 1\\n} 1`] = `
 <View
   style={
     {
@@ -1570,14 +1546,7 @@ exports[`CieCardReadContent when the Platform is "android" should match the snap
 </View>
 `;
 
-exports[`CieCardReadContent when the Platform is "ios" should match the snapshot when the input props are: {
-  title: 'Title 2',
-  pictogram: 'empty',
-  secondaryAction: {
-    label: 'Close',
-    onPress: [Function: bound fn] { [length]: 1, [name]: 'bound fn' }
-  }
-} 1`] = `
+exports[`CieCardReadContent when the Platform is "ios" should match the snapshot when the input props are: {\\n  title: 'Title 2',\\n  pictogram: 'empty',\\n  secondaryAction: {\\n    label: 'Close',\\n    onPress: [Function: bound fn] { [length]: 1, [name]: 'bound fn' }\\n  }\\n} 1`] = `
 <View
   style={
     {
@@ -2083,19 +2052,7 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
 </View>
 `;
 
-exports[`CieCardReadContent when the Platform is "ios" should match the snapshot when the input props are: {
-  title: 'Title 3',
-  pictogram: 'message',
-  hiddenProgressBar: true,
-  primaryAction: {
-    label: 'Open',
-    onPress: [Function: bound fn] { [length]: 1, [name]: 'bound fn' }
-  },
-  secondaryAction: {
-    label: 'Close',
-    onPress: [Function: bound fn] { [length]: 1, [name]: 'bound fn' }
-  }
-} 1`] = `
+exports[`CieCardReadContent when the Platform is "ios" should match the snapshot when the input props are: {\\n  title: 'Title 3',\\n  pictogram: 'message',\\n  hiddenProgressBar: true,\\n  primaryAction: {\\n    label: 'Open',\\n    onPress: [Function: bound fn] { [length]: 1, [name]: 'bound fn' }\\n  },\\n  secondaryAction: {\\n    label: 'Close',\\n    onPress: [Function: bound fn] { [length]: 1, [name]: 'bound fn' }\\n  }\\n} 1`] = `
 <View
   style={
     {
@@ -2813,12 +2770,7 @@ exports[`CieCardReadContent when the Platform is "ios" should match the snapshot
 </View>
 `;
 
-exports[`CieCardReadContent when the Platform is "ios" should match the snapshot when the input props are: {
-  title: 'Title',
-  subtitle: 'Subtitle',
-  pictogram: 'success',
-  progress: 1
-} 1`] = `
+exports[`CieCardReadContent when the Platform is "ios" should match the snapshot when the input props are: {\\n  title: 'Title',\\n  subtitle: 'Subtitle',\\n  pictogram: 'success',\\n  progress: 1\\n} 1`] = `
 <View
   style={
     {

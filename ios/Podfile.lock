@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (5.9.1)
+  - Alamofire (5.11.2)
   - boost (1.84.0)
   - BVLinearGradient (2.5.6):
     - React
@@ -113,8 +113,8 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - IoReactNativeHttpClient (1.1.1):
-    - Alamofire (~> 5.9.1)
+  - IoReactNativeHttpClient (1.2.0):
+    - Alamofire (~> 5.11)
     - boost
     - DoubleConversion
     - fast_float
@@ -4007,7 +4007,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
+  Alamofire: 400275dd1c6d87d95a041861d2a59da4b520a203
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
   BVLinearGradient: 44fd36b87f318e7933c4c91a6991442a5e3f5bcf
   CieSDK: f0413f57294d3df9cf915bc5b20e44b8ba2cb3cc
@@ -4026,7 +4026,7 @@ SPEC CHECKSUMS:
   glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
   hermes-engine: 9f4dfe93326146a1c99eb535b1cb0b857a3cd172
   IoReactNativeCie: 8c772d46d499acad8cfab4e5993c5f50d78cd9e9
-  IoReactNativeHttpClient: 8095efc7a0ef59631b5664b35711c3ab42056d52
+  IoReactNativeHttpClient: bc2f2838fe9f959375d4d7e0419b11ebf27af379
   IoReactNativeIso18013: 785e402750f29c9e2e316ae13e3fa5add5da9b17
   IOWalletCBOR: 92742ef1cbd1b627ba153d0c7c11b81ad22f45cc
   IOWalletProximity: 1d8fc9acc9d97d34364c42927af3ac682448977e

@@ -80,7 +80,7 @@ describe("the ZendeskChooseCategory screen", () => {
       );
       renderComponent(store);
       store.dispatch(getZendeskConfig.request());
-      expect(zendeskSupportFailureSpy).toBeCalled();
+      expect(zendeskSupportFailureSpy).toHaveBeenCalled();
     });
     it("if there isn't a category id", () => {
       const store: Store<GlobalState> = createStore(
@@ -96,7 +96,7 @@ describe("the ZendeskChooseCategory screen", () => {
           } as ZendeskCategories
         })
       );
-      expect(zendeskSupportFailureSpy).toBeCalled();
+      expect(zendeskSupportFailureSpy).toHaveBeenCalled();
     });
     it("if there isn't at least a category", () => {
       const store: Store<GlobalState> = createStore(
@@ -109,7 +109,7 @@ describe("the ZendeskChooseCategory screen", () => {
           panicMode: mockedZendeskConfig.panicMode
         })
       );
-      expect(zendeskSupportFailureSpy).toBeCalled();
+      expect(zendeskSupportFailureSpy).toHaveBeenCalled();
     });
   });
 
