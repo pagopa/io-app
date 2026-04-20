@@ -18,5 +18,6 @@ module.exports = {
   globalSetup: "./jestGlobalSetup.js",
   setupFilesAfterEnv: ["./jestAfterEnvSetup.js"],
   collectCoverage: true,
+  coverageReporters: ["lcov", "text"],
   testPathIgnorePatterns: [".*fiscal-code.test.ts$"]
 };
