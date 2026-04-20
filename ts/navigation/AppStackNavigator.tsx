@@ -12,7 +12,6 @@ import {
 import { PropsWithChildren, ReactElement, useEffect, useRef } from "react";
 
 import { Linking, View } from "react-native";
-import { ReactNavigationInstrumentation } from "../App";
 import { useStoredExperimentalDesign } from "../common/context/DSExperimentalContext";
 import { useStoredFontPreference } from "../common/context/DSTypefaceContext";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
@@ -90,9 +89,7 @@ export const AppStackNavigator = (): ReactElement => {
   return <AuthenticatedStackNavigator />;
 };
 
-type InnerNavigationContainerProps = PropsWithChildren<{
-  routingInstrumentation?: ReactNavigationInstrumentation;
-}>;
+type InnerNavigationContainerProps = PropsWithChildren;
 
 const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
   const routeNameRef = useRef<string>(undefined);
@@ -185,11 +182,6 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
       linking={linking}
       fallback={<LoadingSpinnerOverlay isLoading={true} />}
       onReady={() => {
-        if (props.routingInstrumentation) {
-          props.routingInstrumentation.registerNavigationContainer(
-            navigationRef
-          );
-        }
         NavigationService.setNavigationReady();
         routeNameRef.current = navigationRef.current?.getCurrentRoute()?.name;
       }}
@@ -220,12 +212,8 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
  * Wraps the NavigationContainer with the AppStackNavigator (Root navigator of the app)
  * @constructor
  */
-export const IONavigationContainer = ({
-  routingInstrumentation
-}: {
-  routingInstrumentation?: ReactNavigationInstrumentation;
-}) => (
-  <InnerNavigationContainer routingInstrumentation={routingInstrumentation}>
+export const IONavigationContainer = () => (
+  <InnerNavigationContainer>
     <AppStackNavigator />
   </InnerNavigationContainer>
 );

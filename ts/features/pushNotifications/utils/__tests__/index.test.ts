@@ -3,7 +3,6 @@ import PushNotificationIOS, {
   AuthorizationStatus,
   PushNotificationPermissions
 } from "@react-native-community/push-notification-ios";
-import * as Sentry from "@sentry/react-native";
 import PushNotification from "react-native-push-notification";
 import NotificationsUtils from "react-native-notifications-utils";
 import {
@@ -25,12 +24,6 @@ jest.mock("@react-native-community/push-notification-ios", () => ({
     callback: (permissions: PushNotificationPermissions) => void
   ) => callback({}),
   requestPermissions: () => undefined
-}));
-
-// As above
-jest.mock("@sentry/react-native", () => ({
-  captureException: jest.fn(),
-  captureMessage: jest.fn()
 }));
 
 // As above
@@ -71,14 +64,6 @@ const testCheckNotificationPermissionsThrowsiOS = () => {
 
     const hasPermission = await checkNotificationPermissions();
 
-    expect(Sentry.captureException).toHaveBeenCalledTimes(1);
-    expect(Sentry.captureException).toHaveBeenCalledWith(Error("Test error"));
-
-    expect(Sentry.captureMessage).toHaveBeenCalledTimes(1);
-    expect(Sentry.captureMessage).toHaveBeenCalledWith(
-      "[PushNotifications] 'checkNotificationPermissions' has thrown an exception on iOS"
-    );
-
     expect(hasPermission).toBe(false);
   });
 };
@@ -91,13 +76,6 @@ const testCheckNotificationPermissionsThrowsAndroid = () => {
     });
 
     const hasPermission = await checkNotificationPermissions();
-
-    expect(Sentry.captureException).toHaveBeenCalledTimes(1);
-    expect(Sentry.captureException).toHaveBeenCalledWith(Error("Test error"));
-    expect(Sentry.captureMessage).toHaveBeenCalledTimes(1);
-    expect(Sentry.captureMessage).toHaveBeenCalledWith(
-      "[PushNotifications] 'checkNotificationPermissions' has thrown an exception on Android"
-    );
 
     expect(hasPermission).toBe(false);
   });
@@ -237,8 +215,6 @@ const testRequestNotificationPermissionsOniOS = () => {
 
       const permissionHasBeenGiven = await requestNotificationPermissions();
 
-      expect(Sentry.captureException).toHaveBeenCalledTimes(0);
-      expect(Sentry.captureMessage).toHaveBeenCalledTimes(0);
       expect(permissionHasBeenGiven).toBe(expectedResult);
     });
   });
@@ -271,8 +247,6 @@ const testRequestNotificationPermissionsOnAndroid = () => {
 
       const permissionHasBeenGiven = await requestNotificationPermissions();
 
-      expect(Sentry.captureException).toHaveBeenCalledTimes(0);
-      expect(Sentry.captureMessage).toHaveBeenCalledTimes(0);
       expect(permissionHasBeenGiven).toBe(expectedResult);
     });
   });
@@ -290,14 +264,6 @@ const testRequestNotificationPermissionsOniOSThrows = () => {
 
     const permissionHasBeenGiven = await requestNotificationPermissions();
 
-    expect(Sentry.captureException).toHaveBeenCalledTimes(1);
-    expect(Sentry.captureException).toHaveBeenCalledWith("Test rejection");
-
-    expect(Sentry.captureMessage).toHaveBeenCalledTimes(1);
-    expect(Sentry.captureMessage).toHaveBeenCalledWith(
-      "[PushNotifications] 'requestNotificationPermissions' has thrown an exception on iOS"
-    );
-
     expect(permissionHasBeenGiven).toBe(false);
   });
 };
@@ -313,14 +279,6 @@ const testRequestNotificationPermissionsOnAndroidThrows = () => {
     );
 
     const permissionHasBeenGiven = await requestNotificationPermissions();
-
-    expect(Sentry.captureException).toHaveBeenCalledTimes(1);
-    expect(Sentry.captureException).toHaveBeenCalledWith("Test rejection");
-
-    expect(Sentry.captureMessage).toHaveBeenCalledTimes(1);
-    expect(Sentry.captureMessage).toHaveBeenCalledWith(
-      "[PushNotifications] 'requestNotificationPermissions' has thrown an exception on Android"
-    );
 
     expect(permissionHasBeenGiven).toBe(false);
   });
