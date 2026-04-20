@@ -4,6 +4,8 @@ import {
   HSpacer,
   IOSkeleton,
   IOToast,
+  IOVisualCostants,
+  LoadingSpinner,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/core";
@@ -11,11 +13,9 @@ import { RouteProp } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { useRef } from "react";
-import { ActivityIndicator } from "react-native";
 import I18n from "i18next";
 import { OperationListDTO } from "../../../../../definitions/idpay/OperationListDTO";
 import { IOListViewWithLargeHeader } from "../../../../components/ui/IOListViewWithLargeHeader";
-import customVariables from "../../../../theme/variables";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { useIdPayTimelineDetailsBottomSheet } from "../../timeline/components/IdPayTimelineDetailsBottomSheet";
 import { IdPayTimelineOperationListItem } from "../components/IdPayTimelineOperationListItem";
@@ -30,15 +30,10 @@ type IdPayOperationsListScreenRouteProps = RouteProp<
 >;
 
 const TimelineLoader = () => (
-  <ActivityIndicator
-    animating={true}
-    size={"large"}
-    style={{ padding: 12 }}
-    color={customVariables.brandPrimary}
-    accessible={true}
+  <LoadingSpinner
+    size={48}
     accessibilityHint={I18n.t("global.accessibility.activityIndicator.hint")}
     accessibilityLabel={I18n.t("global.accessibility.activityIndicator.label")}
-    importantForAccessibility={"no-hide-descendants"}
     testID={"activityIndicator"}
   />
 );
@@ -122,7 +117,7 @@ export const IdPayOperationsListScreen = () => {
       }
       contentContainerStyle={{
         paddingBottom: 120,
-        paddingHorizontal: customVariables.contentPadding
+        paddingHorizontal: IOVisualCostants.appMarginDefault
       }}
       ItemSeparatorComponent={() => <Divider />}
       onEndReached={fetchNextPage}
