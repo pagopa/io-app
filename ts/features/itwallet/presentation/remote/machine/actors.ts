@@ -157,7 +157,6 @@ export const createRemoteActorsImplementation = (
       requestObjectEncodedJwt,
       "Missing required input requestObjectEncodedJwt"
     );
-    assert(rpConf, "Missing required input rpConf");
 
     const wiaSdJwt = walletInstanceAttestation[CredentialFormat.SD_JWT];
     assert(wiaSdJwt, "Missing Wallet Attestation in SD-JWT format");
@@ -237,7 +236,7 @@ export const createRemoteActorsImplementation = (
       input;
 
     assert(
-      rpConf && presentationDetails && requestObject,
+      presentationDetails && requestObject,
       "Missing required sendAuthorizationResponse actor params"
     );
 
