@@ -1,20 +1,30 @@
-import I18n from "i18next";
-import { useCallback } from "react";
+import { Body, H2, VSpacer, VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
-import { ContentWrapper, ListItemHeader } from "@pagopa/io-app-design-system";
-import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
-import { ItwParamsList } from "../../../navigation/ItwParamsList";
+import I18n from "i18next";
+import { useCallback } from "react";
+import IOMarkdown from "../../../../../components/IOMarkdown";
+import { IOScrollView } from "../../../../../components/ui/IOScrollView";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import {
+  IOStackNavigationRouteProps,
+  useIONavigation
+} from "../../../../../navigation/params/AppParamsList";
+import { useIOSelector } from "../../../../../store/hooks";
 import {
   StartupStatusEnum,
   isStartupLoaded
 } from "../../../../../store/reducers/startup";
-import { ItwRemoteLoadingScreen } from "../../../presentation/remote/components/ItwRemoteLoadingScreen";
-import { useIOSelector } from "../../../../../store/hooks";
+import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation";
+import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
-import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
-import { selectResolvedCredentialOfferOption } from "../../../machine/credential/selectors";
-import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
+import {
+  selectCredentialIntroContentOption,
+  selectCredentialTypeOption,
+  selectResolvedCredentialOfferOption
+} from "../../../machine/credential/selectors";
+import { ItwParamsList } from "../../../navigation/ItwParamsList";
+import { ItwRemoteLoadingScreen } from "../../../presentation/remote/components/ItwRemoteLoadingScreen";
 
 export type ItwIssuanceCredentialOfferScreenNavigationParams = {
   itwCredentialOfferUri: string;
@@ -25,74 +35,100 @@ type ScreenProps = IOStackNavigationRouteProps<
   "ITW_ISSUANCE_CREDENTIAL_OFFER_INTRO"
 >;
 
-export const ItwIssuanceCredentialOfferIntroScreen = ({
-  route
-}: ScreenProps) => {
+const ItwIssuanceCredentialOfferIntroScreen = ({ route }: ScreenProps) => {
+  useItwDisableGestureNavigation();
+
   const startupStatus = useIOSelector(isStartupLoaded);
 
   if (startupStatus !== StartupStatusEnum.AUTHENTICATED) {
-    return (
-      <ItwRemoteLoadingScreen
-        title={I18n.t(
-          "features.itWallet.presentation.remote.loadingScreen.request"
-        )}
-      />
-    );
+    return <ItwRemoteLoadingScreen title={I18n.t("global.genericWaiting")} />;
   }
 
   return (
-    <ContentView itwCredentialOfferUri={route.params.itwCredentialOfferUri} />
+    <ContentView credentialOfferUri={route.params.itwCredentialOfferUri} />
   );
 };
 
-const ContentView = ({
-  itwCredentialOfferUri
-}: {
-  itwCredentialOfferUri: string;
-}) => {
-  const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
+type ContentViewProps = {
+  credentialOfferUri: string;
+};
 
+const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
+  const navigation = useIONavigation();
+  const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const resolvedCredentialOfferOption =
     ItwCredentialIssuanceMachineContext.useSelector(
       selectResolvedCredentialOfferOption
     );
+  const credentialTypeOption = ItwCredentialIssuanceMachineContext.useSelector(
+    selectCredentialTypeOption
+  );
+  const introductionContentOption =
+    ItwCredentialIssuanceMachineContext.useSelector(
+      selectCredentialIntroContentOption
+    );
+
+  useHeaderSecondLevel({
+    title: "",
+    goBack: () => {
+      machineRef.send({ type: "close" });
+      navigation.goBack();
+    }
+  });
 
   useFocusEffect(
     useCallback(() => {
       if (O.isNone(resolvedCredentialOfferOption)) {
         machineRef.send({
           type: "start-credential-offer",
-          itwCredentialOfferUri
+          itwCredentialOfferUri: credentialOfferUri
         });
       }
-    }, [machineRef, itwCredentialOfferUri, resolvedCredentialOfferOption])
+    }, [machineRef, credentialOfferUri, resolvedCredentialOfferOption])
   );
 
-  if (O.isNone(resolvedCredentialOfferOption)) {
-    return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
+  const handleContinue = useCallback(() => {
+    machineRef.send({ type: "confirm-credential-offer" });
+  }, [machineRef]);
+
+  if (
+    O.isNone(resolvedCredentialOfferOption) ||
+    O.isNone(credentialTypeOption)
+  ) {
+    return <ItwRemoteLoadingScreen title={I18n.t("global.genericWaiting")} />;
   }
 
+  const fallbackTitle = I18n.t(
+    "features.itWallet.issuance.credentialOffer.intro.fallbackTitle"
+  );
+  const title =
+    getCredentialNameFromType(credentialTypeOption.value, fallbackTitle) ||
+    fallbackTitle;
+
   return (
-    <IOScrollViewWithLargeHeader
-      title={{ label: I18n.t("features.itWallet.identification.nfc.title") }}
-      description={I18n.t("features.itWallet.identification.nfc.description")}
+    <IOScrollView
       actions={{
         type: "SingleButton",
         primary: {
-          label: I18n.t("features.itWallet.identification.nfc.primaryAction"),
-          onPress: () => {
-            machineRef.send({
-              type: "confirm-credential-offer"
-            });
-          }
+          label: I18n.t("global.buttons.continue"),
+          onPress: handleContinue
         }
       }}
     >
-      <ContentWrapper>
-        <ListItemHeader
-          label={I18n.t("features.itWallet.identification.nfc.header")}
-        />
-      </ContentWrapper>
-    </IOScrollViewWithLargeHeader>
+      <VStack>
+        <H2>{title}</H2>
+        <Body>
+          {I18n.t("features.itWallet.issuance.credentialIntro.subtitle")}
+        </Body>
+      </VStack>
+      {O.isSome(introductionContentOption) && (
+        <>
+          <VSpacer size={16} />
+          <IOMarkdown content={introductionContentOption.value} />
+        </>
+      )}
+    </IOScrollView>
   );
 };
+
+export { ItwIssuanceCredentialOfferIntroScreen };
