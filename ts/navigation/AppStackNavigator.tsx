@@ -37,7 +37,7 @@ import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import {
   IONavigationDarkTheme,
   IONavigationLightTheme
-} from "../theme/navigations";
+} from "./theme";
 import { isTestEnv } from "../utils/environment";
 import { useOnFirstRender } from "../utils/hooks/useOnFirstRender";
 import {

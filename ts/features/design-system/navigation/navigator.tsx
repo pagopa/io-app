@@ -12,7 +12,7 @@ import { Platform } from "react-native";
 import {
   IONavigationDarkTheme,
   IONavigationLightTheme
-} from "../../../theme/navigations";
+} from "../../../navigation/theme";
 import { isGestureEnabled } from "../../../utils/navigation";
 import { DesignSystem } from "../DesignSystem";
 import { DSAdvice } from "../core/DSAdvice";
