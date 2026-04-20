@@ -1,6 +1,6 @@
 {
   "name": "io",
-  "version": "3.29.0-rc.1",
+  "version": "3.29.0-rc.2",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -62,7 +62,7 @@
     "@pagopa/io-react-native-cie": "1.3.5-rc.2",
     "@pagopa/io-react-native-cieid": "0.4.0",
     "@pagopa/io-react-native-crypto": "^1.2.3",
-    "@pagopa/io-react-native-http-client": "1.1.1",
+    "@pagopa/io-react-native-http-client": "1.2.0",
     "@pagopa/io-react-native-integrity": "^0.3.2",
     "@pagopa/io-react-native-iso18013": "^0.8.1",
     "@pagopa/io-react-native-jwt": "^2.1.0",
