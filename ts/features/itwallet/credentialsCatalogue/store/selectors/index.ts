@@ -105,7 +105,7 @@ export const itwAvailableCredentialsListSelector = createSelector(
     return catalogue.credentials
       .filter(credential => credential.credential_type !== CredentialType.PID)
       .map(credential => ({
-        name: credential.name,
+        name: credential.name ?? credential.credential_type, // TODO: [SIW-4180] handle localized names (name_l10n_id)
         type: credential.credential_type
       }));
   }
