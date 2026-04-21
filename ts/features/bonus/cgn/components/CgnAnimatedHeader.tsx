@@ -17,7 +17,7 @@ type CgnAnimatedHeaderProps = {
   ref?: React.Ref<View>;
 };
 
-const HEIGHT = Platform.select({ ios: 210, android: 170 });
+const HEIGHT = Platform.select({ ios: 210, android: 185 });
 
 const CgnAnimatedHeader = ({ children, ref }: CgnAnimatedHeaderProps) => (
   <View
