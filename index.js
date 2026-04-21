@@ -8,17 +8,13 @@ import "react-native-get-random-values";
 import "react-native-quick-base64";
 import {
   AlertStatic as Alert,
-  AppRegistry,
-  Text,
-  TextInput,
-  LogBox
+  AppRegistry
 } from "react-native";
 import DeviceInfo from "react-native-device-info";
 import {
   setJSExceptionHandler,
   setNativeExceptionHandler
 } from "react-native-exception-handler";
-import * as Sentry from "@sentry/react-native";
 
 import App from "./ts/App";
 import "./ts/i18n";
@@ -27,8 +23,6 @@ import { name as appName } from "./app.json";
 
 const errorHandler = (e, isFatal) => {
   if (isFatal) {
-    Sentry.captureMessage("JSException");
-    Sentry.captureException(e);
     if (isMixpanelInstanceInitialized()) {
       mixpanelTrack("APPLICATION_ERROR", {
         TYPE: "js",
@@ -51,8 +45,6 @@ const errorHandler = (e, isFatal) => {
 
 setJSExceptionHandler(errorHandler);
 setNativeExceptionHandler(exceptionString => {
-  Sentry.captureMessage("NativeException");
-  Sentry.captureException(exceptionString);
   if (isMixpanelInstanceInitialized()) {
     mixpanelTrack("APPLICATION_ERROR", {
       TYPE: "native",

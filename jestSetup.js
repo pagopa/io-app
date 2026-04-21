@@ -130,8 +130,6 @@ jest.mock("@gorhom/bottom-sheet", () => {
   };
 });
 
-jest.mock("@sentry/react-native");
-
 jest.mock("@pagopa/io-app-design-system", () => {
   const actual = jest.requireActual("@pagopa/io-app-design-system");
   const React = require("react");

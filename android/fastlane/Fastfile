@@ -20,6 +20,24 @@ platform :android do
     # ENV["SLACK_URL"] = "https://hooks.slack.com/services/..."
   end
 
+  desc "Get current canary version code from Google Play"
+  lane :current_canary_version_code do
+    version_codes = google_play_track_version_codes(
+      package_name: "it.pagopa.io.app.canary",
+      track: "internal"
+    ) || []
+
+    current_code = (version_codes.map(&:to_i).max || 0)
+
+    if ENV["GITHUB_OUTPUT"]
+      File.open(ENV["GITHUB_OUTPUT"], "a") do |file|
+        file.puts("CURRENT_CANARY_VERSION_CODE=#{current_code}")
+      end
+    end
+
+    UI.message("CURRENT_CANARY_VERSION_CODE=#{current_code}")
+  end
+
   desc "Runs all the tests"
   lane :test do
     gradle(task: "test")
