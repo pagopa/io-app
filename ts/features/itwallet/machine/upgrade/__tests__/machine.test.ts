@@ -1,11 +1,14 @@
-import { createActor, fromPromise, waitFor } from "xstate";
+import { createActor, fromCallback, fromPromise, waitFor } from "xstate";
 import { itwCredentialUpgradeMachine } from "../machine";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import {
   LoadContextOutput,
   UpgradeCredentialParams,
-  UpgradeCredentialOutput
+  UpgradeCredentialOutput,
+  RequestAccessTokenOutput,
+  RequestAccessTokenParams
 } from "../actors";
+import { ItwSessionExpiredError } from "../../../api/client";
 
 const mockLoadContext = jest.fn(() => Promise.resolve({} as LoadContextOutput));
 
@@ -27,11 +30,13 @@ const makeUpgradeOutput = (
   credential: CredentialMetadata
 ): UpgradeCredentialOutput => ({
   credentialType: credential.credentialType,
-  credentials: [{ credential: "raw-jwt", metadata: credential }]
+  credentials: [{ credential: "raw-jwt", metadata: credential }],
+  walletUnitAttestations: { wua1: "wua-jwt" }
 });
 
 describe("itwCredentialUpgradeMachine", () => {
   it("should immediately complete if there are no credentials", async () => {
+    const mockRequestAccessToken = jest.fn();
     const mockUpgradeCredential = jest.fn(() =>
       Promise.reject(new Error("should not be called"))
     );
@@ -39,6 +44,10 @@ describe("itwCredentialUpgradeMachine", () => {
 
     const machine = itwCredentialUpgradeMachine.provide({
       actors: {
+        requestAccessToken: fromPromise<
+          RequestAccessTokenOutput,
+          RequestAccessTokenParams
+        >(mockRequestAccessToken),
         loadContext: fromPromise<LoadContextOutput>(mockLoadContext),
         upgradeCredential: fromPromise<
           UpgradeCredentialOutput,
@@ -65,6 +74,7 @@ describe("itwCredentialUpgradeMachine", () => {
   });
 
   it("should upgrade credentials one by one and complete", async () => {
+    const mockRequestAccessToken = jest.fn();
     const mockUpgradeCredential = jest.fn(({ input }) =>
       Promise.resolve(makeUpgradeOutput(input.credential))
     );
@@ -72,6 +82,10 @@ describe("itwCredentialUpgradeMachine", () => {
 
     const machine = itwCredentialUpgradeMachine.provide({
       actors: {
+        requestAccessToken: fromPromise<
+          RequestAccessTokenOutput,
+          RequestAccessTokenParams
+        >(mockRequestAccessToken),
         loadContext: fromPromise<LoadContextOutput>(mockLoadContext),
         upgradeCredential: fromPromise<
           UpgradeCredentialOutput,
@@ -104,6 +118,7 @@ describe("itwCredentialUpgradeMachine", () => {
   });
 
   it("should collect failed credentials in output", async () => {
+    const mockRequestAccessToken = jest.fn();
     const mockUpgradeCredential = jest.fn(({ input }) => {
       if (input.credential.credentialType === "fail") {
         return Promise.reject(new Error("fail"));
@@ -115,6 +130,10 @@ describe("itwCredentialUpgradeMachine", () => {
 
     const machine = itwCredentialUpgradeMachine.provide({
       actors: {
+        requestAccessToken: fromPromise<
+          RequestAccessTokenOutput,
+          RequestAccessTokenParams
+        >(mockRequestAccessToken),
         loadContext: fromPromise<LoadContextOutput>(mockLoadContext),
         upgradeCredential: fromPromise<
           UpgradeCredentialOutput,
@@ -144,5 +163,60 @@ describe("itwCredentialUpgradeMachine", () => {
     expect(actor.getSnapshot().output?.failedCredentials).toEqual([
       expect.objectContaining({ credentialType: "fail" })
     ]);
+  });
+
+  it("Should wait for session refresh then retry the credentials upgrade", async () => {
+    const mockRequestAccessToken = jest.fn();
+    const waitForSessionRefresh = jest.fn();
+    const handleSessionExpired = jest.fn();
+    const mockUpgradeCredential = jest
+      .fn()
+      .mockRejectedValueOnce(new ItwSessionExpiredError());
+    mockUpgradeCredential.mockImplementation(({ input }) =>
+      Promise.resolve(makeUpgradeOutput(input.credential))
+    );
+    const mockStoreCredential = jest.fn();
+
+    const machine = itwCredentialUpgradeMachine.provide({
+      actors: {
+        requestAccessToken: fromPromise<
+          RequestAccessTokenOutput,
+          RequestAccessTokenParams
+        >(mockRequestAccessToken),
+        loadContext: fromPromise<LoadContextOutput>(mockLoadContext),
+        upgradeCredential: fromPromise<
+          UpgradeCredentialOutput,
+          UpgradeCredentialParams
+        >(mockUpgradeCredential),
+        waitForSessionRefresh: fromCallback(waitForSessionRefresh)
+      },
+      actions: { storeCredential: mockStoreCredential, handleSessionExpired }
+    });
+
+    const credentials = [
+      makeCredential({ credentialType: "expire-then-ok" }),
+      makeCredential({ credentialType: "ok" })
+    ];
+
+    const actor = createActor(machine, {
+      input: {
+        credentials,
+        issuanceMode: "upgrade"
+      }
+    });
+    actor.start();
+
+    await waitFor(actor, snap => snap.matches("WaitingForSessionRefresh"));
+    expect(handleSessionExpired).toHaveBeenCalledTimes(1);
+
+    actor.send({ type: "session-refresh-complete" });
+
+    await waitFor(actor, snap => snap.matches("Completed"));
+
+    expect(mockUpgradeCredential).toHaveBeenCalledTimes(3); // 1 failed for session expired + 2 successful
+    expect(mockStoreCredential).toHaveBeenCalledTimes(2);
+
+    expect(actor.getSnapshot().value).toBe("Completed");
+    expect(actor.getSnapshot().output).toEqual({ failedCredentials: [] });
   });
 });

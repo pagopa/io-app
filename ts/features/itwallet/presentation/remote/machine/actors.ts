@@ -6,10 +6,10 @@ import { assert } from "../../../../../utils/assert";
 import { IO_UNIVERSAL_LINK_PREFIX } from "../../../../../utils/navigation";
 import { sessionTokenSelector } from "../../../../authentication/common/store/selectors";
 import { Env } from "../../../common/utils/environment";
-import { getAttestation } from "../../../common/utils/itwAttestationUtils";
+import { getWalletInstanceAttestation } from "../../../common/utils/itwAttestationUtils";
 import { WIA_KEYTAG } from "../../../common/utils/itwCryptoContextUtils";
 import { getIoWallet } from "../../../common/utils/itwIoWallet";
-import { pollForStoreValue } from "../../../common/utils/itwStoreUtils";
+import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../../common/utils/itwStoreUtils";
 import {
   CredentialFormat,
   CredentialMetadata,
@@ -17,10 +17,7 @@ import {
   WalletInstanceAttestations
 } from "../../../common/utils/itwTypesUtils";
 import { CredentialsVault } from "../../../credentials/utils/vault";
-import {
-  itwIntegrityKeyTagSelector,
-  itwIntegrityServiceStatusSelector
-} from "../../../issuance/store/selectors";
+import { itwIntegrityKeyTagSelector } from "../../../issuance/store/selectors";
 import {
   enrichPresentationDetails,
   getInvalidCredentials
@@ -267,17 +264,7 @@ export const createRemoteActorsImplementation = (
     async () => {
       // In the same-device flow the app might be launched directly to the presentation machine,
       // and the integrity service necessary to get the attestation might not yet be ready.
-      const integrityServiceStatus = await pollForStoreValue({
-        getState: store.getState,
-        selector: itwIntegrityServiceStatusSelector,
-        condition: value => value !== undefined
-      }).catch(() => {
-        throw new Error("Integrity service status check timed out");
-      });
-      assert(
-        integrityServiceStatus === "ready",
-        `Integrity service status is ${integrityServiceStatus}`
-      );
+      await ensureIntegrityServiceIsStoreReadyOrThrow(store);
 
       const sessionToken = sessionTokenSelector(store.getState());
       const integrityKeyTag = O.toUndefined(
@@ -287,7 +274,12 @@ export const createRemoteActorsImplementation = (
       assert(sessionToken, "sessionToken is undefined");
       assert(integrityKeyTag, "integrityKeyTag is undefined");
 
-      return getAttestation(env, itwVersion, integrityKeyTag, sessionToken);
+      return getWalletInstanceAttestation(
+        env,
+        itwVersion,
+        integrityKeyTag,
+        sessionToken
+      );
     }
   );
 
