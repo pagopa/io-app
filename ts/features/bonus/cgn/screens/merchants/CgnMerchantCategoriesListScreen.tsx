@@ -11,8 +11,6 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { useEffect, useMemo, useState } from "react";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -84,62 +82,53 @@ export const CgnMerchantCategoriesListScreen = () => {
     category: ProductCategoryWithNewDiscountsCount,
     index: number
   ) => {
-    const specs = getCategorySpecs(category.productCategory);
+    const specsOption = getCategorySpecs(category.productCategory);
+    if (!("value" in specsOption)) {
+      return null;
+    }
+
+    const s = specsOption.value;
     const countAvailable = category.newDiscounts > 0;
 
-    return pipe(
-      specs,
-      O.fold(
-        () => null,
-        s => {
-          const accessibilityLabel =
-            (countAvailable
-              ? `${I18n.t("bonus.cgn.merchantsList.categoriesList.a11y", {
-                  name: I18n.t(s.nameKey),
-                  count: category.newDiscounts
-                })}`
-              : `${I18n.t(s.nameKey)}`) +
-            getListItemAccessibilityLabelCount(categoriesToArray.length, index);
+    const accessibilityLabel =
+      (countAvailable
+        ? `${I18n.t(s.nameKey)} ${I18n.t("bonus.cgn.merchantsList.news")}`
+        : `${I18n.t(s.nameKey)}`) +
+      getListItemAccessibilityLabelCount(categoriesToArray.length, index);
 
-          return (
-            <ContentWrapper key={category.productCategory}>
-              <ListItemNav
-                value={
-                  countAvailable ? (
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        alignItems: "center"
-                      }}
-                    >
-                      <H6>{I18n.t(s.nameKey)}</H6>
-                      <Badge
-                        accessible={false}
-                        text={`${category?.newDiscounts}`}
-                        variant="cgn"
-                      />
-                    </View>
-                  ) : (
-                    I18n.t(s.nameKey)
-                  )
-                }
-                accessibilityLabel={accessibilityLabel}
-                onPress={() => {
-                  navigation.navigate(
-                    CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY,
-                    {
-                      category: s.type
-                    }
-                  );
+    return (
+      <ContentWrapper key={category.productCategory}>
+        <ListItemNav
+          value={
+            countAvailable ? (
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center"
                 }}
-                iconColor={theme["icon-decorative"]}
-                icon={s.icon}
-              />
-            </ContentWrapper>
-          );
-        }
-      )
+              >
+                <H6>{I18n.t(s.nameKey)}</H6>
+                <Badge
+                  accessible={false}
+                  text={I18n.t("bonus.cgn.merchantsList.news")}
+                  variant="cgn"
+                />
+              </View>
+            ) : (
+              I18n.t(s.nameKey)
+            )
+          }
+          accessibilityLabel={accessibilityLabel}
+          onPress={() => {
+            navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY, {
+              category: s.type
+            });
+          }}
+          iconColor={theme["icon-decorative"]}
+          icon={s.icon}
+        />
+      </ContentWrapper>
     );
   };
 
