@@ -2,6 +2,43 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.29.0-canary.8211](https://github.com/pagopa/io-app/compare/3.29.0-rc.3...3.29.0-canary.8211) (2026-04-21)
+
+
+### Features
+
+* **itwallet:** migrate background task from react-native-background-fetch to expo-background-task ([22787a1](https://github.com/pagopa/io-app/commit/22787a1e79a77d4d26b1b239f8c51a51214fa83e))
+* [[SIW-4084](https://pagopa.atlassian.net/browse/SIW-4084)] add backgroundFetch feature (store, saga, hook) ([de92afb](https://github.com/pagopa/io-app/commit/de92afb33bd06758a298c89828d89fe9a34aa52c))
+* [[SIW-4084](https://pagopa.atlassian.net/browse/SIW-4084)] add lastStatusUpdateDate to wallet instance state ([af1bc78](https://github.com/pagopa/io-app/commit/af1bc782728b26f56db0a8d6186144bd06de2c11))
+* [[SIW-4084](https://pagopa.atlassian.net/browse/SIW-4084)] export checkWalletInstanceAndCredentialsValiditySaga and add Mixpanel placeholder ([0b5e259](https://github.com/pagopa/io-app/commit/0b5e259cb158999a10a723b918aa24fd6f3fd5ea))
+* [[SIW-4084](https://pagopa.atlassian.net/browse/SIW-4084)] wire background fetch into app bootstrap ([ad9eb4e](https://github.com/pagopa/io-app/commit/ad9eb4e23da886b0b7259d0b5463d7224bf24b1c))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-3282](https://pagopa.atlassian.net/browse/SIW-3282)] Fix back navigation in eID reissuance actions ([#7812](https://github.com/pagopa/io-app/issues/7812)) ([40f10ea](https://github.com/pagopa/io-app/commit/40f10ead2a9368521f5ffbc8c6557190b30c9058))
+* tests ([7aa53f1](https://github.com/pagopa/io-app/commit/7aa53f101d7b065802d10002b886938719bf8844))
+* tests ([63a3b3d](https://github.com/pagopa/io-app/commit/63a3b3d7c769f3d23e8c003fc0c62ed30806f3e0))
+* **itwallet:** restore missing imports in background task tests ([4847373](https://github.com/pagopa/io-app/commit/4847373f6fa59669a7794da7901a63cab6250447))
+
+
+### Chores
+
+* [[IEL-411](https://pagopa.atlassian.net/browse/IEL-411)] Updated copy for CIE scan screen on Android ([#8046](https://github.com/pagopa/io-app/issues/8046)) ([8b32c32](https://github.com/pagopa/io-app/commit/8b32c320b05adf74378331591da935ef2e4118b0))
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Adjust README workflow badge reference ([#8040](https://github.com/pagopa/io-app/issues/8040)) ([8d40e6e](https://github.com/pagopa/io-app/commit/8d40e6e8f32c7acdc9f93995f589d5c0a3512d8c))
+* [[SIW-4084](https://pagopa.atlassian.net/browse/SIW-4084)] add react-native-background-fetch dependency ([b1afe4c](https://github.com/pagopa/io-app/commit/b1afe4cf35b092b790e29c5a8fecc46956bb620e))
+* added jest mocks ([5e79891](https://github.com/pagopa/io-app/commit/5e7989144f25a9cb942b9402e75e805de33ee3b1))
+* added playgrounds ([01a3335](https://github.com/pagopa/io-app/commit/01a3335fc3abf1d5128a14e9452abb648dcfaec3))
+* mixpanel tracking ([0daa447](https://github.com/pagopa/io-app/commit/0daa4471158da8be75aa2494219f23c9113c5750))
+* **IT-Wallet:** [[SIW-3468](https://pagopa.atlassian.net/browse/SIW-3468)] Add origin to serialize failure reason to enhance mixpanel tracking on unexpected failures ([#7684](https://github.com/pagopa/io-app/issues/7684)) ([17a5e6a](https://github.com/pagopa/io-app/commit/17a5e6abc207933e1ff07176096dfbd1ee4c17fa))
+* move saga ([3c3bb62](https://github.com/pagopa/io-app/commit/3c3bb6268161852d955e7d274624bd262063818a))
+* remove .env var ([c00e4e4](https://github.com/pagopa/io-app/commit/c00e4e481e0abb068f980c832e432260f27a84d2))
+* remove selectors ([4667727](https://github.com/pagopa/io-app/commit/466772753231d355c50558e3702657e0b663d07c))
+* remove tests ([b827fd4](https://github.com/pagopa/io-app/commit/b827fd4759ad3eb512d7d0385ac6515456d441b9))
+* remove WI check ([3212db9](https://github.com/pagopa/io-app/commit/3212db954b26119369ab83113a6bf16c561747a8))
+* revert jestSetup.js changes ([7a480f6](https://github.com/pagopa/io-app/commit/7a480f60b4fa9c7bfea25402056a79eec234be00))
+* update App.tsx formatting ([5ebf8b5](https://github.com/pagopa/io-app/commit/5ebf8b5434a93c81a6f8adc94655b6a70b8def9b))
+
 ## [3.29.0-rc.3](https://github.com/pagopa/io-app/compare/3.29.0-rc.2...3.29.0-rc.3) (2026-04-20)
 
 

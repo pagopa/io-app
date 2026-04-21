@@ -1,6 +1,6 @@
 {
   "name": "io",
-  "version": "3.29.0-canary.8210",
+  "version": "3.29.0-canary.8211",
   "private": true,
   "scripts": {
     "start": "react-native start",
