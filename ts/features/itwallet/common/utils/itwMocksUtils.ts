@@ -1,6 +1,7 @@
 import dc from "../../__mocks__/dc.json";
 import eid from "../../__mocks__/eid.json";
 import dcL3 from "../../__mocks__/L3/dcL3.json";
+import avL3 from "../../__mocks__/L3/avL3.json";
 import edL3 from "../../__mocks__/L3/edL3.json";
 import eeL3 from "../../__mocks__/L3/eeL3.json";
 import mdlL3 from "../../__mocks__/L3/mdlL3.json";
@@ -43,46 +44,7 @@ export const ItwStoredCredentialsMocks = {
     mdl: mdlL3 as unknown as CredentialMetadata,
     ts: tsL3 as unknown as CredentialMetadata,
     dc: dcL3 as unknown as CredentialMetadata,
-    age_verification: {
-      credentialType: CredentialType.AGE_VERIFICATION,
-      credentialId: CredentialType.AGE_VERIFICATION,
-      format: "dc+sd-jwt",
-      keyTag: "age-verification-playground",
-      jwt: {
-        issuedAt: "2026-04-01T10:00:00.000Z",
-        expiration: "2026-06-30T10:00:00.000Z"
-      },
-      spec_version: "1.0.0",
-      verification: {
-        trust_framework: "it_wallet",
-        assurance_level: "high"
-      },
-      parsedCredential: {
-        age_over_18: {
-          value: "18+",
-          name: {
-            "it-IT": "Età certificata",
-            "en-US": "Age verification"
-          }
-        }
-      },
-      issuerConf: {
-        federation_entity: {
-          organization_name: ISSUER_MOCK_NAME,
-          homepage_uri: "https://pre.eaa.wallet.ipzs.it/1-0",
-          policy_uri:
-            "https://pre.eaa.wallet.ipzs.it/1-0/public/privacy_policy.html",
-          logo_uri: "https://pre.eaa.wallet.ipzs.it/1-0/public/logo.svg",
-          contacts: ["informazioni@ipzs.it"],
-          tos_uri: "https://pre.eaa.wallet.ipzs.it/1-0/public/info_policy.html"
-        },
-        credential_configurations_supported: {
-          [CredentialType.AGE_VERIFICATION]: {
-            authentic_source: "IT-Wallet ID"
-          }
-        }
-      }
-    } as unknown as CredentialMetadata,
+    age_verification: avL3 as unknown as CredentialMetadata,
     ed: edL3 as unknown as CredentialMetadata,
     ee: eeL3 as unknown as CredentialMetadata,
     res: resL3 as unknown as CredentialMetadata,
@@ -120,31 +82,3 @@ export const ItwCredentialFromCatalogueMocks: DigitalCredentialMetadata = {
   ],
   formats: []
 };
-
-export const ItwAgeVerificationCredentialFromCatalogueMock: DigitalCredentialMetadata =
-  {
-    name: "Età certificata",
-    description: "Attestazione digitale anonima che certifica la maggiore età.",
-    purposes: [],
-    version: "1.0",
-    credential_type: CredentialType.AGE_VERIFICATION,
-    legal_type: "pub-eaa",
-    validity_info: {
-      max_validity_days: 90,
-      status_methods: [],
-      allowed_states: []
-    },
-    issuers: [],
-    authentic_sources: [
-      {
-        organization_name: "IT-Wallet ID",
-        organization_code: "it_wallet_id",
-        id: "it_wallet_id",
-        organization_country: "IT",
-        organization_type: "public",
-        user_information:
-          "### Cos'è\n\nEtà certificata è l'attestazione digitale anonima che certifica la tua maggiore età (in Italia, 18 anni). Contiene solo informazioni sulla tua soglia d'età, nient'altro.\n\n### A cosa serve\n\nTi serve accedere a servizi riservati agli adulti senza condividere dati personali."
-      }
-    ],
-    formats: []
-  };
