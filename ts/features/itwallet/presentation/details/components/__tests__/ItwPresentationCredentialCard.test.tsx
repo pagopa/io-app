@@ -1,5 +1,6 @@
 import { fireEvent, render } from "@testing-library/react-native";
-import { StyleSheet } from "react-native";
+import { StyleSheet, type ViewStyle } from "react-native";
+import type { ReactTestInstance } from "react-test-renderer";
 import { ItwStoredCredentialsMocks } from "../../../../common/utils/itwMocksUtils";
 import { ITW_ROUTES } from "../../../../navigation/routes";
 import { ItwPresentationCredentialCard } from "../ItwPresentationCredentialCard";
@@ -107,20 +108,27 @@ jest.mock(
   })
 );
 
-const readFlippableTransforms = (component: ReturnType<typeof render>) => {
-  const flippableFaces = component.UNSAFE_root.findAll(node => {
-    const transform = StyleSheet.flatten(node.props?.style)?.transform;
-    return (
-      Array.isArray(transform) &&
-      transform.some(
-        step => !!step && typeof step === "object" && "rotateY" in step
-      )
-    );
-  });
+type FlippableFaceStyle = ViewStyle & {
+  transform?: ReadonlyArray<Record<string, string | number>>;
+};
 
-  return flippableFaces.map(
-    face => StyleSheet.flatten(face.props.style).transform
+const getFlippableFaceStyle = (node: ReactTestInstance) =>
+  StyleSheet.flatten<FlippableFaceStyle>(node.props?.style);
+
+const readFlippableTransforms = (component: ReturnType<typeof render>) => {
+  const flippableFaces = component.UNSAFE_root.findAll(
+    (node: ReactTestInstance) => {
+      const transform = getFlippableFaceStyle(node)?.transform;
+      return (
+        Array.isArray(transform) &&
+        transform.some(
+          step => !!step && typeof step === "object" && "rotateY" in step
+        )
+      );
+    }
   );
+
+  return flippableFaces.map(face => getFlippableFaceStyle(face)?.transform);
 };
 
 jest.mock("../ItwPresentationCredentialCardFlipButton.tsx", () => ({
@@ -177,7 +185,7 @@ describe("ItwPresentationCredentialCard", () => {
     );
 
     const cardButtons = component.UNSAFE_root.findAll(
-      node =>
+      (node: ReactTestInstance) =>
         node.props?.accessibilityRole === "button" &&
         node.props?.testID !== "flip-button" &&
         typeof node.props?.onPress === "function"

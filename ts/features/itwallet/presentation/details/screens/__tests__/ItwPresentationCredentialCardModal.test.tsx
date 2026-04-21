@@ -1,5 +1,6 @@
 import { fireEvent, render } from "@testing-library/react-native";
-import { StyleSheet } from "react-native";
+import { StyleSheet, type ViewStyle } from "react-native";
+import type { ReactTestInstance } from "react-test-renderer";
 import { ItwStoredCredentialsMocks } from "../../../../common/utils/itwMocksUtils";
 import { ItwPresentationCredentialCardModal } from "../ItwPresentationCredentialCardModal";
 
@@ -104,20 +105,27 @@ jest.mock(
   })
 );
 
-const readFlippableTransforms = (component: ReturnType<typeof render>) => {
-  const flippableFaces = component.UNSAFE_root.findAll(node => {
-    const transform = StyleSheet.flatten(node.props?.style)?.transform;
-    return (
-      Array.isArray(transform) &&
-      transform.some(
-        step => !!step && typeof step === "object" && "rotateY" in step
-      )
-    );
-  });
+type FlippableFaceStyle = ViewStyle & {
+  transform?: ReadonlyArray<Record<string, string | number>>;
+};
 
-  return flippableFaces.map(
-    face => StyleSheet.flatten(face.props.style).transform
+const getFlippableFaceStyle = (node: ReactTestInstance) =>
+  StyleSheet.flatten<FlippableFaceStyle>(node.props?.style);
+
+const readFlippableTransforms = (component: ReturnType<typeof render>) => {
+  const flippableFaces = component.UNSAFE_root.findAll(
+    (node: ReactTestInstance) => {
+      const transform = getFlippableFaceStyle(node)?.transform;
+      return (
+        Array.isArray(transform) &&
+        transform.some(
+          step => !!step && typeof step === "object" && "rotateY" in step
+        )
+      );
+    }
   );
+
+  return flippableFaces.map(face => getFlippableFaceStyle(face)?.transform);
 };
 
 jest.mock(
@@ -174,31 +182,32 @@ describe("ItwPresentationCredentialCardModal", () => {
     );
 
     const cardAreaCandidates = component.UNSAFE_root.findAll(
-      node =>
+      (node: ReactTestInstance) =>
         typeof node.props?.onLayout === "function" &&
-        StyleSheet.flatten(node.props?.style)?.justifyContent === "center" &&
-        StyleSheet.flatten(node.props?.style)?.alignItems === "center"
+        getFlippableFaceStyle(node)?.justifyContent === "center" &&
+        getFlippableFaceStyle(node)?.alignItems === "center"
     );
     expect(cardAreaCandidates.length).toBeGreaterThan(0);
-    cardAreaCandidates.forEach(cardArea => {
+    cardAreaCandidates.forEach((cardArea: ReactTestInstance) => {
       fireEvent(cardArea, "layout", {
         nativeEvent: { layout: { height: 300 } }
       });
     });
 
     const rotatedContainers = component.UNSAFE_root.findAll(
-      node =>
-        !!node.props?.style &&
-        StyleSheet.flatten(node.props.style)?.transform?.some(
-          (transform: Record<string, string>) => transform.rotate === "90deg"
+      (node: ReactTestInstance) =>
+        Array.isArray(getFlippableFaceStyle(node)?.transform) &&
+        getFlippableFaceStyle(node)?.transform?.some(
+          (transform: Record<string, string | number>) =>
+            transform.rotate === "90deg"
         )
     );
     expect(rotatedContainers.length).toBeGreaterThan(0);
     const [rotatedContainer] = rotatedContainers;
 
-    expect(StyleSheet.flatten(rotatedContainer.props.style)?.transform).toEqual(
-      [{ rotate: "90deg" }]
-    );
+    expect(getFlippableFaceStyle(rotatedContainer)?.transform).toEqual([
+      { rotate: "90deg" }
+    ]);
     expect(readFlippableTransforms(component)).toEqual(
       expect.arrayContaining([
         [{ perspective: 1000 }, { rotateY: "0deg" }],
