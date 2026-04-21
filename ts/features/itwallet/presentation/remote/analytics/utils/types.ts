@@ -5,6 +5,7 @@ export type ItwRemoteCredentialCombination =
 
 export type ItwRemoteFailure = {
   reason: unknown;
+  origin?: string;
   type: string;
 };
 
