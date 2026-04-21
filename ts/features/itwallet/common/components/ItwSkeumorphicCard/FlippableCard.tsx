@@ -5,6 +5,8 @@ import { createCSSAnimatedComponent } from "react-native-reanimated";
 const CSSAnimatedView = createCSSAnimatedComponent(View);
 
 const DEFAULT_DURATION = 500;
+// Keep perspective explicit: SIW-4046 fixed an iOS flip regression where missing 3D depth caused rendering artifacts.
+const IOS_FLIP_FIX_PERSPECTIVE = 1000;
 
 export type FlippableCardProps = {
   FrontComponent: ReactElement;
@@ -30,7 +32,10 @@ const FlippableCard = ({
         styles.card,
         styles.front,
         {
-          transform: [{ rotateY: isFlipped ? "180deg" : "0deg" }],
+          transform: [
+            { perspective: IOS_FLIP_FIX_PERSPECTIVE },
+            { rotateY: isFlipped ? "180deg" : "0deg" }
+          ],
           transitionProperty: "transform",
           transitionDuration: duration
         }
@@ -43,7 +48,10 @@ const FlippableCard = ({
         styles.card,
         styles.back,
         {
-          transform: [{ rotateY: isFlipped ? "360deg" : "180deg" }],
+          transform: [
+            { perspective: IOS_FLIP_FIX_PERSPECTIVE },
+            { rotateY: isFlipped ? "360deg" : "180deg" }
+          ],
           transitionProperty: "transform",
           transitionDuration: duration
         }
