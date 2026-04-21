@@ -3,8 +3,8 @@ import {
   ItwVersion
 } from "@pagopa/io-react-native-wallet";
 import {
-  ParsedCredential,
-  StoredCredential
+  CredentialMetadata,
+  ParsedCredential
 } from "../../common/utils/itwTypesUtils";
 import { WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import { WIA_KEYTAG } from "../../common/utils/itwCryptoContextUtils";
@@ -31,7 +31,7 @@ export const getCredentialDocumentNumber = (
  */
 const getCredentialTypeForTrustmark = ({
   credentialType
-}: StoredCredential) => {
+}: CredentialMetadata) => {
   const trustmarkCredentialTypes: Record<string, string> = {
     mDL: "MDL"
   };
@@ -49,7 +49,7 @@ export const getCredentialTrustmark = async (
   { VERIFIER_BASE_URL }: Env,
   itwVersion: ItwVersion,
   walletInstanceAttestation: string,
-  credential: StoredCredential
+  metadata: CredentialMetadata
 ) => {
   const ioWallet = getIoWallet(itwVersion);
   /**
@@ -60,7 +60,7 @@ export const getCredentialTrustmark = async (
   /**
    * Get the document number from the credential
    */
-  const docNumber = getCredentialDocumentNumber(credential.parsedCredential);
+  const docNumber = getCredentialDocumentNumber(metadata.parsedCredential);
 
   /**
    * Generate the trustmark
@@ -70,7 +70,7 @@ export const getCredentialTrustmark = async (
       walletInstanceAttestation,
       wiaCryptoContext,
       docNumber,
-      credentialType: getCredentialTypeForTrustmark(credential)
+      credentialType: getCredentialTypeForTrustmark(metadata)
     });
 
   return {

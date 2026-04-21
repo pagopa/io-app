@@ -15,12 +15,12 @@ import {
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import {
   CredentialFormat,
-  ItwJwtCredentialStatus,
-  StoredCredential
+  CredentialMetadata,
+  ItwJwtCredentialStatus
 } from "../../../common/utils/itwTypesUtils";
 
 type CredentialsByType = {
-  [K: string]: Record<CredentialFormat, StoredCredential>;
+  [K: string]: Record<CredentialFormat, CredentialMetadata>;
 };
 
 /**
@@ -65,7 +65,7 @@ export const makeSelectAllCredentials = (format: CredentialFormat) =>
   createSelector(itwCredentialsByTypeSelector, credentials =>
     Object.values(credentials)
       .map(c => withLegacyFallback(c, format))
-      .reduce<Record<string, StoredCredential>>(
+      .reduce<Record<string, CredentialMetadata>>(
         (acc, c) => (c ? { ...acc, [c.credentialType]: c } : acc),
         {}
       )
@@ -288,14 +288,14 @@ export const itwCredentialsEidIssuedAtSelector = createSelector(
 /**
  * Return a list of all credentials of the same type, mainly used for clean up operations.
  * @param key The type of credential
- * @returns A list of StoredCredential
+ * @returns A list of CredentialMetadata
  */
 export const itwCredentialsListByTypeSelector = (key: string) =>
   createSelector(itwCredentialsByTypeSelector, credentials =>
     pipe(
       O.fromNullable(credentials[key]),
       O.map(Object.values),
-      O.getOrElse<ReadonlyArray<StoredCredential>>(() => [])
+      O.getOrElse<ReadonlyArray<CredentialMetadata>>(() => [])
     )
   );
 
@@ -329,17 +329,18 @@ export const itwIsMdlPresentSelector = createSelector(
 );
 
 /**
- * Split a given list of credential types into obtained / notObtained
+ * Split a given list of credential with types into obtained / notObtained
  * obtained = present in wallet
  */
-export const itwCredentialsByPresenceSelector = createSelector(
-  itwCredentialsByTypeSelector,
-  (_state: GlobalState, types: ReadonlyArray<string>) => types,
-  (credentialsByType, types) => {
+export const makeItwCredentialsByPresenceSelector = <
+  T extends { type: string }
+>(
+  credentials: ReadonlyArray<T>
+) =>
+  createSelector(itwCredentialsByTypeSelector, credentialsByType => {
     const [obtained, notObtained] = partition(
-      types,
-      type => credentialsByType[type] !== undefined
+      credentials,
+      ({ type }) => credentialsByType[type] !== undefined
     );
     return { obtained, notObtained };
-  }
-);
+  });

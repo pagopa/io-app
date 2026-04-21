@@ -14,7 +14,6 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as Sentry from "@sentry/react-native";
 import I18n from "i18next";
 import { ComponentProps, useContext } from "react";
 import { Alert, FlatList, ListRenderItemInfo } from "react-native";
@@ -55,6 +54,8 @@ import { notificationsInstallationSelector } from "../../../pushNotifications/st
 import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 import { clearCache } from "../../common/store/actions";
 import { isPnRemoteEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig.ts";
+import { fciL3LocalFlag } from "../../../fci/store/actions/index.ts";
+import { fciSecurityLevelLocalFeatureFlagSelector } from "../../../fci/store/reducers/fciSecurityLevelReducer.ts";
 import ExperimentalDesignEnableSwitch from "./ExperimentalDesignEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -112,10 +113,6 @@ const DeveloperActionsSection = () => {
     );
   };
 
-  const sendSentryTestEvent = () => {
-    Sentry.captureException(new Error("Random test Error"));
-  };
-
   const dumpAsyncStorage = () => {
     /* eslint-disable no-console */
     console.log("[DUMP START]");
@@ -158,12 +155,6 @@ const DeveloperActionsSection = () => {
       color: "primary",
       label: I18n.t("profile.main.dumpAsyncStorage"),
       onPress: dumpAsyncStorage
-    },
-    {
-      condition: true,
-      color: "primary",
-      label: I18n.t("profile.main.sentryTestEvent"),
-      onPress: sendSentryTestEvent
     }
   ];
 
@@ -474,6 +465,9 @@ const DeveloperTestEnvironmentSection = ({
   const isActiveSessionLoginLocallyEnabled = useIOSelector(
     isActiveSessionLoginLocallyEnabledSelector
   );
+  const fciL3LocalFeatureFlag = useIOSelector(
+    fciSecurityLevelLocalFeatureFlagSelector
+  );
 
   const onPagoPAEnvironmentToggle = (enabled: boolean) => {
     if (enabled) {
@@ -543,6 +537,10 @@ const DeveloperTestEnvironmentSection = ({
     }
   };
 
+  const onFciSecurityLevelLocalFlagToggleChange = (enabled: boolean) => {
+    dispatch(fciL3LocalFlag(enabled));
+  };
+
   const testEnvironmentsListItems: ReadonlyArray<TestEnvironmentsListItem> = [
     {
       label: I18n.t("profile.main.pagoPaEnvironment.pagoPaEnv"),
@@ -568,6 +566,12 @@ const DeveloperTestEnvironmentSection = ({
       ),
       value: isActiveSessionLoginLocallyEnabled,
       onSwitchValueChange: onActiveSessionLoginToggle
+    },
+    {
+      label: I18n.t("features.fci.requestL3.localFlag.title"),
+      description: I18n.t("features.fci.requestL3.localFlag.description"),
+      value: fciL3LocalFeatureFlag,
+      onSwitchValueChange: onFciSecurityLevelLocalFlagToggleChange
     }
   ];
 

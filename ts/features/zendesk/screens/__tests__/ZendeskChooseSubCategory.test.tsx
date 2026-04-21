@@ -79,7 +79,7 @@ describe("the ZendeskChooseSubCategory screen", () => {
         globalState as any
       );
       renderComponent(store);
-      expect(zendeskSupportFailureSpy).toBeCalled();
+      expect(zendeskSupportFailureSpy).toHaveBeenCalled();
     });
     it("if the selected category has not sub-categories", () => {
       const store: Store<GlobalState> = createStore(
@@ -88,7 +88,7 @@ describe("the ZendeskChooseSubCategory screen", () => {
       );
       renderComponent(store);
       store.dispatch(zendeskSelectedCategory(mockedCategory));
-      expect(zendeskSupportFailureSpy).toBeCalled();
+      expect(zendeskSupportFailureSpy).toHaveBeenCalled();
     });
   });
 

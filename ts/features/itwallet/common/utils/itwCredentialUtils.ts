@@ -6,21 +6,15 @@ import I18n from "i18next";
 import { isBefore } from "date-fns";
 import { CredentialType } from "./itwMocksUtils";
 import {
+  CredentialBundle,
   CredentialFormat,
+  CredentialMetadata,
   ItwCredentialStatus,
-  StoredCredential,
   StoredVerification
 } from "./itwTypesUtils";
 
 // Credentials that can be obtained with valid a Documenti su IO instance
 export const l2Credentials = [
-  CredentialType.DRIVING_LICENSE,
-  CredentialType.EUROPEAN_DISABILITY_CARD,
-  CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
-] as const;
-
-// Credentials that can be actively requested and obtained by the user
-export const availableCredentials = [
   CredentialType.DRIVING_LICENSE,
   CredentialType.EUROPEAN_DISABILITY_CARD,
   CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
@@ -150,20 +144,22 @@ export const validCredentialStatuses: Array<ItwCredentialStatus> = [
   "jwtExpiring"
 ];
 
+type ExtractVerification = (args: {
+  format: CredentialMetadata["format"];
+  parsedCredential: CredentialMetadata["parsedCredential"];
+  credential: CredentialBundle["credential"];
+}) => StoredVerification | undefined;
+
 /**
  * Extracts the verification object from a stored credential based on its format.
- * Only persists `trust_framework` and `assurance_level`, excluding `evidence`
- * which is being dropped in spec v1.3.3.
  * @param credential - The stored credential fields needed to extract verification
- * @returns The slim verification object or undefined if extraction fails
+ * @returns The verification object or undefined if extraction fails
  */
-export const extractVerification = ({
+export const extractVerification: ExtractVerification = ({
   format,
-  credential,
-  parsedCredential
-}: Pick<StoredCredential, "format" | "credential" | "parsedCredential">):
-  | StoredVerification
-  | undefined => {
+  parsedCredential,
+  credential
+}) => {
   try {
     const verification = (() => {
       switch (format) {
@@ -193,13 +189,11 @@ export const extractVerification = ({
  * `"it_l2+document_proof"` indicates that the credential has been issued with
  * a substantial authentication (SPID, CieID) plus an MRTD PoP verification,
  *
- * @param storedCredential - The stored credential to check
+ * @param metadata - The metadata of the credential to check
  * @returns boolean indicating if the credential is an ITW credential (L3)
  */
-export const isItwCredential = (
-  storedCredential: StoredCredential
-): boolean => {
-  const verification = storedCredential.verification;
+export const isItwCredential = (metadata: CredentialMetadata): boolean => {
+  const verification = metadata.verification;
   return (
     verification?.assurance_level === "high" ||
     verification?.trust_framework === "it_l2+document_proof"

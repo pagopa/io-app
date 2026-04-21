@@ -10,12 +10,12 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { watchBonusCgnSaga } from "../../saga";
 
 const mockFetch: typeof fetch = async (url, options) => {
-  if (url === "/api/v1/cgn/operator-search/count") {
+  if (url === "/api/cgn-search/v1/count") {
     return new Response(JSON.stringify({ count: merchantList.length }), {
       status: 200
     });
   }
-  if (url === "/api/v1/cgn/operator-search/search") {
+  if (url === "/api/cgn-search/v1/search") {
     const body = JSON.parse(options?.body as string);
     if (body.token === "merchant") {
       return new Response(JSON.stringify({ items: merchantList }), {

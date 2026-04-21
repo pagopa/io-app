@@ -214,7 +214,6 @@
       "forgetCurrentSession": "Forget current session",
       "clearAsyncStorage": "Clear AsyncStorage",
       "dumpAsyncStorage": "Dump AsyncStorage content to console",
-      "sentryTestEvent": "Send Exception to Sentry",
       "contextualHelpTitle": "What you can do in Settings section",
       "contextualHelpContent": "**Settings section lets you manage your data and preferences.** In particular, you can manage your preferences, privacy and account.  \nIn this section you can also access your identity documents in a digital format: interact with the cards in the top part of the screen to see more details.",
       "developerModeOn": "Developer mode enabled",
@@ -2067,6 +2066,12 @@
       "signatureFieldInfo": {
         "title": "What are restrictive clauses?",
         "subTitle": "These are clauses that highlight specific conditions to be aware of and that must be accepted. By law, they have to be easily identifiable to make sure the signer is aware of their contents before signing."
+      },
+      "requestL3": {
+        "localFlag": {
+          "title": "Enable L3 check for the signature flow",
+          "description": "By enabling this toggle, you activate the L3 check for the signature flow, which requires a new L3 login for users who do not have the L3 authentication level (CIE + PIN)"
+        }
       }
     },
     "wallet": {
@@ -2150,6 +2155,13 @@
       }
     },
     "itWallet": {
+      "issuance": {
+        "landingError": {
+          "title": "Something went wrong",
+          "body": "An error occurred, please try again later.",
+          "action": "Close"
+        }
+      },
       "verifiableCredentials": {
         "claims": {
           "attachments": "Attachments"

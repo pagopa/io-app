@@ -4,8 +4,8 @@
 </p>
 
 <p align="center">
-    <a href="https://github.com/pagopa/io-app/actions/workflows/release-nightly.yml">
-        <img src="https://github.com/pagopa/io-app/actions/workflows/release-nightly.yml/badge.svg?branch=master" />
+    <a href="https://github.com/pagopa/io-app/actions/workflows/publish-app-build-nightly.yml">
+        <img src="https://github.com/pagopa/io-app/actions/workflows/publish-app-build-nightly.yml/badge.svg?branch=master" />
     </a>
     <!-- <a href="https://github.com/pagopa/io-app/actions/workflows/test-e2e.yml">
         <img src="https://github.com/pagopa/io-app/actions/workflows/test-e2e.yml/badge.svg?branch=master" />
