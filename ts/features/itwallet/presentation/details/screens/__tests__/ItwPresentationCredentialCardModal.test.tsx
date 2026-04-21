@@ -1,5 +1,5 @@
 import { fireEvent, render } from "@testing-library/react-native";
-import { StyleSheet, type ViewStyle } from "react-native";
+import { StyleSheet, type StyleProp, type ViewStyle } from "react-native";
 import { ItwStoredCredentialsMocks } from "../../../../common/utils/itwMocksUtils";
 import { ItwPresentationCredentialCardModal } from "../ItwPresentationCredentialCardModal";
 
@@ -105,7 +105,7 @@ jest.mock(
 );
 
 type FlippableFaceStyle = ViewStyle & {
-  transform?: ReadonlyArray<Record<string, string | number>>;
+  transform?: NonNullable<ViewStyle["transform"]>;
 };
 
 type UnsafeTestInstance = {
@@ -116,20 +116,22 @@ const getAllRenderedNodes = (component: ReturnType<typeof render>) =>
   component.UNSAFE_root.findAll(() => true) as Array<UnsafeTestInstance>;
 
 const getFlippableFaceStyle = (node: UnsafeTestInstance) =>
-  StyleSheet.flatten<FlippableFaceStyle>(node.props?.style);
+  StyleSheet.flatten<FlippableFaceStyle>(
+    node.props?.style as StyleProp<FlippableFaceStyle>
+  ) ?? {};
+
+const hasRotateYTransform = (
+  transform?: NonNullable<ViewStyle["transform"]>
+): transform is NonNullable<ViewStyle["transform"]> =>
+  Array.isArray(transform) &&
+  transform.some(
+    step => !!step && typeof step === "object" && "rotateY" in step
+  );
 
 const readFlippableTransforms = (component: ReturnType<typeof render>) =>
   getAllRenderedNodes(component)
     .map(node => getFlippableFaceStyle(node)?.transform)
-    .filter(
-      (
-        transform
-      ): transform is ReadonlyArray<Record<string, string | number>> =>
-        Array.isArray(transform) &&
-        transform.some(
-          step => !!step && typeof step === "object" && "rotateY" in step
-        )
-    );
+    .filter(hasRotateYTransform);
 
 jest.mock(
   "../../components/ItwPresentationCredentialCardFlipButton.tsx",
@@ -201,7 +203,10 @@ describe("ItwPresentationCredentialCardModal", () => {
       node =>
         Array.isArray(getFlippableFaceStyle(node)?.transform) &&
         getFlippableFaceStyle(node)?.transform?.some(
-          (transform: Record<string, string | number>) =>
+          transform =>
+            !!transform &&
+            typeof transform === "object" &&
+            "rotate" in transform &&
             transform.rotate === "90deg"
         )
     );
