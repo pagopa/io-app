@@ -3893,6 +3893,14 @@
             "action": "Premi per ingrandire e visualizzare il codice a barre a tutto schermo"
           },
           "ageVerification": {
+            "verifiableWithItWallet": {
+              "label": "Verificabile con IT-Wallet",
+              "value": "Sì, solo online",
+              "bottomSheet": {
+                "title": "Verificabile con IT-Wallet",
+                "content": "Età certificata è un’attestazione digitale anonima generata a partire dalla data di nascita contenuta nel tuo IT-Wallet ID. "
+              }
+            },
             "usageBanner": {
               "title": "Dove usare Età certificata?",
               "content": "Puoi usarla per accedere a servizi online destinati agli adulti: dimostri la tua maggiore età e la tua identità resta anonima."
