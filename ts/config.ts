@@ -79,7 +79,7 @@ export const mixpanelUrl = pipe(
   NonEmptyString.decode,
   E.getOrElse(() => DEFAULT_MIXPANEL_URL)
 );
-export const mixpanelToken: string = Config.MIXPANEL_TOKEN;
+export const mixpanelToken = Config.MIXPANEL_TOKEN;
 export const isDebugBiometricIdentificationEnabled =
   Config.DEBUG_BIOMETRIC_IDENTIFICATION === "YES";
 
