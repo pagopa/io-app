@@ -50,6 +50,7 @@ const ItwPlayground = () => {
         <TabItem label="Issuance" accessibilityLabel="Issuance" />
         <TabItem label="Screens" accessibilityLabel="Screens" />
         <TabItem label="Components" accessibilityLabel="Components" />
+        <TabItem label="Status" accessibilityLabel="Status" />
       </TabNavigation>
       <ScrollView
         contentContainerStyle={{
@@ -61,7 +62,6 @@ const ItwPlayground = () => {
             <>
               <ItwEnvironmentSection />
               <ItwLifecycleSection />
-              <ItwCredentialStatusOverrideSection />
               <ItwSpecsVersionSection />
               <ItwMiscSection />
             </>
@@ -74,6 +74,7 @@ const ItwPlayground = () => {
             </>
           )}
           {page === 3 && <ItwComponentsSection />}
+          {page === 4 && <ItwCredentialStatusOverrideSection />}
         </ContentWrapper>
       </ScrollView>
     </VStack>

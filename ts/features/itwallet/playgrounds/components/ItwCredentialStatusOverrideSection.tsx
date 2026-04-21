@@ -141,8 +141,8 @@ export const ItwCredentialStatusOverrideSection = () => {
             value={credentialType}
             description={
               credentialOverrides[credentialType]
-                ? `Override attivo: ${credentialOverrides[credentialType]}`
-                : "Nessun override"
+                ? `Active override: ${credentialOverrides[credentialType]}`
+                : "No override"
             }
             onPress={() => handlePress(credentialType)}
           />
