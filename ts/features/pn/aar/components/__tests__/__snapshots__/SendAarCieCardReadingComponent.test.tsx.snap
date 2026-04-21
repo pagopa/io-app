@@ -4829,7 +4829,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                               >
                                 <View>
                                   <View
-                                    accessibilityLabel="Poggia il retro del telefono sulla CIE"
+                                    accessibilityLabel="Posiziona il retro del telefono sulla CIE"
                                     accessibilityLiveRegion="polite"
                                     accessible={true}
                                     importantForAccessibility="yes"
@@ -4860,7 +4860,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                       ]
                                     }
                                   >
-                                    Poggia il retro del telefono sulla CIE
+                                    Posiziona il retro del telefono sulla CIE
                                   </Text>
                                 </View>
                                 <Text
@@ -4881,7 +4881,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
                                     ]
                                   }
                                 >
-                                  features.pn.aar.flow.cieScanning.idle.subtitle
+                                  Fai scorrere il telefono sulla carta. Un suono o una vibrazione indicano che la carta è stata rilevata. Se la lettura non parte con il retro, prova con il lato anteriore del telefono.
                                 </Text>
                               </View>
                               <RNSVGSvgView
