@@ -17,9 +17,9 @@ import {
 } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
-import { identificationRequest } from "../../../../identification/store/actions/index.ts";
+import { identificationRequest } from "../../../../identification/store/actions";
 import { trackCredentialRenewStart } from "../../../analytics";
-import { getMixPanelCredential } from "../../../analytics/utils/index.ts";
+import { getMixPanelCredential } from "../../../analytics/utils";
 import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types.ts";
 import ItwCredentialNotFound from "../../../common/components/ItwCredentialNotFound.tsx";
 import { PoweredByItWalletText } from "../../../common/components/PoweredByItWalletText.tsx";
@@ -316,7 +316,6 @@ export const ItwPresentationCredentialDetail = ({
     contentClaim,
     navigation,
     mixPanelCredential,
-    shouldShowMdlUpdateCta,
     status
   ]);
 
