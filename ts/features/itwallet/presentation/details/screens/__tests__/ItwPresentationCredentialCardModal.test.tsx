@@ -128,6 +128,19 @@ const hasRotateYTransform = (
     step => !!step && typeof step === "object" && "rotateY" in step
   );
 
+const hasRotateTransform = (
+  transform?: NonNullable<ViewStyle["transform"]>,
+  expectedValue?: string
+) =>
+  Array.isArray(transform) &&
+  transform.some(
+    step =>
+      !!step &&
+      typeof step === "object" &&
+      "rotate" in step &&
+      step.rotate === expectedValue
+  );
+
 const readFlippableTransforms = (component: ReturnType<typeof render>) =>
   getAllRenderedNodes(component)
     .map(node => getFlippableFaceStyle(node)?.transform)
@@ -199,16 +212,8 @@ describe("ItwPresentationCredentialCardModal", () => {
       });
     });
 
-    const rotatedContainers = getAllRenderedNodes(component).filter(
-      node =>
-        Array.isArray(getFlippableFaceStyle(node)?.transform) &&
-        getFlippableFaceStyle(node)?.transform?.some(
-          transform =>
-            !!transform &&
-            typeof transform === "object" &&
-            "rotate" in transform &&
-            transform.rotate === "90deg"
-        )
+    const rotatedContainers = getAllRenderedNodes(component).filter(node =>
+      hasRotateTransform(getFlippableFaceStyle(node)?.transform, "90deg")
     );
     expect(rotatedContainers.length).toBeGreaterThan(0);
     const [rotatedContainer] = rotatedContainers;
