@@ -122,7 +122,9 @@ export const CgnMerchantsListScreen = () => {
         }}
       />
     ) : (
-      <CgnMerchantListSkeleton hasIcons count={10} />
+      <ContentWrapper>
+        <CgnMerchantListSkeleton hasIcons count={10} />
+      </ContentWrapper>
     );
 
   return {
