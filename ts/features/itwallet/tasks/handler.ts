@@ -1,5 +1,7 @@
 import * as BackgroundTask from "expo-background-task";
-import { trackItwBackgroundFetchWakeUp } from "../analytics";
+import { store } from "../../../boot/configureStoreAndPersistor";
+import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
+import { trackItwBackgroundFetchWakeUp } from "./analytics";
 
 /**
  * Handler for the ITW background task.
@@ -11,7 +13,8 @@ import { trackItwBackgroundFetchWakeUp } from "../analytics";
 export const itwWalletCheckTaskHandler =
   async (): Promise<BackgroundTask.BackgroundTaskResult> => {
     try {
-      trackItwBackgroundFetchWakeUp();
+      const userOptedInForAnalytics = isMixpanelEnabled(store.getState());
+      trackItwBackgroundFetchWakeUp(userOptedInForAnalytics);
       // TODO add WI and credentials check once Status List is implemented
       return BackgroundTask.BackgroundTaskResult.Success;
     } catch {

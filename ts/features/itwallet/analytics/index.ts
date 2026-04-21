@@ -359,16 +359,3 @@ export const trackItwIdVerifiedDocument = (
     buildEventProperties("TECH", undefined, { ITW_ID_method })
   );
 };
-
-/**
- * Tracks a background fetch wake-up event for observability purposes.
- *
- * TODO [SIW-4084]: This is a placeholder — the final event name and properties
- * will be defined in SIW-4090 once the Mixpanel background capabilities are confirmed.
- */
-export const trackItwBackgroundFetchWakeUp = () => {
-  void mixpanelTrack(
-    ITW_TECH_EVENTS.ITW_BACKGROUND_FETCH_WAKE_UP,
-    buildEventProperties("TECH", undefined)
-  );
-};
