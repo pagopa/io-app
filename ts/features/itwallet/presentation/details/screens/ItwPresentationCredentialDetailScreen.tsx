@@ -349,7 +349,7 @@ export const ItwPresentationCredentialDetail = ({
       <ItwPresentationDetailsHeader credential={credential} />
       <View style={{ paddingVertical: 16 }}>
         {showInlineCta && (
-          <View style={{ alignSelf: "center" }}>
+          <View style={{ alignSelf: "center", paddingVertical: 8 }}>
             <IOButton
               variant="link"
               label={I18n.t(
