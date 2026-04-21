@@ -11,6 +11,7 @@ import I18n from "i18next";
 import { useState } from "react";
 import { View } from "react-native";
 import { RefreshControl } from "react-native-gesture-handler";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
@@ -49,6 +50,7 @@ const tabOptions: Record<keyof CgnMerchantsHomeTabParamsList, TabOption> = {
 const CgnMerchantsCategoriesSelectionScreen = () => {
   const { navigate } = useIONavigation();
   useDisableRootNavigatorGesture();
+  const { bottom } = useSafeAreaInsets();
   const [selectedTab, setSelectedTab] = useState<
     keyof CgnMerchantsHomeTabParamsList
   >(CgnMerchantsHomeTabRoutes.CGN_CATEGORIES);
@@ -132,6 +134,8 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
         {ListHeaderComponent}
       </CgnAnimatedHeader>
       <Animated.FlatList
+        scrollEventThrottle={8}
+        snapToEnd={false}
         data={[...data]}
         keyExtractor={item => ("id" in item ? item.id : item.productCategory)}
         renderItem={({ item, index }) => renderItem(item as any, index)}
@@ -149,7 +153,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
         style={{ flex: 1 }}
         contentContainerStyle={{
           flexGrow: 1,
-          paddingBottom: IOVisualCostants.appMarginDefault
+          paddingBottom: IOVisualCostants.appMarginDefault + bottom
         }}
       />
     </View>
