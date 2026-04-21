@@ -78,7 +78,7 @@ export const useSendAarDelegationProposalScreenBottomSheet = ({
       />
       <FeatureInfo
         pictogramProps={{
-          name: "pinSecurity"
+          name: "stopSecurity"
         }}
         body={featureInfoText[1]}
       />
