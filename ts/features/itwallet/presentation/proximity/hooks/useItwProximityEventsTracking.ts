@@ -26,10 +26,7 @@ export const useItwProximityEventsTracking = ({ failure }: Params) => {
     hasGivenConsentSelector
   );
   useEffect(() => {
-    const serializedFailure = serializeFailureReason(
-      failure,
-      "ITW_PROXIMITY_EVENTS_TRACKING"
-    );
+    const serializedFailure = serializeFailureReason(failure);
     switch (failure.type) {
       case ProximityFailureType.RELYING_PARTY_GENERIC:
         return trackItwProximityRPGenericFailure({
@@ -43,7 +40,9 @@ export const useItwProximityEventsTracking = ({ failure }: Params) => {
 
       case ProximityFailureType.UNEXPECTED:
         return trackItwProximityUnexpectedFailure(
-          shouldSerializeReason(failure) ? serializedFailure : failure
+          shouldSerializeReason(failure)
+            ? { ...serializedFailure, origin: "ITW_PROXIMITY_EVENTS_TRACKING" }
+            : failure
         );
       case ProximityFailureType.UNTRUSTED_RP:
         return trackItwProximityUnofficialVerifier(serializedFailure);

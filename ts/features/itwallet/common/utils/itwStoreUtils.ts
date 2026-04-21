@@ -70,25 +70,23 @@ export const serializeFailureReason = (
     | IssuanceFailure
     | CredentialIssuanceFailure
     | RemoteFailure
-    | ProximityFailure,
-  origin?: string
+    | ProximityFailure
 ) => ({
   ...failure,
-  reason: mapFailureReason(failure.reason, origin)
+  reason: mapFailureReason(failure.reason)
 });
 
 /**
  * This logic was agreed upon with the Mixpanel team to allow them to filter these specific error cases.
- * Instead of sending a plain string, we return a structured object with a code, errorDescription and an origin.
+ * Instead of sending a plain string, we return a structured object with a code and errorDescription.
  */
-const createReasonObject = (message: string, origin?: string) => ({
+const createReasonObject = (message: string) => ({
   code: "UNEXPECTED",
-  errorDescription: message,
-  origin
+  errorDescription: message
 });
 
 /**
- * Narrows failure reasons that can be safely inspected with Object.keys and spread with the origin.
+ * Narrows failure reasons that can be safely inspected with Object.keys.
  */
 const isReasonObject = (reason: unknown): reason is object =>
   typeof reason === "object" && reason !== null;
@@ -96,20 +94,16 @@ const isReasonObject = (reason: unknown): reason is object =>
 /**
  * Guards and maps failure reasons to a consistent format for serialization.
  * Missing reasons and Error instances are converted to a structured object,
- * Existing reason objects are preserved and enriched with the origin.
+ * Existing reason objects are preserved as-is.
  * Primitive values are returned as-is.
  */
-const mapFailureReason = (reason: unknown, origin?: string) => {
+const mapFailureReason = (reason: unknown) => {
   if (!reason) {
-    return createReasonObject("Reason not provided", origin);
+    return createReasonObject("Reason not provided");
   }
 
   if (reason instanceof Error) {
-    return createReasonObject(reason.message, origin);
-  }
-
-  if (isReasonObject(reason)) {
-    return { ...reason, origin };
+    return createReasonObject(reason.message);
   }
 
   return reason;

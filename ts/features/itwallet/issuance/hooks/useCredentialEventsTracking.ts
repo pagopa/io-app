@@ -91,11 +91,12 @@ export const useCredentialEventsTracking = ({
 
     if (failure.type === CredentialIssuanceFailureType.UNEXPECTED) {
       const reasonToTrack = shouldSerializeReason(failure)
-        ? serializeFailureReason(failure, "ITW_CREDENTIAL_EVENTS_TRACKING")
+        ? serializeFailureReason(failure)
         : failure;
 
       return trackAddCredentialUnexpectedFailure({
         reason: reasonToTrack.reason,
+        origin: "ITW_CREDENTIAL_EVENTS_TRACKING",
         type: failure.type,
         credential
       });

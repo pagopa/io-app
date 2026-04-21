@@ -33,10 +33,7 @@ const extractTrackingData = (credentials: Array<string>) => ({
  */
 export const useItwRemoteEventsTracking = ({ failure }: Params) => {
   useEffect(() => {
-    const serializedFailure = serializeFailureReason(
-      failure,
-      "ITW_REMOTE_EVENTS_TRACKING"
-    );
+    const serializedFailure = serializeFailureReason(failure);
     switch (failure.type) {
       case RemoteFailureType.WALLET_INACTIVE:
         return trackItwUpgradeL3Mandatory(ItwL3UpgradeTrigger.REMOTE_QR_CODE);
@@ -76,7 +73,9 @@ export const useItwRemoteEventsTracking = ({ failure }: Params) => {
 
       case RemoteFailureType.UNEXPECTED:
         return trackItwRemoteUnexpectedFailure(
-          shouldSerializeReason(failure) ? serializedFailure : failure
+          shouldSerializeReason(failure)
+            ? { ...serializedFailure, origin: "ITW_REMOTE_EVENTS_TRACKING" }
+            : failure
         );
     }
   }, [failure]);
