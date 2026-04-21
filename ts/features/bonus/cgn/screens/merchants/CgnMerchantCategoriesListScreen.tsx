@@ -11,22 +11,21 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
+import I18n from "i18next";
 import { useEffect, useMemo, useState } from "react";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import I18n from "i18next";
 import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { cgnMerchantsModalSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
+import { getListItemAccessibilityLabelCount } from "../../../../../utils/accessibility";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
-import { CgnMerchantListSkeleton } from "../../components/merchants/CgnMerchantListSkeleton";
 import { CgnDetailsParamsList } from "../../navigation/params";
 import CGN_ROUTES from "../../navigation/routes";
 import { cgnCategories } from "../../store/actions/categories";
 import { cgnCategoriesListSelector } from "../../store/reducers/categories";
 import { getCategorySpecs } from "../../utils/filters";
-import { getListItemAccessibilityLabelCount } from "../../../../../utils/accessibility";
-import { cgnMerchantsModalSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 
 export const CgnMerchantCategoriesListScreen = () => {
   const theme = useIOTheme();
