@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`error screens should display an error screen in case of missing_sid error 1`] = `
 <View
@@ -1216,8 +1216,13 @@ exports[`error screens should display an error screen in case of preferences err
                                                   "duration": [MockFunction] {
                                                     "calls": [
                                                       [],
+                                                      [],
                                                     ],
                                                     "results": [
+                                                      {
+                                                        "type": "return",
+                                                        "value": 1,
+                                                      },
                                                       {
                                                         "type": "return",
                                                         "value": 1,
@@ -1227,8 +1232,13 @@ exports[`error screens should display an error screen in case of preferences err
                                                   "fps": [MockFunction] {
                                                     "calls": [
                                                       [],
+                                                      [],
                                                     ],
                                                     "results": [
+                                                      {
+                                                        "type": "return",
+                                                        "value": 30,
+                                                      },
                                                       {
                                                         "type": "return",
                                                         "value": 30,

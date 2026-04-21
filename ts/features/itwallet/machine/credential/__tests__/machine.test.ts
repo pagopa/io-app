@@ -3,6 +3,7 @@ import _ from "lodash";
 import {
   assign,
   createActor,
+  fromCallback,
   fromPromise,
   StateFrom,
   waitFor as waitForActor
@@ -13,6 +14,7 @@ import {
   ItwStoredCredentialsMocks
 } from "../../../common/utils/itwMocksUtils";
 import {
+  CredentialAccessToken,
   CredentialBundle,
   CredentialMetadata,
   IssuerConfiguration,
@@ -21,6 +23,7 @@ import {
 import { ItwTags } from "../../tags";
 import {
   GetWalletAttestationActorOutput,
+  ObtainAccessTokenActorInput,
   ObtainCredentialActorInput,
   ObtainCredentialActorOutput,
   ObtainStatusAssertionActorInput,
@@ -37,7 +40,7 @@ import {
 type MachineSnapshot = StateFrom<ItwCredentialIssuanceMachine>;
 
 const T_WIA: string = "abcdefg";
-
+const T_WUA = { wua1: "wua-jwt" };
 const T_CLIENT_ID = "clientId";
 const T_CODE_VERIFIER = "codeVerifier";
 const T_ISSUER_CONFIG: IssuerConfiguration = {
@@ -89,8 +92,11 @@ describe("itwCredentialIssuanceMachine", () => {
   const verifyTrustFederation = jest.fn();
   const getWalletAttestation = jest.fn();
   const requestCredential = jest.fn();
+  const obtainAccessToken = jest.fn();
   const obtainCredential = jest.fn();
   const obtainStatusAssertion = jest.fn();
+  const waitForSessionRefresh = jest.fn();
+
   const isSessionExpired = jest.fn();
   const hasValidWalletInstanceAttestation = jest.fn();
   const isStatusError = jest.fn();
@@ -125,6 +131,10 @@ describe("itwCredentialIssuanceMachine", () => {
         RequestCredentialActorOutput,
         RequestCredentialActorInput
       >(requestCredential),
+      obtainAccessToken: fromPromise<
+        CredentialAccessToken,
+        ObtainAccessTokenActorInput
+      >(obtainAccessToken),
       obtainCredential: fromPromise<
         ObtainCredentialActorOutput,
         ObtainCredentialActorInput
@@ -132,7 +142,8 @@ describe("itwCredentialIssuanceMachine", () => {
       obtainStatusAssertion: fromPromise<
         ReadonlyArray<CredentialBundle>,
         ObtainStatusAssertionActorInput
-      >(obtainStatusAssertion)
+      >(obtainStatusAssertion),
+      waitForSessionRefresh: fromCallback(waitForSessionRefresh)
     },
     guards: {
       isSessionExpired,
@@ -228,9 +239,12 @@ describe("itwCredentialIssuanceMachine", () => {
      */
 
     obtainCredential.mockImplementation(() =>
-      Promise.resolve([
-        { credential: "", metadata: ItwStoredCredentialsMocks.mdl }
-      ])
+      Promise.resolve({
+        credentials: [
+          { credential: "", metadata: ItwStoredCredentialsMocks.mdl }
+        ],
+        walletUnitAttestations: T_WUA
+      })
     );
 
     obtainStatusAssertion.mockImplementation(() =>
@@ -251,20 +265,29 @@ describe("itwCredentialIssuanceMachine", () => {
 
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Issuing]));
 
-    // Step 1: get the credential
+    // Step 1: get the access token
     const intermediateState1 = await waitForActor(actor, snapshot =>
-      snapshot.matches({ Issuance: "ObtainingCredential" })
+      snapshot.matches({ Issuance: "ObtainingAccessToken" })
     );
     expect(intermediateState1.value).toStrictEqual({
+      Issuance: "ObtainingAccessToken"
+    });
+    expect(obtainAccessToken).toHaveBeenCalledTimes(1);
+
+    // Step 2: get the credential
+    const intermediateState2 = await waitForActor(actor, snapshot =>
+      snapshot.matches({ Issuance: "ObtainingCredential" })
+    );
+    expect(intermediateState2.value).toStrictEqual({
       Issuance: "ObtainingCredential"
     });
     expect(obtainCredential).toHaveBeenCalledTimes(1);
 
-    // Step 2: get the status assertion
-    const intermediateState2 = await waitForActor(actor, snapshot =>
+    // Step 3: get the status assertion
+    const intermediateState3 = await waitForActor(actor, snapshot =>
       snapshot.matches({ Issuance: "ObtainingStatusAssertion" })
     );
-    expect(intermediateState2.value).toStrictEqual({
+    expect(intermediateState3.value).toStrictEqual({
       Issuance: "ObtainingStatusAssertion"
     });
     expect(obtainStatusAssertion).toHaveBeenCalledTimes(1);
@@ -274,6 +297,7 @@ describe("itwCredentialIssuanceMachine", () => {
     );
     expect(actor.getSnapshot().context).toEqual(
       expect.objectContaining<Partial<Context>>({
+        walletUnitAttestations: T_WUA,
         credentials: [
           {
             credential: "",
@@ -588,12 +612,15 @@ describe("itwCredentialIssuanceMachine", () => {
       type: "confirm-trust-data"
     });
 
-    expect(actor.getSnapshot().value).toStrictEqual({
-      Issuance: "ObtainingCredential"
-    });
-    expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Issuing]));
-    await waitFor(() => expect(obtainCredential).toHaveBeenCalledTimes(1));
-    await waitFor(() => expect(obtainStatusAssertion).not.toHaveBeenCalled());
+    const intermediateSnapshot = await waitForActor(actor, s =>
+      s.matches({
+        Issuance: "ObtainingCredential"
+      })
+    );
+    expect(intermediateSnapshot.tags).toStrictEqual(new Set([ItwTags.Issuing]));
+    expect(obtainAccessToken).toHaveBeenCalledTimes(1);
+    expect(obtainCredential).toHaveBeenCalledTimes(1);
+    expect(obtainStatusAssertion).not.toHaveBeenCalled();
 
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
@@ -748,44 +775,57 @@ describe("itwCredentialIssuanceMachine", () => {
     expect(navigateToCredentialIntroductionScreen).toHaveBeenCalledTimes(1);
   });
 
-  // TODO: Remove this test when the mocked flow for age verification will be removed
-  it("should use the mocked issuance flow for age verification", async () => {
-    hasCredentialIntroContent.mockImplementation(() => true);
-    setMockRequestedCredential.mockImplementation(() => ({
-      requestedCredential: T_REQUESTED_CREDENTIAL
-    }));
-    setMockCredential.mockImplementation(() => ({
-      credentials: [ItwStoredCredentialsMocks.mdl]
-    }));
-
-    const actor = createActor(mockedMachine);
-    actor.start();
-
-    actor.send({
-      type: "select-credential",
-      credentialType: CredentialType.AGE_VERIFICATION,
-      mode: "issuance"
-    });
-
-    await waitFor(() =>
-      expect(navigateToCredentialIntroductionScreen).toHaveBeenCalledTimes(1)
+  it("Should wait for session refresh then retry the credential request", async () => {
+    isSessionExpired.mockImplementationOnce(() => true);
+    obtainCredential.mockImplementationOnce(() => Promise.reject({}));
+    obtainCredential.mockImplementationOnce(() =>
+      Promise.resolve({
+        credentials: [
+          { credential: "", metadata: ItwStoredCredentialsMocks.mdl }
+        ],
+        walletUnitAttestations: T_WUA
+      })
     );
 
-    actor.send({ type: "continue" });
+    const initialSnapshot = createActor(
+      itwCredentialIssuanceMachine
+    ).getSnapshot();
 
-    expect(actor.getSnapshot().value).toStrictEqual("DisplayingTrustIssuer");
-    expect(setMockRequestedCredential).toHaveBeenCalledTimes(1);
-    expect(verifyTrustFederation).not.toHaveBeenCalled();
-    expect(getWalletAttestation).not.toHaveBeenCalled();
-    expect(requestCredential).not.toHaveBeenCalled();
+    const snapshot: MachineSnapshot = _.merge(initialSnapshot, {
+      value: "DisplayingTrustIssuer"
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, { snapshot });
+    actor.start();
 
     actor.send({ type: "confirm-trust-data" });
 
-    expect(actor.getSnapshot().value).toStrictEqual(
-      "DisplayingCredentialPreview"
+    const intermediateSnapshot1 = await waitForActor(actor, s =>
+      s.matches({
+        Issuance: "WaitingForSessionRefresh"
+      })
     );
-    expect(setMockCredential).toHaveBeenCalledTimes(1);
-    expect(obtainCredential).not.toHaveBeenCalled();
-    expect(obtainStatusAssertion).not.toHaveBeenCalled();
+
+    expect(intermediateSnapshot1.value).toEqual({
+      Issuance: "WaitingForSessionRefresh"
+    });
+    expect(handleSessionExpired).toHaveBeenCalledTimes(1);
+
+    actor.send({ type: "session-refresh-complete" });
+
+    const intermediateSnapshot2 = await waitForActor(actor, s =>
+      s.matches({
+        Issuance: "ObtainingStatusAssertion"
+      })
+    );
+    expect(intermediateSnapshot2.value).toEqual({
+      Issuance: "ObtainingStatusAssertion"
+    });
+    expect(intermediateSnapshot2.context).toMatchObject<Partial<Context>>({
+      credentials: [
+        { credential: "", metadata: ItwStoredCredentialsMocks.mdl }
+      ],
+      walletUnitAttestations: T_WUA
+    });
   });
 });

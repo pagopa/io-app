@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`MessageDetailsScreen should match the snapshot when everything went fine and not dispatch trackSendAarFailure (opening source aar, user type mandatory) 1`] = `
 <View
