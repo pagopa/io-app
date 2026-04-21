@@ -1,7 +1,7 @@
 import { Errors } from "@pagopa/io-react-native-wallet";
 import {
   isAssertionGenerationError,
-  isPidIssuanceBlockedByAnprError
+  isPidIssuance404Error
 } from "../itwFailureUtils";
 
 describe("isAssertionGenerationError", () => {
@@ -31,7 +31,7 @@ describe("isAssertionGenerationError", () => {
   });
 });
 
-describe("isPidIssuanceBlockedByAnprError", () => {
+describe("isPidIssuance404Error", () => {
   it.each([
     Errors.IssuerResponseErrorCodes.CredentialRequestFailed,
     Errors.IssuerResponseErrorCodes.CredentialInvalidStatus
@@ -43,7 +43,7 @@ describe("isPidIssuanceBlockedByAnprError", () => {
       statusCode: 404
     });
 
-    expect(isPidIssuanceBlockedByAnprError(error)).toBe(true);
+    expect(isPidIssuance404Error(error)).toBe(true);
   });
 
   it("returns false for issuer errors with a different HTTP status", () => {
@@ -54,7 +54,7 @@ describe("isPidIssuanceBlockedByAnprError", () => {
       statusCode: 500
     });
 
-    expect(isPidIssuanceBlockedByAnprError(error)).toBe(false);
+    expect(isPidIssuance404Error(error)).toBe(false);
   });
 
   it("returns false for non matching issuer codes", () => {
@@ -65,11 +65,11 @@ describe("isPidIssuanceBlockedByAnprError", () => {
       statusCode: 404
     });
 
-    expect(isPidIssuanceBlockedByAnprError(error)).toBe(false);
+    expect(isPidIssuance404Error(error)).toBe(false);
   });
 
   it("returns false for non issuer errors", () => {
-    expect(isPidIssuanceBlockedByAnprError(new Error("boom"))).toBe(false);
-    expect(isPidIssuanceBlockedByAnprError(null)).toBe(false);
+    expect(isPidIssuance404Error(new Error("boom"))).toBe(false);
+    expect(isPidIssuance404Error(null)).toBe(false);
   });
 });

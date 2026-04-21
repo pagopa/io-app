@@ -48,13 +48,13 @@ export const isAssertionGenerationError = (e: unknown): e is IntegrityError =>
   e instanceof Error && e.message === "GENERATION_ASSERTION_FAILED";
 
 /**
- * Guard used to identify the PID issuance error caused by an ANPR mismatch.
+ * Guard used to identify PID issuance failures surfaced as HTTP 404 issuer errors.
  *
  * The wallet SDK can surface the same HTTP 404 either as
  * `ERR_CREDENTIAL_REQUEST_FAILED` or `ERR_CREDENTIAL_INVALID_STATUS`
  * depending on the issuance step / specs version.
  */
-export const isPidIssuanceBlockedByAnprError = (
+export const isPidIssuance404Error = (
   e: unknown
 ): e is Errors.IssuerResponseError =>
   Errors.isIssuerResponseError(e) &&
