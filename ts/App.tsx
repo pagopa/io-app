@@ -17,8 +17,8 @@ import { IOAlertVisibleContextProvider } from "./components/StatusMessages/IOAle
 import { StatusMessages } from "./components/StatusMessages/StatusMessages";
 import { LightModalProvider } from "./components/ui/LightModal";
 import { AppFeedbackProvider } from "./features/appReviews/components/AppFeedbackProvider";
-import { ITW_WALLET_CHECK_TASK } from "./features/itwallet/background/constants";
-import { itwWalletCheckTaskHandler } from "./features/itwallet/background/tasks";
+import { ITW_WALLET_CHECK_TASK } from "./features/itwallet/tasks/constants";
+import { itwWalletCheckTaskHandler } from "./features/itwallet/tasks/handler";
 import { TourProvider } from "./features/tour/components/TourProvider";
 
 /**

@@ -8,7 +8,7 @@ import {
   updateNfcInfoTrackingProperties,
   watchItwAnalyticsSaga
 } from "../../analytics/saga";
-import { registerItwBackgroundTaskSaga } from "../../background/saga.ts";
+import { registerItwBackgroundTaskSaga } from "../../tasks/saga.ts";
 import { watchItwCredentialsSaga } from "../../credentials/saga";
 import { checkCredentialsStatusAssertion } from "../../credentials/saga/checkCredentialsStatusAssertion";
 import { handleItwCredentialsVaultCoherenceSaga } from "../../credentials/saga/handleItwCredentialsVaultCoherenceSaga";

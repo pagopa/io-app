@@ -5,11 +5,13 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { useCallback, useState } from "react";
+import { ReactNode, useCallback, useState } from "react";
 import { ScrollView } from "react-native";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useScreenEndMargin } from "../../../../hooks/useScreenEndMargin";
+import { isDevEnv } from "../../../../utils/environment";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
+import { ItwBackgroundTaskSection } from "../components/ItwBackgroundTaskSection";
 import { ItwComponentsSection } from "../components/ItwComponentsSection";
 import { ItwEnvironmentSection } from "../components/ItwEnvironmentSection";
 import { ItwIdentificationScreensSection } from "../components/ItwIdentificationScreensSection";
@@ -19,13 +21,18 @@ import { ItwMiscSection } from "../components/ItwMiscSection";
 import { ItwPidIssuanceSection } from "../components/ItwPidIssuanceSection";
 import { ItwSpecsVersionSection } from "../components/ItwSpecsVersionSection";
 
+type PlaygroundTab = {
+  label: string;
+  content: ReactNode;
+};
+
 /**
  * ITW Playground screen
  * @returns a screen with a list of playgrounds for the ITW
  */
 const ItwPlayground = () => {
   const eidMachineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const { screenEndMargin } = useScreenEndMargin();
+  const { screenEndMargin, screenEndSafeArea } = useScreenEndMargin();
   const [page, setPage] = useState(0);
 
   useHeaderSecondLevel({
@@ -38,41 +45,58 @@ const ItwPlayground = () => {
     }, [eidMachineRef])
   );
 
+  const tabs: ReadonlyArray<PlaygroundTab> = [
+    {
+      label: "Environment",
+      content: (
+        <>
+          <ItwEnvironmentSection />
+          <ItwLifecycleSection />
+          <ItwSpecsVersionSection />
+          <ItwMiscSection />
+        </>
+      )
+    },
+    {
+      label: "Issuance",
+      content: <ItwPidIssuanceSection />
+    },
+    {
+      label: "Screens",
+      content: (
+        <>
+          <ItwL3ScreensSection />
+          <ItwIdentificationScreensSection />
+        </>
+      )
+    },
+    {
+      label: "Components",
+      content: <ItwComponentsSection />
+    },
+    ...(isDevEnv
+      ? [
+          {
+            label: "Task",
+            content: <ItwBackgroundTaskSection />
+          }
+        ]
+      : [])
+  ];
+
   return (
-    <VStack space={16} style={{ flex: 1 }}>
+    <VStack space={16} style={{ paddingBottom: screenEndMargin }}>
       <TabNavigation
         tabAlignment="start"
         selectedIndex={page}
         onItemPress={setPage}
       >
-        <TabItem label="Environment" accessibilityLabel="Environment" />
-        <TabItem label="Issuance" accessibilityLabel="Issuance" />
-        <TabItem label="Screens" accessibilityLabel="Screens" />
-        <TabItem label="Components" accessibilityLabel="Components" />
+        {tabs.map(({ label }) => (
+          <TabItem key={label} label={label} accessibilityLabel={label} />
+        ))}
       </TabNavigation>
-      <ScrollView
-        contentContainerStyle={{
-          paddingBottom: screenEndMargin
-        }}
-      >
-        <ContentWrapper>
-          {page === 0 && (
-            <>
-              <ItwEnvironmentSection />
-              <ItwLifecycleSection />
-              <ItwSpecsVersionSection />
-              <ItwMiscSection />
-            </>
-          )}
-          {page === 1 && <ItwPidIssuanceSection />}
-          {page === 2 && (
-            <>
-              <ItwL3ScreensSection />
-              <ItwIdentificationScreensSection />
-            </>
-          )}
-          {page === 3 && <ItwComponentsSection />}
-        </ContentWrapper>
+      <ScrollView contentContainerStyle={{ paddingBottom: screenEndSafeArea }}>
+        <ContentWrapper>{tabs[page]?.content}</ContentWrapper>
       </ScrollView>
     </VStack>
   );

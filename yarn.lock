@@ -11635,14 +11635,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-background-task@npm:~55.0.10":
-  version: 55.0.10
-  resolution: "expo-background-task@npm:55.0.10"
+"expo-background-task@npm:~1.0.10":
+  version: 1.0.10
+  resolution: "expo-background-task@npm:1.0.10"
   dependencies:
-    expo-task-manager: ~55.0.10
+    expo-task-manager: ~14.0.9
   peerDependencies:
     expo: "*"
-  checksum: 4a567c8aa3b3f8dafdf1972aecd02f0a11d2386534bee14795b15b8c0c6cb50d8852784a305335d65b4b89916cfa5663a711f21f8dde0f4cdca25c5ed65da50a
+  checksum: d3cd342157c93b328382375551eff9225c686f2cc4d3cb1155ae89d73ef6a4e7db0c4b72c7f0d9829f8ba523e59ac5f657490a035961989e00fed9017bd6c31e
   languageName: node
   linkType: hard
 
@@ -11746,15 +11746,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"expo-task-manager@npm:~55.0.10":
-  version: 55.0.10
-  resolution: "expo-task-manager@npm:55.0.10"
+"expo-task-manager@npm:~14.0.9":
+  version: 14.0.9
+  resolution: "expo-task-manager@npm:14.0.9"
   dependencies:
-    unimodules-app-loader: ~55.0.2
+    unimodules-app-loader: ~6.0.8
   peerDependencies:
     expo: "*"
     react-native: "*"
-  checksum: 1150dff1a38708e23a946cffd6cac5240f615e02690a5aaa665192e483e41264adc9dcfec51c5e28d02d4bdd3be5fde31fd396d298d0921db43db94f6fef1d08
+  checksum: c13a7ec062908de31eca4fe2fa9eb6ba47b919e694f10e7547f936bc3943f62b2e22f492b789b64e95413ed87bedbe9d412cc5e449e701bf407d439265263979
   languageName: node
   linkType: hard
 
@@ -13635,9 +13635,9 @@ __metadata:
     eslint-plugin-react-native-a11y: ^3.3.0
     eslint-plugin-sonarjs: ^3.0.7
     expo: ^54.0.33
-    expo-background-task: ~55.0.10
+    expo-background-task: ~1.0.10
     expo-screen-capture: ~8.0.9
-    expo-task-manager: ~55.0.10
+    expo-task-manager: ~14.0.9
     fp-ts: ^2.12.1
     front-matter: ^4.0.2
     fs-extra: ^7.0.0
@@ -22934,10 +22934,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"unimodules-app-loader@npm:~55.0.2":
-  version: 55.0.2
-  resolution: "unimodules-app-loader@npm:55.0.2"
-  checksum: b54a63bf4248fc8765df3d9135487400d791bdb37a3f3a1428a7e187e5f309e313619636219f82d831f6255322436e946d6169ccff341444363ce22253370b7b
+"unimodules-app-loader@npm:~6.0.8":
+  version: 6.0.8
+  resolution: "unimodules-app-loader@npm:6.0.8"
+  checksum: 7db6bdc77b0f9d529965ec5ee69defe45b92551a095183e80ce6bcc36a46635288c5ae6fa41dc6f2f9b74d724dd5673d4f65bf2761f19240150d40c0789f3109
   languageName: node
   linkType: hard
 
