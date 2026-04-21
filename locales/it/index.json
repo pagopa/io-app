@@ -3097,7 +3097,7 @@
         "mdl": "Patente di guida",
         "dc": "Carta Europea della Disabilità",
         "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia",
-        "ageVerification": "Età certificata",
+        "av": "Età certificata",
         "ed": "Titoli accademici",
         "ee": "Iscrizioni accademiche",
         "res": "Attestato di residenza",
@@ -3864,12 +3864,6 @@
             "expiring": {
               "title": "Carta europea della disabilità su IO: documento in scadenza",
               "content": "Puoi richiedere il rinnovo della tua Carta europea della disabilità (CED) contattando l'ente che l'ha emessa.\n\nVerifica le modalità e i documenti richiesti sul sito ufficiale dell'INPS, oppure contattando la tua ASL locale, poiché il rinnovo può variare in base al tipo di disabilità e alle normative del tuo territorio."
-            }
-          },
-          "age_verification": {
-            "expiring": {
-              "title": "Età certificata in scadenza",
-              "content": "La tua Età certificata è valida per 90 giorni. Al termine della validità potrai rinnovarla presentando di nuovo il tuo IT-Wallet ID."
             }
           }
         },

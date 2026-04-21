@@ -45,6 +45,7 @@ type Props = {
 
 const excludedCredentialTypes = [
   CredentialType.PID,
+  CredentialType.AGE_VERIFICATION,
   CredentialType.EDUCATION_DEGREE,
   CredentialType.EDUCATION_ENROLLMENT,
   CredentialType.RESIDENCY,

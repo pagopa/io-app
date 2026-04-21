@@ -73,7 +73,7 @@ export const itwGetCredentialNameByCredentialType = (
       : "features.itWallet.credentialName.eid"
   ),
   [CredentialType.AGE_VERIFICATION]: I18n.t(
-    "features.itWallet.credentialName.ageVerification"
+    "features.itWallet.credentialName.av"
   ),
   [CredentialType.EDUCATION_DEGREE]: I18n.t(
     "features.itWallet.credentialName.ed"
