@@ -764,4 +764,69 @@ describe("itwCredentialIssuanceMachine", () => {
     );
     expect(navigateToCredentialIntroductionScreen).toHaveBeenCalledTimes(1);
   });
+
+  it("Should wait for session refresh then retry the credential request", async () => {
+    isSessionExpired.mockImplementationOnce(() => true);
+    obtainCredential.mockImplementationOnce(() => Promise.reject({}));
+    obtainCredential.mockImplementationOnce(() =>
+      Promise.resolve({
+        credentials: [
+          { credential: "", metadata: ItwStoredCredentialsMocks.mdl }
+        ],
+        walletUnitAttestations: T_WUA
+      })
+    );
+    obtainStatusAssertion.mockImplementationOnce(() =>
+      Promise.resolve([
+        {
+          credential: "",
+          metadata: {
+            ...ItwStoredCredentialsMocks.mdl,
+            storedStatusAssertion: T_STORED_STATUS_ASSERTION
+          }
+        }
+      ])
+    );
+
+    const initialSnapshot = createActor(
+      itwCredentialIssuanceMachine
+    ).getSnapshot();
+
+    const snapshot: MachineSnapshot = _.merge(initialSnapshot, {
+      value: "DisplayingTrustIssuer"
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, { snapshot });
+    actor.start();
+
+    actor.send({ type: "confirm-trust-data" });
+
+    const intermediateSnapshot1 = await waitForActor(actor, s =>
+      s.matches({
+        Issuance: "WaitingForSessionRefresh"
+      })
+    );
+
+    expect(intermediateSnapshot1.value).toEqual({
+      Issuance: "WaitingForSessionRefresh"
+    });
+    expect(handleSessionExpired).toHaveBeenCalledTimes(1);
+
+    actor.send({ type: "session-refresh-complete" });
+
+    const intermediateSnapshot2 = await waitForActor(actor, s =>
+      s.matches({
+        Issuance: "ObtainingStatusAssertion"
+      })
+    );
+    expect(intermediateSnapshot2.value).toEqual({
+      Issuance: "ObtainingStatusAssertion"
+    });
+    expect(intermediateSnapshot2.context).toMatchObject<Partial<Context>>({
+      credentials: [
+        { credential: "", metadata: ItwStoredCredentialsMocks.mdl }
+      ],
+      walletUnitAttestations: T_WUA
+    });
+  });
 });
