@@ -1,6 +1,5 @@
 import { render } from "@testing-library/react-native";
 import { StyleSheet, Text, type ViewStyle } from "react-native";
-import type { ReactTestInstance } from "react-test-renderer";
 import { FlippableCard } from "../FlippableCard";
 
 jest.mock("react-native-reanimated", () => ({
@@ -11,30 +10,39 @@ type FlippableFaceStyle = ViewStyle & {
   transform?: ReadonlyArray<Record<string, string | number>>;
 };
 
-const getFlippableFaceStyle = (node: ReactTestInstance) =>
+type UnsafeTestInstance = {
+  props: Record<string, unknown>;
+};
+
+const getAllRenderedNodes = (component: ReturnType<typeof render>) =>
+  component.UNSAFE_root.findAll(() => true) as Array<UnsafeTestInstance>;
+
+const getFlippableFaceStyle = (node: UnsafeTestInstance) =>
   StyleSheet.flatten<FlippableFaceStyle>(node.props?.style);
 
 const readFlippableTransforms = (component: ReturnType<typeof render>) =>
-  component.UNSAFE_root.findAll((node: ReactTestInstance) => {
-    const transform = getFlippableFaceStyle(node)?.transform;
-    return (
-      Array.isArray(transform) &&
-      transform.some(
-        step => !!step && typeof step === "object" && "rotateY" in step
-      )
+  getAllRenderedNodes(component)
+    .map(node => getFlippableFaceStyle(node)?.transform)
+    .filter(
+      (
+        transform
+      ): transform is ReadonlyArray<Record<string, string | number>> =>
+        Array.isArray(transform) &&
+        transform.some(
+          step => !!step && typeof step === "object" && "rotateY" in step
+        )
     );
-  }).map(node => getFlippableFaceStyle(node)?.transform);
 
 const readFlippableFaceStyles = (component: ReturnType<typeof render>) =>
-  component.UNSAFE_root.findAll((node: ReactTestInstance) => {
-    const transform = getFlippableFaceStyle(node)?.transform;
-    return (
-      Array.isArray(transform) &&
-      transform.some(
-        step => !!step && typeof step === "object" && "rotateY" in step
-      )
+  getAllRenderedNodes(component)
+    .map(node => getFlippableFaceStyle(node))
+    .filter(
+      (style): style is FlippableFaceStyle =>
+        Array.isArray(style?.transform) &&
+        style.transform.some(
+          step => !!step && typeof step === "object" && "rotateY" in step
+        )
     );
-  }).map(node => getFlippableFaceStyle(node));
 
 describe("FlippableCard", () => {
   it("keeps hidden backfaces and applies perspective + rotateY transforms on both faces", () => {

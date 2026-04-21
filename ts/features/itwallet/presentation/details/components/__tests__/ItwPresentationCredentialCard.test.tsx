@@ -1,6 +1,5 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import { StyleSheet, type ViewStyle } from "react-native";
-import type { ReactTestInstance } from "react-test-renderer";
 import { ItwStoredCredentialsMocks } from "../../../../common/utils/itwMocksUtils";
 import { ITW_ROUTES } from "../../../../navigation/routes";
 import { ItwPresentationCredentialCard } from "../ItwPresentationCredentialCard";
@@ -112,24 +111,28 @@ type FlippableFaceStyle = ViewStyle & {
   transform?: ReadonlyArray<Record<string, string | number>>;
 };
 
-const getFlippableFaceStyle = (node: ReactTestInstance) =>
+type UnsafeTestInstance = {
+  props: Record<string, unknown>;
+};
+
+const getAllRenderedNodes = (component: ReturnType<typeof render>) =>
+  component.UNSAFE_root.findAll(() => true) as Array<UnsafeTestInstance>;
+
+const getFlippableFaceStyle = (node: UnsafeTestInstance) =>
   StyleSheet.flatten<FlippableFaceStyle>(node.props?.style);
 
-const readFlippableTransforms = (component: ReturnType<typeof render>) => {
-  const flippableFaces = component.UNSAFE_root.findAll(
-    (node: ReactTestInstance) => {
-      const transform = getFlippableFaceStyle(node)?.transform;
-      return (
+const readFlippableTransforms = (component: ReturnType<typeof render>) =>
+  getAllRenderedNodes(component)
+    .map(node => getFlippableFaceStyle(node)?.transform)
+    .filter(
+      (
+        transform
+      ): transform is ReadonlyArray<Record<string, string | number>> =>
         Array.isArray(transform) &&
         transform.some(
           step => !!step && typeof step === "object" && "rotateY" in step
         )
-      );
-    }
-  );
-
-  return flippableFaces.map(face => getFlippableFaceStyle(face)?.transform);
-};
+    );
 
 jest.mock("../ItwPresentationCredentialCardFlipButton.tsx", () => ({
   ItwPresentationCredentialCardFlipButton: ({
@@ -184,8 +187,8 @@ describe("ItwPresentationCredentialCard", () => {
       ])
     );
 
-    const cardButtons = component.UNSAFE_root.findAll(
-      (node: ReactTestInstance) =>
+    const cardButtons = getAllRenderedNodes(component).filter(
+      node =>
         node.props?.accessibilityRole === "button" &&
         node.props?.testID !== "flip-button" &&
         typeof node.props?.onPress === "function"
