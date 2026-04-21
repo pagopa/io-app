@@ -101,8 +101,8 @@ importers:
         specifier: ^0.2.1
         version: 0.2.1(react-native@0.81.5(patch_hash=707e4553fbc3e532ebfe875389c54a1058f9ecab68ae03fb9e45d5d9c2d33eb5)(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.81.5(@babel/core@7.28.0))(@types/react@19.1.8)(react@19.1.0))(react@19.1.0)
       '@pagopa/io-react-native-wallet':
-        specifier: 3.0.1
-        version: 3.0.1(571f9974ce44fbd188e86b6f73b9ee22)
+        specifier: 3.1.2
+        version: 3.1.2(571f9974ce44fbd188e86b6f73b9ee22)
       '@pagopa/io-react-native-zendesk':
         specifier: ^0.3.30
         version: 0.3.30(react-native@0.81.5(patch_hash=707e4553fbc3e532ebfe875389c54a1058f9ecab68ae03fb9e45d5d9c2d33eb5)(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.81.5(@babel/core@7.28.0))(@types/react@19.1.8)(react@19.1.0))(react@19.1.0)
@@ -424,6 +424,9 @@ importers:
       xstate:
         specifier: ^5
         version: 5.17.4
+      zod:
+        specifier: 4.3.6
+        version: 4.3.6
     devDependencies:
       '@babel/core':
         specifier: ^7.26.0
@@ -2048,8 +2051,8 @@ packages:
       react: '*'
       react-native: '*'
 
-  '@pagopa/io-react-native-wallet@3.0.1':
-    resolution: {integrity: sha512-IIZAB2uVs8UsvhwTWqfD2tjoLMvFZTPNUaavHVTGQXHSueq80RvXc5dA7Jh5W56vjs6VvmC5V+cRwmlcJFEDwA==}
+  '@pagopa/io-react-native-wallet@3.1.2':
+    resolution: {integrity: sha512-vTkeHgnEMQh1XWA5nSsKR7TTzc5kt5M7nJcgaCWzyA9lSxAKJloGR7rwz3yCvB+wAoT85zyHDVjnWdFWR1lR6g==}
     engines: {node: '>= 16.0.0'}
     peerDependencies:
       '@pagopa/io-react-native-crypto': '*'
@@ -11729,12 +11732,13 @@ snapshots:
       react: 19.1.0
       react-native: 0.81.5(patch_hash=707e4553fbc3e532ebfe875389c54a1058f9ecab68ae03fb9e45d5d9c2d33eb5)(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.81.5(@babel/core@7.28.0))(@types/react@19.1.8)(react@19.1.0)
 
-  '@pagopa/io-react-native-wallet@3.0.1(571f9974ce44fbd188e86b6f73b9ee22)':
+  '@pagopa/io-react-native-wallet@3.1.2(571f9974ce44fbd188e86b6f73b9ee22)':
     dependencies:
       '@pagopa/io-react-native-crypto': 1.2.3(react-native@0.81.5(patch_hash=707e4553fbc3e532ebfe875389c54a1058f9ecab68ae03fb9e45d5d9c2d33eb5)(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.81.5(@babel/core@7.28.0))(@types/react@19.1.8)(react@19.1.0))(react@19.1.0)
       '@pagopa/io-react-native-iso18013': 0.6.0(react-native@0.81.5(patch_hash=707e4553fbc3e532ebfe875389c54a1058f9ecab68ae03fb9e45d5d9c2d33eb5)(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.81.5(@babel/core@7.28.0))(@types/react@19.1.8)(react@19.1.0))(react@19.1.0)
       '@pagopa/io-react-native-jwt': 2.1.0(react-native@0.81.5(patch_hash=707e4553fbc3e532ebfe875389c54a1058f9ecab68ae03fb9e45d5d9c2d33eb5)(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.81.5(@babel/core@7.28.0))(@types/react@19.1.8)(react@19.1.0))(react@19.1.0)
       '@pagopa/io-wallet-oauth2': 1.2.1
+      '@pagopa/io-wallet-oid-federation': 1.2.1
       '@pagopa/io-wallet-oid4vci': 1.2.1
       '@pagopa/io-wallet-oid4vp': 1.2.1
       '@pagopa/io-wallet-utils': 1.2.1
@@ -11752,7 +11756,7 @@ snapshots:
       react-native-quick-crypto: 0.7.17(react-native@0.81.5(patch_hash=707e4553fbc3e532ebfe875389c54a1058f9ecab68ae03fb9e45d5d9c2d33eb5)(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.81.5(@babel/core@7.28.0))(@types/react@19.1.8)(react@19.1.0))(react@19.1.0)
       react-native-url-polyfill: 2.0.0(react-native@0.81.5(patch_hash=707e4553fbc3e532ebfe875389c54a1058f9ecab68ae03fb9e45d5d9c2d33eb5)(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.81.5(@babel/core@7.28.0))(@types/react@19.1.8)(react@19.1.0))
       uuid: 11.1.0
-      zod: 3.25.76
+      zod: 4.3.6
     transitivePeerDependencies:
       - typescript
 
@@ -11944,7 +11948,7 @@ snapshots:
       execa: 5.1.1
       node-stream-zip: 1.11.2
       ora: 5.4.1
-      semver: 7.7.3
+      semver: 7.7.4
       wcwidth: 1.0.1
       yaml: 2.8.3
     transitivePeerDependencies:
@@ -12055,7 +12059,7 @@ snapshots:
       mime: 2.4.6
       ora: 5.4.1
       prompts: 2.4.2
-      semver: 7.7.3
+      semver: 7.7.4
 
   '@react-native-community/cli-tools@20.0.0':
     dependencies:
@@ -12094,7 +12098,7 @@ snapshots:
       fs-extra: 8.1.0
       graceful-fs: 4.2.11
       prompts: 2.4.2
-      semver: 7.7.3
+      semver: 7.7.4
     transitivePeerDependencies:
       - bufferutil
       - supports-color
@@ -12162,7 +12166,7 @@ snapshots:
       ora: 3.4.0
       prompts: 2.4.2
       react-native: 0.81.5(patch_hash=707e4553fbc3e532ebfe875389c54a1058f9ecab68ae03fb9e45d5d9c2d33eb5)(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.81.5(@babel/core@7.28.0))(@types/react@19.1.8)(react@19.1.0)
-      semver: 7.7.3
+      semver: 7.7.4
       shelljs: 0.8.5
       username: 5.1.0
       xml-formatter: 2.6.1
@@ -12304,7 +12308,7 @@ snapshots:
       metro: 0.82.5
       metro-config: 0.82.5
       metro-core: 0.82.5
-      semver: 7.7.3
+      semver: 7.7.4
     optionalDependencies:
       '@react-native-community/cli': 17.0.0(typescript@5.9.3)
     transitivePeerDependencies:
@@ -15686,7 +15690,7 @@ snapshots:
 
   execa@4.1.0:
     dependencies:
-      cross-spawn: 7.0.3
+      cross-spawn: 7.0.6
       get-stream: 5.2.0
       human-signals: 1.1.1
       is-stream: 2.0.0
@@ -19731,7 +19735,7 @@ snapshots:
       react-refresh: 0.14.2
       regenerator-runtime: 0.13.7
       scheduler: 0.26.0
-      semver: 7.7.3
+      semver: 7.7.4
       source-map-support: 0.5.21
       stacktrace-parser: 0.1.10
       whatwg-fetch: 3.3.1
