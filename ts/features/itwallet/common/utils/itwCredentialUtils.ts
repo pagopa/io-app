@@ -29,7 +29,6 @@ export const availableCredentials = [
 
 // New credentials that can be actively requested and obtained by the user
 export const newCredentials = [
-  CredentialType.AGE_VERIFICATION,
   CredentialType.EDUCATION_DEGREE,
   CredentialType.EDUCATION_ENROLLMENT,
   CredentialType.RESIDENCY

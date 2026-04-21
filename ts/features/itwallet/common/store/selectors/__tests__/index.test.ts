@@ -8,8 +8,7 @@ import {
   itwShouldRenderL3UpgradeBannerSelector,
   itwShouldRenderWalletDiscoveryBannerSelector,
   itwShouldRenderWalletReadyBannerSelector,
-  itwShouldRenderWalletUpgradeMDLDetailsBannerSelector,
-  itwShouldUpgradeCredentialSelector
+  itwShouldRenderWalletUpgradeMDLDetailsBannerSelector
 } from "..";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { OfflineAccessReasonEnum } from "../../../../../ingress/store/reducer";
@@ -20,7 +19,6 @@ import * as walletInstanceSelectors from "../../../../walletInstance/store/selec
 import * as preferencesSelectors from "../preferences";
 import * as bannersSelectors from "../banners";
 import * as remoteConfigSelectors from "../remoteConfig";
-import { CredentialType } from "../../../utils/itwMocksUtils";
 
 describe("isItwDiscoveryBannerRenderableSelector", () => {
   beforeEach(() => {
@@ -218,26 +216,6 @@ describe("itwShouldRenderWalletUpgradeMDLDetailsBannerSelector", () => {
       ).toBe(expected);
     }
   );
-});
-
-describe("itwShouldUpgradeCredentialSelector", () => {
-  beforeEach(() => {
-    jest.resetAllMocks();
-    jest.clearAllMocks();
-  });
-
-  it("should return false for age verification", () => {
-    jest
-      .spyOn(preferencesSelectors, "itwCredentialUpgradeFailedSelector")
-      .mockReturnValue([CredentialType.AGE_VERIFICATION]);
-
-    expect(
-      itwShouldUpgradeCredentialSelector(
-        CredentialType.AGE_VERIFICATION,
-        "2024-01-01T00:00:00.000Z"
-      )({} as GlobalState)
-    ).toBe(false);
-  });
 });
 
 describe("itwShouldRenderDiscoveryBannerSelector", () => {

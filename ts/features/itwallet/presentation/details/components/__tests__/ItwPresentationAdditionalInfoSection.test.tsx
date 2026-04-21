@@ -25,11 +25,7 @@ describe("ItwPresentationAdditionalInfoSection", () => {
     jest.clearAllMocks();
   });
 
-  const newCredentialsWithValidityAlert = newCredentials.filter(
-    credentialType => credentialType !== CredentialType.AGE_VERIFICATION
-  );
-
-  test.each(newCredentialsWithValidityAlert)(
+  test.each(newCredentials)(
     "renders new credential alert for %s",
     (credentialType: NewCredential) => {
       const { queryByTestId } = renderComponent(credentialType);

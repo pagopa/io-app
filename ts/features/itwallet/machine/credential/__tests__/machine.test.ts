@@ -9,8 +9,8 @@ import {
   waitFor as waitForActor
 } from "xstate";
 import {
-  ItwStatusAssertionMocks,
-  ItwStoredCredentialsMocks
+  ItwStoredCredentialsMocks,
+  ItwStatusAssertionMocks
 } from "../../../common/utils/itwMocksUtils";
 import {
   CredentialAccessToken,
@@ -85,9 +85,6 @@ describe("itwCredentialIssuanceMachine", () => {
   const trackAddCredential = jest.fn();
   const trackCredentialIssuingDataShare = jest.fn();
   const trackCredentialIssuingDataShareAccepted = jest.fn();
-  const setMockRequestedCredential = jest.fn();
-  const setMockCredential = jest.fn();
-
   const verifyTrustFederation = jest.fn();
   const getWalletAttestation = jest.fn();
   const requestCredential = jest.fn();
@@ -99,7 +96,6 @@ describe("itwCredentialIssuanceMachine", () => {
   const isSessionExpired = jest.fn();
   const hasValidWalletInstanceAttestation = jest.fn();
   const isStatusError = jest.fn();
-  const isSkipNavigation = jest.fn();
   const isEidExpired = jest.fn();
   const hasCredentialIntroContent = jest.fn();
 
@@ -118,9 +114,7 @@ describe("itwCredentialIssuanceMachine", () => {
       trackStartAddCredential,
       trackAddCredential,
       trackCredentialIssuingDataShare,
-      trackCredentialIssuingDataShareAccepted,
-      setMockRequestedCredential: assign(setMockRequestedCredential),
-      setMockCredential: assign(setMockCredential)
+      trackCredentialIssuingDataShareAccepted
     },
     actors: {
       verifyTrustFederation: fromPromise<void>(verifyTrustFederation),
@@ -157,7 +151,6 @@ describe("itwCredentialIssuanceMachine", () => {
     onInit.mockImplementation(() => ({ walletInstanceAttestation: undefined }));
     hasValidWalletInstanceAttestation.mockImplementation(() => false);
     isEidExpired.mockImplementation(() => false);
-    isSkipNavigation.mockImplementation(() => true);
     jest.useFakeTimers();
   });
 
@@ -641,8 +634,6 @@ describe("itwCredentialIssuanceMachine", () => {
     const actor = createActor(mockedMachine);
     actor.start();
 
-    isSkipNavigation.mockImplementation(() => false);
-
     requestCredential.mockImplementation(
       () =>
         new Promise(resolve =>
@@ -772,59 +763,5 @@ describe("itwCredentialIssuanceMachine", () => {
       snapshot.matches("CredentialIntroduction")
     );
     expect(navigateToCredentialIntroductionScreen).toHaveBeenCalledTimes(1);
-  });
-
-  it("Should wait for session refresh then retry the credential request", async () => {
-    isSessionExpired.mockImplementationOnce(() => true);
-    obtainCredential.mockImplementationOnce(() => Promise.reject({}));
-    obtainCredential.mockImplementationOnce(() =>
-      Promise.resolve({
-        credentials: [
-          { credential: "", metadata: ItwStoredCredentialsMocks.mdl }
-        ],
-        walletUnitAttestations: T_WUA
-      })
-    );
-
-    const initialSnapshot = createActor(
-      itwCredentialIssuanceMachine
-    ).getSnapshot();
-
-    const snapshot: MachineSnapshot = _.merge(initialSnapshot, {
-      value: "DisplayingTrustIssuer"
-    } as MachineSnapshot);
-
-    const actor = createActor(mockedMachine, { snapshot });
-    actor.start();
-
-    actor.send({ type: "confirm-trust-data" });
-
-    const intermediateSnapshot1 = await waitForActor(actor, s =>
-      s.matches({
-        Issuance: "WaitingForSessionRefresh"
-      })
-    );
-
-    expect(intermediateSnapshot1.value).toEqual({
-      Issuance: "WaitingForSessionRefresh"
-    });
-    expect(handleSessionExpired).toHaveBeenCalledTimes(1);
-
-    actor.send({ type: "session-refresh-complete" });
-
-    const intermediateSnapshot2 = await waitForActor(actor, s =>
-      s.matches({
-        Issuance: "ObtainingStatusAssertion"
-      })
-    );
-    expect(intermediateSnapshot2.value).toEqual({
-      Issuance: "ObtainingStatusAssertion"
-    });
-    expect(intermediateSnapshot2.context).toMatchObject<Partial<Context>>({
-      credentials: [
-        { credential: "", metadata: ItwStoredCredentialsMocks.mdl }
-      ],
-      walletUnitAttestations: T_WUA
-    });
   });
 });

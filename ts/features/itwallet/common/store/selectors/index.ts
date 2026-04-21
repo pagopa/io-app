@@ -7,7 +7,6 @@ import {
   itwIsWalletEmptySelector
 } from "../../../credentials/store/selectors";
 import { isCredentialIssuedBeforePid } from "../../utils/itwCredentialUtils";
-import { CredentialType } from "../../utils/itwMocksUtils";
 import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsOperationalOrValid,
@@ -101,11 +100,6 @@ export const itwShouldRenderL3UpgradeBannerSelector = (state: GlobalState) =>
  */
 export const itwShouldUpgradeCredentialSelector =
   (credentialType: string, issuedAt?: string) => (state: GlobalState) => {
-    // TODO: remove this guard when Age Verification has a backend-managed upgrade/reissuing flow.
-    if (credentialType === CredentialType.AGE_VERIFICATION) {
-      return false;
-    }
-
     const isItwPid = itwLifecycleIsITWalletValidSelector(state);
     const pidIssuedAt = itwCredentialsEidIssuedAtSelector(state);
     const upgradeFailures = itwCredentialUpgradeFailedSelector(state);

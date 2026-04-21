@@ -1,6 +1,7 @@
 import { ListItemHeader, ListItemNav } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { ITW_ROUTES } from "../../navigation/routes";
 
 export const ItwIdentificationScreensSection = () => {
@@ -42,6 +43,19 @@ export const ItwIdentificationScreensSection = () => {
         onPress={() =>
           navigation.navigate(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.NFC_SCREEN
+          })
+        }
+      />
+      <ListItemNav
+        value="Age Verification trust issuer"
+        description="Navigate to the Age Verification trust issuer screen"
+        onPress={() =>
+          navigation.navigate(ITW_ROUTES.MAIN, {
+            screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER,
+            params: {
+              credentialType: CredentialType.AGE_VERIFICATION,
+              animationEnabled: false
+            }
           })
         }
       />

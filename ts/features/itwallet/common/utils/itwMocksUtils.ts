@@ -12,12 +12,7 @@ import edatL3 from "../../__mocks__/L3/edatL3.json";
 import statusAssertion from "../../__mocks__/statusAssertion.json";
 import ts from "../../__mocks__/ts.json";
 import { DigitalCredentialMetadata } from "./itwCredentialsCatalogueUtils";
-import {
-  CredentialBundle,
-  CredentialMetadata,
-  IssuerConfiguration,
-  ParsedStatusAssertion
-} from "./itwTypesUtils";
+import { CredentialMetadata, ParsedStatusAssertion } from "./itwTypesUtils";
 
 export const ISSUER_MOCK_NAME = "Istituto Poligrafico e Zecca dello Stato";
 
@@ -48,6 +43,46 @@ export const ItwStoredCredentialsMocks = {
     mdl: mdlL3 as unknown as CredentialMetadata,
     ts: tsL3 as unknown as CredentialMetadata,
     dc: dcL3 as unknown as CredentialMetadata,
+    age_verification: {
+      credentialType: CredentialType.AGE_VERIFICATION,
+      credentialId: CredentialType.AGE_VERIFICATION,
+      format: "dc+sd-jwt",
+      keyTag: "age-verification-playground",
+      jwt: {
+        issuedAt: "2026-04-01T10:00:00.000Z",
+        expiration: "2026-06-30T10:00:00.000Z"
+      },
+      spec_version: "1.0.0",
+      verification: {
+        trust_framework: "it_wallet",
+        assurance_level: "high"
+      },
+      parsedCredential: {
+        age_over_18: {
+          value: "18+",
+          name: {
+            "it-IT": "Età certificata",
+            "en-US": "Age verification"
+          }
+        }
+      },
+      issuerConf: {
+        federation_entity: {
+          organization_name: ISSUER_MOCK_NAME,
+          homepage_uri: "https://pre.eaa.wallet.ipzs.it/1-0",
+          policy_uri:
+            "https://pre.eaa.wallet.ipzs.it/1-0/public/privacy_policy.html",
+          logo_uri: "https://pre.eaa.wallet.ipzs.it/1-0/public/logo.svg",
+          contacts: ["informazioni@ipzs.it"],
+          tos_uri: "https://pre.eaa.wallet.ipzs.it/1-0/public/info_policy.html"
+        },
+        credential_configurations_supported: {
+          [CredentialType.AGE_VERIFICATION]: {
+            authentic_source: "IT-Wallet ID"
+          }
+        }
+      }
+    } as unknown as CredentialMetadata,
     ed: edL3 as unknown as CredentialMetadata,
     ee: eeL3 as unknown as CredentialMetadata,
     res: resL3 as unknown as CredentialMetadata,
@@ -113,67 +148,3 @@ export const ItwAgeVerificationCredentialFromCatalogueMock: DigitalCredentialMet
     ],
     formats: []
   };
-
-const AGE_VERIFICATION_CREDENTIAL_ID = "dc_sd_jwt_age_verification";
-
-export const createItwAgeVerificationCredentialMock = (
-  pid?: CredentialMetadata
-): CredentialBundle => {
-  const now = new Date();
-  const expiration = new Date(now);
-  expiration.setDate(expiration.getDate() + 90);
-  const issuerConf =
-    pid?.issuerConf ?? ItwStoredCredentialsMocks.L3.res.issuerConf;
-
-  return {
-    credential: "mock_age_verification_credential",
-    metadata: {
-      keyTag: "mock_age_verification_keytag",
-      format: "dc+sd-jwt",
-      credentialType: CredentialType.AGE_VERIFICATION,
-      credentialId: AGE_VERIFICATION_CREDENTIAL_ID,
-      issuerConf: {
-        ...issuerConf,
-        federation_entity: {
-          ...issuerConf.federation_entity,
-          organization_name: ISSUER_MOCK_NAME
-        },
-        credential_configurations_supported: {
-          ...issuerConf.credential_configurations_supported,
-          [AGE_VERIFICATION_CREDENTIAL_ID]: {
-            scope: CredentialType.AGE_VERIFICATION,
-            format: "dc+sd-jwt",
-            authentic_source: "IT-Wallet ID"
-          } as IssuerConfiguration["credential_configurations_supported"][string]
-        }
-      },
-      parsedCredential: {
-        age_over_18: {
-          value: "18+",
-          name: {
-            "it-IT": "Età certificata",
-            "en-US": "Age verification"
-          }
-        }
-      },
-      jwt: {
-        expiration: expiration.toISOString(),
-        issuedAt: now.toISOString()
-      },
-      storedStatusAssertion: {
-        credentialStatus: "valid",
-        statusAssertion: "mock_age_verification_status_assertion",
-        parsedStatusAssertion: {
-          credential_status_type: "0x00",
-          credential_hash_alg: "sha-256",
-          iss: "mock_age_verification_issuer",
-          credential_hash: "mock_age_verification_hash",
-          exp: Math.floor(expiration.getTime() / 1000),
-          iat: Math.floor(now.getTime() / 1000)
-        }
-      },
-      spec_version: pid?.spec_version ?? "1.0.0",
-      verification: pid?.verification
-    }
-  };
-};
