@@ -24,7 +24,12 @@ export type CieManagerFailure = CieError | NfcError;
 export type CieManagerState =
   | { state: "idle" }
   | { state: "reading"; progress: number }
-  | { state: "failure"; failure: CieManagerFailure; progress?: number }
+  | {
+      state: "failure";
+      failure: CieManagerFailure;
+      progress?: number;
+      origin?: string;
+    }
   | { state: "success" };
 
 type UseCieManager = (params: {
@@ -99,22 +104,41 @@ export const useCieManager: UseCieManager = ({
    * Handler for NFC events emitted by the CieManager.
    * @param event The NFC event containing the read progress
    */
-  const onEventListener = (event: NfcEvent) => {
-    setState({ state: "reading", progress: event.progress });
+  const onEventListener = useCallback(
+    (event: NfcEvent) => {
+      setState({ state: "reading", progress: event.progress });
 
-    // Trigger a light haptic feedback on the start of the reading
-    // when the tag is discovered
-    if (event.name === "ON_TAG_DISCOVERED") {
-      HapticFeedback.trigger(HapticFeedbackTypes.impactLight);
-    }
+      // Trigger a light haptic feedback on the start of the reading
+      // when the tag is discovered
+      if (event.name === "ON_TAG_DISCOVERED") {
+        HapticFeedback.trigger(HapticFeedbackTypes.impactLight);
+      }
 
-    // Updates the status alert for the iOS NFC system dialog with the current reading progress.
-    const progressEmojis = getCieProgressEmojis(event.progress);
-    const label = I18n.t(
-      "features.itWallet.identification.cie.readingCard.ios.reading.status"
-    );
-    CieManager.setCurrentAlertMessage(`${progressEmojis}\n${label}`);
-  };
+      // Updates the status alert for the iOS NFC system dialog with the current reading progress.
+      // When the screen reader is active, use a descriptive text label instead of emoji
+      // to avoid VoiceOver reading individual emoji names.
+      if (isScreenReaderEnabled) {
+        const percentage = Math.round(event.progress * 100);
+        const progressLabel = I18n.t(
+          "global.accessibility.cieReadingProgress",
+          {
+            percentage
+          }
+        );
+        const statusLabel = I18n.t(
+          "features.itWallet.identification.cie.readingCard.ios.reading.status"
+        );
+        CieManager.setCurrentAlertMessage(`${progressLabel}\n${statusLabel}`);
+      } else {
+        const progressEmojis = getCieProgressEmojis(event.progress);
+        const label = I18n.t(
+          "features.itWallet.identification.cie.readingCard.ios.reading.status"
+        );
+        CieManager.setCurrentAlertMessage(`${progressEmojis}\n${label}`);
+      }
+    },
+    [isScreenReaderEnabled]
+  );
 
   /**
    * Handler for NFC errors emitted by the CieManager.
@@ -124,7 +148,12 @@ export const useCieManager: UseCieManager = ({
     setState(prev => {
       // For the failure state we want to preserve the current progress
       const currentProgress = prev.state === "reading" ? prev.progress : 0;
-      return { state: "failure", failure: error, progress: currentProgress };
+      return {
+        state: "failure",
+        failure: error,
+        progress: currentProgress,
+        origin: "ITW_CIE_MANAGER"
+      };
     });
 
     // Trigger a warning haptic feedback on TAG_LOST error
@@ -191,7 +220,12 @@ export const useCieManager: UseCieManager = ({
         // Ignore errors on stop reading
       });
     };
-  }, [completionHandler, onInternalAuthAndMRTDWithPaceSuccess, onSuccess]);
+  }, [
+    completionHandler,
+    onEventListener,
+    onInternalAuthAndMRTDWithPaceSuccess,
+    onSuccess
+  ]);
 
   /**
    * Starts the CIE reading process with the provided PIN and service provider URL.
@@ -209,7 +243,11 @@ export const useCieManager: UseCieManager = ({
       // Start the CieManager with the provided pin and authentication URL
       await CieManager.startReading(pin, serviceProviderUrl);
     } catch (error) {
-      setState({ state: "failure", failure: error as CieManagerFailure });
+      setState({
+        state: "failure",
+        failure: error as CieManagerFailure,
+        origin: "ITW_CIE_START_READING"
+      });
     }
   };
 

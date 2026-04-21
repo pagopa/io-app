@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`ItwDiscoveryBanner snapshots should match snapshot for MDL upgrade banner 1`] = `
 <View

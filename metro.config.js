@@ -1,9 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable functional/immutable-data */
 const { getDefaultConfig, mergeConfig } = require("@react-native/metro-config");
-const {
-  createSentryMetroSerializer
-} = require("@sentry/react-native/dist/js/tools/sentryMetroSerializer");
 
 const {
   resolver: { sourceExts, assetExts }
@@ -16,9 +13,6 @@ const {
  * @type {import('@react-native/metro-config').MetroConfig}
  */
 const config = {
-  serializer: {
-    customSerializer: createSentryMetroSerializer()
-  },
   transformer: {
     babelTransformerPath: require.resolve(
       "react-native-svg-transformer/react-native"

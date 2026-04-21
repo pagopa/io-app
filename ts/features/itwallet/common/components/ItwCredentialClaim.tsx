@@ -432,7 +432,7 @@ export const ItwCredentialClaim = ({
     ClaimValue.decode,
     E.fold(
       () => <UnknownClaimItem label={claim.label} />,
-      // eslint-disable-next-line sonarjs/cognitive-complexity
+
       decoded => {
         if (PlaceOfBirthClaim.is(decoded)) {
           return (

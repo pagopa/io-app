@@ -1,55 +1,72 @@
-import { select, call, all, put } from "typed-redux-saga/macro";
+import { Errors } from "@pagopa/io-react-native-wallet";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { Errors } from "@pagopa/io-react-native-wallet";
-import { itwCredentialsSelector } from "../store/selectors";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
-import {
-  shouldRequestStatusAssertion,
-  getCredentialStatusAssertion,
-  StatusAssertionError
-} from "../../common/utils/itwCredentialStatusAssertionUtils";
+import { all, call, put, select } from "typed-redux-saga/macro";
+import { ActionType } from "typesafe-actions";
 import { ReduxSagaEffect } from "../../../../types/utils";
-import {
-  itwLifecycleIsITWalletValidSelector,
-  itwLifecycleIsValidSelector
-} from "../../lifecycle/store/selectors";
-import { itwCredentialsStore } from "../store/actions";
-import {
-  selectItwEnv,
-  selectItwSpecsVersion
-} from "../../common/store/selectors/environment";
-import { getEnv } from "../../common/utils/environment";
+import { trackItwStatusCredentialAssertionFailure } from "../../analytics";
 import { syncItwAnalyticsProperties } from "../../analytics/saga";
 import { getMixPanelCredential } from "../../analytics/utils";
-import { trackItwStatusCredentialAssertionFailure } from "../../analytics";
-import { itwUnverifiedCredentialsCounterLimitReached } from "../../common/store/selectors/securePreferences";
 import {
   itwUnverifiedCredentialsCounterReset,
   itwUnverifiedCredentialsCounterUp
 } from "../../common/store/actions/securePreferences";
+import {
+  selectItwEnv,
+  selectItwSpecsVersion
+} from "../../common/store/selectors/environment";
+import { itwUnverifiedCredentialsCounterLimitReached } from "../../common/store/selectors/securePreferences";
+import { getEnv } from "../../common/utils/environment";
+import {
+  getCredentialStatusAssertion,
+  shouldRequestStatusAssertion,
+  StatusAssertionError
+} from "../../common/utils/itwCredentialStatusAssertionUtils";
+import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
+import {
+  itwLifecycleIsITWalletValidSelector,
+  itwLifecycleIsValidSelector
+} from "../../lifecycle/store/selectors";
+import {
+  itwCredentialsRefreshStatusByType,
+  itwCredentialsStore
+} from "../store/actions";
+import {
+  itwCredentialSelector,
+  itwCredentialsSelector
+} from "../store/selectors";
+import { CredentialsVault } from "../utils/vault";
 
 const { isIssuerResponseError, IssuerResponseErrorCodes: Codes } = Errors;
 
 export function* updateCredentialStatusAssertionSaga(
-  credential: StoredCredential
-): Generator<ReduxSagaEffect, StoredCredential> {
+  metadata: CredentialMetadata
+): Generator<ReduxSagaEffect, CredentialMetadata> {
   const env = yield* select(selectItwEnv);
   const itwVersion = yield* select(selectItwSpecsVersion);
   const isItwL3 = yield* select(itwLifecycleIsITWalletValidSelector);
   const mixpanelCredential = getMixPanelCredential(
-    credential.credentialType,
+    metadata.credentialType,
     isItwL3
   );
   try {
+    const credential = yield* call(() =>
+      CredentialsVault.get(metadata.credentialId)
+    );
+    if (!credential) {
+      throw new Error(
+        `Credential with id ${metadata.credentialId} not found in secure storage`
+      );
+    }
+
     const { parsedStatusAssertion, statusAssertion } = yield* call(
       getCredentialStatusAssertion,
-      credential,
+      { metadata, credential },
       getEnv(env),
       itwVersion
     );
     return {
-      ...credential,
+      ...metadata,
       storedStatusAssertion: {
         credentialStatus: "valid",
         statusAssertion,
@@ -71,7 +88,7 @@ export function* updateCredentialStatusAssertionSaga(
       });
 
       return {
-        ...credential,
+        ...metadata,
         storedStatusAssertion: { credentialStatus: "invalid", errorCode }
       };
     }
@@ -83,7 +100,7 @@ export function* updateCredentialStatusAssertionSaga(
     });
 
     return {
-      ...credential,
+      ...metadata,
       storedStatusAssertion: { credentialStatus: "unknown" }
     };
   }
@@ -145,4 +162,22 @@ export function* checkCredentialsStatusAssertion() {
   }
 
   yield* call(syncItwAnalyticsProperties);
+}
+
+/**
+ * Saga that updates a specific credential status assertion without additional logic.
+ * It is triggered by the user when the credential status is unknown.
+ */
+export function* handleCredentialStatusAssertionRetry(
+  action: ActionType<typeof itwCredentialsRefreshStatusByType>
+) {
+  const credential = yield* select(itwCredentialSelector(action.payload));
+
+  if (O.isSome(credential)) {
+    const updatedCredential = yield* call(
+      updateCredentialStatusAssertionSaga,
+      credential.value
+    );
+    yield* put(itwCredentialsStore([updatedCredential]));
+  }
 }

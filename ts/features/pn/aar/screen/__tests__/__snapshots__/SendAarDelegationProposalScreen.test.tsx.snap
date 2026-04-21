@@ -1,9 +1,8 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`SendAarDelegationProposalScreen alert behavior should show an info alert on first render 1`] = `"Stai aiutando un’altra persona ad accedere a una notifica SEND."`;
 
-exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the androidNFCActivation state, displaying 
-      a loading screen 1`] = `
+exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the androidNFCActivation state, displaying \\n      a loading screen 1`] = `
 <View
   style={
     {
@@ -449,8 +448,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
 </View>
 `;
 
-exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the cieCanAdvisory state, displaying 
-      a loading screen 1`] = `
+exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the cieCanAdvisory state, displaying \\n      a loading screen 1`] = `
 <View
   style={
     {
@@ -896,8 +894,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
 </View>
 `;
 
-exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the cieCanInsertion state, displaying 
-      a loading screen 1`] = `
+exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the cieCanInsertion state, displaying \\n      a loading screen 1`] = `
 <View
   style={
     {
@@ -1343,8 +1340,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
 </View>
 `;
 
-exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the cieScanning state, displaying 
-      a loading screen 1`] = `
+exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the cieScanning state, displaying \\n      a loading screen 1`] = `
 <View
   style={
     {
@@ -1790,8 +1786,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
 </View>
 `;
 
-exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the cieScanningAdvisory state, displaying 
-      a loading screen 1`] = `
+exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the cieScanningAdvisory state, displaying \\n      a loading screen 1`] = `
 <View
   style={
     {
@@ -2237,8 +2232,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
 </View>
 `;
 
-exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the creatingMandate state, displaying 
-      a loading screen 1`] = `
+exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the creatingMandate state, displaying \\n      a loading screen 1`] = `
 <View
   style={
     {
@@ -2684,8 +2678,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
 </View>
 `;
 
-exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the displayingAARToS state, displaying 
-      a loading screen 1`] = `
+exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the displayingAarToS state, displaying \\n      a loading screen 1`] = `
 <View
   style={
     {
@@ -3131,8 +3124,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
 </View>
 `;
 
-exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the displayingNotificationData state, displaying 
-      a loading screen 1`] = `
+exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the displayingNotificationData state, displaying \\n      a loading screen 1`] = `
 <View
   style={
     {
@@ -3578,8 +3570,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
 </View>
 `;
 
-exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the fetchingNotificationData state, displaying 
-      a loading screen 1`] = `
+exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the fetchingNotificationData state, displaying \\n      a loading screen 1`] = `
 <View
   style={
     {
@@ -4025,8 +4016,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
 </View>
 `;
 
-exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the fetchingQRData state, displaying 
-      a loading screen 1`] = `
+exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the fetchingQRData state, displaying \\n      a loading screen 1`] = `
 <View
   style={
     {
@@ -4472,8 +4462,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
 </View>
 `;
 
-exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the ko state, displaying 
-      a loading screen 1`] = `
+exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the ko state, displaying \\n      a loading screen 1`] = `
 <View
   style={
     {
@@ -4919,8 +4908,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
 </View>
 `;
 
-exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the nfcNotSupportedFinal state, displaying 
-      a loading screen 1`] = `
+exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the nfcNotSupportedFinal state, displaying \\n      a loading screen 1`] = `
 <View
   style={
     {
@@ -5366,8 +5354,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
 </View>
 `;
 
-exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the none state, displaying 
-      a loading screen 1`] = `
+exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the none state, displaying \\n      a loading screen 1`] = `
 <View
   style={
     {
@@ -5813,8 +5800,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
 </View>
 `;
 
-exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the notAddressee state, displaying 
-      the delegation proposal screen 1`] = `
+exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the notAddressee state, displaying \\n      the delegation proposal screen 1`] = `
 <View
   style={
     {
@@ -6475,7 +6461,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
                                       ]
                                     }
                                   >
-                                    Se la persona che ha ricevuto la comunicazione ti ha chiesto di farlo, puoi aprire questa notifica SEND per suo conto.
+                                    Per aprire la notifica per suo conto, tieni a portata di mano la Carta di Identità Elettronica (CIE) di Mario Rossi.
                                   </Text>
                                 </Text>
                               </View>
@@ -6970,8 +6956,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
 </View>
 `;
 
-exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the notAddresseeFinal state, displaying 
-      a loading screen 1`] = `
+exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the notAddresseeFinal state, displaying \\n      a loading screen 1`] = `
 <View
   style={
     {
@@ -7417,8 +7402,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
 </View>
 `;
 
-exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the validatingMandate state, displaying 
-      a loading screen 1`] = `
+exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in the validatingMandate state, displaying \\n      a loading screen 1`] = `
 <View
   style={
     {

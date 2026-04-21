@@ -1,5 +1,5 @@
 import { URL as PolyfillURL } from "react-native-url-polyfill";
-import { defaultRetryingFetch } from "../../../utils/fetch";
+import { toFetchTimeout } from "../../../utils/fetch";
 import { createClient } from "../../../../definitions/itw/client";
 
 export class ItwSessionExpiredError extends Error {}
@@ -69,7 +69,7 @@ export function createItWalletFetch(
     walletProviderBaseUrl,
     url
   );
-  const fetch = defaultRetryingFetch();
+  const fetch = toFetchTimeout();
 
   return (input: RequestInfo | URL, init?: RequestInit) =>
     fetch(input, addAuthHeaders(authHeader, init)).then(

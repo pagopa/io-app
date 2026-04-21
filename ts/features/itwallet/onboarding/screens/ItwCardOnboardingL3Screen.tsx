@@ -1,4 +1,5 @@
 import {
+  Alert,
   Badge,
   ContentWrapper,
   Divider,
@@ -37,13 +38,16 @@ import {
 } from "../../analytics";
 import { PoweredByItWalletText } from "../../common/components/PoweredByItWalletText.tsx";
 import { selectItwEnv } from "../../common/store/selectors/environment.ts";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences.ts";
 import {
-  availableCredentials,
-  newCredentials,
-  upcomingCredentials
+  itwIsActivationDisabledSelector,
+  itwIsL3EnabledSelector
+} from "../../common/store/selectors/preferences.ts";
+import {
+  isL2Credential,
+  isUpcomingCredential
 } from "../../common/utils/itwCredentialUtils.ts";
-import { itwCredentialsByPresenceSelector } from "../../credentials/store/selectors/index.ts";
+import { makeItwCredentialsByPresenceSelector } from "../../credentials/store/selectors";
+import { itwAvailableCredentialsListSelector } from "../../credentialsCatalogue/store/selectors";
 import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsValidSelector
@@ -52,8 +56,12 @@ import { ItwParamsList } from "../../navigation/ItwParamsList.ts";
 import { ITW_ROUTES } from "../../navigation/routes.ts";
 import { AsyncCredentialsCatalogue } from "../components/AsyncCredentialsCatalogueWrapper.tsx";
 import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingModuleCredentialsList.tsx";
+import { openWebUrl } from "../../../../utils/url.ts";
 
 const MAX_INDEX = 1;
+
+const NFC_NOT_SUPPORTED_FAQ_URL =
+  "https://assistenza.ioapp.it/hc/it/articles/35541811236113-Cosa-serve-per-usare-IT-Wallet";
 
 const activeBadge: Badge = {
   variant: "success",
@@ -124,24 +132,30 @@ const ItwCredentialOnboardingSection = () => {
   const isWalletEnabled = useIOSelector(itwLifecycleIsValidSelector);
   const isITWalletEnabled = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
+  const isItWalletActivationDisabled = useIOSelector(
+    itwIsActivationDisabledSelector
+  );
+  const catalogueCredentials = useIOSelector(
+    itwAvailableCredentialsListSelector
+  );
+
   // Show upcoming credentials only if env is "pre"
   const shouldShowUpcoming = env === "pre";
-  const shouldShowRestrictedAction = isWalletEnabled && !isITWalletEnabled;
+  const shouldShowRestrictedAction =
+    isWalletEnabled && !isITWalletEnabled && !isItWalletActivationDisabled;
 
   const credentialsToDisplay = useMemo(() => {
-    if (shouldShowUpcoming) {
-      return [
-        ...availableCredentials,
-        ...newCredentials,
-        ...upcomingCredentials
-      ];
-    } else {
-      return [...availableCredentials, ...newCredentials];
+    if (isItWalletActivationDisabled) {
+      return catalogueCredentials.filter(c => isL2Credential(c.type));
     }
-  }, [shouldShowUpcoming]);
+    if (shouldShowUpcoming) {
+      return catalogueCredentials;
+    }
+    return catalogueCredentials.filter(c => !isUpcomingCredential(c.type));
+  }, [catalogueCredentials, shouldShowUpcoming, isItWalletActivationDisabled]);
 
-  const { obtained, notObtained } = useIOSelector(state =>
-    itwCredentialsByPresenceSelector(state, credentialsToDisplay)
+  const { obtained, notObtained } = useIOSelector(
+    makeItwCredentialsByPresenceSelector(credentialsToDisplay)
   );
 
   return (
@@ -150,15 +164,25 @@ const ItwCredentialOnboardingSection = () => {
         <H6 role="heading" color={theme["textBody-tertiary"]}>
           {I18n.t("features.wallet.onboarding.sections.itw")}
         </H6>
-        <PoweredByItWalletText />
+        {!isItWalletActivationDisabled && <PoweredByItWalletText />}
       </View>
       <VStack space={24}>
         {/* Available credentials for issuance */}
         <AsyncCredentialsCatalogue>
           <ItwOnboardingModuleCredentialsList
-            credentialTypesToDisplay={notObtained}
+            credentialsToDisplay={notObtained}
+            isL2Credential={isItWalletActivationDisabled}
           />
         </AsyncCredentialsCatalogue>
+
+        {isItWalletActivationDisabled && (
+          <Alert
+            variant="info"
+            content={I18n.t("features.wallet.onboarding.no-nfc-banner.content")}
+            action={I18n.t("features.wallet.onboarding.no-nfc-banner.cta")}
+            onPress={() => openWebUrl(NFC_NOT_SUPPORTED_FAQ_URL)}
+          />
+        )}
 
         {/* Obtained credentials  */}
         {obtained.length > 0 && (
@@ -169,7 +193,7 @@ const ItwCredentialOnboardingSection = () => {
               </H6>
             </View>
             <ItwOnboardingModuleCredentialsList
-              credentialTypesToDisplay={obtained}
+              credentialsToDisplay={obtained}
             />
           </VStack>
         )}

@@ -44,6 +44,7 @@ export type TrackItWalletCieCardReadingFailure = {
 
 export type TrackItWalletCieCardReadingUnexpectedFailure = {
   reason: string | undefined;
+  origin: string | undefined;
   cie_reading_progress: number;
   itw_flow: ItwFlow;
   ITW_ID_method?: ItwIdMethod;
@@ -69,4 +70,8 @@ export type ItwUserWithoutL3requirements = {
   screen_name: string;
   reason: "user_without_cie" | "user_without_pin";
   position: "screen" | "bottom_sheet";
+};
+
+export type ItwFallbackL2Flow = {
+  fallback_reason: "nfc_not_supported" | "user_without_cie";
 };
