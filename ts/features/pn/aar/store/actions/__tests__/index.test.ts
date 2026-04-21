@@ -7,13 +7,13 @@ import {
   initiateAarFlow
 } from "..";
 import { ThirdPartyMessage } from "../../../../../../../definitions/pn/ThirdPartyMessage";
-import { AARFlowState, sendAARFlowStates } from "../../../utils/stateUtils";
+import { AarFlowState, sendAarFlowStates } from "../../../utils/stateUtils";
 import { MessageBodyMarkdown } from "../../../../../../../definitions/backend/MessageBodyMarkdown";
 import { MessageSubject } from "../../../../../../../definitions/backend/MessageSubject";
 
-describe("AARFlowStateActions", () => {
-  const payload: AARFlowState = {
-    type: sendAARFlowStates.displayingAARToS,
+describe("AarFlowStateActions", () => {
+  const payload: AarFlowState = {
+    type: sendAarFlowStates.displayingAarToS,
     qrCode: "https://www.google.com"
   };
   it(`Should have correct type="SET_AAR_FLOW_STATE" and payload: ${JSON.stringify(

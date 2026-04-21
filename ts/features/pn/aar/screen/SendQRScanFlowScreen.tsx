@@ -3,7 +3,7 @@ import { withAppRequiredUpdate } from "../../../../components/helpers/withAppReq
 import { PnParamsList } from "../../navigation/params";
 import PN_ROUTES from "../../navigation/routes";
 import { SendQRScanFlowHandlerComponent } from "../components/SendQRScanFlowHandlerComponent";
-import { trackSendAARFailure } from "../analytics";
+import { trackSendAarFailure } from "../analytics";
 
 export type SendQRScanFlowScreenProps = {
   aarUrl: string;
@@ -20,7 +20,7 @@ export const SendQRScanFlowScreen = () => {
     "send",
     {
       onLanding: () =>
-        trackSendAARFailure("Entry Point", "App update required", undefined),
+        trackSendAarFailure("Entry Point", "App update required", undefined),
       onConfirm: () => undefined
     }
   );

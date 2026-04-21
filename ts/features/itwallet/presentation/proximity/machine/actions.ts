@@ -1,18 +1,33 @@
-import { ActionArgs } from "xstate";
+import { ActionArgs, assign } from "xstate";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { ITW_PROXIMITY_ROUTES } from "../navigation/routes";
+import { useIOStore } from "../../../../../store/hooks";
+import { serializeFailureReason } from "../../../common/utils/itwStoreUtils";
+import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors";
 import {
   trackItwProximityQrCode,
   trackItwProximityQrCodeLoadingFailure
 } from "../analytics";
-import { serializeFailureReason } from "../../../common/utils/itwStoreUtils";
+import { ITW_PROXIMITY_ROUTES } from "../navigation/routes";
+import { itwPresentableCredentialsByDocTypeSelector } from "../store/selectors";
 import { Context } from "./context";
 import { ProximityEvents } from "./events";
 import { mapEventToFailure } from "./failure";
 
 export const createProximityActionsImplementation = (
-  navigation: ReturnType<typeof useIONavigation>
+  navigation: ReturnType<typeof useIONavigation>,
+  store: ReturnType<typeof useIOStore>
 ) => ({
+  onInit: assign<Context, ProximityEvents, unknown, ProximityEvents, any>(
+    () => {
+      const state = store.getState();
+
+      return {
+        walletInstanceAttestation: itwWalletInstanceAttestationSelector(state),
+        credentials: itwPresentableCredentialsByDocTypeSelector(state)
+      };
+    }
+  ),
+
   navigateToGrantPermissionsScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
       screen: ITW_PROXIMITY_ROUTES.DEVICE_PERMISSIONS
@@ -61,7 +76,7 @@ export const createProximityActionsImplementation = (
     context,
     event
   }: ActionArgs<Context, ProximityEvents, ProximityEvents>) => {
-    if (context.isQRCodeGenerationError) {
+    if (context.failure) {
       const failure = mapEventToFailure(event);
       const serializedFailure = serializeFailureReason(failure);
       trackItwProximityQrCodeLoadingFailure(serializedFailure);

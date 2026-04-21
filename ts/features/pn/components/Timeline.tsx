@@ -24,6 +24,7 @@ export type TimelineItemProps = {
   month: string;
   time: string;
   status: TimelineStatus;
+  accessibilityLabel: string;
 };
 
 export type TimelineProps = {
@@ -143,9 +144,14 @@ const TimelineItem = ({
   description,
   month,
   time,
+  accessibilityLabel,
   ...rest
 }: TimelineItemProps & Position) => (
-  <View accessible={true} style={styles.item}>
+  <View
+    accessible={true}
+    style={styles.item}
+    accessibilityLabel={accessibilityLabel}
+  >
     <TimelineOppositeContent day={day} month={month} />
     <TimelineSeparator {...rest}>
       <TimelineDot {...rest} />

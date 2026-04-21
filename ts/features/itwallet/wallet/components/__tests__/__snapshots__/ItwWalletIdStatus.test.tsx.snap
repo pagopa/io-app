@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpired" 1`] = `
 <View
@@ -52,18 +52,9 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpired"
         },
       }
     }
-    jestInlineStyle={
-      [
-        {
-          "marginHorizontal": -8,
-        },
-      ]
-    }
+    jestInlineStyle={{}}
     style={
       [
-        {
-          "marginHorizontal": -8,
-        },
         {
           "transform": [
             {
@@ -796,18 +787,9 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "jwtExpiring
         },
       }
     }
-    jestInlineStyle={
-      [
-        {
-          "marginHorizontal": -8,
-        },
-      ]
-    }
+    jestInlineStyle={{}}
     style={
       [
-        {
-          "marginHorizontal": -8,
-        },
         {
           "transform": [
             {
@@ -1335,18 +1317,9 @@ exports[`ItwWalletIdStatus should match snapshot when PID status is "valid" 1`] 
         },
       }
     }
-    jestInlineStyle={
-      [
-        {
-          "marginHorizontal": -8,
-        },
-      ]
-    }
+    jestInlineStyle={{}}
     style={
       [
-        {
-          "marginHorizontal": -8,
-        },
         {
           "transform": [
             {

@@ -135,6 +135,10 @@ export type SimulateFailure = {
   failure: IssuanceFailure;
 };
 
+type SessionRefreshComplete = {
+  type: "session-refresh-complete";
+};
+
 export type EidIssuanceEvents =
   | Start
   | AcceptTos
@@ -157,9 +161,10 @@ export type EidIssuanceEvents =
   | RevokeWalletInstance
   | ErrorActorEvent
   | ExternalErrorEvent
-  | DoneActorEvent<Output>
+  | DoneActorEvent<Output, "credentialUpgradeMachine">
   | GoToCieWarning
   | Next
   | GoToL2IdentificationMode
   | Reset
-  | SimulateFailure;
+  | SimulateFailure
+  | SessionRefreshComplete;
