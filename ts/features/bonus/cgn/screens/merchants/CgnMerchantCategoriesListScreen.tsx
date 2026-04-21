@@ -1,6 +1,7 @@
 import {
   Badge,
   Body,
+  ContentWrapper,
   Divider,
   H6,
   IOToast,
@@ -101,40 +102,41 @@ export const CgnMerchantCategoriesListScreen = () => {
             getListItemAccessibilityLabelCount(categoriesToArray.length, index);
 
           return (
-            <ListItemNav
-              key={category.productCategory}
-              value={
-                countAvailable ? (
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      alignItems: "center"
-                    }}
-                  >
-                    <H6>{I18n.t(s.nameKey)}</H6>
-                    <Badge
-                      accessible={false}
-                      text={`${category?.newDiscounts}`}
-                      variant="cgn"
-                    />
-                  </View>
-                ) : (
-                  I18n.t(s.nameKey)
-                )
-              }
-              accessibilityLabel={accessibilityLabel}
-              onPress={() => {
-                navigation.navigate(
-                  CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY,
-                  {
-                    category: s.type
-                  }
-                );
-              }}
-              iconColor={theme["icon-decorative"]}
-              icon={s.icon}
-            />
+            <ContentWrapper key={category.productCategory}>
+              <ListItemNav
+                value={
+                  countAvailable ? (
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        alignItems: "center"
+                      }}
+                    >
+                      <H6>{I18n.t(s.nameKey)}</H6>
+                      <Badge
+                        accessible={false}
+                        text={`${category?.newDiscounts}`}
+                        variant="cgn"
+                      />
+                    </View>
+                  ) : (
+                    I18n.t(s.nameKey)
+                  )
+                }
+                accessibilityLabel={accessibilityLabel}
+                onPress={() => {
+                  navigation.navigate(
+                    CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY,
+                    {
+                      category: s.type
+                    }
+                  );
+                }}
+                iconColor={theme["icon-decorative"]}
+                icon={s.icon}
+              />
+            </ContentWrapper>
           );
         }
       )

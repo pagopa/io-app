@@ -1,4 +1,4 @@
-import { Badge, H6, HSpacer, ListItemNav } from "@pagopa/io-app-design-system";
+import { Badge, ContentWrapper, H6, HSpacer, ListItemNav } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useMemo } from "react";
 import { View } from "react-native";
@@ -72,38 +72,39 @@ export const CgnMerchantsListScreen = () => {
           ? `${item.name} ${I18n.t("bonus.cgn.merchantsList.news")}`
           : item.name) + getListItemAccessibilityLabelCount(data.length, index);
     return (
-      <ListItemNav
-        key={item.id}
-        onPress={() => onItemPress(item.id)}
-        accessibilityLabel={accessibilityLabel}
-        value={
-          <View
-            style={{ flexDirection: "row", justifyContent: "space-between" }}
-          >
-            <H6 style={{ flexGrow: 1, flexShrink: 1 }}>{item.name}</H6>
-            <HSpacer />
-            {item.newDiscounts && (
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center"
-                }}
-              >
-                <Badge
-                  accessible={false}
-                  variant="cgn"
-                  text={
-                    item?.numberOfNewDiscounts
-                      ? item.numberOfNewDiscounts.toString()
-                      : I18n.t("bonus.cgn.merchantsList.news")
-                  }
-                />
-              </View>
-            )}
-          </View>
-        }
-      />
+      <ContentWrapper key={item.id}>
+        <ListItemNav
+          onPress={() => onItemPress(item.id)}
+          accessibilityLabel={accessibilityLabel}
+          value={
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
+            >
+              <H6 style={{ flexGrow: 1, flexShrink: 1 }}>{item.name}</H6>
+              <HSpacer />
+              {item.newDiscounts && (
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center"
+                  }}
+                >
+                  <Badge
+                    accessible={false}
+                    variant="cgn"
+                    text={
+                      item?.numberOfNewDiscounts
+                        ? item.numberOfNewDiscounts.toString()
+                        : I18n.t("bonus.cgn.merchantsList.news")
+                    }
+                  />
+                </View>
+              )}
+            </View>
+          }
+        />
+      </ContentWrapper>
     );
   };
 
