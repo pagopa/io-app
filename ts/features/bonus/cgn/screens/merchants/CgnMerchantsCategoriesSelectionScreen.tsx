@@ -1,13 +1,20 @@
 import {
+  Divider,
+  IOColors,
   IOIcons,
+  IOVisualCostants,
   TabItem,
   TabNavigation,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { useState } from "react";
 import I18n from "i18next";
-import { IOListViewWithLargeHeader } from "../../../../../components/ui/IOListViewWithLargeHeader";
+import { useState } from "react";
+import { View } from "react-native";
+import { RefreshControl } from "react-native-gesture-handler";
+import Animated, { useAnimatedRef } from "react-native-reanimated";
+import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import CgnAnimatedHeader from "../../components/CgnAnimatedHeader";
 import { useDisableRootNavigatorGesture } from "../../hooks/useDisableRootNavigatorGesture";
 import CGN_ROUTES from "../../navigation/routes";
 import { CgnMerchantCategoriesListScreen } from "./CgnMerchantCategoriesListScreen";
@@ -66,7 +73,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
   const ListHeaderComponent = (
     <>
       <TabNavigation
-        includeContentMargins={false}
+        includeContentMargins={true}
         tabAlignment="start"
         selectedIndex={tabRoutesKeys.indexOf(selectedTab)}
       >
@@ -98,37 +105,55 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
       <VSpacer size={16} />
     </>
   );
+  const animatedFlatListRef = useAnimatedRef<any>();
+
+  useHeaderSecondLevel({
+    title: I18n.t("bonus.cgn.merchantsList.screenTitle"),
+    enableDiscreteTransition: true,
+    animatedRef: animatedFlatListRef,
+    transparent: true,
+    supportRequest: true,
+    canGoBack: true,
+    secondAction: {
+      icon: "search",
+      onPress() {
+        navigate(CGN_ROUTES.DETAILS.MAIN, {
+          screen: CGN_ROUTES.DETAILS.MERCHANTS.SEARCH
+        });
+      },
+      accessibilityLabel: I18n.t(
+        "bonus.cgn.merchantSearch.goToSearchAccessibilityLabel"
+      )
+    }
+  });
 
   return (
-    <IOListViewWithLargeHeader
-      keyExtractor={item => ("id" in item ? item.id : item.productCategory)}
-      title={{
-        label: I18n.t("bonus.cgn.merchantsList.screenTitle")
-      }}
-      headerActionsProp={{
-        showHelp: true,
-        headerType: "twoActions",
-        secondAction: {
-          icon: "search",
-          testID: "search-button",
-          onPress() {
-            navigate(CGN_ROUTES.DETAILS.MAIN, {
-              screen: CGN_ROUTES.DETAILS.MERCHANTS.SEARCH
-            });
-          },
-          accessibilityLabel: I18n.t(
-            "bonus.cgn.merchantSearch.goToSearchAccessibilityLabel"
+    <View style={{ flex: 1 }}>
+      <CgnAnimatedHeader ref={animatedFlatListRef}>
+        {ListHeaderComponent}
+      </CgnAnimatedHeader>
+      <Animated.FlatList
+        data={[...data]}
+        keyExtractor={item => ("id" in item ? item.id : item.productCategory)}
+        renderItem={({ item, index }) => renderItem(item as any, index)}
+        refreshControl={
+          refreshControlProps && (
+            <RefreshControl
+              tintColor={IOColors.black}
+              {...refreshControlProps}
+            />
           )
         }
-      }}
-      renderItem={({ item, index }) => renderItem(item as any, index)}
-      data={[...data]}
-      refreshControlProps={refreshControlProps}
-      ListHeaderComponent={ListHeaderComponent}
-      skeleton={skeleton}
-      ListFooterComponent={ListFooterComponent}
-      ListEmptyComponent={ListEmptyComponent}
-    />
+        ListFooterComponent={ListFooterComponent}
+        ListEmptyComponent={ListEmptyComponent}
+        ItemSeparatorComponent={() => <Divider />}
+        style={{ flex: 1 }}
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingBottom: IOVisualCostants.appMarginDefault
+        }}
+      />
+    </View>
   );
 };
 
