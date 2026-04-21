@@ -60,7 +60,9 @@ export const pollForStoreValue = <T>({
  */
 export const shouldSerializeReason = (failure: { reason?: unknown }) =>
   !failure.reason ||
-  (isReasonObject(failure.reason) && Object.keys(failure.reason).length === 0);
+  (typeof failure.reason === "object" &&
+    failure.reason !== null &&
+    Object.keys(failure.reason).length === 0);
 
 /**
  * Serialize failure reasons that are instances of {@link Error}, to be safely stored and displayed.
@@ -84,12 +86,6 @@ const createReasonObject = (message: string) => ({
   code: "UNEXPECTED",
   errorDescription: message
 });
-
-/**
- * Narrows failure reasons that can be safely inspected with Object.keys.
- */
-const isReasonObject = (reason: unknown): reason is object =>
-  typeof reason === "object" && reason !== null;
 
 /**
  * Guards and maps failure reasons to a consistent format for serialization.
