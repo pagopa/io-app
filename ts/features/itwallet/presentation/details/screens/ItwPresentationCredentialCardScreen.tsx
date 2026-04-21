@@ -3,17 +3,21 @@ import {
   IOColors,
   useIOTheme
 } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
-import { useLayoutEffect } from "react";
+import { useCallback, useLayoutEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
+import { getMixPanelCredential } from "../../../analytics/utils";
 import { itwCredentialSelector } from "../../../credentials/store/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList.ts";
+import { trackCredentialCardModal } from "../analytics";
 import { ItwPresentationCredentialCard } from "../components/ItwPresentationCredentialCard.tsx";
 
 export type ItwPresentationCredentialCardScreenNavigationParams = {
@@ -30,8 +34,15 @@ const ItwPresentationCredentialCardScreen = ({ route, navigation }: Props) => {
   const credentialOption = useIOSelector(itwCredentialSelector(credentialType));
   const theme = useIOTheme();
   const safeAreaInsets = useSafeAreaInsets();
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   usePreventScreenCapture();
+
+  useFocusEffect(
+    useCallback(() => {
+      trackCredentialCardModal(getMixPanelCredential(credentialType, isItwL3));
+    }, [credentialType, isItwL3])
+  );
 
   useLayoutEffect(() => {
     navigation.setOptions({
