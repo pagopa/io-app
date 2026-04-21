@@ -9,7 +9,6 @@ import {
   waitFor as waitForActor
 } from "xstate";
 import {
-  CredentialType,
   ItwStatusAssertionMocks,
   ItwStoredCredentialsMocks
 } from "../../../common/utils/itwMocksUtils";
