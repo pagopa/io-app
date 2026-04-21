@@ -9,8 +9,8 @@ import {
   waitFor as waitForActor
 } from "xstate";
 import {
-  ItwStoredCredentialsMocks,
-  ItwStatusAssertionMocks
+  ItwStatusAssertionMocks,
+  ItwStoredCredentialsMocks
 } from "../../../common/utils/itwMocksUtils";
 import {
   CredentialAccessToken,
@@ -85,6 +85,7 @@ describe("itwCredentialIssuanceMachine", () => {
   const trackAddCredential = jest.fn();
   const trackCredentialIssuingDataShare = jest.fn();
   const trackCredentialIssuingDataShareAccepted = jest.fn();
+
   const verifyTrustFederation = jest.fn();
   const getWalletAttestation = jest.fn();
   const requestCredential = jest.fn();
@@ -96,6 +97,7 @@ describe("itwCredentialIssuanceMachine", () => {
   const isSessionExpired = jest.fn();
   const hasValidWalletInstanceAttestation = jest.fn();
   const isStatusError = jest.fn();
+  const isSkipNavigation = jest.fn();
   const isEidExpired = jest.fn();
   const hasCredentialIntroContent = jest.fn();
 
@@ -151,6 +153,7 @@ describe("itwCredentialIssuanceMachine", () => {
     onInit.mockImplementation(() => ({ walletInstanceAttestation: undefined }));
     hasValidWalletInstanceAttestation.mockImplementation(() => false);
     isEidExpired.mockImplementation(() => false);
+    isSkipNavigation.mockImplementation(() => true);
     jest.useFakeTimers();
   });
 
@@ -634,6 +637,8 @@ describe("itwCredentialIssuanceMachine", () => {
     const actor = createActor(mockedMachine);
     actor.start();
 
+    isSkipNavigation.mockImplementation(() => false);
+
     requestCredential.mockImplementation(
       () =>
         new Promise(resolve =>
@@ -775,17 +780,6 @@ describe("itwCredentialIssuanceMachine", () => {
         ],
         walletUnitAttestations: T_WUA
       })
-    );
-    obtainStatusAssertion.mockImplementationOnce(() =>
-      Promise.resolve([
-        {
-          credential: "",
-          metadata: {
-            ...ItwStoredCredentialsMocks.mdl,
-            storedStatusAssertion: T_STORED_STATUS_ASSERTION
-          }
-        }
-      ])
     );
 
     const initialSnapshot = createActor(
