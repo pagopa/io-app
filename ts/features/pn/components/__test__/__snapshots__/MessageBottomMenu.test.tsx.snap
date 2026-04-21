@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`MessageBottomMenu Should match snapshot (payments 0, isCancelled false, paidNoticeCodes 0), source (aar), type (mandatory) 1`] = `
 <View

@@ -1,52 +1,64 @@
+import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
-import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import { useIOStore } from "../../../../store/hooks";
-import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { assert } from "../../../../utils/assert";
+import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
+import { Env } from "../../common/utils/environment";
 import * as itwAttestationUtils from "../../common/utils/itwAttestationUtils";
 import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
 import { getCredentialStatusAssertion } from "../../common/utils/itwCredentialStatusAssertionUtils";
 import {
-  CredentialFormat,
-  StoredCredential
-} from "../../common/utils/itwTypesUtils";
-import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
-import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
-import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
-import { itwSetWalletInstanceRenewalError } from "../../walletInstance/store/actions";
-import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
-import { Env } from "../../common/utils/environment";
-import { getIoWallet } from "../../common/utils/itwIoWallet";
-import {
   enrichErrorWithMetadata,
   isAssertionGenerationError
 } from "../../common/utils/itwFailureUtils";
+import { getIoWallet } from "../../common/utils/itwIoWallet";
+import {
+  CredentialAccessToken,
+  CredentialBundle,
+  CredentialFormat
+} from "../../common/utils/itwTypesUtils";
+import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
+import { CredentialsVault } from "../../credentials/utils/vault";
 import {
   trackWalletInstanceRenewalFailure,
   trackWalletInstanceRenewalSuccess
 } from "../../issuance/analytics";
-import { type Context } from "./context";
+import { itwStoreIntegrityKeyTag } from "../../issuance/store/actions";
+import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
+import { itwSetWalletInstanceRenewalError } from "../../walletInstance/store/actions";
+import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
+import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../common/utils/itwStoreUtils";
+import { createCommonActorsImplementation } from "../utils/actors";
+import { Context } from "./context";
 
 export type GetWalletAttestationActorOutput = Awaited<
-  ReturnType<typeof itwAttestationUtils.getAttestation>
+  ReturnType<typeof itwAttestationUtils.getWalletInstanceAttestation>
 >;
 
-export type RequestCredentialActorInput =
-  Partial<credentialIssuanceUtils.RequestCredentialParams> & {
-    skipMdocIssuance: boolean;
-  };
+export type ObtainAccessTokenActorInput = Partial<
+  Omit<
+    Parameters<credentialIssuanceUtils.CompleteAuthFlow>[0],
+    "env" | "itwVersion" | "pid"
+  >
+>;
+
+export type RequestCredentialActorInput = Partial<
+  Parameters<credentialIssuanceUtils.RequestCredential>[0]
+>;
 
 export type RequestCredentialActorOutput = Awaited<
   ReturnType<typeof credentialIssuanceUtils.requestCredential>
 >;
 
-export type ObtainCredentialActorInput =
-  Partial<credentialIssuanceUtils.ObtainCredentialParams>;
-
-export type ObtainCredentialActorOutput = Awaited<
-  ReturnType<typeof credentialIssuanceUtils.obtainCredential>
+export type ObtainCredentialActorInput = Partial<
+  Parameters<credentialIssuanceUtils.ObtainCredential>[0]
 >;
+
+export type ObtainCredentialActorOutput = {
+  credentials: ReadonlyArray<CredentialBundle>;
+  walletUnitAttestations: Record<string, string>;
+};
 
 export type ObtainStatusAssertionActorInput = Pick<Context, "credentials">;
 
@@ -97,7 +109,7 @@ export const createCredentialIssuanceActorsImplementation = (
       assert(O.isSome(integrityKeyTag), "integriyKeyTag is not present");
 
       try {
-        return await itwAttestationUtils.getAttestation(
+        return await itwAttestationUtils.getWalletInstanceAttestation(
           env,
           itwVersion,
           integrityKeyTag.value,
@@ -132,7 +144,12 @@ export const createCredentialIssuanceActorsImplementation = (
         );
 
         return await itwAttestationUtils
-          .getAttestation(env, itwVersion, newHardwareKeyTag, sessionToken)
+          .getWalletInstanceAttestation(
+            env,
+            itwVersion,
+            newHardwareKeyTag,
+            sessionToken
+          )
           .then(attestation => {
             // Track the successful renewal in Mixpanel
             trackWalletInstanceRenewalSuccess();
@@ -154,8 +171,11 @@ export const createCredentialIssuanceActorsImplementation = (
     RequestCredentialActorOutput,
     RequestCredentialActorInput
   >(async ({ input }) => {
-    const { credentialType, walletInstanceAttestation, skipMdocIssuance } =
-      input;
+    const {
+      credentialType,
+      walletInstanceAttestation,
+      skipMdocIssuance = true
+    } = input;
 
     assert(credentialType, "credentialType is undefined");
     assert(walletInstanceAttestation, "walletInstanceAttestation is undefined");
@@ -169,67 +189,132 @@ export const createCredentialIssuanceActorsImplementation = (
     });
   });
 
+  const obtainAccessToken = fromPromise<
+    CredentialAccessToken,
+    ObtainAccessTokenActorInput
+  >(async ({ input }) => {
+    const {
+      codeVerifier,
+      issuerConf,
+      walletInstanceAttestation,
+      requestedCredential
+    } = input;
+    const eid = itwCredentialsEidSelector(store.getState());
+
+    assert(codeVerifier, "codeVerifier is undefined");
+    assert(issuerConf, "issuerConf is undefined");
+    assert(walletInstanceAttestation, "walletInstanceAttestation is undefined");
+    assert(requestedCredential, "requestedCredential is undefined");
+    assert(O.isSome(eid), "eID is undefined");
+
+    // Retrieve the PID credential from the vault
+    const pidCredential = await CredentialsVault.get(eid.value.credentialId);
+    assert(pidCredential, "PID credential not found in secure storage");
+
+    const pid: CredentialBundle = {
+      metadata: eid.value,
+      credential: pidCredential
+    };
+
+    const { accessToken } = await credentialIssuanceUtils.completeAuthFlow({
+      env,
+      itwVersion,
+      codeVerifier,
+      issuerConf,
+      walletInstanceAttestation,
+      requestedCredential,
+      pid
+    });
+    return accessToken;
+  });
+
+  // To ensure a smooth experience when the session token expires, it is important to keep this actor
+  // retriable: it must fail as early as possible when `generateKeysWithWalletUnitAttestation` is
+  // rejected for session expired, so it can be reentered and retried from where it failed.
   const obtainCredential = fromPromise<
     ObtainCredentialActorOutput,
     ObtainCredentialActorInput
   >(async ({ input }) => {
-    const {
-      credentialType,
-      requestedCredential,
-      issuerConf,
-      walletInstanceAttestation,
-      clientId,
-      codeVerifier
-    } = input;
-
-    const eid = itwCredentialsEidSelector(store.getState());
+    const { credentialType, accessToken, issuerConf, clientId } = input;
+    const state = store.getState();
+    const sessionToken = sessionTokenSelector(state);
+    const integrityKeyTag = itwIntegrityKeyTagSelector(state);
 
     assert(credentialType, "credentialType is undefined");
-    assert(walletInstanceAttestation, "walletInstanceAttestation is undefined");
-    assert(requestedCredential, "requestedCredential is undefined");
     assert(issuerConf, "issuerConf is undefined");
     assert(clientId, "clientId is undefined");
-    assert(codeVerifier, "codeVerifier is undefined");
-    assert(O.isSome(eid), "eID is undefined");
+    assert(sessionToken, "sessionToken is undefined");
+    assert(accessToken, "accessToken is undefined");
+    assert(O.isSome(integrityKeyTag), "integriyKeyTag is undefined");
 
-    return await credentialIssuanceUtils.obtainCredential({
+    // The Wallet Unit Attestation makes use of the integrity service
+    if (getIoWallet(itwVersion).WalletUnitAttestation.isSupported) {
+      await ensureIntegrityServiceIsStoreReadyOrThrow(store);
+    }
+
+    const authorizedCredentials =
+      await credentialIssuanceUtils.generateKeysWithWalletUnitAttestation(
+        accessToken,
+        {
+          env,
+          itwVersion,
+          hardwareKeyTag: integrityKeyTag.value,
+          sessionToken
+        }
+      );
+
+    const credentials = await credentialIssuanceUtils.obtainCredential({
+      authorizedCredentials,
       env,
       itwVersion,
+      accessToken,
       credentialType,
-      walletInstanceAttestation,
-      requestedCredential,
       issuerConf,
-      clientId,
-      codeVerifier,
-      pid: eid.value
+      clientId
     });
+
+    return {
+      credentials,
+      walletUnitAttestations: authorizedCredentials.reduce(
+        (acc, c) =>
+          c.walletUnitAttestationId && c.walletUnitAttestation
+            ? { ...acc, [c.walletUnitAttestationId]: c.walletUnitAttestation }
+            : acc,
+        {} as Record<string, string>
+      )
+    };
   });
 
   const obtainStatusAssertion = fromPromise<
-    Array<StoredCredential>,
+    ReadonlyArray<CredentialBundle>,
     ObtainStatusAssertionActorInput
   >(async ({ input }) => {
     assert(input.credentials, "credentials are undefined");
 
     const requestStatusAssertionOrSkip = async (
-      credential: StoredCredential
-    ): Promise<StoredCredential> => {
+      credential: CredentialBundle
+    ): Promise<CredentialBundle> => {
       // Status assertions for mDoc credentials are not supported yet
-      if (credential.format === CredentialFormat.MDOC) {
+      if (credential.metadata.format === CredentialFormat.MDOC) {
         return credential;
       }
 
       const { statusAssertion, parsedStatusAssertion } =
         await getCredentialStatusAssertion(credential, env, itwVersion).catch(
-          enrichErrorWithMetadata({ credentialId: credential.credentialId })
+          enrichErrorWithMetadata({
+            credentialId: credential.metadata.credentialId
+          })
         );
 
       return {
         ...credential,
-        storedStatusAssertion: {
-          credentialStatus: "valid",
-          statusAssertion,
-          parsedStatusAssertion
+        metadata: {
+          ...credential.metadata,
+          storedStatusAssertion: {
+            credentialStatus: "valid",
+            statusAssertion,
+            parsedStatusAssertion
+          }
         }
       };
     };
@@ -242,8 +327,10 @@ export const createCredentialIssuanceActorsImplementation = (
   return {
     verifyTrustFederation,
     getWalletAttestation,
+    obtainAccessToken,
     requestCredential,
     obtainCredential,
-    obtainStatusAssertion
+    obtainStatusAssertion,
+    ...createCommonActorsImplementation(store)
   };
 };

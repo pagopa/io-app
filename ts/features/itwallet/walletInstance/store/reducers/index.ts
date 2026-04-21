@@ -13,7 +13,9 @@ import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import {
   itwWalletInstanceAttestationStore,
   itwUpdateWalletInstanceStatus,
-  itwSetWalletInstanceRenewalError
+  itwSetWalletInstanceRenewalError,
+  itwWalletUnitAttestationsStore,
+  itwWalletUnitAttestationsRemoveById
 } from "../actions";
 import {
   WalletInstanceStatus,
@@ -36,17 +38,24 @@ export type ItwWalletInstanceState = {
    * Used to prevent re-entering the recovery block on subsequent actor retries.
    */
   renewalError: boolean;
+  /**
+   * Record of Wallet Unit Attestations keyed by ID. They are not stored on
+   * credentials to avoid duplication (one WUA might contain multiple keys)
+   * and to avoid bloating the stored credential unnecessarily.
+   */
+  walletUnitAttestations: Record<string, string>;
 };
 
 export const itwWalletInstanceInitialState: ItwWalletInstanceState = {
   attestation: undefined,
   status: pot.none,
-  renewalError: false
+  renewalError: false,
+  walletUnitAttestations: {}
 };
 
 type MigrationState = PersistedState & Record<string, any>;
 
-const CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION = 2;
+const CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION = 3;
 
 export const migrations: MigrationManifest = {
   // Convert status into a pot for better async handling
@@ -65,6 +74,11 @@ export const migrations: MigrationManifest = {
   "2": (state: MigrationState) => ({
     ...state,
     renewalError: false
+  }),
+  // Add Wallet Unit Attestations
+  "3": (state: MigrationState) => ({
+    ...state,
+    walletUnitAttestations: {}
   })
 };
 
@@ -75,6 +89,7 @@ const reducer = (
   switch (action.type) {
     case getType(itwWalletInstanceAttestationStore): {
       return {
+        ...state,
         status: pot.none,
         attestation: action.payload,
         renewalError: false
@@ -107,6 +122,27 @@ const reducer = (
         ...state,
         renewalError: action.payload
       };
+
+    case getType(itwWalletUnitAttestationsStore): {
+      return {
+        ...state,
+        walletUnitAttestations: {
+          ...state.walletUnitAttestations,
+          ...action.payload
+        }
+      };
+    }
+
+    case getType(itwWalletUnitAttestationsRemoveById): {
+      return {
+        ...state,
+        walletUnitAttestations: Object.fromEntries(
+          Object.entries(state.walletUnitAttestations).filter(
+            ([id]) => !action.payload.includes(id)
+          )
+        )
+      };
+    }
 
     case getType(itwLifecycleStoresReset):
       return { ...itwWalletInstanceInitialState };

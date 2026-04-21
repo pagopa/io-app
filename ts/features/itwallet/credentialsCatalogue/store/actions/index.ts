@@ -1,4 +1,8 @@
-import { ActionType, createAsyncAction } from "typesafe-actions";
+import {
+  ActionType,
+  createAsyncAction,
+  createStandardAction
+} from "typesafe-actions";
 import { NetworkError } from "../../../../../utils/errors";
 import { DigitalCredentialsCatalogue } from "../../../common/utils/itwCredentialsCatalogueUtils";
 
@@ -11,6 +15,10 @@ export const itwFetchCredentialsCatalogue = createAsyncAction(
   "ITW_CREDENTIALS_CATALOGUE_FAILURE"
 )<void, DigitalCredentialsCatalogue, NetworkError>();
 
-export type ItwCredentialsCatalogueActions = ActionType<
-  typeof itwFetchCredentialsCatalogue
->;
+export const itwSetCatalogueEnabledForCredentialsList = createStandardAction(
+  "ITW_SET_CATALOGUE_ENABLED_FOR_CREDENTIALS_LIST"
+)<boolean>();
+
+export type ItwCredentialsCatalogueActions =
+  | ActionType<typeof itwFetchCredentialsCatalogue>
+  | ActionType<typeof itwSetCatalogueEnabledForCredentialsList>;
