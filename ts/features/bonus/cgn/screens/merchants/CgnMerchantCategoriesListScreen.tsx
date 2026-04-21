@@ -146,7 +146,7 @@ export const CgnMerchantCategoriesListScreen = () => {
       onRefresh: onPullRefresh
     },
     ListFooterComponent: showSortingInfo ? (
-      <>
+      <ContentWrapper>
         <Divider />
         <ListItemAction
           onPress={present}
@@ -159,9 +159,8 @@ export const CgnMerchantCategoriesListScreen = () => {
           variant="primary"
         />
         {bottomSheet}
-      </>
+      </ContentWrapper>
     ) : undefined,
-    ListEmptyComponent: undefined,
-    skeleton: <CgnMerchantListSkeleton hasIcons count={10} />
+    ListEmptyComponent: undefined
   };
 };

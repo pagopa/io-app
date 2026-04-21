@@ -61,8 +61,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
     renderItem,
     refreshControlProps,
     ListFooterComponent,
-    ListEmptyComponent,
-    skeleton
+    ListEmptyComponent
   } =
     selectedTab === CgnMerchantsHomeTabRoutes.CGN_CATEGORIES
       ? categoriesScreen

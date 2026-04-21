@@ -1,4 +1,10 @@
-import { Badge, ContentWrapper, H6, HSpacer, ListItemNav } from "@pagopa/io-app-design-system";
+import {
+  Badge,
+  ContentWrapper,
+  H6,
+  HSpacer,
+  ListItemNav
+} from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useMemo } from "react";
 import { View } from "react-native";
@@ -9,12 +15,12 @@ import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/Off
 import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
 import {
   getValueOrElse,
+  isError,
   isLoading
 } from "../../../../../common/model/RemoteValue";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { getListItemAccessibilityLabelCount } from "../../../../../utils/accessibility";
-import { CgnMerchantListSkeleton } from "../../components/merchants/CgnMerchantListSkeleton";
 import CGN_ROUTES from "../../navigation/routes";
 import {
   cgnOfflineMerchants,
@@ -25,6 +31,7 @@ import {
   cgnOnlineMerchantsSelector
 } from "../../store/reducers/merchants";
 import { mixAndSortMerchants } from "../../utils/merchants";
+import { CgnMerchantListSkeleton } from "../../components/merchants/CgnMerchantListSkeleton";
 
 export type MerchantsAll = OfflineMerchant | OnlineMerchant;
 
@@ -104,23 +111,25 @@ export const CgnMerchantsListScreen = () => {
     onRefresh: initLoadingLists
   };
 
-  const ListEmptyComponent = (
-    <OperationResultScreenContent
-      title={I18n.t("wallet.payment.outcome.GENERIC_ERROR.title")}
-      pictogram="umbrella"
-      action={{
-        label: I18n.t("global.buttons.retry"),
-        onPress: initLoadingLists
-      }}
-    />
-  );
+  const ListEmptyComponent =
+    isError(onlineMerchants) || isError(offlineMerchants) ? (
+      <OperationResultScreenContent
+        title={I18n.t("wallet.payment.outcome.GENERIC_ERROR.title")}
+        pictogram="umbrella"
+        action={{
+          label: I18n.t("global.buttons.retry"),
+          onPress: initLoadingLists
+        }}
+      />
+    ) : (
+      <CgnMerchantListSkeleton hasIcons count={10} />
+    );
 
   return {
     data,
     renderItem,
     refreshControlProps,
     ListFooterComponent: <></>,
-    ListEmptyComponent,
-    skeleton: <CgnMerchantListSkeleton hasIcons count={10} />
+    ListEmptyComponent
   };
 };
