@@ -13,7 +13,7 @@ import edatL3 from "../../__mocks__/L3/edatL3.json";
 import statusAssertion from "../../__mocks__/statusAssertion.json";
 import ts from "../../__mocks__/ts.json";
 import { DigitalCredentialMetadata } from "./itwCredentialsCatalogueUtils";
-import { CredentialMetadata, ParsedStatusAssertion } from "./itwTypesUtils";
+import { ParsedStatusAssertion, CredentialMetadata } from "./itwTypesUtils";
 
 export const ISSUER_MOCK_NAME = "Istituto Poligrafico e Zecca dello Stato";
 

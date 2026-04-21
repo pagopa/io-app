@@ -3893,7 +3893,6 @@
             "action": "Premi per ingrandire e visualizzare il codice a barre a tutto schermo"
           },
           "ageVerification": {
-            "subtitle": "Anagrafe Nazionale della Popolazione Residente - ANPR",
             "usageBanner": {
               "title": "Dove usare Età certificata?",
               "content": "Puoi usarla per accedere a servizi online destinati agli adulti: dimostri la tua maggiore età e la tua identità resta anonima."
@@ -3936,7 +3935,6 @@
           },
           "newCredentialValidityAlert": {
             "content": {
-              "age_verification": "La tua Età certificata è valida per 90 giorni e include 30 utilizzi.",
               "education_degree": "I tuoi titoli accademici digitali hanno piena validità ufficiale.",
               "education_enrollment": "Le tue iscrizioni accademiche digitali hanno piena validità ufficiale.",
               "residency": "Il tuo attestato di residenza digitale ha piena validità ufficiale.",
