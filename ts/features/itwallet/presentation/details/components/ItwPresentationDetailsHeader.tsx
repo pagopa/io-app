@@ -103,7 +103,7 @@ const ItwPresentationDetailsHeader = ({
           <Body
             style={{
               textAlign: "center",
-              marginHorizontal: 32,
+              marginHorizontal: 16,
               paddingTop: 4,
               color: IOColors["blueIO-850"]
             }}
