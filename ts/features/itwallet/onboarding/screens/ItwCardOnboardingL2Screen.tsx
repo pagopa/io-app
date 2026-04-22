@@ -12,11 +12,12 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList.ts"
 import { useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp.ts";
 import { trackShowCredentialsList } from "../../analytics";
-import { l2Credentials } from "../../common/utils/itwCredentialUtils.ts";
-import { itwCredentialsByPresenceSelector } from "../../credentials/store/selectors/index.ts";
+import { isL2Credential } from "../../common/utils/itwCredentialUtils.ts";
+import { makeItwCredentialsByPresenceSelector } from "../../credentials/store/selectors/index.ts";
 import { ITW_ROUTES } from "../../navigation/routes.ts";
 import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingModuleCredentialsList.tsx";
 import { AsyncCredentialsCatalogue } from "../components/AsyncCredentialsCatalogueWrapper.tsx";
+import { itwAvailableCredentialsListSelector } from "../../credentialsCatalogue/store/selectors/index.ts";
 
 const ItwCardOnboardingL2Screen = () => {
   useFocusEffect(trackShowCredentialsList);
@@ -43,8 +44,15 @@ const ItwCardOnboardingL2Screen = () => {
 const ItwL2CredentialOnboardingSection = () => {
   const navigation = useIONavigation();
 
-  const { notObtained } = useIOSelector(state =>
-    itwCredentialsByPresenceSelector(state, l2Credentials)
+  const catalogueCredentials = useIOSelector(
+    itwAvailableCredentialsListSelector
+  );
+  const l2Credentials = catalogueCredentials.filter(c =>
+    isL2Credential(c.type)
+  );
+
+  const { notObtained } = useIOSelector(
+    makeItwCredentialsByPresenceSelector(l2Credentials)
   );
 
   return (
@@ -52,7 +60,7 @@ const ItwL2CredentialOnboardingSection = () => {
       <VStack space={24}>
         <AsyncCredentialsCatalogue>
           <ItwOnboardingModuleCredentialsList
-            credentialTypesToDisplay={notObtained}
+            credentialsToDisplay={notObtained}
             isL2Credential
           />
         </AsyncCredentialsCatalogue>
