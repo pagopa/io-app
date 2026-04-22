@@ -271,7 +271,6 @@
     "react-native-calendar-events@2.2.0": "patch:react-native-calendar-events@npm%3A2.2.0#./.yarn/patches/react-native-calendar-events-npm-2.2.0-7c2fb115c6.patch",
     "react-native-device-info@^14.0.4": "patch:react-native-device-info@npm%3A14.0.4#./.yarn/patches/react-native-device-info-npm-14.0.4-9bb10f6c3d.patch",
     "react-native-image-pan-zoom@^2.1.11": "patch:react-native-image-pan-zoom@npm%3A2.1.12#./.yarn/patches/react-native-image-pan-zoom-npm-2.1.12-83ba2c1dcc.patch",
-    "react-native-push-notification@^8.1.1": "patch:react-native-push-notification@npm%3A8.1.1#./.yarn/patches/react-native-push-notification-npm-8.1.1-bcb0d8a65e.patch",
     "react-native-screen-brightness@^2.0.0-alpha": "patch:react-native-screen-brightness@npm%3A2.0.0-alpha#./.yarn/patches/react-native-screen-brightness-npm-2.0.0-alpha-22c6aeb21e.patch",
     "react-native-webview@^13.13.5": "patch:react-native-webview@npm%3A13.13.5#./.yarn/patches/react-native-webview-npm-13.13.5-802657184f.patch",
     "react-native-pdf@6.7.7": "patch:react-native-pdf@npm%3A6.7.7#./.yarn/patches/react-native-pdf-npm-6.7.7-7aa1e3a631.patch",
@@ -282,8 +281,8 @@
     "@react-native-community/art@^1.2.0": "patch:@react-native-community/art@npm%3A1.2.0#./.yarn/patches/@react-native-community-art-npm-1.2.0-1c93d63acc.patch",
     "react-native-exception-handler@^2.10.8": "patch:react-native-exception-handler@npm%3A2.10.8#./.yarn/patches/react-native-exception-handler-npm-2.10.8-0346a1ef37.patch",
     "@gorhom/bottom-sheet@^5.2.8": "patch:@gorhom/bottom-sheet@npm%3A5.2.8#./.yarn/patches/@gorhom-bottom-sheet-npm-5.2.8-1ad4b8f529.patch",
-    "expo-screen-capture@~8.0.9": "patch:expo-screen-capture@npm%3A8.0.9#./.yarn/patches/expo-screen-capture-npm-8.0.9-d1b801bc95.patch",
-    "expo-screen-capture@~55.0.9": "patch:expo-screen-capture@npm%3A55.0.9#./.yarn/patches/expo-screen-capture-npm-55.0.9-45e031d22f.patch"
+    "expo-screen-capture@~55.0.9": "patch:expo-screen-capture@npm%3A55.0.9#./.yarn/patches/expo-screen-capture-npm-55.0.9-45e031d22f.patch",
+    "react-native-push-notification@^8.1.1": "patch:react-native-push-notification@npm%3A8.1.1#./.yarn/patches/react-native-push-notification-npm-8.1.1-bcb0d8a65e.patch"
   },
   "react-native": {
     "path": "path-browserify",

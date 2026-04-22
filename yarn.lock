@@ -19904,11 +19904,11 @@ __metadata:
 
 "react-native-push-notification@patch:react-native-push-notification@npm%3A8.1.1#./.yarn/patches/react-native-push-notification-npm-8.1.1-bcb0d8a65e.patch::locator=io%40workspace%3A.":
   version: 8.1.1
-  resolution: "react-native-push-notification@patch:react-native-push-notification@npm%3A8.1.1#./.yarn/patches/react-native-push-notification-npm-8.1.1-bcb0d8a65e.patch::version=8.1.1&hash=5746da&locator=io%40workspace%3A."
+  resolution: "react-native-push-notification@patch:react-native-push-notification@npm%3A8.1.1#./.yarn/patches/react-native-push-notification-npm-8.1.1-bcb0d8a65e.patch::version=8.1.1&hash=259d59&locator=io%40workspace%3A."
   peerDependencies:
     "@react-native-community/push-notification-ios": ^1.10.1
     react-native: ">=0.33"
-  checksum: 02dc1c06a8ec8b7e9418ccc9823baa282878a8d97447235f35471270163abc2fbbe9b3054b5eb42112d23afbe678fd52b86e0af82ef56cecd70c7b73371d5df6
+  checksum: 4c4cdaf80c3925354345c7d0a46ebd28a5fdaa33ce6c1c1a2472c49a52c3743ba68c69b1022eec40bee240ac951a0f034a8117aa8371c7473778985668b12e6f
   languageName: node
   linkType: hard
 

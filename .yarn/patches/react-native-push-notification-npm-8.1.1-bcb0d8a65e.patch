@@ -33,11 +33,65 @@ index 248ff0825af89ce82e2c7346ef1edc104b06c91c..7a40b165c9cfcbbd21e4bf8c2bd0eaa6
          Log.d(LOG_TAG, String.format("Setting a notification with id %s at time %s",
                  bundle.getString("id"), Long.toString(fireDate)));
          if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+diff --git a/android/src/main/java/com/dieam/reactnativepushnotification/modules/RNPushNotificationListenerService.java b/android/src/main/java/com/dieam/reactnativepushnotification/modules/RNPushNotificationListenerService.java
+index ca78c0363ffa66abf074f6b8ef3e4c722e272561..e64078c7d7613a297da3c9f2ea19b502bd28751f 100644
+--- a/android/src/main/java/com/dieam/reactnativepushnotification/modules/RNPushNotificationListenerService.java
++++ b/android/src/main/java/com/dieam/reactnativepushnotification/modules/RNPushNotificationListenerService.java
+@@ -7,6 +7,7 @@ import android.os.Handler;
+ import android.os.Looper;
+ import android.util.Log;
+ 
++import com.facebook.react.ReactHost;
+ import com.facebook.react.ReactApplication;
+ import com.facebook.react.ReactInstanceManager;
+ import com.facebook.react.bridge.Arguments;
+@@ -41,24 +42,30 @@ public class RNPushNotificationListenerService extends FirebaseMessagingService
+         Handler handler = new Handler(Looper.getMainLooper());
+         handler.post(new Runnable() {
+             public void run() {
+-                // Construct and load our normal React JS code bundle
+-                final ReactInstanceManager mReactInstanceManager = ((ReactApplication)serviceRef.getApplication()).getReactNativeHost().getReactInstanceManager();
+-                ReactContext context = mReactInstanceManager.getCurrentReactContext();
+-                // If it's constructed, send a notification
++                // 1. Get the ReactHost instead of the Host
++                ReactHost reactHost = ((ReactApplication) serviceRef.getApplication()).getReactHost();
++
++                // 2. Get the current context from ReactHost
++                ReactContext context = reactHost.getCurrentReactContext();
++
+                 if (context != null) {
++                    // If it's already constructed, proceed
+                     handleNewToken((ReactApplicationContext) context, deviceToken);
+                 } else {
+-                    // Otherwise wait for construction, then send the notification
+-                    mReactInstanceManager.addReactInstanceEventListener(new ReactInstanceManager.ReactInstanceEventListener() {
++                    // 3. If context is null, use the ReactHost listener
++                    // ReactHost handles the lifecycle and background initialization more gracefully
++                    reactHost.addReactInstanceEventListener(new com.facebook.react.ReactInstanceEventListener() {
++                        @Override
+                         public void onReactContextInitialized(ReactContext context) {
+                             handleNewToken((ReactApplicationContext) context, deviceToken);
+-                            mReactInstanceManager.removeReactInstanceEventListener(this);
++                            // Remove listener to prevent memory leaks/double calls
++                            reactHost.removeReactInstanceEventListener(this);
+                         }
+                     });
+-                    if (!mReactInstanceManager.hasStartedCreatingInitialContext()) {
+-                        // Construct it in the background
+-                        mReactInstanceManager.createReactContextInBackground();
+-                    }
++
++                    // 4. Trigger background start if not already booting
++                    // In ReactHost, we check the status or simply call start()
++                    reactHost.start(); 
+                 }
+             }
+         });
 diff --git a/android/src/main/java/com/dieam/reactnativepushnotification/modules/RNReceivedMessageHandler.java b/android/src/main/java/com/dieam/reactnativepushnotification/modules/RNReceivedMessageHandler.java
-index 721ca40cc44a558cbf3cd083849407bcf01ddd79..6f5c48732bcefa25c3409a89d2f5964ee4790ba0 100644
+index 721ca40cc44a558cbf3cd083849407bcf01ddd79..b9d346f3e8b8f66f7505bf23cbc51291989cbca5 100644
 --- a/android/src/main/java/com/dieam/reactnativepushnotification/modules/RNReceivedMessageHandler.java
 +++ b/android/src/main/java/com/dieam/reactnativepushnotification/modules/RNReceivedMessageHandler.java
-@@ -117,6 +117,18 @@ public class RNReceivedMessageHandler {
+@@ -117,6 +117,19 @@ public class RNReceivedMessageHandler {
              }
          }
  
@@ -52,6 +106,7 @@ index 721ca40cc44a558cbf3cd083849407bcf01ddd79..6f5c48732bcefa25c3409a89d2f5964e
 +          }
 +        }
 +        // End patch
++        
 +
          Bundle dataBundle = new Bundle();
          Map<String, String> notificationData = message.getData();
