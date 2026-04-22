@@ -178,4 +178,21 @@ describe("itWalletReducer migrations", () => {
       credentialsCatalogue: { catalogue: pot.none }
     });
   });
+
+  it("should migrate the store to version 12: add isEnabledForCredentialsList flag", async () => {
+    const previousState = {
+      _persist: { version: 11, rehydrated: false },
+      credentialsCatalogue: { catalogue: pot.none }
+    };
+
+    const newState = await migrate(previousState, 12);
+
+    expect(newState).toEqual({
+      _persist: { version: 11, rehydrated: false },
+      credentialsCatalogue: {
+        catalogue: pot.none,
+        isEnabledForCredentialsList: false
+      }
+    });
+  });
 });
