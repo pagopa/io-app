@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.29.0-canary.8214](https://github.com/pagopa/io-app/compare/3.29.0-rc.4...3.29.0-canary.8214) (2026-04-22)
+
+
+### Bug Fixes
+
+* patch react-native-push-notification for Fabric issue ([76f0f51](https://github.com/pagopa/io-app/commit/76f0f516aa05cde5a8a6b13bcf4e4a3b29501492))
+
+
+### Chores
+
+* [[IOPLT-1693](https://pagopa.atlassian.net/browse/IOPLT-1693)] Upgrades to React Native 0.83 ([a3ab56d](https://github.com/pagopa/io-app/commit/a3ab56d5b1e10d42c5b2f8d742868b5279fdc7e9))
+* prettify ([eb641ff](https://github.com/pagopa/io-app/commit/eb641ff5f6801e6bc36fd94e3baa8a31870a1448))
+
 ## [3.29.0-rc.4](https://github.com/pagopa/io-app/compare/3.29.0-rc.3...3.29.0-rc.4) (2026-04-21)
 
 
