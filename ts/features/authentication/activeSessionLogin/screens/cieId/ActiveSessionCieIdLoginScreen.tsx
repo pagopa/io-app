@@ -19,7 +19,8 @@ import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel"
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import {
   getCieIDLoginUri,
-  isAuthenticationUrl
+  isAuthenticationUrl,
+  SpidLevel
 } from "../../../login/cie/utils";
 import {
   IO_LOGIN_CIE_URL_SCHEME,
@@ -50,6 +51,14 @@ import { ACS_PATH } from "../../shared/utils";
 import { trackLoginSpidError } from "../../../common/analytics/spidAnalytics";
 import { IdpCIE_ID } from "../../../login/hooks/useNavigateToLoginMethod";
 import { trackLoginFailure } from "../../../common/analytics";
+
+const mapSpidLevelToLoginUriParam = (spidLevel: SpidLevel): "L2" | "L3" => {
+  const mapping: Record<SpidLevel, "L2" | "L3"> = {
+    SpidL2: "L2",
+    SpidL3: "L3"
+  };
+  return mapping[spidLevel] ?? "L2";
+};
 
 const ActiveSessionCieIdLoginWebView = ({
   spidLevel,
@@ -133,7 +142,7 @@ const ActiveSessionCieIdLoginWebView = ({
         params: {
           errorCodeOrMessage: code || message,
           authMethod: "CIE_ID",
-          authLevel: "L2",
+          authLevel: mapSpidLevelToLoginUriParam(spidLevel),
           params: { spidLevel, isUat }
         }
       });

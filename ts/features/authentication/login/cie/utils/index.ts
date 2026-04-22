@@ -20,12 +20,13 @@ export const getCieIDLoginUri = (
  * @property livello1 refers to SpidL1
  * @property livello2 refers to SpidL2
  * @property nextUrl refers to SpidL3 for `iOS` and `android`
- * @property openApp refers to SpidL3 for `android`
+ * @property openApp refers to SpidL3 for `android` (case-insensitive)
  *
  * @returns a `boolean`
  */
 export const isAuthenticationUrl = (url: string) => {
-  const authUrlRegex = /\/(livello1|livello2|nextUrl|openApp)(\/|\?|$)/;
+  const authUrlRegex =
+    /\/(livello1|livello2|nextUrl|openApp|OpenApp)(\/|\?|$)/i;
 
   return authUrlRegex.test(url);
 };

@@ -6,20 +6,25 @@ import {
   useIOToast
 } from "@pagopa/io-app-design-system";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIODispatch } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   setStartActiveSessionLogin,
   setIdpSelectedActiveSessionLogin,
   setActiveSessionLoginFlow
 } from "../../../authentication/activeSessionLogin/store/actions";
 import { AUTHENTICATION_ROUTES } from "../../../authentication/common/navigation/routes";
-import { IdpCIE } from "../../../authentication/login/hooks/useNavigateToLoginMethod";
+import {
+  IdpCIE,
+  IdpCIE_ID
+} from "../../../authentication/login/hooks/useNavigateToLoginMethod";
 import { Identifier } from "../../../authentication/login/optIn/screens/OptInScreen";
 import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { fciEndRequest } from "../../store/actions";
 import { useIsNfcFeatureAvailable } from "../../../pn/aar/hooks/useIsNfcFeatureAvailable";
 import { WhatsNewScreenContent } from "../../../../components/screens/WhatsNewScreenContent";
+import { SpidIdp } from "../../../../utils/idps";
+import { isCieLoginUatEnabledSelector } from "../../../authentication/login/cie/store/selectors";
 
 export const FciLoginL3Screen = () => {
   const dispatch = useIODispatch();
@@ -27,6 +32,7 @@ export const FciLoginL3Screen = () => {
   const isNfcAvailable = useIsNfcFeatureAvailable();
   const { setOptions } = useIONavigation();
   const { info } = useIOToast();
+  const isCieUatEnabled = useIOSelector(isCieLoginUatEnabledSelector);
 
   useEffect(() => {
     setOptions({
@@ -46,17 +52,31 @@ export const FciLoginL3Screen = () => {
   }, [dispatch, setOptions]);
 
   const onPressContinue = () => {
+    const idpSelected: SpidIdp = IdpCIE_ID;
     if (isNfcAvailable) {
       dispatch(setStartActiveSessionLogin());
-      dispatch(setIdpSelectedActiveSessionLogin(IdpCIE));
+      dispatch(setIdpSelectedActiveSessionLogin(idpSelected));
       dispatch(setActiveSessionLoginFlow("FCI"));
-      navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
-        screen: SETTINGS_ROUTES.AUTHENTICATION,
-        params: {
-          screen: AUTHENTICATION_ROUTES.OPT_IN,
-          params: { identifier: Identifier.CIE }
-        }
-      });
+      if (idpSelected === IdpCIE_ID) {
+        navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+          screen: SETTINGS_ROUTES.AUTHENTICATION,
+          params: {
+            screen: AUTHENTICATION_ROUTES.OPT_IN,
+            params: {
+              identifier: Identifier.CIE_ID,
+              params: { spidLevel: "SpidL3", isUat: isCieUatEnabled }
+            }
+          }
+        });
+      } else if (idpSelected === IdpCIE) {
+        navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+          screen: SETTINGS_ROUTES.AUTHENTICATION,
+          params: {
+            screen: AUTHENTICATION_ROUTES.OPT_IN,
+            params: { identifier: Identifier.CIE }
+          }
+        });
+      }
     } else {
       navigation.navigate(FCI_ROUTES.MAIN, {
         screen: FCI_ROUTES.NFC_NOT_AVAILABLE

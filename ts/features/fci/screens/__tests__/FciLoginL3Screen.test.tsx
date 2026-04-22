@@ -14,7 +14,7 @@ import {
   setIdpSelectedActiveSessionLogin,
   setActiveSessionLoginFlow
 } from "../../../authentication/activeSessionLogin/store/actions";
-import { IdpCIE } from "../../../authentication/login/hooks/useNavigateToLoginMethod";
+import { IdpCIE_ID } from "../../../authentication/login/hooks/useNavigateToLoginMethod";
 
 // Mock the NFC hook
 jest.mock("../../../pn/aar/hooks/useIsNfcFeatureAvailable");
@@ -82,7 +82,7 @@ describe("FciLoginL3Screen", () => {
 
     const actions = store.getActions();
     expect(actions).toContainEqual(setStartActiveSessionLogin());
-    expect(actions).toContainEqual(setIdpSelectedActiveSessionLogin(IdpCIE));
+    expect(actions).toContainEqual(setIdpSelectedActiveSessionLogin(IdpCIE_ID));
     expect(actions).toContainEqual(setActiveSessionLoginFlow("FCI"));
   });
 
