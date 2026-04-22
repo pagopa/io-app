@@ -117,6 +117,7 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
     canGoBack: true,
     secondAction: {
       icon: "search",
+      testID: "search-button",
       onPress() {
         navigate(CGN_ROUTES.DETAILS.MAIN, {
           screen: CGN_ROUTES.DETAILS.MERCHANTS.SEARCH
