@@ -5,6 +5,10 @@ import {
   ITW_BACKGROUND_TASK_INTERVAL_MINUTES,
   ITW_WALLET_CHECK_TASK
 } from "./constants";
+import {
+  trackItwBackgroundTaskRegistered,
+  trackItwBackgroundTaskRegisterFailure
+} from "./analytics";
 
 /**
  * Registers the ITW background task with expo-background-task.
@@ -23,8 +27,9 @@ export function* registerItwBackgroundTaskSaga(): SagaIterator {
       yield* call(BackgroundTask.registerTaskAsync, ITW_WALLET_CHECK_TASK, {
         minimumInterval: ITW_BACKGROUND_TASK_INTERVAL_MINUTES
       });
+      yield* call(trackItwBackgroundTaskRegistered);
     }
-  } catch {
-    // Registration failure is non-critical: the app still works normally
+  } catch (e) {
+    yield* call(trackItwBackgroundTaskRegisterFailure, e);
   }
 }
