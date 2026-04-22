@@ -72,37 +72,46 @@ export const ItwIdentificationModeSelectionScreen = ({
   const isSpidDisabled = disabledIdentificationMethods.includes("SPID");
   const isCieIdDisabled = disabledIdentificationMethods.includes("CieID");
 
-  const featureName = isL3 ? "IT-Wallet" : "Documenti su IO";
-
   const { section, title, description } = useMemo(() => {
-    if (isReissuanceMode) {
+    if (isL3) {
+      if (isReissuanceMode) {
+        return {
+          section: I18n.t(
+            "features.itWallet.identification.modeSelection.section.l3-reissuance"
+          ),
+          title: I18n.t(
+            "features.itWallet.identification.modeSelection.title.l3-reissuance"
+          ),
+          description: I18n.t(
+            "features.itWallet.identification.modeSelection.description.l3-reissuance"
+          )
+        };
+      }
       return {
         section: I18n.t(
-          "features.itWallet.identification.modeSelection.section.reissuance"
+          "features.itWallet.identification.modeSelection.section.l3-issuance"
         ),
         title: I18n.t(
-          "features.itWallet.identification.modeSelection.title.reissuance"
+          "features.itWallet.identification.modeSelection.title.l3-issuance"
         ),
         description: I18n.t(
-          "features.itWallet.identification.modeSelection.description.reissuance",
-          { feature: featureName }
+          "features.itWallet.identification.modeSelection.description.l3-issuance"
+        )
+      };
+    } else {
+      return {
+        section: I18n.t(
+          "features.itWallet.identification.modeSelection.section.l2"
+        ),
+        title: I18n.t(
+          "features.itWallet.identification.modeSelection.title.l2"
+        ),
+        description: I18n.t(
+          `features.itWallet.identification.modeSelection.description.l2-${isReissuanceMode ? "reissuance" : "issuance"}`
         )
       };
     }
-    return {
-      section: I18n.t(
-        "features.itWallet.identification.modeSelection.section.issuance",
-        { feature: featureName }
-      ),
-      title: I18n.t(
-        "features.itWallet.identification.modeSelection.title.issuance"
-      ),
-      description: I18n.t(
-        "features.itWallet.identification.modeSelection.description.issuance",
-        { feature: featureName }
-      )
-    };
-  }, [isReissuanceMode, featureName]);
+  }, [isL3, isReissuanceMode]);
 
   useFocusEffect(
     useCallback(() => {
@@ -176,6 +185,7 @@ export const ItwIdentificationModeSelectionScreen = ({
               isCieIdDisabled={isCieIdDisabled}
               isSpidDisabled={isSpidDisabled}
               isL3={isL3}
+              isReissuanceMode={isReissuanceMode}
             />
           )}
           {!isReissuanceMode && isL3 && (
@@ -229,7 +239,7 @@ const GroupedMethodList = ({
         />
         <VStack space={16}>
           {!isCiePinDisabled && <CiePinMethodModule isL3 isReissuanceMode />}
-          {!isCieIdDisabled && <CieIdMethodModule isL3 />}
+          {!isCieIdDisabled && <CieIdMethodModule isL3 isReissuanceMode />}
         </VStack>
       </VStack>
     )}
@@ -240,7 +250,7 @@ const GroupedMethodList = ({
             "features.itWallet.identification.modeSelection.frequency.every90Days"
           )}
         />
-        <SpidMethodModule isL3 />
+        <SpidMethodModule isL3 isReissuanceMode />
       </VStack>
     )}
   </>
@@ -251,25 +261,32 @@ type DefaultMethodListProps = {
   isCieIdDisabled: boolean;
   isSpidDisabled: boolean;
   isL3: boolean;
+  isReissuanceMode: boolean;
 };
 
 const DefaultMethodList = ({
   isCiePinDisabled,
   isCieIdDisabled,
   isSpidDisabled,
-  isL3
+  isL3,
+  isReissuanceMode
 }: DefaultMethodListProps) => (
   <>
-    {!isCiePinDisabled && <CiePinMethodModule isL3={isL3} />}
-    {!isCieIdDisabled && <CieIdMethodModule isL3={isL3} />}
-    {!isSpidDisabled && <SpidMethodModule isL3={isL3} />}
+    {!isCiePinDisabled && (
+      <CiePinMethodModule isL3={isL3} isReissuanceMode={isReissuanceMode} />
+    )}
+    {!isCieIdDisabled && (
+      <CieIdMethodModule isL3={isL3} isReissuanceMode={isReissuanceMode} />
+    )}
+    {!isSpidDisabled && (
+      <SpidMethodModule isL3={isL3} isReissuanceMode={isReissuanceMode} />
+    )}
   </>
 );
 
 const styles = StyleSheet.create({
   noCieButtonContainer: {
     marginTop: 16,
-    flexDirection: "row",
-    justifyContent: "center"
+    flexDirection: "row"
   }
 });

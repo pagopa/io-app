@@ -3342,21 +3342,28 @@
         },
         "modeSelection": {
           "section": {
-            "issuance": "Attiva {{ feature }}",
-            "reissuance": "Conferma periodica dell'identità"
+            "l2": "Conferma identità",
+            "l3-issuance": "Attiva IT-Wallet",
+            "l3-reissuance": "Conferma periodica dell’identità"
           },
           "title": {
-            "issuance": "Conferma la tua identità",
-            "reissuance": "Scegli come continuare"
+            "l2": "Scegli come identificarti",
+            "l3-issuance": "Conferma la tua identità",
+            "l3-reissuance": "Scegli come continuare"
           },
           "description": {
-            "issuance": "È un passaggio di sicurezza necessario per associare i documenti digitali alla tua identità. ",
-            "reissuance": "È un passaggio necessario per continuare ad usare {{ feature }} senza limitazioni."
+            "l2-issuance": "È un passaggio necessario per garantire la sicurezza dei tuoi dati.",
+            "l2-reissuance": "È un passaggio necessario per continuare ad usare Documenti su IO senza limitazioni.",
+            "l3-issuance": "È un passaggio di sicurezza necessario per associare i documenti digitali alla tua identità.",
+            "l3-reissuance": "È un passaggio necessario per continuare ad usare IT-Wallet senza limitazioni."
           },
           "noCieCta": "Non hai la Carta di Identità Elettronica?",
           "mode": {
             "ciePin": {
-              "title": "Continua con CIE + PIN",
+              "title": {
+                "default": "Usa CIE + PIN",
+                "l3": "Continua con CIE + PIN"
+              },
               "subtitle": {
                 "default": "Dovrai usare la Carta di Identità Elettronica (CIE) e inserire il suo PIN di 8 cifre.",
                 "l3": "Ha una durata di 12 mesi"
@@ -3371,7 +3378,10 @@
               }
             },
             "cieId": {
-              "title": "Continua con l’app CieID",
+              "title": {
+                "default": "Usa l'app CieID",
+                "l3": "Continua con l’app CieID"
+              },
               "subtitle": {
                 "default": "Dovrai usare credenziali e app CieID",
                 "l3": "Ha una durata di 12 mesi"
@@ -3385,7 +3395,7 @@
             },
             "spid": {
               "title": {
-                "default": "Continua con SPID",
+                "default": "Usa SPID",
                 "l3": "Continua con SPID + CIE"
               },
               "subtitle": {
