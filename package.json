@@ -45,10 +45,7 @@
     "dev:pod-update": "cd ios && NO_INTERNAL_MODULE=1 bundle exec pod update && cd .."
   },
   "lint-staged": {
-    "*.{ts,tsx}": [
-      "prettier --write",
-      "eslint --fix"
-    ]
+    "*.{ts,tsx}": ["prettier --write", "eslint --fix"]
   },
   "dependencies": {
     "@babel/plugin-transform-class-properties": "^7.25.9",
@@ -305,7 +302,7 @@
       "expo-screen-capture@8.0.9": "patches/expo-screen-capture@8.0.9.patch"
     },
     "onlyBuiltDependencies": [
-      "@sentry/cli",
+      "unrs-resolver",
       "@shopify/react-native-skia",
       "core-js",
       "postinstall-postinstall"
