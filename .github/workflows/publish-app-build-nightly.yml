@@ -75,26 +75,7 @@ jobs:
         with:
           fetch-depth: 0
           ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
-      - id: setup-node
-        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
-        with:
-          node-version-file: ".node-version"
-      - name: Enable Corepack and prepare pnpm
-        run: |
-          corepack enable
-          corepack prepare --activate
-      - name: Get pnpm store directory
-        id: pnpm-store
-        run: echo "path=$(pnpm store path)" >> "$GITHUB_OUTPUT"
-      - id: pnpm-cache
-        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
-        with:
-          path: ${{ steps.pnpm-store.outputs.path }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-      - id: install-packages
-        run: pnpm install --frozen-lockfile
+      - uses: ./.github/actions/setup-pnpm
       - id: bump-version
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
@@ -131,26 +112,7 @@ jobs:
           sudo apt-get clean || true
           echo "After cleanup:"
           df -h
-      - id: setup-node
-        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
-        with:
-          node-version-file: ".node-version"
-      - name: Enable Corepack and prepare pnpm
-        run: |
-          corepack enable
-          corepack prepare --activate
-      - name: Get pnpm store directory
-        id: pnpm-store
-        run: echo "path=$(pnpm store path)" >> "$GITHUB_OUTPUT"
-      - id: pnpm-cache
-        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
-        with:
-          path: ${{ steps.pnpm-store.outputs.path }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-      - id: install-packages
-        run: pnpm install --frozen-lockfile
+      - uses: ./.github/actions/setup-pnpm
       - id: download-locales
         uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
         with:
@@ -225,26 +187,7 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ needs.bump-app-version.outputs.currentAppVersion }}
-      - id: setup-node
-        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
-        with:
-          node-version-file: ".node-version"
-      - name: Enable Corepack and prepare pnpm
-        run: |
-          corepack enable
-          corepack prepare --activate
-      - name: Get pnpm store directory
-        id: pnpm-store
-        run: echo "path=$(pnpm store path)" >> "$GITHUB_OUTPUT"
-      - id: pnpm-cache
-        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
-        with:
-          path: ${{ steps.pnpm-store.outputs.path }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-      - id: install-packages
-        run: pnpm install --frozen-lockfile
+      - uses: ./.github/actions/setup-pnpm
       - id: download-locales
         uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
         with:
