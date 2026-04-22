@@ -92,8 +92,8 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
     if (isNewItwRenderable) {
       const isStacked = cards.length > 0;
       return (
-        <View style={[styles.idWrapper, isStacked && styles.idWrapperStacked]}>
-          <ItwWalletIdCard />
+        <View style={styles.cardsWrapper}>
+          <ItwWalletIdCard isStacked={isStacked} />
         </View>
       );
     }
@@ -160,13 +160,6 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
 });
 
 const styles = StyleSheet.create({
-  idWrapper: {
-    marginHorizontal: -8,
-    aspectRatio: 16 / 10
-  },
-  idWrapperStacked: {
-    aspectRatio: 16 / 3
-  },
   cardsWrapper: {
     marginHorizontal: -8
   }
