@@ -3,7 +3,7 @@
 ## API Integration
 
 - API clients are auto-generated from OpenAPI specs in `definitions/`
-- Run `yarn generate` after spec changes
+- Run `pnpm generate` after spec changes
 - Generated types live alongside specs; clients in `ts/api/`
 
 ## Error Handling

@@ -366,7 +366,7 @@ $ nodenv install && nodenv version
 # Install Ruby with rbenv, the returned version should match the one in the .ruby-version file
 $ rbenv install && rbenv version
 
-# Enable corepack and prepare yarn
+# Enable corepack and prepare pnpm
 $ corepack enable
 $ corepack prepare --activate
 
@@ -383,7 +383,7 @@ $ pnpm install
 
 # Install podfiles when targeting iOS (ignore this step for Android)
 # Run this only during the first setup and when Pods dependencies change
-$ yarn dev:pod-install
+$ pnpm dev:pod-install
 
 # Generate the definitions from the OpenAPI specs and from the YAML translations
 # Run this only during the first setup and when specs/translations change

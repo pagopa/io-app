@@ -3,36 +3,36 @@
 ## Setup
 
 ```bash
-yarn setup              # Install deps + generate APIs + locales
-yarn sync               # Full sync including iOS pods (bundle + pod install + generate)
-yarn dev:pod-install.   # Specific command to install iOS Pods on local environment with script variable
+pnpm setup              # Install deps + generate APIs + locales
+pnpm sync               # Full sync including iOS pods (bundle + pod install + generate)
+pnpm dev:pod-install.   # Specific command to install iOS Pods on local environment with script variable
 ```
 
 ## Running the App
 
 ```bash
-yarn run-ios            # Run iOS simulator
-yarn dev:run-android    # Run Android in production debug mode (requires emulator running)
+pnpm run-ios            # Run iOS simulator
+pnpm dev:run-android    # Run Android in production debug mode (requires emulator running)
 ```
 
 ### Android Emulator Setup
 
 ```bash
-yarn lollipop_checks:comment    # Disable hardware keystore check for emulator
-yarn lollipop_checks:uncomment  # Re-enable before committing (required)
+pnpm lollipop_checks:comment    # Disable hardware keystore check for emulator
+pnpm lollipop_checks:uncomment  # Re-enable before committing (required)
 ```
 
 ## Code Generation
 
 ```bash
-yarn generate           # Regenerate API models + locales from OpenAPI specs
+pnpm generate           # Regenerate API models + locales from OpenAPI specs
 ```
 
 ## Quality Checks
 
 ```bash
-yarn lint               # ESLint check
-yarn lint-autofix       # ESLint with auto-fix
-yarn tsc:noemit         # TypeScript check only
-yarn prettier:check     # Check formatting
+pnpm lint               # ESLint check
+pnpm lint-autofix       # ESLint with auto-fix
+pnpm tsc:noemit         # TypeScript check only
+pnpm prettier:check     # Check formatting
 ```

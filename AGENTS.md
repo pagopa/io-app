@@ -2,9 +2,9 @@
 
 React Native 0.81 app for Italian government services. Uses TypeScript, Redux, Redux-Saga and XState.
 
-**Package manager:** `yarn` (not npm)
+**Package manager:** `pnpm` (not npm)
 
-**Sync:** `yarn sync` (installs deps, generates APIs and locales)
+**Sync:** `pnpm sync` (installs deps, generates APIs and locales)
 
 ## Documentation
 

@@ -3,8 +3,8 @@
 ## Commands
 
 ```bash
-yarn test:dev                    # Run tests without coverage
-yarn test:ci                     # CI mode with coverage
+pnpm test:dev                    # Run tests without coverage
+pnpm test:ci                     # CI mode with coverage
 jest path/to/file.test.ts        # Single test file
 jest -t "test name pattern"      # Tests matching pattern
 ```
