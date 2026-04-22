@@ -1,11 +1,8 @@
 import I18n from "i18next";
 import { useCallback } from "react";
-import { View, StyleSheet } from "react-native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { GuidedTour } from "../../../tour/components/GuidedTour";
-import { WalletCardPressableBase } from "../../../wallet/components/WalletCardPressableBase";
-import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import {
   itwCredentialsEidIssuedAtSelector,
@@ -16,6 +13,7 @@ import {
   ITW_TOUR_GROUP_ID,
   ITW_TOUR_STEP_ID
 } from "../../tour/utils/constants.ts";
+import { ItwCredentialWalletCard } from "./ItwCredentialWalletCard.tsx";
 
 export const ItwWalletIdCard = ({ isStacked }: any) => {
   const navigation = useIONavigation();
@@ -35,24 +33,15 @@ export const ItwWalletIdCard = ({ isStacked }: any) => {
       title={I18n.t("features.itWallet.tour.id.title")}
       description={I18n.t("features.itWallet.tour.id.description")}
     >
-      <View style={[styles.idWrapper, isStacked && styles.idWrapperStacked]}>
-        <WalletCardPressableBase onPress={handlePress}>
-          <ItwCredentialCard
-            credentialType={CredentialType.PID}
-            credentialStatus={eidStatus}
-            issuedAt={eidIssuedAt}
-          />
-        </WalletCardPressableBase>
-      </View>
+      <ItwCredentialWalletCard
+        isStacked={isStacked}
+        cardProps={{
+          credentialType: CredentialType.PID,
+          credentialStatus: eidStatus,
+          issuedAt: eidIssuedAt,
+          onPress: handlePress
+        }}
+      />
     </GuidedTour>
   );
 };
-
-const styles = StyleSheet.create({
-  idWrapper: {
-    aspectRatio: 16 / 10
-  },
-  idWrapperStacked: {
-    aspectRatio: 16 / 3
-  }
-});
