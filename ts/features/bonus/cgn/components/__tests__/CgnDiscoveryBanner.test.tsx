@@ -112,9 +112,9 @@ describe("CgnDiscoveryBanner", () => {
   it("should not render when user is not eligible for CGN (age > 35)", () => {
     const store = createTestStore();
     setupStoreWithBannerEnabled(store, oldProfile);
-    expect(
-      isCgnEngagementBannerRenderableSelector(store.getState())
-    ).toBe(false);
+    expect(isCgnEngagementBannerRenderableSelector(store.getState())).toBe(
+      false
+    );
   });
 
   it("should not render when user is already enrolled in CGN", () => {
@@ -127,27 +127,27 @@ describe("CgnDiscoveryBanner", () => {
         expiration_date: new Date(2030, 0, 1)
       })
     );
-    expect(
-      isCgnEngagementBannerRenderableSelector(store.getState())
-    ).toBe(false);
+    expect(isCgnEngagementBannerRenderableSelector(store.getState())).toBe(
+      false
+    );
   });
 
   it("should not render when the banner has been closed", () => {
     const store = createTestStore();
     setupStoreWithBannerEnabled(store);
     store.dispatch(closeCgnDiscoveryBanner());
-    expect(
-      isCgnEngagementBannerRenderableSelector(store.getState())
-    ).toBe(false);
+    expect(isCgnEngagementBannerRenderableSelector(store.getState())).toBe(
+      false
+    );
   });
 
   it("should not render when app version is lower than min_app_version", () => {
     jest.spyOn(appVersion, "getAppVersion").mockImplementation(() => "0.1.0.0");
     const store = createTestStore();
     setupStoreWithBannerEnabled(store);
-    expect(
-      isCgnEngagementBannerRenderableSelector(store.getState())
-    ).toBe(false);
+    expect(isCgnEngagementBannerRenderableSelector(store.getState())).toBe(
+      false
+    );
   });
 
   it("should render when all conditions are met", () => {
