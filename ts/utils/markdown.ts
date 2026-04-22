@@ -18,7 +18,7 @@ function customPlugin() {
       ) {
         // eslint-disable-next-line functional/immutable-data
         const data = node.data || (node.data = {});
-        const hast = h(node.name as string, node.attributes); // Casting required as after migrating to pnpm the Root type gives error as it doesn't containg either tagName or properties.
+        const hast = h(node.name as string, node.attributes); // Casting is required because after migrating to pnpm, the Root type gives an error as it doesn't contain either tagName or properties
 
         // eslint-disable-next-line functional/immutable-data
         data.hName = hast.tagName;
