@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.29.0-canary.8212](https://github.com/pagopa/io-app/compare/3.29.0-rc.4...3.29.0-canary.8212) (2026-04-22)
+
+
+### Bug Fixes
+
+* typescript issue ([dbf6d53](https://github.com/pagopa/io-app/commit/dbf6d53ec617745e5d35f8cee72e07643e325a3e))
+
+
+### Chores
+
+* add eslint rule to avoid ghost dependencies ([f98f8b4](https://github.com/pagopa/io-app/commit/f98f8b46e79ee3bf260a56c1a5d940e445e9fa16))
+* apply patches ([1fbf81f](https://github.com/pagopa/io-app/commit/1fbf81f39a431957889e8d93e1ee27af55b05980))
+* bump pnpm version ([1b1375e](https://github.com/pagopa/io-app/commit/1b1375ec67afaa9e73d9bf123f3886174fe58d13))
+* doc ([f55ab5c](https://github.com/pagopa/io-app/commit/f55ab5c949682dbc24241d2d6e3420129d0726e0))
+* fix missing shell error ([0437252](https://github.com/pagopa/io-app/commit/0437252ae6a5b59612ad3cf269ae007118f6504a))
+* remove download-locales step ([41a923c](https://github.com/pagopa/io-app/commit/41a923ccf481c948de9f40d07674c78c5482a0ed))
+* remove more yarn references ([d309ff9](https://github.com/pagopa/io-app/commit/d309ff987840bdc6b315ab28618e01174a7c523e))
+* remove outpdated dependencies script ([00fc8eb](https://github.com/pagopa/io-app/commit/00fc8ebd4aecfed9fa28709b161fc4b5353eb11a))
+* remove unused script ([f5c68f5](https://github.com/pagopa/io-app/commit/f5c68f5294d8aab6aa1471b7ae2528bd62f237b0))
+* remove unwanted change ([38fd16c](https://github.com/pagopa/io-app/commit/38fd16c469908a6884886d08759761c27da2a0be))
+* remove unwanted changes ([e92fcd3](https://github.com/pagopa/io-app/commit/e92fcd3c4b30e5dbfcdc2f8a3ea7b85d29fe5363))
+* remove unwanted changes ([7ad6011](https://github.com/pagopa/io-app/commit/7ad60111d5c7a3f05378a7904720d27a805ecc26))
+* replace yarn with pnpm in more places ([bab2196](https://github.com/pagopa/io-app/commit/bab21967231e2f93fe4b7e4dec57f96804b23d7c))
+* update actions ([4dc1096](https://github.com/pagopa/io-app/commit/4dc1096deadd3b41dfb3663b3432b2010febb5f3))
+* update actions according to official doc ([ff1f067](https://github.com/pagopa/io-app/commit/ff1f0678f26a1e49857bc3bcd1bd97897c1cadeb))
+* update lock ([652987b](https://github.com/pagopa/io-app/commit/652987b84a85fe3d78f8732331104c1ba385d7db))
+* update patch ([f97f350](https://github.com/pagopa/io-app/commit/f97f35092d9f2d2ec004a3569244e4a94ebca4f4))
+* update patches ([9998216](https://github.com/pagopa/io-app/commit/99982166df3ae11567276756a06e5950f3078862))
+* update pnpm ([c75454c](https://github.com/pagopa/io-app/commit/c75454ce46f705ddd6dd0a0945f7e6171c044389))
+* update setup wf ([af9cfda](https://github.com/pagopa/io-app/commit/af9cfda29e263ad5b343c090b1bfbb60465f41bd))
+* update setup wf ([0aaad6f](https://github.com/pagopa/io-app/commit/0aaad6f36c386b2545d851d0118560ce619e153c))
+
 ## [3.29.0-rc.4](https://github.com/pagopa/io-app/compare/3.29.0-rc.3...3.29.0-rc.4) (2026-04-21)
 
 
