@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
     borderCurve: "continuous"
   },
   content: {
-    alignItems: "center"
+    alignItems: "center",
+    paddingHorizontal: 16
   }
 });
