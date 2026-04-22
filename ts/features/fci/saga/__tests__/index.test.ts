@@ -23,7 +23,10 @@ import {
   fciQtspClausesMetadataSelector,
   fciQtspNonceSelector
 } from "../../store/reducers/fciQtspClauses";
-import { fciSignatureRequestSelector } from "../../store/reducers/fciSignatureRequest";
+import {
+  fciSignatureRequestSelector,
+  fciSignatureRequestIdSelector
+} from "../../store/reducers/fciSignatureRequest";
 import { fciQtspFilledDocumentUrlSelector } from "../../store/reducers/fciQtspFilledDocument";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import { spidLevelFromSessionInfoSelector } from "../../../authentication/common/store/selectors";
@@ -31,7 +34,12 @@ import { fciSecurityLevelLocalFeatureFlagSelector } from "../../store/reducers/f
 import { FciDownloadPreviewDirectoryPath } from "../networking/handleDownloadDocument";
 import { mockQtspClausesMetadata } from "../../types/__mocks__/QtspClausesMetadata.mock";
 import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
-import { testable } from "../index";
+import {
+  testable,
+  navigateAfterFinishedFciActiveSessionLoginFlowSaga
+} from "../index";
+import { activeSessionLoginFlowSelector } from "../../../authentication/activeSessionLogin/store/selectors";
+import { setActiveSessionLoginFlow } from "../../../authentication/activeSessionLogin/store/actions";
 
 // Mock react-native-fs
 jest.mock("react-native-fs", () => ({
@@ -268,5 +276,74 @@ describe("FCI Saga Tests", () => {
           CommonActions.navigate(ROUTES.MAIN)
         )
         .run());
+  });
+
+  describe("navigateAfterFinishedFciActiveSessionLoginFlowSaga", () => {
+    it("should resume FCI signature flow when all conditions are met", () => {
+      const mockSignatureRequestId = "test-signature-id" as NonEmptyString;
+
+      return expectSaga(
+        navigateAfterFinishedFciActiveSessionLoginFlowSaga,
+        true
+      )
+        .provide([
+          [
+            matchers.select(fciSignatureRequestIdSelector),
+            mockSignatureRequestId
+          ],
+          [matchers.select(activeSessionLoginFlowSelector), "FCI"]
+        ])
+        .put(setActiveSessionLoginFlow(undefined))
+        .put(fciSignatureRequestRetryFromId(mockSignatureRequestId))
+        .run();
+    });
+
+    it("should not resume FCI flow when isActiveLoginSuccess is false", () => {
+      const mockSignatureRequestId = "test-signature-id" as NonEmptyString;
+
+      return expectSaga(
+        navigateAfterFinishedFciActiveSessionLoginFlowSaga,
+        false
+      )
+        .provide([
+          [
+            matchers.select(fciSignatureRequestIdSelector),
+            mockSignatureRequestId
+          ],
+          [matchers.select(activeSessionLoginFlowSelector), "FCI"]
+        ])
+        .put(setActiveSessionLoginFlow(undefined))
+        .not.put(fciSignatureRequestRetryFromId(mockSignatureRequestId))
+        .run();
+    });
+
+    it("should not resume FCI flow when signatureRequestId is undefined", () =>
+      expectSaga(navigateAfterFinishedFciActiveSessionLoginFlowSaga, true)
+        .provide([
+          [matchers.select(fciSignatureRequestIdSelector), undefined],
+          [matchers.select(activeSessionLoginFlowSelector), "FCI"]
+        ])
+        .put(setActiveSessionLoginFlow(undefined))
+        .not.put.actionType("FCI_SIGNATURE_REQUEST_RETRY_FROM_ID")
+        .run());
+
+    it("should not resume FCI flow when activeSessionLoginFlow is not FCI", () => {
+      const mockSignatureRequestId = "test-signature-id" as NonEmptyString;
+
+      return expectSaga(
+        navigateAfterFinishedFciActiveSessionLoginFlowSaga,
+        true
+      )
+        .provide([
+          [
+            matchers.select(fciSignatureRequestIdSelector),
+            mockSignatureRequestId
+          ],
+          [matchers.select(activeSessionLoginFlowSelector), undefined]
+        ])
+        .put(setActiveSessionLoginFlow(undefined))
+        .not.put(fciSignatureRequestRetryFromId(mockSignatureRequestId))
+        .run();
+    });
   });
 });

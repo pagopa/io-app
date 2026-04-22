@@ -51,6 +51,8 @@ import {
 } from "../../common/versionInfo/store/reducers/versionInfo";
 import { VersionInfo } from "../../../definitions/content/VersionInfo";
 import { navigateAfterFinishedFciActiveSessionLoginFlowSaga } from "../../features/fci/saga";
+import { startApplicationInitialization } from "../../store/actions/application";
+import { shouldTrackLevelSecurityMismatchSaga } from "../../features/authentication/login/cie/sagas/trackLevelSecuritySaga";
 
 const aSessionToken = "mock-session-token";
 const aSessionInfo = O.some({
@@ -448,5 +450,85 @@ describe("initializeApplicationSaga", () => {
       .next(anEmptySessionInfo)
       .next(anEmptySessionInfo)
       .call(handleApplicationStartupTransientError, "GET_SESSION_DOWN");
+  });
+
+  it("should resume FCI signature flow after successful L3 active session login", () => {
+    const startupAction = startApplicationInitialization({
+      handleSessionExpiration: false,
+      showIdentificationModalAtStartup: false,
+      isActiveLoginSuccess: true
+    });
+
+    testSaga(initializeApplicationSaga, startupAction)
+      .next()
+      .call(checkAppHistoryVersionSaga)
+      .next()
+      .call(initMixpanel)
+      .next()
+      .call(testWaitForNavigatorServiceInitialization!)
+      .next()
+      .call(cancellAllLocalNotifications)
+      .next()
+      .call(previousInstallationDataDeleteSaga)
+      .next()
+      .next()
+      .next()
+      .fork(notificationPermissionsListener)
+      .next()
+      .next(generateLollipopKeySaga)
+      .call(checkPublicKeyAndBlockIfNeeded)
+      .next(false) // the device is supported
+      .fork(watchItwOfflineSaga)
+      .next()
+      .call(shouldExitForOfflineAccess)
+      .next()
+      .fork(watchSessionRefreshInOfflineSaga)
+      .next()
+      .select(remoteConfigSelector)
+      .next(O.some({}))
+      .select(versionInfoDataSelector)
+      .next(aVersionInfo)
+      .select(isAppSupportedSelector)
+      .next(true)
+      .select(isBlockingScreenSelector)
+      .next()
+      .select(sessionTokenSelector)
+      .next(aSessionToken)
+      .next(trackKeychainFailures)
+      .next(getKeyInfo)
+      .call(getKeyInfo)
+      .next()
+      .fork(watchForceLogoutSaga)
+      .next()
+      .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
+      .next()
+      .next(200) // check session
+      .next()
+      .next()
+      .next()
+      .next()
+      .next()
+      // Simulating successful L3 active session login with ongoing FCI flow
+      .call(navigateAfterFinishedFciActiveSessionLoginFlowSaga, true)
+      .next()
+      .select(sessionInfoSelector)
+      .next(aSessionInfo)
+      .select(userFromSuccessLoginSelector)
+      .next()
+      .call(shouldTrackLevelSecurityMismatchSaga, aSessionInfo, true)
+      .next()
+      .select(lollipopPublicKeySelector)
+      .next(aPublicKey)
+      .call(
+        checkLollipopSessionAssertionAndInvalidateIfNeeded,
+        aPublicKey,
+        aSessionInfo
+      )
+      .next(true)
+      .fork(watchProfileUpsertRequestsSaga, undefined)
+      .next()
+      .fork(watchProfile, undefined)
+      .next()
+      .call(loadProfile, undefined);
   });
 });

@@ -2797,10 +2797,6 @@
         }
       },
       "requestL3": {
-        "nfcError": {
-          "title": "NFC non disponibile",
-          "subTitle": "Per firmare i documenti è necessario un dispositivo con NFC. Verifica le impostazioni del tuo dispositivo o usa un altro telefono."
-        },
         "localFlag": {
           "title": "Attivazione check L3 per il flusso di firma",
           "description": "Attivando questo toggle attivi il check L3 per il flusso di firma, che prevede una nuova login L3 per gli utenti che non possiedono il livello di autenticazione L3 (CIE + PIN)"

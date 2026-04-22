@@ -1993,10 +1993,6 @@
         }
       },
       "requestL3": {
-        "nfcError": {
-          "title": "NFC not available",
-          "subTitle": "An NFC-enabled device is required to sign documents. Check your device settings or use another phone."
-        },
         "localFlag": {
           "title": "Enable L3 check for the signature flow",
           "description": "By enabling this toggle, you activate the L3 check for the signature flow, which requires a new L3 login for users who do not have the L3 authentication level (CIE + PIN)"
