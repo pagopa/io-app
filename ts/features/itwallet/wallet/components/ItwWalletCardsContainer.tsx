@@ -1,19 +1,13 @@
-import {
-  IOVisualCostants,
-  ListItemHeader,
-  VStack
-} from "@pagopa/io-app-design-system";
+import { ListItemHeader, VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
-import { useCallback, useMemo, useRef, useState } from "react";
-import { Dimensions, StyleSheet, View } from "react-native";
+import { useCallback, useMemo } from "react";
+import { StyleSheet, View } from "react-native";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { GuidedTour } from "../../../tour/components/GuidedTour.tsx";
-import { useGuidedTourRegion } from "../../../tour/components/useGuidedTourRegion";
-import { TourItemMeasurement } from "../../../tour/types";
 import { WalletCardsCategoryContainer } from "../../../wallet/components/WalletCardsCategoryContainer";
 import { selectWalletCardsByCategory } from "../../../wallet/store/selectors";
 import { withWalletCategoryFilter } from "../../../wallet/utils";
@@ -41,8 +35,7 @@ import { ItwDiscoveryBanner } from "../../discovery/components/ItwDiscoveryBanne
 import { useItwGuidedTour } from "../../tour/hooks/useItwGuidedTour.ts";
 import {
   ITW_TOUR_GROUP_ID,
-  ITW_TOUR_STEP_CREDENTIALS,
-  ITW_TOUR_STEP_ID
+  ITW_TOUR_STEP_CREDENTIALS
 } from "../../tour/utils/constants.ts";
 import { ItwWalletIdCard } from "./ItwWalletIdCard.tsx";
 
@@ -53,7 +46,6 @@ const LIFECYCLE_STATUS: Array<ItwJwtCredentialStatus> = [
 
 export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const navigation = useIONavigation();
-  const { width: screenWidth } = Dimensions.get("window");
   const isNewItwRenderable = useIOSelector(itwShouldRenderNewItWalletSelector);
   const shouldHideEidAlert = useIOSelector(itwShouldHideEidLifecycleAlert);
   const shouldRenderUpgradeBanner = useIOSelector(
@@ -70,35 +62,6 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const eidExpiration = useIOSelector(itwCredentialsEidExpirationSelector);
   const isEidExpired = eidStatus === "jwtExpired";
   const iconColor = useItwStatusIconColor(isEidExpired);
-
-  const idCardHorizontalInset =
-    IOVisualCostants.appMarginDefault + styles.idWrapper.marginHorizontal;
-
-  const idCardRef = useRef<View>(null);
-  const [idCardMeasurement, setIdCardMeasurement] = useState<
-    TourItemMeasurement | undefined
-  >(undefined);
-
-  const idCardRegion = useCallback(
-    () =>
-      idCardMeasurement
-        ? {
-            x: idCardHorizontalInset,
-            y: idCardMeasurement.y,
-            width: screenWidth - 2 * idCardHorizontalInset,
-            height: idCardMeasurement.height
-          }
-        : undefined,
-    [idCardMeasurement, idCardHorizontalInset, screenWidth]
-  );
-
-  useGuidedTourRegion({
-    groupId: ITW_TOUR_GROUP_ID,
-    index: ITW_TOUR_STEP_ID,
-    title: I18n.t("features.itWallet.tour.id.title"),
-    description: I18n.t("features.itWallet.tour.id.description"),
-    region: idCardRegion
-  });
 
   useItwPendingReviewRequest();
 
@@ -129,17 +92,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
     if (isNewItwRenderable) {
       const isStacked = cards.length > 0;
       return (
-        <View
-          ref={idCardRef}
-          style={[styles.idWrapper, isStacked && styles.idWrapperStacked]}
-          onLayout={() => {
-            idCardRef.current?.measureInWindow((x, y, width, height) => {
-              if (width !== 0 || height !== 0) {
-                setIdCardMeasurement({ x, y, width, height });
-              }
-            });
-          }}
-        >
+        <View style={[styles.idWrapper, isStacked && styles.idWrapperStacked]}>
           <ItwWalletIdCard />
         </View>
       );
