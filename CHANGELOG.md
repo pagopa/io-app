@@ -2,6 +2,78 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.29.0-rc.4](https://github.com/pagopa/io-app/compare/3.29.0-rc.3...3.29.0-rc.4) (2026-04-21)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4181](https://pagopa.atlassian.net/browse/SIW-4181)] Add flag to display the list of credentials from the catalogue ([#8028](https://github.com/pagopa/io-app/issues/8028)) ([7ec3aff](https://github.com/pagopa/io-app/commit/7ec3affb56ce74b5ec152aeee06229749b21e53d))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-3282](https://pagopa.atlassian.net/browse/SIW-3282)] Fix back navigation in eID reissuance actions ([#7812](https://github.com/pagopa/io-app/issues/7812)) ([40f10ea](https://github.com/pagopa/io-app/commit/40f10ead2a9368521f5ffbc8c6557190b30c9058))
+
+
+### Chores
+
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Adjust README workflow badge reference ([#8040](https://github.com/pagopa/io-app/issues/8040)) ([8d40e6e](https://github.com/pagopa/io-app/commit/8d40e6e8f32c7acdc9f93995f589d5c0a3512d8c))
+* **IT-Wallet:** [[SIW-3468](https://pagopa.atlassian.net/browse/SIW-3468)] Add origin to serialize failure reason to enhance mixpanel tracking on unexpected failures ([#7684](https://github.com/pagopa/io-app/issues/7684)) ([17a5e6a](https://github.com/pagopa/io-app/commit/17a5e6abc207933e1ff07176096dfbd1ee4c17fa))
+* [[IEL-411](https://pagopa.atlassian.net/browse/IEL-411)] Updated copy for CIE scan screen on Android ([#8046](https://github.com/pagopa/io-app/issues/8046)) ([8b32c32](https://github.com/pagopa/io-app/commit/8b32c320b05adf74378331591da935ef2e4118b0))
+
+## [3.29.0-rc.3](https://github.com/pagopa/io-app/compare/3.29.0-rc.2...3.29.0-rc.3) (2026-04-20)
+
+
+### Chores
+
+* [[IEG-2805](https://pagopa.atlassian.net/browse/IEG-2805)] Add emilio-dimari as CODEOWNERS ([#8041](https://github.com/pagopa/io-app/issues/8041)) ([3ff551f](https://github.com/pagopa/io-app/commit/3ff551faf57358ab9ce9613317d31518d50e7d76))
+* [[IOPLT-1678](https://pagopa.atlassian.net/browse/IOPLT-1678)] Removes Sentry SDK references and config from code ([#7960](https://github.com/pagopa/io-app/issues/7960)) ([a9ecda9](https://github.com/pagopa/io-app/commit/a9ecda9b3b7a742ae72f075a3cc4b0d5fc15b009))
+
+## [3.29.0-rc.2](https://github.com/pagopa/io-app/compare/3.29.0-rc.1...3.29.0-rc.2) (2026-04-17)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-3600](https://pagopa.atlassian.net/browse/SIW-3600)] Add Wallet Unit Attestation with resumable issuance machine ([#7983](https://github.com/pagopa/io-app/issues/7983)) ([7d5484d](https://github.com/pagopa/io-app/commit/7d5484dfcc04fd80d949fbc3995c54f53ae1c025))
+
+
+### Bug Fixes
+
+* [[IEG-2792](https://pagopa.atlassian.net/browse/IEG-2792)] CGN discount code sheet action position on Android ([#7966](https://github.com/pagopa/io-app/issues/7966)) ([1b2760a](https://github.com/pagopa/io-app/commit/1b2760ac2660206e14d54c7af0fcf37b708d8554))
+* [[IOPLT-1779](https://pagopa.atlassian.net/browse/IOPLT-1779)] Fix `codecov` setup ([#8039](https://github.com/pagopa/io-app/issues/8039)) ([00e3da8](https://github.com/pagopa/io-app/commit/00e3da8282bc159e598093e1d59e858f1a425ff2))
+
+
+### Chores
+
+* [[IEL-357](https://pagopa.atlassian.net/browse/IEL-357)] Improve timeline items accessibility ([#8031](https://github.com/pagopa/io-app/issues/8031)) ([dd825c7](https://github.com/pagopa/io-app/commit/dd825c7b110fa179546aadf02b947e0f8d9c8d1d))
+* [[IEL-407](https://pagopa.atlassian.net/browse/IEL-407)] Change copy on AAR screen ([#8011](https://github.com/pagopa/io-app/issues/8011)) ([e2d13ff](https://github.com/pagopa/io-app/commit/e2d13ff79e3afde3f6892a0e291f2c600d7546ed))
+* [[IEL-410](https://pagopa.atlassian.net/browse/IEL-410)] Change copy on AAR screen ([#8013](https://github.com/pagopa/io-app/issues/8013)) ([3302b68](https://github.com/pagopa/io-app/commit/3302b681babe5c8ced87ebee78b70fd55fafec5f))
+* [[IEL-442](https://pagopa.atlassian.net/browse/IEL-442)] Updated copy for send AAR nfc error ([#8034](https://github.com/pagopa/io-app/issues/8034)) ([81284a7](https://github.com/pagopa/io-app/commit/81284a76403525dab5370ea7c5976dcd7577229b))
+* [[IOCOM-3101](https://pagopa.atlassian.net/browse/IOCOM-3101)] io-react-native-http-client version bump ([#8036](https://github.com/pagopa/io-app/issues/8036)) ([3bb2d9d](https://github.com/pagopa/io-app/commit/3bb2d9d8d54fa57dced8d8b3eaea83242542f025))
+* [[IOPLT-1758](https://pagopa.atlassian.net/browse/IOPLT-1758)] Update `jest` to `30.x` ([#8001](https://github.com/pagopa/io-app/issues/8001)) ([550d282](https://github.com/pagopa/io-app/commit/550d282675038c6a0c39ed079bdc76ade0721f80))
+
+## [3.29.0-rc.1](https://github.com/pagopa/io-app/compare/3.29.0-rc.0...3.29.0-rc.1) (2026-04-16)
+
+
+### Features
+
+* [[IEL-452](https://pagopa.atlassian.net/browse/IEL-452)] add local FF to manage L3 login on FCI flow ([#8026](https://github.com/pagopa/io-app/issues/8026)) ([c080100](https://github.com/pagopa/io-app/commit/c080100d03285619bbae57dd11373c8c6775df21))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] remove duplicated `spec_version` and `verification` from credential object ([#8030](https://github.com/pagopa/io-app/issues/8030)) ([37f0a62](https://github.com/pagopa/io-app/commit/37f0a62f8f66479e910620c63102d6d18a3a4e34))
+
+
+### Chores
+
+* [[IEL-000](https://pagopa.atlassian.net/browse/IEL-000)] Remove freddi301 from CODEOWNERS ([#8033](https://github.com/pagopa/io-app/issues/8033)) ([8674f96](https://github.com/pagopa/io-app/commit/8674f96917df065128ea280ac3e7b08c7c394a20))
+* [[IEL-406](https://pagopa.atlassian.net/browse/IEL-406)] updated Send Aar Delegation Bottomsheet ([#8008](https://github.com/pagopa/io-app/issues/8008)) ([c68bbc7](https://github.com/pagopa/io-app/commit/c68bbc7bcaaa55d0dae6e9a95218f5efd60bd7bc))
+* [[IEL-408](https://pagopa.atlassian.net/browse/IEL-408)] updated copy for Insert Cie Can Screen ([#8012](https://github.com/pagopa/io-app/issues/8012)) ([34c0700](https://github.com/pagopa/io-app/commit/34c0700261a9e5714bca8d07d51908e55c0649f9))
+* **IT-Wallet:** [[SIW-4061](https://pagopa.atlassian.net/browse/SIW-4061)] Add new credential reissuing bottomsheet and cta analytics ([#7943](https://github.com/pagopa/io-app/issues/7943)) ([a88f2c0](https://github.com/pagopa/io-app/commit/a88f2c083db53ccf494e3ec604b3c598b1a556e4))
+* [[IOPLT-1762](https://pagopa.atlassian.net/browse/IOPLT-1762)] Use `setup-composite` to save time on tests via GH actions ([#8009](https://github.com/pagopa/io-app/issues/8009)) ([8b41cba](https://github.com/pagopa/io-app/commit/8b41cbaf9d99903a7185d088883f3f53cf698da1))
+* **IT-Wallet:** [[SIW-4062](https://pagopa.atlassian.net/browse/SIW-4062)] Add mtc tracking ([#7948](https://github.com/pagopa/io-app/issues/7948)) ([b1b9c9a](https://github.com/pagopa/io-app/commit/b1b9c9a53e193a2e8fc7d277e7970ce95e7ecee8))
+
 ## [3.29.0-rc.0](https://github.com/pagopa/io-app/compare/3.28.0-rc.7...3.29.0-rc.0) (2026-04-15)
 
 

@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`WhatsNewScreenContent should match the snapshots 1`] = `
 <RNCSafeAreaView

@@ -1,5 +1,4 @@
 import { fireEvent, RenderAPI } from "@testing-library/react-native";
-import { Text } from "react-native";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
@@ -168,17 +167,13 @@ const checkVersionView = (component: RenderAPI) => {
 const checkErrorView = (component: RenderAPI, errorMessage: string) => {
   const errorView = component.queryByTestId("errorView");
   expect(errorView).not.toBeNull();
-  const texts = errorView?.findAllByType(Text);
-  expect(texts).toHaveLength(1);
-  expect(texts?.[0]).toHaveTextContent(errorMessage);
+  expect(errorView).toHaveTextContent(errorMessage);
 };
 
 const checkSuccessView = (component: RenderAPI) => {
   const successView = component.queryByTestId("successView");
   expect(successView).not.toBeNull();
-  const texts = successView?.findAllByType(Text);
-  expect(texts).toHaveLength(1);
-  expect(texts?.[0]).toHaveTextContent("Success");
+  expect(successView).toHaveTextContent("Success");
 };
 
 const checkInput = (

@@ -123,12 +123,13 @@ export const trackAddCredentialFailure = ({
 
 export const trackAddCredentialUnexpectedFailure = ({
   credential,
+  origin,
   reason,
   type
 }: CredentialUnexpectedFailure) => {
   void mixpanelTrack(
     ITW_ISSUANCE_ERRORS_EVENTS.ITW_ADD_CREDENTIAL_UNEXPECTED_FAILURE,
-    buildEventProperties("KO", "error", { credential, reason, type })
+    buildEventProperties("KO", "error", { credential, origin, reason, type })
   );
 };
 
@@ -155,13 +156,14 @@ export const trackCredentialInvalidStatusFailure = ({
 };
 
 export const trackItwIdRequestUnexpectedFailure = ({
+  origin,
   reason,
   type,
   itw_flow
 }: IdUnexpectedFailure) => {
   void mixpanelTrack(
     ITW_ISSUANCE_ERRORS_EVENTS.ITW_ID_REQUEST_UNEXPECTED_FAILURE,
-    buildEventProperties("KO", "error", { reason, type, itw_flow })
+    buildEventProperties("KO", "error", { origin, reason, type, itw_flow })
   );
 };
 
@@ -187,6 +189,15 @@ export const trackItwCredentialReissuingFailed = (
   void mixpanelTrack(
     ITW_ISSUANCE_ERRORS_EVENTS.ITW_CREDENTIAL_REISSUING_FAILED,
     buildEventProperties("KO", "screen_view", properties)
+  );
+};
+
+export const trackItwAlreadyHasCredential = (
+  credential: MixPanelCredential
+) => {
+  void mixpanelTrack(
+    ITW_ISSUANCE_ERRORS_EVENTS.ITW_ALREADY_HAS_CREDENTIAL,
+    buildEventProperties("KO", "screen_view", { credential })
   );
 };
 

@@ -44,6 +44,7 @@ export type TrackItWalletCieCardReadingFailure = {
 
 export type TrackItWalletCieCardReadingUnexpectedFailure = {
   reason: string | undefined;
+  origin: string | undefined;
   cie_reading_progress: number;
   itw_flow: ItwFlow;
   ITW_ID_method?: ItwIdMethod;
