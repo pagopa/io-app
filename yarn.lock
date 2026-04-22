@@ -4377,9 +4377,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-app-design-system@npm:6.1.0":
-  version: 6.1.0
-  resolution: "@pagopa/io-app-design-system@npm:6.1.0"
+"@pagopa/io-app-design-system@npm:7.0.2":
+  version: 7.0.2
+  resolution: "@pagopa/io-app-design-system@npm:7.0.2"
   dependencies:
     auto-changelog: ^2.4.0
     markdown-it: ^14.1.0
@@ -4402,7 +4402,7 @@ __metadata:
     react-native-safe-area-context: "*"
     react-native-svg: "*"
     react-native-worklets: "*"
-  checksum: 2cb6968aed1f8342fae2550ae8859d1bf8086479b5d7dc47bcfa5b56a139837998dd5c626bafb50253baa451ce10a50da139cae00c1b9f11aa4dd07e5dd55aff
+  checksum: b46fc05449ecb3248dc7066bd9d006a460434a2e554ec782da020907870902c3139e26e8844f45844de5dc4c683aee90264c71dc6d07fe0fddbbc7b5047cfd4a
   languageName: node
   linkType: hard
 
@@ -13527,7 +13527,7 @@ __metadata:
     "@eslint/eslintrc": ^3.3.5
     "@eslint/js": ^10.0.1
     "@gorhom/bottom-sheet": ^5.2.8
-    "@pagopa/io-app-design-system": 6.1.0
+    "@pagopa/io-app-design-system": 7.0.2
     "@pagopa/io-pagopa-commons": ^3.1.0
     "@pagopa/io-react-native-cie": 1.3.5-rc.2
     "@pagopa/io-react-native-cieid": 0.4.0
