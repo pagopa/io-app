@@ -9,8 +9,8 @@ import { OfflineMerchant } from "../../../../../../../definitions/cgn/merchants/
 import { OnlineMerchant } from "../../../../../../../definitions/cgn/merchants/OnlineMerchant";
 import { ProductCategoryEnum } from "../../../../../../../definitions/cgn/merchants/ProductCategory";
 import {
-    remoteError,
-    remoteReady
+  remoteError,
+  remoteReady
 } from "../../../../../../common/model/RemoteValue";
 import { useIONavigation } from "../../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../../store/actions/application";
