@@ -34,6 +34,7 @@ const readOutdatedJson = async (): Promise<string> => {
     if (code === 1) {
       return stdout;
     } else {
+      // eslint-disable-next-line preserve-caught-error
       throw new Error(
         `Error ${code} while executing 'yarn outdated --json': ${message}`
       );
