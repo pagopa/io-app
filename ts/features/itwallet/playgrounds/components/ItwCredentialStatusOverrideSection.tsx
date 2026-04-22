@@ -27,6 +27,9 @@ import {
 import { selectItwEnv } from "../../common/store/selectors/environment";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 
+const NO_OVERRIDE = "no_override" as const;
+type StatusOption = ItwCredentialStatus | typeof NO_OVERRIDE;
+
 type CredentialStatusPickerProps = {
   credentialType: string;
   currentOverride: ItwCredentialStatus | undefined;
@@ -40,17 +43,26 @@ const CredentialStatusPicker = ({
   onSelect,
   onReset
 }: CredentialStatusPickerProps) => {
-  const statusItems: ReadonlyArray<RadioItem<ItwCredentialStatus>> =
-    getAvailableStatusOverrides(credentialType).map(s => ({ id: s, value: s }));
+  const noOverrideItem: RadioItem<StatusOption> = {
+    id: NO_OVERRIDE,
+    value: "No override"
+  };
+  const statusItems: ReadonlyArray<RadioItem<StatusOption>> = [
+    noOverrideItem,
+    ...getAvailableStatusOverrides(credentialType).map(s => ({
+      id: s,
+      value: s
+    }))
+  ];
 
   return (
     <View>
-      <RadioGroup<ItwCredentialStatus>
+      <RadioGroup<StatusOption>
         type="radioListItem"
         items={statusItems}
-        selectedItem={currentOverride}
+        selectedItem={currentOverride ?? NO_OVERRIDE}
         onPress={status => {
-          if (status === currentOverride) {
+          if (status === NO_OVERRIDE) {
             onReset();
           } else {
             onSelect(status);
