@@ -50,6 +50,7 @@ import { ItwL3CredentialDetailScreen } from "../playgrounds/screens/ItwL3Credent
 import ItwPlayground from "../playgrounds/screens/ItwPlayground.tsx";
 import { ItwPresentationCredentialAttachmentScreen } from "../presentation/details/screens/ItwPresentationCredentialAttachmentScreen";
 import { ItwPresentationCredentialCardModal } from "../presentation/details/screens/ItwPresentationCredentialCardModal";
+import { ItwPresentationCredentialCardScreen } from "../presentation/details/screens/ItwPresentationCredentialCardScreen";
 import { ItwPresentationCredentialDetailScreen } from "../presentation/details/screens/ItwPresentationCredentialDetailScreen";
 import { ItwPresentationCredentialFiscalCodeModal } from "../presentation/details/screens/ItwPresentationCredentialFiscalCodeModal";
 import { ItwPresentationEidVerificationExpiredScreen } from "../presentation/details/screens/ItwPresentationEidVerificationExpiredScreen";
@@ -276,6 +277,10 @@ const InnerNavigator = memo(() => {
       <Stack.Screen
         name={ITW_ROUTES.PRESENTATION.CREDENTIAL_ATTACHMENT}
         component={ItwPresentationCredentialAttachmentScreen}
+      />
+      <Stack.Screen
+        name={ITW_ROUTES.PRESENTATION.CREDENTIAL_CARD_SCREEN}
+        component={ItwPresentationCredentialCardScreen}
       />
       <Stack.Screen
         name={ITW_ROUTES.PRESENTATION.CREDENTIAL_CARD_MODAL}

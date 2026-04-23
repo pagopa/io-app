@@ -9,10 +9,11 @@ import { itwShouldUpgradeCredentialSelector } from "../../common/store/selectors
 
 export type ItwCredentialWalletCardProps = ItwCredentialCard & {
   isPreview?: false; // Cards in wallet cannot be in preview mode
+  onPress?: () => void; // Optional onPress to override press functionality
 };
 
 const WrappedItwCredentialCard = (props: ItwCredentialWalletCardProps) => {
-  const { credentialType, issuedAt } = props;
+  const { credentialType, issuedAt, onPress } = props;
   const navigation = useIONavigation();
   const needsItwUpgrade = useIOSelector(
     itwShouldUpgradeCredentialSelector(credentialType, issuedAt)
@@ -29,7 +30,9 @@ const WrappedItwCredentialCard = (props: ItwCredentialWalletCardProps) => {
   );
 
   const handleOnPress = () => {
-    if (needsItwUpgrade) {
+    if (onPress) {
+      onPress();
+    } else if (needsItwUpgrade) {
       handleCredentialUpgrade();
     } else {
       navigation.navigate(ITW_ROUTES.MAIN, {
