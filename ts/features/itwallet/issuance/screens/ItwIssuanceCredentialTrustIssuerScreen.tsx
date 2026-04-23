@@ -32,10 +32,7 @@ import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisable
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
-import {
-  CredentialType,
-  ISSUER_MOCK_NAME
-} from "../../common/utils/itwMocksUtils";
+import { ISSUER_MOCK_NAME } from "../../common/utils/itwMocksUtils";
 import {
   CredentialMetadata,
   RequestObject
@@ -173,21 +170,10 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   const claims = parseClaims(eid.parsedCredential, {
     exclude: [WellKnownClaim.unique_id, WellKnownClaim.link_qr_code]
   });
-  const requiredClaims = claims
-    .filter(
-      claim =>
-        credentialType !== CredentialType.AGE_VERIFICATION ||
-        ["birthdate", "birth_date"].includes(claim.id)
-    )
-    .map(claim => ({
-      claim,
-      source: getCredentialNameFromType(eid.credentialType, "", isItwL3)
-    }));
-
-  const credentialAuthKey =
-    credentialType === CredentialType.AGE_VERIFICATION
-      ? "features.itWallet.issuance.ageVerification.credentialAuth"
-      : "features.itWallet.issuance.credentialAuth";
+  const requiredClaims = claims.map(claim => ({
+    claim,
+    source: getCredentialNameFromType(eid.credentialType, "", isItwL3)
+  }));
 
   // Added hasScrolledToBottom ref to avoid sending multiple scroll-to-bottom events when navigating between screens
   const trackScrollToBottom = (crossed: boolean) => {
@@ -229,15 +215,18 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
         />
         <VSpacer size={24} />
         <H2>
-          {I18n.t(`${credentialAuthKey}.title`, {
+          {I18n.t("features.itWallet.issuance.credentialAuth.title", {
             credentialName: getCredentialNameFromType(credentialType)
           })}
         </H2>
         <VSpacer size={16} />
         <IOMarkdown
-          content={I18n.t(`${credentialAuthKey}.subtitle`, {
-            organization: ISSUER_MOCK_NAME
-          })}
+          content={I18n.t(
+            "features.itWallet.issuance.credentialAuth.subtitle",
+            {
+              organization: ISSUER_MOCK_NAME
+            }
+          )}
         />
         <VSpacer size={24} />
         <ListItemHeader
@@ -251,12 +240,16 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
         <VSpacer size={24} />
         <FeatureInfo
           iconName="fornitori"
-          body={I18n.t(`${credentialAuthKey}.disclaimer.0`)}
+          body={I18n.t(
+            "features.itWallet.issuance.credentialAuth.disclaimer.0"
+          )}
         />
         <VSpacer size={24} />
         <FeatureInfo
           iconName="trashcan"
-          body={I18n.t(`${credentialAuthKey}.disclaimer.1`)}
+          body={I18n.t(
+            "features.itWallet.issuance.credentialAuth.disclaimer.1"
+          )}
         />
         <VSpacer size={32} />
         <IOMarkdown
