@@ -17,33 +17,27 @@ export function* handleItwCredentialsStoreBundleSaga(
   const { onComplete, onError } = action.meta;
 
   try {
-    try {
-      yield* call(() =>
-        CredentialsVault.storeAll(
-          credentials.map(({ metadata, credential }) => ({
-            credentialId: metadata.credentialId,
-            credential
-          }))
-        )
-      );
-    } catch (e) {
-      const error = e instanceof Error ? e : new Error("Unknown error");
-
-      trackItwVaultCredentialStoreFailed({
-        credential_ids: credentials.map(
-          ({ metadata }) => metadata.credentialId
-        ),
-        reason: error.message
-      });
-
-      throw error;
-    }
+    yield* call(() =>
+      CredentialsVault.storeAll(
+        credentials.map(({ metadata, credential }) => ({
+          credentialId: metadata.credentialId,
+          credential
+        }))
+      )
+    );
 
     // If all credentials are stored successfully, we can dispatch the action to add them to the store and wallet
     yield* put(itwCredentialsStore(credentials.map(({ metadata: m }) => m)));
 
     onComplete?.();
   } catch (e) {
+    const error = e instanceof Error ? e : new Error("Unknown error");
+
+    trackItwVaultCredentialStoreFailed({
+      credential_ids: credentials.map(({ metadata }) => metadata.credentialId),
+      reason: error.message
+    });
+
     onError?.(e instanceof Error ? e : new Error("Unknown error"));
   }
 }
