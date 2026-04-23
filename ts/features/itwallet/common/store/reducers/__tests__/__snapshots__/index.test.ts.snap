@@ -11,6 +11,7 @@ exports[`itWalletReducer should match snapshot [if this test fails, remember to 
     "catalogue": {
       "kind": "PotNone",
     },
+    "isEnabledForCredentialsList": false,
   },
   "environment": {
     "env": "prod",
