@@ -7,7 +7,7 @@ import { getLuminance } from "../../../../utils/color";
 import {
   getCredentialCardConfig,
   getCredentialBackgroundColor
-} from "../components/ItwCredentialCard/credentialCardConfig";
+} from "../components/ItwCredentialCard/config";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { getCredentialNameFromType } from "./itwCredentialUtils";
 import { CredentialType } from "./itwMocksUtils";

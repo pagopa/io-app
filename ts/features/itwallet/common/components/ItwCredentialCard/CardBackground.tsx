@@ -19,7 +19,7 @@ import Animated, {
 import { useIOSelector } from "../../../../../store/hooks";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { CredentialType } from "../../utils/itwMocksUtils";
-import { getCredentialCardConfig } from "./credentialCardConfig";
+import { getCredentialCardConfig } from "./config";
 import { CredentialCardSkiaBackground } from "./CredentialCardBackground";
 import { CardColorScheme } from "./types";
 
@@ -53,7 +53,7 @@ export const CardBackground = ({
 
   const config = getCredentialCardConfig(credentialType);
   const legacyGradientColors = legacyCredentialGradientColors[credentialType];
-  const watermarkLayer = withL3Design ? config.watermarkLayer : undefined;
+  const watermarkLayer = withL3Design ? config.overlay : undefined;
 
   return (
     <View

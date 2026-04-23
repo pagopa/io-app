@@ -1,5 +1,5 @@
 import { LinearGradient, Rect, vec } from "@shopify/react-native-skia";
-import { CardBackgroundConfig } from "./credentialCardConfig";
+import { CardBackgroundConfig } from "./config";
 
 /**
  * Computes the Skia LinearGradient start/end vectors for a given angle

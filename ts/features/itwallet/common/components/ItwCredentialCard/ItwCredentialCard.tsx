@@ -26,7 +26,7 @@ import { useThemeColorByCredentialType } from "../../utils/itwStyleUtils";
 import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
 import { ItWalletIdLogo } from "../ItWalletIdLogo";
 import { CardBackground } from "./CardBackground";
-import { getCredentialCardConfig } from "./credentialCardConfig";
+import { getCredentialCardConfig } from "./config";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
 import { CardColorScheme } from "./types";
 

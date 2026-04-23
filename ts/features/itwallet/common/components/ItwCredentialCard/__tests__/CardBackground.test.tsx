@@ -5,14 +5,14 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { CredentialType } from "../../../utils/itwMocksUtils";
-import { CardColorScheme } from "../types";
 import { CardBackground } from "../CardBackground.tsx";
 import {
   credentialCardConfigs,
   DEFAULT_CREDENTIAL_CARD_CONFIG,
-  getCredentialCardConfig,
-  getCredentialBackgroundColor
-} from "../credentialCardConfig";
+  getCredentialBackgroundColor,
+  getCredentialCardConfig
+} from "../config.ts";
+import { CardColorScheme } from "../types";
 
 describe("CardBackground", () => {
   it.each([

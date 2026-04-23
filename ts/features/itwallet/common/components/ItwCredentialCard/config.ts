@@ -10,7 +10,7 @@ export type SolidCardBackground = {
  * Up to 5 color stops, distributed evenly along the gradient line.
  * At least 2 colors are required for a meaningful gradient.
  */
-export type GradientColors =
+type GradientColors =
   | [string, string]
   | [string, string, string]
   | [string, string, string, string]
@@ -48,15 +48,14 @@ export type CredentialCardConfig = {
    */
   borderColor: string;
   /**
-   * Optional PNG image rendered as a watermark layer
-   * over the gradient background.
+   * Optional PNG image rendered as an overlay layer over the card.
    */
-  watermarkLayer?: ImageSourcePropType;
+  overlay?: ImageSourcePropType;
   /**
-   * Optional PNG image rendered as a watermark layer
-   * in the credential detail header.
+   * Optional PNG image rendered as an overlay layer in the credential detail
+   * header.
    */
-  detailWatermarkLayer?: ImageSourcePropType;
+  detailOverlay?: ImageSourcePropType;
 };
 
 /**
@@ -91,8 +90,8 @@ export const credentialCardConfigs: Partial<
     },
     titleColor: "#115486",
     borderColor: "#4F99E2",
-    watermarkLayer: require("../../../../../../img/features/itWallet/cards/cardWatermarks/itw_pid_watermark.png"),
-    detailWatermarkLayer: require("../../../../../../img/features/itWallet/cards/detailWatermarks/itw_pid_detail_watermark.png")
+    overlay: require("../../../../../../img/features/itWallet/cards/cardWatermarks/itw_pid_watermark.png"),
+    detailOverlay: require("../../../../../../img/features/itWallet/cards/detailWatermarks/itw_pid_detail_watermark.png")
   },
   [CredentialType.DRIVING_LICENSE]: {
     background: {
@@ -103,8 +102,8 @@ export const credentialCardConfigs: Partial<
     },
     titleColor: "#652035",
     borderColor: "#D674A9",
-    watermarkLayer: require("../../../../../../img/features/itWallet/cards/cardWatermarks/itw_mdl_watermark.png"),
-    detailWatermarkLayer: require("../../../../../../img/features/itWallet/cards/detailWatermarks/itw_mdl_detail_watermark.png")
+    overlay: require("../../../../../../img/features/itWallet/cards/cardWatermarks/itw_mdl_watermark.png"),
+    detailOverlay: require("../../../../../../img/features/itWallet/cards/detailWatermarks/itw_mdl_detail_watermark.png")
   },
   [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: {
     background: {
@@ -115,8 +114,8 @@ export const credentialCardConfigs: Partial<
     },
     titleColor: "#032D5C",
     borderColor: "#449DCF",
-    watermarkLayer: require("../../../../../../img/features/itWallet/cards/cardWatermarks/itw_ts_watermark.png"),
-    detailWatermarkLayer: require("../../../../../../img/features/itWallet/cards/detailWatermarks/itw_ts_detail_watermark.png")
+    overlay: require("../../../../../../img/features/itWallet/cards/cardWatermarks/itw_ts_watermark.png"),
+    detailOverlay: require("../../../../../../img/features/itWallet/cards/detailWatermarks/itw_ts_detail_watermark.png")
   },
   [CredentialType.EUROPEAN_DISABILITY_CARD]: {
     background: {
@@ -125,8 +124,8 @@ export const credentialCardConfigs: Partial<
     },
     titleColor: "#17406F",
     borderColor: "#6B9BB6",
-    watermarkLayer: require("../../../../../../img/features/itWallet/cards/cardWatermarks/itw_dc_watermark.png"),
-    detailWatermarkLayer: require("../../../../../../img/features/itWallet/cards/detailWatermarks/itw_dc_detail_watermark.png")
+    overlay: require("../../../../../../img/features/itWallet/cards/cardWatermarks/itw_dc_watermark.png"),
+    detailOverlay: require("../../../../../../img/features/itWallet/cards/detailWatermarks/itw_dc_detail_watermark.png")
   }
 };
 

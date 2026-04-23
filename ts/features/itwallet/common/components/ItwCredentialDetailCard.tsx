@@ -10,7 +10,7 @@ import { borderVariantByStatus } from "../utils/itwCredentialUtils";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils";
 import { ItwBrandedSkiaBorder } from "./ItwBrandedSkiaBorder";
 import { CredentialCardSkiaBackground } from "./ItwCredentialCard/CredentialCardBackground";
-import { getCredentialCardConfig } from "./ItwCredentialCard/credentialCardConfig";
+import { getCredentialCardConfig } from "./ItwCredentialCard/config";
 
 type ItwCredentialDetailCardProps = PropsWithChildren<{
   credentialType: string;
@@ -36,7 +36,7 @@ export const ItwCredentialDetailCard = ({
   const safeAreaInsets = useSafeAreaInsets();
   const { themeType } = useIOThemeContext();
   const [size, setSize] = useState({ width: 0, height: 0 });
-  const { background, detailWatermarkLayer } =
+  const { background, detailOverlay: detailWatermarkLayer } =
     getCredentialCardConfig(credentialType);
 
   // Extend the card well above the screen so the top border is never visible at rest.
