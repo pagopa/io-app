@@ -1,6 +1,6 @@
 import { InternalAuthAndMrtdResponse } from "@pagopa/io-react-native-cie";
 import { useFocusEffect } from "@react-navigation/native";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
@@ -91,6 +91,15 @@ export const ItwCieInternalAuthAndMrtdScreen = ({ route }: Props) => {
   );
 
   /**
+   * Handles the case where the CAN code is wrong, and we need to retry the challenge
+   */
+  const handleWrongCANRetry = useCallback(() => {
+    issuanceActor.send({
+      type: "retry"
+    });
+  }, [issuanceActor]);
+
+  /**
    * Step 1: Start CIE MRTD with PACE reading process to sign the challenge and return to the
    * machine the data needed to build the validation URL, from which we will obtain the callback URL.
    */
@@ -100,6 +109,7 @@ export const ItwCieInternalAuthAndMrtdScreen = ({ route }: Props) => {
         can={can}
         challenge={challenge}
         onChallengeSigned={handleChallengeSigned}
+        onWrongCANRetry={handleWrongCANRetry}
       />
     );
   }
@@ -121,20 +131,26 @@ type CieManagerComponentProps = {
   can: string;
   challenge: string;
   onChallengeSigned: (data: InternalAuthAndMrtdResponse) => void;
+  onWrongCANRetry: () => void;
 };
 
 const CieManagerComponent = ({
   can,
   challenge,
-  onChallengeSigned
+  onChallengeSigned,
+  onWrongCANRetry
 }: CieManagerComponentProps) => {
   const { startInternalAuthAndMRTDReading, state } = useCieManager({
     onInternalAuthAndMRTDWithPaceSuccess: onChallengeSigned
   });
 
   const handleRetry = useCallback(() => {
-    void startInternalAuthAndMRTDReading(can, challenge);
-  }, [can, challenge, startInternalAuthAndMRTDReading]);
+    if (state.state === "failure" && state.failure.name === "WRONG_CAN") {
+      onWrongCANRetry();
+    } else {
+      void startInternalAuthAndMRTDReading(can, challenge);
+    }
+  }, [can, challenge, startInternalAuthAndMRTDReading, onWrongCANRetry, state]);
 
   /**
    * Starts the reading process as soon the component is mounted
