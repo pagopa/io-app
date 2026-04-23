@@ -15,6 +15,7 @@ import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
 import { isItwCredential } from "../utils/itwCredentialUtils.ts";
 import { getAuthSource, getItwAuthSource } from "../utils/itwMetadataUtils.ts";
 import { CredentialMetadata } from "../utils/itwTypesUtils.ts";
+import { CredentialType } from "../utils/itwMocksUtils.ts";
 
 type ItwIssuanceMetadataProps = {
   credential: CredentialMetadata;
