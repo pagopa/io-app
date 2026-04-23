@@ -2,6 +2,45 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.29.0-rc.5](https://github.com/pagopa/io-app/compare/3.29.0-rc.4...3.29.0-rc.5) (2026-04-22)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4015](https://pagopa.atlassian.net/browse/SIW-4015)] New Credentials UI ([#8027](https://github.com/pagopa/io-app/issues/8027)) ([9505f6e](https://github.com/pagopa/io-app/commit/9505f6ef7875304054364f02c0dd7b265a32cd40))
+
+
+### Bug Fixes
+
+* [[IOPLT-0000](https://pagopa.atlassian.net/browse/IOPLT-0000)] Fixes metro config missing expo reference ([#8051](https://github.com/pagopa/io-app/issues/8051)) ([ede6b83](https://github.com/pagopa/io-app/commit/ede6b831305f55fa95478dc9de0e4a420f06fd54))
+
+## [3.29.0-rc.4](https://github.com/pagopa/io-app/compare/3.29.0-rc.3...3.29.0-rc.4) (2026-04-21)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4181](https://pagopa.atlassian.net/browse/SIW-4181)] Add flag to display the list of credentials from the catalogue ([#8028](https://github.com/pagopa/io-app/issues/8028)) ([7ec3aff](https://github.com/pagopa/io-app/commit/7ec3affb56ce74b5ec152aeee06229749b21e53d))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-3282](https://pagopa.atlassian.net/browse/SIW-3282)] Fix back navigation in eID reissuance actions ([#7812](https://github.com/pagopa/io-app/issues/7812)) ([40f10ea](https://github.com/pagopa/io-app/commit/40f10ead2a9368521f5ffbc8c6557190b30c9058))
+
+
+### Chores
+
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Adjust README workflow badge reference ([#8040](https://github.com/pagopa/io-app/issues/8040)) ([8d40e6e](https://github.com/pagopa/io-app/commit/8d40e6e8f32c7acdc9f93995f589d5c0a3512d8c))
+* **IT-Wallet:** [[SIW-3468](https://pagopa.atlassian.net/browse/SIW-3468)] Add origin to serialize failure reason to enhance mixpanel tracking on unexpected failures ([#7684](https://github.com/pagopa/io-app/issues/7684)) ([17a5e6a](https://github.com/pagopa/io-app/commit/17a5e6abc207933e1ff07176096dfbd1ee4c17fa))
+* [[IEL-411](https://pagopa.atlassian.net/browse/IEL-411)] Updated copy for CIE scan screen on Android ([#8046](https://github.com/pagopa/io-app/issues/8046)) ([8b32c32](https://github.com/pagopa/io-app/commit/8b32c320b05adf74378331591da935ef2e4118b0))
+
+## [3.29.0-rc.3](https://github.com/pagopa/io-app/compare/3.29.0-rc.2...3.29.0-rc.3) (2026-04-20)
+
+
+### Chores
+
+* [[IEG-2805](https://pagopa.atlassian.net/browse/IEG-2805)] Add emilio-dimari as CODEOWNERS ([#8041](https://github.com/pagopa/io-app/issues/8041)) ([3ff551f](https://github.com/pagopa/io-app/commit/3ff551faf57358ab9ce9613317d31518d50e7d76))
+* [[IOPLT-1678](https://pagopa.atlassian.net/browse/IOPLT-1678)] Removes Sentry SDK references and config from code ([#7960](https://github.com/pagopa/io-app/issues/7960)) ([a9ecda9](https://github.com/pagopa/io-app/commit/a9ecda9b3b7a742ae72f075a3cc4b0d5fc15b009))
+
 ## [3.29.0-rc.2](https://github.com/pagopa/io-app/compare/3.29.0-rc.1...3.29.0-rc.2) (2026-04-17)
 
 
