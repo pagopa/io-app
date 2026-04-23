@@ -29,6 +29,8 @@ describe("connectionStatusSaga", () => {
         expect(effect).toMatchObject({ type: "CALL" });
       })
       .next(libraryResponse)
+      .select(appCurrentStateSelector)
+      .next("active")
       .inspect(effect => {
         expect(effect).toMatchObject({ type: "CALL" });
       })
@@ -59,6 +61,8 @@ describe("connectionStatusSaga", () => {
         expect(effect).toMatchObject({ type: "CALL" });
       })
       .next(libraryResponse)
+      .select(appCurrentStateSelector)
+      .next("active")
       .inspect(effect => {
         expect(effect).toMatchObject({ type: "CALL" });
       })
@@ -88,6 +92,8 @@ describe("connectionStatusSaga", () => {
         expect(effect).toMatchObject({ type: "CALL" });
       })
       .next(libraryResponse)
+      .select(appCurrentStateSelector)
+      .next("active")
       .put(setConnectionStatus(false))
       .next()
       .delay(10000)
@@ -131,7 +137,7 @@ describe("connectionStatusSaga", () => {
       .select(appCurrentStateSelector);
   });
 
-  it("should wait for app to become active when app state changes during check", () => {
+  it("should wait for app to become active when app state changes after fetchNetInfoState", () => {
     const client = { getPing: jest.fn() } as any;
     const libraryResponse = E.right({ isConnected: true });
 
@@ -143,6 +149,29 @@ describe("connectionStatusSaga", () => {
         expect(effect).toMatchObject({ type: "CALL" });
       })
       .next(libraryResponse)
+      .select(appCurrentStateSelector)
+      .next("background")
+      .inspect(effect => {
+        expect(effect).toMatchObject({ type: "CALL" });
+      })
+      .next()
+      .select(appCurrentStateSelector);
+  });
+
+  it("should wait for app to become active when app state changes during backend check", () => {
+    const client = { getPing: jest.fn() } as any;
+    const libraryResponse = E.right({ isConnected: true });
+
+    testSaga(connectionStatusSaga, client)
+      .next()
+      .select(appCurrentStateSelector)
+      .next("active")
+      .inspect(effect => {
+        expect(effect).toMatchObject({ type: "CALL" });
+      })
+      .next(libraryResponse)
+      .select(appCurrentStateSelector)
+      .next("active")
       .inspect(effect => {
         expect(effect).toMatchObject({ type: "CALL" });
       })
