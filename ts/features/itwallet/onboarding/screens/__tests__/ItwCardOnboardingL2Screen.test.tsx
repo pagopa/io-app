@@ -1,5 +1,5 @@
 import configureMockStore from "redux-mock-store";
-import { fireEvent } from "@testing-library/react-native";
+import { act, fireEvent } from "@testing-library/react-native";
 
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
@@ -21,6 +21,13 @@ import { CredentialType } from "../../../common/utils/itwMocksUtils";
 describe("ItwCardOnboardingL2Screen", () => {
   const replaceMock = jest.fn();
 
+  const mockSelectorResult = {
+    obtained: [],
+    notObtained: [
+      { type: CredentialType.DRIVING_LICENSE, name: "Patente di guida" }
+    ]
+  };
+
   beforeEach(() => {
     jest.clearAllMocks();
 
@@ -29,11 +36,8 @@ describe("ItwCardOnboardingL2Screen", () => {
     } as any);
 
     jest
-      .spyOn(credentialsSelectors, "itwCredentialsByPresenceSelector")
-      .mockReturnValue({
-        obtained: [],
-        notObtained: [CredentialType.DRIVING_LICENSE]
-      } as any);
+      .spyOn(credentialsSelectors, "makeItwCredentialsByPresenceSelector")
+      .mockReturnValue((() => mockSelectorResult) as any);
   });
 
   it("it should render the screen correctly", () => {
@@ -57,7 +61,9 @@ describe("ItwCardOnboardingL2Screen", () => {
   it("it should navigate to L3 onboarding page=1 when add bonus button is pressed", () => {
     const { getByTestId } = renderComponent();
 
-    fireEvent.press(getByTestId("add-bonus-action-testID"));
+    act(() => {
+      fireEvent.press(getByTestId("add-bonus-action-testID"));
+    });
 
     expect(replaceMock).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.L3_ONBOARDING,
