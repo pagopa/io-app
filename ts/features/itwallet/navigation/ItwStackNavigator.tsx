@@ -271,6 +271,7 @@ const InnerNavigator = memo(() => {
       <Stack.Screen
         name={ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER.INTRO}
         component={ItwIssuanceCredentialOfferIntroScreen}
+        options={hiddenHeader}
       />
       {/* CREDENTIAL PRESENTATION */}
       <Stack.Screen
