@@ -1,16 +1,16 @@
 import { InternalAuthAndMrtdResponse } from "@pagopa/io-react-native-cie";
 import { useFocusEffect } from "@react-navigation/native";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
-import { trackItWalletCieCardReading } from "../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
   selectIdentification,
   selectMrtdCallbackUrl
 } from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
+import { trackItWalletCieCardReading } from "../../analytics";
 import { ItwCieCardReadFailureContent } from "../components/ItwCieCardReadFailureContent";
 import { ItwCieCardReadProgressContent } from "../components/ItwCieCardReadProgressContent";
 import { ItwCieAuthorizationWebview } from "../components/ItwCieWebView";
