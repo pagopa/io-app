@@ -1,7 +1,6 @@
 import { Badge, IOIcons, ModuleCredential } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { memo, useMemo } from "react";
-import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import { useIOSelector } from "../../../../store/hooks";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
@@ -17,6 +16,7 @@ type Props = {
   isSelectedCredential?: boolean;
   isUpcoming?: boolean;
   isNew?: boolean;
+  credentialName: string;
 };
 
 const credentialIconByType: Record<string, IOIcons> = {
@@ -99,7 +99,8 @@ const ItwOnboardingModuleCredential = ({
   isNew,
   isSelectedCredential,
   isCredentialIssuancePending,
-  isRequested = false
+  isRequested = false,
+  credentialName
 }: Props) => {
   const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
 
@@ -124,7 +125,7 @@ const ItwOnboardingModuleCredential = ({
 
   const baseProps = {
     testID: `${type}ModuleTestID`,
-    label: getCredentialNameFromType(type),
+    label: credentialName,
     onPress: isPressable ? handleOnPress : undefined,
     isFetching: isCredentialIssuancePending && isSelectedCredential,
     badge
