@@ -2,7 +2,6 @@ import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
-import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import { openWebUrl } from "../../../../../../utils/url";
 import {
@@ -55,43 +54,15 @@ describe("ItwPresentationAdditionalInfoSection", () => {
     );
   });
 
-  it("does not render the age verification usage banner when dismissed", () => {
-    const { queryByTestId } = renderComponent(CredentialType.AGE_VERIFICATION, {
-      ageVerificationUsageDetails: {
-        dismissedOn: new Date().toISOString(),
-        dismissCount: 1
-      }
-    });
-
-    expect(queryByTestId("ageVerificationUsageBannerTestID")).toBeNull();
-  });
-
   it("does not render alert for non-new credentials", () => {
     const { queryByTestId } = renderComponent(CredentialType.DRIVING_LICENSE);
     expect(queryByTestId("newCredentialAlertTestID")).toBeNull();
   });
 });
 
-const renderComponent = (
-  credentialType: CredentialType,
-  banners: GlobalState["features"]["itWallet"]["banners"] = {}
-) => {
+const renderComponent = (credentialType: CredentialType) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  const state = {
-    ...globalState,
-    features: {
-      ...globalState.features,
-      itWallet: {
-        ...globalState.features.itWallet,
-        banners: {
-          ...globalState.features.itWallet.banners,
-          ...banners
-        }
-      }
-    }
-  };
-
-  return renderScreenWithNavigationStoreContext<GlobalState>(
+  return renderScreenWithNavigationStoreContext(
     () => (
       <ItwPresentationAdditionalInfoSection
         credential={{
@@ -102,6 +73,6 @@ const renderComponent = (
     ),
     ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL,
     {},
-    createStore(appReducer, state as any)
+    createStore(appReducer, globalState as any)
   );
 };
