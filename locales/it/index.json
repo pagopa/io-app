@@ -3596,16 +3596,6 @@
         "credentialIntro": {
           "subtitle": "Leggi con attenzione cosa troverai."
         },
-        "ageVerification": {
-          "credentialAuth": {
-            "title": "Continua per aggiungere {{credentialName}}",
-            "subtitle": "La conferma che sei maggiorenne si basa sulla data di nascita nel tuo IT-Wallet ID.",
-            "disclaimer": {
-              "0": "La tua età sarà trattata solo per le finalità descritte in Informativa Privacy.",
-              "1": "Sarà condivisa solo per il tempo necessario al rilascio dell’attestazione anonima."
-            }
-          }
-        },
         "credentialPreview": {
           "loading": "Attendi ancora qualche secondo, senza uscire dall’app",
           "title": "{{credential}}: ecco l'anteprima dei tuoi dati",
