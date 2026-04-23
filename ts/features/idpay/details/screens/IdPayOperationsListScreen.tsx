@@ -12,8 +12,9 @@ import { useRoute } from "@react-navigation/core";
 import { RouteProp } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useRef } from "react";
 import I18n from "i18next";
+import { useRef } from "react";
+import { View } from "react-native";
 import { OperationListDTO } from "../../../../../definitions/idpay/OperationListDTO";
 import { IOListViewWithLargeHeader } from "../../../../components/ui/IOListViewWithLargeHeader";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
@@ -30,12 +31,16 @@ type IdPayOperationsListScreenRouteProps = RouteProp<
 >;
 
 const TimelineLoader = () => (
-  <LoadingSpinner
-    size={48}
-    accessibilityHint={I18n.t("global.accessibility.activityIndicator.hint")}
-    accessibilityLabel={I18n.t("global.accessibility.activityIndicator.label")}
-    testID={"activityIndicator"}
-  />
+  <View style={{ paddingVertical: 16, alignItems: "center" }}>
+    <LoadingSpinner
+      size={48}
+      accessibilityHint={I18n.t("global.accessibility.activityIndicator.hint")}
+      accessibilityLabel={I18n.t(
+        "global.accessibility.activityIndicator.label"
+      )}
+      testID={"activityIndicator"}
+    />
+  </View>
 );
 
 export const IdPayOperationsListScreen = () => {
