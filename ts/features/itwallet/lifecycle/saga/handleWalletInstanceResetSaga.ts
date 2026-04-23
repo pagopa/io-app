@@ -1,13 +1,13 @@
 import { deleteKey } from "@pagopa/io-react-native-crypto";
-import * as Sentry from "@sentry/react-native";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
 import { identity, pipe } from "fp-ts/lib/function";
-import { all, put, select } from "typed-redux-saga/macro";
+import { all, call, put, select } from "typed-redux-saga/macro";
 import { isIos } from "../../../../utils/platform";
 import { walletRemoveCardsByCategory } from "../../../wallet/store/actions/cards";
 import { itwSetWalletInstanceRemotelyActive } from "../../common/store/actions/preferences.ts";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
+import { CredentialsVault } from "../../credentials/utils/vault";
 import {
   itwCredentialsSelector,
   itwCredentialsEidSelector
@@ -16,7 +16,7 @@ import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwLifecycleStoresReset } from "../store/actions";
 import { updatePropertiesWalletRevoked } from "../../analytics/properties/propertyUpdaters.ts";
 
-const getKeyTag = (credential: O.Option<StoredCredential>) =>
+const getKeyTag = (credential: O.Option<CredentialMetadata>) =>
   pipe(
     credential,
     O.map(x => x.keyTag)
@@ -33,6 +33,9 @@ export function* handleWalletInstanceResetSaga() {
     // Set the remote wallet instance as inactive since it has been revoked on the server.
     yield* put(itwSetWalletInstanceRemotelyActive(false));
 
+    // Clear all credentials from the secure storage vault
+    yield* call(CredentialsVault.clear);
+
     // Remove all keys within the wallet.
     // On iOS skip the integrity key tag as it is managed by the App Attest service.
     const itwKeyTags = pipe(
@@ -47,6 +50,7 @@ export function* handleWalletInstanceResetSaga() {
     // Update every mixpanel property related to the wallet instance and its credentials.
     void updatePropertiesWalletRevoked();
   } catch (e) {
-    Sentry.captureException(e);
+    // TODO: Replace Sentry capture exception with a new logging solution
+    // Sentry.captureException(e);
   }
 }

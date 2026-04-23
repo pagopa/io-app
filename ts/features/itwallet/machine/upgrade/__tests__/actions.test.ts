@@ -8,10 +8,7 @@ import { createCredentialUpgradeActionsImplementation } from "../actions";
 import { Context } from "../context";
 import { CredentialUpgradeEvents } from "../events";
 import { useIOStore } from "../../../../../store/hooks";
-import {
-  itwCredentialsRemoveByType,
-  itwCredentialsStore
-} from "../../../credentials/store/actions";
+import { itwCredentialsReplaceByType } from "../../../credentials/store/actions";
 
 describe("itwCredentialUpgradeMachine actions", () => {
   describe("storeCredential", () => {
@@ -27,11 +24,16 @@ describe("itwCredentialUpgradeMachine actions", () => {
 
       storeCredential({
         event: {
-          type: "xstate.done.actor.itwCredentialUpgradeMachine.0.upgradeCredential",
+          type: "xstate.done.actor.upgradeCredential",
           actorId: "upgradeCredential",
           output: {
             credentialType: "MDL",
-            credentials: [ItwStoredCredentialsMocks.L3.mdl]
+            credentials: [
+              {
+                credential: "raw-jwt",
+                metadata: ItwStoredCredentialsMocks.L3.mdl
+              }
+            ]
           }
         }
       } as unknown as ActionArgs<
@@ -41,10 +43,15 @@ describe("itwCredentialUpgradeMachine actions", () => {
       >);
 
       expect(mockDispatch).toHaveBeenCalledWith(
-        itwCredentialsRemoveByType("MDL")
-      );
-      expect(mockDispatch).toHaveBeenCalledWith(
-        itwCredentialsStore([ItwStoredCredentialsMocks.L3.mdl])
+        itwCredentialsReplaceByType(
+          [
+            {
+              credential: "raw-jwt",
+              metadata: ItwStoredCredentialsMocks.L3.mdl
+            }
+          ],
+          {}
+        )
       );
     });
   });

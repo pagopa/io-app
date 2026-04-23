@@ -17,12 +17,18 @@ import { ItwEngagementBanner } from "../../common/components/ItwEngagementBanner
 import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../common/components/ItwSkeumorphicCard/FlipGestureDetector";
 import { getCredentialStatusObject } from "../../common/utils/itwCredentialStatusUtils";
-import { ItwStoredCredentialsMocks } from "../../common/utils/itwMocksUtils";
-import { StoredCredential } from "../../common/utils/itwTypesUtils";
+import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
+import {
+  CredentialType,
+  ItwStoredCredentialsMocks
+} from "../../common/utils/itwMocksUtils";
+import {
+  CredentialMetadata,
+  ItwCredentialStatus
+} from "../../common/utils/itwTypesUtils";
 import { ItwRequestedClaimsList } from "../../issuance/components/ItwRequestedClaimsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwPresentationCredentialCardFlipButton } from "../../presentation/details/components/ItwPresentationCredentialCardFlipButton";
-import { ItwWalletIdStatus } from "../../wallet/components/ItwWalletIdStatus";
 
 const ItwWalletBrandSection = () => {
   const { width } = useWindowDimensions();
@@ -72,28 +78,28 @@ const ItwWalletBrandSection = () => {
   );
 };
 
-const ItwWalletIdStatusSection = () => (
-  <View
-    style={{
-      marginHorizontal: -24,
-      paddingHorizontal: 24,
-      paddingBottom: 24
-    }}
-  >
-    <ListItemHeader label="IT-Wallet ID" />
+const ALL_CREDENTIAL_STATUSES: ReadonlyArray<ItwCredentialStatus> = [
+  "valid",
+  "expiring",
+  "expired",
+  "jwtExpiring",
+  "jwtExpired",
+  "invalid",
+  "unknown"
+];
+
+const ItwPidCardSection = () => (
+  <View style={{ paddingBottom: 24 }}>
+    <ListItemHeader label="IT-Wallet ID card" />
     <VStack space={8}>
-      <DSComponentViewerBox name={"valid"}>
-        <ItwWalletIdStatus pidStatus="valid" />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name={"jwtExpiring"}>
-        <ItwWalletIdStatus
-          pidStatus="jwtExpiring"
-          pidExpiration="2026-11-12T14:11:48.000Z"
-        />
-      </DSComponentViewerBox>
-      <DSComponentViewerBox name={"jwtExpired"}>
-        <ItwWalletIdStatus pidStatus="jwtExpired" />
-      </DSComponentViewerBox>
+      {ALL_CREDENTIAL_STATUSES.map(status => (
+        <DSComponentViewerBox key={status} name={status}>
+          <ItwCredentialCard
+            credentialType={CredentialType.PID}
+            credentialStatus={status}
+          />
+        </DSComponentViewerBox>
+      ))}
     </VStack>
   </View>
 );
@@ -146,7 +152,7 @@ const ItwSkeumorphicCredentialSection = () => {
 
   const L2Credentials = Object.entries(ItwStoredCredentialsMocks)
     .filter(([key]) => key !== "L3")
-    .map(([_, value]) => value as StoredCredential)
+    .map(([_, value]) => value as CredentialMetadata)
     .filter(({ credentialType }) =>
       credentialsWithCard.includes(credentialType)
     );
@@ -177,7 +183,7 @@ const ItwSkeumorphicCredentialItem = ({
   credential,
   valuesHidden
 }: {
-  credential: StoredCredential;
+  credential: CredentialMetadata;
   valuesHidden: boolean;
 }) => {
   const navigation = useIONavigation();
@@ -258,7 +264,7 @@ export const ItwClaimsListSection = () => {
 export const ItwComponentsSection = () => (
   <>
     <ItwWalletBrandSection />
-    <ItwWalletIdStatusSection />
+    <ItwPidCardSection />
     <ItwEngagementBannerSection />
     <ItwSkeumorphicCredentialSection />
     <ItwClaimsListSection />

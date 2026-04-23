@@ -3,12 +3,17 @@ import I18n from "i18next";
 import { View } from "react-native";
 import IOMarkdown from "../../../../../components/IOMarkdown";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
+import { useIOSelector } from "../../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
+import { trackCredentialRenewStart } from "../../../analytics";
+import { getMixPanelCredential } from "../../../analytics/utils";
+import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import {
-  ItwCredentialStatus,
-  StoredCredential
+  CredentialMetadata,
+  ItwCredentialStatus
 } from "../../../common/utils/itwTypesUtils";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { shouldShowMdlUpdateDigitalCredential } from "../utils";
 import { useItwRemoveCredentialWithConfirm } from "./useItwRemoveCredentialWithConfirm";
@@ -24,9 +29,8 @@ type IssuerDynamicErrorBottomSheetContentConfig = {
 };
 
 type UseItwIssuerDynamicErrorBottomSheetParams = {
-  credential: StoredCredential;
+  credential: CredentialMetadata;
   localizedMessage: { title: string; description: string };
-  onTrackPressCta: () => void;
   status?: ItwCredentialStatus;
 };
 
@@ -41,7 +45,7 @@ type UseItwIssuerDynamicErrorBottomSheetParams = {
  * - any other mDL status falls back to the single remove action
  */
 export const getIssuerDynamicErrorBottomSheetContentConfig = (
-  credential: StoredCredential,
+  credential: CredentialMetadata,
   status?: ItwCredentialStatus
 ): IssuerDynamicErrorBottomSheetContentConfig => {
   const { credentialType } = credential;
@@ -76,19 +80,29 @@ export const getIssuerDynamicErrorBottomSheetContentConfig = (
 export const useItwIssuerDynamicErrorBottomSheet = ({
   credential,
   localizedMessage,
-  onTrackPressCta,
   status
 }: UseItwIssuerDynamicErrorBottomSheetParams) => {
   const navigation = useIONavigation();
-  const { confirmAndRemoveCredential } =
-    useItwRemoveCredentialWithConfirm(credential);
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const { confirmAndRemoveCredential } = useItwRemoveCredentialWithConfirm(
+    credential,
+    "bottom_sheet"
+  );
   const contentConfig = getIssuerDynamicErrorBottomSheetContentConfig(
     credential,
     status
   );
 
   const handleUpdateCredential = () => {
-    onTrackPressCta();
+    if (status) {
+      trackCredentialRenewStart(
+        getMixPanelCredential(credential.credentialType, isItwL3),
+        {
+          credential_status: CREDENTIAL_STATUS_MAP[status],
+          position: "bottom_sheet"
+        }
+      );
+    }
     bottomSheet.dismiss();
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER,

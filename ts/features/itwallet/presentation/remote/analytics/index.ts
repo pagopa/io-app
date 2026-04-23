@@ -70,12 +70,13 @@ export const trackItwRemoteContinuePresentation = (
 // Errors events
 
 export const trackItwRemoteUnexpectedFailure = ({
+  origin,
   reason,
   type
 }: ItwRemoteFailure) => {
   void mixpanelTrack(
     ITW_REMOTE_ERRORS_EVENTS.ITW_REMOTE_UNEXPECTED_FAILURE,
-    buildEventProperties("KO", "error", { reason, type })
+    buildEventProperties("KO", "error", { origin, reason, type })
   );
 };
 

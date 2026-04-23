@@ -1,6 +1,5 @@
 import { createStore } from "redux";
-import { waitFor } from "@testing-library/react-native";
-import { act } from "react-test-renderer";
+import { waitFor, act } from "@testing-library/react-native";
 import I18n from "i18next";
 import { IngressScreen } from "../screens/IngressScreen";
 import { renderScreenWithNavigationStoreContext } from "../../../utils/testWrapper";
@@ -101,7 +100,7 @@ describe(IngressScreen, () => {
         getSecondText
       } = await renderComponentWithSlowdowns();
 
-      await act(() => {
+      act(() => {
         jest.advanceTimersByTime(20000);
       });
 
@@ -127,7 +126,7 @@ describe(IngressScreen, () => {
         getSecondText
       } = await renderComponentWithSlowdowns();
 
-      await act(() => {
+      act(() => {
         jest.advanceTimersByTime(20000);
       });
 
@@ -154,7 +153,7 @@ const renderComponentWithSlowdowns = async () => {
   expect(getFirstText()).toBeTruthy();
   expect(getSecondText()).toBeNull();
 
-  await act(() => {
+  act(() => {
     jest.advanceTimersByTime(5000);
   });
 

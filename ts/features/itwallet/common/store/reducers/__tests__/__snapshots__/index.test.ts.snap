@@ -1,15 +1,17 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`itWalletReducer should match snapshot [if this test fails, remember to add a migration to the store before updating the snapshot] 1`] = `
 {
   "banners": {},
   "credentials": {
     "credentials": {},
+    "legacyCredentials": {},
   },
   "credentialsCatalogue": {
     "catalogue": {
       "kind": "PotNone",
     },
+    "isEnabledForCredentialsList": false,
   },
   "environment": {
     "env": "prod",
@@ -36,6 +38,7 @@ exports[`itWalletReducer should match snapshot [if this test fails, remember to 
     "status": {
       "kind": "PotNone",
     },
+    "walletUnitAttestations": {},
   },
 }
 `;

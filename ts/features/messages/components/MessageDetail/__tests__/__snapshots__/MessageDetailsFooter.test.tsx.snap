@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`MessageDetailsFooter component should match the snapshot, no service's contact details, no notice number, no payee fiscal code 1`] = `
 <View

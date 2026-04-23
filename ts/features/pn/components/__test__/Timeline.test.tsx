@@ -4,6 +4,7 @@ import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import PN_ROUTES from "../../navigation/routes";
+import { getNotificationStatusAccessibilityLabel } from "../../utils";
 
 const defaultProps: TimelineProps = {
   data: [
@@ -91,7 +92,19 @@ const defaultProps: TimelineProps = {
       time: "23:00",
       status: "cancelled"
     }
-  ],
+  ].map(
+    x =>
+      ({
+        accessibilityLabel: getNotificationStatusAccessibilityLabel({
+          status: x.status,
+          activeFrom: new Date(
+            `2024-${x.month}-${x.day.padStart(2, "0")}T${x.time}:00.000Z`
+          ),
+          relatedTimelineElements: []
+        }),
+        ...x
+      }) as TimelineItemProps
+  ),
   footerHeight: 116
 };
 
