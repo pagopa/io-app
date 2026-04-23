@@ -44,6 +44,8 @@ import {
   IO_INTERNAL_LINK_PREFIX,
   IO_UNIVERSAL_LINK_PREFIX
 } from "../utils/navigation";
+import { isPotentialCredentialOfferInvocation } from "../features/itwallet/issuance/offer/utils/utils";
+import { getInternalRoute } from "../utils/internalLink";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
 import NavigationService, {
   navigationRef,
@@ -111,6 +113,13 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
   const linking: LinkingOptions<AppParamsList> = {
     enabled: !isTestEnv, // disable linking in test env
     prefixes: [IO_INTERNAL_LINK_PREFIX, IO_UNIVERSAL_LINK_PREFIX],
+    async getInitialURL() {
+      const url = await Linking.getInitialURL();
+      if (url && isPotentialCredentialOfferInvocation(url)) {
+        return getInternalRoute(url);
+      }
+      return url;
+    },
     config: {
       initialRouteName: ROUTES.MAIN,
       screens: {

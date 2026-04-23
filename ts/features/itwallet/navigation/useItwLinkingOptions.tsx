@@ -54,6 +54,17 @@ export const useItwLinkingOptions = (): PathConfigMap<AppParamsList> => ({
        */
       [ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL]: {
         path: "presentation/credential-detail/:credentialType"
+      },
+      /**
+       * Handles <https://continua.io.pagopa.it/itw/credential-offer?itwCredentialOfferUri=>...
+       *
+       * Starts the credential offer issuance flow from an external link.
+       */
+      [ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER.INTRO]: {
+        path: "credential-offer",
+        parse: {
+          itwCredentialOfferUri: decodeURIComponent
+        }
       }
     }
   },

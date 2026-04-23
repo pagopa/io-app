@@ -12,6 +12,8 @@ import { GlobalState } from "../store/reducers/types";
 import { initiateAarFlow } from "../features/pn/aar/store/actions";
 import { IO_LOGIN_CIE_URL_SCHEME } from "../features/authentication/login/cie/utils/cie";
 import { trackIOOpenedFromUniversalAppLink } from "../features/linking/analytics";
+import { getInternalRoute } from "../utils/internalLink";
+import { isPotentialCredentialOfferInvocation } from "../features/itwallet/issuance/offer/utils/utils";
 
 // as of writing this, the only deep link that is dispatched after an app wake, but before the login's completion
 // is the CIEID login one.
@@ -26,10 +28,13 @@ export const linkingSubscription =
   (dispatch: Dispatch<Action>, store: Store<Readonly<GlobalState>>) =>
   (listener: (url: string) => void) => {
     const subscription = Linking.addEventListener("url", ({ url }) => {
+      const normalizedUrl = isPotentialCredentialOfferInvocation(url)
+        ? getInternalRoute(url)
+        : url;
       // track if the app is opened from a universal link, but only if the url
       // is an https link, to avoid tracking custom scheme deep links that are
       // not universal links
-      trackIOOpenedFromUniversalAppLink(url);
+      trackIOOpenedFromUniversalAppLink(normalizedUrl);
       // Message archiving/restoring hides the bottom tab bar so we must make
       // sure that either it is disabled or we manually deactivate it, otherwise
       // a deep link may initiate a navigation flow that will later deliver the
@@ -43,13 +48,13 @@ export const linkingSubscription =
 
       if (isLoggedIn(state.authentication)) {
         // only when logged in we can navigate to the AAR screen.
-        if (isSendAarLink(state, url)) {
-          dispatch(initiateAarFlow({ aarUrl: url }));
+        if (isSendAarLink(state, normalizedUrl)) {
+          dispatch(initiateAarFlow({ aarUrl: normalizedUrl }));
         }
 
         // Trigger wallet update for external Universal Links and specific internal paths
         // when the user is authenticated and the app is already running
-        if (shouldTriggerWalletUpdate(url)) {
+        if (shouldTriggerWalletUpdate(normalizedUrl)) {
           dispatch(walletUpdate());
         }
       } else {
@@ -57,16 +62,16 @@ export const linkingSubscription =
 
         // we avoid deepLinks that are handled in other parts of the app in order
         // to not let them overwrite deepLinks queued for processing after login.
-        if (!isDeepLinkBlackListed(url)) {
-          dispatch(storeLinkingUrl(url));
+        if (!isDeepLinkBlackListed(normalizedUrl)) {
+          dispatch(storeLinkingUrl(normalizedUrl));
         }
       }
 
       // If we have a deep link with utm_medium and utm_source parameters, we want to track it
       // We don't enter this point if the app is opened from scratch with a deep link,
       // but we track it in the `useOnFirstRender` hook on the AppStackNavigator
-      processUtmLink(url, dispatch);
-      listener(url);
+      processUtmLink(normalizedUrl, dispatch);
+      listener(normalizedUrl);
     });
     return () => {
       subscription.remove();

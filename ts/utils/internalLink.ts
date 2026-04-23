@@ -4,6 +4,7 @@
 import * as A from "fp-ts/lib/Array";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import { isPotentialCredentialOfferInvocation } from "../features/itwallet/issuance/offer/utils/utils.ts";
 import { fciEnabled } from "../config";
 import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
 import { FCI_ROUTES } from "../features/fci/navigation/routes";
@@ -90,6 +91,13 @@ export const testableALLOWED_ROUTE_NAMES = isTestEnv
  * @returns
  */
 export function getInternalRoute(href: string): string {
+  if (isPotentialCredentialOfferInvocation(href)) {
+    // Schemi come openid-credential-offer:// o haip-vci:// non hanno un path:
+    // incapsuliamo l'URI originale come query param di un path interno
+    // riconosciuto dalla linking config di ITW.
+    const encoded = encodeURIComponent(href);
+    return `${IO_INTERNAL_LINK_PREFIX}itw/credential-offer?itwCredentialOfferUri=${encoded}`;
+  }
   return pipe(
     extractPathFromURL(
       [IO_INTERNAL_LINK_PREFIX, IO_UNIVERSAL_LINK_PREFIX, IO_FIMS_LINK_PREFIX],
