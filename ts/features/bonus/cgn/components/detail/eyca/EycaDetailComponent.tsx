@@ -1,8 +1,7 @@
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 
-import { JSX, useEffect } from "react";
-import { connect } from "react-redux";
+import { JSX, useCallback, useEffect } from "react";
 import {
   Alert,
   ListItemHeader,
@@ -12,9 +11,8 @@ import I18n from "i18next";
 import { View } from "react-native";
 import { CardPending } from "../../../../../../../definitions/cgn/CardPending";
 import { EycaCard } from "../../../../../../../definitions/cgn/EycaCard";
-import { Dispatch } from "../../../../../../store/actions/types";
-import { GlobalState } from "../../../../../../store/reducers/types";
 import { isLoading } from "../../../../../../common/model/RemoteValue";
+import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
 import {
   cgnEycaActivation,
   cgnEycaActivationStatusRequest
@@ -30,13 +28,23 @@ import {
 import { useEycaInformationBottomSheet } from "./EycaInformationComponent";
 import EycaStatusDetailsComponent from "./EycaStatusDetailsComponent";
 
-type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
+const EycaDetailComponent = () => {
+  const dispatch = useIODispatch();
+  const eyca = useIOSelector(eycaCardSelector);
+  const eycaActivationStatus = useIOSelector(cgnEycaActivationStatus);
+  const eycaDetails = useIOSelector(eycaDetailSelector);
+  const isActivationLoading = useIOSelector(cgnEycaActivationLoading);
+  const isLoadingState = isLoading(eycaDetails) || isActivationLoading;
 
-const EycaDetailComponent = (props: Props) => {
   const { present, bottomSheet } = useEycaInformationBottomSheet();
 
-  const { eyca, getEycaActivationStatus } = props;
+  const getEycaActivationStatus = useCallback(() => {
+    dispatch(cgnEycaActivationStatusRequest());
+  }, [dispatch]);
+
+  const requestEycaActivation = useCallback(() => {
+    dispatch(cgnEycaActivation.request());
+  }, [dispatch]);
 
   useEffect(() => {
     if (CardPending.is(eyca)) {
@@ -49,20 +57,22 @@ const EycaDetailComponent = (props: Props) => {
       content={I18n.t("bonus.cgn.detail.status.eycaError")}
       testID="eyca-error-component"
       variant="error"
-      onPress={props.requestEycaActivation}
+      onPress={requestEycaActivation}
       action={I18n.t("global.buttons.retry")}
     />
   );
 
-  const renderComponentEycaStatus = (eyca: EycaCard): JSX.Element | null => {
-    switch (eyca.status) {
+  const renderComponentEycaStatus = (
+    eycaCard: EycaCard
+  ): JSX.Element | null => {
+    switch (eycaCard.status) {
       case "ACTIVATED":
       case "REVOKED":
       case "EXPIRED":
-        return <EycaStatusDetailsComponent eycaCard={eyca} />;
+        return <EycaStatusDetailsComponent eycaCard={eycaCard} />;
       case "PENDING":
         return pipe(
-          props.eycaActivationStatus,
+          eycaActivationStatus,
           O.fromNullable,
           O.fold(
             () => errorComponent,
@@ -82,9 +92,10 @@ const EycaDetailComponent = (props: Props) => {
         return null;
     }
   };
+
   return (
     <View>
-      {props.isLoading ? (
+      {isLoadingState ? (
         <LoadingSpinner size={48} />
       ) : (
         <>
@@ -100,7 +111,7 @@ const EycaDetailComponent = (props: Props) => {
             }}
           />
           {pipe(
-            props.eyca,
+            eyca,
             O.fromNullable,
             O.fold(() => errorComponent, renderComponentEycaStatus)
           )}
@@ -111,19 +122,4 @@ const EycaDetailComponent = (props: Props) => {
   );
 };
 
-const mapStateToProps = (state: GlobalState) => ({
-  eyca: eycaCardSelector(state),
-  eycaActivationStatus: cgnEycaActivationStatus(state),
-  isLoading:
-    isLoading(eycaDetailSelector(state)) || cgnEycaActivationLoading(state)
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  requestEycaActivation: () => dispatch(cgnEycaActivation.request()),
-  getEycaActivationStatus: () => dispatch(cgnEycaActivationStatusRequest())
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(EycaDetailComponent);
+export default EycaDetailComponent;
