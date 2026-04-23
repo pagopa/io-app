@@ -3870,6 +3870,7 @@
             "hideValues": "Nascondi dati",
             "showValues": "Mostra dati"
           },
+          "openCardDocument": "Apri copia del documento",
           "documentDataTitle": "Dati del documento",
           "boolClaim": {
             "true": "Sì",
