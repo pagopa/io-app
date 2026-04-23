@@ -1,7 +1,16 @@
 import * as E from "fp-ts/lib/Either";
-import { call, delay, fork, put, select, take } from "typed-redux-saga/macro";
+import {
+  call,
+  delay,
+  fork,
+  put,
+  race,
+  select,
+  take
+} from "typed-redux-saga/macro";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
-import { ActionType } from "typesafe-actions";
+import { Action } from "redux";
+import { isActionOf } from "typesafe-actions";
 import { fetchNetInfoState } from "../utils";
 import { setConnectionStatus } from "../store/actions";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
@@ -15,17 +24,15 @@ import { applicationChangeState } from "../../../store/actions/application";
 const CONNECTIVITY_STATUS_LOAD_INTERVAL = (30 * 1000) as Millisecond;
 const CONNECTIVITY_STATUS_FAILURE_INTERVAL = (10 * 1000) as Millisecond;
 
-function* waitForAppActive(): Generator<
-  ReduxSagaEffect,
-  void,
-  ActionType<typeof applicationChangeState>
-> {
-  while (true) {
-    const appStateChange = yield* take(applicationChangeState);
-    if (appStateChange.payload === "active") {
-      return;
-    }
-  }
+function* waitForAppActive() {
+  yield* race({
+    delay: delay(CONNECTIVITY_STATUS_FAILURE_INTERVAL),
+    applicationActive: take(
+      (action: Action) =>
+        isActionOf(applicationChangeState, action) &&
+        action.payload === "active"
+    )
+  });
 }
 
 function* checkBackendConnectionStatus(
@@ -42,7 +49,6 @@ function* checkBackendConnectionStatus(
 /**
  * this saga requests and checks the connection status
  */
-// eslint-disable-next-line sonarjs/cognitive-complexity
 export function* connectionStatusSaga(
   client: ConnectivityClient
 ): Generator<
@@ -60,6 +66,13 @@ export function* connectionStatusSaga(
       }
 
       const libraryResponse = yield* call(fetchNetInfoState());
+
+      const statePostNetInfo = yield* select(appCurrentStateSelector);
+      if (statePostNetInfo !== "active") {
+        yield* call(waitForAppActive);
+        continue;
+      }
+
       if (E.isRight(libraryResponse)) {
         const backendResponse = yield* call(
           checkBackendConnectionStatus,
