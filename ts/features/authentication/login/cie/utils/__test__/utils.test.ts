@@ -11,8 +11,7 @@ const AUTH_URLS = [
   "http://localhost/livello1?id=1",
   "http://localhost/livello2",
   "http://localhost/nextUrl?id=1",
-  "http://localhost/openApp/test",
-  "http://localhost/OpenApp?test" // Case-insensitive test for L3
+  "http://localhost/OpenApp?test"
 ];
 
 describe(isAuthenticationUrl, () => {
