@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.29.0-rc.5](https://github.com/pagopa/io-app/compare/3.29.0-rc.4...3.29.0-rc.5) (2026-04-22)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4015](https://pagopa.atlassian.net/browse/SIW-4015)] New Credentials UI ([#8027](https://github.com/pagopa/io-app/issues/8027)) ([9505f6e](https://github.com/pagopa/io-app/commit/9505f6ef7875304054364f02c0dd7b265a32cd40))
+
+
+### Bug Fixes
+
+* [[IOPLT-0000](https://pagopa.atlassian.net/browse/IOPLT-0000)] Fixes metro config missing expo reference ([#8051](https://github.com/pagopa/io-app/issues/8051)) ([ede6b83](https://github.com/pagopa/io-app/commit/ede6b831305f55fa95478dc9de0e4a420f06fd54))
+
 ## [3.29.0-rc.4](https://github.com/pagopa/io-app/compare/3.29.0-rc.3...3.29.0-rc.4) (2026-04-21)
 
 
