@@ -168,12 +168,13 @@ export const trackItwProximityTimeout = ({
 };
 
 export const trackItwProximityUnexpectedFailure = ({
+  origin,
   reason,
   type
 }: ItwProximityFailure) => {
   void mixpanelTrack(
     ITW_PROXIMITY_ERRORS_EVENTS.ITW_PROXIMITY_UNEXPECTED_FAILURE,
-    buildEventProperties("KO", "screen_view", { reason, type })
+    buildEventProperties("KO", "screen_view", { origin, reason, type })
   );
 };
 
