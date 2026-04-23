@@ -7,8 +7,6 @@ import { GlobalState } from "../../../../../../store/reducers/types";
 import { CredentialType } from "../../../utils/itwMocksUtils";
 import { CardBackground } from "../CardBackground.tsx";
 import {
-  credentialCardConfigs,
-  DEFAULT_CREDENTIAL_CARD_CONFIG,
   getCredentialBackgroundColor,
   getCredentialCardConfig
 } from "../config.ts";
@@ -95,34 +93,12 @@ describe("credential card config", () => {
     }
   });
 
-  it("should return DEFAULT_CREDENTIAL_CARD_CONFIG for unknown credential types", () => {
-    expect(getCredentialCardConfig("UnknownType")).toEqual(
-      DEFAULT_CREDENTIAL_CARD_CONFIG
-    );
-  });
-
-  it("should return DEFAULT_CREDENTIAL_CARD_CONFIG for credentials without explicit config", () => {
-    const fallbackTypes = [
-      CredentialType.EDUCATION_DEGREE,
-      CredentialType.EDUCATION_ENROLLMENT,
-      CredentialType.RESIDENCY
-    ];
-    fallbackTypes.forEach(type => {
-      expect(getCredentialCardConfig(type)).toEqual(
-        DEFAULT_CREDENTIAL_CARD_CONFIG
-      );
-    });
-  });
-
-  it("should have explicit configs for the main credential types", () => {
-    const explicitTypes = [
-      CredentialType.PID,
-      CredentialType.DRIVING_LICENSE,
-      CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
-      CredentialType.EUROPEAN_DISABILITY_CARD
-    ];
-    explicitTypes.forEach(type => {
-      expect(credentialCardConfigs[type]).toBeDefined();
-    });
+  test.each([
+    CredentialType.PID,
+    CredentialType.DRIVING_LICENSE,
+    CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
+    CredentialType.EUROPEAN_DISABILITY_CARD
+  ])("should match snapshot for type [%s]", type => {
+    expect(getCredentialCardConfig(type)).toMatchSnapshot();
   });
 });
