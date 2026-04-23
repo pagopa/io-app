@@ -14,7 +14,6 @@ import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selec
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
 import { isItwCredential } from "../utils/itwCredentialUtils.ts";
 import { getAuthSource, getItwAuthSource } from "../utils/itwMetadataUtils.ts";
-import { CredentialType } from "../utils/itwMocksUtils";
 import { CredentialMetadata } from "../utils/itwTypesUtils.ts";
 
 type ItwIssuanceMetadataProps = {
@@ -156,20 +155,6 @@ export const ItwIssuanceMetadata = ({
       }),
       [isPreview, mixPanelCredential]
     );
-  // TODO: update content when we have the final copy for the age verification bottom sheet
-  const ageVerificationBottomSheet: ItwMetadataIssuanceListItemProps["bottomSheet"] =
-    useMemo(
-      () => ({
-        contentTitle: I18n.t(
-          "features.itWallet.presentation.credentialDetails.ageVerification.verifiableWithItWallet.bottomSheet.title"
-        ),
-        contentBody: I18n.t(
-          "features.itWallet.presentation.credentialDetails.ageVerification.verifiableWithItWallet.bottomSheet.content"
-        ),
-        onPress: () => undefined
-      }),
-      []
-    );
 
   return (
     <>
@@ -194,21 +179,6 @@ export const ItwIssuanceMetadata = ({
           bottomSheet={releaserNameBottomSheet}
         />
       )}
-      {!isPreview &&
-        credential.credentialType === CredentialType.AGE_VERIFICATION && (
-          <>
-            {releaserName && <Divider />}
-            <ItwMetadataIssuanceListItem
-              label={I18n.t(
-                "features.itWallet.presentation.credentialDetails.ageVerification.verifiableWithItWallet.label"
-              )}
-              value={I18n.t(
-                "features.itWallet.presentation.credentialDetails.ageVerification.verifiableWithItWallet.value"
-              )}
-              bottomSheet={ageVerificationBottomSheet}
-            />
-          </>
-        )}
     </>
   );
 };
