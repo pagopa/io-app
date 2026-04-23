@@ -10,17 +10,15 @@ import { itwCredentialsCatalogueSelector } from "../store/selectors";
 /**
  * Fetch locale bundles for the Digital Credentials Catalogue.
  *
- * This saga is a no-op for IT-Wallet spec v1.0.0 ("Documenti su IO"), since
- * translation support was introduced in v1.3.3. It is also a no-op when the
- * catalogue has not yet been fetched or carries no localization metadata.
+ * Translation support depends on the IT-Wallet spec version in use.
+ * The underlying `fetchCatalogueTranslations` utility is a no-op (returns `{}`)
+ * when the catalogue API does not expose a `fetchTranslations` method (e.g. v1.0.0),
+ * so this saga is safe to run regardless of the active spec version.
+ *
+ * It is also a no-op when the catalogue has not yet been fetched.
  */
 export function* fetchCatalogueTranslationsSaga() {
   const itwVersion = yield* select(selectItwSpecsVersion);
-
-  if (itwVersion !== "1.3.3") {
-    return;
-  }
-
   const catalogue = yield* select(itwCredentialsCatalogueSelector);
 
   if (!catalogue) {

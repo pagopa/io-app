@@ -67,7 +67,7 @@ describe("fetchCatalogueTranslationsSaga", () => {
       .put.actionType(itwFetchCatalogueTranslations.failure.toString())
       .run());
 
-  it("should be a no-op for v1.0.0 (Documenti su IO)", () => {
+  it("should dispatch success with empty translations for v1.0.0 (library returns {} when fetchTranslations is unavailable)", () => {
     const v1Store: DeepPartial<GlobalState> = {
       features: {
         itWallet: {
@@ -86,8 +86,9 @@ describe("fetchCatalogueTranslationsSaga", () => {
     };
     return expectSaga(fetchCatalogueTranslationsSaga)
       .withState(v1Store)
-      .not.put(itwFetchCatalogueTranslations.request())
-      .not.call.fn(fetchCatalogueTranslations)
+      .provide([[matchers.call.fn(fetchCatalogueTranslations), {}]])
+      .put(itwFetchCatalogueTranslations.request())
+      .put(itwFetchCatalogueTranslations.success({}))
       .run();
   });
 
