@@ -7,7 +7,8 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils";
+import { useIOSelector } from "../../../../../store/hooks";
+import { itwCredentialNameResolverSelector } from "../../../credentialsCatalogue/store/selectors";
 import { ProximityDetails } from "../utils/itwProximityTypeUtils";
 import {
   claimsSelectorHeaderGradientsByCredentialType,
@@ -24,6 +25,7 @@ const ItwProximityPresentationDetails = ({
 }: ItwProximityPresentationDetailsProps) => {
   const theme = useIOTheme();
   const { present, bottomSheet } = useClaimsDetailsBottomSheet();
+  const resolveCredentialName = useIOSelector(itwCredentialNameResolverSelector);
 
   return (
     <View>
@@ -41,7 +43,7 @@ const ItwProximityPresentationDetails = ({
         {data.map(({ claimsToDisplay, credentialType }) => (
           <ClaimsSelector
             key={credentialType}
-            title={getCredentialNameFromType(credentialType)}
+            title={resolveCredentialName(credentialType)}
             items={mapClaimsToClaimsSelectorItems(claimsToDisplay, present)}
             defaultExpanded
             selectionEnabled={false}

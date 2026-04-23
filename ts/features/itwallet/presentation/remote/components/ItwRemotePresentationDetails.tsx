@@ -10,7 +10,8 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils";
+import { useIOSelector } from "../../../../../store/hooks";
+import { itwCredentialNameResolverSelector } from "../../../credentialsCatalogue/store/selectors";
 import { selectPresentationDetails } from "../machine/selectors";
 import { ItwRemoteMachineContext } from "../machine/provider";
 import { EnrichedPresentationDetails } from "../utils/itwRemoteTypeUtils";
@@ -31,6 +32,7 @@ const RequestedCredentialsBlock = ({
   credentials: EnrichedPresentationDetails;
 }) => {
   const { present, bottomSheet } = useClaimsDetailsBottomSheet();
+  const resolveCredentialName = useIOSelector(itwCredentialNameResolverSelector);
 
   return (
     <VStack space={24}>
@@ -41,7 +43,7 @@ const RequestedCredentialsBlock = ({
           const credentialType = getCredentialTypeByVct(c.vct);
 
           const title = credentialType
-            ? getCredentialNameFromType(credentialType, "", true)
+            ? resolveCredentialName(credentialType)
             : "";
 
           const headerGradientColors = credentialType
