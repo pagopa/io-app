@@ -155,7 +155,11 @@ export const itwAvailableCredentialsListSelector = createSelector(
       .filter(credential => credential.credential_type !== CredentialType.PID)
       .map(credential => ({
         name:
-          getCatalogueTranslation(translations, locale, credential.name_l10n_id) ??
+          getCatalogueTranslation(
+            translations,
+            locale,
+            credential.name_l10n_id
+          ) ??
           credential.name ??
           credential.credential_type,
         type: credential.credential_type

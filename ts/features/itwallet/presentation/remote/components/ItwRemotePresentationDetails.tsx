@@ -32,7 +32,9 @@ const RequestedCredentialsBlock = ({
   credentials: EnrichedPresentationDetails;
 }) => {
   const { present, bottomSheet } = useClaimsDetailsBottomSheet();
-  const resolveCredentialName = useIOSelector(itwCredentialNameResolverSelector);
+  const resolveCredentialName = useIOSelector(
+    itwCredentialNameResolverSelector
+  );
 
   return (
     <VStack space={24}>

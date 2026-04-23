@@ -25,7 +25,9 @@ const ItwProximityPresentationDetails = ({
 }: ItwProximityPresentationDetailsProps) => {
   const theme = useIOTheme();
   const { present, bottomSheet } = useClaimsDetailsBottomSheet();
-  const resolveCredentialName = useIOSelector(itwCredentialNameResolverSelector);
+  const resolveCredentialName = useIOSelector(
+    itwCredentialNameResolverSelector
+  );
 
   return (
     <View>

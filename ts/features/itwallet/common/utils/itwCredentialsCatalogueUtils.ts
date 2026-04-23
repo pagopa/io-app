@@ -40,8 +40,7 @@ export const fetchCatalogueTranslations = async (
   catalogue: DigitalCredentialsCatalogue,
   locales: Array<string>
 ): Promise<CatalogueTranslations> => {
-  const { fetchTranslations } =
-    getIoWallet(itwVersion).CredentialsCatalogue;
+  const { fetchTranslations } = getIoWallet(itwVersion).CredentialsCatalogue;
 
   if (!fetchTranslations) {
     return {};
