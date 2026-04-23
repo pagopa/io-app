@@ -47,6 +47,7 @@
       "minusSymbol": "meno",
       "reload": "Ricarica",
       "search": "Cerca",
+      "cieReadingProgress": "Lettura {{percentage}}% completata",
       "dateFormat": "DD MMMM YYYY",
       "alert": "Avviso",
       "activityIndicator": {
@@ -273,7 +274,6 @@
       "forgetCurrentSession": "Dimentica sessione corrente",
       "clearAsyncStorage": "Cancella contenuto di AsyncStorage",
       "dumpAsyncStorage": "Scarica contenuto di AsyncStorage",
-      "sentryTestEvent": "Invia Exception a Sentry",
       "contextualHelpTitle": "Cosa puoi fare nella sezione Impostazioni",
       "contextualHelpContent": "**Nella sezione Impostazioni puoi gestire i tuoi dati e le preferenze.**\nIn particolare qui puoi gestire le tue preferenze, la tua privacy e il tuo account. In questa sezione puoi inoltre accedere a i tuoi documenti in versione digitale, selezionando le card che compaiono nella parte alta della schermata.",
       "developerModeOn": "Modalità sviluppatore attivata",
@@ -2433,7 +2433,7 @@
           },
           "cieCanInsertion": {
             "title": "Inserisci il codice a 6 cifre che trovi in basso a destra della CIE",
-            "description": "È il codice a 6 cifre (CAN) che trovi stampato sul fronte della Carta di Identità Elettronica, in basso a destra. [Dove lo trovo?](internal://can-location)",
+            "description": "È il codice che trovi sul fronte della Carta di Identità Elettronica, in basso a destra (CAN). [Dove lo trovo?](internal://can-location)",
             "bottomSheet": {
               "title": "Dove trovo il codice CAN?",
               "info": "Lo trovi stampato sul fronte della Carta di Identità Elettronica (CIE) di {{denomination}}, in basso a destra."
@@ -2441,7 +2441,7 @@
           },
           "cieScanningAdvisory": {
             "title": "Posiziona la CIE su una superficie stabile per la lettura",
-            "description": "Dovrai poggiare il retro del telefono sulla carta e tenerlo fermo per la lettura.",
+            "description": "Dovrai avvicinare il telefono alla carta e tenerlo fermo per la lettura. Rimuovi eventuali cover.",
             "primaryAction": "Inizia lettura CIE"
           },
           "androidNfcActivation": {
@@ -2479,7 +2479,8 @@
           },
           "cieScanning": {
             "idle": {
-              "title": "Poggia il retro del telefono sulla CIE",
+              "title": "Posiziona il retro del telefono sulla CIE",
+              "subtitle": "Fai scorrere il telefono sulla carta. Un suono o una vibrazione indicano che la carta è stata rilevata. Se la lettura non parte con il retro, prova con il lato anteriore del telefono.",
               "status": "Posiziona il telefono sulla CIE per iniziare la lettura."
             },
             "reading": {
@@ -2510,7 +2511,7 @@
           },
           "cieCanAdvisory": {
             "title": "Prepara la Carta di Identità Elettronica (CIE) di {{denomination}}",
-            "description": "Dovrai usarla e inserire il suo codice a 6 cifre (CAN) che trovi stampato sul fronte in basso a destra.",
+            "description": "Dovrai inserire il codice a 6 cifre (CAN) che trovi sul fronte in basso a destra e poi avvicinare il tuo telefono alla carta.",
             "alert": {
               "title": "Vuoi interrompere l’apertura della notifica?",
               "message": "Puoi aprire la notifica SEND in qualsiasi altro momento, dovrai però ripartire dal codice QR.",
@@ -2530,8 +2531,8 @@
               "bottomSheet": {
                 "title": "Cosa ti serve?",
                 "featureInfos": [
-                  "La Carta di Identità Elettronica di {{name}}",
-                  "Il codice a 6 cifre (CAN) che trovi stampato sul fronte della carta, in basso a destra."
+                  "Tieni a portata di mano la Carta di Identità Elettronica (CIE) di {{name}}",
+                  "Non puoi accedere alla notifica con copie o screenshot del documento"
                 ]
               }
             },
@@ -2540,7 +2541,7 @@
               "body": "Controlla che il sistema operativo sia aggiornato oppure scopri cosa fare.",
               "featureInfoText": [
                 "Per leggere la CIE è necessario un dispositivo con chip NFC.",
-                "È richiesto un sistema operativo Android 6.0 o iOS 13 o superiori."
+                "È richiesto un sistema operativo Android 8 o iOS 15.1 o superiori."
               ],
               "cta": "Cosa posso fare?"
             },
@@ -2871,6 +2872,12 @@
       "signatureFieldInfo": {
         "title": "Cosa sono le clausole vessatorie?",
         "subTitle": "Sono delle clausole che segnalano condizioni particolari a cui prestare attenzione e che devono essere accettate. Devono inoltre essere, per legge, facilmente identificabili per far sì che chi firma sia informato del loro contenuto prima di apporre la firma."
+      },
+      "requestL3": {
+        "localFlag": {
+          "title": "Attivazione check L3 per il flusso di firma",
+          "description": "Attivando questo toggle attivi il check L3 per il flusso di firma, che prevede una nuova login L3 per gli utenti che non possiedono il livello di autenticazione L3 (CIE + PIN)"
+        }
       }
     },
     "wallet": {
@@ -3649,6 +3656,11 @@
         "credentialResult": {
           "toast": "Fatto!"
         },
+        "landingError": {
+          "title": "Qualcosa non va",
+          "body": "Si è verificato un problema, riprova più tardi.",
+          "action": "Chiudi"
+        },
         "notMatchingIdentityError": {
           "title": "Identità non riconosciuta",
           "body": "Attiva Documenti su IO con la stessa identità utilizzata per accedere all’app IO. Verifica le credenziali di accesso e riprova.",
@@ -3822,6 +3834,9 @@
             }
           },
           "mDL": {
+            "expired": {
+              "content": "###### Quali documenti devo preparare?\n\nLa Patente di guida (in scadenza o scaduta), un documento di identità, il Codice Fiscale e una foto recente (formato tessera).\n\n###### Hai già rinnovato il documento?\n\nSe hai già rinnovato la Patente fisica, aggiorna il documento digitale per ottenerlo anche su IO."
+            },
             "expiring": {
               "title": "Patente su IO: documento in scadenza",
               "content": "Rinnova la tua Patente di guida presso gli uffici della Motorizzazione Civile o un ente abilitato del tuo territorio.\n\nÈ necessaria una visita medica con un medico autorizzato e provvedere al pagamento dei bollettini che ti saranno indicati.\n\n###### Quali documenti devo preparare?\n\nLa Patente di guida (in scadenza o scaduta), un documento di identità, il Codice Fiscale e una foto recente (formato tessera).",
@@ -3850,6 +3865,7 @@
             "hideValues": "Nascondi dati",
             "showValues": "Mostra dati"
           },
+          "openCardDocument": "Apri copia del documento",
           "documentDataTitle": "Dati del documento",
           "boolClaim": {
             "true": "Sì",
@@ -4444,6 +4460,24 @@
         "restrictedMode": {
           "title": "Documenti con funzionalità ridotte",
           "description": "Puoi ottenere una versione digitale dei seguenti documenti utilizzabile solo dal vivo e senza le funzionalità evolute di IT-Wallet"
+        }
+      },
+      "tour": {
+        "id": {
+          "title": "Il tuo IT-Wallet ID",
+          "description": "Il cuore del tuo Portafoglio IT-Wallet: abilita l’aggiunta di documenti per identificarti e accedere ai servizi."
+        },
+        "credentials": {
+          "title": "I tuoi documenti digitali",
+          "description": "Premi su un documento per visualizzare i dettagli o gestirlo nel Portafoglio.  "
+        },
+        "addCredential": {
+          "title": "Aggiungi un documento",
+          "description": "Premi “+” o “Aggiungi documento” per scegliere un documento digitale da aggiungere al Portafoglio."
+        },
+        "qrCode": {
+          "title": "Mostra il codice QR a chi verifica",
+          "description": "Chi verifica i tuoi documenti dal vivo usa un’app ufficiale per scansionare questo codice QR. "
         }
       }
     },

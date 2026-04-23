@@ -3,6 +3,8 @@ import { type CredentialIssuanceFailure } from "../../machine/credential/failure
 import { type IssuanceFailure } from "../../machine/eid/failure";
 import { RemoteFailure } from "../../presentation/remote/machine/failure.ts";
 import { ProximityFailure } from "../../presentation/proximity/machine/failure.ts";
+import { itwIntegrityServiceStatusSelector } from "../../issuance/store/selectors";
+import { useIOStore } from "../../../../store/hooks";
 
 interface PollForStoreValueOptions<T> {
   getState: () => GlobalState;
@@ -59,6 +61,7 @@ export const pollForStoreValue = <T>({
 export const shouldSerializeReason = (failure: { reason?: unknown }) =>
   !failure.reason ||
   (typeof failure.reason === "object" &&
+    failure.reason !== null &&
     Object.keys(failure.reason).length === 0);
 
 /**
@@ -70,24 +73,60 @@ export const serializeFailureReason = (
     | CredentialIssuanceFailure
     | RemoteFailure
     | ProximityFailure
-) => {
-  const reason = !failure.reason
-    ? "Reason not provided"
-    : failure.reason instanceof Error
-      ? createReasonObject(failure.reason.message)
-      : failure.reason;
-
-  return {
-    ...failure,
-    reason
-  };
-};
+) => ({
+  ...failure,
+  reason: mapFailureReason(failure.reason)
+});
 
 /**
  * This logic was agreed upon with the Mixpanel team to allow them to filter these specific error cases.
- * Instead of sending a plain string, we return a structured object with a code and errorDescription
+ * Instead of sending a plain string, we return a structured object with a code and errorDescription.
  */
 const createReasonObject = (message: string) => ({
   code: "UNEXPECTED",
   errorDescription: message
 });
+
+/**
+ * Guards and maps failure reasons to a consistent format for serialization.
+ * Missing reasons and Error instances are converted to a structured object,
+ * Existing reason objects are preserved as-is.
+ * Primitive values are returned as-is.
+ */
+const mapFailureReason = (reason: unknown) => {
+  if (!reason) {
+    return createReasonObject("Reason not provided");
+  }
+
+  if (reason instanceof Error) {
+    return createReasonObject(reason.message);
+  }
+
+  return reason;
+};
+
+/**
+ * Convenience function that wraps {@link pollForStoreValue} to check for the integrity service readiness.
+ * This functions is meant to be used primarily in machine actors.
+ * @param store The Redux store instance.
+ * @throws Error if the integrity service is not ready within the timeout period.
+ */
+export const ensureIntegrityServiceIsStoreReadyOrThrow = async (
+  store: ReturnType<typeof useIOStore>
+): Promise<void> => {
+  const integrityServiceStatus = await pollForStoreValue({
+    getState: store.getState,
+    selector: itwIntegrityServiceStatusSelector,
+    condition: value => value !== undefined
+  }).catch(() => {
+    throw new Error("Integrity service status check timed out");
+  });
+
+  // If the integrity service preparation is not ready (still undefined) or in an error state
+  // after 10 seconds the user will be prompted with an error, he will need to retry.
+  if (integrityServiceStatus !== "ready") {
+    throw new Error(
+      `Integrity service is not ready. Current status: ${integrityServiceStatus}`
+    );
+  }
+};

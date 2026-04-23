@@ -1,8 +1,8 @@
 import { BodySmall, VSpacer } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
-import { useState, useEffect } from "react";
-import { StyleSheet, View } from "react-native";
 import I18n from "i18next";
+import { useEffect, useState } from "react";
+import { View } from "react-native";
 import { ProgressBar } from "../../../../common/components/ProgressBar";
 
 type Props = {
@@ -18,6 +18,7 @@ export const CgnDiscountExpireProgressBar = ({
 }: Props) => {
   const [seconds, setSeconds] = useState(secondsToExpiration);
   const isCodeExpired = seconds <= 0;
+
   useEffect(() => {
     const timer = setInterval(() => {
       setSeconds(currentSecs => currentSecs - 1);
@@ -30,15 +31,17 @@ export const CgnDiscountExpireProgressBar = ({
     return () => clearInterval(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isCodeExpired]);
+
   const formattedSecondsToExpiration = format(
     new Date(seconds * 1000),
     "mm:ss"
   );
+
   return (
     <View style={{ alignContent: "center" }}>
       <ProgressBar progressPercentage={seconds / secondsExpirationTotal} />
       <VSpacer size={8} />
-      <View style={styles.centeredRow}>
+      <View style={{ flexDirection: "row", justifyContent: "center" }}>
         <BodySmall weight="Regular" color="black">
           {I18n.t("idpay.barCode.resultScreen.success.expiresIn")}
         </BodySmall>
@@ -49,7 +52,3 @@ export const CgnDiscountExpireProgressBar = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  centeredRow: { flexDirection: "row", justifyContent: "center" }
-});
