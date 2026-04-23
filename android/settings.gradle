@@ -18,5 +18,13 @@ includeBuild('../node_modules/@react-native/gradle-plugin')
 expoAutolinking.useExpoModules()
 expoAutolinking.useExpoVersionCatalog()
 includeBuild(expoAutolinking.reactNativeGradlePlugin)
+includeBuild('../node_modules/react-native') {
+    dependencySubstitution {
+        substitute(module("com.facebook.react:react-android")).using(project(":packages:react-native:ReactAndroid"))
+        substitute(module("com.facebook.react:react-native")).using(project(":packages:react-native:ReactAndroid"))
+        substitute(module("com.facebook.react:hermes-android")).using(project(":packages:react-native:ReactAndroid:hermes-engine"))
+        substitute(module("com.facebook.react:hermes-engine")).using(project(":packages:react-native:ReactAndroid:hermes-engine"))
+    }
+}
 include ':react-native-cie'
 project(':react-native-cie').projectDir = new File(rootProject.projectDir, '../node_modules/@pagopa/react-native-cie/android')

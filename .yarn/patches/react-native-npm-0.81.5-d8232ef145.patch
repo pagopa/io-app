@@ -1,5 +1,5 @@
 diff --git a/React/Fabric/Mounting/ComponentViews/ScrollView/RCTPullToRefreshViewComponentView.mm b/React/Fabric/Mounting/ComponentViews/ScrollView/RCTPullToRefreshViewComponentView.mm
-index 0d231bc8aa938da296eb3b981e8ac9595a43b87f..10f93c864ccc4c48d251b9334c993d89294f57f9 100644
+index 0d231bc8aa938da296eb3b981e8ac9595a43b87f..8393d49bd04fd0ec1b54967616d7918db7961357 100644
 --- a/React/Fabric/Mounting/ComponentViews/ScrollView/RCTPullToRefreshViewComponentView.mm
 +++ b/React/Fabric/Mounting/ComponentViews/ScrollView/RCTPullToRefreshViewComponentView.mm
 @@ -24,7 +24,6 @@ @interface RCTPullToRefreshViewComponentView () <RCTPullToRefreshViewViewProtoco
@@ -10,23 +10,15 @@ index 0d231bc8aa938da296eb3b981e8ac9595a43b87f..10f93c864ccc4c48d251b9334c993d89
    UIRefreshControl *_refreshControl;
    RCTScrollViewComponentView *__weak _scrollViewComponentView;
  }
-@@ -36,8 +35,6 @@ - (instancetype)initWithFrame:(CGRect)frame
-     // attaching and detaching of a pull-to-refresh view to a scroll view.
+@@ -37,7 +36,6 @@ - (instancetype)initWithFrame:(CGRect)frame
      // The pull-to-refresh view is not a subview of this view.
      self.hidden = YES;
--
+ 
 -    _isBeforeInitialLayout = YES;
      [self _initializeUIRefreshControl];
    }
  
-@@ -63,19 +60,11 @@ - (void)prepareForRecycle
- {
-   [super prepareForRecycle];
-   _scrollViewComponentView = nil;
--  _props = nil;
--  _isBeforeInitialLayout = YES;
-   [self _initializeUIRefreshControl];
- }
+@@ -70,12 +68,6 @@ - (void)prepareForRecycle
  
  - (void)updateProps:(const Props::Shared &)props oldProps:(const Props::Shared &)oldProps
  {
@@ -39,7 +31,7 @@ index 0d231bc8aa938da296eb3b981e8ac9595a43b87f..10f93c864ccc4c48d251b9334c993d89
    const auto &oldConcreteProps = static_cast<const PullToRefreshViewProps &>(*_props);
    const auto &newConcreteProps = static_cast<const PullToRefreshViewProps &>(*props);
  
-@@ -111,6 +100,10 @@ - (void)updateProps:(const Props::Shared &)props oldProps:(const Props::Shared &
+@@ -111,6 +103,10 @@ - (void)updateProps:(const Props::Shared &)props oldProps:(const Props::Shared &
        [_refreshControl endRefreshing];
      }
    }
@@ -50,7 +42,7 @@ index 0d231bc8aa938da296eb3b981e8ac9595a43b87f..10f93c864ccc4c48d251b9334c993d89
  }
  
  #pragma mark -
-@@ -155,10 +148,12 @@ - (void)layoutSubviews
+@@ -155,10 +151,12 @@ - (void)layoutSubviews
  
    // Attempts to begin refreshing before the initial layout are ignored by _refreshControl. So if the control is
    // refreshing when mounted, we need to call beginRefreshing in layoutSubviews or it won't work.
@@ -66,7 +58,7 @@ index 0d231bc8aa938da296eb3b981e8ac9595a43b87f..10f93c864ccc4c48d251b9334c993d89
    }
  }
  
-@@ -214,11 +209,12 @@ - (void)beginRefreshingProgrammatically
+@@ -214,11 +212,12 @@ - (void)beginRefreshingProgrammatically
  
    // When refreshing programmatically (i.e. without pulling down), we must explicitly adjust the ScrollView content
    // offset, or else the _refreshControl won't be visible
@@ -84,3 +76,16 @@ index 0d231bc8aa938da296eb3b981e8ac9595a43b87f..10f93c864ccc4c48d251b9334c993d89
  }
  
  #pragma mark - Native commands
+diff --git a/ReactCommon/react/featureflags/ReactNativeFeatureFlagsDefaults.h b/ReactCommon/react/featureflags/ReactNativeFeatureFlagsDefaults.h
+index e0742c9c5c97bba076d63d5ab79fcb5356cf0174..a5cd8cfbf10fce0ee43a260134f248401cc0e058 100644
+--- a/ReactCommon/react/featureflags/ReactNativeFeatureFlagsDefaults.h
++++ b/ReactCommon/react/featureflags/ReactNativeFeatureFlagsDefaults.h
+@@ -216,7 +216,7 @@ class ReactNativeFeatureFlagsDefaults : public ReactNativeFeatureFlagsProvider {
+   }
+ 
+   bool preventShadowTreeCommitExhaustion() override {
+-    return false;
++    return true;
+   }
+ 
+   bool traceTurboModulePromiseRejectionsOnAndroid() override {
