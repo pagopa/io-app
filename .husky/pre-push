@@ -15,7 +15,7 @@ pnpm tsc:noemit
 echo "🧹 runnning linter..."  
 pnpm lint-autofix
 # Run prettifier
-echo "🧼 runnning prettier..."
+echo "🧼 runnning formatter..."
 pnpm prettify
 
 # If we have any modified files don't push
