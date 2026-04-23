@@ -13,6 +13,7 @@ import { linkingSubscription } from "../linkingSubscription";
 import { initiateAarFlow } from "../../features/pn/aar/store/actions";
 import { IO_LOGIN_CIE_URL_SCHEME } from "../../features/authentication/login/cie/utils/cie";
 import * as LINKING_ANALYTICS from "../../features/linking/analytics";
+import { getInternalRoute } from "../../utils/internalLink";
 
 describe("linkingSubscription", () => {
   beforeEach(() => {
@@ -186,6 +187,45 @@ describe("linkingSubscription", () => {
       } else {
         expect(mockDispatch).toHaveBeenCalledWith(storeLinkingUrl(url));
       }
+    });
+  });
+
+  describe("credential offer normalization", () => {
+    const credentialOfferUrl =
+      "openid-credential-offer://?credential_offer=%7B%22credential_issuer%22%3A%22https%3A%2F%2Fissuer%22%7D";
+
+    it("should pass the normalized URL to the listener when a credential offer custom scheme is received", () => {
+      const { mockCurrySubscription, addEventListenerSpy } = initializeTests();
+      const mockListener = jest.fn();
+
+      mockCurrySubscription(mockListener);
+      runEventListenerCallback(addEventListenerSpy, {
+        url: credentialOfferUrl
+      });
+
+      expect(mockListener).toHaveBeenCalledTimes(1);
+      expect(mockListener).toHaveBeenCalledWith(
+        getInternalRoute(credentialOfferUrl)
+      );
+    });
+
+    it("should store the normalized URL (not the original) when not logged in and a credential offer is received", () => {
+      const { mockDispatch, mockCurrySubscription, addEventListenerSpy } =
+        initializeTests();
+
+      jest.spyOn(UTIL_GUARDS, "isLoggedIn").mockImplementation(() => false);
+
+      mockCurrySubscription(jest.fn());
+      runEventListenerCallback(addEventListenerSpy, {
+        url: credentialOfferUrl
+      });
+
+      expect(mockDispatch).toHaveBeenCalledWith(
+        storeLinkingUrl(getInternalRoute(credentialOfferUrl))
+      );
+      expect(mockDispatch).not.toHaveBeenCalledWith(
+        storeLinkingUrl(credentialOfferUrl)
+      );
     });
   });
 });
