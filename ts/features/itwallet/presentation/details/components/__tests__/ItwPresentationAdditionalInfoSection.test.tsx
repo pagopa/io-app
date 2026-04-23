@@ -14,6 +14,7 @@ import {
   NewCredential,
   newCredentials
 } from "../../../../common/utils/itwCredentialUtils";
+import { GlobalState } from "../../../../../../store/reducers/types";
 
 jest.mock("../../../../../../utils/url", () => ({
   openWebUrl: jest.fn()
@@ -62,7 +63,7 @@ describe("ItwPresentationAdditionalInfoSection", () => {
 
 const renderComponent = (credentialType: CredentialType) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
-  return renderScreenWithNavigationStoreContext(
+  return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
       <ItwPresentationAdditionalInfoSection
         credential={{
