@@ -28,11 +28,11 @@ import {
   ItwBrandedSkiaBorder,
   ItwIridescentBorderVariant
 } from "../ItwBrandedSkiaBorder";
+import { useItwCredentialName } from "../../hooks/useItwCredentialName";
 import { CardBackground } from "./CardBackground";
 import { CardData } from "./CardData";
 import { CardWidthContext } from "./CardWidthContext";
 import { FlippableCard } from "./FlippableCard";
-import { useItwCredentialName } from "../../hooks/useItwCredentialName";
 
 export type ItwSkeumorphicCardProps = {
   credential: CredentialMetadata;

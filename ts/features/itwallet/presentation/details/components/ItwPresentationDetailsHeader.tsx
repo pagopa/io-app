@@ -25,8 +25,8 @@ import {
 import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { useItwDisplayCredentialStatus } from "../hooks/useItwDisplayCredentialStatus";
-import { ItwPresentationCredentialCard } from "./ItwPresentationCredentialCard.tsx";
 import { useItwCredentialName } from "../../../common/hooks/useItwCredentialName";
+import { ItwPresentationCredentialCard } from "./ItwPresentationCredentialCard.tsx";
 
 type ItwPresentationDetailsHeaderProps = {
   credential: CredentialMetadata;

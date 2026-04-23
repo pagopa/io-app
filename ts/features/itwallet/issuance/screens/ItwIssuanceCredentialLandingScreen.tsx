@@ -20,8 +20,10 @@ import {
 } from "../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
-import { trackItwAlreadyHasCredential } from "../analytics";
-import { trackItwIssuanceFromMsgFailure } from "../analytics";
+import {
+  trackItwAlreadyHasCredential,
+  trackItwIssuanceFromMsgFailure
+} from "../analytics";
 import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 
 export type ItwIssuanceCredentialLandingScreenNavigationParams = {
