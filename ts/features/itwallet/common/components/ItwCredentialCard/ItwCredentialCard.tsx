@@ -14,16 +14,16 @@ import { useIOSelector } from "../../../../../store/hooks";
 import { fontPreferenceSelector } from "../../../../../store/reducers/persistedPreferences";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { useItwDisplayCredentialStatus } from "../../../presentation/details/hooks/useItwDisplayCredentialStatus";
+import { itwShouldUpgradeCredentialSelector } from "../../store/selectors";
 import {
   getCredentialNameFromType,
   tagPropsByStatus,
   useBorderColorByStatus,
   validCredentialStatuses
 } from "../../utils/itwCredentialUtils";
-import { useThemeColorByCredentialType } from "../../utils/itwStyleUtils";
-import { itwShouldUpgradeCredentialSelector } from "../../store/selectors";
-import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
 import { CredentialType } from "../../utils/itwMocksUtils";
+import { useThemeColorByCredentialType } from "../../utils/itwStyleUtils";
+import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
 import { ItWalletIdLogo } from "../ItWalletIdLogo";
 import { CardBackground } from "./CardBackground";
 import { getCredentialCardConfig } from "./credentialCardConfig";
@@ -169,7 +169,7 @@ export const ItwCredentialCard = ({
                   flexShrink: 1
                 }}
               >
-                {getCredentialNameFromType(credentialType, "").toUpperCase()}
+                {getCredentialNameFromType(credentialType).toUpperCase()}
               </IOText>
             )}
             {statusTagProps && <Tag forceLightMode {...statusTagProps} />}

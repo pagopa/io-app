@@ -107,7 +107,7 @@ export const useHeaderPropsByCredentialType = (credentialType: string) => {
   const withL3Design = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   return {
-    title: getCredentialNameFromType(credentialType, "", withL3Design),
+    title: getCredentialNameFromType(credentialType, withL3Design),
     variant,
     backgroundColor
   };

@@ -17,15 +17,8 @@ import { ItwEngagementBanner } from "../../common/components/ItwEngagementBanner
 import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../common/components/ItwSkeumorphicCard/FlipGestureDetector";
 import { getCredentialStatusObject } from "../../common/utils/itwCredentialStatusUtils";
-import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
-import {
-  CredentialType,
-  ItwStoredCredentialsMocks
-} from "../../common/utils/itwMocksUtils";
-import {
-  CredentialMetadata,
-  ItwCredentialStatus
-} from "../../common/utils/itwTypesUtils";
+import { ItwStoredCredentialsMocks } from "../../common/utils/itwMocksUtils";
+import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import { ItwRequestedClaimsList } from "../../issuance/components/ItwRequestedClaimsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwPresentationCredentialCardFlipButton } from "../../presentation/details/components/ItwPresentationCredentialCardFlipButton";
@@ -77,32 +70,6 @@ const ItwWalletBrandSection = () => {
     </View>
   );
 };
-
-const ALL_CREDENTIAL_STATUSES: ReadonlyArray<ItwCredentialStatus> = [
-  "valid",
-  "expiring",
-  "expired",
-  "jwtExpiring",
-  "jwtExpired",
-  "invalid",
-  "unknown"
-];
-
-const ItwPidCardSection = () => (
-  <View style={{ paddingBottom: 24 }}>
-    <ListItemHeader label="IT-Wallet ID card" />
-    <VStack space={8}>
-      {ALL_CREDENTIAL_STATUSES.map(status => (
-        <DSComponentViewerBox key={status} name={status}>
-          <ItwCredentialCard
-            credentialType={CredentialType.PID}
-            credentialStatus={status}
-          />
-        </DSComponentViewerBox>
-      ))}
-    </VStack>
-  </View>
-);
 
 const ItwEngagementBannerSection = () => (
   <View
@@ -264,7 +231,6 @@ export const ItwClaimsListSection = () => {
 export const ItwComponentsSection = () => (
   <>
     <ItwWalletBrandSection />
-    <ItwPidCardSection />
     <ItwEngagementBannerSection />
     <ItwSkeumorphicCredentialSection />
     <ItwClaimsListSection />

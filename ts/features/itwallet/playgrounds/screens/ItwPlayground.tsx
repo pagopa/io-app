@@ -10,6 +10,7 @@ import { ScrollView } from "react-native";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useScreenEndMargin } from "../../../../hooks/useScreenEndMargin";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
+import { ItwCardsSection } from "../components/ItwCardsSection";
 import { ItwComponentsSection } from "../components/ItwComponentsSection";
 import { ItwEnvironmentSection } from "../components/ItwEnvironmentSection";
 import { ItwIdentificationScreensSection } from "../components/ItwIdentificationScreensSection";
@@ -49,6 +50,7 @@ const ItwPlayground = () => {
         <TabItem label="Issuance" accessibilityLabel="Issuance" />
         <TabItem label="Screens" accessibilityLabel="Screens" />
         <TabItem label="Components" accessibilityLabel="Components" />
+        <TabItem label="Cards" accessibilityLabel="Cards" />
       </TabNavigation>
       <ScrollView
         contentContainerStyle={{
@@ -72,6 +74,7 @@ const ItwPlayground = () => {
             </>
           )}
           {page === 3 && <ItwComponentsSection />}
+          {page === 4 && <ItwCardsSection />}
         </ContentWrapper>
       </ScrollView>
     </VStack>

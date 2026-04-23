@@ -1,6 +1,4 @@
 import { IOColors, Tag, useIOTheme } from "@pagopa/io-app-design-system";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { SdJwt, Mdoc } from "@pagopa/io-react-native-wallet";
 import I18n from "i18next";
 import { isBefore } from "date-fns";
@@ -49,7 +47,7 @@ export const isL2Credential = (
   type: string | undefined
 ): type is L2Credential => l2Credentials.includes(type as L2Credential);
 
-export const itwGetCredentialNameByCredentialType = (
+const getCredentialNameByType = (
   isItwCredential: boolean
 ): Record<string, string> => ({
   [CredentialType.EUROPEAN_DISABILITY_CARD]: I18n.t(
@@ -82,15 +80,12 @@ export const itwGetCredentialNameByCredentialType = (
 });
 
 export const getCredentialNameFromType = (
-  credentialType: string | undefined,
-  withDefault: string = "",
+  type: string | undefined,
   isItwCredential: boolean = false
-): string =>
-  pipe(
-    O.fromNullable(credentialType),
-    O.map(type => itwGetCredentialNameByCredentialType(isItwCredential)[type]),
-    O.getOrElse(() => withDefault)
-  );
+): string => {
+  const name = type && getCredentialNameByType(isItwCredential)[type];
+  return name || type || "";
+};
 
 export const useBorderColorByStatus: () => {
   [key in ItwCredentialStatus]: string;
