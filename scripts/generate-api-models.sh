@@ -1,6 +1,6 @@
 #!/bin/bash
 
-IO_BACKEND_VERSION=v17.5.2
+IO_BACKEND_VERSION=v20.0.0
 # need to change after merge on io-services-metadata
 IO_SERVICES_METADATA_VERSION=1.0.98
 # Session manager version
@@ -17,8 +17,8 @@ IO_BACKEND_VERSION_CGN_CDC=v19.0.0
 
 declare -a apis=(
   # Backend APIs
-  "./definitions/backend/communication https://raw.githubusercontent.com/pagopa/io-backend/c880dd0fa6f6e17287f63f1543c8bc0b7e9f5b38/openapi/generated/api_communication.yaml"
-  "./definitions/backend/identity      https://raw.githubusercontent.com/pagopa/io-backend/c880dd0fa6f6e17287f63f1543c8bc0b7e9f5b38/openapi/generated/api_identity.yaml"
+  "./definitions/backend/communication https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/openapi/generated/api_communication.yaml"
+  "./definitions/backend/identity      https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/openapi/generated/api_identity.yaml"
   # pagoPA APIs
   "./definitions/pagopa assets/paymentManager/spec.json"
   "./definitions/pagopa/walletv2 https://raw.githubusercontent.com/pagopa/io-services-metadata/$IO_SERVICES_METADATA_VERSION/bonus/specs/bpd/pm/walletv2.json"
