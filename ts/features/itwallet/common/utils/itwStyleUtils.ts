@@ -60,11 +60,6 @@ const getLegacyThemeColorByCredentialType = (
         backgroundColor: "#F2E4CE",
         textColor: IOColors.black
       };
-    case CredentialType.AGE_VERIFICATION:
-      return {
-        backgroundColor: "#CDD2FC",
-        textColor: IOColors.black
-      };
     case CredentialType.PID:
     default:
       return {
