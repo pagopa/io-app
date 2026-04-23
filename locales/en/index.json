@@ -2175,6 +2175,7 @@
             "showFront": "Show front",
             "showBack": "Show back"
           },
+          "openCardDocument": "Open document copy",
           "documentDataTitle": "Document data",
           "boolClaim": {
             "false": "No"
