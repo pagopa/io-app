@@ -1,44 +1,31 @@
 import { ImageSourcePropType } from "react-native";
 import { CredentialType } from "../../utils/itwMocksUtils";
+import { useItWalletTheme } from "../../utils/theme";
 
-export type SolidCardBackground = {
-  type: "solid";
-  color: string;
-};
-
-/**
- * Up to 5 color stops, distributed evenly along the gradient line.
- * At least 2 colors are required for a meaningful gradient.
- */
-type GradientColors =
-  | [string, string]
-  | [string, string, string]
-  | [string, string, string, string]
-  | [string, string, string, string, string];
-
-export type GradientCardBackground = {
-  type: "gradient";
+export type CredentialCardBackground<L extends number = 1 | 2 | 3 | 4 | 5> = {
   /**
-   * Angle in degrees following the CSS convention:
-   * 0° = bottom → top, 90° = left → right, 135° = top-left → bottom-right.
+   * Up to 5 color stops, distributed evenly along the gradient line.
+   * At least 2 colors are required for a meaningful gradient.
    */
-  angle: number;
-  colors: GradientColors;
+  colors: [string, ...Array<string>] & { length: L };
   /**
    * Optional positions for each color stop, as values between 0 and 1.
    * When omitted the stops are distributed evenly (equivalent to CSS behaviour).
    * Must have the same length as `colors` when provided.
    */
-  positions?: Array<number>;
+  positions?: [number, ...Array<number>] & { length: L };
+  /**
+   * Angle in degrees following the CSS convention:
+   * 0° = bottom → top, 90° = left → right, 135° = top-left → bottom-right.
+   */
+  angle?: number;
 };
-
-export type CardBackgroundConfig = SolidCardBackground | GradientCardBackground;
 
 export type CredentialCardConfig = {
   /**
    * Card background: either a solid colour or a gradient (angle + up to 5 stops).
    */
-  background: CardBackgroundConfig;
+  background: CredentialCardBackground;
   /**
    * Color used for the credential title text.
    */
@@ -59,18 +46,6 @@ export type CredentialCardConfig = {
 };
 
 /**
- * TODO: Tentative, to be updated with https://pagopa.atlassian.net/browse/SIW-4077
- */
-export const DEFAULT_CREDENTIAL_CARD_CONFIG: CredentialCardConfig = {
-  background: {
-    type: "solid",
-    color: "#F2F1F0"
-  },
-  titleColor: "#33302B",
-  borderColor: "#33302B"
-};
-
-/**
  * Per-credential static card configuration.
  * Background, title color and border color are set explicitly here.
  * An optional `watermarkLayer` PNG image can be provided to render a
@@ -83,10 +58,9 @@ export const credentialCardConfigs: Partial<
 > = {
   [CredentialType.PID]: {
     background: {
-      type: "gradient",
-      angle: 217,
       colors: ["#EAF6FF", "#F6FBFF", "#EAF6FF", "#F9F9F9", "#EAF6FF"],
-      positions: [0.0349, 0.2514, 0.4646, 0.7143, 0.9425]
+      positions: [0.0349, 0.2514, 0.4646, 0.7143, 0.9425],
+      angle: 217
     },
     titleColor: "#115486",
     borderColor: "#4F99E2",
@@ -95,10 +69,9 @@ export const credentialCardConfigs: Partial<
   },
   [CredentialType.DRIVING_LICENSE]: {
     background: {
-      type: "gradient",
-      angle: 249,
       colors: ["#FADCF5", "#FFECFC", "#FADCF5", "#FFECFC"],
-      positions: [0.0041, 0.3614, 0.6716, 1.0251]
+      positions: [0.0041, 0.3614, 0.6716, 1.0251],
+      angle: 249
     },
     titleColor: "#652035",
     borderColor: "#D674A9",
@@ -107,10 +80,9 @@ export const credentialCardConfigs: Partial<
   },
   [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: {
     background: {
-      type: "gradient",
-      angle: 249,
       colors: ["#B7E1FA", "#D0EDFF", "#B7E1FA", "#D0EDFF"],
-      positions: [0.0031, 0.3686, 0.6772, 0.9904]
+      positions: [0.0031, 0.3686, 0.6772, 0.9904],
+      angle: 249
     },
     titleColor: "#032D5C",
     borderColor: "#449DCF",
@@ -119,8 +91,7 @@ export const credentialCardConfigs: Partial<
   },
   [CredentialType.EUROPEAN_DISABILITY_CARD]: {
     background: {
-      type: "solid",
-      color: "#D6EAF7"
+      colors: ["#D6EAF7"]
     },
     titleColor: "#17406F",
     borderColor: "#6B9BB6",
@@ -129,10 +100,31 @@ export const credentialCardConfigs: Partial<
   }
 };
 
+export const useCredentialConfiguration = (credentialType: string) => {
+  const theme = useItWalletTheme();
+
+  const config = credentialCardConfigs[credentialType] ??
+    credentialCardConfigs[credentialType] ?? {
+      background: {
+        colors: ["#F2F1F0"]
+      },
+      titleColor: "#33302B",
+      borderColor: "#33302B"
+    };
+
+  return config;
+};
+
 export const getCredentialCardConfig = (
   credentialType: string
 ): CredentialCardConfig =>
-  credentialCardConfigs[credentialType] ?? DEFAULT_CREDENTIAL_CARD_CONFIG;
+  credentialCardConfigs[credentialType] ?? {
+    background: {
+      colors: ["#F2F1F0"]
+    },
+    titleColor: "#33302B",
+    borderColor: "#33302B"
+  };
 
 /**
  * Returns the representative background color for a credential card config.
@@ -141,7 +133,4 @@ export const getCredentialCardConfig = (
  */
 export const getCredentialBackgroundColor = (
   config: CredentialCardConfig
-): string =>
-  config.background.type === "solid"
-    ? config.background.color
-    : config.background.colors[0];
+): string => config.background.colors[0];

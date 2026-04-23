@@ -1,5 +1,5 @@
 import { LinearGradient, Rect, vec } from "@shopify/react-native-skia";
-import { CardBackgroundConfig } from "./config";
+import { CredentialCardConfig } from "./config";
 
 /**
  * Computes the Skia LinearGradient start/end vectors for a given angle
@@ -26,7 +26,7 @@ export const getGradientVectors = (
 };
 
 type CredentialCardSkiaBackgroundProps = {
-  bg: CardBackgroundConfig;
+  bg: CredentialCardConfig["background"];
   width: number;
   height: number;
 };
@@ -40,11 +40,7 @@ export const CredentialCardSkiaBackground = ({
   width,
   height
 }: CredentialCardSkiaBackgroundProps) => {
-  if (bg.type === "solid") {
-    return <Rect x={0} y={0} width={width} height={height} color={bg.color} />;
-  }
-
-  const { start, end } = getGradientVectors(bg.angle, width, height);
+  const { start, end } = getGradientVectors(bg.angle || 0, width, height);
   return (
     <Rect x={0} y={0} width={width} height={height}>
       <LinearGradient
