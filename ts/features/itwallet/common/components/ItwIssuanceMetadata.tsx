@@ -14,7 +14,7 @@ import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selec
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
 import { isItwCredential } from "../utils/itwCredentialUtils.ts";
 import { getAuthSource, getItwAuthSource } from "../utils/itwMetadataUtils.ts";
-import { CredentialType } from "../utils/itwMocksUtils.ts";
+import { CredentialType } from "../utils/itwMocksUtils";
 import { CredentialMetadata } from "../utils/itwTypesUtils.ts";
 
 type ItwIssuanceMetadataProps = {
