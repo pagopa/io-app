@@ -48,9 +48,8 @@ export type CredentialCardConfig = {
 /**
  * Per-credential static card configuration.
  * Background, title color and border color are set explicitly here.
- * An optional `watermarkLayer` PNG image can be provided to render a
- * watermark overlay on top of the background.
- * TODO: these configurations are tentative, will be updated once the design will be finalized
+ * An optional `overlay` PNG image can be provided to render an overlay on top of the background.
+ *
  * ADD MORE CONFIGURATIONS HERE IF NEEDED, ONLY FOR STATIC CREDENTIALS
  */
 export const credentialCardConfigs: Partial<

@@ -9,20 +9,20 @@ import {
 } from "@pagopa/io-app-design-system";
 import { memo, useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import ItwAvatar from "../../../../../../img/features/itWallet/brand/itw_avatar.svg";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar.tsx";
 import { useIOSelector } from "../../../../../store/hooks.ts";
-import ItwAvatar from "../../../../../../img/features/itWallet/brand/itw_avatar.svg";
 import { ItwCredentialDetailCard } from "../../../common/components/ItwCredentialDetailCard.tsx";
-import { getItwAuthSource } from "../../../common/utils/itwMetadataUtils.ts";
 import {
   getCredentialNameFromType,
   tagPropsByStatus
 } from "../../../common/utils/itwCredentialUtils.ts";
+import { getItwAuthSource } from "../../../common/utils/itwMetadataUtils.ts";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { useThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
-import { itwCredentialsCatalogueByTypesSelector } from "../../../credentialsCatalogue/store/selectors";
 import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
+import { itwCredentialsCatalogueByTypesSelector } from "../../../credentialsCatalogue/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { useItwDisplayCredentialStatus } from "../hooks/useItwDisplayCredentialStatus";
 import { ItwPresentationCredentialCard } from "./ItwPresentationCredentialCard.tsx";
@@ -93,11 +93,7 @@ const ItwPresentationDetailsHeader = ({
             color: IOColors["blueIO-850"]
           }}
         >
-          {getCredentialNameFromType(
-            credential.credentialType,
-            "",
-            withL3Design
-          )}
+          {getCredentialNameFromType(credential.credentialType, withL3Design)}
         </H2>
         {authSource && (
           <Body

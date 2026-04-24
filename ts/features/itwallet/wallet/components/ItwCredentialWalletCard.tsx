@@ -12,9 +12,10 @@ import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selec
 import { ITW_ROUTES } from "../../navigation/routes";
 
 export type ItwCredentialWalletCardProps = ItwCredentialCard & {
-  isPreview?: false; // Cards in wallet cannot be in preview mode
-  onPress?: () => void; // Optional onPress to override press functionality
-  withItwDesign?: boolean; // Optional override to force the use of the new Itw design, used for testing purposes
+  /* Optional onPress to override press functionality */
+  onPress?: () => void;
+  /* Optional override to force the use of the new Itw design, used for testing purposes */
+  withItwDesign?: boolean;
 };
 
 const WrappedItwCredentialCard = (props: ItwCredentialWalletCardProps) => {

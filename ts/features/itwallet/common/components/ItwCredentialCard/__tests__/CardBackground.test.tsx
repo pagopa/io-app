@@ -1,58 +1,24 @@
 import { render } from "@testing-library/react-native";
-import { Provider } from "react-redux";
-import configureMockStore from "redux-mock-store";
-import { applicationChangeState } from "../../../../../../store/actions/application";
-import { appReducer } from "../../../../../../store/reducers";
-import { GlobalState } from "../../../../../../store/reducers/types";
-import { CredentialType } from "../../../utils/itwMocksUtils";
-import { CardBackground } from "../CardBackground.tsx";
-import {
-  getCredentialBackgroundColor,
-  getCredentialCardConfig
-} from "../config.ts";
-import { CardColorScheme } from "../types";
+import { CredentialType } from "../../../utils/itwMocksUtils.ts";
+import { CardBackground, LegacyCardBackground } from "../CardBackground.tsx";
+import { CardColorScheme } from "../types.ts";
 
 describe("CardBackground", () => {
-  it.each([
-    ["mDL", "default"],
-    ["mDL", "faded"],
-    ["mDL", "greyscale"],
-    ["EuropeanDisabilityCard", "default"],
-    ["EuropeanDisabilityCard", "faded"],
-    ["EuropeanDisabilityCard", "greyscale"],
-    ["EuropeanHealthInsuranceCard", "default"],
-    ["EuropeanHealthInsuranceCard", "faded"],
-    ["EuropeanHealthInsuranceCard", "greyscale"],
-    ["education_degree", "default"],
-    ["education_degree", "faded"],
-    ["education_degree", "greyscale"],
-    ["education_enrollment", "default"],
-    ["education_enrollment", "faded"],
-    ["education_enrollment", "greyscale"],
-    ["residency", "default"],
-    ["residency", "faded"],
-    ["residency", "greyscale"],
-    ["InvalidCredentialType", "default"]
+  test.each([
+    CredentialType.PID,
+    CredentialType.DRIVING_LICENSE,
+    CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
+    CredentialType.EUROPEAN_DISABILITY_CARD,
+    CredentialType.EDUCATION_ATTENDANCE,
+    CredentialType.EDUCATION_DEGREE,
+    CredentialType.EDUCATION_DIPLOMA,
+    CredentialType.EDUCATION_ENROLLMENT,
+    CredentialType.RESIDENCY
   ])(
-    "should render correctly %s in state %s",
-    (credentialType, colorScheme) => {
-      const globalState = appReducer(
-        undefined,
-        applicationChangeState("active")
-      );
-
-      const mockStore = configureMockStore<GlobalState>();
-      const store: ReturnType<typeof mockStore> = mockStore({
-        ...globalState
-      } as GlobalState);
-
+    "should correctly render background for credential type [%s]",
+    credentialType => {
       const component = render(
-        <Provider store={store}>
-          <CardBackground
-            credentialType={credentialType}
-            colorScheme={colorScheme as CardColorScheme}
-          />
-        </Provider>
+        <CardBackground credentialType={credentialType} />
       ).toJSON();
 
       expect(component).toMatchSnapshot();
@@ -60,45 +26,28 @@ describe("CardBackground", () => {
   );
 });
 
-describe("credential card config", () => {
-  it("should expose static border and title colors for mDL", () => {
-    const config = getCredentialCardConfig(CredentialType.DRIVING_LICENSE);
-    expect(getCredentialBackgroundColor(config)).toBe("#FADCF5");
-    expect(config.borderColor).toBe("#D674A9");
-    expect(config.titleColor).toBe("#652035");
-  });
+describe("LegacyCardBackground", () => {
+  it.each([
+    [CredentialType.DRIVING_LICENSE, "default"],
+    [CredentialType.DRIVING_LICENSE, "faded"],
+    [CredentialType.DRIVING_LICENSE, "greyscale"],
+    [CredentialType.EUROPEAN_DISABILITY_CARD, "default"],
+    [CredentialType.EUROPEAN_DISABILITY_CARD, "faded"],
+    [CredentialType.EUROPEAN_DISABILITY_CARD, "greyscale"],
+    [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD, "default"],
+    [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD, "faded"],
+    [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD, "greyscale"]
+  ])(
+    "should correctly render background for credential type [%s] in state [%s]",
+    (credentialType, colorScheme) => {
+      const component = render(
+        <LegacyCardBackground
+          credentialType={credentialType}
+          colorScheme={colorScheme as CardColorScheme}
+        />
+      ).toJSON();
 
-  it("should expose static colors for PID", () => {
-    const config = getCredentialCardConfig(CredentialType.PID);
-    expect(getCredentialBackgroundColor(config)).toBe("#EAF6FF");
-    expect(config.titleColor).toBe("#115486");
-    expect(config.borderColor).toBe("#4F99E2");
-  });
-
-  it("should expose gradient angle and colors for PID", () => {
-    const config = getCredentialCardConfig(CredentialType.PID);
-    expect(config.background.type).toBe("gradient");
-    if (config.background.type === "gradient") {
-      expect(config.background.angle).toBe(217);
-      expect(config.background.colors).toEqual([
-        "#EAF6FF",
-        "#F6FBFF",
-        "#EAF6FF",
-        "#F9F9F9",
-        "#EAF6FF"
-      ]);
-      expect(config.background.positions).toEqual([
-        0.0349, 0.2514, 0.4646, 0.7143, 0.9425
-      ]);
+      expect(component).toMatchSnapshot();
     }
-  });
-
-  test.each([
-    CredentialType.PID,
-    CredentialType.DRIVING_LICENSE,
-    CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
-    CredentialType.EUROPEAN_DISABILITY_CARD
-  ])("should match snapshot for type [%s]", type => {
-    expect(getCredentialCardConfig(type)).toMatchSnapshot();
-  });
+  );
 });

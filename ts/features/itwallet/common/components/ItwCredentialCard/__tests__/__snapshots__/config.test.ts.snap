@@ -1,0 +1,165 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`credential card config should match snapshot for type [EuropeanDisabilityCard] 1`] = `
+{
+  "background": {
+    "colors": [
+      "#D6EAF7",
+    ],
+  },
+  "borderColor": "#6B9BB6",
+  "detailOverlay": {
+    "testUri": "../../../img/features/itWallet/cards/detailWatermarks/itw_dc_detail_watermark.png",
+  },
+  "overlay": {
+    "testUri": "../../../img/features/itWallet/cards/cardWatermarks/itw_dc_watermark.png",
+  },
+  "titleColor": "#17406F",
+}
+`;
+
+exports[`credential card config should match snapshot for type [EuropeanHealthInsuranceCard] 1`] = `
+{
+  "background": {
+    "angle": 249,
+    "colors": [
+      "#B7E1FA",
+      "#D0EDFF",
+      "#B7E1FA",
+      "#D0EDFF",
+    ],
+    "positions": [
+      0.0031,
+      0.3686,
+      0.6772,
+      0.9904,
+    ],
+  },
+  "borderColor": "#449DCF",
+  "detailOverlay": {
+    "testUri": "../../../img/features/itWallet/cards/detailWatermarks/itw_ts_detail_watermark.png",
+  },
+  "overlay": {
+    "testUri": "../../../img/features/itWallet/cards/cardWatermarks/itw_ts_watermark.png",
+  },
+  "titleColor": "#032D5C",
+}
+`;
+
+exports[`credential card config should match snapshot for type [PersonIdentificationData] 1`] = `
+{
+  "background": {
+    "angle": 217,
+    "colors": [
+      "#EAF6FF",
+      "#F6FBFF",
+      "#EAF6FF",
+      "#F9F9F9",
+      "#EAF6FF",
+    ],
+    "positions": [
+      0.0349,
+      0.2514,
+      0.4646,
+      0.7143,
+      0.9425,
+    ],
+  },
+  "borderColor": "#4F99E2",
+  "detailOverlay": {
+    "testUri": "../../../img/features/itWallet/cards/detailWatermarks/itw_pid_detail_watermark.png",
+  },
+  "overlay": {
+    "testUri": "../../../img/features/itWallet/cards/cardWatermarks/itw_pid_watermark.png",
+  },
+  "titleColor": "#115486",
+}
+`;
+
+exports[`credential card config should match snapshot for type [education_attendance] 1`] = `
+{
+  "background": {
+    "colors": [
+      "#F2F1F0",
+    ],
+  },
+  "borderColor": "#33302B",
+  "titleColor": "#33302B",
+}
+`;
+
+exports[`credential card config should match snapshot for type [education_degree] 1`] = `
+{
+  "background": {
+    "colors": [
+      "#F2F1F0",
+    ],
+  },
+  "borderColor": "#33302B",
+  "titleColor": "#33302B",
+}
+`;
+
+exports[`credential card config should match snapshot for type [education_diploma] 1`] = `
+{
+  "background": {
+    "colors": [
+      "#F2F1F0",
+    ],
+  },
+  "borderColor": "#33302B",
+  "titleColor": "#33302B",
+}
+`;
+
+exports[`credential card config should match snapshot for type [education_enrollment] 1`] = `
+{
+  "background": {
+    "colors": [
+      "#F2F1F0",
+    ],
+  },
+  "borderColor": "#33302B",
+  "titleColor": "#33302B",
+}
+`;
+
+exports[`credential card config should match snapshot for type [mDL] 1`] = `
+{
+  "background": {
+    "angle": 249,
+    "colors": [
+      "#FADCF5",
+      "#FFECFC",
+      "#FADCF5",
+      "#FFECFC",
+    ],
+    "positions": [
+      0.0041,
+      0.3614,
+      0.6716,
+      1.0251,
+    ],
+  },
+  "borderColor": "#D674A9",
+  "detailOverlay": {
+    "testUri": "../../../img/features/itWallet/cards/detailWatermarks/itw_mdl_detail_watermark.png",
+  },
+  "overlay": {
+    "testUri": "../../../img/features/itWallet/cards/cardWatermarks/itw_mdl_watermark.png",
+  },
+  "titleColor": "#652035",
+}
+`;
+
+exports[`credential card config should match snapshot for type [residency] 1`] = `
+{
+  "background": {
+    "colors": [
+      "#F2F1F0",
+    ],
+  },
+  "borderColor": "#33302B",
+  "titleColor": "#33302B",
+}
+`;
