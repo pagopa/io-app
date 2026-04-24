@@ -4,10 +4,7 @@ import { StatusBarStyle } from "react-native";
 import { HeaderSecondLevelHookProps } from "../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../store/hooks";
 import { getLuminance } from "../../../../utils/color";
-import {
-  getCredentialCardConfig,
-  getCredentialBackgroundColor
-} from "../components/ItwCredentialCard/config";
+import { getCredentialCardConfig } from "../components/ItwCredentialCard/config";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { getCredentialNameFromType } from "./itwCredentialUtils";
 import { CredentialType } from "./itwMocksUtils";
@@ -74,12 +71,13 @@ export const getThemeColorByCredentialType = (
   withL3Design: boolean
 ): CredentialTheme => {
   const cardConfig = getCredentialCardConfig(credentialType);
-  const colors = withL3Design
-    ? {
-        backgroundColor: getCredentialBackgroundColor(cardConfig),
-        textColor: cardConfig.titleColor
-      }
-    : getLegacyThemeColorByCredentialType(credentialType);
+  const colors =
+    withL3Design && cardConfig
+      ? {
+          backgroundColor: cardConfig.color,
+          textColor: cardConfig.titleColor
+        }
+      : getLegacyThemeColorByCredentialType(credentialType);
 
   const isDarker = getLuminance(colors.backgroundColor) < 0.5;
 

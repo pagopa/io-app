@@ -25,7 +25,7 @@ import { useThemeColorByCredentialType } from "../../utils/itwStyleUtils";
 import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
 import { ItWalletIdLogo } from "../ItWalletIdLogo";
 import { CardBackground, LegacyCardBackground } from "./CardBackground";
-import { getCredentialCardConfig } from "./config";
+import { useCredentialConfiguration } from "./config";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
 import { CardColorScheme } from "./types";
 
@@ -71,9 +71,8 @@ export const ItwCredentialCard = ({
   );
   const ioTheme = useIOTheme();
   const status = useItwDisplayCredentialStatus(credentialStatus);
-  const withL3Design = true;
   const borderColorMap = useBorderColorByStatus();
-  const cardConfig = getCredentialCardConfig(credentialType);
+  const cardConfig = useCredentialConfiguration(credentialType);
 
   const statusTagProps = useMemo<Tag | undefined>(() => {
     if (needsItwUpgrade) {
@@ -119,21 +118,19 @@ export const ItwCredentialCard = ({
     };
   }, [cardConfig, status, needsItwUpgrade]);
 
-  const hasCredentialBorderColor = withL3Design && status === "valid";
-
   const appBackgroundColor = IOColors[ioTheme["appBackground-primary"]];
 
   return (
     <View
       style={[
         styles.cardWrapper,
-        hasCredentialBorderColor && {
+        status === "valid" && {
           boxShadow: `0 0 0 2px ${appBackgroundColor}`
         }
       ]}
     >
       <View style={styles.cardContainer}>
-        <CardBackground credentialType={credentialType} />
+        <CardBackground {...cardConfig} />
         <View style={styles.header}>
           <HStack space={16}>
             {credentialType === CredentialType.PID ? (
