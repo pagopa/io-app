@@ -154,6 +154,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
       "catalogue": {
         "kind": "PotNone",
       },
+      "isEnabledForCredentialsList": false,
     },
     "environment": {
       "env": "prod",
@@ -184,6 +185,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
     },
   },
   "landingBanners": {
+    "CGN_ENGAGEMENT_BANNER": true,
     "ITW_DISCOVERY": true,
     "IT_WALLET_DISCOVERY": true,
     "LV_EXPIRATION_REMINDER": true,
