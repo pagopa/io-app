@@ -71,6 +71,20 @@ describe("isFciSecurityLevelCheckEnabledSelector", () => {
       )
     ).toBe(true);
   });
+
+  it("returns true when both min_app_version gates are satisfied (Security Level min version Equals App version)", () => {
+    mockAppVersion("2.0.0.0");
+    expect(
+      isFciSecurityLevelCheckEnabledSelector(
+        makeState({
+          min_app_version: { ios: "1.0.0.0", android: "1.0.0.0" },
+          security_level_check: {
+            min_app_version: { ios: "2.0.0.0", android: "2.0.0.0" }
+          }
+        })
+      )
+    ).toBe(true);
+  });
 });
 
 describe("fciSecurityLevelCheckHelpCenterUrlSelector", () => {
