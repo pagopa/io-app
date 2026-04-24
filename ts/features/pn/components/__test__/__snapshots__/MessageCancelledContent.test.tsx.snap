@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid notice code, empty payments 1`] = `
 <View

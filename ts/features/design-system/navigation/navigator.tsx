@@ -38,6 +38,7 @@ import { DSForceScrollDownViewCustomSlot } from "../core/DSForceScrollDownViewCu
 import { DSForceScrollDownViewTitleTransition } from "../core/DSForceScrollDownViewTitleTransition";
 import { DSFullScreenModal } from "../core/DSFullScreenModal";
 import { DSHapticFeedback } from "../core/DSHapticFeedback";
+import { DSHapticFeedbackPulsar } from "../core/DSHapticFeedbackPulsar";
 import { DSHeaderFirstLevel } from "../core/DSHeaderFirstLevel";
 import { DSHeaderSecondLevel } from "../core/DSHeaderSecondLevel";
 import { DSHeaderSecondLevelWithSectionTitle } from "../core/DSHeaderSecondLevelWithSectionTitle";
@@ -210,6 +211,15 @@ export const DesignSystemNavigator = () => {
           component={DSHapticFeedback}
           options={{
             headerTitle: DESIGN_SYSTEM_ROUTES.FOUNDATION.HAPTIC_FEEDBACK.title
+          }}
+        />
+
+        <Stack.Screen
+          name={DESIGN_SYSTEM_ROUTES.FOUNDATION.HAPTIC_FEEDBACK_PULSAR.route}
+          component={DSHapticFeedbackPulsar}
+          options={{
+            headerTitle:
+              DESIGN_SYSTEM_ROUTES.FOUNDATION.HAPTIC_FEEDBACK_PULSAR.title
           }}
         />
 

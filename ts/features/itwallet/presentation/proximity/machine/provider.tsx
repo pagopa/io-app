@@ -21,8 +21,8 @@ export const ItwProximityMachineProvider = ({
   const env = getEnv(useIOSelector(selectItwEnv));
 
   const proximityMachine = itwProximityMachine.provide({
-    actions: createProximityActionsImplementation(navigation),
-    actors: createProximityActorsImplementation(env, store),
+    actions: createProximityActionsImplementation(navigation, store),
+    actors: createProximityActorsImplementation(env),
     guards: createProximityGuardsImplementation()
   });
 

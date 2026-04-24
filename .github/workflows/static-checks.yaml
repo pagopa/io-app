@@ -3,6 +3,8 @@ on:
   - pull_request
   - merge_group
   - workflow_call
+permissions:
+  contents: read
 jobs:
   static-checks:
     name: Typescript lint and prettier
@@ -24,7 +26,6 @@ jobs:
   unit-test:
     name: Unit tests
     runs-on: ubuntu-latest
-    environment: dev
     needs: static-checks
     strategy:
       matrix:
@@ -32,20 +33,10 @@ jobs:
     steps:
       - id: checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - id: setup-node
-        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+      - id: setup
+        uses: ./.github/actions/setup-composite
         with:
-          node-version-file: ".node-version"
-      - id: yarn-cache
-        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
-        env:
-          cache-name: cache-node-modules
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
-      - id: install-packages
-        run: yarn install --frozen-lockfile
+          generate-api: "false"
       - id: download-api-client
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
@@ -53,7 +44,31 @@ jobs:
           path: definitions/
       - id: run-test
         run: yarn test:ci --shard=${{ matrix.shard }}/${{ strategy.job-total }}
-      - id: codecov-script        
+      - id: upload-coverage
+        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: coverage-${{ matrix.shard }}
+          path: coverage/lcov.info
+          retention-days: 1
+  codecov:
+    name: Codecov
+    runs-on: ubuntu-latest
+    environment: dev
+    permissions:
+      contents: read
+      deployments: write
+    needs: unit-test
+    if: always()
+    steps:
+      - id: checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: download-coverage
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          pattern: coverage-*
+          path: coverage/
+      - id: codecov-script
         uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          directory: coverage/

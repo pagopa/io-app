@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`ItwDiscoveryBanner should match snapshot with 'onboarding' banner type 1`] = `
 <View

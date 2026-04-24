@@ -1,22 +1,29 @@
 import I18n from "i18next";
-import { FunctionComponent } from "react";
-import { connect } from "react-redux";
+import { FunctionComponent, useCallback } from "react";
 import { isError, isLoading } from "../../../../../../common/model/RemoteValue";
 import LoadingScreenContent from "../../../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../../../components/screens/OperationResultScreenContent";
-import { Dispatch } from "../../../../../../store/actions/types";
-import { GlobalState } from "../../../../../../store/reducers/types";
+import { useIODispatch, useIOSelector } from "../../../../../../store/hooks";
 import {
   cgnEycaActivation,
   cgnEycaActivationCancel
 } from "../../../store/actions/eyca/activation";
 import { eycaActivationStatusSelector } from "../../../store/reducers/eyca/activation";
 
-type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
+const EycaActivationLoading: FunctionComponent = () => {
+  const dispatch = useIODispatch();
+  const eycaActivation = useIOSelector(eycaActivationStatusSelector);
+  const isLoadingState = isLoading(eycaActivation) || !isError(eycaActivation);
 
-const EycaActivationLoading: FunctionComponent<Props> = (props: Props) =>
-  props.isLoading ? (
+  const onRetry = useCallback(() => {
+    dispatch(cgnEycaActivation.request());
+  }, [dispatch]);
+
+  const onCancel = useCallback(() => {
+    dispatch(cgnEycaActivationCancel());
+  }, [dispatch]);
+
+  return isLoadingState ? (
     <LoadingScreenContent
       title={I18n.t("bonus.cgn.activation.eyca.loading.caption")}
       subtitle={I18n.t("bonus.cgn.activation.eyca.loading.subCaption")}
@@ -30,30 +37,16 @@ const EycaActivationLoading: FunctionComponent<Props> = (props: Props) =>
       subtitle={I18n.t("bonus.cgn.activation.eyca.error.body")}
       action={{
         label: I18n.t("global.buttons.retry"),
-        onPress: props.onRetry,
+        onPress: onRetry,
         testID: "eyca-activation-retry-button"
       }}
       secondaryAction={{
         label: I18n.t("global.buttons.cancel"),
-        onPress: props.onCancel,
+        onPress: onCancel,
         testID: "eyca-activation-cancel-button"
       }}
     />
   );
-
-const mapStateToProps = (state: GlobalState) => {
-  const eycaActivation = eycaActivationStatusSelector(state);
-  return {
-    isLoading: isLoading(eycaActivation) || !isError(eycaActivation)
-  };
 };
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  onRetry: () => dispatch(cgnEycaActivation.request()),
-  onCancel: () => dispatch(cgnEycaActivationCancel())
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(EycaActivationLoading);
+export default EycaActivationLoading;

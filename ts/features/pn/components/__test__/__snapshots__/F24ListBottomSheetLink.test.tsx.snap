@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`F24ListBottomSheetLink should match snapshot (0 items, opening source aar, user type mandatory) 1`] = `
 <View

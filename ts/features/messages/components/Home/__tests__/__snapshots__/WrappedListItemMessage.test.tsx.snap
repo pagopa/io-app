@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, category {"tag":"EU_COVID_CERT"}, read false, selected for archiviation/unarchiviation false 1`] = `
 <View

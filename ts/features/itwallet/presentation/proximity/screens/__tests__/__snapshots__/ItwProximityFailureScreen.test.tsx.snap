@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`ItwProximityFailureScreen should render failure screen for RELYING_PARTY_GENERIC 1`] = `
 <View
@@ -1223,8 +1223,13 @@ exports[`ItwProximityFailureScreen should render failure screen for TIMEOUT 1`] 
                                                   "duration": [MockFunction] {
                                                     "calls": [
                                                       [],
+                                                      [],
                                                     ],
                                                     "results": [
+                                                      {
+                                                        "type": "return",
+                                                        "value": 1,
+                                                      },
                                                       {
                                                         "type": "return",
                                                         "value": 1,
@@ -1234,8 +1239,13 @@ exports[`ItwProximityFailureScreen should render failure screen for TIMEOUT 1`] 
                                                   "fps": [MockFunction] {
                                                     "calls": [
                                                       [],
+                                                      [],
                                                     ],
                                                     "results": [
+                                                      {
+                                                        "type": "return",
+                                                        "value": 30,
+                                                      },
                                                       {
                                                         "type": "return",
                                                         "value": 30,

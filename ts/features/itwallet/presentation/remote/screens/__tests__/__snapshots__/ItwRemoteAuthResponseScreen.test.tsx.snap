@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`ItwRemoteAuthResponseScreen should match snapshot when a redirect_uri is available in same-device flow 1`] = `
 <View

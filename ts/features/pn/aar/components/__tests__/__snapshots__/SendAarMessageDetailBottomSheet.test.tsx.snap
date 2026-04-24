@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`BottomSheetContent doesn't render the website section and matches its snapshot when called with user type = mandatory) 1`] = `
 <View

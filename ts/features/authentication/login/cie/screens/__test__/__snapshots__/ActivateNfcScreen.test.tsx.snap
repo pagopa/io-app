@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`ActivateNfcScreen UI Rendering renders the screen with header, title, subtitle, and list items 1`] = `
 <View

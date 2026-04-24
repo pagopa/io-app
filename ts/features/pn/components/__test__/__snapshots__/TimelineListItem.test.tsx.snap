@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no history, link defined, source aar, type mandatory) 1`] = `
 <View

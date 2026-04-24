@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`SendAarNfcNotSupportedComponent should match the snapshot 1`] = `
 <View
@@ -945,7 +945,7 @@ exports[`SendAarNfcNotSupportedComponent should match the snapshot 1`] = `
                                 }
                                 testID="infoScreenBody"
                               >
-                                È richiesto un sistema operativo Android 6.0 o iOS 13 o superiori.
+                                È richiesto un sistema operativo Android 8 o iOS 15.1 o superiori.
                               </Text>
                             </View>
                           </View>

@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`LoadingScreenContent should match the snapshot with title, a subtitle, header hidden 1`] = `
 <View

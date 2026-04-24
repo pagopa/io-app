@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`LandingBannerPicker should correctly render a banner if passed a valid id: withBanner 1`] = `
 <View

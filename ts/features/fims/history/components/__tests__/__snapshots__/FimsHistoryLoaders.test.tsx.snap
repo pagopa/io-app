@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`fimsHistoryItemsFooter should match snapshot for show first divider == false , and render the divider 0 time(s) 1`] = `
 <View

@@ -33,6 +33,7 @@ export type IdRequestFailure = {
 
 export type IdUnexpectedFailure = {
   reason: unknown;
+  origin?: string;
   type: string;
   itw_flow: ItwFlow;
 };
@@ -40,6 +41,7 @@ export type IdUnexpectedFailure = {
 export type CredentialUnexpectedFailure = {
   credential: MixPanelCredential;
   reason: unknown;
+  origin?: string;
   type: string;
 };
 

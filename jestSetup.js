@@ -4,6 +4,7 @@
  * Set up of the testing environment
  */
 
+
 import mockAsyncStorage from "@react-native-async-storage/async-storage/jest/async-storage-mock";
 import mockClipboard from "@react-native-clipboard/clipboard/jest/clipboard-mock.js";
 import nodeFetch from "node-fetch";
@@ -35,6 +36,12 @@ jest.mock("react-native-haptic-feedback", () => ({
   trigger: jest.fn()
 }));
 
+jest.mock("react-native-pulsar", () => ({
+  Presets: {
+    System: new Proxy({}, { get: () => jest.fn() })
+  }
+}));
+
 // eslint-disable-next-line functional/immutable-data
 global.CanvasKit = {
   MakeCanvas: jest.fn(),
@@ -63,6 +70,7 @@ global.CanvasKit = {
   }))
 };
 
+jest.mock("react-native-quick-crypto", () => ({}));
 jest.mock("@pagopa/io-react-native-zendesk", () => mockZendesk);
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
 jest.mock("@react-native-community/push-notification-ios", () => jest.fn());
@@ -86,16 +94,11 @@ NativeModules.PlatformConstants = NativeModules.PlatformConstants || {
   forceTouchAvailable: false
 };
 
-// We need to override the global fetch and AbortController to make the tests
-// compatible with node-fetch
-
-const {
-  AbortController
-} = require("abortcontroller-polyfill/dist/cjs-ponyfill");
+// node-fetch is required instead of native fetch because @pagopa/ts-commons
+// abort error handling checks reason.type === "aborted" (node-fetch's shape),
+// which differs from native fetch's DOMException with name === "AbortError"
 // eslint-disable-next-line functional/immutable-data
 global.fetch = nodeFetch;
-// eslint-disable-next-line functional/immutable-data
-global.AbortController = AbortController;
 
 jest.mock("remark-directive", () => jest.fn());
 jest.mock("remark-rehype", () => jest.fn());
@@ -127,8 +130,6 @@ jest.mock("@gorhom/bottom-sheet", () => {
   };
 });
 
-jest.mock("@sentry/react-native");
-
 jest.mock("@pagopa/io-app-design-system", () => {
   const actual = jest.requireActual("@pagopa/io-app-design-system");
   const React = require("react");
@@ -140,18 +141,11 @@ jest.mock("@pagopa/io-app-design-system", () => {
   };
 });
 
-jest.mock("react-native-device-info", () => mockRNDeviceInfo);
-
 jest.mock("react-native-pdf", () => jest.fn());
 
 jest.mock("react-native-permissions", () =>
   require("react-native-permissions/mock")
 );
-
-const mockSubscription = {
-  callback: jest.fn(),
-  remove: jest.fn()
-};
 
 jest.mock("react-native", () => {
   const RN = jest.requireActual("react-native"); // use original implementation, which comes with mocks out of the box

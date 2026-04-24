@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill the list, and match snapshot for 1 accesses, historyLoading = false and historyExporting = false  1`] = `
 <View

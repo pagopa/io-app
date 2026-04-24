@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`] = `
 <View
@@ -3179,8 +3179,13 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                                   "duration": [MockFunction] {
                                                     "calls": [
                                                       [],
+                                                      [],
                                                     ],
                                                     "results": [
+                                                      {
+                                                        "type": "return",
+                                                        "value": 1,
+                                                      },
                                                       {
                                                         "type": "return",
                                                         "value": 1,
@@ -3190,8 +3195,13 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                                   "fps": [MockFunction] {
                                                     "calls": [
                                                       [],
+                                                      [],
                                                     ],
                                                     "results": [
+                                                      {
+                                                        "type": "return",
+                                                        "value": 30,
+                                                      },
                                                       {
                                                         "type": "return",
                                                         "value": 30,
