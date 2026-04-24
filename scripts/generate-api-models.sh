@@ -38,7 +38,7 @@ declare -a apis=(
   # CDN APIs
   "./definitions/content https://raw.githubusercontent.com/pagopa/io-services-metadata/$IO_SERVICES_METADATA_VERSION/definitions.yml"
   # Session Manager APIs
-  "./definitions/session_manager https://raw.githubusercontent.com/pagopa/io-auth-n-identity-domain/refs/tags/io-session-manager@$IO_SESSION_MANAGER_VERSION/apps/io-session-manager/api/external.yaml"
+  "./definitions/session_manager https://raw.githubusercontent.com/pagopa/io-auth-n-identity-domain/io-session-manager@$IO_SESSION_MANAGER_VERSION/apps/io-session-manager/api/external.yaml"
   # CGN APIs
   "./definitions/cgn https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION_CGN_CDC/openapi/generated/api_cgn_card_platform.yaml"
   "./definitions/cgn/merchants https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION_CGN_CDC/openapi/generated/api_cgn_search_platform.yaml"
@@ -63,8 +63,9 @@ done
 wait
 
 declare -a apisNoClient=(
+  # Backend APIs
   "./definitions/backend https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_public.yaml"
-  "./definitions/session_manager https://raw.githubusercontent.com/pagopa/io-auth-n-identity-domain/io-session-manager@$IO_SESSION_MANAGER_VERSION/apps/io-session-manager/api/external.yaml"
+  # PN APIs
   "./definitions/pn https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/openapi/consumed/api-piattaforma-notifiche.yaml"
 )
 
