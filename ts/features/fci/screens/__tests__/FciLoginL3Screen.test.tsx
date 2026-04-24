@@ -15,6 +15,7 @@ import {
   setActiveSessionLoginFlow
 } from "../../../authentication/activeSessionLogin/store/actions";
 import { IdpCIE } from "../../../authentication/login/hooks/useNavigateToLoginMethod";
+import * as remoteConfigSelectors from "../../store/selectors/remoteConfig";
 
 // Mock the NFC hook
 jest.mock("../../../pn/aar/hooks/useIsNfcFeatureAvailable");
@@ -22,18 +23,22 @@ jest.mock("../../../pn/aar/hooks/useIsNfcFeatureAvailable");
 const mockIsNfcAvailable =
   require("../../../pn/aar/hooks/useIsNfcFeatureAvailable").useIsNfcFeatureAvailable;
 
-const mockToastInfo = jest.fn();
+// Mock openWebUrl
+const mockOpenWebUrl = jest.fn();
+jest.mock("../../../../utils/url", () => ({
+  openWebUrl: jest.fn((url, onError) => mockOpenWebUrl(url, onError))
+}));
+
+const mockToastError = jest.fn();
 
 jest.mock("@pagopa/io-app-design-system", () => {
   const actual = jest.requireActual("@pagopa/io-app-design-system");
   return {
     ...actual,
-    useIOToast: () => ({
-      info: mockToastInfo,
-      success: jest.fn(),
-      error: jest.fn(),
-      warning: jest.fn()
-    })
+    IOToast: {
+      ...actual.IOToast,
+      error: jest.fn(() => mockToastError())
+    }
   };
 });
 
@@ -108,13 +113,52 @@ describe("FciLoginL3Screen", () => {
 
     const helpButton = component.getByTestId("FciLoginL3HelpButton");
     expect(helpButton).toBeDefined();
+  });
 
-    // Press the help button
+  it("should open help center URL when help button is pressed and URL is available", () => {
+    mockIsNfcAvailable.mockReturnValue(true);
+    const helpCenterUrl = "https://example.com/help";
+
+    jest
+      .spyOn(
+        remoteConfigSelectors,
+        "fciSecurityLevelCheckHelpCenterUrlSelector"
+      )
+      .mockReturnValue(helpCenterUrl);
+
+    const { component } = renderComponent();
+
+    const helpButton = component.getByTestId("FciLoginL3HelpButton");
+
     act(() => {
       fireEvent.press(helpButton);
     });
 
-    expect(mockToastInfo).toHaveBeenCalled();
+    expect(mockOpenWebUrl).toHaveBeenCalledWith(
+      helpCenterUrl,
+      expect.any(Function)
+    );
+  });
+
+  it("should not open help center URL when help button is pressed and URL is not available", () => {
+    mockIsNfcAvailable.mockReturnValue(true);
+
+    jest
+      .spyOn(
+        remoteConfigSelectors,
+        "fciSecurityLevelCheckHelpCenterUrlSelector"
+      )
+      .mockReturnValue(undefined);
+
+    const { component } = renderComponent();
+
+    const helpButton = component.getByTestId("FciLoginL3HelpButton");
+
+    act(() => {
+      fireEvent.press(helpButton);
+    });
+
+    expect(mockOpenWebUrl).not.toHaveBeenCalled();
   });
 });
 

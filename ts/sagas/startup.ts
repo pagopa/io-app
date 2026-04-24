@@ -49,7 +49,7 @@ import { isCgnEligibleByAgeSelector } from "../features/bonus/cgn/store/selector
 import {
   navigateAfterFinishedFciActiveSessionLoginFlowSaga,
   watchFciSaga
-} from "../features/fci/saga"
+} from "../features/fci/saga";
 import { watchFimsSaga } from "../features/fims/common/saga";
 import { startAndReturnIdentificationResult } from "../features/identification/sagas";
 import {

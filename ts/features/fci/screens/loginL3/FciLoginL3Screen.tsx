@@ -1,12 +1,8 @@
 import i18n from "i18next";
 import { useEffect } from "react";
-import {
-  Body,
-  HeaderSecondLevel,
-  useIOToast
-} from "@pagopa/io-app-design-system";
+import { Body, HeaderSecondLevel, IOToast } from "@pagopa/io-app-design-system";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIODispatch } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   setStartActiveSessionLogin,
   setIdpSelectedActiveSessionLogin,
@@ -20,13 +16,17 @@ import { FCI_ROUTES } from "../../navigation/routes";
 import { fciEndRequest } from "../../store/actions";
 import { useIsNfcFeatureAvailable } from "../../../pn/aar/hooks/useIsNfcFeatureAvailable";
 import { WhatsNewScreenContent } from "../../../../components/screens/WhatsNewScreenContent";
+import { fciSecurityLevelCheckHelpCenterUrlSelector } from "../../store/selectors/remoteConfig";
+import { openWebUrl } from "../../../../utils/url";
 
 export const FciLoginL3Screen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const isNfcAvailable = useIsNfcFeatureAvailable();
   const { setOptions } = useIONavigation();
-  const { info } = useIOToast();
+  const fciSecurityLevelCheckHelpCenterUrl = useIOSelector(
+    fciSecurityLevelCheckHelpCenterUrlSelector
+  );
 
   useEffect(() => {
     setOptions({
@@ -64,11 +64,12 @@ export const FciLoginL3Screen = () => {
     }
   };
 
-  // actually this action just shows a toast, but when the article is available, it will navigate to the help center
-  // TODO: add link to the article on help center when available
-  // Jira ref: https://pagopa.atlassian.net/browse/IEL-462
   const onNavigateToHelpCenter = () => {
-    info(i18n.t("features.fci.requestL3.toast"));
+    if (fciSecurityLevelCheckHelpCenterUrl) {
+      openWebUrl(fciSecurityLevelCheckHelpCenterUrl, () =>
+        IOToast.error(i18n.t("global.jserror.title"))
+      );
+    }
   };
 
   return (

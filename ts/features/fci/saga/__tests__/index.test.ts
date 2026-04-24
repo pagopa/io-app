@@ -30,7 +30,7 @@ import {
 import { fciQtspFilledDocumentUrlSelector } from "../../store/reducers/fciQtspFilledDocument";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import { spidLevelFromSessionInfoSelector } from "../../../authentication/common/store/selectors";
-import { fciSecurityLevelLocalFeatureFlagSelector } from "../../store/reducers/fciSecurityLevelReducer";
+import { isFciSecurityLevelCheckEnabledSelector } from "../../store/reducers/fciSecurityLevelReducer";
 import { FciDownloadPreviewDirectoryPath } from "../networking/handleDownloadDocument";
 import { mockQtspClausesMetadata } from "../../types/__mocks__/QtspClausesMetadata.mock";
 import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
@@ -123,31 +123,31 @@ describe("FCI Saga Tests", () => {
   });
 
   describe("watchFciStartSaga", () => {
-    it("should start standard flow when l3LocalFlag is false", () =>
+    it("should start standard flow when security level check is disabled", () =>
       expectSaga(watchFciStartSaga)
         .provide([
           [matchers.select(spidLevelFromSessionInfoSelector), "L2"],
-          [matchers.select(fciSecurityLevelLocalFeatureFlagSelector), false],
+          [matchers.select(isFciSecurityLevelCheckEnabledSelector), false],
           [matchers.call.fn(standardFciFlowStartSaga), undefined]
         ])
         .call(standardFciFlowStartSaga)
         .run());
 
-    it("should start standard flow when l3LocalFlag is true and spidLevel is L3", () =>
+    it("should start standard flow when security level check is enabled and spidLevel is L3", () =>
       expectSaga(watchFciStartSaga)
         .provide([
           [matchers.select(spidLevelFromSessionInfoSelector), "L3"],
-          [matchers.select(fciSecurityLevelLocalFeatureFlagSelector), true],
+          [matchers.select(isFciSecurityLevelCheckEnabledSelector), true],
           [matchers.call.fn(standardFciFlowStartSaga), undefined]
         ])
         .call(standardFciFlowStartSaga)
         .run());
 
-    it("should navigate to L3 login screen when l3LocalFlag is true and spidLevel is not L3", () =>
+    it("should navigate to L3 login screen when security level check is enabled and spidLevel is not L3", () =>
       expectSaga(watchFciStartSaga)
         .provide([
           [matchers.select(spidLevelFromSessionInfoSelector), "L2"],
-          [matchers.select(fciSecurityLevelLocalFeatureFlagSelector), true]
+          [matchers.select(isFciSecurityLevelCheckEnabledSelector), true]
         ])
         .call(
           NavigationService.dispatchNavigationAction,

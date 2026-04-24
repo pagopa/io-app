@@ -48,7 +48,7 @@ import { fciDocumentSignaturesSelector } from "../store/reducers/fciDocumentSign
 import { KeyInfo } from "../../lollipop/utils/crypto";
 import { createFciClient } from "../api/backendFci";
 import { spidLevelFromSessionInfoSelector } from "../../authentication/common/store/selectors";
-import { fciSecurityLevelLocalFeatureFlagSelector } from "../store/reducers/fciSecurityLevelReducer";
+import { isFciSecurityLevelCheckEnabledSelector } from "../store/reducers/fciSecurityLevelReducer";
 import { isTestEnv } from "../../../utils/environment";
 import { activeSessionLoginFlowSelector } from "../../authentication/activeSessionLogin/store/selectors";
 import { setActiveSessionLoginFlow } from "../../authentication/activeSessionLogin/store/actions";
@@ -207,9 +207,11 @@ function* standardFciFlowStartSaga(): SagaIterator {
  */
 function* watchFciStartSaga(): SagaIterator {
   const spidLevel = yield* select(spidLevelFromSessionInfoSelector);
-  const l3LocalFlag = yield* select(fciSecurityLevelLocalFeatureFlagSelector);
+  const isFciSecurityLevelCheckEnabled = yield* select(
+    isFciSecurityLevelCheckEnabledSelector
+  );
 
-  if (!l3LocalFlag) {
+  if (!isFciSecurityLevelCheckEnabled) {
     yield* call(standardFciFlowStartSaga);
     return;
   } else {
