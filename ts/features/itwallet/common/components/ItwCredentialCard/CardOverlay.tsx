@@ -4,13 +4,14 @@ import {
   Image as SkiaImage,
   useImage
 } from "@shopify/react-native-skia";
+import { memo } from "react";
 import { CredentialCardConfig } from "./config";
 
 type CardOverlayProps = Required<Pick<CredentialCardConfig, "overlay">> &
   Pick<CredentialCardConfig, "overlayBlend"> &
   Size;
 
-export const SkiaCardOverlay = (props: CardOverlayProps) => {
+export const SkiaCardOverlay = memo((props: CardOverlayProps) => {
   const image = useImage(props.overlay);
 
   return (
@@ -21,32 +22,31 @@ export const SkiaCardOverlay = (props: CardOverlayProps) => {
       y={0}
       width={props.width}
       height={props.height}
+      opacity={1}
       blendMode={props.overlayBlend ? "softLight" : undefined}
     />
   );
-};
+});
 
 type CardCornerOverlayProps = Pick<CredentialCardConfig, "color"> & Size;
 
-export const SkiaCardCornerOverlay = ({
-  width,
-  height,
-  color
-}: CardCornerOverlayProps) => {
-  const image = useImage(
-    require("../../../../../../img/features/itWallet/cards/overlay/card_corner.png")
-  );
+const CARD_CORNER_OVERLAY = require("../../../../../../img/features/itWallet/cards/overlay/card_corner.png");
 
-  return (
-    <SkiaImage
-      image={image}
-      fit="fill"
-      x={0}
-      y={0}
-      width={width}
-      height={height}
-    >
-      <BlendColor color={color} mode="srcIn" />
-    </SkiaImage>
-  );
-};
+export const SkiaCardCornerOverlay = memo(
+  ({ width, height, color }: CardCornerOverlayProps) => {
+    const image = useImage(CARD_CORNER_OVERLAY);
+
+    return (
+      <SkiaImage
+        image={image}
+        fit="fill"
+        x={0}
+        y={0}
+        width={width}
+        height={height}
+      >
+        <BlendColor color={color} mode="srcIn" />
+      </SkiaImage>
+    );
+  }
+);

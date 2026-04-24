@@ -9,8 +9,8 @@ import {
   useImage,
   vec
 } from "@shopify/react-native-skia";
-import { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { memo, useCallback, useEffect, useState } from "react";
+import { LayoutChangeEvent, StyleSheet, View } from "react-native";
 import Animated, {
   Easing,
   useAnimatedStyle,
@@ -20,7 +20,7 @@ import Animated, {
 import { CredentialType } from "../../utils/itwMocksUtils";
 import { SkiaCardCornerOverlay, SkiaCardOverlay } from "./CardOverlay";
 import { CredentialCardConfig } from "./config";
-import { CredentialCardSkiaBackground } from "./CredentialCardBackground";
+import { SkiaGradientBackground } from "./GradientBackground";
 import { CardColorScheme } from "./types";
 
 type Props = Pick<
@@ -28,48 +28,49 @@ type Props = Pick<
   "background" | "color" | "overlay" | "overlayBlend" | "showCornerOverlay"
 >;
 
-export const CardBackground = ({
-  background,
-  color,
-  overlay,
-  overlayBlend,
-  showCornerOverlay
-}: Props) => {
-  const [size, setSize] = useState<Size>({ width: 0, height: 0 });
+export const CardBackground = memo(
+  ({ background, color, overlay, overlayBlend, showCornerOverlay }: Props) => {
+    const [size, setSize] = useState<Size>({ width: 0, height: 0 });
 
-  return (
-    <View
-      style={[
-        StyleSheet.absoluteFillObject,
-        { backgroundColor: IOColors.white }
-      ]}
-      onLayout={event => {
-        setSize({
-          width: event.nativeEvent.layout.width,
-          height: event.nativeEvent.layout.height
-        });
-      }}
-    >
-      <Canvas style={StyleSheet.absoluteFillObject} pointerEvents="none">
-        <CredentialCardSkiaBackground
-          bg={background}
-          width={size.width}
-          height={size.height}
-        />
-        {showCornerOverlay && size.width > 0 && size.height > 0 && (
-          <SkiaCardCornerOverlay color={color} {...size} />
-        )}
-        {overlay && size.width > 0 && size.height > 0 && (
-          <SkiaCardOverlay
-            overlay={overlay}
-            overlayBlend={overlayBlend}
-            {...size}
+    const handleLayout = useCallback((event: LayoutChangeEvent) => {
+      const { width, height } = event.nativeEvent.layout;
+      // Avoid re-rendering when size hasn't changed (e.g., repeated layout events)
+      setSize(prev =>
+        prev.width === width && prev.height === height
+          ? prev
+          : { width, height }
+      );
+    }, []);
+
+    return (
+      <View
+        style={[
+          StyleSheet.absoluteFillObject,
+          { backgroundColor: IOColors.white }
+        ]}
+        onLayout={handleLayout}
+      >
+        <Canvas style={StyleSheet.absoluteFillObject} pointerEvents="none">
+          <SkiaGradientBackground
+            bg={background}
+            width={size.width}
+            height={size.height}
           />
-        )}
-      </Canvas>
-    </View>
-  );
-};
+          {showCornerOverlay && size.width > 0 && size.height > 0 && (
+            <SkiaCardCornerOverlay color={color} {...size} />
+          )}
+          {overlay && size.width > 0 && size.height > 0 && (
+            <SkiaCardOverlay
+              overlay={overlay}
+              overlayBlend={overlayBlend}
+              {...size}
+            />
+          )}
+        </Canvas>
+      </View>
+    );
+  }
+);
 
 const legacyCredentialCardBackgrounds: { [type: string]: number } = {
   [CredentialType.EUROPEAN_DISABILITY_CARD]: require("../../../../../../img/features/itWallet/cards/dc.png"),
@@ -101,19 +102,27 @@ export const LegacyCardBackground = ({
   const image = useImage(legacyCredentialCardBackgrounds[credentialType]);
   const loadingOverlayOpacity = useSharedValue(1);
 
+  // Read the shared value directly; animation is driven from useEffect below
   const loadingOverlayOpacityTransition = useAnimatedStyle(() => ({
-    opacity: withTiming(loadingOverlayOpacity.value, {
-      duration: 200,
-      easing: Easing.ease
-    })
+    opacity: loadingOverlayOpacity.value
   }));
 
   useEffect(() => {
     if (image && size.width > 0 && size.height > 0) {
       // eslint-disable-next-line functional/immutable-data
-      loadingOverlayOpacity.value = 0;
+      loadingOverlayOpacity.value = withTiming(0, {
+        duration: 200,
+        easing: Easing.ease
+      });
     }
   }, [image, loadingOverlayOpacity, size]);
+
+  const handleLayout = useCallback((event: LayoutChangeEvent) => {
+    const { width, height } = event.nativeEvent.layout;
+    setSize(prev =>
+      prev.width === width && prev.height === height ? prev : { width, height }
+    );
+  }, []);
 
   const gradientColors = legacyCredentialGradientColors[credentialType] || [
     IOColors["grey-100"],
@@ -126,12 +135,7 @@ export const LegacyCardBackground = ({
         StyleSheet.absoluteFillObject,
         { backgroundColor: IOColors.white }
       ]}
-      onLayout={event => {
-        setSize({
-          width: event.nativeEvent.layout.width,
-          height: event.nativeEvent.layout.height
-        });
-      }}
+      onLayout={handleLayout}
     >
       <Animated.View
         style={[

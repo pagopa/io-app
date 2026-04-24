@@ -1,4 +1,5 @@
 import { LinearGradient, Rect, vec } from "@shopify/react-native-skia";
+import { memo, useMemo } from "react";
 import { CredentialCardConfig } from "./config";
 
 /**
@@ -34,21 +35,23 @@ type CredentialCardSkiaBackgroundProps = {
 /**
  * Skia-renderable background layer for a credential card or detail header.
  * Must be rendered inside a Skia <Canvas>.
+ * Memoized to avoid re-renders when dimensions and background config are stable.
  */
-export const CredentialCardSkiaBackground = ({
-  bg,
-  width,
-  height
-}: CredentialCardSkiaBackgroundProps) => {
-  const { start, end } = getGradientVectors(bg.angle || 0, width, height);
-  return (
-    <Rect x={0} y={0} width={width} height={height}>
-      <LinearGradient
-        start={start}
-        end={end}
-        colors={bg.colors}
-        positions={bg.positions}
-      />
-    </Rect>
-  );
-};
+export const SkiaGradientBackground = memo(
+  ({ bg, width, height }: CredentialCardSkiaBackgroundProps) => {
+    const { start, end } = useMemo(
+      () => getGradientVectors(bg.angle || 0, width, height),
+      [bg.angle, width, height]
+    );
+    return (
+      <Rect x={0} y={0} width={width} height={height}>
+        <LinearGradient
+          start={start}
+          end={end}
+          colors={bg.colors}
+          positions={bg.positions}
+        />
+      </Rect>
+    );
+  }
+);

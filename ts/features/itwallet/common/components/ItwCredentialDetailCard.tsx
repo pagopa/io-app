@@ -2,23 +2,16 @@ import {
   IOVisualCostants,
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
-import {
-  Canvas,
-  Size,
-  Image as SkiaImage,
-  useImage
-} from "@shopify/react-native-skia";
+import { Canvas } from "@shopify/react-native-skia";
 import { PropsWithChildren, useState } from "react";
 import { LayoutChangeEvent, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { borderVariantByStatus } from "../utils/itwCredentialUtils";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils";
 import { ItwBrandedSkiaBorder } from "./ItwBrandedSkiaBorder";
-import { CredentialCardSkiaBackground } from "./ItwCredentialCard/CredentialCardBackground";
-import {
-  CredentialCardConfig,
-  useCredentialCardConfiguration
-} from "./ItwCredentialCard/config";
+import { SkiaCardOverlay } from "./ItwCredentialCard/CardOverlay";
+import { SkiaGradientBackground } from "./ItwCredentialCard/GradientBackground";
+import { useCredentialCardConfiguration } from "./ItwCredentialCard/config";
 
 type ItwCredentialDetailCardProps = PropsWithChildren<{
   credentialType: string;
@@ -64,7 +57,7 @@ export const ItwCredentialDetailCard = ({
     <View style={[styles.container, { paddingTop }]} onLayout={handleOnLayout}>
       <Canvas style={StyleSheet.absoluteFill}>
         {size.width > 0 && size.height > 0 && (
-          <CredentialCardSkiaBackground
+          <SkiaGradientBackground
             bg={background}
             width={size.width}
             height={size.height}
@@ -87,26 +80,6 @@ export const ItwCredentialDetailCard = ({
       </Canvas>
       <View style={styles.content}>{children}</View>
     </View>
-  );
-};
-
-type CardOverlayProps = Required<Pick<CredentialCardConfig, "overlay">> &
-  Pick<CredentialCardConfig, "overlayBlend"> &
-  Size;
-
-export const SkiaCardOverlay = (props: CardOverlayProps) => {
-  const image = useImage(props.overlay);
-
-  return (
-    <SkiaImage
-      image={image}
-      fit="cover"
-      x={0}
-      y={0}
-      width={props.width}
-      height={props.height}
-      blendMode={props.overlayBlend ? "softLight" : undefined}
-    />
   );
 };
 
