@@ -1,6 +1,7 @@
 import { useIOThemeContext } from "@pagopa/io-app-design-system";
+import { DataSourceParam } from "@shopify/react-native-skia";
 import { useMemo } from "react";
-import { ColorSchemeName, ImageSourcePropType } from "react-native";
+import { ColorSchemeName } from "react-native";
 import { hexToHsb, hsbToHex } from "../../../../../utils/color";
 import { fnv1a } from "../../../../../utils/hash";
 import { CredentialType } from "../../utils/itwMocksUtils";
@@ -45,12 +46,12 @@ export type CredentialCardConfig = {
   /**
    * Optional PNG image rendered as an overlay layer over the card.
    */
-  overlay?: ImageSourcePropType;
+  overlay?: DataSourceParam;
   /**
    * Optional PNG image rendered as an overlay layer in the credential detail
    * header.
    */
-  headerOverlay?: ImageSourcePropType;
+  headerOverlay?: DataSourceParam;
   /**
    * Wether to apply a blend mode to the overlay image (soft light)
    */
@@ -60,6 +61,28 @@ export type CredentialCardConfig = {
    */
   showCornerOverlay?: boolean;
 };
+
+/**
+ * Colors from which random configurations will be generated, based on the
+ * provided seed.
+ */
+const baseColors = ["#FFB357", "#CDD2FC", "#7AC1FA", "#003366"];
+
+/**
+ * Default overlay images for random configurations
+ * TODO: overlays should be based on credential taxonomy
+ */
+const baseOverlays: ReadonlyArray<DataSourceParam> = [
+  require("../../../../../../img/features/itWallet/cards/overlay/default/1.png"),
+  require("../../../../../../img/features/itWallet/cards/overlay/default/2.png"),
+  require("../../../../../../img/features/itWallet/cards/overlay/default/3.png"),
+  require("../../../../../../img/features/itWallet/cards/overlay/default/4.png"),
+  require("../../../../../../img/features/itWallet/cards/overlay/default/5.png"),
+  require("../../../../../../img/features/itWallet/cards/overlay/default/6.png"),
+  require("../../../../../../img/features/itWallet/cards/overlay/default/7.png"),
+  require("../../../../../../img/features/itWallet/cards/overlay/default/8.png"),
+  require("../../../../../../img/features/itWallet/cards/overlay/default/9.png")
+];
 
 /**
  * Per-credential static card configuration.
@@ -119,8 +142,6 @@ export const credentialCardConfigs: Partial<
   }
 };
 
-const defaultBaseColors = ["#FFB357", "#CDD2FC", "#7AC1FA", "#003366"];
-
 /**
  * Generates a credential card configuration based on the provided color and
  * taxonomy.
@@ -164,8 +185,7 @@ export const generateCredentialCardConfig = (
       colors: [backgroundColor, theme["card-background"]]
     },
     borderColor,
-    titleColor,
-    showCornerOverlay: true
+    titleColor
   };
 };
 
@@ -184,9 +204,19 @@ export const getRandomCredentialCardConfig = (
   seed: unknown,
   colorScheme?: ColorSchemeName
 ): CredentialCardConfig => {
-  const hash = fnv1a(String(seed));
-  const baseColorHex = defaultBaseColors[hash % defaultBaseColors.length];
-  return generateCredentialCardConfig(baseColorHex, colorScheme);
+  const colorHash = fnv1a(String(seed));
+  const colorHex = baseColors[colorHash % baseColors.length];
+
+  // TODO: overlay should be based on credential taxonomy.
+  const overlayHash = fnv1a(String(seed), 1);
+  const overlaySource = baseOverlays[overlayHash % baseOverlays.length];
+
+  return {
+    ...generateCredentialCardConfig(colorHex, colorScheme),
+    overlay: overlaySource,
+    overlayBlend: true,
+    showCornerOverlay: true
+  };
 };
 
 /**

@@ -1,6 +1,5 @@
 import { IOColors } from "@pagopa/io-app-design-system";
 import {
-  Blend,
   BlendColor,
   Canvas,
   LinearGradient,
@@ -11,7 +10,7 @@ import {
   vec
 } from "@shopify/react-native-skia";
 import { useEffect, useState } from "react";
-import { Image as RNImage, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Animated, {
   Easing,
   useAnimatedStyle,
@@ -50,72 +49,69 @@ export const CardBackground = ({
         });
       }}
     >
-      <Canvas style={{ flex: 1 }}>
+      <Canvas style={StyleSheet.absoluteFillObject} pointerEvents="none">
         <CredentialCardSkiaBackground
           bg={background}
           width={size.width}
           height={size.height}
         />
-      </Canvas>
-      {showCornerOverlay && size.width > 0 && size.height > 0 && (
-        <CornerOverlay color={color} {...size} />
-      )}
-      {overlay && size.width > 0 && size.height > 0 && (
-        <View style={StyleSheet.absoluteFillObject} pointerEvents="none">
-          <RNImage
-            source={overlay}
-            style={{ width: size.width, height: size.height }}
-            resizeMode="stretch"
+        {showCornerOverlay && size.width > 0 && size.height > 0 && (
+          <SkiaCardCornerOverlay color={color} {...size} />
+        )}
+        {overlay && size.width > 0 && size.height > 0 && (
+          <SkiaCardOverlay
+            overlay={overlay}
+            overlayBlend={overlayBlend}
+            {...size}
           />
-        </View>
-      )}
+        )}
+      </Canvas>
     </View>
   );
 };
 
-type OverlayProps = Props & { width: number; height: number };
+type CardOverlayProps = Required<Pick<CredentialCardConfig, "overlay">> &
+  Pick<CredentialCardConfig, "overlayBlend"> &
+  Size;
 
-const CardOverlay = (props: OverlayProps) => {
-  const image = useImage(
-    "../../../../../../img/features/itWallet/cards/overlay/pid_card_overlay.png"
-  );
+export const SkiaCardOverlay = (props: CardOverlayProps) => {
+  const image = useImage(props.overlay);
 
   return (
-    <Canvas style={StyleSheet.absoluteFillObject}>
-      <SkiaImage
-        image={image}
-        fit="fill"
-        x={0}
-        y={0}
-        width={props.width}
-        height={props.height}
-      >
-        {props.overlayBlend && <Blend mode={"softLight"} />}
-      </SkiaImage>
-    </Canvas>
+    <SkiaImage
+      image={image}
+      fit="cover"
+      x={0}
+      y={0}
+      width={props.width}
+      height={props.height}
+      blendMode={props.overlayBlend ? "softLight" : undefined}
+    />
   );
 };
 
-type CornerOverlayProps = Pick<Props, "color"> & Size;
+type CardCornerOverlayProps = Pick<CredentialCardConfig, "color"> & Size;
 
-const CornerOverlay = ({ width, height, color }: CornerOverlayProps) => {
+export const SkiaCardCornerOverlay = ({
+  width,
+  height,
+  color
+}: CardCornerOverlayProps) => {
   const image = useImage(
     require("../../../../../../img/features/itWallet/cards/overlay/card_corner.png")
   );
 
   return (
-    <Canvas style={StyleSheet.absoluteFillObject}>
-      <SkiaImage
-        image={image}
-        fit="fill"
-        x={0}
-        y={0}
-        width={width}
-        height={height}
-      >
-        <BlendColor color={color} mode="srcIn" />
-      </SkiaImage>
-    </Canvas>
+    <SkiaImage
+      image={image}
+      fit="fill"
+      x={0}
+      y={0}
+      width={width}
+      height={height}
+    >
+      <BlendColor color={color} mode="srcIn" />
+    </SkiaImage>
   );
 };
 

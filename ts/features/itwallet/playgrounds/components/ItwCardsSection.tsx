@@ -99,7 +99,6 @@ export const ItwCardsSection = () => (
         />
       ))}
     </View>
-    ,
     {LEGACY_CREDENTIAL_TYPES.map(credentialType => (
       <View key={credentialType}>
         <ListItemHeader label={getCredentialNameFromType(credentialType)} />
