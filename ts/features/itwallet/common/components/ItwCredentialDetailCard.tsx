@@ -2,15 +2,23 @@ import {
   IOVisualCostants,
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
-import { Canvas } from "@shopify/react-native-skia";
+import {
+  Canvas,
+  Size,
+  Image as SkiaImage,
+  useImage
+} from "@shopify/react-native-skia";
 import { PropsWithChildren, useState } from "react";
-import { Image, LayoutChangeEvent, StyleSheet, View } from "react-native";
+import { LayoutChangeEvent, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { borderVariantByStatus } from "../utils/itwCredentialUtils";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils";
 import { ItwBrandedSkiaBorder } from "./ItwBrandedSkiaBorder";
 import { CredentialCardSkiaBackground } from "./ItwCredentialCard/CredentialCardBackground";
-import { getCredentialCardConfig } from "./ItwCredentialCard/config";
+import {
+  CredentialCardConfig,
+  useCredentialCardConfiguration
+} from "./ItwCredentialCard/config";
 
 type ItwCredentialDetailCardProps = PropsWithChildren<{
   credentialType: string;
@@ -36,8 +44,8 @@ export const ItwCredentialDetailCard = ({
   const safeAreaInsets = useSafeAreaInsets();
   const { themeType } = useIOThemeContext();
   const [size, setSize] = useState({ width: 0, height: 0 });
-  const { background, detailOverlay: detailWatermarkLayer } =
-    getCredentialCardConfig(credentialType);
+  const { background, headerOverlay, overlayBlend } =
+    useCredentialCardConfiguration(credentialType);
 
   // Extend the card well above the screen so the top border is never visible at rest.
   // The negative marginTop pulls the card up, hiding the extra paddingTop above the screen.
@@ -62,20 +70,13 @@ export const ItwCredentialDetailCard = ({
             height={size.height}
           />
         )}
-      </Canvas>
-
-      {detailWatermarkLayer && size.width > 0 && size.height > 0 && (
-        <View style={StyleSheet.absoluteFillObject} pointerEvents="none">
-          <Image
-            accessibilityIgnoresInvertColors
-            source={detailWatermarkLayer}
-            style={{ width: size.width, height: size.height }}
-            resizeMode="stretch"
+        {headerOverlay && size.width > 0 && size.height > 0 && (
+          <SkiaCardOverlay
+            overlay={headerOverlay}
+            overlayBlend={overlayBlend}
+            {...size}
           />
-        </View>
-      )}
-
-      <Canvas style={StyleSheet.absoluteFill} pointerEvents="none">
+        )}
         <ItwBrandedSkiaBorder
           width={size.width}
           height={size.height}
@@ -84,9 +85,28 @@ export const ItwCredentialDetailCard = ({
           variant={borderVariantByStatus[credentialStatus]}
         />
       </Canvas>
-
       <View style={styles.content}>{children}</View>
     </View>
+  );
+};
+
+type CardOverlayProps = Required<Pick<CredentialCardConfig, "overlay">> &
+  Pick<CredentialCardConfig, "overlayBlend"> &
+  Size;
+
+export const SkiaCardOverlay = (props: CardOverlayProps) => {
+  const image = useImage(props.overlay);
+
+  return (
+    <SkiaImage
+      image={image}
+      fit="cover"
+      x={0}
+      y={0}
+      width={props.width}
+      height={props.height}
+      blendMode={props.overlayBlend ? "softLight" : undefined}
+    />
   );
 };
 

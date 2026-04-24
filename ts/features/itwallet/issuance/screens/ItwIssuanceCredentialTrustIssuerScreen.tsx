@@ -172,7 +172,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   });
   const requiredClaims = claims.map(claim => ({
     claim,
-    source: getCredentialNameFromType(eid.credentialType, "", isItwL3)
+    source: getCredentialNameFromType(eid.credentialType, isItwL3)
   }));
 
   // Added hasScrolledToBottom ref to avoid sending multiple scroll-to-bottom events when navigating between screens

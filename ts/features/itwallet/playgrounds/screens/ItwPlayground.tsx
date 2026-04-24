@@ -12,6 +12,7 @@ import { useScreenEndMargin } from "../../../../hooks/useScreenEndMargin";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { ItwCardsSection } from "../components/ItwCardsSection";
 import { ItwComponentsSection } from "../components/ItwComponentsSection";
+import { ItwDetailCardsSection } from "../components/ItwDetailCardsSection";
 import { ItwEnvironmentSection } from "../components/ItwEnvironmentSection";
 import { ItwIdentificationScreensSection } from "../components/ItwIdentificationScreensSection";
 import { ItwL3ScreensSection } from "../components/ItwL3ScreensSection";
@@ -51,6 +52,7 @@ const ItwPlayground = () => {
         <TabItem label="Screens" accessibilityLabel="Screens" />
         <TabItem label="Components" accessibilityLabel="Components" />
         <TabItem label="Cards" accessibilityLabel="Cards" />
+        <TabItem label="Detail Cards" accessibilityLabel="Detail Cards" />
       </TabNavigation>
       <ScrollView
         contentContainerStyle={{
@@ -75,6 +77,7 @@ const ItwPlayground = () => {
           )}
           {page === 3 && <ItwComponentsSection />}
           {page === 4 && <ItwCardsSection />}
+          {page === 5 && <ItwDetailCardsSection />}
         </ContentWrapper>
       </ScrollView>
     </VStack>

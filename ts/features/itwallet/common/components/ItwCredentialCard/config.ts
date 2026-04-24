@@ -214,6 +214,7 @@ export const getRandomCredentialCardConfig = (
   return {
     ...generateCredentialCardConfig(colorHex, colorScheme),
     overlay: overlaySource,
+    headerOverlay: overlaySource,
     overlayBlend: true,
     showCornerOverlay: true
   };
@@ -233,7 +234,7 @@ export const getCredentialCardConfig = (
  * @param credentialType
  * @returns
  */
-export const useCredentialConfiguration = (credentialType: string) => {
+export const useCredentialCardConfiguration = (credentialType: string) => {
   const { themeType } = useIOThemeContext();
   // TODO get credential color from metadata
   const credentialColor = undefined;
