@@ -2282,6 +2282,11 @@
           "placeholder": "Referer"
         },
         "send": "Invia"
+      },
+      "engagement": {
+        "banner": {
+          "cta": "Attiva Carta Giovani"
+        }
       }
     },
     "cdc": {
