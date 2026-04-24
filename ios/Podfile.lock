@@ -3337,8 +3337,6 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - RNScreenshotPrevent (1.2.1):
-    - React
   - RNShare (12.0.9):
     - boost
     - DoubleConversion
@@ -3676,7 +3674,6 @@ DEPENDENCIES:
   - RNReactNativeHapticFeedback (from `../node_modules/react-native-haptic-feedback`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
-  - RNScreenshotPrevent (from `../node_modules/react-native-screenshot-prevent`)
   - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNWorklets (from `../node_modules/react-native-worklets`)
@@ -3963,8 +3960,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
-  RNScreenshotPrevent:
-    :path: "../node_modules/react-native-screenshot-prevent"
   RNShare:
     :path: "../node_modules/react-native-share"
   RNSVG:
@@ -4111,7 +4106,6 @@ SPEC CHECKSUMS:
   RNReactNativeHapticFeedback: be4f1b4bf0398c30b59b76ed92ecb0a2ff3a69c6
   RNReanimated: 28141b41781ded169829afdb6fd80f3498de254e
   RNScreens: c77cc7a5d1fbc23f0725b54e96eec81118453382
-  RNScreenshotPrevent: 5f8473abaa2db2476561ef8f3704b66491ce7b01
   RNShare: 1dba46787d6e5543e05655efaefa0e4bb98380d9
   RNSVG: d260beec1775108e1bd065a0ed666ff2c5565158
   RNWorklets: 5dd32e6d649594b9a938cdd75673dffb2266e119

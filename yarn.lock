@@ -13693,7 +13693,6 @@ __metadata:
     react-native-safe-area-context: ^5.6.2
     react-native-screen-brightness: ^2.0.0-alpha
     react-native-screens: ^4.16.0
-    react-native-screenshot-prevent: ^1.2.1
     react-native-share: ^12.0.9
     react-native-splash-screen: ^3.2.0
     react-native-svg: ^15.15.1
@@ -19507,16 +19506,6 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 7369a1e40a0e039d56fa1d43dc59dec93663aa659b5bbde55486a54347332017d5cc1b67e2d74a32e3e4610789cfb73d8a31ee0339b245dcb4717a498ac3192a
-  languageName: node
-  linkType: hard
-
-"react-native-screenshot-prevent@npm:^1.2.1":
-  version: 1.2.1
-  resolution: "react-native-screenshot-prevent@npm:1.2.1"
-  peerDependencies:
-    react: "*"
-    react-native: "*"
-  checksum: 5563adea419627ce1a066495c7779ffdfa85bdb9c180b47eb25215175a02fc4af402bf24cea684d208ae18651df9396fb545998dd3c566afe67f119ecfa62a4a
   languageName: node
   linkType: hard
 
