@@ -1,5 +1,5 @@
 diff --git a/React/Fabric/Mounting/ComponentViews/ScrollView/RCTPullToRefreshViewComponentView.mm b/React/Fabric/Mounting/ComponentViews/ScrollView/RCTPullToRefreshViewComponentView.mm
-index 0d231bc8aa938da296eb3b981e8ac9595a43b87f..8393d49bd04fd0ec1b54967616d7918db7961357 100644
+index 0d231bc8aa938da296eb3b981e8ac9595a43b87f..042f2a27bf6bb60d98b906e5716697e2ed208aa8 100644
 --- a/React/Fabric/Mounting/ComponentViews/ScrollView/RCTPullToRefreshViewComponentView.mm
 +++ b/React/Fabric/Mounting/ComponentViews/ScrollView/RCTPullToRefreshViewComponentView.mm
 @@ -24,7 +24,6 @@ @interface RCTPullToRefreshViewComponentView () <RCTPullToRefreshViewViewProtoco
@@ -18,7 +18,13 @@ index 0d231bc8aa938da296eb3b981e8ac9595a43b87f..8393d49bd04fd0ec1b54967616d7918d
      [self _initializeUIRefreshControl];
    }
  
-@@ -70,12 +68,6 @@ - (void)prepareForRecycle
+@@ -64,18 +62,11 @@ - (void)prepareForRecycle
+   [super prepareForRecycle];
+   _scrollViewComponentView = nil;
+   _props = nil;
+-  _isBeforeInitialLayout = YES;
+   [self _initializeUIRefreshControl];
+ }
  
  - (void)updateProps:(const Props::Shared &)props oldProps:(const Props::Shared &)oldProps
  {
@@ -31,7 +37,7 @@ index 0d231bc8aa938da296eb3b981e8ac9595a43b87f..8393d49bd04fd0ec1b54967616d7918d
    const auto &oldConcreteProps = static_cast<const PullToRefreshViewProps &>(*_props);
    const auto &newConcreteProps = static_cast<const PullToRefreshViewProps &>(*props);
  
-@@ -111,6 +103,10 @@ - (void)updateProps:(const Props::Shared &)props oldProps:(const Props::Shared &
+@@ -111,6 +102,10 @@ - (void)updateProps:(const Props::Shared &)props oldProps:(const Props::Shared &
        [_refreshControl endRefreshing];
      }
    }
@@ -42,7 +48,7 @@ index 0d231bc8aa938da296eb3b981e8ac9595a43b87f..8393d49bd04fd0ec1b54967616d7918d
  }
  
  #pragma mark -
-@@ -155,10 +151,12 @@ - (void)layoutSubviews
+@@ -155,10 +150,12 @@ - (void)layoutSubviews
  
    // Attempts to begin refreshing before the initial layout are ignored by _refreshControl. So if the control is
    // refreshing when mounted, we need to call beginRefreshing in layoutSubviews or it won't work.
@@ -58,7 +64,7 @@ index 0d231bc8aa938da296eb3b981e8ac9595a43b87f..8393d49bd04fd0ec1b54967616d7918d
    }
  }
  
-@@ -214,11 +212,12 @@ - (void)beginRefreshingProgrammatically
+@@ -214,11 +211,12 @@ - (void)beginRefreshingProgrammatically
  
    // When refreshing programmatically (i.e. without pulling down), we must explicitly adjust the ScrollView content
    // offset, or else the _refreshControl won't be visible
