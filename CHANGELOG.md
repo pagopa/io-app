@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.29.0-canary.8215](https://github.com/pagopa/io-app/compare/3.29.0-rc.5...3.29.0-canary.8215) (2026-04-24)
+
+
+### Features
+
+* color utilities ([3e6e05e](https://github.com/pagopa/io-app/commit/3e6e05e7813aa27b222beb8425943665213752f0))
+* overlay ([d108fd0](https://github.com/pagopa/io-app/commit/d108fd0839dbfe4b0d476ff37b44f2684bcdacb0))
+
+
+### Bug Fixes
+
+* tests ([9dd1efa](https://github.com/pagopa/io-app/commit/9dd1efad5e89159b90b21111345cf793ff9caf1c))
+
+
+### Chores
+
+* cards playgrounds ([ff14a9d](https://github.com/pagopa/io-app/commit/ff14a9dc29601d069f1a74d13377a37afd22baf8))
+* improved performances ([6292c1d](https://github.com/pagopa/io-app/commit/6292c1d7a9b248cca06330629556f282650feb5d))
+* ItwCredentialDetailCard playgrounds ([d681ec7](https://github.com/pagopa/io-app/commit/d681ec772db6c966b9dabcdfb4d0c924b210fcff))
+* overlays ([e47861e](https://github.com/pagopa/io-app/commit/e47861e6dbef4df83f3eb8b631b326c4ab8d3ad4))
+* tests ([fdf364d](https://github.com/pagopa/io-app/commit/fdf364d4b0ba4368a726750d44e01d48bc006167))
+
 ## [3.29.0-rc.5](https://github.com/pagopa/io-app/compare/3.29.0-rc.4...3.29.0-rc.5) (2026-04-22)
 
 
