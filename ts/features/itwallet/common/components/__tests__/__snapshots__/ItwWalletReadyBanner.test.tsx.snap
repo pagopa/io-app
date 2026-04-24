@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`ItwWalletReadyBanner should match snapshot when ITW new interface active status is false 1`] = `
 <View

@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Timeline component should match the snapshot, default data 1`] = `
 <View
@@ -349,6 +349,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                         }
                       >
                         <View
+                          accessibilityLabel="1 gennaio, 01:00, viewed"
                           accessible={true}
                           style={
                             {
@@ -526,6 +527,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           </View>
                         </View>
                         <View
+                          accessibilityLabel="3 febbraio, 03:00, cancelled"
                           accessible={true}
                           style={
                             {
@@ -701,6 +703,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           </View>
                         </View>
                         <View
+                          accessibilityLabel="6 marzo, 05:00, default"
                           accessible={true}
                           style={
                             {
@@ -876,6 +879,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           </View>
                         </View>
                         <View
+                          accessibilityLabel="9 aprile, 07:00, default"
                           accessible={true}
                           style={
                             {
@@ -1051,6 +1055,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           </View>
                         </View>
                         <View
+                          accessibilityLabel="11 maggio, 09:00, effective"
                           accessible={true}
                           style={
                             {
@@ -1226,6 +1231,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           </View>
                         </View>
                         <View
+                          accessibilityLabel="14 giugno, 11:00, unreachable"
                           accessible={true}
                           style={
                             {
@@ -1401,6 +1407,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           </View>
                         </View>
                         <View
+                          accessibilityLabel="15 luglio, 13:00, viewed"
                           accessible={true}
                           style={
                             {
@@ -1576,6 +1583,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           </View>
                         </View>
                         <View
+                          accessibilityLabel="18 agosto, 15:00, default"
                           accessible={true}
                           style={
                             {
@@ -1751,6 +1759,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           </View>
                         </View>
                         <View
+                          accessibilityLabel="21 settembre, 17:00, default"
                           accessible={true}
                           style={
                             {
@@ -1926,6 +1935,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           </View>
                         </View>
                         <View
+                          accessibilityLabel="24 ottobre, 19:00, default"
                           accessible={true}
                           style={
                             {
@@ -2101,6 +2111,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           </View>
                         </View>
                         <View
+                          accessibilityLabel="27 novembre, 21:00, default"
                           accessible={true}
                           style={
                             {
@@ -2276,6 +2287,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           </View>
                         </View>
                         <View
+                          accessibilityLabel="30 dicembre, 23:00, cancelled"
                           accessible={true}
                           style={
                             {

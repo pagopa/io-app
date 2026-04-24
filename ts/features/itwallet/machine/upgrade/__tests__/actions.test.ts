@@ -24,7 +24,7 @@ describe("itwCredentialUpgradeMachine actions", () => {
 
       storeCredential({
         event: {
-          type: "xstate.done.actor.itwCredentialUpgradeMachine.0.upgradeCredential",
+          type: "xstate.done.actor.upgradeCredential",
           actorId: "upgradeCredential",
           output: {
             credentialType: "MDL",

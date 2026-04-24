@@ -227,6 +227,7 @@ export const SendAarCieCardReadingComponent = ({
     return {
       [ReadStatus.IDLE]: {
         title: i18n.t("features.pn.aar.flow.cieScanning.idle.title"),
+        subtitle: i18n.t("features.pn.aar.flow.cieScanning.idle.subtitle"),
         pictogram: "nfcScanAndroid",
         secondaryAction: {
           testID: "idleCloseButton",

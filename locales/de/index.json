@@ -184,7 +184,6 @@
       "forgetCurrentSession": "Aktuelle Sitzung löschen",
       "clearAsyncStorage": "Inhalt von AsyncStorage löschen",
       "dumpAsyncStorage": "AsyncStorage-Inhalt herunterladen",
-      "sentryTestEvent": "Teile Fehler",
       "contextualHelpTitle": "Was du in deinem Profil machen kannst",
       "developerModeOn": "Entwicklermodus aktiviert",
       "cache": {

@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`featuresPersistor should match snapshot 1`] = `
 {
@@ -154,6 +154,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
       "catalogue": {
         "kind": "PotNone",
       },
+      "isEnabledForCredentialsList": false,
     },
     "debug": {
       "credentialStatusOverrides": {},
@@ -184,9 +185,11 @@ exports[`featuresPersistor should match snapshot 1`] = `
       "status": {
         "kind": "PotNone",
       },
+      "walletUnitAttestations": {},
     },
   },
   "landingBanners": {
+    "CGN_ENGAGEMENT_BANNER": true,
     "ITW_DISCOVERY": true,
     "IT_WALLET_DISCOVERY": true,
     "LV_EXPIRATION_REMINDER": true,
