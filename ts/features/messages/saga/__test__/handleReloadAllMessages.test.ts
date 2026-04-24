@@ -12,21 +12,11 @@ import {
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { handleReloadAllMessages } from "../handleReloadAllMessages";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
-import { communicationClientManager } from "../../../../api/CommunicationClientManager";
-import { getKeyInfo } from "../../../lollipop/saga";
+import { getCommunicationClient } from "../../utils/client";
 
-jest.mock("../../../../api/CommunicationClientManager");
+jest.mock("../../utils/client");
 
 const mockGetMessages = jest.fn();
-const mockCommunicationClientManager =
-  communicationClientManager as jest.Mocked<typeof communicationClientManager>;
-
-beforeEach(() => {
-  jest.clearAllMocks();
-  mockCommunicationClientManager.getClient.mockReturnValue({
-    getUserMessages: mockGetMessages
-  } as any);
-});
 
 describe("handleReloadAllMessages", () => {
   const sessionToken = "mockedSessionToken";
@@ -45,8 +35,8 @@ describe("handleReloadAllMessages", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
-        .call(getKeyInfo)
-        .next()
+        .call(getCommunicationClient, sessionToken)
+        .next({ getUserMessages: mockGetMessages })
         .call(
           withRefreshApiCall,
           mockGetMessages(getMessagesPayload),
@@ -65,8 +55,8 @@ describe("handleReloadAllMessages", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
-        .call(getKeyInfo)
-        .next()
+        .call(getCommunicationClient, sessionToken)
+        .next({ getUserMessages: mockGetMessages })
         .call(
           withRefreshApiCall,
           mockGetMessages(getMessagesPayload),
@@ -97,8 +87,8 @@ describe("handleReloadAllMessages", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
-        .call(getKeyInfo)
-        .next()
+        .call(getCommunicationClient, sessionToken)
+        .next({ getUserMessages: mockGetMessages })
         .throw(new Error(defaultRequestError.error.message))
         .put(
           action.failure({

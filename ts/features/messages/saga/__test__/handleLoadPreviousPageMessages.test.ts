@@ -14,22 +14,11 @@ import {
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { handleLoadPreviousPageMessages } from "../handleLoadPreviousPageMessages";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
-import { communicationClientManager } from "../../../../api/CommunicationClientManager";
-import { getKeyInfo } from "../../../lollipop/saga";
+import { getCommunicationClient } from "../../utils/client";
 
-// Mock the communicationClientManager
-jest.mock("../../../../api/CommunicationClientManager");
+jest.mock("../../utils/client");
 
 const mockGetMessages = jest.fn();
-const mockCommunicationClientManager =
-  communicationClientManager as jest.Mocked<typeof communicationClientManager>;
-
-beforeEach(() => {
-  jest.clearAllMocks();
-  mockCommunicationClientManager.getClient.mockReturnValue({
-    getUserMessages: mockGetMessages
-  } as any);
-});
 
 describe("handleLoadPreviousPageMessages", () => {
   const sessionToken = "mockSessionToken";
@@ -51,8 +40,8 @@ describe("handleLoadPreviousPageMessages", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
-        .call(getKeyInfo)
-        .next()
+        .call(getCommunicationClient, sessionToken)
+        .next({ getUserMessages: mockGetMessages })
         .call(
           withRefreshApiCall,
           mockGetMessages(getMessagesPayload),
@@ -74,8 +63,8 @@ describe("handleLoadPreviousPageMessages", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
-        .call(getKeyInfo)
-        .next()
+        .call(getCommunicationClient, sessionToken)
+        .next({ getUserMessages: mockGetMessages })
         .call(
           withRefreshApiCall,
           mockGetMessages(getMessagesPayload),
@@ -102,8 +91,8 @@ describe("handleLoadPreviousPageMessages", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
-        .call(getKeyInfo)
-        .next()
+        .call(getCommunicationClient, sessionToken)
+        .next({ getUserMessages: mockGetMessages })
         .throw(new Error("I made a boo-boo, sir!"))
         .put(
           action.failure({

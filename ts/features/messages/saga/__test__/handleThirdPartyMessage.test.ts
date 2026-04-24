@@ -17,15 +17,11 @@ import { serviceDetailsByIdSelector } from "../../../services/details/store/sele
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { ThirdPartyMessageUnion } from "../../types/thirdPartyById";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
-import { communicationClientManager } from "../../../../api/CommunicationClientManager";
-import { getKeyInfo } from "../../../lollipop/saga";
+import { getCommunicationClient } from "../../utils/client";
 
-// Mock the communicationClientManager
-jest.mock("../../../../api/CommunicationClientManager");
+jest.mock("../../utils/client");
 
 const mockGetThirdPartyMessage = jest.fn();
-const mockCommunicationClientManager =
-  communicationClientManager as jest.Mocked<typeof communicationClientManager>;
 
 describe("handleThirdPartyMessage", () => {
   const serviceDetails = {
@@ -37,13 +33,6 @@ describe("handleThirdPartyMessage", () => {
     }
   } as unknown as ServiceDetails;
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-    mockCommunicationClientManager.getClient.mockReturnValue({
-      getThirdPartyMessage: mockGetThirdPartyMessage
-    } as any);
-  });
-
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -53,7 +42,6 @@ describe("handleThirdPartyMessage", () => {
       const messageId = "01K813A7EVHP2W5ZAYDSTX9J0E";
       const serviceId = "01K813ACAMDW4DRVXK0CEGFHGM" as ServiceId;
       const sessionToken = "mockSessionToken";
-      const keyInfo = {};
       const action = loadThirdPartyMessage.request({
         id: messageId,
         serviceId,
@@ -65,8 +53,8 @@ describe("handleThirdPartyMessage", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
-        .call(getKeyInfo)
-        .next(keyInfo)
+        .call(getCommunicationClient, sessionToken)
+        .next({ getThirdPartyMessage: mockGetThirdPartyMessage })
         .select(serviceDetailsByIdSelector, serviceId)
         .next(serviceDetails)
         .call(

@@ -11,24 +11,13 @@ import {
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { handleLoadMessageDetails } from "../handleLoadMessageDetails";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
-import { communicationClientManager } from "../../../../api/CommunicationClientManager";
-import { getKeyInfo } from "../../../lollipop/saga";
+import { getCommunicationClient } from "../../utils/client";
 
 const id = paymentValidInvalidAfterDueDate.id;
 
-// Mock the communicationClientManager
-jest.mock("../../../../api/CommunicationClientManager");
+jest.mock("../../utils/client");
 
 const mockGetMessage = jest.fn();
-const mockCommunicationClientManager =
-  communicationClientManager as jest.Mocked<typeof communicationClientManager>;
-
-beforeEach(() => {
-  jest.clearAllMocks();
-  mockCommunicationClientManager.getClient.mockReturnValue({
-    getUserMessage: mockGetMessage
-  } as any);
-});
 
 describe("handleLoadMessageDetails", () => {
   const getMessagesPayload = { id };
@@ -42,14 +31,13 @@ describe("handleLoadMessageDetails", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
-        .call(getKeyInfo)
-        .next()
+        .call(getCommunicationClient, sessionToken)
+        .next({ getUserMessage: mockGetMessage })
         .call(
           withRefreshApiCall,
           mockGetMessage(getMessagesPayload),
           action.request({ id })
         )
-        // .call(getMessage, getMessagesPayload)
         .next(E.right({ status: 200, value: apiPayload }))
         .put(action.success(successLoadMessageDetails))
         .next()
@@ -63,8 +51,8 @@ describe("handleLoadMessageDetails", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
-        .call(getKeyInfo)
-        .next()
+        .call(getCommunicationClient, sessionToken)
+        .next({ getUserMessage: mockGetMessage })
         .call(
           withRefreshApiCall,
           mockGetMessage(getMessagesPayload),
@@ -88,8 +76,8 @@ describe("handleLoadMessageDetails", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
-        .call(getKeyInfo)
-        .next()
+        .call(getCommunicationClient, sessionToken)
+        .next({ getUserMessage: mockGetMessage })
         .throw(new Error("I made a boo-boo, sir!"))
         .put(
           action.failure({

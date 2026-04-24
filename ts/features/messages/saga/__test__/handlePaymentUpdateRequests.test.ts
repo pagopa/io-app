@@ -5,7 +5,6 @@ import { fork } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
 import { PaymentFaultV2Enum } from "../../../../../definitions/backend/communication/PaymentFaultV2";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
-import { communicationClientManager } from "../../../../api/CommunicationClientManager";
 import * as MIXPANEL from "../../../../mixpanel";
 import { isPagoPATestEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
@@ -26,20 +25,11 @@ import {
 } from "../handlePaymentUpdateRequests";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { Action } from "../../../../store/actions/types";
-import { getKeyInfo } from "../../../lollipop/saga";
+import { getCommunicationClient } from "../../utils/client";
 
-jest.mock("../../../../api/CommunicationClientManager");
+jest.mock("../../utils/client");
 
 const mockGetPaymentInfoV2 = jest.fn();
-const mockCommunicationClientManager =
-  communicationClientManager as jest.Mocked<typeof communicationClientManager>;
-
-beforeEach(() => {
-  jest.clearAllMocks();
-  mockCommunicationClientManager.getClient.mockReturnValue({
-    getPaymentInfoV2: mockGetPaymentInfoV2
-  } as any);
-});
 
 describe("handlePaymentUpdateRequests", () => {
   afterEach(() => {
@@ -183,8 +173,8 @@ describe("handlePaymentUpdateRequests", () => {
           .next()
           .select(sessionTokenSelector)
           .next(sessionToken)
-          .call(getKeyInfo)
-          .next()
+          .call(getCommunicationClient, sessionToken)
+          .next({ getPaymentInfoV2: mockGetPaymentInfoV2 })
           .call(
             withRefreshApiCall,
             mockGetPaymentInfoV2({ rptId: paymentId, test: true }),
@@ -206,8 +196,8 @@ describe("handlePaymentUpdateRequests", () => {
             .next()
             .select(sessionTokenSelector)
             .next(sessionToken)
-            .call(getKeyInfo)
-            .next()
+            .call(getCommunicationClient, sessionToken)
+            .next({ getPaymentInfoV2: mockGetPaymentInfoV2 })
             .call(
               withRefreshApiCall,
               mockGetPaymentInfoV2({
@@ -241,8 +231,8 @@ describe("handlePaymentUpdateRequests", () => {
           .next()
           .select(sessionTokenSelector)
           .next(sessionToken)
-          .call(getKeyInfo)
-          .next()
+          .call(getCommunicationClient, sessionToken)
+          .next({ getPaymentInfoV2: mockGetPaymentInfoV2 })
           .call(
             withRefreshApiCall,
             mockGetPaymentInfoV2({
@@ -279,8 +269,8 @@ describe("handlePaymentUpdateRequests", () => {
           .next()
           .select(sessionTokenSelector)
           .next(sessionToken)
-          .call(getKeyInfo)
-          .next()
+          .call(getCommunicationClient, sessionToken)
+          .next({ getPaymentInfoV2: mockGetPaymentInfoV2 })
           .call(
             withRefreshApiCall,
             mockGetPaymentInfoV2({
@@ -308,8 +298,8 @@ describe("handlePaymentUpdateRequests", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
-        .call(getKeyInfo)
-        .next()
+        .call(getCommunicationClient, sessionToken)
+        .next({ getPaymentInfoV2: mockGetPaymentInfoV2 })
         .call(
           withRefreshApiCall,
           mockGetPaymentInfoV2({
