@@ -2,10 +2,7 @@ import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import * as E from "fp-ts/lib/Either";
 import { call, put, race, select, take } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import {
-  CommunicationClient,
-  communicationClientManager
-} from "../../../api/CommunicationClientManager";
+import { CommunicationClient } from "../../../api/CommunicationClientManager";
 import { convertUnknownToError } from "../../../utils/errors";
 import { isTestEnv } from "../../../utils/environment";
 import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
@@ -29,9 +26,8 @@ import {
   preconditionsMessageIdSelector
 } from "../store/reducers/messagePrecondition";
 import { isIOMarkdownEnabledForMessagesAndServicesSelector } from "../../../store/reducers/backendStatus/remoteConfig";
-import { apiUrlPrefix } from "../../../config";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
-import { getKeyInfo } from "../../lollipop/saga";
+import { getCommunicationClient } from "../utils/client";
 
 export function* handleMessagePrecondition(
   action: ActionType<typeof retrievingDataPreconditionStatusAction>
@@ -45,13 +41,10 @@ export function* handleMessagePrecondition(
     return;
   }
 
-  const keyInfo = yield* call(getKeyInfo);
-
-  const { getThirdPartyMessagePrecondition } =
-    communicationClientManager.getClient(apiUrlPrefix, {
-      token: sessionToken,
-      keyInfo
-    });
+  const { getThirdPartyMessagePrecondition } = yield* call(
+    getCommunicationClient,
+    sessionToken
+  );
 
   yield* race({
     response: call(

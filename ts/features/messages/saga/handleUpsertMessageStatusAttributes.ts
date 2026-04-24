@@ -37,12 +37,8 @@ import { nextQueuedMessageDataUncachedSelector } from "../store/reducers/archivi
 import { paginatedMessageFromIdForCategorySelector } from "../store/reducers/allPaginated";
 import { MessageListCategory } from "../types/messageListCategory";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
-import {
-  communicationClientManager,
-  CommunicationClient
-} from "../../../api/CommunicationClientManager";
-import { apiUrlPrefix } from "../../../config";
-import { getKeyInfo } from "../../lollipop/saga";
+import { CommunicationClient } from "../../../api/CommunicationClientManager";
+import { getCommunicationClient } from "../utils/client";
 
 /**
  * @throws invalid payload
@@ -196,13 +192,10 @@ export function* raceUpsertMessageStatusAttributes(
     return;
   }
 
-  const keyInfo = yield* call(getKeyInfo);
-
-  const { upsertMessageStatusAttributes: putMessage } =
-    communicationClientManager.getClient(apiUrlPrefix, {
-      token: sessionToken,
-      keyInfo
-    });
+  const { upsertMessageStatusAttributes: putMessage } = yield* call(
+    getCommunicationClient,
+    sessionToken
+  );
 
   yield* race({
     task: call(handleUpsertMessageStatusAttributes, putMessage, action),

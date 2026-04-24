@@ -16,10 +16,8 @@ import {
   UndefinedBearerTokenPhase
 } from "../analytics";
 import { handleResponse } from "../utils/responseHandling";
-import { communicationClientManager } from "../../../api/CommunicationClientManager";
-import { apiUrlPrefix } from "../../../config";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
-import { getKeyInfo } from "../../lollipop/saga";
+import { getCommunicationClient } from "../utils/client";
 
 export function* handleReloadAllMessages(
   action: ActionType<typeof reloadAllMessages.request>
@@ -35,14 +33,9 @@ export function* handleReloadAllMessages(
     return;
   }
 
-  const keyInfo = yield* call(getKeyInfo);
-
-  const { getUserMessages: getMessages } = communicationClientManager.getClient(
-    apiUrlPrefix,
-    {
-      token: sessionToken,
-      keyInfo
-    }
+  const { getUserMessages: getMessages } = yield* call(
+    getCommunicationClient,
+    sessionToken
   );
 
   try {

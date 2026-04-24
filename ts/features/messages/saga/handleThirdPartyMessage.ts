@@ -24,11 +24,9 @@ import { TagEnum } from "../../../../definitions/backend/communication/MessageCa
 import { serviceDetailsByIdSelector } from "../../services/details/store/selectors";
 import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
 import { thirdPartyKind } from "../types/thirdPartyById";
-import { communicationClientManager } from "../../../api/CommunicationClientManager";
-import { apiUrlPrefix } from "../../../config";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
 import { isTestEnv } from "../../../utils/environment";
-import { getKeyInfo } from "../../lollipop/saga";
+import { getCommunicationClient } from "../utils/client";
 
 export function* handleThirdPartyMessage(
   action: ActionType<typeof loadThirdPartyMessage.request>
@@ -44,14 +42,9 @@ export function* handleThirdPartyMessage(
     return;
   }
 
-  const keyInfo = yield* call(getKeyInfo);
-
-  const { getThirdPartyMessage } = communicationClientManager.getClient(
-    apiUrlPrefix,
-    {
-      token: sessionToken,
-      keyInfo
-    }
+  const { getThirdPartyMessage } = yield* call(
+    getCommunicationClient,
+    sessionToken
   );
 
   // This method is called by `handleLoadMessageData` saga, which makes

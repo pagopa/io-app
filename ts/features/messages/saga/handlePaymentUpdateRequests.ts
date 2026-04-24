@@ -13,8 +13,6 @@ import {
 } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 import { PaymentFaultV2Enum } from "../../../../definitions/backend/communication/PaymentFaultV2";
-import { communicationClientManager } from "../../../api/CommunicationClientManager";
-import { apiUrlPrefix } from "../../../config";
 import { Action } from "../../../store/actions/types";
 import { isPagoPATestEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { SagaCallReturnType } from "../../../types/utils";
@@ -38,7 +36,7 @@ import {
   toSpecificMessagePaymentError,
   toTimeoutMessagePaymentError
 } from "../types/paymentErrors";
-import { getKeyInfo } from "../../lollipop/saga";
+import { getCommunicationClient } from "../utils/client";
 
 const PaymentUpdateWorkerCount = 5;
 
@@ -117,13 +115,10 @@ function* updatePaymentInfo(
     return;
   }
 
-  const keyInfo = yield* call(getKeyInfo);
-
-  const { getPaymentInfoV2: getPaymentDataRequestFactory } =
-    communicationClientManager.getClient(apiUrlPrefix, {
-      token: sessionToken,
-      keyInfo
-    });
+  const { getPaymentInfoV2: getPaymentDataRequestFactory } = yield* call(
+    getCommunicationClient,
+    sessionToken
+  );
 
   const getPaymentDataRequest = getPaymentDataRequestFactory({
     rptId: paymentId,

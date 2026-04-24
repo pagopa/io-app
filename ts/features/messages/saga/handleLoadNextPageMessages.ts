@@ -17,9 +17,7 @@ import {
 } from "../analytics";
 import { handleResponse } from "../utils/responseHandling";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
-import { communicationClientManager } from "../../../api/CommunicationClientManager";
-import { apiUrlPrefix } from "../../../config";
-import { getKeyInfo } from "../../lollipop/saga";
+import { getCommunicationClient } from "../utils/client";
 
 export function* handleLoadNextPageMessages(
   action: ActionType<typeof loadNextPageMessages.request>
@@ -34,14 +32,9 @@ export function* handleLoadNextPageMessages(
     );
     return;
   }
-  const keyInfo = yield* call(getKeyInfo);
-
-  const { getUserMessages: getMessages } = communicationClientManager.getClient(
-    apiUrlPrefix,
-    {
-      token: sessionToken,
-      keyInfo
-    }
+  const { getUserMessages: getMessages } = yield* call(
+    getCommunicationClient,
+    sessionToken
   );
 
   try {
