@@ -55,11 +55,11 @@ export const createRemoteGuardsImplementation = (
    * - `https://rp.example` (no prefix)
    */
   isOpenIdFederationClient: ({ context }: GuardArgs) =>
-    !!(
+    Boolean(
       context.payload?.client_id.startsWith(ClientIdPrefix.OPENID_FEDERATION) ||
       context.payload?.client_id.startsWith("https://")
     ),
 
   isX509HashClient: ({ context }: GuardArgs) =>
-    !!context.payload?.client_id.startsWith(ClientIdPrefix.X509_HASH)
+    Boolean(context.payload?.client_id.startsWith(ClientIdPrefix.X509_HASH))
 });
