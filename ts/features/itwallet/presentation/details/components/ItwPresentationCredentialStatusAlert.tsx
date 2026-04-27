@@ -5,15 +5,10 @@ import I18n from "i18next";
 import { memo, useCallback } from "react";
 import { View } from "react-native";
 import IOMarkdown from "../../../../../components/IOMarkdown";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { format } from "../../../../../utils/dates.ts";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet.tsx";
 import { openWebUrl } from "../../../../../utils/url";
-import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
-import { getMixPanelCredential } from "../../../analytics/utils/index.ts";
-import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types.ts";
-import { ItwEidLifecycleAlert } from "../../../common/components/ItwEidLifecycleAlert";
 import {
   ClaimsLocales,
   getClaimsFullLocale,
@@ -29,13 +24,18 @@ import {
   itwCredentialStatusSelector,
   itwCredentialsEidStatusSelector
 } from "../../../credentials/store/selectors";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import {
   trackItwCredentialBottomSheet,
   trackItwCredentialBottomSheetAction,
   trackItwCredentialTapBanner
 } from "../analytics";
+import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types.ts";
+import { getMixPanelCredential } from "../../../analytics/utils";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
+import { ItwEidLifecycleAlert } from "../../../common/components/ItwEidLifecycleAlert";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useItwIssuerDynamicErrorBottomSheet } from "../hooks/useItwIssuerDynamicErrorBottomSheet";
 
 type Props = {
@@ -360,8 +360,7 @@ const IssuerDynamicErrorAlert = ({
   const bottomSheet = useItwIssuerDynamicErrorBottomSheet({
     credential,
     localizedMessage,
-    status,
-    onTrackPressCta: () => onTrack("press_cta")
+    status
   });
 
   const handleAlertPress = useAlertPressHandler(onTrack, bottomSheet);
