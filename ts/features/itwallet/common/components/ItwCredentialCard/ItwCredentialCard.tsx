@@ -139,7 +139,7 @@ export const ItwCredentialCard = memo(
         <View style={styles.cardContainer}>
           <CardBackground {...cardConfig} />
           <View style={styles.header}>
-            <HStack space={16} style={{ width: "90%" }}>
+            <HStack space={16}>
               {credentialType === CredentialType.PID ? (
                 <View style={{ flex: 1 }}>
                   <ItWalletIdLogo width={117} height={27} />

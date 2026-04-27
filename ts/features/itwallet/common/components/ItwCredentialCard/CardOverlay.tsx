@@ -35,7 +35,9 @@ export const SkiaCardOverlay = memo((props: CardOverlayProps) => {
       height={props.height}
       opacity={opacity}
       blendMode={props.overlayBlend ? "softLight" : undefined}
-    />
+    >
+      {props.overlayBlend && <BlendColor color={"#FFFFFF"} mode="srcIn" />}
+    </SkiaImage>
   );
 });
 
