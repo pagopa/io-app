@@ -2483,6 +2483,12 @@
           "trustmark": "Echtheitszertifikat anzeigen",
           "openPdf": "Dokument anzeigen",
           "shareButton": "Speichern oder freigeben"
+        },
+        "itWalletId": {
+          "banner": {
+            "title": "Was ist die IT-Wallet ID?",
+            "content": "Sie ist das Herzstück deines IT-Wallet: Damit kannst du digitale Dokumente erhalten, nachweisen, wer du bist, und auf Online-Dienste zugreifen"
+          }
         }
       },
       "trustmark": {

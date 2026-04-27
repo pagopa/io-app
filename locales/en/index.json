@@ -2201,6 +2201,12 @@
         "ctas": {
           "openPdf": "Show document",
           "shareButton": "Save or share"
+        },
+        "itWalletId": {
+          "banner": {
+            "title": "What is IT-Wallet ID?",
+            "content": "It is the core of your IT-Wallet: it lets you get digital documents, prove who you are, and access online services"
+          }
         }
       },
       "offline": {
