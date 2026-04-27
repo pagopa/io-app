@@ -17,10 +17,16 @@ import { ItwPresentationDetailsHeader } from "../components/ItwPresentationDetai
 import { ItwPresentationDetailsScreenBase } from "../components/ItwPresentationDetailsScreenBase";
 import { ItwPresentationPidDetail } from "../components/ItwPresentationPidDetail";
 import { ItwPresentationPidDetailFooter } from "../components/ItwPresentationPidDetailFooter";
+import { ItwDiscoveryInfoBanner } from "../components/ItwDiscoveryInfoBanner";
+import { itwIsBannerHiddenSelector } from "../../../common/store/selectors/banners";
 
 export const ItwPresentationPidDetailScreen = () => {
   const pidOption = useIOSelector(itwCredentialsEidSelector);
   const maybeEidStatus = useIOSelector(itwCredentialsEidStatusSelector);
+
+  const isItwDiscoveryInfoBannerHidden = useIOSelector(
+    itwIsBannerHiddenSelector("itw_discovery_info")
+  );
 
   useFocusEffect(
     useCallback(() => {
@@ -36,9 +42,9 @@ export const ItwPresentationPidDetailScreen = () => {
   const getContent = (credential: CredentialMetadata) => (
     <ItwPresentationDetailsScreenBase credential={credential} headerTransparent>
       <ItwPresentationDetailsHeader credential={credential} />
-
       <ContentWrapper>
-        <VStack style={{ paddingVertical: 16 }} space={16}>
+        <VStack style={{ paddingVertical: 16 }} space={24}>
+          {!isItwDiscoveryInfoBannerHidden && <ItwDiscoveryInfoBanner />}
           <ItwPresentationPidDetail credential={credential} />
           <ItwPresentationPidDetailFooter credential={credential} />
           <View style={{ alignItems: "center" }}>
