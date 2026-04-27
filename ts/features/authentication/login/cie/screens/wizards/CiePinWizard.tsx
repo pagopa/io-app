@@ -2,6 +2,7 @@ import { useRef } from "react";
 import {
   ContentWrapper,
   IOButton,
+  IOMarkdown,
   useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -11,7 +12,6 @@ import I18n from "i18next";
 import { IOScrollViewWithLargeHeader } from "../../../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIONavigation } from "../../../../../../navigation/params/AppParamsList";
 import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
-import IOMarkdown from "../../../../../../components/IOMarkdown";
 import useNavigateToLoginMethod from "../../../hooks/useNavigateToLoginMethod";
 import { IOScrollViewActions } from "../../../../../../components/ui/IOScrollView";
 import { openWebUrl } from "../../../../../../utils/url";
