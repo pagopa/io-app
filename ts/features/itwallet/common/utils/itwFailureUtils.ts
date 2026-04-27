@@ -4,6 +4,7 @@ import {
   IntegrityErrorCodes
 } from "@pagopa/io-react-native-integrity";
 import { Errors, Trust } from "@pagopa/io-react-native-wallet";
+import { z } from "zod";
 import { WithCredentialMetadata } from "./ItwFailureTypes";
 
 /**
@@ -47,6 +48,10 @@ export const isLocalIntegrityError = (e: unknown): e is IntegrityError =>
 export const isAssertionGenerationError = (e: unknown): e is IntegrityError =>
   e instanceof Error && e.message === "GENERATION_ASSERTION_FAILED";
 
+const CredentialNotFoundError = z.object({
+  error: z.literal("credential_not_found")
+});
+
 /**
  * Guard used to identify ANPR PID 404 issuance failures.
  *
@@ -61,8 +66,7 @@ export const isAnprPidCredentialNotFoundError = (
   Errors.isIssuerResponseError(e) &&
   e.statusCode === 404 &&
   e.code === Errors.IssuerResponseErrorCodes.CredentialInvalidStatus &&
-  typeof e.reason === "object" &&
-  e.reason.error === "credential_not_found";
+  CredentialNotFoundError.safeParse(e.reason).success;
 
 type ItwFailureWithReason = {
   type: string;
