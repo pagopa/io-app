@@ -65,32 +65,6 @@ export const isAnprPid404Failure = (
 ): e is Errors.IssuerResponseError =>
   Errors.isIssuerResponseError(e) && anprPid404Failure.safeParse(e).success;
 
-type ItwFailureWithReason = {
-  type: string;
-  reason?: unknown;
-};
-
-export const extractItwFailureCode = (failure: ItwFailureWithReason) => {
-  const rawError = failure.reason;
-
-  if (
-    Errors.isWalletProviderResponseError(rawError) ||
-    Errors.isIssuerResponseError(rawError)
-  ) {
-    return rawError.code ?? failure.type;
-  }
-
-  if (rawError instanceof Errors.IoWalletError) {
-    return rawError.code;
-  }
-
-  if (rawError instanceof Error) {
-    return rawError.message;
-  }
-
-  return failure.type;
-};
-
 /**
  * Enrich instances of Error with `credentialId` so it is possible to retrieve the credential configuration
  * from `credential_configurations_supported` in the Issuer's EC. This is needed during multi-credential issuance
