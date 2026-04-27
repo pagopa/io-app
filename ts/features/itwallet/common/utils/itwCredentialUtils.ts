@@ -4,6 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import { SdJwt, Mdoc } from "@pagopa/io-react-native-wallet";
 import I18n from "i18next";
 import { isBefore } from "date-fns";
+import { ItwIridescentBorderVariant } from "../components/ItwBrandedSkiaBorder";
 import { CredentialType } from "./itwMocksUtils";
 import {
   CredentialBundle,
@@ -15,13 +16,6 @@ import {
 
 // Credentials that can be obtained with valid a Documenti su IO instance
 export const l2Credentials = [
-  CredentialType.DRIVING_LICENSE,
-  CredentialType.EUROPEAN_DISABILITY_CARD,
-  CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
-] as const;
-
-// Credentials that can be actively requested and obtained by the user
-export const availableCredentials = [
   CredentialType.DRIVING_LICENSE,
   CredentialType.EUROPEAN_DISABILITY_CARD,
   CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
@@ -112,6 +106,18 @@ export const useBorderColorByStatus: () => {
     jwtExpiring: IOColors["warning-700"],
     unknown: IOColors["grey-300"]
   };
+};
+
+export const borderVariantByStatus: {
+  [key in ItwCredentialStatus]: ItwIridescentBorderVariant;
+} = {
+  valid: "default",
+  expiring: "warning",
+  jwtExpiring: "warning",
+  expired: "error",
+  jwtExpired: "error",
+  invalid: "error",
+  unknown: "default"
 };
 
 export const tagPropsByStatus: { [key in ItwCredentialStatus]?: Tag } = {

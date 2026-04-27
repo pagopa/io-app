@@ -2,6 +2,7 @@
 
 exports[`landingScreenBannersReducer should match snapshot: undefined_no_action 1`] = `
 {
+  "CGN_ENGAGEMENT_BANNER": true,
   "ITW_DISCOVERY": true,
   "IT_WALLET_DISCOVERY": true,
   "LV_EXPIRATION_REMINDER": true,

@@ -61,6 +61,7 @@ export const pollForStoreValue = <T>({
 export const shouldSerializeReason = (failure: { reason?: unknown }) =>
   !failure.reason ||
   (typeof failure.reason === "object" &&
+    failure.reason !== null &&
     Object.keys(failure.reason).length === 0);
 
 /**
@@ -72,27 +73,37 @@ export const serializeFailureReason = (
     | CredentialIssuanceFailure
     | RemoteFailure
     | ProximityFailure
-) => {
-  const reason = !failure.reason
-    ? "Reason not provided"
-    : failure.reason instanceof Error
-      ? createReasonObject(failure.reason.message)
-      : failure.reason;
-
-  return {
-    ...failure,
-    reason
-  };
-};
+) => ({
+  ...failure,
+  reason: mapFailureReason(failure.reason)
+});
 
 /**
  * This logic was agreed upon with the Mixpanel team to allow them to filter these specific error cases.
- * Instead of sending a plain string, we return a structured object with a code and errorDescription
+ * Instead of sending a plain string, we return a structured object with a code and errorDescription.
  */
 const createReasonObject = (message: string) => ({
   code: "UNEXPECTED",
   errorDescription: message
 });
+
+/**
+ * Guards and maps failure reasons to a consistent format for serialization.
+ * Missing reasons and Error instances are converted to a structured object,
+ * Existing reason objects are preserved as-is.
+ * Primitive values are returned as-is.
+ */
+const mapFailureReason = (reason: unknown) => {
+  if (!reason) {
+    return createReasonObject("Reason not provided");
+  }
+
+  if (reason instanceof Error) {
+    return createReasonObject(reason.message);
+  }
+
+  return reason;
+};
 
 /**
  * Convenience function that wraps {@link pollForStoreValue} to check for the integrity service readiness.
