@@ -46,7 +46,10 @@ export const ItwPresentationPidDetail = ({ credential }: Props) => {
 
   return (
     <View>
-      <ItwEidLifecycleAlert navigation={navigation} />
+      <ItwEidLifecycleAlert
+        navigation={navigation}
+        lifecycleStatus={["jwtExpiring", "jwtExpired"]}
+      />
       {claims.length > 0 && (
         <ListItemHeader label={listItemHeaderLabel} endElement={endElement} />
       )}
