@@ -22,7 +22,6 @@ import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwFailureSupportModal } from "../../common/hooks/useItwFailureSupportModal";
-import { useItwIssuerDynamicErrorBottomSheet } from "../../common/hooks/useItwIssuerDynamicErrorBottomSheet";
 import { ZendeskSubcategoryValue } from "../../common/hooks/useItwZendeskSupport";
 import { KoState } from "../../analytics/utils/types";
 import { trackItwKoStateAction } from "../../analytics";
@@ -38,14 +37,19 @@ const zendeskAssistanceErrors = [
   IssuanceFailureType.UNEXPECTED,
   IssuanceFailureType.WALLET_PROVIDER_GENERIC,
   IssuanceFailureType.UNSUPPORTED_DEVICE,
-  IssuanceFailureType.HARDWARE_KEY_INVALID
+  IssuanceFailureType.HARDWARE_KEY_INVALID,
+  IssuanceFailureType.PID_ANPR_CREDENTIAL_NOT_FOUND
 ];
 
 const ASSERTION_FAILED_FAQ_URL =
   "https://assistenza.ioapp.it/hc/it/articles/43824826487953-Provo-ad-aggiungere-un-documento-al-Portafoglio-ma-ricevo-un-errore-dal-mio-dispositivo-Apple";
 
+const PID_ANPR_MISMATCH_FAQ_URL =
+  "https://assistenza.ioapp.it/hc/it/articles/40032473652881-Continuare-a-usare-Documenti-su-IO-senza-limitazioni-dopo-12-mesi";
+
 const failureLinkMapper: Partial<Record<IssuanceFailureType, string>> = {
-  [IssuanceFailureType.HARDWARE_KEY_INVALID]: ASSERTION_FAILED_FAQ_URL
+  [IssuanceFailureType.HARDWARE_KEY_INVALID]: ASSERTION_FAILED_FAQ_URL,
+  [IssuanceFailureType.PID_ANPR_CREDENTIAL_NOT_FOUND]: PID_ANPR_MISMATCH_FAQ_URL
 };
 
 export const ItwIssuanceEidFailureScreen = () => {
@@ -93,10 +97,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
     supportChatEnabled: zendeskAssistanceErrors.includes(failure.type),
     zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI,
     supportLink: failureLinkMapper[failure.type]
-  });
-  const issuerDynamicErrorBottomSheet = useItwIssuerDynamicErrorBottomSheet({
-    failure,
-    zendeskSubcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI
   });
 
   const closeIssuance = (errorConfig: KoState) => {
@@ -170,7 +170,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
                     "features.itWallet.issuance.pidAnprMismatchError.primaryAction"
                   )
                 });
-                issuerDynamicErrorBottomSheet.present();
+                supportModal.present();
               }
             },
             secondaryAction: {
@@ -366,7 +366,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
     <>
       <OperationResultScreenContent {...resultScreenProps} />
       {supportModal.bottomSheet}
-      {issuerDynamicErrorBottomSheet.bottomSheet}
     </>
   );
 };
