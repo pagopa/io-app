@@ -62,6 +62,9 @@ export const dateToAccessibilityReadableFormat = (
 export const hoursAndMinutesToAccessibilityReadableFormat = (date: Date) =>
   dateToAccessibilityReadableFormat(date, "HH:mm");
 
+export const formatStringToSpacedString = (str: string) =>
+  str.split("").join(" ");
+
 /**
  * This function is used to get the text that will be read by the screen reader
  * with the correct minus symbol pronunciation.
