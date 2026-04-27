@@ -29,6 +29,7 @@ import {
   cgnDetailSelector,
   isCgnDetailsAlreadyFetchedSelector
 } from "../store/reducers/details";
+import { trackCgnEngagementBanner } from "../analytics/index.ts";
 
 type Props = {
   handleOnClose: () => void;
@@ -53,20 +54,20 @@ const CgnDiscoveryBanner = ({ handleOnClose }: Props) => {
     isRemoteBannerEnabled && !cgnFetched && pot.isNone(cgnStatus);
 
   const closeHandler = useCallback(() => {
-    // TODO: Mixpanel close event from IEG-2687
+    trackCgnEngagementBanner("CLOSE_BANNER");
     dispatch(closeCgnDiscoveryBanner());
     handleOnClose();
   }, [dispatch, handleOnClose]);
 
   const onPressHandler = useCallback(() => {
-    // TODO: Mixpanel activation event from IEG-2687
+    trackCgnEngagementBanner("TAP_BANNER");
     dispatch(loadAvailableBonuses.request());
     dispatch(cgnActivationStart());
   }, [dispatch]);
 
   useOnFirstRender(
-    // TODO: Mixpanel render event from IEG-2687
     () => {
+      trackCgnEngagementBanner("BANNER");
       if (shouldFetchCgnDetails) {
         dispatch(cgnDetails.request());
       }
