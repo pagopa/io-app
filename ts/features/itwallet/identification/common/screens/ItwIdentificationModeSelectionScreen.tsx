@@ -74,28 +74,15 @@ export const ItwIdentificationModeSelectionScreen = ({
 
   const { section, title, description } = useMemo(() => {
     if (isL3) {
-      if (isReissuanceMode) {
-        return {
-          section: I18n.t(
-            "features.itWallet.identification.modeSelection.section.l3-reissuance"
-          ),
-          title: I18n.t(
-            "features.itWallet.identification.modeSelection.title.l3-reissuance"
-          ),
-          description: I18n.t(
-            "features.itWallet.identification.modeSelection.description.l3-reissuance"
-          )
-        };
-      }
       return {
         section: I18n.t(
-          "features.itWallet.identification.modeSelection.section.l3-issuance"
+          `features.itWallet.identification.modeSelection.section.l3-${isReissuanceMode ? "reissuance" : "issuance"}`
         ),
         title: I18n.t(
-          "features.itWallet.identification.modeSelection.title.l3-issuance"
+          `features.itWallet.identification.modeSelection.title.l3-${isReissuanceMode ? "reissuance" : "issuance"}`
         ),
         description: I18n.t(
-          "features.itWallet.identification.modeSelection.description.l3-issuance"
+          `features.itWallet.identification.modeSelection.description.l3-${isReissuanceMode ? "reissuance" : "issuance"}`
         )
       };
     } else {
