@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.29.0-rc.7](https://github.com/pagopa/io-app/compare/3.29.0-rc.6...3.29.0-rc.7) (2026-04-24)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4080](https://pagopa.atlassian.net/browse/SIW-4080)] Add IT Wallet Credentials vault tracking ([#8042](https://github.com/pagopa/io-app/issues/8042)) ([c727822](https://github.com/pagopa/io-app/commit/c727822323756fa101846d228b476b1e0926e4d1))
+* [[IEG-2797](https://pagopa.atlassian.net/browse/IEG-2797)] CGN engagement banner ([#8050](https://github.com/pagopa/io-app/issues/8050)) ([42701c5](https://github.com/pagopa/io-app/commit/42701c5d292303093c842f9c2f36958bd1dd255b))
+
+
+### Chores
+
+* [[IEL-451](https://pagopa.atlassian.net/browse/IEL-451)] added remote FF and url for Fci Security check ([#8057](https://github.com/pagopa/io-app/issues/8057)) ([e49d3f5](https://github.com/pagopa/io-app/commit/e49d3f500124b3af7351b3e9e58c73fd403d7fd8))
+
+## [3.29.0-rc.6](https://github.com/pagopa/io-app/compare/3.29.0-rc.5...3.29.0-rc.6) (2026-04-23)
+
 ## [3.29.0-rc.5](https://github.com/pagopa/io-app/compare/3.29.0-rc.4...3.29.0-rc.5) (2026-04-22)
 
 
