@@ -32,7 +32,6 @@ import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
 import { useIOSelector } from "../../../../store/hooks";
 import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { DOCUMENTS_ON_IO_FAQ_12_URL_BODY } from "../../../../urls";
-import { isAnprPidCredentialNotFoundError } from "../../common/utils/itwFailureUtils";
 
 // Errors that allow a user to send a support request to Zendesk
 const zendeskAssistanceErrors = [
@@ -131,42 +130,6 @@ const ContentView = ({ failure }: ContentViewProps) => {
             }
           };
         case IssuanceFailureType.ISSUER_GENERIC:
-          if (isAnprPidCredentialNotFoundError(failure.reason)) {
-            return {
-              title: I18n.t(
-                "features.itWallet.issuance.pidAnprMismatchError.title"
-              ),
-              subtitle: I18n.t(
-                "features.itWallet.issuance.pidAnprMismatchError.body"
-              ),
-              pictogram: "fatalError",
-              action: {
-                label: I18n.t(
-                  "features.itWallet.issuance.pidAnprMismatchError.primaryAction"
-                ),
-                onPress: () => {
-                  trackItwKoStateAction({
-                    reason: failure.reason,
-                    cta_category: "custom_1",
-                    cta_id: I18n.t(
-                      "features.itWallet.issuance.pidAnprMismatchError.primaryAction"
-                    )
-                  });
-                  issuerDynamicErrorBottomSheet.present();
-                }
-              },
-              secondaryAction: {
-                label: I18n.t("global.buttons.close"),
-                onPress: () =>
-                  closeIssuance({
-                    reason: failure.reason,
-                    cta_category: "custom_2",
-                    cta_id: I18n.t("global.buttons.close")
-                  })
-              }
-            };
-          }
-
           return {
             title: I18n.t("features.itWallet.issuance.genericError.title"),
             subtitle: I18n.t("features.itWallet.issuance.genericError.body"),
@@ -185,6 +148,40 @@ const ContentView = ({ failure }: ContentViewProps) => {
                 }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
             },
             secondaryAction: supportModalAction
+          };
+        case IssuanceFailureType.PID_ANPR_CREDENTIAL_NOT_FOUND:
+          return {
+            title: I18n.t(
+              "features.itWallet.issuance.pidAnprMismatchError.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.issuance.pidAnprMismatchError.body"
+            ),
+            pictogram: "fatalError",
+            action: {
+              label: I18n.t(
+                "features.itWallet.issuance.pidAnprMismatchError.primaryAction"
+              ),
+              onPress: () => {
+                trackItwKoStateAction({
+                  reason: failure.reason,
+                  cta_category: "custom_1",
+                  cta_id: I18n.t(
+                    "features.itWallet.issuance.pidAnprMismatchError.primaryAction"
+                  )
+                });
+                issuerDynamicErrorBottomSheet.present();
+              }
+            },
+            secondaryAction: {
+              label: I18n.t("global.buttons.close"),
+              onPress: () =>
+                closeIssuance({
+                  reason: failure.reason,
+                  cta_category: "custom_2",
+                  cta_id: I18n.t("global.buttons.close")
+                })
+            }
           };
         case IssuanceFailureType.HARDWARE_KEY_INVALID:
           return {

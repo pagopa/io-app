@@ -48,25 +48,22 @@ export const isLocalIntegrityError = (e: unknown): e is IntegrityError =>
 export const isAssertionGenerationError = (e: unknown): e is IntegrityError =>
   e instanceof Error && e.message === "GENERATION_ASSERTION_FAILED";
 
-const CredentialNotFoundError = z.object({
-  error: z.literal("credential_not_found")
+const anprPid404Failure = z.object({
+  code: z.literal(Errors.IssuerResponseErrorCodes.CredentialInvalidStatus),
+  statusCode: z.literal(404),
+  reason: z.object({
+    error: z.literal("credential_not_found")
+  })
 });
 
 /**
  * Guard used to identify ANPR PID 404 issuance failures.
- *
- * ANPR is the only expected issuer to surface a HTTP 404 as
- * `ERR_CREDENTIAL_INVALID_STATUS` with `credential_not_found` in `reason.error`,
- * so all three conditions are required to avoid matching generic issuer 404
- * errors.
+ * It is identified by the presence of reason.error with value "credential_not_found" inside an IssuerResponseError with code `CredentialInvalidStatus` and HTTP status 404.
  */
-export const isAnprPidCredentialNotFoundError = (
+export const isAnprPid404Failure = (
   e: unknown
 ): e is Errors.IssuerResponseError =>
-  Errors.isIssuerResponseError(e) &&
-  e.statusCode === 404 &&
-  e.code === Errors.IssuerResponseErrorCodes.CredentialInvalidStatus &&
-  CredentialNotFoundError.safeParse(e.reason).success;
+  Errors.isIssuerResponseError(e) && anprPid404Failure.safeParse(e).success;
 
 type ItwFailureWithReason = {
   type: string;
