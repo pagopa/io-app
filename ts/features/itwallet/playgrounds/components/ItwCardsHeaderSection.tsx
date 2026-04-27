@@ -1,4 +1,8 @@
-import { IOText, ListItemHeader, VStack } from "@pagopa/io-app-design-system";
+import {
+  IOVisualCostants,
+  ListItemHeader,
+  VStack
+} from "@pagopa/io-app-design-system";
 import { View } from "react-native";
 import { ItwCredentialDetailCard } from "../../common/components/ItwCredentialDetailCard";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
@@ -18,26 +22,20 @@ const ALL_CREDENTIAL_TYPES: ReadonlyArray<string> = [
   "Unknown Credential Type with Ridicolously Long Long Long Long Name"
 ];
 
-const PlaceholderContent = () => (
-  <View style={{ paddingVertical: 24, alignItems: "center" }}>
-    <IOText>{"Credential content"}</IOText>
-  </View>
-);
-
 /**
  * Detail Cards section for ITW Playground.
  * Shows ItwCredentialDetailCard for each credential type and status.
  */
-export const ItwDetailCardsSection = () => (
+export const ItwCardsHeaderSection = () => (
   <VStack space={24}>
     {ALL_CREDENTIAL_TYPES.map(credentialType => (
       <View key={credentialType}>
         <ListItemHeader label={getCredentialNameFromType(credentialType)} />
-        <VStack space={16}>
+        <View style={{ marginHorizontal: -IOVisualCostants.appMarginDefault }}>
           <ItwCredentialDetailCard credentialType={credentialType}>
-            <PlaceholderContent />
+            <View style={{ height: 200 }} />
           </ItwCredentialDetailCard>
-        </VStack>
+        </View>
       </View>
     ))}
   </VStack>

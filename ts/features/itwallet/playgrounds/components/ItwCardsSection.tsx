@@ -51,13 +51,17 @@ export const ItwCardsSection = () => (
   <VStack space={8}>
     <View style={{ paddingBottom: 160 }}>
       <ListItemHeader label={"Stack"} />
-      {ALL_CREDENTIAL_TYPES.map(credentialType => (
-        <ItwCredentialWalletCard
-          key={credentialType}
-          cardProps={{ credentialType, withItwDesign: true }}
-          isStacked
-        />
-      ))}
+      <View
+        style={{ marginHorizontal: -IOVisualCostants.appMarginDefault / 2 }}
+      >
+        {ALL_CREDENTIAL_TYPES.map(credentialType => (
+          <ItwCredentialWalletCard
+            key={credentialType}
+            cardProps={{ credentialType, withItwDesign: true }}
+            isStacked
+          />
+        ))}
+      </View>
     </View>
     {ALL_CREDENTIAL_TYPES.map(credentialType => (
       <View key={credentialType}>
@@ -70,7 +74,7 @@ export const ItwCardsSection = () => (
             marginHorizontal: -IOVisualCostants.appMarginDefault
           }}
           contentContainerStyle={{
-            paddingHorizontal: IOVisualCostants.appMarginDefault,
+            paddingHorizontal: IOVisualCostants.appMarginDefault / 2,
             paddingTop: 8,
             paddingBottom: 24
           }}
