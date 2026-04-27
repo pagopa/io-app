@@ -25,7 +25,9 @@ export const l2Credentials = [
 export const newCredentials = [
   CredentialType.EDUCATION_DEGREE,
   CredentialType.EDUCATION_ENROLLMENT,
-  CredentialType.RESIDENCY
+  CredentialType.RESIDENCY,
+  CredentialType.EDUCATION_DIPLOMA,
+  CredentialType.EDUCATION_ATTENDANCE
 ] as const;
 
 export type NewCredential = (typeof newCredentials)[number];
@@ -33,11 +35,7 @@ export type NewCredential = (typeof newCredentials)[number];
 export type L2Credential = (typeof l2Credentials)[number];
 
 // Credentials that will be available in the future
-// TODO: [SIW-3923] remove once IPZS releases new credentials in PROD
-export const upcomingCredentials = [
-  CredentialType.EDUCATION_DIPLOMA,
-  CredentialType.EDUCATION_ATTENDANCE
-] as ReadonlyArray<string>;
+export const upcomingCredentials = [] as ReadonlyArray<string>;
 
 export const isUpcomingCredential = (type: string): boolean =>
   upcomingCredentials.includes(type);
