@@ -280,3 +280,9 @@ jest.mock("@pagopa/io-react-native-iso18013", () => ({
 jest.mock("@pagopa/io-react-native-cie", () => ({
   CieManager: jest.fn()
 }));
+
+// Polyfill requestIdleCallback for Jest (not available in jsdom/RN test env)
+global.requestIdleCallback =
+  global.requestIdleCallback ?? ((cb) => setTimeout(cb, 0));
+global.cancelIdleCallback =
+  global.cancelIdleCallback ?? ((id) => clearTimeout(id));

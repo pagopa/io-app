@@ -101,11 +101,18 @@ export const useCachedImage = (
 
 /**
  * Eagerly starts loading the given bundled image assets into the module cache.
- * Call this at app startup or feature mount to warm the cache before
- * individual card components need the images.
+ * Defers work until the JS thread is idle via {@link requestIdleCallback}, then
+ * loads images sequentially so that JSI decode callbacks are spread across
+ * frames instead of bursting all at once on the JS thread.
  */
 export const preloadImages = (sources: ReadonlyArray<number>): void => {
-  sources.forEach(source => {
-    void loadImageAsync(source);
+  const loadSequentially = async () => {
+    for (const source of sources) {
+      await loadImageAsync(source);
+    }
+  };
+
+  requestIdleCallback(() => {
+    void loadSequentially();
   });
 };
