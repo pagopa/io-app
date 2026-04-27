@@ -1,10 +1,9 @@
 import * as ioCrypto from "@pagopa/io-react-native-crypto";
-import { DeepPartial } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
-import { GlobalState } from "../../../../../store/reducers/types";
 import { walletRemoveCards } from "../../../../wallet/store/actions/cards";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
+import { trackItwVaultCredentialRemoveFailed } from "../../analytics";
 import {
   itwCredentialsRemove,
   itwCredentialsRemoveByType
@@ -15,10 +14,14 @@ import { handleItwCredentialsRemoveByTypeSaga } from "../handleItwCredentialsRem
 jest.mock("../../utils/vault", () => ({
   CredentialsVault: { removeAll: jest.fn() }
 }));
+jest.mock("../../analytics", () => ({
+  trackItwVaultCredentialRemoveFailed: jest.fn()
+}));
 jest.mock("@pagopa/io-react-native-crypto", () => ({ deleteKey: jest.fn() }));
 
 const mockRemoveAll = jest.mocked(CredentialsVault.removeAll);
 const mockDeleteKey = jest.mocked(ioCrypto.deleteKey);
+const mockTrackRemoveFailed = jest.mocked(trackItwVaultCredentialRemoveFailed);
 
 const baseCredential: CredentialMetadata = {
   credentialType: CredentialType.DRIVING_LICENSE,
@@ -34,9 +37,7 @@ const baseCredential: CredentialMetadata = {
   spec_version: "1.0.0"
 };
 
-const makeState = (
-  credentials: Record<string, CredentialMetadata>
-): DeepPartial<GlobalState> => ({
+const makeState = (credentials: Record<string, CredentialMetadata>) => ({
   features: {
     itWallet: {
       credentials: { credentials }
@@ -81,6 +82,28 @@ describe("handleItwCredentialsRemoveByTypeSaga", () => {
       .then(() => {
         expect(mockRemoveAll).toHaveBeenCalledWith([credential.credentialId]);
         expect(mockDeleteKey).toHaveBeenCalledWith(credential.keyTag);
+      });
+  });
+
+  it("tracks vault removal failures and skips Redux cleanup", () => {
+    mockRemoveAll.mockRejectedValue(new Error("vault error"));
+    const credential = { ...baseCredential };
+    const action = itwCredentialsRemoveByType(
+      CredentialType.DRIVING_LICENSE,
+      {}
+    );
+
+    return expectSaga(handleItwCredentialsRemoveByTypeSaga, action)
+      .withState(makeState({ [credential.credentialId]: credential }))
+      .not.put.actionType(itwCredentialsRemove.toString())
+      .not.put.actionType(walletRemoveCards.toString())
+      .run()
+      .then(() => {
+        expect(mockTrackRemoveFailed).toHaveBeenCalledWith({
+          credential_ids: [credential.credentialId],
+          reason: "vault error"
+        });
+        expect(mockDeleteKey).not.toHaveBeenCalled();
       });
   });
 });
