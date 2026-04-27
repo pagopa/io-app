@@ -374,26 +374,15 @@
             "title": "I tuoi dati di utilizzo",
             "description": "Se condividi i tuoi dati, ci aiuti a migliorare la tua esperienza su IO e a fornirti assistenza mirata.",
             "why": {
-              "description": {
-                "one": "Usiamo ",
-                "two": "solo i dati necessari ",
-                "three": "a monitorare il funzionamento dell’app e a migliorare i servizi offerti."
-              },
+              "description": "Usiamo **solo i dati necessari** a monitorare il funzionamento dell'app e a migliorare i servizi offerti.",
               "cta": "Perché raccogliamo i dati"
             },
             "security": {
-              "description": {
-                "one": "Adottiamo misure di sicurezza per ",
-                "two": "proteggere ",
-                "three": "i tuoi dati."
-              },
+              "description": "Adottiamo misure di sicurezza per **proteggere** i tuoi dati.",
               "cta": "Come proteggiamo i dati"
             },
             "gdpr": {
-              "description": {
-                "one": "Collaboriamo solo con fornitori che trattano i dati in modo ",
-                "two": "trasparente e sicuro."
-              },
+              "description": "Collaboriamo solo con fornitori che trattano i dati in modo **trasparente e sicuro.**",
               "cta": "Chi sono i fornitori"
             },
             "additionalInformation": {
@@ -716,7 +705,7 @@
         },
         "bottom_sheet": {
           "title": "Dove trovo il PIN della CIE?",
-          "content": "Il codice PIN è composto da 8 cifre ed è diviso in due parti:\n- le prime 4 cifre le hai ricevute all’anagrafe;\n- le ultime 4 cifre le hai ricevute a casa con la CIE. \nMettile insieme e inseriscile in quest’ordine.",
+          "content": "Il codice PIN è composto da 8 cifre ed è diviso in due parti:\n- le prime 4 cifre le hai ricevute all’anagrafe;\n- le ultime 4 cifre le hai ricevute a casa con la CIE. \n\nMettile insieme e inseriscile in quest’ordine.",
           "link": "Hai dimenticato il PIN?",
           "cta": {
             "label": "Dove trovo il PIN della CIE?"
@@ -2282,6 +2271,11 @@
           "placeholder": "Referer"
         },
         "send": "Invia"
+      },
+      "engagement": {
+        "banner": {
+          "cta": "Attiva Carta Giovani"
+        }
       }
     },
     "cdc": {
@@ -3827,9 +3821,9 @@
               },
               "itw": {
                 "valid": "Hai attivato il tuo ID con CIE il {{date}}.",
-                "expiring": "Rinnova il tuo ID per continuare ad usare IT-Wallet entro il {{date}}.",
-                "expired": "Rinnova il tuo ID per continuare ad usare IT-Wallet.",
-                "action": "Rinnova ID"
+                "expiring": "Conferma la tua indentità entro il {{date}} per continuare a usare i tuoi documenti senza limitazioni.",
+                "expired": "Conferma la tua identità per continuare a usare i tuoi documenti senza limitazioni.",
+                "action": "Conferma identità"
               }
             }
           },
@@ -3865,6 +3859,7 @@
             "hideValues": "Nascondi dati",
             "showValues": "Mostra dati"
           },
+          "openCardDocument": "Apri copia del documento",
           "documentDataTitle": "Dati del documento",
           "boolClaim": {
             "true": "Sì",

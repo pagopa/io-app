@@ -1,20 +1,15 @@
 import { Alert, IOButton, IOToast, VStack } from "@pagopa/io-app-design-system";
-import { useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { memo, useCallback } from "react";
 import { View } from "react-native";
+import { useRoute } from "@react-navigation/native";
 import IOMarkdown from "../../../../../components/IOMarkdown";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { format } from "../../../../../utils/dates.ts";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet.tsx";
 import { openWebUrl } from "../../../../../utils/url";
-import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
-import { getMixPanelCredential } from "../../../analytics/utils/index.ts";
-import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types.ts";
-import { ItwEidLifecycleAlert } from "../../../common/components/ItwEidLifecycleAlert";
 import {
   ClaimsLocales,
   getClaimsFullLocale,
@@ -30,13 +25,18 @@ import {
   itwCredentialStatusSelector,
   itwCredentialsEidStatusSelector
 } from "../../../credentials/store/selectors";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
 import {
   trackItwCredentialBottomSheet,
   trackItwCredentialBottomSheetAction,
   trackItwCredentialTapBanner
 } from "../analytics";
+import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types.ts";
+import { getMixPanelCredential } from "../../../analytics/utils";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
+import { ItwEidLifecycleAlert } from "../../../common/components/ItwEidLifecycleAlert";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useItwIssuerDynamicErrorBottomSheet } from "../hooks/useItwIssuerDynamicErrorBottomSheet";
 
 type Props = {
@@ -162,13 +162,13 @@ export const deriveCredentialAlertType = (
  */
 const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
   const navigation = useIONavigation();
+  const { name: currentScreenName } = useRoute();
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
   const { status, message } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
-  const { name: currentScreenName } = useRoute();
 
   const trackCredentialAlertEvent = (action: CredentialAlertEvents): void => {
     if (!status) {
