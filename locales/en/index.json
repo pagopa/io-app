@@ -314,26 +314,15 @@
             "title": "Your usage data",
             "description": "Sharing your data helps us improve your experience and provide you with targeted assistance.",
             "why": {
-              "description": {
-                "one": "We only collect ",
-                "two": "the data we need ",
-                "three": "to monitor how the app is working and to make the services we offer better."
-              },
+              "description": "We only collect **the data we need** to monitor how the app is working and to make the services we offer better.",
               "cta": "Why we collect data"
             },
             "security": {
-              "description": {
-                "one": "We take data security seriously ",
-                "two": "and have measures in place to protect ",
-                "three": "your data."
-              },
+              "description": "We take data security seriously **and have measures in place to protect** your data.",
               "cta": "How we keep data safe"
             },
             "gdpr": {
-              "description": {
-                "one": "We only work with suppliers who process data ",
-                "two": "in a transparent and secure way."
-              },
+              "description": "We only work with suppliers who process data **in a transparent and secure way.**",
               "cta": "Who are the suppliers"
             },
             "additionalInformation": {

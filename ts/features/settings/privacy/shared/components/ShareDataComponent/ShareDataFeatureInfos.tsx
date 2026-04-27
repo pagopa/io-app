@@ -1,5 +1,4 @@
 import {
-  Body,
   FeatureInfo,
   IOMarkdownLite,
   VSpacer
@@ -69,15 +68,13 @@ const AnalyticsFeatureInfo = ({ trackAction }: FeatureProps) => {
 
   const analyticsBody = useMemo(
     () => (
-      <Body ref={bodyRef}>
-        {I18n.t("profile.main.privacy.shareData.screen.why.description.one")}
-        <Body weight="Semibold">
-          {I18n.t("profile.main.privacy.shareData.screen.why.description.two")}
-        </Body>
-        {`${I18n.t(
-          "profile.main.privacy.shareData.screen.why.description.three"
-        )}`}
-      </Body>
+      <View ref={bodyRef}>
+        <IOMarkdownLite
+          content={I18n.t(
+            "profile.main.privacy.shareData.screen.why.description"
+          )}
+        />
+      </View>
     ),
     []
   );
@@ -112,19 +109,11 @@ const SecurityFeatureInfo = ({ trackAction }: FeatureProps) => {
     <FeatureInfo
       iconName="locked"
       body={
-        <Body>
-          {I18n.t(
-            "profile.main.privacy.shareData.screen.security.description.one"
+        <IOMarkdownLite
+          content={I18n.t(
+            "profile.main.privacy.shareData.screen.security.description"
           )}
-          <Body weight="Semibold">
-            {I18n.t(
-              "profile.main.privacy.shareData.screen.security.description.two"
-            )}
-          </Body>
-          {I18n.t(
-            "profile.main.privacy.shareData.screen.security.description.three"
-          )}
-        </Body>
+        />
       }
       action={{
         label: I18n.t("profile.main.privacy.shareData.screen.security.cta"),
@@ -147,14 +136,11 @@ const GDPRFeatureInfo = ({ trackAction }: FeatureProps) => {
     <FeatureInfo
       iconName="security"
       body={
-        <Body>
-          {I18n.t("profile.main.privacy.shareData.screen.gdpr.description.one")}
-          <Body weight="Semibold">
-            {I18n.t(
-              "profile.main.privacy.shareData.screen.gdpr.description.two"
-            )}
-          </Body>
-        </Body>
+        <IOMarkdownLite
+          content={I18n.t(
+            "profile.main.privacy.shareData.screen.gdpr.description"
+          )}
+        />
       }
       action={{
         label: I18n.t("profile.main.privacy.shareData.screen.gdpr.cta"),
