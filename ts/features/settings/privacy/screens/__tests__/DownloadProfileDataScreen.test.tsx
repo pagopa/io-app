@@ -9,7 +9,7 @@ import DownloadProfileDataScreen from "../DownloadProfileDataScreen";
 import * as hooks from "../../../../../store/hooks";
 import * as selectors from "../../../common/store/selectors/userDataProcessing";
 import { upsertUserDataProcessing } from "../../../common/store/actions/userDataProcessing";
-import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/backend/identity/UserDataProcessingChoice";
+import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/identity/UserDataProcessingChoice";
 
 jest.mock("../../../../../store/hooks", () => ({
   useIODispatch: jest.fn(),

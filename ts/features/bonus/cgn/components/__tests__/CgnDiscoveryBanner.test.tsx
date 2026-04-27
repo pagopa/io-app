@@ -2,7 +2,7 @@ import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import MockDate from "mockdate";
 import { Store, createStore } from "redux";
-import { InitializedProfile } from "../../../../../../definitions/backend/identity/InitializedProfile";
+import { InitializedProfile } from "../../../../../../definitions/identity/InitializedProfile";
 import { StatusEnum } from "../../../../../../definitions/cgn/CardActivated";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { backendStatusLoadSuccess } from "../../../../../store/actions/backendStatus";

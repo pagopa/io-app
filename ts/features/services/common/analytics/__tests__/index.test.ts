@@ -1,4 +1,4 @@
-import { ServiceId } from "../../../../../../definitions/backend/communication/ServiceId";
+import { ServiceId } from "../../../../../../definitions/communication/ServiceId";
 import * as mixpanelTrackModule from "../../../../../mixpanel";
 import { TimeoutError } from "../../../../../utils/errors";
 import { loadServicePreference } from "../../../details/store/actions/preference";

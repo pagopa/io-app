@@ -1,5 +1,5 @@
-import { PaymentFaultV2Enum } from "../../../../../definitions/backend/communication/PaymentFaultV2";
-import { ServiceId } from "../../../../../definitions/backend/communication/ServiceId";
+import { PaymentFaultV2Enum } from "../../../../../definitions/communication/PaymentFaultV2";
+import { ServiceId } from "../../../../../definitions/communication/ServiceId";
 import {
   updatePaymentForMessage,
   UpdatePaymentForMessageFailure

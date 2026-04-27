@@ -1,4 +1,4 @@
-import { ThirdPartyMessageWithContent } from "../../../../../../definitions/backend/communication/ThirdPartyMessageWithContent";
+import { ThirdPartyMessageWithContent } from "../../../../../../definitions/communication/ThirdPartyMessageWithContent";
 import { toSENDMessage } from "../transformers";
 
 describe("transformers", () => {

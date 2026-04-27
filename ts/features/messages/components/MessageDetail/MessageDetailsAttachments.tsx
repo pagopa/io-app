@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { ListItemHeader } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { ServiceId } from "../../../../../definitions/backend/communication/ServiceId";
+import { ServiceId } from "../../../../../definitions/communication/ServiceId";
 import { useIOSelector } from "../../../../store/hooks";
 import { thirdPartyMessageAttachments } from "../../store/reducers/thirdPartyById";
 import { ATTACHMENT_CATEGORY } from "../../types/attachmentCategory";

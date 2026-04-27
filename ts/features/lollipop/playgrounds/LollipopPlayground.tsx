@@ -3,8 +3,8 @@ import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
 import { useCallback, useState } from "react";
 import { ScrollView } from "react-native";
-import { ProblemJson } from "../../../../definitions/backend/identity/ProblemJson";
-import { SignMessageResponse } from "../../../../definitions/backend/identity/SignMessageResponse";
+import { ProblemJson } from "../../../../definitions/identity/ProblemJson";
+import { SignMessageResponse } from "../../../../definitions/identity/SignMessageResponse";
 import { apiUrlPrefix } from "../../../config";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../store/hooks";
@@ -15,11 +15,11 @@ import {
 } from "../store/reducers/lollipop";
 import { toThumbprint } from "../utils/crypto";
 import { identityClientManager } from "../../../api/IdentityClientManager";
-import { LollipopOriginalURL } from "../../../../definitions/backend/identity/LollipopOriginalURL";
-import { LollipopContentDigest } from "../../../../definitions/backend/identity/LollipopContentDigest";
-import { LollipopSignatureInput } from "../../../../definitions/backend/identity/LollipopSignatureInput";
-import { LollipopSignature } from "../../../../definitions/backend/identity/LollipopSignature";
-import { LollipopMethodEnum } from "../../../../definitions/backend/identity/LollipopMethod";
+import { LollipopOriginalURL } from "../../../../definitions/identity/LollipopOriginalURL";
+import { LollipopContentDigest } from "../../../../definitions/identity/LollipopContentDigest";
+import { LollipopSignatureInput } from "../../../../definitions/identity/LollipopSignatureInput";
+import { LollipopSignature } from "../../../../definitions/identity/LollipopSignature";
+import { LollipopMethodEnum } from "../../../../definitions/identity/LollipopMethod";
 import LollipopPlaygroundContent from "./LollipopPlaygroundContent";
 
 export type LollipopPlaygroundState = {

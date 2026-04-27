@@ -5,7 +5,7 @@ import {
   WithServiceID
 } from "../../types/ServicePreferenceResponse";
 import { NetworkError } from "../../../../../utils/errors";
-import { ServiceId } from "../../../../../../definitions/backend/communication/ServiceId";
+import { ServiceId } from "../../../../../../definitions/communication/ServiceId";
 
 /**
  * Actions to load the specified preferences for a given ServiceID

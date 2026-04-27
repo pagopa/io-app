@@ -4,9 +4,9 @@ import { MESSAGES_ROUTES } from "../../navigation/routes";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { MessageAttachmentScreen } from "../MessageAttachmentScreen";
-import { ServiceId } from "../../../../../definitions/backend/communication/ServiceId";
+import { ServiceId } from "../../../../../definitions/communication/ServiceId";
 import { downloadAttachment } from "../../store/actions";
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/communication/ThirdPartyAttachment";
+import { ThirdPartyAttachment } from "../../../../../definitions/communication/ThirdPartyAttachment";
 
 describe("MessageAttachment", () => {
   it("Should match the snapshot when there is an error", () => {

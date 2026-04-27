@@ -1,7 +1,7 @@
 import { act, renderHook, waitFor } from "@testing-library/react-native";
 import RNFS from "react-native-fs";
-import { ServiceId } from "../../../../../definitions/backend/communication/ServiceId";
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/communication/ThirdPartyAttachment";
+import { ServiceId } from "../../../../../definitions/communication/ServiceId";
+import { ThirdPartyAttachment } from "../../../../../definitions/communication/ThirdPartyAttachment";
 import { isAarAttachmentTtlError } from "../../../pn/aar/utils/aarErrorMappings";
 import {
   trackPNAttachmentDownloadFailure,

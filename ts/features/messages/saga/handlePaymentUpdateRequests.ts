@@ -12,7 +12,7 @@ import {
   take
 } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
-import { PaymentFaultV2Enum } from "../../../../definitions/backend/communication/PaymentFaultV2";
+import { PaymentFaultV2Enum } from "../../../../definitions/communication/PaymentFaultV2";
 import { Action } from "../../../store/actions/types";
 import { isPagoPATestEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { SagaCallReturnType } from "../../../types/utils";

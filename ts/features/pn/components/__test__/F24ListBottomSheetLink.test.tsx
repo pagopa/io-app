@@ -4,8 +4,8 @@ import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { F24ListBottomSheetLink } from "../F24ListBottomSheetLink";
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/communication/ThirdPartyAttachment";
-import { ServiceId } from "../../../../../definitions/backend/communication/ServiceId";
+import { ThirdPartyAttachment } from "../../../../../definitions/communication/ThirdPartyAttachment";
+import { ServiceId } from "../../../../../definitions/communication/ServiceId";
 import PN_ROUTES from "../../navigation/routes";
 import {
   SendOpeningSource,

@@ -4,10 +4,10 @@ import { appReducer } from "../../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MessagePaymentItem } from "../MessagePaymentItem";
 import { NotificationPaymentInfo } from "../../../../../../definitions/pn/NotificationPaymentInfo";
-import { PaymentFaultV2Enum } from "../../../../../../definitions/backend/communication/PaymentFaultV2";
+import { PaymentFaultV2Enum } from "../../../../../../definitions/communication/PaymentFaultV2";
 import { updatePaymentForMessage } from "../../../store/actions";
-import { PaymentInfoResponse } from "../../../../../../definitions/backend/communication/PaymentInfoResponse";
-import { ServiceId } from "../../../../../../definitions/backend/communication/ServiceId";
+import { PaymentInfoResponse } from "../../../../../../definitions/communication/PaymentInfoResponse";
+import { ServiceId } from "../../../../../../definitions/communication/ServiceId";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { toSpecificMessagePaymentError } from "../../../types/paymentErrors";
 

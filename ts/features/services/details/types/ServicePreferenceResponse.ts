@@ -1,5 +1,5 @@
 import { EnabledChannels } from "../../../../utils/profile";
-import { ServiceId } from "../../../../../definitions/backend/communication/ServiceId";
+import { ServiceId } from "../../../../../definitions/communication/ServiceId";
 
 export type ServicePreference = { settings_version: number } & EnabledChannels;
 

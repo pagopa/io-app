@@ -9,7 +9,7 @@ import {
 import i18n from "i18next";
 import { useCallback } from "react";
 import { ImageSourcePropType, StyleSheet, View } from "react-native";
-import { ServiceId } from "../../../../../definitions/backend/communication/ServiceId";
+import { ServiceId } from "../../../../../definitions/communication/ServiceId";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { SERVICES_ROUTES } from "../../../services/common/navigation/routes";

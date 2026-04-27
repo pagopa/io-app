@@ -1,6 +1,6 @@
 import { FiscalCode, NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-import { MessageBodyMarkdown } from "../../../../../definitions/backend/communication/MessageBodyMarkdown";
-import { MessageSubject } from "../../../../../definitions/backend/communication/MessageSubject";
+import { MessageBodyMarkdown } from "../../../../../definitions/communication/MessageBodyMarkdown";
+import { MessageSubject } from "../../../../../definitions/communication/MessageSubject";
 import { EphemeralAarMessageDataActionPayload } from "../store/actions";
 import { ThirdPartyMessage } from "../../../../../definitions/pn/aar/ThirdPartyMessage";
 import { AarFlowState, RecipientInfo, sendAarFlowStates } from "./stateUtils";

@@ -7,10 +7,10 @@ import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWr
 import { MessagePaymentBottomSheet } from "../MessagePaymentBottomSheet";
 import { GlobalState } from "../../../../store/reducers/types";
 import { remoteError, remoteReady } from "../../../../common/model/RemoteValue";
-import { PaymentFaultV2Enum } from "../../../../../definitions/backend/communication/PaymentFaultV2";
-import { ServiceId } from "../../../../../definitions/backend/communication/ServiceId";
+import { PaymentFaultV2Enum } from "../../../../../definitions/communication/PaymentFaultV2";
+import { ServiceId } from "../../../../../definitions/communication/ServiceId";
 import { toSpecificMessagePaymentError } from "../../../messages/types/paymentErrors";
-import { PaymentInfoResponse } from "../../../../../definitions/backend/communication/PaymentInfoResponse";
+import { PaymentInfoResponse } from "../../../../../definitions/communication/PaymentInfoResponse";
 
 describe("MessagePaymentBottomSheet", () => {
   it("should match snapshot, no payments", () => {

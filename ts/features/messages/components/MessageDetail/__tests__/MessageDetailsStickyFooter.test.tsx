@@ -7,10 +7,10 @@ import { PaymentData } from "../../../types";
 import { CTA, CTAS } from "../../../../../types/LocalizedCTAs";
 import * as detailsById from "../../../store/reducers/detailsById";
 import * as payments from "../../../store/reducers/payments";
-import { PaymentAmount } from "../../../../../../definitions/backend/communication/PaymentAmount";
-import { PaymentNoticeNumber } from "../../../../../../definitions/backend/communication/PaymentNoticeNumber";
-import { OrganizationFiscalCode } from "../../../../../../definitions/backend/communication/OrganizationFiscalCode";
-import { ServiceId } from "../../../../../../definitions/backend/communication/ServiceId";
+import { PaymentAmount } from "../../../../../../definitions/communication/PaymentAmount";
+import { PaymentNoticeNumber } from "../../../../../../definitions/communication/PaymentNoticeNumber";
+import { OrganizationFiscalCode } from "../../../../../../definitions/communication/OrganizationFiscalCode";
+import { ServiceId } from "../../../../../../definitions/communication/ServiceId";
 
 const cta1: CTA = {
   text: "CTA 1",

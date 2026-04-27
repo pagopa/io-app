@@ -20,7 +20,7 @@ import {
   toErrorPayload,
   toLoadingContentPayload
 } from "../store/actions/preconditions";
-import { MessageCategory } from "../../../../definitions/backend/communication/MessageCategory";
+import { MessageCategory } from "../../../../definitions/communication/MessageCategory";
 import {
   preconditionsCategoryTagSelector,
   preconditionsMessageIdSelector

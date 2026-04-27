@@ -16,9 +16,6 @@ IO_BACKEND_VERSION_CGN_CDC=v19.0.0
 
 
 declare -a apis=(
-  # Backend APIs
-  "./definitions/backend/communication https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/openapi/generated/api_communication.yaml"
-  "./definitions/backend/identity      https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/openapi/generated/api_identity.yaml"
   # pagoPA APIs
   "./definitions/pagopa assets/paymentManager/spec.json"
   "./definitions/pagopa/walletv2 https://raw.githubusercontent.com/pagopa/io-services-metadata/$IO_SERVICES_METADATA_VERSION/bonus/specs/bpd/pm/walletv2.json"
@@ -28,6 +25,10 @@ declare -a apis=(
   "./definitions/pagopa/platform https://raw.githubusercontent.com/pagopa/pagopa-infra/v1.64.0/src/domains/shared-app/api/session-wallet/v1/_openapi.json.tpl"
   "./definitions/pagopa/cobadge/configuration https://raw.githubusercontent.com/pagopa/io-services-metadata/$IO_SERVICES_METADATA_VERSION/pagopa/cobadge/abi_definitions.yml"
   "./definitions/pagopa/privative/configuration https://raw.githubusercontent.com/pagopa/io-services-metadata/$IO_SERVICES_METADATA_VERSION/pagopa/privative/definitions.yml"
+  # Identity APIs
+  "./definitions/identity      https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/openapi/generated/api_identity.yaml"
+  # Communication APIs
+  "./definitions/communication https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/openapi/generated/api_communication.yaml"
   # IDPay APIs
   "./definitions/idpay https://raw.githubusercontent.com/pagopa/cstar-securehub-infra-api-spec/refs/tags/v3.10.2/src/idpay/apim/api/idpay_appio_full/openapi.appio.full.yml"
   # Services APIs
@@ -70,8 +71,8 @@ declare -a apisNoClient=(
 )
 
 for elem in "${apisNoClient[@]}"; do
-    read -a strarr <<< "$elem"  # uses default whitespace IFS
-    yarn run gen-api-models --api-spec ${strarr[1]} --out-dir ${strarr[0]} &
+  read -a strarr <<< "$elem"  # uses default whitespace IFS
+  echo ${strarr[0]}; [ ! -d ${strarr[0]} ] && mkdir -p ${strarr[0]}; yarn run gen-api-models --api-spec ${strarr[1]} --out-dir ${strarr[0]} &
 done
 wait
 

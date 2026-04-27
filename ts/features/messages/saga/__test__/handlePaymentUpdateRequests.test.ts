@@ -3,7 +3,7 @@ import { Channel, channel } from "redux-saga";
 import { testSaga } from "redux-saga-test-plan";
 import { fork } from "redux-saga/effects";
 import { ActionType } from "typesafe-actions";
-import { PaymentFaultV2Enum } from "../../../../../definitions/backend/communication/PaymentFaultV2";
+import { PaymentFaultV2Enum } from "../../../../../definitions/communication/PaymentFaultV2";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import * as MIXPANEL from "../../../../mixpanel";
 import { isPagoPATestEnabledSelector } from "../../../../store/reducers/persistedPreferences";

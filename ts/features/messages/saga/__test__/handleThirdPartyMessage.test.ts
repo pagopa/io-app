@@ -3,12 +3,12 @@ import { testSaga } from "redux-saga-test-plan";
 import {
   TagEnum,
   TagEnum as TEBASE
-} from "../../../../../definitions/backend/communication/MessageCategoryBase";
-import { TagEnum as TEPAYMENT } from "../../../../../definitions/backend/communication/MessageCategoryPayment";
-import { TagEnum as TESEND } from "../../../../../definitions/backend/communication/MessageCategoryPN";
+} from "../../../../../definitions/communication/MessageCategoryBase";
+import { TagEnum as TEPAYMENT } from "../../../../../definitions/communication/MessageCategoryPayment";
+import { TagEnum as TESEND } from "../../../../../definitions/communication/MessageCategoryPN";
 import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
 import { handleThirdPartyMessage, testable } from "../handleThirdPartyMessage";
-import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/communication/ThirdPartyMessageWithContent";
+import { ThirdPartyMessageWithContent } from "../../../../../definitions/communication/ThirdPartyMessageWithContent";
 import * as ANALYTICS from "../../analytics";
 import * as SEND_ANALYTICS from "../../../pn/analytics";
 import { loadThirdPartyMessage } from "../../store/actions";

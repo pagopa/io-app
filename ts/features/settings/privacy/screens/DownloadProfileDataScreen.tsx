@@ -8,7 +8,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useCallback, useEffect } from "react";
 import { AccessibilityInfo } from "react-native";
 import I18n from "i18next";
-import { UserDataProcessingChoiceEnum } from "../../../../../definitions/backend/identity/UserDataProcessingChoice";
+import { UserDataProcessingChoiceEnum } from "../../../../../definitions/identity/UserDataProcessingChoice";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { upsertUserDataProcessing } from "../../common/store/actions/userDataProcessing";

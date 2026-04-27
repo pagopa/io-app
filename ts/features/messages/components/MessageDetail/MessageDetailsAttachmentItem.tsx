@@ -1,7 +1,7 @@
 import { ModuleAttachment, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { ServiceId } from "../../../../../definitions/backend/communication/ServiceId";
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/communication/ThirdPartyAttachment";
+import { ServiceId } from "../../../../../definitions/communication/ServiceId";
+import { ThirdPartyAttachment } from "../../../../../definitions/communication/ThirdPartyAttachment";
 import { useAttachmentDownload } from "../../hooks/useAttachmentDownload";
 import {
   SendOpeningSource,

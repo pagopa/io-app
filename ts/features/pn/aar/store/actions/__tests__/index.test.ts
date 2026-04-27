@@ -7,8 +7,8 @@ import {
   initiateAarFlow
 } from "..";
 import { ThirdPartyMessage } from "../../../../../../../definitions/pn/ThirdPartyMessage";
-import { MessageBodyMarkdown } from "../../../../../../../definitions/backend/communication/MessageBodyMarkdown";
-import { MessageSubject } from "../../../../../../../definitions/backend/communication/MessageSubject";
+import { MessageBodyMarkdown } from "../../../../../../../definitions/communication/MessageBodyMarkdown";
+import { MessageSubject } from "../../../../../../../definitions/communication/MessageSubject";
 import { AarFlowState, sendAarFlowStates } from "../../../utils/stateUtils";
 
 describe("AarFlowStateActions", () => {

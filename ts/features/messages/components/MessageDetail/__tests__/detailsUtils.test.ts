@@ -1,7 +1,7 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { PaymentInfoResponse } from "../../../../../../definitions/backend/communication/PaymentInfoResponse";
-import { PaymentFaultV2Enum } from "../../../../../../definitions/backend/communication/PaymentFaultV2";
-import { ServiceId } from "../../../../../../definitions/backend/communication/ServiceId";
+import { PaymentInfoResponse } from "../../../../../../definitions/communication/PaymentInfoResponse";
+import { PaymentFaultV2Enum } from "../../../../../../definitions/communication/PaymentFaultV2";
+import { ServiceId } from "../../../../../../definitions/communication/ServiceId";
 import {
   isError,
   remoteError,

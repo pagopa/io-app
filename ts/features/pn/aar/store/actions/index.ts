@@ -5,8 +5,8 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { MessageBodyMarkdown } from "../../../../../../definitions/backend/communication/MessageBodyMarkdown";
-import { MessageSubject } from "../../../../../../definitions/backend/communication/MessageSubject";
+import { MessageBodyMarkdown } from "../../../../../../definitions/communication/MessageBodyMarkdown";
+import { MessageSubject } from "../../../../../../definitions/communication/MessageSubject";
 import { ThirdPartyMessage } from "../../../../../../definitions/pn/aar/ThirdPartyMessage";
 import { AarFlowState, AarFlowStateName } from "../../utils/stateUtils";
 import { MandateCreationResponse } from "../../../../../../definitions/pn/aar/MandateCreationResponse";

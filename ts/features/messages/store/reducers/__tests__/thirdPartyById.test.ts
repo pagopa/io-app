@@ -1,12 +1,12 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { pipe } from "fp-ts/lib/function";
 import { Action } from "redux";
-import { ServiceId } from "../../../../../../definitions/backend/communication/ServiceId";
-import { ThirdPartyAttachment } from "../../../../../../definitions/backend/communication/ThirdPartyAttachment";
+import { ServiceId } from "../../../../../../definitions/communication/ServiceId";
+import { ThirdPartyAttachment } from "../../../../../../definitions/communication/ThirdPartyAttachment";
 import {
   ThirdPartyMessage,
   ThirdPartyMessageDetails
-} from "../../../../../../definitions/backend/communication/ThirdPartyMessage";
+} from "../../../../../../definitions/communication/ThirdPartyMessage";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { toSome } from "../../../../../store/reducers/IndexedByIdPot";

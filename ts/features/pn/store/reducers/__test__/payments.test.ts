@@ -1,12 +1,12 @@
 import { appReducer } from "../../../../../store/reducers";
 import { updatePaymentForMessage } from "../../../../messages/store/actions";
 import { paymentsButtonStateSelector } from "../payments";
-import { PaymentFaultV2Enum } from "../../../../../../definitions/backend/communication/PaymentFaultV2";
+import { PaymentFaultV2Enum } from "../../../../../../definitions/communication/PaymentFaultV2";
 import { reproduceSequence } from "../../../../../utils/tests";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { Action } from "../../../../../store/actions/types";
 import { NotificationPaymentInfo } from "../../../../../../definitions/pn/NotificationPaymentInfo";
-import { ServiceId } from "../../../../../../definitions/backend/communication/ServiceId";
+import { ServiceId } from "../../../../../../definitions/communication/ServiceId";
 import { toSpecificMessagePaymentError } from "../../../../messages/types/paymentErrors";
 
 describe("paymentsButtonStateSelector", () => {

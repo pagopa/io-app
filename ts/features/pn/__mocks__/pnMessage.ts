@@ -1,4 +1,4 @@
-import { ThirdPartyMessageWithContent } from "../../../../definitions/backend/communication/ThirdPartyMessageWithContent";
+import { ThirdPartyMessageWithContent } from "../../../../definitions/communication/ThirdPartyMessageWithContent";
 import { Denomination } from "../../../../definitions/pn/Denomination";
 import { noticeCode } from "../../../../definitions/pn/noticeCode";
 import { paTaxId } from "../../../../definitions/pn/paTaxId";

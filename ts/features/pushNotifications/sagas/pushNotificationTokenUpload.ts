@@ -3,7 +3,7 @@ import * as E from "fp-ts/lib/Either";
 import { Platform } from "react-native";
 import { SagaIterator } from "redux-saga";
 import { call, put, select, take } from "typed-redux-saga/macro";
-import { PlatformEnum } from "../../../../definitions/backend/communication/Platform";
+import { PlatformEnum } from "../../../../definitions/communication/Platform";
 import { CommunicationClient } from "../../../api/CommunicationClientManager";
 import {
   canSkipTokenRegistrationSelector,
@@ -19,7 +19,7 @@ import {
   newPushNotificationsToken,
   pushNotificationsTokenUploaded
 } from "../store/actions/installation";
-import { InstallationID } from "../../../../definitions/backend/communication/InstallationID";
+import { InstallationID } from "../../../../definitions/communication/InstallationID";
 
 export const notificationsPlatform: PlatformEnum =
   Platform.select<PlatformEnum>({

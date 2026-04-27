@@ -1,7 +1,7 @@
 import { KeyInfo } from "../../features/lollipop/utils/crypto";
 import { TestCommunicationClientManager } from "../CommunicationClientManager";
 
-jest.mock("../../../definitions/backend/communication/client", () => ({
+jest.mock("../../../definitions/communication/client", () => ({
   createClient: jest.fn(() => ({ _type: "communication", id: Math.random() }))
 }));
 

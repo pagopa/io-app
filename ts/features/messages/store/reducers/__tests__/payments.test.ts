@@ -1,6 +1,6 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { PaymentFaultV2Enum } from "../../../../../../definitions/backend/communication/PaymentFaultV2";
-import { PaymentInfoResponse } from "../../../../../../definitions/backend/communication/PaymentInfoResponse";
+import { PaymentFaultV2Enum } from "../../../../../../definitions/communication/PaymentFaultV2";
+import { PaymentInfoResponse } from "../../../../../../definitions/communication/PaymentInfoResponse";
 import {
   cancelQueuedPaymentUpdates,
   reloadAllMessages
@@ -38,7 +38,7 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import * as versionInfo from "../../../../../common/versionInfo/store/reducers/versionInfo";
 import * as profile from "../../../../settings/common/store/selectors";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { ServiceId } from "../../../../../../definitions/backend/communication/ServiceId";
+import { ServiceId } from "../../../../../../definitions/communication/ServiceId";
 import {
   toGenericMessagePaymentError,
   toSpecificMessagePaymentError,

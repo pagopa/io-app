@@ -1,5 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { ServicesPreferencesModeEnum } from "../../../definitions/backend/identity/ServicesPreferencesMode";
+import { ServicesPreferencesModeEnum } from "../../../definitions/identity/ServicesPreferencesMode";
 import mockedProfile from "../../__mocks__/initializedProfile";
 import { NotificationPreferenceConfiguration } from "../../features/settings/common/analytics";
 import { applicationChangeState } from "../../store/actions/application";
@@ -14,8 +14,8 @@ import {
   serviceConfigHandler,
   welfareStatusHandler
 } from "../mixpanelPropertyUtils";
-import { ReminderStatusEnum } from "../../../definitions/backend/identity/ReminderStatus";
-import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/identity/PushNotificationsContentType";
+import { ReminderStatusEnum } from "../../../definitions/identity/ReminderStatus";
+import { PushNotificationsContentTypeEnum } from "../../../definitions/identity/PushNotificationsContentType";
 
 describe("mixpanelPropertyUtils", () => {
   const state = appReducer(undefined, applicationChangeState("active"));

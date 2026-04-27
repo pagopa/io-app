@@ -8,10 +8,10 @@ import {
 } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 import I18n from "i18next";
-import { MessageStatusArchivingChange } from "../../../../definitions/backend/communication/MessageStatusArchivingChange";
-import { MessageStatusBulkChange } from "../../../../definitions/backend/communication/MessageStatusBulkChange";
-import { MessageStatusChange } from "../../../../definitions/backend/communication/MessageStatusChange";
-import { MessageStatusReadingChange } from "../../../../definitions/backend/communication/MessageStatusReadingChange";
+import { MessageStatusArchivingChange } from "../../../../definitions/communication/MessageStatusArchivingChange";
+import { MessageStatusBulkChange } from "../../../../definitions/communication/MessageStatusBulkChange";
+import { MessageStatusChange } from "../../../../definitions/communication/MessageStatusChange";
+import { MessageStatusReadingChange } from "../../../../definitions/communication/MessageStatusReadingChange";
 import {
   upsertMessageStatusAttributes,
   UpsertMessageStatusAttributesPayload

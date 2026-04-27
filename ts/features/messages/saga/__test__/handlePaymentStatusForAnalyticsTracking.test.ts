@@ -1,7 +1,7 @@
 import { Effect } from "redux-saga/effects";
 import { testSaga } from "redux-saga-test-plan";
 import { call, take } from "typed-redux-saga/macro";
-import { PaymentFaultV2Enum } from "../../../../../definitions/backend/communication/PaymentFaultV2";
+import { PaymentFaultV2Enum } from "../../../../../definitions/communication/PaymentFaultV2";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import {
   cancelPaymentStatusTracking,

@@ -1,4 +1,4 @@
-import { PaymentFaultV2Enum } from "../../../../definitions/backend/communication/PaymentFaultV2";
+import { PaymentFaultV2Enum } from "../../../../definitions/communication/PaymentFaultV2";
 import { isError, RemoteValue } from "../../../common/model/RemoteValue";
 import { isOngoingPaymentFromDetailV2Enum } from "../../../utils/payment";
 

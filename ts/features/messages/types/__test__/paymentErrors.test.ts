@@ -1,4 +1,4 @@
-import { PaymentFaultV2Enum } from "../../../../../definitions/backend/communication/PaymentFaultV2";
+import { PaymentFaultV2Enum } from "../../../../../definitions/communication/PaymentFaultV2";
 import { remoteError } from "../../../../common/model/RemoteValue";
 import {
   isMessagePaymentGenericError,

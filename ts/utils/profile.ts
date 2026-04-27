@@ -3,9 +3,9 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { Municipality } from "../../definitions/content/Municipality";
 import { ProfileState } from "../features/settings/common/store/reducers";
-import { InitializedProfile } from "../../definitions/backend/identity/InitializedProfile";
-import { FiscalCode } from "../../definitions/backend/identity/FiscalCode";
-import { BlockedInboxOrChannels } from "../../definitions/backend/identity/BlockedInboxOrChannels";
+import { InitializedProfile } from "../../definitions/identity/InitializedProfile";
+import { FiscalCode } from "../../definitions/identity/FiscalCode";
+import { BlockedInboxOrChannels } from "../../definitions/identity/BlockedInboxOrChannels";
 import { ServiceId } from "../../definitions/services/ServiceId";
 import { pad } from "./dates";
 

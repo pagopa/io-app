@@ -4,8 +4,8 @@ import { appReducer } from "../../../../../store/reducers";
 import { downloadAttachment } from "../../../store/actions";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MessageDetailsAttachmentItem } from "../MessageDetailsAttachmentItem";
-import { ThirdPartyAttachment } from "../../../../../../definitions/backend/communication/ThirdPartyAttachment";
-import { ServiceId } from "../../../../../../definitions/backend/communication/ServiceId";
+import { ThirdPartyAttachment } from "../../../../../../definitions/communication/ThirdPartyAttachment";
+import { ServiceId } from "../../../../../../definitions/communication/ServiceId";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import {
   SendOpeningSource,
