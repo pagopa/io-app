@@ -1,4 +1,5 @@
 import { call, put } from "typed-redux-saga/macro";
+import { trackItwVaultCredentialStoreFailed } from "../analytics";
 import {
   itwCredentialsStore,
   itwCredentialsStoreBundle
@@ -30,7 +31,13 @@ export function* handleItwCredentialsStoreBundleSaga(
 
     onComplete?.();
   } catch (e) {
-    // TODO [SIW-4080] Log failure to Mixpanel
+    const error = e instanceof Error ? e : new Error("Unknown error");
+
+    trackItwVaultCredentialStoreFailed({
+      credential_ids: credentials.map(({ metadata }) => metadata.credentialId),
+      reason: error.message
+    });
+
     onError?.(e instanceof Error ? e : new Error("Unknown error"));
   }
 }

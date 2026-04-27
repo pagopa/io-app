@@ -278,26 +278,15 @@
           "screen": {
             "description": "Wenn du deine Daten weitergibst, hilfst du uns, dein IO-Erlebnis zu verbessern und dir gezielte Unterstützung zu bieten.",
             "why": {
-              "description": {
-                "one": "Wir verwenden ",
-                "two": "nur die Daten, die notwendig sind, ",
-                "three": "um das Funktionieren der App zu überwachen und die angebotenen Dienste zu verbessern."
-              },
+              "description": "Wir verwenden **nur die Daten, die notwendig sind,** um das Funktionieren der App zu überwachen und die angebotenen Dienste zu verbessern.",
               "cta": "Warum wir Daten erfassen"
             },
             "security": {
-              "description": {
-                "one": "Wir ergreifen Sicherheitsmaßnahmen ",
-                "two": "zum Schutz ",
-                "three": "deiner Daten."
-              },
+              "description": "Wir ergreifen Sicherheitsmaßnahmen **zum Schutz** deiner Daten.",
               "cta": "Wie wir die Daten schützen"
             },
             "gdpr": {
-              "description": {
-                "one": "Wir arbeiten nur mit Lieferanten zusammen, die Daten ",
-                "two": "transparent und sicher verarbeiten."
-              },
+              "description": "Wir arbeiten nur mit Lieferanten zusammen, die Daten **transparent und sicher verarbeiten.**",
               "cta": "Wer sind die Lieferanten?"
             },
             "additionalInformation": {

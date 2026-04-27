@@ -1,26 +1,26 @@
-import { FlatList } from "react-native";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   Divider,
+  IOMarkdown,
   ListItemHeader,
   ListItemInfo,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
 import { useState } from "react";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { idPayInitiativeWaitingListGet } from "../store/actions";
-import { idPayInitiativeWaitingListSelector } from "../store/reducers";
+import { FlatList } from "react-native";
 import {
   StatusEnum as InitiativeOnboardingStatus,
   UserOnboardingStatusDTO
 } from "../../../../../definitions/idpay/UserOnboardingStatusDTO";
-import IOMarkdown from "../../../../components/IOMarkdown";
-import { isAndroid } from "../../../../utils/platform";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { isAndroid } from "../../../../utils/platform";
 import { trackIDPayOnWaitingListInfoButtonTap } from "../analytics";
+import { idPayInitiativeWaitingListGet } from "../store/actions";
+import { idPayInitiativeWaitingListSelector } from "../store/reducers";
 
 export const IdPayInitiativeWaitingList = () => {
   const dispatch = useIODispatch();
@@ -32,6 +32,8 @@ export const IdPayInitiativeWaitingList = () => {
   const { bottomSheet, present } = useIOBottomSheetModal({
     component: (
       <>
+        {/* TODO: Use `IOMarkdown` with custom headers,
+        such as the ones used in Messages */}
         <IOMarkdown
           content={I18n.t(
             "idpay.wallet.initiativeOnboardedStatus.ON_WAITING_LIST.bottomSheet.content",
