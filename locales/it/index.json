@@ -716,7 +716,7 @@
         },
         "bottom_sheet": {
           "title": "Dove trovo il PIN della CIE?",
-          "content": "Il codice PIN è composto da 8 cifre ed è diviso in due parti:\n- le prime 4 cifre le hai ricevute all’anagrafe;\n- le ultime 4 cifre le hai ricevute a casa con la CIE. \nMettile insieme e inseriscile in quest’ordine.",
+          "content": "Il codice PIN è composto da 8 cifre ed è diviso in due parti:\n- le prime 4 cifre le hai ricevute all’anagrafe;\n- le ultime 4 cifre le hai ricevute a casa con la CIE. \n\nMettile insieme e inseriscile in quest’ordine.",
           "link": "Hai dimenticato il PIN?",
           "cta": {
             "label": "Dove trovo il PIN della CIE?"
