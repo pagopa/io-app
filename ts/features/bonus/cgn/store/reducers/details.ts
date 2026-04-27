@@ -13,10 +13,12 @@ import { cgnUnsubscribe } from "../actions/unsubscribe";
 
 export type CgnDetailsState = {
   information: pot.Pot<Card, NetworkError>;
+  fetched: boolean;
 };
 
 const INITIAL_STATE: CgnDetailsState = {
-  information: pot.none
+  information: pot.none,
+  fetched: false
 };
 
 const reducer = (
@@ -33,18 +35,21 @@ const reducer = (
     case getType(cgnDetails.success):
       return {
         ...state,
-        information: pot.some(action.payload)
+        information: pot.some(action.payload),
+        fetched: true
       };
     case getType(cgnDetails.failure):
       return {
         ...state,
-        information: pot.toError(state.information, action.payload)
+        information: pot.toError(state.information, action.payload),
+        fetched: true
       };
     // This action is fired when the user is not elegible to have a CGN or it doesn't have it onboarded
     case getType(cgnDetails.cancel):
       return {
         ...state,
-        information: pot.none
+        information: pot.none,
+        fetched: true
       };
     case getType(cgnUnsubscribe.success):
       return INITIAL_STATE;
@@ -93,6 +98,9 @@ export const cgnDetailsInformationSelector = createSelector(
   ): Card | undefined =>
     isStrictSome(information) && isAvailable ? information.value : undefined
 );
+
+export const isCgnDetailsAlreadyFetchedSelector = (state: GlobalState) =>
+  state.bonus.cgn.detail.fetched;
 
 export const isCgnDetailsLoading = createSelector(
   cgnDetailSelector,

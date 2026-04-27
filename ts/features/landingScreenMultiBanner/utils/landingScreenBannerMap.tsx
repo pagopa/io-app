@@ -14,6 +14,8 @@ import { PushNotificationsBanner } from "../../pushNotifications/components/Push
 import { isPushNotificationsBannerRenderableSelector } from "../../pushNotifications/store/selectors";
 import OsDismissionBanner from "../../osDismission/components/OsDismissionBanner";
 import { isOsDismissionBannerRenderableSelector } from "../../osDismission/store/selectors";
+import CgnDiscoveryBanner from "../../bonus/cgn/components/CgnDiscoveryBanner";
+import { isCgnEngagementBannerRenderableSelector } from "../../bonus/cgn/store/selectors/banners";
 
 type ComponentWithCloseHandler = (closeHandler: () => void) => ReactElement;
 type ComponentAndLogic = {
@@ -33,7 +35,8 @@ export const LANDING_SCREEN_BANNERS_ENABLED_MAP = {
   IT_WALLET_DISCOVERY: true,
   ITW_DISCOVERY: true /** Legacy Documenti su IO */,
   LV_EXPIRATION_REMINDER: true,
-  SEND_ACTIVATION_REMINDER: true
+  SEND_ACTIVATION_REMINDER: true,
+  CGN_ENGAGEMENT_BANNER: true
 } as const;
 
 export const landingScreenBannerMap: BannerMapById = {
@@ -76,5 +79,11 @@ export const landingScreenBannerMap: BannerMapById = {
       <PNActivationReminderBanner handleOnClose={closeHandler} />
     ),
     isRenderableSelector: isPnActivationReminderBannerRenderableSelector
+  },
+  CGN_ENGAGEMENT_BANNER: {
+    component: closeHandler => (
+      <CgnDiscoveryBanner handleOnClose={closeHandler} />
+    ),
+    isRenderableSelector: isCgnEngagementBannerRenderableSelector
   }
 } as const;
