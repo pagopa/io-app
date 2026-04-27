@@ -63,13 +63,11 @@ const loadImageAsync = (source: number): Promise<SkImage | null> => {
  * Concurrent calls with the same source share a single decode operation,
  * preventing the burst of parallel decodes that causes jank in list screens.
  */
-export const useCachedImage = (
-  source: DataSourceParam
-): SkImage | null => {
+export const useCachedImage = (source: DataSourceParam): SkImage | null => {
   const key = typeof source === "number" ? source : undefined;
 
   const [image, setImage] = useState<SkImage | null>(() =>
-    key !== undefined ? resolvedImages.get(key) ?? null : null
+    key !== undefined ? (resolvedImages.get(key) ?? null) : null
   );
 
   useEffect(() => {

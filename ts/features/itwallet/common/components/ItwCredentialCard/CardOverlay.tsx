@@ -5,8 +5,9 @@ import {
 } from "@shopify/react-native-skia";
 import { memo, useEffect } from "react";
 import { Easing, useSharedValue, withTiming } from "react-native-reanimated";
+import { CARD_CORNER_OVERLAY } from "../../utils/assets";
 import { useCachedImage } from "../../utils/imageCache";
-import { CARD_CORNER_OVERLAY, CredentialCardConfig } from "./config";
+import { CredentialCardConfig } from "./config";
 
 type CardOverlayProps = Required<Pick<CredentialCardConfig, "overlay">> &
   Pick<CredentialCardConfig, "overlayBlend"> &

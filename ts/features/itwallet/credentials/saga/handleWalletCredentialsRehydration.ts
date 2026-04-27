@@ -7,6 +7,7 @@ import {
   itwCredentialsEidSelector,
   itwCredentialsSelector
 } from "../store/selectors";
+import { preloadItwAssets } from "../../common/utils/assets";
 
 /**
  * This saga adds stored credentials to the wallet screen as cards.
@@ -21,6 +22,8 @@ export function* handleWalletCredentialsRehydration() {
   if (!isItWalletValid || O.isNone(pid)) {
     return;
   }
+
+  preloadItwAssets();
 
   const allItwCredentials = Object.values(credentials);
   yield* put(walletAddCards(allItwCredentials.map(mapCredentialToWalletCard)));
