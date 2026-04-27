@@ -12,9 +12,21 @@ jobs:
     concurrency:
       group: ${{ github.workflow }}-pr-staticcheck-${{ github.head_ref || github.run_id }}
       cancel-in-progress: true
+    outputs:
+      changed_files: ${{ steps.changed-files.outputs.files }}
+      should_test: ${{ github.event_name != 'pull_request' || steps.changed-files.outputs.files != '' }}
     steps:
       - id: checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+      - id: changed-files
+        if: github.event_name == 'pull_request'
+        run: |
+          FILES=$(git diff --name-only --diff-filter=ACMR origin/${{ github.base_ref }}...HEAD \
+            | grep -E '\.(ts|tsx|js|jsx|json)$' \
+            | tr '\n' ' ')
+          echo "files=$FILES" >> $GITHUB_OUTPUT
       - id: setup
         uses: ./.github/actions/setup-composite
       - id: run-tsc
@@ -30,13 +42,12 @@ jobs:
     strategy:
       matrix:
         shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    if: needs.static-checks.outputs.should_test == 'true'
     outputs:
       tests_ran: ${{ steps.run-test.outcome == 'success' }}
     steps:
       - id: checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-        with:
-          fetch-depth: 0
       - id: setup
         uses: ./.github/actions/setup-composite
         with:
@@ -46,18 +57,10 @@ jobs:
         with:
           name: api-client
           path: definitions/
-      - id: changed-files
-        if: github.event_name == 'pull_request'
-        run: |
-          FILES=$(git diff --name-only --diff-filter=ACMR origin/${{ github.base_ref }}...HEAD \
-            | grep -E '\.(ts|tsx|js|jsx|json)$' \
-            | tr '\n' ' ')
-          echo "files=$FILES" >> $GITHUB_OUTPUT
       - id: run-test
-        if: github.event_name != 'pull_request' || steps.changed-files.outputs.files != ''
         run: |
           if [ "${{ github.event_name }}" = "pull_request" ]; then
-            yarn test:ci --findRelatedTests ${{ steps.changed-files.outputs.files }}
+            yarn test:ci --findRelatedTests ${{ needs.static-checks.outputs.changed_files }}
           else
             yarn test:ci
           fi
