@@ -21,6 +21,8 @@ import { OIDCError } from "../../../../../definitions/fims_sso/OIDCError";
 import { FimsErrorStateType } from "../store/reducers";
 import { preferredLanguageSelector } from "../../../../store/reducers/persistedPreferences";
 import { preferredLanguageToString } from "../../common/utils";
+import { trackAppCaughtError } from "../../../../utils/analytics";
+import { unknownToString } from "../../../../utils/errors";
 import {
   computeAndTrackAuthenticationError,
   deallocateFimsAndRenewFastLoginSession,
@@ -220,11 +222,11 @@ const safeParseFailureResponseBody = (failureResponseBody: string) => {
   try {
     return JSON.parse(failureResponseBody);
   } catch (e) {
-    // TODO: Replace Sentry capture exception with a new logging solution
-    // Sentry.captureException(e);
-    // Sentry.captureMessage(
-    //   `handleFimsGetConsentsList.safeParseFailureResponseBody: JSON.parse threw an exception on a ${failureResponseBody?.length}-character long input string`
-    // );
+    trackAppCaughtError(
+      "safeParseFailureResponseBody",
+      `JSON.parse threw an exception on a ${failureResponseBody?.length}-character long input string`,
+      unknownToString(e)
+    );
     return undefined;
   }
 };

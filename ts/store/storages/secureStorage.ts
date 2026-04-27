@@ -1,27 +1,8 @@
 import * as SecureStorage from "@pagopa/io-react-native-secure-storage";
 import { type SecureStorageError } from "@pagopa/io-react-native-secure-storage";
 import { type Storage } from "redux-persist";
-
-// TODO: Replace Sentry capture exception with a new logging solution
-// type SentryContext =
-//   | "SECURE_STORAGE_GET_ITEM_FAILURE"
-//   | "SECURE_STORAGE_SET_ITEM_FAILURE"
-//   | "SECURE_STORAGE_REMOVE_ITEM_FAILURE";
-
-// const trackExceptionOnSentry = (
-//   context: SentryContext,
-//   error: unknown,
-//   key: string
-// ) => {
-//   Sentry.captureException(error, {
-//     tags: {
-//       isRequired: true
-//     }
-//   });
-//   Sentry.captureMessage(
-//     `${context}: SecureStorage threw an exception on ${key} key`
-//   );
-// };
+import { trackAppCaughtError } from "../../utils/analytics";
+import { unknownToString } from "../../utils/errors";
 
 const isSecureStorageError = (e: unknown): e is SecureStorageError => {
   const error = e as { message?: unknown };
@@ -44,7 +25,11 @@ export default function createSecureStorage(): Storage {
         if (!isValueNotFoundError(e)) {
           // VALUE_NOT_FOUND it's a normal case when we try to get a value that is not set
           // We should send to Sentry only unwanted exceptions
-          // trackExceptionOnSentry("SECURE_STORAGE_GET_ITEM_FAILURE", e, key);
+          trackAppCaughtError(
+            "createSecureStorage.getItem",
+            `SecureStorage threw an exception on ${key}`,
+            unknownToString(e)
+          );
         }
         return undefined;
       }
@@ -54,7 +39,11 @@ export default function createSecureStorage(): Storage {
       try {
         await SecureStorage.put(key, value);
       } catch (e) {
-        // trackExceptionOnSentry("SECURE_STORAGE_SET_ITEM_FAILURE", e, key);
+        trackAppCaughtError(
+          "createSecureStorage.setItem",
+          `SecureStorage threw an exception on ${key}`,
+          unknownToString(e)
+        );
       }
     },
 
@@ -62,7 +51,11 @@ export default function createSecureStorage(): Storage {
       try {
         await SecureStorage.remove(key);
       } catch (e) {
-        // trackExceptionOnSentry("SECURE_STORAGE_REMOVE_ITEM_FAILURE", e, key);
+        trackAppCaughtError(
+          "createSecureStorage.removeItem",
+          `SecureStorage threw an exception on ${key}`,
+          unknownToString(e)
+        );
       }
     }
   };
