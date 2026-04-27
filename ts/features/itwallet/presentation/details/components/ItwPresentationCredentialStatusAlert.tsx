@@ -1,5 +1,4 @@
 import { Alert, IOButton, IOToast, VStack } from "@pagopa/io-app-design-system";
-import { useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
@@ -168,7 +167,6 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
   );
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
-  const { name: currentScreenName } = useRoute();
 
   const trackCredentialAlertEvent = (action: CredentialAlertEvents): void => {
     if (!status) {
@@ -211,12 +209,7 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
 
   switch (alertType) {
     case CredentialAlertType.EID_LIFECYCLE:
-      return (
-        <ItwEidLifecycleAlert
-          navigation={navigation}
-          currentScreenName={currentScreenName}
-        />
-      );
+      return <ItwEidLifecycleAlert navigation={navigation} />;
     case CredentialAlertType.JWT_VERIFICATION:
       return (
         <JwtVerificationAlert

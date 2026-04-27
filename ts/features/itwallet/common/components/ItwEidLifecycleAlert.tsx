@@ -6,6 +6,7 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { ComponentProps, useMemo } from "react";
 import { View } from "react-native";
+import { useRoute } from "@react-navigation/native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
@@ -17,8 +18,8 @@ import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selec
 import { ITW_ROUTES } from "../../navigation/routes";
 import { useItwEidLifecycleAlertTracking } from "../hooks/useItwEidLifecycleAlertTracking";
 import {
-  CredentialMetadata,
-  ItwJwtCredentialStatus
+  ItwJwtCredentialStatus,
+  CredentialMetadata
 } from "../utils/itwTypesUtils";
 
 const defaultLifecycleStatus: Array<ItwJwtCredentialStatus> = [
@@ -34,7 +35,6 @@ type Props = {
   lifecycleStatus?: Array<ItwJwtCredentialStatus>;
   navigation: ReturnType<typeof useIONavigation>;
   skipViewTracking?: boolean;
-  currentScreenName?: string;
 };
 
 /**
@@ -43,9 +43,9 @@ type Props = {
 export const ItwEidLifecycleAlert = ({
   lifecycleStatus = defaultLifecycleStatus,
   navigation,
-  skipViewTracking,
-  currentScreenName
+  skipViewTracking
 }: Props) => {
+  const { name: currentScreenName } = useRoute();
   const eidOption = useIOSelector(itwCredentialsEidSelector);
   const isItw = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const maybeEidStatus = useIOSelector(itwCredentialsEidStatusSelector);
@@ -53,7 +53,6 @@ export const ItwEidLifecycleAlert = ({
   const isOffline = offlineAccessReason !== undefined;
 
   const { trackAlertTap } = useItwEidLifecycleAlertTracking({
-    isItw,
     maybeEidStatus,
     navigation,
     skipViewTracking,
@@ -134,7 +133,17 @@ export const ItwEidLifecycleAlert = ({
         };
       }
 
-      return eIDAlertPropsMap[eidStatus];
+      const isPidDetailScreen =
+        currentScreenName === ITW_ROUTES.PRESENTATION.PID_DETAIL;
+
+      const baseProps = eIDAlertPropsMap[eidStatus];
+
+      if (isPidDetailScreen && eidStatus === "jwtExpired") {
+        const { action, onPress, ...rest } = baseProps;
+        return rest;
+      }
+
+      return baseProps;
     }, [eidStatus, eid.jwt.issuedAt, eid.jwt.expiration, nameSpace]);
 
     if (!lifecycleStatus.includes(eidStatus)) {
