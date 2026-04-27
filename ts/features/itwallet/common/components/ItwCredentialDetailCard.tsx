@@ -3,7 +3,7 @@ import {
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import { Canvas } from "@shopify/react-native-skia";
-import { PropsWithChildren, useState } from "react";
+import { PropsWithChildren, useCallback, useState } from "react";
 import { LayoutChangeEvent, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { borderVariantByStatus } from "../utils/itwCredentialUtils";
@@ -48,10 +48,14 @@ export const ItwCredentialDetailCard = ({
     POST_HEADER_CONTENT_PADDING +
     SCROLL_HACK_OFFSET;
 
-  const handleOnLayout = (event: LayoutChangeEvent) => {
+  const handleOnLayout = useCallback((event: LayoutChangeEvent) => {
     const { width, height } = event.nativeEvent.layout;
-    setSize({ width, height });
-  };
+    setSize(prev =>
+      prev.width === width && prev.height === height
+        ? prev
+        : { width, height }
+    );
+  }, []);
 
   return (
     <View style={[styles.container, { paddingTop }]} onLayout={handleOnLayout}>

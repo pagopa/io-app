@@ -1,18 +1,28 @@
 import {
   BlendColor,
   Size,
-  Image as SkiaImage,
-  useImage
+  Image as SkiaImage
 } from "@shopify/react-native-skia";
-import { memo } from "react";
-import { CredentialCardConfig } from "./config";
+import { memo, useEffect } from "react";
+import { Easing, useSharedValue, withTiming } from "react-native-reanimated";
+import { useCachedImage } from "../../utils/imageCache";
+import { CARD_CORNER_OVERLAY, CredentialCardConfig } from "./config";
 
 type CardOverlayProps = Required<Pick<CredentialCardConfig, "overlay">> &
   Pick<CredentialCardConfig, "overlayBlend"> &
   Size;
 
 export const SkiaCardOverlay = memo((props: CardOverlayProps) => {
-  const image = useImage(props.overlay);
+  const image = useCachedImage(props.overlay);
+  const opacity = useSharedValue(0);
+
+  useEffect(() => {
+    if (image) {
+      opacity.set(
+        withTiming(1, { duration: 200, easing: Easing.out(Easing.ease) })
+      );
+    }
+  }, [image, opacity]);
 
   return (
     <SkiaImage
@@ -22,7 +32,7 @@ export const SkiaCardOverlay = memo((props: CardOverlayProps) => {
       y={0}
       width={props.width}
       height={props.height}
-      opacity={1}
+      opacity={opacity}
       blendMode={props.overlayBlend ? "softLight" : undefined}
     />
   );
@@ -30,11 +40,18 @@ export const SkiaCardOverlay = memo((props: CardOverlayProps) => {
 
 type CardCornerOverlayProps = Pick<CredentialCardConfig, "color"> & Size;
 
-const CARD_CORNER_OVERLAY = require("../../../../../../img/features/itWallet/cards/overlay/card_corner.png");
-
 export const SkiaCardCornerOverlay = memo(
   ({ width, height, color }: CardCornerOverlayProps) => {
-    const image = useImage(CARD_CORNER_OVERLAY);
+    const image = useCachedImage(CARD_CORNER_OVERLAY);
+    const opacity = useSharedValue(0);
+
+    useEffect(() => {
+      if (image) {
+        opacity.set(
+          withTiming(1, { duration: 200, easing: Easing.out(Easing.ease) })
+        );
+      }
+    }, [image, opacity]);
 
     return (
       <SkiaImage
@@ -44,6 +61,7 @@ export const SkiaCardCornerOverlay = memo(
         y={0}
         width={width}
         height={height}
+        opacity={opacity}
       >
         <BlendColor color={color} mode="srcIn" />
       </SkiaImage>

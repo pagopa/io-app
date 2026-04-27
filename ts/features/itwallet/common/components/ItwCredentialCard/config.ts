@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { ColorSchemeName } from "react-native";
 import { hexToHsb, hsbToHex } from "../../../../../utils/color";
 import { fnv1a } from "../../../../../utils/hash";
+import { preloadImages } from "../../utils/imageCache";
 import { CredentialType } from "../../utils/itwMocksUtils";
 import { ItWalletThemes } from "../../utils/theme";
 
@@ -66,13 +67,16 @@ export type CredentialCardConfig = {
  * Colors from which random configurations will be generated, based on the
  * provided seed.
  */
-const baseColors = ["#FFB357", "#CDD2FC", "#7AC1FA", "#003366"];
+const BASE_COLORS = ["#FFB357", "#CDD2FC", "#7AC1FA", "#003366"];
+
+export const CARD_CORNER_OVERLAY =
+  require("../../../../../../img/features/itWallet/cards/overlay/card_corner.png") as number;
 
 /**
  * Default overlay images for random configurations
  * TODO: overlays should be based on credential taxonomy
  */
-const baseOverlays: ReadonlyArray<DataSourceParam> = [
+const BASE_OVERLAYS: ReadonlyArray<DataSourceParam> = [
   require("../../../../../../img/features/itWallet/cards/overlay/default/1.png"),
   require("../../../../../../img/features/itWallet/cards/overlay/default/2.png"),
   require("../../../../../../img/features/itWallet/cards/overlay/default/3.png"),
@@ -205,11 +209,11 @@ export const getRandomCredentialCardConfig = (
   colorScheme?: ColorSchemeName
 ): CredentialCardConfig => {
   const colorHash = fnv1a(String(seed));
-  const colorHex = baseColors[colorHash % baseColors.length];
+  const colorHex = BASE_COLORS[colorHash % BASE_COLORS.length];
 
   // TODO: overlay should be based on credential taxonomy.
   const overlayHash = fnv1a(String(seed), 1);
-  const overlaySource = baseOverlays[overlayHash % baseOverlays.length];
+  const overlaySource = BASE_OVERLAYS[overlayHash % BASE_OVERLAYS.length];
 
   return {
     ...generateCredentialCardConfig(colorHex, colorScheme),
@@ -251,3 +255,22 @@ export const useCredentialCardConfiguration = (credentialType: string) => {
     return getRandomCredentialCardConfig(credentialType, themeType);
   }, [credentialType, credentialColor, themeType]);
 };
+
+/**
+ * Eagerly warm the image cache for all known card overlay assets.
+ * This runs at module load time so images start decoding before any card mounts,
+ * eliminating the pop-in effect in list screens.
+ */
+const allOverlaySources: ReadonlyArray<number> = [
+  CARD_CORNER_OVERLAY,
+  ...Object.values(credentialCardConfigs).flatMap(config =>
+    [config?.overlay, config?.headerOverlay].filter(
+      (s): s is number => typeof s === "number"
+    )
+  ),
+  ...(BASE_OVERLAYS.filter(
+    (s): s is number => typeof s === "number"
+  ) as ReadonlyArray<number>)
+];
+
+preloadImages(allOverlaySources);
