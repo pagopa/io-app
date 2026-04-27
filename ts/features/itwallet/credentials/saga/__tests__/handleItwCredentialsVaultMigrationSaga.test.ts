@@ -3,6 +3,11 @@ import { expectSaga } from "redux-saga-test-plan";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
+import {
+  trackItwVaultMigrationFailed,
+  trackItwVaultMigrationRequest,
+  trackItwVaultMigrationSuccess
+} from "../../analytics";
 import { CredentialsVault } from "../../utils/vault";
 import { itwCredentialsVaultMigrationComplete } from "../../store/actions";
 import { handleItwCredentialsVaultMigrationSaga } from "../handleItwCredentialsVaultMigrationSaga";
@@ -12,8 +17,16 @@ jest.mock("../../utils/vault", () => ({
     store: jest.fn()
   }
 }));
+jest.mock("../../analytics", () => ({
+  trackItwVaultMigrationFailed: jest.fn(),
+  trackItwVaultMigrationRequest: jest.fn(),
+  trackItwVaultMigrationSuccess: jest.fn()
+}));
 
 const mockStore = jest.mocked(CredentialsVault.store);
+const mockTrackMigrationFailed = jest.mocked(trackItwVaultMigrationFailed);
+const mockTrackMigrationRequest = jest.mocked(trackItwVaultMigrationRequest);
+const mockTrackMigrationSuccess = jest.mocked(trackItwVaultMigrationSuccess);
 
 const baseCredential: CredentialMetadata = {
   credentialType: CredentialType.DRIVING_LICENSE,
@@ -29,6 +42,25 @@ const baseCredential: CredentialMetadata = {
   spec_version: "1.0.0"
 };
 
+const makeState = (
+  legacyCredentials: Record<
+    string,
+    CredentialMetadata & { credential: string }
+  >,
+  isMixpanelEnabled: boolean | null = true
+): DeepPartial<GlobalState> => ({
+  persistedPreferences: {
+    isMixpanelEnabled
+  },
+  features: {
+    itWallet: {
+      credentials: {
+        legacyCredentials
+      }
+    }
+  }
+});
+
 describe("handleItwCredentialsVaultMigrationSaga", () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -36,6 +68,9 @@ describe("handleItwCredentialsVaultMigrationSaga", () => {
 
   it("exits early when no legacy credentials are found", () => {
     const store: DeepPartial<GlobalState> = {
+      persistedPreferences: {
+        isMixpanelEnabled: true
+      },
       features: {
         itWallet: {
           credentials: {
@@ -51,6 +86,9 @@ describe("handleItwCredentialsVaultMigrationSaga", () => {
       .run()
       .then(() => {
         expect(mockStore).not.toHaveBeenCalled();
+        expect(mockTrackMigrationRequest).not.toHaveBeenCalled();
+        expect(mockTrackMigrationFailed).not.toHaveBeenCalled();
+        expect(mockTrackMigrationSuccess).not.toHaveBeenCalled();
       });
   });
 
@@ -59,20 +97,8 @@ describe("handleItwCredentialsVaultMigrationSaga", () => {
 
     const legacyEntry = { ...baseCredential, credential: "raw-jwt-string" };
 
-    const store: DeepPartial<GlobalState> = {
-      features: {
-        itWallet: {
-          credentials: {
-            legacyCredentials: {
-              [legacyEntry.credentialId]: legacyEntry
-            }
-          }
-        }
-      }
-    };
-
     return expectSaga(handleItwCredentialsVaultMigrationSaga)
-      .withState(store)
+      .withState(makeState({ [legacyEntry.credentialId]: legacyEntry }))
       .put(itwCredentialsVaultMigrationComplete([legacyEntry.credentialId]))
       .run()
       .then(() => {
@@ -81,6 +107,9 @@ describe("handleItwCredentialsVaultMigrationSaga", () => {
           legacyEntry.credentialId,
           "raw-jwt-string"
         );
+        expect(mockTrackMigrationRequest).toHaveBeenCalledWith(true);
+        expect(mockTrackMigrationSuccess).toHaveBeenCalledWith(true);
+        expect(mockTrackMigrationFailed).not.toHaveBeenCalled();
       });
   });
 
@@ -89,22 +118,21 @@ describe("handleItwCredentialsVaultMigrationSaga", () => {
 
     const legacyEntry = { ...baseCredential, credential: "raw-jwt-string" };
 
-    const store: DeepPartial<GlobalState> = {
-      features: {
-        itWallet: {
-          credentials: {
-            legacyCredentials: {
-              [legacyEntry.credentialId]: legacyEntry
-            }
-          }
-        }
-      }
-    };
-
     return expectSaga(handleItwCredentialsVaultMigrationSaga)
-      .withState(store)
+      .withState(makeState({ [legacyEntry.credentialId]: legacyEntry }))
       .not.put.actionType(itwCredentialsVaultMigrationComplete.toString())
-      .run();
+      .run()
+      .then(() => {
+        expect(mockTrackMigrationRequest).toHaveBeenCalledWith(true);
+        expect(mockTrackMigrationSuccess).not.toHaveBeenCalled();
+        expect(mockTrackMigrationFailed).toHaveBeenCalledWith(
+          {
+            credential_ids: [legacyEntry.credentialId],
+            reason: "Storage error"
+          },
+          true
+        );
+      });
   });
 
   it("dispatches completion with only succeeded IDs on partial failure", () => {
@@ -120,22 +148,25 @@ describe("handleItwCredentialsVaultMigrationSaga", () => {
       .mockResolvedValueOnce()
       .mockRejectedValueOnce(new Error("Storage error"));
 
-    const store: DeepPartial<GlobalState> = {
-      features: {
-        itWallet: {
-          credentials: {
-            legacyCredentials: {
-              [successEntry.credentialId]: successEntry,
-              [failEntry.credentialId]: failEntry
-            }
-          }
-        }
-      }
-    };
-
     return expectSaga(handleItwCredentialsVaultMigrationSaga)
-      .withState(store)
+      .withState(
+        makeState({
+          [successEntry.credentialId]: successEntry,
+          [failEntry.credentialId]: failEntry
+        })
+      )
       .put(itwCredentialsVaultMigrationComplete([successEntry.credentialId]))
-      .run();
+      .run()
+      .then(() => {
+        expect(mockTrackMigrationRequest).toHaveBeenCalledWith(true);
+        expect(mockTrackMigrationSuccess).not.toHaveBeenCalled();
+        expect(mockTrackMigrationFailed).toHaveBeenCalledWith(
+          {
+            credential_ids: [failEntry.credentialId],
+            reason: "Storage error"
+          },
+          true
+        );
+      });
   });
 });

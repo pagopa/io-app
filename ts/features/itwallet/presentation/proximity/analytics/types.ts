@@ -1,5 +1,6 @@
 export type ItwProximityFailure = {
   reason: unknown;
+  origin?: string;
   type: string;
 };
 
