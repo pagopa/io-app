@@ -32,7 +32,7 @@ import { serializeFailureReason } from "../../common/utils/itwStoreUtils";
 import { useIOSelector } from "../../../../store/hooks";
 import { generateDynamicUrlSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
 import { DOCUMENTS_ON_IO_FAQ_12_URL_BODY } from "../../../../urls";
-import { isPidIssuance404Error } from "../../common/utils/itwFailureUtils";
+import { isAnprPidCredentialNotFoundError } from "../../common/utils/itwFailureUtils";
 
 // Errors that allow a user to send a support request to Zendesk
 const zendeskAssistanceErrors = [
@@ -131,7 +131,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
             }
           };
         case IssuanceFailureType.ISSUER_GENERIC:
-          if (isPidIssuance404Error(failure.reason)) {
+          if (isAnprPidCredentialNotFoundError(failure.reason)) {
             return {
               title: I18n.t(
                 "features.itWallet.issuance.pidAnprMismatchError.title"

@@ -48,19 +48,21 @@ export const isAssertionGenerationError = (e: unknown): e is IntegrityError =>
   e instanceof Error && e.message === "GENERATION_ASSERTION_FAILED";
 
 /**
- * Guard used to identify PID issuance failures surfaced as HTTP 404 issuer errors.
+ * Guard used to identify ANPR PID 404 issuance failures.
  *
- * The wallet SDK can surface the same HTTP 404 either as
- * `ERR_CREDENTIAL_REQUEST_FAILED` or `ERR_CREDENTIAL_INVALID_STATUS`
- * depending on the issuance step / specs version.
+ * ANPR is the only expected issuer to surface a HTTP 404 as
+ * `ERR_CREDENTIAL_INVALID_STATUS` with `credential_not_found` in `reason.error`,
+ * so all three conditions are required to avoid matching generic issuer 404
+ * errors.
  */
-export const isPidIssuance404Error = (
+export const isAnprPidCredentialNotFoundError = (
   e: unknown
 ): e is Errors.IssuerResponseError =>
   Errors.isIssuerResponseError(e) &&
   e.statusCode === 404 &&
-  (e.code === Errors.IssuerResponseErrorCodes.CredentialRequestFailed ||
-    e.code === Errors.IssuerResponseErrorCodes.CredentialInvalidStatus);
+  e.code === Errors.IssuerResponseErrorCodes.CredentialInvalidStatus &&
+  typeof e.reason === "object" &&
+  e.reason.error === "credential_not_found";
 
 type ItwFailureWithReason = {
   type: string;

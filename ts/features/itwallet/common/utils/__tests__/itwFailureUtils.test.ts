@@ -1,7 +1,7 @@
 import { Errors } from "@pagopa/io-react-native-wallet";
 import {
   isAssertionGenerationError,
-  isPidIssuance404Error
+  isAnprPidCredentialNotFoundError
 } from "../itwFailureUtils";
 
 describe("isAssertionGenerationError", () => {
@@ -31,30 +31,49 @@ describe("isAssertionGenerationError", () => {
   });
 });
 
-describe("isPidIssuance404Error", () => {
-  it.each([
-    Errors.IssuerResponseErrorCodes.CredentialRequestFailed,
-    Errors.IssuerResponseErrorCodes.CredentialInvalidStatus
-  ])("returns true for %s with HTTP 404", code => {
+describe("isAnprPidCredentialNotFoundError", () => {
+  it("returns true for CredentialInvalidStatus with HTTP 404 and credential_not_found in the reason", () => {
     const error = new Errors.IssuerResponseError({
-      code,
+      code: Errors.IssuerResponseErrorCodes.CredentialInvalidStatus,
       message: "PID issuance failed",
-      reason: {},
+      reason: { error: "credential_not_found" },
       statusCode: 404
     });
 
-    expect(isPidIssuance404Error(error)).toBe(true);
+    expect(isAnprPidCredentialNotFoundError(error)).toBe(true);
   });
 
   it("returns false for issuer errors with a different HTTP status", () => {
     const error = new Errors.IssuerResponseError({
-      code: Errors.IssuerResponseErrorCodes.CredentialRequestFailed,
+      code: Errors.IssuerResponseErrorCodes.CredentialInvalidStatus,
       message: "PID issuance failed",
-      reason: {},
+      reason: { error: "credential_not_found" },
       statusCode: 500
     });
 
-    expect(isPidIssuance404Error(error)).toBe(false);
+    expect(isAnprPidCredentialNotFoundError(error)).toBe(false);
+  });
+
+  it("returns false for CredentialRequestFailed with HTTP 404 and credential_not_found in the reason", () => {
+    const error = new Errors.IssuerResponseError({
+      code: Errors.IssuerResponseErrorCodes.CredentialRequestFailed,
+      message: "PID issuance failed",
+      reason: { error: "credential_not_found" },
+      statusCode: 404
+    });
+
+    expect(isAnprPidCredentialNotFoundError(error)).toBe(false);
+  });
+
+  it("returns false when credential_not_found is missing from the reason", () => {
+    const error = new Errors.IssuerResponseError({
+      code: Errors.IssuerResponseErrorCodes.CredentialInvalidStatus,
+      message: "PID issuance failed",
+      reason: { error: "unexpected_error" },
+      statusCode: 404
+    });
+
+    expect(isAnprPidCredentialNotFoundError(error)).toBe(false);
   });
 
   it("returns false for non matching issuer codes", () => {
@@ -65,11 +84,11 @@ describe("isPidIssuance404Error", () => {
       statusCode: 404
     });
 
-    expect(isPidIssuance404Error(error)).toBe(false);
+    expect(isAnprPidCredentialNotFoundError(error)).toBe(false);
   });
 
   it("returns false for non issuer errors", () => {
-    expect(isPidIssuance404Error(new Error("boom"))).toBe(false);
-    expect(isPidIssuance404Error(null)).toBe(false);
+    expect(isAnprPidCredentialNotFoundError(new Error("boom"))).toBe(false);
+    expect(isAnprPidCredentialNotFoundError(null)).toBe(false);
   });
 });
