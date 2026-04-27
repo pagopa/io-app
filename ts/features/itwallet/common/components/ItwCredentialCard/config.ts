@@ -135,15 +135,11 @@ export const credentialCardConfigs: Partial<
 };
 
 /**
- * Generates a credential card configuration based on the provided color and
- * taxonomy.
+ * Generates a credential card configuration based on the provided base color.
  * @param color A string representing the base color for the credential card,
  * used to derive the background and title colors.
- * @param taxonomy A string representing the credential taxonomy, used to
- * determine the overlay pattern
- * @param theme The current IT Wallet theme
- * @return A credential card configuration derived from the provided color and
- * taxonomy.
+ * @param colorScheme The current app color scheme (light, dark)
+ * @return A credential card configuration derived from the provided color
  */
 export const generateCredentialCardConfig = (
   color: string,
@@ -187,10 +183,10 @@ export const generateCredentialCardConfig = (
  * specific configuration defined.
  * @param seed An unknown value used to generate a deterministic random
  * configuration.
- * @param taxonomy A string representing the credential taxonomy, used to
- * determine the overlay pattern.
- * @param theme The current IT Wallet theme
+ * @param colorScheme The current app color scheme (light, dark)
  * @returns A randomly generated credential card configuration.
+ *
+ * TODO: [SIW-4216] Add credential's taxonomy as a parameter and use it to select the overlay pattern, instead of randomizing it
  */
 export const getRandomCredentialCardConfig = (
   seed: unknown,
@@ -199,7 +195,7 @@ export const getRandomCredentialCardConfig = (
   const colorHash = fnv1a(String(seed));
   const colorHex = BASE_COLORS[colorHash % BASE_COLORS.length];
 
-  // TODO: overlay should be based on credential taxonomy.
+  // TODO: [SIW-4216] Select credential overlay based on credential taxonomy, not randomly
   const overlayHash = fnv1a(String(seed), 1);
   const overlaySource =
     CREDENTIAL_BASE_OVERLAYS[overlayHash % CREDENTIAL_BASE_OVERLAYS.length];
