@@ -1,4 +1,4 @@
-import IOMarkdown from "../../../components/IOMarkdown";
+import { IOMarkdown } from "@pagopa/io-app-design-system";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const MARKDOWN = `

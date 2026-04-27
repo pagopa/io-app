@@ -392,47 +392,11 @@ exports[`OnboardingNavigator renders all routes (snapshot) 1`] = `
                                   }
                                 }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Usiamo 
-                                  <Text
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {},
-                                        {
-                                          "color": "#555C70",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    solo i dati necessari 
+                                <View>
+                                  <Text>
+                                    Usiamo **solo i dati necessari** a monitorare il funzionamento dell'app e a migliorare i servizi offerti.
                                   </Text>
-                                  a monitorare il funzionamento dell’app e a migliorare i servizi offerti.
-                                </Text>
+                                </View>
                                 <View
                                   accessibilityRole="link"
                                   accessibilityState={
@@ -545,94 +509,11 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                       accessible={false}
                                       importantForAccessibility="no-hide-descendants"
                                     >
-                                      <View>
-                                        <Text
-                                          allowFontScaling={true}
-                                          dynamicTypeRamp="body"
-                                          maxFontSizeMultiplier={1.5}
-                                          style={
-                                            [
-                                              {},
-                                              {
-                                                "color": "#555C70",
-                                                "fontFamily": "Titillio",
-                                                "fontSize": 16,
-                                                "fontStyle": "normal",
-                                                "fontWeight": "400",
-                                                "lineHeight": 24,
-                                              },
-                                            ]
-                                          }
-                                        >
-                                          Non raccogliamo dati per finalità di marketing.
-                                        </Text>
-                                        <View
-                                          style={
-                                            {
-                                              "height": 8,
-                                            }
-                                          }
-                                        />
-                                        <Text
-                                          allowFontScaling={true}
-                                          dynamicTypeRamp="body"
-                                          maxFontSizeMultiplier={1.5}
-                                          style={
-                                            [
-                                              {},
-                                              {
-                                                "color": "#555C70",
-                                                "fontFamily": "Titillio",
-                                                "fontSize": 16,
-                                                "fontStyle": "normal",
-                                                "fontWeight": "400",
-                                                "lineHeight": 24,
-                                              },
-                                            ]
-                                          }
-                                        >
-                                          Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’app, per 
-                                          <Text
-                                            allowFontScaling={true}
-                                            maxFontSizeMultiplier={1.5}
-                                            style={
-                                              [
-                                                {},
-                                                {
-                                                  "color": undefined,
-                                                  "fontFamily": "Titillio",
-                                                  "fontSize": 16,
-                                                  "fontStyle": "normal",
-                                                  "fontWeight": "600",
-                                                  "lineHeight": undefined,
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            fornirti un servizio migliore
-                                          </Text>
-                                           e 
-                                          <Text
-                                            allowFontScaling={true}
-                                            maxFontSizeMultiplier={1.5}
-                                            style={
-                                              [
-                                                {},
-                                                {
-                                                  "color": undefined,
-                                                  "fontFamily": "Titillio",
-                                                  "fontSize": 16,
-                                                  "fontStyle": "normal",
-                                                  "fontWeight": "600",
-                                                  "lineHeight": undefined,
-                                                },
-                                              ]
-                                            }
-                                          >
-                                            assisterti in caso di necessità.
-                                          </Text>
-                                        </Text>
-                                      </View>
+                                      <Text>
+                                        Non raccogliamo dati per finalità di marketing.  
+
+Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’app, per **fornirti un servizio migliore** e **assisterti in caso di necessità.**
+                                      </Text>
                                     </View>
                                     <View
                                       style={
@@ -743,46 +624,8 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                   }
                                 }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Adottiamo misure di sicurezza per 
-                                  <Text
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {},
-                                        {
-                                          "color": "#555C70",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    proteggere 
-                                  </Text>
-                                  i tuoi dati.
+                                <Text>
+                                  Adottiamo misure di sicurezza per **proteggere** i tuoi dati.
                                 </Text>
                                 <View
                                   accessibilityRole="link"
@@ -929,45 +772,8 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                   }
                                 }
                               >
-                                <Text
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="body"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#555C70",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "400",
-                                        "lineHeight": 24,
-                                      },
-                                    ]
-                                  }
-                                >
-                                  Collaboriamo solo con fornitori che trattano i dati in modo 
-                                  <Text
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {},
-                                        {
-                                          "color": "#555C70",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    trasparente e sicuro.
-                                  </Text>
+                                <Text>
+                                  Collaboriamo solo con fornitori che trattano i dati in modo **trasparente e sicuro.**
                                 </Text>
                                 <View
                                   accessibilityRole="link"
