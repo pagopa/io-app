@@ -3,6 +3,7 @@ import {
   ContentWrapper,
   H3,
   IOButton,
+  IOMarkdownLite,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -11,7 +12,6 @@ import { Platform, ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useDispatch } from "react-redux";
 import I18n from "i18next";
-import IOMarkdown from "../../components/IOMarkdown";
 import { useIONavigation } from "../../navigation/params/AppParamsList";
 import { continueWithRootOrJailbreak } from "../../store/actions/persistedPreferences";
 import { useIOBottomSheetModal } from "../../utils/hooks/bottomSheet";
@@ -38,7 +38,7 @@ const RootedDeviceModal = () => {
     bottomSheet: learnMoreBottomSheet
   } = useIOBottomSheetModal({
     title: I18n.t("rooted.learnMoreBottomsheet.title"),
-    component: <IOMarkdown content={body} />
+    component: <IOMarkdownLite content={body} />
   });
 
   return (
