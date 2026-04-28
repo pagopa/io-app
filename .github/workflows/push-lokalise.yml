@@ -1,6 +1,9 @@
 name: Push locales to Lokalise
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - IOPLT-1813-github-actions-from-lokalise
 concurrency:
   group: lokalise-push-${{ github.head_ref || github.run_id }}
   cancel-in-progress: false
