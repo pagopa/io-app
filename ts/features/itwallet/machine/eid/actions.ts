@@ -6,6 +6,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
+import { isRouteInNavigationState } from "../../../../utils/navigation";
 import { checkCurrentSession } from "../../../authentication/common/store/actions";
 import {
   trackItWalletIDMethodSelected,
@@ -23,14 +24,7 @@ import {
   itwSetIdentificationMode
 } from "../../common/store/actions/preferences";
 import { itwIsPidReissuingSurveyHiddenSelector } from "../../common/store/selectors/preferences";
-import {
-  itwCredentialsRemoveByType,
-  itwCredentialsStore
-} from "../../credentials/store/actions";
-import {
-  itwCredentialsEidSelector,
-  itwCredentialsSelector
-} from "../../credentials/store/selectors";
+import { itwCredentialsSelector } from "../../credentials/store/selectors";
 import {
   itwRemoveIntegrityKeyTag,
   itwStoreIntegrityKeyTag
@@ -60,7 +54,7 @@ export const createEidIssuanceActionsImplementation = (
       return {
         integrityKeyTag: O.toUndefined(storedIntegrityKeyTag),
         walletInstanceAttestation,
-        legacyCredentials: Object.values(credentials)
+        credentialsToUpgrade: Object.values(credentials)
       };
     }
   ),
@@ -245,6 +239,15 @@ export const createEidIssuanceActionsImplementation = (
   closeIssuance: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    const isWalletInNavigationState = isRouteInNavigationState(
+      navigation.getState(),
+      ROUTES.WALLET_HOME
+    );
+
+    if (!isWalletInNavigationState && navigation.canGoBack()) {
+      navigation.goBack();
+      return;
+    }
     navigation.reset({
       index: 1,
       routes: [
@@ -287,17 +290,6 @@ export const createEidIssuanceActionsImplementation = (
     );
   },
 
-  storeEidCredential: ({
-    context
-  }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
-    assert(context.eid, "eID is undefined");
-    // When upgrading to IT-Wallet it is possible to end up with the old and the new PID
-    // at the same time, because they have different IDs and are not overwritten. To avoid this issue,
-    // the eID is always removed before storing the new one. If no previous eID is present, the action is a no-op.
-    store.dispatch(itwCredentialsRemoveByType(context.eid.credentialType));
-    store.dispatch(itwCredentialsStore([context.eid]));
-  },
-
   handleSessionExpired: () =>
     store.dispatch(checkCurrentSession.success({ isSessionValid: false })),
 
@@ -336,17 +328,6 @@ export const createEidIssuanceActionsImplementation = (
       )
     );
   },
-
-  loadPidIntoContext: assign<
-    Context,
-    EidIssuanceEvents,
-    unknown,
-    EidIssuanceEvents,
-    any
-  >(() => {
-    const pid = itwCredentialsEidSelector(store.getState());
-    return { eid: O.toUndefined(pid) };
-  }),
 
   trackWalletInstanceCreation: ({
     context

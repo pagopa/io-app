@@ -1,5 +1,5 @@
-import { ListItemHeader, VSpacer, VStack } from "@pagopa/io-app-design-system";
-import { useFocusEffect } from "@react-navigation/native";
+import { ListItemHeader, VStack } from "@pagopa/io-app-design-system";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
@@ -32,14 +32,12 @@ import {
   itwCredentialsEidStatusSelector
 } from "../../credentials/store/selectors";
 import { ItwDiscoveryBanner } from "../../discovery/components/ItwDiscoveryBanner.tsx";
-import { ITW_ROUTES } from "../../navigation/routes.ts";
 import { useItwGuidedTour } from "../../tour/hooks/useItwGuidedTour.ts";
 import {
   ITW_TOUR_GROUP_ID,
-  ITW_TOUR_STEP_CREDENTIALS,
-  ITW_TOUR_STEP_ID
+  ITW_TOUR_STEP_CREDENTIALS
 } from "../../tour/utils/constants.ts";
-import { ItwWalletIdStatus } from "./ItwWalletIdStatus.tsx";
+import { ItwWalletIdCard } from "./ItwWalletIdCard.tsx";
 
 const LIFECYCLE_STATUS: Array<ItwJwtCredentialStatus> = [
   "jwtExpiring",
@@ -48,7 +46,7 @@ const LIFECYCLE_STATUS: Array<ItwJwtCredentialStatus> = [
 
 export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const navigation = useIONavigation();
-
+  const { name: currentScreenName } = useRoute();
   const isNewItwRenderable = useIOSelector(itwShouldRenderNewItWalletSelector);
   const shouldHideEidAlert = useIOSelector(itwShouldHideEidLifecycleAlert);
   const shouldRenderUpgradeBanner = useIOSelector(
@@ -67,6 +65,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const iconColor = useItwStatusIconColor(isEidExpired);
 
   useItwPendingReviewRequest();
+
   useItwGuidedTour();
 
   useDebugInfo({
@@ -79,8 +78,12 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
 
   const eidInfoBottomSheet = useIOBottomSheetModal({
     title: <ItwEidInfoBottomSheetTitle isExpired={isEidExpired} />,
-    // Navigation does not seem to work when the bottom sheet's component is not inline
-    component: <ItwEidInfoBottomSheetContent navigation={navigation} />
+    component: (
+      <ItwEidInfoBottomSheetContent
+        navigation={navigation}
+        currentScreenName={currentScreenName}
+      />
+    )
   });
 
   useFocusEffect(
@@ -91,33 +94,13 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
     )
   );
 
-  const handleNavigateToItwId = useCallback(() => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.PRESENTATION.PID_DETAIL
-    });
-  }, [navigation]);
-
   const sectionHeader = useMemo((): React.ReactElement => {
     if (isNewItwRenderable) {
+      const isStacked = cards.length > 0;
       return (
-        <>
-          <View style={styles.idWrapper}>
-            <GuidedTour
-              groupId={ITW_TOUR_GROUP_ID}
-              index={ITW_TOUR_STEP_ID}
-              title={I18n.t("features.itWallet.tour.id.title")}
-              description={I18n.t("features.itWallet.tour.id.description")}
-              cutoutStyle={{ cornerRadius: 16 }}
-            >
-              <ItwWalletIdStatus
-                pidStatus={eidStatus}
-                pidExpiration={eidExpiration}
-                onPress={handleNavigateToItwId}
-              />
-            </GuidedTour>
-          </View>
-          <VSpacer size={16} />
-        </>
+        <View style={styles.cardsWrapper}>
+          <ItwWalletIdCard isStacked={isStacked} />
+        </View>
       );
     }
     return (
@@ -141,14 +124,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
         }}
       />
     );
-  }, [
-    iconColor,
-    isNewItwRenderable,
-    eidInfoBottomSheet.present,
-    eidStatus,
-    eidExpiration,
-    handleNavigateToItwId
-  ]);
+  }, [iconColor, isNewItwRenderable, eidInfoBottomSheet.present, cards.length]);
 
   return (
     <View>
@@ -161,34 +137,36 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
           <ItwEidLifecycleAlert
             lifecycleStatus={LIFECYCLE_STATUS}
             navigation={navigation}
+            currentScreenName={currentScreenName}
           />
         )}
         {/* Dummy view to add space in case there is another component */}
         <View />
       </VStack>
-      <View style={styles.cardsWrapper}>
-        <GuidedTour
-          groupId={ITW_TOUR_GROUP_ID}
-          index={ITW_TOUR_STEP_CREDENTIALS}
-          title={I18n.t("features.itWallet.tour.credentials.title")}
-          description={I18n.t("features.itWallet.tour.credentials.description")}
-        >
-          <WalletCardsCategoryContainer
-            key={`cards_category_itw`}
-            testID={`itwWalletCardsContainerTestID`}
-            cards={cards}
-          />
-        </GuidedTour>
-      </View>
+      {cards.length > 0 && (
+        <View style={styles.cardsWrapper}>
+          <GuidedTour
+            groupId={ITW_TOUR_GROUP_ID}
+            index={ITW_TOUR_STEP_CREDENTIALS}
+            title={I18n.t("features.itWallet.tour.credentials.title")}
+            description={I18n.t(
+              "features.itWallet.tour.credentials.description"
+            )}
+          >
+            <WalletCardsCategoryContainer
+              key={`cards_category_itw`}
+              testID={`itwWalletCardsContainerTestID`}
+              cards={cards}
+            />
+          </GuidedTour>
+        </View>
+      )}
       {eidInfoBottomSheet.bottomSheet}
     </View>
   );
 });
 
 const styles = StyleSheet.create({
-  idWrapper: {
-    marginHorizontal: -8
-  },
   cardsWrapper: {
     marginHorizontal: -8
   }

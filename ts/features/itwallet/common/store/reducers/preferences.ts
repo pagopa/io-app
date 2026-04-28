@@ -15,7 +15,7 @@ import {
   itwSetIdentificationMode
 } from "../actions/preferences";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
-import { ItwAuthLevel, StoredCredential } from "../../utils/itwTypesUtils.ts";
+import { ItwAuthLevel, StoredCredential, CredentialMetadata } from "../../utils/itwTypesUtils.ts";
 import { IdentificationContext } from "../../../machine/eid/context.ts";
 
 export type ItwPreferencesState = {
@@ -37,7 +37,7 @@ export type ItwPreferencesState = {
   // the reissuing flow only for the first time
   isPidReissuingSurveyHidden?: boolean;
   // Credential that failed to upgrade by type
-  credentialUpgradeFailed?: ReadonlyArray<StoredCredential["credentialType"]>;
+  credentialUpgradeFailed?: ReadonlyArray<CredentialMetadata["credentialType"]>;
   // Indicates whether the IT-Wallet activation should be disabled
   // because the user's device does not support NFC
   isItwActivationDisabled?: boolean;

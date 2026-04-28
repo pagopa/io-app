@@ -1,25 +1,27 @@
 import { Divider, ListItemHeader } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
+import { useMemo, useState } from "react";
 import { View } from "react-native";
 import { Fragment } from "react/jsx-runtime";
-import { useMemo, useState } from "react";
-import I18n from "i18next";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
-import {
-  parseClaims,
-  WellKnownClaim
-} from "../../../common/utils/itwClaimsUtils";
+import { useRoute } from "@react-navigation/native";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { ItwCredentialClaim } from "../../../common/components/ItwCredentialClaim";
 import { ItwEidLifecycleAlert } from "../../../common/components/ItwEidLifecycleAlert";
 import { ItwIssuanceMetadata } from "../../../common/components/ItwIssuanceMetadata";
+import {
+  parseClaims,
+  WellKnownClaim
+} from "../../../common/utils/itwClaimsUtils";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 
 type Props = {
-  credential: StoredCredential;
+  credential: CredentialMetadata;
 };
 
 export const ItwPresentationPidDetail = ({ credential }: Props) => {
   const [claimsHidden, setClaimsHidden] = useState(false);
   const navigation = useIONavigation();
+  const { name: currentScreenName } = useRoute();
 
   const listItemHeaderLabel = I18n.t(
     "features.itWallet.presentation.itWalletId.listItemHeader"
@@ -46,7 +48,11 @@ export const ItwPresentationPidDetail = ({ credential }: Props) => {
 
   return (
     <View>
-      <ItwEidLifecycleAlert navigation={navigation} />
+      <ItwEidLifecycleAlert
+        navigation={navigation}
+        currentScreenName={currentScreenName}
+        skipViewTracking={false}
+      />
       {claims.length > 0 && (
         <ListItemHeader label={listItemHeaderLabel} endElement={endElement} />
       )}

@@ -2,13 +2,16 @@
 
 IO_BACKEND_VERSION=v17.5.2
 # need to change after merge on io-services-metadata
-IO_SERVICES_METADATA_VERSION=1.0.98
+IO_SERVICES_METADATA_VERSION=1.0.100
 # Session manager version
 IO_SESSION_MANAGER_VERSION=1.23.1
 # IO Wallet user function version
 IO_WALLET_USER_FUNC_VERSION=4.1.11
 # Send function version
 SEND_FUNC_VERSION=1.5.5
+# CGN and CDC APIs are generated with a different version of io-backend, so we need to specify it separately
+IO_BACKEND_VERSION_CGN_CDC=v19.0.0
+
 
 declare -a apis=(
   # Backend APIs
@@ -34,10 +37,10 @@ declare -a apis=(
   # CDN APIs
   "./definitions/content https://raw.githubusercontent.com/pagopa/io-services-metadata/$IO_SERVICES_METADATA_VERSION/definitions.yml"
   # Session Manager APIs
-  "./definitions/session_manager https://raw.githubusercontent.com/pagopa/io-auth-n-identity-domain/refs/tags/io-session-manager@$IO_SESSION_MANAGER_VERSION/apps/io-session-manager/api/external.yaml"  
+  "./definitions/session_manager https://raw.githubusercontent.com/pagopa/io-auth-n-identity-domain/refs/tags/io-session-manager@$IO_SESSION_MANAGER_VERSION/apps/io-session-manager/api/external.yaml"
   # CGN APIs
-  "./definitions/cgn https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_cgn.yaml"
-  "./definitions/cgn/merchants https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_cgn_operator_search.yaml"
+  "./definitions/cgn https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION_CGN_CDC/openapi/generated/api_cgn_card_platform.yaml"
+  "./definitions/cgn/merchants https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION_CGN_CDC/openapi/generated/api_cgn_search_platform.yaml"
   # PN APIs
   "./definitions/pn https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_pn.yaml"
   "./definitions/pn/aar https://raw.githubusercontent.com/pagopa/io-messages/refs/tags/send-func@$SEND_FUNC_VERSION/apps/send-func/openapi/aar-notification.yaml"
@@ -48,7 +51,8 @@ declare -a apis=(
   "./definitions/itw https://raw.githubusercontent.com/pagopa/io-wallet/io-wallet-user-func@$IO_WALLET_USER_FUNC_VERSION/apps/io-wallet-user-func/openapi-external/user_v1/swagger.yaml"
   # Connectivity APIs (used for connectivity checks)
   "./definitions/connectivity https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_public.yaml"
-  "./definitions/cdc https://raw.githubusercontent.com/pagopa/io-backend/refs/tags/$IO_BACKEND_VERSION/openapi/generated/api_cdc.yaml"
+  # CDC APIs
+  "./definitions/cdc https://raw.githubusercontent.com/pagopa/io-backend/refs/tags/$IO_BACKEND_VERSION_CGN_CDC/openapi/generated/api_cdc_support_platform.yaml"
 )
 
 for elem in "${apis[@]}"; do

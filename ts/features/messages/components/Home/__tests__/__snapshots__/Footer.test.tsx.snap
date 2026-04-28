@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`Footer shoudl match snapshot when output from 'shouldShowFooterListComponentSelector' is false 1`] = `
 <View

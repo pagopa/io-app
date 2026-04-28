@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (5.9.1)
+  - Alamofire (5.11.2)
   - boost (1.84.0)
   - BVLinearGradient (2.5.6):
     - React
@@ -113,8 +113,8 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - IoReactNativeHttpClient (1.1.1):
-    - Alamofire (~> 5.9.1)
+  - IoReactNativeHttpClient (1.2.0):
+    - Alamofire (~> 5.11)
     - boost
     - DoubleConversion
     - fast_float
@@ -142,7 +142,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - IoReactNativeIso18013 (0.8.0):
+  - IoReactNativeIso18013 (0.8.1):
     - boost
     - DoubleConversion
     - fast_float
@@ -387,6 +387,34 @@ PODS:
     - ZendeskChatSDK
     - ZendeskMessagingAPISDK
     - ZendeskSupportSDK
+  - Pulsar (1.0.2):
+    - boost
+    - DoubleConversion
+    - fast_float
+    - fmt
+    - glog
+    - hermes-engine
+    - RCT-Folly
+    - RCT-Folly/Fabric
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - SocketRocket
+    - Yoga
   - RCT-Folly (2024.11.18.00):
     - boost
     - DoubleConversion
@@ -3309,36 +3337,6 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - RNSentry (7.4.0):
-    - boost
-    - DoubleConversion
-    - fast_float
-    - fmt
-    - glog
-    - hermes-engine
-    - RCT-Folly
-    - RCT-Folly/Fabric
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-hermes
-    - React-ImageManager
-    - React-jsi
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-renderercss
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - Sentry/HybridSDK (= 8.57.0)
-    - SocketRocket
-    - Yoga
   - RNShare (12.0.9):
     - boost
     - DoubleConversion
@@ -3513,7 +3511,6 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - Sentry/HybridSDK (8.57.0)
   - SocketRocket (0.7.1)
   - SwiftCBOR (0.6.0)
   - VisionCamera (4.7.3):
@@ -3578,6 +3575,7 @@ DEPENDENCIES:
   - "pagopa-io-react-native-login-utils (from `../node_modules/@pagopa/io-react-native-login-utils`)"
   - "pagopa-io-react-native-secure-storage (from `../node_modules/@pagopa/io-react-native-secure-storage`)"
   - "pagopa-react-native-zendesk (from `../node_modules/@pagopa/io-react-native-zendesk`)"
+  - Pulsar (from `../node_modules/react-native-pulsar`)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
   - RCTDeprecation (from `../node_modules/react-native/ReactApple/Libraries/RCTFoundation/RCTDeprecation`)
   - RCTRequired (from `../node_modules/react-native/Libraries/Required`)
@@ -3676,7 +3674,6 @@ DEPENDENCIES:
   - RNReactNativeHapticFeedback (from `../node_modules/react-native-haptic-feedback`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
-  - "RNSentry (from `../node_modules/@sentry/react-native`)"
   - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNWorklets (from `../node_modules/react-native-worklets`)
@@ -3694,7 +3691,6 @@ SPEC REPOS:
     - Mixpanel-swift
     - OpenSSL-Universal
     - React-Codegen
-    - Sentry
     - SocketRocket
     - SwiftCBOR
     - ZendeskAnswerBotProvidersSDK
@@ -3768,6 +3764,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@pagopa/io-react-native-secure-storage"
   pagopa-react-native-zendesk:
     :path: "../node_modules/@pagopa/io-react-native-zendesk"
+  Pulsar:
+    :path: "../node_modules/react-native-pulsar"
   RCT-Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec"
   RCTDeprecation:
@@ -3962,8 +3960,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
-  RNSentry:
-    :path: "../node_modules/@sentry/react-native"
   RNShare:
     :path: "../node_modules/react-native-share"
   RNSVG:
@@ -3976,7 +3972,7 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
-  Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
+  Alamofire: 400275dd1c6d87d95a041861d2a59da4b520a203
   boost: 7e761d76ca2ce687f7cc98e698152abd03a18f90
   BVLinearGradient: 44fd36b87f318e7933c4c91a6991442a5e3f5bcf
   CieSDK: f0413f57294d3df9cf915bc5b20e44b8ba2cb3cc
@@ -3995,8 +3991,8 @@ SPEC CHECKSUMS:
   glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
   hermes-engine: 9f4dfe93326146a1c99eb535b1cb0b857a3cd172
   IoReactNativeCie: 8c772d46d499acad8cfab4e5993c5f50d78cd9e9
-  IoReactNativeHttpClient: 8095efc7a0ef59631b5664b35711c3ab42056d52
-  IoReactNativeIso18013: efc3a6623463970575f986b6dc9b75fe9ba8b940
+  IoReactNativeHttpClient: bc2f2838fe9f959375d4d7e0419b11ebf27af379
+  IoReactNativeIso18013: 785e402750f29c9e2e316ae13e3fa5add5da9b17
   IOWalletCBOR: 92742ef1cbd1b627ba153d0c7c11b81ad22f45cc
   IOWalletProximity: 1d8fc9acc9d97d34364c42927af3ac682448977e
   jail-monkey: 9298d04aa09f8c9cdcf04e7bf597ea423b52b5bf
@@ -4011,6 +4007,7 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-login-utils: 4d4e00aeb67ffbb36dc6f5fcfc17e088ef5b9f34
   pagopa-io-react-native-secure-storage: 64dcc5dff82ec5ce136d7904bc076d70db157dec
   pagopa-react-native-zendesk: 9436edab6731dd9b64b72f1f2e039c166f0161b9
+  Pulsar: ed489192a2174d4ec4346a18d415eefaa05bc36d
   RCT-Folly: 846fda9475e61ec7bcbf8a3fe81edfcaeb090669
   RCTDeprecation: 5eb1d2eeff5fb91151e8a8eef45b6c7658b6c897
   RCTRequired: cebcf9442fc296c9b89ac791dfd463021d9f6f23
@@ -4109,11 +4106,9 @@ SPEC CHECKSUMS:
   RNReactNativeHapticFeedback: be4f1b4bf0398c30b59b76ed92ecb0a2ff3a69c6
   RNReanimated: 28141b41781ded169829afdb6fd80f3498de254e
   RNScreens: 0bbf16c074ae6bb1058a7bf2d1ae017f4306797c
-  RNSentry: 3ffb79c1393af4800c85bc96bc880c20316fc67a
   RNShare: 1dba46787d6e5543e05655efaefa0e4bb98380d9
   RNSVG: d260beec1775108e1bd065a0ed666ff2c5565158
   RNWorklets: 5dd32e6d649594b9a938cdd75673dffb2266e119
-  Sentry: e1b49e5f49367ff211b25c431a60e2bd83b792aa
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   SwiftCBOR: b873af28a9cc66003852fdc79a41852a7e54009a
   VisionCamera: 7187b3dac1ff3071234ead959ce311875748e14f

@@ -98,6 +98,8 @@ export type ItwCredentialMixpanelStatus =
   | "verification_expired"
   | "unknown";
 
+export type ItwCredentialActionPosition = "screen" | "bottom_sheet";
+
 export type ItwStatus =
   | "not_active"
   | "L2"
@@ -148,6 +150,11 @@ export type ItwWalletDataShare = {
 export type ItwCopyListItem = {
   credential: MixPanelCredential;
   item_copied: string;
+};
+
+export type TrackStartCredentialUpgradeProperties = {
+  credential_status: ItwCredentialMixpanelStatus;
+  position: ItwCredentialActionPosition;
 };
 
 export type ItwCredentialInfoDetails = {

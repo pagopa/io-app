@@ -3,23 +3,23 @@ import { format } from "date-fns";
 import { sequenceT } from "fp-ts/lib/Apply";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
 import { ComponentProps, useMemo } from "react";
 import { View } from "react-native";
-import I18n from "i18next";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
+import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
 import {
   itwCredentialsEidSelector,
   itwCredentialsEidStatusSelector
 } from "../../credentials/store/selectors";
-import {
-  ItwJwtCredentialStatus,
-  StoredCredential
-} from "../utils/itwTypesUtils";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { ITW_ROUTES } from "../../navigation/routes";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
-import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
+import { ITW_ROUTES } from "../../navigation/routes";
 import { useItwEidLifecycleAlertTracking } from "../hooks/useItwEidLifecycleAlertTracking";
+import {
+  CredentialMetadata,
+  ItwJwtCredentialStatus
+} from "../utils/itwTypesUtils";
 
 const defaultLifecycleStatus: Array<ItwJwtCredentialStatus> = [
   "valid",
@@ -33,8 +33,12 @@ type Props = {
    */
   lifecycleStatus?: Array<ItwJwtCredentialStatus>;
   navigation: ReturnType<typeof useIONavigation>;
-  skipViewTracking?: boolean;
+  /**
+   * The name of the current screen, used for analytics tracking
+   * and conditional rendering logic (e.g. PID detail screen).
+   */
   currentScreenName?: string;
+  skipViewTracking?: boolean;
 };
 
 /**
@@ -43,8 +47,8 @@ type Props = {
 export const ItwEidLifecycleAlert = ({
   lifecycleStatus = defaultLifecycleStatus,
   navigation,
-  skipViewTracking,
-  currentScreenName
+  currentScreenName,
+  skipViewTracking
 }: Props) => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
   const isItw = useIOSelector(itwLifecycleIsITWalletValidSelector);
@@ -53,7 +57,6 @@ export const ItwEidLifecycleAlert = ({
   const isOffline = offlineAccessReason !== undefined;
 
   const { trackAlertTap } = useItwEidLifecycleAlertTracking({
-    isItw,
     maybeEidStatus,
     navigation,
     skipViewTracking,
@@ -76,7 +79,7 @@ export const ItwEidLifecycleAlert = ({
     eid,
     eidStatus
   }: {
-    eid: StoredCredential;
+    eid: CredentialMetadata;
     eidStatus: ItwJwtCredentialStatus;
   }) => {
     const nameSpace = isItw ? "itw" : "documents";
@@ -134,7 +137,17 @@ export const ItwEidLifecycleAlert = ({
         };
       }
 
-      return eIDAlertPropsMap[eidStatus];
+      const isPidDetailScreen =
+        currentScreenName === ITW_ROUTES.PRESENTATION.PID_DETAIL;
+
+      const baseProps = eIDAlertPropsMap[eidStatus];
+
+      if (isPidDetailScreen && eidStatus === "jwtExpired") {
+        const { action, onPress, ...rest } = baseProps;
+        return rest;
+      }
+
+      return baseProps;
     }, [eidStatus, eid.jwt.issuedAt, eid.jwt.expiration, nameSpace]);
 
     if (!lifecycleStatus.includes(eidStatus)) {
