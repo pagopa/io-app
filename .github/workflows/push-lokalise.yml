@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - IOPLT-1813-github-actions-from-lokalise
+      - IOPLT-1813-github-action-from-lokalise
 concurrency:
   group: lokalise-push-${{ github.head_ref || github.run_id }}
   cancel-in-progress: false
