@@ -5,7 +5,7 @@ concurrency:
   group: lokalise-push-${{ github.head_ref || github.run_id }}
   cancel-in-progress: false
 jobs:
-  build:
+  push-locale:
     runs-on: ubuntu-latest
     environment: lokalise
     steps:
