@@ -74,6 +74,7 @@ export const ItwCredentialCard = memo(
     const status = useItwDisplayCredentialStatus(credentialStatus);
     const borderColorMap = useBorderColorByStatus();
     const cardConfig = useCredentialCardConfiguration(credentialType);
+    const isValid = validCredentialStatuses.includes(status);
 
     const statusTagProps = useMemo<Tag | undefined>(() => {
       if (needsItwUpgrade) {
@@ -85,41 +86,6 @@ export const ItwCredentialCard = memo(
 
       return tagPropsByStatus[status];
     }, [status, needsItwUpgrade]);
-
-    const { titleColor, titleOpacity } = useMemo<StyleProps>(() => {
-      // Include "jwtExpired" as a valid status because credentials with this state
-      // should not appear faded. Only the "expired" status should be displayed with reduced opacity.
-      const isValid = [...validCredentialStatuses, "jwtExpired"].includes(
-        status
-      );
-      const baseColor = cardConfig.titleColor;
-
-      if (needsItwUpgrade) {
-        return {
-          titleColor: baseColor,
-          titleOpacity: 0.5
-        };
-      }
-
-      if (status === "unknown") {
-        return {
-          titleColor: Color(baseColor).grayscale().hex(),
-          titleOpacity: 0.5
-        };
-      }
-
-      if (isValid) {
-        return {
-          titleColor: baseColor,
-          titleOpacity: 1
-        };
-      }
-
-      return {
-        titleColor: baseColor,
-        titleOpacity: 0.5
-      };
-    }, [cardConfig, status, needsItwUpgrade]);
 
     const appBackgroundColor = IOColors[ioTheme["appBackground-primary"]];
 
@@ -147,7 +113,7 @@ export const ItwCredentialCard = memo(
               ) : (
                 <IOText
                   size={16}
-                  lineHeight={20}
+                  lineHeight={24}
                   font={
                     typefacePreference === "comfortable"
                       ? "Titillio"
@@ -157,8 +123,7 @@ export const ItwCredentialCard = memo(
                   maxFontSizeMultiplier={1.25}
                   style={{
                     letterSpacing: 0.25,
-                    color: titleColor,
-                    opacity: titleOpacity,
+                    color: cardConfig.titleColor,
                     flex: 1,
                     flexShrink: 1
                   }}
@@ -174,6 +139,12 @@ export const ItwCredentialCard = memo(
               {statusTagProps && <Tag forceLightMode {...statusTagProps} />}
             </View>
           </View>
+
+          {!isValid && (
+            <View
+              style={[StyleSheet.absoluteFillObject, styles.statusOverlay]}
+            />
+          )}
           <View
             style={[
               styles.border,
@@ -338,11 +309,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     paddingHorizontal: 16,
-    paddingTop: 14
+    paddingTop: 12
   },
   statusTag: {
     position: "absolute",
     right: 16,
-    top: 10
+    top: 10,
+    zIndex: 20
+  },
+  statusOverlay: {
+    backgroundColor: IOColors.white,
+    opacity: 0.7
   }
 });
