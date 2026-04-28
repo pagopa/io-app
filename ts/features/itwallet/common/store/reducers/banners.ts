@@ -18,7 +18,8 @@ export type ItwBannerId =
   | "discovery" // (Legacy) Discovery banner for Documenti su IO
   | "discovery_wallet" // Discovery banner for IT Wallet placed in the wallet screen
   | "discovery_messages_inbox" // Discovery banner for IT Wallet placed in the messages inbox screen
-  | "upgradeMDLDetails"; // Upgrade to IT Wallet banner placed in MDL details screen
+  | "upgradeMDLDetails" // Upgrade to IT Wallet banner placed in MDL details screen
+  | "ageVerificationUsageDetails"; // Age Verification usage banner placed in credential details screen
 
 /**
  * Mapping between banner identifiers and the duration (expressed in days) for which they should be hidden
@@ -28,7 +29,8 @@ export const bannerHideDurations: Record<ItwBannerId, NonEmptyArray<number>> = {
   discovery: [6 * 30], // ~6 months
   discovery_wallet: [30, 60, 120], // ~1 month, ~2 months, ~4 months
   discovery_messages_inbox: [30, 60, 120], // ~1 month, ~2 months, ~4 months
-  upgradeMDLDetails: [FOREVER]
+  upgradeMDLDetails: [FOREVER],
+  ageVerificationUsageDetails: [FOREVER]
 };
 
 export type ItwBannersState = Partial<
