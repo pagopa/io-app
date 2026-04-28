@@ -36524,7 +36524,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               item at 0
                             </View>
                             <View>
-                              Codice IUN, copia
+                              Codice IUN : randomIUN, copia
                             </View>
                             <View>
                               docPaymentTitle
@@ -36549,7 +36549,7 @@ exports[`MessageBottomMenu Should match snapshot (payments undefined, isCancelle
                               item at 0
                             </View>
                             <View>
-                              ID messaggio, copia
+                              ID messaggio: 01HVPB9XYZMWNEPTDKZJ8ZJV28, copia
                             </View>
                             <View>
                               docPaymentTitle
