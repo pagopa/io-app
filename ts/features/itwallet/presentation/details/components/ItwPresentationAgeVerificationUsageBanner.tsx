@@ -8,7 +8,7 @@ import { itwShouldRenderAgeVerificationUsageDetailsBannerSelector } from "../../
 const i18nNs =
   "features.itWallet.presentation.credentialDetails.ageVerification.usageBanner";
 
-// TODO: replace with the Age Verification Help Center article URL once published.
+// TODO: [SIW-4242] replace with the Age Verification Help Center article URL once published.
 const AGE_VERIFICATION_HELP_CENTER_URL = "https://assistenza.ioapp.it/hc/it";
 
 /**
