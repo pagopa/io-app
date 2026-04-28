@@ -179,7 +179,8 @@ export const ItwCredentialCard = memo(
                 borderColor:
                   status === "valid"
                     ? cardConfig.borderColor
-                    : borderColorMap[status]
+                    : borderColorMap[status],
+                borderWidth: status === "valid" ? 1 : 2
               }
             ]}
           />
