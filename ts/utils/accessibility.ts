@@ -62,7 +62,13 @@ export const dateToAccessibilityReadableFormat = (
 export const hoursAndMinutesToAccessibilityReadableFormat = (date: Date) =>
   dateToAccessibilityReadableFormat(date, "HH:mm");
 
-export const formatStringToSpacedString = (str: string) =>
+/**
+ * Adds a single space between every character in a string.
+ *
+ * @param {string} str - The original string to be formatted.
+ * @returns {string} A new string with spaces separating each character.
+ */
+export const formatStringToSpacedString = (str: string): string =>
   str.split("").join(" ");
 
 /**
