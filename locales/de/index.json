@@ -1449,12 +1449,12 @@
     "showMoreDataBottomSheet": {
       "title": "Identifikationsdaten",
       "messageId": "MitteilungsID",
-      "messageIdAccessibility": "MitteilungsID kopieren",
+      "messageIdAccessibility": "MitteilungsID: {{messageId}}, kopieren",
       "pagoPAHeader": "pagoPA Zahlungsmitteilung",
       "noticeCode": "Zahlungsmitteilungskodex",
-      "noticeCodeAccessibility": "Zahlungsmitteilungskodex, kopieren",
+      "noticeCodeAccessibility": "Zahlungsmitteilungskodex: {{paymentNoticeNumber}}, kopieren",
       "entityFiscalCode": "Steuernummer Körperschaft",
-      "entityFiscalCodeAccessibility": "Steuernummer Körperschaft, kopieren"
+      "entityFiscalCodeAccessibility": "Steuernummer Körperschaft: {{creditorTaxId}}, kopieren"
     },
     "contactsBottomSheet": {
       "title": "Hilfe",
@@ -1970,7 +1970,7 @@
         "infoSection": {
           "title": "Informationen zur Zustellung",
           "iun": "IUN-Code",
-          "iunAccessibility": "IUN-Code, kopieren",
+          "iunAccessibility": "IUN-Code : {{iun}}, kopieren",
           "iunSectionTitle": "Zustellung"
         },
         "timeline": {
