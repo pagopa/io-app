@@ -79,7 +79,7 @@ exports[`useSendAreYouSureBottomSheet should match the snapshot 1`] = `
             }
           }
         >
-          <ForwardRef
+          <IOButton
             fullWidth={true}
             label="Attiva SEND su IO"
             loading={false}
@@ -87,7 +87,7 @@ exports[`useSendAreYouSureBottomSheet should match the snapshot 1`] = `
             testID="sendActivationID"
           />
           <View>
-            <ForwardRef
+            <IOButton
               label="Non attivare SEND su IO"
               onPress={[Function]}
               testID="sendDismissalID"
