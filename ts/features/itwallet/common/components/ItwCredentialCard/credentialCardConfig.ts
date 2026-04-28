@@ -127,6 +127,17 @@ export const credentialCardConfigs: Partial<
     borderColor: "#6B9BB6",
     watermarkLayer: require("../../../../../../img/features/itWallet/cards/cardWatermarks/itw_dc_watermark.png"),
     detailWatermarkLayer: require("../../../../../../img/features/itWallet/cards/detailWatermarks/itw_dc_detail_watermark.png")
+  },
+  [CredentialType.AGE_VERIFICATION]: {
+    background: {
+      type: "gradient",
+      angle: 180,
+      colors: ["#ECECEC", "#CECFF2"]
+    },
+    titleColor: "#0E0F13",
+    borderColor: "#B8C5FF",
+    watermarkLayer: require("../../../../../../img/features/itWallet/cards/cardWatermarks/itw_av_watermark.png"),
+    detailWatermarkLayer: require("../../../../../../img/features/itWallet/cards/cardWatermarks/itw_av_watermark.png")
   }
 };
 
