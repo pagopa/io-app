@@ -1,5 +1,5 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { ItwAuthLevel, StoredCredential, CredentialMetadata } from "../../utils/itwTypesUtils.ts";
+import { ItwAuthLevel, CredentialMetadata } from "../../utils/itwTypesUtils.ts";
 import { IdentificationContext } from "../../../machine/eid/context.ts";
 
 export const itwSetReviewPending = createStandardAction(

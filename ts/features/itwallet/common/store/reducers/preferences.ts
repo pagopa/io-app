@@ -15,7 +15,7 @@ import {
   itwSetIdentificationMode
 } from "../actions/preferences";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
-import { ItwAuthLevel, StoredCredential, CredentialMetadata } from "../../utils/itwTypesUtils.ts";
+import { ItwAuthLevel, CredentialMetadata } from "../../utils/itwTypesUtils.ts";
 import { IdentificationContext } from "../../../machine/eid/context.ts";
 
 export type ItwPreferencesState = {
