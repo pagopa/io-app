@@ -7,7 +7,7 @@ on:
     paths:
       - 'locales/it/**'
 concurrency:
-  group: lokalise-push-${{ github.head_ref || github.run_id }}
+  group: lokalise-pull-${{ github.head_ref || github.run_id }}
   cancel-in-progress: false
 jobs:
   build:
