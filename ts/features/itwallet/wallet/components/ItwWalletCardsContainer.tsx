@@ -1,5 +1,5 @@
 import { ListItemHeader, VStack } from "@pagopa/io-app-design-system";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
@@ -46,6 +46,7 @@ const LIFECYCLE_STATUS: Array<ItwJwtCredentialStatus> = [
 
 export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const navigation = useIONavigation();
+  const { name: currentScreenName } = useRoute();
   const isNewItwRenderable = useIOSelector(itwShouldRenderNewItWalletSelector);
   const shouldHideEidAlert = useIOSelector(itwShouldHideEidLifecycleAlert);
   const shouldRenderUpgradeBanner = useIOSelector(
@@ -77,7 +78,12 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
 
   const eidInfoBottomSheet = useIOBottomSheetModal({
     title: <ItwEidInfoBottomSheetTitle isExpired={isEidExpired} />,
-    component: <ItwEidInfoBottomSheetContent navigation={navigation} />
+    component: (
+      <ItwEidInfoBottomSheetContent
+        navigation={navigation}
+        currentScreenName={currentScreenName}
+      />
+    )
   });
 
   useFocusEffect(
@@ -131,6 +137,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
           <ItwEidLifecycleAlert
             lifecycleStatus={LIFECYCLE_STATUS}
             navigation={navigation}
+            currentScreenName={currentScreenName}
           />
         )}
         {/* Dummy view to add space in case there is another component */}

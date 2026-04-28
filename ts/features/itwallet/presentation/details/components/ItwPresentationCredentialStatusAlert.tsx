@@ -4,6 +4,7 @@ import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { memo, useCallback } from "react";
 import { View } from "react-native";
+import { useRoute } from "@react-navigation/native";
 import IOMarkdown from "../../../../../components/IOMarkdown";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { format } from "../../../../../utils/dates.ts";
@@ -161,6 +162,7 @@ export const deriveCredentialAlertType = (
  */
 const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
   const navigation = useIONavigation();
+  const { name: currentScreenName } = useRoute();
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
   const { status, message } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
@@ -209,7 +211,12 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
 
   switch (alertType) {
     case CredentialAlertType.EID_LIFECYCLE:
-      return <ItwEidLifecycleAlert navigation={navigation} />;
+      return (
+        <ItwEidLifecycleAlert
+          navigation={navigation}
+          currentScreenName={currentScreenName}
+        />
+      );
     case CredentialAlertType.JWT_VERIFICATION:
       return (
         <JwtVerificationAlert
