@@ -43,12 +43,11 @@ import {
   itwIsL3EnabledSelector
 } from "../../common/store/selectors/preferences.ts";
 import {
-  availableCredentials,
-  l2Credentials,
-  newCredentials,
-  upcomingCredentials
+  isL2Credential,
+  isUpcomingCredential
 } from "../../common/utils/itwCredentialUtils.ts";
-import { itwCredentialsByPresenceSelector } from "../../credentials/store/selectors/index.ts";
+import { makeItwCredentialsByPresenceSelector } from "../../credentials/store/selectors";
+import { itwAvailableCredentialsListSelector } from "../../credentialsCatalogue/store/selectors";
 import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsValidSelector
@@ -136,6 +135,9 @@ const ItwCredentialOnboardingSection = () => {
   const isItWalletActivationDisabled = useIOSelector(
     itwIsActivationDisabledSelector
   );
+  const catalogueCredentials = useIOSelector(
+    itwAvailableCredentialsListSelector
+  );
 
   // Show upcoming credentials only if env is "pre"
   const shouldShowUpcoming = env === "pre";
@@ -144,22 +146,16 @@ const ItwCredentialOnboardingSection = () => {
 
   const credentialsToDisplay = useMemo(() => {
     if (isItWalletActivationDisabled) {
-      return [...l2Credentials];
+      return catalogueCredentials.filter(c => isL2Credential(c.type));
     }
-
     if (shouldShowUpcoming) {
-      return [
-        ...availableCredentials,
-        ...newCredentials,
-        ...upcomingCredentials
-      ];
-    } else {
-      return [...availableCredentials, ...newCredentials];
+      return catalogueCredentials;
     }
-  }, [shouldShowUpcoming, isItWalletActivationDisabled]);
+    return catalogueCredentials.filter(c => !isUpcomingCredential(c.type));
+  }, [catalogueCredentials, shouldShowUpcoming, isItWalletActivationDisabled]);
 
-  const { obtained, notObtained } = useIOSelector(state =>
-    itwCredentialsByPresenceSelector(state, credentialsToDisplay)
+  const { obtained, notObtained } = useIOSelector(
+    makeItwCredentialsByPresenceSelector(credentialsToDisplay)
   );
 
   return (
@@ -174,7 +170,7 @@ const ItwCredentialOnboardingSection = () => {
         {/* Available credentials for issuance */}
         <AsyncCredentialsCatalogue>
           <ItwOnboardingModuleCredentialsList
-            credentialTypesToDisplay={notObtained}
+            credentialsToDisplay={notObtained}
             isL2Credential={isItWalletActivationDisabled}
           />
         </AsyncCredentialsCatalogue>
@@ -197,7 +193,7 @@ const ItwCredentialOnboardingSection = () => {
               </H6>
             </View>
             <ItwOnboardingModuleCredentialsList
-              credentialTypesToDisplay={obtained}
+              credentialsToDisplay={obtained}
             />
           </VStack>
         )}

@@ -3,7 +3,8 @@ import {
   IntegrityError,
   IntegrityErrorCodes
 } from "@pagopa/io-react-native-integrity";
-import { Trust } from "@pagopa/io-react-native-wallet";
+import { Errors, Trust } from "@pagopa/io-react-native-wallet";
+import { z } from "zod";
 import { WithCredentialMetadata } from "./ItwFailureTypes";
 
 /**
@@ -46,6 +47,23 @@ export const isLocalIntegrityError = (e: unknown): e is IntegrityError =>
  */
 export const isAssertionGenerationError = (e: unknown): e is IntegrityError =>
   e instanceof Error && e.message === "GENERATION_ASSERTION_FAILED";
+
+const anprPid404Failure = z.object({
+  code: z.literal(Errors.IssuerResponseErrorCodes.CredentialInvalidStatus),
+  statusCode: z.literal(404),
+  reason: z.object({
+    error: z.literal("credential_not_found")
+  })
+});
+
+/**
+ * Guard used to identify ANPR PID 404 issuance failures.
+ * It is identified by the presence of reason.error with value "credential_not_found" inside an IssuerResponseError with code `CredentialInvalidStatus` and HTTP status 404.
+ */
+export const isAnprPid404Failure = (
+  e: unknown
+): e is Errors.IssuerResponseError =>
+  Errors.isIssuerResponseError(e) && anprPid404Failure.safeParse(e).success;
 
 /**
  * Enrich instances of Error with `credentialId` so it is possible to retrieve the credential configuration

@@ -1,5 +1,10 @@
 import { useFocusEffect } from "@react-navigation/native";
-import { Banner, ContentWrapper, VStack } from "@pagopa/io-app-design-system";
+import {
+  Banner,
+  ContentWrapper,
+  IOMarkdown,
+  VStack
+} from "@pagopa/io-app-design-system";
 import { Alert } from "react-native";
 import { constNull } from "fp-ts/lib/function";
 import I18n from "i18next";
@@ -13,7 +18,6 @@ import { useIODispatch } from "../../../../store/hooks";
 import { trackItwIdNotMatch, trackWalletNewIdReset } from "../analytics";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
-import IOMarkdown from "../../../../components/IOMarkdown";
 
 export const ItwIdentityNotMatchingScreen = () => {
   useAvoidHardwareBackButton();

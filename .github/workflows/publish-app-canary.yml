@@ -8,6 +8,7 @@ jobs:
     name: Prepare canary release
     needs: run-static-checks
     runs-on: ubuntu-24.04
+    environment: canary
     outputs:
       canaryVersion: ${{ steps.github-release-creation.outputs.CANARY_VERSION }}
     steps:
@@ -29,9 +30,20 @@ jobs:
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
       - id: install-packages
         run: yarn install --frozen-lockfile
+      - id: setup-ruby
+        uses: ruby/setup-ruby@e65c17d16e57e481586a6a5a0282698790062f92 # v1.300.0
+        with:
+          bundler-cache: true
+      - id: resolve-canary-version-code
+        run: |
+          echo $ENCODED_IOAPP_JSON_KEY_FILE | base64 --decode > /tmp/json-key.json
+          cd android
+          bundle exec fastlane current_canary_version_code
+        env:
+          ENCODED_IOAPP_JSON_KEY_FILE: ${{ secrets.ENCODED_IOAPP_JSON_KEY_FILE }}
       - id: replace-version-with-canary
         run: |
-          UPDATED_BUILD_CODE=$(git rev-list HEAD --count)
+          UPDATED_BUILD_CODE=${{ steps.resolve-canary-version-code.outputs.CURRENT_CANARY_VERSION_CODE }}
           node scripts/canary/replaceCanaryVersion.js $UPDATED_BUILD_CODE
           mv ios/fastlane/Matchfile ios/fastlane/Matchfile_prod
           mv ios/fastlane/Matchfile_canary ios/fastlane/Matchfile
@@ -105,7 +117,6 @@ jobs:
           ENCODED_IOAPP_GOOGLE_SERVICES_JSON_FILE: ${{secrets.ENCODED_IOAPP_GOOGLE_SERVICES_JSON_FILE}}
           ENCODED_IOAPP_JSON_KEY_FILE: ${{secrets.ENCODED_IOAPP_JSON_KEY_FILE}}
           ENCODED_IO_APP_RELEASE_KEYSTORE: ${{secrets.ENCODED_IO_APP_RELEASE_KEYSTORE}}
-          ENCODED_IO_APP_SENTRY_PROPERTIES: ${{secrets.ENCODED_IO_APP_SENTRY_PROPERTIES}}
           IO_APP_RELEASE_STORE_FILE : ${{secrets.IO_APP_RELEASE_STORE_FILE}}
           IO_APP_RELEASE_STORE_PASSWORD: ${{secrets.IO_APP_RELEASE_STORE_PASSWORD}}
           IO_APP_RELEASE_KEY_ALIAS: ${{secrets.IO_APP_RELEASE_KEY_ALIAS}}
@@ -185,7 +196,6 @@ jobs:
         env:
           APP_STORE_API_KEY_ID: ${{secrets.APP_STORE_API_KEY_ID}}
           APP_STORE_API_PRIVATE_KEY: ${{secrets.APP_STORE_API_PRIVATE_KEY}}
-          ENCODED_IO_APP_SENTRY_PROPERTIES: ${{secrets.ENCODED_IO_APP_SENTRY_PROPERTIES}}
       - id: add-ssh-deploy-key
         run: |
           echo -e "Host github.com
