@@ -15,7 +15,6 @@ const mockKeyInfo: KeyInfo = {
   publicKeyThumbprint: "mock-thumbprint"
 };
 
-const mockClient = { getUserMessages: jest.fn() };
 const sessionToken = "mock-session-token";
 
 describe("getCommunicationClient", () => {
@@ -24,12 +23,12 @@ describe("getCommunicationClient", () => {
       .next()
       .call(getKeyInfo)
       .next(mockKeyInfo)
-      .call(communicationClientManager.getClient, apiUrlPrefix, {
-        token: sessionToken,
-        keyInfo: mockKeyInfo
-      })
-      .next(mockClient)
-      .returns(mockClient);
+      .returns(
+        communicationClientManager.getClient(apiUrlPrefix, {
+          token: sessionToken,
+          keyInfo: mockKeyInfo
+        })
+      );
   });
 
   it("should pass the sessionToken to getClient", () => {
@@ -39,12 +38,12 @@ describe("getCommunicationClient", () => {
       .next()
       .call(getKeyInfo)
       .next(mockKeyInfo)
-      .call(communicationClientManager.getClient, apiUrlPrefix, {
-        token: differentToken,
-        keyInfo: mockKeyInfo
-      })
-      .next(mockClient)
-      .returns(mockClient);
+      .returns(
+        communicationClientManager.getClient(apiUrlPrefix, {
+          token: differentToken,
+          keyInfo: mockKeyInfo
+        })
+      );
   });
 
   it("should pass keyInfo returned by getKeyInfo to getClient", () => {
@@ -57,12 +56,12 @@ describe("getCommunicationClient", () => {
       .next()
       .call(getKeyInfo)
       .next(specificKeyInfo)
-      .call(communicationClientManager.getClient, apiUrlPrefix, {
-        token: sessionToken,
-        keyInfo: specificKeyInfo
-      })
-      .next(mockClient)
-      .returns(mockClient);
+      .returns(
+        communicationClientManager.getClient(apiUrlPrefix, {
+          token: sessionToken,
+          keyInfo: specificKeyInfo
+        })
+      );
   });
 
   it("should pass empty keyInfo when getKeyInfo returns an empty object", () => {
@@ -72,11 +71,11 @@ describe("getCommunicationClient", () => {
       .next()
       .call(getKeyInfo)
       .next(emptyKeyInfo)
-      .call(communicationClientManager.getClient, apiUrlPrefix, {
-        token: sessionToken,
-        keyInfo: emptyKeyInfo
-      })
-      .next(mockClient)
-      .returns(mockClient);
+      .returns(
+        communicationClientManager.getClient(apiUrlPrefix, {
+          token: sessionToken,
+          keyInfo: emptyKeyInfo
+        })
+      );
   });
 });

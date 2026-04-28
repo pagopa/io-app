@@ -5,14 +5,9 @@ import { communicationClientManager } from "../../../api/CommunicationClientMana
 
 export function* getCommunicationClient(sessionToken: string) {
   const keyInfo = yield* call(getKeyInfo);
-  const client = yield* call(
-    communicationClientManager.getClient,
-    apiUrlPrefix,
-    {
-      token: sessionToken,
-      keyInfo
-    }
-  );
 
-  return client;
+  return communicationClientManager.getClient(apiUrlPrefix, {
+    token: sessionToken,
+    keyInfo
+  });
 }
