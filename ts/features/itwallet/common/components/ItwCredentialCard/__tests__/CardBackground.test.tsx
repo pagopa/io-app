@@ -119,7 +119,8 @@ describe("credential card config", () => {
       CredentialType.PID,
       CredentialType.DRIVING_LICENSE,
       CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
-      CredentialType.EUROPEAN_DISABILITY_CARD
+      CredentialType.EUROPEAN_DISABILITY_CARD,
+      CredentialType.AGE_VERIFICATION
     ];
     explicitTypes.forEach(type => {
       expect(credentialCardConfigs[type]).toBeDefined();
