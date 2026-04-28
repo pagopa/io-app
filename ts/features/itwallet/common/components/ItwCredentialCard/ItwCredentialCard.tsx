@@ -166,11 +166,13 @@ export const ItwCredentialCard = memo(
                   {getCredentialNameFromType(credentialType).toUpperCase()}
                 </IOText>
               )}
-              {statusTagProps && <Tag forceLightMode {...statusTagProps} />}
               {isMultiCredential && (
                 <Icon name="multiCard" color="grey-850" size={24} />
               )}
             </HStack>
+            <View style={styles.statusTag}>
+              {statusTagProps && <Tag forceLightMode {...statusTagProps} />}
+            </View>
           </View>
           <View
             style={[
@@ -337,5 +339,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     paddingHorizontal: 16,
     paddingTop: 14
+  },
+  statusTag: {
+    position: "absolute",
+    right: 16,
+    top: 10
   }
 });

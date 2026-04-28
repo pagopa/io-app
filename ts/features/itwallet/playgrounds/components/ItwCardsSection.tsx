@@ -55,16 +55,12 @@ export const ItwCardsSection = () => (
       <View
         style={{ marginHorizontal: -IOVisualCostants.appMarginDefault / 2 }}
       >
-        {ALL_CREDENTIAL_TYPES.map((credentialType, i) => (
+        {ALL_CREDENTIAL_TYPES.map(credentialType => (
           <ItwCredentialWalletCard
             key={credentialType}
             cardProps={{
               credentialType,
-              withItwDesign: true,
-              credentialStatus:
-                ALL_CREDENTIAL_STATUSES[
-                  (i - 3) % ALL_CREDENTIAL_STATUSES.length
-                ]
+              withItwDesign: true
             }}
             isStacked
           />
