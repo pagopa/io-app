@@ -10,9 +10,19 @@ describe("getCredentialNameFromType", () => {
       expectedTranslation: string;
     }> = [
       {
+        type: CredentialType.PID,
+        isItwCredential: true,
+        expectedTranslation: I18n.t("features.itWallet.credentialName.pid")
+      },
+      {
         type: CredentialType.EUROPEAN_DISABILITY_CARD,
         isItwCredential: false,
         expectedTranslation: I18n.t("features.itWallet.credentialName.dc")
+      },
+      {
+        type: CredentialType.AGE_VERIFICATION,
+        isItwCredential: false,
+        expectedTranslation: I18n.t("features.itWallet.credentialName.av")
       },
       {
         type: CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,

@@ -10,14 +10,16 @@ export const CREDENTIAL_CARD_OVERLAYS: Record<string, number> = {
   [CredentialType.PID]: require("../../../../../img/features/itWallet/cards/overlay/pid_card_overlay.png"),
   [CredentialType.DRIVING_LICENSE]: require("../../../../../img/features/itWallet/cards/overlay/mdl_card_overlay.png"),
   [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: require("../../../../../img/features/itWallet/cards/overlay/ts_card_overlay.png"),
-  [CredentialType.EUROPEAN_DISABILITY_CARD]: require("../../../../../img/features/itWallet/cards/overlay/dc_card_overlay.png")
+  [CredentialType.EUROPEAN_DISABILITY_CARD]: require("../../../../../img/features/itWallet/cards/overlay/dc_card_overlay.png"),
+  [CredentialType.AGE_VERIFICATION]: require("../../../../../img/features/itWallet/cards/overlay/av_overlay.png")
 };
 
 export const CREDENTIAL_HEADER_OVERLAYS: Record<string, number> = {
   [CredentialType.PID]: require("../../../../../img/features/itWallet/cards/overlay/pid_header_overlay.png"),
   [CredentialType.DRIVING_LICENSE]: require("../../../../../img/features/itWallet/cards/overlay/mdl_header_overlay.png"),
   [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: require("../../../../../img/features/itWallet/cards/overlay/ts_header_overlay.png"),
-  [CredentialType.EUROPEAN_DISABILITY_CARD]: require("../../../../../img/features/itWallet/cards/overlay/dc_header_overlay.png")
+  [CredentialType.EUROPEAN_DISABILITY_CARD]: require("../../../../../img/features/itWallet/cards/overlay/dc_header_overlay.png"),
+  [CredentialType.AGE_VERIFICATION]: require("../../../../../img/features/itWallet/cards/overlay/av_overlay.png")
 };
 
 /**

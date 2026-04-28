@@ -131,6 +131,17 @@ export const credentialCardConfigs: Partial<
     overlay: CREDENTIAL_CARD_OVERLAYS[CredentialType.EUROPEAN_DISABILITY_CARD],
     headerOverlay:
       CREDENTIAL_HEADER_OVERLAYS[CredentialType.EUROPEAN_DISABILITY_CARD]
+  },
+  [CredentialType.AGE_VERIFICATION]: {
+    color: "#CECFF2",
+    background: {
+      colors: ["#ECECEC", "#CECFF2"],
+      angle: 180
+    },
+    titleColor: "#363740",
+    borderColor: "#9490BE",
+    overlay: CREDENTIAL_CARD_OVERLAYS[CredentialType.AGE_VERIFICATION],
+    headerOverlay: CREDENTIAL_HEADER_OVERLAYS[CredentialType.AGE_VERIFICATION]
   }
 };
 
