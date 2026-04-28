@@ -148,6 +148,9 @@ export const useItwProximityFlow = () => {
     ISO18013_5.VerifierRequest["request"] | null
   >(null);
   const isNfcEnabled = useRef<boolean>(false);
+  const retrievalMethod = useRef<ISO18013_5.RetrievalMethod | undefined>(
+    undefined
+  );
 
   const {
     nfcSessionSecondsLeft,
@@ -227,6 +230,9 @@ export const useItwProximityFlow = () => {
       }
       await ISO18013_5.close();
 
+      retrievalMethod.current = undefined;
+      isNfcEnabled.current = false;
+
       setQrCode(null);
       setRequest(null);
       setStatus(PROXIMITY_STATUS.READY);
@@ -304,12 +310,7 @@ export const useItwProximityFlow = () => {
 
         isRequestMdl(Object.keys(requestedDocuments));
 
-        if (payload.retrievalMethod === "nfc") {
-          // If NFC retrieval mode we send documents immediately after receiving the request, without waiting for user interaction
-          void sendDocument(parsedResponse.request, MDL_BASE64);
-          return;
-        }
-
+        retrievalMethod.current = payload.retrievalMethod;
         setRequest(parsedResponse.request);
         setStatus(PROXIMITY_STATUS.PRESENTING);
       } catch (e) {
@@ -321,7 +322,7 @@ export const useItwProximityFlow = () => {
         void sendError(ISO18013_5.ErrorCode.SESSION_TERMINATED);
       }
     },
-    [sendError, sendDocument]
+    [sendError]
   );
 
   const onDeviceDisconnected = useCallback(async () => {
@@ -403,6 +404,7 @@ export const useItwProximityFlow = () => {
     nfcSessionSecondsLeft,
     nfcCooldownSecondsLeft,
     isNfcEnabled: isNfcEnabled.current,
+    retrievalMethod: retrievalMethod.current,
     startFlow,
     closeFlow,
     sendDocument,

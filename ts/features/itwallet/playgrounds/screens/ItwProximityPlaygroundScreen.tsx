@@ -1,5 +1,11 @@
-import { Body, IOButton, VStack } from "@pagopa/io-app-design-system";
+import {
+  Body,
+  IOButton,
+  ListItemSwitch,
+  VStack
+} from "@pagopa/io-app-design-system";
 import { ISO18013_5 } from "@pagopa/io-react-native-iso18013";
+import { useEffect, useState } from "react";
 import { Platform, StyleSheet, View } from "react-native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { QrCodeImage } from "../../../../components/QrCodeImage";
@@ -55,6 +61,8 @@ export const ERROR_CODES: ReadonlyArray<ISO18013_5.ErrorCode> = [
 ];
 
 export const ItwProximityPlaygroundScreen = () => {
+  const [skipConsent, setSkipConsent] = useState(true);
+
   const {
     status,
     qrCode,
@@ -74,6 +82,18 @@ export const ItwProximityPlaygroundScreen = () => {
   useHeaderSecondLevel({
     title: "Proximity Playground"
   });
+
+  useEffect(() => {
+    if (!request) {
+      return;
+    }
+
+    if (skipConsent && request) {
+      // If NFC retrieval mode we send documents immediately after receiving the request, without waiting for user interaction
+      void sendDocument(request, MDL_BASE64);
+      return;
+    }
+  }, [skipConsent, request, sendDocument]);
 
   return (
     <LoadingSpinnerOverlay
@@ -115,6 +135,12 @@ export const ItwProximityPlaygroundScreen = () => {
                   NFC unavailable — please wait {nfcCooldownSecondsLeft}s
                 </Body>
               )}
+              <ListItemSwitch
+                label="Skip consent"
+                description="Documents will be shared as soon as a valid request is received"
+                value={skipConsent}
+                onSwitchValueChange={() => setSkipConsent(v => !v)}
+              />
               {START_FLOW_OPTIONS.map(
                 ({ label, engagementModes, retrievalMethods, needsNfc }) => (
                   <IOButton
