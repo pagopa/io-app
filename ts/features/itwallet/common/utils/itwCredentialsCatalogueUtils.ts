@@ -54,22 +54,3 @@ export const fetchCatalogueTranslations = async (
     locales
   );
 };
-
-/**
- * Resolve an l10n_id to its translated string for the given locale.
- * Returns `undefined` if translations are unavailable or the key is missing.
- *
- * @param translations - The catalogue translations map
- * @param locale - The target locale code (e.g. "it")
- * @param l10nId - The localization key to look up
- */
-export const getCatalogueTranslation = (
-  translations: CatalogueTranslations | undefined,
-  locale: string,
-  l10nId: string | undefined
-): string | undefined => {
-  if (!translations || !l10nId) {
-    return undefined;
-  }
-  return translations[locale]?.[l10nId];
-};

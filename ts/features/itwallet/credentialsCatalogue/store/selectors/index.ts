@@ -4,10 +4,7 @@ import { constTrue, pipe } from "fp-ts/lib/function";
 import { isAfter } from "date-fns";
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
-import {
-  DigitalCredentialMetadata,
-  getCatalogueTranslation
-} from "../../../common/utils/itwCredentialsCatalogueUtils";
+import { DigitalCredentialMetadata } from "../../../common/utils/itwCredentialsCatalogueUtils";
 import {
   getCredentialNameFromType,
   l2Credentials,
@@ -125,49 +122,6 @@ export const itwCatalogueTranslationsByLocaleSelector = createSelector(
 );
 
 /**
- * Select the list of all obtainable credentials that are available in the catalogue (if enabled),
- * or the hardcoded list otherwise. This list is not filtered any further: it includes all credentials.
- */
-export const itwAvailableCredentialsListSelector = createSelector(
-  [
-    itwIsCatalogueEnabledForCredentialsList,
-    itwCredentialsCatalogueSelector,
-    itwCatalogueTranslationsSelector,
-    persistedPreferencesSelector
-  ],
-  (
-    isEnabled,
-    catalogue,
-    translations,
-    preferences
-  ): ReadonlyArray<CredentialsListEntry> => {
-    if (!isEnabled) {
-      return hardcodedCredentialsList;
-    }
-
-    if (!catalogue) {
-      return EMPTY_ARRAY;
-    }
-
-    const locale: Locales = preferences.preferredLanguage ?? "it";
-
-    return catalogue.credentials
-      .filter(credential => credential.credential_type !== CredentialType.PID)
-      .map(credential => ({
-        name:
-          getCatalogueTranslation(
-            translations,
-            locale,
-            credential.name_l10n_id
-          ) ??
-          credential.name ??
-          credential.credential_type,
-        type: credential.credential_type
-      }));
-  }
-);
-
-/**
  * Returns a resolver function that resolves a credential display name
  * using catalogue translations (v1.3.3+) when available,
  * falling back to the catalogue static name, then to the hardcoded i18n string.
@@ -195,4 +149,35 @@ export const itwCredentialNameResolverSelector = createSelector(
         getCredentialNameFromType(credentialType, withDefault, withL3Design)
       );
     }
+);
+
+/**
+ * Select the list of all obtainable credentials that are available in the catalogue (if enabled),
+ * or the hardcoded list otherwise. This list is not filtered any further: it includes all credentials.
+ */
+export const itwAvailableCredentialsListSelector = createSelector(
+  [
+    itwIsCatalogueEnabledForCredentialsList,
+    itwCredentialsCatalogueSelector,
+    itwCredentialNameResolverSelector
+  ],
+  (isEnabled, catalogue, resolveName): ReadonlyArray<CredentialsListEntry> => {
+    if (!isEnabled) {
+      return hardcodedCredentialsList;
+    }
+
+    if (!catalogue) {
+      return EMPTY_ARRAY;
+    }
+
+    return catalogue.credentials
+      .filter(credential => credential.credential_type !== CredentialType.PID)
+      .map(credential => ({
+        name: resolveName(
+          credential.credential_type,
+          credential.name ?? credential.credential_type
+        ),
+        type: credential.credential_type
+      }));
+  }
 );
