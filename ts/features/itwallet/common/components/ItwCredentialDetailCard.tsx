@@ -51,9 +51,7 @@ export const ItwCredentialDetailCard = ({
   const handleOnLayout = useCallback((event: LayoutChangeEvent) => {
     const { width, height } = event.nativeEvent.layout;
     setSize(prev =>
-      prev.width === width && prev.height === height
-        ? prev
-        : { width, height }
+      prev.width === width && prev.height === height ? prev : { width, height }
     );
   }, []);
 

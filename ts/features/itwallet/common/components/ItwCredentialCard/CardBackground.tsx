@@ -99,9 +99,7 @@ export const LegacyCardBackground = ({
   colorScheme
 }: LegacyProps) => {
   const [size, setSize] = useState({ width: 0, height: 0 });
-  const image = useCachedImage(
-    legacyCredentialCardBackgrounds[credentialType]
-  );
+  const image = useCachedImage(legacyCredentialCardBackgrounds[credentialType]);
   const loadingOverlayOpacity = useSharedValue(1);
 
   // Read the shared value directly; animation is driven from useEffect below
