@@ -1,6 +1,7 @@
 import { deleteKey } from "@pagopa/io-react-native-crypto";
 import { call, put, select, all } from "typed-redux-saga/macro";
 import { walletRemoveCards } from "../../../wallet/store/actions/cards";
+import { trackItwVaultCredentialRemoveFailed } from "../analytics";
 import {
   itwCredentialsRemove,
   itwCredentialsRemoveByType
@@ -28,18 +29,28 @@ export function* handleItwCredentialsRemoveByTypeSaga(
     );
 
     if (sameTypeCredentials.length > 0) {
-      // Remove from vault first; only proceed with Redux/key cleanup on success
-      yield* call(
-        CredentialsVault.removeAll,
-        sameTypeCredentials.map(c => c.credentialId)
-      );
+      const credentialIds = sameTypeCredentials.map(c => c.credentialId);
+
+      try {
+        // Remove from vault first; only proceed with Redux/key cleanup on success
+        yield* call(CredentialsVault.removeAll, credentialIds);
+      } catch (e) {
+        const error = e instanceof Error ? e : new Error("Unknown error");
+
+        trackItwVaultCredentialRemoveFailed({
+          credential_ids: credentialIds,
+          reason: error.message
+        });
+
+        throw error;
+      }
+
       yield* put(itwCredentialsRemove(sameTypeCredentials));
       yield* put(walletRemoveCards([`ITW_${credentialType}`]));
       yield* all(sameTypeCredentials.map(c => call(deleteKey, c.keyTag)));
     }
     onComplete?.();
   } catch (e) {
-    // TODO [SIW-4080] Log failures to Mixpanel
     onError?.(e instanceof Error ? e : new Error("Unknown error"));
   }
 }

@@ -1,6 +1,11 @@
 import { deleteKey } from "@pagopa/io-react-native-crypto";
 import { all, call, put, select } from "typed-redux-saga/macro";
+import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../../../store/reducers/types";
+import {
+  trackItwVaultCoherenceCheckFailed,
+  trackItwVaultOrphanedCredentialsFound
+} from "../analytics";
 import { CredentialsVault } from "../utils/vault";
 import { itwCredentialsRemove } from "../store/actions";
 
@@ -23,6 +28,7 @@ export function* handleItwCredentialsVaultCoherenceSaga() {
   const legacyCredentials = yield* select(
     (s: GlobalState) => s.features.itWallet.credentials.legacyCredentials
   );
+  const isMixpanelEnabled = yield* select(isMixpanelEnabledSelector);
 
   try {
     const vaultCredentialIds = yield* call(CredentialsVault.list);
@@ -34,7 +40,14 @@ export function* handleItwCredentialsVaultCoherenceSaga() {
     );
 
     if (missingInVault.length > 0) {
-      // TODO [SIW-4080] Log orphaned credential to Mixpanel
+      trackItwVaultOrphanedCredentialsFound(
+        {
+          credential_ids: missingInVault,
+          origin: "redux"
+        },
+        isMixpanelEnabled
+      );
+
       const toRemove = missingInVault
         .map(id => reduxCredentials[id])
         .filter(Boolean);
@@ -48,10 +61,20 @@ export function* handleItwCredentialsVaultCoherenceSaga() {
     );
 
     if (orphanedInVault.length > 0) {
-      // TODO [SIW-4080] Log orphaned credential to Mixpanel
+      trackItwVaultOrphanedCredentialsFound(
+        {
+          credential_ids: orphanedInVault,
+          origin: "vault"
+        },
+        isMixpanelEnabled
+      );
+
       yield* call(CredentialsVault.removeAll, orphanedInVault);
     }
-  } catch {
-    // TODO [SIW-4080] Log failures to Mixpanel
+  } catch (e) {
+    // This repair step is best-effort at boot: track the failure and let the
+    // app continue, so the next launch can retry the cleanup.
+    const reason = e instanceof Error ? e.message : String(e);
+    trackItwVaultCoherenceCheckFailed(reason, isMixpanelEnabled);
   }
 }

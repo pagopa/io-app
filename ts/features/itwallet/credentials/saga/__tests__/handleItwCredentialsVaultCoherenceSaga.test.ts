@@ -4,6 +4,10 @@ import { expectSaga } from "redux-saga-test-plan";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
+import {
+  trackItwVaultCoherenceCheckFailed,
+  trackItwVaultOrphanedCredentialsFound
+} from "../../analytics";
 import { CredentialsVault } from "../../utils/vault";
 import { itwCredentialsRemove } from "../../store/actions";
 import { handleItwCredentialsVaultCoherenceSaga } from "../handleItwCredentialsVaultCoherenceSaga";
@@ -14,6 +18,10 @@ jest.mock("../../utils/vault", () => ({
     removeAll: jest.fn()
   }
 }));
+jest.mock("../../analytics", () => ({
+  trackItwVaultCoherenceCheckFailed: jest.fn(),
+  trackItwVaultOrphanedCredentialsFound: jest.fn()
+}));
 
 jest.mock("@pagopa/io-react-native-crypto", () => ({
   deleteKey: jest.fn()
@@ -22,6 +30,8 @@ jest.mock("@pagopa/io-react-native-crypto", () => ({
 const mockList = jest.mocked(CredentialsVault.list);
 const mockRemoveAll = jest.mocked(CredentialsVault.removeAll);
 const mockDeleteKey = jest.mocked(ioCrypto.deleteKey);
+const mockTrackCoherenceFailed = jest.mocked(trackItwVaultCoherenceCheckFailed);
+const mockTrackOrphaned = jest.mocked(trackItwVaultOrphanedCredentialsFound);
 
 const baseCredential: CredentialMetadata = {
   credentialType: CredentialType.DRIVING_LICENSE,
@@ -42,8 +52,12 @@ const makeState = (
   legacyCredentials: Record<
     string,
     CredentialMetadata & { credential: string }
-  > = {}
+  > = {},
+  isMixpanelEnabled: boolean | null = true
 ): DeepPartial<GlobalState> => ({
+  persistedPreferences: {
+    isMixpanelEnabled
+  },
   features: {
     itWallet: {
       credentials: {
@@ -70,6 +84,8 @@ describe("handleItwCredentialsVaultCoherenceSaga", () => {
       .then(() => {
         expect(mockRemoveAll).not.toHaveBeenCalled();
         expect(mockDeleteKey).not.toHaveBeenCalled();
+        expect(mockTrackOrphaned).not.toHaveBeenCalled();
+        expect(mockTrackCoherenceFailed).not.toHaveBeenCalled();
       });
   });
 
@@ -84,6 +100,13 @@ describe("handleItwCredentialsVaultCoherenceSaga", () => {
       .then(() => {
         expect(mockDeleteKey).toHaveBeenCalledWith(credential.keyTag);
         expect(mockRemoveAll).not.toHaveBeenCalled();
+        expect(mockTrackOrphaned).toHaveBeenCalledWith(
+          {
+            credential_ids: [credential.credentialId],
+            origin: "redux"
+          },
+          true
+        );
       });
   });
 
@@ -97,6 +120,13 @@ describe("handleItwCredentialsVaultCoherenceSaga", () => {
       .then(() => {
         expect(mockRemoveAll).toHaveBeenCalledWith(["orphan_id"]);
         expect(mockDeleteKey).not.toHaveBeenCalled();
+        expect(mockTrackOrphaned).toHaveBeenCalledWith(
+          {
+            credential_ids: ["orphan_id"],
+            origin: "vault"
+          },
+          true
+        );
       });
   });
 
@@ -111,6 +141,22 @@ describe("handleItwCredentialsVaultCoherenceSaga", () => {
       .then(() => {
         expect(mockDeleteKey).toHaveBeenCalledWith(credential.keyTag);
         expect(mockRemoveAll).toHaveBeenCalledWith(["orphan_id"]);
+        expect(mockTrackOrphaned).toHaveBeenNthCalledWith(
+          1,
+          {
+            credential_ids: [credential.credentialId],
+            origin: "redux"
+          },
+          true
+        );
+        expect(mockTrackOrphaned).toHaveBeenNthCalledWith(
+          2,
+          {
+            credential_ids: ["orphan_id"],
+            origin: "vault"
+          },
+          true
+        );
       });
   });
 
@@ -133,6 +179,7 @@ describe("handleItwCredentialsVaultCoherenceSaga", () => {
       .run()
       .then(() => {
         expect(mockDeleteKey).not.toHaveBeenCalled();
+        expect(mockTrackOrphaned).not.toHaveBeenCalled();
       });
   });
 
@@ -166,6 +213,13 @@ describe("handleItwCredentialsVaultCoherenceSaga", () => {
       .then(() => {
         expect(mockDeleteKey).toHaveBeenCalledTimes(1);
         expect(mockDeleteKey).toHaveBeenCalledWith(orphanedCredential.keyTag);
+        expect(mockTrackOrphaned).toHaveBeenCalledWith(
+          {
+            credential_ids: [orphanedCredential.credentialId],
+            origin: "redux"
+          },
+          true
+        );
       });
   });
 
@@ -179,6 +233,45 @@ describe("handleItwCredentialsVaultCoherenceSaga", () => {
       .then(() => {
         expect(mockRemoveAll).not.toHaveBeenCalled();
         expect(mockDeleteKey).not.toHaveBeenCalled();
+        expect(mockTrackOrphaned).not.toHaveBeenCalled();
+        expect(mockTrackCoherenceFailed).not.toHaveBeenCalled();
+      });
+  });
+
+  it("tracks coherence check failures when listing the vault throws", () => {
+    mockList.mockRejectedValue(new Error("Vault list failure"));
+
+    return expectSaga(handleItwCredentialsVaultCoherenceSaga)
+      .withState(makeState({}))
+      .run()
+      .then(() => {
+        expect(mockTrackCoherenceFailed).toHaveBeenCalledWith(
+          "Vault list failure",
+          true
+        );
+        expect(mockTrackOrphaned).not.toHaveBeenCalled();
+      });
+  });
+
+  it("tracks coherence check failures when removing orphaned vault entries throws", () => {
+    mockList.mockResolvedValue(["orphan_id"]);
+    mockRemoveAll.mockRejectedValue(new Error("Vault remove failure"));
+
+    return expectSaga(handleItwCredentialsVaultCoherenceSaga)
+      .withState(makeState({}))
+      .run()
+      .then(() => {
+        expect(mockTrackOrphaned).toHaveBeenCalledWith(
+          {
+            credential_ids: ["orphan_id"],
+            origin: "vault"
+          },
+          true
+        );
+        expect(mockTrackCoherenceFailed).toHaveBeenCalledWith(
+          "Vault remove failure",
+          true
+        );
       });
   });
 });

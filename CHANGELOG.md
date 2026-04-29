@@ -2,6 +2,48 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.30.0-rc.0](https://github.com/pagopa/io-app/compare/3.29.0-rc.7...3.30.0-rc.0) (2026-04-29)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-3923](https://pagopa.atlassian.net/browse/SIW-3923)] Make ANIST credentials available in prod ([#8065](https://github.com/pagopa/io-app/issues/8065)) ([8889d83](https://github.com/pagopa/io-app/commit/8889d83f2d2f3b9b58376e606dcb326f35a409a6))
+* **IT-Wallet:** [[SIW-4021](https://pagopa.atlassian.net/browse/SIW-4021)] Add 404 fallback credential failed screen ([#8002](https://github.com/pagopa/io-app/issues/8002)) ([77b32da](https://github.com/pagopa/io-app/commit/77b32daf228a7f6a0a2f8936cab61f02511daae6))
+* **IT-Wallet:** [[SIW-4040](https://pagopa.atlassian.net/browse/SIW-4040)] New ITW_STATUS activation values ([#8023](https://github.com/pagopa/io-app/issues/8023)) ([b365dd3](https://github.com/pagopa/io-app/commit/b365dd3fe9c322d903a799b7a942559d1210c3d0))
+* **IT-Wallet:** [[SIW-4081](https://pagopa.atlassian.net/browse/SIW-4081)] Add QR code events for mixpanel tracking ([#8029](https://github.com/pagopa/io-app/issues/8029)) ([bcf0ea3](https://github.com/pagopa/io-app/commit/bcf0ea38977737f1f8f619710c3c3ae547f4ea3d))
+* **IT-Wallet:** [[SIW-4159](https://pagopa.atlassian.net/browse/SIW-4159)] Add age verification credential detail UI ([#8048](https://github.com/pagopa/io-app/issues/8048)) ([2ccb408](https://github.com/pagopa/io-app/commit/2ccb40829699a5a9a7a907713e030330547213de))
+* **IT-Wallet:** [[SIW-4175](https://pagopa.atlassian.net/browse/SIW-4175)] Update copy and tracking for the PID detail page ([#8022](https://github.com/pagopa/io-app/issues/8022)) ([194ef28](https://github.com/pagopa/io-app/commit/194ef2871f369fe3ff251c2984f5b28e8154f2ca))
+* **IT-Wallet:** [[SIW-4199](https://pagopa.atlassian.net/browse/SIW-4199)] Alignment of EID issuance flow screens ([#8052](https://github.com/pagopa/io-app/issues/8052)) ([dd7ca11](https://github.com/pagopa/io-app/commit/dd7ca115f7584f6d918b8342a954e3db09a0578d))
+
+
+### Bug Fixes
+
+* [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Fix crash on ItwEidLifecycleAlert rendered outside navigation context ([#8063](https://github.com/pagopa/io-app/issues/8063)) ([0bbf34c](https://github.com/pagopa/io-app/commit/0bbf34c1cffdf289af38bb2076693a2dae02ffd8))
+
+
+### Chores
+
+* [[IEL-358](https://pagopa.atlassian.net/browse/IEL-358)] Accessibility labels with values for messages "Show more data" bottomsheet ([#8066](https://github.com/pagopa/io-app/issues/8066)) ([b387840](https://github.com/pagopa/io-app/commit/b387840db76d248741fda08dbf7a8fd0bf793510))
+* [[IOPLT-1713](https://pagopa.atlassian.net/browse/IOPLT-1713)] App should not check offline status when its state is not active ([#7980](https://github.com/pagopa/io-app/issues/7980)) ([1ccc474](https://github.com/pagopa/io-app/commit/1ccc474836b8127847e8c09bc41408b85465c45d))
+* [[IOPLT-1719](https://pagopa.atlassian.net/browse/IOPLT-1719)] Replace local `IOMarkdown` with new `IOMarkdown...` wherever they are easily applicable ([#7959](https://github.com/pagopa/io-app/issues/7959)) ([a027831](https://github.com/pagopa/io-app/commit/a027831d5702783103ec732420a528f3388b0e2a))
+* [[IOPLT-1801](https://pagopa.atlassian.net/browse/IOPLT-1801)] Replace `forwardRef` with just the `ref` prop ([#8064](https://github.com/pagopa/io-app/issues/8064)) ([162e163](https://github.com/pagopa/io-app/commit/162e163f4a88b14b9f7adbb56968f5bdfc5a1d7f))
+* [[IOPLT-1815](https://pagopa.atlassian.net/browse/IOPLT-1815)] Update `io-app-design-system` to `7.1.0` ([#8067](https://github.com/pagopa/io-app/issues/8067)) ([7639fd3](https://github.com/pagopa/io-app/commit/7639fd3a9ca05c695369ca8934c472407fd7619d))
+
+## [3.29.0-rc.7](https://github.com/pagopa/io-app/compare/3.29.0-rc.6...3.29.0-rc.7) (2026-04-24)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4080](https://pagopa.atlassian.net/browse/SIW-4080)] Add IT Wallet Credentials vault tracking ([#8042](https://github.com/pagopa/io-app/issues/8042)) ([c727822](https://github.com/pagopa/io-app/commit/c727822323756fa101846d228b476b1e0926e4d1))
+* [[IEG-2797](https://pagopa.atlassian.net/browse/IEG-2797)] CGN engagement banner ([#8050](https://github.com/pagopa/io-app/issues/8050)) ([42701c5](https://github.com/pagopa/io-app/commit/42701c5d292303093c842f9c2f36958bd1dd255b))
+
+
+### Chores
+
+* [[IEL-451](https://pagopa.atlassian.net/browse/IEL-451)] added remote FF and url for Fci Security check ([#8057](https://github.com/pagopa/io-app/issues/8057)) ([e49d3f5](https://github.com/pagopa/io-app/commit/e49d3f500124b3af7351b3e9e58c73fd403d7fd8))
+
+## [3.29.0-rc.6](https://github.com/pagopa/io-app/compare/3.29.0-rc.5...3.29.0-rc.6) (2026-04-23)
+
 ## [3.29.0-rc.5](https://github.com/pagopa/io-app/compare/3.29.0-rc.4...3.29.0-rc.5) (2026-04-22)
 
 

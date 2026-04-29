@@ -11,8 +11,9 @@ import {
   VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
-import { useEffect } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { StyleSheet, useWindowDimensions, View } from "react-native";
 import QRCode from "react-native-qrcode-skia";
 import ItwIcon from "../../../../../../img/features/itWallet/brand/itw_icon.svg";
@@ -22,7 +23,10 @@ import {
 } from "../../../../../components/ui/IOScrollView.tsx";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
+import {
+  IOStackNavigationRouteProps,
+  useIONavigation
+} from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { useMaxBrightness } from "../../../../../utils/brightness.ts";
 import { emptyContextualHelp } from "../../../../../utils/contextualHelp.ts";
@@ -32,6 +36,11 @@ import {
   ItwBrandedBox
 } from "../../../common/components/ItwBrandedBox.tsx";
 import { ITW_ROUTES } from "../../../navigation/routes";
+import {
+  trackItwProximityQrCode,
+  trackItwProximityQrCodeLoadingRetry,
+  trackItwStartReissuingPID
+} from "../analytics/index.ts";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
 import {
   selectFailure,
@@ -40,6 +49,7 @@ import {
   selectIsPermissionsRequiredState,
   selectQRCodeString
 } from "../machine/selectors.ts";
+import { ItwProximityParamsList } from "../navigation/ItwProximityParamsList.ts";
 import { shouldBlockProximityQrCodeSelector } from "../store/selectors";
 
 const QR_CODE_LOGO_SIZE = 52;
@@ -58,7 +68,19 @@ const StatusBox = ({ iconName, description, action }: StatusBoxProps) => (
   </View>
 );
 
-export const ItwProximityQrCodeScreen = () => {
+export type ItwProximityQrCodeScreenNavigationParams = {
+  source: "ITW_CREDENTIAL_DETAIL" | "WALLET_HOME";
+};
+
+type ItwProximityQrCodeScreenProps = IOStackNavigationRouteProps<
+  ItwProximityParamsList,
+  "ITW_PROXIMITY_QR_CODE"
+>;
+
+export const ItwProximityQrCodeScreen = ({
+  route
+}: ItwProximityQrCodeScreenProps) => {
+  const source = route.params?.source;
   const { themeType, theme } = useIOThemeContext();
   const { width } = useWindowDimensions();
 
@@ -112,6 +134,24 @@ export const ItwProximityQrCodeScreen = () => {
     supportRequest: true
   });
 
+  const qrCodeStatus = useMemo(() => {
+    if (shouldBlockProximityPresentation) {
+      return "PID_expired";
+    }
+    if (failure) {
+      return "generation_failed";
+    }
+    return "valid";
+  }, [shouldBlockProximityPresentation, failure]);
+
+  useFocusEffect(
+    useCallback(() => {
+      if (source) {
+        trackItwProximityQrCode({ source, qr_code_status: qrCodeStatus });
+      }
+    }, [source, qrCodeStatus])
+  );
+
   // When the screen is removed (back button), dismiss the proximity machine
   useEffect(
     () =>
@@ -129,10 +169,14 @@ export const ItwProximityQrCodeScreen = () => {
   }, [isPermissionsRequired, isBluetoothRequired, navigation]);
 
   const handleRetry = () => {
+    trackItwProximityQrCodeLoadingRetry();
     machineRef.send({ type: "retry" });
   };
 
   const handleReissuePress = () => {
+    trackItwStartReissuingPID({
+      position: "ITW_QR_CODE"
+    });
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
       params: {
