@@ -1,6 +1,7 @@
 import dc from "../../__mocks__/dc.json";
 import eid from "../../__mocks__/eid.json";
 import dcL3 from "../../__mocks__/L3/dcL3.json";
+import avL3 from "../../__mocks__/L3/avL3.json";
 import edL3 from "../../__mocks__/L3/edL3.json";
 import eeL3 from "../../__mocks__/L3/eeL3.json";
 import mdlL3 from "../../__mocks__/L3/mdlL3.json";
@@ -26,6 +27,7 @@ export enum CredentialType {
   EUROPEAN_DISABILITY_CARD = "EuropeanDisabilityCard",
   DRIVING_LICENSE = "mDL",
   PID = "PersonIdentificationData",
+  AGE_VERIFICATION = "age_verification",
   EDUCATION_DEGREE = "education_degree",
   EDUCATION_ENROLLMENT = "education_enrollment",
   RESIDENCY = "residency",
@@ -42,6 +44,7 @@ export const ItwStoredCredentialsMocks = {
     mdl: mdlL3 as unknown as CredentialMetadata,
     ts: tsL3 as unknown as CredentialMetadata,
     dc: dcL3 as unknown as CredentialMetadata,
+    age_verification: avL3 as unknown as CredentialMetadata,
     ed: edL3 as unknown as CredentialMetadata,
     ee: eeL3 as unknown as CredentialMetadata,
     res: resL3 as unknown as CredentialMetadata,

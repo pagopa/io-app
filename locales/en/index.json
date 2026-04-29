@@ -1365,11 +1365,12 @@
     "showMoreDataBottomSheet": {
       "title": "Identification data",
       "messageId": "Message ID",
+      "messageIdAccessibility": "Message ID: {{messageId}}, copy",
       "pagoPAHeader": "pagoPA notice",
       "noticeCode": "Notice code",
-      "noticeCodeAccessibility": "Notice code, copy",
+      "noticeCodeAccessibility": "Notice code: {{paymentNoticeNumber}}, copy",
       "entityFiscalCode": "Payee fiscal code",
-      "entityFiscalCodeAccessibility": "Payee fiscal code, copy"
+      "entityFiscalCodeAccessibility": "Payee fiscal code: {{creditorTaxId}}, copy"
     },
     "contactsBottomSheet": {
       "title": "Support",
@@ -1923,6 +1924,10 @@
       "details": {
         "badge": {
           "legalValue": "Legal value"
+        },
+        "infoSection": {
+          "iun": "IUN code",
+          "iunAccessibility": "IUN code: {{iun}}, copy"
         }
       },
       "lollipopPlayground": {

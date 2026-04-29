@@ -61,6 +61,12 @@ export const itwIsDiscoveryBannerHiddenSelector =
 export const itwIsWalletUpgradeMDLDetailsBannerHiddenSelector =
   itwIsBannerHiddenSelector("upgradeMDLDetails");
 
+/**
+ * Returns whether the Age Verification usage banner in credential details is hidden. Defaults to false.
+ */
+export const itwIsAgeVerificationUsageDetailsBannerHiddenSelector =
+  itwIsBannerHiddenSelector("ageVerificationUsageDetails");
+
 /** Returns whether the IT-wallet discovery banner in wallet screen is hidden. Defaults to false.
  */
 export const itwIsWalletDiscoveryBannerHiddenSelector =
