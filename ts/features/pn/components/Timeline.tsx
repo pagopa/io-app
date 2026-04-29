@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     width: 30
   },
   content: {
-    flexShrink: 1,
+    flex: 1,
     paddingVertical: 12
   },
   hidden: {
