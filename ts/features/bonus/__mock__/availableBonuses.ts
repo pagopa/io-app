@@ -2,6 +2,7 @@ import { BonusVisibilityEnum } from "../../../../definitions/content/BonusVisibi
 import { BonusesAvailable } from "../../../../definitions/content/BonusesAvailable";
 import { ID_CGN_TYPE } from "../common/utils";
 
+// CI test: triggers a single related test for shard validation
 export const contentBonusVacanzeIT = `#### Chi può richiederlo?
 
 Il bonus è destinato a tutte le famiglie con un reddito familiare ISEE non superiore a 40.000€.
