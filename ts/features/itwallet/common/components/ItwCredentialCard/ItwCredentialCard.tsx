@@ -1,6 +1,5 @@
 import {
   HStack,
-  Icon,
   IOColors,
   IOText,
   Tag,
@@ -47,11 +46,6 @@ export type ItwCredentialCard = {
    * an L3 PID and the credential was issued before it.
    */
   issuedAt?: string;
-  /**
-   * Indicates if the credential is a multi-level credential,
-   * which affects the display of a specific badge on the card.
-   */
-  isMultiCredential?: boolean;
 };
 
 type StyleProps = {
@@ -63,8 +57,7 @@ export const ItwCredentialCard = memo(
   ({
     credentialType,
     credentialStatus = "valid",
-    issuedAt,
-    isMultiCredential
+    issuedAt
   }: ItwCredentialCard) => {
     const typefacePreference = useIOSelector(fontPreferenceSelector);
     const needsItwUpgrade = useIOSelector(
@@ -131,9 +124,6 @@ export const ItwCredentialCard = memo(
                   {getCredentialNameFromType(credentialType).toUpperCase()}
                 </IOText>
               )}
-              {isMultiCredential && (
-                <Icon name="multiCard" color="grey-850" size={24} />
-              )}
             </HStack>
             <View style={styles.statusTag}>
               {statusTagProps && <Tag forceLightMode {...statusTagProps} />}
@@ -169,8 +159,7 @@ export const ItwCredentialCard = memo(
 export const ItwCredentialCardLegacy = ({
   credentialType,
   credentialStatus = "valid",
-  issuedAt,
-  isMultiCredential
+  issuedAt
 }: ItwCredentialCard) => {
   const typefacePreference = useIOSelector(fontPreferenceSelector);
   const needsItwUpgrade = useIOSelector(
@@ -260,9 +249,6 @@ export const ItwCredentialCardLegacy = ({
               {getCredentialNameFromType(credentialType).toUpperCase()}
             </IOText>
             {statusTagProps && <Tag forceLightMode {...statusTagProps} />}
-            {isMultiCredential && (
-              <Icon name="multiCard" color="grey-850" size={24} />
-            )}
           </HStack>
         </View>
         <DigitalVersionBadge
