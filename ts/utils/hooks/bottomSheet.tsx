@@ -199,8 +199,8 @@ export const useIOBottomSheetModal = ({
         importantForAccessibility={"yes"}
         onDismiss={handleDismiss}
       >
-        {(screenReaderEnabled && Platform.OS === "android") ||
-        forceFullscreen ? (
+        {Platform.OS === "android" &&
+        (screenReaderEnabled || forceFullscreen) ? (
           <Modal>
             <View style={{ flex: 1, backgroundColor }} accessible={true}>
               {header}
