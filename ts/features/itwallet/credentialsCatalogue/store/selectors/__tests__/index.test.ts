@@ -42,6 +42,14 @@ const buildState = (
             overrides.isEnabledForCredentialsList ?? false,
           catalogue: overrides.catalogue ?? pot.none,
           translations: overrides.translations ?? pot.none
+        },
+        // Required by itwLifecycleIsITWalletValidSelector, transitively used
+        // by itwCredentialNameResolverSelector.
+        issuance: { integrityKeyTag: { _tag: "None" } },
+        credentials: { credentials: {} },
+        preferences: {
+          isFiscalCodeWhitelisted: false,
+          isItwSimplifiedActivationRequired: false
         }
       }
     },
