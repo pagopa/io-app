@@ -469,7 +469,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           <View
                             style={
                               {
-                                "flex": 1,
+                                "flexShrink": 1,
                                 "paddingVertical": 12,
                               }
                             }
@@ -645,7 +645,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           <View
                             style={
                               {
-                                "flex": 1,
+                                "flexShrink": 1,
                                 "paddingVertical": 12,
                               }
                             }
@@ -821,7 +821,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           <View
                             style={
                               {
-                                "flex": 1,
+                                "flexShrink": 1,
                                 "paddingVertical": 12,
                               }
                             }
@@ -997,7 +997,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           <View
                             style={
                               {
-                                "flex": 1,
+                                "flexShrink": 1,
                                 "paddingVertical": 12,
                               }
                             }
@@ -1173,7 +1173,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           <View
                             style={
                               {
-                                "flex": 1,
+                                "flexShrink": 1,
                                 "paddingVertical": 12,
                               }
                             }
@@ -1349,7 +1349,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           <View
                             style={
                               {
-                                "flex": 1,
+                                "flexShrink": 1,
                                 "paddingVertical": 12,
                               }
                             }
@@ -1525,7 +1525,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           <View
                             style={
                               {
-                                "flex": 1,
+                                "flexShrink": 1,
                                 "paddingVertical": 12,
                               }
                             }
@@ -1701,7 +1701,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           <View
                             style={
                               {
-                                "flex": 1,
+                                "flexShrink": 1,
                                 "paddingVertical": 12,
                               }
                             }
@@ -1877,7 +1877,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           <View
                             style={
                               {
-                                "flex": 1,
+                                "flexShrink": 1,
                                 "paddingVertical": 12,
                               }
                             }
@@ -2053,7 +2053,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           <View
                             style={
                               {
-                                "flex": 1,
+                                "flexShrink": 1,
                                 "paddingVertical": 12,
                               }
                             }
@@ -2229,7 +2229,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           <View
                             style={
                               {
-                                "flex": 1,
+                                "flexShrink": 1,
                                 "paddingVertical": 12,
                               }
                             }
@@ -2407,7 +2407,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
                           <View
                             style={
                               {
-                                "flex": 1,
+                                "flexShrink": 1,
                                 "paddingVertical": 12,
                               }
                             }
