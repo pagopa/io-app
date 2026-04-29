@@ -283,9 +283,15 @@ export const ItwPresentationCredentialDetail = ({
         icon: "productITWallet",
         iconPosition: "end",
         onPress: () => {
-          trackItwProximityShowQrCode();
+          trackItwProximityShowQrCode({
+            credential: mixPanelCredential,
+            position: "ITW_CREDENTIAL_DETAIL"
+          });
           navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-            screen: ITW_PROXIMITY_ROUTES.QR_CODE
+            screen: ITW_PROXIMITY_ROUTES.QR_CODE,
+            params: {
+              source: "ITW_CREDENTIAL_DETAIL"
+            }
           });
         }
       };
