@@ -1716,12 +1716,12 @@
     "showMoreDataBottomSheet": {
       "title": "Dati identificativi",
       "messageId": "ID messaggio",
-      "messageIdAccessibility": "ID messaggio, copia",
+      "messageIdAccessibility": "ID messaggio: {{messageId}}, copia",
       "pagoPAHeader": "Avviso pagoPA",
       "noticeCode": "Codice Avviso",
-      "noticeCodeAccessibility": "Codice avviso, copia",
+      "noticeCodeAccessibility": "Codice avviso: {{paymentNoticeNumber}}, copia",
       "entityFiscalCode": "Codice Fiscale Ente",
-      "entityFiscalCodeAccessibility": "Codice fiscale ente, copia"
+      "entityFiscalCodeAccessibility": "Codice fiscale ente: {{creditorTaxId}}, copia"
     },
     "contactsBottomSheet": {
       "title": "Assistenza",
@@ -2658,7 +2658,7 @@
         "infoSection": {
           "title": "Informazioni sulla notifica",
           "iun": "Codice IUN",
-          "iunAccessibility": "Codice IUN, copia",
+          "iunAccessibility": "Codice IUN : {{iun}}, copia",
           "iunSectionTitle": "Notifica"
         },
         "timeline": {
