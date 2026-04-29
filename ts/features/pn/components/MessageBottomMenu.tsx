@@ -17,6 +17,7 @@ import {
   SendOpeningSource,
   SendUserType
 } from "../../pushNotifications/analytics";
+import { formatStringToSpacedString } from "../../../utils/accessibility.ts";
 import { TimelineListItem } from "./TimelineListItem";
 import { NeedHelp } from "./NeedHelp";
 
@@ -54,7 +55,8 @@ const generateMessageSectionData = (
       items: [
         {
           accessibilityLabel: I18n.t(
-            "features.pn.details.infoSection.iunAccessibility"
+            "features.pn.details.infoSection.iunAccessibility",
+            { iun }
           ),
           icon: "docPaymentTitle",
           label: I18n.t("features.pn.details.infoSection.iun"),
@@ -70,7 +72,8 @@ const generateMessageSectionData = (
       items: [
         {
           accessibilityLabel: I18n.t(
-            "messageDetails.showMoreDataBottomSheet.messageIdAccessibility"
+            "messageDetails.showMoreDataBottomSheet.messageIdAccessibility",
+            { messageId }
           ),
           icon: "docPaymentTitle",
           label: I18n.t("messageDetails.showMoreDataBottomSheet.messageId"),
@@ -84,6 +87,7 @@ const generateMessageSectionData = (
   // Paid payments, when notification is cancelled but has previously paid payments
   if (isCancelled) {
     paidNoticeCodes?.forEach((paidNoticeCode, index) => {
+      const paymentNoticeNumber = formatPaymentNoticeNumber(paidNoticeCode);
       const paidPaymentData: ShowMoreSection = {
         title: `${I18n.t(
           "messageDetails.showMoreDataBottomSheet.pagoPAHeader"
@@ -91,11 +95,12 @@ const generateMessageSectionData = (
         items: [
           {
             accessibilityLabel: I18n.t(
-              "messageDetails.showMoreDataBottomSheet.noticeCodeAccessibility"
+              "messageDetails.showMoreDataBottomSheet.noticeCodeAccessibility",
+              { paymentNoticeNumber }
             ),
             icon: "docPaymentCode",
             label: I18n.t("messageDetails.showMoreDataBottomSheet.noticeCode"),
-            value: formatPaymentNoticeNumber(paidNoticeCode),
+            value: paymentNoticeNumber,
             valueToCopy: paidNoticeCode
           }
         ]
@@ -109,6 +114,7 @@ const generateMessageSectionData = (
     const hasMoreThanOnePayment = (payments?.length ?? 0) > 1;
     payments?.forEach((payment, index) => {
       const titleSuffix = hasMoreThanOnePayment ? ` ${index + 1}` : ``;
+      const paymentNoticeNumber = formatPaymentNoticeNumber(payment.noticeCode);
       const paymentData: ShowMoreSection = {
         title: `${I18n.t(
           "messageDetails.showMoreDataBottomSheet.pagoPAHeader"
@@ -116,16 +122,20 @@ const generateMessageSectionData = (
         items: [
           {
             accessibilityLabel: I18n.t(
-              "messageDetails.showMoreDataBottomSheet.noticeCodeAccessibility"
+              "messageDetails.showMoreDataBottomSheet.noticeCodeAccessibility",
+              { paymentNoticeNumber }
             ),
             icon: "docPaymentCode",
             label: I18n.t("messageDetails.showMoreDataBottomSheet.noticeCode"),
-            value: formatPaymentNoticeNumber(payment.noticeCode),
+            value: paymentNoticeNumber,
             valueToCopy: payment.noticeCode
           },
           {
             accessibilityLabel: I18n.t(
-              "messageDetails.showMoreDataBottomSheet.entityFiscalCodeAccessibility"
+              "messageDetails.showMoreDataBottomSheet.entityFiscalCodeAccessibility",
+              {
+                creditorTaxId: formatStringToSpacedString(payment.creditorTaxId)
+              }
             ),
             icon: "entityCode",
             label: I18n.t(
