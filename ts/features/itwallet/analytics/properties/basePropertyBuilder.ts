@@ -1,7 +1,10 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { GlobalState } from "../../../../store/reducers/types";
-import { itwAuthLevelSelector } from "../../common/store/selectors/preferences";
+import {
+  itwAuthLevelSelector,
+  itwIdentificationModeSelector
+} from "../../common/store/selectors/preferences";
 import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
 import { CredentialType } from "../../common/utils/itwMocksUtils";
 import {
@@ -12,7 +15,8 @@ import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selec
 import { mapPIDStatusToMixpanel } from "../utils";
 import {
   CREDENTIAL_STATUS_MAP,
-  ItwCredentialMixpanelStatus
+  ItwCredentialMixpanelStatus,
+  ItwStatus
 } from "../utils/types";
 import { ItwBaseProperties } from "./propertyTypes";
 
@@ -26,7 +30,11 @@ export const buildItwBaseProperties = (
   const credentialProps = buildCredentialProperties(state);
 
   return {
-    ITW_STATUS_V2: itwAuthLevelSelector(state) ?? "not_active",
+    ITW_STATUS_V2: computeItwStatus(
+      itwAuthLevelSelector(state),
+      itwIdentificationModeSelector(state),
+      itwLifecycleIsITWalletValidSelector(state)
+    ),
     ...pidProps,
     ...credentialProps
   };
@@ -119,4 +127,29 @@ const getMixpanelCredentialStatus = (
     O.map(cred => CREDENTIAL_STATUS_MAP[getCredentialStatus(cred)]),
     O.getOrElse(() => "not_available" as ItwCredentialMixpanelStatus)
   );
+};
+
+export const computeItwStatus = (
+  authLevel: "L2" | "L3" | undefined,
+  identificationMode: "cieId" | "ciePin" | "spid" | undefined,
+  isItwL3?: boolean
+): ItwStatus => {
+  if (!authLevel) {
+    return "not_active";
+  }
+
+  if (!isItwL3) {
+    return authLevel;
+  }
+
+  switch (identificationMode) {
+    case "spid":
+      return "L2+ (spid_can)";
+    case "cieId":
+      return authLevel === "L2" ? "L3 (cieid_can)" : "L3 (cieid_pin)";
+    case "ciePin":
+      return "L3 (cie_pin)";
+    default:
+      return authLevel;
+  }
 };

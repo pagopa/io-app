@@ -1,10 +1,10 @@
 import { Alert, IOButton, IOToast, VStack } from "@pagopa/io-app-design-system";
-import { useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { memo, useCallback } from "react";
 import { View } from "react-native";
+import { useRoute } from "@react-navigation/native";
 import IOMarkdown from "../../../../../components/IOMarkdown";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { format } from "../../../../../utils/dates.ts";
@@ -45,6 +45,7 @@ type Props = {
 
 const excludedCredentialTypes = [
   CredentialType.PID,
+  CredentialType.AGE_VERIFICATION,
   CredentialType.EDUCATION_DEGREE,
   CredentialType.EDUCATION_ENROLLMENT,
   CredentialType.RESIDENCY,
@@ -162,13 +163,13 @@ export const deriveCredentialAlertType = (
  */
 const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
   const navigation = useIONavigation();
+  const { name: currentScreenName } = useRoute();
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
   const { status, message } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
-  const { name: currentScreenName } = useRoute();
 
   const trackCredentialAlertEvent = (action: CredentialAlertEvents): void => {
     if (!status) {

@@ -1,19 +1,39 @@
 import * as E from "fp-ts/lib/Either";
-import { call, fork, put, select } from "typed-redux-saga/macro";
+import {
+  call,
+  delay,
+  fork,
+  put,
+  race,
+  select,
+  take
+} from "typed-redux-saga/macro";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
+import { Action } from "redux";
+import { isActionOf } from "typesafe-actions";
 import { fetchNetInfoState } from "../utils";
-import { startTimer } from "../../../utils/timer";
 import { setConnectionStatus } from "../store/actions";
 import { ReduxSagaEffect, SagaCallReturnType } from "../../../types/utils";
 import { updateMixpanelSuperProperties } from "../../../mixpanelConfig/superProperties";
 import { GlobalState } from "../../../store/reducers/types";
 import { ConnectivityClient, createConnectivityClient } from "../api/client";
 import { apiUrlPrefix } from "../../../config";
-// import { appCurrentStateSelector } from "../../../store/reducers/appState";
+import { appCurrentStateSelector } from "../../../store/reducers/appState";
+import { applicationChangeState } from "../../../store/actions/application";
 
 const CONNECTIVITY_STATUS_LOAD_INTERVAL = (30 * 1000) as Millisecond;
 const CONNECTIVITY_STATUS_FAILURE_INTERVAL = (10 * 1000) as Millisecond;
-// const CONNECTIVITY_STATUS_BACKGROUND_INTERVAL = 1000 as Millisecond;
+
+function* waitForAppActive() {
+  yield* race({
+    delay: delay(CONNECTIVITY_STATUS_FAILURE_INTERVAL),
+    applicationActive: take(
+      (action: Action) =>
+        isActionOf(applicationChangeState, action) &&
+        action.payload === "active"
+    )
+  });
+}
 
 function* checkBackendConnectionStatus(
   client: ConnectivityClient
@@ -38,14 +58,20 @@ export function* connectionStatusSaga(
 > {
   while (true) {
     try {
-      // const appState = yield* select(appCurrentStateSelector);
+      const appState = yield* select(appCurrentStateSelector);
 
-      // if (appState !== "active") {
-      //   // if the app is not active we wait for the next check
-      //   yield* call(startTimer, CONNECTIVITY_STATUS_BACKGROUND_INTERVAL);
-      //   continue;
-      // }
+      if (appState !== "active") {
+        yield* call(waitForAppActive);
+        continue;
+      }
+
       const libraryResponse = yield* call(fetchNetInfoState());
+
+      const statePostNetInfo = yield* select(appCurrentStateSelector);
+      if (statePostNetInfo !== "active") {
+        yield* call(waitForAppActive);
+        continue;
+      }
 
       if (E.isRight(libraryResponse)) {
         const backendResponse = yield* call(
@@ -53,6 +79,11 @@ export function* connectionStatusSaga(
           client
         );
 
+        const statePostAwait = yield* select(appCurrentStateSelector);
+        if (statePostAwait !== "active") {
+          yield* call(waitForAppActive);
+          continue;
+        }
         const isAppConnected =
           !!libraryResponse.right.isConnected && backendResponse;
 
@@ -62,20 +93,21 @@ export function* connectionStatusSaga(
         // update mixpanel super properties
         const state: GlobalState = yield* select();
         void updateMixpanelSuperProperties(state);
-
         if (isAppConnected) {
-          yield* call(startTimer, CONNECTIVITY_STATUS_LOAD_INTERVAL);
+          yield* delay(CONNECTIVITY_STATUS_LOAD_INTERVAL);
           continue;
         }
-        yield* call(startTimer, CONNECTIVITY_STATUS_FAILURE_INTERVAL);
-        continue;
+      } else {
+        // NetInfo read failed: keep store aligned with failure handling.
+        yield* put(setConnectionStatus(false));
       }
-      yield* call(startTimer, CONNECTIVITY_STATUS_FAILURE_INTERVAL);
+      yield* delay(CONNECTIVITY_STATUS_FAILURE_INTERVAL);
       continue;
     } catch (e) {
-      yield* call(startTimer, CONNECTIVITY_STATUS_FAILURE_INTERVAL);
-      continue;
+      // we ignore errors and treat them as a connection failure
+      yield* put(setConnectionStatus(false));
     }
+    yield* delay(CONNECTIVITY_STATUS_FAILURE_INTERVAL);
   }
 }
 

@@ -55,10 +55,12 @@ export const ItwEidInfoBottomSheetTitle = ({
 
 type ItwEidInfoBottomSheetContentProps = {
   navigation: ReturnType<typeof useIONavigation>;
+  currentScreenName?: string;
 };
 
 const ItwEidInfoBottomSheetContent = ({
-  navigation
+  navigation,
+  currentScreenName
 }: ItwEidInfoBottomSheetContentProps) => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
@@ -96,7 +98,11 @@ const ItwEidInfoBottomSheetContent = ({
             "features.itWallet.presentation.bottomSheets.eidInfo.contentTop"
           )}
         />
-        <ItwEidLifecycleAlert navigation={navigation} skipViewTracking={true} />
+        <ItwEidLifecycleAlert
+          navigation={navigation}
+          currentScreenName={currentScreenName}
+          skipViewTracking={true}
+        />
         <View>
           {claims.map((claim, index) => (
             <Fragment key={index}>
