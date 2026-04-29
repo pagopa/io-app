@@ -1,17 +1,14 @@
-name: Push locales to Lokalise
+name: Pull locales from Lokalise
 on:
   workflow_dispatch:
-permissions:
-  contents: write
-  pull-requests: write
 concurrency:
-  group: lokalise-push-${{ github.head_ref || github.run_id }}
+  group: lokalise-pull-${{ github.head_ref || github.run_id }}
   cancel-in-progress: false
 permissions:
   contents: write
   pull-requests: write
 jobs:
-  push-locale:
+  pull-locales:
     runs-on: ubuntu-latest
     environment: lokalise
     steps:

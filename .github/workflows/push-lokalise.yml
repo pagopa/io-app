@@ -7,12 +7,12 @@ on:
     paths:
       - 'locales/it/**'
 concurrency:
-  group: lokalise-pull-${{ github.head_ref || github.run_id }}
+  group: lokalise-push-${{ github.head_ref || github.run_id }}
   cancel-in-progress: false
 permissions: 
   contents: read
 jobs:
-  pull-locales:
+  push-locale:
     runs-on: ubuntu-latest
     environment: lokalise
     steps:
