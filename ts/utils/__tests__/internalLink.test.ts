@@ -61,12 +61,12 @@ describe("getInternalRoute - credential offer normalization", () => {
       href: "haip-vci://?credential_offer_uri=https%3A%2F%2Fissuer%2Foffer"
     },
     {
-      name: "https url with credential_offer query param",
-      href: "https://issuer.example/offer?credential_offer=abc"
+      name: "io universal link with credential_offer query param",
+      href: `${IO_UNIVERSAL_LINK_PREFIX}/itw/credential-offer?credential_offer=abc`
     },
     {
-      name: "https url with credential_offer_uri query param",
-      href: "https://issuer.example/entry?credential_offer_uri=https%3A%2F%2Fissuer%2Foffer"
+      name: "io universal link with credential_offer_uri query param",
+      href: `${IO_UNIVERSAL_LINK_PREFIX}/itw/credential-offer?credential_offer_uri=https%3A%2F%2Fissuer%2Foffer`
     }
   ])(
     "wraps $name into ioit://itw/credential-offer preserving the original URI as itwCredentialOfferUri",

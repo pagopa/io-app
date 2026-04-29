@@ -1,26 +1,31 @@
+import { IO_UNIVERSAL_LINK_PREFIX } from "../../../../utils/navigation";
+
+const CREDENTIAL_OFFER_SCHEMES = [
+  "openid-credential-offer://",
+  "haip-vci://",
+  IO_UNIVERSAL_LINK_PREFIX
+] as const;
+
+const CREDENTIAL_OFFER_QUERY_PARAMS = [
+  "credential_offer",
+  "credential_offer_uri"
+] as const;
+
 export const isPotentialCredentialOfferInvocation = (
   value: string
 ): boolean => {
   const s = value.trim();
 
-  if (
-    s.startsWith("openid-credential-offer://") ||
-    s.startsWith("haip-vci://")
-  ) {
-    return true;
+  if (!CREDENTIAL_OFFER_SCHEMES.some(scheme => s.startsWith(scheme))) {
+    return false;
   }
 
-  if (s.startsWith("https://")) {
-    try {
-      const url = new URL(s);
-      return (
-        url.searchParams.has("credential_offer") ||
-        url.searchParams.has("credential_offer_uri")
-      );
-    } catch {
-      return false;
-    }
+  try {
+    const url = new URL(s);
+    return CREDENTIAL_OFFER_QUERY_PARAMS.some(param =>
+      url.searchParams.has(param)
+    );
+  } catch {
+    return false;
   }
-
-  return false;
 };
