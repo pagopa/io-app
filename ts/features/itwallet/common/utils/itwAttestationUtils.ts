@@ -177,12 +177,6 @@ export const getCurrentWalletInstanceStatus = (
       )
     });
   } catch (e) {
-    // TODO: Replace Sentry capture exception with a new logging solution
-    // Sentry.captureException(e, {
-    //   tags: {
-    //     isRequired: true
-    //   }
-    // });
     throw e;
   }
 };

@@ -29,8 +29,6 @@ export const revokeCurrentWalletInstance = async (
       appFetch
     });
   } catch (e) {
-    // TODO: Replace Sentry capture exception with a new logging solution
-    // Sentry.captureException(e);
     throw e instanceof Error ? e : new Error("Unknown error");
   }
 };
