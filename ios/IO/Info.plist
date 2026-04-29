@@ -34,15 +34,6 @@
           <string>ioit</string>
           <string>iowalletcie</string>
           <string>iologincie</string>
-        </array>
-      </dict>
-      <dict>
-        <key>CFBundleTypeRole</key>
-        <string>Editor</string>
-        <key>CFBundleURLName</key>
-        <string>it.pagopa.itwallet.credential-offer</string>
-        <key>CFBundleURLSchemes</key>
-        <array>
           <string>openid-credential-offer</string>
           <string>haip-vci</string>
         </array>

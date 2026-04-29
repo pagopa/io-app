@@ -13,7 +13,7 @@ import { linkingSubscription } from "../linkingSubscription";
 import { initiateAarFlow } from "../../features/pn/aar/store/actions";
 import { IO_LOGIN_CIE_URL_SCHEME } from "../../features/authentication/login/cie/utils/cie";
 import * as LINKING_ANALYTICS from "../../features/linking/analytics";
-import { getInternalRoute } from "../../utils/internalLink";
+import { getCredentialOfferInternalRoute } from "../../features/itwallet/offer/utils";
 
 describe("linkingSubscription", () => {
   beforeEach(() => {
@@ -194,7 +194,7 @@ describe("linkingSubscription", () => {
     const credentialOfferUrl =
       "openid-credential-offer://?credential_offer=%7B%22credential_issuer%22%3A%22https%3A%2F%2Fissuer%22%7D";
 
-    it("should pass the normalized URL to the listener when a credential offer custom scheme is received", () => {
+    it("should pass the internal route to the listener when a credential offer custom scheme is received", () => {
       const { mockCurrySubscription, addEventListenerSpy } = initializeTests();
       const mockListener = jest.fn();
 
@@ -205,11 +205,11 @@ describe("linkingSubscription", () => {
 
       expect(mockListener).toHaveBeenCalledTimes(1);
       expect(mockListener).toHaveBeenCalledWith(
-        getInternalRoute(credentialOfferUrl)
+        getCredentialOfferInternalRoute(credentialOfferUrl)
       );
     });
 
-    it("should store the normalized URL (not the original) when not logged in and a credential offer is received", () => {
+    it("should store the original URL when not logged in and a credential offer is received", () => {
       const { mockDispatch, mockCurrySubscription, addEventListenerSpy } =
         initializeTests();
 
@@ -221,10 +221,33 @@ describe("linkingSubscription", () => {
       });
 
       expect(mockDispatch).toHaveBeenCalledWith(
-        storeLinkingUrl(getInternalRoute(credentialOfferUrl))
-      );
-      expect(mockDispatch).not.toHaveBeenCalledWith(
         storeLinkingUrl(credentialOfferUrl)
+      );
+    });
+
+    it("should preserve the original URL for side effects when a credential offer is received", () => {
+      const { mockCurrySubscription, addEventListenerSpy } = initializeTests();
+      const mockTrackIOOpenedFromUniversalAppLink = jest.fn();
+      const mockProcessUtmLink = jest.fn();
+
+      jest
+        .spyOn(LINKING_ANALYTICS, "trackIOOpenedFromUniversalAppLink")
+        .mockImplementation(mockTrackIOOpenedFromUniversalAppLink);
+      jest
+        .spyOn(UTM_LINK, "processUtmLink")
+        .mockImplementation(mockProcessUtmLink);
+
+      mockCurrySubscription(jest.fn());
+      runEventListenerCallback(addEventListenerSpy, {
+        url: credentialOfferUrl
+      });
+
+      expect(mockTrackIOOpenedFromUniversalAppLink).toHaveBeenCalledWith(
+        credentialOfferUrl
+      );
+      expect(mockProcessUtmLink).toHaveBeenCalledWith(
+        credentialOfferUrl,
+        expect.any(Function)
       );
     });
   });
