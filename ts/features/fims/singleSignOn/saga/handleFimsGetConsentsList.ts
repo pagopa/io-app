@@ -23,6 +23,7 @@ import { preferredLanguageSelector } from "../../../../store/reducers/persistedP
 import { preferredLanguageToString } from "../../common/utils";
 import { trackAppCaughtError } from "../../../../utils/analytics";
 import { unknownToString } from "../../../../utils/errors";
+import { isTestEnv } from "../../../../utils/environment";
 import {
   computeAndTrackAuthenticationError,
   deallocateFimsAndRenewFastLoginSession,
@@ -230,3 +231,7 @@ const safeParseFailureResponseBody = (failureResponseBody: string) => {
     return undefined;
   }
 };
+
+export const testable = isTestEnv
+  ? { safeParseFailureResponseBody }
+  : undefined;

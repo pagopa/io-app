@@ -1,4 +1,9 @@
-import { buildEventProperties, dateToUTCISOString } from "../analytics";
+import * as MIXPANEL from "../../mixpanel";
+import {
+  buildEventProperties,
+  dateToUTCISOString,
+  trackAppCaughtError
+} from "../analytics";
 
 describe("buildEventProperties", () => {
   it("should output base object with event_category and event_type when no additional properties are provided", () => {
@@ -55,5 +60,52 @@ describe("dateToUTCISOString", () => {
     const dateWithMs = new Date(2023, 5, 15, 10, 30, 45, 123);
     const isoString = dateToUTCISOString(dateWithMs);
     expect(isoString).toBe("2023-06-15T10:30:45.123Z");
+  });
+});
+
+describe("trackAppCaughtError", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+    jest.clearAllMocks();
+  });
+
+  it("should track APP_CAUGHT_ERROR with provided payload", () => {
+    const subject = "auth";
+    const message = "unexpected error";
+    const exception = "TypeError: undefined is not an object";
+
+    const spiedOnMockedMixpanelTrack = jest.spyOn(MIXPANEL, "mixpanelTrack").mockImplementation();
+
+    trackAppCaughtError(subject, message, exception);
+
+    expect(spiedOnMockedMixpanelTrack).toHaveBeenCalledTimes(1);
+    expect(spiedOnMockedMixpanelTrack).toHaveBeenCalledWith(
+      "APP_CAUGHT_ERROR",
+      expect.objectContaining({
+        event_category: "TECH",
+        event_type: undefined,
+        flow: undefined,
+        subject,
+        message,
+        exception
+      })
+    );
+  });
+
+  it("should track APP_CAUGHT_ERROR also when optional fields are undefined", () => {
+    const spiedOnMockedMixpanelTrack = jest.spyOn(MIXPANEL, "mixpanelTrack").mockImplementation();
+
+    trackAppCaughtError("startup", undefined, undefined);
+
+    expect(spiedOnMockedMixpanelTrack).toHaveBeenCalledTimes(1);
+    expect(spiedOnMockedMixpanelTrack).toHaveBeenCalledWith(
+      "APP_CAUGHT_ERROR",
+      expect.objectContaining({
+        event_category: "TECH",
+        subject: "startup",
+        message: undefined,
+        exception: undefined
+      })
+    );
   });
 });
