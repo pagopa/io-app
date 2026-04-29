@@ -6,3 +6,4 @@ export function assert(
     throw new Error(msg);
   }
 }
+
