@@ -1,16 +1,16 @@
 import { useIOThemeContext } from "@pagopa/io-app-design-system";
 import { DataSourceParam } from "@shopify/react-native-skia";
+import Color from "color";
 import { useMemo } from "react";
 import { ColorSchemeName } from "react-native";
-import { hexToHsb, hsbToHex } from "../../../../../utils/color";
 import { fnv1a } from "../../../../../utils/hash";
-import { CredentialType } from "../../utils/itwMocksUtils";
-import { ItWalletThemes } from "../../utils/theme";
 import {
   CREDENTIAL_BASE_OVERLAYS,
   CREDENTIAL_CARD_OVERLAYS,
   CREDENTIAL_HEADER_OVERLAYS
 } from "../../utils/assets";
+import { CredentialType } from "../../utils/itwMocksUtils";
+import { ItWalletThemes } from "../../utils/theme";
 
 export type CredentialCardBackground<L extends number = 1 | 2 | 3 | 4 | 5> = {
   /**
@@ -156,27 +156,25 @@ export const generateCredentialCardConfig = (
   color: string,
   colorScheme?: ColorSchemeName
 ): CredentialCardConfig => {
-  const isLight = colorScheme !== "dark";
-  const fallbackColor = [30, 1, 95]; // #F2F1F0
-  const baseColor = hexToHsb(color) || fallbackColor;
-
-  const backgroundColor = hsbToHex(
-    baseColor[0],
-    isLight ? 10 : 95,
-    isLight ? 100 : 15
-  );
-  const borderColor = hsbToHex(
-    baseColor[0],
-    isLight ? 25 : 10,
-    isLight ? 60 : 40
-  );
-  const titleColor = hsbToHex(
-    baseColor[0],
-    isLight ? 15 : 10,
-    isLight ? 20 : 80
-  );
-
   const theme = ItWalletThemes[colorScheme || "light"];
+  const isLight = colorScheme !== "dark";
+
+  const baseColor = Color(color).hsv();
+
+  const backgroundColor = Color.hsv(
+    baseColor.hue(),
+    ...(isLight ? [10, 100] : [95, 15])
+  ).hex();
+
+  const borderColor = Color.hsv(
+    baseColor.hue(),
+    ...(isLight ? [25, 60] : [10, 40])
+  ).hex();
+
+  const titleColor = Color.hsv(
+    baseColor.hue(),
+    ...(isLight ? [15, 20] : [10, 80])
+  ).hex();
 
   return {
     color,

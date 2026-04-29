@@ -1,11 +1,11 @@
 import { IOColors } from "@pagopa/io-app-design-system";
+import Color from "color";
 import { useMemo } from "react";
 import { StatusBarStyle } from "react-native";
 import { HeaderSecondLevelHookProps } from "../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../store/hooks";
-import { getLuminance } from "../../../../utils/color";
-import { getCredentialCardConfig } from "../components/ItwCredentialCard/config";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { getCredentialCardConfig } from "../components/ItwCredentialCard/config";
 import { getCredentialNameFromType } from "./itwCredentialUtils";
 import { CredentialType } from "./itwMocksUtils";
 
@@ -79,12 +79,12 @@ export const getThemeColorByCredentialType = (
         }
       : getLegacyThemeColorByCredentialType(credentialType);
 
-  const isDarker = getLuminance(colors.backgroundColor) < 0.5;
+  const isDark = Color(colors.backgroundColor).isDark();
 
   return {
     ...colors,
-    statusBarStyle: isDarker ? "light-content" : "dark-content",
-    variant: isDarker ? "contrast" : "neutral"
+    statusBarStyle: isDark ? "light-content" : "dark-content",
+    variant: isDark ? "contrast" : "neutral"
   };
 };
 

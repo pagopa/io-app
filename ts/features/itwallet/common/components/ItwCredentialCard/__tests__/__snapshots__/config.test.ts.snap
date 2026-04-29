@@ -8,9 +8,9 @@ exports[`generateCredentialCardConfig when color scheme is [dark] should match s
       "#1A1A1A",
     ],
   },
-  "borderColor": "#5c6166",
+  "borderColor": "#5C6166",
   "color": "#003366",
-  "titleColor": "#b8c2cc",
+  "titleColor": "#B8C2CC",
 }
 `;
 
@@ -22,9 +22,9 @@ exports[`generateCredentialCardConfig when color scheme is [dark] should match s
       "#1A1A1A",
     ],
   },
-  "borderColor": "#5c6166",
+  "borderColor": "#5C6166",
   "color": "#7AC1FA",
-  "titleColor": "#b8c3cc",
+  "titleColor": "#B8C3CC",
 }
 `;
 
@@ -36,9 +36,9 @@ exports[`generateCredentialCardConfig when color scheme is [dark] should match s
       "#1A1A1A",
     ],
   },
-  "borderColor": "#66655c",
+  "borderColor": "#66655C",
   "color": "#545028",
-  "titleColor": "#cccab8",
+  "titleColor": "#CCCAB8",
 }
 `;
 
@@ -46,13 +46,13 @@ exports[`generateCredentialCardConfig when color scheme is [dark] should match s
 {
   "background": {
     "colors": [
-      "#1a0226",
+      "#1A0226",
       "#1A1A1A",
     ],
   },
-  "borderColor": "#635c66",
+  "borderColor": "#635C66",
   "color": "#662088",
-  "titleColor": "#c5b8cc",
+  "titleColor": "#C5B8CC",
 }
 `;
 
@@ -64,9 +64,9 @@ exports[`generateCredentialCardConfig when color scheme is [dark] should match s
       "#1A1A1A",
     ],
   },
-  "borderColor": "#5c5d66",
+  "borderColor": "#5C5D66",
   "color": "#CDD2FC",
-  "titleColor": "#b8bacc",
+  "titleColor": "#B8BACC",
 }
 `;
 
@@ -74,13 +74,13 @@ exports[`generateCredentialCardConfig when color scheme is [dark] should match s
 {
   "background": {
     "colors": [
-      "#1f2602",
+      "#1F2602",
       "#1A1A1A",
     ],
   },
-  "borderColor": "#64665c",
+  "borderColor": "#64665C",
   "color": "#E9FE96",
-  "titleColor": "#c8ccb8",
+  "titleColor": "#C8CCB8",
 }
 `;
 
@@ -92,9 +92,9 @@ exports[`generateCredentialCardConfig when color scheme is [dark] should match s
       "#1A1A1A",
     ],
   },
-  "borderColor": "#665e5c",
+  "borderColor": "#665E5C",
   "color": "#FF4920",
-  "titleColor": "#ccbbb8",
+  "titleColor": "#CCBBB8",
 }
 `;
 
@@ -106,9 +106,9 @@ exports[`generateCredentialCardConfig when color scheme is [dark] should match s
       "#1A1A1A",
     ],
   },
-  "borderColor": "#66615c",
+  "borderColor": "#66615C",
   "color": "#FFB357",
-  "titleColor": "#ccc3b8",
+  "titleColor": "#CCC3B8",
 }
 `;
 
@@ -116,13 +116,13 @@ exports[`generateCredentialCardConfig when color scheme is [light] should match 
 {
   "background": {
     "colors": [
-      "#e6f2ff",
+      "#E6F2FF",
       "#F2F2F2",
     ],
   },
   "borderColor": "#738699",
   "color": "#003366",
-  "titleColor": "#2b2f33",
+  "titleColor": "#2B2F33",
 }
 `;
 
@@ -130,13 +130,13 @@ exports[`generateCredentialCardConfig when color scheme is [light] should match 
 {
   "background": {
     "colors": [
-      "#e6f4ff",
+      "#E6F4FF",
       "#F2F2F2",
     ],
   },
   "borderColor": "#738899",
   "color": "#7AC1FA",
-  "titleColor": "#2b3033",
+  "titleColor": "#2B3033",
 }
 `;
 
@@ -144,13 +144,13 @@ exports[`generateCredentialCardConfig when color scheme is [light] should match 
 {
   "background": {
     "colors": [
-      "#fffde6",
+      "#FFFDE6",
       "#F2F2F2",
     ],
   },
   "borderColor": "#999673",
   "color": "#545028",
-  "titleColor": "#33322b",
+  "titleColor": "#33322B",
 }
 `;
 
@@ -158,13 +158,13 @@ exports[`generateCredentialCardConfig when color scheme is [light] should match 
 {
   "background": {
     "colors": [
-      "#f7e6ff",
+      "#F7E6FF",
       "#F2F2F2",
     ],
   },
-  "borderColor": "#8c7399",
+  "borderColor": "#8C7399",
   "color": "#662088",
-  "titleColor": "#302b33",
+  "titleColor": "#302B33",
 }
 `;
 
@@ -172,13 +172,13 @@ exports[`generateCredentialCardConfig when color scheme is [light] should match 
 {
   "background": {
     "colors": [
-      "#e6e8ff",
+      "#E6E8FF",
       "#F2F2F2",
     ],
   },
   "borderColor": "#737799",
   "color": "#CDD2FC",
-  "titleColor": "#2b2c33",
+  "titleColor": "#2B2C33",
 }
 `;
 
@@ -186,13 +186,13 @@ exports[`generateCredentialCardConfig when color scheme is [light] should match 
 {
   "background": {
     "colors": [
-      "#faffe6",
+      "#FAFFE6",
       "#F2F2F2",
     ],
   },
   "borderColor": "#919973",
   "color": "#E9FE96",
-  "titleColor": "#31332b",
+  "titleColor": "#31332B",
 }
 `;
 
@@ -200,13 +200,13 @@ exports[`generateCredentialCardConfig when color scheme is [light] should match 
 {
   "background": {
     "colors": [
-      "#ffeae6",
+      "#FFEAE6",
       "#F2F2F2",
     ],
   },
-  "borderColor": "#997a73",
+  "borderColor": "#997A73",
   "color": "#FF4920",
-  "titleColor": "#332d2b",
+  "titleColor": "#332D2B",
 }
 `;
 
@@ -214,13 +214,13 @@ exports[`generateCredentialCardConfig when color scheme is [light] should match 
 {
   "background": {
     "colors": [
-      "#fff4e6",
+      "#FFF3E6",
       "#F2F2F2",
     ],
   },
   "borderColor": "#998873",
   "color": "#FFB357",
-  "titleColor": "#33302b",
+  "titleColor": "#33302B",
 }
 `;
 
@@ -228,13 +228,13 @@ exports[`generateCredentialCardConfig when color scheme is [undefined] should ma
 {
   "background": {
     "colors": [
-      "#e6f2ff",
+      "#E6F2FF",
       "#F2F2F2",
     ],
   },
   "borderColor": "#738699",
   "color": "#003366",
-  "titleColor": "#2b2f33",
+  "titleColor": "#2B2F33",
 }
 `;
 
@@ -242,13 +242,13 @@ exports[`generateCredentialCardConfig when color scheme is [undefined] should ma
 {
   "background": {
     "colors": [
-      "#e6f4ff",
+      "#E6F4FF",
       "#F2F2F2",
     ],
   },
   "borderColor": "#738899",
   "color": "#7AC1FA",
-  "titleColor": "#2b3033",
+  "titleColor": "#2B3033",
 }
 `;
 
@@ -256,13 +256,13 @@ exports[`generateCredentialCardConfig when color scheme is [undefined] should ma
 {
   "background": {
     "colors": [
-      "#fffde6",
+      "#FFFDE6",
       "#F2F2F2",
     ],
   },
   "borderColor": "#999673",
   "color": "#545028",
-  "titleColor": "#33322b",
+  "titleColor": "#33322B",
 }
 `;
 
@@ -270,13 +270,13 @@ exports[`generateCredentialCardConfig when color scheme is [undefined] should ma
 {
   "background": {
     "colors": [
-      "#f7e6ff",
+      "#F7E6FF",
       "#F2F2F2",
     ],
   },
-  "borderColor": "#8c7399",
+  "borderColor": "#8C7399",
   "color": "#662088",
-  "titleColor": "#302b33",
+  "titleColor": "#302B33",
 }
 `;
 
@@ -284,13 +284,13 @@ exports[`generateCredentialCardConfig when color scheme is [undefined] should ma
 {
   "background": {
     "colors": [
-      "#e6e8ff",
+      "#E6E8FF",
       "#F2F2F2",
     ],
   },
   "borderColor": "#737799",
   "color": "#CDD2FC",
-  "titleColor": "#2b2c33",
+  "titleColor": "#2B2C33",
 }
 `;
 
@@ -298,13 +298,13 @@ exports[`generateCredentialCardConfig when color scheme is [undefined] should ma
 {
   "background": {
     "colors": [
-      "#faffe6",
+      "#FAFFE6",
       "#F2F2F2",
     ],
   },
   "borderColor": "#919973",
   "color": "#E9FE96",
-  "titleColor": "#31332b",
+  "titleColor": "#31332B",
 }
 `;
 
@@ -312,13 +312,13 @@ exports[`generateCredentialCardConfig when color scheme is [undefined] should ma
 {
   "background": {
     "colors": [
-      "#ffeae6",
+      "#FFEAE6",
       "#F2F2F2",
     ],
   },
-  "borderColor": "#997a73",
+  "borderColor": "#997A73",
   "color": "#FF4920",
-  "titleColor": "#332d2b",
+  "titleColor": "#332D2B",
 }
 `;
 
@@ -326,13 +326,13 @@ exports[`generateCredentialCardConfig when color scheme is [undefined] should ma
 {
   "background": {
     "colors": [
-      "#fff4e6",
+      "#FFF3E6",
       "#F2F2F2",
     ],
   },
   "borderColor": "#998873",
   "color": "#FFB357",
-  "titleColor": "#33302b",
+  "titleColor": "#33302B",
 }
 `;
 
@@ -485,7 +485,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [dark] should match 
       "#1A1A1A",
     ],
   },
-  "borderColor": "#5c5d66",
+  "borderColor": "#5C5D66",
   "color": "#CDD2FC",
   "headerOverlay": {
     "testUri": "../../../img/features/itWallet/cards/overlay/default/7.png",
@@ -495,7 +495,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [dark] should match 
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#b8bacc",
+  "titleColor": "#B8BACC",
 }
 `;
 
@@ -507,7 +507,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [dark] should match 
       "#1A1A1A",
     ],
   },
-  "borderColor": "#5c6166",
+  "borderColor": "#5C6166",
   "color": "#003366",
   "headerOverlay": {
     "testUri": "../../../img/features/itWallet/cards/overlay/default/5.png",
@@ -517,7 +517,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [dark] should match 
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#b8c2cc",
+  "titleColor": "#B8C2CC",
 }
 `;
 
@@ -529,7 +529,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [dark] should match 
       "#1A1A1A",
     ],
   },
-  "borderColor": "#66615c",
+  "borderColor": "#66615C",
   "color": "#FFB357",
   "headerOverlay": {
     "testUri": "../../../img/features/itWallet/cards/overlay/default/4.png",
@@ -539,7 +539,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [dark] should match 
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#ccc3b8",
+  "titleColor": "#CCC3B8",
 }
 `;
 
@@ -551,7 +551,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [dark] should match 
       "#1A1A1A",
     ],
   },
-  "borderColor": "#5c6166",
+  "borderColor": "#5C6166",
   "color": "#003366",
   "headerOverlay": {
     "testUri": "../../../img/features/itWallet/cards/overlay/default/6.png",
@@ -561,7 +561,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [dark] should match 
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#b8c2cc",
+  "titleColor": "#B8C2CC",
 }
 `;
 
@@ -573,7 +573,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [dark] should match 
       "#1A1A1A",
     ],
   },
-  "borderColor": "#5c6166",
+  "borderColor": "#5C6166",
   "color": "#7AC1FA",
   "headerOverlay": {
     "testUri": "../../../img/features/itWallet/cards/overlay/default/5.png",
@@ -583,7 +583,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [dark] should match 
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#b8c3cc",
+  "titleColor": "#B8C3CC",
 }
 `;
 
@@ -595,7 +595,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [dark] should match 
       "#1A1A1A",
     ],
   },
-  "borderColor": "#66615c",
+  "borderColor": "#66615C",
   "color": "#FFB357",
   "headerOverlay": {
     "testUri": "../../../img/features/itWallet/cards/overlay/default/7.png",
@@ -605,7 +605,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [dark] should match 
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#ccc3b8",
+  "titleColor": "#CCC3B8",
 }
 `;
 
@@ -617,7 +617,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [dark] should match 
       "#1A1A1A",
     ],
   },
-  "borderColor": "#5c5d66",
+  "borderColor": "#5C5D66",
   "color": "#CDD2FC",
   "headerOverlay": {
     "testUri": "../../../img/features/itWallet/cards/overlay/default/8.png",
@@ -627,7 +627,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [dark] should match 
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#b8bacc",
+  "titleColor": "#B8BACC",
 }
 `;
 
@@ -639,7 +639,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [dark] should match 
       "#1A1A1A",
     ],
   },
-  "borderColor": "#5c6166",
+  "borderColor": "#5C6166",
   "color": "#7AC1FA",
   "headerOverlay": {
     "testUri": "../../../img/features/itWallet/cards/overlay/default/3.png",
@@ -649,7 +649,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [dark] should match 
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#b8c3cc",
+  "titleColor": "#B8C3CC",
 }
 `;
 
@@ -661,7 +661,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [dark] should match 
       "#1A1A1A",
     ],
   },
-  "borderColor": "#66615c",
+  "borderColor": "#66615C",
   "color": "#FFB357",
   "headerOverlay": {
     "testUri": "../../../img/features/itWallet/cards/overlay/default/5.png",
@@ -671,7 +671,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [dark] should match 
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#ccc3b8",
+  "titleColor": "#CCC3B8",
 }
 `;
 
@@ -683,7 +683,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [dark] should match 
       "#1A1A1A",
     ],
   },
-  "borderColor": "#5c6166",
+  "borderColor": "#5C6166",
   "color": "#7AC1FA",
   "headerOverlay": {
     "testUri": "../../../img/features/itWallet/cards/overlay/default/5.png",
@@ -693,7 +693,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [dark] should match 
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#b8c3cc",
+  "titleColor": "#B8C3CC",
 }
 `;
 
@@ -705,7 +705,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [dark] should match 
       "#1A1A1A",
     ],
   },
-  "borderColor": "#66615c",
+  "borderColor": "#66615C",
   "color": "#FFB357",
   "headerOverlay": {
     "testUri": "../../../img/features/itWallet/cards/overlay/default/8.png",
@@ -715,7 +715,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [dark] should match 
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#ccc3b8",
+  "titleColor": "#CCC3B8",
 }
 `;
 
@@ -727,7 +727,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [dark] should match 
       "#1A1A1A",
     ],
   },
-  "borderColor": "#5c6166",
+  "borderColor": "#5C6166",
   "color": "#7AC1FA",
   "headerOverlay": {
     "testUri": "../../../img/features/itWallet/cards/overlay/default/8.png",
@@ -737,7 +737,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [dark] should match 
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#b8c3cc",
+  "titleColor": "#B8C3CC",
 }
 `;
 
@@ -749,7 +749,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [dark] should match 
       "#1A1A1A",
     ],
   },
-  "borderColor": "#5c6166",
+  "borderColor": "#5C6166",
   "color": "#003366",
   "headerOverlay": {
     "testUri": "../../../img/features/itWallet/cards/overlay/default/3.png",
@@ -759,7 +759,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [dark] should match 
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#b8c2cc",
+  "titleColor": "#B8C2CC",
 }
 `;
 
@@ -771,7 +771,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [dark] should match 
       "#1A1A1A",
     ],
   },
-  "borderColor": "#5c6166",
+  "borderColor": "#5C6166",
   "color": "#003366",
   "headerOverlay": {
     "testUri": "../../../img/features/itWallet/cards/overlay/default/7.png",
@@ -781,7 +781,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [dark] should match 
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#b8c2cc",
+  "titleColor": "#B8C2CC",
 }
 `;
 
@@ -793,7 +793,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [dark] should match 
       "#1A1A1A",
     ],
   },
-  "borderColor": "#66615c",
+  "borderColor": "#66615C",
   "color": "#FFB357",
   "headerOverlay": {
     "testUri": "../../../img/features/itWallet/cards/overlay/default/4.png",
@@ -803,7 +803,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [dark] should match 
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#ccc3b8",
+  "titleColor": "#CCC3B8",
 }
 `;
 
@@ -815,7 +815,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [dark] should match 
       "#1A1A1A",
     ],
   },
-  "borderColor": "#5c5d66",
+  "borderColor": "#5C5D66",
   "color": "#CDD2FC",
   "headerOverlay": {
     "testUri": "../../../img/features/itWallet/cards/overlay/default/5.png",
@@ -825,7 +825,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [dark] should match 
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#b8bacc",
+  "titleColor": "#B8BACC",
 }
 `;
 
@@ -833,7 +833,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [light] should match
 {
   "background": {
     "colors": [
-      "#e6e8ff",
+      "#E6E8FF",
       "#F2F2F2",
     ],
   },
@@ -847,7 +847,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [light] should match
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#2b2c33",
+  "titleColor": "#2B2C33",
 }
 `;
 
@@ -855,7 +855,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [light] should match
 {
   "background": {
     "colors": [
-      "#e6f2ff",
+      "#E6F2FF",
       "#F2F2F2",
     ],
   },
@@ -869,7 +869,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [light] should match
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#2b2f33",
+  "titleColor": "#2B2F33",
 }
 `;
 
@@ -877,7 +877,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [light] should match
 {
   "background": {
     "colors": [
-      "#fff4e6",
+      "#FFF3E6",
       "#F2F2F2",
     ],
   },
@@ -891,7 +891,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [light] should match
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#33302b",
+  "titleColor": "#33302B",
 }
 `;
 
@@ -899,7 +899,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [light] should match
 {
   "background": {
     "colors": [
-      "#e6f2ff",
+      "#E6F2FF",
       "#F2F2F2",
     ],
   },
@@ -913,7 +913,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [light] should match
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#2b2f33",
+  "titleColor": "#2B2F33",
 }
 `;
 
@@ -921,7 +921,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [light] should match
 {
   "background": {
     "colors": [
-      "#e6f4ff",
+      "#E6F4FF",
       "#F2F2F2",
     ],
   },
@@ -935,7 +935,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [light] should match
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#2b3033",
+  "titleColor": "#2B3033",
 }
 `;
 
@@ -943,7 +943,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [light] should match
 {
   "background": {
     "colors": [
-      "#fff4e6",
+      "#FFF3E6",
       "#F2F2F2",
     ],
   },
@@ -957,7 +957,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [light] should match
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#33302b",
+  "titleColor": "#33302B",
 }
 `;
 
@@ -965,7 +965,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [light] should match
 {
   "background": {
     "colors": [
-      "#e6e8ff",
+      "#E6E8FF",
       "#F2F2F2",
     ],
   },
@@ -979,7 +979,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [light] should match
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#2b2c33",
+  "titleColor": "#2B2C33",
 }
 `;
 
@@ -987,7 +987,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [light] should match
 {
   "background": {
     "colors": [
-      "#e6f4ff",
+      "#E6F4FF",
       "#F2F2F2",
     ],
   },
@@ -1001,7 +1001,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [light] should match
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#2b3033",
+  "titleColor": "#2B3033",
 }
 `;
 
@@ -1009,7 +1009,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [light] should match
 {
   "background": {
     "colors": [
-      "#fff4e6",
+      "#FFF3E6",
       "#F2F2F2",
     ],
   },
@@ -1023,7 +1023,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [light] should match
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#33302b",
+  "titleColor": "#33302B",
 }
 `;
 
@@ -1031,7 +1031,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [light] should match
 {
   "background": {
     "colors": [
-      "#e6f4ff",
+      "#E6F4FF",
       "#F2F2F2",
     ],
   },
@@ -1045,7 +1045,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [light] should match
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#2b3033",
+  "titleColor": "#2B3033",
 }
 `;
 
@@ -1053,7 +1053,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [light] should match
 {
   "background": {
     "colors": [
-      "#fff4e6",
+      "#FFF3E6",
       "#F2F2F2",
     ],
   },
@@ -1067,7 +1067,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [light] should match
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#33302b",
+  "titleColor": "#33302B",
 }
 `;
 
@@ -1075,7 +1075,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [light] should match
 {
   "background": {
     "colors": [
-      "#e6f4ff",
+      "#E6F4FF",
       "#F2F2F2",
     ],
   },
@@ -1089,7 +1089,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [light] should match
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#2b3033",
+  "titleColor": "#2B3033",
 }
 `;
 
@@ -1097,7 +1097,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [light] should match
 {
   "background": {
     "colors": [
-      "#e6f2ff",
+      "#E6F2FF",
       "#F2F2F2",
     ],
   },
@@ -1111,7 +1111,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [light] should match
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#2b2f33",
+  "titleColor": "#2B2F33",
 }
 `;
 
@@ -1119,7 +1119,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [light] should match
 {
   "background": {
     "colors": [
-      "#e6f2ff",
+      "#E6F2FF",
       "#F2F2F2",
     ],
   },
@@ -1133,7 +1133,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [light] should match
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#2b2f33",
+  "titleColor": "#2B2F33",
 }
 `;
 
@@ -1141,7 +1141,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [light] should match
 {
   "background": {
     "colors": [
-      "#fff4e6",
+      "#FFF3E6",
       "#F2F2F2",
     ],
   },
@@ -1155,7 +1155,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [light] should match
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#33302b",
+  "titleColor": "#33302B",
 }
 `;
 
@@ -1163,7 +1163,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [light] should match
 {
   "background": {
     "colors": [
-      "#e6e8ff",
+      "#E6E8FF",
       "#F2F2F2",
     ],
   },
@@ -1177,7 +1177,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [light] should match
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#2b2c33",
+  "titleColor": "#2B2C33",
 }
 `;
 
@@ -1185,7 +1185,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [undefined] should m
 {
   "background": {
     "colors": [
-      "#e6e8ff",
+      "#E6E8FF",
       "#F2F2F2",
     ],
   },
@@ -1199,7 +1199,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [undefined] should m
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#2b2c33",
+  "titleColor": "#2B2C33",
 }
 `;
 
@@ -1207,7 +1207,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [undefined] should m
 {
   "background": {
     "colors": [
-      "#e6f2ff",
+      "#E6F2FF",
       "#F2F2F2",
     ],
   },
@@ -1221,7 +1221,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [undefined] should m
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#2b2f33",
+  "titleColor": "#2B2F33",
 }
 `;
 
@@ -1229,7 +1229,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [undefined] should m
 {
   "background": {
     "colors": [
-      "#fff4e6",
+      "#FFF3E6",
       "#F2F2F2",
     ],
   },
@@ -1243,7 +1243,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [undefined] should m
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#33302b",
+  "titleColor": "#33302B",
 }
 `;
 
@@ -1251,7 +1251,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [undefined] should m
 {
   "background": {
     "colors": [
-      "#e6f2ff",
+      "#E6F2FF",
       "#F2F2F2",
     ],
   },
@@ -1265,7 +1265,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [undefined] should m
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#2b2f33",
+  "titleColor": "#2B2F33",
 }
 `;
 
@@ -1273,7 +1273,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [undefined] should m
 {
   "background": {
     "colors": [
-      "#e6f4ff",
+      "#E6F4FF",
       "#F2F2F2",
     ],
   },
@@ -1287,7 +1287,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [undefined] should m
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#2b3033",
+  "titleColor": "#2B3033",
 }
 `;
 
@@ -1295,7 +1295,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [undefined] should m
 {
   "background": {
     "colors": [
-      "#fff4e6",
+      "#FFF3E6",
       "#F2F2F2",
     ],
   },
@@ -1309,7 +1309,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [undefined] should m
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#33302b",
+  "titleColor": "#33302B",
 }
 `;
 
@@ -1317,7 +1317,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [undefined] should m
 {
   "background": {
     "colors": [
-      "#e6e8ff",
+      "#E6E8FF",
       "#F2F2F2",
     ],
   },
@@ -1331,7 +1331,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [undefined] should m
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#2b2c33",
+  "titleColor": "#2B2C33",
 }
 `;
 
@@ -1339,7 +1339,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [undefined] should m
 {
   "background": {
     "colors": [
-      "#e6f4ff",
+      "#E6F4FF",
       "#F2F2F2",
     ],
   },
@@ -1353,7 +1353,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [undefined] should m
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#2b3033",
+  "titleColor": "#2B3033",
 }
 `;
 
@@ -1361,7 +1361,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [undefined] should m
 {
   "background": {
     "colors": [
-      "#fff4e6",
+      "#FFF3E6",
       "#F2F2F2",
     ],
   },
@@ -1375,7 +1375,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [undefined] should m
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#33302b",
+  "titleColor": "#33302B",
 }
 `;
 
@@ -1383,7 +1383,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [undefined] should m
 {
   "background": {
     "colors": [
-      "#e6f4ff",
+      "#E6F4FF",
       "#F2F2F2",
     ],
   },
@@ -1397,7 +1397,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [undefined] should m
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#2b3033",
+  "titleColor": "#2B3033",
 }
 `;
 
@@ -1405,7 +1405,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [undefined] should m
 {
   "background": {
     "colors": [
-      "#fff4e6",
+      "#FFF3E6",
       "#F2F2F2",
     ],
   },
@@ -1419,7 +1419,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [undefined] should m
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#33302b",
+  "titleColor": "#33302B",
 }
 `;
 
@@ -1427,7 +1427,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [undefined] should m
 {
   "background": {
     "colors": [
-      "#e6f4ff",
+      "#E6F4FF",
       "#F2F2F2",
     ],
   },
@@ -1441,7 +1441,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [undefined] should m
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#2b3033",
+  "titleColor": "#2B3033",
 }
 `;
 
@@ -1449,7 +1449,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [undefined] should m
 {
   "background": {
     "colors": [
-      "#e6f2ff",
+      "#E6F2FF",
       "#F2F2F2",
     ],
   },
@@ -1463,7 +1463,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [undefined] should m
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#2b2f33",
+  "titleColor": "#2B2F33",
 }
 `;
 
@@ -1471,7 +1471,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [undefined] should m
 {
   "background": {
     "colors": [
-      "#e6f2ff",
+      "#E6F2FF",
       "#F2F2F2",
     ],
   },
@@ -1485,7 +1485,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [undefined] should m
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#2b2f33",
+  "titleColor": "#2B2F33",
 }
 `;
 
@@ -1493,7 +1493,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [undefined] should m
 {
   "background": {
     "colors": [
-      "#fff4e6",
+      "#FFF3E6",
       "#F2F2F2",
     ],
   },
@@ -1507,7 +1507,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [undefined] should m
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#33302b",
+  "titleColor": "#33302B",
 }
 `;
 
@@ -1515,7 +1515,7 @@ exports[`getRandomCredentialCardConfig when color scheme is [undefined] should m
 {
   "background": {
     "colors": [
-      "#e6e8ff",
+      "#E6E8FF",
       "#F2F2F2",
     ],
   },
@@ -1529,6 +1529,6 @@ exports[`getRandomCredentialCardConfig when color scheme is [undefined] should m
   },
   "overlayBlend": true,
   "showCornerOverlay": true,
-  "titleColor": "#2b2c33",
+  "titleColor": "#2B2C33",
 }
 `;
