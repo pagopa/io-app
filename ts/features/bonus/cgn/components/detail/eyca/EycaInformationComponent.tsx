@@ -1,6 +1,10 @@
-import { IOButton, IOToast, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  IOButton,
+  IOMarkdownLite,
+  IOToast,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import IOMarkdown from "../../../../../../components/IOMarkdown";
 import { useIOBottomSheetModal } from "../../../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../../../utils/url";
 import { EYCA_WEBSITE_BASE_URL } from "../../../utils/constants";
@@ -11,7 +15,9 @@ import { EYCA_WEBSITE_BASE_URL } from "../../../utils/constants";
  */
 const EycaInformationComponent: React.FunctionComponent = () => (
   <>
-    <IOMarkdown content={I18n.t("bonus.cgn.detail.status.eycaDescription")} />
+    <IOMarkdownLite
+      content={I18n.t("bonus.cgn.detail.status.eycaDescription")}
+    />
     <VSpacer size={16} />
     <IOButton
       variant="outline"
