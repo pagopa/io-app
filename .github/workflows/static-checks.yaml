@@ -39,9 +39,6 @@ jobs:
     name: Unit tests
     runs-on: ubuntu-latest
     needs: static-checks
-    strategy:
-      matrix:
-        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     if: needs.static-checks.outputs.should_test == 'true'
     outputs:
       tests_ran: ${{ steps.run-test.outcome == 'success' }}
