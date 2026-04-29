@@ -3,28 +3,28 @@ import { useFocusEffect } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useCallback } from "react";
-import IOMarkdown from "../../../../../components/IOMarkdown";
-import { IOScrollView } from "../../../../../components/ui/IOScrollView";
-import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import IOMarkdown from "../../../../components/IOMarkdown";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import {
   IOStackNavigationRouteProps,
   useIONavigation
-} from "../../../../../navigation/params/AppParamsList";
-import { useIOSelector } from "../../../../../store/hooks";
+} from "../../../../navigation/params/AppParamsList";
+import { useIOSelector } from "../../../../store/hooks";
 import {
   StartupStatusEnum,
   isStartupLoaded
-} from "../../../../../store/reducers/startup";
-import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation";
-import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils";
-import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
+} from "../../../../store/reducers/startup";
+import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
+import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
+import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
   selectCredentialIntroContentOption,
   selectCredentialTypeOption,
   selectResolvedCredentialOfferOption
-} from "../../../machine/credential/selectors";
-import { ItwParamsList } from "../../../navigation/ItwParamsList";
-import { ItwRemoteLoadingScreen } from "../../../presentation/remote/components/ItwRemoteLoadingScreen";
+} from "../../machine/credential/selectors";
+import { ItwParamsList } from "../../navigation/ItwParamsList";
+import { ItwRemoteLoadingScreen } from "../../presentation/remote/components/ItwRemoteLoadingScreen";
 
 export type ItwIssuanceCredentialOfferScreenNavigationParams = {
   itwCredentialOfferUri: string;

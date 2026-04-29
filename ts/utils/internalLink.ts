@@ -4,7 +4,7 @@
 import * as A from "fp-ts/lib/Array";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { isPotentialCredentialOfferInvocation } from "../features/itwallet/issuance/offer/utils";
+import { isPotentialCredentialOfferInvocation } from "../features/itwallet/offer/utils";
 import { fciEnabled } from "../config";
 import CGN_ROUTES from "../features/bonus/cgn/navigation/routes";
 import { FCI_ROUTES } from "../features/fci/navigation/routes";

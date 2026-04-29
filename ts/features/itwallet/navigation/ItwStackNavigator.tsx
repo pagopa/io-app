@@ -60,7 +60,7 @@ import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredential
 import { ItwOfflineWalletScreen } from "../wallet/screens/ItwOfflineWalletScreen";
 import { ItwCardOnboardingL3Screen } from "../onboarding/screens/ItwCardOnboardingL3Screen.tsx";
 import { ItwCardOnboardingL2Screen } from "../onboarding/screens/ItwCardOnboardingL2Screen.tsx";
-import { ItwIssuanceCredentialOfferIntroScreen } from "../issuance/offer/screens/ItwIssuanceCredentialOfferIntro";
+import { ItwIssuanceCredentialOfferIntroScreen } from "../offer/screens/ItwIssuanceCredentialOfferIntro.tsx";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
