@@ -2,6 +2,7 @@ import { MixPanelCredential } from "../../../analytics/utils/types";
 
 export type ItwProximityFailure = {
   reason: unknown;
+  origin?: string;
   type: string;
 };
 

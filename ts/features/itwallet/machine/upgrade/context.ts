@@ -1,6 +1,8 @@
 import {
+  CredentialAccessToken,
   CredentialBundle,
   CredentialMetadata,
+  IssuerConfiguration,
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
 import { EidIssuanceMode } from "../eid/context";
@@ -33,6 +35,20 @@ export type Context = {
    * - "reissuance": reissuing the eID on Documenti su IO, reissuing also owned credentials.
    */
   issuanceMode: EidIssuanceMode;
+  /**
+   * The integrity key tag that will be used when requesting the Wallet Unit Attestation.
+   */
+  integrityKeyTag: string | undefined;
+  /**
+   * Credential Issuer configuration.
+   */
+  issuerConf: IssuerConfiguration | undefined;
+  /**
+   * The access token obtained from the Issuer. If the session with the Wallet Provider expires
+   * before requesting the credential, this token is used to retry the request.
+   */
+  accessToken: CredentialAccessToken | undefined;
+  clientId: string | undefined;
 };
 
 export const getInitialContext = (input: Input): Context => ({
@@ -41,5 +57,9 @@ export const getInitialContext = (input: Input): Context => ({
   credentials: input.credentials,
   credentialIndex: -1,
   failedCredentials: [],
-  issuanceMode: input.issuanceMode
+  issuanceMode: input.issuanceMode,
+  integrityKeyTag: undefined,
+  issuerConf: undefined,
+  accessToken: undefined,
+  clientId: undefined
 });

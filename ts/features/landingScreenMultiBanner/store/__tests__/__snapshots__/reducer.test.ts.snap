@@ -1,7 +1,8 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`landingScreenBannersReducer should match snapshot: undefined_no_action 1`] = `
 {
+  "CGN_ENGAGEMENT_BANNER": true,
   "ITW_DISCOVERY": true,
   "IT_WALLET_DISCOVERY": true,
   "LV_EXPIRATION_REMINDER": true,

@@ -1,9 +1,14 @@
+import { fireEvent } from "@testing-library/react-native";
 import MockDate from "mockdate";
+import I18n from "i18next";
 import { createStore } from "redux";
+import { useIONavigation } from "../../../../../../navigation/params/AppParamsList";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import * as bottomSheet from "../../../../../../utils/hooks/bottomSheet.tsx";
+import * as itwAnalytics from "../../../../analytics";
 import {
   CredentialMetadata,
   ItwCredentialStatus
@@ -16,6 +21,24 @@ import {
   ItwPresentationCredentialStatusAlert,
   deriveCredentialAlertType
 } from "../ItwPresentationCredentialStatusAlert";
+import * as detailsAnalytics from "../../analytics";
+
+const mockBottomSheetPresent = jest.fn();
+const mockBottomSheetDismiss = jest.fn();
+const mockNavigate = jest.fn();
+
+jest.mock("../../../../../../navigation/params/AppParamsList", () => ({
+  ...jest.requireActual("../../../../../../navigation/params/AppParamsList"),
+  useIONavigation: jest.fn()
+}));
+
+jest.mock("../../analytics");
+
+jest.mock("../../../../analytics");
+
+jest.mock("../../../../../../utils/url", () => ({
+  openWebUrl: jest.fn()
+}));
 
 type TestCaseParams = [
   ItwCredentialStatus,
@@ -27,12 +50,30 @@ const mockMessage = {
   "en-US": { title: "__Expired__", description: "__Expired__" }
 };
 
+const mockBottomSheetModal = () => {
+  jest.spyOn(bottomSheet, "useIOBottomSheetModal").mockImplementation(
+    ({ component }) =>
+      ({
+        present: mockBottomSheetPresent,
+        dismiss: mockBottomSheetDismiss,
+        bottomSheet: component
+      }) as ReturnType<typeof bottomSheet.useIOBottomSheetModal>
+  );
+};
+
 describe("ItwPresentationCredentialStatusAlert", () => {
   beforeAll(() => {
     MockDate.set(new Date(2025, 1, 1));
   });
 
+  beforeEach(() => {
+    (useIONavigation as jest.Mock).mockReturnValue({
+      navigate: mockNavigate
+    });
+  });
+
   afterEach(() => {
+    jest.clearAllMocks();
     jest.restoreAllMocks();
   });
 
@@ -145,6 +186,137 @@ describe("ItwPresentationCredentialStatusAlert", () => {
     expect(component.queryByText("Hai già rinnovato il documento?")).toBeNull();
     expect(component.getByText("Aggiorna il documento digitale")).toBeTruthy();
     expect(component.getByText("Rimuovi dal Portafoglio")).toBeTruthy();
+  });
+
+  it("tracks banner tap and bottom sheet opening for the expiring status alert", () => {
+    mockBottomSheetModal();
+
+    const selectorMock: ReturnType<
+      typeof selectors.itwCredentialStatusSelector
+    > = {
+      status: "expiring",
+      message: undefined
+    };
+
+    jest
+      .spyOn(selectors, "itwCredentialStatusSelector")
+      .mockImplementation(() => selectorMock);
+
+    const component = renderComponent();
+
+    fireEvent.press(
+      component.getByText(
+        I18n.t("features.itWallet.presentation.alerts.statusAction")
+      )
+    );
+
+    expect(detailsAnalytics.trackItwCredentialTapBanner).toHaveBeenCalledWith({
+      credential: "ITW_PG_V2",
+      credential_status: "expiring"
+    });
+    expect(detailsAnalytics.trackItwCredentialBottomSheet).toHaveBeenCalledWith(
+      {
+        credential: "ITW_PG_V2",
+        credential_status: "expiring"
+      }
+    );
+  });
+
+  it("tracks the informational bottom sheet CTA for the expiring status alert", () => {
+    mockBottomSheetModal();
+
+    const selectorMock: ReturnType<
+      typeof selectors.itwCredentialStatusSelector
+    > = {
+      status: "expiring",
+      message: undefined
+    };
+
+    jest
+      .spyOn(selectors, "itwCredentialStatusSelector")
+      .mockImplementation(() => selectorMock);
+
+    const component = renderComponent();
+
+    fireEvent.press(
+      component.getByText(
+        I18n.t("features.itWallet.presentation.bottomSheets.mDL.expiring.cta")
+      )
+    );
+
+    expect(
+      detailsAnalytics.trackItwCredentialBottomSheetAction
+    ).toHaveBeenCalledWith({
+      credential: "ITW_PG_V2",
+      credential_status: "expiring"
+    });
+  });
+
+  it("tracks renew start from the invalid status update action", () => {
+    mockBottomSheetModal();
+
+    const selectorMock: ReturnType<
+      typeof selectors.itwCredentialStatusSelector
+    > = {
+      status: "invalid",
+      message: mockMessage
+    };
+
+    jest
+      .spyOn(selectors, "itwCredentialStatusSelector")
+      .mockImplementation(() => selectorMock);
+
+    const component = renderComponent({
+      storedStatusAssertion: {
+        credentialStatus: "invalid",
+        errorCode: "credential_invalid"
+      }
+    });
+
+    fireEvent.press(component.getByText("Aggiorna il documento digitale"));
+
+    expect(itwAnalytics.trackCredentialRenewStart).toHaveBeenCalledWith(
+      "ITW_PG_V2",
+      {
+        credential_status: "not_valid",
+        position: "bottom_sheet"
+      }
+    );
+    expect(
+      detailsAnalytics.trackItwCredentialBottomSheetAction
+    ).not.toHaveBeenCalled();
+  });
+
+  it("tracks credential deletion from the issuer error bottom sheet with status and position", () => {
+    mockBottomSheetModal();
+
+    const selectorMock: ReturnType<
+      typeof selectors.itwCredentialStatusSelector
+    > = {
+      status: "invalid",
+      message: mockMessage
+    };
+
+    jest
+      .spyOn(selectors, "itwCredentialStatusSelector")
+      .mockImplementation(() => selectorMock);
+
+    const component = renderComponent({
+      storedStatusAssertion: {
+        credentialStatus: "invalid",
+        errorCode: "credential_invalid"
+      }
+    });
+
+    fireEvent.press(component.getByText("Rimuovi dal Portafoglio"));
+
+    expect(detailsAnalytics.trackItwCredentialDelete).toHaveBeenCalledWith(
+      "ITW_PG_V2",
+      {
+        credential_status: "not_valid",
+        position: "bottom_sheet"
+      }
+    );
   });
 });
 

@@ -98,7 +98,16 @@ export type ItwCredentialMixpanelStatus =
   | "verification_expired"
   | "unknown";
 
-export type ItwStatus = "not_active" | "L2" | "L3";
+export type ItwCredentialActionPosition = "screen" | "bottom_sheet";
+
+export type ItwStatus =
+  | "not_active"
+  | "L2"
+  | "L3"
+  | "L2+ (spid_can)"
+  | "L3 (cieid_can)"
+  | "L3 (cieid_pin)"
+  | "L3 (cie_pin)";
 
 // Assuming that the eID status is the same as the PID status
 export type ItwPIDStatus = Extract<
@@ -141,6 +150,11 @@ export type ItwWalletDataShare = {
 export type ItwCopyListItem = {
   credential: MixPanelCredential;
   item_copied: string;
+};
+
+export type TrackStartCredentialUpgradeProperties = {
+  credential_status: ItwCredentialMixpanelStatus;
+  position: ItwCredentialActionPosition;
 };
 
 export type ItwCredentialInfoDetails = {

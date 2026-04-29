@@ -3,6 +3,7 @@ import {
   and,
   assertEvent,
   assign,
+  fromCallback,
   fromPromise,
   not,
   or,
@@ -12,7 +13,7 @@ import {
 import { assert } from "../../../../utils/assert.ts";
 import { trackItWalletIntroScreen } from "../../analytics";
 import {
-  CredentialBundle,
+  CredentialAccessToken,
   WalletInstanceAttestations
 } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
@@ -20,6 +21,8 @@ import { itwCredentialUpgradeMachine } from "../upgrade/machine.ts";
 import {
   GetWalletAttestationActorParams,
   InitMrtdPoPChallengeActorParams,
+  RequestAccessTokenActorParams,
+  RequestEidActorOutput,
   type RequestEidActorParams,
   StartAuthFlowActorParams,
   StoreEidCredentialActorParams,
@@ -107,10 +110,9 @@ export const itwEidIssuanceMachine = setup({
       identification: {
         mode: "cieId",
         level: "L2"
-      }
+      } as const
     })),
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
-
     /**
      * Save the final redirect url in the machine context for later reuse.
      * This action is the same for the three identification methods.
@@ -185,12 +187,17 @@ export const itwEidIssuanceMachine = setup({
      * PID issuance actors
      */
 
-    requestEid: fromPromise<CredentialBundle, RequestEidActorParams>(
+    requestAccessToken: fromPromise<
+      CredentialAccessToken,
+      RequestAccessTokenActorParams
+    >(notImplemented),
+    requestEid: fromPromise<RequestEidActorOutput, RequestEidActorParams>(
       notImplemented
     ),
     storeEidCredential: fromPromise<void, StoreEidCredentialActorParams>(
       notImplemented
     ),
+    waitForSessionRefresh: fromCallback(notImplemented),
 
     /**
      * Credential upgrade actors
@@ -1074,23 +1081,58 @@ export const itwEidIssuanceMachine = setup({
     },
     Issuance: {
       entry: "navigateToEidPreviewScreen",
-      initial: "RequestingEid",
+      initial: "RequestingAccessToken",
       states: {
+        WaitingForSessionRefresh: {
+          tags: [ItwTags.Loading],
+          invoke: {
+            src: "waitForSessionRefresh"
+          },
+          on: {
+            "session-refresh-complete": { target: "RequestingEid" }
+          }
+        },
+        RequestingAccessToken: {
+          tags: [ItwTags.Loading],
+          invoke: {
+            src: "requestAccessToken",
+            input: ({ context }) => ({
+              authenticationContext: context.authenticationContext,
+              walletInstanceAttestation: context.walletInstanceAttestation?.jwt
+            }),
+            onDone: {
+              target: "RequestingEid",
+              actions: assign(({ event }) => ({ accessToken: event.output }))
+            }
+          }
+        },
         RequestingEid: {
           tags: [ItwTags.Loading],
+          description:
+            "Obtain the EID with the WUA if supported. This state is retried when the session expires, so it must contain the minimal retriable logic to obtain the credential",
           invoke: {
             src: "requestEid",
             input: ({ context }) => ({
               identification: context.identification,
               authenticationContext: context.authenticationContext,
               walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
-              level: context.level
+              level: context.level,
+              integrityKeyTag: context.integrityKeyTag,
+              accessToken: context.accessToken
             }),
             onDone: {
-              actions: assign(({ event }) => ({ eid: event.output })),
+              actions: assign(({ event }) => ({
+                eid: event.output.credential,
+                walletUnitAttestations: event.output.walletUnitAttestations
+              })),
               target: "CheckingIdentityMatch"
             },
             onError: [
+              {
+                guard: "isSessionExpired",
+                actions: "handleSessionExpired",
+                target: "WaitingForSessionRefresh"
+              },
               {
                 actions: "setFailure",
                 target: "#itwEidIssuanceMachine.Failure"
@@ -1135,7 +1177,8 @@ export const itwEidIssuanceMachine = setup({
           invoke: {
             src: "storeEidCredential",
             input: ({ context }) => ({
-              eid: context.eid
+              eid: context.eid,
+              walletUnitAttestations: context.walletUnitAttestations
             }),
             onDone: {
               target: "Completed",

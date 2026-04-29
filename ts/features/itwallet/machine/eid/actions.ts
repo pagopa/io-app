@@ -6,6 +6,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
+import { isRouteInNavigationState } from "../../../../utils/navigation";
 import { checkCurrentSession } from "../../../authentication/common/store/actions";
 import {
   trackItWalletIDMethodSelected,
@@ -19,7 +20,8 @@ import {
   itwClearSimplifiedActivationRequirements,
   itwFreezeSimplifiedActivationRequirements,
   itwSetAuthLevel,
-  itwSetCredentialUpgradeFailed
+  itwSetCredentialUpgradeFailed,
+  itwSetIdentificationMode
 } from "../../common/store/actions/preferences";
 import { itwIsPidReissuingSurveyHiddenSelector } from "../../common/store/selectors/preferences";
 import { itwCredentialsSelector } from "../../credentials/store/selectors";
@@ -237,6 +239,15 @@ export const createEidIssuanceActionsImplementation = (
   closeIssuance: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
+    const isWalletInNavigationState = isRouteInNavigationState(
+      navigation.getState(),
+      ROUTES.WALLET_HOME
+    );
+
+    if (!isWalletInNavigationState && navigation.canGoBack()) {
+      navigation.goBack();
+      return;
+    }
     navigation.reset({
       index: 1,
       routes: [
@@ -285,6 +296,7 @@ export const createEidIssuanceActionsImplementation = (
   resetWalletInstance: () => {
     store.dispatch(itwLifecycleWalletReset());
     store.dispatch(itwSetAuthLevel(undefined));
+    store.dispatch(itwSetIdentificationMode(undefined));
     toast.success(I18n.t("features.itWallet.issuance.credentialResult.toast"));
   },
 
@@ -293,6 +305,7 @@ export const createEidIssuanceActionsImplementation = (
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     // Save the auth level in the preferences
     store.dispatch(itwSetAuthLevel(context.identification?.level));
+    store.dispatch(itwSetIdentificationMode(context.identification?.mode));
   },
 
   freezeSimplifiedActivationRequirements: () => {
