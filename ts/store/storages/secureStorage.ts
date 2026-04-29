@@ -24,7 +24,6 @@ export default function createSecureStorage(): Storage {
       } catch (e) {
         if (!isValueNotFoundError(e)) {
           // VALUE_NOT_FOUND it's a normal case when we try to get a value that is not set
-          // We should send to Sentry only unwanted exceptions
           trackAppCaughtError(
             "createSecureStorage.getItem",
             `SecureStorage threw an exception on ${key}`,
