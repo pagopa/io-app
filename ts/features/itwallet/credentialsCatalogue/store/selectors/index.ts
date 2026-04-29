@@ -122,9 +122,10 @@ export const itwCatalogueTranslationsByLocaleSelector = createSelector(
 );
 
 /**
- * Returns a resolver function that resolves a credential display name
- * using catalogue translations (v1.3.3+) when available,
- * falling back to the catalogue static name, then to the hardcoded i18n string.
+ * Returns a resolver function that resolves a credential display name.
+ * When the credentials catalogue feature flag is enabled, names are resolved using
+ * catalogue translations (v1.3.3+) when available, falling back to the catalogue
+ * static name. When the FF is disabled, always falls back to the hardcoded i18n string.
  *
  * This is the single source of truth for credential name resolution across the app.
  * Use `useItwCredentialName` hook for component use, or call this selector directly
@@ -132,21 +133,30 @@ export const itwCatalogueTranslationsByLocaleSelector = createSelector(
  */
 export const itwCredentialNameResolverSelector = createSelector(
   [
+    itwIsCatalogueEnabledForCredentialsList,
     itwCredentialsCatalogueByTypesSelector,
     itwCatalogueTranslationsByLocaleSelector,
     itwLifecycleIsITWalletValidSelector
   ],
-  (catalogue, translations, withL3Design) =>
+  (isCatalogueEnabled, catalogue, translations, withL3Design) =>
     (credentialType: string | undefined, withDefault: string = ""): string => {
       if (!credentialType) {
         return withDefault;
       }
-      const catalogueMeta = catalogue?.[credentialType];
-      return (
-        (catalogueMeta?.name_l10n_id &&
-          translations?.[catalogueMeta.name_l10n_id]) ||
-        catalogueMeta?.name ||
-        getCredentialNameFromType(credentialType, withDefault, withL3Design)
+      if (isCatalogueEnabled) {
+        const catalogueMeta = catalogue?.[credentialType];
+        const resolvedName =
+          (catalogueMeta?.name_l10n_id &&
+            translations?.[catalogueMeta.name_l10n_id]) ||
+          catalogueMeta?.name;
+        if (resolvedName) {
+          return resolvedName;
+        }
+      }
+      return getCredentialNameFromType(
+        credentialType,
+        withDefault,
+        withL3Design
       );
     }
 );
