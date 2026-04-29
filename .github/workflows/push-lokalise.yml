@@ -10,7 +10,7 @@ concurrency:
   group: lokalise-pull-${{ github.head_ref || github.run_id }}
   cancel-in-progress: false
 permissions: 
-  contents: 'read'
+  contents: read
 jobs:
   pull-locales:
     runs-on: ubuntu-latest
