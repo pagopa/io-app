@@ -1,8 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
-import {
+import type {
   CredentialOffer,
-  IoWallet,
   ItwVersion
 } from "@pagopa/io-react-native-wallet";
 import { useIOStore } from "../../../../store/hooks";
@@ -342,8 +341,7 @@ export const createCredentialIssuanceActorsImplementation = (
   >(async ({ input }) => {
     assert(input.credentialOfferUri, "credentialOfferUri is undefined");
 
-    // TODO - handle different versions. Hardcoded for a first implementation
-    const wallet = new IoWallet({ version: "1.3.3" });
+    const wallet = getIoWallet(itwVersion);
 
     const offer = await wallet.CredentialsOffer.resolveCredentialOffer(
       input.credentialOfferUri
