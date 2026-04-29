@@ -63,9 +63,9 @@ jobs:
         if: needs.static-checks.outputs.should_test == 'true'
         run: |
           if [ "${{ github.event_name }}" = "pull_request" ]; then
-            yarn test:ci --findRelatedTests ${{ needs.static-checks.outputs.changed_files }}
+            yarn test:ci --shard=${{ matrix.shard }}/10 --findRelatedTests ${{ needs.static-checks.outputs.changed_files }}
           else
-            yarn test:ci
+            yarn test:ci --shard=${{ matrix.shard }}/10
           fi
       - id: upload-coverage
         if: needs.static-checks.outputs.should_test == 'true' && steps.run-test.outcome == 'success'
