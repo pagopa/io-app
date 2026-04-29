@@ -11,10 +11,10 @@ import {
 } from "@pagopa/io-app-design-system";
 import {
   cloneElement,
-  forwardRef,
   isValidElement,
   PropsWithChildren,
-  ReactNode
+  ReactNode,
+  Ref
 } from "react";
 import { Platform, ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -30,6 +30,7 @@ type ButtonProps = Pick<
 >;
 
 type OperationResultScreenContentProps = WithTestID<{
+  ref?: Ref<View>;
   pictogram: IOPictograms | IOAnimatedPictograms;
   title: string;
   subtitle?: string;
@@ -46,92 +47,85 @@ const hasAnimatedVersion = (
   pictogram: IOPictograms | IOAnimatedPictograms
 ): pictogram is IOAnimatedPictograms => pictogram in IOAnimatedPictogramsAssets;
 
-const OperationResultScreenContent = forwardRef<
-  View,
-  PropsWithChildren<OperationResultScreenContentProps>
->(
-  (
-    {
-      disableAnimatedPictogram = false,
-      pictogram,
-      title,
-      subtitle,
-      onSubtitleLinkPress,
-      action,
-      secondaryAction,
-      children,
-      testID,
-      isHeaderVisible,
-      topElement = undefined
-    },
-    ref
-  ) => {
-    const isAnimatedPictogram =
-      !disableAnimatedPictogram && hasAnimatedVersion(pictogram);
+const OperationResultScreenContent = ({
+  ref,
+  disableAnimatedPictogram = false,
+  pictogram,
+  title,
+  subtitle,
+  onSubtitleLinkPress,
+  action,
+  secondaryAction,
+  children,
+  testID,
+  isHeaderVisible,
+  topElement = undefined
+}: PropsWithChildren<OperationResultScreenContentProps>) => {
+  const isAnimatedPictogram =
+    !disableAnimatedPictogram && hasAnimatedVersion(pictogram);
 
-    return (
-      <SafeAreaView
-        edges={isHeaderVisible ? ["bottom"] : undefined}
-        style={{ flexGrow: 1 }}
-        testID={testID}
-        ref={ref}
+  return (
+    <SafeAreaView
+      edges={isHeaderVisible ? ["bottom"] : undefined}
+      style={{ flexGrow: 1 }}
+      testID={testID}
+      ref={ref}
+    >
+      <ScrollView
+        alwaysBounceVertical={false}
+        centerContent={true}
+        contentContainerStyle={[
+          styles.wrapper,
+          /* Android fallback because `centerContent` is only an iOS property */
+          Platform.OS === "android" && styles.wrapperAndroid
+        ]}
       >
-        <ScrollView
-          alwaysBounceVertical={false}
-          centerContent={true}
-          contentContainerStyle={[
-            styles.wrapper,
-            /* Android fallback because `centerContent` is only an iOS property */
-            Platform.OS === "android" && styles.wrapperAndroid
-          ]}
-        >
-          {pictogram && (
-            <View style={{ alignItems: "center" }}>
-              {isAnimatedPictogram ? (
-                <AnimatedPictogram name={pictogram} size={120} />
-              ) : (
-                <Pictogram name={pictogram as IOPictograms} size={120} />
-              )}
-              <VSpacer size={24} />
+        {pictogram && (
+          <View style={{ alignItems: "center" }}>
+            {isAnimatedPictogram ? (
+              <AnimatedPictogram name={pictogram} size={120} />
+            ) : (
+              <Pictogram name={pictogram as IOPictograms} size={120} />
+            )}
+            <VSpacer size={24} />
+          </View>
+        )}
+        {topElement}
+        <H3 accessibilityRole="header" style={{ textAlign: "center" }}>
+          {title}
+        </H3>
+        {subtitle && (
+          <>
+            <VSpacer size={8} />
+            <IOMarkdownLite
+              content={subtitle}
+              textAlign="center"
+              onLinkPress={onSubtitleLinkPress}
+            />
+          </>
+        )}
+        {action && (
+          <View style={{ alignItems: "center" }}>
+            <VSpacer size={24} />
+            <View>
+              <IOButton variant="solid" {...action} />
             </View>
-          )}
-          {topElement}
-          <H3 accessibilityRole="header" style={{ textAlign: "center" }}>
-            {title}
-          </H3>
-          {subtitle && (
-            <>
-              <VSpacer size={8} />
-              <IOMarkdownLite
-                content={subtitle}
-                textAlign="center"
-                onLinkPress={onSubtitleLinkPress}
-              />
-            </>
-          )}
-          {action && (
-            <View style={{ alignItems: "center" }}>
-              <VSpacer size={24} />
-              <View>
-                <IOButton variant="solid" {...action} />
-              </View>
+          </View>
+        )}
+        {secondaryAction && (
+          <View style={{ alignItems: "center" }}>
+            <VSpacer size={24} />
+            <View>
+              <IOButton variant="link" {...secondaryAction} />
             </View>
-          )}
-          {secondaryAction && (
-            <View style={{ alignItems: "center" }}>
-              <VSpacer size={24} />
-              <View>
-                <IOButton variant="link" {...secondaryAction} />
-              </View>
-            </View>
-          )}
+          </View>
+        )}
 
-          {isValidElement(children) && cloneElement(children)}
-        </ScrollView>
-      </SafeAreaView>
-    );
-  }
-);
+        {isValidElement(children) && cloneElement(children)}
+      </ScrollView>
+    </SafeAreaView>
+  );
+};
 
 const styles = StyleSheet.create({
   wrapper: {

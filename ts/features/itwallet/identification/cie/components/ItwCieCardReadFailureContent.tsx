@@ -47,7 +47,8 @@ type ItwCieCardReadFailureContentProps = Extract<
 export const ItwCieCardReadFailureContent = ({
   failure,
   progress,
-  onRetry
+  onRetry,
+  origin
 }: ItwCieCardReadFailureContentProps) => {
   const issuanceActor = ItwEidIssuanceMachineContext.useActorRef();
   const isL3 = ItwEidIssuanceMachineContext.useSelector(
@@ -63,8 +64,14 @@ export const ItwCieCardReadFailureContent = ({
   useFocusEffect(
     useCallback(
       () =>
-        trackError({ failure, isL3, identification, readProgress: progress }),
-      [failure, isL3, progress, identification]
+        trackError({
+          failure,
+          isL3,
+          identification,
+          readProgress: progress,
+          origin
+        }),
+      [failure, isL3, progress, identification, origin]
     )
   );
 
@@ -227,13 +234,15 @@ type TrackErrorParams = {
   isL3: boolean;
   readProgress?: number;
   identification?: IdentificationContext;
+  origin?: string;
 };
 
 const trackError = ({
   failure,
   isL3,
   readProgress,
-  identification
+  identification,
+  origin
   // eslint-disable-next-line complexity
 }: TrackErrorParams) => {
   const itw_flow: ItwFlow = isL3 ? "L3" : "L2";
@@ -306,7 +315,8 @@ const trackError = ({
   }
 
   trackItWalletCieCardReadingUnexpectedFailure({
-    reason: failure?.name ?? "UNEXPECTED_ERROR",
+    reason: failure.name ?? "UNEXPECTED_ERROR",
+    origin: origin ?? "ITW_CIE_CARD_READING",
     cie_reading_progress: progress,
     itw_flow,
     ITW_ID_method: identification?.mode

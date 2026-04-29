@@ -9,14 +9,18 @@ import {
   vec
 } from "@shopify/react-native-skia";
 import { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { Image as RNImage, StyleSheet, View } from "react-native";
 import Animated, {
   Easing,
   useAnimatedStyle,
   useSharedValue,
   withTiming
 } from "react-native-reanimated";
+import { useIOSelector } from "../../../../../store/hooks";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { CredentialType } from "../../utils/itwMocksUtils";
+import { getCredentialCardConfig } from "./credentialCardConfig";
+import { CredentialCardSkiaBackground } from "./CredentialCardBackground";
 import { CardColorScheme } from "./types";
 
 type ItwCredentialCardBackgroundProps = {
@@ -28,8 +32,9 @@ export const CardBackground = ({
   credentialType,
   colorScheme
 }: ItwCredentialCardBackgroundProps) => {
+  const withL3Design = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const [size, setSize] = useState({ width: 0, height: 0 });
-  const image = useImage(credentialCardBackgrounds[credentialType]);
+  const image = useImage(legacyCredentialCardBackgrounds[credentialType]);
   const loadingOverlayOpacity = useSharedValue(1);
 
   const loadingOverlayOpacityTransition = useAnimatedStyle(() => ({
@@ -40,12 +45,15 @@ export const CardBackground = ({
   }));
 
   useEffect(() => {
-    // Set loading ended only if we have an image and a size defined
-    if (image && size.width > 0 && size.height > 0) {
+    if (!withL3Design && image && size.width > 0 && size.height > 0) {
       // eslint-disable-next-line functional/immutable-data
       loadingOverlayOpacity.value = 0;
     }
-  }, [image, loadingOverlayOpacity, size]);
+  }, [image, loadingOverlayOpacity, size, withL3Design]);
+
+  const config = getCredentialCardConfig(credentialType);
+  const legacyGradientColors = legacyCredentialGradientColors[credentialType];
+  const watermarkLayer = withL3Design ? config.watermarkLayer : undefined;
 
   return (
     <View
@@ -60,15 +68,17 @@ export const CardBackground = ({
         });
       }}
     >
-      <Animated.View
-        style={[
-          loadingOverlayOpacityTransition,
-          StyleSheet.absoluteFillObject,
-          { backgroundColor: IOColors["grey-100"] }
-        ]}
-      />
+      {!withL3Design && (
+        <Animated.View
+          style={[
+            loadingOverlayOpacityTransition,
+            StyleSheet.absoluteFillObject,
+            { backgroundColor: IOColors["grey-100"] }
+          ]}
+        />
+      )}
       <Canvas style={{ flex: 1 }}>
-        {image ? (
+        {!withL3Design && image ? (
           <Image
             image={image}
             fit="fill"
@@ -80,6 +90,12 @@ export const CardBackground = ({
               <BlendColor color="white" mode="color" />
             )}
           </Image>
+        ) : withL3Design ? (
+          <CredentialCardSkiaBackground
+            bg={config.background}
+            width={size.width}
+            height={size.height}
+          />
         ) : (
           <RoundedRect
             x={0}
@@ -92,7 +108,7 @@ export const CardBackground = ({
               start={vec(0, 0)}
               end={vec(size.width, size.height)}
               colors={
-                credentialGradientColors[credentialType] ?? [
+                legacyGradientColors ?? [
                   IOColors["grey-100"],
                   IOColors["grey-200"]
                 ]
@@ -101,21 +117,26 @@ export const CardBackground = ({
           </RoundedRect>
         )}
       </Canvas>
+      {watermarkLayer && size.width > 0 && size.height > 0 && (
+        <View style={StyleSheet.absoluteFillObject} pointerEvents="none">
+          <RNImage
+            source={watermarkLayer}
+            style={{ width: size.width, height: size.height }}
+            resizeMode="stretch"
+          />
+        </View>
+      )}
     </View>
   );
 };
 
-const credentialCardBackgrounds: {
-  [type: string]: string;
-} = {
+const legacyCredentialCardBackgrounds: { [type: string]: number } = {
   [CredentialType.EUROPEAN_DISABILITY_CARD]: require("../../../../../../img/features/itWallet/cards/dc.png"),
   [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: require("../../../../../../img/features/itWallet/cards/ts.png"),
   [CredentialType.DRIVING_LICENSE]: require("../../../../../../img/features/itWallet/cards/mdl.png")
 };
 
-export const credentialGradientColors: {
-  [type: string]: Array<string>;
-} = {
+const legacyCredentialGradientColors: { [type: string]: Array<string> } = {
   [CredentialType.EDUCATION_DEGREE]: ["#F2F1CE", "#ECECEC"],
   [CredentialType.EDUCATION_ENROLLMENT]: ["#E0F2CE", "#ECECEC"],
   [CredentialType.RESIDENCY]: ["#F2E4CE", "#ECECEC"],

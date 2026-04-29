@@ -11,6 +11,7 @@ import {
   isUpcomingCredential
 } from "../../common/utils/itwCredentialUtils";
 import { itwCredentialsTypesSelector } from "../../credentials/store/selectors";
+import { type CredentialsListEntry } from "../../credentialsCatalogue/store/selectors";
 import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsValidSelector
@@ -24,12 +25,12 @@ import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwOnboardingModuleCredential } from "./ItwOnboardingModuleCredential";
 
 type Props = {
-  credentialTypesToDisplay: Array<string>;
+  credentialsToDisplay: ReadonlyArray<CredentialsListEntry>;
   isL2Credential?: boolean;
 };
 
 export const ItwOnboardingModuleCredentialsList = ({
-  credentialTypesToDisplay,
+  credentialsToDisplay,
   isL2Credential
 }: Props) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
@@ -110,7 +111,7 @@ export const ItwOnboardingModuleCredentialsList = ({
     )
   );
 
-  return credentialTypesToDisplay.map(type => (
+  return credentialsToDisplay.map(({ type, name }) => (
     <ItwOnboardingModuleCredential
       key={`itw_credential_${type}`}
       type={type}
@@ -126,6 +127,7 @@ export const ItwOnboardingModuleCredentialsList = ({
         O.getOrElse(constFalse)
       )}
       onPress={beginCredentialIssuance}
+      credentialName={name}
     />
   ));
 };

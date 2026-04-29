@@ -16,16 +16,12 @@ interface PollForStoreValueOptions<T> {
 
 /**
  * Polls the Redux store until the selected value meets the specified condition.
- *
  * @param state The Redux store state.
  * @param selector A function that selects the value from the store.
- * @param condition A function that checks if the value meets the desired
- *   condition.
+ * @param condition A function that checks if the value meets the desired condition.
  * @param interval The interval in milliseconds between each check.
- * @param timeout The maximum time in milliseconds to wait for the condition to
- *   be met.
- * @returns A promise that resolves with the store value once the condition is
- *   met.
+ * @param timeout The maximum time in milliseconds to wait for the condition to be met.
+ * @returns A promise that resolves with the store value once the condition is met.
  */
 export const pollForStoreValue = <T>({
   getState,
@@ -59,17 +55,17 @@ export const pollForStoreValue = <T>({
   });
 
 /**
- * Determines whether a failure reason should be serialized. Returns true if
- * reason is absent or an empty object.
+ * Determines whether a failure reason should be serialized.
+ * Returns true if reason is absent or an empty object.
  */
 export const shouldSerializeReason = (failure: { reason?: unknown }) =>
   !failure.reason ||
   (typeof failure.reason === "object" &&
+    failure.reason !== null &&
     Object.keys(failure.reason).length === 0);
 
 /**
- * Serialize failure reasons that are instances of {@link Error}, to be safely
- * stored and displayed.
+ * Serialize failure reasons that are instances of {@link Error}, to be safely stored and displayed.
  */
 export const serializeFailureReason = (
   failure:
@@ -77,23 +73,14 @@ export const serializeFailureReason = (
     | CredentialIssuanceFailure
     | RemoteFailure
     | ProximityFailure
-) => {
-  const reason = !failure.reason
-    ? "Reason not provided"
-    : failure.reason instanceof Error
-      ? createReasonObject(failure.reason.message)
-      : failure.reason;
-
-  return {
-    ...failure,
-    reason
-  };
-};
+) => ({
+  ...failure,
+  reason: mapFailureReason(failure.reason)
+});
 
 /**
- * This logic was agreed upon with the Mixpanel team to allow them to filter
- * these specific error cases. Instead of sending a plain string, we return a
- * structured object with a code and errorDescription
+ * This logic was agreed upon with the Mixpanel team to allow them to filter these specific error cases.
+ * Instead of sending a plain string, we return a structured object with a code and errorDescription.
  */
 const createReasonObject = (message: string) => ({
   code: "UNEXPECTED",
@@ -101,13 +88,28 @@ const createReasonObject = (message: string) => ({
 });
 
 /**
- * Convenience function that wraps {@link pollForStoreValue} to check for the
- * integrity service readiness. This functions is meant to be used primarily in
- * machine actors.
- *
+ * Guards and maps failure reasons to a consistent format for serialization.
+ * Missing reasons and Error instances are converted to a structured object,
+ * Existing reason objects are preserved as-is.
+ * Primitive values are returned as-is.
+ */
+const mapFailureReason = (reason: unknown) => {
+  if (!reason) {
+    return createReasonObject("Reason not provided");
+  }
+
+  if (reason instanceof Error) {
+    return createReasonObject(reason.message);
+  }
+
+  return reason;
+};
+
+/**
+ * Convenience function that wraps {@link pollForStoreValue} to check for the integrity service readiness.
+ * This functions is meant to be used primarily in machine actors.
  * @param store The Redux store instance.
- * @throws Error if the integrity service is not ready within the timeout
- *   period.
+ * @throws Error if the integrity service is not ready within the timeout period.
  */
 export const ensureIntegrityServiceIsStoreReadyOrThrow = async (
   store: ReturnType<typeof useIOStore>

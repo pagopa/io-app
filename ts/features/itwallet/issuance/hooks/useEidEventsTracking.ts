@@ -69,7 +69,11 @@ export const useEidEventsTracking = ({
       return trackItwUnsupportedDevice(failure);
     }
 
-    if (failure.type === IssuanceFailureType.ISSUER_GENERIC && identification) {
+    if (
+      (failure.type === IssuanceFailureType.ISSUER_GENERIC ||
+        failure.type === IssuanceFailureType.PID_ANPR_CREDENTIAL_NOT_FOUND) &&
+      identification
+    ) {
       trackItwIdRequestFailure({
         ITW_ID_method: identification.mode,
         reason: failure.reason,
@@ -126,7 +130,11 @@ export const useEidEventsTracking = ({
        */
       return trackItwIdRequestUnexpectedFailure(
         shouldSerializeReason(failure)
-          ? { ...serializeFailureReason(failure), itw_flow: itwFlow }
+          ? {
+              ...serializeFailureReason(failure),
+              origin: "ITW_EID_EVENTS_TRACKING",
+              itw_flow: itwFlow
+            }
           : { ...failure, itw_flow: itwFlow }
       );
     }

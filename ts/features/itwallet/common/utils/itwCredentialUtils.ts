@@ -4,6 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import { SdJwt, Mdoc } from "@pagopa/io-react-native-wallet";
 import I18n from "i18next";
 import { isBefore } from "date-fns";
+import { ItwIridescentBorderVariant } from "../components/ItwBrandedSkiaBorder";
 import { CredentialType } from "./itwMocksUtils";
 import {
   CredentialBundle,
@@ -20,18 +21,13 @@ export const l2Credentials = [
   CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
 ] as const;
 
-// Credentials that can be actively requested and obtained by the user
-export const availableCredentials = [
-  CredentialType.DRIVING_LICENSE,
-  CredentialType.EUROPEAN_DISABILITY_CARD,
-  CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
-] as const;
-
 // New credentials that can be actively requested and obtained by the user
 export const newCredentials = [
   CredentialType.EDUCATION_DEGREE,
   CredentialType.EDUCATION_ENROLLMENT,
-  CredentialType.RESIDENCY
+  CredentialType.RESIDENCY,
+  CredentialType.EDUCATION_DIPLOMA,
+  CredentialType.EDUCATION_ATTENDANCE
 ] as const;
 
 export type NewCredential = (typeof newCredentials)[number];
@@ -39,11 +35,7 @@ export type NewCredential = (typeof newCredentials)[number];
 export type L2Credential = (typeof l2Credentials)[number];
 
 // Credentials that will be available in the future
-// TODO: [SIW-3923] remove once IPZS releases new credentials in PROD
-export const upcomingCredentials = [
-  CredentialType.EDUCATION_DIPLOMA,
-  CredentialType.EDUCATION_ATTENDANCE
-] as ReadonlyArray<string>;
+export const upcomingCredentials = [] as ReadonlyArray<string>;
 
 export const isUpcomingCredential = (type: string): boolean =>
   upcomingCredentials.includes(type);
@@ -71,6 +63,9 @@ export const itwGetCredentialNameByCredentialType = (
     isItwCredential
       ? "features.itWallet.credentialName.pid"
       : "features.itWallet.credentialName.eid"
+  ),
+  [CredentialType.AGE_VERIFICATION]: I18n.t(
+    "features.itWallet.credentialName.av"
   ),
   [CredentialType.EDUCATION_DEGREE]: I18n.t(
     "features.itWallet.credentialName.ed"
@@ -112,6 +107,18 @@ export const useBorderColorByStatus: () => {
     jwtExpiring: IOColors["warning-700"],
     unknown: IOColors["grey-300"]
   };
+};
+
+export const borderVariantByStatus: {
+  [key in ItwCredentialStatus]: ItwIridescentBorderVariant;
+} = {
+  valid: "default",
+  expiring: "warning",
+  jwtExpiring: "warning",
+  expired: "error",
+  jwtExpired: "error",
+  invalid: "error",
+  unknown: "default"
 };
 
 export const tagPropsByStatus: { [key in ItwCredentialStatus]?: Tag } = {

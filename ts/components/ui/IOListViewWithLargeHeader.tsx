@@ -8,14 +8,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import {
-  ComponentProps,
-  createRef,
-  forwardRef,
-  JSX,
-  useCallback,
-  useState
-} from "react";
+import { ComponentProps, createRef, JSX, useCallback, useState } from "react";
 
 import { LayoutChangeEvent, View } from "react-native";
 import I18n from "i18next";
@@ -35,131 +28,127 @@ type Props<T> = ComponentProps<typeof IOListView<T>> &
  * of LargeHeader naming is due to similar behavior offered by the native iOS
  * API.
  */
-export const IOListViewWithLargeHeader = forwardRef(
-  <T,>(
-    {
-      renderItem,
-      data,
-      keyExtractor,
-      title,
-      description,
-      subtitle,
-      actions,
-      goBack,
-      canGoback = true,
-      contextualHelp,
-      contextualHelpMarkdown,
-      faqCategories,
-      ignoreSafeAreaMargin = false,
-      refreshControlProps,
-      includeContentMargins = true,
-      headerActionsProp = {},
-      excludeEndContentMargin,
-      skeleton,
-      ListHeaderComponent,
-      ListFooterComponent,
-      ListEmptyComponent,
-      testID,
-      ignoreAccessibilityCheck = false,
-      loading
-    }: Props<T>,
-    ref: React.Ref<View>
-  ) => {
-    const [titleHeight, setTitleHeight] = useState(0);
+export const IOListViewWithLargeHeader = <T,>({
+  ref,
+  renderItem,
+  data,
+  keyExtractor,
+  title,
+  description,
+  subtitle,
+  actions,
+  goBack,
+  canGoback = true,
+  contextualHelp,
+  contextualHelpMarkdown,
+  faqCategories,
+  ignoreSafeAreaMargin = false,
+  refreshControlProps,
+  includeContentMargins = true,
+  headerActionsProp = {},
+  excludeEndContentMargin,
+  skeleton,
+  ListHeaderComponent,
+  ListFooterComponent,
+  ListEmptyComponent,
+  testID,
+  ignoreAccessibilityCheck = false,
+  loading
+}: Props<T>): JSX.Element => {
+  const [titleHeight, setTitleHeight] = useState(0);
 
-    const navigation = useNavigation();
-    const theme = useIOTheme();
+  const navigation = useNavigation();
+  const theme = useIOTheme();
 
-    const getTitleHeight = (event: LayoutChangeEvent) => {
-      const { height } = event.nativeEvent.layout;
-      setTitleHeight(height);
-    };
+  const getTitleHeight = (event: LayoutChangeEvent) => {
+    const { height } = event.nativeEvent.layout;
+    setTitleHeight(height);
+  };
 
-    const headerPropsWithoutGoBack = {
-      title: title.label,
-      contextualHelp,
-      contextualHelpMarkdown,
-      faqCategories,
-      ...headerActionsProp
-    };
+  const headerPropsWithoutGoBack = {
+    title: title.label,
+    contextualHelp,
+    contextualHelpMarkdown,
+    faqCategories,
+    ...headerActionsProp
+  };
 
-    const headerProps: ComponentProps<typeof HeaderSecondLevel> = {
-      ignoreSafeAreaMargin,
-      ignoreAccessibilityCheck,
-      ...useHeaderProps(
-        canGoback
-          ? {
-              ...headerPropsWithoutGoBack,
-              backAccessibilityLabel: I18n.t("global.buttons.back"),
-              goBack: goBack ?? navigation.goBack
-            }
-          : headerPropsWithoutGoBack
-      )
-    };
+  const headerProps: ComponentProps<typeof HeaderSecondLevel> = {
+    ignoreSafeAreaMargin,
+    ignoreAccessibilityCheck,
+    ...useHeaderProps(
+      canGoback
+        ? {
+            ...headerPropsWithoutGoBack,
+            backAccessibilityLabel: I18n.t("global.buttons.back"),
+            goBack: goBack ?? navigation.goBack
+          }
+        : headerPropsWithoutGoBack
+    )
+  };
 
-    const titleRef = createRef<View>();
+  const titleRef = createRef<View>();
 
-    useFocusEffect(
-      useCallback(() => setAccessibilityFocus(titleRef), [titleRef])
-    );
+  useFocusEffect(
+    useCallback(() => setAccessibilityFocus(titleRef), [titleRef])
+  );
 
-    return (
-      <IOListView<T>
-        ListHeaderComponent={
-          <>
-            <View onLayout={getTitleHeight}>
-              {title.section && (
-                <BodySmall weight="Semibold" color={theme["textBody-tertiary"]}>
-                  {title.section}
-                </BodySmall>
-              )}
-              <H2
-                color={theme["textHeading-default"]}
-                testID={title?.testID}
-                ref={ref ?? titleRef}
-                accessibilityLabel={title.accessibilityLabel ?? title.label}
-                accessibilityRole="header"
-              >
-                {title.label}
-              </H2>
-            </View>
-
-            {description && (
-              <>
-                <VSpacer size={16} />
-                <IOMarkdownLite content={description} />
-              </>
+  return (
+    <IOListView<T>
+      ListHeaderComponent={
+        <>
+          <View onLayout={getTitleHeight}>
+            {title.section && (
+              <BodySmall weight="Semibold" color={theme["textBody-tertiary"]}>
+                {title.section}
+              </BodySmall>
             )}
-            {subtitle && (
-              <>
-                <VSpacer size={8} />
-                <IOMarkdownLite content={subtitle} />
-              </>
-            )}
-            {ListHeaderComponent && (
-              <>
-                <VSpacer size={16} />
-                {ListHeaderComponent}
-              </>
-            )}
-          </>
-        }
-        loading={loading}
-        skeleton={skeleton}
-        ListFooterComponent={ListFooterComponent}
-        ListEmptyComponent={ListEmptyComponent}
-        ItemSeparatorComponent={Divider}
-        refreshControlProps={refreshControlProps}
-        renderItem={renderItem}
-        data={data}
-        keyExtractor={keyExtractor}
-        actions={actions}
-        headerConfig={headerProps}
-        snapOffset={titleHeight}
-        includeContentMargins={includeContentMargins}
-        excludeEndContentMargin={excludeEndContentMargin}
-        testID={testID}
-      />
-    );
-  }
-) as <T>(props: Props<T> & { ref?: React.Ref<View> }) => JSX.Element;
+            <H2
+              color={theme["textHeading-default"]}
+              testID={title?.testID}
+              ref={ref ?? titleRef}
+              accessibilityLabel={title.accessibilityLabel ?? title.label}
+              accessibilityRole="header"
+            >
+              {title.label}
+            </H2>
+          </View>
+
+          {description && (
+            <>
+              <VSpacer size={16} />
+              <IOMarkdownLite content={description} />
+            </>
+          )}
+          {subtitle && (
+            <>
+              <VSpacer size={8} />
+              <IOMarkdownLite content={subtitle} />
+            </>
+          )}
+          {ListHeaderComponent && (
+            <>
+              <VSpacer size={16} />
+              {ListHeaderComponent}
+            </>
+          )}
+        </>
+      }
+      loading={loading}
+      skeleton={skeleton}
+      ListFooterComponent={ListFooterComponent}
+      ListEmptyComponent={ListEmptyComponent}
+      ItemSeparatorComponent={Divider}
+      refreshControlProps={refreshControlProps}
+      renderItem={renderItem}
+      data={data}
+      keyExtractor={keyExtractor}
+      actions={actions}
+      headerConfig={headerProps}
+      snapOffset={titleHeight}
+      includeContentMargins={includeContentMargins}
+      excludeEndContentMargin={excludeEndContentMargin}
+      testID={testID}
+    />
+  );
+};

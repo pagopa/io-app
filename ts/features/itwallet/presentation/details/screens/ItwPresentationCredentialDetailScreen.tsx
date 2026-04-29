@@ -1,7 +1,7 @@
 import {
   ContentWrapper,
+  IOButton,
   Optional,
-  VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
@@ -17,9 +17,9 @@ import {
 } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
-import { identificationRequest } from "../../../../identification/store/actions/index.ts";
+import { identificationRequest } from "../../../../identification/store/actions";
 import { trackCredentialRenewStart } from "../../../analytics";
-import { getMixPanelCredential } from "../../../analytics/utils/index.ts";
+import { getMixPanelCredential } from "../../../analytics/utils";
 import { CREDENTIAL_STATUS_MAP } from "../../../analytics/utils/types.ts";
 import ItwCredentialNotFound from "../../../common/components/ItwCredentialNotFound.tsx";
 import { PoweredByItWalletText } from "../../../common/components/PoweredByItWalletText.tsx";
@@ -167,6 +167,11 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   );
 };
 
+const credentialsWithSkeumorphicCard: ReadonlyArray<string> = [
+  CredentialType.DRIVING_LICENSE,
+  CredentialType.EUROPEAN_DISABILITY_CARD
+];
+
 type ItwPresentationCredentialDetailProps = {
   credential: CredentialMetadata;
 };
@@ -183,6 +188,12 @@ export const ItwPresentationCredentialDetail = ({
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
+  const contentClaim = credential.parsedCredential[WellKnownClaim.content];
+  const hasSkeumorphicCard = credentialsWithSkeumorphicCard.includes(
+    credential.credentialType
+  );
+  const showInlineCta =
+    isL3Credential && (hasSkeumorphicCard || !!contentClaim);
 
   const mixPanelCredential = useMemo(
     () => getMixPanelCredential(credential.credentialType, isL3Credential),
@@ -234,9 +245,7 @@ export const ItwPresentationCredentialDetail = ({
   };
 
   const ctaProps = useMemo<Optional<CredentialCtaProps>>(() => {
-    const { parsedCredential } = credential;
     const credentialType = credential.credentialType;
-    const contentClaim = parsedCredential[WellKnownClaim.content];
 
     if (shouldShowMdlUpdateCta) {
       return {
@@ -276,8 +285,7 @@ export const ItwPresentationCredentialDetail = ({
       };
     }
 
-    // If the "content" claim exists, return a CTA to view and download it.
-    if (contentClaim) {
+    if (!isL3Credential && contentClaim) {
       return {
         label: I18n.t("features.itWallet.presentation.ctas.openPdf"),
         icon: "docPaymentTitle",
@@ -285,12 +293,9 @@ export const ItwPresentationCredentialDetail = ({
           if (mixPanelCredential === "ITW_TS_V2") {
             trackWalletCredentialShowFAC_SIMILE();
           }
-
           navigation.navigate(ITW_ROUTES.MAIN, {
             screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_ATTACHMENT,
-            params: {
-              attachmentClaim: contentClaim
-            }
+            params: { attachmentClaim: contentClaim }
           });
         }
       };
@@ -298,11 +303,13 @@ export const ItwPresentationCredentialDetail = ({
 
     return undefined;
   }, [
-    credential,
+    credential.credentialType,
+    shouldShowMdlUpdateCta,
     itwFeaturesEnabled,
+    isL3Credential,
+    contentClaim,
     navigation,
     mixPanelCredential,
-    shouldShowMdlUpdateCta,
     status
   ]);
 
@@ -310,13 +317,45 @@ export const ItwPresentationCredentialDetail = ({
     return <ItwPresentationCredentialUnknownStatus credential={credential} />;
   }
 
+  const handleOpenCard = () => {
+    if (contentClaim) {
+      if (mixPanelCredential === "ITW_TS_V2") {
+        trackWalletCredentialShowFAC_SIMILE();
+      }
+      navigation.navigate(ITW_ROUTES.MAIN, {
+        screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_ATTACHMENT,
+        params: { attachmentClaim: contentClaim }
+      });
+    } else {
+      navigation.navigate(ITW_ROUTES.MAIN, {
+        screen: ITW_ROUTES.PRESENTATION.CREDENTIAL_CARD_SCREEN,
+        params: { credentialType: credential.credentialType }
+      });
+    }
+  };
+
   return (
     <ItwPresentationDetailsScreenBase
       credential={credential}
       ctaProps={ctaProps}
+      headerTransparent={isL3Credential}
     >
       <ItwPresentationDetailsHeader credential={credential} />
-      <VSpacer size={24} />
+      <View style={{ paddingVertical: 16 }}>
+        {showInlineCta && (
+          <View style={{ alignSelf: "center", paddingVertical: 8 }}>
+            <IOButton
+              variant="link"
+              label={I18n.t(
+                "features.itWallet.presentation.credentialDetails.openCardDocument"
+              )}
+              icon="creditCard"
+              iconPosition="start"
+              onPress={handleOpenCard}
+            />
+          </View>
+        )}
+      </View>
       <ContentWrapper>
         <VStack space={24}>
           <ItwPresentationAdditionalInfoSection credential={credential} />

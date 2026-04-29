@@ -8,10 +8,11 @@ import {
   Pictogram,
   VStack
 } from "@pagopa/io-app-design-system";
-import { forwardRef } from "react";
+import { Ref } from "react";
 import { ScrollView, useWindowDimensions, View } from "react-native";
 
 type Props = {
+  ref?: Ref<View>;
   id: number;
   pictogramName: IOPictograms;
   title: string;
@@ -22,39 +23,38 @@ type Props = {
 
 const VERTICAL_SPACING = 16;
 
-export const LandingCardComponent = forwardRef<View, Props>(
-  (
-    { accessibilityLabel, accessibilityHint, pictogramName, title, content },
-    ref
-  ) => {
-    const { width: screenWidth } = useWindowDimensions();
+export const LandingCardComponent = ({
+  ref,
+  accessibilityLabel,
+  accessibilityHint,
+  pictogramName,
+  title,
+  content
+}: Props) => {
+  const { width: screenWidth } = useWindowDimensions();
 
-    return (
-      <ScrollView
-        accessible={false}
-        contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
+  return (
+    <ScrollView
+      accessible={false}
+      contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
+    >
+      <ContentWrapper
+        ref={ref}
+        style={{ width: screenWidth }}
+        accessible={true}
+        accessibilityLabel={accessibilityLabel}
+        accessibilityHint={accessibilityHint}
       >
-        <ContentWrapper
-          ref={ref}
-          style={{ width: screenWidth }}
-          accessible={true}
-          accessibilityLabel={accessibilityLabel}
-          accessibilityHint={accessibilityHint}
-        >
-          <VStack space={VERTICAL_SPACING} style={{ alignItems: "center" }}>
-            <Pictogram size={180} name={pictogramName} />
-            <H3 importantForAccessibility="no" style={{ textAlign: "center" }}>
-              {title}
-            </H3>
-            <Body
-              importantForAccessibility="no"
-              style={{ textAlign: "center" }}
-            >
-              {content}
-            </Body>
-          </VStack>
-        </ContentWrapper>
-      </ScrollView>
-    );
-  }
-);
+        <VStack space={VERTICAL_SPACING} style={{ alignItems: "center" }}>
+          <Pictogram size={180} name={pictogramName} />
+          <H3 importantForAccessibility="no" style={{ textAlign: "center" }}>
+            {title}
+          </H3>
+          <Body importantForAccessibility="no" style={{ textAlign: "center" }}>
+            {content}
+          </Body>
+        </VStack>
+      </ContentWrapper>
+    </ScrollView>
+  );
+};

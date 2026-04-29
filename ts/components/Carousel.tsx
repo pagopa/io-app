@@ -3,7 +3,6 @@ import {
   JSXElementConstructor,
   ReactElement,
   Ref,
-  forwardRef,
   useCallback,
   useMemo
 } from "react";
@@ -48,26 +47,24 @@ type Props<T> = {
  * at a time, how many space between the rendered elements and other important
  * features inherited from the `FlatList` component.
  */
-function CarouselComponent<T extends Record<string, unknown>>(
-  {
-    data,
-    snapToAlignment,
-    decelerationRate,
-    pagingEnabled,
-    viewabilityConfig,
-    contentContainerStyle,
-    initialScrollIndex,
-    itemsGap = 0,
-    itemsPerTime = 1,
-    scrollEnabled = true,
-    style,
-    testID,
-    Component,
-    onViewableItemsChanged,
-    keyExtractor
-  }: WithTestID<Props<T>>,
-  ref: Ref<FlatList<T>>
-) {
+export const Carousel = <T extends Record<string, unknown>>({
+  ref,
+  data,
+  snapToAlignment,
+  decelerationRate,
+  pagingEnabled,
+  viewabilityConfig,
+  contentContainerStyle,
+  initialScrollIndex,
+  itemsGap = 0,
+  itemsPerTime = 1,
+  scrollEnabled = true,
+  style,
+  testID,
+  Component,
+  onViewableItemsChanged,
+  keyExtractor
+}: WithTestID<Props<T>> & { ref?: Ref<FlatList<T>> }): ReactElement => {
   const snapToInterval = useMemo(
     () => WINDOW_WIDTH - itemsGap * itemsPerTime,
     [itemsGap, itemsPerTime]
@@ -121,12 +118,8 @@ function CarouselComponent<T extends Record<string, unknown>>(
       onViewableItemsChanged={onViewableItemsChanged}
     />
   );
-}
+};
 
 const styles = StyleSheet.create({
   box: { overflow: "visible" }
 });
-
-export const Carousel = forwardRef(CarouselComponent) as <T>(
-  p: WithTestID<Props<T>> & { ref?: Ref<FlatList<T>> }
-) => ReactElement;

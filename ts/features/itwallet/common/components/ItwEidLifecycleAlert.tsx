@@ -31,16 +31,20 @@ type Props = {
   /** The eID statuses that will render the alert. */
   lifecycleStatus?: Array<ItwJwtCredentialStatus>;
   navigation: ReturnType<typeof useIONavigation>;
-  skipViewTracking?: boolean;
+  /**
+   * The name of the current screen, used for analytics tracking
+   * and conditional rendering logic (e.g. PID detail screen).
+   */
   currentScreenName?: string;
+  skipViewTracking?: boolean;
 };
 
 /** This component renders an alert that displays information on the eID status. */
 export const ItwEidLifecycleAlert = ({
   lifecycleStatus = defaultLifecycleStatus,
   navigation,
-  skipViewTracking,
-  currentScreenName
+  currentScreenName,
+  skipViewTracking
 }: Props) => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
   const isItw = useIOSelector(itwLifecycleIsITWalletValidSelector);
@@ -49,7 +53,6 @@ export const ItwEidLifecycleAlert = ({
   const isOffline = offlineAccessReason !== undefined;
 
   const { trackAlertTap } = useItwEidLifecycleAlertTracking({
-    isItw,
     maybeEidStatus,
     navigation,
     skipViewTracking,
@@ -130,7 +133,17 @@ export const ItwEidLifecycleAlert = ({
         };
       }
 
-      return eIDAlertPropsMap[eidStatus];
+      const isPidDetailScreen =
+        currentScreenName === ITW_ROUTES.PRESENTATION.PID_DETAIL;
+
+      const baseProps = eIDAlertPropsMap[eidStatus];
+
+      if (isPidDetailScreen && eidStatus === "jwtExpired") {
+        const { action, onPress, ...rest } = baseProps;
+        return rest;
+      }
+
+      return baseProps;
     }, [eidStatus, eid.jwt.issuedAt, eid.jwt.expiration, nameSpace]);
 
     if (!lifecycleStatus.includes(eidStatus)) {

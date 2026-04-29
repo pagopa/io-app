@@ -80,6 +80,32 @@ export const cgnMerchantsModalSelector = createSelector(
     )
 );
 
+export const isCGNDiscoveryBannerEnabledSelector = (state: GlobalState) =>
+  pipe(
+    state,
+    remoteConfigSelector,
+    O.chainNullableK(
+      config => config.cgn.show_cgn_engagement_banner?.min_app_version
+    ),
+    minAppVersion =>
+      isMinAppVersionSupported(
+        pipe(
+          minAppVersion,
+          O.map(mav => ({ min_app_version: mav }))
+        )
+      )
+  );
+
+export const engagementCGNDiscoveryBannerSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): Banner | undefined =>
+    pipe(
+      remoteConfig,
+      O.map(config => config.cgn.show_cgn_engagement_banner),
+      O.toUndefined
+    )
+);
+
 export const assistanceToolConfigSelector = createSelector(
   remoteConfigSelector,
   (remoteConfig): ToolEnum | undefined =>

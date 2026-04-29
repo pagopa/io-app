@@ -71,7 +71,9 @@ export const useItwRemoteEventsTracking = ({ failure }: Params) => {
 
       case RemoteFailureType.UNEXPECTED:
         return trackItwRemoteUnexpectedFailure(
-          shouldSerializeReason(failure) ? serializedFailure : failure
+          shouldSerializeReason(failure)
+            ? { ...serializedFailure, origin: "ITW_REMOTE_EVENTS_TRACKING" }
+            : failure
         );
     }
   }, [failure]);

@@ -1,10 +1,10 @@
 import { memo } from "react";
 import { View } from "react-native";
 import { Body } from "@pagopa/io-app-design-system";
-import * as Sentry from "@sentry/react-native";
 import I18n from "i18next";
 import { useIOSelector } from "../../store/hooks";
 import { isScreenReaderEnabledSelector } from "../../store/reducers/preferences";
+import ErrorBoundary from "../error/ErrorBoundary";
 import { IOMarkdownRenderRules } from "./types";
 import {
   convertReferenceLinksToInline,
@@ -17,25 +17,21 @@ import { DEFAULT_RULES } from "./renderRules";
 type UnsafeProps = Omit<IOMarkdownProps, "onError">;
 
 export type IOMarkdownProps = {
-  /** The `markdown` string to render. */
+  /**
+   * The `markdown` string to render.
+   */
   content: string;
-  onError?:
-    | ((
-        error: unknown,
-        componentStack: string | undefined,
-        eventId: string
-      ) => void)
-    | undefined;
-  /** The render rules that can be used to override the `DEFAULT_RULES`. */
+  onError?: (error: unknown, componentStack: string | undefined) => void;
+  /**
+   * The render rules that can be used to override the `DEFAULT_RULES`.
+   */
   rules?: Partial<IOMarkdownRenderRules>;
 };
 
 /**
- * This component parses a markdown string and render it using the `DS`
- * components.
+ * This component parses a markdown string and render it using the `DS` components.
  *
- * It's possible to override every single rule by passing a custom `rules`
- * object.
+ * It's possible to override every single rule by passing a custom `rules` object.
  */
 const UnsafeIOMarkdown = ({ content, rules }: UnsafeProps) => {
   const screenReaderEnabled = useIOSelector(isScreenReaderEnabledSelector);
@@ -53,8 +49,8 @@ const UnsafeIOMarkdown = ({ content, rules }: UnsafeProps) => {
   return <View>{parsedContent.map(renderMarkdown)}</View>;
 };
 
-const IOMarkdown = ({ content, rules, onError }: IOMarkdownProps) => (
-  <Sentry.ErrorBoundary
+const IOMarkdownComponent = ({ content, rules, onError }: IOMarkdownProps) => (
+  <ErrorBoundary
     fallback={
       <View>
         <Body>{I18n.t("global.markdown.decodeError")}</Body>
@@ -63,6 +59,12 @@ const IOMarkdown = ({ content, rules, onError }: IOMarkdownProps) => (
     onError={onError}
   >
     <UnsafeIOMarkdown content={content} rules={rules} />
-  </Sentry.ErrorBoundary>
+  </ErrorBoundary>
 );
-export default memo(IOMarkdown);
+
+/**
+ * @deprecated Use `IOMarkdown` or `IOMarkdownLite` from `@pagopa/io-app-design-system` instead.
+ * Remaining usages with custom render rules need to be tested against the DS version before migrating.
+ */
+const IOMarkdown = memo(IOMarkdownComponent);
+export default IOMarkdown;

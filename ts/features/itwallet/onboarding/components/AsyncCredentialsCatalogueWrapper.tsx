@@ -8,16 +8,10 @@ import { PropsWithChildren } from "react";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { itwFetchCredentialsCatalogue } from "../../credentialsCatalogue/store/actions";
 import {
+  itwIsCatalogueEnabledForCredentialsList,
   itwIsCredentialsCatalogueLoading,
   itwIsCredentialsCatalogueUnavailable
 } from "../../credentialsCatalogue/store/selectors";
-
-/**
- * Local feature flag that enables catalogue loading/error handling. Since
- * credentials are still hardcoded and the catalogue barely used, we can keep it
- * disabled.
- */
-const CATALOGUE_ENABLED = false;
 
 export const AsyncCredentialsCatalogue = ({ children }: PropsWithChildren) => {
   const dispatch = useIODispatch();
@@ -25,18 +19,21 @@ export const AsyncCredentialsCatalogue = ({ children }: PropsWithChildren) => {
   const isCatalogueUnavailable = useIOSelector(
     itwIsCredentialsCatalogueUnavailable
   );
+  const isCatalogueEnabledForCredentialsList = useIOSelector(
+    itwIsCatalogueEnabledForCredentialsList
+  );
 
   const loadingContent = Array.from({ length: 5 }).map((_, i) => (
     <ModuleCredential key={`loading-item-${i}`} isLoading />
   ));
 
   const content = () => {
-    if (!CATALOGUE_ENABLED) {
-      return <>{children}</>;
+    if (!isCatalogueEnabledForCredentialsList) {
+      return children;
     }
 
     if (isCatalogueLoading) {
-      return <>{loadingContent}</>;
+      return loadingContent;
     }
 
     if (isCatalogueUnavailable) {
@@ -53,7 +50,7 @@ export const AsyncCredentialsCatalogue = ({ children }: PropsWithChildren) => {
       );
     }
 
-    return <>{children}</>;
+    return children;
   };
 
   return <VStack space={8}>{content()}</VStack>;

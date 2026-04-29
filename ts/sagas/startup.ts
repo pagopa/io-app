@@ -40,6 +40,9 @@ import {
 import { shouldTrackLevelSecurityMismatchSaga } from "../features/authentication/login/cie/sagas/trackLevelSecuritySaga";
 import { userFromSuccessLoginSelector } from "../features/authentication/loginInfo/store/selectors";
 import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
+import { cgnDetails } from "../features/bonus/cgn/store/actions/details";
+import { isCgnDiscoveryBannerClosedSelector } from "../features/bonus/cgn/store/reducers/banners";
+import { isCgnEligibleByAgeSelector } from "../features/bonus/cgn/store/selectors/banners";
 import { watchFciSaga } from "../features/fci/saga";
 import { watchFimsSaga } from "../features/fims/common/saga";
 import { startAndReturnIdentificationResult } from "../features/identification/sagas";
@@ -623,6 +626,16 @@ export function* initializeApplicationSaga(
 
   // Start watching for cgn actions
   yield* fork(watchBonusCgnSaga, sessionToken);
+
+  // Fetch CGN status early so banner selectors have data
+  const isCgnBannerClosed: boolean = yield* select(
+    isCgnDiscoveryBannerClosedSelector
+  );
+  // over 35 should not see the banner
+  const isCgnEligibleByAge: boolean = yield* select(isCgnEligibleByAgeSelector);
+  if (!isCgnBannerClosed && isCgnEligibleByAge) {
+    yield* put(cgnDetails.request());
+  }
 
   const pnEnabled: ReturnType<typeof isPnRemoteEnabledSelector> = yield* select(
     isPnRemoteEnabledSelector

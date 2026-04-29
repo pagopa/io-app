@@ -1,6 +1,7 @@
-import { put } from "typed-redux-saga/macro";
+import { put, select } from "typed-redux-saga/macro";
 import { getCdcStatusWallet } from "../../bonus/cdc/wallet/store/actions";
 import { cgnDetails } from "../../bonus/cgn/store/actions/details";
+import { isCgnDetailsAlreadyFetchedSelector } from "../../bonus/cgn/store/reducers/details";
 import { idPayWalletGet } from "../../idpay/wallet/store/actions";
 import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/actions";
 
@@ -13,8 +14,13 @@ export function* handleWalletUpdateSaga() {
   yield* put(getPaymentsWalletUserMethods.request());
   // Updates the IDPay wallet, if active
   yield* put(idPayWalletGet.request());
-  // Updates the CGN details
-  yield* put(cgnDetails.request());
+  // Updates the CGN details only if not already fetched
+  const isCgnAlreadyFetched: boolean = yield* select(
+    isCgnDetailsAlreadyFetchedSelector
+  );
+  if (!isCgnAlreadyFetched) {
+    yield* put(cgnDetails.request());
+  }
   // Updates the CDC status
   yield* put(getCdcStatusWallet.request());
 }

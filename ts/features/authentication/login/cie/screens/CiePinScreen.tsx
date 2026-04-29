@@ -3,6 +3,7 @@ import {
   Body,
   ContentWrapper,
   H2,
+  IOMarkdown,
   OTPInput,
   useIOToast,
   VSpacer
@@ -28,7 +29,6 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { IdpData } from "../../../../../../definitions/content/IdpData";
-import IOMarkdown from "../../../../../components/IOMarkdown";
 import {
   BottomTopAnimation,
   LightModalContext

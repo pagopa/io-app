@@ -9,12 +9,7 @@ import {
 import * as AR from "fp-ts/lib/Array";
 import { constNull, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import {
-  ComponentProps,
-  forwardRef,
-  useContext,
-  useImperativeHandle
-} from "react";
+import { ComponentProps, useContext, useImperativeHandle, Ref } from "react";
 import { Image, ImageStyle, StyleProp } from "react-native";
 import Animated, {
   useAnimatedRef,
@@ -36,6 +31,7 @@ import { getRemoteLocale } from "../../../messages/utils/ctas";
 import TosBonusComponent from "./TosBonusComponent";
 
 type OwnProps = {
+  ref?: Ref<BonusInformationComponentRef>;
   onBack?: () => void;
   bonus: BonusAvailable;
   onConfirm?: () => void;
@@ -111,7 +107,7 @@ const imageHeight: number = 270;
  * A screen to explain how the bonus activation works and how it will be
  * assigned
  */
-const BonusInformationComponent = forwardRef((props: Props, ref) => {
+const BonusInformationComponent = ({ ref, ...props }: Props) => {
   const { showModal, hideModal } = useContext(LightModalContext);
   const bonusType = props.bonus;
   const { imageStyle: imageProps } = props;
@@ -236,6 +232,6 @@ const BonusInformationComponent = forwardRef((props: Props, ref) => {
       </ContentWrapper>
     </IOScrollView>
   );
-});
+};
 
 export default BonusInformationComponent;

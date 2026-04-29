@@ -17,7 +17,10 @@ type Params = {
   failure: ProximityFailure;
 };
 
-/** Track errors occurred during the proximity presentation flow for analytics. */
+/**
+ * Track errors occurred during the proximity presentation flow for analytics.
+ */
+
 export const useItwProximityEventsTracking = ({ failure }: Params) => {
   const hasGivenConsent = ItwProximityMachineContext.useSelector(
     hasGivenConsentSelector
@@ -37,7 +40,9 @@ export const useItwProximityEventsTracking = ({ failure }: Params) => {
 
       case ProximityFailureType.UNEXPECTED:
         return trackItwProximityUnexpectedFailure(
-          shouldSerializeReason(failure) ? serializedFailure : failure
+          shouldSerializeReason(failure)
+            ? { ...serializedFailure, origin: "ITW_PROXIMITY_EVENTS_TRACKING" }
+            : failure
         );
       case ProximityFailureType.UNTRUSTED_RP:
         return trackItwProximityUnofficialVerifier(serializedFailure);

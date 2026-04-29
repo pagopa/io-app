@@ -61,7 +61,7 @@ const ItwCieIdLoginScreen = () => {
 
   useHeaderSecondLevel({
     title: I18n.t(
-      "features.itWallet.identification.modeSelection.mode.cieId.title"
+      "features.itWallet.identification.modeSelection.mode.cieId.title.l3"
     ),
     supportRequest: false,
     goBack: dismissalDialog.show
