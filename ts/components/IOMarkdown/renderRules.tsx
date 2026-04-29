@@ -39,7 +39,7 @@ import {
   TxtStrongNode
 } from "@textlint/ast-node-types";
 import {
-  ExoticComponent,
+  ComponentType,
   Fragment,
   ReactNode,
   useLayoutEffect,
@@ -442,7 +442,7 @@ export const headerNodeToReactNative = (
   header: TxtHeaderNode,
   headingsMap: Record<
     number,
-    ExoticComponent<{ children?: ReactNode | undefined }>
+    ComponentType<{ children?: ReactNode | undefined }>
   >,
   onPress: (url: string) => void,
   render: Renderer,

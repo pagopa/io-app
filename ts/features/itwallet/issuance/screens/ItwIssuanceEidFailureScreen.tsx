@@ -37,14 +37,19 @@ const zendeskAssistanceErrors = [
   IssuanceFailureType.UNEXPECTED,
   IssuanceFailureType.WALLET_PROVIDER_GENERIC,
   IssuanceFailureType.UNSUPPORTED_DEVICE,
-  IssuanceFailureType.HARDWARE_KEY_INVALID
+  IssuanceFailureType.HARDWARE_KEY_INVALID,
+  IssuanceFailureType.PID_ANPR_CREDENTIAL_NOT_FOUND
 ];
 
 const ASSERTION_FAILED_FAQ_URL =
   "https://assistenza.ioapp.it/hc/it/articles/43824826487953-Provo-ad-aggiungere-un-documento-al-Portafoglio-ma-ricevo-un-errore-dal-mio-dispositivo-Apple";
 
+const PID_ANPR_MISMATCH_FAQ_URL =
+  "https://assistenza.ioapp.it/hc/it/articles/40032473652881-Continuare-a-usare-Documenti-su-IO-senza-limitazioni-dopo-12-mesi";
+
 const failureLinkMapper: Partial<Record<IssuanceFailureType, string>> = {
-  [IssuanceFailureType.HARDWARE_KEY_INVALID]: ASSERTION_FAILED_FAQ_URL
+  [IssuanceFailureType.HARDWARE_KEY_INVALID]: ASSERTION_FAILED_FAQ_URL,
+  [IssuanceFailureType.PID_ANPR_CREDENTIAL_NOT_FOUND]: PID_ANPR_MISMATCH_FAQ_URL
 };
 
 export const ItwIssuanceEidFailureScreen = () => {
@@ -143,6 +148,40 @@ const ContentView = ({ failure }: ContentViewProps) => {
                 }) // TODO: [SIW-1375] better retry and go back handling logic for the issuance process
             },
             secondaryAction: supportModalAction
+          };
+        case IssuanceFailureType.PID_ANPR_CREDENTIAL_NOT_FOUND:
+          return {
+            title: I18n.t(
+              "features.itWallet.issuance.pidAnprMismatchError.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.issuance.pidAnprMismatchError.body"
+            ),
+            pictogram: "fatalError",
+            action: {
+              label: I18n.t(
+                "features.itWallet.issuance.pidAnprMismatchError.primaryAction"
+              ),
+              onPress: () => {
+                trackItwKoStateAction({
+                  reason: failure.reason,
+                  cta_category: "custom_1",
+                  cta_id: I18n.t(
+                    "features.itWallet.issuance.pidAnprMismatchError.primaryAction"
+                  )
+                });
+                supportModal.present();
+              }
+            },
+            secondaryAction: {
+              label: I18n.t("global.buttons.close"),
+              onPress: () =>
+                closeIssuance({
+                  reason: failure.reason,
+                  cta_category: "custom_2",
+                  cta_id: I18n.t("global.buttons.close")
+                })
+            }
           };
         case IssuanceFailureType.HARDWARE_KEY_INVALID:
           return {

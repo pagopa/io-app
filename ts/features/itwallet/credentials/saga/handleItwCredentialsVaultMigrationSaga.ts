@@ -1,7 +1,24 @@
 import { call, put, select } from "typed-redux-saga/macro";
+import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../../../store/reducers/types";
+import {
+  trackItwVaultMigrationFailed,
+  trackItwVaultMigrationRequest,
+  trackItwVaultMigrationSuccess
+} from "../analytics";
 import { CredentialsVault } from "../utils/vault";
 import { itwCredentialsVaultMigrationComplete } from "../store/actions";
+
+type VaultMigrationResult =
+  | {
+      credentialId: string;
+      success: true;
+    }
+  | {
+      credentialId: string;
+      success: false;
+      reason: string;
+    };
 
 /**
  * SIW-2178 introduced CredentialsVault to keep raw JWTs out of Redux.
@@ -25,25 +42,51 @@ export function* handleItwCredentialsVaultMigrationSaga() {
     return;
   }
 
-  const results = yield* call(() =>
+  const isMixpanelEnabled = yield* select(isMixpanelEnabledSelector);
+  trackItwVaultMigrationRequest(isMixpanelEnabled);
+
+  // Collect one result per credential so a single vault write failure does not
+  // prevent successful entries from being removed from `legacyCredentials`.
+  const results: ReadonlyArray<VaultMigrationResult> = yield* call(() =>
     Promise.all(
       entries.map(async c => {
         try {
           await CredentialsVault.store(c.credentialId, c.credential);
           return { credentialId: c.credentialId, success: true as const };
-        } catch {
-          return { credentialId: c.credentialId, success: false as const };
+        } catch (e) {
+          return {
+            credentialId: c.credentialId,
+            success: false as const,
+            reason: e instanceof Error ? e.message : String(e)
+          };
         }
       })
     )
   );
 
   const succeeded = results.filter(r => r.success).map(r => r.credentialId);
+  const failed = results.filter(
+    (result): result is Extract<VaultMigrationResult, { success: false }> =>
+      !result.success
+  );
 
-  // TODO [SIW-4080] Log failures to Mixpanel, including count and IDs
-  // const failed = results.filter(r => !r.success).map(r => r.credentialId);
+  if (failed.length > 0) {
+    trackItwVaultMigrationFailed(
+      {
+        credential_ids: failed.map(({ credentialId }) => credentialId),
+        reason: Array.from(new Set(failed.map(({ reason }) => reason))).join(
+          "; "
+        )
+      },
+      isMixpanelEnabled
+    );
+  }
 
   if (succeeded.length > 0) {
     yield* put(itwCredentialsVaultMigrationComplete(succeeded));
+  }
+
+  if (failed.length === 0) {
+    trackItwVaultMigrationSuccess(isMixpanelEnabled);
   }
 }
