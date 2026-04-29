@@ -50,7 +50,7 @@ describe("getInternalRoute", () => {
   });
 });
 
-describe("getInternalRoute - credential offer normalization", () => {
+describe("getInternalRoute - custom schemes", () => {
   it.each([
     {
       name: "openid-credential-offer custom scheme",
@@ -59,30 +59,9 @@ describe("getInternalRoute - credential offer normalization", () => {
     {
       name: "haip-vci custom scheme",
       href: "haip-vci://?credential_offer_uri=https%3A%2F%2Fissuer%2Foffer"
-    },
-    {
-      name: "io universal link with credential_offer query param",
-      href: `${IO_UNIVERSAL_LINK_PREFIX}/itw/credential-offer?credential_offer=abc`
-    },
-    {
-      name: "io universal link with credential_offer_uri query param",
-      href: `${IO_UNIVERSAL_LINK_PREFIX}/itw/credential-offer?credential_offer_uri=https%3A%2F%2Fissuer%2Foffer`
     }
-  ])(
-    "wraps $name into ioit://itw/credential-offer preserving the original URI as itwCredentialOfferUri",
-    ({ href }) => {
-      const result = getInternalRoute(href);
-      const prefix = `${IO_INTERNAL_LINK_PREFIX}itw/credential-offer?itwCredentialOfferUri=`;
-      expect(result.startsWith(prefix)).toBe(true);
-
-      const encoded = result.slice(prefix.length);
-      expect(decodeURIComponent(encoded)).toBe(href);
-    }
-  );
-
-  it("does not wrap URLs that are not credential offer invocations", () => {
-    const href = "https://example.com/some/page";
-    expect(getInternalRoute(href)).not.toContain("itw/credential-offer");
+  ])("keeps $name unchanged", ({ href }) => {
+    expect(getInternalRoute(href)).toBe(href);
   });
 });
 
