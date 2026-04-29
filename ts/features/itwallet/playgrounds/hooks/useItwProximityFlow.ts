@@ -19,7 +19,7 @@ import {
   requestMultiple,
   RESULTS
 } from "react-native-permissions";
-import { KEYTAG, MDL_BASE64, WELL_KNOWN_CREDENTIALS } from "../mocks/proximity";
+import { KEYTAG, WELL_KNOWN_CREDENTIALS } from "../mocks/proximity";
 import { useItwProximityNfcTimers } from "./useItwProximityNfcTimers";
 
 interface NestedBooleanMap {
