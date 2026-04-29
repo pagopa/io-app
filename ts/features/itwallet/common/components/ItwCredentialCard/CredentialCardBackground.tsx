@@ -2,10 +2,10 @@ import { LinearGradient, Rect, vec } from "@shopify/react-native-skia";
 import { CardBackgroundConfig } from "./credentialCardConfig";
 
 /**
- * Computes the Skia LinearGradient start/end vectors for a given angle
- * (CSS convention: 0° = bottom→top, 90° = left→right) and canvas dimensions.
- * The resulting line passes through the center and is long enough to cover
- * all four corners of the rectangle.
+ * Computes the Skia LinearGradient start/end vectors for a given angle (CSS
+ * convention: 0° = bottom→top, 90° = left→right) and canvas dimensions. The
+ * resulting line passes through the center and is long enough to cover all four
+ * corners of the rectangle.
  */
 export const getGradientVectors = (
   angle: number,
@@ -32,8 +32,8 @@ type CredentialCardSkiaBackgroundProps = {
 };
 
 /**
- * Skia-renderable background layer for a credential card or detail header.
- * Must be rendered inside a Skia <Canvas>.
+ * Skia-renderable background layer for a credential card or detail header. Must
+ * be rendered inside a Skia <Canvas>.
  */
 export const CredentialCardSkiaBackground = ({
   bg,

@@ -21,8 +21,9 @@ export type CredentialsListEntry = {
 const EMPTY_ARRAY: ReadonlyArray<CredentialsListEntry> = [];
 
 /**
- * Hardcoded list of all obtainable credentials. When the credentials catalogue is not enabled,
- * this list is used as the source of truth for displaying credentials in the UI.
+ * Hardcoded list of all obtainable credentials. When the credentials catalogue
+ * is not enabled, this list is used as the source of truth for displaying
+ * credentials in the UI.
  */
 const hardcodedCredentialsList: ReadonlyArray<CredentialsListEntry> = [
   ...l2Credentials,
@@ -84,15 +85,16 @@ export const itwIsCredentialsCatalogueUnavailable = (state: GlobalState) =>
   pot.isNone(state.features.itWallet.credentialsCatalogue.catalogue);
 
 /**
- * Return whether the list of obtainable credentials is built
- * from the catalogue and does not use hardcoded values.
+ * Return whether the list of obtainable credentials is built from the catalogue
+ * and does not use hardcoded values.
  */
 export const itwIsCatalogueEnabledForCredentialsList = (state: GlobalState) =>
   state.features.itWallet.credentialsCatalogue.isEnabledForCredentialsList;
 
 /**
- * Select the list of all obtainable credentials that are available in the catalogue (if enabled),
- * or the hardcoded list otherwise. This list is not filtered any further: it includes all credentials.
+ * Select the list of all obtainable credentials that are available in the
+ * catalogue (if enabled), or the hardcoded list otherwise. This list is not
+ * filtered any further: it includes all credentials.
  */
 export const itwAvailableCredentialsListSelector = createSelector(
   [itwIsCatalogueEnabledForCredentialsList, itwCredentialsCatalogueSelector],

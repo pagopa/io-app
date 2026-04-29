@@ -56,8 +56,9 @@ const anprPid404Failure = z.object({
 });
 
 /**
- * Guard used to identify ANPR PID 404 issuance failures.
- * It is identified by the presence of reason.error with value "credential_not_found" inside an IssuerResponseError with code `CredentialInvalidStatus` and HTTP status 404.
+ * Guard used to identify ANPR PID 404 issuance failures. It is identified by
+ * the presence of reason.error with value "credential_not_found" inside an
+ * IssuerResponseError with code `CredentialInvalidStatus` and HTTP status 404.
  */
 export const isAnprPid404Failure = (
   e: unknown

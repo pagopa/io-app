@@ -7,8 +7,8 @@ export type SolidCardBackground = {
 };
 
 /**
- * Up to 5 color stops, distributed evenly along the gradient line.
- * At least 2 colors are required for a meaningful gradient.
+ * Up to 5 color stops, distributed evenly along the gradient line. At least 2
+ * colors are required for a meaningful gradient.
  */
 export type GradientColors =
   | [string, string]
@@ -19,14 +19,14 @@ export type GradientColors =
 export type GradientCardBackground = {
   type: "gradient";
   /**
-   * Angle in degrees following the CSS convention:
-   * 0° = bottom → top, 90° = left → right, 135° = top-left → bottom-right.
+   * Angle in degrees following the CSS convention: 0° = bottom → top, 90° =
+   * left → right, 135° = top-left → bottom-right.
    */
   angle: number;
   colors: GradientColors;
   /**
-   * Optional positions for each color stop, as values between 0 and 1.
-   * When omitted the stops are distributed evenly (equivalent to CSS behaviour).
+   * Optional positions for each color stop, as values between 0 and 1. When
+   * omitted the stops are distributed evenly (equivalent to CSS behaviour).
    * Must have the same length as `colors` when provided.
    */
   positions?: Array<number>;
@@ -36,31 +36,29 @@ export type CardBackgroundConfig = SolidCardBackground | GradientCardBackground;
 
 export type CredentialCardConfig = {
   /**
-   * Card background: either a solid colour or a gradient (angle + up to 5 stops).
+   * Card background: either a solid colour or a gradient (angle + up to 5
+   * stops).
    */
   background: CardBackgroundConfig;
-  /**
-   * Color used for the credential title text.
-   */
+  /** Color used for the credential title text. */
   titleColor: string;
-  /**
-   * Color used for the card border when the credential is valid.
-   */
+  /** Color used for the card border when the credential is valid. */
   borderColor: string;
   /**
-   * Optional PNG image rendered as a watermark layer
-   * over the gradient background.
+   * Optional PNG image rendered as a watermark layer over the gradient
+   * background.
    */
   watermarkLayer?: ImageSourcePropType;
   /**
-   * Optional PNG image rendered as a watermark layer
-   * in the credential detail header.
+   * Optional PNG image rendered as a watermark layer in the credential detail
+   * header.
    */
   detailWatermarkLayer?: ImageSourcePropType;
 };
 
 /**
- * TODO: Tentative, to be updated with https://pagopa.atlassian.net/browse/SIW-4077
+ * TODO: Tentative, to be updated with
+ * https://pagopa.atlassian.net/browse/SIW-4077
  */
 export const DEFAULT_CREDENTIAL_CARD_CONFIG: CredentialCardConfig = {
   background: {
@@ -72,12 +70,12 @@ export const DEFAULT_CREDENTIAL_CARD_CONFIG: CredentialCardConfig = {
 };
 
 /**
- * Per-credential static card configuration.
- * Background, title color and border color are set explicitly here.
- * An optional `watermarkLayer` PNG image can be provided to render a
- * watermark overlay on top of the background.
- * TODO: these configurations are tentative, will be updated once the design will be finalized
- * ADD MORE CONFIGURATIONS HERE IF NEEDED, ONLY FOR STATIC CREDENTIALS
+ * Per-credential static card configuration. Background, title color and border
+ * color are set explicitly here. An optional `watermarkLayer` PNG image can be
+ * provided to render a watermark overlay on top of the background. TODO: these
+ * configurations are tentative, will be updated once the design will be
+ * finalized ADD MORE CONFIGURATIONS HERE IF NEEDED, ONLY FOR STATIC
+ * CREDENTIALS
  */
 export const credentialCardConfigs: Partial<
   Record<string, CredentialCardConfig>
@@ -147,8 +145,8 @@ export const getCredentialCardConfig = (
   credentialCardConfigs[credentialType] ?? DEFAULT_CREDENTIAL_CARD_CONFIG;
 
 /**
- * Returns the representative background color for a credential card config.
- * For solid backgrounds this is the solid color; for gradients it is the first
+ * Returns the representative background color for a credential card config. For
+ * solid backgrounds this is the solid color; for gradients it is the first
  * color stop (which by convention is the darker/more saturated one).
  */
 export const getCredentialBackgroundColor = (

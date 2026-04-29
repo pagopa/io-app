@@ -23,11 +23,11 @@ type NavigationStateLike =
 /**
  * Checks whether a route is present in the user's active navigation path.
  *
- * Only traverses routes that are part of the current navigation path:
- * - Tab/drawer navigators: only the active tab is considered in-path; inactive
- *   tabs are excluded even if they were visited previously.
- * - Stack navigators: all routes up to and including the active index are
- *   considered in-path because the user can navigate back through them.
+ * Only traverses routes that are part of the current navigation path: -
+ * Tab/drawer navigators: only the active tab is considered in-path; inactive
+ * tabs are excluded even if they were visited previously. - Stack navigators:
+ * all routes up to and including the active index are considered in-path
+ * because the user can navigate back through them.
  */
 export const isRouteInNavigationState = (
   state: NavigationStateLike,

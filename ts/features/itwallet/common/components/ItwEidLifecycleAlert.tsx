@@ -32,8 +32,8 @@ type Props = {
   lifecycleStatus?: Array<ItwJwtCredentialStatus>;
   navigation: ReturnType<typeof useIONavigation>;
   /**
-   * The name of the current screen, used for analytics tracking
-   * and conditional rendering logic (e.g. PID detail screen).
+   * The name of the current screen, used for analytics tracking and conditional
+   * rendering logic (e.g. PID detail screen).
    */
   currentScreenName?: string;
   skipViewTracking?: boolean;
