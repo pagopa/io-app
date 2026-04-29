@@ -83,13 +83,15 @@ describe("unknownToString", () => {
   });
 
   it("should prepend header when stack does not include the error message", () => {
-    const error = new Error("boom");
-    Object.defineProperty(error, "stack", {
-      configurable: true,
-      value: "custom-stack"
-    });
+    const error = Object.create(Error.prototype, {
+      message: { value: "boom" },
+      name: { value: "Error" },
+      stack: { value: "custom-stack" }
+    }) as Error;
 
-    expect(unknownToString(error)).toBe("Error: boom\ncustom-stack");
+    expect(unknownToString(error)).toBe(
+      `${error.name}: ${error.message}\ncustom-stack`
+    );
   });
 
   it("should serialize objects and handle bigint and symbol values", () => {
@@ -102,8 +104,11 @@ describe("unknownToString", () => {
   });
 
   it("should return an unserializable marker for circular objects", () => {
-    const circular: { self?: unknown } = {};
-    circular.self = circular;
+    const circular: { readonly self: unknown } = {
+      get self() {
+        return circular;
+      }
+    };
 
     expect(unknownToString(circular)).toBe("[Unserializable Object]");
   });

@@ -74,7 +74,9 @@ describe("trackAppCaughtError", () => {
     const message = "unexpected error";
     const exception = "TypeError: undefined is not an object";
 
-    const spiedOnMockedMixpanelTrack = jest.spyOn(MIXPANEL, "mixpanelTrack").mockImplementation();
+    const spiedOnMockedMixpanelTrack = jest
+      .spyOn(MIXPANEL, "mixpanelTrack")
+      .mockImplementation();
 
     trackAppCaughtError(subject, message, exception);
 
@@ -93,7 +95,9 @@ describe("trackAppCaughtError", () => {
   });
 
   it("should track APP_CAUGHT_ERROR also when optional fields are undefined", () => {
-    const spiedOnMockedMixpanelTrack = jest.spyOn(MIXPANEL, "mixpanelTrack").mockImplementation();
+    const spiedOnMockedMixpanelTrack = jest
+      .spyOn(MIXPANEL, "mixpanelTrack")
+      .mockImplementation();
 
     trackAppCaughtError("startup", undefined, undefined);
 
