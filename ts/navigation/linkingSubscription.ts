@@ -13,7 +13,7 @@ import { initiateAarFlow } from "../features/pn/aar/store/actions";
 import { IO_LOGIN_CIE_URL_SCHEME } from "../features/authentication/login/cie/utils/cie";
 import { trackIOOpenedFromUniversalAppLink } from "../features/linking/analytics";
 import { getInternalRoute } from "../utils/internalLink";
-import { isPotentialCredentialOfferInvocation } from "../features/itwallet/issuance/offer/utils/utils";
+import { isPotentialCredentialOfferInvocation } from "../features/itwallet/issuance/offer/utils";
 
 // as of writing this, the only deep link that is dispatched after an app wake, but before the login's completion
 // is the CIEID login one.
