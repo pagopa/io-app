@@ -43,7 +43,7 @@ import {
   IO_INTERNAL_LINK_PREFIX,
   IO_UNIVERSAL_LINK_PREFIX
 } from "../utils/navigation";
-import { isPotentialCredentialOfferInvocation } from "../features/itwallet/issuance/offer/utils/utils";
+import { isPotentialCredentialOfferInvocation } from "../features/itwallet/issuance/offer/utils";
 import { getInternalRoute } from "../utils/internalLink";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
 import NavigationService, {

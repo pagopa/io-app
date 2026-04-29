@@ -16,7 +16,7 @@ import { ItwRemoteRequestPayload } from "../../itwallet/presentation/remote/util
 import { validateItwPresentationQrCodeParams } from "../../itwallet/presentation/remote/utils/itwRemotePresentationUtils";
 import { selectItwSpecsVersion } from "../../itwallet/common/store/selectors/environment";
 import { pnAarQRCodeRegexSelector } from "../../../store/reducers/backendStatus/remoteConfig";
-import { isPotentialCredentialOfferInvocation } from "../../itwallet/issuance/offer/utils/utils";
+import { isPotentialCredentialOfferInvocation } from "../../itwallet/issuance/offer/utils";
 import { IOBarcodeType } from "./IOBarcode";
 
 // Discriminated barcode type
