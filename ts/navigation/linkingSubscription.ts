@@ -72,7 +72,7 @@ export const linkingSubscription =
       // We don't enter this point if the app is opened from scratch with a deep link,
       // but we track it in the `useOnFirstRender` hook on the AppStackNavigator
       processUtmLink(url, dispatch);
-      if (isCredentialOfferInvocation) {
+      if (isPotentialCredentialOfferInvocation(url)) {
         listener(getCredentialOfferInternalRoute(url));
         return;
       }
