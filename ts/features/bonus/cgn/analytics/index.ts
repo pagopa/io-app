@@ -27,6 +27,8 @@ import {
 import { cgnCodeFromBucket } from "../store/actions/bucket";
 import { cgnUnsubscribe } from "../store/actions/unsubscribe";
 import { cgnCategories } from "../store/actions/categories";
+import { buildEventProperties } from "../../../../utils/analytics";
+import CGN_ROUTES from "../navigation/routes";
 
 export type TrackCgnStatus = "active" | "not_active";
 
@@ -92,3 +94,17 @@ const trackCgnAction =
   };
 
 export default trackCgnAction;
+
+type TrackCgnEngagementBannerEvent = "BANNER" | "TAP_BANNER" | "CLOSE_BANNER";
+
+export const trackCgnEngagementBanner = (
+  event: TrackCgnEngagementBannerEvent
+) =>
+  mixpanelTrack(
+    event,
+    buildEventProperties("UX", "action", {
+      banner_id: "CGN_ACTIVATION",
+      banner_page: "MESSAGES_HOME",
+      banner_landing: CGN_ROUTES.ACTIVATION.INFORMATION_TOS
+    })
+  );
