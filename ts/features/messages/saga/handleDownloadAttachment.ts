@@ -18,7 +18,7 @@ import {
   cancelPreviousAttachmentDownload,
   downloadAttachment
 } from "../store/actions";
-import { ServiceId } from "../../../../definitions/communication/ServiceId";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
 import {
   trackThirdPartyMessageAttachmentBadFormat,
   trackThirdPartyMessageAttachmentDownloadFailed,

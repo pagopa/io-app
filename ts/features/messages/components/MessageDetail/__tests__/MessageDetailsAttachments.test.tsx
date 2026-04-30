@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { View } from "react-native";
 import { createStore } from "redux";
-import { ServiceId } from "../../../../../../definitions/communication/ServiceId";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { ThirdPartyAttachment } from "../../../../../../definitions/communication/ThirdPartyAttachment";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";

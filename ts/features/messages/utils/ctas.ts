@@ -5,7 +5,7 @@ import { identity, pipe } from "fp-ts/lib/function";
 import FM from "front-matter";
 import { Linking } from "react-native";
 import { MessageBodyMarkdown } from "../../../../definitions/communication/MessageBodyMarkdown";
-import { ServiceId } from "../../../../definitions/communication/ServiceId";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { ServiceMetadata } from "../../../../definitions/services/ServiceMetadata";
 import {
   deriveCustomHandledLink,

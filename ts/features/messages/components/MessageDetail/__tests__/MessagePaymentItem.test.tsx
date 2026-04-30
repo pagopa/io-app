@@ -7,7 +7,7 @@ import { NotificationPaymentInfo } from "../../../../../../definitions/pn/Notifi
 import { PaymentFaultV2Enum } from "../../../../../../definitions/communication/PaymentFaultV2";
 import { updatePaymentForMessage } from "../../../store/actions";
 import { PaymentInfoResponse } from "../../../../../../definitions/communication/PaymentInfoResponse";
-import { ServiceId } from "../../../../../../definitions/communication/ServiceId";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { toSpecificMessagePaymentError } from "../../../types/paymentErrors";
 

@@ -6,7 +6,7 @@ import { reproduceSequence } from "../../../../../utils/tests";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { Action } from "../../../../../store/actions/types";
 import { NotificationPaymentInfo } from "../../../../../../definitions/pn/NotificationPaymentInfo";
-import { ServiceId } from "../../../../../../definitions/communication/ServiceId";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { toSpecificMessagePaymentError } from "../../../../messages/types/paymentErrors";
 
 describe("paymentsButtonStateSelector", () => {

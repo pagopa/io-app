@@ -2,7 +2,7 @@ import { MessageBodyMarkdown } from "../../../../definitions/communication/Messa
 import { OrganizationFiscalCode } from "../../../../definitions/communication/OrganizationFiscalCode";
 import { PaymentAmount } from "../../../../definitions/communication/PaymentAmount";
 import { PaymentNoticeNumber } from "../../../../definitions/communication/PaymentNoticeNumber";
-import { ServiceId } from "../../../../definitions/communication/ServiceId";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { TimeToLiveSeconds } from "../../../../definitions/communication/TimeToLiveSeconds";
 import { MessageCategory } from "../../../../definitions/communication/MessageCategory";
 /**

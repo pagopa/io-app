@@ -8,7 +8,7 @@ import { call, delay, put, race, select, take } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 import { TagEnum } from "../../../../definitions/communication/MessageCategoryPN";
 import { RemoteContentDetails } from "../../../../definitions/communication/RemoteContentDetails";
-import { ServiceId } from "../../../../definitions/communication/ServiceId";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { ThirdPartyMessageWithContent } from "../../../../definitions/communication/ThirdPartyMessageWithContent";
 import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
 import { isPnRemoteEnabledSelector } from "../../../store/reducers/backendStatus/remoteConfig";

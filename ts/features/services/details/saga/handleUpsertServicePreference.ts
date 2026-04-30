@@ -4,7 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { ServiceId } from "../../../../../definitions/communication/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { ServicePreference } from "../../../../../definitions/identity/ServicePreference";
 import { IdentityClient } from "../../../../api/IdentityClientManager";
 import { SagaCallReturnType } from "../../../../types/utils";

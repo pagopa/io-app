@@ -1,6 +1,6 @@
 import { IOStackNavigationRouteProps } from "../../../navigation/params/AppParamsList";
 import { MessagesParamsList } from "../navigation/params";
-import { ServiceId } from "../../../../definitions/communication/ServiceId";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { MessageAttachment } from "../components/MessageAttachment/MessageAttachment";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 

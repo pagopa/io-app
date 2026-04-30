@@ -1,7 +1,7 @@
 import * as E from "fp-ts/lib/Either";
 import ReactNativeBlobUtil from "react-native-blob-util";
 import { testSaga } from "redux-saga-test-plan";
-import { ServiceId } from "../../../../../../definitions/communication/ServiceId";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { ThirdPartyAttachment } from "../../../../../../definitions/communication/ThirdPartyAttachment";
 import { AARProblemJson } from "../../../../../../definitions/pn/aar/AARProblemJson";
 import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";

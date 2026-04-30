@@ -2,7 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { PushNotificationsContentTypeEnum } from "../../../definitions/identity/PushNotificationsContentType";
 import { ReminderStatusEnum } from "../../../definitions/identity/ReminderStatus";
-import { ServiceId } from "../../../definitions/communication/ServiceId";
+import { ServiceId } from "../../../definitions/services/ServiceId";
 import * as PUSHUTILS from "../../features/pushNotifications/utils";
 import { ServicesState } from "../../features/services/common/store/reducers";
 import { ServicePreferenceResponse } from "../../features/services/details/types/ServicePreferenceResponse";

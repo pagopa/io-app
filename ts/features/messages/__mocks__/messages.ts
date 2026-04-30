@@ -1,5 +1,5 @@
 import { TimeToLiveSeconds } from "../../../../definitions/communication/TimeToLiveSeconds";
-import { ServiceId } from "../../../../definitions/communication/ServiceId";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { ServiceDetails } from "../../../../definitions/services/ServiceDetails";
 import { OrganizationFiscalCode } from "../../../../definitions/communication/OrganizationFiscalCode";
 import { MessageCategory } from "../../../../definitions/communication/MessageCategory";

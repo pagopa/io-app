@@ -5,7 +5,7 @@ import {
   trackMessagePaymentFailure,
   trackOpenMessage
 } from "..";
-import { ServiceId } from "../../../../../definitions/communication/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import * as MIXPANEL from "../../../../mixpanel";
 
 describe("index", () => {

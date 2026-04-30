@@ -20,7 +20,7 @@ import {
   testable
 } from "../ctas";
 import * as ANALYTICS from "../../analytics";
-import { ServiceId } from "../../../../../definitions/communication/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { ServiceMetadata } from "../../../../../definitions/services/ServiceMetadata";
 
 const messageBody = `### this is a message

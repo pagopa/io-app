@@ -22,7 +22,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { ThirdPartyAttachment } from "../../../../../../definitions/communication/ThirdPartyAttachment";
-import { ServiceId } from "../../../../../../definitions/communication/ServiceId";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 
 const path = "/path/attachment.pdf";
 

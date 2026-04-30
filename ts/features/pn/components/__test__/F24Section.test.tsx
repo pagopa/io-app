@@ -3,7 +3,7 @@ import { F24Section } from "../F24Section";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { ServiceId } from "../../../../../definitions/communication/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import * as thirdPartyById from "../../../messages/store/reducers/thirdPartyById";
 import { ThirdPartyAttachment } from "../../../../../definitions/communication/ThirdPartyAttachment";
 import { ATTACHMENT_CATEGORY } from "../../../messages/types/attachmentCategory";

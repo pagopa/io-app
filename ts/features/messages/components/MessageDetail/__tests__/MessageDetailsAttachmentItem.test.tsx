@@ -5,7 +5,7 @@ import { downloadAttachment } from "../../../store/actions";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MessageDetailsAttachmentItem } from "../MessageDetailsAttachmentItem";
 import { ThirdPartyAttachment } from "../../../../../../definitions/communication/ThirdPartyAttachment";
-import { ServiceId } from "../../../../../../definitions/communication/ServiceId";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import {
   SendOpeningSource,

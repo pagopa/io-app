@@ -9,7 +9,7 @@ import { GlobalState } from "../../../../store/reducers/types";
 import { remoteError, remoteReady } from "../../../../common/model/RemoteValue";
 import { PaymentInfoResponse } from "../../../../../definitions/communication/PaymentInfoResponse";
 import { PaymentFaultV2Enum } from "../../../../../definitions/communication/PaymentFaultV2";
-import { ServiceId } from "../../../../../definitions/communication/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { toSpecificMessagePaymentError } from "../../../messages/types/paymentErrors";
 
 const globalMessageId = "01HTFFDYS8VQ779EA4M5WB9YWA";

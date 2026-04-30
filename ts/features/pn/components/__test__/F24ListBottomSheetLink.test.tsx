@@ -5,7 +5,7 @@ import { appReducer } from "../../../../store/reducers";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { F24ListBottomSheetLink } from "../F24ListBottomSheetLink";
 import { ThirdPartyAttachment } from "../../../../../definitions/communication/ThirdPartyAttachment";
-import { ServiceId } from "../../../../../definitions/communication/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import PN_ROUTES from "../../navigation/routes";
 import {
   SendOpeningSource,

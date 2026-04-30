@@ -4,7 +4,7 @@ import { testSaga } from "redux-saga-test-plan";
 import { Effect } from "redux-saga/effects";
 import { call, take } from "typed-redux-saga/macro";
 import { TagEnum } from "../../../../../definitions/communication/MessageCategoryPN";
-import { ServiceId } from "../../../../../definitions/communication/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { ThirdPartyAttachment } from "../../../../../definitions/communication/ThirdPartyAttachment";
 import { ThirdPartyMessage } from "../../../../../definitions/communication/ThirdPartyMessage";
 import { ThirdPartyMessageWithContent } from "../../../../../definitions/communication/ThirdPartyMessageWithContent";

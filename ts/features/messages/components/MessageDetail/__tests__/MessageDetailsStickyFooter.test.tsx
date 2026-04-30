@@ -10,7 +10,7 @@ import * as payments from "../../../store/reducers/payments";
 import { PaymentAmount } from "../../../../../../definitions/communication/PaymentAmount";
 import { PaymentNoticeNumber } from "../../../../../../definitions/communication/PaymentNoticeNumber";
 import { OrganizationFiscalCode } from "../../../../../../definitions/communication/OrganizationFiscalCode";
-import { ServiceId } from "../../../../../../definitions/communication/ServiceId";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 
 const cta1: CTA = {
   text: "CTA 1",

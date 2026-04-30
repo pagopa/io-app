@@ -5,7 +5,7 @@ import {
   createStandardAction
 } from "typesafe-actions";
 import { PaymentInfoResponse } from "../../../../../definitions/communication/PaymentInfoResponse";
-import { ServiceId } from "../../../../../definitions/communication/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { ThirdPartyAttachment } from "../../../../../definitions/communication/ThirdPartyAttachment";
 import { UIMessage, UIMessageDetails } from "../../types";
 import { MessageListCategory } from "../../types/messageListCategory";
