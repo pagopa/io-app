@@ -90,6 +90,20 @@ export const buildEventProperties = (
   ...customProperties
 });
 
+export const trackAppCaughtError = (
+  subject: string,
+  message: string | undefined,
+  exception: string | undefined
+) => {
+  const eventName = "APP_CAUGHT_ERROR";
+  const properties = buildEventProperties("TECH", undefined, {
+    subject,
+    message,
+    exception
+  });
+  void mixpanelTrack(eventName, properties);
+};
+
 // Lollipop events
 export function trackLollipopKeyGenerationSuccess(keyType?: string) {
   void mixpanelTrack("LOLLIPOP_KEY_GENERATION_SUCCESS", {
