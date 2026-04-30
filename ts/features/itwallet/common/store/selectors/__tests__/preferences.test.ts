@@ -4,6 +4,7 @@ import { applicationChangeState } from "../../../../../../store/actions/applicat
 import { appReducer } from "../../../../../../store/reducers";
 import {
   itwAuthLevelSelector,
+  itwIdentificationModeSelector,
   itwIsPidReissuingSurveyHiddenSelector
 } from "../preferences";
 import { ItwAuthLevel } from "../../../utils/itwTypesUtils.ts";
@@ -50,6 +51,50 @@ describe("itwAuthLevelSelector", () => {
     };
 
     expect(itwAuthLevelSelector(updatedState)).toBeUndefined();
+  });
+});
+
+describe("itwIdentificationModeSelector", () => {
+  afterEach(() => {
+    MockDate.reset();
+  });
+
+  it("returns the identification mode when it is set", () => {
+    const state = appReducer(undefined, applicationChangeState("active"));
+    const updatedState = {
+      ...state,
+      features: {
+        ...state.features,
+        itWallet: {
+          ...state.features?.itWallet,
+          preferences: {
+            ...state.features?.itWallet?.preferences,
+            identificationMode: "cieId" as const
+          }
+        }
+      }
+    };
+
+    expect(itwIdentificationModeSelector(updatedState)).toEqual("cieId");
+  });
+
+  it("returns undefined when the identification mode is not set", () => {
+    const state = appReducer(undefined, applicationChangeState("active"));
+    const updatedState = {
+      ...state,
+      features: {
+        ...state.features,
+        itWallet: {
+          ...state.features?.itWallet,
+          preferences: {
+            ...state.features?.itWallet?.preferences,
+            identificationMode: undefined
+          }
+        }
+      }
+    };
+
+    expect(itwIdentificationModeSelector(updatedState)).toBeUndefined();
   });
 });
 
