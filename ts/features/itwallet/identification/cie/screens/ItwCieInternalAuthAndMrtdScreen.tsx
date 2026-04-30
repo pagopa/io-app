@@ -93,7 +93,7 @@ export const ItwCieInternalAuthAndMrtdScreen = ({ route }: Props) => {
   /**
    * Handles the case where the CAN code is wrong, and we need to retry the challenge
    */
-  const handleWrongCANRetry = useCallback(() => {
+  const handleWrongCanRetry = useCallback(() => {
     issuanceActor.send({
       type: "retry"
     });
@@ -109,7 +109,7 @@ export const ItwCieInternalAuthAndMrtdScreen = ({ route }: Props) => {
         can={can}
         challenge={challenge}
         onChallengeSigned={handleChallengeSigned}
-        onWrongCANRetry={handleWrongCANRetry}
+        onWrongCanRetry={handleWrongCanRetry}
       />
     );
   }
@@ -131,14 +131,14 @@ type CieManagerComponentProps = {
   can: string;
   challenge: string;
   onChallengeSigned: (data: InternalAuthAndMrtdResponse) => void;
-  onWrongCANRetry: () => void;
+  onWrongCanRetry: () => void;
 };
 
 const CieManagerComponent = ({
   can,
   challenge,
   onChallengeSigned,
-  onWrongCANRetry
+  onWrongCanRetry
 }: CieManagerComponentProps) => {
   const { startInternalAuthAndMRTDReading, state } = useCieManager({
     onInternalAuthAndMRTDWithPaceSuccess: onChallengeSigned
@@ -146,11 +146,11 @@ const CieManagerComponent = ({
 
   const handleRetry = useCallback(() => {
     if (state.state === "failure" && state.failure.name === "WRONG_CAN") {
-      onWrongCANRetry();
+      onWrongCanRetry();
     } else {
       void startInternalAuthAndMRTDReading(can, challenge);
     }
-  }, [can, challenge, startInternalAuthAndMRTDReading, onWrongCANRetry, state]);
+  }, [can, challenge, startInternalAuthAndMRTDReading, onWrongCanRetry, state]);
 
   /**
    * Starts the reading process as soon the component is mounted
