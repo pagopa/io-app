@@ -30,8 +30,6 @@ export const linkingSubscription =
   (dispatch: Dispatch<Action>, store: Store<Readonly<GlobalState>>) =>
   (listener: (url: string) => void) => {
     const subscription = Linking.addEventListener("url", ({ url }) => {
-      const isCredentialOfferInvocation =
-        isPotentialCredentialOfferInvocation(url);
       // track if the app is opened from a universal link, but only if the url
       // is an https link, to avoid tracking custom scheme deep links that are
       // not universal links
