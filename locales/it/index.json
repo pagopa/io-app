@@ -2844,6 +2844,10 @@
         "content": "Riceverai un messaggio su IO con l’esito della tua richiesta.",
         "cta": "Chiudi"
       },
+      "documentUnavailablePage": {
+        "title": "Non siamo riusciti a recuperare i documenti",
+        "subtitle": "Riprova tra qualche minuto."
+      },
       "qtspTos": {
         "title": "Ci siamo quasi!",
         "subTitle": "Per firmare, devi accettare i termini e condizioni del servizio e confermare di avere letto l’informativa privacy del fornitore della firma."

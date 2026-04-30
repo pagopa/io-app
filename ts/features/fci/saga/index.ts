@@ -216,6 +216,11 @@ function* watchFciSignatureRequestRetrySaga(
 
     if (isActionOf(fciSignatureRequestFromId.success, result)) {
       if (result.payload.id === action.payload) {
+        /**
+         * when restarting the flow from 'DocumentUnavailableScreen',
+         * FciDocumentsScreen will still get pot error if not reset
+         */
+        yield* put(fciDownloadPreview.cancel());
         // start a new signing flow
         yield* put(fciStartRequest());
         return;

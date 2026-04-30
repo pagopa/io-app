@@ -10,6 +10,7 @@ import FciThankyouScreen from "../screens/valid/FciThankyouScreen";
 import { FciDocumentPreviewScreen } from "../screens/valid/FciDocumentPreviewScreen";
 import FciSignatureRequestsScreen from "../screens/valid/FciSignatureRequestsScreen";
 import { AppParamsList } from "../../../navigation/params/AppParamsList";
+import FciDocumentUnavailableScreen from "../screens/failure/FciDocumentUnavailableScreen.tsx";
 import { FCI_ROUTES } from "./routes";
 import { FciParamsList } from "./params";
 
@@ -61,6 +62,13 @@ export const FciStackNavigator = () => (
     <Stack.Screen
       name={FCI_ROUTES.SIGNATURE_REQUESTS}
       component={FciSignatureRequestsScreen}
+    />
+    <Stack.Screen
+      name={FCI_ROUTES.DOCUMENT_UNAVAILABLE}
+      component={FciDocumentUnavailableScreen}
+      options={{
+        headerShown: false
+      }}
     />
   </Stack.Navigator>
 );

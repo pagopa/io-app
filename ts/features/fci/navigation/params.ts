@@ -13,4 +13,5 @@ export type FciParamsList = {
   [FCI_ROUTES.TYP]: undefined;
   [FCI_ROUTES.DOC_PREVIEW]: FciDocumentPreviewScreenNavigationParams;
   [FCI_ROUTES.SIGNATURE_REQUESTS]: undefined;
+  [FCI_ROUTES.DOCUMENT_UNAVAILABLE]: undefined;
 };
