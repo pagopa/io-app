@@ -1,7 +1,7 @@
 import { v4 as uuid } from "uuid";
 import { createClient, Client } from "../../definitions/identity/client";
 import { KeyInfo } from "../features/lollipop/utils/crypto";
-import { isDevEnv } from "../utils/environment";
+import { isTestEnv } from "../utils/environment";
 import { lollipopFetch } from "../features/lollipop/utils/fetch";
 import { ApiClientManager, BaseClientOptions } from "./ApiClientManager";
 
@@ -30,6 +30,6 @@ class IdentityClientManager extends ApiClientManager<
 
 export const identityClientManager = new IdentityClientManager();
 
-export const TestIdentityClientManager = isDevEnv
+export const TestIdentityClientManager = isTestEnv
   ? { IdentityClientManager }
   : {};

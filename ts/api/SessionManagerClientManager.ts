@@ -1,6 +1,6 @@
 import { createClient, Client } from "../../definitions/session_manager/client";
 import { defaultRetryingFetch } from "../utils/fetch";
-import { isDevEnv } from "../utils/environment";
+import { isTestEnv } from "../utils/environment";
 import { ApiClientManager, BaseClientOptions } from "./ApiClientManager";
 
 export type SessionManagerClient = Client<"Bearer">;
@@ -25,6 +25,6 @@ class SessionManagerClientManager extends ApiClientManager<
 
 export const sessionManagerClientManager = new SessionManagerClientManager();
 
-export const TestSessionManagerClientManager = isDevEnv
+export const TestSessionManagerClientManager = isTestEnv
   ? { SessionManagerClientManager }
   : {};

@@ -2,7 +2,7 @@ import { v4 as uuid } from "uuid";
 import { createClient, Client } from "../../definitions/communication/client";
 import { KeyInfo } from "../features/lollipop/utils/crypto";
 import { lollipopFetch } from "../features/lollipop/utils/fetch";
-import { isDevEnv } from "../utils/environment";
+import { isTestEnv } from "../utils/environment";
 import { ApiClientManager, BaseClientOptions } from "./ApiClientManager";
 
 export type CommunicationClient = Client<"Bearer">;
@@ -28,6 +28,6 @@ class CommunicationClientManager extends ApiClientManager<
 
 export const communicationClientManager = new CommunicationClientManager();
 
-export const TestCommunicationClientManager = isDevEnv
+export const TestCommunicationClientManager = isTestEnv
   ? { CommunicationClientManager }
   : {};
