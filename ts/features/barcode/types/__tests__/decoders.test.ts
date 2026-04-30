@@ -282,7 +282,7 @@ describe("test decodeIOBarcode function", () => {
     describe("https universal links", () => {
       it("should return O.some on valid https URI with credential_offer param", () => {
         const value =
-          "https://wallet.example.com/credential-offer?credential_offer=%7B%22credential_issuer%22%3A%22https%3A%2F%2Fissuer.example.com%22%7D";
+          "https://continua.io.pagopa.it/itw/credential-offer?credential_offer=%7B%22credential_issuer%22%3A%22https%3A%2F%2Fissuer.example.com%22%7D";
         const output = decodeIOBarcode(fakeGlobalState, value);
 
         expect(output).toStrictEqual(
@@ -295,7 +295,7 @@ describe("test decodeIOBarcode function", () => {
 
       it("should return O.some on valid https URI with credential_offer_uri param", () => {
         const value =
-          "https://wallet.example.com/credential-offer?credential_offer_uri=https%3A%2F%2Fissuer.example.com%2Foffers%2F123";
+          "https://continua.io.pagopa.it/itw/credential-offer?credential_offer_uri=https%3A%2F%2Fissuer.example.com%2Foffers%2F123";
         const output = decodeIOBarcode(fakeGlobalState, value);
 
         expect(output).toStrictEqual(
@@ -308,7 +308,7 @@ describe("test decodeIOBarcode function", () => {
 
       it("should return O.some with additional query params", () => {
         const value =
-          "https://wallet.example.com/credential-offer?foo=bar&credential_offer=abc123&baz=qux";
+          "https://continua.io.pagopa.it/itw/credential-offer?foo=bar&credential_offer=abc123&baz=qux";
         const output = decodeIOBarcode(fakeGlobalState, value);
 
         expect(output).toStrictEqual(
@@ -328,14 +328,22 @@ describe("test decodeIOBarcode function", () => {
       });
 
       it("should return O.none on https URI without credential_offer params", () => {
-        const value = "https://wallet.example.com/credential-offer?foo=bar";
+        const value =
+          "https://continua.io.pagopa.it/itw/credential-offer?foo=bar";
+        const output = decodeIOBarcode(fakeGlobalState, value);
+        expect(output).toStrictEqual(O.none);
+      });
+
+      it("should return O.none on https URI outside the IO universal link host", () => {
+        const value =
+          "https://wallet.example.com/credential-offer?credential_offer=abc123";
         const output = decodeIOBarcode(fakeGlobalState, value);
         expect(output).toStrictEqual(O.none);
       });
 
       it("should return O.none on http URI (not https)", () => {
         const value =
-          "http://wallet.example.com/credential-offer?credential_offer=abc123";
+          "http://continua.io.pagopa.it/itw/credential-offer?credential_offer=abc123";
         const output = decodeIOBarcode(fakeGlobalState, value);
         expect(output).toStrictEqual(O.none);
       });
