@@ -1,4 +1,5 @@
 import { useIOThemeContext } from "@pagopa/io-app-design-system";
+import { setUserInterfaceStyle } from "@pagopa/io-react-native-zendesk";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useEffect } from "react";
 import { Appearance, ColorSchemeName, useColorScheme } from "react-native";
@@ -31,5 +32,6 @@ export const useAppThemeConfiguration = () => {
 
   useEffect(() => {
     updateNavigationBarColor(themeType);
+    setUserInterfaceStyle(themeType === "dark" ? "dark" : "light");
   }, [themeType]);
 };
