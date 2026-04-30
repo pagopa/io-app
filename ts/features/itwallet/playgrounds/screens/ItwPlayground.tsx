@@ -11,6 +11,7 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useScreenEndMargin } from "../../../../hooks/useScreenEndMargin";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { ItwComponentsSection } from "../components/ItwComponentsSection";
+import { ItwCredentialStatusOverrideSection } from "../components/ItwCredentialStatusOverrideSection";
 import { ItwEnvironmentSection } from "../components/ItwEnvironmentSection";
 import { ItwIdentificationScreensSection } from "../components/ItwIdentificationScreensSection";
 import { ItwL3ScreensSection } from "../components/ItwL3ScreensSection";
@@ -49,6 +50,7 @@ const ItwPlayground = () => {
         <TabItem label="Issuance" accessibilityLabel="Issuance" />
         <TabItem label="Screens" accessibilityLabel="Screens" />
         <TabItem label="Components" accessibilityLabel="Components" />
+        <TabItem label="Status" accessibilityLabel="Status" />
       </TabNavigation>
       <ScrollView
         contentContainerStyle={{
@@ -72,6 +74,7 @@ const ItwPlayground = () => {
             </>
           )}
           {page === 3 && <ItwComponentsSection />}
+          {page === 4 && <ItwCredentialStatusOverrideSection />}
         </ContentWrapper>
       </ScrollView>
     </VStack>
