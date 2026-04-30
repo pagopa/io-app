@@ -106,6 +106,26 @@ export const engagementCGNDiscoveryBannerSelector = createSelector(
     )
 );
 
+export const getEYCABaseUrl = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): string =>
+    pipe(
+      remoteConfig,
+      O.map(config => config.cgn.eyca_base_url),
+      O.getOrElse(() => "")
+    )
+);
+
+export const getEYCADiscountUrl = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): string =>
+    pipe(
+      remoteConfig,
+      O.map(config => config.cgn.eyca_discount_url),
+      O.getOrElse(() => "")
+    )
+);
+
 export const assistanceToolConfigSelector = createSelector(
   remoteConfigSelector,
   (remoteConfig): ToolEnum | undefined =>
