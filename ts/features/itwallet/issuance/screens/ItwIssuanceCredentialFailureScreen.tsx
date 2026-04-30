@@ -61,13 +61,6 @@ export const ItwIssuanceCredentialFailureScreen = () => {
   );
 };
 
-const defaultInvalidStatusMessage = {
-  title: I18n.t("features.itWallet.issuance.notEntitledCredentialError.title"),
-  description: I18n.t(
-    "features.itWallet.issuance.notEntitledCredentialError.body"
-  )
-};
-
 type ContentViewProps = { failure: CredentialIssuanceFailure };
 
 /**
@@ -145,10 +138,14 @@ const ContentView = ({ failure }: ContentViewProps) => {
           return {
             title:
               invalidStatusDetails.message?.title ??
-              defaultInvalidStatusMessage.title,
+              I18n.t(
+                "features.itWallet.issuance.notEntitledCredentialError.title"
+              ),
             subtitle:
               invalidStatusDetails.message?.description ??
-              defaultInvalidStatusMessage.description,
+              I18n.t(
+                "features.itWallet.issuance.notEntitledCredentialError.body"
+              ),
             pictogram: "accessDenied",
             ...(supportModal.hasContactMethods
               ? { action: supportModalAction, secondaryAction: closeAction }

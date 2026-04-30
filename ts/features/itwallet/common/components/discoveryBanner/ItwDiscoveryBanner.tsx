@@ -17,14 +17,14 @@ import { itwCloseBanner } from "../../store/actions/banners";
 
 const bannerConfig = {
   onboarding: {
-    content: I18n.t("features.itWallet.discovery.banner.home.content"),
-    title: I18n.t("features.itWallet.discovery.banner.home.title"),
-    action: I18n.t("features.itWallet.discovery.banner.home.action")
+    content: "features.itWallet.discovery.banner.home.content",
+    title: "features.itWallet.discovery.banner.home.title",
+    action: "features.itWallet.discovery.banner.home.action"
   },
   reactivating: {
-    content: I18n.t("features.itWallet.discovery.banner.homeActive.content"),
-    title: I18n.t("features.itWallet.discovery.banner.homeActive.title"),
-    action: I18n.t("features.itWallet.discovery.banner.homeActive.action")
+    content: "features.itWallet.discovery.banner.homeActive.content",
+    title: "features.itWallet.discovery.banner.homeActive.title",
+    action: "features.itWallet.discovery.banner.homeActive.action"
   }
 } as const;
 
@@ -91,9 +91,9 @@ export const ItwDiscoveryBannerLegacy = ({
       <Banner
         testID="itwDiscoveryBannerTestID"
         ref={bannerRef}
-        title={withTitle ? title : undefined}
-        content={content}
-        action={action}
+        title={withTitle ? I18n.t(title) : undefined}
+        content={I18n.t(content)}
+        action={I18n.t(action)}
         pictogramName="itWallet"
         color="turquoise"
         onClose={closable ? handleClose : undefined}

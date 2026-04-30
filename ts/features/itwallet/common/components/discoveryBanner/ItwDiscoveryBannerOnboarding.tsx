@@ -16,12 +16,10 @@ import { useItwDiscoveryBannerType } from "../../hooks/useItwDiscoveryBannerType
 
 const bannerConfig = {
   onboarding: {
-    content: I18n.t("features.itWallet.discovery.banner.home.content")
+    content: "features.itWallet.discovery.banner.home.content"
   },
   reactivating: {
-    content: I18n.t(
-      "features.itWallet.discovery.banner.onboardingActive.content"
-    )
+    content: "features.itWallet.discovery.banner.onboardingActive.content"
   }
 } as const;
 
@@ -74,7 +72,7 @@ const ItwDiscoveryBannerOnboarding = () => {
     <View style={styles.wrapper}>
       <Banner
         testID="itwDiscoveryBannerOnboardingTestID"
-        content={content}
+        content={I18n.t(content)}
         action={I18n.t("features.itWallet.discovery.banner.onboarding.action")}
         pictogramName="itWallet"
         color="neutral"

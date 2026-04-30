@@ -4,6 +4,7 @@ import * as O from "fp-ts/lib/Option";
 import { SdJwt, Mdoc } from "@pagopa/io-react-native-wallet";
 import I18n from "i18next";
 import { isBefore } from "date-fns";
+import { TranslationKeys } from "../../../../i18n";
 import { ItwIridescentBorderVariant } from "../components/ItwBrandedSkiaBorder";
 import { CredentialType } from "./itwMocksUtils";
 import {
@@ -121,32 +122,51 @@ export const borderVariantByStatus: {
   unknown: "default"
 };
 
-export const tagPropsByStatus: { [key in ItwCredentialStatus]?: Tag } = {
+const tagConfigByStatus: Partial<
+  Record<ItwCredentialStatus, Tag & { text: TranslationKeys }>
+> = {
   invalid: {
     variant: "error",
-    text: I18n.t("features.itWallet.card.status.invalid")
+    text: "features.itWallet.card.status.invalid"
   },
   expired: {
     variant: "error",
-    text: I18n.t("features.itWallet.card.status.expired")
+    text: "features.itWallet.card.status.expired"
   },
   jwtExpired: {
     variant: "error",
-    text: I18n.t("features.itWallet.card.status.verificationExpired")
+    text: "features.itWallet.card.status.verificationExpired"
   },
   expiring: {
     variant: "warning",
-    text: I18n.t("features.itWallet.card.status.expiring")
+    text: "features.itWallet.card.status.expiring"
   },
   jwtExpiring: {
     variant: "warning",
-    text: I18n.t("features.itWallet.card.status.verificationExpiring")
+    text: "features.itWallet.card.status.verificationExpiring"
   },
   unknown: {
     variant: "custom",
     icon: { name: "infoFilled", color: "grey-450" },
-    text: I18n.t("features.itWallet.card.status.unknown")
+    text: "features.itWallet.card.status.unknown"
   }
+};
+
+export const getTagPropsByStatus = (
+  status: ItwCredentialStatus
+): Tag | undefined => {
+  const tagConfig = tagConfigByStatus[status];
+
+  if (!tagConfig) {
+    return undefined;
+  }
+
+  const { text: textKey, ...tagProps } = tagConfig;
+
+  return {
+    ...tagProps,
+    text: I18n.t(textKey)
+  };
 };
 
 /**

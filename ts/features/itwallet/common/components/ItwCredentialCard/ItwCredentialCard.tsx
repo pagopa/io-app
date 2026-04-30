@@ -16,7 +16,7 @@ import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/se
 import { useItwDisplayCredentialStatus } from "../../../presentation/details/hooks/useItwDisplayCredentialStatus";
 import {
   getCredentialNameFromType,
-  tagPropsByStatus,
+  getTagPropsByStatus,
   useBorderColorByStatus,
   validCredentialStatuses
 } from "../../utils/itwCredentialUtils";
@@ -86,7 +86,7 @@ export const ItwCredentialCard = ({
       };
     }
 
-    return tagPropsByStatus[status];
+    return getTagPropsByStatus(status);
   }, [status, needsItwUpgrade]);
 
   const { titleColor, titleOpacity, colorScheme } = useMemo<StyleProps>(() => {

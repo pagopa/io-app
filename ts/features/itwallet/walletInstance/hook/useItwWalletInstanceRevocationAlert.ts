@@ -13,13 +13,6 @@ import {
   DOCUMENTS_ON_IO_FAQ_14_URL_BODY
 } from "../../../../urls";
 
-const closeButtonText = I18n.t(
-  "features.itWallet.walletInstanceRevoked.alert.closeButton"
-);
-const alertCtaText = I18n.t(
-  "features.itWallet.walletInstanceRevoked.alert.cta"
-);
-
 /**
  * Hook to monitor wallet instance status and display alerts if revoked.
  */
@@ -79,9 +72,13 @@ const showWalletRevocationAlert = (
           "features.itWallet.walletInstanceRevoked.alert.revokedByWalletProvider.content"
         ),
         [
-          { text: closeButtonText },
           {
-            text: alertCtaText,
+            text: I18n.t(
+              "features.itWallet.walletInstanceRevoked.alert.closeButton"
+            )
+          },
+          {
+            text: I18n.t("features.itWallet.walletInstanceRevoked.alert.cta"),
             onPress: () => openWebUrl(itwMinIntegrityReqUrl)
           }
         ]
@@ -97,9 +94,13 @@ const showWalletRevocationAlert = (
           "features.itWallet.walletInstanceRevoked.alert.newWalletInstanceCreated.content"
         ),
         [
-          { text: closeButtonText },
           {
-            text: alertCtaText,
+            text: I18n.t(
+              "features.itWallet.walletInstanceRevoked.alert.closeButton"
+            )
+          },
+          {
+            text: I18n.t("features.itWallet.walletInstanceRevoked.alert.cta"),
             onPress: () => openWebUrl(itwDocsOnIOMultipleDevicesUrl)
           }
         ]

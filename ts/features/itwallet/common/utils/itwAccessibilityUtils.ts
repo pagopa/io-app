@@ -1,12 +1,19 @@
 import I18n from "i18next";
+import { TranslationKeys } from "../../../../i18n";
 import { ItwCredentialStatus } from "./itwTypesUtils";
 
-export const accessibilityLabelByStatus: {
-  [key in ItwCredentialStatus]?: string;
-} = {
-  invalid: I18n.t("features.itWallet.card.status.invalid"),
-  expired: I18n.t("features.itWallet.card.status.expired"),
-  jwtExpired: I18n.t("features.itWallet.card.status.verificationExpired"),
-  expiring: I18n.t("features.itWallet.card.status.expiring"),
-  jwtExpiring: I18n.t("features.itWallet.card.status.verificationExpiring")
+const accessibilityLabelKeyByStatus: Partial<
+  Record<ItwCredentialStatus, TranslationKeys | undefined>
+> = {
+  invalid: "features.itWallet.card.status.invalid",
+  expired: "features.itWallet.card.status.expired",
+  jwtExpired: "features.itWallet.card.status.verificationExpired",
+  expiring: "features.itWallet.card.status.expiring",
+  jwtExpiring: "features.itWallet.card.status.verificationExpiring"
+};
+
+export const getAccessibilityLabelByStatus = (status: ItwCredentialStatus) => {
+  const labelKey = accessibilityLabelKeyByStatus[status];
+
+  return labelKey ? I18n.t(labelKey) : undefined;
 };

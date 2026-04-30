@@ -30,36 +30,6 @@ const credentialIconByType: Record<string, IOIcons> = {
   [CredentialType.EDUCATION_ATTENDANCE]: "messageLegal"
 };
 
-const activeBadge: Badge = {
-  variant: "success",
-  text: I18n.t("features.wallet.onboarding.badge.active")
-};
-
-const activeL3Badge: Badge = {
-  variant: "success",
-  text: I18n.t("features.wallet.onboarding.badge.valid")
-};
-
-const disabledBadge: Badge = {
-  variant: "default",
-  text: I18n.t("features.wallet.onboarding.badge.unavailable")
-};
-
-const requestedBadge: Badge = {
-  variant: "highlight",
-  text: I18n.t("features.wallet.onboarding.badge.requested")
-};
-
-const upcomingBadge: Badge = {
-  variant: "default",
-  text: I18n.t("features.wallet.onboarding.badge.upcoming")
-};
-
-const newBadge: Badge = {
-  variant: "default",
-  text: I18n.t("features.wallet.onboarding.badge.new")
-};
-
 const getBadge = (args: {
   isActive?: boolean;
   isDisabled?: boolean;
@@ -72,19 +42,38 @@ const getBadge = (args: {
     args;
 
   if (isActive) {
-    return isL3Enabled ? activeL3Badge : activeBadge;
+    return {
+      variant: "success",
+      text: I18n.t(
+        isL3Enabled
+          ? "features.wallet.onboarding.badge.valid"
+          : "features.wallet.onboarding.badge.active"
+      )
+    };
   }
   if (isDisabled) {
-    return disabledBadge;
+    return {
+      variant: "default",
+      text: I18n.t("features.wallet.onboarding.badge.unavailable")
+    };
   }
   if (isRequested) {
-    return requestedBadge;
+    return {
+      variant: "highlight",
+      text: I18n.t("features.wallet.onboarding.badge.requested")
+    };
   }
   if (isUpcoming) {
-    return upcomingBadge;
+    return {
+      variant: "default",
+      text: I18n.t("features.wallet.onboarding.badge.upcoming")
+    };
   }
   if (isNew) {
-    return newBadge;
+    return {
+      variant: "default",
+      text: I18n.t("features.wallet.onboarding.badge.new")
+    };
   }
   return undefined;
 };

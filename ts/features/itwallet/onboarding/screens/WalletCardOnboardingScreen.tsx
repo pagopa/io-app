@@ -1,5 +1,4 @@
 import {
-  Badge,
   IOVisualCostants,
   ListItemHeader,
   ModuleCredential,
@@ -36,11 +35,6 @@ import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingModuleCredentialsList.tsx";
 import { AsyncCredentialsCatalogue } from "../components/AsyncCredentialsCatalogueWrapper.tsx";
 import { itwAvailableCredentialsListSelector } from "../../credentialsCatalogue/store/selectors";
-
-const activeBadge: Badge = {
-  variant: "success",
-  text: I18n.t("features.wallet.onboarding.badge.active")
-};
 
 const WalletCardOnboardingScreen = () => {
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
@@ -139,7 +133,14 @@ const OtherCardsOnboardingSection = (props: { showTitle?: boolean }) => {
           image={require("../../../../../img/bonus/cgn/cgn_logo.png")}
           label={I18n.t("features.wallet.onboarding.options.cgn")}
           onPress={!isCgnActive ? startCgnActivation : undefined}
-          badge={isCgnActive ? activeBadge : undefined}
+          badge={
+            isCgnActive
+              ? {
+                  variant: "success",
+                  text: I18n.t("features.wallet.onboarding.badge.active")
+                }
+              : undefined
+          }
         />
       ),
     [isCgnActive, isCgnLoading, startCgnActivation]
