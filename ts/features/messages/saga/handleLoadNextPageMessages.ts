@@ -1,6 +1,6 @@
 import { put, call, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { PaginatedPublicMessagesCollection } from "../../../../definitions/backend/PaginatedPublicMessagesCollection";
+import { PaginatedPublicMessagesCollection } from "../../../../definitions/communication/PaginatedPublicMessagesCollection";
 import {
   loadNextPageMessages,
   loadNextPageMessages as loadNextPageMessagesAction
@@ -17,8 +17,7 @@ import {
 } from "../analytics";
 import { handleResponse } from "../utils/responseHandling";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
-import { backendClientManager } from "../../../api/BackendClientManager";
-import { apiUrlPrefix } from "../../../config";
+import { getCommunicationClient } from "./commons";
 
 export function* handleLoadNextPageMessages(
   action: ActionType<typeof loadNextPageMessages.request>
@@ -33,9 +32,8 @@ export function* handleLoadNextPageMessages(
     );
     return;
   }
-
-  const { getMessages } = backendClientManager.getBackendClient(
-    apiUrlPrefix,
+  const { getUserMessages: getMessages } = yield* call(
+    getCommunicationClient,
     sessionToken
   );
 
