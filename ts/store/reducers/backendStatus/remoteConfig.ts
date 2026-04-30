@@ -111,7 +111,7 @@ export const getEYCABaseUrl = createSelector(
   (remoteConfig): string =>
     pipe(
       remoteConfig,
-      O.map(config => config.cgn.eyca_base_url),
+      O.chain(config => O.fromNullable(config.cgn.eyca_base_url)),
       O.getOrElse(() => "")
     )
 );
@@ -121,7 +121,7 @@ export const getEYCADiscountUrl = createSelector(
   (remoteConfig): string =>
     pipe(
       remoteConfig,
-      O.map(config => config.cgn.eyca_discount_url),
+      O.chain(config => O.fromNullable(config.cgn.eyca_discount_url)),
       O.getOrElse(() => "")
     )
 );
