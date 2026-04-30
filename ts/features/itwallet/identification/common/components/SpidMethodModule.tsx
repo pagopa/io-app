@@ -7,10 +7,13 @@ import { useContinueWithBottomSheet } from "../hooks/useContinueWithBottomSheet"
 
 type Props = {
   isL3: boolean;
+  isReissuanceMode?: boolean;
 };
 
-export const SpidMethodModule = ({ isL3 }: Props) => {
+export const SpidMethodModule = ({ isL3, isReissuanceMode = false }: Props) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
+  const translationKey =
+    "features.itWallet.identification.modeSelection.mode.spid";
 
   const handleOnPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "spid" });
@@ -27,12 +30,12 @@ export const SpidMethodModule = ({ isL3 }: Props) => {
       <>
         <ModuleNavigationAlt
           testID="SpidMethodModuleTestIDL3"
-          title={I18n.t(
-            "features.itWallet.identification.modeSelection.mode.spid.title.l3"
-          )}
-          subtitle={I18n.t(
-            "features.itWallet.identification.modeSelection.mode.spid.subtitle.l3"
-          )}
+          title={I18n.t(`${translationKey}.title.l3`)}
+          subtitle={
+            isReissuanceMode
+              ? undefined
+              : I18n.t(`${translationKey}.subtitle.l3`)
+          }
           icon="spid"
           onPress={() => {
             trackItWalletIDMethodSelected({
@@ -51,11 +54,9 @@ export const SpidMethodModule = ({ isL3 }: Props) => {
     <ModuleNavigationAlt
       testID="SpidMethodModuleTestIDL2"
       title={I18n.t(
-        "features.itWallet.identification.modeSelection.mode.spid.title.default"
+        `${translationKey}${isReissuanceMode ? ".title.l3" : ".title.default"}`
       )}
-      subtitle={I18n.t(
-        "features.itWallet.identification.modeSelection.mode.spid.subtitle.default"
-      )}
+      subtitle={I18n.t(`${translationKey}.subtitle.default`)}
       icon="spid"
       onPress={handleOnPress}
     />

@@ -1,6 +1,6 @@
 import { IOColors, useIOTheme, VSpacer } from "@pagopa/io-app-design-system";
 
-import { ComponentProps, forwardRef, useCallback, useRef } from "react";
+import { ComponentProps, useCallback, useRef, Ref } from "react";
 import {
   Animated,
   GestureResponderEvent,
@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
 });
 
 export type CarouselProps = {
+  ref?: Ref<View>;
   carouselCards: ReadonlyArray<ComponentProps<typeof LandingCardComponent>>;
   dotEasterEggCallback?: () => void;
 };
@@ -104,8 +105,11 @@ const CarouselDots = (props: CarouselDotsProps) => {
   );
 };
 
-export const Carousel = forwardRef<View, CarouselProps>((props, ref) => {
-  const { carouselCards, dotEasterEggCallback } = props;
+export const Carousel = ({
+  ref,
+  carouselCards,
+  dotEasterEggCallback
+}: CarouselProps) => {
   const screenDimension = useWindowDimensions();
   const windowWidth = screenDimension.width;
   const scrollX = useRef(new Animated.Value(0)).current;
@@ -164,4 +168,4 @@ export const Carousel = forwardRef<View, CarouselProps>((props, ref) => {
       <VSpacer size={24} />
     </>
   );
-});
+};
