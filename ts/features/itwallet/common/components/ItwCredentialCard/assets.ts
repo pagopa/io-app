@@ -40,6 +40,7 @@ export const CREDENTIAL_PATTERN_OVERLAYS = {
   education: require("../../../../../../img/features/itWallet/cards/overlay/pattern/education.png"),
   family: require("../../../../../../img/features/itWallet/cards/overlay/pattern/family.png"),
   financial: require("../../../../../../img/features/itWallet/cards/overlay/pattern/financial.png"),
+  health: require("../../../../../../img/features/itWallet/cards/overlay/pattern/health.png"),
   identity: require("../../../../../../img/features/itWallet/cards/overlay/pattern/identity.png"),
   lifestyle: require("../../../../../../img/features/itWallet/cards/overlay/pattern/lifestyle.png"),
   travel: require("../../../../../../img/features/itWallet/cards/overlay/pattern/travel.png"),
