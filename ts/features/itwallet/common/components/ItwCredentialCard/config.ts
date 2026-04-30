@@ -1,16 +1,18 @@
 import { DataSourceParam } from "@shopify/react-native-skia";
 import Color from "color";
 import { ColorSchemeName } from "react-native";
+import { XOR } from "../../../../../types/utils";
 import { fnv1a } from "../../../../../utils/hash";
-import {
-  CARD_CORNER_OVERLAY,
-  CREDENTIAL_BASE_OVERLAYS,
-  CREDENTIAL_CARD_OVERLAYS,
-  CREDENTIAL_HEADER_OVERLAYS
-} from "../../utils/assets";
+import { preloadImages } from "../../utils/imageCache";
 import { CredentialType } from "../../utils/itwMocksUtils";
 import { ItWalletThemes } from "../../utils/theme";
-import { preloadImages } from "../../utils/imageCache";
+import {
+  CREDENTIAL_BASE_COLORS,
+  CREDENTIAL_CARD_CORNER_OVERLAY,
+  CREDENTIAL_CARD_OVERLAYS,
+  CREDENTIAL_HEADER_OVERLAYS,
+  CREDENTIAL_PATTERN_OVERLAYS
+} from "./assets";
 
 export type CredentialCardBackground<L extends number = 1 | 2 | 3 | 4 | 5> = {
   /**
@@ -24,22 +26,65 @@ export type CredentialCardBackground<L extends number = 1 | 2 | 3 | 4 | 5> = {
    * Must have the same length as `colors` when provided.
    */
   positions?: [number, ...Array<number>] & { length: L };
-  /**
-   * Angle in degrees following the CSS convention:
-   * 0° = bottom → top, 90° = left → right, 135° = top-left → bottom-right.
-   */
-  angle?: number;
-};
+} & XOR<
+  {
+    /**
+     * Type of the gradient, either linearor radial.
+     */
+    type: "linear";
+    /**
+     * Angle in degrees following the CSS convention:
+     * 0° = bottom → top, 90° = left → right, 135° = top-left → bottom-right.
+     */
+    angle: number;
+  },
+  {
+    /**
+     * Type of the gradient, either linear (default) or radial.
+     */
+    type: "radial";
+    /**
+     * Center of the gradient expressed in percentage values between 0 and 1,
+     * where [0.5, 0.5] corresponds to the center of the card.
+     */
+    center: [number, number];
+
+    /**
+     * Radius of the gradient, expressed as a percentage of the card width, between 0 and 1.
+     */
+    radius: number;
+  }
+>;
+
+export type CredentialCardOverlay = XOR<
+  {
+    /**
+     * A fixed overlay image applied to the credential card
+     */
+    card: DataSourceParam;
+    /**
+     * Optional fixed overlay image applied to the credential detail header.
+     * If not provided, the card overlay will be used in the header as well.
+     */
+    header?: DataSourceParam;
+  },
+  {
+    /**
+     * A pattern overlay applied to the credential card and header
+     */
+    pattern: DataSourceParam;
+    /**
+     * Whether to apply the corner overlay on top of the background
+     */
+    showCornerOverlay?: boolean;
+  }
+>;
 
 export type CredentialCardConfig = {
   /**
    * Base color for the credential, defined by the AS or in static configurations.
    */
   color: string;
-  /**
-   * Card background: either a solid colour or a gradient (angle + up to 5 stops).
-   */
-  background: CredentialCardBackground;
   /**
    * Color used for the credential title text.
    */
@@ -49,29 +94,14 @@ export type CredentialCardConfig = {
    */
   borderColor: string;
   /**
-   * Optional PNG image rendered as an overlay layer over the card.
+   * Card background: either a solid colour or a gradient (angle + up to 5 stops).
    */
-  overlay: DataSourceParam;
+  background: CredentialCardBackground;
   /**
-   * Optional PNG image rendered as an overlay layer in the credential detail
-   * header.
+   * Overlay configuration for the credential card, either a fixed image or a pattern
    */
-  headerOverlay?: DataSourceParam;
-  /**
-   * Wether to apply a blend mode to the overlay image (soft light)
-   */
-  overlayBlend?: boolean;
-  /**
-   * Whether to show the corner overlay with credential's base color
-   */
-  showCornerOverlay?: boolean;
+  overlay?: CredentialCardOverlay;
 };
-
-/**
- * Colors from which random configurations will be generated, based on the
- * provided seed.
- */
-const BASE_COLORS = ["#FFB357", "#CDD2FC", "#7AC1FA", "#003366"];
 
 /**
  * Per-credential static card configuration.
@@ -85,63 +115,84 @@ export const credentialCardConfigs: Partial<
 > = {
   [CredentialType.PID]: {
     color: "#EAF6FF",
+    titleColor: "#115486",
+    borderColor: "#4F99E2",
     background: {
+      type: "linear",
       colors: ["#EAF6FF", "#F6FBFF", "#EAF6FF", "#F9F9F9", "#EAF6FF"],
       positions: [0.0349, 0.2514, 0.4646, 0.7143, 0.9425],
       angle: 217
     },
-    titleColor: "#115486",
-    borderColor: "#4F99E2",
-    overlay: CREDENTIAL_CARD_OVERLAYS[CredentialType.PID],
-    headerOverlay: CREDENTIAL_HEADER_OVERLAYS[CredentialType.PID]
+    overlay: {
+      card: CREDENTIAL_CARD_OVERLAYS[CredentialType.PID],
+      header: CREDENTIAL_HEADER_OVERLAYS[CredentialType.PID]
+    }
   },
   [CredentialType.DRIVING_LICENSE]: {
     color: "#FADCF5",
+    titleColor: "#652035",
+    borderColor: "#D674A9",
     background: {
+      type: "linear",
       colors: ["#FADCF5", "#FFECFC", "#FADCF5", "#FFECFC"],
       positions: [0.0041, 0.3614, 0.6716, 1.0251],
       angle: 249
     },
-    titleColor: "#652035",
-    borderColor: "#D674A9",
-    overlay: CREDENTIAL_CARD_OVERLAYS[CredentialType.DRIVING_LICENSE],
-    headerOverlay: CREDENTIAL_HEADER_OVERLAYS[CredentialType.DRIVING_LICENSE]
+    overlay: {
+      card: CREDENTIAL_CARD_OVERLAYS[CredentialType.DRIVING_LICENSE],
+      header: CREDENTIAL_HEADER_OVERLAYS[CredentialType.DRIVING_LICENSE]
+    }
   },
   [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: {
     color: "#B7E1FA",
+    titleColor: "#032D5C",
+    borderColor: "#449DCF",
     background: {
+      type: "linear",
       colors: ["#B7E1FA", "#D0EDFF", "#B7E1FA", "#D0EDFF"],
       positions: [0.0031, 0.3686, 0.6772, 0.9904],
       angle: 249
     },
-    titleColor: "#032D5C",
-    borderColor: "#449DCF",
-    overlay:
-      CREDENTIAL_CARD_OVERLAYS[CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD],
-    headerOverlay:
-      CREDENTIAL_HEADER_OVERLAYS[CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]
+    overlay: {
+      card: CREDENTIAL_CARD_OVERLAYS[
+        CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+      ],
+      header:
+        CREDENTIAL_HEADER_OVERLAYS[
+          CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+        ]
+    }
   },
   [CredentialType.EUROPEAN_DISABILITY_CARD]: {
     color: "#D6EAF7",
-    background: {
-      colors: ["#D6EAF7"]
-    },
     titleColor: "#17406F",
     borderColor: "#6B9BB6",
-    overlay: CREDENTIAL_CARD_OVERLAYS[CredentialType.EUROPEAN_DISABILITY_CARD],
-    headerOverlay:
-      CREDENTIAL_HEADER_OVERLAYS[CredentialType.EUROPEAN_DISABILITY_CARD]
+    background: {
+      type: "radial",
+      colors: ["#E5F0F7", "#D6DDE2", "#DFE9EF", "#C7D0DB"],
+      positions: [0, 0.2223, 0.4999, 1],
+      center: [1, 0.195],
+      radius: 1.0564
+    },
+    overlay: {
+      card: CREDENTIAL_CARD_OVERLAYS[CredentialType.EUROPEAN_DISABILITY_CARD],
+      header:
+        CREDENTIAL_HEADER_OVERLAYS[CredentialType.EUROPEAN_DISABILITY_CARD]
+    }
   },
   [CredentialType.AGE_VERIFICATION]: {
     color: "#CECFF2",
-    background: {
-      colors: ["#ECECEC", "#CECFF2"],
-      angle: 180
-    },
     titleColor: "#363740",
     borderColor: "#9490BE",
-    overlay: CREDENTIAL_CARD_OVERLAYS[CredentialType.AGE_VERIFICATION],
-    headerOverlay: CREDENTIAL_HEADER_OVERLAYS[CredentialType.AGE_VERIFICATION]
+    background: {
+      type: "linear",
+      colors: ["#CECFF2", "#ECECEC"],
+      angle: 69
+    },
+    overlay: {
+      card: CREDENTIAL_CARD_OVERLAYS[CredentialType.AGE_VERIFICATION],
+      header: CREDENTIAL_HEADER_OVERLAYS[CredentialType.AGE_VERIFICATION]
+    }
   }
 };
 
@@ -152,7 +203,7 @@ const generateBaseColorFromCredentialType = (
   credentialType: string
 ): string => {
   const colorHash = fnv1a(credentialType);
-  return BASE_COLORS[colorHash % BASE_COLORS.length];
+  return CREDENTIAL_BASE_COLORS[colorHash % CREDENTIAL_BASE_COLORS.length];
 };
 
 /**
@@ -162,9 +213,11 @@ const generateBaseOverlayFromCredentialType = (
   credentialType: string
 ): DataSourceParam => {
   const overlayHash = fnv1a(credentialType, 1);
-  return CREDENTIAL_BASE_OVERLAYS[
-    overlayHash % CREDENTIAL_BASE_OVERLAYS.length
-  ];
+  const keys = Object.keys(CREDENTIAL_PATTERN_OVERLAYS) as Array<
+    keyof typeof CREDENTIAL_PATTERN_OVERLAYS
+  >;
+  const key = keys[overlayHash % keys.length];
+  return CREDENTIAL_PATTERN_OVERLAYS[key];
 };
 
 /**
@@ -206,19 +259,21 @@ const generateCredentialCardConfig = (
   ).hex();
 
   // TODO: [SIW-4216] Use credential taxonomy info to select overlay pattern
-  const overlay = generateBaseOverlayFromCredentialType(credentialType);
+  const patternOverlay = generateBaseOverlayFromCredentialType(credentialType);
 
   return {
     color,
-    background: {
-      colors: [backgroundColor, theme["card-background"]]
-    },
     borderColor,
     titleColor,
-    overlay,
-    headerOverlay: overlay,
-    overlayBlend: true,
-    showCornerOverlay: true
+    background: {
+      type: "linear",
+      colors: [backgroundColor, theme["card-background"]],
+      angle: 0
+    },
+    overlay: {
+      pattern: patternOverlay,
+      showCornerOverlay: true
+    }
   };
 };
 
@@ -262,14 +317,15 @@ export const preloadCredentialCardAssets = (
   const assetsToPreload = credentialTypes
     // Get credential card configurations for the provided credential types
     .map(type => getCredentialCardConfig(type, undefined))
-    .filter((config): config is CredentialCardConfig => config !== undefined)
-    // Extract overlay and header overlay assets from the configurations, plus the corner overlay if needed
-    .map(config => [
-      config.overlay,
-      config.headerOverlay,
-      config.showCornerOverlay ? CARD_CORNER_OVERLAY : undefined
+    // Extract overlay assets from the configurations
+    .map(({ overlay }) => [
+      overlay?.card,
+      overlay?.header,
+      overlay?.pattern,
+      overlay?.showCornerOverlay ? CREDENTIAL_CARD_CORNER_OVERLAY : undefined
     ])
     .flat()
+    // Filter out undefined assets
     .filter((asset): asset is DataSourceParam => asset !== undefined);
 
   preloadImages(Array.from(new Set(assetsToPreload)) as ReadonlyArray<number>);

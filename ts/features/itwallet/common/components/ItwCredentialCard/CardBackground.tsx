@@ -18,63 +18,61 @@ import Animated, {
 import { useLayoutSize } from "../../hooks/useLayoutSize";
 import { useCachedImage } from "../../utils/imageCache";
 import { CredentialType } from "../../utils/itwMocksUtils";
-import { SkiaCardCornerOverlay, SkiaCardOverlay } from "./CardOverlay";
+import {
+  SkiaCardCornerOverlay,
+  SkiaCardOverlay,
+  SkiaCardPatternOverlay
+} from "./CardOverlay";
 import { CredentialCardConfig } from "./config";
 import { SkiaGradientBackground } from "./GradientBackground";
 import { CardColorScheme } from "./types";
 
-type Props = Pick<
-  CredentialCardConfig,
-  "background" | "color" | "overlay" | "overlayBlend" | "showCornerOverlay"
->;
+type Props = Pick<CredentialCardConfig, "background" | "color" | "overlay">;
 
-export const CardBackground = memo(
-  ({ background, color, overlay, overlayBlend, showCornerOverlay }: Props) => {
-    const [size, setSize] = useLayoutSize();
+export const CardBackground = memo(({ background, color, overlay }: Props) => {
+  const [size, setSize] = useLayoutSize();
 
-    const handleLayout = useCallback(
-      (event: LayoutChangeEvent) => {
-        setSize(event.nativeEvent.layout);
-      },
-      [setSize]
-    );
+  const handleLayout = useCallback(
+    (event: LayoutChangeEvent) => {
+      setSize(event.nativeEvent.layout);
+    },
+    [setSize]
+  );
 
-    return (
-      <View
-        style={[
-          StyleSheet.absoluteFillObject,
-          { backgroundColor: IOColors.white }
-        ]}
-        onLayout={handleLayout}
-      >
-        <Canvas style={StyleSheet.absoluteFillObject} pointerEvents="none">
-          <SkiaGradientBackground
-            bg={background}
-            width={size.width}
-            height={size.height}
-          />
-          {showCornerOverlay && size.width > 0 && size.height > 0 && (
-            <SkiaCardCornerOverlay color={color} {...size} />
-          )}
-          {overlay && size.width > 0 && size.height > 0 && (
-            <SkiaCardOverlay
-              overlay={overlay}
-              overlayBlend={overlayBlend}
-              {...size}
-            />
-          )}
-        </Canvas>
-      </View>
-    );
-  }
-);
+  return (
+    <View
+      style={[
+        StyleSheet.absoluteFillObject,
+        { backgroundColor: IOColors.white }
+      ]}
+      onLayout={handleLayout}
+    >
+      <Canvas style={StyleSheet.absoluteFillObject} pointerEvents="none">
+        <SkiaGradientBackground bg={background} {...size} />
+        {overlay?.showCornerOverlay && (
+          <SkiaCardCornerOverlay color={color} {...size} />
+        )}
+        {overlay?.pattern && (
+          <SkiaCardPatternOverlay src={overlay.pattern} {...size} />
+        )}
+        {overlay?.card && <SkiaCardOverlay src={overlay.card} {...size} />}
+      </Canvas>
+    </View>
+  );
+});
 
+/**
+ * @deprecated Only used for the older Documenti su IO, will be removed in the future
+ */
 const legacyCredentialCardBackgrounds: { [type: string]: number } = {
   [CredentialType.EUROPEAN_DISABILITY_CARD]: require("../../../../../../img/features/itWallet/cards/dc.png"),
   [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: require("../../../../../../img/features/itWallet/cards/ts.png"),
   [CredentialType.DRIVING_LICENSE]: require("../../../../../../img/features/itWallet/cards/mdl.png")
 };
 
+/**
+ * @deprecated Only used for the older Documenti su IO, will be removed in the future
+ */
 const legacyCredentialGradientColors: { [type: string]: Array<string> } = {
   [CredentialType.EDUCATION_DEGREE]: ["#F2F1CE", "#ECECEC"],
   [CredentialType.EDUCATION_ENROLLMENT]: ["#E0F2CE", "#ECECEC"],

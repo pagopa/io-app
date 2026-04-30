@@ -1,4 +1,9 @@
-import { LinearGradient, Rect, vec } from "@shopify/react-native-skia";
+import {
+  LinearGradient,
+  RadialGradient,
+  Rect,
+  vec
+} from "@shopify/react-native-skia";
 import { memo, useMemo } from "react";
 import { CredentialCardConfig } from "./config";
 
@@ -45,12 +50,21 @@ export const SkiaGradientBackground = memo(
     );
     return (
       <Rect x={0} y={0} width={width} height={height}>
-        <LinearGradient
-          start={start}
-          end={end}
-          colors={bg.colors}
-          positions={bg.positions}
-        />
+        {bg.type === "radial" ? (
+          <RadialGradient
+            c={vec(width * bg.center[0], height * bg.center[1])}
+            r={width * bg.radius}
+            colors={bg.colors}
+            positions={bg.positions}
+          />
+        ) : (
+          <LinearGradient
+            start={start}
+            end={end}
+            colors={bg.colors}
+            positions={bg.positions}
+          />
+        )}
       </Rect>
     );
   }

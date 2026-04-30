@@ -2,16 +2,18 @@ import {
   Body,
   ContentWrapper,
   H2,
-  IOColors,
   Tag,
   makeFontStyleObject,
-  useIOExperimentalDesign
+  useIOExperimentalDesign,
+  useIOThemeContext
 } from "@pagopa/io-app-design-system";
+import Color from "color";
 import { memo, useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import ItwAvatar from "../../../../../../img/features/itWallet/brand/itw_avatar.svg";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar.tsx";
 import { useIOSelector } from "../../../../../store/hooks.ts";
+import { getCredentialCardConfig } from "../../../common/components/ItwCredentialCard/config.ts";
 import { ItwCredentialDetailCard } from "../../../common/components/ItwCredentialDetailCard.tsx";
 import {
   getCredentialNameFromType,
@@ -23,7 +25,6 @@ import { useThemeColorByCredentialType } from "../../../common/utils/itwStyleUti
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
 import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
 import { itwCredentialsCatalogueByTypesSelector } from "../../../credentialsCatalogue/store/selectors";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { useItwDisplayCredentialStatus } from "../hooks/useItwDisplayCredentialStatus";
 import { ItwPresentationCredentialCard } from "./ItwPresentationCredentialCard.tsx";
 
@@ -39,10 +40,11 @@ const credentialsWithSkeumorphicCard: ReadonlyArray<string> = [
 const ItwPresentationDetailsHeader = ({
   credential
 }: ItwPresentationDetailsHeaderProps) => {
-  const { isExperimental } = useIOExperimentalDesign();
-  const withL3Design = useIOSelector(itwLifecycleIsITWalletValidSelector);
-  const { statusBarStyle, backgroundColor, textColor } =
-    useThemeColorByCredentialType(credential.credentialType);
+  const { themeType } = useIOThemeContext();
+  const { color } = getCredentialCardConfig(
+    credential.credentialType,
+    themeType
+  );
   const { status: rawStatus = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
@@ -55,54 +57,27 @@ const ItwPresentationDetailsHeader = ({
     ? getItwAuthSource(credentialsCatalogue[credential.credentialType])
     : undefined;
 
-  const headerContent = useMemo(() => {
-    if (!withL3Design) {
-      if (credentialsWithSkeumorphicCard.includes(credential.credentialType)) {
-        return <ItwPresentationCredentialCard credential={credential} />;
-      }
+  const isLight = useMemo(() => Color(color).isLight(), [color]);
 
-      return (
-        <View style={[styles.legacyHeader, { backgroundColor }]}>
-          <ContentWrapper>
-            <Text
-              style={[
-                isExperimental
-                  ? styles.legacyHeaderLabelExperimental
-                  : styles.legacyHeaderLabel,
-                { color: textColor }
-              ]}
-              accessibilityRole="header"
-            >
-              {getCredentialNameFromType(credential.credentialType)}
-            </Text>
-          </ContentWrapper>
-        </View>
-      );
-    }
+  return (
+    <>
+      <FocusAwareStatusBar
+        backgroundColor={color}
+        barStyle={isLight ? "dark-content" : "light-content"}
+      />
 
-    return (
       <ItwCredentialDetailCard
         credentialType={credential.credentialType}
         credentialStatus={displayStatus}
       >
         <ItwAvatar width={48} height={48} />
-        <H2
-          style={{
-            paddingTop: 16,
-            textAlign: "center",
-            color: IOColors["blueIO-850"]
-          }}
-        >
-          {getCredentialNameFromType(credential.credentialType, withL3Design)}
+        <H2 style={styles.nameText} color={isLight ? "black" : "white"}>
+          {getCredentialNameFromType(credential.credentialType, true)}
         </H2>
         {authSource && (
           <Body
-            style={{
-              textAlign: "center",
-              marginHorizontal: 16,
-              paddingTop: 4,
-              color: IOColors["blueIO-850"]
-            }}
+            style={styles.authSourceText}
+            color={isLight ? "black" : "white"}
           >
             {authSource}
           </Body>
@@ -113,17 +88,43 @@ const ItwPresentationDetailsHeader = ({
           </View>
         )}
       </ItwCredentialDetailCard>
+    </>
+  );
+};
+
+/**
+ * @deprecated Legacy header component for presentation details, to be used until the new design is enabled for all users.
+ */
+const ItwPresentationDetailsHeaderLegacy = ({
+  credential
+}: ItwPresentationDetailsHeaderProps) => {
+  const { isExperimental } = useIOExperimentalDesign();
+  const { statusBarStyle, backgroundColor, textColor } =
+    useThemeColorByCredentialType(credential.credentialType);
+
+  const headerContent = useMemo(() => {
+    if (credentialsWithSkeumorphicCard.includes(credential.credentialType)) {
+      return <ItwPresentationCredentialCard credential={credential} />;
+    }
+
+    return (
+      <View style={[styles.legacyHeader, { backgroundColor }]}>
+        <ContentWrapper>
+          <Text
+            style={[
+              isExperimental
+                ? styles.legacyHeaderLabelExperimental
+                : styles.legacyHeaderLabel,
+              { color: textColor }
+            ]}
+            accessibilityRole="header"
+          >
+            {getCredentialNameFromType(credential.credentialType)}
+          </Text>
+        </ContentWrapper>
+      </View>
     );
-  }, [
-    authSource,
-    backgroundColor,
-    credential,
-    displayStatus,
-    isExperimental,
-    statusTagProps,
-    textColor,
-    withL3Design
-  ]);
+  }, [credential, backgroundColor, textColor, isExperimental]);
 
   return (
     <>
@@ -137,6 +138,15 @@ const ItwPresentationDetailsHeader = ({
 };
 
 const styles = StyleSheet.create({
+  nameText: {
+    textAlign: "center",
+    marginTop: 16
+  },
+  authSourceText: {
+    textAlign: "center",
+    marginHorizontal: 16,
+    paddingTop: 4
+  },
   legacyHeader: {
     marginTop: -300,
     paddingTop: 300,
@@ -153,4 +163,14 @@ const styles = StyleSheet.create({
 
 const MemoizedItwPresentationDetailsHeader = memo(ItwPresentationDetailsHeader);
 
-export { MemoizedItwPresentationDetailsHeader as ItwPresentationDetailsHeader };
+/**
+ * @deprecated
+ */
+const MemoizedItwPresentationDetailsHeaderLegacy = memo(
+  ItwPresentationDetailsHeaderLegacy
+);
+
+export {
+  MemoizedItwPresentationDetailsHeader as ItwPresentationDetailsHeader,
+  MemoizedItwPresentationDetailsHeaderLegacy as ItwPresentationDetailsHeaderLegacy
+};

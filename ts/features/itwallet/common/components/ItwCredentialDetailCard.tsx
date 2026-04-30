@@ -2,7 +2,7 @@ import {
   IOVisualCostants,
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
-import { Canvas } from "@shopify/react-native-skia";
+import { Canvas, Rect } from "@shopify/react-native-skia";
 import { PropsWithChildren, useCallback } from "react";
 import { LayoutChangeEvent, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -10,7 +10,10 @@ import { useLayoutSize } from "../hooks/useLayoutSize";
 import { borderVariantByStatus } from "../utils/itwCredentialUtils";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils";
 import { ItwBrandedSkiaBorder } from "./ItwBrandedSkiaBorder";
-import { SkiaCardOverlay } from "./ItwCredentialCard/CardOverlay";
+import {
+  SkiaCardOverlay,
+  SkiaCardPatternOverlay
+} from "./ItwCredentialCard/CardOverlay";
 import { SkiaGradientBackground } from "./ItwCredentialCard/GradientBackground";
 import { getCredentialCardConfig } from "./ItwCredentialCard/config";
 
@@ -38,7 +41,7 @@ export const ItwCredentialDetailCard = ({
   const safeAreaInsets = useSafeAreaInsets();
   const { themeType } = useIOThemeContext();
   const [size, setSize] = useLayoutSize();
-  const { background, headerOverlay, overlayBlend } = getCredentialCardConfig(
+  const { color, background, overlay } = getCredentialCardConfig(
     credentialType,
     themeType
   );
@@ -61,29 +64,31 @@ export const ItwCredentialDetailCard = ({
 
   return (
     <View style={[styles.container, { paddingTop }]} onLayout={handleOnLayout}>
-      <Canvas style={StyleSheet.absoluteFill}>
-        {size.width > 0 && size.height > 0 && (
-          <SkiaGradientBackground
-            bg={background}
+      {size && (
+        <Canvas style={StyleSheet.absoluteFill}>
+          {overlay?.header && (
+            <>
+              <SkiaGradientBackground bg={background} {...size} />
+              <SkiaCardOverlay src={overlay.header} {...size} />
+            </>
+          )}
+          {overlay?.pattern && (
+            <>
+              {/* Pattern should have a solid background */}
+              <Rect color={color} x={0} y={0} {...size} />
+              <SkiaCardPatternOverlay src={overlay.pattern} {...size} />
+            </>
+          )}
+
+          <ItwBrandedSkiaBorder
             width={size.width}
             height={size.height}
+            borderRadius={CARD_BORDER_RADIUS}
+            themeType={themeType}
+            variant={borderVariantByStatus[credentialStatus]}
           />
-        )}
-        {headerOverlay && size.width > 0 && size.height > 0 && (
-          <SkiaCardOverlay
-            overlay={headerOverlay}
-            overlayBlend={overlayBlend}
-            {...size}
-          />
-        )}
-        <ItwBrandedSkiaBorder
-          width={size.width}
-          height={size.height}
-          borderRadius={CARD_BORDER_RADIUS}
-          themeType={themeType}
-          variant={borderVariantByStatus[credentialStatus]}
-        />
-      </Canvas>
+        </Canvas>
+      )}
       <View style={styles.content}>{children}</View>
     </View>
   );

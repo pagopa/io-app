@@ -1,51 +1,85 @@
 import {
   BlendColor,
+  DataSourceParam,
+  Rect,
   Size,
-  Image as SkiaImage
+  Image as SkiaImage,
+  ImageShader as SkiaImageShader
 } from "@shopify/react-native-skia";
 import { memo, useEffect } from "react";
 import { Easing, useSharedValue, withTiming } from "react-native-reanimated";
-import { CARD_CORNER_OVERLAY } from "../../utils/assets";
 import { useCachedImage } from "../../utils/imageCache";
+import { CREDENTIAL_CARD_CORNER_OVERLAY } from "./assets";
 import { CredentialCardConfig } from "./config";
 
-type CardOverlayProps = Required<Pick<CredentialCardConfig, "overlay">> &
-  Pick<CredentialCardConfig, "overlayBlend"> &
-  Size;
+type CardOverlayProps = { src: DataSourceParam } & Size;
 
-export const SkiaCardOverlay = memo((props: CardOverlayProps) => {
-  const image = useCachedImage(props.overlay);
-  const opacity = useSharedValue(0);
+export const SkiaCardOverlay = memo(
+  ({ src, height, width }: CardOverlayProps) => {
+    const image = useCachedImage(src);
+    const opacity = useSharedValue(0);
 
-  useEffect(() => {
-    if (image) {
-      opacity.set(
-        withTiming(1, { duration: 200, easing: Easing.out(Easing.ease) })
-      );
-    }
-  }, [image, opacity]);
+    useEffect(() => {
+      if (image) {
+        opacity.set(
+          withTiming(1, { duration: 200, easing: Easing.out(Easing.ease) })
+        );
+      }
+    }, [image, opacity]);
 
-  return (
-    <SkiaImage
-      image={image}
-      fit="cover"
-      x={0}
-      y={0}
-      width={props.width}
-      height={props.height}
-      opacity={opacity}
-      blendMode={props.overlayBlend ? "softLight" : undefined}
-    >
-      {props.overlayBlend && <BlendColor color={"#FFFFFF"} mode="srcIn" />}
-    </SkiaImage>
-  );
-});
+    return (
+      <SkiaImage
+        image={image}
+        fit="cover"
+        x={0}
+        y={0}
+        width={width}
+        height={height}
+        opacity={opacity}
+      />
+    );
+  }
+);
+
+export const SkiaCardPatternOverlay = memo(
+  ({ src, height, width }: CardOverlayProps) => {
+    const image = useCachedImage(src);
+    const opacity = useSharedValue(0);
+
+    useEffect(() => {
+      if (image) {
+        opacity.set(
+          withTiming(1, { duration: 200, easing: Easing.out(Easing.ease) })
+        );
+      }
+    }, [image, opacity]);
+
+    return (
+      <Rect
+        x={0}
+        y={0}
+        width={width}
+        height={height}
+        opacity={opacity}
+        blendMode={"softLight"}
+      >
+        <SkiaImageShader
+          image={image}
+          fit={"contain"}
+          tx={"repeat"}
+          ty={"repeat"}
+          rect={{ x: 0, y: 0, width: 20, height: 20 }}
+        />
+      </Rect>
+    );
+  }
+);
 
 type CardCornerOverlayProps = Pick<CredentialCardConfig, "color"> & Size;
 
 export const SkiaCardCornerOverlay = memo(
   ({ width, height, color }: CardCornerOverlayProps) => {
-    const image = useCachedImage(CARD_CORNER_OVERLAY);
+    const image = useCachedImage(CREDENTIAL_CARD_CORNER_OVERLAY);
     const opacity = useSharedValue(0);
 
     useEffect(() => {
