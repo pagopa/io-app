@@ -12,7 +12,7 @@ import {
 import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum";
 import { ItwEngagementBanner } from "../../common/components/ItwEngagementBanner";
 import { itwCloseBanner } from "../../common/store/actions/banners";
-import { itwIsWalletInstanceRemotelyActiveSelector } from "../../common/store/selectors/preferences";
+import { itwIsWalletInstanceRemotelyActiveSelector } from "../../walletInstance/store/selectors";
 import {
   itwIsMdlPresentSelector,
   itwIsWalletEmptySelector

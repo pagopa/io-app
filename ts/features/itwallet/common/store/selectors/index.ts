@@ -12,7 +12,10 @@ import {
   itwLifecycleIsOperationalOrValid,
   itwLifecycleIsValidSelector
 } from "../../../lifecycle/store/selectors";
-import { itwIsWalletInstanceStatusFailureSelector } from "../../../walletInstance/store/selectors";
+import {
+  itwIsWalletInstanceRemotelyActiveSelector,
+  itwIsWalletInstanceStatusFailureSelector
+} from "../../../walletInstance/store/selectors";
 import {
   itwIsBannerHiddenSelector,
   itwIsDiscoveryBannerHiddenSelector,
@@ -23,8 +26,7 @@ import {
 import {
   itwCredentialUpgradeFailedSelector,
   itwIsActivationDisabledSelector,
-  itwIsL3EnabledSelector,
-  itwIsWalletInstanceRemotelyActiveSelector
+  itwIsL3EnabledSelector
 } from "./preferences";
 import { isItwEnabledSelector } from "./remoteConfig";
 

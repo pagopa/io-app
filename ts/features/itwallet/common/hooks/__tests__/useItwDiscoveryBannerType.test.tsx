@@ -5,7 +5,7 @@ import { Text } from "react-native";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
-import * as itwPreferencesSelectors from "../../../common/store/selectors/preferences";
+import * as itwWalletInstanceSelectors from "../../../walletInstance/store/selectors";
 import { useItwDiscoveryBannerType } from "../useItwDiscoveryBannerType";
 
 describe("useItwDiscoveryBannerType", () => {
@@ -16,7 +16,7 @@ describe("useItwDiscoveryBannerType", () => {
   it("should return undefined when isWalletInstanceRemotelyActive is undefined", () => {
     jest
       .spyOn(
-        itwPreferencesSelectors,
+        itwWalletInstanceSelectors,
         "itwIsWalletInstanceRemotelyActiveSelector"
       )
       .mockImplementation(() => undefined);
@@ -28,7 +28,7 @@ describe("useItwDiscoveryBannerType", () => {
   it("should return 'reactivating' when isWalletInstanceRemotelyActive is true", () => {
     jest
       .spyOn(
-        itwPreferencesSelectors,
+        itwWalletInstanceSelectors,
         "itwIsWalletInstanceRemotelyActiveSelector"
       )
       .mockImplementation(() => true);
@@ -40,7 +40,7 @@ describe("useItwDiscoveryBannerType", () => {
   it("should return 'onboarding' when isWalletInstanceRemotelyActive is false", () => {
     jest
       .spyOn(
-        itwPreferencesSelectors,
+        itwWalletInstanceSelectors,
         "itwIsWalletInstanceRemotelyActiveSelector"
       )
       .mockImplementation(() => false);

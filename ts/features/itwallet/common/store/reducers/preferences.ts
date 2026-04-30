@@ -14,8 +14,7 @@ import {
   itwSetFiscalCodeWhitelisted,
   itwSetIdentificationMode,
   itwSetPidReissuingSurveyHidden,
-  itwSetReviewPending,
-  itwSetWalletInstanceRemotelyActive
+  itwSetReviewPending
 } from "../actions/preferences";
 
 export type ItwPreferencesState = {
@@ -25,9 +24,6 @@ export type ItwPreferencesState = {
   authLevel?: ItwAuthLevel;
   // Indicates whether the claim values should be hidden in credential details
   claimValuesHidden?: boolean;
-  // Indicates whether the user has an already active wallet instance
-  // but the actual local wallet is not active
-  isWalletInstanceRemotelyActive?: boolean;
   // Indicates whether the fiscal code is whitelisted for L3 features
   isFiscalCodeWhitelisted?: boolean;
   // Indicates whether the user should activate IT-Wallet with the simplified flow,
@@ -70,13 +66,6 @@ const reducer = (
       return {
         ...state,
         claimValuesHidden: action.payload
-      };
-    }
-
-    case getType(itwSetWalletInstanceRemotelyActive): {
-      return {
-        ...state,
-        isWalletInstanceRemotelyActive: action.payload
       };
     }
 
@@ -129,19 +118,16 @@ const reducer = (
     case getType(itwLifecycleStoresReset):
       // When the wallet is being reset, we need to persist only the preferences:
       // - claimValuesHidden
-      // - isWalletInstanceRemotelyActive: the correct value will be set in the saga related to the wallet deactivation
       // - isFiscalCodeWhitelisted: avoids to have the value undefined after a wallet reset
       // - isItwActivationDisabled: should persist across wallet resets
       const {
         claimValuesHidden,
-        isWalletInstanceRemotelyActive,
         isFiscalCodeWhitelisted,
         isItwActivationDisabled
       } = state;
       return {
         ...itwPreferencesInitialState,
         claimValuesHidden,
-        isWalletInstanceRemotelyActive,
         isFiscalCodeWhitelisted,
         isItwActivationDisabled
       };

@@ -322,7 +322,7 @@ describe("itwShouldRenderInboxDiscoveryBannerSelector", () => {
       mockItwIsBannerHiddenSelector(isBannerHidden);
       jest
         .spyOn(
-          preferencesSelectors,
+          walletInstanceSelectors,
           "itwIsWalletInstanceRemotelyActiveSelector"
         )
         .mockReturnValue(isWalletInstanceRemotelyActive);

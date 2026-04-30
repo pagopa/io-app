@@ -10,7 +10,7 @@ import * as credentialsSelectors from "../../../credentials/store/selectors";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwDiscoveryBanner } from "../ItwDiscoveryBanner";
-import * as preferencesSelectors from "../../../common/store/selectors/preferences";
+import * as itwWalletInstanceSelectors from "../../../walletInstance/store/selectors";
 
 const mockNavigate = jest.fn();
 
@@ -86,7 +86,10 @@ const setupMocks = (scenario: BannerScenario) => {
     .mockReturnValue(scenario.hasItwInstance);
 
   jest
-    .spyOn(preferencesSelectors, "itwIsWalletInstanceRemotelyActiveSelector")
+    .spyOn(
+      itwWalletInstanceSelectors,
+      "itwIsWalletInstanceRemotelyActiveSelector"
+    )
     .mockReturnValue(scenario.isWalletInstanceRemotelyActive);
 
   jest
