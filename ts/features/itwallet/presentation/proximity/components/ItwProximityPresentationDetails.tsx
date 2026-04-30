@@ -48,7 +48,10 @@ const ItwProximityPresentationDetails = ({
               items={mapClaimsToClaimsSelectorItems(claimsToDisplay, present)}
               defaultExpanded
               selectionEnabled={false}
-              headerGradientColors={[itwTheme["card-background"], config.color]}
+              headerGradientColors={[
+                itwTheme["card-background"],
+                config.background.colors[0]
+              ]}
             />
           );
         })}

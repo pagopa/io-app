@@ -14,7 +14,7 @@ exports[`getCredentialCardConfig when color scheme is [dark] should match snapsh
   "color": "#CDD2FC",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/identity.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/lifestyle.png",
     },
     "showCornerOverlay": true,
   },
@@ -138,7 +138,7 @@ exports[`getCredentialCardConfig when color scheme is [dark] should match snapsh
   "color": "#FFB357",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/work.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/lifestyle.png",
     },
     "showCornerOverlay": true,
   },
@@ -184,7 +184,7 @@ exports[`getCredentialCardConfig when color scheme is [dark] should match snapsh
   "color": "#CDD2FC",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/bonus.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/travel.png",
     },
     "showCornerOverlay": true,
   },
@@ -206,7 +206,7 @@ exports[`getCredentialCardConfig when color scheme is [dark] should match snapsh
   "color": "#7AC1FA",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/financial.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/family.png",
     },
     "showCornerOverlay": true,
   },
@@ -228,7 +228,7 @@ exports[`getCredentialCardConfig when color scheme is [dark] should match snapsh
   "color": "#FFB357",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/work.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/health.png",
     },
     "showCornerOverlay": true,
   },
@@ -250,7 +250,7 @@ exports[`getCredentialCardConfig when color scheme is [dark] should match snapsh
   "color": "#7AC1FA",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/work.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/health.png",
     },
     "showCornerOverlay": true,
   },
@@ -272,7 +272,7 @@ exports[`getCredentialCardConfig when color scheme is [dark] should match snapsh
   "color": "#FFB357",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/work.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/travel.png",
     },
     "showCornerOverlay": true,
   },
@@ -294,7 +294,7 @@ exports[`getCredentialCardConfig when color scheme is [dark] should match snapsh
   "color": "#7AC1FA",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/lifestyle.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/travel.png",
     },
     "showCornerOverlay": true,
   },
@@ -348,7 +348,7 @@ exports[`getCredentialCardConfig when color scheme is [dark] should match snapsh
   "color": "#003366",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/bonus.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/family.png",
     },
     "showCornerOverlay": true,
   },
@@ -370,7 +370,7 @@ exports[`getCredentialCardConfig when color scheme is [dark] should match snapsh
   "color": "#003366",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/bonus.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/lifestyle.png",
     },
     "showCornerOverlay": true,
   },
@@ -392,7 +392,7 @@ exports[`getCredentialCardConfig when color scheme is [dark] should match snapsh
   "color": "#FFB357",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/work.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/financial.png",
     },
     "showCornerOverlay": true,
   },
@@ -414,7 +414,7 @@ exports[`getCredentialCardConfig when color scheme is [dark] should match snapsh
   "color": "#CDD2FC",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/identity.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/health.png",
     },
     "showCornerOverlay": true,
   },
@@ -436,7 +436,7 @@ exports[`getCredentialCardConfig when color scheme is [light] should match snaps
   "color": "#CDD2FC",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/identity.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/lifestyle.png",
     },
     "showCornerOverlay": true,
   },
@@ -560,7 +560,7 @@ exports[`getCredentialCardConfig when color scheme is [light] should match snaps
   "color": "#FFB357",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/work.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/lifestyle.png",
     },
     "showCornerOverlay": true,
   },
@@ -606,7 +606,7 @@ exports[`getCredentialCardConfig when color scheme is [light] should match snaps
   "color": "#CDD2FC",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/bonus.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/travel.png",
     },
     "showCornerOverlay": true,
   },
@@ -628,7 +628,7 @@ exports[`getCredentialCardConfig when color scheme is [light] should match snaps
   "color": "#7AC1FA",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/financial.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/family.png",
     },
     "showCornerOverlay": true,
   },
@@ -650,7 +650,7 @@ exports[`getCredentialCardConfig when color scheme is [light] should match snaps
   "color": "#FFB357",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/work.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/health.png",
     },
     "showCornerOverlay": true,
   },
@@ -672,7 +672,7 @@ exports[`getCredentialCardConfig when color scheme is [light] should match snaps
   "color": "#7AC1FA",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/work.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/health.png",
     },
     "showCornerOverlay": true,
   },
@@ -694,7 +694,7 @@ exports[`getCredentialCardConfig when color scheme is [light] should match snaps
   "color": "#FFB357",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/work.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/travel.png",
     },
     "showCornerOverlay": true,
   },
@@ -716,7 +716,7 @@ exports[`getCredentialCardConfig when color scheme is [light] should match snaps
   "color": "#7AC1FA",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/lifestyle.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/travel.png",
     },
     "showCornerOverlay": true,
   },
@@ -770,7 +770,7 @@ exports[`getCredentialCardConfig when color scheme is [light] should match snaps
   "color": "#003366",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/bonus.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/family.png",
     },
     "showCornerOverlay": true,
   },
@@ -792,7 +792,7 @@ exports[`getCredentialCardConfig when color scheme is [light] should match snaps
   "color": "#003366",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/bonus.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/lifestyle.png",
     },
     "showCornerOverlay": true,
   },
@@ -814,7 +814,7 @@ exports[`getCredentialCardConfig when color scheme is [light] should match snaps
   "color": "#FFB357",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/work.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/financial.png",
     },
     "showCornerOverlay": true,
   },
@@ -836,7 +836,7 @@ exports[`getCredentialCardConfig when color scheme is [light] should match snaps
   "color": "#CDD2FC",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/identity.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/health.png",
     },
     "showCornerOverlay": true,
   },
@@ -858,7 +858,7 @@ exports[`getCredentialCardConfig when color scheme is [undefined] should match s
   "color": "#CDD2FC",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/identity.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/lifestyle.png",
     },
     "showCornerOverlay": true,
   },
@@ -982,7 +982,7 @@ exports[`getCredentialCardConfig when color scheme is [undefined] should match s
   "color": "#FFB357",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/work.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/lifestyle.png",
     },
     "showCornerOverlay": true,
   },
@@ -1028,7 +1028,7 @@ exports[`getCredentialCardConfig when color scheme is [undefined] should match s
   "color": "#CDD2FC",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/bonus.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/travel.png",
     },
     "showCornerOverlay": true,
   },
@@ -1050,7 +1050,7 @@ exports[`getCredentialCardConfig when color scheme is [undefined] should match s
   "color": "#7AC1FA",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/financial.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/family.png",
     },
     "showCornerOverlay": true,
   },
@@ -1072,7 +1072,7 @@ exports[`getCredentialCardConfig when color scheme is [undefined] should match s
   "color": "#FFB357",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/work.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/health.png",
     },
     "showCornerOverlay": true,
   },
@@ -1094,7 +1094,7 @@ exports[`getCredentialCardConfig when color scheme is [undefined] should match s
   "color": "#7AC1FA",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/work.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/health.png",
     },
     "showCornerOverlay": true,
   },
@@ -1116,7 +1116,7 @@ exports[`getCredentialCardConfig when color scheme is [undefined] should match s
   "color": "#FFB357",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/work.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/travel.png",
     },
     "showCornerOverlay": true,
   },
@@ -1138,7 +1138,7 @@ exports[`getCredentialCardConfig when color scheme is [undefined] should match s
   "color": "#7AC1FA",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/lifestyle.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/travel.png",
     },
     "showCornerOverlay": true,
   },
@@ -1192,7 +1192,7 @@ exports[`getCredentialCardConfig when color scheme is [undefined] should match s
   "color": "#003366",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/bonus.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/family.png",
     },
     "showCornerOverlay": true,
   },
@@ -1214,7 +1214,7 @@ exports[`getCredentialCardConfig when color scheme is [undefined] should match s
   "color": "#003366",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/bonus.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/lifestyle.png",
     },
     "showCornerOverlay": true,
   },
@@ -1236,7 +1236,7 @@ exports[`getCredentialCardConfig when color scheme is [undefined] should match s
   "color": "#FFB357",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/work.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/financial.png",
     },
     "showCornerOverlay": true,
   },
@@ -1258,7 +1258,7 @@ exports[`getCredentialCardConfig when color scheme is [undefined] should match s
   "color": "#CDD2FC",
   "overlay": {
     "pattern": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/identity.png",
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/health.png",
     },
     "showCornerOverlay": true,
   },
