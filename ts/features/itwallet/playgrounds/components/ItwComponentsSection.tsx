@@ -1,8 +1,10 @@
 import {
   Body,
+  ClaimsSelector,
   ListItemHeader,
   ListItemSwitch,
   useIOTheme,
+  useIOThemeContext,
   VStack
 } from "@pagopa/io-app-design-system";
 import { Canvas } from "@shopify/react-native-skia";
@@ -13,12 +15,18 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { DSComponentViewerBox } from "../../../design-system/components/DSComponentViewerBox";
 import { ItwBrandedBox } from "../../common/components/ItwBrandedBox";
 import { ItwBrandedSkiaGradient } from "../../common/components/ItwBrandedSkiaGradient";
+import { getCredentialCardConfig } from "../../common/components/ItwCredentialCard/config";
 import { ItwEngagementBanner } from "../../common/components/ItwEngagementBanner";
 import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../common/components/ItwSkeumorphicCard/FlipGestureDetector";
 import { getCredentialStatusObject } from "../../common/utils/itwCredentialStatusUtils";
-import { ItwStoredCredentialsMocks } from "../../common/utils/itwMocksUtils";
+import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
+import {
+  CredentialType,
+  ItwStoredCredentialsMocks
+} from "../../common/utils/itwMocksUtils";
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
+import { useItWalletTheme } from "../../common/utils/theme";
 import { ItwRequestedClaimsList } from "../../issuance/components/ItwRequestedClaimsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwPresentationCredentialCardFlipButton } from "../../presentation/details/components/ItwPresentationCredentialCardFlipButton";
@@ -228,11 +236,53 @@ export const ItwClaimsListSection = () => {
   );
 };
 
+const ItwClaimsSelectorSection = () => {
+  const { themeType } = useIOThemeContext();
+  const itwTheme = useItWalletTheme();
+
+  return (
+    <VStack space={8}>
+      <ListItemHeader label="ClaimsSelector" />
+      {[
+        CredentialType.PID,
+        CredentialType.DRIVING_LICENSE,
+        CredentialType.EUROPEAN_DISABILITY_CARD,
+        CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
+        CredentialType.AGE_VERIFICATION,
+        CredentialType.EDUCATION_ATTENDANCE,
+        CredentialType.EDUCATION_DEGREE,
+        CredentialType.EDUCATION_DIPLOMA,
+        CredentialType.EDUCATION_ENROLLMENT,
+        CredentialType.RESIDENCY,
+        "Unknown Credential",
+        "Unknown Credential Type with Ridicolously Long Long Long Long Name"
+      ].map(credentialType => {
+        const config = getCredentialCardConfig(credentialType, themeType);
+
+        return (
+          <ClaimsSelector
+            key={credentialType}
+            title={getCredentialNameFromType(credentialType, true)}
+            items={[]}
+            defaultExpanded={false}
+            selectionEnabled={false}
+            headerGradientColors={[
+              itwTheme["card-background"],
+              config.background.colors[0]
+            ]}
+          />
+        );
+      })}
+    </VStack>
+  );
+};
+
 export const ItwComponentsSection = () => (
   <>
     <ItwWalletBrandSection />
     <ItwEngagementBannerSection />
     <ItwSkeumorphicCredentialSection />
     <ItwClaimsListSection />
+    <ItwClaimsSelectorSection />
   </>
 );

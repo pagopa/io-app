@@ -1,19 +1,18 @@
-import { memo } from "react";
-import { View } from "react-native";
 import {
   ClaimsSelector,
   ListItemHeader,
   VStack,
-  useIOTheme
+  useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+import { memo } from "react";
+import { View } from "react-native";
+import { getCredentialCardConfig } from "../../../common/components/ItwCredentialCard/config";
 import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils";
-import { ProximityDetails } from "../utils/itwProximityTypeUtils";
-import {
-  claimsSelectorHeaderGradientsByCredentialType,
-  mapClaimsToClaimsSelectorItems
-} from "../../common/utils/itwClaimSelector";
+import { useItWalletTheme } from "../../../common/utils/theme";
 import { useClaimsDetailsBottomSheet } from "../../common/hooks/useClaimsDetailsBottomSheet";
+import { mapClaimsToClaimsSelectorItems } from "../../common/utils/itwClaimSelector";
+import { ProximityDetails } from "../utils/itwProximityTypeUtils";
 
 type ItwProximityPresentationDetailsProps = {
   data: ProximityDetails;
@@ -22,7 +21,8 @@ type ItwProximityPresentationDetailsProps = {
 const ItwProximityPresentationDetails = ({
   data
 }: ItwProximityPresentationDetailsProps) => {
-  const theme = useIOTheme();
+  const { theme, themeType } = useIOThemeContext();
+  const itwTheme = useItWalletTheme();
   const { present, bottomSheet } = useClaimsDetailsBottomSheet();
 
   return (
@@ -38,18 +38,20 @@ const ItwProximityPresentationDetails = ({
         )}
       />
       <VStack space={24}>
-        {data.map(({ claimsToDisplay, credentialType }) => (
-          <ClaimsSelector
-            key={credentialType}
-            title={getCredentialNameFromType(credentialType)}
-            items={mapClaimsToClaimsSelectorItems(claimsToDisplay, present)}
-            defaultExpanded
-            selectionEnabled={false}
-            headerGradientColors={
-              claimsSelectorHeaderGradientsByCredentialType[credentialType]
-            }
-          />
-        ))}
+        {data.map(({ claimsToDisplay, credentialType }) => {
+          const config = getCredentialCardConfig(credentialType, themeType);
+
+          return (
+            <ClaimsSelector
+              key={credentialType}
+              title={getCredentialNameFromType(credentialType)}
+              items={mapClaimsToClaimsSelectorItems(claimsToDisplay, present)}
+              defaultExpanded
+              selectionEnabled={false}
+              headerGradientColors={[itwTheme["card-background"], config.color]}
+            />
+          );
+        })}
         {bottomSheet}
       </VStack>
     </View>

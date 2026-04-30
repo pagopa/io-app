@@ -8,23 +8,6 @@ import {
   getSafeText,
   drivingPrivilegeToClaims
 } from "../../../common/utils/itwClaimsUtils";
-import { CredentialType } from "../../../common/utils/itwMocksUtils";
-
-/**
- * Defines gradient color schemes for different credential types
- * to be used in the header of the {@link ClaimsSelector} component.
- */
-export const claimsSelectorHeaderGradientsByCredentialType: {
-  [type: string]: Array<string>;
-} = {
-  [CredentialType.PID]: ["#ECECEC", "#CEE2F2"],
-  [CredentialType.DRIVING_LICENSE]: ["#ECECEC", "#FADCF5"],
-  [CredentialType.EUROPEAN_DISABILITY_CARD]: ["#ECECEC", "#E8EEF4"],
-  [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: ["#ECECEC", "#ABD8F2"],
-  [CredentialType.EDUCATION_DEGREE]: ["#ECECEC", "#F2F1CE"],
-  [CredentialType.EDUCATION_ENROLLMENT]: ["#ECECEC", "#E0F2CE"],
-  [CredentialType.RESIDENCY]: ["#ECECEC", "#F2E4CE"]
-};
 
 type PresentFn = (claims: Array<ClaimDisplayFormat>, title?: string) => void;
 

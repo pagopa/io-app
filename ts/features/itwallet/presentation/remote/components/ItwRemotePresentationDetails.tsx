@@ -5,18 +5,18 @@ import {
   ListItemHeader,
   VSpacer,
   VStack,
-  useIOTheme
+  useIOTheme,
+  useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { memo, useMemo } from "react";
 import { View } from "react-native";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
+import { getCredentialCardConfig } from "../../../common/components/ItwCredentialCard/config";
 import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils";
+import { useItWalletTheme } from "../../../common/utils/theme";
 import { useClaimsDetailsBottomSheet } from "../../common/hooks/useClaimsDetailsBottomSheet";
-import {
-  claimsSelectorHeaderGradientsByCredentialType,
-  mapClaimsToClaimsSelectorItems
-} from "../../common/utils/itwClaimSelector";
+import { mapClaimsToClaimsSelectorItems } from "../../common/utils/itwClaimSelector";
 import { ItwRemoteMachineContext } from "../machine/provider";
 import { selectPresentationDetails } from "../machine/selectors";
 import {
@@ -30,6 +30,8 @@ const RequestedCredentialsBlock = ({
 }: {
   credentials: EnrichedPresentationDetails;
 }) => {
+  const { themeType } = useIOThemeContext();
+  const itwTheme = useItWalletTheme();
   const { present, bottomSheet } = useClaimsDetailsBottomSheet();
 
   return (
@@ -39,23 +41,24 @@ const RequestedCredentialsBlock = ({
         .filter(c => c.claimsToDisplay.length > 0)
         .map(c => {
           const credentialType = getCredentialTypeByVct(c.vct);
+          if (!credentialType) {
+            // Should never happen
+            return null;
+          }
 
-          const title = credentialType
-            ? getCredentialNameFromType(credentialType, true)
-            : "";
-
-          const headerGradientColors = credentialType
-            ? claimsSelectorHeaderGradientsByCredentialType[credentialType]
-            : undefined;
+          const config = getCredentialCardConfig(credentialType, themeType);
 
           return (
             <ClaimsSelector
               key={c.id}
-              title={title}
+              title={getCredentialNameFromType(credentialType, true)}
               items={mapClaimsToClaimsSelectorItems(c.claimsToDisplay, present)}
               defaultExpanded
               selectionEnabled={false}
-              headerGradientColors={headerGradientColors}
+              headerGradientColors={[
+                itwTheme["card-background"],
+                config.background.colors[0]
+              ]}
             />
           );
         })}
