@@ -19,6 +19,14 @@ import {
 import { handleWalletInstanceResetSaga } from "../handleWalletInstanceResetSaga";
 import { itwUpdateWalletInstanceStatus } from "../../../walletInstance/store/actions";
 
+jest.mock("@pagopa/io-react-native-secure-storage", () => ({
+  keys: jest.fn(() => Promise.resolve([])),
+  get: jest.fn(() => Promise.resolve(undefined)),
+  set: jest.fn(() => Promise.resolve()),
+  remove: jest.fn(() => Promise.resolve()),
+  clear: jest.fn(() => Promise.resolve())
+}));
+
 jest.mock("@pagopa/io-react-native-crypto", () => ({
   deleteKey: jest.fn
 }));
