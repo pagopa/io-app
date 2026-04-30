@@ -73,6 +73,7 @@ type BottomSheetOptions = {
   snapPoint?: NonEmptyArray<number | string>;
   footer?: ReactElement;
   onDismiss?: () => void;
+  forceFullscreen?: boolean;
 };
 
 /**
@@ -85,7 +86,8 @@ export const useIOBottomSheetModal = ({
   title,
   snapPoint,
   footer,
-  onDismiss
+  onDismiss,
+  forceFullscreen
 }: BottomSheetOptions): IOBottomSheetModal => {
   const insets = useSafeAreaInsets();
   const theme = useIOTheme();
@@ -197,7 +199,8 @@ export const useIOBottomSheetModal = ({
         importantForAccessibility={"yes"}
         onDismiss={handleDismiss}
       >
-        {screenReaderEnabled && Platform.OS === "android" ? (
+        {Platform.OS === "android" &&
+        (screenReaderEnabled || forceFullscreen) ? (
           <Modal>
             <View style={{ flex: 1, backgroundColor }} accessible={true}>
               {header}
