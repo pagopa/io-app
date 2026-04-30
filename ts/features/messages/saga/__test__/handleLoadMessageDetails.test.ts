@@ -11,11 +11,11 @@ import {
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { handleLoadMessageDetails } from "../handleLoadMessageDetails";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
-import { getCommunicationClient } from "../../utils/client";
+import { getCommunicationClient } from "../commons";
 
 const id = paymentValidInvalidAfterDueDate.id;
 
-jest.mock("../../utils/client");
+jest.mock("../commons");
 
 const mockGetMessage = jest.fn();
 

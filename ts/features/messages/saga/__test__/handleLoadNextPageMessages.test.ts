@@ -11,9 +11,9 @@ import {
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { handleLoadNextPageMessages } from "../handleLoadNextPageMessages";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
-import { getCommunicationClient } from "../../utils/client";
+import { getCommunicationClient } from "../commons";
 
-jest.mock("../../utils/client");
+jest.mock("../commons");
 
 const mockGetMessages = jest.fn();
 

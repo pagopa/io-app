@@ -36,7 +36,7 @@ import {
   toSpecificMessagePaymentError,
   toTimeoutMessagePaymentError
 } from "../types/paymentErrors";
-import { getCommunicationClient } from "../utils/client";
+import { getCommunicationClient } from "./commons";
 
 const PaymentUpdateWorkerCount = 5;
 

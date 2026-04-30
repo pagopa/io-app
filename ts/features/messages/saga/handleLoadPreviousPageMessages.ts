@@ -14,7 +14,7 @@ import {
 } from "../analytics";
 import { handleResponse } from "../utils/responseHandling";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
-import { getCommunicationClient } from "../utils/client";
+import { getCommunicationClient } from "./commons";
 
 export function* handleLoadPreviousPageMessages(
   action: ActionType<typeof loadPreviousPageMessagesAction.request>

@@ -17,9 +17,9 @@ import { serviceDetailsByIdSelector } from "../../../services/details/store/sele
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { ThirdPartyMessageUnion } from "../../types/thirdPartyById";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
-import { getCommunicationClient } from "../../utils/client";
+import { getCommunicationClient } from "../commons";
 
-jest.mock("../../utils/client");
+jest.mock("../commons");
 
 const mockGetThirdPartyMessage = jest.fn();
 

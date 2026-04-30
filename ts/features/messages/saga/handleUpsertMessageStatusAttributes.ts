@@ -38,7 +38,7 @@ import { paginatedMessageFromIdForCategorySelector } from "../store/reducers/all
 import { MessageListCategory } from "../types/messageListCategory";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
 import { CommunicationClient } from "../../../api/CommunicationClientManager";
-import { getCommunicationClient } from "../utils/client";
+import { getCommunicationClient } from "./commons";
 
 /**
  * @throws invalid payload

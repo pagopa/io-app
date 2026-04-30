@@ -26,7 +26,7 @@ import { ServiceDetails } from "../../../../definitions/services/ServiceDetails"
 import { thirdPartyKind } from "../types/thirdPartyById";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
 import { isTestEnv } from "../../../utils/environment";
-import { getCommunicationClient } from "../utils/client";
+import { getCommunicationClient } from "./commons";
 
 export function* handleThirdPartyMessage(
   action: ActionType<typeof loadThirdPartyMessage.request>

@@ -25,9 +25,9 @@ import {
 } from "../handlePaymentUpdateRequests";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { Action } from "../../../../store/actions/types";
-import { getCommunicationClient } from "../../utils/client";
+import { getCommunicationClient } from "../commons";
 
-jest.mock("../../utils/client");
+jest.mock("../commons");
 
 const mockGetPaymentInfoV2 = jest.fn();
 

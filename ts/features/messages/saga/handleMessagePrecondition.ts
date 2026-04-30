@@ -27,7 +27,7 @@ import {
 } from "../store/reducers/messagePrecondition";
 import { isIOMarkdownEnabledForMessagesAndServicesSelector } from "../../../store/reducers/backendStatus/remoteConfig";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
-import { getCommunicationClient } from "../utils/client";
+import { getCommunicationClient } from "./commons";
 
 export function* handleMessagePrecondition(
   action: ActionType<typeof retrievingDataPreconditionStatusAction>

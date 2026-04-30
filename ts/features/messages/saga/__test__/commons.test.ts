@@ -3,7 +3,7 @@ import { communicationClientManager } from "../../../../api/CommunicationClientM
 import { apiUrlPrefix } from "../../../../config";
 import { getKeyInfo } from "../../../lollipop/saga";
 import { KeyInfo } from "../../../lollipop/utils/crypto";
-import { getCommunicationClient } from "../client";
+import { getCommunicationClient } from "../commons";
 
 jest.mock("../../../../api/CommunicationClientManager");
 jest.mock("../../../../config", () => ({
