@@ -325,29 +325,38 @@ export function* initializeApplicationSaga(
   yield* fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel);
 
   // Instantiate backend clients from the session token
-  const comClient = communicationClientManager.getClient(apiUrlPrefix, {
+  const communicationClient = communicationClientManager.getClient(
+    apiUrlPrefix,
+    {
+      token: sessionToken,
+      keyInfo
+    }
+  );
+  const identityClient = identityClientManager.getClient(apiUrlPrefix, {
     token: sessionToken,
     keyInfo
   });
-  const idClient = identityClientManager.getClient(apiUrlPrefix, {
-    token: sessionToken,
-    keyInfo
-  });
-  const smClient = sessionManagerClientManager.getClient(apiUrlPrefix, {
-    token: sessionToken
-  });
+  const sessionManagerClient = sessionManagerClientManager.getClient(
+    apiUrlPrefix,
+    {
+      token: sessionToken
+    }
+  );
 
   // The following functions all rely on the backend clients
 
   if (zendeskEnabled) {
-    yield* fork(watchZendeskGetSessionSaga, smClient.getSessionState);
+    yield* fork(
+      watchZendeskGetSessionSaga,
+      sessionManagerClient.getSessionState
+    );
   }
 
   // check if the current session is still valid
   const checkSessionResponse: SagaCallReturnType<typeof checkSession> =
     yield* call(
       checkSession,
-      smClient.getSessionState,
+      sessionManagerClient.getSessionState,
       formatRequestedTokenString()
     );
 
@@ -377,16 +386,16 @@ export function* initializeApplicationSaga(
 
   yield* fork(
     watchUserDataProcessingSaga,
-    idClient.getUserDataProcessing,
-    idClient.upsertUserDataProcessing,
-    idClient.abortUserDataProcessing
+    identityClient.getUserDataProcessing,
+    identityClient.upsertUserDataProcessing,
+    identityClient.abortUserDataProcessing
   );
 
   // The logic below relies on the current active session
   // and is maintained by separate teams
 
   // Start watching for Services actions
-  yield* fork(watchServicesSaga, idClient);
+  yield* fork(watchServicesSaga, identityClient);
 
   // Start watching for Messages actions
   yield* fork(watchMessagesSaga);
@@ -428,7 +437,7 @@ export function* initializeApplicationSaga(
 
     maybeSessionInformation = yield* call(
       loadSessionInformationSaga,
-      smClient.getSessionState
+      sessionManagerClient.getSessionState
     );
 
     if (
@@ -467,10 +476,10 @@ export function* initializeApplicationSaga(
 
   // Start watching for profile update requests as the checkProfileEnabledSaga
   // may need to update the profile.
-  yield* fork(watchProfileUpsertRequestsSaga, idClient.updateProfile);
+  yield* fork(watchProfileUpsertRequestsSaga, identityClient.updateProfile);
 
   // Start watching when profile is successfully loaded
-  yield* fork(watchProfile, idClient.startEmailValidationProcess);
+  yield* fork(watchProfile, identityClient.startEmailValidationProcess);
 
   // If we are here the user is logged in and the session info is
   // loaded and valid
@@ -478,7 +487,7 @@ export function* initializeApplicationSaga(
   // Load the profile info
   const maybeUserProfile: SagaCallReturnType<typeof loadProfile> = yield* call(
     loadProfile,
-    idClient.getUserProfile
+    identityClient.getUserProfile
   );
 
   if (O.isNone(maybeUserProfile)) {
@@ -499,17 +508,17 @@ export function* initializeApplicationSaga(
   const maybeStoredPin: SagaCallReturnType<typeof getPin> = yield* call(getPin);
 
   // Start watching for requests of refresh the profile
-  yield* fork(watchProfileRefreshRequestsSaga, idClient.getUserProfile);
+  yield* fork(watchProfileRefreshRequestsSaga, identityClient.getUserProfile);
 
   // Start watching for requests about session and support token
   yield* fork(
     watchCheckSessionSaga,
-    smClient.getSessionState,
+    sessionManagerClient.getSessionState,
     formatRequestedTokenString()
   );
   // Start watching for requests of abort the onboarding
 
-  yield* fork(watchGetZendeskTokenSaga, smClient.getSessionState);
+  yield* fork(watchGetZendeskTokenSaga, sessionManagerClient.getSessionState);
 
   const watchAbortOnboardingSagaTask = yield* fork(watchAbortOnboardingSaga);
 
@@ -616,7 +625,7 @@ export function* initializeApplicationSaga(
   // a blocking call, since the saga will just hang, waiting for the token
   yield* fork(
     pushNotificationTokenUpload,
-    comClient.createOrUpdateInstallation
+    communicationClient.createOrUpdateInstallation
   );
 
   // This saga is called before the startup status is set to authenticated to avoid flashing
