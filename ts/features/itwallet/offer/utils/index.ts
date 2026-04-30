@@ -3,7 +3,7 @@ import {
   IO_UNIVERSAL_LINK_PREFIX
 } from "../../../../utils/navigation";
 
-export const CREDENTIAL_OFFER_LINKING_PREFIXES = [
+export const ITW_CREDENTIAL_OFFER_LINKING_PREFIXES = [
   "openid-credential-offer://",
   "haip-vci://"
 ] as const;
