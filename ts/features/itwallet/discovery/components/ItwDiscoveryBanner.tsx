@@ -1,4 +1,4 @@
-import { Banner } from "@pagopa/io-app-design-system";
+import { Banner, IOSkeleton } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { ComponentProps, useCallback, useMemo } from "react";
@@ -17,7 +17,10 @@ import {
   itwIsMdlPresentSelector,
   itwIsWalletEmptySelector
 } from "../../credentials/store/selectors";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import {
+  itwLifecycleIsITWalletValidSelector,
+  itwLifecycleIsValidSelector
+} from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 
 type Props = {
@@ -46,6 +49,7 @@ export const ItwDiscoveryBanner = ({
     itwIsWalletInstanceRemotelyActiveSelector
   );
   const isWalletActive = useIOSelector(itwLifecycleIsValidSelector);
+  const hasItwInstance = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const isWalletEmpty = useIOSelector(itwIsWalletEmptySelector);
   const hasMdl = useIOSelector(itwIsMdlPresentSelector);
 
@@ -107,6 +111,12 @@ export const ItwDiscoveryBanner = ({
     onDismiss?.();
     dispatch(itwCloseBanner(`discovery_${flow}`));
   };
+
+  if (!hasItwInstance && isWalletInstanceRemotelyActive === undefined) {
+    return (
+      <IOSkeleton shape="rectangle" width={"100%"} height={200} radius={8} />
+    );
+  }
 
   if (isWalletInstanceRemotelyActive) {
     return (

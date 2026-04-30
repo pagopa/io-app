@@ -4,6 +4,7 @@ import _ from "lodash";
 import { combineReducers } from "redux";
 import {
   createMigrate,
+  createTransform,
   MigrationManifest,
   PersistConfig,
   PersistedState,
@@ -168,6 +169,18 @@ export const migrations: MigrationManifest = {
     _.set(state, "credentialsCatalogue.isEnabledForCredentialsList", false)
 };
 
+const preferencesTransform = createTransform<
+  ItwPreferencesState,
+  ItwPreferencesState
+>(
+  inboundState => {
+    const { isWalletInstanceRemotelyActive, ...rest } = inboundState;
+    return rest;
+  },
+  outboundState => outboundState,
+  { whitelist: ["preferences"] }
+);
+
 const itwPersistConfig: PersistConfig = {
   key: "itWallet",
   storage: AsyncStorage,
@@ -178,7 +191,8 @@ const itwPersistConfig: PersistConfig = {
     "banners"
   ] satisfies Array<keyof ItWalletState>,
   version: CURRENT_REDUX_ITW_STORE_VERSION,
-  migrate: createMigrate(migrations, { debug: isDevEnv })
+  migrate: createMigrate(migrations, { debug: isDevEnv }),
+  transforms: [preferencesTransform]
 };
 
 export const persistedReducer = persistReducer<ItWalletState, Action>(

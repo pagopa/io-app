@@ -182,10 +182,16 @@ export const itwShouldRenderDiscoveryBannerSelector = (state: GlobalState) =>
  */
 export const itwShouldRenderInboxDiscoveryBannerSelector = (
   state: GlobalState
-) =>
-  itwShouldRenderDiscoveryBannerSelector(state) &&
-  !itwIsBannerHiddenSelector("discovery_messages_inbox")(state) &&
-  !itwIsWalletInstanceRemotelyActiveSelector(state);
+) => {
+  if (itwIsWalletInstanceRemotelyActiveSelector(state) === undefined) {
+    return false;
+  }
+  return (
+    itwShouldRenderDiscoveryBannerSelector(state) &&
+    !itwIsBannerHiddenSelector("discovery_messages_inbox")(state) &&
+    !itwIsWalletInstanceRemotelyActiveSelector(state)
+  );
+};
 
 /**
  * Returns whether the new IT-Wallet activation banner in the messages inbox screen should be rendered

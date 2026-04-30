@@ -1,22 +1,22 @@
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
+import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
+import { IdentificationContext } from "../../../machine/eid/context.ts";
+import { CredentialMetadata, ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
 import {
+  itwClearCredentialUpgradeFailed,
+  itwClearSimplifiedActivationRequirements,
+  itwDisableItwActivation,
+  itwFreezeSimplifiedActivationRequirements,
   itwSetAuthLevel,
   itwSetClaimValuesHidden,
-  itwSetFiscalCodeWhitelisted,
-  itwSetReviewPending,
-  itwSetWalletInstanceRemotelyActive,
-  itwFreezeSimplifiedActivationRequirements,
-  itwClearSimplifiedActivationRequirements,
-  itwSetPidReissuingSurveyHidden,
   itwSetCredentialUpgradeFailed,
-  itwClearCredentialUpgradeFailed,
-  itwDisableItwActivation,
-  itwSetIdentificationMode
+  itwSetFiscalCodeWhitelisted,
+  itwSetIdentificationMode,
+  itwSetPidReissuingSurveyHidden,
+  itwSetReviewPending,
+  itwSetWalletInstanceRemotelyActive
 } from "../actions/preferences";
-import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
-import { ItwAuthLevel, CredentialMetadata } from "../../utils/itwTypesUtils.ts";
-import { IdentificationContext } from "../../../machine/eid/context.ts";
 
 export type ItwPreferencesState = {
   // Indicates whether the user should see the modal to review the app.
