@@ -4,11 +4,10 @@ import {
   Canvas,
   LinearGradient,
   RoundedRect,
-  Size,
   Image as SkiaImage,
   vec
 } from "@shopify/react-native-skia";
-import { memo, useCallback, useEffect, useState } from "react";
+import { memo, useCallback, useEffect } from "react";
 import { LayoutChangeEvent, StyleSheet, View } from "react-native";
 import Animated, {
   Easing,
@@ -16,6 +15,7 @@ import Animated, {
   useSharedValue,
   withTiming
 } from "react-native-reanimated";
+import { useLayoutSize } from "../../hooks/useLayoutSize";
 import { useCachedImage } from "../../utils/imageCache";
 import { CredentialType } from "../../utils/itwMocksUtils";
 import { SkiaCardCornerOverlay, SkiaCardOverlay } from "./CardOverlay";
@@ -30,17 +30,14 @@ type Props = Pick<
 
 export const CardBackground = memo(
   ({ background, color, overlay, overlayBlend, showCornerOverlay }: Props) => {
-    const [size, setSize] = useState<Size>({ width: 0, height: 0 });
+    const [size, setSize] = useLayoutSize();
 
-    const handleLayout = useCallback((event: LayoutChangeEvent) => {
-      const { width, height } = event.nativeEvent.layout;
-      // Avoid re-rendering when size hasn't changed (e.g., repeated layout events)
-      setSize(prev =>
-        prev.width === width && prev.height === height
-          ? prev
-          : { width, height }
-      );
-    }, []);
+    const handleLayout = useCallback(
+      (event: LayoutChangeEvent) => {
+        setSize(event.nativeEvent.layout);
+      },
+      [setSize]
+    );
 
     return (
       <View
@@ -98,7 +95,7 @@ export const LegacyCardBackground = ({
   credentialType,
   colorScheme
 }: LegacyProps) => {
-  const [size, setSize] = useState({ width: 0, height: 0 });
+  const [size, setSize] = useLayoutSize();
   const image = useCachedImage(legacyCredentialCardBackgrounds[credentialType]);
   const loadingOverlayOpacity = useSharedValue(1);
 
@@ -117,12 +114,13 @@ export const LegacyCardBackground = ({
     }
   }, [image, loadingOverlayOpacity, size]);
 
-  const handleLayout = useCallback((event: LayoutChangeEvent) => {
-    const { width, height } = event.nativeEvent.layout;
-    setSize(prev =>
-      prev.width === width && prev.height === height ? prev : { width, height }
-    );
-  }, []);
+  const handleLayout = useCallback(
+    (event: LayoutChangeEvent) => {
+      const { width, height } = event.nativeEvent.layout;
+      setSize({ width, height });
+    },
+    [setSize]
+  );
 
   const gradientColors = legacyCredentialGradientColors[credentialType] || [
     IOColors["grey-100"],

@@ -1,16 +1,16 @@
-import { useIOThemeContext } from "@pagopa/io-app-design-system";
 import { DataSourceParam } from "@shopify/react-native-skia";
 import Color from "color";
-import { useMemo } from "react";
 import { ColorSchemeName } from "react-native";
 import { fnv1a } from "../../../../../utils/hash";
 import {
+  CARD_CORNER_OVERLAY,
   CREDENTIAL_BASE_OVERLAYS,
   CREDENTIAL_CARD_OVERLAYS,
   CREDENTIAL_HEADER_OVERLAYS
 } from "../../utils/assets";
 import { CredentialType } from "../../utils/itwMocksUtils";
 import { ItWalletThemes } from "../../utils/theme";
+import { preloadImages } from "../../utils/imageCache";
 
 export type CredentialCardBackground<L extends number = 1 | 2 | 3 | 4 | 5> = {
   /**
@@ -51,7 +51,7 @@ export type CredentialCardConfig = {
   /**
    * Optional PNG image rendered as an overlay layer over the card.
    */
-  overlay?: DataSourceParam;
+  overlay: DataSourceParam;
   /**
    * Optional PNG image rendered as an overlay layer in the credential detail
    * header.
@@ -146,19 +146,48 @@ export const credentialCardConfigs: Partial<
 };
 
 /**
- * Generates a credential card configuration based on the provided base color.
- * @param color A string representing the base color for the credential card,
- * used to derive the background and title colors.
- * @param colorScheme The current app color scheme (light, dark)
- * @return A credential card configuration derived from the provided color
+ * Generates a color based on credential type
  */
-export const generateCredentialCardConfig = (
-  color: string,
-  colorScheme?: ColorSchemeName
+const generateBaseColorFromCredentialType = (
+  credentialType: string
+): string => {
+  const colorHash = fnv1a(credentialType);
+  return BASE_COLORS[colorHash % BASE_COLORS.length];
+};
+
+/**
+ * Generates an overlay asset based on credential type
+ */
+const generateBaseOverlayFromCredentialType = (
+  credentialType: string
+): DataSourceParam => {
+  const overlayHash = fnv1a(credentialType, 1);
+  return CREDENTIAL_BASE_OVERLAYS[
+    overlayHash % CREDENTIAL_BASE_OVERLAYS.length
+  ];
+};
+
+/**
+ * Generates a credential card configuration based on the provided base color and taxonomy.
+ * @param credentialType The type of the credential
+ * @param credentialColor Color assoaicted to the credential, if any. A color
+ * will be generated based on the credential type if not provided.
+ * @param colorScheme The current app color scheme (light, dark)
+ *
+ * @return A credential card configuration derived from the provided color
+ *
+ * TODO: [SIW-4216] Add credential's taxonomy as a parameter and use it to select the overlay pattern, instead of randomizing it
+ */
+const generateCredentialCardConfig = (
+  credentialType: string,
+  colorScheme: ColorSchemeName,
+  credentialColor?: string
 ): CredentialCardConfig => {
   const theme = ItWalletThemes[colorScheme || "light"];
   const isLight = colorScheme !== "dark";
 
+  const color =
+    credentialColor || generateBaseColorFromCredentialType(credentialType);
   const baseColor = Color(color).hsv();
 
   const backgroundColor = Color.hsv(
@@ -176,43 +205,18 @@ export const generateCredentialCardConfig = (
     ...(isLight ? [15, 20] : [10, 80])
   ).hex();
 
+  // TODO: [SIW-4216] Use credential taxonomy info to select overlay pattern
+  const overlay = generateBaseOverlayFromCredentialType(credentialType);
+
   return {
     color,
     background: {
       colors: [backgroundColor, theme["card-background"]]
     },
     borderColor,
-    titleColor
-  };
-};
-
-/**
- * Generates a random credential card configuration based on the provided seed
- * and taxonomy, used as a fallback for credential types that don't have a
- * specific configuration defined.
- * @param seed An unknown value used to generate a deterministic random
- * configuration.
- * @param colorScheme The current app color scheme (light, dark)
- * @returns A randomly generated credential card configuration.
- *
- * TODO: [SIW-4216] Add credential's taxonomy as a parameter and use it to select the overlay pattern, instead of randomizing it
- */
-export const getRandomCredentialCardConfig = (
-  seed: unknown,
-  colorScheme?: ColorSchemeName
-): CredentialCardConfig => {
-  const colorHash = fnv1a(String(seed));
-  const colorHex = BASE_COLORS[colorHash % BASE_COLORS.length];
-
-  // TODO: [SIW-4216] Select credential overlay based on credential taxonomy, not randomly
-  const overlayHash = fnv1a(String(seed), 1);
-  const overlaySource =
-    CREDENTIAL_BASE_OVERLAYS[overlayHash % CREDENTIAL_BASE_OVERLAYS.length];
-
-  return {
-    ...generateCredentialCardConfig(colorHex, colorScheme),
-    overlay: overlaySource,
-    headerOverlay: overlaySource,
+    titleColor,
+    overlay,
+    headerOverlay: overlay,
     overlayBlend: true,
     showCornerOverlay: true
   };
@@ -221,31 +225,52 @@ export const getRandomCredentialCardConfig = (
 /**
  * Returns the card configuration for a given credential type, if it exists.
  * @param credentialType The type of the credential to get the configuration for.
+ * @param credentialColor An optional base color for the credential, used to
+ * generate a configuration if a static one is not defined for the given type.
+ * @param colorScheme The current app color scheme (light, dark), used to generate
+ * the configuration if a static one is not defined for the given type.
+ *
  * @returns The card configuration for the given credential type.
+ *
+ * TODO: [SIW-4216] Add credential's taxonomy as a parameter and use it to select the overlay pattern, instead of randomizing it
  */
 export const getCredentialCardConfig = (
-  credentialType: string
-): CredentialCardConfig | undefined => credentialCardConfigs[credentialType];
+  credentialType: string,
+  colorScheme: ColorSchemeName,
+  credentialColor?: string
+): CredentialCardConfig => {
+  const staticConfig = credentialCardConfigs[credentialType];
+  if (staticConfig) {
+    return staticConfig;
+  }
+
+  return generateCredentialCardConfig(
+    credentialType,
+    colorScheme,
+    credentialColor
+  );
+};
 
 /**
- *
- * @param credentialType
- * @returns
+ * Preloads the images used in the credential card configurations to improve
+ * performance and reduce loading times when rendering the cards for the first
+ * time.
  */
-export const useCredentialCardConfiguration = (credentialType: string) => {
-  const { themeType } = useIOThemeContext();
-  // TODO get credential color from metadata
-  const credentialColor = undefined;
+export const preloadCredentialCardAssets = (
+  credentialTypes: ReadonlyArray<string>
+) => {
+  const assetsToPreload = credentialTypes
+    // Get credential card configurations for the provided credential types
+    .map(type => getCredentialCardConfig(type, undefined))
+    .filter((config): config is CredentialCardConfig => config !== undefined)
+    // Extract overlay and header overlay assets from the configurations, plus the corner overlay if needed
+    .map(config => [
+      config.overlay,
+      config.headerOverlay,
+      config.showCornerOverlay ? CARD_CORNER_OVERLAY : undefined
+    ])
+    .flat()
+    .filter((asset): asset is DataSourceParam => asset !== undefined);
 
-  return useMemo(() => {
-    const staticConfig = credentialCardConfigs[credentialType];
-    if (staticConfig) {
-      return staticConfig;
-    }
-
-    if (credentialColor) {
-      return generateCredentialCardConfig(credentialColor, themeType);
-    }
-    return getRandomCredentialCardConfig(credentialType, themeType);
-  }, [credentialType, credentialColor, themeType]);
+  preloadImages(Array.from(new Set(assetsToPreload)) as ReadonlyArray<number>);
 };

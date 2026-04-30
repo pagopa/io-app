@@ -1,5 +1,5 @@
 import { IOColors, Tag, useScaleAnimation } from "@pagopa/io-app-design-system";
-import { ReactNode, useMemo, useState } from "react";
+import { ReactNode, useMemo } from "react";
 
 import { Canvas } from "@shopify/react-native-skia";
 import I18n from "i18next";
@@ -13,6 +13,7 @@ import {
   ViewStyle
 } from "react-native";
 import Animated from "react-native-reanimated";
+import { useLayoutSize } from "../../hooks/useLayoutSize";
 import { accessibilityLabelByStatus } from "../../utils/itwAccessibilityUtils";
 import {
   getCredentialNameFromType,
@@ -157,11 +158,7 @@ type CardSideBaseProps = {
 
 const CardSideBase = ({ status, children, isItw }: CardSideBaseProps) => {
   const borderColorMap = useBorderColorByStatus();
-
-  const [size, setSize] = useState<{ width: number; height: number }>({
-    width: 0,
-    height: 0
-  });
+  const [size, setSize] = useLayoutSize();
 
   const statusTagProps = tagPropsByStatus[status];
   const borderColor = borderColorMap[status];

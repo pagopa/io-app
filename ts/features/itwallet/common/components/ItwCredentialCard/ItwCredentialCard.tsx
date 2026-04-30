@@ -3,7 +3,7 @@ import {
   IOColors,
   IOText,
   Tag,
-  useIOTheme
+  useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import Color from "color";
 import I18n from "i18next";
@@ -24,7 +24,7 @@ import { useThemeColorByCredentialType } from "../../utils/itwStyleUtils";
 import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
 import { ItWalletIdLogo } from "../ItWalletIdLogo";
 import { CardBackground, LegacyCardBackground } from "./CardBackground";
-import { useCredentialCardConfiguration } from "./config";
+import { getCredentialCardConfig } from "./config";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
 import { CardColorScheme } from "./types";
 
@@ -63,10 +63,10 @@ export const ItwCredentialCard = memo(
     const needsItwUpgrade = useIOSelector(
       itwShouldUpgradeCredentialSelector(credentialType, issuedAt)
     );
-    const ioTheme = useIOTheme();
+    const { themeType, theme } = useIOThemeContext();
     const status = useItwDisplayCredentialStatus(credentialStatus);
     const borderColorMap = useBorderColorByStatus();
-    const cardConfig = useCredentialCardConfiguration(credentialType);
+    const cardConfig = getCredentialCardConfig(credentialType, themeType);
     const isValid = validCredentialStatuses.includes(status);
 
     const statusTagProps = useMemo<Tag | undefined>(() => {
@@ -80,7 +80,7 @@ export const ItwCredentialCard = memo(
       return tagPropsByStatus[status];
     }, [status, needsItwUpgrade]);
 
-    const appBackgroundColor = IOColors[ioTheme["appBackground-primary"]];
+    const appBackgroundColor = IOColors[theme["appBackground-primary"]];
 
     const cardWrapperStyle = useMemo(
       () =>

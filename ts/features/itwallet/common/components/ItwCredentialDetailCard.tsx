@@ -3,15 +3,16 @@ import {
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import { Canvas } from "@shopify/react-native-skia";
-import { PropsWithChildren, useCallback, useState } from "react";
+import { PropsWithChildren, useCallback } from "react";
 import { LayoutChangeEvent, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useLayoutSize } from "../hooks/useLayoutSize";
 import { borderVariantByStatus } from "../utils/itwCredentialUtils";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils";
 import { ItwBrandedSkiaBorder } from "./ItwBrandedSkiaBorder";
 import { SkiaCardOverlay } from "./ItwCredentialCard/CardOverlay";
 import { SkiaGradientBackground } from "./ItwCredentialCard/GradientBackground";
-import { useCredentialCardConfiguration } from "./ItwCredentialCard/config";
+import { getCredentialCardConfig } from "./ItwCredentialCard/config";
 
 type ItwCredentialDetailCardProps = PropsWithChildren<{
   credentialType: string;
@@ -36,9 +37,11 @@ export const ItwCredentialDetailCard = ({
 }: ItwCredentialDetailCardProps) => {
   const safeAreaInsets = useSafeAreaInsets();
   const { themeType } = useIOThemeContext();
-  const [size, setSize] = useState({ width: 0, height: 0 });
-  const { background, headerOverlay, overlayBlend } =
-    useCredentialCardConfiguration(credentialType);
+  const [size, setSize] = useLayoutSize();
+  const { background, headerOverlay, overlayBlend } = getCredentialCardConfig(
+    credentialType,
+    themeType
+  );
 
   // Extend the card well above the screen so the top border is never visible at rest.
   // The negative marginTop pulls the card up, hiding the extra paddingTop above the screen.
@@ -48,12 +51,13 @@ export const ItwCredentialDetailCard = ({
     POST_HEADER_CONTENT_PADDING +
     SCROLL_HACK_OFFSET;
 
-  const handleOnLayout = useCallback((event: LayoutChangeEvent) => {
-    const { width, height } = event.nativeEvent.layout;
-    setSize(prev =>
-      prev.width === width && prev.height === height ? prev : { width, height }
-    );
-  }, []);
+  const handleOnLayout = useCallback(
+    (event: LayoutChangeEvent) => {
+      const { width, height } = event.nativeEvent.layout;
+      setSize({ width, height });
+    },
+    [setSize]
+  );
 
   return (
     <View style={[styles.container, { paddingTop }]} onLayout={handleOnLayout}>

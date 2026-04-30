@@ -7,7 +7,7 @@ import {
   RadialGradient as SkiaRadialGradient,
   vec
 } from "@shopify/react-native-skia";
-import { PropsWithChildren, useState } from "react";
+import { PropsWithChildren } from "react";
 import {
   LayoutChangeEvent,
   LayoutRectangle,
@@ -24,6 +24,7 @@ import {
   useDerivedValue,
   useSharedValue
 } from "react-native-reanimated";
+import { useLayoutSize } from "../hooks/useLayoutSize";
 import { useItWalletTheme } from "../utils/theme";
 import { ItwBrandedSkiaBorder } from "./ItwBrandedSkiaBorder";
 import { ItwSkiaBrandedGradientVariant } from "./ItwBrandedSkiaGradient";
@@ -58,10 +59,7 @@ export const ItwBrandedBox = ({
   const shouldUseGradientBackground =
     isLightMode && backgroundVariant === "gradient";
 
-  const [size, setSize] = useState<{ width: number; height: number }>({
-    width: 0,
-    height: 0
-  });
+  const [size, setSize] = useLayoutSize();
 
   /* Styles */
   const lightSkiaOpacity = isLightMode ? 0.4 : 0.05;

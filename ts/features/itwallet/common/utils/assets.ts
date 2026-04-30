@@ -1,5 +1,4 @@
 import { CredentialType } from "./itwMocksUtils";
-import { preloadImages } from "./imageCache";
 
 /**
  * Fixed overlay images for specific credential types that require a non-random
@@ -42,19 +41,3 @@ export const CREDENTIAL_BASE_OVERLAYS: ReadonlyArray<number> = [
  * background/ovarlays
  */
 export const CARD_CORNER_OVERLAY = require("../../../../../img/features/itWallet/cards/overlay/card_corner.png");
-
-/**
- * Eagerly warm the image cache for all known card overlay assets.
- * This runs at module load time so images start decoding before any card mounts,
- * eliminating the pop-in effect in list screens.
- */
-export const preloadItwAssets = () => {
-  const allOverlaySources: ReadonlyArray<number> = [
-    ...Object.values(CREDENTIAL_CARD_OVERLAYS),
-    ...Object.values(CREDENTIAL_HEADER_OVERLAYS),
-    ...CREDENTIAL_BASE_OVERLAYS,
-    CARD_CORNER_OVERLAY
-  ];
-
-  preloadImages(allOverlaySources);
-};
