@@ -6,13 +6,34 @@ import { fnv1a } from "../../../../../utils/hash";
 import { preloadImages } from "../../utils/imageCache";
 import { CredentialType } from "../../utils/itwMocksUtils";
 import { ItWalletThemes } from "../../utils/theme";
-import {
-  CREDENTIAL_BASE_COLORS,
-  CREDENTIAL_CARD_CORNER_OVERLAY,
-  CREDENTIAL_CARD_OVERLAYS,
-  CREDENTIAL_HEADER_OVERLAYS,
-  CREDENTIAL_PATTERN_OVERLAYS
-} from "./assets";
+import { CREDENTIAL_CARD_CORNER_OVERLAY } from "./CardOverlay";
+
+/**
+ * Colors from which random configurations will be generated, based on the
+ * provided seed.
+ */
+export const CREDENTIAL_BASE_COLORS = [
+  "#FFB357",
+  "#CDD2FC",
+  "#7AC1FA",
+  "#003366"
+];
+
+/**
+ * Pattern overlay images by credential taxonomy category
+ * !IMPORTANT: keys are provisional and may change in the future once the taxonomy is finalized.
+ */
+export const CREDENTIAL_CARD_PATTERN_OVERLAYS = {
+  bonus: require("../../../../../../img/features/itWallet/cards/overlay/pattern/bonus.png"),
+  education: require("../../../../../../img/features/itWallet/cards/overlay/pattern/education.png"),
+  family: require("../../../../../../img/features/itWallet/cards/overlay/pattern/family.png"),
+  financial: require("../../../../../../img/features/itWallet/cards/overlay/pattern/financial.png"),
+  health: require("../../../../../../img/features/itWallet/cards/overlay/pattern/health.png"),
+  identity: require("../../../../../../img/features/itWallet/cards/overlay/pattern/identity.png"),
+  lifestyle: require("../../../../../../img/features/itWallet/cards/overlay/pattern/lifestyle.png"),
+  travel: require("../../../../../../img/features/itWallet/cards/overlay/pattern/travel.png"),
+  work: require("../../../../../../img/features/itWallet/cards/overlay/pattern/work.png")
+};
 
 export type CredentialCardBackground<L extends number = 1 | 2 | 3 | 4 | 5> = {
   /**
@@ -124,8 +145,8 @@ export const credentialCardConfigs: Partial<
       angle: 217
     },
     overlay: {
-      card: CREDENTIAL_CARD_OVERLAYS[CredentialType.PID],
-      header: CREDENTIAL_HEADER_OVERLAYS[CredentialType.PID]
+      card: require("../../../../../../img/features/itWallet/cards/overlay/pid_card_overlay.png"),
+      header: require("../../../../../../img/features/itWallet/cards/overlay/pid_header_overlay.png")
     }
   },
   [CredentialType.DRIVING_LICENSE]: {
@@ -139,8 +160,8 @@ export const credentialCardConfigs: Partial<
       angle: 249
     },
     overlay: {
-      card: CREDENTIAL_CARD_OVERLAYS[CredentialType.DRIVING_LICENSE],
-      header: CREDENTIAL_HEADER_OVERLAYS[CredentialType.DRIVING_LICENSE]
+      card: require("../../../../../../img/features/itWallet/cards/overlay/mdl_card_overlay.png"),
+      header: require("../../../../../../img/features/itWallet/cards/overlay/mdl_header_overlay.png")
     }
   },
   [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: {
@@ -154,13 +175,8 @@ export const credentialCardConfigs: Partial<
       angle: 249
     },
     overlay: {
-      card: CREDENTIAL_CARD_OVERLAYS[
-        CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
-      ],
-      header:
-        CREDENTIAL_HEADER_OVERLAYS[
-          CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
-        ]
+      card: require("../../../../../../img/features/itWallet/cards/overlay/ts_card_overlay.png"),
+      header: require("../../../../../../img/features/itWallet/cards/overlay/ts_header_overlay.png")
     }
   },
   [CredentialType.EUROPEAN_DISABILITY_CARD]: {
@@ -175,9 +191,8 @@ export const credentialCardConfigs: Partial<
       radius: 1.0564
     },
     overlay: {
-      card: CREDENTIAL_CARD_OVERLAYS[CredentialType.EUROPEAN_DISABILITY_CARD],
-      header:
-        CREDENTIAL_HEADER_OVERLAYS[CredentialType.EUROPEAN_DISABILITY_CARD]
+      card: require("../../../../../../img/features/itWallet/cards/overlay/dc_card_overlay.png"),
+      header: require("../../../../../../img/features/itWallet/cards/overlay/dc_header_overlay.png")
     }
   },
   [CredentialType.AGE_VERIFICATION]: {
@@ -190,8 +205,8 @@ export const credentialCardConfigs: Partial<
       angle: 69
     },
     overlay: {
-      card: CREDENTIAL_CARD_OVERLAYS[CredentialType.AGE_VERIFICATION],
-      header: CREDENTIAL_HEADER_OVERLAYS[CredentialType.AGE_VERIFICATION]
+      card: require("../../../../../../img/features/itWallet/cards/overlay/av_card_overlay.png"),
+      header: require("../../../../../../img/features/itWallet/cards/overlay/av_header_overlay.png")
     }
   }
 };
@@ -213,11 +228,11 @@ const generateBaseOverlayFromCredentialType = (
   credentialType: string
 ): DataSourceParam => {
   const overlayHash = fnv1a(credentialType, 1);
-  const keys = Object.keys(CREDENTIAL_PATTERN_OVERLAYS) as Array<
-    keyof typeof CREDENTIAL_PATTERN_OVERLAYS
+  const keys = Object.keys(CREDENTIAL_CARD_PATTERN_OVERLAYS) as Array<
+    keyof typeof CREDENTIAL_CARD_PATTERN_OVERLAYS
   >;
   const key = keys[overlayHash % keys.length];
-  return CREDENTIAL_PATTERN_OVERLAYS[key];
+  return CREDENTIAL_CARD_PATTERN_OVERLAYS[key];
 };
 
 /**

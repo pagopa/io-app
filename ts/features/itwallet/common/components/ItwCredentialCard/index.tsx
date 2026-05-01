@@ -82,19 +82,13 @@ export const ItwCredentialCard = memo(
 
     const appBackgroundColor = IOColors[theme["appBackground-primary"]];
 
-    const cardWrapperStyle = useMemo(
-      () =>
-        status === "valid"
-          ? [
-              styles.cardWrapper,
-              { boxShadow: `0 0 0 2px ${appBackgroundColor}` }
-            ]
-          : styles.cardWrapper,
-      [status, appBackgroundColor]
-    );
-
     return (
-      <View style={cardWrapperStyle}>
+      <View
+        style={[
+          styles.cardWrapper,
+          status === "valid" && { boxShadow: `0 0 0 2px ${appBackgroundColor}` }
+        ]}
+      >
         <View style={styles.cardContainer}>
           <CardBackground {...cardConfig} />
           <View style={styles.header}>
@@ -125,9 +119,11 @@ export const ItwCredentialCard = memo(
                 </IOText>
               )}
             </HStack>
-            <View style={styles.statusTag}>
-              {statusTagProps && <Tag forceLightMode {...statusTagProps} />}
-            </View>
+            {statusTagProps && (
+              <View style={styles.statusTag}>
+                <Tag {...statusTagProps} />
+              </View>
+            )}
           </View>
 
           {!isValid && (
@@ -138,13 +134,9 @@ export const ItwCredentialCard = memo(
           <View
             style={[
               styles.border,
-              {
-                borderColor:
-                  status === "valid"
-                    ? cardConfig.borderColor
-                    : borderColorMap[status],
-                borderWidth: status === "valid" ? 1 : 2
-              }
+              status === "valid"
+                ? { borderColor: cardConfig.borderColor, borderWidth: 1 }
+                : { borderColor: borderColorMap[status], borderWidth: 2 }
             ]}
           />
         </View>

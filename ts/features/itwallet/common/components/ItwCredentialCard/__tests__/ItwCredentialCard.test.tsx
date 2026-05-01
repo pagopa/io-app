@@ -1,4 +1,5 @@
 import { createStore } from "redux";
+import { ItwCredentialCard, ItwCredentialCardLegacy } from "..";
 import ROUTES from "../../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
@@ -11,10 +12,6 @@ import {
   ItwCredentialStatus,
   ItwJwtCredentialStatus
 } from "../../../utils/itwTypesUtils";
-import {
-  ItwCredentialCard,
-  ItwCredentialCardLegacy
-} from "../ItwCredentialCard";
 
 describe("ItwCredentialCard", () => {
   it.each([
