@@ -1,3 +1,5 @@
+import { memo, useMemo } from "react";
+import { View } from "react-native";
 import {
   Alert,
   ClaimsSelector,
@@ -5,33 +7,29 @@ import {
   ListItemHeader,
   VSpacer,
   VStack,
-  useIOTheme,
-  useIOThemeContext
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { memo, useMemo } from "react";
-import { View } from "react-native";
-import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
-import { getCredentialCardConfig } from "../../../common/components/ItwCredentialCard/config";
 import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils";
-import { useItWalletTheme } from "../../../common/utils/theme";
-import { useClaimsDetailsBottomSheet } from "../../common/hooks/useClaimsDetailsBottomSheet";
-import { mapClaimsToClaimsSelectorItems } from "../../common/utils/itwClaimSelector";
-import { ItwRemoteMachineContext } from "../machine/provider";
 import { selectPresentationDetails } from "../machine/selectors";
+import { ItwRemoteMachineContext } from "../machine/provider";
+import { EnrichedPresentationDetails } from "../utils/itwRemoteTypeUtils";
 import {
   getCredentialTypeByVct,
   groupCredentialsByPurpose
 } from "../utils/itwRemotePresentationUtils";
-import { EnrichedPresentationDetails } from "../utils/itwRemoteTypeUtils";
+import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
+import { useClaimsDetailsBottomSheet } from "../../common/hooks/useClaimsDetailsBottomSheet";
+import {
+  claimsSelectorHeaderGradientsByCredentialType,
+  mapClaimsToClaimsSelectorItems
+} from "../../common/utils/itwClaimSelector";
 
 const RequestedCredentialsBlock = ({
   credentials
 }: {
   credentials: EnrichedPresentationDetails;
 }) => {
-  const { themeType } = useIOThemeContext();
-  const itwTheme = useItWalletTheme();
   const { present, bottomSheet } = useClaimsDetailsBottomSheet();
 
   return (
@@ -41,24 +39,23 @@ const RequestedCredentialsBlock = ({
         .filter(c => c.claimsToDisplay.length > 0)
         .map(c => {
           const credentialType = getCredentialTypeByVct(c.vct);
-          if (!credentialType) {
-            // Should never happen
-            return null;
-          }
 
-          const config = getCredentialCardConfig(credentialType, themeType);
+          const title = credentialType
+            ? getCredentialNameFromType(credentialType, "", true)
+            : "";
+
+          const headerGradientColors = credentialType
+            ? claimsSelectorHeaderGradientsByCredentialType[credentialType]
+            : undefined;
 
           return (
             <ClaimsSelector
               key={c.id}
-              title={getCredentialNameFromType(credentialType, true)}
+              title={title}
               items={mapClaimsToClaimsSelectorItems(c.claimsToDisplay, present)}
               defaultExpanded
               selectionEnabled={false}
-              headerGradientColors={[
-                itwTheme["card-background"],
-                config.background.colors[0]
-              ]}
+              headerGradientColors={headerGradientColors}
             />
           );
         })}
