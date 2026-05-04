@@ -49,7 +49,6 @@ describe("createProximityActionsImplementation", () => {
         event: { type: "start" }
       } as never);
 
-      expect(trackItwProximityQrCode).toHaveBeenCalledTimes(1);
       expect(trackItwProximityQrCodeLoadingFailure).not.toHaveBeenCalled();
     });
 

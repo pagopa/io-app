@@ -12,9 +12,7 @@ import {
   take
 } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
-import { Detail_v2Enum } from "../../../../definitions/backend/PaymentProblemJson";
-import { backendClientManager } from "../../../api/BackendClientManager";
-import { apiUrlPrefix } from "../../../config";
+import { PaymentFaultV2Enum } from "../../../../definitions/communication/PaymentFaultV2";
 import { Action } from "../../../store/actions/types";
 import { isPagoPATestEnabledSelector } from "../../../store/reducers/persistedPreferences";
 import { SagaCallReturnType } from "../../../types/utils";
@@ -38,6 +36,7 @@ import {
   toSpecificMessagePaymentError,
   toTimeoutMessagePaymentError
 } from "../types/paymentErrors";
+import { getCommunicationClient } from "./commons";
 
 const PaymentUpdateWorkerCount = 5;
 
@@ -116,8 +115,10 @@ function* updatePaymentInfo(
     return;
   }
 
-  const { getPaymentInfoV2: getPaymentDataRequestFactory } =
-    backendClientManager.getBackendClient(apiUrlPrefix, sessionToken);
+  const { getPaymentInfoV2: getPaymentDataRequestFactory } = yield* call(
+    getCommunicationClient,
+    sessionToken
+  );
 
   const getPaymentDataRequest = getPaymentDataRequestFactory({
     rptId: paymentId,
@@ -167,8 +168,8 @@ const unknownErrorToPaymentError = (e: unknown): MessagePaymentError => {
   if (lowerCaseReason === "max-retries" || lowerCaseReason === "aborted") {
     return toTimeoutMessagePaymentError();
   }
-  if (reason in Detail_v2Enum) {
-    return toSpecificMessagePaymentError(reason as Detail_v2Enum);
+  if (reason in PaymentFaultV2Enum) {
+    return toSpecificMessagePaymentError(reason as PaymentFaultV2Enum);
   }
   return toGenericMessagePaymentError(reason);
 };

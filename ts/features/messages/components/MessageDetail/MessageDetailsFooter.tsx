@@ -6,10 +6,11 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useMemo } from "react";
 import I18n from "i18next";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { useIOSelector } from "../../../../store/hooks";
 import { formatPaymentNoticeNumber } from "../../../payments/common/utils";
 import { serviceMetadataByIdSelector } from "../../../services/details/store/selectors";
+import { formatStringToSpacedString } from "../../../../utils/accessibility.ts";
 import { ContactsListItem } from "./ContactsListItem";
 import {
   ShowMoreItem,
@@ -61,7 +62,10 @@ const generateMessageSectionData = (
     ? [
         {
           accessibilityLabel: I18n.t(
-            "messageDetails.showMoreDataBottomSheet.entityFiscalCodeAccessibility"
+            "messageDetails.showMoreDataBottomSheet.entityFiscalCodeAccessibility",
+            {
+              creditorTaxId: formatStringToSpacedString(payeeFiscalCode)
+            }
           ),
           icon: "entityCode",
           label: I18n.t(

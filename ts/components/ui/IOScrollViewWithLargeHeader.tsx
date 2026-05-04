@@ -9,13 +9,7 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
-import {
-  ComponentProps,
-  forwardRef,
-  ReactNode,
-  useMemo,
-  useState
-} from "react";
+import { ComponentProps, ReactNode, Ref, useMemo, useState } from "react";
 
 import { LayoutChangeEvent, View } from "react-native";
 import Animated, { AnimatedRef } from "react-native-reanimated";
@@ -39,6 +33,7 @@ export type LargeHeaderTitleProps = {
 
 type Props = WithTestID<
   {
+    ref?: Ref<View>;
     children?: ReactNode;
     actions?: ComponentProps<typeof IOScrollView>["actions"];
     title: LargeHeaderTitleProps;
@@ -66,123 +61,119 @@ type Props = WithTestID<
  * the user scrolls. It also handles the contextual help and the FAQ.
  * Use of LargeHeader naming is due to similar behavior offered by the native iOS API.
  */
-export const IOScrollViewWithLargeHeader = forwardRef<View, Props>(
-  (
-    {
-      children,
-      title,
-      description,
-      onDescriptionLinkPress,
-      actions,
-      goBack,
-      canGoback = true,
-      contextualHelp,
-      contextualHelpMarkdown,
-      faqCategories,
-      ignoreSafeAreaMargin = false,
-      includeContentMargins = false,
-      headerActionsProp = {},
-      excludeEndContentMargin,
-      testID,
-      ignoreAccessibilityCheck = false,
-      animatedRef,
-      topElement = undefined,
-      alwaysBounceVertical
-    },
-    ref
-  ) => {
-    const [titleHeight, setTitleHeight] = useState(0);
+export const IOScrollViewWithLargeHeader = ({
+  ref,
+  children,
+  title,
+  description,
+  onDescriptionLinkPress,
+  actions,
+  goBack,
+  canGoback = true,
+  contextualHelp,
+  contextualHelpMarkdown,
+  faqCategories,
+  ignoreSafeAreaMargin = false,
+  includeContentMargins = false,
+  headerActionsProp = {},
+  excludeEndContentMargin,
+  testID,
+  ignoreAccessibilityCheck = false,
+  animatedRef,
+  topElement = undefined,
+  alwaysBounceVertical
+}: Props) => {
+  const [titleHeight, setTitleHeight] = useState(0);
 
-    const { isAlertVisible } = useIOAlertVisible();
+  const { isAlertVisible } = useIOAlertVisible();
 
-    const navigation = useNavigation();
-    const theme = useIOTheme();
+  const navigation = useNavigation();
+  const theme = useIOTheme();
 
-    const getTitleHeight = (event: LayoutChangeEvent) => {
-      const { height } = event.nativeEvent.layout;
-      setTitleHeight(height);
-    };
+  const getTitleHeight = (event: LayoutChangeEvent) => {
+    const { height } = event.nativeEvent.layout;
+    setTitleHeight(height);
+  };
 
-    const headerPropsWithoutGoBack = {
-      title: title.label,
-      contextualHelp,
-      contextualHelpMarkdown,
-      faqCategories,
-      ...headerActionsProp
-    };
+  const headerPropsWithoutGoBack = {
+    title: title.label,
+    contextualHelp,
+    contextualHelpMarkdown,
+    faqCategories,
+    ...headerActionsProp
+  };
 
-    const computeIgnoreSafeAreaMargin = useMemo(() => {
-      if (isAlertVisible) {
-        return true;
-      }
-      return ignoreSafeAreaMargin;
-    }, [ignoreSafeAreaMargin, isAlertVisible]);
+  const computeIgnoreSafeAreaMargin = useMemo(() => {
+    if (isAlertVisible) {
+      return true;
+    }
+    return ignoreSafeAreaMargin;
+  }, [ignoreSafeAreaMargin, isAlertVisible]);
 
-    const headerProps: ComponentProps<typeof HeaderSecondLevel> = {
-      ignoreSafeAreaMargin: computeIgnoreSafeAreaMargin,
-      ignoreAccessibilityCheck,
-      ...useHeaderProps(
-        canGoback
-          ? {
-              ...headerPropsWithoutGoBack,
-              backAccessibilityLabel: I18n.t("global.buttons.back"),
-              goBack: goBack ?? navigation.goBack
-            }
-          : headerPropsWithoutGoBack
-      )
-    };
+  const headerProps: ComponentProps<typeof HeaderSecondLevel> = {
+    ignoreSafeAreaMargin: computeIgnoreSafeAreaMargin,
+    ignoreAccessibilityCheck,
+    ...useHeaderProps(
+      canGoback
+        ? {
+            ...headerPropsWithoutGoBack,
+            backAccessibilityLabel: I18n.t("global.buttons.back"),
+            goBack: goBack ?? navigation.goBack
+          }
+        : headerPropsWithoutGoBack
+    )
+  };
 
-    return (
-      <IOScrollView
-        actions={actions}
-        animatedRef={animatedRef}
-        headerConfig={headerProps}
-        snapOffset={titleHeight}
-        includeContentMargins={false}
-        excludeEndContentMargin={excludeEndContentMargin}
-        testID={testID}
-        topElement={topElement}
-        alwaysBounceVertical={alwaysBounceVertical}
-      >
-        <ContentWrapper onLayout={getTitleHeight}>
-          <VStack space={8}>
-            {title.section && (
-              <BodySmall weight="Semibold" color={theme["textBody-tertiary"]}>
-                {title.section}
-              </BodySmall>
-            )}
-            <H2
-              color={theme["textHeading-default"]}
-              testID={title?.testID}
-              ref={ref}
-              accessibilityLabel={title.accessibilityLabel ?? title.label}
-              accessibilityRole="header"
-            >
-              {title.label}
-            </H2>
-          </VStack>
+  return (
+    <IOScrollView
+      actions={actions}
+      animatedRef={animatedRef}
+      headerConfig={headerProps}
+      snapOffset={titleHeight}
+      includeContentMargins={false}
+      excludeEndContentMargin={excludeEndContentMargin}
+      testID={testID}
+      topElement={topElement}
+      alwaysBounceVertical={alwaysBounceVertical}
+    >
+      <ContentWrapper onLayout={getTitleHeight}>
+        <VStack space={8}>
+          {title.section && (
+            <BodySmall weight="Semibold" color={theme["textBody-tertiary"]}>
+              {title.section}
+            </BodySmall>
+          )}
+          <H2
+            color={theme["textHeading-default"]}
+            testID={title?.testID}
+            ref={ref}
+            accessibilityLabel={title.accessibilityLabel ?? title.label}
+            accessibilityRole="header"
+          >
+            {title.label}
+          </H2>
+        </VStack>
+      </ContentWrapper>
+
+      {description && (
+        <ContentWrapper>
+          <VSpacer size={16} />
+          <IOMarkdownLite
+            content={description}
+            onLinkPress={onDescriptionLinkPress}
+          />
         </ContentWrapper>
-
-        {description && (
-          <ContentWrapper>
-            <VSpacer size={16} />
-            <IOMarkdownLite
-              content={description}
-              onLinkPress={onDescriptionLinkPress}
-            />
-          </ContentWrapper>
-        )}
-        {children && (
-          <>
-            <VSpacer size={16} />
-            {includeContentMargins ? (
-              <ContentWrapper>{children}</ContentWrapper>
-            ) : (
-              children
-            )}
-          </>
-        )}
-      </IOScrollView>
-    );
-  }
-);
+      )}
+      {children && (
+        <>
+          <VSpacer size={16} />
+          {includeContentMargins ? (
+            <ContentWrapper>{children}</ContentWrapper>
+          ) : (
+            children
+          )}
+        </>
+      )}
+    </IOScrollView>
+  );
+};

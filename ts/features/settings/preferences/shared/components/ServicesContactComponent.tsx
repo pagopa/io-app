@@ -1,7 +1,7 @@
 import { IOMarkdownLite, RadioGroup } from "@pagopa/io-app-design-system";
 import { ReactElement, useCallback, useEffect, useState } from "react";
 import I18n from "i18next";
-import { ServicesPreferencesModeEnum } from "../../../../../../definitions/backend/ServicesPreferencesMode";
+import { ServicesPreferencesModeEnum } from "../../../../../../definitions/identity/ServicesPreferencesMode";
 import { usePrevious } from "../../../../../utils/hooks/usePrevious";
 
 type Props = {
