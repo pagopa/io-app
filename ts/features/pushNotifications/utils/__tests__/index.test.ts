@@ -5,6 +5,7 @@ import PushNotificationIOS, {
 } from "@react-native-community/push-notification-ios";
 import PushNotification from "react-native-push-notification";
 import NotificationsUtils from "react-native-notifications-utils";
+import * as analytics from "../../../../utils/analytics";
 import {
   AuthorizationStatus as AS,
   cancellAllLocalNotifications,
@@ -56,6 +57,9 @@ describe("AuthorizationStatus", () => {
 const testCheckNotificationPermissionsThrowsiOS = () => {
   it("should return 'false' if the library throws on iOS", async () => {
     mockisIOS = true;
+    const trackAppCaughtErrorSpy = jest
+      .spyOn(analytics, "trackAppCaughtError")
+      .mockImplementation(() => undefined);
     jest
       .spyOn(PushNotificationIOS, "checkPermissions")
       .mockImplementation(_fn => {
@@ -65,12 +69,20 @@ const testCheckNotificationPermissionsThrowsiOS = () => {
     const hasPermission = await checkNotificationPermissions();
 
     expect(hasPermission).toBe(false);
+    expect(trackAppCaughtErrorSpy).toHaveBeenCalledWith(
+      "checkNotificationPermissions",
+      "exception thrown on iOS",
+      expect.stringContaining("Error: Test error")
+    );
   });
 };
 
 const testCheckNotificationPermissionsThrowsAndroid = () => {
   it("should return 'false' if the library throws on Android", async () => {
     mockisIOS = false;
+    const trackAppCaughtErrorSpy = jest
+      .spyOn(analytics, "trackAppCaughtError")
+      .mockImplementation(() => undefined);
     jest.spyOn(PushNotification, "checkPermissions").mockImplementation(_fn => {
       throw Error("Test error");
     });
@@ -78,6 +90,11 @@ const testCheckNotificationPermissionsThrowsAndroid = () => {
     const hasPermission = await checkNotificationPermissions();
 
     expect(hasPermission).toBe(false);
+    expect(trackAppCaughtErrorSpy).toHaveBeenCalledWith(
+      "checkNotificationPermissions",
+      "exception thrown on Android",
+      expect.stringContaining("Error: Test error")
+    );
   });
 };
 
@@ -255,6 +272,9 @@ const testRequestNotificationPermissionsOnAndroid = () => {
 const testRequestNotificationPermissionsOniOSThrows = () => {
   it("should throw on iOS     if the internal promise is rejected and return 'false'", async () => {
     mockisIOS = true;
+    const trackAppCaughtErrorSpy = jest
+      .spyOn(analytics, "trackAppCaughtError")
+      .mockImplementation(() => undefined);
     jest.spyOn(PushNotificationIOS, "requestPermissions").mockImplementation(
       _permissions =>
         new Promise<PushNotificationPermissions>((_resolve, reject) => {
@@ -265,12 +285,20 @@ const testRequestNotificationPermissionsOniOSThrows = () => {
     const permissionHasBeenGiven = await requestNotificationPermissions();
 
     expect(permissionHasBeenGiven).toBe(false);
+    expect(trackAppCaughtErrorSpy).toHaveBeenCalledWith(
+      "requestNotificationPermissions",
+      "exception thrown on iOS",
+      "Test rejection"
+    );
   });
 };
 
 const testRequestNotificationPermissionsOnAndroidThrows = () => {
   it("should throw on Android if the internal promise is rejected and return 'false'", async () => {
     mockisIOS = false;
+    const trackAppCaughtErrorSpy = jest
+      .spyOn(analytics, "trackAppCaughtError")
+      .mockImplementation(() => undefined);
     jest.spyOn(PermissionsAndroid, "request").mockImplementation(
       (_requestedPermission, _) =>
         new Promise<PermissionStatus>((_resolve, reject) => {
@@ -281,6 +309,11 @@ const testRequestNotificationPermissionsOnAndroidThrows = () => {
     const permissionHasBeenGiven = await requestNotificationPermissions();
 
     expect(permissionHasBeenGiven).toBe(false);
+    expect(trackAppCaughtErrorSpy).toHaveBeenCalledWith(
+      "requestNotificationPermissions",
+      "exception thrown on Android",
+      "Test rejection"
+    );
   });
 };
 

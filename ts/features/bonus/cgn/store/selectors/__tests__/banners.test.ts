@@ -1,6 +1,6 @@
 import MockDate from "mockdate";
 import { createStore, Store } from "redux";
-import { InitializedProfile } from "../../../../../../../definitions/backend/InitializedProfile";
+import { InitializedProfile } from "../../../../../../../definitions/identity/InitializedProfile";
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
 import { GlobalState } from "../../../../../../store/reducers/types";

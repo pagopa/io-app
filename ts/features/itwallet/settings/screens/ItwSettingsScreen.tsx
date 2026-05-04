@@ -1,5 +1,5 @@
 import { ContentWrapper, IOToast, VStack } from "@pagopa/io-app-design-system";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useRoute } from "@react-navigation/native";
 import { TxtLinkNode } from "@textlint/ast-node-types";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
@@ -26,6 +26,7 @@ const MIXPANEL_SCREEN_NAME = ITW_SCREENVIEW_EVENTS.ITW_SETTINGS;
 
 const ItwSettingsScreen = () => {
   const navigation = useIONavigation();
+  const { name: currentScreenName } = useRoute();
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
@@ -91,7 +92,12 @@ const ItwSettingsScreen = () => {
       <ContentWrapper>
         <VStack space={8}>
           <View />
-          {isWalletValid && <ItwEidLifecycleAlert navigation={navigation} />}
+          {isWalletValid && (
+            <ItwEidLifecycleAlert
+              navigation={navigation}
+              currentScreenName={currentScreenName}
+            />
+          )}
           <IOMarkdown
             content={I18n.t("features.itWallet.settings.manage.content")}
             // TODO [SIW-2632] remove this rule and add IT Wallet url to I18n locales

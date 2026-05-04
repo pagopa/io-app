@@ -2,7 +2,7 @@ import { FooterActions, useIOToast } from "@pagopa/io-app-design-system";
 import { useLinkTo } from "@react-navigation/native";
 import { ComponentProps, useCallback } from "react";
 import I18n from "i18next";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import {
   useIODispatch,
   useIOSelector,

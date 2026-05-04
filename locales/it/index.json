@@ -1716,12 +1716,12 @@
     "showMoreDataBottomSheet": {
       "title": "Dati identificativi",
       "messageId": "ID messaggio",
-      "messageIdAccessibility": "ID messaggio, copia",
+      "messageIdAccessibility": "ID messaggio: {{messageId}}, copia",
       "pagoPAHeader": "Avviso pagoPA",
       "noticeCode": "Codice Avviso",
-      "noticeCodeAccessibility": "Codice avviso, copia",
+      "noticeCodeAccessibility": "Codice avviso: {{paymentNoticeNumber}}, copia",
       "entityFiscalCode": "Codice Fiscale Ente",
-      "entityFiscalCodeAccessibility": "Codice fiscale ente, copia"
+      "entityFiscalCodeAccessibility": "Codice fiscale ente: {{creditorTaxId}}, copia"
     },
     "contactsBottomSheet": {
       "title": "Assistenza",
@@ -2658,7 +2658,7 @@
         "infoSection": {
           "title": "Informazioni sulla notifica",
           "iun": "Codice IUN",
-          "iunAccessibility": "Codice IUN, copia",
+          "iunAccessibility": "Codice IUN : {{iun}}, copia",
           "iunSectionTitle": "Notifica"
         },
         "timeline": {
@@ -3091,6 +3091,7 @@
         "mdl": "Patente di guida",
         "dc": "Carta Europea della Disabilità",
         "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia",
+        "av": "Età certificata",
         "ed": "Titoli accademici",
         "ee": "Iscrizioni accademiche",
         "res": "Attestato di residenza",
@@ -3123,6 +3124,7 @@
         "button": "Mostra dettagli",
         "supportTitle": "Contatta l'assistenza",
         "supportDescription": "Prendi nota del codice di errore, potrebbe servirti per richiedere assistenza.",
+        "helpCenter": "Visita il centro assistenza",
         "phone": "Chiama {{phoneNumber}}",
         "landline": "Da telefono fisso",
         "chat": "Chiedi aiuto in chat",
@@ -3336,21 +3338,28 @@
         },
         "modeSelection": {
           "section": {
-            "issuance": "Attiva {{ feature }}",
-            "reissuance": "Conferma periodica dell'identità"
+            "l2": "Conferma identità",
+            "l3-issuance": "Attiva IT-Wallet",
+            "l3-reissuance": "Conferma periodica dell’identità"
           },
           "title": {
-            "issuance": "Conferma la tua identità",
-            "reissuance": "Scegli come continuare"
+            "l2": "Scegli come identificarti",
+            "l3-issuance": "Conferma la tua identità",
+            "l3-reissuance": "Scegli come continuare"
           },
           "description": {
-            "issuance": "È un passaggio di sicurezza necessario per associare i documenti digitali alla tua identità. ",
-            "reissuance": "È un passaggio necessario per continuare ad usare {{ feature }} senza limitazioni."
+            "l2-issuance": "È un passaggio necessario per garantire la sicurezza dei tuoi dati.",
+            "l2-reissuance": "È un passaggio necessario per continuare ad usare Documenti su IO senza limitazioni.",
+            "l3-issuance": "È un passaggio di sicurezza necessario per associare i documenti digitali alla tua identità.",
+            "l3-reissuance": "È un passaggio necessario per continuare ad usare IT-Wallet senza limitazioni."
           },
           "noCieCta": "Non hai la Carta di Identità Elettronica?",
           "mode": {
             "ciePin": {
-              "title": "Continua con CIE + PIN",
+              "title": {
+                "default": "Usa CIE + PIN",
+                "l3": "Continua con CIE + PIN"
+              },
               "subtitle": {
                 "default": "Dovrai usare la Carta di Identità Elettronica (CIE) e inserire il suo PIN di 8 cifre.",
                 "l3": "Ha una durata di 12 mesi"
@@ -3365,7 +3374,10 @@
               }
             },
             "cieId": {
-              "title": "Continua con l’app CieID",
+              "title": {
+                "default": "Usa l'app CieID",
+                "l3": "Continua con l’app CieID"
+              },
               "subtitle": {
                 "default": "Dovrai usare credenziali e app CieID",
                 "l3": "Ha una durata di 12 mesi"
@@ -3379,7 +3391,7 @@
             },
             "spid": {
               "title": {
-                "default": "Continua con SPID",
+                "default": "Usa SPID",
                 "l3": "Continua con SPID + CIE"
               },
               "subtitle": {
@@ -3671,6 +3683,11 @@
           "body": "Assicurati di avere il documento fisico valido prima di richiedere la sua versione digitale.",
           "primaryAction": "Ho capito"
         },
+        "pidAnprMismatchError": {
+          "title": "Non puoi proseguire con la richiesta",
+          "body": "Abbiamo rilevato incongruenze nei tuoi dati su ANPR (Anagrafe nazionale della popolazione residente).",
+          "primaryAction": "Contatta l'assistenza"
+        },
         "issuerNotTrustedCommonError": {
           "title": "Un problema non permette di continuare",
           "subtitle": "Si è verificato un errore tecnico che impedisce di ottenere {{credential}}. Riprova.\nSe il problema persiste, contatta l’assistenza.",
@@ -3869,6 +3886,12 @@
           "fiscalCode": {
             "label": "Il tuo Codice Fiscale",
             "action": "Premi per ingrandire e visualizzare il codice a barre a tutto schermo"
+          },
+          "ageVerification": {
+            "usageBanner": {
+              "title": "Dove usare Età certificata?",
+              "content": "Puoi usarla per accedere a servizi online destinati agli adulti: dimostri la tua maggiore età e la tua identità resta anonima."
+            }
           },
           "status": {
             "valid": "Valida",
