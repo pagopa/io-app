@@ -25,7 +25,7 @@ export const ItwPresentationPidDetailScreen = () => {
   const maybeEidStatus = useIOSelector(itwCredentialsEidStatusSelector);
 
   const isItwDiscoveryInfoBannerHidden = useIOSelector(
-    itwIsBannerHiddenSelector("itw_discovery_info")
+    itwIsBannerHiddenSelector("itw_pid_info")
   );
 
   useFocusEffect(

@@ -89,9 +89,7 @@ describe("ItwDiscoveryInfoBanner", () => {
         banner_landing: expect.stringContaining("assistenza.ioapp.it")
       })
     );
-    expect(store.getActions()).toContainEqual(
-      itwCloseBanner("itw_discovery_info")
-    );
+    expect(store.getActions()).toContainEqual(itwCloseBanner("itw_pid_info"));
   });
 });
 

@@ -41,7 +41,7 @@ const ItwDiscoveryInfoBanner = () => {
 
   const handleOnClose = () => {
     trackItwBannerClosure(trackBannerProperties);
-    dispatch(itwCloseBanner("itw_discovery_info"));
+    dispatch(itwCloseBanner("itw_pid_info"));
   };
 
   return (

@@ -56,7 +56,7 @@ const renderComponent = (isBannerHidden: boolean) => {
         ...globalState.features.itWallet,
         banners: isBannerHidden
           ? {
-              itw_discovery_info: {
+              itw_pid_info: {
                 dismissedOn: new Date().toISOString(),
                 dismissCount: 1
               }
