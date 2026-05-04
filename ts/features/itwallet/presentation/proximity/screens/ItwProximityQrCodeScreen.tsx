@@ -51,6 +51,8 @@ import {
 } from "../machine/selectors.ts";
 import { ItwProximityParamsList } from "../navigation/ItwProximityParamsList.ts";
 import { shouldBlockProximityQrCodeSelector } from "../store/selectors";
+import { itwIsBannerHiddenSelector } from "../../../common/store/selectors/banners";
+import { ItwProximityQrCodeInfoBanner } from "../components/ItwProximityQrCodeInfoBanner";
 
 const QR_CODE_LOGO_SIZE = 52;
 
@@ -99,6 +101,9 @@ export const ItwProximityQrCodeScreen = ({
   );
   const shouldBlockProximityPresentation = useIOSelector(
     shouldBlockProximityQrCodeSelector
+  );
+  const isQrCodeInfoBannerHidden = useIOSelector(
+    itwIsBannerHiddenSelector("proximity_qr_code_info")
   );
 
   useDebugInfo({
@@ -272,6 +277,12 @@ export const ItwProximityQrCodeScreen = ({
           {renderQrCodeContent()}
         </VStack>
       </ItwBrandedBox>
+      {!isQrCodeInfoBannerHidden && (
+        <>
+          <VSpacer size={24} />
+          <ItwProximityQrCodeInfoBanner />
+        </>
+      )}
       {shouldBlockProximityPresentation && (
         <>
           <VSpacer size={24} />
