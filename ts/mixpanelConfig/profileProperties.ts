@@ -24,6 +24,8 @@ import {
   PNServiceStatus
 } from "../features/pn/analytics/index.ts";
 import { isPnServiceEnabled } from "../features/pn/reminderBanner/reducer/bannerDismiss.ts";
+import { trackAppCaughtError } from "../utils/analytics.ts";
+import { unknownToString } from "../utils/errors.ts";
 import {
   cdcStatusHandler,
   cgnStatusHandler,
@@ -114,8 +116,11 @@ export const updateMixpanelProfileProperties = async (
 
     getPeople()?.set(profilePropertiesObject);
   } catch (e) {
-    // TODO: Replace Sentry capture exception with a new logging solution
-    // Sentry.captureException(e);
+    trackAppCaughtError(
+      "updateMixpanelProfileProperties",
+      undefined,
+      unknownToString(e)
+    );
   }
 };
 

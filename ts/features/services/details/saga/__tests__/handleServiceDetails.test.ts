@@ -1,7 +1,9 @@
 import * as E from "fp-ts/lib/Either";
-import { OrganizationFiscalCode } from "@pagopa/ts-commons/lib/strings";
+import {
+  NonEmptyString,
+  OrganizationFiscalCode
+} from "@pagopa/ts-commons/lib/strings";
 import { testSaga } from "redux-saga-test-plan";
-import { OrganizationName } from "../../../../../../definitions/backend/OrganizationName";
 import { ServiceDetails } from "../../../../../../definitions/services/ServiceDetails";
 import { StandardServiceCategoryEnum } from "../../../../../../definitions/services/StandardServiceCategory";
 import { ScopeTypeEnum } from "../../../../../../definitions/services/ScopeType";
@@ -23,7 +25,7 @@ export const mockedService: ServiceDetails = {
   name: "servizio1",
   organization: {
     fiscal_code: "OrgFiscalCode" as OrganizationFiscalCode,
-    name: "OrgName" as OrganizationName
+    name: "OrgName" as NonEmptyString
   }
 };
 const mockedGenericError = new Error(`response status 500`);
