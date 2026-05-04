@@ -17,7 +17,7 @@ import I18n from "i18next";
 import { useCallback, useLayoutEffect } from "react";
 import { Linking, View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import {
   InitiativeDTO,
   InitiativeRewardTypeEnum,

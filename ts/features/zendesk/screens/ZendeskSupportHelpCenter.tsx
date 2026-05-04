@@ -26,7 +26,7 @@ import {
 } from "react";
 import { FlatList, ListRenderItemInfo, Platform } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
-import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
+import { InitializedProfile } from "../../../../definitions/identity/InitializedProfile";
 import IOMarkdown from "../../../components/IOMarkdown";
 import {
   IOScrollView,

@@ -27,6 +27,7 @@ import { isTestEnv } from "../../../utils/environment";
 import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
 import { Store } from "../../../store/actions/types";
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
+import { trackAppCaughtError } from "../../../utils/analytics";
 
 /**
  * Helper type used to validate the notification payload.
@@ -71,10 +72,11 @@ const onPushNotificationTokenAvailable = (
   }
 ) => {
   if (token == null || token.token == null) {
-    // TODO: Replace Sentry capture exception with a new logging solution
-    // captureMessage(
-    //   `onPushNotificationTokenAvailable received a nullish token (or inner 'token' instance) (${token})`
-    // );
+    trackAppCaughtError(
+      "onPushNotificationTokenAvailable",
+      `received a nullish token (or inner 'token' instance) (${token})`,
+      undefined
+    );
     return;
   }
   // Dispatch an action to save the token in the store
