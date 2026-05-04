@@ -41,7 +41,7 @@ const RequestedCredentialsBlock = ({
           const credentialType = getCredentialTypeByVct(c.vct);
 
           const title = credentialType
-            ? getCredentialNameFromType(credentialType, "", true)
+            ? getCredentialNameFromType(credentialType, true)
             : "";
 
           const headerGradientColors = credentialType

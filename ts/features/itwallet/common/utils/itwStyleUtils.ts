@@ -1,7 +1,7 @@
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors, useIOThemeContext } from "@pagopa/io-app-design-system";
 import Color from "color";
 import { useMemo } from "react";
-import { StatusBarStyle } from "react-native";
+import { ColorSchemeName, StatusBarStyle } from "react-native";
 import { HeaderSecondLevelHookProps } from "../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../store/hooks";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
@@ -68,9 +68,10 @@ const getLegacyThemeColorByCredentialType = (
 
 export const getThemeColorByCredentialType = (
   credentialType: string,
-  withL3Design: boolean
+  withL3Design: boolean,
+  colorScheme: ColorSchemeName
 ): CredentialTheme => {
-  const cardConfig = getCredentialCardConfig(credentialType);
+  const cardConfig = getCredentialCardConfig(credentialType, colorScheme);
   const colors =
     withL3Design && cardConfig
       ? {
@@ -91,11 +92,13 @@ export const getThemeColorByCredentialType = (
 export const useThemeColorByCredentialType = (
   credentialType: string
 ): CredentialTheme => {
+  const { themeType } = useIOThemeContext();
   const withL3Design = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   return useMemo(
-    () => getThemeColorByCredentialType(credentialType, withL3Design),
-    [credentialType, withL3Design]
+    () =>
+      getThemeColorByCredentialType(credentialType, withL3Design, themeType),
+    [credentialType, withL3Design, themeType]
   );
 };
 
