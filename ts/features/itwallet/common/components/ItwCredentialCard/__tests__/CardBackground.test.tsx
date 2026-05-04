@@ -1,94 +1,169 @@
 import { render } from "@testing-library/react-native";
 import { CredentialType } from "../../../utils/itwMocksUtils.ts";
 import { CardBackground, LegacyCardBackground } from "../CardBackground.tsx";
-import { CredentialCardBackground } from "../config.ts";
+import { CredentialCardBackground, CredentialCardOverlay } from "../config.ts";
 import { CardColorScheme } from "../types.ts";
 
-const mockBackground: CredentialCardBackground = {
+// --- Fixtures ---
+
+const twoColorBackground: CredentialCardBackground<2> = {
+  type: "linear",
   colors: ["#EAF6FF", "#F9F9F9"],
   angle: 217
 };
 
-const mockBackgroundWithPositions: CredentialCardBackground = {
+const threeColorBackgroundWithPositions: CredentialCardBackground<3> = {
+  type: "linear",
   colors: ["#FADCF5", "#FFECFC", "#FADCF5"],
   positions: [0.0, 0.5, 1.0],
   angle: 90
 };
 
+const cardOverlay: CredentialCardOverlay = {
+  card: require("../../../../../../../img/features/itWallet/cards/overlay/pid_card.png")
+};
+
+const patternOverlay: CredentialCardOverlay = {
+  pattern: require("../../../../../../../img/features/itWallet/cards/overlay/pattern/identity.png")
+};
+
+const patternOverlayWithCorner: CredentialCardOverlay = {
+  pattern: require("../../../../../../../img/features/itWallet/cards/overlay/pattern/identity.png"),
+  showCornerOverlay: true
+};
+
+// --- CardBackground ---
+
+const backgroundScenarios: Array<{
+  name: string;
+  background: CredentialCardBackground;
+  color: string;
+}> = [
+  {
+    name: "two-color gradient",
+    background: twoColorBackground,
+    color: "#EAF6FF"
+  },
+  {
+    name: "three-color gradient with explicit positions",
+    background: threeColorBackgroundWithPositions,
+    color: "#FADCF5"
+  }
+];
+
 describe("CardBackground", () => {
-  it("renders with minimum required props", () => {
-    const component = render(
-      <CardBackground background={mockBackground} color="#EAF6FF" />
-    ).toJSON();
-    expect(component).toMatchSnapshot();
-  });
+  describe.each(backgroundScenarios)(
+    "with $name background",
+    ({ background, color }) => {
+      it("renders without overlay", () => {
+        const component = render(
+          <CardBackground background={background} color={color} />
+        ).toJSON();
+        expect(component).toMatchSnapshot();
+      });
 
-  it("renders with showCornerOverlay enabled", () => {
-    const component = render(
-      <CardBackground
-        background={mockBackground}
-        color="#EAF6FF"
-        showCornerOverlay
-      />
-    ).toJSON();
-    expect(component).toMatchSnapshot();
-  });
+      it("renders with a fixed card overlay", () => {
+        const component = render(
+          <CardBackground
+            background={background}
+            color={color}
+            overlay={cardOverlay}
+          />
+        ).toJSON();
+        expect(component).toMatchSnapshot();
+      });
 
-  it("renders with an overlay image", () => {
-    const component = render(
-      <CardBackground background={mockBackground} color="#EAF6FF" overlay={1} />
-    ).toJSON();
-    expect(component).toMatchSnapshot();
-  });
+      it("renders with a pattern overlay", () => {
+        const component = render(
+          <CardBackground
+            background={background}
+            color={color}
+            overlay={patternOverlay}
+          />
+        ).toJSON();
+        expect(component).toMatchSnapshot();
+      });
 
-  it("renders with overlay and soft-light blend mode", () => {
-    const component = render(
-      <CardBackground
-        background={mockBackground}
-        color="#EAF6FF"
-        overlay={1}
-        overlayBlend
-      />
-    ).toJSON();
-    expect(component).toMatchSnapshot();
-  });
-
-  it("renders with all optional props enabled", () => {
-    const component = render(
-      <CardBackground
-        background={mockBackgroundWithPositions}
-        color="#FADCF5"
-        overlay={1}
-        overlayBlend
-        showCornerOverlay
-      />
-    ).toJSON();
-    expect(component).toMatchSnapshot();
-  });
-});
-
-describe("LegacyCardBackground", () => {
-  it.each([
-    [CredentialType.DRIVING_LICENSE, "default"],
-    [CredentialType.DRIVING_LICENSE, "faded"],
-    [CredentialType.DRIVING_LICENSE, "greyscale"],
-    [CredentialType.EUROPEAN_DISABILITY_CARD, "default"],
-    [CredentialType.EUROPEAN_DISABILITY_CARD, "faded"],
-    [CredentialType.EUROPEAN_DISABILITY_CARD, "greyscale"],
-    [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD, "default"],
-    [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD, "faded"],
-    [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD, "greyscale"]
-  ])(
-    "should correctly render background for credential type [%s] in state [%s]",
-    (credentialType, colorScheme) => {
-      const component = render(
-        <LegacyCardBackground
-          credentialType={credentialType}
-          colorScheme={colorScheme as CardColorScheme}
-        />
-      ).toJSON();
-
-      expect(component).toMatchSnapshot();
+      it("renders with a pattern overlay and corner overlay", () => {
+        const component = render(
+          <CardBackground
+            background={background}
+            color={color}
+            overlay={patternOverlayWithCorner}
+          />
+        ).toJSON();
+        expect(component).toMatchSnapshot();
+      });
     }
   );
+});
+
+// --- LegacyCardBackground ---
+
+/**
+ * Credential types that have dedicated background images.
+ * The image opacity and blend mode vary by colorScheme.
+ */
+const credentialTypesWithImages = [
+  CredentialType.DRIVING_LICENSE,
+  CredentialType.EUROPEAN_DISABILITY_CARD,
+  CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
+];
+
+/**
+ * Credential types without dedicated images; they fall back to
+ * a LinearGradient derived from `legacyCredentialGradientColors`.
+ */
+const credentialTypesWithGradientFallback = [
+  CredentialType.EDUCATION_DEGREE,
+  CredentialType.EDUCATION_ENROLLMENT,
+  CredentialType.RESIDENCY
+];
+
+const colorSchemes: ReadonlyArray<CardColorScheme> = [
+  "default",
+  "faded",
+  "greyscale"
+];
+
+describe("LegacyCardBackground", () => {
+  describe("credential types with dedicated card images", () => {
+    describe.each(credentialTypesWithImages)(
+      "credentialType = %s",
+      credentialType => {
+        it.each(colorSchemes)(
+          "renders correctly in %s color scheme",
+          colorScheme => {
+            const component = render(
+              <LegacyCardBackground
+                credentialType={credentialType}
+                colorScheme={colorScheme}
+              />
+            ).toJSON();
+            expect(component).toMatchSnapshot();
+          }
+        );
+      }
+    );
+  });
+
+  describe("credential types with gradient fallback (no image)", () => {
+    describe.each(credentialTypesWithGradientFallback)(
+      "credentialType = %s",
+      credentialType => {
+        it.each(colorSchemes)(
+          "renders gradient fallback in %s color scheme",
+          colorScheme => {
+            const component = render(
+              <LegacyCardBackground
+                credentialType={credentialType}
+                colorScheme={colorScheme}
+              />
+            ).toJSON();
+            expect(component).toMatchSnapshot();
+          }
+        );
+      }
+    );
+  });
 });
