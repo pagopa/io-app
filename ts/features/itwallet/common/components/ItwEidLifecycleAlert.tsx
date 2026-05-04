@@ -6,7 +6,6 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { ComponentProps, useMemo } from "react";
 import { View } from "react-native";
-import { useRoute } from "@react-navigation/native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
@@ -18,8 +17,8 @@ import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selec
 import { ITW_ROUTES } from "../../navigation/routes";
 import { useItwEidLifecycleAlertTracking } from "../hooks/useItwEidLifecycleAlertTracking";
 import {
-  ItwJwtCredentialStatus,
-  CredentialMetadata
+  CredentialMetadata,
+  ItwJwtCredentialStatus
 } from "../utils/itwTypesUtils";
 
 const defaultLifecycleStatus: Array<ItwJwtCredentialStatus> = [
@@ -34,6 +33,11 @@ type Props = {
    */
   lifecycleStatus?: Array<ItwJwtCredentialStatus>;
   navigation: ReturnType<typeof useIONavigation>;
+  /**
+   * The name of the current screen, used for analytics tracking
+   * and conditional rendering logic (e.g. PID detail screen).
+   */
+  currentScreenName?: string;
   skipViewTracking?: boolean;
 };
 
@@ -43,9 +47,9 @@ type Props = {
 export const ItwEidLifecycleAlert = ({
   lifecycleStatus = defaultLifecycleStatus,
   navigation,
+  currentScreenName,
   skipViewTracking
 }: Props) => {
-  const { name: currentScreenName } = useRoute();
   const eidOption = useIOSelector(itwCredentialsEidSelector);
   const isItw = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const maybeEidStatus = useIOSelector(itwCredentialsEidStatusSelector);

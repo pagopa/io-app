@@ -156,7 +156,7 @@ exports[`SpidMethodModule renders correctly for L2 1`] = `
                 ]
               }
             >
-              Continua con SPID
+              Usa SPID
             </Text>
             <Text
               allowFontScaling={true}

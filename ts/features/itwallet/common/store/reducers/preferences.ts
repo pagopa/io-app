@@ -11,10 +11,12 @@ import {
   itwSetPidReissuingSurveyHidden,
   itwSetCredentialUpgradeFailed,
   itwClearCredentialUpgradeFailed,
-  itwDisableItwActivation
+  itwDisableItwActivation,
+  itwSetIdentificationMode
 } from "../actions/preferences";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
-import { CredentialMetadata, ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
+import { ItwAuthLevel, CredentialMetadata } from "../../utils/itwTypesUtils.ts";
+import { IdentificationContext } from "../../../machine/eid/context.ts";
 
 export type ItwPreferencesState = {
   // Indicates whether the user should see the modal to review the app.
@@ -39,6 +41,8 @@ export type ItwPreferencesState = {
   // Indicates whether the IT-Wallet activation should be disabled
   // because the user's device does not support NFC
   isItwActivationDisabled?: boolean;
+  // Indicates the identification mode used for the user
+  identificationMode?: IdentificationContext["mode"];
 };
 
 export const itwPreferencesInitialState: ItwPreferencesState = {};
@@ -106,6 +110,7 @@ const reducer = (
         ...state,
         credentialUpgradeFailed: action.payload
       };
+
     case getType(itwClearCredentialUpgradeFailed):
       return {
         ...state,
@@ -140,6 +145,13 @@ const reducer = (
         isFiscalCodeWhitelisted,
         isItwActivationDisabled
       };
+
+    case getType(itwSetIdentificationMode): {
+      return {
+        ...state,
+        identificationMode: action.payload
+      };
+    }
 
     default:
       return state;
