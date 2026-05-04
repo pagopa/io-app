@@ -128,7 +128,14 @@ export const ItwCredentialCard = memo(
 
           {!isValid && (
             <View
-              style={[StyleSheet.absoluteFillObject, styles.statusOverlay]}
+              style={[
+                StyleSheet.absoluteFillObject,
+                styles.statusOverlay,
+                {
+                  backgroundColor:
+                    themeType === "light" ? IOColors.white : IOColors.black
+                }
+              ]}
             />
           )}
           <View
@@ -296,7 +303,6 @@ const styles = StyleSheet.create({
     zIndex: 20
   },
   statusOverlay: {
-    backgroundColor: IOColors.white,
     opacity: 0.7
   }
 });

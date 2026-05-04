@@ -1,3 +1,4 @@
+import { Appearance } from "react-native";
 import { call, select } from "typed-redux-saga/macro";
 import { preloadCredentialCardAssets } from "../../common/components/ItwCredentialCard/config";
 import { itwCredentialsAllSelector } from "../../credentials/store/selectors";
@@ -11,6 +12,7 @@ export function* handleItwAssetsPreloadSaga() {
 
   yield* call(
     preloadCredentialCardAssets,
-    Object.values(credentials).map(c => c.credentialType)
+    Object.values(credentials).map(c => c.credentialType),
+    Appearance.getColorScheme()
   );
 }
