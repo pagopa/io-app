@@ -28,7 +28,7 @@ type BannerScenario = {
   name: string;
   isWalletActive: boolean;
   hasItwInstance: boolean;
-  isWalletInstanceRemotelyActive?: boolean;
+  isRemotelyActive?: boolean;
   isWalletEmpty: boolean;
   hasMdl: boolean;
 };
@@ -38,7 +38,7 @@ const allScenarios: Array<BannerScenario> = [
     name: "activation banner",
     isWalletActive: false,
     hasItwInstance: false,
-    isWalletInstanceRemotelyActive: false,
+    isRemotelyActive: false,
     isWalletEmpty: true,
     hasMdl: false
   },
@@ -46,7 +46,7 @@ const allScenarios: Array<BannerScenario> = [
     name: "empty wallet banner",
     isWalletActive: true,
     hasItwInstance: true,
-    isWalletInstanceRemotelyActive: false,
+    isRemotelyActive: false,
     isWalletEmpty: true,
     hasMdl: false
   },
@@ -54,7 +54,7 @@ const allScenarios: Array<BannerScenario> = [
     name: "MDL upgrade banner",
     isWalletActive: true,
     hasItwInstance: true,
-    isWalletInstanceRemotelyActive: false,
+    isRemotelyActive: false,
     isWalletEmpty: false,
     hasMdl: true
   },
@@ -62,7 +62,7 @@ const allScenarios: Array<BannerScenario> = [
     name: "default upgrade banner",
     isWalletActive: true,
     hasItwInstance: true,
-    isWalletInstanceRemotelyActive: false,
+    isRemotelyActive: false,
     isWalletEmpty: false,
     hasMdl: false
   },
@@ -70,7 +70,7 @@ const allScenarios: Array<BannerScenario> = [
     name: "reactivation banner",
     isWalletActive: false,
     hasItwInstance: false,
-    isWalletInstanceRemotelyActive: true,
+    isRemotelyActive: true,
     isWalletEmpty: true,
     hasMdl: false
   }
@@ -86,11 +86,8 @@ const setupMocks = (scenario: BannerScenario) => {
     .mockReturnValue(scenario.hasItwInstance);
 
   jest
-    .spyOn(
-      itwWalletInstanceSelectors,
-      "itwIsWalletInstanceRemotelyActiveSelector"
-    )
-    .mockReturnValue(scenario.isWalletInstanceRemotelyActive);
+    .spyOn(itwWalletInstanceSelectors, "itwIsRemotelyActiveSelector")
+    .mockReturnValue(scenario.isRemotelyActive);
 
   jest
     .spyOn(credentialsSelectors, "itwIsWalletEmptySelector")
@@ -116,7 +113,7 @@ describe("ItwDiscoveryBanner", () => {
         name: "skeleton",
         isWalletActive: false,
         hasItwInstance: false,
-        isWalletInstanceRemotelyActive: undefined,
+        isRemotelyActive: undefined,
         isWalletEmpty: true,
         hasMdl: false
       });
@@ -131,7 +128,7 @@ describe("ItwDiscoveryBanner", () => {
         name: "active wallet",
         isWalletActive: true,
         hasItwInstance: true,
-        isWalletInstanceRemotelyActive: undefined,
+        isRemotelyActive: undefined,
         isWalletEmpty: true,
         hasMdl: false
       });
@@ -154,9 +151,7 @@ describe("ItwDiscoveryBanner", () => {
 
   describe("navigation", () => {
     const onboardingScenarios = allScenarios.filter(
-      s =>
-        !s.isWalletInstanceRemotelyActive &&
-        (!s.isWalletActive || s.isWalletEmpty)
+      s => !s.isRemotelyActive && (!s.isWalletActive || s.isWalletEmpty)
     );
 
     test.each(onboardingScenarios)(
@@ -181,7 +176,7 @@ describe("ItwDiscoveryBanner", () => {
         name: "reactivation banner",
         isWalletActive: false,
         hasItwInstance: false,
-        isWalletInstanceRemotelyActive: true,
+        isRemotelyActive: true,
         isWalletEmpty: true,
         hasMdl: false
       });
@@ -198,8 +193,8 @@ describe("ItwDiscoveryBanner", () => {
 
   describe("dismissal behavior", () => {
     const dismissableScenarios = allScenarios.filter(
-      ({ isWalletActive, isWalletEmpty, isWalletInstanceRemotelyActive }) =>
-        !isWalletInstanceRemotelyActive && !(isWalletActive && isWalletEmpty)
+      ({ isWalletActive, isWalletEmpty, isRemotelyActive }) =>
+        !isRemotelyActive && !(isWalletActive && isWalletEmpty)
     );
     const nonDismissableScenarios = allScenarios.filter(
       ({ isWalletActive, isWalletEmpty }) => isWalletActive && isWalletEmpty

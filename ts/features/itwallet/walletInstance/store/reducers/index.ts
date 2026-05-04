@@ -49,7 +49,7 @@ export type ItwWalletInstanceState = {
    * Indicates whether the user has an already active wallet instance
    * but the actual local wallet is not active.
    */
-  isWalletInstanceRemotelyActive?: boolean;
+  isRemotelyActive?: boolean;
 };
 
 export const itwWalletInstanceInitialState: ItwWalletInstanceState = {
@@ -57,7 +57,7 @@ export const itwWalletInstanceInitialState: ItwWalletInstanceState = {
   status: pot.none,
   renewalError: false,
   walletUnitAttestations: {},
-  isWalletInstanceRemotelyActive: undefined
+  isRemotelyActive: undefined
 };
 
 type MigrationState = PersistedState & Record<string, any>;
@@ -87,10 +87,10 @@ export const migrations: MigrationManifest = {
     ...state,
     walletUnitAttestations: {}
   }),
-  // Add isWalletInstanceRemotelyActive
+  // Add isRemotelyActive
   "4": (state: MigrationState) => ({
     ...state,
-    isWalletInstanceRemotelyActive: undefined
+    isRemotelyActive: undefined
   })
 };
 
@@ -159,7 +159,7 @@ const reducer = (
     case getType(itwSetWalletInstanceRemotelyActive): {
       return {
         ...state,
-        isWalletInstanceRemotelyActive: action.payload
+        isRemotelyActive: action.payload
       };
     }
 
@@ -176,9 +176,7 @@ const itwWalletInstancePersistConfig: PersistConfig = {
   storage: createSecureStorage(),
   version: CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION,
   migrate: createMigrate(migrations, { debug: isDevEnv }),
-  blacklist: ["isWalletInstanceRemotelyActive"] satisfies Array<
-    keyof ItwWalletInstanceState
-  >
+  blacklist: ["isRemotelyActive"] satisfies Array<keyof ItwWalletInstanceState>
 };
 
 const persistedReducer = persistReducer(

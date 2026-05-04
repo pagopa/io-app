@@ -13,7 +13,7 @@ import {
   itwLifecycleIsValidSelector
 } from "../../../lifecycle/store/selectors";
 import {
-  itwIsWalletInstanceRemotelyActiveSelector,
+  itwIsRemotelyActiveSelector,
   itwIsWalletInstanceStatusFailureSelector
 } from "../../../walletInstance/store/selectors";
 import {
@@ -185,13 +185,13 @@ export const itwShouldRenderDiscoveryBannerSelector = (state: GlobalState) =>
 export const itwShouldRenderInboxDiscoveryBannerSelector = (
   state: GlobalState
 ) => {
-  if (itwIsWalletInstanceRemotelyActiveSelector(state) === undefined) {
+  if (itwIsRemotelyActiveSelector(state) === undefined) {
     return false;
   }
   return (
     itwShouldRenderDiscoveryBannerSelector(state) &&
     !itwIsBannerHiddenSelector("discovery_messages_inbox")(state) &&
-    !itwIsWalletInstanceRemotelyActiveSelector(state)
+    !itwIsRemotelyActiveSelector(state)
   );
 };
 

@@ -13,36 +13,27 @@ describe("useItwDiscoveryBannerType", () => {
     jest.clearAllMocks();
   });
 
-  it("should return undefined when isWalletInstanceRemotelyActive is undefined", () => {
+  it("should return undefined when isRemotelyActive is undefined", () => {
     jest
-      .spyOn(
-        itwWalletInstanceSelectors,
-        "itwIsWalletInstanceRemotelyActiveSelector"
-      )
+      .spyOn(itwWalletInstanceSelectors, "itwIsRemotelyActiveSelector")
       .mockImplementation(() => undefined);
 
     const result = renderHook();
     expect(result).toBeUndefined();
   });
 
-  it("should return 'reactivating' when isWalletInstanceRemotelyActive is true", () => {
+  it("should return 'reactivating' when isRemotelyActive is true", () => {
     jest
-      .spyOn(
-        itwWalletInstanceSelectors,
-        "itwIsWalletInstanceRemotelyActiveSelector"
-      )
+      .spyOn(itwWalletInstanceSelectors, "itwIsRemotelyActiveSelector")
       .mockImplementation(() => true);
 
     const result = renderHook();
     expect(result).toBe("reactivating");
   });
 
-  it("should return 'onboarding' when isWalletInstanceRemotelyActive is false", () => {
+  it("should return 'onboarding' when isRemotelyActive is false", () => {
     jest
-      .spyOn(
-        itwWalletInstanceSelectors,
-        "itwIsWalletInstanceRemotelyActiveSelector"
-      )
+      .spyOn(itwWalletInstanceSelectors, "itwIsRemotelyActiveSelector")
       .mockImplementation(() => false);
 
     const result = renderHook();
