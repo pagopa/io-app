@@ -1,7 +1,4 @@
-import {
-  IOVisualCostants,
-  useIOThemeContext
-} from "@pagopa/io-app-design-system";
+import { IOVisualCostants } from "@pagopa/io-app-design-system";
 import { Canvas, Rect } from "@shopify/react-native-skia";
 import { PropsWithChildren, useCallback } from "react";
 import { LayoutChangeEvent, StyleSheet, View } from "react-native";
@@ -39,11 +36,12 @@ export const ItwCredentialDetailCard = ({
   children
 }: ItwCredentialDetailCardProps) => {
   const safeAreaInsets = useSafeAreaInsets();
-  const { themeType } = useIOThemeContext();
   const [size, setSize] = useLayoutSize();
+
+  // Credential's header card is always in light mode
   const { color, background, overlay } = getCredentialCardConfig(
     credentialType,
-    themeType
+    "light"
   );
 
   // Extend the card well above the screen so the top border is never visible at rest.
@@ -84,7 +82,6 @@ export const ItwCredentialDetailCard = ({
             width={size.width}
             height={size.height}
             borderRadius={CARD_BORDER_RADIUS}
-            themeType={themeType}
             variant={borderVariantByStatus[credentialStatus]}
           />
         </Canvas>

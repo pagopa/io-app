@@ -125,6 +125,22 @@ export type CredentialCardConfig = {
 };
 
 /**
+ * A credential card configuration that varies based on the app color scheme (light/dark).
+ */
+export type ThemeAwareCredentialCardConfig = Record<
+  "light" | "dark",
+  CredentialCardConfig
+>;
+
+/**
+ * Type guard to determine if a credential card configuration is theme-aware or not.
+ */
+export const isThemeAwareCredentialCardConfig = (
+  config: CredentialCardConfig | ThemeAwareCredentialCardConfig
+): config is ThemeAwareCredentialCardConfig =>
+  "light" in config && "dark" in config;
+
+/**
  * Per-credential static card configuration.
  * Background, title color and border color are set explicitly here.
  * An optional `overlay` PNG image can be provided to render an overlay on top of the background.
@@ -132,81 +148,167 @@ export type CredentialCardConfig = {
  * ADD MORE CONFIGURATIONS HERE IF NEEDED, ONLY FOR STATIC CREDENTIALS
  */
 export const credentialCardConfigs: Partial<
-  Record<string, CredentialCardConfig>
+  Record<string, CredentialCardConfig | ThemeAwareCredentialCardConfig>
 > = {
   [CredentialType.PID]: {
-    color: "#EAF6FF",
-    titleColor: "#115486",
-    borderColor: "#4F99E2",
-    background: {
-      type: "linear",
-      colors: ["#EAF6FF", "#F6FBFF", "#EAF6FF", "#F9F9F9", "#EAF6FF"],
-      positions: [0.0349, 0.2514, 0.4646, 0.7143, 0.9425],
-      angle: 217
+    light: {
+      color: "#EAF6FF",
+      titleColor: "#115486",
+      borderColor: "#4F99E2",
+      background: {
+        type: "linear",
+        colors: ["#EAF6FF", "#F6FBFF", "#EAF6FF", "#F9F9F9", "#EAF6FF"],
+        positions: [0.0349, 0.2514, 0.4646, 0.7143, 0.9425],
+        angle: 217
+      },
+      overlay: {
+        card: require("../../../../../../img/features/itWallet/cards/overlay/pid_card_dark.png"),
+        header: require("../../../../../../img/features/itWallet/cards/overlay/pid_header.png")
+      }
     },
-    overlay: {
-      card: require("../../../../../../img/features/itWallet/cards/overlay/pid_card_overlay.png"),
-      header: require("../../../../../../img/features/itWallet/cards/overlay/pid_header_overlay.png")
+    dark: {
+      color: "#24375A",
+      titleColor: "#C4DCF5",
+      borderColor: "#738199",
+      background: {
+        type: "linear",
+        colors: ["#233966", "#26344B", "#233966"],
+        positions: [0.0349, 0.4887, 0.9425],
+        angle: 217
+      },
+      overlay: {
+        card: require("../../../../../../img/features/itWallet/cards/overlay/pid_card.png"),
+        header: require("../../../../../../img/features/itWallet/cards/overlay/pid_header.png")
+      }
     }
   },
   [CredentialType.DRIVING_LICENSE]: {
-    color: "#FADCF5",
-    titleColor: "#652035",
-    borderColor: "#D674A9",
-    background: {
-      type: "linear",
-      colors: ["#FADCF5", "#FFECFC", "#FADCF5", "#FFECFC"],
-      positions: [0.0041, 0.3614, 0.6716, 1.0251],
-      angle: 249
+    light: {
+      color: "#FADCF5",
+      titleColor: "#652035",
+      borderColor: "#D674A9",
+      background: {
+        type: "linear",
+        colors: ["#FADCF5", "#FFECFC", "#FADCF5", "#FFECFC"],
+        positions: [0.0041, 0.3614, 0.6716, 1.0251],
+        angle: 249
+      },
+      overlay: {
+        card: require("../../../../../../img/features/itWallet/cards/overlay/mdl_card.png"),
+        header: require("../../../../../../img/features/itWallet/cards/overlay/mdl_header.png")
+      }
     },
-    overlay: {
-      card: require("../../../../../../img/features/itWallet/cards/overlay/mdl_card_overlay.png"),
-      header: require("../../../../../../img/features/itWallet/cards/overlay/mdl_header_overlay.png")
+    dark: {
+      color: "#2A092E",
+      titleColor: "#FADCF5",
+      borderColor: "#997387",
+      background: {
+        type: "linear",
+        colors: ["#401B37", "#290744", "#2A0A2A", "#370945"],
+        positions: [0.0041, 0.3726, 0.6722, 1.026],
+        angle: 249
+      },
+      overlay: {
+        card: require("../../../../../../img/features/itWallet/cards/overlay/mdl_card_dark.png"),
+        header: require("../../../../../../img/features/itWallet/cards/overlay/mdl_header.png")
+      }
     }
   },
   [CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD]: {
-    color: "#B7E1FA",
-    titleColor: "#032D5C",
-    borderColor: "#449DCF",
-    background: {
-      type: "linear",
-      colors: ["#B7E1FA", "#D0EDFF", "#B7E1FA", "#D0EDFF"],
-      positions: [0.0031, 0.3686, 0.6772, 0.9904],
-      angle: 249
+    light: {
+      color: "#B7E1FA",
+      titleColor: "#032D5C",
+      borderColor: "#449DCF",
+      background: {
+        type: "linear",
+        colors: ["#B7E1FA", "#D0EDFF", "#B7E1FA", "#D0EDFF"],
+        positions: [0.0031, 0.3686, 0.6772, 0.9904],
+        angle: 249
+      },
+      overlay: {
+        card: require("../../../../../../img/features/itWallet/cards/overlay/ts_card.png"),
+        header: require("../../../../../../img/features/itWallet/cards/overlay/ts_header.png")
+      }
     },
-    overlay: {
-      card: require("../../../../../../img/features/itWallet/cards/overlay/ts_card_overlay.png"),
-      header: require("../../../../../../img/features/itWallet/cards/overlay/ts_header_overlay.png")
+    dark: {
+      color: "#112F51",
+      titleColor: "#D5E9FF",
+      borderColor: "#738499",
+      background: {
+        type: "linear",
+        colors: ["#0B2A4A", "#1E3A5F", "#0B2A4A", "#1E3A5F"],
+        positions: [0.0031, 0.3686, 0.6772, 0.9905],
+        angle: 249
+      },
+      overlay: {
+        card: require("../../../../../../img/features/itWallet/cards/overlay/ts_card_dark.png"),
+        header: require("../../../../../../img/features/itWallet/cards/overlay/ts_header.png")
+      }
     }
   },
   [CredentialType.EUROPEAN_DISABILITY_CARD]: {
-    color: "#D6EAF7",
-    titleColor: "#17406F",
-    borderColor: "#6B9BB6",
-    background: {
-      type: "radial",
-      colors: ["#E5F0F7", "#D6DDE2", "#DFE9EF", "#C7D0DB"],
-      positions: [0, 0.2223, 0.4999, 1],
-      center: [1, 0.195],
-      radius: 1.0564
+    light: {
+      color: "#D6EAF7",
+      titleColor: "#17406F",
+      borderColor: "#6B9BB6",
+      background: {
+        type: "radial",
+        colors: ["#E5F0F7", "#D6DDE2", "#DFE9EF", "#C7D0DB"],
+        positions: [0, 0.2223, 0.4999, 1],
+        center: [1, 0.195],
+        radius: 1.0564
+      },
+      overlay: {
+        card: require("../../../../../../img/features/itWallet/cards/overlay/dc_card.png"),
+        header: require("../../../../../../img/features/itWallet/cards/overlay/dc_header.png")
+      }
     },
-    overlay: {
-      card: require("../../../../../../img/features/itWallet/cards/overlay/dc_card_overlay.png"),
-      header: require("../../../../../../img/features/itWallet/cards/overlay/dc_header_overlay.png")
+    dark: {
+      color: "#233B4D",
+      titleColor: "#D6EAF7",
+      borderColor: "#6B9BB6",
+      background: {
+        type: "radial",
+        colors: ["#1A3547", "#3B4C57", "#1D3749", "#3C4E60"],
+        positions: [0, 0.2223, 0.4999, 1],
+        center: [1, 0.195],
+        radius: 1.0564
+      },
+      overlay: {
+        card: require("../../../../../../img/features/itWallet/cards/overlay/dc_card_dark.png"),
+        header: require("../../../../../../img/features/itWallet/cards/overlay/dc_header.png")
+      }
     }
   },
   [CredentialType.AGE_VERIFICATION]: {
-    color: "#CECFF2",
-    titleColor: "#363740",
-    borderColor: "#9490BE",
-    background: {
-      type: "linear",
-      colors: ["#CECFF2", "#ECECEC"],
-      angle: 69
+    light: {
+      color: "#CECFF2",
+      titleColor: "#363740",
+      borderColor: "#9490BE",
+      background: {
+        type: "linear",
+        colors: ["#CECFF2", "#ECECEC"],
+        angle: 69
+      },
+      overlay: {
+        card: require("../../../../../../img/features/itWallet/cards/overlay/av_card.png"),
+        header: require("../../../../../../img/features/itWallet/cards/overlay/av_header.png")
+      }
     },
-    overlay: {
-      card: require("../../../../../../img/features/itWallet/cards/overlay/av_card_overlay.png"),
-      header: require("../../../../../../img/features/itWallet/cards/overlay/av_header_overlay.png")
+    dark: {
+      color: "#2E2647",
+      titleColor: "#D9CDED",
+      borderColor: "#767399",
+      background: {
+        type: "linear",
+        colors: ["#0B2A4A", "#1E3A5F", "#0B2A4A", "#1E3A5F"],
+        positions: [0.0031, 0.3686, 0.6772, 0.9905],
+        angle: 249
+      },
+      overlay: {
+        card: require("../../../../../../img/features/itWallet/cards/overlay/av_card_dark.png"),
+        header: require("../../../../../../img/features/itWallet/cards/overlay/av_header.png")
+      }
     }
   }
 };
@@ -311,6 +413,11 @@ export const getCredentialCardConfig = (
 ): CredentialCardConfig => {
   const staticConfig = credentialCardConfigs[credentialType];
   if (staticConfig) {
+    if (isThemeAwareCredentialCardConfig(staticConfig)) {
+      // Selects the appropriate credential card configuration based on the
+      // current color scheme.
+      return staticConfig[colorScheme || "light"];
+    }
     return staticConfig;
   }
 
@@ -327,11 +434,12 @@ export const getCredentialCardConfig = (
  * time.
  */
 export const preloadCredentialCardAssets = (
-  credentialTypes: ReadonlyArray<string>
+  credentialTypes: ReadonlyArray<string>,
+  colorScheme: ColorSchemeName
 ) => {
   const assetsToPreload = credentialTypes
     // Get credential card configurations for the provided credential types
-    .map(type => getCredentialCardConfig(type, undefined))
+    .map(type => getCredentialCardConfig(type, colorScheme))
     // Extract overlay assets from the configurations
     .map(({ overlay }) => [
       overlay?.card,

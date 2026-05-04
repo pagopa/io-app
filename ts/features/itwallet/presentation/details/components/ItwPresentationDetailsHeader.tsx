@@ -4,8 +4,7 @@ import {
   H2,
   Tag,
   makeFontStyleObject,
-  useIOExperimentalDesign,
-  useIOThemeContext
+  useIOExperimentalDesign
 } from "@pagopa/io-app-design-system";
 import Color from "color";
 import { memo, useMemo } from "react";
@@ -40,11 +39,8 @@ const credentialsWithSkeumorphicCard: ReadonlyArray<string> = [
 const ItwPresentationDetailsHeader = ({
   credential
 }: ItwPresentationDetailsHeaderProps) => {
-  const { themeType } = useIOThemeContext();
-  const { color } = getCredentialCardConfig(
-    credential.credentialType,
-    themeType
-  );
+  // Credential's header card is always in light mode
+  const { color } = getCredentialCardConfig(credential.credentialType, "light");
   const { status: rawStatus = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
@@ -71,13 +67,16 @@ const ItwPresentationDetailsHeader = ({
         credentialStatus={displayStatus}
       >
         <ItwAvatar width={48} height={48} />
-        <H2 style={styles.nameText} color={isLight ? "black" : "white"}>
+        <H2
+          style={styles.nameText}
+          color={isLight ? "blueItalia-850" : "white"}
+        >
           {getCredentialNameFromType(credential.credentialType, true)}
         </H2>
         {authSource && (
           <Body
             style={styles.authSourceText}
-            color={isLight ? "black" : "white"}
+            color={isLight ? "blueItalia-850" : "white"}
           >
             {authSource}
           </Body>
