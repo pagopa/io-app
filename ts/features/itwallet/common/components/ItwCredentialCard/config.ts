@@ -3,10 +3,8 @@ import Color from "color";
 import { ColorSchemeName } from "react-native";
 import { XOR } from "../../../../../types/utils";
 import { fnv1a } from "../../../../../utils/hash";
-import { preloadImages } from "../../utils/imageCache";
 import { CredentialType } from "../../utils/itwMocksUtils";
 import { ItWalletThemes } from "../../utils/theme";
-import { CREDENTIAL_CARD_CORNER_OVERLAY } from "./CardOverlay";
 
 /**
  * Colors from which random configurations will be generated, based on the
@@ -426,30 +424,4 @@ export const getCredentialCardConfig = (
     colorScheme,
     credentialColor
   );
-};
-
-/**
- * Preloads the images used in the credential card configurations to improve
- * performance and reduce loading times when rendering the cards for the first
- * time.
- */
-export const preloadCredentialCardAssets = (
-  credentialTypes: ReadonlyArray<string>,
-  colorScheme: ColorSchemeName
-) => {
-  const assetsToPreload = credentialTypes
-    // Get credential card configurations for the provided credential types
-    .map(type => getCredentialCardConfig(type, colorScheme))
-    // Extract overlay assets from the configurations
-    .map(({ overlay }) => [
-      overlay?.card,
-      overlay?.header,
-      overlay?.pattern,
-      overlay?.showCornerOverlay ? CREDENTIAL_CARD_CORNER_OVERLAY : undefined
-    ])
-    .flat()
-    // Filter out undefined assets
-    .filter((asset): asset is DataSourceParam => asset !== undefined);
-
-  preloadImages(Array.from(new Set(assetsToPreload)) as ReadonlyArray<number>);
 };

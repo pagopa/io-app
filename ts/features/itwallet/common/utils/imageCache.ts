@@ -96,21 +96,3 @@ export const useCachedImage = (source: DataSourceParam): SkImage | null => {
 
   return image;
 };
-
-/**
- * Eagerly starts loading the given bundled image assets into the module cache.
- * Defers work until the JS thread is idle via {@link requestIdleCallback}, then
- * loads images sequentially so that JSI decode callbacks are spread across
- * frames instead of bursting all at once on the JS thread.
- */
-export const preloadImages = (sources: ReadonlyArray<number>): void => {
-  const loadSequentially = async () => {
-    for (const source of sources) {
-      await loadImageAsync(source);
-    }
-  };
-
-  requestIdleCallback(() => {
-    void loadSequentially();
-  });
-};

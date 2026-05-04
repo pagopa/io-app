@@ -33,7 +33,6 @@ import { handleWalletUnitAttestationsCleanUp } from "../../credentials/saga/hand
 import { isItwCredential } from "../utils/itwCredentialUtils.ts";
 import { watchItwEnvironment } from "./environment";
 import { watchItwOfflineAccess } from "./offlineAccess.ts";
-import { handleItwAssetsPreloadSaga } from "./assets.ts";
 
 export function* watchItwSaga(): SagaIterator {
   yield* takeLatest(
@@ -71,9 +70,6 @@ export function* watchItwSaga(): SagaIterator {
  * Watcher for ITW sagas that do not require internet connection or a valid session
  */
 export function* watchItwOfflineSaga(): SagaIterator {
-  // Preload required assets for ITW Credential Cards
-  yield* fork(handleItwAssetsPreloadSaga);
-
   // Watch for changes in the credentials store to keep the wallet in sync
   yield* fork(watchItwCredentialsSaga);
 

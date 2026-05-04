@@ -4,7 +4,6 @@
  * Set up of the testing environment
  */
 
-
 import mockAsyncStorage from "@react-native-async-storage/async-storage/jest/async-storage-mock";
 import mockClipboard from "@react-native-clipboard/clipboard/jest/clipboard-mock.js";
 import nodeFetch from "node-fetch";
@@ -280,9 +279,3 @@ jest.mock("@pagopa/io-react-native-iso18013", () => ({
 jest.mock("@pagopa/io-react-native-cie", () => ({
   CieManager: jest.fn()
 }));
-
-// Polyfill requestIdleCallback for Jest (not available in jsdom/RN test env)
-global.requestIdleCallback =
-  global.requestIdleCallback ?? ((cb) => setTimeout(cb, 0));
-global.cancelIdleCallback =
-  global.cancelIdleCallback ?? ((id) => clearTimeout(id));
