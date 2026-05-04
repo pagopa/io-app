@@ -263,7 +263,18 @@ const ItwClaimsSelectorSection = () => {
           <ClaimsSelector
             key={credentialType}
             title={getCredentialNameFromType(credentialType, true)}
-            items={[]}
+            items={[
+              {
+                id: "claim1",
+                description: "Claim 1",
+                value: "Value 1"
+              },
+              {
+                id: "claim2",
+                description: "Claim 2",
+                value: "Value 2"
+              }
+            ]}
             defaultExpanded={false}
             selectionEnabled={false}
             headerGradientColors={[
