@@ -1,5 +1,3 @@
-import { memo, useMemo } from "react";
-import { View } from "react-native";
 import {
   Alert,
   ClaimsSelector,
@@ -10,20 +8,23 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils";
-import { selectPresentationDetails } from "../machine/selectors";
-import { ItwRemoteMachineContext } from "../machine/provider";
-import { EnrichedPresentationDetails } from "../utils/itwRemoteTypeUtils";
-import {
-  getCredentialTypeByVct,
-  groupCredentialsByPurpose
-} from "../utils/itwRemotePresentationUtils";
+import { memo, useMemo } from "react";
+import { View } from "react-native";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
+import { useIOSelector } from "../../../../../store/hooks";
+import { itwCredentialNameResolverSelector } from "../../../credentialsCatalogue/store/selectors";
 import { useClaimsDetailsBottomSheet } from "../../common/hooks/useClaimsDetailsBottomSheet";
 import {
   claimsSelectorHeaderGradientsByCredentialType,
   mapClaimsToClaimsSelectorItems
 } from "../../common/utils/itwClaimSelector";
+import { ItwRemoteMachineContext } from "../machine/provider";
+import { selectPresentationDetails } from "../machine/selectors";
+import {
+  getCredentialTypeByVct,
+  groupCredentialsByPurpose
+} from "../utils/itwRemotePresentationUtils";
+import { EnrichedPresentationDetails } from "../utils/itwRemoteTypeUtils";
 
 const RequestedCredentialsBlock = ({
   credentials
@@ -31,6 +32,9 @@ const RequestedCredentialsBlock = ({
   credentials: EnrichedPresentationDetails;
 }) => {
   const { present, bottomSheet } = useClaimsDetailsBottomSheet();
+  const resolveCredentialName = useIOSelector(
+    itwCredentialNameResolverSelector
+  );
 
   return (
     <VStack space={24}>
@@ -41,7 +45,7 @@ const RequestedCredentialsBlock = ({
           const credentialType = getCredentialTypeByVct(c.vct);
 
           const title = credentialType
-            ? getCredentialNameFromType(credentialType, true)
+            ? resolveCredentialName(credentialType)
             : "";
 
           const headerGradientColors = credentialType

@@ -14,16 +14,17 @@ import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBa
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { getCredentialCardConfig } from "../../../common/components/ItwCredentialCard/config.ts";
 import { ItwCredentialDetailCard } from "../../../common/components/ItwCredentialDetailCard.tsx";
-import {
-  getCredentialNameFromType,
-  tagPropsByStatus
-} from "../../../common/utils/itwCredentialUtils.ts";
+import { useItwCredentialName } from "../../../common/hooks/useItwCredentialName";
+import { tagPropsByStatus } from "../../../common/utils/itwCredentialUtils.ts";
 import { getItwAuthSource } from "../../../common/utils/itwMetadataUtils.ts";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { useThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
 import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
-import { itwCredentialsCatalogueByTypesSelector } from "../../../credentialsCatalogue/store/selectors";
+import {
+  itwCatalogueTranslationsByLocaleSelector,
+  itwCredentialsCatalogueByTypesSelector
+} from "../../../credentialsCatalogue/store/selectors";
 import { useItwDisplayCredentialStatus } from "../hooks/useItwDisplayCredentialStatus";
 import { ItwPresentationCredentialCard } from "./ItwPresentationCredentialCard.tsx";
 
@@ -49,9 +50,14 @@ const ItwPresentationDetailsHeader = ({
   const credentialsCatalogue = useIOSelector(
     itwCredentialsCatalogueByTypesSelector
   );
-  const authSource = credentialsCatalogue?.[credential.credentialType]
-    ? getItwAuthSource(credentialsCatalogue[credential.credentialType])
+  const translationsByLocale = useIOSelector(
+    itwCatalogueTranslationsByLocaleSelector
+  );
+  const catalogueMeta = credentialsCatalogue?.[credential.credentialType];
+  const authSource = catalogueMeta
+    ? getItwAuthSource(catalogueMeta, translationsByLocale)
     : undefined;
+  const credentialName = useItwCredentialName(credential.credentialType);
 
   const isLight = useMemo(() => Color(color).isLight(), [color]);
 
@@ -71,7 +77,7 @@ const ItwPresentationDetailsHeader = ({
           style={styles.nameText}
           color={isLight ? "blueItalia-850" : "white"}
         >
-          {getCredentialNameFromType(credential.credentialType, true)}
+          {credentialName}
         </H2>
         {authSource && (
           <Body
@@ -100,6 +106,7 @@ const ItwPresentationDetailsHeaderLegacy = ({
   const { isExperimental } = useIOExperimentalDesign();
   const { statusBarStyle, backgroundColor, textColor } =
     useThemeColorByCredentialType(credential.credentialType);
+  const credentialName = useItwCredentialName(credential.credentialType);
 
   const headerContent = useMemo(() => {
     if (credentialsWithSkeumorphicCard.includes(credential.credentialType)) {
@@ -118,12 +125,12 @@ const ItwPresentationDetailsHeaderLegacy = ({
             ]}
             accessibilityRole="header"
           >
-            {getCredentialNameFromType(credential.credentialType)}
+            {credentialName}
           </Text>
         </ContentWrapper>
       </View>
     );
-  }, [credential, backgroundColor, textColor, isExperimental]);
+  }, [credential, backgroundColor, textColor, isExperimental, credentialName]);
 
   return (
     <>

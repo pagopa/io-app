@@ -6,7 +6,7 @@ import { HeaderSecondLevelHookProps } from "../../../../hooks/useHeaderSecondLev
 import { useIOSelector } from "../../../../store/hooks";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { getCredentialCardConfig } from "../components/ItwCredentialCard/config";
-import { getCredentialNameFromType } from "./itwCredentialUtils";
+import { useItwCredentialName } from "../hooks/useItwCredentialName";
 import { CredentialType } from "./itwMocksUtils";
 
 export type CredentialTheme = {
@@ -105,10 +105,10 @@ export const useThemeColorByCredentialType = (
 export const useHeaderPropsByCredentialType = (credentialType: string) => {
   const { backgroundColor, variant } =
     useThemeColorByCredentialType(credentialType);
-  const withL3Design = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const title = useItwCredentialName(credentialType);
 
   return {
-    title: getCredentialNameFromType(credentialType, withL3Design),
+    title,
     variant,
     backgroundColor
   };
