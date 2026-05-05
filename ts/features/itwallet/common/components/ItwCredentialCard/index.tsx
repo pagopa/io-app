@@ -12,9 +12,9 @@ import { StyleSheet, View } from "react-native";
 import { useIOSelector } from "../../../../../store/hooks";
 import { fontPreferenceSelector } from "../../../../../store/reducers/persistedPreferences";
 import { useItwDisplayCredentialStatus } from "../../../presentation/details/hooks/useItwDisplayCredentialStatus";
+import { useItwCredentialName } from "../../hooks/useItwCredentialName";
 import { itwShouldUpgradeCredentialSelector } from "../../store/selectors";
 import {
-  getCredentialNameFromType,
   tagPropsByStatus,
   useBorderColorByStatus,
   validCredentialStatuses
@@ -67,6 +67,7 @@ export const ItwCredentialCard = memo(
     const status = useItwDisplayCredentialStatus(credentialStatus);
     const borderColorMap = useBorderColorByStatus();
     const cardConfig = getCredentialCardConfig(credentialType, themeType);
+    const credentialName = useItwCredentialName(credentialType);
     const isValid = validCredentialStatuses.includes(status);
 
     const statusTagProps = useMemo<Tag | undefined>(() => {
@@ -115,7 +116,7 @@ export const ItwCredentialCard = memo(
                     flexShrink: 1
                   }}
                 >
-                  {getCredentialNameFromType(credentialType).toUpperCase()}
+                  {credentialName.toUpperCase()}
                 </IOText>
               )}
             </HStack>
@@ -166,6 +167,7 @@ export const ItwCredentialCardLegacy = ({
   );
   const status = useItwDisplayCredentialStatus(credentialStatus);
   const theme = useThemeColorByCredentialType(credentialType);
+  const credentialName = useItwCredentialName(credentialType);
   const borderColorMap = useBorderColorByStatus();
 
   const statusTagProps = useMemo<Tag | undefined>(() => {
@@ -245,7 +247,7 @@ export const ItwCredentialCardLegacy = ({
                 flexShrink: 1
               }}
             >
-              {getCredentialNameFromType(credentialType).toUpperCase()}
+              {credentialName.toUpperCase()}
             </IOText>
             {statusTagProps && <Tag forceLightMode {...statusTagProps} />}
           </HStack>

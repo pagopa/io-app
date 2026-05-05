@@ -82,10 +82,14 @@ const getCredentialNameByType = (
 
 export const getCredentialNameFromType = (
   type: string | undefined,
-  isItwCredential: boolean = false
+  isItwCredential: boolean = false,
+  withDefault: string = ""
 ): string => {
+  if (!type) {
+    return withDefault;
+  }
   const name = type && getCredentialNameByType(isItwCredential)[type];
-  return name || type || "";
+  return name || withDefault || type;
 };
 
 export const useBorderColorByStatus: () => {
