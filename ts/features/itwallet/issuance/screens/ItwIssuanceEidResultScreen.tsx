@@ -38,6 +38,8 @@ export const ItwIssuanceEidResultScreen = () => {
   const credentialType =
     ItwEidIssuanceMachineContext.useSelector(selectCredentialType);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isEidMachineLoading =
+    ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
 
   const itw_flow = isItwL3 ? "L3" : "reissuing_eID";
 
@@ -68,14 +70,16 @@ export const ItwIssuanceEidResultScreen = () => {
   const handleBackToWallet = () => machineRef.send({ type: "go-to-wallet" });
 
   useEffect(() => {
-    if (credentialType) {
+    // When the EID issuance was triggered by a credential request, the credential
+    // issuance must not start prematurely while the EID machine is still loading.
+    if (credentialType && !isEidMachineLoading) {
       credentialMachineRef.send({
         type: "select-credential",
         mode: "issuance",
         credentialType
       });
     }
-  }, [credentialType, credentialMachineRef]);
+  }, [credentialType, credentialMachineRef, isEidMachineLoading]);
 
   if (credentialType) {
     return <ItwIssuanceEidCredentialTriggerContent />;
