@@ -24,11 +24,14 @@ const EMPTY_ARRAY: ReadonlyArray<CredentialsListEntry> = [];
  * Hardcoded list of all obtainable credentials. When the credentials catalogue is not enabled,
  * this list is used as the source of truth for displaying credentials in the UI.
  */
-const hardcodedCredentialsList = [
+const hardcodedCredentialsList: ReadonlyArray<CredentialsListEntry> = [
   ...l2Credentials,
   ...newCredentials,
   ...upcomingCredentials
-] as const;
+].map(type => ({
+  type,
+  name: getCredentialNameFromType(type)
+}));
 
 /**
  * Select the last fetched credentials catalogue.
@@ -93,10 +96,7 @@ export const itwAvailableCredentialsListSelector = createSelector(
   [itwIsCatalogueEnabledForCredentialsList, itwCredentialsCatalogueSelector],
   (isEnabled, catalogue): ReadonlyArray<CredentialsListEntry> => {
     if (!isEnabled) {
-      return hardcodedCredentialsList.map(type => ({
-        type,
-        name: getCredentialNameFromType(type)
-      }));
+      return hardcodedCredentialsList;
     }
 
     if (!catalogue) {
