@@ -3,10 +3,12 @@ import { PaymentNoticeNumberFromString } from "@pagopa/io-pagopa-commons/lib/pag
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useRef, useState } from "react";
-import { InputAccessoryView, Keyboard, Platform, View } from "react-native";
 import I18n from "i18next";
+import { useRef, useState } from "react";
+import { Keyboard, View } from "react-native";
+import { KeyboardStickyView } from "react-native-keyboard-controller";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { useFooterActionsMargin } from "../../../../hooks/useFooterActionsMargin";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -62,6 +64,8 @@ const WalletPaymentInputNoticeNumberScreen = () => {
 
   const textInputRef = useRef<TextInputValidationRefProps>(null);
 
+  const { bottomMargin } = useFooterActionsMargin();
+
   return (
     <>
       <IOScrollViewWithLargeHeader
@@ -73,17 +77,6 @@ const WalletPaymentInputNoticeNumberScreen = () => {
         canGoback={true}
         contextualHelp={emptyContextualHelp}
         headerActionsProp={{ showHelp: true }}
-        actions={
-          Platform.OS === "android"
-            ? {
-                type: "SingleButton",
-                primary: {
-                  label: I18n.t("global.buttons.continue"),
-                  onPress: handleContinueClick
-                }
-              }
-            : undefined
-        }
         includeContentMargins
         ref={textInputWrapperRef}
       >
@@ -123,24 +116,26 @@ const WalletPaymentInputNoticeNumberScreen = () => {
           textInputProps={{
             keyboardType: "number-pad",
             inputMode: "numeric",
-            returnKeyType: "done",
-            inputAccessoryViewID: "noticeNumberInputAccessoryView"
+            inputAccessoryViewID: "keyboardStickyView"
           }}
           autoFocus
         />
       </IOScrollViewWithLargeHeader>
-      {Platform.OS === "ios" && (
-        <InputAccessoryView nativeID="noticeNumberInputAccessoryView">
-          <View style={{ padding: 20 }}>
-            <IOButton
-              fullWidth
-              variant="solid"
-              label={I18n.t("global.buttons.continue")}
-              onPress={handleContinueClick}
-            />
-          </View>
-        </InputAccessoryView>
-      )}
+      <KeyboardStickyView offset={{ closed: 0 }}>
+        <View
+          style={{
+            paddingHorizontal: 20,
+            marginBottom: bottomMargin
+          }}
+        >
+          <IOButton
+            fullWidth
+            variant="solid"
+            label={I18n.t("global.buttons.continue")}
+            onPress={handleContinueClick}
+          />
+        </View>
+      </KeyboardStickyView>
     </>
   );
 };
