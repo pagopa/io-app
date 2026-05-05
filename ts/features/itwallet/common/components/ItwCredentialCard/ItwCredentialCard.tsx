@@ -79,12 +79,16 @@ export const ItwCredentialCard = ({
   const tagPropsByStatus = useTagPropsByStatus();
   const cardConfig = getCredentialCardConfig(credentialType);
 
-  const statusTagProps: Tag | undefined = needsItwUpgrade
-    ? {
+  const statusTagProps = useMemo<Tag | undefined>(() => {
+    if (needsItwUpgrade) {
+      return {
         variant: "info",
         text: I18n.t("features.itWallet.card.status.upgradePending")
-      }
-    : tagPropsByStatus[status];
+      };
+    }
+
+    return tagPropsByStatus[status];
+  }, [status, needsItwUpgrade, tagPropsByStatus]);
 
   const { titleColor, titleOpacity, colorScheme } = useMemo<StyleProps>(() => {
     // Include "jwtExpired" as a valid status because credentials with this state
