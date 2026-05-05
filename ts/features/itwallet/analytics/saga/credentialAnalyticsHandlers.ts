@@ -2,13 +2,14 @@ import { SagaIterator } from "redux-saga";
 import { select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import {
-  itwCredentialsStore,
-  itwCredentialsRemove
+  itwCredentialsRemove,
+  itwCredentialsStore
 } from "../../credentials/store/actions";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import {
   updateCredentialProperties,
-  updateItwStatusAndPIDProperties
+  updateItwStatusAndPIDProperties,
+  updateThirdPartyCredentialProperty
 } from "../properties/propertyUpdaters";
 import { getMixPanelCredential } from "../utils";
 import { MixPanelCredential } from "../utils/types";
@@ -41,6 +42,7 @@ export function* handleCredentialStoredAnalytics(
   }
 
   updateCredentialProperties(credential, "valid");
+  updateThirdPartyCredentialProperty(state);
 }
 
 /**
@@ -49,7 +51,8 @@ export function* handleCredentialStoredAnalytics(
 export function* handleCredentialRemovedAnalytics(
   action: ActionType<typeof itwCredentialsRemove>
 ): SagaIterator {
-  const isItwL3 = yield* select(itwLifecycleIsITWalletValidSelector);
+  const state: GlobalState = yield* select();
+  const isItwL3 = itwLifecycleIsITWalletValidSelector(state);
 
   const credential = getAnalyticsCredentialFromStored(action.payload, isItwL3);
 
@@ -68,6 +71,7 @@ export function* handleCredentialRemovedAnalytics(
   }
 
   updateCredentialProperties(credential, "not_available");
+  updateThirdPartyCredentialProperty(state);
 }
 
 function getAnalyticsCredentialFromStored(
