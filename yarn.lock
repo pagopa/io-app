@@ -4390,15 +4390,34 @@ __metadata:
   version: 0.4.3
   resolution: "@openid4vc/utils@npm:0.4.3"
   dependencies:
-    buffer: ^6.0.3
-    zod: ^4.1.13
+    auto-changelog: ^2.4.0
+    markdown-it: ^14.1.0
+    react-native-easing-gradient: ^1.1.1
+    react-native-gesture-handler: ^2.25.0
+    react-native-haptic-feedback: ^2.3.3
+    react-native-linear-gradient: ^2.8.3
+    react-native-reanimated: 4.2.2
+    react-native-safe-area-context: ^5.6.2
+    react-native-svg: ^15.12.0
+    react-native-worklets: ^0.7.0
+  peerDependencies:
+    react: ^19.0.0
+    react-native: "*"
+    react-native-easing-gradient: "*"
+    react-native-gesture-handler: "*"
+    react-native-haptic-feedback: "*"
+    react-native-linear-gradient: "*"
+    react-native-reanimated: ">=4.0.0"
+    react-native-safe-area-context: "*"
+    react-native-svg: "*"
+    react-native-worklets: "*"
   checksum: 4fa714e1193b57e0b757f90192857ff39cc509c7e4ec8d94a47f703bdc29391d4c161259535795e702b1a75a66540193d1005b3b1276d8a25f7a62e8980d82b6
   languageName: node
   linkType: hard
 
 "@pagopa/io-app-design-system@pagopa/io-app-design-system#IOPLT-000-react-navigation-v7-adjustment":
-  version: 7.0.1
-  resolution: "@pagopa/io-app-design-system@https://github.com/pagopa/io-app-design-system.git#commit=257b82091c511d7cad2863ac604743d63c1e8ce1"
+  version: 7.1.0
+  resolution: "@pagopa/io-app-design-system@https://github.com/pagopa/io-app-design-system.git#commit=c7095b55b4df24ad5b1e49b61be0afc6bbd9b257"
   dependencies:
     auto-changelog: ^2.4.0
     markdown-it: ^14.1.0
@@ -4411,7 +4430,7 @@ __metadata:
     react-native-svg: ^15.12.0
     react-native-worklets: ^0.7.0
   peerDependencies:
-    react: "*"
+    react: ^19.0.0
     react-native: "*"
     react-native-easing-gradient: "*"
     react-native-gesture-handler: "*"
@@ -4421,7 +4440,7 @@ __metadata:
     react-native-safe-area-context: "*"
     react-native-svg: "*"
     react-native-worklets: "*"
-  checksum: cd6bc6efc3edf68f80e8598d23ec80c85ade42e2e42581ce7cfff3eef59f632c4aeea1224ff0be2ed6a20e08d2ecd607b20614d0620e0e50f786e14a3ceb9d66
+  checksum: 515bb16c79c9a987bfac53096975646b9c0a91733d8023b3b918b5af11581db9a5b66cd37d3fcdb8b0e3464b3b31bca7b6dbe334b2871708f9c1771113d51869
   languageName: node
   linkType: hard
 

@@ -482,25 +482,25 @@ exports[`OnboardingNotificationsInfoScreenConsent should match snapshot 1`] = `
                         ItemSeparatorComponent={[Function]}
                         ListHeaderComponent={
                           <View>
-                            <ForwardRef
+                            <H2
                               accessibilityRole="header"
                             >
                               Attiva le notifiche push per non perdere messaggi importanti!
-                            </ForwardRef>
+                            </H2>
                             <VSpacer
                               size={16}
                             />
-                            <ForwardRef>
+                            <Body>
                               Per farlo, devi modificare le preferenze nelle impostazioni di sistema del tuo dispositivo.
-                            </ForwardRef>
+                            </Body>
                             <VSpacer
                               size={16}
                             />
-                            <ForwardRef
+                            <H6
                               color="grey-700"
                             >
                               Ecco come:
-                            </ForwardRef>
+                            </H6>
                             <VSpacer
                               size={8}
                             />

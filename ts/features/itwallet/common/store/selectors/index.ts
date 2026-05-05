@@ -16,6 +16,7 @@ import { itwIsWalletInstanceStatusFailureSelector } from "../../../walletInstanc
 import {
   itwIsBannerHiddenSelector,
   itwIsDiscoveryBannerHiddenSelector,
+  itwIsAgeVerificationUsageDetailsBannerHiddenSelector,
   itwIsWalletDiscoveryBannerHiddenSelector,
   itwIsWalletUpgradeMDLDetailsBannerHiddenSelector
 } from "./banners";
@@ -137,6 +138,14 @@ export const itwShouldRenderWalletUpgradeMDLDetailsBannerSelector = (
   itwIsL3EnabledSelector(state) &&
   !itwLifecycleIsITWalletValidSelector(state) &&
   !itwIsWalletUpgradeMDLDetailsBannerHiddenSelector(state);
+
+/**
+ * Returns whether the Age Verification usage banner in credential details should be rendered.
+ * - The user did not close the banner
+ */
+export const itwShouldRenderAgeVerificationUsageDetailsBannerSelector = (
+  state: GlobalState
+): boolean => !itwIsAgeVerificationUsageDetailsBannerHiddenSelector(state);
 
 /**
  * Returns whether the eID lifecycle alert should be hidden in wallet.
