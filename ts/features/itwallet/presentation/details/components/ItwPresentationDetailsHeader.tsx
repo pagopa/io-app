@@ -14,7 +14,7 @@ import { useIOSelector } from "../../../../../store/hooks.ts";
 import ItwAvatar from "../../../../../../img/features/itWallet/brand/itw_avatar.svg";
 import { ItwCredentialDetailCard } from "../../../common/components/ItwCredentialDetailCard.tsx";
 import { getItwAuthSource } from "../../../common/utils/itwMetadataUtils.ts";
-import { tagPropsByStatus } from "../../../common/utils/itwCredentialUtils.ts";
+import { useTagPropsByStatus } from "../../../common/utils/itwCredentialUtils.ts";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { useThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
@@ -48,6 +48,7 @@ const ItwPresentationDetailsHeader = ({
     itwCredentialStatusSelector(state, credential.credentialType)
   );
   const displayStatus = useItwDisplayCredentialStatus(rawStatus);
+  const tagPropsByStatus = useTagPropsByStatus();
   const statusTagProps = tagPropsByStatus[displayStatus];
   const credentialsCatalogue = useIOSelector(
     itwCredentialsCatalogueByTypesSelector
