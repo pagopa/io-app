@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.30.0-rc.2](https://github.com/pagopa/io-app/compare/3.30.0-rc.1...3.30.0-rc.2) (2026-05-04)
+
+## [3.30.0-rc.1](https://github.com/pagopa/io-app/compare/3.30.0-rc.0...3.30.0-rc.1) (2026-04-30)
+
+
+### Features
+
+* [[IOPID-3755](https://pagopa.atlassian.net/browse/IOPID-3755),[IOPID-3756](https://pagopa.atlassian.net/browse/IOPID-3756)] split be client ([#7916](https://github.com/pagopa/io-app/issues/7916)) ([5873418](https://github.com/pagopa/io-app/commit/5873418fd05b6e870165f31c01926599e67a34f4))
+* [[IOPID-3894](https://pagopa.atlassian.net/browse/IOPID-3894),[IOCOM-3097](https://pagopa.atlassian.net/browse/IOCOM-3097)] Replace Sentry events with mixpanel ones ([#8070](https://github.com/pagopa/io-app/issues/8070)) ([fad2256](https://github.com/pagopa/io-app/commit/fad22565b0af1a95e6155858b912266f7afa8113))
+* **IT-Wallet:** [[SIW-4066](https://pagopa.atlassian.net/browse/SIW-4066),[SIW-4179](https://pagopa.atlassian.net/browse/SIW-4179)] Credential status simulation  ([#8021](https://github.com/pagopa/io-app/issues/8021)) ([1607e12](https://github.com/pagopa/io-app/commit/1607e125198b198fb11c3d1d8f6c90a86c123858))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4237](https://pagopa.atlassian.net/browse/SIW-4237)] Update credential reissuing tracking credential property value ([#8071](https://github.com/pagopa/io-app/issues/8071)) ([e03c536](https://github.com/pagopa/io-app/commit/e03c5363dc02a8c1371c26c1d0bad2c10801e5b8))
+
+
+### Chores
+
+* [[IEG-2687](https://pagopa.atlassian.net/browse/IEG-2687)] CGN engagement banner tracking event ([#8062](https://github.com/pagopa/io-app/issues/8062)) ([d91bf67](https://github.com/pagopa/io-app/commit/d91bf674e572094e50e191f3d18e8e5e243e0f18))
+* [[IEL-279](https://pagopa.atlassian.net/browse/IEL-279)] Timeline bottomsheet accessibility improved ([#8072](https://github.com/pagopa/io-app/issues/8072)) ([6d6e639](https://github.com/pagopa/io-app/commit/6d6e639f292fe250cfc3dd0669d823bfdb7001c0))
+
 ## [3.30.0-rc.0](https://github.com/pagopa/io-app/compare/3.29.0-rc.7...3.30.0-rc.0) (2026-04-29)
 
 
