@@ -4,7 +4,6 @@
  * Set up of the testing environment
  */
 
-
 import mockAsyncStorage from "@react-native-async-storage/async-storage/jest/async-storage-mock";
 import mockClipboard from "@react-native-clipboard/clipboard/jest/clipboard-mock.js";
 import nodeFetch from "node-fetch";
@@ -280,3 +279,7 @@ jest.mock("@pagopa/io-react-native-iso18013", () => ({
 jest.mock("@pagopa/io-react-native-cie", () => ({
   CieManager: jest.fn()
 }));
+
+jest.mock("react-native-keyboard-controller", () =>
+  require("react-native-keyboard-controller/jest")
+);
