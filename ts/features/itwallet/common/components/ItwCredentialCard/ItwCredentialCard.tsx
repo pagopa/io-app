@@ -16,7 +16,7 @@ import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/se
 import { useItwDisplayCredentialStatus } from "../../../presentation/details/hooks/useItwDisplayCredentialStatus";
 import {
   getCredentialNameFromType,
-  tagPropsByStatus,
+  useTagPropsByStatus,
   useBorderColorByStatus,
   validCredentialStatuses
 } from "../../utils/itwCredentialUtils";
@@ -76,18 +76,15 @@ export const ItwCredentialCard = ({
   const theme = useThemeColorByCredentialType(credentialType);
   const withL3Design = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const borderColorMap = useBorderColorByStatus();
+  const tagPropsByStatus = useTagPropsByStatus();
   const cardConfig = getCredentialCardConfig(credentialType);
 
-  const statusTagProps = useMemo<Tag | undefined>(() => {
-    if (needsItwUpgrade) {
-      return {
+  const statusTagProps: Tag | undefined = needsItwUpgrade
+    ? {
         variant: "info",
         text: I18n.t("features.itWallet.card.status.upgradePending")
-      };
-    }
-
-    return tagPropsByStatus(status);
-  }, [status, needsItwUpgrade]);
+      }
+    : tagPropsByStatus[status];
 
   const { titleColor, titleOpacity, colorScheme } = useMemo<StyleProps>(() => {
     // Include "jwtExpired" as a valid status because credentials with this state
