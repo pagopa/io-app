@@ -46,39 +46,45 @@ const ItwOnboardingModuleCredential = ({
   const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
 
   const badge = useMemo((): Badge | undefined => {
+    const activeBadge: Badge = {
+      variant: "success",
+      text: I18n.t("features.wallet.onboarding.badge.active")
+    };
+    const activeL3Badge: Badge = {
+      variant: "success",
+      text: I18n.t("features.wallet.onboarding.badge.valid")
+    };
+    const disabledBadge: Badge = {
+      variant: "default",
+      text: I18n.t("features.wallet.onboarding.badge.unavailable")
+    };
+    const requestedBadge: Badge = {
+      variant: "highlight",
+      text: I18n.t("features.wallet.onboarding.badge.requested")
+    };
+    const upcomingBadge: Badge = {
+      variant: "default",
+      text: I18n.t("features.wallet.onboarding.badge.upcoming")
+    };
+    const newBadge: Badge = {
+      variant: "default",
+      text: I18n.t("features.wallet.onboarding.badge.new")
+    };
+
     if (isActive) {
-      return {
-        variant: "success",
-        text: I18n.t(
-          isL3Enabled
-            ? "features.wallet.onboarding.badge.valid"
-            : "features.wallet.onboarding.badge.active"
-        )
-      };
+      return isL3Enabled ? activeL3Badge : activeBadge;
     }
     if (isDisabled) {
-      return {
-        variant: "default",
-        text: I18n.t("features.wallet.onboarding.badge.unavailable")
-      };
+      return disabledBadge;
     }
     if (isRequested) {
-      return {
-        variant: "highlight",
-        text: I18n.t("features.wallet.onboarding.badge.requested")
-      };
+      return requestedBadge;
     }
     if (isUpcoming) {
-      return {
-        variant: "default",
-        text: I18n.t("features.wallet.onboarding.badge.upcoming")
-      };
+      return upcomingBadge;
     }
     if (isNew) {
-      return {
-        variant: "default",
-        text: I18n.t("features.wallet.onboarding.badge.new")
-      };
+      return newBadge;
     }
     return undefined;
   }, [isActive, isDisabled, isRequested, isUpcoming, isNew, isL3Enabled]);

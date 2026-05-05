@@ -1,4 +1,5 @@
 import {
+  Badge,
   IOVisualCostants,
   ListItemHeader,
   ModuleCredential,
@@ -123,28 +124,24 @@ const OtherCardsOnboardingSection = (props: { showTitle?: boolean }) => {
     });
   };
 
-  const cgnModule = useMemo(
-    () =>
-      isCgnLoading ? (
-        <ModuleCredential testID="cgnModuleLoadingTestID" isLoading={true} />
-      ) : (
-        <ModuleCredential
-          testID="cgnModuleTestID"
-          image={require("../../../../../img/bonus/cgn/cgn_logo.png")}
-          label={I18n.t("features.wallet.onboarding.options.cgn")}
-          onPress={!isCgnActive ? startCgnActivation : undefined}
-          badge={
-            isCgnActive
-              ? {
-                  variant: "success",
-                  text: I18n.t("features.wallet.onboarding.badge.active")
-                }
-              : undefined
-          }
-        />
-      ),
-    [isCgnActive, isCgnLoading, startCgnActivation]
-  );
+  const cgnModule = useMemo(() => {
+    const activeBadge: Badge = {
+      variant: "success",
+      text: I18n.t("features.wallet.onboarding.badge.active")
+    };
+
+    return isCgnLoading ? (
+      <ModuleCredential testID="cgnModuleLoadingTestID" isLoading={true} />
+    ) : (
+      <ModuleCredential
+        testID="cgnModuleTestID"
+        image={require("../../../../../img/bonus/cgn/cgn_logo.png")}
+        label={I18n.t("features.wallet.onboarding.options.cgn")}
+        onPress={!isCgnActive ? startCgnActivation : undefined}
+        badge={isCgnActive ? activeBadge : undefined}
+      />
+    );
+  }, [isCgnActive, isCgnLoading, startCgnActivation]);
 
   return (
     <View>

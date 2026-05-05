@@ -80,6 +80,14 @@ const ContentView = ({ failure }: ContentViewProps) => {
     credentialType,
     issuerConf
   });
+  const defaultInvalidStatusMessage = {
+    title: I18n.t(
+      "features.itWallet.issuance.notEntitledCredentialError.title"
+    ),
+    description: I18n.t(
+      "features.itWallet.issuance.notEntitledCredentialError.body"
+    )
+  };
 
   const closeIssuance = () => {
     machineRef.send({ type: "close" });
@@ -138,14 +146,10 @@ const ContentView = ({ failure }: ContentViewProps) => {
           return {
             title:
               invalidStatusDetails.message?.title ??
-              I18n.t(
-                "features.itWallet.issuance.notEntitledCredentialError.title"
-              ),
+              defaultInvalidStatusMessage.title,
             subtitle:
               invalidStatusDetails.message?.description ??
-              I18n.t(
-                "features.itWallet.issuance.notEntitledCredentialError.body"
-              ),
+              defaultInvalidStatusMessage.description,
             pictogram: "accessDenied",
             ...(supportModal.hasContactMethods
               ? { action: supportModalAction, secondaryAction: closeAction }

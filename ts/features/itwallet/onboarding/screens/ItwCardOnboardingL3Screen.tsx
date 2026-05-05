@@ -240,18 +240,16 @@ const OtherCardsOnboardingSection = () => {
   };
 
   const cgnBaseProps = useMemo(() => {
-    const badge: Badge | undefined = isCgnActive
-      ? {
-          variant: "success",
-          text: I18n.t("features.wallet.onboarding.badge.active")
-        }
-      : undefined;
+    const activeBadge: Badge = {
+      variant: "success",
+      text: I18n.t("features.wallet.onboarding.badge.active")
+    };
 
     return {
       testID: "cgnModuleTestID",
       label: I18n.t("features.wallet.onboarding.options.cgn"),
       onPress: !isCgnActive ? startCgnActivation : undefined,
-      badge
+      badge: isCgnActive ? activeBadge : undefined
     };
   }, [startCgnActivation, isCgnActive]);
 

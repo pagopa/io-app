@@ -62,6 +62,13 @@ const showWalletRevocationAlert = (
   itwDocsOnIOMultipleDevicesUrl: string,
   revocationReason?: WalletInstanceRevocationReason
 ) => {
+  const closeButtonText = I18n.t(
+    "features.itWallet.walletInstanceRevoked.alert.closeButton"
+  );
+  const alertCtaText = I18n.t(
+    "features.itWallet.walletInstanceRevoked.alert.cta"
+  );
+
   switch (revocationReason) {
     case "CERTIFICATE_REVOKED_BY_ISSUER":
       Alert.alert(
@@ -72,13 +79,9 @@ const showWalletRevocationAlert = (
           "features.itWallet.walletInstanceRevoked.alert.revokedByWalletProvider.content"
         ),
         [
+          { text: closeButtonText },
           {
-            text: I18n.t(
-              "features.itWallet.walletInstanceRevoked.alert.closeButton"
-            )
-          },
-          {
-            text: I18n.t("features.itWallet.walletInstanceRevoked.alert.cta"),
+            text: alertCtaText,
             onPress: () => openWebUrl(itwMinIntegrityReqUrl)
           }
         ]
@@ -94,13 +97,9 @@ const showWalletRevocationAlert = (
           "features.itWallet.walletInstanceRevoked.alert.newWalletInstanceCreated.content"
         ),
         [
+          { text: closeButtonText },
           {
-            text: I18n.t(
-              "features.itWallet.walletInstanceRevoked.alert.closeButton"
-            )
-          },
-          {
-            text: I18n.t("features.itWallet.walletInstanceRevoked.alert.cta"),
+            text: alertCtaText,
             onPress: () => openWebUrl(itwDocsOnIOMultipleDevicesUrl)
           }
         ]
