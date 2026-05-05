@@ -15,7 +15,6 @@ import {
 import Animated from "react-native-reanimated";
 import { accessibilityLabelByStatus } from "../../utils/itwAccessibilityUtils";
 import {
-  getCredentialNameFromType,
   isItwCredential,
   tagPropsByStatus,
   useBorderColorByStatus,
@@ -29,6 +28,7 @@ import {
   ItwBrandedSkiaBorder,
   ItwIridescentBorderVariant
 } from "../ItwBrandedSkiaBorder";
+import { useItwCredentialName } from "../../hooks/useItwCredentialName";
 import { CardBackground } from "./CardBackground";
 import { CardData } from "./CardData";
 import { CardWidthContext } from "./CardWidthContext";
@@ -50,6 +50,8 @@ export const ItwSkeumorphicCard = ({
   valuesHidden
 }: ItwSkeumorphicCardProps) => {
   const isItw = useMemo(() => isItwCredential(credential), [credential]);
+
+  const credentialName = useItwCredentialName(credential.credentialType);
 
   const FrontSide = useMemo(
     () => (
@@ -89,16 +91,14 @@ export const ItwSkeumorphicCard = ({
     () =>
       ({
         accessible: true,
-        accessibilityLabel: `${getCredentialNameFromType(
-          credential.credentialType
-        )}, ${I18n.t(
+        accessibilityLabel: `${credentialName}, ${I18n.t(
           isFlipped
             ? "features.itWallet.presentation.credentialDetails.card.back"
             : "features.itWallet.presentation.credentialDetails.card.front"
         )}`,
         accessibilityValue: { text: accessibilityLabelByStatus[status] }
       }) as AccessibilityProps,
-    [credential.credentialType, isFlipped, status]
+    [credentialName, isFlipped, status]
   );
 
   const card = (
