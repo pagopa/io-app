@@ -3,14 +3,14 @@ import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
-import { NetworkError } from "../../../../utils/errors";
 import { fciClearStateRequest, fciDownloadPreview } from "../actions";
+import { FciNetworkError } from "../../utils/errors.ts";
 
 export type FciDownload = {
   path: string;
 };
 
-export type FciDownloadPreviewState = pot.Pot<FciDownload, NetworkError>;
+export type FciDownloadPreviewState = pot.Pot<FciDownload, FciNetworkError>;
 
 const initialState: FciDownloadPreviewState = pot.none;
 

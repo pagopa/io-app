@@ -2,7 +2,12 @@ import { FciRouterScreenNavigationParams } from "../screens/FciRouterScreen";
 import { FciDocumentPreviewScreenNavigationParams } from "../screens/valid/FciDocumentPreviewScreen";
 import { FciDocumentsScreenNavigationParams } from "../screens/valid/FciDocumentsScreen";
 import { FciSignatureFieldsScreenNavigationParams } from "../screens/valid/FciSignatureFieldsScreen";
+import { FciNetworkError } from "../utils/errors";
 import { FCI_ROUTES } from "./routes";
+
+export type FciDocumentUnavailableScreenNavigationParams = {
+  errorKind?: FciNetworkError["kind"];
+};
 
 export type FciParamsList = {
   [FCI_ROUTES.ROUTER]: FciRouterScreenNavigationParams;
@@ -13,5 +18,5 @@ export type FciParamsList = {
   [FCI_ROUTES.TYP]: undefined;
   [FCI_ROUTES.DOC_PREVIEW]: FciDocumentPreviewScreenNavigationParams;
   [FCI_ROUTES.SIGNATURE_REQUESTS]: undefined;
-  [FCI_ROUTES.DOCUMENT_UNAVAILABLE]: undefined;
+  [FCI_ROUTES.DOCUMENT_UNAVAILABLE]: FciDocumentUnavailableScreenNavigationParams;
 };

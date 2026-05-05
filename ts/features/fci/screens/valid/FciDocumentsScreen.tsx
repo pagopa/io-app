@@ -93,8 +93,12 @@ const FciDocumentsScreen = () => {
       !pot.isLoading(signatureRequest) &&
       (pot.isError(fciDownloadSelector) || hasDocumentLoadError)
     ) {
+      const errorKind = pot.isError(fciDownloadSelector)
+        ? fciDownloadSelector.error.kind
+        : undefined;
       navigation.replace(FCI_ROUTES.MAIN, {
-        screen: FCI_ROUTES.DOCUMENT_UNAVAILABLE
+        screen: FCI_ROUTES.DOCUMENT_UNAVAILABLE,
+        params: { errorKind }
       });
     }
   }, [fciDownloadSelector, hasDocumentLoadError, navigation, signatureRequest]);

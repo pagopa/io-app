@@ -135,6 +135,18 @@ export const trackFciDocOpeningFailure = () =>
     buildEventProperties("KO", "control")
   );
 
+export const trackFciDocExpiredFailure = () =>
+  mixpanelTrack("FCI_DOC_URL_EXPIRED", buildEventProperties("KO", "control"));
+
+export const trackFciDocExpiredAction = (
+  cta_category: "custom_1" | "custom_2",
+  cta_id: string
+) =>
+  mixpanelTrack(
+    "FCI_DOC_URL_EXPIRED_ACTION",
+    buildEventProperties("UX", "action", { cta_category, cta_id })
+  );
+
 export const trackFciSignatureFieldsView = () =>
   mixpanelTrack(
     "FCI_SIGNATURE_FIELDS",
