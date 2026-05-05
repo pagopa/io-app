@@ -15,7 +15,6 @@ import { fontPreferenceSelector } from "../../../../../store/reducers/persistedP
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { useItwDisplayCredentialStatus } from "../../../presentation/details/hooks/useItwDisplayCredentialStatus";
 import {
-  getCredentialNameFromType,
   useTagPropsByStatus,
   useBorderColorByStatus,
   validCredentialStatuses
@@ -25,6 +24,7 @@ import { itwShouldUpgradeCredentialSelector } from "../../store/selectors";
 import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
 import { CredentialType } from "../../utils/itwMocksUtils";
 import { ItWalletIdLogo } from "../ItWalletIdLogo";
+import { useItwCredentialName } from "../../hooks/useItwCredentialName";
 import { CardBackground } from "./CardBackground";
 import { getCredentialCardConfig } from "./credentialCardConfig";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
@@ -78,6 +78,7 @@ export const ItwCredentialCard = ({
   const borderColorMap = useBorderColorByStatus();
   const tagPropsByStatus = useTagPropsByStatus();
   const cardConfig = getCredentialCardConfig(credentialType);
+  const credentialName = useItwCredentialName(credentialType);
 
   const statusTagProps = useMemo<Tag | undefined>(() => {
     if (needsItwUpgrade) {
@@ -170,7 +171,7 @@ export const ItwCredentialCard = ({
                   flexShrink: 1
                 }}
               >
-                {getCredentialNameFromType(credentialType, "").toUpperCase()}
+                {credentialName.toUpperCase()}
               </IOText>
             )}
             {statusTagProps && <Tag forceLightMode {...statusTagProps} />}

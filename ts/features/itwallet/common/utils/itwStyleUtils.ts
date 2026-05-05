@@ -9,7 +9,7 @@ import {
   getCredentialBackgroundColor
 } from "../components/ItwCredentialCard/credentialCardConfig";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
-import { getCredentialNameFromType } from "./itwCredentialUtils";
+import { useItwCredentialName } from "../hooks/useItwCredentialName";
 import { CredentialType } from "./itwMocksUtils";
 
 export type CredentialTheme = {
@@ -104,10 +104,10 @@ export const useThemeColorByCredentialType = (
 export const useHeaderPropsByCredentialType = (credentialType: string) => {
   const { backgroundColor, variant } =
     useThemeColorByCredentialType(credentialType);
-  const withL3Design = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const title = useItwCredentialName(credentialType);
 
   return {
-    title: getCredentialNameFromType(credentialType, "", withL3Design),
+    title,
     variant,
     backgroundColor
   };

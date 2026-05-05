@@ -3,13 +3,13 @@ import I18n from "i18next";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOStackNavigationRouteProps } from "../../../../navigation/params/AppParamsList";
 import { useMaxBrightness } from "../../../../utils/brightness";
-import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ItwTrustmarkExpirationTimer } from "../components/ItwTrustmarkExpirationTimer";
 import { ItwTrustmarkQrCode } from "../components/ItwTrustmarkQrCode";
 import { ItwTrustmarkMachineProvider } from "../machine/provider";
 import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { withOfflineFailureScreen } from "../../common/helpers/withOfflineFailureScreen";
+import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 
 export type ItwCredentialTrustmarkScreenNavigationParams = {
   credentialType: string;
@@ -22,6 +22,7 @@ type ScreenProps = IOStackNavigationRouteProps<
 
 const ItwCredentialTrustmarkScreenComponent = (params: ScreenProps) => {
   const { credentialType } = params.route.params;
+  const credentialName = useItwCredentialName(credentialType);
 
   usePreventScreenCapture();
   useMaxBrightness({ useSmoothTransition: true });
@@ -30,7 +31,7 @@ const ItwCredentialTrustmarkScreenComponent = (params: ScreenProps) => {
     <ItwTrustmarkMachineProvider credentialType={credentialType}>
       <IOScrollViewWithLargeHeader
         title={{
-          label: getCredentialNameFromType(credentialType)
+          label: credentialName
         }}
         headerActionsProp={{ showHelp: true }}
       >

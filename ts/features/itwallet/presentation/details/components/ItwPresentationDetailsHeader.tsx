@@ -14,17 +14,18 @@ import { useIOSelector } from "../../../../../store/hooks.ts";
 import ItwAvatar from "../../../../../../img/features/itWallet/brand/itw_avatar.svg";
 import { ItwCredentialDetailCard } from "../../../common/components/ItwCredentialDetailCard.tsx";
 import { getItwAuthSource } from "../../../common/utils/itwMetadataUtils.ts";
-import {
-  getCredentialNameFromType,
-  useTagPropsByStatus
-} from "../../../common/utils/itwCredentialUtils.ts";
+import { useTagPropsByStatus } from "../../../common/utils/itwCredentialUtils.ts";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { useThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
-import { itwCredentialsCatalogueByTypesSelector } from "../../../credentialsCatalogue/store/selectors";
+import {
+  itwCatalogueTranslationsByLocaleSelector,
+  itwCredentialsCatalogueByTypesSelector
+} from "../../../credentialsCatalogue/store/selectors";
 import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { useItwDisplayCredentialStatus } from "../hooks/useItwDisplayCredentialStatus";
+import { useItwCredentialName } from "../../../common/hooks/useItwCredentialName";
 import { ItwPresentationCredentialCard } from "./ItwPresentationCredentialCard.tsx";
 
 type ItwPresentationDetailsHeaderProps = {
@@ -52,9 +53,14 @@ const ItwPresentationDetailsHeader = ({
   const credentialsCatalogue = useIOSelector(
     itwCredentialsCatalogueByTypesSelector
   );
-  const authSource = credentialsCatalogue?.[credential.credentialType]
-    ? getItwAuthSource(credentialsCatalogue[credential.credentialType])
+  const translationsByLocale = useIOSelector(
+    itwCatalogueTranslationsByLocaleSelector
+  );
+  const catalogueMeta = credentialsCatalogue?.[credential.credentialType];
+  const authSource = catalogueMeta
+    ? getItwAuthSource(catalogueMeta, translationsByLocale)
     : undefined;
+  const credentialName = useItwCredentialName(credential.credentialType);
 
   const headerContent = useMemo(() => {
     if (!withL3Design) {
@@ -74,7 +80,7 @@ const ItwPresentationDetailsHeader = ({
               ]}
               accessibilityRole="header"
             >
-              {getCredentialNameFromType(credential.credentialType)}
+              {credentialName}
             </Text>
           </ContentWrapper>
         </View>
@@ -94,11 +100,7 @@ const ItwPresentationDetailsHeader = ({
             color: IOColors["blueIO-850"]
           }}
         >
-          {getCredentialNameFromType(
-            credential.credentialType,
-            "",
-            withL3Design
-          )}
+          {credentialName}
         </H2>
         {authSource && (
           <Body
@@ -123,6 +125,7 @@ const ItwPresentationDetailsHeader = ({
     authSource,
     backgroundColor,
     credential,
+    credentialName,
     displayStatus,
     isExperimental,
     statusTagProps,
