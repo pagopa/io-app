@@ -98,6 +98,8 @@ export type ItwCredentialMixpanelStatus =
   | "verification_expired"
   | "unknown";
 
+export type ItwThirdPartyCredentials = "not_available" | "valid" | "not_valid";
+
 export type ItwCredentialActionPosition = "screen" | "bottom_sheet";
 
 export type ItwStatus =
