@@ -162,6 +162,11 @@ export const computeItwStatus = (
   }
 };
 
+/**
+ * Builds the aggregate Mixpanel status for third-party credentials.
+ * The property ignores PID and historical L2 credentials because it tracks only
+ * credentials obtained through the third-party/catalogue channel.
+ */
 export const buildThirdPartyCredentialProperty = (
   state: GlobalState
 ): ItwThirdPartyCredentials => {

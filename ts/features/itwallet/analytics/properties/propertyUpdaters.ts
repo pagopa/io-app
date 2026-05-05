@@ -145,6 +145,11 @@ export const updateOfflineAccessReason = (
   }
 };
 
+/**
+ * Recomputes and syncs the aggregate third-party credential property.
+ * It must update both Profile and Super properties so future events and user
+ * profile data stay aligned after credential store/remove operations.
+ */
 export const updateThirdPartyCredentialProperty = (state: GlobalState) => {
   const thirdPartyCredentialProperty = buildThirdPartyCredentialProperty(state);
   forceUpdateItwProfileProperties({
