@@ -20,11 +20,12 @@ import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selec
 import {
   buildItwBaseProperties,
   buildPidProperties,
+  buildThirdPartyCredentialProperty,
   computeItwStatus
 } from "./basePropertyBuilder";
 import {
-  ItwProfileProperties,
-  forceUpdateItwProfileProperties
+  forceUpdateItwProfileProperties,
+  ItwProfileProperties
 } from "./profileProperties";
 import {
   ITW_ANALYTICS_CREDENTIALS,
@@ -32,9 +33,9 @@ import {
   WalletRevokedAnalyticsEvent
 } from "./propertyTypes";
 import {
-  ItwSuperProperties,
   buildItwSuperProperties,
-  forceUpdateItwSuperProperties
+  forceUpdateItwSuperProperties,
+  ItwSuperProperties
 } from "./superProperties";
 
 /**
@@ -97,7 +98,8 @@ export const updatePropertiesWalletRevoked = () => {
 
   const finalProps: WalletRevokedAnalyticsEvent = {
     ...credentialsResetProps,
-    ITW_STATUS_V2: "not_active"
+    ITW_STATUS_V2: "not_active",
+    ITW_THIRD_PARTY_CREDENTIAL: "not_available"
   };
 
   forceUpdateItwProfileProperties(finalProps);
@@ -141,4 +143,14 @@ export const updateOfflineAccessReason = (
         OFFLINE_ACCESS_REASON: "not_available"
       });
   }
+};
+
+export const updateThirdPartyCredentialProperty = (state: GlobalState) => {
+  const thirdPartyCredentialProperty = buildThirdPartyCredentialProperty(state);
+  forceUpdateItwProfileProperties({
+    ITW_THIRD_PARTY_CREDENTIAL: thirdPartyCredentialProperty
+  });
+  forceUpdateItwSuperProperties({
+    ITW_THIRD_PARTY_CREDENTIAL: thirdPartyCredentialProperty
+  });
 };
