@@ -13,11 +13,11 @@ import {
   ViewStyle
 } from "react-native";
 import Animated from "react-native-reanimated";
-import { getAccessibilityLabelByStatus } from "../../utils/itwAccessibilityUtils";
+import { accessibilityLabelByStatus } from "../../utils/itwAccessibilityUtils";
 import {
   getCredentialNameFromType,
-  getTagPropsByStatus,
   isItwCredential,
+  tagPropsByStatus,
   useBorderColorByStatus,
   validCredentialStatuses
 } from "../../utils/itwCredentialUtils";
@@ -96,7 +96,7 @@ export const ItwSkeumorphicCard = ({
             ? "features.itWallet.presentation.credentialDetails.card.back"
             : "features.itWallet.presentation.credentialDetails.card.front"
         )}`,
-        accessibilityValue: { text: getAccessibilityLabelByStatus(status) }
+        accessibilityValue: { text: accessibilityLabelByStatus(status) }
       }) as AccessibilityProps,
     [credential.credentialType, isFlipped, status]
   );
@@ -163,7 +163,7 @@ const CardSideBase = ({ status, children, isItw }: CardSideBaseProps) => {
     height: 0
   });
 
-  const statusTagProps = getTagPropsByStatus(status);
+  const statusTagProps = tagPropsByStatus(status);
   const borderColor = borderColorMap[status];
   // Include "jwtExpired" as a valid status because the credential skeumorphic card with this state
   // should not appear faded. Only the "expired" status should be displayed with reduced opacity.

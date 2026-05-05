@@ -4,7 +4,6 @@ import * as O from "fp-ts/lib/Option";
 import { SdJwt, Mdoc } from "@pagopa/io-react-native-wallet";
 import I18n from "i18next";
 import { isBefore } from "date-fns";
-import { TranslationKeys } from "../../../../i18n";
 import { ItwIridescentBorderVariant } from "../components/ItwBrandedSkiaBorder";
 import { CredentialType } from "./itwMocksUtils";
 import {
@@ -122,51 +121,44 @@ export const borderVariantByStatus: {
   unknown: "default"
 };
 
-const tagConfigByStatus: Partial<
-  Record<ItwCredentialStatus, Tag & { text: TranslationKeys }>
-> = {
-  invalid: {
-    variant: "error",
-    text: "features.itWallet.card.status.invalid"
-  },
-  expired: {
-    variant: "error",
-    text: "features.itWallet.card.status.expired"
-  },
-  jwtExpired: {
-    variant: "error",
-    text: "features.itWallet.card.status.verificationExpired"
-  },
-  expiring: {
-    variant: "warning",
-    text: "features.itWallet.card.status.expiring"
-  },
-  jwtExpiring: {
-    variant: "warning",
-    text: "features.itWallet.card.status.verificationExpiring"
-  },
-  unknown: {
-    variant: "custom",
-    icon: { name: "infoFilled", color: "grey-450" },
-    text: "features.itWallet.card.status.unknown"
-  }
-};
-
-export const getTagPropsByStatus = (
+export const tagPropsByStatus = (
   status: ItwCredentialStatus
 ): Tag | undefined => {
-  const tagConfig = tagConfigByStatus[status];
-
-  if (!tagConfig) {
-    return undefined;
+  switch (status) {
+    case "invalid":
+      return {
+        variant: "error",
+        text: I18n.t("features.itWallet.card.status.invalid")
+      };
+    case "expired":
+      return {
+        variant: "error",
+        text: I18n.t("features.itWallet.card.status.expired")
+      };
+    case "jwtExpired":
+      return {
+        variant: "error",
+        text: I18n.t("features.itWallet.card.status.verificationExpired")
+      };
+    case "expiring":
+      return {
+        variant: "warning",
+        text: I18n.t("features.itWallet.card.status.expiring")
+      };
+    case "jwtExpiring":
+      return {
+        variant: "warning",
+        text: I18n.t("features.itWallet.card.status.verificationExpiring")
+      };
+    case "unknown":
+      return {
+        variant: "custom",
+        icon: { name: "infoFilled", color: "grey-450" },
+        text: I18n.t("features.itWallet.card.status.unknown")
+      };
+    default:
+      return undefined;
   }
-
-  const { text: textKey, ...tagProps } = tagConfig;
-
-  return {
-    ...tagProps,
-    text: I18n.t(textKey)
-  };
 };
 
 /**

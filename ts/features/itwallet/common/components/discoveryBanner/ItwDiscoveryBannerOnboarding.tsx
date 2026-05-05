@@ -14,15 +14,6 @@ import { ITW_ROUTES } from "../../../navigation/routes";
 import { isItwDiscoveryBannerRenderableSelector } from "../../store/selectors";
 import { useItwDiscoveryBannerType } from "../../hooks/useItwDiscoveryBannerType.ts";
 
-const bannerConfig = {
-  onboarding: {
-    content: "features.itWallet.discovery.banner.home.content"
-  },
-  reactivating: {
-    content: "features.itWallet.discovery.banner.onboardingActive.content"
-  }
-} as const;
-
 /**
  * ITW discovery banner to be displayed in the wallet card onboarding screen
  */
@@ -66,13 +57,24 @@ const ItwDiscoveryBannerOnboarding = () => {
     return null;
   }
 
+  const bannerConfig = {
+    onboarding: {
+      content: I18n.t("features.itWallet.discovery.banner.home.content")
+    },
+    reactivating: {
+      content: I18n.t(
+        "features.itWallet.discovery.banner.onboardingActive.content"
+      )
+    }
+  } as const;
+
   const { content } = bannerConfig[bannerType];
 
   return (
     <View style={styles.wrapper}>
       <Banner
         testID="itwDiscoveryBannerOnboardingTestID"
-        content={I18n.t(content)}
+        content={content}
         action={I18n.t("features.itWallet.discovery.banner.onboarding.action")}
         pictogramName="itWallet"
         color="neutral"

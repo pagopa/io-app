@@ -16,7 +16,7 @@ import { ItwCredentialDetailCard } from "../../../common/components/ItwCredentia
 import { getItwAuthSource } from "../../../common/utils/itwMetadataUtils.ts";
 import {
   getCredentialNameFromType,
-  getTagPropsByStatus
+  tagPropsByStatus
 } from "../../../common/utils/itwCredentialUtils.ts";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { useThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
@@ -47,7 +47,7 @@ const ItwPresentationDetailsHeader = ({
     itwCredentialStatusSelector(state, credential.credentialType)
   );
   const displayStatus = useItwDisplayCredentialStatus(rawStatus);
-  const statusTagProps = getTagPropsByStatus(displayStatus);
+  const statusTagProps = tagPropsByStatus(displayStatus);
   const credentialsCatalogue = useIOSelector(
     itwCredentialsCatalogueByTypesSelector
   );
