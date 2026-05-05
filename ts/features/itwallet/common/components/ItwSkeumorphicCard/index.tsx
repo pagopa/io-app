@@ -13,12 +13,12 @@ import {
   ViewStyle
 } from "react-native";
 import Animated from "react-native-reanimated";
+import { useItwCredentialName } from "../../hooks/useItwCredentialName";
 import { useLayoutSize } from "../../hooks/useLayoutSize";
-import { accessibilityLabelByStatus } from "../../utils/itwAccessibilityUtils";
 import {
   isItwCredential,
-  tagPropsByStatus,
   useBorderColorByStatus,
+  useTagPropsByStatus,
   validCredentialStatuses
 } from "../../utils/itwCredentialUtils";
 import {
@@ -29,7 +29,6 @@ import {
   ItwBrandedSkiaBorder,
   ItwIridescentBorderVariant
 } from "../ItwBrandedSkiaBorder";
-import { useItwCredentialName } from "../../hooks/useItwCredentialName";
 import { CardBackground } from "./CardBackground";
 import { CardData } from "./CardData";
 import { CardWidthContext } from "./CardWidthContext";
@@ -88,19 +87,27 @@ export const ItwSkeumorphicCard = ({
     [credential, status, valuesHidden, isItw]
   );
 
-  const accessibilityProps = useMemo(
-    () =>
-      ({
-        accessible: true,
-        accessibilityLabel: `${credentialName}, ${I18n.t(
-          isFlipped
-            ? "features.itWallet.presentation.credentialDetails.card.back"
-            : "features.itWallet.presentation.credentialDetails.card.front"
-        )}`,
-        accessibilityValue: { text: accessibilityLabelByStatus[status] }
-      }) as AccessibilityProps,
-    [credentialName, isFlipped, status]
-  );
+  const accessibilityProps = useMemo(() => {
+    const accessibilityLabelByStatus: {
+      [key in ItwCredentialStatus]?: string;
+    } = {
+      invalid: I18n.t("features.itWallet.card.status.invalid"),
+      expired: I18n.t("features.itWallet.card.status.expired"),
+      jwtExpired: I18n.t("features.itWallet.card.status.verificationExpired"),
+      expiring: I18n.t("features.itWallet.card.status.expiring"),
+      jwtExpiring: I18n.t("features.itWallet.card.status.verificationExpiring")
+    };
+
+    return {
+      accessible: true,
+      accessibilityLabel: `${credentialName}, ${I18n.t(
+        isFlipped
+          ? "features.itWallet.presentation.credentialDetails.card.back"
+          : "features.itWallet.presentation.credentialDetails.card.front"
+      )}`,
+      accessibilityValue: { text: accessibilityLabelByStatus[status] }
+    } as AccessibilityProps;
+  }, [credentialName, isFlipped, status]);
 
   const card = (
     <FlippableCard
@@ -158,6 +165,8 @@ type CardSideBaseProps = {
 
 const CardSideBase = ({ status, children, isItw }: CardSideBaseProps) => {
   const borderColorMap = useBorderColorByStatus();
+  const tagPropsByStatus = useTagPropsByStatus();
+
   const [size, setSize] = useLayoutSize();
 
   const statusTagProps = tagPropsByStatus[status];

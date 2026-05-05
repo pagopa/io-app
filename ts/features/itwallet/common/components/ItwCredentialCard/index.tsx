@@ -15,8 +15,8 @@ import { useItwDisplayCredentialStatus } from "../../../presentation/details/hoo
 import { useItwCredentialName } from "../../hooks/useItwCredentialName";
 import { itwShouldUpgradeCredentialSelector } from "../../store/selectors";
 import {
-  tagPropsByStatus,
   useBorderColorByStatus,
+  useTagPropsByStatus,
   validCredentialStatuses
 } from "../../utils/itwCredentialUtils";
 import { CredentialType } from "../../utils/itwMocksUtils";
@@ -68,6 +68,7 @@ export const ItwCredentialCard = memo(
     const borderColorMap = useBorderColorByStatus();
     const cardConfig = getCredentialCardConfig(credentialType, themeType);
     const credentialName = useItwCredentialName(credentialType);
+    const tagPropsByStatus = useTagPropsByStatus();
     const isValid = validCredentialStatuses.includes(status);
 
     const statusTagProps = useMemo<Tag | undefined>(() => {
@@ -79,7 +80,7 @@ export const ItwCredentialCard = memo(
       }
 
       return tagPropsByStatus[status];
-    }, [status, needsItwUpgrade]);
+    }, [status, needsItwUpgrade, tagPropsByStatus]);
 
     const appBackgroundColor = IOColors[theme["appBackground-primary"]];
 
@@ -168,6 +169,7 @@ export const ItwCredentialCardLegacy = ({
   const status = useItwDisplayCredentialStatus(credentialStatus);
   const theme = useThemeColorByCredentialType(credentialType);
   const credentialName = useItwCredentialName(credentialType);
+  const tagPropsByStatus = useTagPropsByStatus();
   const borderColorMap = useBorderColorByStatus();
 
   const statusTagProps = useMemo<Tag | undefined>(() => {
@@ -179,7 +181,7 @@ export const ItwCredentialCardLegacy = ({
     }
 
     return tagPropsByStatus[status];
-  }, [status, needsItwUpgrade]);
+  }, [status, needsItwUpgrade, tagPropsByStatus]);
 
   const { titleColor, titleOpacity, colorScheme } = useMemo<
     StyleProps & { colorScheme: CardColorScheme }

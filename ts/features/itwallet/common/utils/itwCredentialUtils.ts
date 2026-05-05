@@ -120,7 +120,9 @@ export const borderVariantByStatus: {
   unknown: "default"
 };
 
-export const tagPropsByStatus: { [key in ItwCredentialStatus]?: Tag } = {
+export const useTagPropsByStatus = (): {
+  [key in ItwCredentialStatus]?: Tag;
+} => ({
   invalid: {
     variant: "error",
     text: I18n.t("features.itWallet.card.status.invalid")
@@ -146,7 +148,7 @@ export const tagPropsByStatus: { [key in ItwCredentialStatus]?: Tag } = {
     icon: { name: "infoFilled", color: "grey-450" },
     text: I18n.t("features.itWallet.card.status.unknown")
   }
-};
+});
 
 /**
  * List of statuses that make a credential valid, especially for UI purposes.
