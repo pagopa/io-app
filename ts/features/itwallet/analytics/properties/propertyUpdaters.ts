@@ -89,7 +89,6 @@ export const updateItwStatusAndPIDProperties = (state: GlobalState) => {
 /**
  * This function is used to set all to not_available / not_active when wallet
  * is revoked or when the wallet section is visualized in empty state
- * @param state
  */
 export const updatePropertiesWalletRevoked = () => {
   const credentialsResetProps = Object.fromEntries(
@@ -126,7 +125,6 @@ export const updateCredentialProperties = (
 /**
  * Track the reason for offline access on Mixpanel
  * @param action - The action that was dispatched
- * @param state - The current state of the application
  */
 export const updateOfflineAccessReason = (
   action: Action
