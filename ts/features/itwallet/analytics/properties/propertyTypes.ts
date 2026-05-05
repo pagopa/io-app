@@ -1,7 +1,8 @@
 import {
-  ItwStatus,
+  ItwCredentialMixpanelStatus,
   ItwPIDStatus,
-  ItwCredentialMixpanelStatus
+  ItwStatus,
+  ItwThirdPartyCredentials
 } from "../utils/types";
 
 export type ItwBaseProperties = {
@@ -14,6 +15,7 @@ export type ItwBaseProperties = {
   ITW_PG_V3: ItwCredentialMixpanelStatus;
   ITW_TS_V3: ItwCredentialMixpanelStatus;
   ITW_CED_V3: ItwCredentialMixpanelStatus;
+  ITW_THIRD_PARTY_CREDENTIAL: ItwThirdPartyCredentials;
 };
 
 export const ITW_ANALYTICS_CREDENTIALS = [
@@ -34,4 +36,5 @@ export type WalletRevokedAnalyticsEvent = Record<
   "not_available"
 > & {
   ITW_STATUS_V2: "not_active";
+  ITW_THIRD_PARTY_CREDENTIAL: "not_available";
 };
