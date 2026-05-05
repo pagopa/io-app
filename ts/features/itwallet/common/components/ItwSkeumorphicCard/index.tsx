@@ -13,10 +13,9 @@ import {
   ViewStyle
 } from "react-native";
 import Animated from "react-native-reanimated";
-import { accessibilityLabelByStatus } from "../../utils/itwAccessibilityUtils";
 import {
   isItwCredential,
-  tagPropsByStatus,
+  useTagPropsByStatus,
   useBorderColorByStatus,
   validCredentialStatuses
 } from "../../utils/itwCredentialUtils";
@@ -87,19 +86,27 @@ export const ItwSkeumorphicCard = ({
     [credential, status, valuesHidden, isItw]
   );
 
-  const accessibilityProps = useMemo(
-    () =>
-      ({
-        accessible: true,
-        accessibilityLabel: `${credentialName}, ${I18n.t(
-          isFlipped
-            ? "features.itWallet.presentation.credentialDetails.card.back"
-            : "features.itWallet.presentation.credentialDetails.card.front"
-        )}`,
-        accessibilityValue: { text: accessibilityLabelByStatus[status] }
-      }) as AccessibilityProps,
-    [credentialName, isFlipped, status]
-  );
+  const accessibilityProps = useMemo(() => {
+    const accessibilityLabelByStatus: {
+      [key in ItwCredentialStatus]?: string;
+    } = {
+      invalid: I18n.t("features.itWallet.card.status.invalid"),
+      expired: I18n.t("features.itWallet.card.status.expired"),
+      jwtExpired: I18n.t("features.itWallet.card.status.verificationExpired"),
+      expiring: I18n.t("features.itWallet.card.status.expiring"),
+      jwtExpiring: I18n.t("features.itWallet.card.status.verificationExpiring")
+    };
+
+    return {
+      accessible: true,
+      accessibilityLabel: `${credentialName}, ${I18n.t(
+        isFlipped
+          ? "features.itWallet.presentation.credentialDetails.card.back"
+          : "features.itWallet.presentation.credentialDetails.card.front"
+      )}`,
+      accessibilityValue: { text: accessibilityLabelByStatus[status] }
+    } as AccessibilityProps;
+  }, [credentialName, isFlipped, status]);
 
   const card = (
     <FlippableCard
@@ -157,6 +164,7 @@ type CardSideBaseProps = {
 
 const CardSideBase = ({ status, children, isItw }: CardSideBaseProps) => {
   const borderColorMap = useBorderColorByStatus();
+  const tagPropsByStatus = useTagPropsByStatus();
 
   const [size, setSize] = useState<{ width: number; height: number }>({
     width: 0,
