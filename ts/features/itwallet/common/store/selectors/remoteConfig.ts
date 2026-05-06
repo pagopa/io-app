@@ -134,7 +134,7 @@ export const itwIpzsPrivacyUrlSelector = createSelector(
 /**
  * Returns whether the current app version meets the minimum required to use IT Wallet.
  */
-export const isItwMinAppVersionSupportedSelector = createSelector(
+export const isItwL3SupportedSelector = createSelector(
   itwRemoteConfigSelector,
   (itwConfig): boolean =>
     pipe(

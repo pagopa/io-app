@@ -1,5 +1,5 @@
 import { GlobalState } from "../../../../../store/reducers/types";
-import { isItwMinAppVersionSupportedSelector } from "./remoteConfig";
+import { isItwL3SupportedSelector } from "./remoteConfig";
 
 export const itwPreferencesSelector = (state: GlobalState) =>
   state.features.itWallet.preferences;
@@ -28,7 +28,7 @@ export const itwIsClaimValueHiddenSelector = (state: GlobalState) =>
  */
 export const itwIsL3EnabledSelector = (state: GlobalState) =>
   (state.features.itWallet.preferences.isFiscalCodeWhitelisted ||
-    isItwMinAppVersionSupportedSelector(state)) ??
+    isItwL3SupportedSelector(state)) ??
   false;
 
 /**
