@@ -12,9 +12,8 @@ import {
 import { fciSignatureRequestIdSelector } from "../../store/reducers/fciSignatureRequest.ts";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 import {
-  trackFciDocExpiredAction,
-  trackFciDocExpiredFailure,
-  trackFciDocOpeningFailure
+  trackFciDocOpeningFailure,
+  trackFciDocOpeningFailureAction
 } from "../../analytics";
 import { FciParamsList } from "../../navigation/params";
 import { FCI_ROUTES } from "../../navigation/routes";
@@ -26,22 +25,20 @@ const FciDocumentUnavailableScreen = () => {
     useRoute<
       RouteProp<FciParamsList, typeof FCI_ROUTES.DOCUMENT_UNAVAILABLE>
     >();
-  const errorKind = route.params?.errorKind;
+  const errorKind =
+    route.params?.errorKind === "expired" ? "expired" : "generic_error";
 
   useOnFirstRender(() => {
-    if (errorKind === "expired") {
-      trackFciDocExpiredFailure();
-    } else {
-      trackFciDocOpeningFailure();
-    }
+    trackFciDocOpeningFailure(errorKind);
   });
 
   const closeButtonProps = {
     testID: "FciCloseButtonTestID",
     onPress: () => {
-      trackFciDocExpiredAction(
+      trackFciDocOpeningFailureAction(
         "custom_1",
-        I18n.t("features.fci.errors.buttons.close")
+        I18n.t("features.fci.errors.buttons.close"),
+        errorKind
       );
       dispatch(fciEndRequest());
     },
@@ -59,9 +56,10 @@ const FciDocumentUnavailableScreen = () => {
         action: {
           testID: "FciRetryButtonTestID",
           onPress: () => {
-            trackFciDocExpiredAction(
+            trackFciDocOpeningFailureAction(
               "custom_2",
-              I18n.t("features.fci.errors.buttons.retry")
+              I18n.t("features.fci.errors.buttons.retry"),
+              errorKind
             );
             dispatch(fciSignatureRequestRetryFromId(signatureRequestId));
           },

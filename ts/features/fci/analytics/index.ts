@@ -129,22 +129,22 @@ export const trackFciDocOpening = (
 export const trackFciDocumentsView = () =>
   mixpanelTrack("FCI_DOCUMENTS", buildEventProperties("UX", "screen_view"));
 
-export const trackFciDocOpeningFailure = () =>
-  mixpanelTrack(
-    "FCI_DOC_OPENING_FAILURE",
-    buildEventProperties("KO", "control")
-  );
-
-export const trackFciDocExpiredFailure = () =>
-  mixpanelTrack("FCI_DOC_URL_EXPIRED", buildEventProperties("KO", "control"));
-
-export const trackFciDocExpiredAction = (
-  cta_category: "custom_1" | "custom_2",
-  cta_id: string
+export const trackFciDocOpeningFailure = (
+  reason: "expired" | "generic_error"
 ) =>
   mixpanelTrack(
-    "FCI_DOC_URL_EXPIRED_ACTION",
-    buildEventProperties("UX", "action", { cta_category, cta_id })
+    "FCI_DOC_OPENING_FAILURE",
+    buildEventProperties("KO", "control", { reason })
+  );
+
+export const trackFciDocOpeningFailureAction = (
+  cta_category: "custom_1" | "custom_2",
+  cta_id: string,
+  reason: "expired" | "generic_error"
+) =>
+  mixpanelTrack(
+    "FCI_DOC_OPENING_FAILURE_ACTION",
+    buildEventProperties("UX", "action", { cta_category, cta_id, reason })
   );
 
 export const trackFciSignatureFieldsView = () =>
