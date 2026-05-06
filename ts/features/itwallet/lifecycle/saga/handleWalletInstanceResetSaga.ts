@@ -49,5 +49,8 @@ export function* handleWalletInstanceResetSaga() {
     yield* all(itwKeyTags.map(deleteKey));
     // Update every mixpanel property related to the wallet instance and its credentials.
     void updatePropertiesWalletRevoked();
-  } catch (e) {}
+  } catch (e) {
+    // eslint-disable-next-line no-console
+    console.error("Wallet reset failed", e);
+  }
 }

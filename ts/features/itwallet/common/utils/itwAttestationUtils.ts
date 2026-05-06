@@ -159,6 +159,7 @@ export const getWalletInstanceStatus = (
  * @param env - The environment to use for the wallet provider base URL
  * @param itwVersion - IT-Wallet technical specs version
  * @param sessionToken The session token to use for the API calls
+ * @throws Error if the wallet instance status retrieval fails
  */
 export const getCurrentWalletInstanceStatus = (
   { WALLET_PROVIDER_BASE_URL }: Env,
@@ -166,19 +167,15 @@ export const getCurrentWalletInstanceStatus = (
   sessionToken: string
 ) => {
   const ioWallet = getIoWallet(itwVersion);
-  // eslint-disable-next-line no-useless-catch
-  try {
-    return ioWallet.WalletInstance.getCurrentWalletInstanceStatus({
-      walletProviderBaseUrl: WALLET_PROVIDER_BASE_URL,
-      appFetch: createItWalletFetch(
-        sessionToken,
-        WALLET_PROVIDER_BASE_URL,
-        WALLET_PROVIDER_BASE_URL
-      )
-    });
-  } catch (e) {
-    throw e;
-  }
+
+  return ioWallet.WalletInstance.getCurrentWalletInstanceStatus({
+    walletProviderBaseUrl: WALLET_PROVIDER_BASE_URL,
+    appFetch: createItWalletFetch(
+      sessionToken,
+      WALLET_PROVIDER_BASE_URL,
+      WALLET_PROVIDER_BASE_URL
+    )
+  });
 };
 
 export const getWalletUnitAttestation = async (
