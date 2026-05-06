@@ -15,7 +15,7 @@ import { fontPreferenceSelector } from "../../../../../store/reducers/persistedP
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { useItwDisplayCredentialStatus } from "../../../presentation/details/hooks/useItwDisplayCredentialStatus";
 import {
-  tagPropsByStatus,
+  useTagPropsByStatus,
   useBorderColorByStatus,
   validCredentialStatuses
 } from "../../utils/itwCredentialUtils";
@@ -76,6 +76,7 @@ export const ItwCredentialCard = ({
   const theme = useThemeColorByCredentialType(credentialType);
   const withL3Design = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const borderColorMap = useBorderColorByStatus();
+  const tagPropsByStatus = useTagPropsByStatus();
   const cardConfig = getCredentialCardConfig(credentialType);
   const credentialName = useItwCredentialName(credentialType);
 
@@ -88,7 +89,7 @@ export const ItwCredentialCard = ({
     }
 
     return tagPropsByStatus[status];
-  }, [status, needsItwUpgrade]);
+  }, [status, needsItwUpgrade, tagPropsByStatus]);
 
   const { titleColor, titleOpacity, colorScheme } = useMemo<StyleProps>(() => {
     // Include "jwtExpired" as a valid status because credentials with this state
