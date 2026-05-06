@@ -15,7 +15,8 @@ import {
   itwUpdateWalletInstanceStatus,
   itwSetWalletInstanceRenewalError,
   itwWalletUnitAttestationsStore,
-  itwWalletUnitAttestationsRemoveById
+  itwWalletUnitAttestationsRemoveById,
+  itwSetWalletInstanceRemotelyActive
 } from "../actions";
 import {
   WalletInstanceStatus,
@@ -44,18 +45,24 @@ export type ItwWalletInstanceState = {
    * and to avoid bloating the stored credential unnecessarily.
    */
   walletUnitAttestations: Record<string, string>;
+  /**
+   * Indicates whether the user has an already active wallet instance
+   * but the actual local wallet is not active.
+   */
+  isRemotelyActive?: boolean;
 };
 
 export const itwWalletInstanceInitialState: ItwWalletInstanceState = {
   attestation: undefined,
   status: pot.none,
   renewalError: false,
-  walletUnitAttestations: {}
+  walletUnitAttestations: {},
+  isRemotelyActive: undefined
 };
 
 type MigrationState = PersistedState & Record<string, any>;
 
-const CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION = 3;
+const CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION = 4;
 
 export const migrations: MigrationManifest = {
   // Convert status into a pot for better async handling
@@ -79,6 +86,11 @@ export const migrations: MigrationManifest = {
   "3": (state: MigrationState) => ({
     ...state,
     walletUnitAttestations: {}
+  }),
+  // Add isRemotelyActive
+  "4": (state: MigrationState) => ({
+    ...state,
+    isRemotelyActive: undefined
   })
 };
 
@@ -144,6 +156,13 @@ const reducer = (
       };
     }
 
+    case getType(itwSetWalletInstanceRemotelyActive): {
+      return {
+        ...state,
+        isRemotelyActive: action.payload
+      };
+    }
+
     case getType(itwLifecycleStoresReset):
       return { ...itwWalletInstanceInitialState };
 
@@ -156,7 +175,8 @@ const itwWalletInstancePersistConfig: PersistConfig = {
   key: "itwWalletInstance",
   storage: createSecureStorage(),
   version: CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION,
-  migrate: createMigrate(migrations, { debug: isDevEnv })
+  migrate: createMigrate(migrations, { debug: isDevEnv }),
+  blacklist: ["isRemotelyActive"] satisfies Array<keyof ItwWalletInstanceState>
 };
 
 const persistedReducer = persistReducer(

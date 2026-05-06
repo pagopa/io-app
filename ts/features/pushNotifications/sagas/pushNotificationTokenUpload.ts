@@ -24,9 +24,8 @@ import { InstallationID } from "../../../../definitions/communication/Installati
 export const notificationsPlatform: PlatformEnum =
   Platform.select<PlatformEnum>({
     ios: PlatformEnum.apns,
-    // TODO: proper specs in https://github.com/pagopa/io-app/pull/7916
-    android: "fcmv1" as PlatformEnum,
-    default: "fcmv1" as PlatformEnum
+    android: PlatformEnum.fcmv1,
+    default: PlatformEnum.fcmv1
   });
 
 export function* pushNotificationTokenUpload(

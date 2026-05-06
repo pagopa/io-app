@@ -14,10 +14,6 @@ export const itwSetClaimValuesHidden = createStandardAction(
   "ITW_SET_CLAIM_VALUES_HIDDEN"
 )<boolean>();
 
-export const itwSetWalletInstanceRemotelyActive = createStandardAction(
-  "ITW_SET_WALLET_INSTANCE_REMOTELY_ACTIVE"
-)<boolean | undefined>();
-
 export const itwSetFiscalCodeWhitelisted = createStandardAction(
   "ITW_SET_FISCAL_CODE_WHITELISTED"
 )<boolean>();
@@ -54,7 +50,6 @@ export type ItwPreferencesActions =
   | ActionType<typeof itwSetReviewPending>
   | ActionType<typeof itwSetAuthLevel>
   | ActionType<typeof itwSetClaimValuesHidden>
-  | ActionType<typeof itwSetWalletInstanceRemotelyActive>
   | ActionType<typeof itwSetFiscalCodeWhitelisted>
   | ActionType<typeof itwFreezeSimplifiedActivationRequirements>
   | ActionType<typeof itwClearSimplifiedActivationRequirements>
