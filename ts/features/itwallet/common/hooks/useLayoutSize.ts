@@ -15,8 +15,10 @@ export const useLayoutSize = (
 
   const handleLayout = useCallback(
     (event: LayoutChangeEvent) => {
-      const n = event.nativeEvent.layout;
-      setSize(p => (p.width === n.width && p.height === n.height ? p : n));
+      const { width, height } = event.nativeEvent.layout;
+      setSize(p =>
+        p.width === width && p.height === height ? p : { width, height }
+      );
     },
     [setSize]
   );
