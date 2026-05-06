@@ -66,7 +66,7 @@ const itwReducer = combineReducers({
   debug: itwDebugReducer
 });
 
-const CURRENT_REDUX_ITW_STORE_VERSION = 13;
+const CURRENT_REDUX_ITW_STORE_VERSION = 14;
 
 export const migrations: MigrationManifest = {
   // Added preferences store
@@ -171,9 +171,11 @@ export const migrations: MigrationManifest = {
   // Added flag to switch between the hardcoded values and the catalogue for the list of credentials
   "12": (state: PersistedState): PersistedState =>
     _.set(state, "credentialsCatalogue.isEnabledForCredentialsList", false),
-
-  // Removed itwSetWalletInstanceRemotelyActive from preferences
+  // Added catalogue translations pot (IT-Wallet spec v1.3.3+)
   "13": (state: PersistedState): PersistedState =>
+    _.set(state, "credentialsCatalogue.translations", pot.none),
+  // Removed itwSetWalletInstanceRemotelyActive from preferences
+  "14": (state: PersistedState): PersistedState =>
     _.omit(state, "preferences.itwSetWalletInstanceRemotelyActive")
 };
 
