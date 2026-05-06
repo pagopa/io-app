@@ -1,8 +1,12 @@
+import { useIOThemeContext } from "@pagopa/io-app-design-system";
 import { DataSourceParam } from "@shopify/react-native-skia";
 import Color from "color";
+import { useMemo } from "react";
 import { ColorSchemeName } from "react-native";
+import { useIOSelector } from "../../../../../store/hooks";
 import { XOR } from "../../../../../types/utils";
 import { fnv1a } from "../../../../../utils/hash";
+import { itwCredentialsCatalogueByTypesSelector } from "../../../credentialsCatalogue/store/selectors";
 import { CredentialType } from "../../utils/itwMocksUtils";
 import { ItWalletThemes } from "../../utils/theme";
 
@@ -18,20 +22,19 @@ export const CREDENTIAL_BASE_COLORS = [
 ];
 
 /**
- * Pattern overlay images by credential taxonomy category
- * !IMPORTANT: keys are provisional and may change in the future once the taxonomy is finalized.
+ * Pattern overlay images by credential taxonomy domain
  */
 export const CREDENTIAL_CARD_PATTERN_OVERLAYS = {
-  bonus: require("../../../../../../img/features/itWallet/cards/overlay/pattern/bonus.png"),
-  education: require("../../../../../../img/features/itWallet/cards/overlay/pattern/education.png"),
-  family: require("../../../../../../img/features/itWallet/cards/overlay/pattern/family.png"),
-  financial: require("../../../../../../img/features/itWallet/cards/overlay/pattern/financial.png"),
-  health: require("../../../../../../img/features/itWallet/cards/overlay/pattern/health.png"),
-  identity: require("../../../../../../img/features/itWallet/cards/overlay/pattern/identity.png"),
-  lifestyle: require("../../../../../../img/features/itWallet/cards/overlay/pattern/lifestyle.png"),
-  travel: require("../../../../../../img/features/itWallet/cards/overlay/pattern/travel.png"),
-  work: require("../../../../../../img/features/itWallet/cards/overlay/pattern/work.png")
-};
+  BONUSES: require("../../../../../../img/features/itWallet/cards/overlay/pattern/bonus.png"),
+  EDUCATION: require("../../../../../../img/features/itWallet/cards/overlay/pattern/education.png"),
+  HOME_FAMILY: require("../../../../../../img/features/itWallet/cards/overlay/pattern/family.png"),
+  FINANCIAL: require("../../../../../../img/features/itWallet/cards/overlay/pattern/financial.png"),
+  HEALTH: require("../../../../../../img/features/itWallet/cards/overlay/pattern/health.png"),
+  IDENTITY: require("../../../../../../img/features/itWallet/cards/overlay/pattern/identity.png"),
+  CULTURE_LEISURE: require("../../../../../../img/features/itWallet/cards/overlay/pattern/lifestyle.png"),
+  MOBILITY_TRAVEL: require("../../../../../../img/features/itWallet/cards/overlay/pattern/travel.png"),
+  EMPLOYMENT: require("../../../../../../img/features/itWallet/cards/overlay/pattern/work.png")
+} as const;
 
 export type CredentialCardBackground<L extends number = 1 | 2 | 3 | 4 | 5> = {
   /**
@@ -322,11 +325,23 @@ const generateBaseColorFromCredentialType = (
 };
 
 /**
- * Generates an overlay asset based on credential type
+ * Generates an overlay asset based on credential type and taxonomy domain.
+ * If the domain is not provided or does not match any of the defined domains,
+ * a default overlay will be generated based on the credential type.
  */
-const generateBaseOverlayFromCredentialType = (
-  credentialType: string
+const getOverlayPatterForCredentialType = (
+  credentialType: string,
+  credentialDomain?: string
 ): DataSourceParam => {
+  if (
+    credentialDomain &&
+    credentialDomain in CREDENTIAL_CARD_PATTERN_OVERLAYS
+  ) {
+    return CREDENTIAL_CARD_PATTERN_OVERLAYS[
+      credentialDomain as keyof typeof CREDENTIAL_CARD_PATTERN_OVERLAYS
+    ];
+  }
+
   const overlayHash = fnv1a(credentialType, 1);
   const keys = Object.keys(CREDENTIAL_CARD_PATTERN_OVERLAYS) as Array<
     keyof typeof CREDENTIAL_CARD_PATTERN_OVERLAYS
@@ -336,20 +351,22 @@ const generateBaseOverlayFromCredentialType = (
 };
 
 /**
- * Generates a credential card configuration based on the provided base color and taxonomy.
+ * Generates a credential card configuration based on the provided base color
+ * and taxonomy.
  * @param credentialType The type of the credential
- * @param credentialColor Color assoaicted to the credential, if any. A color
- * will be generated based on the credential type if not provided.
  * @param colorScheme The current app color scheme (light, dark)
+ * @param credentialColor An optional base color for the credential, used to
+ * generate a configuration
+ * @param credentialDomain An optional taxonomy domain, used to select the
+ * pattern overlay.
  *
  * @return A credential card configuration derived from the provided color
- *
- * TODO: [SIW-4216] Add credential's taxonomy as a parameter and use it to select the overlay pattern, instead of randomizing it
  */
 const generateCredentialCardConfig = (
   credentialType: string,
   colorScheme: ColorSchemeName,
-  credentialColor?: string
+  credentialColor?: string,
+  credentialDomain?: string
 ): CredentialCardConfig => {
   const theme = ItWalletThemes[colorScheme || "light"];
   const isLight = colorScheme !== "dark";
@@ -373,8 +390,10 @@ const generateCredentialCardConfig = (
     ...(isLight ? [15, 20] : [10, 80])
   ).hex();
 
-  // TODO: [SIW-4216] Use credential taxonomy info to select overlay pattern
-  const patternOverlay = generateBaseOverlayFromCredentialType(credentialType);
+  const patternOverlay = getOverlayPatterForCredentialType(
+    credentialType,
+    credentialDomain
+  );
 
   return {
     color,
@@ -394,20 +413,21 @@ const generateCredentialCardConfig = (
 
 /**
  * Returns the card configuration for a given credential type, if it exists.
- * @param credentialType The type of the credential to get the configuration for.
+ * @param credentialType The type of the credential to get the configuration for
+ * the configuration if a static one is not defined for the given type.
+ * @param colorScheme The current app color scheme (light, dark)
  * @param credentialColor An optional base color for the credential, used to
  * generate a configuration if a static one is not defined for the given type.
- * @param colorScheme The current app color scheme (light, dark), used to generate
- * the configuration if a static one is not defined for the given type.
+ * @param credentialDomain An optional taxonomy domain, used to select the
+ * pattern overlay if a static one is not defined for the given type.
  *
  * @returns The card configuration for the given credential type.
- *
- * TODO: [SIW-4216] Add credential's taxonomy as a parameter and use it to select the overlay pattern, instead of randomizing it
  */
 export const getCredentialCardConfig = (
   credentialType: string,
   colorScheme: ColorSchemeName,
-  credentialColor?: string
+  credentialColor?: string,
+  credentialDomain?: string
 ): CredentialCardConfig => {
   const staticConfig = credentialCardConfigs[credentialType];
   if (staticConfig) {
@@ -422,6 +442,46 @@ export const getCredentialCardConfig = (
   return generateCredentialCardConfig(
     credentialType,
     colorScheme,
-    credentialColor
+    credentialColor,
+    credentialDomain
+  );
+};
+
+/**
+ * Custom hook to retrieve the credential card configuration for a given
+ * credential type, based on the current app theme and the credential's
+ * taxonomy domain (if available).
+ *
+ * The configuration is retrieved from the static `credentialCardConfigs` if
+ * available, or generated dynamically based on the credential type and domain.
+ *
+ * @param credentialType The type of the credential to get the configuration for
+ * @param themeOverride An optional color scheme to override the current app t
+ * heme, used to select the appropriate configuration when the static
+ * configuration is theme-aware.
+ *
+ * @returns The card configuration for the given credential type.
+ */
+export const useCredentialCardConfig = (
+  credentialType: string,
+  themeOverride?: ColorSchemeName
+) => {
+  const { themeType } = useIOThemeContext();
+  const catalogueByType = useIOSelector(itwCredentialsCatalogueByTypesSelector);
+
+  const credentialDomain = useMemo((): string | undefined => {
+    if (catalogueByType) {
+      const credentialMeta = catalogueByType[credentialType];
+      // We only consider the first domain for the credential, if any
+      return credentialMeta.domains?.[0];
+    }
+    return undefined;
+  }, [credentialType, catalogueByType]);
+
+  return getCredentialCardConfig(
+    credentialType,
+    themeOverride || themeType,
+    undefined,
+    credentialDomain
   );
 };

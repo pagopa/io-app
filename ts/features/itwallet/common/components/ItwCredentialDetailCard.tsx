@@ -12,7 +12,7 @@ import {
   SkiaCardPatternOverlay
 } from "./ItwCredentialCard/CardOverlay";
 import { SkiaGradientBackground } from "./ItwCredentialCard/GradientBackground";
-import { getCredentialCardConfig } from "./ItwCredentialCard/config";
+import { useCredentialCardConfig } from "./ItwCredentialCard/config";
 
 type ItwCredentialDetailCardProps = PropsWithChildren<{
   credentialType: string;
@@ -39,7 +39,7 @@ export const ItwCredentialDetailCard = ({
   const { size, onLayout } = useLayoutSize();
 
   // Credential's header card is always in light mode
-  const { color, background, overlay } = getCredentialCardConfig(
+  const { color, background, overlay } = useCredentialCardConfig(
     credentialType,
     "light"
   );

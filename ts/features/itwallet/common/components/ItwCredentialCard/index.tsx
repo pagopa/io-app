@@ -24,7 +24,7 @@ import { useThemeColorByCredentialType } from "../../utils/itwStyleUtils";
 import { ItwCredentialStatus } from "../../utils/itwTypesUtils";
 import { ItWalletIdLogo } from "../ItWalletIdLogo";
 import { CardBackground, LegacyCardBackground } from "./CardBackground";
-import { getCredentialCardConfig } from "./config";
+import { useCredentialCardConfig } from "./config";
 import { DigitalVersionBadge } from "./DigitalVersionBadge";
 import { CardColorScheme } from "./types";
 
@@ -66,7 +66,7 @@ export const ItwCredentialCard = memo(
     const { themeType, theme } = useIOThemeContext();
     const status = useItwDisplayCredentialStatus(credentialStatus);
     const borderColorMap = useBorderColorByStatus();
-    const cardConfig = getCredentialCardConfig(credentialType, themeType);
+    const cardConfig = useCredentialCardConfig(credentialType);
     const credentialName = useItwCredentialName(credentialType);
     const tagPropsByStatus = useTagPropsByStatus();
     const isValid = validCredentialStatuses.includes(status);
