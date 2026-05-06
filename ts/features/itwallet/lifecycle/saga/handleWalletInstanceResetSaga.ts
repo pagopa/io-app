@@ -49,7 +49,5 @@ export function* handleWalletInstanceResetSaga() {
     yield* all(itwKeyTags.map(deleteKey));
     // Update every mixpanel property related to the wallet instance and its credentials.
     void updatePropertiesWalletRevoked();
-  } catch (e) {
-    throw e instanceof Error ? e : new Error("Unknown error");
-  }
+  } catch (e) {}
 }
