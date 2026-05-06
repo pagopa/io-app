@@ -28,6 +28,9 @@ import issuanceReducer, {
 import wiaReducer, {
   ItwWalletInstanceState
 } from "../../../walletInstance/store/reducers";
+import itwDebugReducer, {
+  ItwDebugState
+} from "../../../playgrounds/store/reducer";
 import bannersReducer, { ItwBannersState } from "./banners";
 import environmentReducer, { ItwEnvironmentState } from "./environment";
 import preferencesReducer, { ItwPreferencesState } from "./preferences";
@@ -45,6 +48,7 @@ export type ItWalletState = {
   securePreferences: ItwSecurePreferencesState & PersistPartial;
   credentialsCatalogue: ItwCredentialsCatalogueState;
   banners: ItwBannersState;
+  debug: ItwDebugState;
 };
 
 export type PersistedItWalletState = ReturnType<typeof persistedReducer>;
@@ -58,10 +62,11 @@ const itwReducer = combineReducers({
   preferences: preferencesReducer,
   securePreferences: securePreferencesReducer,
   credentialsCatalogue: itwCredentialsCatalogueReducer,
-  banners: bannersReducer
+  banners: bannersReducer,
+  debug: itwDebugReducer
 });
 
-const CURRENT_REDUX_ITW_STORE_VERSION = 12;
+const CURRENT_REDUX_ITW_STORE_VERSION = 13;
 
 export const migrations: MigrationManifest = {
   // Added preferences store
@@ -165,7 +170,11 @@ export const migrations: MigrationManifest = {
 
   // Added flag to switch between the hardcoded values and the catalogue for the list of credentials
   "12": (state: PersistedState): PersistedState =>
-    _.set(state, "credentialsCatalogue.isEnabledForCredentialsList", false)
+    _.set(state, "credentialsCatalogue.isEnabledForCredentialsList", false),
+
+  // Added catalogue translations pot (IT-Wallet spec v1.3.3+)
+  "13": (state: PersistedState): PersistedState =>
+    _.set(state, "credentialsCatalogue.translations", pot.none)
 };
 
 const itwPersistConfig: PersistConfig = {
@@ -175,7 +184,8 @@ const itwPersistConfig: PersistConfig = {
     "preferences",
     "environment",
     "credentialsCatalogue",
-    "banners"
+    "banners",
+    "debug"
   ] satisfies Array<keyof ItWalletState>,
   version: CURRENT_REDUX_ITW_STORE_VERSION,
   migrate: createMigrate(migrations, { debug: isDevEnv })
