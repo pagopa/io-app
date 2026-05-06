@@ -12,7 +12,6 @@ import {
 import { RemoteFailure, RemoteFailureType } from "../machine/failure.ts";
 import { useAvoidHardwareBackButton } from "../../../../../utils/useAvoidHardwareBackButton.ts";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
-import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils.ts";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { useItwRemoteUntrustedRPBottomSheet } from "../hooks/useItwRemoteUntrustedRPBottomSheet.tsx";
@@ -22,10 +21,11 @@ import { ZendeskSubcategoryValue } from "../../../common/hooks/useItwZendeskSupp
 import { useItwSendAuthorizationErrorResponse } from "../hooks/useItwSendAuthorizationErrorResponse.tsx";
 import { useItwRemoteEventsTracking } from "../hooks/useItwRemoteEventsTracking";
 import { trackItwRemoteInvalidAuthResponseBottomSheet } from "../analytics";
-import { getDismissalContextFromFailure } from "../analytics/utils/index.ts";
+import { getDismissalContextFromFailure } from "../analytics/utils";
 import { trackItwKoStateAction } from "../../../analytics";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { itwIsL3EnabledSelector } from "../../../common/store/selectors/preferences.ts";
+import { itwCredentialNameResolverSelector } from "../../../credentialsCatalogue/store/selectors";
 
 const zendeskAssistanceErrors = [
   RemoteFailureType.RELYING_PARTY_INVALID_AUTH_RESPONSE,
@@ -51,6 +51,9 @@ const ContentView = ({ failure }: ContentViewProps) => {
   const isWhitelisted = useIOSelector(itwIsL3EnabledSelector);
   const machineRef = ItwRemoteMachineContext.useActorRef();
   const navigation = useIONavigation();
+  const resolveCredentialName = useIOSelector(
+    itwCredentialNameResolverSelector
+  );
   useDebugInfo({
     failure: serializeFailureReason(failure)
   });
@@ -177,7 +180,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
               "features.itWallet.presentation.remote.missingCredentialsScreen.subtitle",
               {
                 credentialNames: missingCredentials
-                  .map(c => getCredentialNameFromType(c))
+                  .map(c => resolveCredentialName(c))
                   .join(", ")
               }
             ),
@@ -333,7 +336,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
               "features.itWallet.presentation.remote.invalidCredentialsScreen.title",
               {
                 count,
-                credentialName: getCredentialNameFromType(invalidCredentials[0])
+                credentialName: resolveCredentialName(invalidCredentials[0])
               }
             ),
             subtitle: I18n.t(

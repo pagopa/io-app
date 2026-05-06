@@ -3,12 +3,12 @@ import { testSaga } from "redux-saga-test-plan";
 import {
   TagEnum,
   TagEnum as TEBASE
-} from "../../../../../definitions/backend/MessageCategoryBase";
-import { TagEnum as TEPAYMENT } from "../../../../../definitions/backend/MessageCategoryPayment";
-import { TagEnum as TESEND } from "../../../../../definitions/backend/MessageCategoryPN";
+} from "../../../../../definitions/communication/MessageCategoryBase";
+import { TagEnum as TEPAYMENT } from "../../../../../definitions/communication/MessageCategoryPayment";
+import { TagEnum as TESEND } from "../../../../../definitions/communication/MessageCategoryPN";
 import { ServiceDetails } from "../../../../../definitions/services/ServiceDetails";
 import { handleThirdPartyMessage, testable } from "../handleThirdPartyMessage";
-import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
+import { ThirdPartyMessageWithContent } from "../../../../../definitions/communication/ThirdPartyMessageWithContent";
 import * as ANALYTICS from "../../analytics";
 import * as SEND_ANALYTICS from "../../../pn/analytics";
 import { loadThirdPartyMessage } from "../../store/actions";
@@ -17,16 +17,11 @@ import { serviceDetailsByIdSelector } from "../../../services/details/store/sele
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { ThirdPartyMessageUnion } from "../../types/thirdPartyById";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
-import { backendClientManager } from "../../../../api/BackendClientManager";
-import { getKeyInfo } from "../../../lollipop/saga";
+import { getCommunicationClient } from "../commons";
 
-// Mock the backendClientManager
-jest.mock("../../../../api/BackendClientManager");
+jest.mock("../commons");
 
 const mockGetThirdPartyMessage = jest.fn();
-const mockBackendClientManager = backendClientManager as jest.Mocked<
-  typeof backendClientManager
->;
 
 describe("handleThirdPartyMessage", () => {
   const serviceDetails = {
@@ -38,13 +33,6 @@ describe("handleThirdPartyMessage", () => {
     }
   } as unknown as ServiceDetails;
 
-  beforeEach(() => {
-    jest.clearAllMocks();
-    mockBackendClientManager.getBackendClient.mockReturnValue({
-      getThirdPartyMessage: () => mockGetThirdPartyMessage
-    } as any);
-  });
-
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -54,7 +42,6 @@ describe("handleThirdPartyMessage", () => {
       const messageId = "01K813A7EVHP2W5ZAYDSTX9J0E";
       const serviceId = "01K813ACAMDW4DRVXK0CEGFHGM" as ServiceId;
       const sessionToken = "mockSessionToken";
-      const keyInfo = {};
       const action = loadThirdPartyMessage.request({
         id: messageId,
         serviceId,
@@ -66,8 +53,8 @@ describe("handleThirdPartyMessage", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
-        .call(getKeyInfo)
-        .next(keyInfo)
+        .call(getCommunicationClient, sessionToken)
+        .next({ getThirdPartyMessage: mockGetThirdPartyMessage })
         .select(serviceDetailsByIdSelector, serviceId)
         .next(serviceDetails)
         .call(
