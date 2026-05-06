@@ -2,23 +2,24 @@ import { CredentialType } from "../itwMocksUtils";
 import { getThemeColorByCredentialType } from "../itwStyleUtils";
 
 describe("getThemeColorByCredentialType", () => {
-  it("should keep the legacy mDL theme when L3 is disabled", () => {
-    expect(
-      getThemeColorByCredentialType(CredentialType.DRIVING_LICENSE, false)
-    ).toEqual({
-      backgroundColor: "#744C63",
-      textColor: "#652035",
-      statusBarStyle: "light-content",
-      variant: "contrast"
-    });
-  });
-
-  it("should use the redesigned PID palette when L3 is enabled", () => {
-    expect(getThemeColorByCredentialType(CredentialType.PID, true)).toEqual({
-      backgroundColor: "#EAF6FF",
-      textColor: "#115486",
-      statusBarStyle: "dark-content",
-      variant: "neutral"
-    });
-  });
+  describe.each(["light", "dark"] as const)(
+    "when color scheme is %s",
+    colorScheme => {
+      describe.each([true, false])("when L3 is [%s]", isL3 => {
+        it.each([
+          CredentialType.PID,
+          CredentialType.DRIVING_LICENSE,
+          CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
+          CredentialType.EUROPEAN_DISABILITY_CARD
+        ])(
+          "should match the snapshot for [%s] when L3 is enabled",
+          credentialType => {
+            expect(
+              getThemeColorByCredentialType(credentialType, isL3, colorScheme)
+            ).toMatchSnapshot();
+          }
+        );
+      });
+    }
+  );
 });

@@ -1,11 +1,10 @@
 import { IOColors, Tag, useScaleAnimation } from "@pagopa/io-app-design-system";
-import { ReactNode, useMemo, useState } from "react";
+import { ReactNode, useMemo } from "react";
 
 import { Canvas } from "@shopify/react-native-skia";
 import I18n from "i18next";
 import {
   AccessibilityProps,
-  LayoutChangeEvent,
   Pressable,
   StyleProp,
   StyleSheet,
@@ -13,10 +12,12 @@ import {
   ViewStyle
 } from "react-native";
 import Animated from "react-native-reanimated";
+import { useItwCredentialName } from "../../hooks/useItwCredentialName";
+import { useLayoutSize } from "../../hooks/useLayoutSize";
 import {
   isItwCredential,
-  useTagPropsByStatus,
   useBorderColorByStatus,
+  useTagPropsByStatus,
   validCredentialStatuses
 } from "../../utils/itwCredentialUtils";
 import {
@@ -27,7 +28,6 @@ import {
   ItwBrandedSkiaBorder,
   ItwIridescentBorderVariant
 } from "../ItwBrandedSkiaBorder";
-import { useItwCredentialName } from "../../hooks/useItwCredentialName";
 import { CardBackground } from "./CardBackground";
 import { CardData } from "./CardData";
 import { CardWidthContext } from "./CardWidthContext";
@@ -166,10 +166,7 @@ const CardSideBase = ({ status, children, isItw }: CardSideBaseProps) => {
   const borderColorMap = useBorderColorByStatus();
   const tagPropsByStatus = useTagPropsByStatus();
 
-  const [size, setSize] = useState<{ width: number; height: number }>({
-    width: 0,
-    height: 0
-  });
+  const { size, onLayout } = useLayoutSize();
 
   const statusTagProps = tagPropsByStatus[status];
   const borderColor = borderColorMap[status];
@@ -182,13 +179,8 @@ const CardSideBase = ({ status, children, isItw }: CardSideBaseProps) => {
     backgroundColor: isValid ? undefined : "rgba(255,255,255,0.7)"
   };
 
-  const handleOnLayout = (event: LayoutChangeEvent) => {
-    const { width, height } = event.nativeEvent.layout;
-    setSize({ width, height });
-  };
-
   return (
-    <View onLayout={handleOnLayout} style={styles.container}>
+    <View onLayout={onLayout} style={styles.container}>
       <CardWidthContext.Provider value={size.width}>
         {/* Status badge  */}
         {statusTagProps && (
