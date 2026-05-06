@@ -283,7 +283,7 @@ const JwtVerificationAlert = ({
         { date: format(credential.jwt.expiration, "DD-MM-YYYY") }
       )}
       action={I18n.t(
-        "features.itWallet.presentation.alerts.jwtVerification.action"
+        `features.itWallet.presentation.alerts.jwtVerification.action.${isExpired ? "jwtExpired" : "jwtExpiring"}`
       )}
       onPress={beginCredentialIssuance}
     />

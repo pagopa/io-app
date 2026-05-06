@@ -3816,9 +3816,12 @@
           "jwtVerification": {
             "content": {
               "jwtExpiring": "Verifica la versione digitale del tuo documento entro il {{date}} per continuare a usarlo senza limitazioni.",
-              "jwtExpired": "Verifica ora la versione digitale del tuo documento per continuare a usarlo senza limitazioni."
+              "jwtExpired": "Conferma la tua identità per continuare a usare i tuoi documenti senza limitazioni."
             },
-            "action": "Inizia"
+            "action": {
+              "jwtExpiring": "Inizia",
+              "jwtExpired": "Conferma identità"
+            }
           }
         },
         "bottomSheets": {
