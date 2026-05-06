@@ -473,7 +473,7 @@ export const useCredentialCardConfig = (
     if (catalogueByType) {
       const credentialMeta = catalogueByType[credentialType];
       // We only consider the first domain for the credential, if any
-      return credentialMeta.domains?.[0];
+      return credentialMeta?.domains?.[0];
     }
     return undefined;
   }, [credentialType, catalogueByType]);
