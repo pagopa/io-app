@@ -65,7 +65,7 @@ export const ItwCredentialDetailCard = ({
           {overlay?.pattern && (
             <>
               {/* Pattern should have a solid background */}
-              <Rect color={color} x={0} y={0} {...size} />
+              <Rect color={color} {...size} />
               <SkiaCardPatternOverlay src={overlay.pattern} {...size} />
             </>
           )}
