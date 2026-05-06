@@ -103,3 +103,11 @@ Created on **23/03/2026**
 #### Reason:
 
 - Patch to remove the black layer on screen while recording the app
+
+### @react-navigation-stack-npm-6.4.1-52dad4e278.patch
+
+Created on **24/04/2026**
+
+#### Reason:
+
+- Patch to apply an explicit header `minHeight` in `CardContainer` only when `headerTransparent` is enabled and a screen reader is active, improving Android accessibility by ensuring the header area is properly sized for TalkBack.
