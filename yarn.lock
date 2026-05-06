@@ -4547,12 +4547,12 @@ __metadata:
   linkType: hard
 
 "@pagopa/io-react-native-zendesk@github:pagopa/io-react-native-zendesk#IOPLT-000-dark-mode":
-  version: 0.3.30
-  resolution: "@pagopa/io-react-native-zendesk@https://github.com/pagopa/io-react-native-zendesk.git#commit=982834268beba80dd06e452a953aa229649124f1"
+  version: 0.3.31
+  resolution: "@pagopa/io-react-native-zendesk@https://github.com/pagopa/io-react-native-zendesk.git#commit=dcf921535e0c03fe1b48f112230eeb7cf54861ae"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 03b3126d023eaaceb0566a369e64341e1df0b54417d54b30034654860d4ebcbeedc363a36e8404dea5dc1a6d1ae56f3601fe57412392b35240beef4de5e11126
+  checksum: f610e75ec92c255632218a8d56336120577698909568bd74bb17d6a8ed54b99b661b2fe9b7be3e557b4c3ee5b33e0e72e864ee491fdf6b712d4ae33dd8f7b92e
   languageName: node
   linkType: hard
 
