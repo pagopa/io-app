@@ -3816,12 +3816,11 @@
           "jwtVerification": {
             "content": {
               "jwtExpiring": "Verifica la versione digitale del tuo documento entro il {{date}} per continuare a usarlo senza limitazioni.",
-              "jwtExpired": "Conferma la tua identità per continuare a usare i tuoi documenti senza limitazioni."
+              "jwtExpired": "Verifica ora la versione digitale del tuo documento per continuare a usarlo senza limitazioni.",
+              "invalid": "Conferma la tua identità per continuare a usare i tuoi documenti senza limitazioni."
             },
-            "action": {
-              "jwtExpiring": "Inizia",
-              "jwtExpired": "Conferma identità"
-            }
+            "action": "Inizia",
+            "actionInvalid": "Conferma identità"
           }
         },
         "bottomSheets": {
