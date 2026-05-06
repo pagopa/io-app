@@ -7,8 +7,8 @@ import {
   Image as SkiaImage,
   vec
 } from "@shopify/react-native-skia";
-import { memo, useCallback, useEffect } from "react";
-import { LayoutChangeEvent, StyleSheet, View } from "react-native";
+import { memo, useEffect } from "react";
+import { StyleSheet, View } from "react-native";
 import Animated, {
   Easing,
   useAnimatedStyle,
@@ -30,14 +30,7 @@ import { CardColorScheme } from "./types";
 type Props = Pick<CredentialCardConfig, "background" | "color" | "overlay">;
 
 export const CardBackground = memo(({ background, color, overlay }: Props) => {
-  const [size, setSize] = useLayoutSize();
-
-  const handleLayout = useCallback(
-    (event: LayoutChangeEvent) => {
-      setSize(event.nativeEvent.layout);
-    },
-    [setSize]
-  );
+  const { size, onLayout } = useLayoutSize();
 
   return (
     <View
@@ -45,7 +38,7 @@ export const CardBackground = memo(({ background, color, overlay }: Props) => {
         StyleSheet.absoluteFillObject,
         { backgroundColor: IOColors.white }
       ]}
-      onLayout={handleLayout}
+      onLayout={onLayout}
     >
       <Canvas style={StyleSheet.absoluteFillObject} pointerEvents="none">
         <SkiaGradientBackground bg={background} {...size} />
@@ -93,7 +86,7 @@ export const LegacyCardBackground = ({
   credentialType,
   colorScheme
 }: LegacyProps) => {
-  const [size, setSize] = useLayoutSize();
+  const { size, onLayout } = useLayoutSize();
   const image = useCachedImage(legacyCredentialCardBackgrounds[credentialType]);
   const loadingOverlayOpacity = useSharedValue(1);
 
@@ -112,14 +105,6 @@ export const LegacyCardBackground = ({
     }
   }, [image, loadingOverlayOpacity, size]);
 
-  const handleLayout = useCallback(
-    (event: LayoutChangeEvent) => {
-      const { width, height } = event.nativeEvent.layout;
-      setSize({ width, height });
-    },
-    [setSize]
-  );
-
   const gradientColors = legacyCredentialGradientColors[credentialType] || [
     IOColors["grey-100"],
     IOColors["grey-200"]
@@ -131,7 +116,7 @@ export const LegacyCardBackground = ({
         StyleSheet.absoluteFillObject,
         { backgroundColor: IOColors.white }
       ]}
-      onLayout={handleLayout}
+      onLayout={onLayout}
     >
       <Animated.View
         style={[

@@ -8,12 +8,7 @@ import {
   vec
 } from "@shopify/react-native-skia";
 import { PropsWithChildren } from "react";
-import {
-  LayoutChangeEvent,
-  LayoutRectangle,
-  StyleSheet,
-  View
-} from "react-native";
+import { LayoutRectangle, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import {
   Extrapolation,
@@ -59,7 +54,7 @@ export const ItwBrandedBox = ({
   const shouldUseGradientBackground =
     isLightMode && backgroundVariant === "gradient";
 
-  const [size, setSize] = useLayoutSize();
+  const { size, onLayout } = useLayoutSize();
 
   /* Styles */
   const lightSkiaOpacity = isLightMode ? 0.4 : 0.05;
@@ -148,14 +143,9 @@ export const ItwBrandedBox = ({
     </SkiaGroup>
   );
 
-  const handleOnLayout = (event: LayoutChangeEvent) => {
-    const { width, height } = event.nativeEvent.layout;
-    setSize({ width, height });
-  };
-
   return (
     <View
-      onLayout={handleOnLayout}
+      onLayout={onLayout}
       style={[
         styles.container,
         {

@@ -5,7 +5,6 @@ import { Canvas } from "@shopify/react-native-skia";
 import I18n from "i18next";
 import {
   AccessibilityProps,
-  LayoutChangeEvent,
   Pressable,
   StyleProp,
   StyleSheet,
@@ -167,7 +166,7 @@ const CardSideBase = ({ status, children, isItw }: CardSideBaseProps) => {
   const borderColorMap = useBorderColorByStatus();
   const tagPropsByStatus = useTagPropsByStatus();
 
-  const [size, setSize] = useLayoutSize();
+  const { size, onLayout } = useLayoutSize();
 
   const statusTagProps = tagPropsByStatus[status];
   const borderColor = borderColorMap[status];
@@ -180,13 +179,8 @@ const CardSideBase = ({ status, children, isItw }: CardSideBaseProps) => {
     backgroundColor: isValid ? undefined : "rgba(255,255,255,0.7)"
   };
 
-  const handleOnLayout = (event: LayoutChangeEvent) => {
-    const { width, height } = event.nativeEvent.layout;
-    setSize({ width, height });
-  };
-
   return (
-    <View onLayout={handleOnLayout} style={styles.container}>
+    <View onLayout={onLayout} style={styles.container}>
       <CardWidthContext.Provider value={size.width}>
         {/* Status badge  */}
         {statusTagProps && (

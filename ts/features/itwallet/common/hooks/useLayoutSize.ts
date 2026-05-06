@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { LayoutRectangle } from "react-native";
+import { LayoutChangeEvent, LayoutRectangle } from "react-native";
 
 type LayoutSize = Pick<LayoutRectangle, "width" | "height">;
 
@@ -13,9 +13,13 @@ export const useLayoutSize = (
 ) => {
   const [size, setSize] = useState<LayoutSize>(initialSize);
 
-  const updateSize = useCallback((n: LayoutSize) => {
-    setSize(p => (p.width === n.width && p.height === n.height ? p : n));
-  }, []);
+  const handleLayout = useCallback(
+    (event: LayoutChangeEvent) => {
+      const n = event.nativeEvent.layout;
+      setSize(p => (p.width === n.width && p.height === n.height ? p : n));
+    },
+    [setSize]
+  );
 
-  return [size, updateSize] as const;
+  return { size, onLayout: handleLayout };
 };

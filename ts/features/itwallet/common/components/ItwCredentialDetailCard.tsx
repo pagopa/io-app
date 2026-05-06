@@ -1,7 +1,7 @@
 import { IOVisualCostants } from "@pagopa/io-app-design-system";
 import { Canvas, Rect } from "@shopify/react-native-skia";
-import { PropsWithChildren, useCallback } from "react";
-import { LayoutChangeEvent, StyleSheet, View } from "react-native";
+import { PropsWithChildren } from "react";
+import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useLayoutSize } from "../hooks/useLayoutSize";
 import { borderVariantByStatus } from "../utils/itwCredentialUtils";
@@ -36,7 +36,7 @@ export const ItwCredentialDetailCard = ({
   children
 }: ItwCredentialDetailCardProps) => {
   const safeAreaInsets = useSafeAreaInsets();
-  const [size, setSize] = useLayoutSize();
+  const { size, onLayout } = useLayoutSize();
 
   // Credential's header card is always in light mode
   const { color, background, overlay } = getCredentialCardConfig(
@@ -52,16 +52,8 @@ export const ItwCredentialDetailCard = ({
     POST_HEADER_CONTENT_PADDING +
     SCROLL_HACK_OFFSET;
 
-  const handleOnLayout = useCallback(
-    (event: LayoutChangeEvent) => {
-      const { width, height } = event.nativeEvent.layout;
-      setSize({ width, height });
-    },
-    [setSize]
-  );
-
   return (
-    <View style={[styles.container, { paddingTop }]} onLayout={handleOnLayout}>
+    <View style={[styles.container, { paddingTop }]} onLayout={onLayout}>
       {size && (
         <Canvas style={StyleSheet.absoluteFill}>
           {overlay?.header && (
