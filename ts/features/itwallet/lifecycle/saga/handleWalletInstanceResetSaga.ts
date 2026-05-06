@@ -5,7 +5,7 @@ import { identity, pipe } from "fp-ts/lib/function";
 import { all, call, put, select } from "typed-redux-saga/macro";
 import { isIos } from "../../../../utils/platform";
 import { walletRemoveCardsByCategory } from "../../../wallet/store/actions/cards";
-import { itwSetWalletInstanceRemotelyActive } from "../../common/store/actions/preferences.ts";
+import { itwSetWalletInstanceRemotelyActive } from "../../walletInstance/store/actions";
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import { CredentialsVault } from "../../credentials/utils/vault";
 import {
