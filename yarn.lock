@@ -4545,13 +4545,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-zendesk@pagopa/io-react-native-zendesk#IOPLT-000-dark-mode":
+"@pagopa/io-react-native-zendesk@github:pagopa/io-react-native-zendesk#IOPLT-000-dark-mode":
   version: 0.3.30
-  resolution: "@pagopa/io-react-native-zendesk@https://github.com/pagopa/io-react-native-zendesk.git#commit=91cfa3ce5998c359092ea30e2ade0105d55542f6"
+  resolution: "@pagopa/io-react-native-zendesk@https://github.com/pagopa/io-react-native-zendesk.git#commit=982834268beba80dd06e452a953aa229649124f1"
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: b5ba19a2fd53d0f801e08b1c1e235985696c1d179baf6666e900b2895d00ed3919f7fa8186d65a383af1f334d1d12afc7290db19e87c8326838cc76ee93c7dc3
+  checksum: 03b3126d023eaaceb0566a369e64341e1df0b54417d54b30034654860d4ebcbeedc363a36e8404dea5dc1a6d1ae56f3601fe57412392b35240beef4de5e11126
   languageName: node
   linkType: hard
 
@@ -13539,7 +13539,7 @@ __metadata:
     "@pagopa/io-react-native-login-utils": 1.2.0
     "@pagopa/io-react-native-secure-storage": ^0.2.1
     "@pagopa/io-react-native-wallet": 3.1.0
-    "@pagopa/io-react-native-zendesk": "pagopa/io-react-native-zendesk#IOPLT-000-dark-mode"
+    "@pagopa/io-react-native-zendesk": "github:pagopa/io-react-native-zendesk#IOPLT-000-dark-mode"
     "@pagopa/openapi-codegen-ts": ^14.2.0
     "@pagopa/react-native-cie": ^1.5.0
     "@pagopa/ts-commons": ^10.15.0
