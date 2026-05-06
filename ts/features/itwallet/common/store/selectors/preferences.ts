@@ -1,4 +1,5 @@
 import { GlobalState } from "../../../../../store/reducers/types";
+import { isItwMinAppVersionSupportedSelector } from "./remoteConfig";
 
 export const itwPreferencesSelector = (state: GlobalState) =>
   state.features.itWallet.preferences;
@@ -26,7 +27,9 @@ export const itwIsClaimValueHiddenSelector = (state: GlobalState) =>
  * @param state the application global state
  */
 export const itwIsL3EnabledSelector = (state: GlobalState) =>
-  state.features.itWallet.preferences.isFiscalCodeWhitelisted ?? false;
+  (state.features.itWallet.preferences.isFiscalCodeWhitelisted ||
+    isItwMinAppVersionSupportedSelector(state)) ??
+  false;
 
 /**
  * Returns whether the user has the requirements for IT-Wallet simplified activation.
