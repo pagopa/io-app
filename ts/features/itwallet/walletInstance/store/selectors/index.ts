@@ -30,3 +30,10 @@ export const itwWalletInstanceRenewalErrorSelector = (state: GlobalState) =>
  */
 export const itwWalletUnitAttestationsSelector = (state: GlobalState) =>
   state.features.itWallet.walletInstance.walletUnitAttestations;
+
+/**
+ * Returns whether the user has an already active wallet instance but the actual local wallet is not active.
+ * @param state the application global state
+ */
+export const itwIsRemotelyActiveSelector = (state: GlobalState) =>
+  state.features.itWallet.walletInstance.isRemotelyActive;
