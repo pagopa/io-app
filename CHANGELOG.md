@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.30.0-rc.3](https://github.com/pagopa/io-app/compare/3.30.0-rc.2...3.30.0-rc.3) (2026-05-05)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4180](https://pagopa.atlassian.net/browse/SIW-4180)] Integrate credential-catalogue translations on `v1.3.3` ([#8055](https://github.com/pagopa/io-app/issues/8055)) ([a27e70a](https://github.com/pagopa/io-app/commit/a27e70a3a9f07836c24abb44b3461bfb28006705))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4280](https://pagopa.atlassian.net/browse/SIW-4280)] Possible race condition in eID upgrade flow triggered by adding a new credential ([#8079](https://github.com/pagopa/io-app/issues/8079)) ([ef3221c](https://github.com/pagopa/io-app/commit/ef3221c77f47f6ad9bd5f852cafc6f6d974e7a52))
+
 ## [3.30.0-rc.2](https://github.com/pagopa/io-app/compare/3.30.0-rc.1...3.30.0-rc.2) (2026-05-04)
 
 ## [3.30.0-rc.1](https://github.com/pagopa/io-app/compare/3.30.0-rc.0...3.30.0-rc.1) (2026-04-30)

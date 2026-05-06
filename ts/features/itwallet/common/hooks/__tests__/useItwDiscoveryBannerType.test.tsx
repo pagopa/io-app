@@ -5,7 +5,7 @@ import { Text } from "react-native";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
-import * as itwPreferencesSelectors from "../../../common/store/selectors/preferences";
+import * as itwWalletInstanceSelectors from "../../../walletInstance/store/selectors";
 import { useItwDiscoveryBannerType } from "../useItwDiscoveryBannerType";
 
 describe("useItwDiscoveryBannerType", () => {
@@ -13,36 +13,27 @@ describe("useItwDiscoveryBannerType", () => {
     jest.clearAllMocks();
   });
 
-  it("should return undefined when isWalletInstanceRemotelyActive is undefined", () => {
+  it("should return undefined when isRemotelyActive is undefined", () => {
     jest
-      .spyOn(
-        itwPreferencesSelectors,
-        "itwIsWalletInstanceRemotelyActiveSelector"
-      )
+      .spyOn(itwWalletInstanceSelectors, "itwIsRemotelyActiveSelector")
       .mockImplementation(() => undefined);
 
     const result = renderHook();
     expect(result).toBeUndefined();
   });
 
-  it("should return 'reactivating' when isWalletInstanceRemotelyActive is true", () => {
+  it("should return 'reactivating' when isRemotelyActive is true", () => {
     jest
-      .spyOn(
-        itwPreferencesSelectors,
-        "itwIsWalletInstanceRemotelyActiveSelector"
-      )
+      .spyOn(itwWalletInstanceSelectors, "itwIsRemotelyActiveSelector")
       .mockImplementation(() => true);
 
     const result = renderHook();
     expect(result).toBe("reactivating");
   });
 
-  it("should return 'onboarding' when isWalletInstanceRemotelyActive is false", () => {
+  it("should return 'onboarding' when isRemotelyActive is false", () => {
     jest
-      .spyOn(
-        itwPreferencesSelectors,
-        "itwIsWalletInstanceRemotelyActiveSelector"
-      )
+      .spyOn(itwWalletInstanceSelectors, "itwIsRemotelyActiveSelector")
       .mockImplementation(() => false);
 
     const result = renderHook();
