@@ -10,6 +10,7 @@ import * as credentialsSelectors from "../../../credentials/store/selectors";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwDiscoveryBanner } from "../ItwDiscoveryBanner";
+import * as itwWalletInstanceSelectors from "../../../walletInstance/store/selectors";
 
 const mockNavigate = jest.fn();
 
@@ -27,6 +28,8 @@ jest.mock("@react-navigation/native", () => {
 type BannerScenario = {
   name: string;
   isWalletActive: boolean;
+  hasItwInstance: boolean;
+  isRemotelyActive?: boolean;
   isWalletEmpty: boolean;
   hasMdl: boolean;
 };
@@ -35,25 +38,41 @@ const allScenarios: Array<BannerScenario> = [
   {
     name: "activation banner",
     isWalletActive: false,
+    hasItwInstance: false,
+    isRemotelyActive: false,
     isWalletEmpty: true,
     hasMdl: false
   },
   {
     name: "empty wallet banner",
     isWalletActive: true,
+    hasItwInstance: true,
+    isRemotelyActive: false,
     isWalletEmpty: true,
     hasMdl: false
   },
   {
     name: "MDL upgrade banner",
     isWalletActive: true,
+    hasItwInstance: true,
+    isRemotelyActive: false,
     isWalletEmpty: false,
     hasMdl: true
   },
   {
     name: "default upgrade banner",
     isWalletActive: true,
+    hasItwInstance: true,
+    isRemotelyActive: false,
     isWalletEmpty: false,
+    hasMdl: false
+  },
+  {
+    name: "reactivation banner",
+    isWalletActive: false,
+    hasItwInstance: false,
+    isRemotelyActive: true,
+    isWalletEmpty: true,
     hasMdl: false
   }
 ];
@@ -62,9 +81,19 @@ const setupMocks = (scenario: BannerScenario) => {
   jest
     .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
     .mockReturnValue(scenario.isWalletActive);
+
+  jest
+    .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+    .mockReturnValue(scenario.hasItwInstance);
+
+  jest
+    .spyOn(itwWalletInstanceSelectors, "itwIsRemotelyActiveSelector")
+    .mockReturnValue(scenario.isRemotelyActive);
+
   jest
     .spyOn(credentialsSelectors, "itwIsWalletEmptySelector")
     .mockReturnValue(scenario.isWalletEmpty);
+
   jest
     .spyOn(credentialsSelectors, "itwIsMdlPresentSelector")
     .mockReturnValue(scenario.hasMdl);
@@ -79,6 +108,40 @@ describe("ItwDiscoveryBanner", () => {
     jest.restoreAllMocks();
   });
 
+  describe("skeleton", () => {
+    it("should render skeleton while remote wallet instance state is loading and wallet is not active", () => {
+      setupMocks({
+        name: "skeleton",
+        isWalletActive: false,
+        hasItwInstance: false,
+        isRemotelyActive: undefined,
+        isWalletEmpty: true,
+        hasMdl: false
+      });
+
+      const component = renderComponent();
+
+      expect(component.toJSON()).toMatchSnapshot();
+    });
+
+    it("should not render skeleton when wallet is active", () => {
+      setupMocks({
+        name: "active wallet",
+        isWalletActive: true,
+        hasItwInstance: true,
+        isRemotelyActive: undefined,
+        isWalletEmpty: true,
+        hasMdl: false
+      });
+
+      const { queryByTestId } = renderComponent();
+
+      expect(
+        queryByTestId("itwEngagementBannerActionButtonTestID")
+      ).not.toBeNull();
+    });
+  });
+
   describe("snapshots", () => {
     test.each(allScenarios)("should match snapshot for $name", scenario => {
       setupMocks(scenario);
@@ -89,7 +152,7 @@ describe("ItwDiscoveryBanner", () => {
 
   describe("navigation", () => {
     const onboardingScenarios = allScenarios.filter(
-      s => !s.isWalletActive || s.isWalletEmpty
+      s => !s.isRemotelyActive && (!s.isWalletActive || s.isWalletEmpty)
     );
 
     test.each(onboardingScenarios)(
@@ -108,11 +171,31 @@ describe("ItwDiscoveryBanner", () => {
         });
       }
     );
+
+    it("should navigate to onboarding when reactivation banner action is pressed", () => {
+      setupMocks({
+        name: "reactivation banner",
+        isWalletActive: false,
+        hasItwInstance: false,
+        isRemotelyActive: true,
+        isWalletEmpty: true,
+        hasMdl: false
+      });
+
+      const { getByTestId } = renderComponent();
+
+      fireEvent.press(getByTestId("itwReactivationBannerTestID"));
+
+      expect(mockNavigate).toHaveBeenCalledWith(ITW_ROUTES.MAIN, {
+        screen: ITW_ROUTES.L3_ONBOARDING
+      });
+    });
   });
 
   describe("dismissal behavior", () => {
     const dismissableScenarios = allScenarios.filter(
-      ({ isWalletActive, isWalletEmpty }) => !(isWalletActive && isWalletEmpty)
+      ({ isWalletActive, isWalletEmpty, isRemotelyActive }) =>
+        !isRemotelyActive && !(isWalletActive && isWalletEmpty)
     );
     const nonDismissableScenarios = allScenarios.filter(
       ({ isWalletActive, isWalletEmpty }) => isWalletActive && isWalletEmpty

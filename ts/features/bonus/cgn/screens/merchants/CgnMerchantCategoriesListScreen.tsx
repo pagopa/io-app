@@ -1,6 +1,7 @@
 import {
   Badge,
   Body,
+  ContentWrapper,
   Divider,
   H6,
   IOToast,
@@ -10,24 +11,21 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
 import { useEffect, useMemo, useState } from "react";
 import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import I18n from "i18next";
 import { ProductCategoryWithNewDiscountsCount } from "../../../../../../definitions/cgn/merchants/ProductCategoryWithNewDiscountsCount";
 import { IOStackNavigationProp } from "../../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { cgnMerchantsModalSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
+import { getListItemAccessibilityLabelCount } from "../../../../../utils/accessibility";
 import { useIOBottomSheetModal } from "../../../../../utils/hooks/bottomSheet";
-import { CgnMerchantListSkeleton } from "../../components/merchants/CgnMerchantListSkeleton";
 import { CgnDetailsParamsList } from "../../navigation/params";
 import CGN_ROUTES from "../../navigation/routes";
 import { cgnCategories } from "../../store/actions/categories";
 import { cgnCategoriesListSelector } from "../../store/reducers/categories";
 import { getCategorySpecs } from "../../utils/filters";
-import { getListItemAccessibilityLabelCount } from "../../../../../utils/accessibility";
-import { cgnMerchantsModalSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 
 export const CgnMerchantCategoriesListScreen = () => {
   const theme = useIOTheme();
@@ -83,61 +81,53 @@ export const CgnMerchantCategoriesListScreen = () => {
     category: ProductCategoryWithNewDiscountsCount,
     index: number
   ) => {
-    const specs = getCategorySpecs(category.productCategory);
+    const specsOption = getCategorySpecs(category.productCategory);
+    if (!("value" in specsOption)) {
+      return null;
+    }
+
+    const s = specsOption.value;
     const countAvailable = category.newDiscounts > 0;
 
-    return pipe(
-      specs,
-      O.fold(
-        () => null,
-        s => {
-          const accessibilityLabel =
-            (countAvailable
-              ? `${I18n.t("bonus.cgn.merchantsList.categoriesList.a11y", {
-                  name: I18n.t(s.nameKey),
-                  count: category.newDiscounts
-                })}`
-              : `${I18n.t(s.nameKey)}`) +
-            getListItemAccessibilityLabelCount(categoriesToArray.length, index);
+    const accessibilityLabel =
+      (countAvailable
+        ? `${I18n.t(s.nameKey)} ${I18n.t("bonus.cgn.merchantsList.news")}`
+        : `${I18n.t(s.nameKey)}`) +
+      getListItemAccessibilityLabelCount(categoriesToArray.length, index);
 
-          return (
-            <ListItemNav
-              key={category.productCategory}
-              value={
-                countAvailable ? (
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-between",
-                      alignItems: "center"
-                    }}
-                  >
-                    <H6>{I18n.t(s.nameKey)}</H6>
-                    <Badge
-                      accessible={false}
-                      text={`${category?.newDiscounts}`}
-                      variant="cgn"
-                    />
-                  </View>
-                ) : (
-                  I18n.t(s.nameKey)
-                )
-              }
-              accessibilityLabel={accessibilityLabel}
-              onPress={() => {
-                navigation.navigate(
-                  CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY,
-                  {
-                    category: s.type
-                  }
-                );
-              }}
-              iconColor={theme["icon-decorative"]}
-              icon={s.icon}
-            />
-          );
-        }
-      )
+    return (
+      <ContentWrapper key={category.productCategory}>
+        <ListItemNav
+          value={
+            countAvailable ? (
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center"
+                }}
+              >
+                <H6>{I18n.t(s.nameKey)}</H6>
+                <Badge
+                  accessible={false}
+                  text={I18n.t("bonus.cgn.merchantsList.news")}
+                  variant="cgn"
+                />
+              </View>
+            ) : (
+              I18n.t(s.nameKey)
+            )
+          }
+          accessibilityLabel={accessibilityLabel}
+          onPress={() => {
+            navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.LIST_BY_CATEGORY, {
+              category: s.type
+            });
+          }}
+          iconColor={theme["icon-decorative"]}
+          icon={s.icon}
+        />
+      </ContentWrapper>
     );
   };
 
@@ -155,7 +145,7 @@ export const CgnMerchantCategoriesListScreen = () => {
       onRefresh: onPullRefresh
     },
     ListFooterComponent: showSortingInfo ? (
-      <>
+      <ContentWrapper>
         <Divider />
         <ListItemAction
           onPress={present}
@@ -168,9 +158,8 @@ export const CgnMerchantCategoriesListScreen = () => {
           variant="primary"
         />
         {bottomSheet}
-      </>
+      </ContentWrapper>
     ) : undefined,
-    ListEmptyComponent: undefined,
-    skeleton: <CgnMerchantListSkeleton hasIcons count={10} />
+    ListEmptyComponent: undefined
   };
 };
