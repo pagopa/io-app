@@ -4377,9 +4377,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-app-design-system@npm:6.1.0":
-  version: 6.1.0
-  resolution: "@pagopa/io-app-design-system@npm:6.1.0"
+"@pagopa/io-app-design-system@npm:7.1.0":
+  version: 7.1.0
+  resolution: "@pagopa/io-app-design-system@npm:7.1.0"
   dependencies:
     auto-changelog: ^2.4.0
     markdown-it: ^14.1.0
@@ -4392,7 +4392,7 @@ __metadata:
     react-native-svg: ^15.12.0
     react-native-worklets: ^0.7.0
   peerDependencies:
-    react: "*"
+    react: ^19.0.0
     react-native: "*"
     react-native-easing-gradient: "*"
     react-native-gesture-handler: "*"
@@ -4402,7 +4402,7 @@ __metadata:
     react-native-safe-area-context: "*"
     react-native-svg: "*"
     react-native-worklets: "*"
-  checksum: 2cb6968aed1f8342fae2550ae8859d1bf8086479b5d7dc47bcfa5b56a139837998dd5c626bafb50253baa451ce10a50da139cae00c1b9f11aa4dd07e5dd55aff
+  checksum: 99b343387dee086e179bc4f9dced1e8b5b6ace19b021e8386f1b91ef658cfc9ff3ba24341a8e3740bcc3665877602c88820bc29ddb16a8b3b859755bc794eac1
   languageName: node
   linkType: hard
 
@@ -4514,11 +4514,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-wallet@npm:3.1.0":
-  version: 3.1.0
-  resolution: "@pagopa/io-react-native-wallet@npm:3.1.0"
+"@pagopa/io-react-native-wallet@npm:3.1.2":
+  version: 3.1.2
+  resolution: "@pagopa/io-react-native-wallet@npm:3.1.2"
   dependencies:
     "@pagopa/io-wallet-oauth2": 1.2.1
+    "@pagopa/io-wallet-oid-federation": 1.2.1
     "@pagopa/io-wallet-oid4vci": 1.2.1
     "@pagopa/io-wallet-oid4vp": 1.2.1
     "@pagopa/io-wallet-utils": 1.2.1
@@ -4541,7 +4542,7 @@ __metadata:
     react: "*"
     react-native: "*"
     react-native-quick-crypto: "*"
-  checksum: ac853a5535c41bc5c0b4418b3bd7f834b7f5acc31e7650d1b0edc328c7a38a3c5cb328199b8dc9b9189bbfb14b424a3df05d9e43d02e457a508bf57ff236bd8a
+  checksum: 40b244af2bc6b97bf14db8283d16a65b935c115bb2037fb8c57f9dc116333fbc92a9cabb018d003d1979c4c9296ab6f6e03f1e7ea313f44b327a4fbb3fecefbd
   languageName: node
   linkType: hard
 
@@ -5307,7 +5308,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-navigation/stack@npm:^6.3.21":
+"@react-navigation/stack@npm:6.4.1":
   version: 6.4.1
   resolution: "@react-navigation/stack@npm:6.4.1"
   dependencies:
@@ -5322,6 +5323,24 @@ __metadata:
     react-native-safe-area-context: ">= 3.0.0"
     react-native-screens: ">= 3.0.0"
   checksum: 09bcfb001db0f411df881da9f2551b7015c4d5259a77fcb93196de308838035d016dc4dcb654d16d9cd4cc99f09f5e48add796aa903f9a253678947c35b18199
+  languageName: node
+  linkType: hard
+
+"@react-navigation/stack@patch:@react-navigation/stack@npm%3A6.4.1#./.yarn/patches/@react-navigation-stack-npm-6.4.1-52dad4e278.patch::locator=io%40workspace%3A.":
+  version: 6.4.1
+  resolution: "@react-navigation/stack@patch:@react-navigation/stack@npm%3A6.4.1#./.yarn/patches/@react-navigation-stack-npm-6.4.1-52dad4e278.patch::version=6.4.1&hash=6e1a70&locator=io%40workspace%3A."
+  dependencies:
+    "@react-navigation/elements": ^1.3.31
+    color: ^4.2.3
+    warn-once: ^0.1.0
+  peerDependencies:
+    "@react-navigation/native": ^6.0.0
+    react: "*"
+    react-native: "*"
+    react-native-gesture-handler: ">= 1.0.0"
+    react-native-safe-area-context: ">= 3.0.0"
+    react-native-screens: ">= 3.0.0"
+  checksum: e3a53b57b41c6fbe74cf169e88144d584f74bfb5e9bf4ccdfa0280101ce15454ac181129e1cf7b25b756f80907bcde6a8e4b362af56aa999ea529eb74c678045
   languageName: node
   linkType: hard
 
@@ -13527,7 +13546,7 @@ __metadata:
     "@eslint/eslintrc": ^3.3.5
     "@eslint/js": ^10.0.1
     "@gorhom/bottom-sheet": ^5.2.8
-    "@pagopa/io-app-design-system": 6.1.0
+    "@pagopa/io-app-design-system": 7.1.0
     "@pagopa/io-pagopa-commons": ^3.1.0
     "@pagopa/io-react-native-cie": 1.3.5-rc.2
     "@pagopa/io-react-native-cieid": 0.4.0
@@ -13538,7 +13557,7 @@ __metadata:
     "@pagopa/io-react-native-jwt": ^2.1.0
     "@pagopa/io-react-native-login-utils": 1.2.0
     "@pagopa/io-react-native-secure-storage": ^0.2.1
-    "@pagopa/io-react-native-wallet": 3.1.0
+    "@pagopa/io-react-native-wallet": 3.1.2
     "@pagopa/io-react-native-zendesk": ^0.3.30
     "@pagopa/openapi-codegen-ts": ^14.2.0
     "@pagopa/react-native-cie": ^1.5.0

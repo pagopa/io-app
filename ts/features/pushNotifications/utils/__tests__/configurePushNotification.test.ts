@@ -15,6 +15,7 @@ import { newPushNotificationsToken } from "../../store/actions/installation";
 import * as ANALYTICS from "../../analytics";
 import * as MESSAGESANALYTICS from "../../../messages/analytics";
 import * as PROFILEPROPERTIES from "../../../../mixpanelConfig/profileProperties";
+import * as APPANALYTICS from "../../../../utils/analytics";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
   loadPreviousPageMessages,
@@ -110,6 +111,9 @@ describe("configurePushNotifications", () => {
           const spiedOnAnalytics = jest
             .spyOn(ANALYTICS, "trackNewPushNotificationsTokenGenerated")
             .mockImplementation(constUndefined);
+          const spiedOnTrackAppCaughtError = jest
+            .spyOn(APPANALYTICS, "trackAppCaughtError")
+            .mockImplementation(constUndefined);
           const spyOnMockedUpdateMixpanelProfileProperties = jest
             .spyOn(PROFILEPROPERTIES, "updateMixpanelProfileProperties")
             .mockImplementation(_state => new Promise(resolve => resolve()));
@@ -121,6 +125,16 @@ describe("configurePushNotifications", () => {
           expect(
             spyOnMockedUpdateMixpanelProfileProperties.mock.calls.length
           ).toBe(0);
+
+          expect(spiedOnTrackAppCaughtError.mock.calls.length).toBe(1);
+          expect(spiedOnTrackAppCaughtError.mock.calls[0].length).toBe(3);
+          expect(spiedOnTrackAppCaughtError.mock.calls[0][0]).toBe(
+            "onPushNotificationTokenAvailable"
+          );
+          expect(spiedOnTrackAppCaughtError.mock.calls[0][1]).toBe(
+            `received a nullish token (or inner 'token' instance) (${input})`
+          );
+          expect(spiedOnTrackAppCaughtError.mock.calls[0][2]).toBe(undefined);
         });
       }
     );

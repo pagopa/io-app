@@ -12,18 +12,21 @@ import {
   itwLifecycleIsOperationalOrValid,
   itwLifecycleIsValidSelector
 } from "../../../lifecycle/store/selectors";
-import { itwIsWalletInstanceStatusFailureSelector } from "../../../walletInstance/store/selectors";
+import {
+  itwIsRemotelyActiveSelector,
+  itwIsWalletInstanceStatusFailureSelector
+} from "../../../walletInstance/store/selectors";
 import {
   itwIsBannerHiddenSelector,
   itwIsDiscoveryBannerHiddenSelector,
+  itwIsAgeVerificationUsageDetailsBannerHiddenSelector,
   itwIsWalletDiscoveryBannerHiddenSelector,
   itwIsWalletUpgradeMDLDetailsBannerHiddenSelector
 } from "./banners";
 import {
   itwCredentialUpgradeFailedSelector,
   itwIsActivationDisabledSelector,
-  itwIsL3EnabledSelector,
-  itwIsWalletInstanceRemotelyActiveSelector
+  itwIsL3EnabledSelector
 } from "./preferences";
 import { isItwEnabledSelector } from "./remoteConfig";
 
@@ -139,6 +142,14 @@ export const itwShouldRenderWalletUpgradeMDLDetailsBannerSelector = (
   !itwIsWalletUpgradeMDLDetailsBannerHiddenSelector(state);
 
 /**
+ * Returns whether the Age Verification usage banner in credential details should be rendered.
+ * - The user did not close the banner
+ */
+export const itwShouldRenderAgeVerificationUsageDetailsBannerSelector = (
+  state: GlobalState
+): boolean => !itwIsAgeVerificationUsageDetailsBannerHiddenSelector(state);
+
+/**
  * Returns whether the eID lifecycle alert should be hidden in wallet.
  * When the ITW upgrade banner is displayed, the eID lifecycle alert
  * is hidden so that the user does not need to perform eID reissuance.
@@ -173,10 +184,16 @@ export const itwShouldRenderDiscoveryBannerSelector = (state: GlobalState) =>
  */
 export const itwShouldRenderInboxDiscoveryBannerSelector = (
   state: GlobalState
-) =>
-  itwShouldRenderDiscoveryBannerSelector(state) &&
-  !itwIsBannerHiddenSelector("discovery_messages_inbox")(state) &&
-  !itwIsWalletInstanceRemotelyActiveSelector(state);
+) => {
+  if (itwIsRemotelyActiveSelector(state) === undefined) {
+    return false;
+  }
+  return (
+    itwShouldRenderDiscoveryBannerSelector(state) &&
+    !itwIsBannerHiddenSelector("discovery_messages_inbox")(state) &&
+    !itwIsRemotelyActiveSelector(state)
+  );
+};
 
 /**
  * Returns whether the new IT-Wallet activation banner in the messages inbox screen should be rendered

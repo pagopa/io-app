@@ -155,6 +155,13 @@ exports[`featuresPersistor should match snapshot 1`] = `
         "kind": "PotNone",
       },
       "isEnabledForCredentialsList": false,
+      "translations": {
+        "kind": "PotNone",
+      },
+    },
+    "debug": {
+      "credentialStatusOverrides": {},
+      "savedCredentials": undefined,
     },
     "environment": {
       "env": "prod",
@@ -177,6 +184,7 @@ exports[`featuresPersistor should match snapshot 1`] = `
     },
     "walletInstance": {
       "attestation": undefined,
+      "isRemotelyActive": undefined,
       "renewalError": false,
       "status": {
         "kind": "PotNone",

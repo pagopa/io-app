@@ -1,9 +1,12 @@
-import { ModuleSummary, VSpacer } from "@pagopa/io-app-design-system";
+import {
+  IOMarkdownLite,
+  ModuleSummary,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { Fragment, useState } from "react";
-import IOMarkdown from "../../../../components/IOMarkdown";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
@@ -41,7 +44,7 @@ const IdPayPDNDPrerequisitesScreen = () => {
     ),
     component: (
       <>
-        <IOMarkdown
+        <IOMarkdownLite
           content={I18n.t(
             "idpay.onboarding.PDNDPrerequisites.prerequisites.info.body",
             {

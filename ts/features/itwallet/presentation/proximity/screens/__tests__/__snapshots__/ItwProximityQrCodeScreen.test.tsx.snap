@@ -3950,7 +3950,7 @@ exports[`ItwProximityQrCodeScreen when credentials are expired should render blo
               <View
                 collapsable={false}
                 enabled={false}
-                handlerTag={4}
+                handlerTag={6}
                 handlerType="PanGestureHandler"
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
@@ -4582,317 +4582,12 @@ exports[`ItwProximityQrCodeScreen when credentials are expired should render blo
                             }
                           />
                           <View
-                            accessibilityRole="alert"
-                            accessible={false}
-                            style={
-                              [
-                                {
-                                  "borderCurve": "continuous",
-                                  "borderRadius": 12,
-                                  "padding": 16,
-                                },
-                                {
-                                  "backgroundColor": "#FFD9D9",
-                                },
-                              ]
-                            }
-                            testID="itwExpiredBannerTestID"
-                          >
-                            <View
-                              style={
-                                {
-                                  "alignItems": "center",
-                                  "display": "flex",
-                                  "flexDirection": "row",
-                                  "gap": 18,
-                                }
-                              }
-                            >
-                              <RNSVGSvgView
-                                accessibilityElementsHidden={true}
-                                accessibilityLabel=""
-                                accessible={false}
-                                align="xMidYMid"
-                                bbHeight={36}
-                                bbWidth={36}
-                                color="#5D1313"
-                                focusable={false}
-                                height={36}
-                                importantForAccessibility="no-hide-descendants"
-                                meetOrSlice={0}
-                                minX={0}
-                                minY={0}
-                                style={
-                                  [
-                                    {
-                                      "backgroundColor": "transparent",
-                                      "borderWidth": 0,
-                                    },
-                                    {
-                                      "flex": 0,
-                                      "height": 36,
-                                      "width": 36,
-                                    },
-                                  ]
-                                }
-                                vbHeight={24}
-                                vbWidth={24}
-                                width={36}
-                              >
-                                <RNSVGGroup
-                                  fill={
-                                    {
-                                      "payload": 4278190080,
-                                      "type": 0,
-                                    }
-                                  }
-                                >
-                                  <RNSVGPath
-                                    clipRule={0}
-                                    d="M7.00702 1c-.73494 0-1.41405.39209-1.78152 1.02856L.2756 11.0274c-.36747.6365-.36747 1.4206 0 2.0571l4.9499 8.8783c.36747.6365 1.04658 1.0286 1.78152 1.0286h9.94288c.7349 0 1.414-.3921 1.7815-1.0286l4.993-8.8783c.3675-.6365.3675-1.4206 0-2.0571l-4.993-8.99884C18.3639 1.39209 17.6848 1 16.9499 1H7.00702Zm5.02608 13.5549c.5676 0 1.0283-.4601 1.0283-1.0277V5.52583c0-.56758-.4601-1.02769-1.0277-1.02769-.5676 0-1.0282.46011-1.0282 1.02769v8.00137c0 .5676.4601 1.0277 1.0276 1.0277Zm0 1.9431c.8436 0 1.5275.6839 1.5275 1.5275 0 .8436-.6839 1.5275-1.5275 1.5275-.8436 0-1.5274-.6839-1.5274-1.5275 0-.8436.6838-1.5275 1.5274-1.5275Z"
-                                    fill={
-                                      {
-                                        "type": 2,
-                                      }
-                                    }
-                                    fillRule={0}
-                                    propList={
-                                      [
-                                        "fill",
-                                        "fillRule",
-                                      ]
-                                    }
-                                  />
-                                </RNSVGGroup>
-                              </RNSVGSvgView>
-                              <View
-                                style={
-                                  {
-                                    "flex": 1,
-                                    "marginBottom": -6,
-                                    "marginTop": -6,
-                                  }
-                                }
-                              >
-                                <View
-                                  style={
-                                    {
-                                      "display": "flex",
-                                      "flexDirection": "column",
-                                      "gap": 12,
-                                    }
-                                  }
-                                >
-                                  <Text
-                                    allowFontScaling={true}
-                                    dynamicTypeRamp="body"
-                                    maxFontSizeMultiplier={1.5}
-                                    style={
-                                      [
-                                        {},
-                                        {
-                                          "color": "#5D1313",
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "400",
-                                          "lineHeight": 24,
-                                        },
-                                      ]
-                                    }
-                                  >
-                                    Conferma la tua identità per continuare a usare i tuoi documenti senza limitazioni.
-                                  </Text>
-                                </View>
-                              </View>
-                            </View>
-                          </View>
-                        </View>
-                      </RCTScrollView>
-                      <View
-                        pointerEvents="box-none"
-                        style={
-                          [
-                            {
-                              "bottom": 0,
-                              "justifyContent": "flex-end",
-                              "position": "absolute",
-                              "width": "100%",
-                            },
-                            {
-                              "height": 120,
-                              "paddingBottom": 24,
-                            },
-                          ]
-                        }
-                      >
-                        <View
-                          collapsable={false}
-                          jestAnimatedProps={
-                            {
-                              "value": {},
-                            }
-                          }
-                          jestAnimatedStyle={
-                            {
-                              "value": {},
-                            }
-                          }
-                          jestInlineStyle={
-                            [
-                              {
-                                "bottom": 0,
-                                "left": 0,
-                                "position": "absolute",
-                                "right": 0,
-                                "top": 0,
-                              },
-                              false,
-                            ]
-                          }
-                          pointerEvents="none"
-                          style={
-                            [
-                              {
-                                "bottom": 0,
-                                "left": 0,
-                                "position": "absolute",
-                                "right": 0,
-                                "top": 0,
-                              },
-                              false,
-                            ]
-                          }
-                        >
-                          <View
-                            collapsable={false}
-                            jestAnimatedProps={
-                              {
-                                "value": {},
-                              }
-                            }
-                            jestAnimatedStyle={
-                              {
-                                "value": {
-                                  "opacity": 1,
-                                },
-                              }
-                            }
-                            jestInlineStyle={
-                              [
-                                false,
-                              ]
-                            }
-                            style={
-                              [
-                                {
-                                  "opacity": 1,
-                                },
-                                false,
-                              ]
-                            }
-                          >
-                            <BVLinearGradient
-                              colors={
-                                [
-                                  16777215,
-                                  33554431,
-                                  83886079,
-                                  150994943,
-                                  268435455,
-                                  385875967,
-                                  520093695,
-                                  687865855,
-                                  855638015,
-                                  1056964607,
-                                  1258291199,
-                                  1476395007,
-                                  1711276031,
-                                  1946157055,
-                                  2214592511,
-                                  2466250751,
-                                  2751463423,
-                                  3036676095,
-                                  3338665983,
-                                  3640655871,
-                                  3959422975,
-                                  4294967295,
-                                ]
-                              }
-                              endPoint={
-                                {
-                                  "x": 0.5,
-                                  "y": 1,
-                                }
-                              }
-                              locations={
-                                [
-                                  0,
-                                  0.047619047619047616,
-                                  0.09523809523809523,
-                                  0.14285714285714285,
-                                  0.19047619047619047,
-                                  0.23809523809523808,
-                                  0.2857142857142857,
-                                  0.3333333333333333,
-                                  0.38095238095238093,
-                                  0.42857142857142855,
-                                  0.47619047619047616,
-                                  0.5238095238095237,
-                                  0.5714285714285714,
-                                  0.6190476190476191,
-                                  0.6666666666666666,
-                                  0.7142857142857142,
-                                  0.7619047619047619,
-                                  0.8095238095238095,
-                                  0.8571428571428571,
-                                  0.9047619047619047,
-                                  0.9523809523809523,
-                                  1,
-                                ]
-                              }
-                              startPoint={
-                                {
-                                  "x": 0.5,
-                                  "y": 0,
-                                }
-                              }
-                              style={
-                                {
-                                  "height": 99.6,
-                                }
-                              }
-                            />
-                          </View>
-                          <View
-                            style={
-                              {
-                                "backgroundColor": "#FFFFFF",
-                                "bottom": 0,
-                                "height": 20.4,
-                              }
-                            }
-                          />
-                        </View>
-                        <View
-                          onLayout={[Function]}
-                          pointerEvents="box-none"
-                          style={
-                            {
-                              "flexShrink": 0,
-                              "paddingHorizontal": 24,
-                              "width": "100%",
-                            }
-                          }
-                        >
-                          <View
-                            accessibilityLabel="Conferma identità"
                             accessibilityRole="button"
                             accessibilityState={
                               {
-                                "busy": false,
+                                "busy": undefined,
                                 "checked": undefined,
-                                "disabled": false,
+                                "disabled": undefined,
                                 "expanded": undefined,
                                 "selected": undefined,
                               }
@@ -4917,12 +4612,8 @@ exports[`ItwProximityQrCodeScreen when credentials are expired should render blo
                             onResponderTerminate={[Function]}
                             onResponderTerminationRequest={[Function]}
                             onStartShouldSetResponder={[Function]}
-                            style={
-                              {
-                                "alignSelf": "stretch",
-                                "flexShrink": 0,
-                              }
-                            }
+                            onTouchEnd={[Function]}
+                            testID="itwExpiredBannerTestID"
                           >
                             <View
                               collapsable={false}
@@ -4934,7 +4625,6 @@ exports[`ItwProximityQrCodeScreen when credentials are expired should render blo
                               jestAnimatedStyle={
                                 {
                                   "value": {
-                                    "backgroundColor": "rgba(11, 62, 227, 1)",
                                     "transform": [
                                       {
                                         "scale": 1,
@@ -4946,37 +4636,24 @@ exports[`ItwProximityQrCodeScreen when credentials are expired should render blo
                               jestInlineStyle={
                                 [
                                   {
-                                    "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
-                                    "flexDirection": "row",
-                                    "justifyContent": "center",
-                                    "overflow": "hidden",
-                                    "textAlignVertical": "center",
+                                    "borderRadius": 12,
+                                    "padding": 16,
                                   },
                                   {
-                                    "paddingHorizontal": 16,
+                                    "backgroundColor": "#FFD9D9",
                                   },
-                                  {
-                                    "backgroundColor": "#0B3EE3",
-                                    "borderColor": "#FFFFFF",
-                                    "borderRadius": 8,
-                                    "borderWidth": 0,
-                                    "height": 48,
-                                  },
-                                  {},
                                 ]
                               }
                               style={
                                 [
                                   {
-                                    "alignItems": "center",
                                     "borderCurve": "continuous",
-                                    "elevation": 0,
-                                    "flexDirection": "row",
-                                    "justifyContent": "center",
-                                    "overflow": "hidden",
-                                    "textAlignVertical": "center",
+                                    "borderRadius": 12,
+                                    "padding": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "#FFD9D9",
                                   },
                                   {
                                     "transform": [
@@ -4985,125 +4662,142 @@ exports[`ItwProximityQrCodeScreen when credentials are expired should render blo
                                       },
                                     ],
                                   },
-                                  {
-                                    "backgroundColor": "rgba(11, 62, 227, 1)",
-                                  },
-                                  {
-                                    "paddingHorizontal": 16,
-                                  },
-                                  {
-                                    "backgroundColor": "#0B3EE3",
-                                    "borderColor": "#FFFFFF",
-                                    "borderRadius": 8,
-                                    "borderWidth": 0,
-                                    "height": 48,
-                                  },
-                                  {},
                                 ]
                               }
                             >
                               <View
-                                collapsable={false}
-                                jestAnimatedProps={
-                                  {
-                                    "value": {},
-                                  }
-                                }
-                                jestAnimatedStyle={
-                                  {
-                                    "value": {},
-                                  }
-                                }
-                                jestInlineStyle={
-                                  [
-                                    {
-                                      "alignItems": "center",
-                                      "flexDirection": "row",
-                                      "justifyContent": "center",
-                                    },
-                                    {
-                                      "columnGap": 8,
-                                    },
-                                    false,
-                                  ]
-                                }
                                 style={
-                                  [
-                                    {
-                                      "alignItems": "center",
-                                      "flexDirection": "row",
-                                      "justifyContent": "center",
-                                    },
-                                    {
-                                      "columnGap": 8,
-                                    },
-                                    false,
-                                  ]
+                                  {
+                                    "alignItems": "center",
+                                    "display": "flex",
+                                    "flexDirection": "row",
+                                    "gap": 18,
+                                  }
                                 }
                               >
-                                <Text
+                                <RNSVGSvgView
                                   accessibilityElementsHidden={true}
+                                  accessibilityLabel=""
                                   accessible={false}
-                                  allowFontScaling={true}
-                                  collapsable={false}
-                                  ellipsizeMode="tail"
+                                  align="xMidYMid"
+                                  bbHeight={36}
+                                  bbWidth={36}
+                                  color="#5D1313"
+                                  focusable={false}
+                                  height={36}
                                   importantForAccessibility="no-hide-descendants"
-                                  jestAnimatedProps={
-                                    {
-                                      "value": {},
-                                    }
-                                  }
-                                  jestAnimatedStyle={
-                                    {
-                                      "value": {
-                                        "color": "rgba(255, 255, 255, 1)",
-                                      },
-                                    }
-                                  }
-                                  jestInlineStyle={
-                                    [
-                                      {
-                                        "textAlign": "auto",
-                                      },
-                                      {
-                                        "color": "#FFFFFF",
-                                      },
-                                    ]
-                                  }
-                                  maxFontSizeMultiplier={1.5}
-                                  numberOfLines={1}
+                                  meetOrSlice={0}
+                                  minX={0}
+                                  minY={0}
                                   style={
                                     [
-                                      {},
                                       {
-                                        "color": undefined,
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 16,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": undefined,
+                                        "backgroundColor": "transparent",
+                                        "borderWidth": 0,
                                       },
-                                      [
-                                        {
-                                          "textAlign": "auto",
-                                        },
-                                        {
-                                          "color": "#FFFFFF",
-                                        },
-                                        {
-                                          "color": "rgba(255, 255, 255, 1)",
-                                        },
-                                      ],
+                                      {
+                                        "flex": 0,
+                                        "height": 36,
+                                        "width": 36,
+                                      },
                                     ]
                                   }
+                                  vbHeight={24}
+                                  vbWidth={24}
+                                  width={36}
                                 >
-                                  Conferma identità
-                                </Text>
+                                  <RNSVGGroup
+                                    fill={
+                                      {
+                                        "payload": 4278190080,
+                                        "type": 0,
+                                      }
+                                    }
+                                  >
+                                    <RNSVGPath
+                                      clipRule={0}
+                                      d="M7.00702 1c-.73494 0-1.41405.39209-1.78152 1.02856L.2756 11.0274c-.36747.6365-.36747 1.4206 0 2.0571l4.9499 8.8783c.36747.6365 1.04658 1.0286 1.78152 1.0286h9.94288c.7349 0 1.414-.3921 1.7815-1.0286l4.993-8.8783c.3675-.6365.3675-1.4206 0-2.0571l-4.993-8.99884C18.3639 1.39209 17.6848 1 16.9499 1H7.00702Zm5.02608 13.5549c.5676 0 1.0283-.4601 1.0283-1.0277V5.52583c0-.56758-.4601-1.02769-1.0277-1.02769-.5676 0-1.0282.46011-1.0282 1.02769v8.00137c0 .5676.4601 1.0277 1.0276 1.0277Zm0 1.9431c.8436 0 1.5275.6839 1.5275 1.5275 0 .8436-.6839 1.5275-1.5275 1.5275-.8436 0-1.5274-.6839-1.5274-1.5275 0-.8436.6838-1.5275 1.5274-1.5275Z"
+                                      fill={
+                                        {
+                                          "type": 2,
+                                        }
+                                      }
+                                      fillRule={0}
+                                      propList={
+                                        [
+                                          "fill",
+                                          "fillRule",
+                                        ]
+                                      }
+                                    />
+                                  </RNSVGGroup>
+                                </RNSVGSvgView>
+                                <View
+                                  style={
+                                    {
+                                      "flex": 1,
+                                      "marginBottom": -6,
+                                      "marginTop": -6,
+                                    }
+                                  }
+                                >
+                                  <View
+                                    style={
+                                      {
+                                        "display": "flex",
+                                        "flexDirection": "column",
+                                        "gap": 12,
+                                      }
+                                    }
+                                  >
+                                    <Text
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="body"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {},
+                                          {
+                                            "color": "#5D1313",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "400",
+                                            "lineHeight": 24,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Conferma la tua identità per continuare a usare i tuoi documenti senza limitazioni.
+                                    </Text>
+                                    <Text
+                                      allowFontScaling={true}
+                                      ellipsizeMode="tail"
+                                      maxFontSizeMultiplier={1.5}
+                                      numberOfLines={1}
+                                      style={
+                                        [
+                                          {},
+                                          {
+                                            "color": "#5D1313",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": 20,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      Conferma identità
+                                    </Text>
+                                  </View>
+                                </View>
                               </View>
                             </View>
                           </View>
                         </View>
-                      </View>
+                      </RCTScrollView>
                     </View>
                     <View
                       collapsable={false}

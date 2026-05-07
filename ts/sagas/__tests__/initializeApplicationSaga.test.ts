@@ -92,11 +92,18 @@ jest.mock("react-native-share", () => ({
   open: jest.fn()
 }));
 
-jest.mock("../../api/backend", () => ({
-  BackendClient: jest.fn().mockReturnValue({
-    isSameClient: jest.fn()
-  })
-}));
+jest.mock("../../api/SessionManagerClientManager");
+jest.mock("../../api/IdentityClientManager");
+jest.mock("../../api/CommunicationClientManager");
+
+// jest.requireMock returns the same module instance that Jest injects when the
+// saga imports these paths, so mock client references are identical at runtime.
+const { mockSessionManagerClient } = jest.requireMock(
+  "../../api/SessionManagerClientManager"
+);
+const { mockIdentityClient } = jest.requireMock(
+  "../../api/IdentityClientManager"
+);
 
 describe("initializeApplicationSaga", () => {
   it("should call handleTransientError if check session response is 200 but session is none", () => {
@@ -202,7 +209,11 @@ describe("initializeApplicationSaga", () => {
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
-      .call(checkSession, undefined, formatRequestedTokenString())
+      .call(
+        checkSession,
+        mockSessionManagerClient.getSessionState,
+        formatRequestedTokenString()
+      )
       .next(401)
       .select(isFastLoginEnabledSelector)
       .next(false) // FastLogin FF
@@ -253,7 +264,11 @@ describe("initializeApplicationSaga", () => {
       .next()
       .fork(watchForActionsDifferentFromRequestLogoutThatMustResetMixpanel)
       .next()
-      .call(checkSession, undefined, formatRequestedTokenString())
+      .call(
+        checkSession,
+        mockSessionManagerClient.getSessionState,
+        formatRequestedTokenString()
+      )
       .next(401)
       .next(true) // FastLogin FF
       .put(
@@ -329,11 +344,11 @@ describe("initializeApplicationSaga", () => {
         aSessionInfo
       ) // assertionRef is valid?
       .next(true) // assertionRef is valid!
-      .fork(watchProfileUpsertRequestsSaga, undefined)
+      .fork(watchProfileUpsertRequestsSaga, mockIdentityClient.updateProfile)
       .next()
-      .fork(watchProfile, undefined)
+      .fork(watchProfile, mockIdentityClient.startEmailValidationProcess)
       .next()
-      .call(loadProfile, undefined);
+      .call(loadProfile, mockIdentityClient.getUserProfile);
   });
 
   it("should dispatch handleApplicationStartupTransientError if session information is none", () => {
