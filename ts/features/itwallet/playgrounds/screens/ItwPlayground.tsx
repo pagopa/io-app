@@ -10,6 +10,8 @@ import { ScrollView } from "react-native";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useScreenEndMargin } from "../../../../hooks/useScreenEndMargin";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
+import { ItwCardsHeaderSection } from "../components/ItwCardsHeaderSection";
+import { ItwCardsSection } from "../components/ItwCardsSection";
 import { ItwComponentsSection } from "../components/ItwComponentsSection";
 import { ItwCredentialStatusOverrideSection } from "../components/ItwCredentialStatusOverrideSection";
 import { ItwEnvironmentSection } from "../components/ItwEnvironmentSection";
@@ -50,9 +52,11 @@ const ItwPlayground = () => {
         <TabItem label="Environment" accessibilityLabel="Environment" />
         <TabItem label="Issuance" accessibilityLabel="Issuance" />
         <TabItem label="ISO-18013" accessibilityLabel="ISO-18013" />
+        <TabItem label="Status" accessibilityLabel="Status" />
         <TabItem label="Screens" accessibilityLabel="Screens" />
         <TabItem label="Components" accessibilityLabel="Components" />
-        <TabItem label="Status" accessibilityLabel="Status" />
+        <TabItem label="Cards" accessibilityLabel="Cards" />
+        <TabItem label="Header Cards" accessibilityLabel="Header Cards" />
       </TabNavigation>
       <ScrollView
         contentContainerStyle={{
@@ -70,14 +74,16 @@ const ItwPlayground = () => {
           )}
           {page === 1 && <ItwPidIssuanceSection />}
           {page === 2 && <ItwIso18013Section />}
-          {page === 3 && (
+          {page === 3 && <ItwCredentialStatusOverrideSection />}
+          {page === 4 && (
             <>
               <ItwL3ScreensSection />
               <ItwIdentificationScreensSection />
             </>
           )}
-          {page === 4 && <ItwComponentsSection />}
-          {page === 5 && <ItwCredentialStatusOverrideSection />}
+          {page === 5 && <ItwComponentsSection />}
+          {page === 6 && <ItwCardsSection />}
+          {page === 7 && <ItwCardsHeaderSection />}
         </ContentWrapper>
       </ScrollView>
     </VStack>

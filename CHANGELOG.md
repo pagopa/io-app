@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.30.0-rc.4](https://github.com/pagopa/io-app/compare/3.30.0-rc.3...3.30.0-rc.4) (2026-05-06)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4077](https://pagopa.atlassian.net/browse/SIW-4077)] New credential cards theme system ([#8059](https://github.com/pagopa/io-app/issues/8059)) ([62225d5](https://github.com/pagopa/io-app/commit/62225d51595bda625c4815ca99ebb56bc51ab4e1)), closes [/#diff-7cf5237057a1b5808672eea868f1e668c3bc04a0b6e2808114191f48f439c468L5-R145](https://github.com/pagopa///issues/diff-7cf5237057a1b5808672eea868f1e668c3bc04a0b6e2808114191f48f439c468L5-R145) [/#diff-7cf5237057a1b5808672eea868f1e668c3bc04a0b6e2808114191f48f439c468L92-R155](https://github.com/pagopa///issues/diff-7cf5237057a1b5808672eea868f1e668c3bc04a0b6e2808114191f48f439c468L92-R155) [/#diff-7cf5237057a1b5808672eea868f1e668c3bc04a0b6e2808114191f48f439c468L110-L145](https://github.com/pagopa///issues/diff-7cf5237057a1b5808672eea868f1e668c3bc04a0b6e2808114191f48f439c468L110-L145) [/#diff-d61a558b99cf152e5aa033cfdfac340b69f27931d390cea851e996838e1dec5cR1-R112](https://github.com/pagopa///issues/diff-d61a558b99cf152e5aa033cfdfac340b69f27931d390cea851e996838e1dec5cR1-R112) [/#diff-49d56b5067dfd3b7b2ccdcfff01993ac3b340e241c0f034473851c4131a4ab5aR1-R71](https://github.com/pagopa///issues/diff-49d56b5067dfd3b7b2ccdcfff01993ac3b340e241c0f034473851c4131a4ab5aR1-R71) [/#diff-4d7959e1a79b151365c72ec573336f10edd3d2626e5d39fe3b50f68eb6cdb069L1-L58](https://github.com/pagopa///issues/diff-4d7959e1a79b151365c72ec573336f10edd3d2626e5d39fe3b50f68eb6cdb069L1-L58) [/#diff-9d308a8da418c4cf8b5049cc12a64b6bcad4ef4beb27c8aac8ab7bfc95b20b13L470-L475](https://github.com/pagopa///issues/diff-9d308a8da418c4cf8b5049cc12a64b6bcad4ef4beb27c8aac8ab7bfc95b20b13L470-L475) [/#diff-9d308a8da418c4cf8b5049cc12a64b6bcad4ef4beb27c8aac8ab7bfc95b20b13L485-L490](https://github.com/pagopa///issues/diff-9d308a8da418c4cf8b5049cc12a64b6bcad4ef4beb27c8aac8ab7bfc95b20b13L485-L490) [/#diff-0bec5ab327bc2e0ea1024f9c5229299eeb97007aa70e7f5131fd3545a2e7ecf9L10-R10](https://github.com/pagopa///issues/diff-0bec5ab327bc2e0ea1024f9c5229299eeb97007aa70e7f5131fd3545a2e7ecf9L10-R10) [/#diff-0bec5ab327bc2e0ea1024f9c5229299eeb97007aa70e7f5131fd3545a2e7ecf9R27](https://github.com/pagopa///issues/diff-0bec5ab327bc2e0ea1024f9c5229299eeb97007aa70e7f5131fd3545a2e7ecf9R27) [/#diff-0bec5ab327bc2e0ea1024f9c5229299eeb97007aa70e7f5131fd3545a2e7ecf9L61-R62](https://github.com/pagopa///issues/diff-0bec5ab327bc2e0ea1024f9c5229299eeb97007aa70e7f5131fd3545a2e7ecf9L61-R62)
+* **IT-Wallet:** [[SIW-4152](https://pagopa.atlassian.net/browse/SIW-4152)] Update QR code screen  ([#8083](https://github.com/pagopa/io-app/issues/8083)) ([6043e5b](https://github.com/pagopa/io-app/commit/6043e5ba8274d3fa9a8514e49021f582f96bdefe))
+* **IT-Wallet:** [[SIW-4214](https://pagopa.atlassian.net/browse/SIW-4214)] Add skeleton to ITW engagement banner ([#8073](https://github.com/pagopa/io-app/issues/8073)) ([3b2e045](https://github.com/pagopa/io-app/commit/3b2e04579757b81370cb6777cc55fe47341420c4))
+
+
+### Chores
+
+* [[IOCOM-3119](https://pagopa.atlassian.net/browse/IOCOM-3119)] Proper specs for `PlatformEnum` ([#8081](https://github.com/pagopa/io-app/issues/8081)) ([c320377](https://github.com/pagopa/io-app/commit/c320377c2eb064bc8eafb687edbbae73c3bc13d3))
+
+## [3.30.0-rc.3](https://github.com/pagopa/io-app/compare/3.30.0-rc.2...3.30.0-rc.3) (2026-05-05)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4180](https://pagopa.atlassian.net/browse/SIW-4180)] Integrate credential-catalogue translations on `v1.3.3` ([#8055](https://github.com/pagopa/io-app/issues/8055)) ([a27e70a](https://github.com/pagopa/io-app/commit/a27e70a3a9f07836c24abb44b3461bfb28006705))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4280](https://pagopa.atlassian.net/browse/SIW-4280)] Possible race condition in eID upgrade flow triggered by adding a new credential ([#8079](https://github.com/pagopa/io-app/issues/8079)) ([ef3221c](https://github.com/pagopa/io-app/commit/ef3221c77f47f6ad9bd5f852cafc6f6d974e7a52))
+
+## [3.30.0-rc.2](https://github.com/pagopa/io-app/compare/3.30.0-rc.1...3.30.0-rc.2) (2026-05-04)
+
 ## [3.30.0-rc.1](https://github.com/pagopa/io-app/compare/3.30.0-rc.0...3.30.0-rc.1) (2026-04-30)
 
 
