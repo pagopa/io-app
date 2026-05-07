@@ -70,6 +70,7 @@ export function* watchItwSaga(): SagaIterator {
  * Watcher for ITW sagas that do not require internet connection or a valid session
  */
 export function* watchItwOfflineSaga(): SagaIterator {
+  // Watch for changes in the credentials store to keep the wallet in sync
   yield* fork(watchItwCredentialsSaga);
 
   // Migrate legacy credentials to vault

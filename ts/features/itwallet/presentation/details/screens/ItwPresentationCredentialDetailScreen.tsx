@@ -58,7 +58,10 @@ import { ItwPresentationCredentialInfoAlert } from "../components/ItwPresentatio
 import { ItwPresentationCredentialStatusAlert } from "../components/ItwPresentationCredentialStatusAlert.tsx";
 import { ItwPresentationCredentialUnknownStatus } from "../components/ItwPresentationCredentialUnknownStatus.tsx";
 import { ItwPresentationDetailsFooter } from "../components/ItwPresentationDetailsFooter.tsx";
-import { ItwPresentationDetailsHeader } from "../components/ItwPresentationDetailsHeader.tsx";
+import {
+  ItwPresentationDetailsHeader,
+  ItwPresentationDetailsHeaderLegacy
+} from "../components/ItwPresentationDetailsHeader.tsx";
 import {
   CredentialCtaProps,
   ItwPresentationDetailsScreenBase
@@ -352,7 +355,11 @@ export const ItwPresentationCredentialDetail = ({
       ctaProps={ctaProps}
       headerTransparent={isL3Credential}
     >
-      <ItwPresentationDetailsHeader credential={credential} />
+      {itwFeaturesEnabled ? (
+        <ItwPresentationDetailsHeader credential={credential} />
+      ) : (
+        <ItwPresentationDetailsHeaderLegacy credential={credential} />
+      )}
       <View style={{ paddingVertical: 16 }}>
         {showInlineCta && (
           <View style={{ alignSelf: "center", paddingVertical: 8 }}>
