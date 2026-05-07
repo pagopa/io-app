@@ -1,8 +1,10 @@
 import {
   Body,
+  ClaimsSelector,
   ListItemHeader,
   ListItemSwitch,
   useIOTheme,
+  useIOThemeContext,
   VStack
 } from "@pagopa/io-app-design-system";
 import { Canvas } from "@shopify/react-native-skia";
@@ -13,19 +15,18 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { DSComponentViewerBox } from "../../../design-system/components/DSComponentViewerBox";
 import { ItwBrandedBox } from "../../common/components/ItwBrandedBox";
 import { ItwBrandedSkiaGradient } from "../../common/components/ItwBrandedSkiaGradient";
+import { getCredentialCardConfig } from "../../common/components/ItwCredentialCard/config";
 import { ItwEngagementBanner } from "../../common/components/ItwEngagementBanner";
 import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../common/components/ItwSkeumorphicCard/FlipGestureDetector";
 import { getCredentialStatusObject } from "../../common/utils/itwCredentialStatusUtils";
-import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
+import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import {
   CredentialType,
   ItwStoredCredentialsMocks
 } from "../../common/utils/itwMocksUtils";
-import {
-  CredentialMetadata,
-  ItwCredentialStatus
-} from "../../common/utils/itwTypesUtils";
+import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
+import { useItWalletTheme } from "../../common/utils/theme";
 import { ItwRequestedClaimsList } from "../../issuance/components/ItwRequestedClaimsList";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwPresentationCredentialCardFlipButton } from "../../presentation/details/components/ItwPresentationCredentialCardFlipButton";
@@ -77,32 +78,6 @@ const ItwWalletBrandSection = () => {
     </View>
   );
 };
-
-const ALL_CREDENTIAL_STATUSES: ReadonlyArray<ItwCredentialStatus> = [
-  "valid",
-  "expiring",
-  "expired",
-  "jwtExpiring",
-  "jwtExpired",
-  "invalid",
-  "unknown"
-];
-
-const ItwPidCardSection = () => (
-  <View style={{ paddingBottom: 24 }}>
-    <ListItemHeader label="IT-Wallet ID card" />
-    <VStack space={8}>
-      {ALL_CREDENTIAL_STATUSES.map(status => (
-        <DSComponentViewerBox key={status} name={status}>
-          <ItwCredentialCard
-            credentialType={CredentialType.PID}
-            credentialStatus={status}
-          />
-        </DSComponentViewerBox>
-      ))}
-    </VStack>
-  </View>
-);
 
 const ItwEngagementBannerSection = () => (
   <View
@@ -261,12 +236,64 @@ export const ItwClaimsListSection = () => {
   );
 };
 
+const ItwClaimsSelectorSection = () => {
+  const { themeType } = useIOThemeContext();
+  const itwTheme = useItWalletTheme();
+
+  return (
+    <VStack space={8}>
+      <ListItemHeader label="ClaimsSelector" />
+      {[
+        CredentialType.PID,
+        CredentialType.DRIVING_LICENSE,
+        CredentialType.EUROPEAN_DISABILITY_CARD,
+        CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
+        CredentialType.AGE_VERIFICATION,
+        CredentialType.EDUCATION_ATTENDANCE,
+        CredentialType.EDUCATION_DEGREE,
+        CredentialType.EDUCATION_DIPLOMA,
+        CredentialType.EDUCATION_ENROLLMENT,
+        CredentialType.RESIDENCY,
+        "Unknown Credential",
+        "Unknown Credential Type with Ridicolously Long Long Long Long Name"
+      ].map(credentialType => {
+        const config = getCredentialCardConfig(credentialType, themeType);
+
+        return (
+          <ClaimsSelector
+            key={credentialType}
+            title={getCredentialNameFromType(credentialType, true)}
+            items={[
+              {
+                id: "claim1",
+                description: "Claim 1",
+                value: "Value 1"
+              },
+              {
+                id: "claim2",
+                description: "Claim 2",
+                value: "Value 2"
+              }
+            ]}
+            defaultExpanded={false}
+            selectionEnabled={false}
+            headerGradientColors={[
+              itwTheme["card-background"],
+              config.background.colors[0]
+            ]}
+          />
+        );
+      })}
+    </VStack>
+  );
+};
+
 export const ItwComponentsSection = () => (
   <>
     <ItwWalletBrandSection />
-    <ItwPidCardSection />
     <ItwEngagementBannerSection />
     <ItwSkeumorphicCredentialSection />
     <ItwClaimsListSection />
+    <ItwClaimsSelectorSection />
   </>
 );
