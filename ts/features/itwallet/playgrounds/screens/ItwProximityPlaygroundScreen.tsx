@@ -6,7 +6,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { ISO18013_5 } from "@pagopa/io-react-native-iso18013";
 import { useEffect, useState } from "react";
-import { Platform, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { QrCodeImage } from "../../../../components/QrCodeImage";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
@@ -67,17 +67,12 @@ export const ItwProximityPlaygroundScreen = () => {
     status,
     qrCode,
     request,
-    nfcSessionSecondsLeft,
-    nfcCooldownSecondsLeft,
     isNfcEnabled,
     startFlow,
     closeFlow,
     sendDocument,
     sendError
   } = useItwProximityFlow();
-
-  const isNfcUnavailable =
-    Platform.OS === "ios" && nfcCooldownSecondsLeft !== null;
 
   useHeaderSecondLevel({
     title: "Proximity Playground"
@@ -116,11 +111,6 @@ export const ItwProximityPlaygroundScreen = () => {
                 NFC engagement active, tap the back of both devices toward each
                 other and hold them together
               </Body>
-              {Platform.OS === "ios" &&
-                nfcSessionSecondsLeft !== null &&
-                nfcSessionSecondsLeft > 0 && (
-                  <Body>Session expires in {nfcSessionSecondsLeft}s</Body>
-                )}
             </>
           )}
         </View>
@@ -130,11 +120,6 @@ export const ItwProximityPlaygroundScreen = () => {
         <VStack space={8}>
           {status === PROXIMITY_STATUS.READY && (
             <>
-              {isNfcUnavailable && (
-                <Body>
-                  NFC unavailable — please wait {nfcCooldownSecondsLeft}s
-                </Body>
-              )}
               <ListItemSwitch
                 label="Skip consent"
                 description="Documents will be shared as soon as a valid request is received"
@@ -148,7 +133,7 @@ export const ItwProximityPlaygroundScreen = () => {
                     key={label}
                     label={label}
                     onPress={() => startFlow(engagementModes, retrievalMethods)}
-                    disabled={needsNfc && isNfcUnavailable}
+                    disabled={needsNfc}
                   />
                 )
               )}

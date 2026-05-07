@@ -20,7 +20,6 @@ import {
   RESULTS
 } from "react-native-permissions";
 import { KEYTAG, WELL_KNOWN_CREDENTIALS } from "../mocks/proximity";
-import { useItwProximityNfcTimers } from "./useItwProximityNfcTimers";
 
 interface NestedBooleanMap {
   [key: string]: boolean | NestedBooleanMap;
@@ -152,35 +151,31 @@ export const useItwProximityFlow = () => {
     undefined
   );
 
-  const {
-    nfcSessionSecondsLeft,
-    nfcCooldownSecondsLeft,
-    startSessionTimer,
-    clearSessionTimer,
-    startCooldownTimer
-  } = useItwProximityNfcTimers();
-
   const handleQrCodeString = useCallback(
     (payload: ISO18013_5.EventsPayload["onQrCodeString"]) => {
+      ISO18013_5.setHceModalMessage("onQrCodeString");
       setQrCode(payload.data);
     },
     []
   );
 
   const handleNfcStarted = useCallback(() => {
-    startSessionTimer();
+    ISO18013_5.setHceModalMessage("onNfcStarted");
     isNfcEnabled.current = true;
-  }, [startSessionTimer]);
+  }, []);
 
   const handleNfcStopped = useCallback(() => {
-    clearSessionTimer();
-    startCooldownTimer();
+    ISO18013_5.setHceModalMessage("onNfcStopped");
     isNfcEnabled.current = false;
-  }, [clearSessionTimer, startCooldownTimer]);
+  }, []);
 
-  const handleOnDeviceConnecting = useCallback(() => {}, []);
+  const handleOnDeviceConnecting = useCallback(() => {
+    ISO18013_5.setHceModalMessage("onDeviceConnecting");
+  }, []);
 
-  const handleOnDeviceConnected = useCallback(() => {}, []);
+  const handleOnDeviceConnected = useCallback(() => {
+    ISO18013_5.setHceModalMessage("onDeviceConnected");
+  }, []);
 
   const init = useCallback(async () => {
     setStatus(PROXIMITY_STATUS.IDLE);
@@ -291,6 +286,7 @@ export const useItwProximityFlow = () => {
 
   const onDocumentRequestReceived = useCallback(
     async (payload: ISO18013_5.EventsPayload["onDocumentRequestReceived"]) => {
+      ISO18013_5.setHceModalMessage("onDocumentRequestReceived");
       try {
         if (!payload || !payload.data) {
           return;
@@ -326,12 +322,14 @@ export const useItwProximityFlow = () => {
   );
 
   const onDeviceDisconnected = useCallback(async () => {
+    ISO18013_5.setHceModalMessage("onDeviceDisconnected");
     Alert.alert("Device disconnected", "Check the verifier app");
     await closeFlow();
   }, [closeFlow]);
 
   const onError = useCallback(
     async (data: ISO18013_5.EventsPayload["onError"]) => {
+      ISO18013_5.setHceModalMessage("onError");
       try {
         if (!data || !data.error) {
           throw new Error("No error data received");
@@ -349,12 +347,6 @@ export const useItwProximityFlow = () => {
     },
     [closeFlow]
   );
-
-  useEffect(() => {
-    if (nfcSessionSecondsLeft === 0) {
-      void closeFlow();
-    }
-  }, [nfcSessionSecondsLeft, closeFlow]);
 
   useEffect(() => {
     const listeners = [
@@ -401,8 +393,6 @@ export const useItwProximityFlow = () => {
     status,
     qrCode,
     request,
-    nfcSessionSecondsLeft,
-    nfcCooldownSecondsLeft,
     isNfcEnabled: isNfcEnabled.current,
     retrievalMethod: retrievalMethod.current,
     startFlow,
