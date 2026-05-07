@@ -4,9 +4,11 @@ import { getType } from "typesafe-actions";
 import { Institutions } from "../../../../../../definitions/services/Institutions";
 import { OrganizationFiscalCode } from "../../../../../../definitions/services/OrganizationFiscalCode";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
-import { ServicesClient } from "../../../common/api/__mocks__/servicesClient";
+import { servicesClientManager } from "../../../../../api/ServicesClientManager";
 import { featuredInstitutionsGet } from "../../store/actions";
 import { handleGetFeaturedInstitutions } from "../handleGetFeaturedInstitutions";
+
+jest.mock("../../../../../api/ServicesClientManager");
 
 const MOCK_RESPONSE_PAYLOAD: Institutions = {
   institutions: [
@@ -29,19 +31,22 @@ const MOCK_RESPONSE_PAYLOAD: Institutions = {
 };
 
 describe("handleGetFeaturedInstitutions", () => {
+  const servicesClient = servicesClientManager.getClient("https://base.url", {
+    token: "mock-bearer-token"
+  });
   describe("when the response is successful", () => {
     it(`should put ${getType(
       featuredInstitutionsGet.success
     )} with the parsed featured institutions data`, () => {
       testSaga(
         handleGetFeaturedInstitutions,
-        ServicesClient.getFeaturedInstitutions,
+        servicesClient.getFeaturedInstitutions,
         featuredInstitutionsGet.request()
       )
         .next()
         .call(
           withRefreshApiCall,
-          ServicesClient.getFeaturedInstitutions(),
+          servicesClient.getFeaturedInstitutions("anInstitutionId1"),
           featuredInstitutionsGet.request()
         )
         .next(E.right({ status: 200, value: MOCK_RESPONSE_PAYLOAD }))
@@ -59,13 +64,13 @@ describe("handleGetFeaturedInstitutions", () => {
     )} with the error`, () => {
       testSaga(
         handleGetFeaturedInstitutions,
-        ServicesClient.getFeaturedInstitutions,
+        servicesClient.getFeaturedInstitutions,
         featuredInstitutionsGet.request()
       )
         .next()
         .call(
           withRefreshApiCall,
-          ServicesClient.getFeaturedInstitutions(),
+          servicesClient.getFeaturedInstitutions("anInstitutionId1"),
           featuredInstitutionsGet.request()
         )
         .next(

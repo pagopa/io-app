@@ -4,18 +4,29 @@ import { apiUrlPrefix } from "../../../../config";
 import { watchHomeSaga } from "../../home/saga";
 import { watchInstitutionSaga } from "../../institution/saga";
 import { watchSearchSaga } from "../../search/saga";
-import { createServicesClient } from "../api/servicesClient";
 import { watchServicesDetailsSaga } from "../../details/saga";
 import { watchFavouriteServicesSaga } from "../../favouriteServices/saga";
-import { IdentityClient } from "../../../../api/IdentityClientManager";
 import { loadServicePreference } from "../../details/store/actions/preference";
 import { isFavouriteServicesEnabledSelector } from "../store/selectors/remoteConfig";
+import { identityClientManager } from "../../../../api/IdentityClientManager";
+import { servicesClientManager } from "../../../../api/ServicesClientManager";
+import { KeyInfo } from "../../../lollipop/utils/crypto";
 import { specialServicePreferencesSaga } from "./specialServicePreferencesSaga";
 
 export function* watchServicesSaga(
-  identityClient: IdentityClient
+  keyInfo: KeyInfo,
+  sessionToken: string
 ): SagaIterator {
-  const servicesClient = yield* call(createServicesClient, apiUrlPrefix);
+  const identityClient = yield* call(
+    identityClientManager.getClient,
+    apiUrlPrefix,
+    { keyInfo, token: sessionToken }
+  );
+  const servicesClient = yield* call(
+    servicesClientManager.getClient,
+    apiUrlPrefix,
+    { token: sessionToken }
+  );
 
   yield* fork(watchServicesDetailsSaga, identityClient, servicesClient);
   yield* fork(watchHomeSaga, servicesClient);
