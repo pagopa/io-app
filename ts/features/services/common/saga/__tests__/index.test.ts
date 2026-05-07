@@ -32,14 +32,22 @@ describe("index", () => {
 
       testSaga(watchServicesSaga, keyInfo, sessionToken)
         .next()
-        .call(identityClientManager.getClient, apiUrlPrefix, {
-          keyInfo,
-          token: sessionToken
-        })
+        .call(
+          [identityClientManager, identityClientManager.getClient],
+          apiUrlPrefix,
+          {
+            keyInfo,
+            token: sessionToken
+          }
+        )
         .next(identityClient)
-        .call(servicesClientManager.getClient, apiUrlPrefix, {
-          token: sessionToken
-        })
+        .call(
+          [servicesClientManager, servicesClientManager.getClient],
+          apiUrlPrefix,
+          {
+            token: sessionToken
+          }
+        )
         .next(servicesClient)
         .fork(watchServicesDetailsSaga, identityClient, servicesClient)
         .next()

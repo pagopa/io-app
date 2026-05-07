@@ -18,12 +18,12 @@ export function* watchServicesSaga(
   sessionToken: string
 ): SagaIterator {
   const identityClient = yield* call(
-    identityClientManager.getClient,
+    [identityClientManager, identityClientManager.getClient],
     apiUrlPrefix,
     { keyInfo, token: sessionToken }
   );
   const servicesClient = yield* call(
-    servicesClientManager.getClient,
+    [servicesClientManager, servicesClientManager.getClient],
     apiUrlPrefix,
     { token: sessionToken }
   );
