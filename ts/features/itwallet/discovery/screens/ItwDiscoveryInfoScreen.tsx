@@ -13,8 +13,8 @@ import { ItwL2FallbackComponent } from "../components/ItwL2FallbackComponent.tsx
 
 export type ItwDiscoveryInfoScreenNavigationParams = {
   level?: EidIssuanceLevel;
-  animationEnabled?: boolean;
   credentialType?: string;
+  disableAnimation?: boolean;
 };
 
 export type ItwDiscoveryInfoScreenProps = IOStackNavigationRouteProps<

@@ -1,16 +1,16 @@
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import configureMockStore from "redux-mock-store";
+import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import ROUTES from "../../../../../navigation/routes";
-import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import * as preferencesSelectors from "../../../common/store/selectors/preferences";
 import * as credentialsSelectors from "../../../credentials/store/selectors";
-import { ITW_ROUTES } from "../../../navigation/routes";
 import * as issuanceAnalytics from "../../../issuance/analytics";
+import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
+import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwIssuanceCredentialLandingScreen } from "../ItwIssuanceCredentialLandingScreen";
 
 const mockReplace = jest.fn();
@@ -44,12 +44,12 @@ describe("ItwIssuanceCredentialLandingScreen", () => {
   describe("Navigation scenarios", () => {
     test.each`
       credentialStatus | pidStatus    | isItwValid | isWhitelisted | expectedRoute                                  | expectedParams
-      ${undefined}     | ${undefined} | ${false}   | ${false}      | ${ITW_ROUTES.DISCOVERY.INFO}                   | ${{ animationEnabled: false, level: "l2", credentialType: "mDL" }}
-      ${undefined}     | ${undefined} | ${false}   | ${true}       | ${ITW_ROUTES.DISCOVERY.INFO}                   | ${{ animationEnabled: false, level: "l3", credentialType: "mDL" }}
-      ${undefined}     | ${undefined} | ${true}    | ${false}      | ${ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER} | ${{ animationEnabled: false, credentialType: "mDL" }}
-      ${undefined}     | ${undefined} | ${true}    | ${true}       | ${ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER} | ${{ animationEnabled: false, credentialType: "mDL" }}
-      ${"jwtExpired"}  | ${undefined} | ${false}   | ${false}      | ${ITW_ROUTES.DISCOVERY.INFO}                   | ${{ animationEnabled: false, level: "l2", credentialType: "mDL" }}
-      ${"jwtExpiring"} | ${undefined} | ${true}    | ${false}      | ${ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER} | ${{ animationEnabled: false, credentialType: "mDL" }}
+      ${undefined}     | ${undefined} | ${false}   | ${false}      | ${ITW_ROUTES.DISCOVERY.INFO}                   | ${{ disableAnimation: true, level: "l2", credentialType: "mDL" }}
+      ${undefined}     | ${undefined} | ${false}   | ${true}       | ${ITW_ROUTES.DISCOVERY.INFO}                   | ${{ disableAnimation: true, level: "l3", credentialType: "mDL" }}
+      ${undefined}     | ${undefined} | ${true}    | ${false}      | ${ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER} | ${{ disableAnimation: true, credentialType: "mDL" }}
+      ${undefined}     | ${undefined} | ${true}    | ${true}       | ${ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER} | ${{ disableAnimation: true, credentialType: "mDL" }}
+      ${"jwtExpired"}  | ${undefined} | ${false}   | ${false}      | ${ITW_ROUTES.DISCOVERY.INFO}                   | ${{ disableAnimation: true, level: "l2", credentialType: "mDL" }}
+      ${"jwtExpiring"} | ${undefined} | ${true}    | ${false}      | ${ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER} | ${{ disableAnimation: true, credentialType: "mDL" }}
     `(
       "navigates to $expectedRoute when credentialStatus=$credentialStatus, pidStatus=$pidStatus, isItwValid=$isItwValid, isWhitelisted=$isWhitelisted",
       ({

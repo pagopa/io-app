@@ -141,7 +141,7 @@ const InnerNavigator = memo(() => {
         component={withItwEnabled(ItwDiscoveryInfoScreen)}
         options={({ route }) => ({
           ...hiddenHeader,
-          animation: route.params?.animationEnabled ? "default" : "none"
+          animation: route.params?.disableAnimation ? "none" : "default"
         })}
       />
       <Stack.Screen
@@ -158,7 +158,7 @@ const InnerNavigator = memo(() => {
         name={ITW_ROUTES.IDENTIFICATION.MODE_SELECTION}
         component={ItwIdentificationModeSelectionScreen}
         options={({ route }) => ({
-          animation: route.params.animationEnabled ? "default" : "none"
+          animation: route.params.disableAnimation ? "none" : "default"
         })}
       />
       <Stack.Screen
@@ -232,7 +232,7 @@ const InnerNavigator = memo(() => {
         component={ItwIssuanceCredentialTrustIssuerScreen}
         options={({ route }) => ({
           ...hiddenHeader,
-          animationEnabled: route.params?.animationEnabled
+          animation: route.params?.disableAnimation ? "none" : "default"
         })}
       />
       <Stack.Screen
