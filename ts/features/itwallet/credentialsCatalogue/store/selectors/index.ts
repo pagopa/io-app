@@ -140,23 +140,20 @@ export const itwCredentialNameResolverSelector = createSelector(
   ],
   (isCatalogueEnabled, catalogue, translations, withL3Design) =>
     (credentialType: string | undefined, withDefault: string = ""): string => {
-      if (!credentialType) {
-        return withDefault;
-      }
-      if (isCatalogueEnabled) {
-        const catalogueMeta = catalogue?.[credentialType];
+      if (isCatalogueEnabled && credentialType && catalogue && translations) {
+        const catalogueMeta = catalogue[credentialType];
         const resolvedName =
-          (catalogueMeta?.name_l10n_id &&
-            translations?.[catalogueMeta.name_l10n_id]) ||
-          catalogueMeta?.name;
+          (catalogueMeta.name_l10n_id &&
+            translations[catalogueMeta.name_l10n_id]) ||
+          catalogueMeta.name;
         if (resolvedName) {
           return resolvedName;
         }
       }
       return getCredentialNameFromType(
         credentialType,
-        withDefault,
-        withL3Design
+        withL3Design,
+        withDefault
       );
     }
 );
