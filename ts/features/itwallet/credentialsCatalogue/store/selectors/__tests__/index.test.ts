@@ -1,4 +1,5 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
 import { type GlobalState } from "../../../../../../store/reducers/types";
 import { DigitalCredentialsCatalogue } from "../../../../common/utils/itwCredentialsCatalogueUtils";
 import {
@@ -53,6 +54,7 @@ const buildState = (
         }
       }
     },
+    remoteConfig: O.none,
     persistedPreferences: {
       preferredLanguage:
         overrides.preferredLanguage !== undefined
