@@ -108,7 +108,7 @@ export const deriveCredentialAlertType = (
   const isCredentialJwtInvalid =
     isCredentialJwtExpiring || isCredentialJwtExpired;
 
-  const isInvalidCredential = isEidExpired && isCredentialJwtExpired;
+  const isInvalidCredential = isItwL3 && isEidExpired && isCredentialJwtExpired;
 
   if (isInvalidCredential) {
     return CredentialAlertType.INVALID_CREDENTIAL;
