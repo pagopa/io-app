@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`getCredentialCardConfig Should return correct pattern overlay for credential domain [BONUSES] 1`] = `
+exports[`getCredentialCardConfig Should return correct pattern overlay when credential domain is [BONUSES] 1`] = `
 {
   "background": {
     "angle": 0,
@@ -22,7 +22,7 @@ exports[`getCredentialCardConfig Should return correct pattern overlay for crede
 }
 `;
 
-exports[`getCredentialCardConfig Should return correct pattern overlay for credential domain [CULTURE_LEISURE] 1`] = `
+exports[`getCredentialCardConfig Should return correct pattern overlay when credential domain is [CULTURE_LEISURE] 1`] = `
 {
   "background": {
     "angle": 0,
@@ -44,7 +44,7 @@ exports[`getCredentialCardConfig Should return correct pattern overlay for crede
 }
 `;
 
-exports[`getCredentialCardConfig Should return correct pattern overlay for credential domain [EDUCATION] 1`] = `
+exports[`getCredentialCardConfig Should return correct pattern overlay when credential domain is [EDUCATION] 1`] = `
 {
   "background": {
     "angle": 0,
@@ -66,7 +66,7 @@ exports[`getCredentialCardConfig Should return correct pattern overlay for crede
 }
 `;
 
-exports[`getCredentialCardConfig Should return correct pattern overlay for credential domain [EMPLOYMENT] 1`] = `
+exports[`getCredentialCardConfig Should return correct pattern overlay when credential domain is [EMPLOYMENT] 1`] = `
 {
   "background": {
     "angle": 0,
@@ -88,7 +88,7 @@ exports[`getCredentialCardConfig Should return correct pattern overlay for crede
 }
 `;
 
-exports[`getCredentialCardConfig Should return correct pattern overlay for credential domain [FINANCIAL] 1`] = `
+exports[`getCredentialCardConfig Should return correct pattern overlay when credential domain is [FINANCIAL] 1`] = `
 {
   "background": {
     "angle": 0,
@@ -110,7 +110,7 @@ exports[`getCredentialCardConfig Should return correct pattern overlay for crede
 }
 `;
 
-exports[`getCredentialCardConfig Should return correct pattern overlay for credential domain [HEALTH] 1`] = `
+exports[`getCredentialCardConfig Should return correct pattern overlay when credential domain is [HEALTH] 1`] = `
 {
   "background": {
     "angle": 0,
@@ -132,7 +132,7 @@ exports[`getCredentialCardConfig Should return correct pattern overlay for crede
 }
 `;
 
-exports[`getCredentialCardConfig Should return correct pattern overlay for credential domain [HOME_FAMILY] 1`] = `
+exports[`getCredentialCardConfig Should return correct pattern overlay when credential domain is [HOME_FAMILY] 1`] = `
 {
   "background": {
     "angle": 0,
@@ -154,7 +154,7 @@ exports[`getCredentialCardConfig Should return correct pattern overlay for crede
 }
 `;
 
-exports[`getCredentialCardConfig Should return correct pattern overlay for credential domain [IDENTITY] 1`] = `
+exports[`getCredentialCardConfig Should return correct pattern overlay when credential domain is [IDENTITY] 1`] = `
 {
   "background": {
     "angle": 0,
@@ -176,7 +176,7 @@ exports[`getCredentialCardConfig Should return correct pattern overlay for crede
 }
 `;
 
-exports[`getCredentialCardConfig Should return correct pattern overlay for credential domain [MOBILITY_TRAVEL] 1`] = `
+exports[`getCredentialCardConfig Should return correct pattern overlay when credential domain is [MOBILITY_TRAVEL] 1`] = `
 {
   "background": {
     "angle": 0,
@@ -198,7 +198,7 @@ exports[`getCredentialCardConfig Should return correct pattern overlay for crede
 }
 `;
 
-exports[`getCredentialCardConfig Should return correct pattern overlay for credential domain [inexistent] 1`] = `
+exports[`getCredentialCardConfig Should return correct pattern overlay when credential domain is [inexistent] 1`] = `
 {
   "background": {
     "angle": 0,
@@ -220,7 +220,7 @@ exports[`getCredentialCardConfig Should return correct pattern overlay for crede
 }
 `;
 
-exports[`getCredentialCardConfig Should return correct pattern overlay for credential domain [undefined] 1`] = `
+exports[`getCredentialCardConfig Should return correct pattern overlay when credential domain is [undefined] 1`] = `
 {
   "background": {
     "angle": 0,
