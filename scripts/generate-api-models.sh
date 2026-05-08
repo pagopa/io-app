@@ -44,11 +44,10 @@ declare -a apis=(
   "./definitions/cgn https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION_CGN_CDC/openapi/generated/api_cgn_card_platform.yaml"
   "./definitions/cgn/merchants https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION_CGN_CDC/openapi/generated/api_cgn_search_platform.yaml"
   # PN APIs
-  "./definitions/pn https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_pn.yaml"
   "./definitions/pn/aar https://raw.githubusercontent.com/pagopa/io-messages/refs/tags/send-func@$SEND_FUNC_VERSION/apps/send-func/openapi/aar-notification.yaml"
   "./definitions/pn/lollipop-lambda https://raw.githubusercontent.com/pagopa/io-messages/refs/tags/send-func@$SEND_FUNC_VERSION/apps/send-func/openapi/lollipop-integration-check.yaml"
   # FCI APIs
-  "./definitions/fci https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_io_sign.yaml"
+  "./definitions/fci https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/openapi/generated/api_io_sign.yaml"
   # ITW APIs
   "./definitions/itw https://raw.githubusercontent.com/pagopa/io-wallet/io-wallet-user-func@$IO_WALLET_USER_FUNC_VERSION/apps/io-wallet-user-func/openapi-external/user_v1/swagger.yaml"
   # Connectivity APIs (used for connectivity checks)
