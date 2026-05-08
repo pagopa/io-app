@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.31.0-rc.1](https://github.com/pagopa/io-app/compare/3.31.0-rc.0...3.31.0-rc.1) (2026-05-08)
+
+
+### Chores
+
+* [[IOPID-3902](https://pagopa.atlassian.net/browse/IOPID-3902)] Bearer token in services' APIs ([#8088](https://github.com/pagopa/io-app/issues/8088)) ([16cc8df](https://github.com/pagopa/io-app/commit/16cc8dfb267adbc5619a6059527774ec21d30d1e))
+
+## [3.31.0-rc.0](https://github.com/pagopa/io-app/compare/3.30.0-rc.5...3.31.0-rc.0) (2026-05-08)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4092](https://pagopa.atlassian.net/browse/SIW-4092)] Add NFC proximity playgrounds ([#8037](https://github.com/pagopa/io-app/issues/8037)) ([abb1993](https://github.com/pagopa/io-app/commit/abb19937941c95cff012367c3d6a6545779c989d))
+* **IT-Wallet:** [[SIW-4241](https://pagopa.atlassian.net/browse/SIW-4241)] Remove Sentry errors from codebase ([#8074](https://github.com/pagopa/io-app/issues/8074)) ([047ed91](https://github.com/pagopa/io-app/commit/047ed91f07c4b9cbff3d742ef4f606b9ab4ed62c))
+
 ## [3.30.0-rc.5](https://github.com/pagopa/io-app/compare/3.30.0-rc.4...3.30.0-rc.5) (2026-05-07)
 
 

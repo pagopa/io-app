@@ -10,7 +10,7 @@ IO_WALLET_USER_FUNC_VERSION=4.1.11
 # Send function version
 SEND_FUNC_VERSION=1.5.5
 # IO Services CMS version
-IO_SERVICES_CMS_VERSION=1.31.5
+IO_SERVICES_APP_BACKEND=3.1.0
 # CGN and CDC APIs are generated with a different version of io-backend, so we need to specify it separately
 IO_BACKEND_VERSION_CGN_CDC=v19.0.0
 
@@ -32,7 +32,7 @@ declare -a apis=(
   # IDPay APIs
   "./definitions/idpay https://raw.githubusercontent.com/pagopa/cstar-securehub-infra-api-spec/refs/tags/v3.10.2/src/idpay/apim/api/idpay_appio_full/openapi.appio.full.yml"
   # Services APIs
-  "./definitions/services https://raw.githubusercontent.com/pagopa/io-services-cms/io-services-cms-backoffice@$IO_SERVICES_CMS_VERSION/apps/app-backend/api/external.yaml"
+  "./definitions/services https://raw.githubusercontent.com/pagopa/io-services-cms/io-services-app-backend@$IO_SERVICES_APP_BACKEND/apps/app-backend/api/external.yaml"
   # Fims APIs
   "./definitions/fims_history https://raw.githubusercontent.com/pagopa/io-backend/$IO_BACKEND_VERSION/api_io_fims.yaml"
   "./definitions/fims_sso https://raw.githubusercontent.com/pagopa/io-fims/a93f1a1abf5230f103d9f489b139902b87288061/apps/op-app/openapi.yaml"
