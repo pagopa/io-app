@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.30.0-rc.5](https://github.com/pagopa/io-app/compare/3.30.0-rc.4...3.30.0-rc.5) (2026-05-07)
+
+
+### Chores
+
+* [[IEL-324](https://pagopa.atlassian.net/browse/IEL-324),[IEL-332](https://pagopa.atlassian.net/browse/IEL-332)] Update endpoints for FCI and Send API ([#8085](https://github.com/pagopa/io-app/issues/8085)) ([e42d651](https://github.com/pagopa/io-app/commit/e42d651947d9b81c24b8e1803fd9b7c2723cd548))
+
 ## [3.30.0-rc.4](https://github.com/pagopa/io-app/compare/3.30.0-rc.3...3.30.0-rc.4) (2026-05-06)
 
 
