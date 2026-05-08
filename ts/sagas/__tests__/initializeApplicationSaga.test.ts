@@ -540,10 +540,10 @@ describe("initializeApplicationSaga", () => {
         aSessionInfo
       )
       .next(true)
-      .fork(watchProfileUpsertRequestsSaga, undefined)
+      .fork(watchProfileUpsertRequestsSaga, mockIdentityClient.updateProfile)
       .next()
-      .fork(watchProfile, undefined)
+      .fork(watchProfile, mockIdentityClient.startEmailValidationProcess)
       .next()
-      .call(loadProfile, undefined);
+      .call(loadProfile, mockIdentityClient.getUserProfile);
   });
 });
