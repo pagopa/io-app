@@ -4469,15 +4469,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-iso18013@npm:^0.8.1":
-  version: 0.8.1
-  resolution: "@pagopa/io-react-native-iso18013@npm:0.8.1"
+"@pagopa/io-react-native-iso18013@npm:^0.8.3":
+  version: 0.8.3
+  resolution: "@pagopa/io-react-native-iso18013@npm:0.8.3"
   dependencies:
-    zod: ^3.25.67
+    zod: 4.3.6
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 0a3c558cfef0289aabef8cdd034d6e0f80b8f160205fbeadf30729639f4b42afc81564518bb7cafe09158cf171c5c40316c886baa9a11c63553bf45c32682b0f
+  checksum: 24dd41260d91ff2a594842ceb56d722471486af4172581dca76f34a973756702683afa136751afeee5a7cd45f7839b1b73425b64330f8990685cadd6dce8bd2e
   languageName: node
   linkType: hard
 
@@ -13553,7 +13553,7 @@ __metadata:
     "@pagopa/io-react-native-crypto": ^1.2.3
     "@pagopa/io-react-native-http-client": 1.2.0
     "@pagopa/io-react-native-integrity": ^0.3.2
-    "@pagopa/io-react-native-iso18013": ^0.8.1
+    "@pagopa/io-react-native-iso18013": ^0.8.3
     "@pagopa/io-react-native-jwt": ^2.1.0
     "@pagopa/io-react-native-login-utils": 1.2.0
     "@pagopa/io-react-native-secure-storage": ^0.2.1
@@ -24072,6 +24072,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"zod@npm:4.3.6, zod@npm:^3.25.0 || ^4.0.0, zod@npm:^4.1.13, zod@npm:^4.3.6":
+  version: 4.3.6
+  resolution: "zod@npm:4.3.6"
+  checksum: 19cec761b46bae4b6e7e861ea740f3f248e50a6671825afc8a5758e27b35d6f20ccde9942422fd5cf6f8b697f18bd05ef8bb33f5f2db112ab25cc628de2fae47
+  languageName: node
+  linkType: hard
+
 "zod@npm:^3.22.4":
   version: 3.23.8
   resolution: "zod@npm:3.23.8"
@@ -24083,20 +24090,6 @@ __metadata:
   version: 3.25.67
   resolution: "zod@npm:3.25.67"
   checksum: 56ab904d33b1cd00041ce64ae05b0628fcbfeb7e707fa31cd498a97b540135e4dfe685200c9c62aea307695ee132870b4bc34f035228ea728aa75cc96a4954cb
-  languageName: node
-  linkType: hard
-
-"zod@npm:^3.25.0 || ^4.0.0, zod@npm:^4.1.13, zod@npm:^4.3.6":
-  version: 4.3.6
-  resolution: "zod@npm:4.3.6"
-  checksum: 19cec761b46bae4b6e7e861ea740f3f248e50a6671825afc8a5758e27b35d6f20ccde9942422fd5cf6f8b697f18bd05ef8bb33f5f2db112ab25cc628de2fae47
-  languageName: node
-  linkType: hard
-
-"zod@npm:^3.25.67":
-  version: 3.25.76
-  resolution: "zod@npm:3.25.76"
-  checksum: c9a403a62b329188a5f6bd24d5d935d2bba345f7ab8151d1baa1505b5da9f227fb139354b043711490c798e91f3df75991395e40142e6510a4b16409f302b849
   languageName: node
   linkType: hard
 

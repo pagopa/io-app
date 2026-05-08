@@ -2,7 +2,7 @@ import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
-import { ServicesClient } from "../../common/api/servicesClient";
+import { ServicesClient } from "../../../../api/ServicesClientManager";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { convertUnknownToError } from "../../../../utils/errors";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";

@@ -395,7 +395,7 @@ export function* initializeApplicationSaga(
   // and is maintained by separate teams
 
   // Start watching for Services actions
-  yield* fork(watchServicesSaga, identityClient);
+  yield* fork(watchServicesSaga, keyInfo, sessionToken);
 
   // Start watching for Messages actions
   yield* fork(watchMessagesSaga);
