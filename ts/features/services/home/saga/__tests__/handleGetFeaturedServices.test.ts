@@ -4,9 +4,11 @@ import { getType } from "typesafe-actions";
 import { FeaturedService } from "../../../../../../definitions/services/FeaturedService";
 import { FeaturedServices } from "../../../../../../definitions/services/FeaturedServices";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
-import { ServicesClient } from "../../../common/api/__mocks__/servicesClient";
+import { servicesClientManager } from "../../../../../api/ServicesClientManager";
 import { featuredServicesGet } from "../../store/actions";
 import { handleGetFeaturedServices } from "../handleGetFeaturedServices";
+
+jest.mock("../../../../../api/ServicesClientManager");
 
 const MOCK_RESPONSE_PAYLOAD: FeaturedServices = {
   services: [
@@ -30,19 +32,22 @@ const MOCK_RESPONSE_PAYLOAD: FeaturedServices = {
 };
 
 describe("handleGetFeaturedServices", () => {
+  const servicesClient = servicesClientManager.getClient("https://base.url", {
+    token: "mock-bearer-token"
+  });
   describe("when the response is successful", () => {
     it(`should put ${getType(
       featuredServicesGet.success
     )} with the parsed featured services data`, () => {
       testSaga(
         handleGetFeaturedServices,
-        ServicesClient.getFeaturedServices,
+        servicesClient.getFeaturedServices,
         featuredServicesGet.request()
       )
         .next()
         .call(
           withRefreshApiCall,
-          ServicesClient.getFeaturedServices(),
+          servicesClient.getFeaturedServices({}),
           featuredServicesGet.request()
         )
         .next(E.right({ status: 200, value: MOCK_RESPONSE_PAYLOAD }))
@@ -60,13 +65,13 @@ describe("handleGetFeaturedServices", () => {
     )} with the error`, () => {
       testSaga(
         handleGetFeaturedServices,
-        ServicesClient.getFeaturedServices,
+        servicesClient.getFeaturedServices,
         featuredServicesGet.request()
       )
         .next()
         .call(
           withRefreshApiCall,
-          ServicesClient.getFeaturedServices(),
+          servicesClient.getFeaturedServices({}),
           featuredServicesGet.request()
         )
         .next(
