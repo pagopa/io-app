@@ -34,9 +34,9 @@ const readOutdatedJson = async (): Promise<string> => {
     if (code === 1) {
       return stdout;
     } else {
-      // eslint-disable-next-line preserve-caught-error
       throw new Error(
-        `Error ${code} while executing 'pnpm outdated --json': ${message}`
+        `Error ${code} while executing 'pnpm outdated --json': ${message}`,
+        { cause: e }
       );
     }
   }

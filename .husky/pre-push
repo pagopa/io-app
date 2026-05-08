@@ -12,10 +12,10 @@ echo "🔨 compiling..."
 pnpm tsc:noemit
 
 # Run lintier
-echo "🧹 runnning linter..."  
+echo "🧹 running linter..."  
 pnpm lint-autofix
 # Run prettifier
-echo "🧼 runnning formatter..."
+echo "🧼 running formatter..."
 pnpm prettify
 
 # If we have any modified files don't push

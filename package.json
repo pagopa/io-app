@@ -266,12 +266,6 @@
   "engines": {
     "node": ">=20"
   },
-  "resolutions": {
-    "pretty-format>react-is": "19.0.0",
-    "@babel/plugin-transform-typescript": "^7.23.6",
-    "@babel/plugin-syntax-typescript": "^7.23.3",
-    "@babel/types": "^7.23.6"
-  },
   "react-native": {
     "path": "path-browserify",
     "crypto": "react-native-crypto"
@@ -291,6 +285,12 @@
   },
   "packageManager": "pnpm@10.33.0+sha512.10568bb4a6afb58c9eb3630da90cc9516417abebd3fabbe6739f0ae795728da1491e9db5a544c76ad8eb7570f5c4bb3d6c637b2cb41bfdcdb47fa823c8649319",
   "pnpm": {
+    "overrides": {
+      "pretty-format>react-is": "19.0.0",
+      "@babel/plugin-transform-typescript": "^7.23.6",
+      "@babel/plugin-syntax-typescript": "^7.23.3",
+      "@babel/types": "^7.23.6"
+    },
     "patchedDependencies": {
       "react-native-barcode-builder@2.0.0": "patches/react-native-barcode-builder@2.0.0.patch",
       "react-native-calendar-events@2.2.0": "patches/react-native-calendar-events@2.2.0.patch",
