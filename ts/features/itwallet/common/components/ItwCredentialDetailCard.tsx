@@ -1,16 +1,18 @@
-import {
-  IOVisualCostants,
-  useIOThemeContext
-} from "@pagopa/io-app-design-system";
-import { Canvas } from "@shopify/react-native-skia";
-import { PropsWithChildren, useState } from "react";
-import { Image, LayoutChangeEvent, StyleSheet, View } from "react-native";
+import { IOVisualCostants } from "@pagopa/io-app-design-system";
+import { Canvas, Rect } from "@shopify/react-native-skia";
+import { PropsWithChildren } from "react";
+import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useLayoutSize } from "../hooks/useLayoutSize";
 import { borderVariantByStatus } from "../utils/itwCredentialUtils";
 import { ItwCredentialStatus } from "../utils/itwTypesUtils";
 import { ItwBrandedSkiaBorder } from "./ItwBrandedSkiaBorder";
-import { CredentialCardSkiaBackground } from "./ItwCredentialCard/CredentialCardBackground";
-import { getCredentialCardConfig } from "./ItwCredentialCard/credentialCardConfig";
+import {
+  SkiaCardOverlay,
+  SkiaCardPatternOverlay
+} from "./ItwCredentialCard/CardOverlay";
+import { SkiaGradientBackground } from "./ItwCredentialCard/GradientBackground";
+import { getCredentialCardConfig } from "./ItwCredentialCard/config";
 
 type ItwCredentialDetailCardProps = PropsWithChildren<{
   credentialType: string;
@@ -34,10 +36,13 @@ export const ItwCredentialDetailCard = ({
   children
 }: ItwCredentialDetailCardProps) => {
   const safeAreaInsets = useSafeAreaInsets();
-  const { themeType } = useIOThemeContext();
-  const [size, setSize] = useState({ width: 0, height: 0 });
-  const { background, detailWatermarkLayer } =
-    getCredentialCardConfig(credentialType);
+  const { size, onLayout } = useLayoutSize();
+
+  // Credential's header card is always in light mode
+  const { color, background, overlay } = getCredentialCardConfig(
+    credentialType,
+    "light"
+  );
 
   // Extend the card well above the screen so the top border is never visible at rest.
   // The negative marginTop pulls the card up, hiding the extra paddingTop above the screen.
@@ -47,44 +52,32 @@ export const ItwCredentialDetailCard = ({
     POST_HEADER_CONTENT_PADDING +
     SCROLL_HACK_OFFSET;
 
-  const handleOnLayout = (event: LayoutChangeEvent) => {
-    const { width, height } = event.nativeEvent.layout;
-    setSize({ width, height });
-  };
-
   return (
-    <View style={[styles.container, { paddingTop }]} onLayout={handleOnLayout}>
-      <Canvas style={StyleSheet.absoluteFill}>
-        {size.width > 0 && size.height > 0 && (
-          <CredentialCardSkiaBackground
-            bg={background}
+    <View style={[styles.container, { paddingTop }]} onLayout={onLayout}>
+      {size && (
+        <Canvas style={StyleSheet.absoluteFill}>
+          {overlay?.header && (
+            <>
+              <SkiaGradientBackground bg={background} {...size} />
+              <SkiaCardOverlay src={overlay.header} {...size} />
+            </>
+          )}
+          {overlay?.pattern && (
+            <>
+              {/* Pattern should have a solid background */}
+              <Rect color={color} {...size} />
+              <SkiaCardPatternOverlay src={overlay.pattern} {...size} />
+            </>
+          )}
+
+          <ItwBrandedSkiaBorder
             width={size.width}
             height={size.height}
+            borderRadius={CARD_BORDER_RADIUS}
+            variant={borderVariantByStatus[credentialStatus]}
           />
-        )}
-      </Canvas>
-
-      {detailWatermarkLayer && size.width > 0 && size.height > 0 && (
-        <View style={StyleSheet.absoluteFillObject} pointerEvents="none">
-          <Image
-            accessibilityIgnoresInvertColors
-            source={detailWatermarkLayer}
-            style={{ width: size.width, height: size.height }}
-            resizeMode="stretch"
-          />
-        </View>
+        </Canvas>
       )}
-
-      <Canvas style={StyleSheet.absoluteFill} pointerEvents="none">
-        <ItwBrandedSkiaBorder
-          width={size.width}
-          height={size.height}
-          borderRadius={CARD_BORDER_RADIUS}
-          themeType={themeType}
-          variant={borderVariantByStatus[credentialStatus]}
-        />
-      </Canvas>
-
       <View style={styles.content}>{children}</View>
     </View>
   );

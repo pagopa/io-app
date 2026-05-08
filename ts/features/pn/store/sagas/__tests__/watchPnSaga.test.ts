@@ -24,7 +24,7 @@ const mockBearerToken = "mock-token";
 const mockServiceId = "service-id" as ServiceId;
 const mockUpsertPNActivation = jest.fn();
 const mockPnClient: Partial<CLIENT.PnClient> = {
-  upsertPNActivation: mockUpsertPNActivation
+  upsertSendActivation: mockUpsertPNActivation
 };
 
 // Extract functions from testable export
@@ -224,7 +224,7 @@ describe("watchPnSaga", () => {
         .takeLatest(
           pnActivationUpsert.request,
           handlePnActivation,
-          mockPnClient.upsertPNActivation
+          mockPnClient.upsertSendActivation
         )
         .next()
         .takeLatest(

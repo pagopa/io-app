@@ -4,7 +4,6 @@
  * Set up of the testing environment
  */
 
-
 import mockAsyncStorage from "@react-native-async-storage/async-storage/jest/async-storage-mock";
 import mockClipboard from "@react-native-clipboard/clipboard/jest/clipboard-mock.js";
 import nodeFetch from "node-fetch";
