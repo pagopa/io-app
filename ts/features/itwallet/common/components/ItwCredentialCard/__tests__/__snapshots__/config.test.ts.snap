@@ -1,5 +1,247 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
+exports[`getCredentialCardConfig Should return correct pattern overlay when credential domain is [BONUSES] 1`] = `
+{
+  "background": {
+    "angle": 0,
+    "colors": [
+      "#E6F2FF",
+      "#F2F2F2",
+    ],
+    "type": "linear",
+  },
+  "borderColor": "#738699",
+  "color": "#003366",
+  "overlay": {
+    "pattern": {
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/bonus.png",
+    },
+    "showCornerOverlay": true,
+  },
+  "titleColor": "#2B2F33",
+}
+`;
+
+exports[`getCredentialCardConfig Should return correct pattern overlay when credential domain is [CULTURE_LEISURE] 1`] = `
+{
+  "background": {
+    "angle": 0,
+    "colors": [
+      "#E6F2FF",
+      "#F2F2F2",
+    ],
+    "type": "linear",
+  },
+  "borderColor": "#738699",
+  "color": "#003366",
+  "overlay": {
+    "pattern": {
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/lifestyle.png",
+    },
+    "showCornerOverlay": true,
+  },
+  "titleColor": "#2B2F33",
+}
+`;
+
+exports[`getCredentialCardConfig Should return correct pattern overlay when credential domain is [EDUCATION] 1`] = `
+{
+  "background": {
+    "angle": 0,
+    "colors": [
+      "#E6F2FF",
+      "#F2F2F2",
+    ],
+    "type": "linear",
+  },
+  "borderColor": "#738699",
+  "color": "#003366",
+  "overlay": {
+    "pattern": {
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/education.png",
+    },
+    "showCornerOverlay": true,
+  },
+  "titleColor": "#2B2F33",
+}
+`;
+
+exports[`getCredentialCardConfig Should return correct pattern overlay when credential domain is [EMPLOYMENT] 1`] = `
+{
+  "background": {
+    "angle": 0,
+    "colors": [
+      "#E6F2FF",
+      "#F2F2F2",
+    ],
+    "type": "linear",
+  },
+  "borderColor": "#738699",
+  "color": "#003366",
+  "overlay": {
+    "pattern": {
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/work.png",
+    },
+    "showCornerOverlay": true,
+  },
+  "titleColor": "#2B2F33",
+}
+`;
+
+exports[`getCredentialCardConfig Should return correct pattern overlay when credential domain is [FINANCIAL] 1`] = `
+{
+  "background": {
+    "angle": 0,
+    "colors": [
+      "#E6F2FF",
+      "#F2F2F2",
+    ],
+    "type": "linear",
+  },
+  "borderColor": "#738699",
+  "color": "#003366",
+  "overlay": {
+    "pattern": {
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/financial.png",
+    },
+    "showCornerOverlay": true,
+  },
+  "titleColor": "#2B2F33",
+}
+`;
+
+exports[`getCredentialCardConfig Should return correct pattern overlay when credential domain is [HEALTH] 1`] = `
+{
+  "background": {
+    "angle": 0,
+    "colors": [
+      "#E6F2FF",
+      "#F2F2F2",
+    ],
+    "type": "linear",
+  },
+  "borderColor": "#738699",
+  "color": "#003366",
+  "overlay": {
+    "pattern": {
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/health.png",
+    },
+    "showCornerOverlay": true,
+  },
+  "titleColor": "#2B2F33",
+}
+`;
+
+exports[`getCredentialCardConfig Should return correct pattern overlay when credential domain is [HOME_FAMILY] 1`] = `
+{
+  "background": {
+    "angle": 0,
+    "colors": [
+      "#E6F2FF",
+      "#F2F2F2",
+    ],
+    "type": "linear",
+  },
+  "borderColor": "#738699",
+  "color": "#003366",
+  "overlay": {
+    "pattern": {
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/family.png",
+    },
+    "showCornerOverlay": true,
+  },
+  "titleColor": "#2B2F33",
+}
+`;
+
+exports[`getCredentialCardConfig Should return correct pattern overlay when credential domain is [IDENTITY] 1`] = `
+{
+  "background": {
+    "angle": 0,
+    "colors": [
+      "#E6F2FF",
+      "#F2F2F2",
+    ],
+    "type": "linear",
+  },
+  "borderColor": "#738699",
+  "color": "#003366",
+  "overlay": {
+    "pattern": {
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/identity.png",
+    },
+    "showCornerOverlay": true,
+  },
+  "titleColor": "#2B2F33",
+}
+`;
+
+exports[`getCredentialCardConfig Should return correct pattern overlay when credential domain is [MOBILITY_TRAVEL] 1`] = `
+{
+  "background": {
+    "angle": 0,
+    "colors": [
+      "#E6F2FF",
+      "#F2F2F2",
+    ],
+    "type": "linear",
+  },
+  "borderColor": "#738699",
+  "color": "#003366",
+  "overlay": {
+    "pattern": {
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/travel.png",
+    },
+    "showCornerOverlay": true,
+  },
+  "titleColor": "#2B2F33",
+}
+`;
+
+exports[`getCredentialCardConfig Should return correct pattern overlay when credential domain is [inexistent] 1`] = `
+{
+  "background": {
+    "angle": 0,
+    "colors": [
+      "#E6F2FF",
+      "#F2F2F2",
+    ],
+    "type": "linear",
+  },
+  "borderColor": "#738699",
+  "color": "#003366",
+  "overlay": {
+    "pattern": {
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/family.png",
+    },
+    "showCornerOverlay": true,
+  },
+  "titleColor": "#2B2F33",
+}
+`;
+
+exports[`getCredentialCardConfig Should return correct pattern overlay when credential domain is [undefined] 1`] = `
+{
+  "background": {
+    "angle": 0,
+    "colors": [
+      "#E6F2FF",
+      "#F2F2F2",
+    ],
+    "type": "linear",
+  },
+  "borderColor": "#738699",
+  "color": "#003366",
+  "overlay": {
+    "pattern": {
+      "testUri": "../../../img/features/itWallet/cards/overlay/pattern/family.png",
+    },
+    "showCornerOverlay": true,
+  },
+  "titleColor": "#2B2F33",
+}
+`;
+
 exports[`getCredentialCardConfig when color scheme is [dark] should match snapshot for type [] 1`] = `
 {
   "background": {
