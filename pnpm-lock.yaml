@@ -14,7 +14,7 @@ patchedDependencies:
   '@gorhom/bottom-sheet@5.2.8':
     hash: 9995dc509367cbc5391cc76916a68192588c5aec4321e7f54ff69a8a3662ee98
     path: patches/@gorhom__bottom-sheet@5.2.8.patch
-  '@react-navigation/stack':
+  '@react-navigation/stack@6.4.1':
     hash: e2a5b59c2c1d2574b25cc2ef6c7ddaa52528bdae0d1abc9025400ac9dbc6f514
     path: patches/@react-navigation__stack.patch
   expo-screen-capture@8.0.9:
@@ -12691,7 +12691,7 @@ snapshots:
       eslint: 9.39.4
       eslint-config-prettier: 8.10.0(eslint@9.39.4)
       eslint-plugin-eslint-comments: 3.2.0(eslint@9.39.4)
-      eslint-plugin-ft-flow: 2.0.3(@babel/eslint-parser@7.27.0(@babel/core@7.29.0)(eslint@9.39.4))(eslint@9.39.4)
+      eslint-plugin-ft-flow: 2.0.3(@babel/eslint-parser@7.27.0(@babel/core@7.28.0)(eslint@9.39.4))(eslint@9.39.4)
       eslint-plugin-jest: 29.15.2(@typescript-eslint/eslint-plugin@8.58.1(@typescript-eslint/parser@8.58.1(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(jest@30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@7.0.1))(typescript@5.9.3)
       eslint-plugin-react: 7.37.5(eslint@9.39.4)
       eslint-plugin-react-hooks: 7.0.1(eslint@9.39.4)
@@ -15699,7 +15699,7 @@ snapshots:
       eslint: 9.39.4
       ignore: 5.3.2
 
-  eslint-plugin-ft-flow@2.0.3(@babel/eslint-parser@7.27.0(@babel/core@7.29.0)(eslint@9.39.4))(eslint@9.39.4):
+  eslint-plugin-ft-flow@2.0.3(@babel/eslint-parser@7.27.0(@babel/core@7.28.0)(eslint@9.39.4))(eslint@9.39.4):
     dependencies:
       '@babel/eslint-parser': 7.27.0(@babel/core@7.29.0)(eslint@9.39.4)
       eslint: 9.39.4
