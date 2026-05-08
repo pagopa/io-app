@@ -47,6 +47,9 @@ export const isActiveSessionFastLoginEnabledSelector = (state: GlobalState) =>
   state.features.loginFeatures.activeSessionLogin?.loginInfo?.fastLoginOptIn ??
   false;
 
+export const activeSessionLoginFlowSelector = (state: GlobalState) =>
+  state.features.loginFeatures.activeSessionLogin?.flow;
+
 export const cieIDSelectedSecurityLevelActiveSessionLoginSelector = (
   state: GlobalState
 ) =>
