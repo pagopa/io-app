@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.31.0-rc.1](https://github.com/pagopa/io-app/compare/3.31.0-rc.0...3.31.0-rc.1) (2026-05-08)
+
+
+### Chores
+
+* [[IOPID-3902](https://pagopa.atlassian.net/browse/IOPID-3902)] Bearer token in services' APIs ([#8088](https://github.com/pagopa/io-app/issues/8088)) ([16cc8df](https://github.com/pagopa/io-app/commit/16cc8dfb267adbc5619a6059527774ec21d30d1e))
+
 ## [3.31.0-rc.0](https://github.com/pagopa/io-app/compare/3.30.0-rc.5...3.31.0-rc.0) (2026-05-08)
 
 
