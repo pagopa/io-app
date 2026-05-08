@@ -47,7 +47,7 @@ describe("handleGetFeaturedServices", () => {
         .next()
         .call(
           withRefreshApiCall,
-          servicesClient.getFeaturedServices("aServiceId1"),
+          servicesClient.getFeaturedServices({}),
           featuredServicesGet.request()
         )
         .next(E.right({ status: 200, value: MOCK_RESPONSE_PAYLOAD }))
@@ -71,7 +71,7 @@ describe("handleGetFeaturedServices", () => {
         .next()
         .call(
           withRefreshApiCall,
-          servicesClient.getFeaturedServices("aServiceId1"),
+          servicesClient.getFeaturedServices({}),
           featuredServicesGet.request()
         )
         .next(

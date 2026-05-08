@@ -46,7 +46,7 @@ describe("handleGetFeaturedInstitutions", () => {
         .next()
         .call(
           withRefreshApiCall,
-          servicesClient.getFeaturedInstitutions("anInstitutionId1"),
+          servicesClient.getFeaturedInstitutions({}),
           featuredInstitutionsGet.request()
         )
         .next(E.right({ status: 200, value: MOCK_RESPONSE_PAYLOAD }))
@@ -70,7 +70,7 @@ describe("handleGetFeaturedInstitutions", () => {
         .next()
         .call(
           withRefreshApiCall,
-          servicesClient.getFeaturedInstitutions("anInstitutionId1"),
+          servicesClient.getFeaturedInstitutions({}),
           featuredInstitutionsGet.request()
         )
         .next(
