@@ -302,7 +302,7 @@
       "react-native@0.81.5": "patches/react-native@0.81.5.patch",
       "@gorhom/bottom-sheet@5.2.8": "patches/@gorhom__bottom-sheet@5.2.8.patch",
       "expo-screen-capture@8.0.9": "patches/expo-screen-capture@8.0.9.patch",
-      "@react-navigation/stack": "patches/@react-navigation__stack.patch"
+      "@react-navigation/stack@6.4.1": "patches/@react-navigation__stack.patch"
     },
     "onlyBuiltDependencies": [
       "unrs-resolver",
