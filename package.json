@@ -1,6 +1,6 @@
 {
   "name": "io",
-  "version": "3.31.0-rc.1",
+  "version": "3.31.0-rc.2",
   "private": true,
   "scripts": {
     "start": "react-native start",
@@ -127,6 +127,7 @@
     "react-native-gesture-handler": "^2.28.0",
     "react-native-haptic-feedback": "^2.3.3",
     "react-native-image-picker": "7.2.3",
+    "react-native-keyboard-controller": "^1.21.7",
     "react-native-keychain": "^10.0.0",
     "react-native-linear-gradient": "^2.5.6",
     "react-native-notifications-utils": "^0.3.0",
