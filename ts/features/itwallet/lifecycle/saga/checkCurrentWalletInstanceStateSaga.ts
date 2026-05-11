@@ -9,7 +9,7 @@ import {
 } from "../../common/store/selectors/environment.ts";
 import { getEnv } from "../../common/utils/environment.ts";
 import { getCurrentWalletInstanceStatus } from "../../common/utils/itwAttestationUtils.ts";
-import { itwLifecycleIsValidSelector } from "../store/selectors";
+import { itwLifecycleIsOperationalSelector } from "../store/selectors";
 
 export function* getCurrentStatusWalletInstance() {
   const sessionToken = yield* select(sessionTokenSelector);
@@ -40,7 +40,7 @@ export function* checkCurrentWalletInstanceStateSaga(): Generator<
     getCurrentStatusWalletInstance
   );
 
-  const isItwValidLocally = yield* select(itwLifecycleIsValidSelector);
+  const isItwValidLocally = yield* select(itwLifecycleIsOperationalSelector);
 
   const itwCanBeReactivated = Boolean(
     remoteWalletInstanceStatus &&

@@ -104,8 +104,7 @@ const reducer = (
         ...state,
         status: pot.none,
         attestation: action.payload,
-        renewalError: false,
-        isRemotelyActive: false
+        renewalError: false
       };
     }
 
