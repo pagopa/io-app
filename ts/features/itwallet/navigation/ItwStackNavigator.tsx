@@ -45,9 +45,12 @@ import {
   ItwEidIssuanceMachineContext,
   ItwEidIssuanceMachineProvider
 } from "../machine/eid/provider";
+import { ItwCardOnboardingL2Screen } from "../onboarding/screens/ItwCardOnboardingL2Screen.tsx";
+import { ItwCardOnboardingL3Screen } from "../onboarding/screens/ItwCardOnboardingL3Screen.tsx";
 import { WalletCardOnboardingScreen } from "../onboarding/screens/WalletCardOnboardingScreen";
 import { ItwL3CredentialDetailScreen } from "../playgrounds/screens/ItwL3CredentialDetailScreen.tsx";
 import ItwPlayground from "../playgrounds/screens/ItwPlayground.tsx";
+import { ItwProximityPlaygroundScreen } from "../playgrounds/screens/ItwProximityPlaygroundScreen.tsx";
 import { ItwPresentationCredentialAttachmentScreen } from "../presentation/details/screens/ItwPresentationCredentialAttachmentScreen";
 import { ItwPresentationCredentialCardModal } from "../presentation/details/screens/ItwPresentationCredentialCardModal";
 import { ItwPresentationCredentialCardScreen } from "../presentation/details/screens/ItwPresentationCredentialCardScreen";
@@ -58,8 +61,6 @@ import { ItwPresentationPidDetailScreen } from "../presentation/details/screens/
 import { ItwSettingsScreen } from "../settings/screens/ItwSettingsScreen.tsx";
 import { ItwCredentialTrustmarkScreen } from "../trustmark/screens/ItwCredentialTrustmarkScreen";
 import { ItwOfflineWalletScreen } from "../wallet/screens/ItwOfflineWalletScreen";
-import { ItwCardOnboardingL3Screen } from "../onboarding/screens/ItwCardOnboardingL3Screen.tsx";
-import { ItwCardOnboardingL2Screen } from "../onboarding/screens/ItwCardOnboardingL2Screen.tsx";
 import { ItwParamsList } from "./ItwParamsList";
 import { ITW_ROUTES } from "./routes";
 
@@ -331,6 +332,10 @@ const InnerNavigator = memo(() => {
         <Stack.Screen
           name={ITW_ROUTES.PLAYGROUNDS.DISCOVERY_INFO_NEW}
           component={ItwDiscoveryInfoFallbackComponent}
+        />
+        <Stack.Screen
+          name={ITW_ROUTES.PLAYGROUNDS.ISO_18013_PROXIMITY}
+          component={ItwProximityPlaygroundScreen}
         />
       </Stack.Group>
       <Stack.Screen name={ITW_ROUTES.SETTINGS} component={ItwSettingsScreen} />

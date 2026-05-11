@@ -3,13 +3,15 @@ import { testSaga } from "redux-saga-test-plan";
 import { getType } from "typesafe-actions";
 import { InstitutionServicesResource } from "../../../../../../definitions/services/InstitutionServicesResource";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
-import { ServicesClient } from "../../../common/api/__mocks__/servicesClient";
+import { servicesClientManager } from "../../../../../api/ServicesClientManager";
 import {
   PaginatedServicesGetPayload,
   paginatedServicesGet
 } from "../../store/actions";
 import { handleFindInstitutionServices } from "../handleFindInstitutionServices";
 import { ServiceId } from "../../../../../../definitions/services/ServiceId";
+
+jest.mock("../../../../../api/ServicesClientManager");
 
 const MOCK_INSTITUTION_ID = "I01";
 
@@ -43,19 +45,22 @@ const MOCK_RESPONSE_PAYLOAD: InstitutionServicesResource = {
 };
 
 describe("handleFindInstitutionServices", () => {
+  const servicesClient = servicesClientManager.getClient("https://base.url", {
+    token: "mock-bearer-token"
+  });
   describe("when the response is successful", () => {
     it(`should put ${getType(
       paginatedServicesGet.success
     )} with the parsed institutions and pagination data`, () => {
       testSaga(
         handleFindInstitutionServices,
-        ServicesClient.findInstutionServices,
+        servicesClient.findInstutionServices,
         paginatedServicesGet.request(DEFAULT_REQUEST_PAYLOAD)
       )
         .next()
         .call(
           withRefreshApiCall,
-          ServicesClient.findInstutionServices(DEFAULT_REQUEST_PAYLOAD),
+          servicesClient.findInstutionServices(DEFAULT_REQUEST_PAYLOAD),
           paginatedServicesGet.request(DEFAULT_REQUEST_PAYLOAD)
         )
         .next(E.right({ status: 200, value: MOCK_RESPONSE_PAYLOAD }))
@@ -73,13 +78,13 @@ describe("handleFindInstitutionServices", () => {
     )} with the error`, () => {
       testSaga(
         handleFindInstitutionServices,
-        ServicesClient.findInstutionServices,
+        servicesClient.findInstutionServices,
         paginatedServicesGet.request(DEFAULT_REQUEST_PAYLOAD)
       )
         .next()
         .call(
           withRefreshApiCall,
-          ServicesClient.findInstutionServices(DEFAULT_REQUEST_PAYLOAD),
+          servicesClient.findInstutionServices(DEFAULT_REQUEST_PAYLOAD),
           paginatedServicesGet.request(DEFAULT_REQUEST_PAYLOAD)
         )
         .next(
