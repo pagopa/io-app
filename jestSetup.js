@@ -300,3 +300,26 @@ jest.mock("@pagopa/io-react-native-iso18013", () => ({
 jest.mock("@pagopa/io-react-native-cie", () => ({
   CieManager: jest.fn()
 }));
+
+jest.mock("react-native-keyboard-controller", () =>
+  require("react-native-keyboard-controller/jest")
+);
+jest.mock("@pagopa/io-react-native-iso18013", () => ({
+  ISO18013_5: {
+    ErrorCode: {
+      CBOR_DECODING: 11,
+      SESSION_ENCRYPTION: 10,
+      SESSION_TERMINATED: 20
+    },
+    addListener: jest.fn(),
+    startEngagement: jest.fn(),
+    close: jest.fn(),
+    generateResponse: jest.fn(),
+    sendErrorResponse: jest.fn(),
+    sendResponse: jest.fn(),
+    parseVerifierRequest: jest.fn()
+  },
+  ISO18013_7: {},
+  CBOR: {},
+  COSE: {}
+}));

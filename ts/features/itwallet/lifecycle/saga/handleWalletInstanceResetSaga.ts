@@ -49,8 +49,5 @@ export function* handleWalletInstanceResetSaga() {
     yield* all(itwKeyTags.map(deleteKey));
     // Update every mixpanel property related to the wallet instance and its credentials.
     void updatePropertiesWalletRevoked();
-  } catch (e) {
-    // TODO: Replace Sentry capture exception with a new logging solution
-    // Sentry.captureException(e);
-  }
+  } catch (e) {}
 }

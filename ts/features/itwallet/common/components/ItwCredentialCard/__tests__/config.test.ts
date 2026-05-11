@@ -1,6 +1,9 @@
 import { ColorSchemeName } from "react-native";
 import { CredentialType } from "../../../utils/itwMocksUtils";
-import { getCredentialCardConfig } from "../config.ts";
+import {
+  CREDENTIAL_CARD_PATTERN_OVERLAYS,
+  getCredentialCardConfig
+} from "../config.ts";
 
 describe("getCredentialCardConfig", () => {
   describe.each(["light", "dark", undefined])(
@@ -33,6 +36,19 @@ describe("getCredentialCardConfig", () => {
           getCredentialCardConfig(type, colorScheme as ColorSchemeName)
         ).toMatchSnapshot();
       });
+    }
+  );
+
+  test.each([
+    ...Object.keys(CREDENTIAL_CARD_PATTERN_OVERLAYS),
+    "inexistent",
+    undefined
+  ])(
+    "Should return correct pattern overlay when credential domain is [%s]",
+    domain => {
+      expect(
+        getCredentialCardConfig("RANDOM_TYPE", "light", undefined, domain)
+      ).toMatchSnapshot();
     }
   );
 });

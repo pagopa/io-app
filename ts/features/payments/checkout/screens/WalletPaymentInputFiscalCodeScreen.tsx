@@ -10,8 +10,10 @@ import * as O from "fp-ts/lib/Option";
 import { flow, pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { ComponentRef, useEffect, useRef, useState } from "react";
-import { InputAccessoryView, Keyboard, Platform, View } from "react-native";
+import { Keyboard, Platform, View } from "react-native";
+import { KeyboardStickyView } from "react-native-keyboard-controller";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { useFooterActionsMargin } from "../../../../hooks/useFooterActionsMargin";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -107,6 +109,7 @@ const WalletPaymentInputFiscalCodeScreen = () => {
   });
 
   useInputFocus(textInputRef);
+  const { bottomMargin } = useFooterActionsMargin();
 
   return (
     <>
@@ -119,17 +122,6 @@ const WalletPaymentInputFiscalCodeScreen = () => {
         canGoback
         headerActionsProp={{ showHelp: true }}
         contextualHelp={emptyContextualHelp}
-        actions={
-          Platform.OS === "android"
-            ? {
-                type: "SingleButton",
-                primary: {
-                  label: I18n.t("global.buttons.continue"),
-                  onPress: handleContinueClick
-                }
-              }
-            : undefined
-        }
         ref={textInputWrapperRef}
         includeContentMargins
       >
@@ -161,24 +153,21 @@ const WalletPaymentInputFiscalCodeScreen = () => {
             textInputProps={{
               keyboardType: "number-pad",
               inputMode: "numeric",
-              returnKeyType: "done",
-              inputAccessoryViewID: "fiscalCodeInputAccessoryView"
+              inputAccessoryViewID: "keyboardStickyView"
             }}
           />
         )}
       </IOScrollViewWithLargeHeader>
-      {Platform.OS === "ios" && (
-        <InputAccessoryView nativeID="fiscalCodeInputAccessoryView">
-          <View style={{ padding: 20 }}>
-            <IOButton
-              fullWidth
-              variant="solid"
-              label={I18n.t("global.buttons.continue")}
-              onPress={handleContinueClick}
-            />
-          </View>
-        </InputAccessoryView>
-      )}
+      <KeyboardStickyView offset={{ closed: 0 }}>
+        <View style={{ paddingHorizontal: 20, marginBottom: bottomMargin }}>
+          <IOButton
+            fullWidth
+            variant="solid"
+            label={I18n.t("global.buttons.continue")}
+            onPress={handleContinueClick}
+          />
+        </View>
+      </KeyboardStickyView>
     </>
   );
 };
