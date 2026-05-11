@@ -26,20 +26,6 @@ export const FciNfcNotAvailableScreen = () => {
         }
       }}
       alwaysBounceVertical={false}
-      headerConfig={{
-        title: "",
-        type: "singleAction",
-        firstAction: {
-          icon: "closeLarge",
-          onPress: () => {
-            dispatch(fciEndRequest());
-          },
-          accessibilityLabel: i18n.t(
-            "global.accessibility.contextualHelp.close"
-          ),
-          testID: "close-x"
-        }
-      }}
       contentContainerStyle={{
         paddingHorizontal: 32
       }}
