@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`FciLoginL3Screen should match the snapshot 1`] = `
+exports[`LoginOptInScreen should match the snapshot 1`] = `
 <View
   style={
     {
@@ -280,7 +280,7 @@ exports[`FciLoginL3Screen should match the snapshot 1`] = `
                                     }
                                   >
                                     <RNSVGPath
-                                      d="M164.06 119.75L164.89 126.26L162.56 131.24L158.25 133.5L149.14 132.23L142.33 125.74L140.41 118.15C140.41 118.15 135.22 115.94 134.85 115.97C134.48 116.01 133.51 111.35 133.51 111.35C133.51 111.35 133.33 105.88 133.07 105.62C132.81 105.36 127.15 110.35 127.15 110.35L117.83 116.48L107.98 119.3L103.51 115.88L103.66 111.07L109.13 105L120.24 96.62L131.73 89.37L128.7 84.89L128.04 81.66H58.0805C58.0805 94.01 48.0705 104.03 35.7105 104.03C31.8205 104.03 28.1705 103.04 24.9805 101.29V178.55C24.9805 182.98 28.5705 186.58 33.0105 186.58H174.15C178.58 186.58 182.18 182.99 182.18 178.55V118.82L164.06 119.75Z"
+                                      d="M110.53 162.33L109.36 152.05L116.13 146.4L120.96 147.02L123.88 136.31L126.49 132.47L136 129.83L142.8 133.15C142.82 132.81 142.86 132.47 142.86 132.13V68.12C142.86 60.8 138.51 54.17 131.8 51.25L93.24 34.52C88.57 32.49 83.26 32.49 78.59 34.52L40.06 51.25C33.35 54.17 29 60.79 29 68.12V132.13C29 137.55 31.39 142.7 35.54 146.2L74.07 178.65C80.91 184.41 90.91 184.41 97.76 178.65L112.39 166.33L110.52 162.34L110.53 162.33Z"
                                       fill={
                                         {
                                           "payload": 4289392367,
@@ -294,77 +294,7 @@ exports[`FciLoginL3Screen should match the snapshot 1`] = `
                                       }
                                     />
                                     <RNSVGPath
-                                      d="M35.0998 90.38C34.6998 90.38 34.3098 90.22 34.0298 89.93L15.4298 70.95C14.8498 70.36 14.8598 69.41 15.4498 68.83C16.0398 68.25 16.9898 68.26 17.5698 68.85L35.0698 86.7L66.0198 53.48C66.5898 52.87 67.5298 52.84 68.1398 53.4C68.7498 53.96 68.7798 54.91 68.2198 55.52L36.1998 89.9C35.9198 90.2 35.5298 90.37 35.1198 90.38H35.0998Z"
-                                      fill={
-                                        {
-                                          "payload": 4278240714,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="M70.4102 147.86C62.0502 147.86 55.2402 141.06 55.2402 132.69C55.2402 124.32 62.0402 117.52 70.4102 117.52C78.7802 117.52 85.5802 124.32 85.5802 132.69C85.5802 141.06 78.7802 147.86 70.4102 147.86ZM70.4102 120.53C63.7002 120.53 58.2402 125.99 58.2402 132.7C58.2402 139.41 63.7002 144.87 70.4102 144.87C77.1202 144.87 82.5802 139.41 82.5802 132.7C82.5802 125.99 77.1202 120.53 70.4102 120.53Z"
-                                      fill={
-                                        {
-                                          "payload": 4278240714,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="M90.2503 167.79C89.4203 167.79 88.7503 167.12 88.7503 166.29C88.7503 156.18 80.5203 147.95 70.4103 147.95C60.3003 147.95 52.0703 156.18 52.0703 166.29C52.0703 167.12 51.4003 167.79 50.5703 167.79C49.7403 167.79 49.0703 167.12 49.0703 166.29C49.0703 154.52 58.6403 144.95 70.4103 144.95C82.1803 144.95 91.7503 154.52 91.7503 166.29C91.7503 167.12 91.0803 167.79 90.2503 167.79Z"
-                                      fill={
-                                        {
-                                          "payload": 4278240714,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="M141.44 126.27H98.9102C98.0802 126.27 97.4102 125.6 97.4102 124.77C97.4102 123.94 98.0802 123.27 98.9102 123.27H141.44C142.27 123.27 142.94 123.94 142.94 124.77C142.94 125.6 142.27 126.27 141.44 126.27Z"
-                                      fill={
-                                        {
-                                          "payload": 4278240714,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="M147.63 138.29H98.9199C98.0899 138.29 97.4199 137.62 97.4199 136.79C97.4199 135.96 98.0899 135.29 98.9199 135.29H147.63C148.46 135.29 149.13 135.96 149.13 136.79C149.13 137.62 148.46 138.29 147.63 138.29Z"
-                                      fill={
-                                        {
-                                          "payload": 4278240714,
-                                          "type": 0,
-                                        }
-                                      }
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    />
-                                    <RNSVGPath
-                                      d="M108.39 121.02C105.9 121.02 103.58 119.78 102.2 117.6C100.51 114.94 100.66 111.59 102.6 109.08C114.1 94.15 144.69 81.41 145.99 80.88L146.26 80.79C188.46 70.09 207.85 59.21 208.04 59.1L210.02 62.57C209.23 63.02 190.1 73.79 147.38 84.63C145.2 85.55 116.25 97.91 105.76 111.52C104.67 112.93 104.95 114.48 105.57 115.45C106.18 116.41 107.45 117.31 109.18 116.93C118.16 114.93 131.18 108.98 142.19 91.98L145.55 94.15C133.8 112.28 119.76 118.66 110.05 120.83C109.49 120.95 108.94 121.01 108.39 121.01V121.02Z"
+                                      d="M137.661 196.7C136.351 196.7 134.931 196.56 133.391 196.27C122.631 194.29 115.071 185.08 112.591 177.37C111.081 172.65 111.451 168.66 113.621 166.42L116.501 169.2C115.441 170.3 115.401 173.03 116.401 176.16C118.521 182.78 124.971 190.66 134.111 192.35C138.351 193.13 141.211 192.66 142.621 190.96C144.991 188.08 143.281 181.83 142.421 179.67L146.141 178.19C146.551 179.21 149.991 188.28 145.721 193.49C143.961 195.64 141.261 196.71 137.661 196.71V196.7Z"
                                       fill={
                                         {
                                           "payload": 4278927075,
@@ -378,7 +308,7 @@ exports[`FciLoginL3Screen should match the snapshot 1`] = `
                                       }
                                     />
                                     <RNSVGPath
-                                      d="M138.6 120.11C135.72 119.54 133.61 118.12 132.35 115.89C129.78 111.37 131.91 105.21 132.01 104.95L135.78 106.29L133.9 105.62L135.79 106.28C135.33 107.58 134.46 111.49 135.85 113.92C136.53 115.1 137.69 115.84 139.4 116.18L138.62 120.1L138.6 120.11Z"
+                                      d="M141.3 179.76C138.34 179.76 134.75 179.25 130.53 178.21C113.64 174.08 109.5 162.23 108.53 155.53C108 151.86 108.95 148.24 111.14 145.58C113.96 142.15 117.88 141.46 121.89 143.69L119.95 147.19C117.6 145.88 115.83 146.17 114.23 148.12C112.76 149.91 112.12 152.41 112.49 154.96C113.31 160.66 116.87 170.76 131.48 174.33C141.61 176.8 146.21 175.67 147.15 173.79C147.84 172.4 146.76 170.28 145.71 169.44L148.22 166.33C150.71 168.34 152.33 172.34 150.73 175.57C149.35 178.37 146.19 179.77 141.3 179.77V179.76Z"
                                       fill={
                                         {
                                           "payload": 4278927075,
@@ -392,7 +322,7 @@ exports[`FciLoginL3Screen should match the snapshot 1`] = `
                                       }
                                     />
                                     <RNSVGPath
-                                      d="M156.521 136.08C152.271 136.08 147.291 134.05 142.631 129.19C138.961 125.36 137.471 121.36 138.191 117.28C139.661 109 149.981 103.86 150.421 103.65L152.181 107.24C152.091 107.28 143.241 111.71 142.131 117.99C141.651 120.73 142.791 123.57 145.521 126.42C151.541 132.7 158.091 133.21 161.201 130.49C163.751 128.26 163.401 124.29 160.281 120.39L163.411 117.9C168.601 124.4 167.361 130.42 163.831 133.51C161.961 135.14 159.411 136.09 156.521 136.09V136.08Z"
+                                      d="M146.89 169.91C142.12 169.91 135.67 166.92 126.48 160.53C120.97 156.7 118.38 150.49 118.98 142.59C119.54 135.26 125.15 129.31 132.02 128.75C134.06 128.58 138.29 128.24 141.53 131.12C143.94 133.26 145.25 136.74 145.43 141.44L141.43 141.59C141.3 138.01 140.44 135.5 138.87 134.11C137.06 132.5 134.55 132.56 132.34 132.74C127.4 133.14 123.37 137.51 122.96 142.9C122.46 149.4 124.41 154.23 128.75 157.26C138.23 163.86 144.61 166.64 148.25 165.78C149.6 165.46 150.61 164.61 151.42 163.12C152.19 161.7 150.89 159.47 150.04 158.26C145.83 152.27 135.8 146.42 132.23 146.96L131.63 143.01C137.49 142.12 148.81 149.55 153.32 155.96C156.37 160.3 155.89 163.29 154.94 165.03C153.58 167.53 151.65 169.09 149.18 169.68C148.46 169.85 147.7 169.94 146.89 169.94V169.91Z"
                                       fill={
                                         {
                                           "payload": 4278927075,
@@ -406,7 +336,7 @@ exports[`FciLoginL3Screen should match the snapshot 1`] = `
                                       }
                                     />
                                     <RNSVGPath
-                                      d="M164.18 121.76C158.14 121.76 154.18 121.31 153.66 121.25L154.13 117.28C154.55 117.33 196.7 122.02 223.11 98.74L225.75 101.74C206.05 119.11 178.92 121.76 164.17 121.76H164.18Z"
+                                      d="M193.3 159.28C186.32 159.28 179.37 157.55 172.68 154.08C166.06 150.65 161.56 144.2 160.64 136.81C160.14 132.76 161 127.59 161.83 122.59C162.81 116.68 163.92 109.98 162.03 107.74C161.72 107.37 161.13 106.88 159.64 106.88C156.83 106.88 154.49 107.89 152.49 109.96C144.77 117.98 145.43 138.23 145.44 138.43L141.44 138.58C141.41 137.68 140.71 116.43 149.61 107.19C152.36 104.33 155.74 102.88 159.64 102.88C161.97 102.88 163.8 103.64 165.08 105.15C168.17 108.8 167.01 115.81 165.78 123.24C165 127.96 164.19 132.83 164.62 136.31C165.38 142.48 168.99 147.66 174.53 150.52C186.04 156.48 198.37 156.82 210.17 151.53L211.81 155.18C205.72 157.91 199.5 159.28 193.31 159.28H193.3Z"
                                       fill={
                                         {
                                           "payload": 4278927075,
@@ -420,10 +350,24 @@ exports[`FciLoginL3Screen should match the snapshot 1`] = `
                                       }
                                     />
                                     <RNSVGPath
-                                      d="M131.651 90.76C131.001 90.3 125.331 86.14 125.631 81.22C125.781 78.72 127.351 76.65 130.301 75.06C139.731 69.97 170.281 73.21 171.571 73.35L171.141 77.33C162.651 76.41 139.121 74.85 132.201 78.58C130.561 79.47 129.691 80.44 129.631 81.46C129.491 83.76 132.801 86.66 133.971 87.5L131.661 90.76H131.651Z"
+                                      d="M187.88 206.26C179.42 206.26 171.48 204.88 165.11 203.27C151.92 199.94 142.67 195.1 142.28 194.9L144.15 191.36C144.51 191.55 180.81 210.36 210.21 198.14L211.75 201.83C203.91 205.09 195.68 206.26 187.89 206.26H187.88Z"
                                       fill={
                                         {
                                           "payload": 4278927075,
+                                          "type": 0,
+                                        }
+                                      }
+                                      propList={
+                                        [
+                                          "fill",
+                                        ]
+                                      }
+                                    />
+                                    <RNSVGPath
+                                      d="M78.5101 128.64C78.1101 128.64 77.7201 128.48 77.4401 128.19L52.2101 102.45C51.6301 101.86 51.6401 100.91 52.2301 100.33C52.8201 99.75 53.7701 99.76 54.3501 100.35L78.4801 124.97L120.84 79.49C121.4 78.88 122.35 78.85 122.96 79.41C123.57 79.97 123.6 80.92 123.04 81.53L79.6101 128.16C79.3301 128.46 78.9401 128.63 78.5301 128.64H78.5101Z"
+                                      fill={
+                                        {
+                                          "payload": 4278240714,
                                           "type": 0,
                                         }
                                       }
@@ -467,7 +411,7 @@ exports[`FciLoginL3Screen should match the snapshot 1`] = `
                                     ]
                                   }
                                 >
-                                  Prepara la tua Carta di Identità Elettronica e il PIN
+                                  Vuoi attivare l’accesso rapido?
                                 </Text>
                                 <Text
                                   allowFontScaling={true}
@@ -491,8 +435,80 @@ exports[`FciLoginL3Screen should match the snapshot 1`] = `
                                   }
                                   testID="FciLoginL3SubtitleText"
                                 >
-                                  Prima di firmare dobbiamo verificare la tua identità. Questo passaggio protegge la tua firma e ne garantisce la validità.
+                                  Con l’accesso rapido chiederemo la tua l'identità digitale una sola volta all'anno invece che ogni 30 giorni. Poi ti basterà usare il volto, l’impronta o il codice.
                                 </Text>
+                                <View
+                                  style={
+                                    {
+                                      "alignSelf": "center",
+                                    }
+                                  }
+                                >
+                                  <View
+                                    accessibilityRole="link"
+                                    accessibilityState={
+                                      {
+                                        "busy": undefined,
+                                        "checked": undefined,
+                                        "disabled": undefined,
+                                        "expanded": undefined,
+                                        "selected": undefined,
+                                      }
+                                    }
+                                    accessibilityValue={
+                                      {
+                                        "max": undefined,
+                                        "min": undefined,
+                                        "now": undefined,
+                                        "text": undefined,
+                                      }
+                                    }
+                                    accessible={true}
+                                    collapsable={false}
+                                    focusable={true}
+                                    onBlur={[Function]}
+                                    onClick={[Function]}
+                                    onFocus={[Function]}
+                                    onResponderGrant={[Function]}
+                                    onResponderMove={[Function]}
+                                    onResponderRelease={[Function]}
+                                    onResponderTerminate={[Function]}
+                                    onResponderTerminationRequest={[Function]}
+                                    onStartShouldSetResponder={[Function]}
+                                  >
+                                    <Text
+                                      accessibilityRole="link"
+                                      allowFontScaling={true}
+                                      dynamicTypeRamp="body"
+                                      maxFontSizeMultiplier={1.5}
+                                      style={
+                                        [
+                                          {
+                                            "textDecorationLine": "underline",
+                                          },
+                                          {
+                                            "color": "#0B3EE3",
+                                            "fontFamily": "Titillio",
+                                            "fontSize": 16,
+                                            "fontStyle": "normal",
+                                            "fontWeight": "600",
+                                            "lineHeight": 24,
+                                          },
+                                        ]
+                                      }
+                                      testID="FciLoginL3DescriptionButton"
+                                    >
+                                      Come proteggere il tuo accesso
+                                    </Text>
+                                  </View>
+                                </View>
+                                <View
+                                  style={
+                                    {
+                                      "height": 16,
+                                    }
+                                  }
+                                />
                               </View>
                               <View
                                 style={
@@ -511,7 +527,7 @@ exports[`FciLoginL3Screen should match the snapshot 1`] = `
                                   }
                                 >
                                   <View
-                                    accessibilityLabel="Continua"
+                                    accessibilityLabel="Continua con l’accesso rapido"
                                     accessibilityRole="button"
                                     accessibilityState={
                                       {
@@ -723,7 +739,237 @@ exports[`FciLoginL3Screen should match the snapshot 1`] = `
                                             ]
                                           }
                                         >
-                                          Continua
+                                          Continua con l’accesso rapido
+                                        </Text>
+                                      </View>
+                                    </View>
+                                  </View>
+                                </View>
+                                <View
+                                  style={
+                                    {
+                                      "alignSelf": "center",
+                                    }
+                                  }
+                                >
+                                  <View
+                                    accessibilityLabel="Rinnova l’accesso ogni 30 giorni"
+                                    accessibilityRole="button"
+                                    accessibilityState={
+                                      {
+                                        "busy": false,
+                                        "checked": undefined,
+                                        "disabled": false,
+                                        "expanded": undefined,
+                                        "selected": undefined,
+                                      }
+                                    }
+                                    accessibilityValue={
+                                      {
+                                        "max": undefined,
+                                        "min": undefined,
+                                        "now": undefined,
+                                        "text": undefined,
+                                      }
+                                    }
+                                    accessible={true}
+                                    collapsable={false}
+                                    focusable={true}
+                                    hitSlop={
+                                      {
+                                        "bottom": 14,
+                                        "left": 24,
+                                        "right": 24,
+                                        "top": 14,
+                                      }
+                                    }
+                                    onBlur={[Function]}
+                                    onClick={[Function]}
+                                    onFocus={[Function]}
+                                    onResponderGrant={[Function]}
+                                    onResponderMove={[Function]}
+                                    onResponderRelease={[Function]}
+                                    onResponderTerminate={[Function]}
+                                    onResponderTerminationRequest={[Function]}
+                                    onStartShouldSetResponder={[Function]}
+                                    style={
+                                      {
+                                        "alignSelf": "flex-start",
+                                      }
+                                    }
+                                    testID="FciLoginL3HelpButton"
+                                  >
+                                    <View
+                                      collapsable={false}
+                                      jestAnimatedProps={
+                                        {
+                                          "value": {},
+                                        }
+                                      }
+                                      jestAnimatedStyle={
+                                        {
+                                          "value": {
+                                            "transform": [
+                                              {
+                                                "scale": 1,
+                                              },
+                                            ],
+                                          },
+                                        }
+                                      }
+                                      jestInlineStyle={
+                                        [
+                                          {
+                                            "alignItems": "center",
+                                            "borderCurve": "continuous",
+                                            "elevation": 0,
+                                            "flexDirection": "row",
+                                            "justifyContent": "center",
+                                            "overflow": "hidden",
+                                            "textAlignVertical": "center",
+                                          },
+                                          {
+                                            "paddingHorizontal": 0,
+                                          },
+                                          {
+                                            "backgroundColor": "transparent",
+                                            "borderColor": "#0B3EE3",
+                                            "borderRadius": 8,
+                                            "borderWidth": 0,
+                                            "height": undefined,
+                                          },
+                                          {},
+                                        ]
+                                      }
+                                      style={
+                                        [
+                                          {
+                                            "alignItems": "center",
+                                            "borderCurve": "continuous",
+                                            "elevation": 0,
+                                            "flexDirection": "row",
+                                            "justifyContent": "center",
+                                            "overflow": "hidden",
+                                            "textAlignVertical": "center",
+                                          },
+                                          {
+                                            "transform": [
+                                              {
+                                                "scale": 1,
+                                              },
+                                            ],
+                                          },
+                                          {},
+                                          {
+                                            "paddingHorizontal": 0,
+                                          },
+                                          {
+                                            "backgroundColor": "transparent",
+                                            "borderColor": "#0B3EE3",
+                                            "borderRadius": 8,
+                                            "borderWidth": 0,
+                                            "height": undefined,
+                                          },
+                                          {},
+                                        ]
+                                      }
+                                    >
+                                      <View
+                                        collapsable={false}
+                                        jestAnimatedProps={
+                                          {
+                                            "value": {},
+                                          }
+                                        }
+                                        jestAnimatedStyle={
+                                          {
+                                            "value": {},
+                                          }
+                                        }
+                                        jestInlineStyle={
+                                          [
+                                            {
+                                              "alignItems": "center",
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                            },
+                                            {
+                                              "columnGap": 8,
+                                            },
+                                            false,
+                                          ]
+                                        }
+                                        style={
+                                          [
+                                            {
+                                              "alignItems": "center",
+                                              "flexDirection": "row",
+                                              "justifyContent": "center",
+                                            },
+                                            {
+                                              "columnGap": 8,
+                                            },
+                                            false,
+                                          ]
+                                        }
+                                      >
+                                        <Text
+                                          accessibilityElementsHidden={true}
+                                          accessible={false}
+                                          allowFontScaling={true}
+                                          collapsable={false}
+                                          ellipsizeMode="tail"
+                                          importantForAccessibility="no-hide-descendants"
+                                          jestAnimatedProps={
+                                            {
+                                              "value": {},
+                                            }
+                                          }
+                                          jestAnimatedStyle={
+                                            {
+                                              "value": {
+                                                "color": "rgba(11, 62, 227, 1)",
+                                              },
+                                            }
+                                          }
+                                          jestInlineStyle={
+                                            [
+                                              {
+                                                "textAlign": "auto",
+                                              },
+                                              {
+                                                "color": "#0B3EE3",
+                                              },
+                                            ]
+                                          }
+                                          maxFontSizeMultiplier={1.5}
+                                          numberOfLines={1}
+                                          style={
+                                            [
+                                              {},
+                                              {
+                                                "color": undefined,
+                                                "fontFamily": "Titillio",
+                                                "fontSize": 16,
+                                                "fontStyle": "normal",
+                                                "fontWeight": "600",
+                                                "lineHeight": 20,
+                                              },
+                                              [
+                                                {
+                                                  "textAlign": "auto",
+                                                },
+                                                {
+                                                  "color": "#0B3EE3",
+                                                },
+                                                {
+                                                  "color": "rgba(11, 62, 227, 1)",
+                                                },
+                                              ],
+                                            ]
+                                          }
+                                        >
+                                          Rinnova l’accesso ogni 30 giorni
                                         </Text>
                                       </View>
                                     </View>
@@ -828,12 +1074,161 @@ exports[`FciLoginL3Screen should match the snapshot 1`] = `
                             }
                           >
                             <View
-                              style={
+                              accessibilityLabel="Indietro"
+                              accessibilityRole="button"
+                              accessibilityState={
                                 {
-                                  "width": 32,
+                                  "busy": undefined,
+                                  "checked": undefined,
+                                  "disabled": false,
+                                  "expanded": undefined,
+                                  "selected": undefined,
                                 }
                               }
-                            />
+                              accessibilityValue={
+                                {
+                                  "max": undefined,
+                                  "min": undefined,
+                                  "now": undefined,
+                                  "text": undefined,
+                                }
+                              }
+                              accessible={true}
+                              collapsable={false}
+                              focusable={true}
+                              hitSlop={8}
+                              onBlur={[Function]}
+                              onClick={[Function]}
+                              onFocus={[Function]}
+                              onResponderGrant={[Function]}
+                              onResponderMove={[Function]}
+                              onResponderRelease={[Function]}
+                              onResponderTerminate={[Function]}
+                              onResponderTerminationRequest={[Function]}
+                              onStartShouldSetResponder={[Function]}
+                            >
+                              <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "height": 24,
+                                      "width": 24,
+                                    },
+                                  ]
+                                }
+                                style={
+                                  [
+                                    {
+                                      "alignItems": "center",
+                                      "justifyContent": "center",
+                                    },
+                                    {
+                                      "height": 24,
+                                      "width": 24,
+                                    },
+                                    {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                  ]
+                                }
+                              >
+                                <RNSVGSvgView
+                                  accessibilityElementsHidden={true}
+                                  accessibilityLabel=""
+                                  accessible={false}
+                                  align="xMidYMid"
+                                  bbHeight={36}
+                                  bbWidth={36}
+                                  collapsable={false}
+                                  color="#0E0F13"
+                                  focusable={false}
+                                  height={36}
+                                  importantForAccessibility="no-hide-descendants"
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {
+                                        "color": "rgba(14, 15, 19, 1)",
+                                      },
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  meetOrSlice={0}
+                                  minX={0}
+                                  minY={0}
+                                  style={
+                                    [
+                                      {
+                                        "backgroundColor": "transparent",
+                                        "borderWidth": 0,
+                                      },
+                                      {
+                                        "flex": 0,
+                                        "height": 36,
+                                        "width": 36,
+                                      },
+                                    ]
+                                  }
+                                  vbHeight={24}
+                                  vbWidth={24}
+                                  width={36}
+                                >
+                                  <RNSVGGroup
+                                    fill={
+                                      {
+                                        "payload": 4278190080,
+                                        "type": 0,
+                                      }
+                                    }
+                                  >
+                                    <RNSVGPath
+                                      clipRule={0}
+                                      d="M12.7071.2929c-.3905-.39053-1.0237-.39053-1.4142 0l-11 11c-.39053.3905-.39053 1.0237 0 1.4142l11 11c.3905.3905 1.0237.3905 1.4142 0 .3905-.3905.3905-1.0237 0-1.4142L2.41421 12 12.7071 1.70711c.3905-.39053.3905-1.0237 0-1.41422Z"
+                                      fill={
+                                        {
+                                          "type": 2,
+                                        }
+                                      }
+                                      fillRule={0}
+                                      propList={
+                                        [
+                                          "fill",
+                                          "fillRule",
+                                        ]
+                                      }
+                                    />
+                                  </RNSVGGroup>
+                                </RNSVGSvgView>
+                              </View>
+                            </View>
                             <View
                               accessibilityElementsHidden={true}
                               accessibilityLabel=""
@@ -909,7 +1304,7 @@ exports[`FciLoginL3Screen should match the snapshot 1`] = `
                               }
                             >
                               <View
-                                accessibilityLabel="Chiudi"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -1046,7 +1441,7 @@ exports[`FciLoginL3Screen should match the snapshot 1`] = `
                                     >
                                       <RNSVGPath
                                         clipRule={0}
-                                        d="M19.7071 5.70711c.3905-.39053.3905-1.02369 0-1.41422-.3905-.39052-1.0237-.39052-1.4142 0L12 10.5858 5.70711 4.29289c-.39053-.39052-1.02369-.39052-1.41422 0-.39052.39053-.39052 1.02369 0 1.41422L10.5858 12l-6.29291 6.2929c-.39052.3905-.39052 1.0237 0 1.4142.39053.3905 1.02369.3905 1.41422 0L12 13.4142l6.2929 6.2929c.3905.3905 1.0237.3905 1.4142 0 .3905-.3905.3905-1.0237 0-1.4142L13.4142 12l6.2929-6.29289Z"
+                                        d="M6 8c0-3.31371 2.68629-6 6-6 3.3137 0 6 2.68629 6 6 0 2.7248-1.8172 5.0278-4.3079 5.7583C12.3754 14.1446 11 15.2973 11 17v1c0 .5523.4477 1 1 1s1-.4477 1-1v-1c0-.5064.452-1.087 1.255-1.3225C17.5744 14.7039 20 11.6365 20 8c0-4.41828-3.5817-8-8-8-4.41828 0-8 3.58172-8 8 0 .55228.44772 1 1 1s1-.44772 1-1Zm7.5 14.5c0 .8284-.6716 1.5-1.5 1.5s-1.5-.6716-1.5-1.5.6716-1.5 1.5-1.5 1.5.6716 1.5 1.5Z"
                                         fill={
                                           {
                                             "type": 2,
