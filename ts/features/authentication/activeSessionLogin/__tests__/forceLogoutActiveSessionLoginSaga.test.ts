@@ -13,6 +13,7 @@ import {
 } from "../store/actions";
 import { sessionCorrupted } from "../../common/store/actions";
 import { sessionTokenSelector } from "../../common/store/selectors";
+import { cieLoginFlowSelector } from "../store/selectors";
 import { startApplicationInitialization } from "../../../../store/actions/application";
 import { resetMixpanelSaga } from "../../../../sagas/mixpanel";
 import * as error from "../../../../utils/errors";
@@ -73,7 +74,8 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next()
         .select(sessionTokenSelector)
         .next(undefined) // No session token
-        .next() // The saga returns here
+        .select(cieLoginFlowSelector)
+        .next("auth")
         .isDone();
 
       // Verify that trackUndefinedBearerToken was called
@@ -94,9 +96,11 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
+        .select(cieLoginFlowSelector)
+        .next("reauth")
         .call(mockLogout, {})
         .next(successResponse) // Mock logout API success
-        .put(sessionCorrupted("auth"))
+        .put(sessionCorrupted("reauth"))
         .next()
         .call(resetMixpanelSaga)
         .next()
@@ -105,6 +109,31 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .isDone();
 
       expect(analytics.trackLogoutSuccess).toHaveBeenCalledWith("reauth");
+    });
+
+    it("should track success with FCI_auth flow and finalize session corrupted flow", () => {
+      const successResponse = E.right({ status: 200 });
+
+      testSaga(
+        logoutUserAfterActiveSessionLoginSaga,
+        logoutBeforeSessionCorruptedAction
+      )
+        .next()
+        .select(sessionTokenSelector)
+        .next(sessionToken)
+        .select(cieLoginFlowSelector)
+        .next("FCI_auth")
+        .call(mockLogout, {})
+        .next(successResponse)
+        .put(sessionCorrupted("FCI_auth"))
+        .next()
+        .call(resetMixpanelSaga)
+        .next()
+        .put(startApplicationInitialization())
+        .next()
+        .isDone();
+
+      expect(analytics.trackLogoutSuccess).toHaveBeenCalledWith("FCI_auth");
     });
 
     it("should track success and finalize different CF flow", () => {
@@ -117,6 +146,8 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
+        .select(cieLoginFlowSelector)
+        .next("reauth")
         .call(mockLogout, {})
         .next(successResponse) // Mock logout API success
         .put(setFinalizeLoggedOutUserWithDifferentCF())
@@ -143,9 +174,11 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
+        .select(cieLoginFlowSelector)
+        .next("reauth")
         .call(mockLogout, {})
         .next(errorResponse) // Mock logout API error
-        .put(sessionCorrupted("auth"))
+        .put(sessionCorrupted("reauth"))
         .next()
         .call(resetMixpanelSaga)
         .next()
@@ -172,6 +205,8 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
+        .select(cieLoginFlowSelector)
+        .next("reauth")
         .call(mockLogout, {})
         .next(errorResponse) // Mock logout API error
         .put(setFinalizeLoggedOutUserWithDifferentCF())
@@ -204,9 +239,11 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
+        .select(cieLoginFlowSelector)
+        .next("reauth")
         .call(mockLogout, {})
         .next(leftResponse) // Mock validation error
-        .put(sessionCorrupted("auth"))
+        .put(sessionCorrupted("reauth"))
         .next()
         .call(resetMixpanelSaga)
         .next()
@@ -237,9 +274,11 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
+        .select(cieLoginFlowSelector)
+        .next("reauth")
         .call(mockLogout, {})
         .throw(thrownError) // Mock exception during API call
-        .put(sessionCorrupted("auth"))
+        .put(sessionCorrupted("reauth"))
         .next()
         .call(resetMixpanelSaga)
         .next()
