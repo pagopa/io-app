@@ -96,7 +96,7 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next(sessionToken)
         .call(mockLogout, {})
         .next(successResponse) // Mock logout API success
-        .put(sessionCorrupted())
+        .put(sessionCorrupted("auth"))
         .next()
         .call(resetMixpanelSaga)
         .next()
@@ -145,7 +145,7 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next(sessionToken)
         .call(mockLogout, {})
         .next(errorResponse) // Mock logout API error
-        .put(sessionCorrupted())
+        .put(sessionCorrupted("auth"))
         .next()
         .call(resetMixpanelSaga)
         .next()
@@ -206,7 +206,7 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next(sessionToken)
         .call(mockLogout, {})
         .next(leftResponse) // Mock validation error
-        .put(sessionCorrupted())
+        .put(sessionCorrupted("auth"))
         .next()
         .call(resetMixpanelSaga)
         .next()
@@ -239,7 +239,7 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next(sessionToken)
         .call(mockLogout, {})
         .throw(thrownError) // Mock exception during API call
-        .put(sessionCorrupted())
+        .put(sessionCorrupted("auth"))
         .next()
         .call(resetMixpanelSaga)
         .next()
