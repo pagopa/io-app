@@ -164,7 +164,11 @@ const reducer = (
     }
 
     case getType(itwLifecycleStoresReset):
-      return { ...itwWalletInstanceInitialState };
+      return {
+        // Should be persisted on wallet resets
+        isRemotelyActive: state.isRemotelyActive,
+        ...itwWalletInstanceInitialState
+      };
 
     default:
       return state;
