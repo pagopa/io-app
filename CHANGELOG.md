@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.31.0-rc.3](https://github.com/pagopa/io-app/compare/3.31.0-rc.2...3.31.0-rc.3) (2026-05-12)
+
+
+### Features
+
+* [[IEL-462](https://pagopa.atlassian.net/browse/IEL-462)] Apply some changes to the re-login fci flow in order to improve the UX ([#8094](https://github.com/pagopa/io-app/issues/8094)) ([f2ecf66](https://github.com/pagopa/io-app/commit/f2ecf6681068ce932c62c915398abe1298e93a16))
+* **IT-Wallet:** [[SIW-4173](https://pagopa.atlassian.net/browse/SIW-4173)] How QR Code works banner and tracking ([#8056](https://github.com/pagopa/io-app/issues/8056)) ([0ee6d4a](https://github.com/pagopa/io-app/commit/0ee6d4a56474a42c9cc2b8903995a20df7d1cba9))
+* **IT-Wallet:** [[SIW-4174](https://pagopa.atlassian.net/browse/SIW-4174)] Wallet ID info QR Code banner and tracking  ([#8061](https://github.com/pagopa/io-app/issues/8061)) ([525acb4](https://github.com/pagopa/io-app/commit/525acb412dbc4c2abee659876ec2326c068d589d))
+
+
+### Bug Fixes
+
+* [[IEL-525](https://pagopa.atlassian.net/browse/IEL-525)] Edit on counter limit change ([#8093](https://github.com/pagopa/io-app/issues/8093)) ([9590c91](https://github.com/pagopa/io-app/commit/9590c9164df9d513af31134293fe2bb513f24d43))
+* **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] update `@pagopa/io-react-native-cie` to `1.3.6` ([#8095](https://github.com/pagopa/io-app/issues/8095)) ([fb6783b](https://github.com/pagopa/io-app/commit/fb6783b67097b91351299ac2d5c48217e006bf4e))
+
 ## [3.31.0-rc.2](https://github.com/pagopa/io-app/compare/3.31.0-rc.1...3.31.0-rc.2) (2026-05-08)
 
 
