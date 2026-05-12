@@ -4237,6 +4237,9 @@
             "invalid": "Non puoi far verificare i tuoi documenti digitali."
           },
           "banner": {
+            "title": "Come funziona il QR Code?",
+            "content": "Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio.",
+            "action": "Scopri di più",
             "invalid": "Conferma la tua identità per continuare a usare i tuoi documenti senza limitazioni."
           },
           "reissue": {
