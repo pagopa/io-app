@@ -1,3 +1,4 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { addMonths } from "date-fns";
 import _ from "lodash";
@@ -10,7 +11,6 @@ import {
   PersistPartial,
   persistReducer
 } from "redux-persist";
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Action } from "../../../../../store/actions/types";
 import { isDevEnv } from "../../../../../utils/environment";
 import itwCredentialsReducer, {
@@ -25,6 +25,9 @@ import identificationReducer, {
 import issuanceReducer, {
   ItwIssuanceState
 } from "../../../issuance/store/reducers";
+import itwDebugReducer, {
+  ItwDebugState
+} from "../../../playgrounds/store/reducer";
 import wiaReducer, {
   ItwWalletInstanceState
 } from "../../../walletInstance/store/reducers";
@@ -45,6 +48,7 @@ export type ItWalletState = {
   securePreferences: ItwSecurePreferencesState & PersistPartial;
   credentialsCatalogue: ItwCredentialsCatalogueState;
   banners: ItwBannersState;
+  debug: ItwDebugState;
 };
 
 export type PersistedItWalletState = ReturnType<typeof persistedReducer>;
@@ -58,10 +62,11 @@ const itwReducer = combineReducers({
   preferences: preferencesReducer,
   securePreferences: securePreferencesReducer,
   credentialsCatalogue: itwCredentialsCatalogueReducer,
-  banners: bannersReducer
+  banners: bannersReducer,
+  debug: itwDebugReducer
 });
 
-const CURRENT_REDUX_ITW_STORE_VERSION = 12;
+const CURRENT_REDUX_ITW_STORE_VERSION = 14;
 
 export const migrations: MigrationManifest = {
   // Added preferences store
@@ -165,7 +170,13 @@ export const migrations: MigrationManifest = {
 
   // Added flag to switch between the hardcoded values and the catalogue for the list of credentials
   "12": (state: PersistedState): PersistedState =>
-    _.set(state, "credentialsCatalogue.isEnabledForCredentialsList", false)
+    _.set(state, "credentialsCatalogue.isEnabledForCredentialsList", false),
+  // Added catalogue translations pot (IT-Wallet spec v1.3.3+)
+  "13": (state: PersistedState): PersistedState =>
+    _.set(state, "credentialsCatalogue.translations", pot.none),
+  // Removed itwSetWalletInstanceRemotelyActive from preferences
+  "14": (state: PersistedState): PersistedState =>
+    _.omit(state, "preferences.itwSetWalletInstanceRemotelyActive")
 };
 
 const itwPersistConfig: PersistConfig = {
@@ -175,7 +186,8 @@ const itwPersistConfig: PersistConfig = {
     "preferences",
     "environment",
     "credentialsCatalogue",
-    "banners"
+    "banners",
+    "debug"
   ] satisfies Array<keyof ItWalletState>,
   version: CURRENT_REDUX_ITW_STORE_VERSION,
   migrate: createMigrate(migrations, { debug: isDevEnv })

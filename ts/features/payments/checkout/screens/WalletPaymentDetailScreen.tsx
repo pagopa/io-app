@@ -1,6 +1,7 @@
 import {
   Divider,
   H3,
+  IOMarkdown,
   IOSpacingScale,
   ListItemInfo,
   ListItemInfoCopy,
@@ -23,10 +24,9 @@ import I18n from "i18next";
 import { ComponentProps, useCallback, useLayoutEffect, useState } from "react";
 import { AccessibilityInfo, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { OrganizationFiscalCode } from "../../../../../definitions/backend/OrganizationFiscalCode";
+import { OrganizationFiscalCode } from "../../../../../definitions/communication/OrganizationFiscalCode";
 import { PaymentRequestsGetResponse } from "../../../../../definitions/pagopa/ecommerce/PaymentRequestsGetResponse";
 import { RptId } from "../../../../../definitions/pagopa/ecommerce/RptId";
-import IOMarkdown from "../../../../components/IOMarkdown";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { LoadingIndicator } from "../../../../components/ui/LoadingIndicator";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";

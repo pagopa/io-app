@@ -1,23 +1,24 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { MixpanelProperties } from "mixpanel-react-native";
 import { Appearance } from "react-native";
-import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
-import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
+import { PushNotificationsContentTypeEnum } from "../../../definitions/identity/PushNotificationsContentType";
+import { ReminderStatusEnum } from "../../../definitions/identity/ReminderStatus";
 import * as PUSHUTILS from "../../features/pushNotifications/utils";
 import { GlobalState } from "../../store/reducers/types";
 import * as ACCESSIBILITY from "../../utils/accessibility";
 import * as APPVERSION from "../../utils/appVersion";
 import * as BIOMETRICS from "../../utils/biometrics";
 import * as DEVICE from "../../utils/device";
+import * as analytics from "../../utils/analytics";
 import { updateMixpanelSuperProperties } from "../superProperties";
 
 const mockColorScheme = "light";
 
 // eslint-disable-next-line functional/no-let
-let mockIsMixpanelInitialized = true;
+let mockIsMixpanelInitialized: () => boolean = () => true;
 const mockedRegisterSuperProperties = jest.fn();
 jest.mock("../../mixpanel", () => ({
-  isMixpanelInstanceInitialized: () => mockIsMixpanelInitialized,
+  isMixpanelInstanceInitialized: () => mockIsMixpanelInitialized(),
   registerSuperProperties: (properties: MixpanelProperties) =>
     mockedRegisterSuperProperties(properties)
 }));
@@ -67,7 +68,7 @@ describe("superProperties", () => {
         [false, "disabled"],
         [true, "enabled"]
       ].forEach(notificationPermissionTuple => {
-        mockIsMixpanelInitialized = true;
+        mockIsMixpanelInitialized = () => true;
         it(`should call 'mixpanel.getPeople().set' with proper parameter's value for input
 ({
     notificationPermission: ${notificationPermissionTuple[0]}
@@ -126,11 +127,29 @@ describe("superProperties", () => {
     );
   });
   it("should do nothing if 'isMixpanelInstanceInitialized' returns 'false'", async () => {
-    mockIsMixpanelInitialized = false;
+    mockIsMixpanelInitialized = () => false;
     const state = {} as GlobalState;
 
     await updateMixpanelSuperProperties(state);
 
+    expect(mockedRegisterSuperProperties.mock.calls.length).toBe(0);
+  });
+  it("should call trackAppCaughtError with proper parameters when an exception is thrown", async () => {
+    mockIsMixpanelInitialized = () => {
+      throw new Error("mixpanel initialization check failed");
+    };
+    const trackAppCaughtErrorSpy = jest
+      .spyOn(analytics, "trackAppCaughtError")
+      .mockImplementation(() => undefined);
+    const fakeState = {} as GlobalState;
+
+    await updateMixpanelSuperProperties(fakeState);
+
+    expect(trackAppCaughtErrorSpy).toHaveBeenCalledWith(
+      "updateMixpanelSuperProperties",
+      undefined,
+      expect.stringContaining("mixpanel initialization check failed")
+    );
     expect(mockedRegisterSuperProperties.mock.calls.length).toBe(0);
   });
 });

@@ -180,9 +180,15 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
           icon: "productITWallet",
           iconPosition: "end",
           onPress: () => {
-            trackItwProximityShowQrCode();
+            trackItwProximityShowQrCode({
+              credential: "general",
+              position: "WALLET_HOME"
+            });
             navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-              screen: ITW_PROXIMITY_ROUTES.QR_CODE
+              screen: ITW_PROXIMITY_ROUTES.QR_CODE,
+              params: {
+                source: "WALLET_HOME"
+              }
             });
           },
           tourGuideProps: {

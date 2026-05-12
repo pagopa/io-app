@@ -9,7 +9,7 @@ import {
   addFavouriteServiceSuccess
 } from "../../store/actions";
 import { favouriteServicesCountSelector } from "../../store/selectors";
-import { createMockService } from "../../__mocks__";
+import { createMockService } from "../../__mocks__/favouriteServicesMocks";
 import { favouriteServicesLimitSelector } from "../../../common/store/selectors/remoteConfig";
 
 const mockedDate = Date.now();

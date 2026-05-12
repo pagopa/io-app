@@ -12,9 +12,13 @@ import { useScreenEndMargin } from "../../../../hooks/useScreenEndMargin";
 import { isDevEnv } from "../../../../utils/environment";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import { ItwBackgroundTaskSection } from "../components/ItwBackgroundTaskSection";
+import { ItwCardsHeaderSection } from "../components/ItwCardsHeaderSection";
+import { ItwCardsSection } from "../components/ItwCardsSection";
 import { ItwComponentsSection } from "../components/ItwComponentsSection";
+import { ItwCredentialStatusOverrideSection } from "../components/ItwCredentialStatusOverrideSection";
 import { ItwEnvironmentSection } from "../components/ItwEnvironmentSection";
 import { ItwIdentificationScreensSection } from "../components/ItwIdentificationScreensSection";
+import { ItwIso18013Section } from "../components/ItwIso18013Section";
 import { ItwL3ScreensSection } from "../components/ItwL3ScreensSection";
 import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
 import { ItwMiscSection } from "../components/ItwMiscSection";
@@ -62,6 +66,14 @@ const ItwPlayground = () => {
       content: <ItwPidIssuanceSection />
     },
     {
+      label: "ISO-18013",
+      content: <ItwIso18013Section />
+    },
+    {
+      label: "Status",
+      content: <ItwCredentialStatusOverrideSection />
+    },
+    {
       label: "Screens",
       content: (
         <>
@@ -73,6 +85,14 @@ const ItwPlayground = () => {
     {
       label: "Components",
       content: <ItwComponentsSection />
+    },
+    {
+      label: "Cards",
+      content: <ItwCardsSection />
+    },
+    {
+      label: "Header Cards",
+      content: <ItwCardsHeaderSection />
     },
     ...(isDevEnv
       ? [

@@ -14,7 +14,6 @@ import {
 import { getMixPanelCredential } from "../../analytics/utils";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
-import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import {
@@ -23,6 +22,7 @@ import {
   selectIsLoading
 } from "../../machine/credential/selectors";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
+import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 
 export const ItwIssuanceCredentialIntroductionScreen = () => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
@@ -64,6 +64,7 @@ export const ContentView = ({
   const isLoading =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const credentialName = useItwCredentialName(credentialType);
   const mixPanelCredential = useMemo(
     () => getMixPanelCredential(credentialType, isItwL3),
     [credentialType, isItwL3]
@@ -92,7 +93,7 @@ export const ContentView = ({
       }}
     >
       <VStack>
-        <H2>{getCredentialNameFromType(credentialType)}</H2>
+        <H2>{credentialName}</H2>
         <Body>
           {I18n.t("features.itWallet.issuance.credentialIntro.subtitle")}
         </Body>

@@ -1,15 +1,12 @@
-import { IOColors } from "@pagopa/io-app-design-system";
+import { IOColors, useIOThemeContext } from "@pagopa/io-app-design-system";
+import Color from "color";
 import { useMemo } from "react";
-import { StatusBarStyle } from "react-native";
+import { ColorSchemeName, StatusBarStyle } from "react-native";
 import { HeaderSecondLevelHookProps } from "../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../store/hooks";
-import { getLuminance } from "../../../../utils/color";
-import {
-  getCredentialCardConfig,
-  getCredentialBackgroundColor
-} from "../components/ItwCredentialCard/credentialCardConfig";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
-import { getCredentialNameFromType } from "./itwCredentialUtils";
+import { getCredentialCardConfig } from "../components/ItwCredentialCard/config";
+import { useItwCredentialName } from "../hooks/useItwCredentialName";
 import { CredentialType } from "./itwMocksUtils";
 
 export type CredentialTheme = {
@@ -71,43 +68,47 @@ const getLegacyThemeColorByCredentialType = (
 
 export const getThemeColorByCredentialType = (
   credentialType: string,
-  withL3Design: boolean
+  withL3Design: boolean,
+  colorScheme: ColorSchemeName
 ): CredentialTheme => {
-  const cardConfig = getCredentialCardConfig(credentialType);
-  const colors = withL3Design
-    ? {
-        backgroundColor: getCredentialBackgroundColor(cardConfig),
-        textColor: cardConfig.titleColor
-      }
-    : getLegacyThemeColorByCredentialType(credentialType);
+  const cardConfig = getCredentialCardConfig(credentialType, colorScheme);
+  const colors =
+    withL3Design && cardConfig
+      ? {
+          backgroundColor: cardConfig.color,
+          textColor: cardConfig.titleColor
+        }
+      : getLegacyThemeColorByCredentialType(credentialType);
 
-  const isDarker = getLuminance(colors.backgroundColor) < 0.5;
+  const isDark = Color(colors.backgroundColor).isDark();
 
   return {
     ...colors,
-    statusBarStyle: isDarker ? "light-content" : "dark-content",
-    variant: isDarker ? "contrast" : "neutral"
+    statusBarStyle: isDark ? "light-content" : "dark-content",
+    variant: isDark ? "contrast" : "neutral"
   };
 };
 
 export const useThemeColorByCredentialType = (
   credentialType: string
 ): CredentialTheme => {
+  const { themeType } = useIOThemeContext();
   const withL3Design = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
   return useMemo(
-    () => getThemeColorByCredentialType(credentialType, withL3Design),
-    [credentialType, withL3Design]
+    () =>
+      getThemeColorByCredentialType(credentialType, withL3Design, themeType),
+    [credentialType, withL3Design, themeType]
   );
 };
 
 export const useHeaderPropsByCredentialType = (credentialType: string) => {
   const { backgroundColor, variant } =
     useThemeColorByCredentialType(credentialType);
-  const withL3Design = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const title = useItwCredentialName(credentialType);
 
   return {
-    title: getCredentialNameFromType(credentialType, "", withL3Design),
+    title,
     variant,
     backgroundColor
   };
