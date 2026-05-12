@@ -12,7 +12,10 @@ import {
   itwLifecycleIsOperationalOrValid,
   itwLifecycleIsValidSelector
 } from "../../../lifecycle/store/selectors";
-import { itwIsWalletInstanceStatusFailureSelector } from "../../../walletInstance/store/selectors";
+import {
+  itwIsRemotelyActiveSelector,
+  itwIsWalletInstanceStatusFailureSelector
+} from "../../../walletInstance/store/selectors";
 import {
   itwIsBannerHiddenSelector,
   itwIsDiscoveryBannerHiddenSelector,
@@ -23,8 +26,7 @@ import {
 import {
   itwCredentialUpgradeFailedSelector,
   itwIsActivationDisabledSelector,
-  itwIsL3EnabledSelector,
-  itwIsWalletInstanceRemotelyActiveSelector
+  itwIsL3EnabledSelector
 } from "./preferences";
 import { isItwEnabledSelector } from "./remoteConfig";
 
@@ -182,10 +184,16 @@ export const itwShouldRenderDiscoveryBannerSelector = (state: GlobalState) =>
  */
 export const itwShouldRenderInboxDiscoveryBannerSelector = (
   state: GlobalState
-) =>
-  itwShouldRenderDiscoveryBannerSelector(state) &&
-  !itwIsBannerHiddenSelector("discovery_messages_inbox")(state) &&
-  !itwIsWalletInstanceRemotelyActiveSelector(state);
+) => {
+  if (itwIsRemotelyActiveSelector(state) === undefined) {
+    return false;
+  }
+  return (
+    itwShouldRenderDiscoveryBannerSelector(state) &&
+    !itwIsBannerHiddenSelector("discovery_messages_inbox")(state) &&
+    !itwIsRemotelyActiveSelector(state)
+  );
+};
 
 /**
  * Returns whether the new IT-Wallet activation banner in the messages inbox screen should be rendered

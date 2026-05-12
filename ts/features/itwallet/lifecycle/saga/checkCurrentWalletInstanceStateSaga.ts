@@ -2,7 +2,7 @@ import { call, put, select } from "typed-redux-saga/macro";
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { assert } from "../../../../utils/assert";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
-import { itwSetWalletInstanceRemotelyActive } from "../../common/store/actions/preferences.ts";
+import { itwSetWalletInstanceRemotelyActive } from "../../walletInstance/store/actions";
 import {
   selectItwEnv,
   selectItwSpecsVersion

@@ -8,14 +8,18 @@ import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { flow, pipe } from "fp-ts/lib/function";
-import { useEffect, useRef, useState } from "react";
-import { InputAccessoryView, Keyboard, Platform, View } from "react-native";
 import I18n from "i18next";
+import { useEffect, useRef, useState } from "react";
+import { Keyboard, Platform, View } from "react-native";
+import { KeyboardStickyView } from "react-native-keyboard-controller";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { useFooterActionsMargin } from "../../../../hooks/useFooterActionsMargin";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
+import { useIOSelector } from "../../../../store/hooks";
+import { isScreenReaderEnabledSelector } from "../../../../store/reducers/preferences";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
@@ -26,8 +30,6 @@ import * as analytics from "../analytics";
 import { usePagoPaPayment } from "../hooks/usePagoPaPayment";
 import { PaymentsCheckoutParamsList } from "../navigation/params";
 import { TextInputValidationRefProps } from "../types";
-import { useIOSelector } from "../../../../store/hooks";
-import { isScreenReaderEnabledSelector } from "../../../../store/reducers/preferences";
 
 export type WalletPaymentInputFiscalCodeScreenNavigationParams = {
   paymentNoticeNumber: O.Option<PaymentNoticeNumberFromString>;
@@ -107,6 +109,8 @@ const WalletPaymentInputFiscalCodeScreen = () => {
     analytics.trackPaymentOrganizationDataEntry();
   });
 
+  const { bottomMargin } = useFooterActionsMargin();
+
   return (
     <>
       <IOScrollViewWithLargeHeader
@@ -118,17 +122,6 @@ const WalletPaymentInputFiscalCodeScreen = () => {
         canGoback
         headerActionsProp={{ showHelp: true }}
         contextualHelp={emptyContextualHelp}
-        actions={
-          Platform.OS === "android"
-            ? {
-                type: "SingleButton",
-                primary: {
-                  label: I18n.t("global.buttons.continue"),
-                  onPress: handleContinueClick
-                }
-              }
-            : undefined
-        }
         ref={textInputWrapperRef}
         includeContentMargins
       >
@@ -160,25 +153,22 @@ const WalletPaymentInputFiscalCodeScreen = () => {
             textInputProps={{
               keyboardType: "number-pad",
               inputMode: "numeric",
-              returnKeyType: "done",
-              inputAccessoryViewID: "fiscalCodeInputAccessoryView"
+              inputAccessoryViewID: "keyboardStickyView"
             }}
             autoFocus
           />
         )}
       </IOScrollViewWithLargeHeader>
-      {Platform.OS === "ios" && (
-        <InputAccessoryView nativeID="fiscalCodeInputAccessoryView">
-          <View style={{ padding: 20 }}>
-            <IOButton
-              fullWidth
-              variant="solid"
-              label={I18n.t("global.buttons.continue")}
-              onPress={handleContinueClick}
-            />
-          </View>
-        </InputAccessoryView>
-      )}
+      <KeyboardStickyView offset={{ closed: 0 }}>
+        <View style={{ paddingHorizontal: 20, marginBottom: bottomMargin }}>
+          <IOButton
+            fullWidth
+            variant="solid"
+            label={I18n.t("global.buttons.continue")}
+            onPress={handleContinueClick}
+          />
+        </View>
+      </KeyboardStickyView>
     </>
   );
 };

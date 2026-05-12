@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`IT-Wallet themes should have the correct structure and values 1`] = `
+{
+  "dark": {
+    "banner-background": "#0F2433",
+    "card-background": "#1A1A1A",
+    "header-background": "#0F2433",
+  },
+  "light": {
+    "banner-background": "#F2F9FF",
+    "card-background": "#F2F2F2",
+    "header-background": "#F2F9FF",
+  },
+}
+`;

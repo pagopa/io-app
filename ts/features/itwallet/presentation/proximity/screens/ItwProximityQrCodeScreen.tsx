@@ -17,10 +17,7 @@ import { useCallback, useEffect, useMemo } from "react";
 import { StyleSheet, useWindowDimensions, View } from "react-native";
 import QRCode from "react-native-qrcode-skia";
 import ItwIcon from "../../../../../../img/features/itWallet/brand/itw_icon.svg";
-import {
-  IOScrollView,
-  IOScrollViewActions
-} from "../../../../../components/ui/IOScrollView.tsx";
+import { IOScrollView } from "../../../../../components/ui/IOScrollView.tsx";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import {
@@ -51,6 +48,8 @@ import {
 } from "../machine/selectors.ts";
 import { ItwProximityParamsList } from "../navigation/ItwProximityParamsList.ts";
 import { shouldBlockProximityQrCodeSelector } from "../store/selectors";
+import { itwIsBannerHiddenSelector } from "../../../common/store/selectors/banners";
+import { ItwProximityQrCodeInfoBanner } from "../components/ItwProximityQrCodeInfoBanner";
 
 const QR_CODE_LOGO_SIZE = 52;
 
@@ -99,6 +98,9 @@ export const ItwProximityQrCodeScreen = ({
   );
   const shouldBlockProximityPresentation = useIOSelector(
     shouldBlockProximityQrCodeSelector
+  );
+  const isQrCodeInfoBannerHidden = useIOSelector(
+    itwIsBannerHiddenSelector("proximity_qr_code_info")
   );
 
   useDebugInfo({
@@ -186,17 +188,6 @@ export const ItwProximityQrCodeScreen = ({
     });
   };
 
-  const scrollViewActions: IOScrollViewActions | undefined =
-    shouldBlockProximityPresentation
-      ? {
-          type: "SingleButton",
-          primary: {
-            label: I18n.t("features.itWallet.presentation.qrCode.reissue.cta"),
-            onPress: handleReissuePress
-          }
-        }
-      : undefined;
-
   const isFailure = !!failure || shouldBlockProximityPresentation;
   const showStatusContent = !!isLoading || isFailure;
 
@@ -242,15 +233,21 @@ export const ItwProximityQrCodeScreen = ({
         value={qrCodeString}
         size={qrCodeSize}
         errorCorrectionLevel="H"
-        shapeOptions={{ shape: "rounded", eyePatternShape: "rounded" }}
-        logoAreaSize={QR_CODE_LOGO_SIZE + 8}
+        shapeOptions={{
+          shape: "circle",
+          eyePatternShape: "rounded",
+          eyePatternGap: 0,
+          gap: 0
+        }}
+        logoAreaSize={88}
+        logoAreaBorderRadius={8}
         logo={<ItwIcon width={QR_CODE_LOGO_SIZE} height={QR_CODE_LOGO_SIZE} />}
       />
     );
   };
 
   return (
-    <IOScrollView actions={scrollViewActions}>
+    <IOScrollView>
       <ItwBrandedBox
         variant={isFailure ? "error" : "default"}
         backgroundVariant={"gradient"}
@@ -272,6 +269,12 @@ export const ItwProximityQrCodeScreen = ({
           {renderQrCodeContent()}
         </VStack>
       </ItwBrandedBox>
+      {!isQrCodeInfoBannerHidden && (
+        <>
+          <VSpacer size={24} />
+          <ItwProximityQrCodeInfoBanner />
+        </>
+      )}
       {shouldBlockProximityPresentation && (
         <>
           <VSpacer size={24} />
@@ -281,6 +284,8 @@ export const ItwProximityQrCodeScreen = ({
             content={I18n.t(
               "features.itWallet.presentation.qrCode.banner.invalid"
             )}
+            action={I18n.t("features.itWallet.presentation.qrCode.reissue.cta")}
+            onPress={handleReissuePress}
           />
         </>
       )}

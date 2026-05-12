@@ -1,7 +1,7 @@
 import { SagaIterator } from "redux-saga";
 import { takeEvery, takeLatest } from "typed-redux-saga/macro";
 import { IdentityClient } from "../../../../api/IdentityClientManager";
-import { ServicesClient } from "../../common/api/servicesClient";
+import { ServicesClient } from "../../../../api/ServicesClientManager";
 import {
   loadServicePreference,
   upsertServicePreference
