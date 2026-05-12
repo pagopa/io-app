@@ -4417,15 +4417,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-cie@npm:1.3.5-rc.2":
-  version: 1.3.5-rc.2
-  resolution: "@pagopa/io-react-native-cie@npm:1.3.5-rc.2"
+"@pagopa/io-react-native-cie@npm:1.3.6":
+  version: 1.3.6
+  resolution: "@pagopa/io-react-native-cie@npm:1.3.6"
   dependencies:
     zod: ^3.24.4
   peerDependencies:
     react: ">=19.1"
     react-native: ">=0.81"
-  checksum: 2a5b3d6e7f1077ce7c73559f33bfc1361900a804524ed1c09be3842269db0ee0d5b3946d863ccf84218f1e3132909783ef0ff314d426747b89a2c220f8fb2a77
+  checksum: a8fcd64ecc60828546d37969603d4681cba407524294970caf2e97c78a0c2ffb37c1fdf0819ae5531b14c41c538860c460f07436be2a074370b97aef8d473b15
   languageName: node
   linkType: hard
 
@@ -13548,7 +13548,7 @@ __metadata:
     "@gorhom/bottom-sheet": ^5.2.8
     "@pagopa/io-app-design-system": 7.1.0
     "@pagopa/io-pagopa-commons": ^3.1.0
-    "@pagopa/io-react-native-cie": 1.3.5-rc.2
+    "@pagopa/io-react-native-cie": 1.3.6
     "@pagopa/io-react-native-cieid": 0.4.0
     "@pagopa/io-react-native-crypto": ^1.2.3
     "@pagopa/io-react-native-http-client": 1.2.0
