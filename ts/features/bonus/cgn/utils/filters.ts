@@ -120,19 +120,24 @@ export const getCategorySpecs = (
 ): O.Option<Category> => O.fromNullable(categories[category]);
 
 export const orderCategoriesByNameKey = (
-  categories: ReadonlyArray<ProductCategoryWithNewDiscountsCount>
+  categoriesList: ReadonlyArray<ProductCategoryWithNewDiscountsCount>
 ): ReadonlyArray<ProductCategoryWithNewDiscountsCount> =>
-  [...categories].sort((c1, c2) => {
-    const c1Specs = getCategorySpecs(c1.productCategory);
-    const c2Specs = getCategorySpecs(c2.productCategory);
-    if (O.isNone(c1Specs) && O.isSome(c2Specs)) {
+  [...categoriesList].sort((c1, c2) => {
+    const c1Specs = categories[c1.productCategory];
+    const c2Specs = categories[c2.productCategory];
+
+    if (!c1Specs && c2Specs) {
       return 1;
-    } else if (O.isSome(c1Specs) && O.isNone(c2Specs)) {
+    }
+
+    if (c1Specs && !c2Specs) {
       return -1;
-    } else if (O.isSome(c1Specs) && O.isSome(c2Specs)) {
-      return I18n.t(c1Specs.value.nameKey)
+    }
+
+    if (c1Specs && c2Specs) {
+      return I18n.t(c1Specs.nameKey)
         .toLocaleLowerCase()
-        .localeCompare(I18n.t(c2Specs.value.nameKey).toLocaleLowerCase());
+        .localeCompare(I18n.t(c2Specs.nameKey).toLocaleLowerCase());
     }
 
     return 0;

@@ -4469,15 +4469,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-iso18013@npm:^0.8.1":
-  version: 0.8.1
-  resolution: "@pagopa/io-react-native-iso18013@npm:0.8.1"
+"@pagopa/io-react-native-iso18013@npm:^0.8.3":
+  version: 0.8.3
+  resolution: "@pagopa/io-react-native-iso18013@npm:0.8.3"
   dependencies:
-    zod: ^3.25.67
+    zod: 4.3.6
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: 0a3c558cfef0289aabef8cdd034d6e0f80b8f160205fbeadf30729639f4b42afc81564518bb7cafe09158cf171c5c40316c886baa9a11c63553bf45c32682b0f
+  checksum: 24dd41260d91ff2a594842ceb56d722471486af4172581dca76f34a973756702683afa136751afeee5a7cd45f7839b1b73425b64330f8990685cadd6dce8bd2e
   languageName: node
   linkType: hard
 
@@ -4514,11 +4514,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-wallet@npm:3.1.0":
-  version: 3.1.0
-  resolution: "@pagopa/io-react-native-wallet@npm:3.1.0"
+"@pagopa/io-react-native-wallet@npm:3.1.2":
+  version: 3.1.2
+  resolution: "@pagopa/io-react-native-wallet@npm:3.1.2"
   dependencies:
     "@pagopa/io-wallet-oauth2": 1.2.1
+    "@pagopa/io-wallet-oid-federation": 1.2.1
     "@pagopa/io-wallet-oid4vci": 1.2.1
     "@pagopa/io-wallet-oid4vp": 1.2.1
     "@pagopa/io-wallet-utils": 1.2.1
@@ -4541,7 +4542,7 @@ __metadata:
     react: "*"
     react-native: "*"
     react-native-quick-crypto: "*"
-  checksum: ac853a5535c41bc5c0b4418b3bd7f834b7f5acc31e7650d1b0edc328c7a38a3c5cb328199b8dc9b9189bbfb14b424a3df05d9e43d02e457a508bf57ff236bd8a
+  checksum: 40b244af2bc6b97bf14db8283d16a65b935c115bb2037fb8c57f9dc116333fbc92a9cabb018d003d1979c4c9296ab6f6e03f1e7ea313f44b327a4fbb3fecefbd
   languageName: node
   linkType: hard
 
@@ -5307,7 +5308,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-navigation/stack@npm:^6.3.21":
+"@react-navigation/stack@npm:6.4.1":
   version: 6.4.1
   resolution: "@react-navigation/stack@npm:6.4.1"
   dependencies:
@@ -5322,6 +5323,24 @@ __metadata:
     react-native-safe-area-context: ">= 3.0.0"
     react-native-screens: ">= 3.0.0"
   checksum: 09bcfb001db0f411df881da9f2551b7015c4d5259a77fcb93196de308838035d016dc4dcb654d16d9cd4cc99f09f5e48add796aa903f9a253678947c35b18199
+  languageName: node
+  linkType: hard
+
+"@react-navigation/stack@patch:@react-navigation/stack@npm%3A6.4.1#./.yarn/patches/@react-navigation-stack-npm-6.4.1-52dad4e278.patch::locator=io%40workspace%3A.":
+  version: 6.4.1
+  resolution: "@react-navigation/stack@patch:@react-navigation/stack@npm%3A6.4.1#./.yarn/patches/@react-navigation-stack-npm-6.4.1-52dad4e278.patch::version=6.4.1&hash=6e1a70&locator=io%40workspace%3A."
+  dependencies:
+    "@react-navigation/elements": ^1.3.31
+    color: ^4.2.3
+    warn-once: ^0.1.0
+  peerDependencies:
+    "@react-navigation/native": ^6.0.0
+    react: "*"
+    react-native: "*"
+    react-native-gesture-handler: ">= 1.0.0"
+    react-native-safe-area-context: ">= 3.0.0"
+    react-native-screens: ">= 3.0.0"
+  checksum: e3a53b57b41c6fbe74cf169e88144d584f74bfb5e9bf4ccdfa0280101ce15454ac181129e1cf7b25b756f80907bcde6a8e4b362af56aa999ea529eb74c678045
   languageName: node
   linkType: hard
 
@@ -13534,11 +13553,11 @@ __metadata:
     "@pagopa/io-react-native-crypto": ^1.2.3
     "@pagopa/io-react-native-http-client": 1.2.0
     "@pagopa/io-react-native-integrity": ^0.3.2
-    "@pagopa/io-react-native-iso18013": ^0.8.1
+    "@pagopa/io-react-native-iso18013": ^0.8.3
     "@pagopa/io-react-native-jwt": ^2.1.0
     "@pagopa/io-react-native-login-utils": 1.2.0
     "@pagopa/io-react-native-secure-storage": ^0.2.1
-    "@pagopa/io-react-native-wallet": 3.1.0
+    "@pagopa/io-react-native-wallet": 3.1.2
     "@pagopa/io-react-native-zendesk": ^0.3.30
     "@pagopa/openapi-codegen-ts": ^14.2.0
     "@pagopa/react-native-cie": ^1.5.0
@@ -13657,6 +13676,7 @@ __metadata:
     react-native-get-random-values: ^1.11.0
     react-native-haptic-feedback: ^2.3.3
     react-native-image-picker: 7.2.3
+    react-native-keyboard-controller: ^1.21.7
     react-native-keychain: ^10.0.0
     react-native-linear-gradient: ^2.5.6
     react-native-notifications-utils: ^0.3.0
@@ -19277,6 +19297,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-keyboard-controller@npm:^1.21.7":
+  version: 1.21.7
+  resolution: "react-native-keyboard-controller@npm:1.21.7"
+  dependencies:
+    react-native-is-edge-to-edge: ^1.2.1
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+    react-native-reanimated: ">=3.0.0"
+  checksum: ac8b8887021e819b78e50d1f32f003dbcff786c9b02eb6301412403baa4a3588e3eb77f898e420c1d1fabcd6e5c95c2919b15cfa1b3c49e351b2c772bd56614d
+  languageName: node
+  linkType: hard
+
 "react-native-keychain@npm:^10.0.0":
   version: 10.0.0
   resolution: "react-native-keychain@npm:10.0.0"
@@ -24039,6 +24072,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"zod@npm:4.3.6, zod@npm:^3.25.0 || ^4.0.0, zod@npm:^4.1.13, zod@npm:^4.3.6":
+  version: 4.3.6
+  resolution: "zod@npm:4.3.6"
+  checksum: 19cec761b46bae4b6e7e861ea740f3f248e50a6671825afc8a5758e27b35d6f20ccde9942422fd5cf6f8b697f18bd05ef8bb33f5f2db112ab25cc628de2fae47
+  languageName: node
+  linkType: hard
+
 "zod@npm:^3.22.4":
   version: 3.23.8
   resolution: "zod@npm:3.23.8"
@@ -24050,20 +24090,6 @@ __metadata:
   version: 3.25.67
   resolution: "zod@npm:3.25.67"
   checksum: 56ab904d33b1cd00041ce64ae05b0628fcbfeb7e707fa31cd498a97b540135e4dfe685200c9c62aea307695ee132870b4bc34f035228ea728aa75cc96a4954cb
-  languageName: node
-  linkType: hard
-
-"zod@npm:^3.25.0 || ^4.0.0, zod@npm:^4.1.13, zod@npm:^4.3.6":
-  version: 4.3.6
-  resolution: "zod@npm:4.3.6"
-  checksum: 19cec761b46bae4b6e7e861ea740f3f248e50a6671825afc8a5758e27b35d6f20ccde9942422fd5cf6f8b697f18bd05ef8bb33f5f2db112ab25cc628de2fae47
-  languageName: node
-  linkType: hard
-
-"zod@npm:^3.25.67":
-  version: 3.25.76
-  resolution: "zod@npm:3.25.76"
-  checksum: c9a403a62b329188a5f6bd24d5d935d2bba345f7ab8151d1baa1505b5da9f227fb139354b043711490c798e91f3df75991395e40142e6510a4b16409f302b849
   languageName: node
   linkType: hard
 

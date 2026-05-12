@@ -15,7 +15,9 @@ const fciRemoteConfigSelector = (state: GlobalState) =>
  * if there is no data or the local Feature Flag is disabled,
  * false is the default value -> (FCI's Security Level Check disabled)
  */
-export const isFciSecurityLevelCheckEnabledSelector = (state: GlobalState) =>
+export const isFciSecurityLevelCheckRemoteFFEnabledSelector = (
+  state: GlobalState
+) =>
   pipe(
     state,
     fciRemoteConfigSelector,
