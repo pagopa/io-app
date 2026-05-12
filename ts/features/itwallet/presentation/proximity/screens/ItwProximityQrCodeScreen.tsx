@@ -48,8 +48,8 @@ import {
   selectIsPermissionsRequiredState,
   selectQRCodeString
 } from "../machine/selectors.ts";
-import { ItwProximityParamsList } from "../navigation/ItwProximityParamsList.ts";
-import { shouldBlockProximityQrCodeSelector } from "../store/selectors/credentials.ts";
+import { ItwProximityParamsList } from "../navigation/ItwProximityParamsList";
+import { shouldBlockProximityQrCodeSelector } from "../store/selectors/credentials";
 
 const QR_CODE_LOGO_SIZE = 52;
 
