@@ -97,11 +97,24 @@ export const createProximityActorsImplementation = (env: Env) => {
     }
   );
 
-  const checkBluetoothIsActive = fromPromise<boolean, void>(async () => {
-    const bluetoothState = await BluetoothStateManager.getState();
+  const checkBluetoothIsActive = fromPromise<boolean, void>(
+    () =>
+      new Promise<boolean>(resolve => {
+        const MAX_WAIT_MS = 3000;
+        const timeoutId = setTimeout(() => {
+          subscription.remove();
+          resolve(false);
+        }, MAX_WAIT_MS);
 
-    return bluetoothState === "PoweredOn";
-  });
+        const subscription = BluetoothStateManager.onStateChange(state => {
+          if (state !== "Unknown" && state !== "Resetting") {
+            clearTimeout(timeoutId);
+            subscription.remove();
+            resolve(state === "PoweredOn");
+          }
+        }, true);
+      })
+  );
 
   const startEngagement = fromPromise<void>(async () => {
     // Ensure any existing session is closed before starting a new one

@@ -122,7 +122,7 @@ export const itwProximityMachine = setup({
             "Display the screen prompting the user to grant device permissions",
           on: {
             back: {
-              target: "#itwProximityMachine.Idle"
+              target: "CheckPermissionsSilently"
             },
             continue: {
               target: "CheckPermissionsSilently"
@@ -194,7 +194,9 @@ export const itwProximityMachine = setup({
             "Display the screen prompting the user to enable Bluetooth",
           on: {
             back: {
-              target: "#itwProximityMachine.Idle"
+              // Treat back the same as continue: silently re-check Bluetooth
+              // state so the QR code screen is never left in a blank Idle state.
+              target: "CheckingBluetoothIsActiveSilently"
             },
             continue: {
               target: "CheckingBluetoothIsActiveSilently"

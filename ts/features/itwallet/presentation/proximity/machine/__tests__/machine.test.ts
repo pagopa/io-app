@@ -105,6 +105,39 @@ describe("itwProximityMachine", () => {
     expect(navigateToGrantPermissionsScreen).toHaveBeenCalledTimes(1);
   });
 
+  /**
+   * Regression: pressing back from GrantPermissions must re-check permissions
+   * silently (same as "continue"), so the QR code screen is never left blank.
+   * If permissions are now granted the flow resumes; if not, it reaches
+   * PermissionsRequired which the QR code screen handles by closing the navigator.
+   */
+  it("GrantPermissions + back → CheckPermissionsSilently (permissions now granted → Bluetooth)", async () => {
+    checkPermissions
+      .mockResolvedValueOnce(false) // first check: not granted
+      .mockResolvedValueOnce(true); // silent re-check after back: granted
+    checkBluetoothIsActive.mockReturnValue(new Promise(() => {}));
+    const actor = createActor(mockedMachine);
+    actor.start();
+    actor.send({ type: "start" });
+    await waitFor(actor, s => s.matches({ Permissions: "GrantPermissions" }));
+    actor.send({ type: "back" });
+    await waitFor(actor, s =>
+      s.matches({ Bluetooth: "CheckingBluetoothIsActive" })
+    );
+  });
+
+  it("GrantPermissions + back → CheckPermissionsSilently (permissions still missing → PermissionsRequired)", async () => {
+    checkPermissions.mockResolvedValue(false);
+    const actor = createActor(mockedMachine);
+    actor.start();
+    actor.send({ type: "start" });
+    await waitFor(actor, s => s.matches({ Permissions: "GrantPermissions" }));
+    actor.send({ type: "back" });
+    await waitFor(actor, s =>
+      s.matches({ Permissions: "PermissionsRequired" })
+    );
+  });
+
   it("Bluetooth active → Presentation.Starting", async () => {
     checkPermissions.mockResolvedValue(true);
     checkBluetoothIsActive.mockResolvedValue(true);
@@ -123,6 +156,37 @@ describe("itwProximityMachine", () => {
     actor.send({ type: "start" });
     await waitFor(actor, s => s.matches({ Bluetooth: "EnableBluetooth" }));
     expect(navigateToBluetoothActivationScreen).toHaveBeenCalledTimes(1);
+  });
+
+  /**
+   * Regression: pressing back from EnableBluetooth must re-check Bluetooth
+   * state silently (same as "continue"), so the QR code screen is never left
+   * blank. If BT is now on the flow resumes; if not, BluetoothRequired handles
+   * the graceful exit.
+   */
+  it("EnableBluetooth + back → CheckingBluetoothIsActiveSilently (BT now on → Presentation)", async () => {
+    checkPermissions.mockResolvedValue(true);
+    checkBluetoothIsActive
+      .mockResolvedValueOnce(false) // first check: off
+      .mockResolvedValueOnce(true); // silent re-check after back: on
+    startEngagement.mockReturnValue(new Promise(() => {}));
+    const actor = createActor(mockedMachine);
+    actor.start();
+    actor.send({ type: "start" });
+    await waitFor(actor, s => s.matches({ Bluetooth: "EnableBluetooth" }));
+    actor.send({ type: "back" });
+    await waitFor(actor, s => s.matches({ Presentation: "Starting" }));
+  });
+
+  it("EnableBluetooth + back → CheckingBluetoothIsActiveSilently (BT still off → BluetoothRequired)", async () => {
+    checkPermissions.mockResolvedValue(true);
+    checkBluetoothIsActive.mockResolvedValue(false);
+    const actor = createActor(mockedMachine);
+    actor.start();
+    actor.send({ type: "start" });
+    await waitFor(actor, s => s.matches({ Bluetooth: "EnableBluetooth" }));
+    actor.send({ type: "back" });
+    await waitFor(actor, s => s.matches({ Bluetooth: "BluetoothRequired" }));
   });
 
   describe("Verifier events during Presentation", () => {
