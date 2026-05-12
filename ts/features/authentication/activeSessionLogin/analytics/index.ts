@@ -1,6 +1,7 @@
 import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
+import { CieLoginFlowType } from "../../common/analytics/cieAnalytics.ts";
 
 export const BANNER_ID = "SESSION_ABOUT_TO_EXPIRE";
 const BANNER_CAMPAIGN = "LV";
@@ -40,9 +41,11 @@ export function trackLoginExpirationBannerClosure(banner_landing: string) {
   );
 }
 
-export function trackSessionCorrupted() {
+export function trackSessionCorrupted(flow: CieLoginFlowType) {
   void mixpanelTrack(
     "SESSION_CORRUPTED",
-    buildEventProperties("TECH", "error")
+    buildEventProperties("TECH", "error", {
+      flow
+    })
   );
 }

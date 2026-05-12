@@ -13,6 +13,7 @@ import { IdpData } from "../../../../../../definitions/content/IdpData";
 import { PasswordLogin } from "../../../../../../definitions/session_manager/PasswordLogin";
 import { PublicSession } from "../../../../../../definitions/session_manager/PublicSession";
 import { SpidIdp } from "../../../../../utils/idps";
+import { CieLoginFlowType } from "../../analytics/cieAnalytics.ts";
 
 export type LogoutError = {
   error: Error;
@@ -84,7 +85,8 @@ export const checkCurrentSession = createAsyncAction(
 export const sessionExpired = createStandardAction("SESSION_EXPIRED")();
 
 // Login successful on the backend but not propagated to the app
-export const sessionCorrupted = createStandardAction("SESSION_CORRUPTED")();
+export const sessionCorrupted =
+  createStandardAction("SESSION_CORRUPTED")<CieLoginFlowType>();
 
 export const sessionInvalid = createStandardAction("SESSION_INVALID")();
 
