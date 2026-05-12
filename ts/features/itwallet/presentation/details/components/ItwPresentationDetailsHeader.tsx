@@ -12,7 +12,7 @@ import { StyleSheet, Text, View } from "react-native";
 import ItwAvatar from "../../../../../../img/features/itWallet/brand/itw_avatar.svg";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar.tsx";
 import { useIOSelector } from "../../../../../store/hooks.ts";
-import { getCredentialCardConfig } from "../../../common/components/ItwCredentialCard/config.ts";
+import { useCredentialCardConfig } from "../../../common/components/ItwCredentialCard/config.ts";
 import { ItwCredentialDetailCard } from "../../../common/components/ItwCredentialDetailCard.tsx";
 import { useItwAuthSourceName } from "../../../common/hooks/useItwAuthSourceName.ts";
 import { useItwCredentialName } from "../../../common/hooks/useItwCredentialName.ts";
@@ -37,7 +37,7 @@ const ItwPresentationDetailsHeader = ({
   credential
 }: ItwPresentationDetailsHeaderProps) => {
   // Credential's header card is always in light mode
-  const { color } = getCredentialCardConfig(credential.credentialType, "light");
+  const { color } = useCredentialCardConfig(credential.credentialType, "light");
   const { status: rawStatus = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
