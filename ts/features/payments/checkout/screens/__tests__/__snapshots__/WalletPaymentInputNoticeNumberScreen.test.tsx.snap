@@ -675,6 +675,7 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                                 inputMode="numeric"
                                 keyboardType="number-pad"
                                 maxFontSizeMultiplier={1.5}
+                                maxLength={18}
                                 onBlur={[Function]}
                                 onChangeText={[Function]}
                                 onFocus={[Function]}
@@ -898,6 +899,20 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                                 />
                               </View>
                             </View>
+                            <View
+                              accessibilityElementsHidden={false}
+                              importantForAccessibility="auto"
+                              style={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "paddingHorizontal": 12,
+                                  },
+                                  {},
+                                ]
+                              }
+                            />
                           </View>
                         </View>
                       </RCTScrollView>
