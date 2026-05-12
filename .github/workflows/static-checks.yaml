@@ -71,7 +71,7 @@ jobs:
         if: needs.static-checks.outputs.should_test == 'true' && steps.run-test.outcome == 'success'
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
-          name: coverage-${{ matrix.shard }}
+          name: coverage-artifact-${{ matrix.shard }}
           path: coverage/lcov.info
           retention-days: 1
   unit-test-gate:
@@ -103,8 +103,9 @@ jobs:
       - id: download-coverage
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
-          pattern: coverage-*
+          pattern: coverage-artifact-*
           path: coverage/
+          merge-multiple: true
       - id: codecov-script
         uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:
