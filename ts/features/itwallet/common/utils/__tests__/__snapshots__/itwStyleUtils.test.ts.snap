@@ -1,0 +1,145 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`getThemeColorByCredentialType when color scheme is dark when L3 is [false] should match the snapshot for [EuropeanDisabilityCard] when L3 is enabled 1`] = `
+{
+  "backgroundColor": "#315B76",
+  "statusBarStyle": "light-content",
+  "textColor": "#17406F",
+  "variant": "contrast",
+}
+`;
+
+exports[`getThemeColorByCredentialType when color scheme is dark when L3 is [false] should match the snapshot for [EuropeanHealthInsuranceCard] when L3 is enabled 1`] = `
+{
+  "backgroundColor": "#B3DCF9",
+  "statusBarStyle": "dark-content",
+  "textColor": "#032D5C",
+  "variant": "neutral",
+}
+`;
+
+exports[`getThemeColorByCredentialType when color scheme is dark when L3 is [false] should match the snapshot for [PersonIdentificationData] when L3 is enabled 1`] = `
+{
+  "backgroundColor": "#295699",
+  "statusBarStyle": "light-content",
+  "textColor": "#032D5C",
+  "variant": "contrast",
+}
+`;
+
+exports[`getThemeColorByCredentialType when color scheme is dark when L3 is [false] should match the snapshot for [mDL] when L3 is enabled 1`] = `
+{
+  "backgroundColor": "#744C63",
+  "statusBarStyle": "light-content",
+  "textColor": "#652035",
+  "variant": "contrast",
+}
+`;
+
+exports[`getThemeColorByCredentialType when color scheme is dark when L3 is [true] should match the snapshot for [EuropeanDisabilityCard] when L3 is enabled 1`] = `
+{
+  "backgroundColor": "#233B4D",
+  "statusBarStyle": "light-content",
+  "textColor": "#D6EAF7",
+  "variant": "contrast",
+}
+`;
+
+exports[`getThemeColorByCredentialType when color scheme is dark when L3 is [true] should match the snapshot for [EuropeanHealthInsuranceCard] when L3 is enabled 1`] = `
+{
+  "backgroundColor": "#112F51",
+  "statusBarStyle": "light-content",
+  "textColor": "#D5E9FF",
+  "variant": "contrast",
+}
+`;
+
+exports[`getThemeColorByCredentialType when color scheme is dark when L3 is [true] should match the snapshot for [PersonIdentificationData] when L3 is enabled 1`] = `
+{
+  "backgroundColor": "#24375A",
+  "statusBarStyle": "light-content",
+  "textColor": "#C4DCF5",
+  "variant": "contrast",
+}
+`;
+
+exports[`getThemeColorByCredentialType when color scheme is dark when L3 is [true] should match the snapshot for [mDL] when L3 is enabled 1`] = `
+{
+  "backgroundColor": "#2A092E",
+  "statusBarStyle": "light-content",
+  "textColor": "#FADCF5",
+  "variant": "contrast",
+}
+`;
+
+exports[`getThemeColorByCredentialType when color scheme is light when L3 is [false] should match the snapshot for [EuropeanDisabilityCard] when L3 is enabled 1`] = `
+{
+  "backgroundColor": "#315B76",
+  "statusBarStyle": "light-content",
+  "textColor": "#17406F",
+  "variant": "contrast",
+}
+`;
+
+exports[`getThemeColorByCredentialType when color scheme is light when L3 is [false] should match the snapshot for [EuropeanHealthInsuranceCard] when L3 is enabled 1`] = `
+{
+  "backgroundColor": "#B3DCF9",
+  "statusBarStyle": "dark-content",
+  "textColor": "#032D5C",
+  "variant": "neutral",
+}
+`;
+
+exports[`getThemeColorByCredentialType when color scheme is light when L3 is [false] should match the snapshot for [PersonIdentificationData] when L3 is enabled 1`] = `
+{
+  "backgroundColor": "#295699",
+  "statusBarStyle": "light-content",
+  "textColor": "#032D5C",
+  "variant": "contrast",
+}
+`;
+
+exports[`getThemeColorByCredentialType when color scheme is light when L3 is [false] should match the snapshot for [mDL] when L3 is enabled 1`] = `
+{
+  "backgroundColor": "#744C63",
+  "statusBarStyle": "light-content",
+  "textColor": "#652035",
+  "variant": "contrast",
+}
+`;
+
+exports[`getThemeColorByCredentialType when color scheme is light when L3 is [true] should match the snapshot for [EuropeanDisabilityCard] when L3 is enabled 1`] = `
+{
+  "backgroundColor": "#D6EAF7",
+  "statusBarStyle": "dark-content",
+  "textColor": "#17406F",
+  "variant": "neutral",
+}
+`;
+
+exports[`getThemeColorByCredentialType when color scheme is light when L3 is [true] should match the snapshot for [EuropeanHealthInsuranceCard] when L3 is enabled 1`] = `
+{
+  "backgroundColor": "#B7E1FA",
+  "statusBarStyle": "dark-content",
+  "textColor": "#032D5C",
+  "variant": "neutral",
+}
+`;
+
+exports[`getThemeColorByCredentialType when color scheme is light when L3 is [true] should match the snapshot for [PersonIdentificationData] when L3 is enabled 1`] = `
+{
+  "backgroundColor": "#EAF6FF",
+  "statusBarStyle": "dark-content",
+  "textColor": "#115486",
+  "variant": "neutral",
+}
+`;
+
+exports[`getThemeColorByCredentialType when color scheme is light when L3 is [true] should match the snapshot for [mDL] when L3 is enabled 1`] = `
+{
+  "backgroundColor": "#FADCF5",
+  "statusBarStyle": "dark-content",
+  "textColor": "#652035",
+  "variant": "neutral",
+}
+`;
