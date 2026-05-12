@@ -1,7 +1,7 @@
 import { ListItemInfo } from "@pagopa/io-app-design-system";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Alert, Platform } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import I18n from "i18next";
 import { IOScrollViewActions } from "../../../../../components/ui/IOScrollView";
 import { openAppSettings } from "../../../../../utils/appSettings";
@@ -23,40 +23,48 @@ export const ItwGrantPermissionsScreen = () => {
   const isPermissionRequiredState = ItwProximityMachineContext.useSelector(
     selectIsPermissionsRequiredState
   );
+  const isFocused = useIsFocused();
+  const hasShownAlertRef = useRef(false);
 
   useHeaderSecondLevel({
     title: "",
     goBack: () => {
       trackItwProximityBluetoothAccessClose();
-      navigation.goBack();
+      navigation.getParent()?.goBack();
     }
   });
 
   useFocusEffect(trackItwProximityBluetoothAccess);
 
   useEffect(() => {
-    if (isPermissionRequiredState) {
-      trackItwProximityBluetoothAccessDenied();
-      Alert.alert(
-        I18n.t(
-          "features.itWallet.presentation.proximity.permissionsRequired.alert.title"
-        ),
-        I18n.t(
-          "features.itWallet.presentation.proximity.permissionsRequired.alert.message"
-        ),
-        [
-          {
-            text: I18n.t(
-              "features.itWallet.presentation.proximity.permissionsRequired.alert.text"
-            ),
-            onPress: () => {
-              machineRef.send({ type: "close" });
-            }
-          }
-        ]
-      );
+    if (!isPermissionRequiredState || !isFocused || hasShownAlertRef.current) {
+      return;
     }
-  }, [isPermissionRequiredState, machineRef]);
+    // eslint-disable-next-line functional/immutable-data
+    hasShownAlertRef.current = true;
+    trackItwProximityBluetoothAccessDenied();
+    Alert.alert(
+      I18n.t(
+        "features.itWallet.presentation.proximity.permissionsRequired.alert.title"
+      ),
+      I18n.t(
+        "features.itWallet.presentation.proximity.permissionsRequired.alert.message"
+      ),
+      [
+        {
+          text: I18n.t(
+            "features.itWallet.presentation.proximity.permissionsRequired.alert.text"
+          ),
+          onPress: () => {
+            machineRef.send({ type: "close" });
+            // Pop the entire proximity stack: the parent navigator removes
+            // both this screen and the underlying QR code screen at once.
+            navigation.getParent()?.goBack();
+          }
+        }
+      ]
+    );
+  }, [isPermissionRequiredState, isFocused, machineRef, navigation]);
 
   const listItems = useMemo<Array<ListItemInfo>>(
     () => [
@@ -118,7 +126,6 @@ export const ItwGrantPermissionsScreen = () => {
       ),
       onPress: () => {
         machineRef.send({ type: "continue" });
-        navigation.goBack();
       }
     }
   };

@@ -1,7 +1,7 @@
 import { Alert, Platform } from "react-native";
 import { ListItemInfo } from "@pagopa/io-app-design-system";
-import { useCallback, useEffect, useMemo } from "react";
-import { useFocusEffect } from "@react-navigation/native";
+import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import I18n from "i18next";
 import { IOScrollViewActions } from "../../../../../components/ui/IOScrollView";
 import { ItwProximityMachineContext } from "../machine/provider";
@@ -23,12 +23,14 @@ export const ItwActivateBluetoothScreen = () => {
   const isBluetoothRequiredState = ItwProximityMachineContext.useSelector(
     selectIsBluetoothRequiredState
   );
+  const isFocused = useIsFocused();
+  const hasShownAlertRef = useRef(false);
 
   useHeaderSecondLevel({
     title: "",
     goBack: () => {
       trackItwProximityBluetoothActivationClose();
-      navigation.goBack();
+      navigation.getParent()?.goBack();
     }
   });
 
@@ -39,28 +41,34 @@ export const ItwActivateBluetoothScreen = () => {
   );
 
   useEffect(() => {
-    if (isBluetoothRequiredState) {
-      trackItwProximityBluetoothNotActivated();
-      Alert.alert(
-        I18n.t(
-          "features.itWallet.presentation.proximity.bluetoothRequired.alert.title"
-        ),
-        I18n.t(
-          "features.itWallet.presentation.proximity.bluetoothRequired.alert.message"
-        ),
-        [
-          {
-            text: I18n.t(
-              "features.itWallet.presentation.proximity.bluetoothRequired.alert.text"
-            ),
-            onPress: () => {
-              machineRef.send({ type: "close" });
-            }
-          }
-        ]
-      );
+    if (!isBluetoothRequiredState || !isFocused || hasShownAlertRef.current) {
+      return;
     }
-  }, [isBluetoothRequiredState, machineRef]);
+    // eslint-disable-next-line functional/immutable-data
+    hasShownAlertRef.current = true;
+    trackItwProximityBluetoothNotActivated();
+    Alert.alert(
+      I18n.t(
+        "features.itWallet.presentation.proximity.bluetoothRequired.alert.title"
+      ),
+      I18n.t(
+        "features.itWallet.presentation.proximity.bluetoothRequired.alert.message"
+      ),
+      [
+        {
+          text: I18n.t(
+            "features.itWallet.presentation.proximity.bluetoothRequired.alert.text"
+          ),
+          onPress: () => {
+            machineRef.send({ type: "close" });
+            // Pop the entire proximity stack: the parent navigator removes
+            // both this screen and the underlying QR code screen at once.
+            navigation.getParent()?.goBack();
+          }
+        }
+      ]
+    );
+  }, [isBluetoothRequiredState, isFocused, machineRef, navigation]);
 
   const listItems = useMemo<Array<ListItemInfo>>(
     () => [
@@ -113,7 +121,6 @@ export const ItwActivateBluetoothScreen = () => {
       ),
       onPress: () => {
         machineRef.send({ type: "continue" });
-        navigation.goBack();
       }
     }
   };
