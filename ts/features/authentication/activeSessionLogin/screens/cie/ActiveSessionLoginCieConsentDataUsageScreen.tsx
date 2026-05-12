@@ -14,7 +14,7 @@ import {
 import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
-import { useIODispatch } from "../../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { onLoginUriChanged } from "../../../common/utils/login";
 import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
@@ -35,6 +35,7 @@ import {
   trackLoginCieDataSharingError
 } from "../../../common/analytics/cieAnalytics";
 import { trackLoginFailure } from "../../../common/analytics";
+import { cieLoginFlowSelector } from "../../store/selectors";
 
 const ActiveSessionLoginCieConsentDataUsageScreen = () => {
   const route =
@@ -52,8 +53,10 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
   const navigation = useIONavigation();
   const { forceLogoutAndNavigateToLanding } = useActiveSessionLoginNavigation();
 
+  const cieLoginFlowType = useIOSelector(cieLoginFlowSelector);
+
   useOnFirstRender(() => {
-    void trackLoginCieConsentDataUsageScreen("reauth");
+    void trackLoginCieConsentDataUsageScreen(cieLoginFlowType);
   });
 
   const navigateToErrorScreen = useCallback(
@@ -97,17 +100,17 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
         dispatch(activeSessionLoginFailure());
       }
       if (code === "22") {
-        trackLoginCieDataSharingError("reauth");
+        trackLoginCieDataSharingError(cieLoginFlowType);
       }
       setHasError(true);
       navigateToErrorScreen(code || message);
       trackLoginFailure({
         reason: `login CIE failure with code ${code || message || "n/a"}`,
         idp: "cie",
-        flow: "reauth"
+        flow: cieLoginFlowType
       });
     },
-    [dispatch, navigateToErrorScreen]
+    [dispatch, navigateToErrorScreen, cieLoginFlowType]
   );
 
   const handleLoadingError = useCallback(

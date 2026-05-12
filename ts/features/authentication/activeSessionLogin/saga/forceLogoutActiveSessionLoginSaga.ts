@@ -22,6 +22,7 @@ import {
   trackUndefinedBearerToken,
   UndefinedBearerTokenPhase
 } from "../../../messages/analytics";
+import { cieLoginFlowSelector } from "../store/selectors";
 
 export function* logoutUserAfterActiveSessionLoginSaga(
   action:
@@ -29,6 +30,8 @@ export function* logoutUserAfterActiveSessionLoginSaga(
     | ActionType<typeof logoutBeforeSessionCorrupted>
 ) {
   const sessionToken = yield* select(sessionTokenSelector);
+
+  const cieLoginFlowType = yield* select(cieLoginFlowSelector);
 
   if (!sessionToken) {
     trackUndefinedBearerToken(
@@ -45,7 +48,7 @@ export function* logoutUserAfterActiveSessionLoginSaga(
     const response: SagaCallReturnType<typeof logout> = yield* call(logout, {});
     if (E.isRight(response)) {
       if (response.right.status === 200) {
-        trackLogoutSuccess("reauth");
+        trackLogoutSuccess(cieLoginFlowType);
       } else {
         // We got an error, send a LOGOUT_FAILURE action so we can log it using Mixpanel
         const error = Error(
@@ -53,13 +56,16 @@ export function* logoutUserAfterActiveSessionLoginSaga(
             ? response.right.value.title
             : "Unknown error"
         );
-        trackLogoutFailure(error, "reauth");
+        trackLogoutFailure(error, cieLoginFlowType);
       }
     } else {
-      trackLogoutFailure(Error(readableReport(response.left)), "reauth");
+      trackLogoutFailure(
+        Error(readableReport(response.left)),
+        cieLoginFlowType
+      );
     }
   } catch (e) {
-    trackLogoutFailure(convertUnknownToError(e), "reauth");
+    trackLogoutFailure(convertUnknownToError(e), cieLoginFlowType);
   } finally {
     // clean up crypto keys
     yield* deleteCurrentLollipopKeyAndGenerateNewKeyTag();
