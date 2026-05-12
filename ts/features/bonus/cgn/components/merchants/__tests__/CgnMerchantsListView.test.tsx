@@ -53,15 +53,6 @@ describe("CgnMerchantsListView", () => {
     expect(getByText(I18n.t("bonus.cgn.merchantsList.news"))).toBeTruthy();
   });
 
-  it("should show the numberOfNewDiscounts in the badge when provided", () => {
-    const { getByText } = renderItem({
-      ...baseMerchant,
-      newDiscounts: true,
-      numberOfNewDiscounts: 5
-    });
-    expect(getByText("5")).toBeTruthy();
-  });
-
   it("should call onItemPress with the merchant id when pressed", () => {
     const { getByText } = renderItem(baseMerchant);
     fireEvent.press(getByText("Test Merchant"));

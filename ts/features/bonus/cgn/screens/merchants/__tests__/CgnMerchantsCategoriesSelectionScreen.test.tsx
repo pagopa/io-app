@@ -19,6 +19,18 @@ jest.mock("../../../hooks/useDisableRootNavigatorGesture", () => ({
   useDisableRootNavigatorGesture: jest.fn()
 }));
 
+jest.mock("../../../components/CgnAnimatedBackground", () => {
+  const React = require("react");
+  const { View } = require("react-native");
+
+  return {
+    CgnAnimatedBackground: () =>
+      React.createElement(View, {
+        testID: "cgn-animated-background-mock"
+      })
+  };
+});
+
 const globalState = appReducer(undefined, applicationChangeState("active"));
 
 const defaultState: GlobalState = {

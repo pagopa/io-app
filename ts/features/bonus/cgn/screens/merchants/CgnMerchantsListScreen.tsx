@@ -1,4 +1,10 @@
-import { Badge, H6, HSpacer, ListItemNav } from "@pagopa/io-app-design-system";
+import {
+  Badge,
+  ContentWrapper,
+  H6,
+  HSpacer,
+  ListItemNav
+} from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useMemo } from "react";
 import { View } from "react-native";
@@ -9,12 +15,12 @@ import { OfflineMerchant } from "../../../../../../definitions/cgn/merchants/Off
 import { OnlineMerchant } from "../../../../../../definitions/cgn/merchants/OnlineMerchant";
 import {
   getValueOrElse,
+  isError,
   isLoading
 } from "../../../../../common/model/RemoteValue";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { getListItemAccessibilityLabelCount } from "../../../../../utils/accessibility";
-import { CgnMerchantListSkeleton } from "../../components/merchants/CgnMerchantListSkeleton";
 import CGN_ROUTES from "../../navigation/routes";
 import {
   cgnOfflineMerchants,
@@ -25,6 +31,7 @@ import {
   cgnOnlineMerchantsSelector
 } from "../../store/reducers/merchants";
 import { mixAndSortMerchants } from "../../utils/merchants";
+import { CgnMerchantListSkeleton } from "../../components/merchants/CgnMerchantListSkeleton";
 
 export type MerchantsAll = OfflineMerchant | OnlineMerchant;
 
@@ -63,47 +70,39 @@ export const CgnMerchantsListScreen = () => {
 
   const renderItem = (item: MerchantsAll, index: number) => {
     const accessibilityLabel =
-      (item?.numberOfNewDiscounts
-        ? I18n.t("bonus.cgn.merchantsList.categoriesList.a11y", {
-            name: item.name,
-            count: item.numberOfNewDiscounts
-          })
-        : item.newDiscounts
-          ? `${item.name} ${I18n.t("bonus.cgn.merchantsList.news")}`
-          : item.name) + getListItemAccessibilityLabelCount(data.length, index);
+      (item.newDiscounts
+        ? `${item.name} ${I18n.t("bonus.cgn.merchantsList.news")}`
+        : item.name) + getListItemAccessibilityLabelCount(data.length, index);
     return (
-      <ListItemNav
-        key={item.id}
-        onPress={() => onItemPress(item.id)}
-        accessibilityLabel={accessibilityLabel}
-        value={
-          <View
-            style={{ flexDirection: "row", justifyContent: "space-between" }}
-          >
-            <H6 style={{ flexGrow: 1, flexShrink: 1 }}>{item.name}</H6>
-            <HSpacer />
-            {item.newDiscounts && (
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center"
-                }}
-              >
-                <Badge
-                  accessible={false}
-                  variant="cgn"
-                  text={
-                    item?.numberOfNewDiscounts
-                      ? item.numberOfNewDiscounts.toString()
-                      : I18n.t("bonus.cgn.merchantsList.news")
-                  }
-                />
-              </View>
-            )}
-          </View>
-        }
-      />
+      <ContentWrapper key={item.id}>
+        <ListItemNav
+          onPress={() => onItemPress(item.id)}
+          accessibilityLabel={accessibilityLabel}
+          value={
+            <View
+              style={{ flexDirection: "row", justifyContent: "space-between" }}
+            >
+              <H6 style={{ flexGrow: 1, flexShrink: 1 }}>{item.name}</H6>
+              <HSpacer />
+              {item.newDiscounts && (
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center"
+                  }}
+                >
+                  <Badge
+                    accessible={false}
+                    variant="cgn"
+                    text={I18n.t("bonus.cgn.merchantsList.news")}
+                  />
+                </View>
+              )}
+            </View>
+          }
+        />
+      </ContentWrapper>
     );
   };
 
@@ -112,23 +111,27 @@ export const CgnMerchantsListScreen = () => {
     onRefresh: initLoadingLists
   };
 
-  const ListEmptyComponent = (
-    <OperationResultScreenContent
-      title={I18n.t("wallet.payment.outcome.GENERIC_ERROR.title")}
-      pictogram="umbrella"
-      action={{
-        label: I18n.t("global.buttons.retry"),
-        onPress: initLoadingLists
-      }}
-    />
-  );
+  const ListEmptyComponent =
+    isError(onlineMerchants) || isError(offlineMerchants) ? (
+      <OperationResultScreenContent
+        title={I18n.t("wallet.payment.outcome.GENERIC_ERROR.title")}
+        pictogram="umbrella"
+        action={{
+          label: I18n.t("global.buttons.retry"),
+          onPress: initLoadingLists
+        }}
+      />
+    ) : (
+      <ContentWrapper>
+        <CgnMerchantListSkeleton hasIcons count={10} />
+      </ContentWrapper>
+    );
 
   return {
     data,
     renderItem,
     refreshControlProps,
     ListFooterComponent: <></>,
-    ListEmptyComponent,
-    skeleton: <CgnMerchantListSkeleton hasIcons count={10} />
+    ListEmptyComponent
   };
 };

@@ -1,6 +1,4 @@
 import { IOColors, Tag, useIOTheme } from "@pagopa/io-app-design-system";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { SdJwt, Mdoc } from "@pagopa/io-react-native-wallet";
 import I18n from "i18next";
 import { isBefore } from "date-fns";
@@ -47,7 +45,7 @@ export const isL2Credential = (
   type: string | undefined
 ): type is L2Credential => l2Credentials.includes(type as L2Credential);
 
-export const itwGetCredentialNameByCredentialType = (
+const getCredentialNameByType = (
   isItwCredential: boolean
 ): Record<string, string> => ({
   [CredentialType.EUROPEAN_DISABILITY_CARD]: I18n.t(
@@ -83,15 +81,16 @@ export const itwGetCredentialNameByCredentialType = (
 });
 
 export const getCredentialNameFromType = (
-  credentialType: string | undefined,
-  withDefault: string = "",
-  isItwCredential: boolean = false
-): string =>
-  pipe(
-    O.fromNullable(credentialType),
-    O.map(type => itwGetCredentialNameByCredentialType(isItwCredential)[type]),
-    O.getOrElse(() => withDefault)
-  );
+  type: string | undefined,
+  isItwCredential: boolean = false,
+  withDefault: string = ""
+): string => {
+  if (!type) {
+    return withDefault;
+  }
+  const name = type && getCredentialNameByType(isItwCredential)[type];
+  return name || withDefault || type;
+};
 
 export const useBorderColorByStatus: () => {
   [key in ItwCredentialStatus]: string;
@@ -121,7 +120,9 @@ export const borderVariantByStatus: {
   unknown: "default"
 };
 
-export const tagPropsByStatus: { [key in ItwCredentialStatus]?: Tag } = {
+export const useTagPropsByStatus = (): {
+  [key in ItwCredentialStatus]?: Tag;
+} => ({
   invalid: {
     variant: "error",
     text: I18n.t("features.itWallet.card.status.invalid")
@@ -147,7 +148,7 @@ export const tagPropsByStatus: { [key in ItwCredentialStatus]?: Tag } = {
     icon: { name: "infoFilled", color: "grey-450" },
     text: I18n.t("features.itWallet.card.status.unknown")
   }
-};
+});
 
 /**
  * List of statuses that make a credential valid, especially for UI purposes.
