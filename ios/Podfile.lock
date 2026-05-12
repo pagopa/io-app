@@ -5,7 +5,11 @@ PODS:
     - React
   - CieSDK (0.1.20-rc.2)
   - DoubleConversion (1.1.6)
+  - EXApplication (7.0.8):
+    - ExpoModulesCore
   - EXConstants (18.0.13):
+    - ExpoModulesCore
+  - EXNotifications (0.32.17):
     - ExpoModulesCore
   - Expo (54.0.33):
     - boost
@@ -39,6 +43,8 @@ PODS:
     - SocketRocket
     - Yoga
   - ExpoAsset (12.0.12):
+    - ExpoModulesCore
+  - ExpoDevice (8.0.10):
     - ExpoModulesCore
   - ExpoFileSystem (19.0.21):
     - ExpoModulesCore
@@ -454,7 +460,6 @@ PODS:
     - React-RCTText (= 0.81.5)
     - React-RCTVibration (= 0.81.5)
   - React-callinvoker (0.81.5)
-  - React-Codegen (0.1.0)
   - React-Core (0.81.5):
     - boost
     - DoubleConversion
@@ -2254,13 +2259,6 @@ PODS:
     - Yoga
   - react-native-netinfo (11.4.1):
     - React-Core
-  - react-native-notifications-utils (0.3.0):
-    - RCT-Folly
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Codegen
-    - React-Core
-    - ReactCommon/turbomodule/core
   - react-native-pager-view (7.0.2):
     - boost
     - DoubleConversion
@@ -3065,8 +3063,6 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - RNCPushNotificationIOS (1.8.0):
-    - React-Core
   - RNDeviceInfo (14.0.4):
     - React-Core
   - RNFS (2.18.0):
@@ -3550,9 +3546,12 @@ DEPENDENCIES:
   - boost (from `../node_modules/react-native/third-party-podspecs/boost.podspec`)
   - BVLinearGradient (from `../node_modules/react-native-linear-gradient`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
+  - EXApplication (from `../node_modules/expo-application/ios`)
   - EXConstants (from `../node_modules/expo-constants/ios`)
+  - EXNotifications (from `../node_modules/expo-notifications/ios`)
   - Expo (from `../node_modules/expo`)
   - ExpoAsset (from `../node_modules/expo-asset/ios`)
+  - ExpoDevice (from `../node_modules/expo-device/ios`)
   - ExpoFileSystem (from `../node_modules/expo-file-system/ios`)
   - ExpoFont (from `../node_modules/expo-font/ios`)
   - ExpoKeepAwake (from `../node_modules/expo-keep-awake/ios`)
@@ -3619,7 +3618,6 @@ DEPENDENCIES:
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
-  - react-native-notifications-utils (from `../node_modules/react-native-notifications-utils`)
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-pdf (from `../node_modules/react-native-pdf`)
   - react-native-quick-base64 (from `../node_modules/react-native-quick-base64`)
@@ -3664,7 +3662,6 @@ DEPENDENCIES:
   - RNCalendarEvents (from `../node_modules/react-native-calendar-events`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
-  - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios`)"
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
@@ -3690,7 +3687,6 @@ SPEC REPOS:
     - JOSESwift
     - Mixpanel-swift
     - OpenSSL-Universal
-    - React-Codegen
     - SocketRocket
     - SwiftCBOR
     - ZendeskAnswerBotProvidersSDK
@@ -3713,12 +3709,18 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-linear-gradient"
   DoubleConversion:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
+  EXApplication:
+    :path: "../node_modules/expo-application/ios"
   EXConstants:
     :path: "../node_modules/expo-constants/ios"
+  EXNotifications:
+    :path: "../node_modules/expo-notifications/ios"
   Expo:
     :path: "../node_modules/expo"
   ExpoAsset:
     :path: "../node_modules/expo-asset/ios"
+  ExpoDevice:
+    :path: "../node_modules/expo-device/ios"
   ExpoFileSystem:
     :path: "../node_modules/expo-file-system/ios"
   ExpoFont:
@@ -3850,8 +3852,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-image-picker"
   react-native-netinfo:
     :path: "../node_modules/@react-native-community/netinfo"
-  react-native-notifications-utils:
-    :path: "../node_modules/react-native-notifications-utils"
   react-native-pager-view:
     :path: "../node_modules/react-native-pager-view"
   react-native-pdf:
@@ -3940,8 +3940,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCClipboard:
     :path: "../node_modules/@react-native-clipboard/clipboard"
-  RNCPushNotificationIOS:
-    :path: "../node_modules/@react-native-community/push-notification-ios"
   RNDeviceInfo:
     :path: "../node_modules/react-native-device-info"
   RNFS:
@@ -3977,9 +3975,12 @@ SPEC CHECKSUMS:
   BVLinearGradient: 44fd36b87f318e7933c4c91a6991442a5e3f5bcf
   CieSDK: f0413f57294d3df9cf915bc5b20e44b8ba2cb3cc
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
+  EXApplication: 1e98d4b1dccdf30627f92917f4b2c5a53c330e5f
   EXConstants: fce59a631a06c4151602843667f7cfe35f81e271
+  EXNotifications: c67e92b9fdfe785ff9dbdc5f4c0ff935de357da7
   Expo: ffcd2fb31776b663b84501a2568cab7dd7c0f9cb
   ExpoAsset: f867e55ceb428aab99e1e8c082b5aee7c159ea18
+  ExpoDevice: 6327c3c200816795708885adf540d26ecab83d1a
   ExpoFileSystem: 858a44267a3e6e9057e0888ad7c7cfbf55d52063
   ExpoFont: f543ce20a228dd702813668b1a07b46f51878d47
   ExpoKeepAwake: 55f75eca6499bb9e4231ebad6f3e9cb8f99c0296
@@ -4014,7 +4015,6 @@ SPEC CHECKSUMS:
   RCTTypeSafety: b99aa872829ee18f6e777e0ef55852521c5a6788
   React: 914f8695f9bf38e6418228c2ffb70021e559f92f
   React-callinvoker: 23cd4e33928608bd0cc35357597568b8b9a5f068
-  React-Codegen: 4b8b4817cea7a54b83851d4c1f91f79aa73de30a
   React-Core: 6a0a97598e9455348113bfe4c573fe8edac34469
   React-CoreModules: a88a6ca48b668401b9780e272e2a607e70f9f955
   React-cxxreact: 06265fd7e8d5c3b6b49e00d328ef76e5f1ae9c8b
@@ -4051,7 +4051,6 @@ SPEC CHECKSUMS:
   react-native-get-random-values: d16467cf726c618e9c7a8c3c39c31faa2244bbba
   react-native-image-picker: b16541b587b275e81a12f9b82f215c5e9b0ccbf3
   react-native-netinfo: cec9c4e86083cb5b6aba0e0711f563e2fbbff187
-  react-native-notifications-utils: 3e4bfc85db8610c150945472a8976a036a8931a7
   react-native-pager-view: 5c3098839820aa73d75873e7b1a7eb9f119602b7
   react-native-pdf: edc236298f13f1609e42d41e45b8b6ea88ed10f9
   react-native-quick-base64: 6568199bb2ac8e72ecdfdc73a230fbc5c1d3aac4
@@ -4096,7 +4095,6 @@ SPEC CHECKSUMS:
   RNCalendarEvents: f90f73666b6bcbb3cc8a491ffbb5e48c0db3de37
   RNCAsyncStorage: a38d050067936ce8617a322dd4c63fce66429e5e
   RNCClipboard: 4b58c780f63676367640f23c8e114e9bd0cf86ac
-  RNCPushNotificationIOS: 9f3ee8e3b19b6d1941990d0e6306e89fc7610c83
   RNDeviceInfo: d863506092aef7e7af3a1c350c913d867d795047
   RNFS: 4f02bbb5c95d71bade3d36a1b6514305ccefc4c9
   RNGestureHandler: 29bbca60c881e5243e219e3fe0016060002ed389
@@ -4126,6 +4124,6 @@ SPEC CHECKSUMS:
   ZendeskSupportSDK: ae9d470360e00f2e0694cad4b118a80af018e8ef
   ZXingObjC: 8898711ab495761b2dbbdec76d90164a6d7e14c5
 
-PODFILE CHECKSUM: 4f9448e3cb7247046464a94ab48418a92b515bcb
+PODFILE CHECKSUM: dc109e41e5c3b621a94e11dd308c3502c4db5db5
 
 COCOAPODS: 1.15.2

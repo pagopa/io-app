@@ -1,69 +1,49 @@
+import * as Notifications from "expo-notifications";
+import { Linking } from "react-native";
 import { v4 as uuid } from "uuid";
-import { PermissionsAndroid } from "react-native";
-import PushNotificationIOS from "@react-native-community/push-notification-ios";
-import PushNotification from "react-native-push-notification";
-import NotificationsUtils from "react-native-notifications-utils";
-import { isIos } from "../../../utils/platform";
 import { trackAppCaughtError } from "../../../utils/analytics";
 import { unknownToString } from "../../../utils/errors";
+import { isIos } from "../../../utils/platform";
 
-export enum AuthorizationStatus {
-  NotDetermined = 0,
-  StatusDenied = 1,
-  Authorized = 2,
-  Provisional = 3,
-  Ephemeral = 4 // This is a state that may be returned by iOS (as a number) but it is not mapped in the iOS library
-}
-
-export const checkNotificationPermissions = () =>
-  new Promise<boolean>(resolve => {
-    try {
-      if (isIos) {
-        PushNotificationIOS.checkPermissions(({ authorizationStatus }) => {
-          // On iOS, 'authorizationStatus' is the parameter that
-          // reflects the notification permission status ('alert'
-          // is just one of the presentation's options)
-          resolve(
-            authorizationStatus !== undefined &&
-              authorizationStatus !== AuthorizationStatus.NotDetermined &&
-              authorizationStatus !== AuthorizationStatus.StatusDenied
-          );
-        });
-      } else {
-        PushNotification.checkPermissions(data => {
-          // On Android, only 'alert' has a value
-          resolve(!!data.alert);
-        });
-      }
-    } catch (e) {
-      trackAppCaughtError(
-        "checkNotificationPermissions",
-        `exception thrown on ${isIos ? "iOS" : "Android"}`,
-        unknownToString(e)
-      );
-      resolve(false);
-    }
-  });
-
-export const requestNotificationPermissions = async () => {
+export const checkNotificationPermissions = async (): Promise<boolean> => {
   try {
-    if (isIos) {
-      const pushNotificationPermissions =
-        await PushNotificationIOS.requestPermissions({
-          alert: true,
-          badge: true,
-          sound: true
-        });
-      return (
-        pushNotificationPermissions.authorizationStatus ===
-        AuthorizationStatus.Authorized
-      );
-    } else {
-      const permissionStatus = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
-      );
-      return permissionStatus === PermissionsAndroid.RESULTS.GRANTED;
-    }
+    const settings = await Notifications.getPermissionsAsync();
+
+    const areIosNotificationsDisabled = [
+      undefined,
+      Notifications.IosAuthorizationStatus.DENIED,
+      Notifications.IosAuthorizationStatus.NOT_DETERMINED
+    ].includes(settings.ios?.status);
+    return settings.granted || !areIosNotificationsDisabled;
+  } catch (e) {
+    trackAppCaughtError(
+      "checkNotificationPermissions",
+      `exception thrown on ${isIos ? "iOS" : "Android"}`,
+      unknownToString(e)
+    );
+    return false;
+  }
+};
+/**
+ * Requests the system-level push notification permission.
+ * On iOS, also enables alert, badge, and sound presentation options.
+ * Returns false on error to avoid blocking the calling flow.
+ */
+export const requestNotificationPermissions = async (): Promise<boolean> => {
+  try {
+    const permissions = await Notifications.requestPermissionsAsync({
+      ios: {
+        allowAlert: true,
+        allowBadge: true,
+        allowSound: true
+      }
+    });
+
+    return (
+      permissions.granted ||
+      permissions.ios?.status ===
+        Notifications.IosAuthorizationStatus.AUTHORIZED
+    );
   } catch (e) {
     trackAppCaughtError(
       "requestNotificationPermissions",
@@ -75,17 +55,11 @@ export const requestNotificationPermissions = async () => {
 };
 
 /**
- * Remove all the local notifications related to authentication with spid.
- *
- * With the previous library version (7.3.1 - now 8.1.1), cancelLocalNotifications
- * did not work. At the moment, the "first access spid" is the only kind of
- * scheduled notification and for this reason it is safe to use
- * PushNotification.cancelAllLocalNotifications();
- * If we add more scheduled notifications, we need to investigate if
- * cancelLocalNotifications works with the new library version
+ * Cancels all pending scheduled (local) notifications.
+ * Called during app logout/cache clear to remove any stale SPID-related local notifications.
  */
 export const cancellAllLocalNotifications = () =>
-  PushNotification.cancelAllLocalNotifications();
+  Notifications.cancelAllScheduledNotificationsAsync();
 
 /**
  * This is a legacy code that was used to generate a unique Id
@@ -97,7 +71,8 @@ export const cancellAllLocalNotifications = () =>
  */
 export const generateInstallationId = () => `001${uuid().replace(/-/g, "")}`;
 
-export const openSystemNotificationSettingsScreen = () =>
-  NotificationsUtils.openSettings();
+export const openSystemNotificationSettingsScreen = () => {
+  void Linking.openSettings();
+};
 
 export const generateTokenRegistrationTime = () => new Date().getTime();
