@@ -32,12 +32,14 @@ import {
   ITW_BRANDED_BOX_PADDING,
   ItwBrandedBox
 } from "../../../common/components/ItwBrandedBox.tsx";
+import { itwIsBannerHiddenSelector } from "../../../common/store/selectors/banners";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import {
   trackItwProximityQrCode,
   trackItwProximityQrCodeLoadingRetry,
   trackItwStartReissuingPID
 } from "../analytics/index.ts";
+import { ItwProximityQrCodeInfoBanner } from "../components/ItwProximityQrCodeInfoBanner";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
 import {
   selectFailure,
@@ -47,9 +49,7 @@ import {
   selectQRCodeString
 } from "../machine/selectors.ts";
 import { ItwProximityParamsList } from "../navigation/ItwProximityParamsList.ts";
-import { shouldBlockProximityQrCodeSelector } from "../store/selectors";
-import { itwIsBannerHiddenSelector } from "../../../common/store/selectors/banners";
-import { ItwProximityQrCodeInfoBanner } from "../components/ItwProximityQrCodeInfoBanner";
+import { shouldBlockProximityQrCodeSelector } from "../store/selectors/credentials.ts";
 
 const QR_CODE_LOGO_SIZE = 52;
 
