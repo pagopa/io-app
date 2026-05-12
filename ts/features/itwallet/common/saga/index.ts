@@ -8,32 +8,32 @@ import {
   updateNfcInfoTrackingProperties,
   watchItwAnalyticsSaga
 } from "../../analytics/saga";
-import { registerItwBackgroundTaskSaga } from "../../tasks/saga.ts";
 import { watchItwCredentialsSaga } from "../../credentials/saga";
 import { checkCredentialsStatusAssertion } from "../../credentials/saga/checkCredentialsStatusAssertion";
 import { handleItwCredentialsVaultCoherenceSaga } from "../../credentials/saga/handleItwCredentialsVaultCoherenceSaga";
 import { handleItwCredentialsVaultMigrationSaga } from "../../credentials/saga/handleItwCredentialsVaultMigrationSaga";
 import { handleWalletCredentialsRehydration } from "../../credentials/saga/handleWalletCredentialsRehydration";
-import { itwCredentialsEidSelector } from "../../credentials/store/selectors/index.ts";
-import { watchItwCredentialsCatalogueSaga } from "../../credentialsCatalogue/saga/index.ts";
-import { checkHasNfcFeatureSaga } from "../../identification/common/saga/index.ts";
+import { handleWalletUnitAttestationsCleanUp } from "../../credentials/saga/handleWalletUnitAttestationsCleanUp";
+import { itwCredentialsEidSelector } from "../../credentials/store/selectors/index";
+import { watchItwCredentialsCatalogueSaga } from "../../credentialsCatalogue/saga/index";
+import { checkHasNfcFeatureSaga } from "../../identification/common/saga/index";
 import { watchItwLifecycleSaga } from "../../lifecycle/saga";
-import { checkCurrentWalletInstanceStateSaga } from "../../lifecycle/saga/checkCurrentWalletInstanceStateSaga.ts";
+import { checkCurrentWalletInstanceStateSaga } from "../../lifecycle/saga/checkCurrentWalletInstanceStateSaga";
 import { warmUpIntegrityServiceSaga } from "../../lifecycle/saga/checkIntegrityServiceReadySaga";
 import {
   checkWalletInstanceInconsistencySaga,
   checkWalletInstanceStateSaga
 } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
-import { checkFiscalCodeEnabledSaga } from "../../trialSystem/saga/checkFiscalCodeIsEnabledSaga.ts";
+import { checkFiscalCodeEnabledSaga } from "../../trialSystem/saga/checkFiscalCodeIsEnabledSaga";
+import { registerStatusListFetchTaskSaga } from "../../statusList/saga";
 import {
   itwFreezeSimplifiedActivationRequirements,
   itwSetAuthLevel,
   itwSetFiscalCodeWhitelisted
-} from "../store/actions/preferences.ts";
-import { handleWalletUnitAttestationsCleanUp } from "../../credentials/saga/handleWalletUnitAttestationsCleanUp.ts";
-import { isItwCredential } from "../utils/itwCredentialUtils.ts";
+} from "../store/actions/preferences";
+import { isItwCredential } from "../utils/itwCredentialUtils";
 import { watchItwEnvironment } from "./environment";
-import { watchItwOfflineAccess } from "./offlineAccess.ts";
+import { watchItwOfflineAccess } from "./offlineAccess";
 
 export function* watchItwSaga(): SagaIterator {
   yield* takeLatest(
@@ -65,9 +65,6 @@ export function* watchItwSaga(): SagaIterator {
   yield* call(checkWalletInstanceStateSaga);
   yield* call(checkCurrentWalletInstanceStateSaga);
   yield* call(checkCredentialsStatusAssertion);
-
-  // Register the background task for Wallet Instance status checks
-  yield* fork(registerItwBackgroundTaskSaga);
 }
 
 /**
@@ -97,6 +94,9 @@ export function* watchItwOfflineSaga(): SagaIterator {
 
   // TODO remove this fork when NFC antenna info tracking is not needed anymore
   yield* fork(updateNfcInfoTrackingProperties);
+
+  // Register the background task for Wallet Instance status checks
+  yield* fork(registerStatusListFetchTaskSaga);
 }
 
 /**

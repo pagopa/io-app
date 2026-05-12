@@ -18,8 +18,10 @@ import { IOAlertVisibleContextProvider } from "./components/StatusMessages/IOAle
 import { StatusMessages } from "./components/StatusMessages/StatusMessages";
 import { LightModalProvider } from "./components/ui/LightModal";
 import { AppFeedbackProvider } from "./features/appReviews/components/AppFeedbackProvider";
-import { ITW_WALLET_CHECK_TASK } from "./features/itwallet/tasks/constants";
-import { itwWalletCheckTaskHandler } from "./features/itwallet/tasks/handler";
+import {
+  ITW_STATUS_LIST_FETCH_TASK,
+  itwStatusListFetchTaskHandler
+} from "./features/itwallet/statusList/tasks";
 import { TourProvider } from "./features/tour/components/TourProvider";
 
 /**
@@ -32,7 +34,10 @@ import { TourProvider } from "./features/tour/components/TourProvider";
  * for execution (https://docs.expo.dev/versions/latest/sdk/background-task/#multiple-background-tasks)
  *
  */
-TaskManager.defineTask(ITW_WALLET_CHECK_TASK, itwWalletCheckTaskHandler);
+TaskManager.defineTask(
+  ITW_STATUS_LIST_FETCH_TASK,
+  itwStatusListFetchTaskHandler
+);
 
 // Infer the `RootState` and `AppDispatch` types from the store itself export
 export type RootState = ReturnType<typeof store.getState>;

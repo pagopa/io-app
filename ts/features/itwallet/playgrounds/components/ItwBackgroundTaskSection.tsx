@@ -12,7 +12,7 @@ import { useCallback, useState } from "react";
 import { Alert, View } from "react-native";
 import { isDevEnv } from "../../../../utils/environment";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import { ITW_WALLET_CHECK_TASK } from "../../tasks/constants";
+import { ITW_STATUS_LIST_FETCH_TASK } from "../../statusList/tasks";
 
 const getAlertMessage = (error: unknown) =>
   error instanceof Error ? error.message : String(error);
@@ -50,7 +50,7 @@ export const ItwBackgroundTaskSection = () => {
     try {
       const [backgroundTaskStatus, taskRegistered] = await Promise.all([
         BackgroundTask.getStatusAsync(),
-        TaskManager.isTaskRegisteredAsync(ITW_WALLET_CHECK_TASK)
+        TaskManager.isTaskRegisteredAsync(ITW_STATUS_LIST_FETCH_TASK)
       ]);
 
       setStatus(backgroundTaskStatus);
@@ -106,7 +106,7 @@ export const ItwBackgroundTaskSection = () => {
         value={getTaskRegistrationLabel(isTaskRegistered)}
       />
       <Divider />
-      <ListItemInfo label="Task name" value={ITW_WALLET_CHECK_TASK} />
+      <ListItemInfo label="Task name" value={ITW_STATUS_LIST_FETCH_TASK} />
       <VSpacer size={16} />
       <IOButton
         variant="solid"
