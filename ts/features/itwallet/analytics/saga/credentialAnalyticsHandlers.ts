@@ -74,6 +74,14 @@ export function* handleCredentialRemovedAnalytics(
   updateThirdPartyCredentialProperty(state);
 }
 
+/**
+ * Handles aggregate analytics updates when catalogue metadata is refreshed.
+ */
+export function* handleCredentialsCatalogueLoadedAnalytics(): SagaIterator {
+  const state: GlobalState = yield* select();
+  updateThirdPartyCredentialProperty(state);
+}
+
 function getAnalyticsCredentialFromStored(
   credentials: ReadonlyArray<CredentialMetadata>,
   isItwL3: boolean
