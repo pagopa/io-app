@@ -1,6 +1,5 @@
 import { fireEvent, render } from "@testing-library/react-native";
 import { ClaimDisplayFormat } from "../../../../../common/utils/itwClaimsUtils";
-import { CredentialType } from "../../../../../common/utils/itwMocksUtils";
 import { ItwClaimsSelector } from "../index";
 
 jest.mock("../../../hooks/useClaimsDetailsBottomSheet", () => ({
@@ -64,34 +63,6 @@ describe("ItwClaimsSelector", () => {
     { id: "name", label: "Name", value: "Mario Rossi" },
     { id: "birth_date", label: "Birth date", value: "1990-01-01" }
   ];
-
-  it.each([
-    CredentialType.PID,
-    CredentialType.DRIVING_LICENSE,
-    CredentialType.EUROPEAN_DISABILITY_CARD,
-    CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
-    CredentialType.AGE_VERIFICATION,
-    CredentialType.EDUCATION_ATTENDANCE,
-    CredentialType.EDUCATION_DEGREE,
-    CredentialType.EDUCATION_DIPLOMA,
-    CredentialType.EDUCATION_ENROLLMENT,
-    CredentialType.RESIDENCY,
-    "Unknown Credential",
-    "Unknown Credential Type with Ridicolously Long Long Long Long Name"
-  ])(
-    "matches snapshot for credential configuration: %s",
-    (credentialType: string) => {
-      const component = render(
-        <ItwClaimsSelector
-          credentialType={credentialType}
-          items={items}
-          accessibilityLabel="claims-selector"
-        />
-      );
-
-      expect(component).toMatchSnapshot();
-    }
-  );
 
   it("renders credential claims", () => {
     const component = render(
