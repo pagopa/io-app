@@ -2790,6 +2790,40 @@
           }
         }
       },
+      "requestL3": {
+        "localFlag": {
+          "title": "Attivazione check L3 per il flusso di firma",
+          "description": "Attivando questo toggle attivi il check L3 per il flusso di firma, che prevede una nuova login L3 per gli utenti che non possiedono il livello di autenticazione L3 (CIE + PIN)"
+        },
+        "landingPage": {
+          "title": "Prepara la tua Carta di Identità Elettronica e il PIN",
+          "subtitle": "Prima di firmare dobbiamo verificare la tua identità. Questo passaggio protegge la tua firma e ne garantisce la validità."
+        },
+        "optinLogin": {
+          "title": "Vuoi attivare l’accesso rapido?",
+          "description": "Con l’accesso rapido chiederemo la tua l'identità digitale una sola volta all'anno invece che ogni 30 giorni. Poi ti basterà usare il volto, l’impronta o il codice.",
+          "descriptionButton": "Come proteggere il tuo accesso",
+          "primaryAction": "Continua con l’accesso rapido",
+          "secondaryAction": "Rinnova l’accesso ogni 30 giorni",
+          "securityBottomsheet": {
+            "title": "Come proteggere il tuo accesso",
+            "featureInfo1": "Puoi uscire dall’app anche se perdi il dispositivo.",
+            "featureInfo1Action": "Vai al sito",
+            "featureInfo2": "Se temi che qualcuno possa usare la tua identità digitale, puoi bloccare l’accesso all’app entrando dal web.",
+            "featureInfo2Action": "Gestisci l’accesso",
+            "featureInfo3": "Se accedi a IO con un dispositivo non tuo, ricordati di uscire dall’app."
+          }
+        },
+        "nfcNotAvailable": {
+          "title": "Il tuo dispositivo non supporta la lettura della CIE",
+          "description": "Il dispositivo che stai utilizzando non supporta l’accesso con Carta d’Identità Elettronica (CIE).",
+          "featureInfoText": [
+            "Per leggere la CIE è necessario un dispositivo con chip NFC.",
+            "È richiesto un sistema operativo Android 8 o iOS 15.1 o superiori."
+          ],
+          "cta": "Ho capito"
+        }
+      },
       "abort": {
         "title": "Annulla la firma",
         "content": "Vuoi annullare la firma di **{{dossierTitle}}**?",
@@ -2846,7 +2880,7 @@
       },
       "qtspTos": {
         "title": "Ci siamo quasi!",
-        "subTitle": "Per firmare, devi accettare i termini e condizioni del servizio e confermare di avere letto l’informativa privacy del fornitore della firma."
+        "subTitle": "Per firmare, devi accettare i termini e condizioni del servizio e confermare di avere letto l’informativa privacy del fornitore della firma **Namirial S.p.A.**"
       },
       "documents": {
         "footer": {
@@ -2866,12 +2900,6 @@
       "signatureFieldInfo": {
         "title": "Cosa sono le clausole vessatorie?",
         "subTitle": "Sono delle clausole che segnalano condizioni particolari a cui prestare attenzione e che devono essere accettate. Devono inoltre essere, per legge, facilmente identificabili per far sì che chi firma sia informato del loro contenuto prima di apporre la firma."
-      },
-      "requestL3": {
-        "localFlag": {
-          "title": "Attivazione check L3 per il flusso di firma",
-          "description": "Attivando questo toggle attivi il check L3 per il flusso di firma, che prevede una nuova login L3 per gli utenti che non possiedono il livello di autenticazione L3 (CIE + PIN)"
-        }
       }
     },
     "wallet": {
@@ -4209,6 +4237,9 @@
             "invalid": "Non puoi far verificare i tuoi documenti digitali."
           },
           "banner": {
+            "title": "Come funziona il QR Code?",
+            "content": "Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio.",
+            "action": "Scopri di più",
             "invalid": "Conferma la tua identità per continuare a usare i tuoi documenti senza limitazioni."
           },
           "reissue": {
@@ -4218,6 +4249,10 @@
         "itWalletId": {
           "description": "È il tuo pass digitale per dimostrare chi sei, accedere ai servizi online e ottenere nuovi documenti.",
           "listItemHeader": "Dati del mio IT-Wallet ID",
+          "banner": {
+            "title": "Cos'è IT-Wallet ID?",
+            "content": "È il cuore del tuo Portafoglio IT-Wallet: ti consente di ottenere i documenti digitali, dimostrare chi sei e accedere ai servizi online"
+          },
           "cta": {
             "info": "Parte di IT-Wallet",
             "revoke": "Disattiva IT-Wallet"

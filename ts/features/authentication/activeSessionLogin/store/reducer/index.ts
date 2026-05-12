@@ -14,7 +14,8 @@ import {
   setLoggedOutUserWithDifferentCF,
   setStartActiveSessionLogin,
   setActiveSessionLoginBlockingScreenHasBeenVisualized,
-  setCieIDSelectedSecurityLevelActiveSessionLogin
+  setCieIDSelectedSecurityLevelActiveSessionLogin,
+  setActiveSessionLoginFlow
 } from "../actions";
 import { SpidIdp } from "../../../../../utils/idps";
 import { StandardLoginRequestInfo } from "../../../login/idp/store/types";
@@ -41,6 +42,7 @@ export type ActiveSessionLoginState = {
     hasBlockingScreenBeenVisualized: boolean;
     showSessionExpirationBanner: boolean;
   };
+  flow?: "FCI"; // We can extend this type with other flows in the future if needed
 };
 
 export const activeSessionLoginInitialState: ActiveSessionLoginState = {
@@ -63,6 +65,11 @@ const activeSessionLoginReducer = (
         ...state,
         activeSessionLoginLocalFlag: action.payload,
         engagement: { ...activeSessionLoginInitialState.engagement }
+      };
+    case getType(setActiveSessionLoginFlow):
+      return {
+        ...state,
+        flow: action.payload
       };
     case getType(setActiveSessionLoginBlockingScreenHasBeenVisualized):
       return {
@@ -133,6 +140,11 @@ const activeSessionLoginReducer = (
         engagement: { ...state.engagement }
       };
     case getType(consolidateActiveSessionLoginData):
+      // Preserve the flow when consolidating data, it will be used after startup
+      return {
+        ...activeSessionLoginInitialState,
+        flow: state.flow
+      };
     case getType(setLoggedOutUserWithDifferentCF):
     case getType(sessionCorrupted):
     case getType(logoutSuccess):

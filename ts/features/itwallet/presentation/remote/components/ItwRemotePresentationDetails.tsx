@@ -1,5 +1,3 @@
-import { memo, useMemo } from "react";
-import { View } from "react-native";
 import {
   Alert,
   ClaimsSelector,
@@ -10,21 +8,23 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+import { memo, useMemo } from "react";
+import { View } from "react-native";
+import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../../../store/hooks";
 import { itwCredentialNameResolverSelector } from "../../../credentialsCatalogue/store/selectors";
-import { selectPresentationDetails } from "../machine/selectors";
-import { ItwRemoteMachineContext } from "../machine/provider";
-import { EnrichedPresentationDetails } from "../utils/itwRemoteTypeUtils";
-import {
-  getCredentialTypeByVct,
-  groupCredentialsByPurpose
-} from "../utils/itwRemotePresentationUtils";
-import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { useClaimsDetailsBottomSheet } from "../../common/hooks/useClaimsDetailsBottomSheet";
 import {
   claimsSelectorHeaderGradientsByCredentialType,
   mapClaimsToClaimsSelectorItems
 } from "../../common/utils/itwClaimSelector";
+import { ItwRemoteMachineContext } from "../machine/provider";
+import { selectPresentationDetails } from "../machine/selectors";
+import {
+  getCredentialTypeByVct,
+  groupCredentialsByPurpose
+} from "../utils/itwRemotePresentationUtils";
+import { EnrichedPresentationDetails } from "../utils/itwRemoteTypeUtils";
 
 const RequestedCredentialsBlock = ({
   credentials
