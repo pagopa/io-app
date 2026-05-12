@@ -20,6 +20,7 @@ export type ItwBannerId =
   | "discovery_messages_inbox" // Discovery banner for IT Wallet placed in the messages inbox screen
   | "upgradeMDLDetails" // Upgrade to IT Wallet banner placed in MDL details screen
   | "ageVerificationUsageDetails" // Age Verification usage banner placed in credential details screen
+  | "itw_pid_info" // IT-Wallet informational banner within PID details screen
   | "proximity_qr_code_info"; // Info banner shown on the proximity QR code screen
 
 /**
@@ -32,6 +33,7 @@ export const bannerHideDurations: Record<ItwBannerId, NonEmptyArray<number>> = {
   discovery_messages_inbox: [30, 60, 120], // ~1 month, ~2 months, ~4 months
   upgradeMDLDetails: [FOREVER],
   ageVerificationUsageDetails: [FOREVER],
+  itw_pid_info: [FOREVER],
   proximity_qr_code_info: [FOREVER]
 };
 
