@@ -4225,6 +4225,10 @@
         "itWalletId": {
           "description": "È il tuo pass digitale per dimostrare chi sei, accedere ai servizi online e ottenere nuovi documenti.",
           "listItemHeader": "Dati del mio IT-Wallet ID",
+          "banner": {
+            "title": "Cos'è IT-Wallet ID?",
+            "content": "È il cuore del tuo Portafoglio IT-Wallet: ti consente di ottenere i documenti digitali, dimostrare chi sei e accedere ai servizi online"
+          },
           "cta": {
             "info": "Parte di IT-Wallet",
             "revoke": "Disattiva IT-Wallet"
