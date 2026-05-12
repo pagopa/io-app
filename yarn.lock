@@ -4377,9 +4377,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-app-design-system@pagopa/io-app-design-system#IEL-000-form-limit-counter":
-  version: 7.1.0
-  resolution: "@pagopa/io-app-design-system@https://github.com/pagopa/io-app-design-system.git#commit=42eb8f616cfb94e852e9992c5fe88943428a36c4"
+"@pagopa/io-app-design-system@npm:7.1.1":
+  version: 7.1.1
+  resolution: "@pagopa/io-app-design-system@npm:7.1.1"
   dependencies:
     auto-changelog: ^2.4.0
     markdown-it: ^14.1.0
@@ -4402,7 +4402,7 @@ __metadata:
     react-native-safe-area-context: "*"
     react-native-svg: "*"
     react-native-worklets: "*"
-  checksum: 8f852669e4312e676987bb3caa9175a6a7a86992d8bbb05bc82ca61e595ee12e2e7645b0402c78d558feb98d48d63a5beb463f8bdfd6f5566565f86315552716
+  checksum: 47223343447fb6d43be99e9c07c0d4707d173cadaf69acb3826618175056bdacd03594af23c541138674af5d2097d32667ad3205ca37c2f62da650a95e0be447
   languageName: node
   linkType: hard
 
@@ -13546,7 +13546,7 @@ __metadata:
     "@eslint/eslintrc": ^3.3.5
     "@eslint/js": ^10.0.1
     "@gorhom/bottom-sheet": ^5.2.8
-    "@pagopa/io-app-design-system": "pagopa/io-app-design-system#IEL-000-form-limit-counter"
+    "@pagopa/io-app-design-system": 7.1.1
     "@pagopa/io-pagopa-commons": ^3.1.0
     "@pagopa/io-react-native-cie": 1.3.5-rc.2
     "@pagopa/io-react-native-cieid": 0.4.0
