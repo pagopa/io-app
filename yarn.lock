@@ -13670,7 +13670,6 @@ __metadata:
     babel-jest: ^30.3.0
     babel-plugin-macros: ^3.1.0
     babel-plugin-module-resolver: ^5.0.2
-    babel-preset-expo: ~54.0.10
     babel-preset-react-native: ^4.0.1
     buffer: ^4.9.1
     chalk: ^2.4.1
