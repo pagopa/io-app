@@ -85,6 +85,9 @@ export const itwProximityMachine = setup({
             verifierRequest: undefined
           })),
           target: "Bluetooth"
+        },
+        close: {
+          actions: "closeProximity"
         }
       }
     },
@@ -99,8 +102,8 @@ export const itwProximityMachine = setup({
             src: "checkBluetoothPermissions",
             onDone: [
               {
-                guard: ({ event }) => !!event.output,
-                target: "CheckState"
+                guard: ({ event }) => event.output,
+                target: "CheckActivation"
               },
               {
                 guard: ({ event }) => !event.output,
@@ -117,14 +120,11 @@ export const itwProximityMachine = setup({
             "Display the screen prompting the user to grant bluetooth permissions",
           entry: "navigateToBluetoothPermissionsScreen",
           on: {
-            back: {
-              actions: "closeProximity"
-            },
             close: {
               actions: "closeProximity"
             },
             continue: {
-              target: "CheckState"
+              target: "CheckActivation"
             }
           }
         },
@@ -152,9 +152,6 @@ export const itwProximityMachine = setup({
           description:
             "Display the screen prompting the user to enable Bluetooth",
           on: {
-            back: {
-              actions: "closeProximity"
-            },
             close: {
               actions: "closeProximity"
             },
@@ -166,9 +163,10 @@ export const itwProximityMachine = setup({
       }
     },
     Presentation: {
-      initial: "Starting",
       description:
         "Manages the communication lifecycle between the device and the verifier",
+      initial: "Starting",
+      entry: "navigateToQrCodeScreen",
       invoke: {
         id: "proximityCommunicationLogic",
         src: "proximityCommunicationLogic",
@@ -251,7 +249,7 @@ export const itwProximityMachine = setup({
             "Displays the QR code to initiate proximity communication",
           on: {
             close: {
-              target: "#itwProximityMachine.Idle"
+              actions: "closeProximity"
             }
           }
         },

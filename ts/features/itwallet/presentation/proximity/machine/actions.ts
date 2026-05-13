@@ -27,7 +27,7 @@ export const createProximityActionsImplementation = (
 
   navigateToBluetoothPermissionsScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.DEVICE_PERMISSIONS
+      screen: ITW_PROXIMITY_ROUTES.BLUETOOTH_PERMISSIONS
     });
   },
 

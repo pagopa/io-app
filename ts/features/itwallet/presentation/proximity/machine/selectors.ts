@@ -10,12 +10,6 @@ export const selectIsLoading = (snapshot: MachineSnapshot) =>
 export const selectIsSuccess = (snapshot: MachineSnapshot) =>
   snapshot.matches("Success");
 
-export const selectIsPermissionsRequiredState = (snapshot: MachineSnapshot) =>
-  snapshot.matches({ Permissions: "PermissionsRequired" });
-
-export const selectIsBluetoothRequiredState = (snapshot: MachineSnapshot) =>
-  snapshot.matches({ Bluetooth: "BluetoothRequired" });
-
 export const selectQRCodeString = (snapshot: MachineSnapshot) =>
   snapshot.context.qrCodeString;
 

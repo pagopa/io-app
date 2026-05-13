@@ -1,5 +1,4 @@
 import { ISO18013_5 } from "@pagopa/io-react-native-iso18013";
-import BluetoothStateManager from "react-native-bluetooth-state-manager";
 import { fromCallback, fromPromise } from "xstate";
 import { assert } from "../../../../../utils/assert";
 import { Env } from "../../../common/utils/environment";
@@ -12,7 +11,10 @@ import {
   promiseWithTimeout
 } from "../utils/itwProximityPresentationUtils";
 import type { EventsPayload } from "../utils/itwProximityTypeUtils";
-import { checkBluetoothPermissions } from "../utils/permissions";
+import {
+  checkBluetoothPermissions,
+  checkBluetoothActivation
+} from "../utils/ble";
 import { Context } from "./context";
 import { ProximityEvents } from "./events";
 
@@ -36,14 +38,13 @@ export type SendDocumentsActorOutput = Awaited<
 >;
 
 export const createProximityActorsImplementation = (env: Env) => {
-  const checkBluetoohPermissions = fromPromise<boolean>(
+  const checkBluetoothPermissionsActor = fromPromise<boolean>(
     checkBluetoothPermissions
   );
 
-  const checkBluetoothActivation = fromPromise<boolean>(async () => {
-    const bluetoothState = await BluetoothStateManager.getState();
-    return bluetoothState === "PoweredOn";
-  });
+  const checkBluetoothActivationActor = fromPromise<boolean>(
+    checkBluetoothActivation
+  );
 
   const startEngagement = fromPromise<void>(async () => {
     // Ensure any existing session is closed before starting a new one
@@ -192,8 +193,8 @@ export const createProximityActorsImplementation = (env: Env) => {
   );
 
   return {
-    checkBluetoohPermissions,
-    checkBluetoothActivation,
+    checkBluetoothPermissions: checkBluetoothPermissionsActor,
+    checkBluetoothActivation: checkBluetoothActivationActor,
     startEngagement,
     proximityCommunicationLogic,
     closeProximityFlow,
