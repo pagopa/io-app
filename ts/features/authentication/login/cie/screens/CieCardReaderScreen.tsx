@@ -62,7 +62,6 @@ import {
   getTextForState
 } from "../../../activeSessionLogin/shared/utils";
 import { isScreenReaderEnabledSelector } from "../../../../../store/reducers/preferences";
-import { cieLoginFlowSelector } from "../../../activeSessionLogin/store/selectors";
 
 export type CieCardReaderScreenNavigationParams = {
   ciePin: string;
@@ -135,7 +134,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
   );
   constructor(props: Props) {
     super(props);
-    trackLoginCieCardReaderScreen(props.LoginType);
+    trackLoginCieCardReaderScreen();
     this.state = {
       /*
       These are the states that can occur when reading the cie (from SDK)
@@ -170,7 +169,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
     this.dispatchAnalyticEvent({
       reason: eventReason,
       cieDescription,
-      flow: this.props.LoginType
+      flow: "auth"
     });
 
     this.setState(
@@ -292,7 +291,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
         );
         break;
       case ReadingState.error:
-        trackLoginCieCardReadingError(this.props.LoginType);
+        trackLoginCieCardReadingError();
         this.setState(
           state => getTextForState(ReadingState.error, state.errorMessage),
           this.announceUpdate
@@ -322,7 +321,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
 
   // TODO: It should reset authentication process
   private handleCieError = (error: Error) => {
-    trackLoginCieCardReadingError(this.props.LoginType);
+    trackLoginCieCardReadingError();
     handleSendAssistanceLog(this.choosenTool, error.message);
     this.setError({ eventReason: "GENERIC", errorDescription: error.message });
   };
@@ -336,7 +335,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
       this.updateContent();
       setTimeout(
         async () => {
-          trackLoginCieCardReadingSuccess(this.props.LoginType);
+          trackLoginCieCardReadingSuccess();
           this.props.navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
             screen: AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE,
             params: {
@@ -508,8 +507,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
 const mapStateToProps = (state: GlobalState) => ({
   assistanceToolConfig: assistanceToolConfigSelector(state),
   isCieUatEnabled: isCieLoginUatEnabledSelector(state),
-  isScreenReaderEnabled: isScreenReaderEnabledSelector(state),
-  LoginType: cieLoginFlowSelector(state)
+  isScreenReaderEnabled: isScreenReaderEnabledSelector(state)
 });
 
 const ReaderScreen = (props: Props) => (

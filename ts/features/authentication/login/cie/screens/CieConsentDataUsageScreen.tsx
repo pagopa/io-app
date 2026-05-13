@@ -18,13 +18,12 @@ import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhite
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useOnboardingAbortAlert } from "../../../../onboarding/hooks/useOnboardingAbortAlert";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
-import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { useIODispatch } from "../../../../../store/hooks";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { loginFailure, loginSuccess } from "../../../common/store/actions";
 import { onLoginUriChanged } from "../../../common/utils/login";
 import { LoaderComponent } from "../../../activeSessionLogin/shared/components/LoaderComponent";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
-import { cieLoginFlowSelector } from "../../../activeSessionLogin/store/selectors";
 
 export type CieConsentDataUsageScreenNavigationParams = {
   cieConsentUri: string;
@@ -48,7 +47,6 @@ const CieConsentDataUsageScreen = () => {
   >();
   const { showAlert } = useOnboardingAbortAlert();
   const navigation = useIONavigation();
-  const LoginType = useIOSelector(cieLoginFlowSelector);
   const loginSuccessDispatch = useCallback(
     (token: string) => dispatch(loginSuccess({ token, idp: "cie" })),
     [dispatch]
@@ -126,14 +124,14 @@ const CieConsentDataUsageScreen = () => {
 
   // fix of https://github.com/pagopa/io-app/pull/5750/files#diff-89c251a9a9539e3470c6001c13917f0881272bfa692f61bdc4a6f191b0435fa3
   useOnFirstRender(() => {
-    void trackLoginCieConsentDataUsageScreen(LoginType);
+    void trackLoginCieConsentDataUsageScreen();
   });
 
   useEffect(() => {
     if (hasError && errorCodeOrMessage === "22") {
-      trackLoginCieDataSharingError(LoginType);
+      trackLoginCieDataSharingError();
     }
-  }, [errorCodeOrMessage, hasError, LoginType]);
+  }, [errorCodeOrMessage, hasError]);
 
   useEffect(() => {
     if (hasError) {
