@@ -53,10 +53,10 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
   const navigation = useIONavigation();
   const { forceLogoutAndNavigateToLanding } = useActiveSessionLoginNavigation();
 
-  const cieLoginFlowType = useIOSelector(cieLoginFlowSelector);
+  const LoginType = useIOSelector(cieLoginFlowSelector);
 
   useOnFirstRender(() => {
-    void trackLoginCieConsentDataUsageScreen(cieLoginFlowType);
+    void trackLoginCieConsentDataUsageScreen(LoginType);
   });
 
   const navigateToErrorScreen = useCallback(
@@ -100,17 +100,17 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
         dispatch(activeSessionLoginFailure());
       }
       if (code === "22") {
-        trackLoginCieDataSharingError(cieLoginFlowType);
+        trackLoginCieDataSharingError(LoginType);
       }
       setHasError(true);
       navigateToErrorScreen(code || message);
       trackLoginFailure({
         reason: `login CIE failure with code ${code || message || "n/a"}`,
         idp: "cie",
-        flow: cieLoginFlowType
+        flow: LoginType
       });
     },
-    [dispatch, navigateToErrorScreen, cieLoginFlowType]
+    [dispatch, navigateToErrorScreen, LoginType]
   );
 
   const handleLoadingError = useCallback(

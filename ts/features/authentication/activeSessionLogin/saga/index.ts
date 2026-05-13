@@ -71,9 +71,9 @@ export function* handleActiveSessionLoginSaga(): Generator<
   void,
   any
 > {
-  const cieLoginFlowType = yield* select(cieLoginFlowSelector);
+  const LoginType = yield* select(cieLoginFlowSelector);
 
-  yield* put(analyticsAuthenticationStarted(cieLoginFlowType));
+  yield* put(analyticsAuthenticationStarted(LoginType));
 
   yield* fork(watchCieAuthenticationSaga);
 

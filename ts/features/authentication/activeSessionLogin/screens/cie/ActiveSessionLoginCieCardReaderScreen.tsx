@@ -143,7 +143,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
     [assistanceToolConfig]
   );
 
-  const cieLoginFlowType = useIOSelector(cieLoginFlowSelector);
+  const LoginType = useIOSelector(cieLoginFlowSelector);
 
   const textState = useMemo<TextForState>(() => {
     switch (readingState) {
@@ -184,7 +184,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
       errorDescription?: string;
       navigation?: () => void;
     }) => {
-      trackLoginCieCardReadingError(cieLoginFlowType);
+      trackLoginCieCardReadingError(LoginType);
 
       const cieDescription =
         errorDescription ?? analyticActions.get(eventReason) ?? "";
@@ -202,7 +202,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
       HapticFeedback.trigger(HapticFeedbackTypes.notificationError);
       navAction?.();
     },
-    [dispatch, cieLoginFlowType]
+    [dispatch, LoginType]
   );
 
   const handleCieSuccess = useCallback(
@@ -215,7 +215,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
 
       setTimeout(
         () => {
-          void trackLoginCieCardReadingSuccess(cieLoginFlowType);
+          void trackLoginCieCardReadingSuccess(LoginType);
           navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
             screen:
               AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE_ACTIVE_SESSION_LOGIN,
@@ -227,7 +227,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
           : Platform.select({ ios: 0, default: WAIT_TIMEOUT_NAVIGATION })
       );
     },
-    [choosenTool, navigation, isScreenReaderEnabled, cieLoginFlowType]
+    [choosenTool, navigation, isScreenReaderEnabled, LoginType]
   );
 
   const handleCieEvent = useCallback(
@@ -339,7 +339,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
         await cieManager.startListeningNFC();
         setReadingState(ReadingState.waiting_card);
       } catch (e) {
-        trackLoginCieCardReadingError(cieLoginFlowType);
+        trackLoginCieCardReadingError(LoginType);
         setReadingState(ReadingState.error);
       }
     },
@@ -349,12 +349,12 @@ const ActiveSessionLoginCieCardReaderScreen = ({
       handleCieError,
       handleCieEvent,
       handleCieSuccess,
-      cieLoginFlowType
+      LoginType
     ]
   );
 
   useOnFirstRender(() => {
-    void trackLoginCieCardReaderScreen(cieLoginFlowType);
+    void trackLoginCieCardReaderScreen(LoginType);
   });
 
   useEffect(() => {

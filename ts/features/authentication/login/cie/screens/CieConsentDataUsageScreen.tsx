@@ -48,7 +48,7 @@ const CieConsentDataUsageScreen = () => {
   >();
   const { showAlert } = useOnboardingAbortAlert();
   const navigation = useIONavigation();
-  const cieLoginFlowType = useIOSelector(cieLoginFlowSelector);
+  const LoginType = useIOSelector(cieLoginFlowSelector);
   const loginSuccessDispatch = useCallback(
     (token: string) => dispatch(loginSuccess({ token, idp: "cie" })),
     [dispatch]
@@ -126,14 +126,14 @@ const CieConsentDataUsageScreen = () => {
 
   // fix of https://github.com/pagopa/io-app/pull/5750/files#diff-89c251a9a9539e3470c6001c13917f0881272bfa692f61bdc4a6f191b0435fa3
   useOnFirstRender(() => {
-    void trackLoginCieConsentDataUsageScreen(cieLoginFlowType);
+    void trackLoginCieConsentDataUsageScreen(LoginType);
   });
 
   useEffect(() => {
     if (hasError && errorCodeOrMessage === "22") {
-      trackLoginCieDataSharingError(cieLoginFlowType);
+      trackLoginCieDataSharingError(LoginType);
     }
-  }, [errorCodeOrMessage, hasError, cieLoginFlowType]);
+  }, [errorCodeOrMessage, hasError, LoginType]);
 
   useEffect(() => {
     if (hasError) {

@@ -3,9 +3,9 @@ import { updateMixpanelProfileProperties } from "../../../../mixpanelConfig/prof
 import { updateMixpanelSuperProperties } from "../../../../mixpanelConfig/superProperties";
 import { GlobalState } from "../../../../store/reducers/types";
 import { buildEventProperties } from "../../../../utils/analytics";
-import { CieLoginFlowType } from "../../common/analytics/cieAnalytics.ts";
+import { LoginType } from "../../activeSessionLogin/screens/analytics";
 
-export function trackLoginSessionOptIn(flow: CieLoginFlowType = "auth") {
+export function trackLoginSessionOptIn(flow: LoginType = "auth") {
   void mixpanelTrack(
     "LOGIN_SESSION_OPTIN_2",
     buildEventProperties("UX", "screen_view", {
@@ -14,7 +14,7 @@ export function trackLoginSessionOptIn(flow: CieLoginFlowType = "auth") {
   );
 }
 
-export function trackLoginSessionOptInInfo(flow: CieLoginFlowType = "auth") {
+export function trackLoginSessionOptInInfo(flow: LoginType = "auth") {
   void mixpanelTrack(
     "LOGIN_SESSION_OPTIN_INFO",
     buildEventProperties("UX", "action", {
@@ -37,7 +37,7 @@ export async function updateLoginSessionProfileAndSuperProperties(
 }
 export async function trackLoginSessionOptIn365(
   state: GlobalState,
-  flow: CieLoginFlowType = "auth"
+  flow: LoginType = "auth"
 ) {
   if (flow === "auth") {
     await updateLoginSessionProfileAndSuperProperties(state, "365");
@@ -49,7 +49,7 @@ export async function trackLoginSessionOptIn365(
 }
 export async function trackLoginSessionOptIn30(
   state: GlobalState,
-  flow: CieLoginFlowType = "auth"
+  flow: LoginType = "auth"
 ) {
   if (flow === "auth") {
     await updateLoginSessionProfileAndSuperProperties(state, "30");

@@ -7,7 +7,6 @@ import { LoginSessionDuration } from "../../fastLogin/analytics/optinAnalytics";
 import { SpidLevel } from "../../../authentication/login/cie/utils";
 import { LoginType } from "../../activeSessionLogin/screens/analytics";
 import { IdpData } from "../../../../../definitions/content/IdpData";
-import { CieLoginFlowType } from "./cieAnalytics";
 
 const SECURITY_LEVEL_MAP: Record<SpidLevel, "L2" | "L3"> = {
   SpidL2: "L2",
@@ -103,7 +102,7 @@ export function trackMethodInfo() {
 
 export function trackCieLoginSuccess(
   login_session: LoginSessionDuration,
-  flow: CieLoginFlowType = "auth"
+  flow: LoginType = "auth"
 ) {
   void mixpanelTrack(
     "LOGIN_CIE_UX_SUCCESS",
@@ -195,7 +194,7 @@ export function trackLoginInfoResourceTap(
 export function trackLoginFailure(props: {
   reason: string;
   idp: keyof IdpData | undefined;
-  flow: CieLoginFlowType;
+  flow: LoginType;
 }) {
   const { flow, ...rest } = props;
   void mixpanelTrack(
@@ -207,7 +206,7 @@ export function trackLoginFailure(props: {
   );
 }
 
-export function trackLogoutSuccess(flow: CieLoginFlowType = "auth") {
+export function trackLogoutSuccess(flow: LoginType = "auth") {
   void mixpanelTrack(
     "LOGOUT_SUCCESS",
     buildEventProperties("TECH", "confirm", { flow })
@@ -216,7 +215,7 @@ export function trackLogoutSuccess(flow: CieLoginFlowType = "auth") {
 
 export function trackLogoutFailure(
   reason?: string | Error,
-  flow: CieLoginFlowType = "auth"
+  flow: LoginType = "auth"
 ) {
   void mixpanelTrack(
     "LOGOUT_FAILURE",

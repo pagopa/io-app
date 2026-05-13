@@ -135,7 +135,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
   );
   constructor(props: Props) {
     super(props);
-    trackLoginCieCardReaderScreen(props.cieLoginFlowType);
+    trackLoginCieCardReaderScreen(props.LoginType);
     this.state = {
       /*
       These are the states that can occur when reading the cie (from SDK)
@@ -170,7 +170,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
     this.dispatchAnalyticEvent({
       reason: eventReason,
       cieDescription,
-      flow: this.props.cieLoginFlowType
+      flow: this.props.LoginType
     });
 
     this.setState(
@@ -292,7 +292,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
         );
         break;
       case ReadingState.error:
-        trackLoginCieCardReadingError(this.props.cieLoginFlowType);
+        trackLoginCieCardReadingError(this.props.LoginType);
         this.setState(
           state => getTextForState(ReadingState.error, state.errorMessage),
           this.announceUpdate
@@ -322,7 +322,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
 
   // TODO: It should reset authentication process
   private handleCieError = (error: Error) => {
-    trackLoginCieCardReadingError(this.props.cieLoginFlowType);
+    trackLoginCieCardReadingError(this.props.LoginType);
     handleSendAssistanceLog(this.choosenTool, error.message);
     this.setError({ eventReason: "GENERIC", errorDescription: error.message });
   };
@@ -336,7 +336,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
       this.updateContent();
       setTimeout(
         async () => {
-          trackLoginCieCardReadingSuccess(this.props.cieLoginFlowType);
+          trackLoginCieCardReadingSuccess(this.props.LoginType);
           this.props.navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
             screen: AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE,
             params: {
@@ -509,7 +509,7 @@ const mapStateToProps = (state: GlobalState) => ({
   assistanceToolConfig: assistanceToolConfigSelector(state),
   isCieUatEnabled: isCieLoginUatEnabledSelector(state),
   isScreenReaderEnabled: isScreenReaderEnabledSelector(state),
-  cieLoginFlowType: cieLoginFlowSelector(state)
+  LoginType: cieLoginFlowSelector(state)
 });
 
 const ReaderScreen = (props: Props) => (
