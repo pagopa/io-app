@@ -32,18 +32,18 @@ import { selectFailure, selectIsLoading } from "../machine/selectors.ts";
 import { ItwProximityParamsList } from "../navigation/ItwProximityParamsList.ts";
 import { shouldBlockProximityQrCodeSelector } from "../store/selectors/credentials.ts";
 
-export type ItwProximityQrCodeScreenNavigationParams = {
+export type ItwProximityPresentmentScreenNavigationParams = {
   source?: ItwProximityQrCodeTracking["source"];
 };
 
-type ItwProximityQrCodeScreenProps = IOStackNavigationRouteProps<
+type ItwProximityPresentmentScreenProps = IOStackNavigationRouteProps<
   ItwProximityParamsList,
-  "ITW_PROXIMITY_QR_CODE_PRESENTMENT"
+  "ITW_PROXIMITY_PRESENTMENT"
 >;
 
-export const ItwProximityQrCodePresentmentScreen = ({
+export const ItwProximityPresentmentScreen = ({
   route
-}: ItwProximityQrCodeScreenProps) => {
+}: ItwProximityPresentmentScreenProps) => {
   const { source } = route.params;
 
   const navigation = useIONavigation();
@@ -95,6 +95,10 @@ export const ItwProximityQrCodePresentmentScreen = ({
     });
   }, [navigation, machineRef]);
 
+  const handleContactlessPress = () => {
+    machineRef.send({ type: "start-nfc-presentment" });
+  };
+
   const handleReissuePress = () => {
     trackItwStartReissuingPID({
       position: "ITW_QR_CODE"
@@ -135,6 +139,7 @@ export const ItwProximityQrCodePresentmentScreen = ({
           </VStack>
         </ItwBrandedBox>
       </View>
+
       <View
         style={{ alignSelf: "center", marginTop: 32, marginBottom: 24, gap: 8 }}
       >
@@ -146,17 +151,19 @@ export const ItwProximityQrCodePresentmentScreen = ({
           label={I18n.t(
             "features.itWallet.presentation.proximity.engagement.nfc.action"
           )}
-          onPress={() => {}}
+          onPress={handleContactlessPress}
           icon="contactless"
           iconPosition="end"
         />
       </View>
+
       {!isQrCodeInfoBannerHidden && (
         <Animated.View layout={LinearTransition.duration(200)}>
           <VSpacer size={24} />
           <ItwProximityQrCodeInfoBanner />
         </Animated.View>
       )}
+
       {shouldBlockProximityPresentation && (
         <Animated.View layout={LinearTransition.duration(200)}>
           <VSpacer size={24} />

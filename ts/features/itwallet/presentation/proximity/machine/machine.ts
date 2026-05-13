@@ -36,7 +36,7 @@ export const itwProximityMachine = setup({
     navigateToBluetoothPermissionsScreen: notImplemented,
     navigateToBluetoothActivationScreen: notImplemented,
     navigateToNfcActivationScreen: notImplemented,
-    navigateToQrCodePresentmentScreen: notImplemented,
+    navigatePresentmentScreen: notImplemented,
     navigateToNfcPresentmentScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
     navigateToClaimsDisclosureScreen: notImplemented,
@@ -222,7 +222,7 @@ export const itwProximityMachine = setup({
       description:
         "Manages the communication lifecycle between the device and the verifier",
       initial: "Starting",
-      entry: "navigateToQrCodePresentmentScreen",
+      entry: "navigatePresentmentScreen",
       invoke: {
         id: "proximityCommunicationLogic",
         src: "proximityCommunicationLogic",

@@ -13,7 +13,7 @@ import { ItwNfcActivationScreen } from "../screens/ItwNfcActivationScreen.tsx";
 import { ItwProximityClaimsDisclosureScreen } from "../screens/ItwProximityClaimsDisclosureScreen";
 import { ItwProximityFailureScreen } from "../screens/ItwProximityFailureScreen";
 import { ItwProximityNfcPresentmentScreen } from "../screens/ItwProximityNfcPresentmentScreen.tsx";
-import { ItwProximityQrCodePresentmentScreen } from "../screens/ItwProximityQrCodePresentmentScreen.tsx";
+import { ItwProximityPresentmentScreen } from "../screens/ItwProximityPresentmentScreen.tsx";
 import { ItwProximitySendDocumentsResponseScreen } from "../screens/ItwProximitySendDocumentsResponseScreen";
 import { ItwProximityParamsList } from "./ItwProximityParamsList";
 import { ITW_PROXIMITY_ROUTES } from "./routes";
@@ -33,7 +33,7 @@ const InnerNavigator = () => {
 
   return (
     <Stack.Navigator
-      initialRouteName={ITW_PROXIMITY_ROUTES.QR_CODE_PRESENTMENT}
+      initialRouteName={ITW_PROXIMITY_ROUTES.PRESENTMENT}
       screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
       screenListeners={{
         beforeRemove: () => {
@@ -41,16 +41,6 @@ const InnerNavigator = () => {
         }
       }}
     >
-      <Stack.Screen
-        name={ITW_PROXIMITY_ROUTES.QR_CODE_PRESENTMENT}
-        component={ItwProximityQrCodePresentmentScreen}
-        options={TransitionPresets.ModalSlideFromBottomIOS}
-      />
-      <Stack.Screen
-        name={ITW_PROXIMITY_ROUTES.NFC_PRESENTMENT}
-        component={ItwProximityNfcPresentmentScreen}
-        options={TransitionPresets.ModalSlideFromBottomIOS}
-      />
       <Stack.Screen
         name={ITW_PROXIMITY_ROUTES.BLUETOOTH_PERMISSIONS}
         component={ItwBluetoothPermissionsScreen}
@@ -65,6 +55,15 @@ const InnerNavigator = () => {
         name={ITW_PROXIMITY_ROUTES.NFC_ACTIVATION}
         component={ItwNfcActivationScreen}
         options={hiddenHeader}
+      />
+      <Stack.Screen
+        name={ITW_PROXIMITY_ROUTES.PRESENTMENT}
+        component={ItwProximityPresentmentScreen}
+        options={TransitionPresets.ModalSlideFromBottomIOS}
+      />
+      <Stack.Screen
+        name={ITW_PROXIMITY_ROUTES.NFC_PRESENTMENT}
+        component={ItwProximityNfcPresentmentScreen}
       />
       <Stack.Screen
         name={ITW_PROXIMITY_ROUTES.CLAIMS_DISCLOSURE}
