@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.31.0-rc.4](https://github.com/pagopa/io-app/compare/3.31.0-rc.3...3.31.0-rc.4) (2026-05-13)
+
+
+### Bug Fixes
+
+* [[IOPID-3930](https://pagopa.atlassian.net/browse/IOPID-3930)] FIMS history APIs split ([#8101](https://github.com/pagopa/io-app/issues/8101)) ([dce2b7b](https://github.com/pagopa/io-app/commit/dce2b7b62043a36d3a6d1e157edaa81126b65d68))
+
 ## [3.31.0-rc.3](https://github.com/pagopa/io-app/compare/3.31.0-rc.2...3.31.0-rc.3) (2026-05-12)
 
 
