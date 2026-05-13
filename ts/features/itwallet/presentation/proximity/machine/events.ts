@@ -19,10 +19,6 @@ export type Continue = {
   type: "continue";
 };
 
-export type Dismiss = {
-  type: "dismiss";
-};
-
 export type Retry = {
   type: "retry";
 };
@@ -65,7 +61,6 @@ export type ProximityEvents =
   | Consent
   | Continue
   | Close
-  | Dismiss
   | Retry
   | QrCodeString
   | DeviceConnecting

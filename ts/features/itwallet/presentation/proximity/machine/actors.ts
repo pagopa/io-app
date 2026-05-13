@@ -1,14 +1,10 @@
 import { ISO18013_5 } from "@pagopa/io-react-native-iso18013";
-import { requestMultiple, RESULTS } from "react-native-permissions";
+import BluetoothStateManager from "react-native-bluetooth-state-manager";
 import { fromCallback, fromPromise } from "xstate";
 import { assert } from "../../../../../utils/assert";
 import { Env } from "../../../common/utils/environment";
 import { CredentialFormat } from "../../../common/utils/itwTypesUtils";
 import { CredentialsVault } from "../../../credentials/utils/vault";
-import {
-  trackItwProximityBluetoothBlock,
-  trackItwProximityBluetoothBlockAction
-} from "../analytics";
 import {
   generateAcceptedFields,
   getDocuments,
@@ -21,6 +17,7 @@ import {
   PROXIMITY_PERMISSIONS_TO_CHECK
 } from "../utils";
 import type { EventsPayload } from "../utils/itwProximityTypeUtils";
+import { checkBluetoothPermissions } from "../utils/permissions";
 import { Context } from "./context";
 import { ProximityEvents } from "./events";
 
@@ -44,25 +41,13 @@ export type SendDocumentsActorOutput = Awaited<
 >;
 
 export const createProximityActorsImplementation = (env: Env) => {
-  const checkPermissions = fromPromise<boolean, void>(async () => {
-    if (await areProximityPermissionsGranted()) {
-      return true;
-    }
+  const checkBluetoohPermissions = fromPromise<boolean>(
+    checkBluetoothPermissions
+  );
 
-    // Some permissions are missing: prompt the user.
-    trackItwProximityBluetoothBlock();
-    const requestResults = await requestMultiple(
-      PROXIMITY_PERMISSIONS_TO_CHECK
-    );
-    const allPermissionsGranted = PROXIMITY_PERMISSIONS_TO_CHECK.every(
-      permission => requestResults[permission] === RESULTS.GRANTED
-    );
-
-    trackItwProximityBluetoothBlockAction(
-      allPermissionsGranted ? "allow" : "not_allow"
-    );
-
-    return allPermissionsGranted;
+  const checkBluetoothActivation = fromPromise<boolean>(async () => {
+    const bluetoothState = await BluetoothStateManager.getState();
+    return bluetoothState === "PoweredOn";
   });
 
   const checkBluetoothIsActive = fromPromise<boolean, void>(
@@ -216,8 +201,8 @@ export const createProximityActorsImplementation = (env: Env) => {
   );
 
   return {
-    checkPermissions,
-    checkBluetoothIsActive,
+    checkBluetoohPermissions,
+    checkBluetoothActivation,
     startEngagement,
     proximityCommunicationLogic,
     closeProximityFlow,
