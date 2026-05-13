@@ -43,7 +43,7 @@ export const createProximityActionsImplementation = (
     });
   },
 
-  navigateToPresentmentScreen: () => {
+  navigatePresentmentScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
       screen: ITW_PROXIMITY_ROUTES.PRESENTMENT,
       params: {}

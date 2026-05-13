@@ -36,7 +36,7 @@ export const itwProximityMachine = setup({
     navigateToBluetoothPermissionsScreen: notImplemented,
     navigateToBluetoothActivationScreen: notImplemented,
     navigateToNfcActivationScreen: notImplemented,
-    navigateToPresentmentScreen: notImplemented,
+    navigatePresentmentScreen: notImplemented,
     navigateToNfcPresentmentScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
     navigateToClaimsDisclosureScreen: notImplemented,
@@ -153,8 +153,7 @@ export const itwProximityMachine = setup({
         RequireActivation: {
           entry: "navigateToBluetoothActivationScreen",
           description:
-            "Display the screen prompting the user to enable Bluetooth. " +
-            "The screen re-checks the Bluetooth status on Continue and only emits the event when enabled.",
+            "Display the screen prompting the user to enable Bluetooth",
           on: {
             close: {
               actions: "closeProximity"
@@ -222,7 +221,7 @@ export const itwProximityMachine = setup({
       description:
         "Manages the communication lifecycle between the device and the verifier",
       initial: "Starting",
-      entry: "navigateToPresentmentScreen",
+      entry: "navigatePresentmentScreen",
       invoke: {
         id: "proximityCommunicationLogic",
         src: "proximityCommunicationLogic",
