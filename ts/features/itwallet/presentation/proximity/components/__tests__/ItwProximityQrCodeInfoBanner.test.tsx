@@ -42,7 +42,7 @@ const renderComponent = () => {
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     ItwProximityQrCodeInfoBanner,
-    ITW_PROXIMITY_ROUTES.QR_CODE,
+    ITW_PROXIMITY_ROUTES.PRESENTMENT,
     {},
     store
   );

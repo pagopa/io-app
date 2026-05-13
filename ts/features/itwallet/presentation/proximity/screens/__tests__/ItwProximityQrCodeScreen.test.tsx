@@ -13,9 +13,9 @@ import { ItwPresentationTags } from "../../machine/tags";
 import { ItwProximityParamsList } from "../../navigation/ItwProximityParamsList";
 import { ITW_PROXIMITY_ROUTES } from "../../navigation/routes";
 import {
-  ItwProximityQrCodeScreen,
-  ItwProximityQrCodeScreenNavigationParams
-} from "../ItwProximityNfcPresentmentScreen";
+  ItwProximityPresentmentScreen,
+  ItwProximityPresentmentScreenNavigationParams
+} from "../ItwProximityPresentmentScreen";
 
 jest.mock("../../analytics", () => ({
   trackItwProximityQrCode: jest.fn()
@@ -35,7 +35,7 @@ jest.mock("../../store/selectors/credentials", () => ({
     mockShouldBlockProximityQrCodeSelector()
 }));
 
-describe("ItwProximityQrCodeScreen", () => {
+describe("ItwProximityPresentmentScreen", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -125,7 +125,7 @@ type RenderOptions =
 
 const renderComponent = (
   options: RenderOptions,
-  routeParams: ItwProximityQrCodeScreenNavigationParams
+  routeParams: ItwProximityPresentmentScreenNavigationParams
 ) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const initialSnapshot = createActor(itwProximityMachine).getSnapshot();
@@ -139,22 +139,25 @@ const renderComponent = (
     }
   ) as unknown as IOStackNavigationProp<
     ItwProximityParamsList,
-    "ITW_PROXIMITY_QR_CODE"
+    "ITW_PROXIMITY_PRESENTMENT"
   >;
 
   const route = {
-    key: "ITW_PROXIMITY_QR_CODE",
-    name: ITW_PROXIMITY_ROUTES.QR_CODE,
+    key: "ITW_PROXIMITY_PRESENTMENT",
+    name: ITW_PROXIMITY_ROUTES.PRESENTMENT,
     params: routeParams
   };
 
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
       <ItwProximityMachineContext.Provider options={{ snapshot }}>
-        <ItwProximityQrCodeScreen navigation={mockNavigation} route={route} />
+        <ItwProximityPresentmentScreen
+          navigation={mockNavigation}
+          route={route}
+        />
       </ItwProximityMachineContext.Provider>
     ),
-    ITW_PROXIMITY_ROUTES.QR_CODE,
+    ITW_PROXIMITY_ROUTES.PRESENTMENT,
     {},
     createStore(appReducer, initialState as any)
   );
@@ -168,7 +171,7 @@ const buildSnapshot = (
     case "loading":
       return {
         ...initialSnapshot,
-        value: { Presentation: "Starting" },
+        value: { Presentment: "Starting" },
         tags: new Set([ItwPresentationTags.Loading]),
         context: { ...initialSnapshot.context }
       };
@@ -176,7 +179,7 @@ const buildSnapshot = (
     case "displayQrCode":
       return {
         ...initialSnapshot,
-        value: { Presentation: "DisplayQrCode" },
+        value: { Presentment: "DisplayQrCode" },
         tags: new Set([ItwPresentationTags.Presenting]),
         context: {
           ...initialSnapshot.context,
@@ -187,7 +190,7 @@ const buildSnapshot = (
     case "error":
       return {
         ...initialSnapshot,
-        value: { Presentation: "Starting" },
+        value: { Presentment: "Starting" },
         tags: new Set([ItwPresentationTags.Loading]),
         context: {
           ...initialSnapshot.context,
@@ -201,7 +204,7 @@ const buildSnapshot = (
     case "blocked":
       return {
         ...initialSnapshot,
-        value: { Presentation: "DisplayQrCode" },
+        value: { Presentment: "DisplayQrCode" },
         tags: new Set([ItwPresentationTags.Presenting]),
         context: {
           ...initialSnapshot.context,
