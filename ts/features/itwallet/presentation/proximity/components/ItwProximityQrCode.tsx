@@ -11,6 +11,7 @@ import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import QRCode from "react-native-qrcode-skia";
+import Animated, { FadeIn } from "react-native-reanimated";
 import ItwIcon from "../../../../../../img/features/itWallet/brand/itw_icon.svg";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../../../store/hooks";
@@ -121,21 +122,23 @@ export const ItwProximityQrCode = ({ source }: Props) => {
   }
 
   return (
-    <QRCode
-      color={itwTheme["qrcode-color"]}
-      value={qrCodeString}
-      size={QR_CODE_SIZE}
-      errorCorrectionLevel="H"
-      shapeOptions={{
-        shape: "circle",
-        eyePatternShape: "rounded",
-        eyePatternGap: 0,
-        gap: 0
-      }}
-      logoAreaSize={88}
-      logoAreaBorderRadius={8}
-      logo={<ItwIcon width={QR_CODE_LOGO_SIZE} height={QR_CODE_LOGO_SIZE} />}
-    />
+    <Animated.View entering={FadeIn.duration(200)}>
+      <QRCode
+        color={itwTheme["qrcode-color"]}
+        value={qrCodeString}
+        size={QR_CODE_SIZE}
+        errorCorrectionLevel="H"
+        shapeOptions={{
+          shape: "circle",
+          eyePatternShape: "rounded",
+          eyePatternGap: 0,
+          gap: 0
+        }}
+        logoAreaSize={88}
+        logoAreaBorderRadius={8}
+        logo={<ItwIcon width={QR_CODE_LOGO_SIZE} height={QR_CODE_LOGO_SIZE} />}
+      />
+    </Animated.View>
   );
 };
 
