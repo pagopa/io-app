@@ -105,6 +105,38 @@ describe("itwProximityMachine", () => {
     expect(navigateToGrantPermissionsScreen).toHaveBeenCalledTimes(1);
   });
 
+  /**
+   * Back from GrantPermissions closes the proximity presentation:
+   * the machine returns to Idle and dispatches the closeProximity action.
+   */
+  it("GrantPermissions + back → Idle, closeProximity", async () => {
+    checkPermissions.mockResolvedValue(false);
+    const actor = createActor(mockedMachine);
+    actor.start();
+    actor.send({ type: "start" });
+    await waitFor(actor, s => s.matches({ Permissions: "GrantPermissions" }));
+    actor.send({ type: "back" });
+    expect(actor.getSnapshot().value).toStrictEqual("Idle");
+    expect(closeProximity).toHaveBeenCalledTimes(1);
+  });
+
+  /**
+   * The screen verifies permissions before sending "continue", so the machine
+   * trusts the event and proceeds directly to the Bluetooth check.
+   */
+  it("GrantPermissions + continue → Bluetooth.CheckingBluetoothIsActive", async () => {
+    checkPermissions.mockResolvedValue(false);
+    checkBluetoothIsActive.mockReturnValue(new Promise(() => {}));
+    const actor = createActor(mockedMachine);
+    actor.start();
+    actor.send({ type: "start" });
+    await waitFor(actor, s => s.matches({ Permissions: "GrantPermissions" }));
+    actor.send({ type: "continue" });
+    await waitFor(actor, s =>
+      s.matches({ Bluetooth: "CheckingBluetoothIsActive" })
+    );
+  });
+
   it("Bluetooth active → Presentation.Starting", async () => {
     checkPermissions.mockResolvedValue(true);
     checkBluetoothIsActive.mockResolvedValue(true);
@@ -123,6 +155,38 @@ describe("itwProximityMachine", () => {
     actor.send({ type: "start" });
     await waitFor(actor, s => s.matches({ Bluetooth: "EnableBluetooth" }));
     expect(navigateToBluetoothActivationScreen).toHaveBeenCalledTimes(1);
+  });
+
+  /**
+   * Back from EnableBluetooth closes the proximity presentation:
+   * the machine returns to Idle and dispatches the closeProximity action.
+   */
+  it("EnableBluetooth + back → Idle, closeProximity", async () => {
+    checkPermissions.mockResolvedValue(true);
+    checkBluetoothIsActive.mockResolvedValue(false);
+    const actor = createActor(mockedMachine);
+    actor.start();
+    actor.send({ type: "start" });
+    await waitFor(actor, s => s.matches({ Bluetooth: "EnableBluetooth" }));
+    actor.send({ type: "back" });
+    expect(actor.getSnapshot().value).toStrictEqual("Idle");
+    expect(closeProximity).toHaveBeenCalledTimes(1);
+  });
+
+  /**
+   * The screen verifies Bluetooth is on before sending "continue", so the
+   * machine trusts the event and proceeds to the Presentation state.
+   */
+  it("EnableBluetooth + continue → Presentation.Starting", async () => {
+    checkPermissions.mockResolvedValue(true);
+    checkBluetoothIsActive.mockResolvedValue(false);
+    startEngagement.mockReturnValue(new Promise(() => {}));
+    const actor = createActor(mockedMachine);
+    actor.start();
+    actor.send({ type: "start" });
+    await waitFor(actor, s => s.matches({ Bluetooth: "EnableBluetooth" }));
+    actor.send({ type: "continue" });
+    await waitFor(actor, s => s.matches({ Presentation: "Starting" }));
   });
 
   describe("Verifier events during Presentation", () => {
