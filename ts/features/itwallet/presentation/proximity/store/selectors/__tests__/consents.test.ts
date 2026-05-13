@@ -5,7 +5,7 @@ import {
   itwProximityConsentsByCredentialTypeSelector,
   itwProximityConsentExistsSelector,
   itwProximityConsentsByRpIdSelector
-} from "../index";
+} from "../consents";
 import { GlobalState } from "../../../../../../../store/reducers/types";
 
 const mdlConsent: ConsentData = {
