@@ -13,6 +13,7 @@ import {
 } from "../store/actions";
 import { sessionCorrupted } from "../../common/store/actions";
 import { sessionTokenSelector } from "../../common/store/selectors";
+import { cieLoginFlowSelector } from "../store/selectors";
 import { startApplicationInitialization } from "../../../../store/actions/application";
 import { resetMixpanelSaga } from "../../../../sagas/mixpanel";
 import * as error from "../../../../utils/errors";
@@ -73,7 +74,8 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next()
         .select(sessionTokenSelector)
         .next(undefined) // No session token
-        .next() // The saga returns here
+        .select(cieLoginFlowSelector)
+        .next("auth")
         .isDone();
 
       // Verify that trackUndefinedBearerToken was called
@@ -94,6 +96,8 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
+        .select(cieLoginFlowSelector)
+        .next("reauth")
         .call(mockLogout, {})
         .next(successResponse) // Mock logout API success
         .put(sessionCorrupted())
@@ -117,6 +121,8 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
+        .select(cieLoginFlowSelector)
+        .next("reauth")
         .call(mockLogout, {})
         .next(successResponse) // Mock logout API success
         .put(setFinalizeLoggedOutUserWithDifferentCF())
@@ -143,6 +149,8 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
+        .select(cieLoginFlowSelector)
+        .next("reauth")
         .call(mockLogout, {})
         .next(errorResponse) // Mock logout API error
         .put(sessionCorrupted())
@@ -172,6 +180,8 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
+        .select(cieLoginFlowSelector)
+        .next("reauth")
         .call(mockLogout, {})
         .next(errorResponse) // Mock logout API error
         .put(setFinalizeLoggedOutUserWithDifferentCF())
@@ -204,6 +214,8 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
+        .select(cieLoginFlowSelector)
+        .next("reauth")
         .call(mockLogout, {})
         .next(leftResponse) // Mock validation error
         .put(sessionCorrupted())
@@ -237,6 +249,8 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
+        .select(cieLoginFlowSelector)
+        .next("reauth")
         .call(mockLogout, {})
         .throw(thrownError) // Mock exception during API call
         .put(sessionCorrupted())

@@ -47,12 +47,12 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_PROXIMITY_ROUTES.DEVICE_PERMISSIONS}
         component={ItwGrantPermissionsScreen}
-        options={hiddenHeader}
+        options={{ ...hiddenHeader, gestureEnabled: false }}
       />
       <Stack.Screen
         name={ITW_PROXIMITY_ROUTES.BLUETOOTH_ACTIVATION}
         component={ItwActivateBluetoothScreen}
-        options={hiddenHeader}
+        options={{ ...hiddenHeader, gestureEnabled: false }}
       />
       <Stack.Screen
         name={ITW_PROXIMITY_ROUTES.CLAIMS_DISCLOSURE}
