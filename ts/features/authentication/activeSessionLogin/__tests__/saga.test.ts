@@ -12,7 +12,8 @@ import {
   isActiveSessionFastLoginEnabledSelector,
   idpSelectedActiveSessionLoginSelector,
   newTokenActiveSessionLoginSelector,
-  cieIDSelectedSecurityLevelActiveSessionLoginSelector
+  cieIDSelectedSecurityLevelActiveSessionLoginSelector,
+  cieLoginFlowSelector
 } from "../store/selectors";
 import { startApplicationInitialization } from "../../../../store/actions/application";
 import { analyticsAuthenticationStarted } from "../../../../store/actions/analytics";
@@ -44,6 +45,7 @@ describe("handleActiveSessionLoginSaga", () => {
         ],
         [select(newTokenActiveSessionLoginSelector), mockToken],
         [select(idpSelectedActiveSessionLoginSelector), mockIdp],
+        [select(cieLoginFlowSelector), "reauth"],
         [select(isActiveSessionFastLoginEnabledSelector), mockOptIn],
         [select(cieIDSelectedSecurityLevelActiveSessionLoginSelector), "SpidL2"]
       ])
@@ -77,6 +79,7 @@ describe("handleActiveSessionLoginSaga", () => {
         ],
         [select(newTokenActiveSessionLoginSelector), undefined],
         [select(idpSelectedActiveSessionLoginSelector), undefined],
+        [select(cieLoginFlowSelector), "reauth"],
         [select(isActiveSessionFastLoginEnabledSelector), undefined],
         [
           select(cieIDSelectedSecurityLevelActiveSessionLoginSelector),
