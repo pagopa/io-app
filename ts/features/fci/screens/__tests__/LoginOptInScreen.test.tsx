@@ -7,45 +7,60 @@ import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { FCI_ROUTES } from "../../navigation/routes";
-import { FciLoginL3Screen } from "../loginL3/FciLoginL3Screen";
+import { LoginOptInScreen } from "../loginL3/LoginOptInScreen";
 import mockedProfile from "../../../../__mocks__/initializedProfile";
-import {
-  setStartActiveSessionLogin,
-  setIdpSelectedActiveSessionLogin,
-  setActiveSessionLoginFlow
-} from "../../../authentication/activeSessionLogin/store/actions";
-import { IdpCIE } from "../../../authentication/login/hooks/useNavigateToLoginMethod";
+import { setFastLoginOptSessionLogin } from "../../../authentication/activeSessionLogin/store/actions";
 
-// Mock the NFC hook
-jest.mock("../../../pn/aar/hooks/useIsNfcFeatureAvailable");
+const mockPresentBottomSheet = jest.fn();
 
-const mockIsNfcAvailable =
-  require("../../../pn/aar/hooks/useIsNfcFeatureAvailable").useIsNfcFeatureAvailable;
+jest.mock("../../../../utils/hooks/bottomSheet", () => ({
+  useIOBottomSheetModal: () => ({
+    present: mockPresentBottomSheet,
+    bottomSheet: null
+  })
+}));
 
-describe("FciLoginL3Screen", () => {
+// Mock openWebUrl
+const mockOpenWebUrl = jest.fn();
+jest.mock("../../../../utils/url", () => ({
+  openWebUrl: jest.fn((url, onError) => mockOpenWebUrl(url, onError))
+}));
+
+const mockToastError = jest.fn();
+
+jest.mock("@pagopa/io-app-design-system", () => {
+  const actual = jest.requireActual("@pagopa/io-app-design-system");
+  return {
+    ...actual,
+    IOToast: {
+      ...actual.IOToast,
+      error: jest.fn(() => mockToastError())
+    }
+  };
+});
+
+describe("LoginOptInScreen", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   it("should match the snapshot", () => {
-    mockIsNfcAvailable.mockReturnValue(true);
     const { component } = renderComponent();
     expect(component.toJSON()).toMatchSnapshot();
   });
 
   it("should render the screen correctly", () => {
-    mockIsNfcAvailable.mockReturnValue(true);
-
     const { component } = renderComponent();
 
     expect(component).toBeDefined();
     expect(component.getByTestId("FciLoginL3ScreenContent")).toBeDefined();
     expect(component.getByTestId("FciLoginL3SubtitleText")).toBeDefined();
+    expect(component.getByTestId("FciLoginL3ContinueButton")).toBeDefined();
+    expect(component.getByTestId("FciLoginL3HelpButton")).toBeDefined();
+    expect(component.getByTestId("FciLoginL3DescriptionButton")).toBeDefined();
   });
 
-  it("should dispatch active session login actions when continue button is pressed and NFC is available", () => {
-    mockIsNfcAvailable.mockReturnValue(true);
-
+  it("should dispatch setFastLoginOptSessionLogin(true) and navigate when primary button is pressed", () => {
     const { component, store } = renderComponent({ useMockStore: true });
 
     const continueButton = component.getByTestId("FciLoginL3ContinueButton");
@@ -55,23 +70,32 @@ describe("FciLoginL3Screen", () => {
     });
 
     const actions = store.getActions();
-    expect(actions).toContainEqual(setStartActiveSessionLogin());
-    expect(actions).toContainEqual(setIdpSelectedActiveSessionLogin(IdpCIE));
-    expect(actions).toContainEqual(setActiveSessionLoginFlow("FCI"));
+    expect(actions).toContainEqual(setFastLoginOptSessionLogin(true));
   });
 
-  it("should navigate to NFC not available screen when continue button is pressed and NFC is not available", () => {
-    mockIsNfcAvailable.mockReturnValue(false);
+  it("should dispatch setFastLoginOptSessionLogin(false) and navigate when secondary button is pressed", () => {
+    const { component, store } = renderComponent({ useMockStore: true });
 
-    const { component } = renderComponent();
-
-    const continueButton = component.getByTestId("FciLoginL3ContinueButton");
+    const helpButton = component.getByTestId("FciLoginL3HelpButton");
 
     act(() => {
-      fireEvent.press(continueButton);
+      fireEvent.press(helpButton);
     });
 
-    expect(continueButton).toBeDefined();
+    const actions = store.getActions();
+    expect(actions).toContainEqual(setFastLoginOptSessionLogin(false));
+  });
+
+  it("should call present when info link is pressed", () => {
+    const { component } = renderComponent();
+
+    const infoButton = component.getByTestId("FciLoginL3DescriptionButton");
+
+    act(() => {
+      fireEvent.press(infoButton);
+    });
+
+    expect(mockPresentBottomSheet).toHaveBeenCalledTimes(1);
   });
 });
 
@@ -91,8 +115,8 @@ const renderComponent = (options?: RenderOptions) => {
 
     return {
       component: renderScreenWithNavigationStoreContext<GlobalState>(
-        FciLoginL3Screen,
-        FCI_ROUTES.FCI_LOGIN_L3,
+        LoginOptInScreen,
+        FCI_ROUTES.LOGIN_OPTIN,
         {},
         store
       ),
@@ -107,8 +131,8 @@ const renderComponent = (options?: RenderOptions) => {
 
   return {
     component: renderScreenWithNavigationStoreContext<GlobalState>(
-      FciLoginL3Screen,
-      FCI_ROUTES.FCI_LOGIN_L3,
+      LoginOptInScreen,
+      FCI_ROUTES.LOGIN_OPTIN,
       {},
       store
     ),
