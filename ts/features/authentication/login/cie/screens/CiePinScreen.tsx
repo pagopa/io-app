@@ -93,10 +93,10 @@ const CiePinScreen = () => {
   const dispatch = useIODispatch();
 
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
-  const LoginType = useIOSelector(cieLoginFlowSelector);
+  const loginType = useIOSelector(cieLoginFlowSelector);
 
   useOnFirstRender(() => {
-    trackLoginCiePinScreen(LoginType);
+    trackLoginCiePinScreen(loginType);
   });
 
   const requestNfcEnabledCheck = useCallback(
@@ -251,7 +251,7 @@ const CiePinScreen = () => {
               asLink
               accessibilityRole="button"
               onPress={() => {
-                trackLoginCiePinInfo(LoginType);
+                trackLoginCiePinInfo(loginType);
                 present();
               }}
             >
