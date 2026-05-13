@@ -73,7 +73,7 @@ export const ItwClaimsSelector = ({
   onToggle,
   accessibilityLabel,
   selectedItemIds,
-  selectionEnabled = true
+  selectionEnabled = false
 }: Props) => {
   const { theme, themeType } = useIOThemeContext();
   const itwTheme = useItWalletTheme();
