@@ -43,9 +43,7 @@ import { ItwProximityQrCodeInfoBanner } from "../components/ItwProximityQrCodeIn
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
 import {
   selectFailure,
-  selectIsBluetoothRequiredState,
   selectIsLoading,
-  selectIsPermissionsRequiredState,
   selectQRCodeString
 } from "../machine/selectors.ts";
 import { ItwProximityParamsList } from "../navigation/ItwProximityParamsList";
@@ -90,12 +88,6 @@ export const ItwProximityQrCodeScreen = ({
   const isLoading = ItwProximityMachineContext.useSelector(selectIsLoading);
   const failure = ItwProximityMachineContext.useSelector(selectFailure);
 
-  const isPermissionsRequired = ItwProximityMachineContext.useSelector(
-    selectIsPermissionsRequiredState
-  );
-  const isBluetoothRequired = ItwProximityMachineContext.useSelector(
-    selectIsBluetoothRequiredState
-  );
   const shouldBlockProximityPresentation = useIOSelector(
     shouldBlockProximityQrCodeSelector
   );
@@ -106,8 +98,6 @@ export const ItwProximityQrCodeScreen = ({
   useDebugInfo({
     isLoading,
     failure,
-    isPermissionsRequired,
-    isBluetoothRequired,
     shouldBlockProximityPresentation,
     qrCodeString
   });
@@ -162,13 +152,6 @@ export const ItwProximityQrCodeScreen = ({
       }),
     [navigation, machineRef]
   );
-
-  // If the user denied permissions or didn't enable Bluetooth, go back
-  useEffect(() => {
-    if (isPermissionsRequired || isBluetoothRequired) {
-      navigation.goBack();
-    }
-  }, [isPermissionsRequired, isBluetoothRequired, navigation]);
 
   const handleRetry = () => {
     trackItwProximityQrCodeLoadingRetry();

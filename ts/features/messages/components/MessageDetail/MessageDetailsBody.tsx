@@ -12,6 +12,8 @@ import { removeCTAsFromMarkdown } from "../../utils/ctas";
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { generateMessagesAndServicesRules } from "../../../common/components/IOMarkdown/customRules";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
+import { trackAppCaughtError } from "../../../../utils/analytics";
+import { unknownToString } from "../../../../utils/errors";
 import { MessageMarkdown } from "./MessageMarkdown";
 
 export type MessageDetailsBodyProps = {
@@ -66,6 +68,14 @@ export const MessageDetailsBody = ({
     <IOMarkdown
       content={markdownWithNoCTA}
       rules={generateMessagesAndServicesRules(linkTo)}
+      onError={(error, _stack) => {
+        const errorString = unknownToString(error);
+        trackAppCaughtError(
+          "MessageDetailsBody",
+          "Unable to render message's markdown",
+          errorString
+        );
+      }}
     />
   ) : (
     <MessageMarkdown

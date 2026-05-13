@@ -1,13 +1,11 @@
 import { Alert, Platform } from "react-native";
 import { ListItemInfo } from "@pagopa/io-app-design-system";
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { IOScrollViewActions } from "../../../../../components/ui/IOScrollView";
 import { ItwProximityMachineContext } from "../machine/provider";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { openBluetoothPreferences } from "../utils";
-import { selectIsBluetoothRequiredState } from "../machine/selectors";
+import { isBluetoothPoweredOn, openBluetoothPreferences } from "../utils";
 import { IOScrollViewWithListItems } from "../../../../../components/ui/IOScrollViewWithListItems";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import {
@@ -18,17 +16,17 @@ import {
 } from "../analytics";
 
 export const ItwActivateBluetoothScreen = () => {
-  const navigation = useIONavigation();
   const machineRef = ItwProximityMachineContext.useActorRef();
-  const isBluetoothRequiredState = ItwProximityMachineContext.useSelector(
-    selectIsBluetoothRequiredState
-  );
+
+  const closeFlow = useCallback(() => {
+    machineRef.send({ type: "back" });
+  }, [machineRef]);
 
   useHeaderSecondLevel({
     title: "",
     goBack: () => {
       trackItwProximityBluetoothActivationClose();
-      navigation.goBack();
+      closeFlow();
     }
   });
 
@@ -38,29 +36,30 @@ export const ItwActivateBluetoothScreen = () => {
     }, [])
   );
 
-  useEffect(() => {
-    if (isBluetoothRequiredState) {
-      trackItwProximityBluetoothNotActivated();
-      Alert.alert(
-        I18n.t(
-          "features.itWallet.presentation.proximity.bluetoothRequired.alert.title"
-        ),
-        I18n.t(
-          "features.itWallet.presentation.proximity.bluetoothRequired.alert.message"
-        ),
-        [
-          {
-            text: I18n.t(
-              "features.itWallet.presentation.proximity.bluetoothRequired.alert.text"
-            ),
-            onPress: () => {
-              machineRef.send({ type: "close" });
-            }
-          }
-        ]
-      );
+  const onContinue = useCallback(async () => {
+    if (await isBluetoothPoweredOn()) {
+      machineRef.send({ type: "continue" });
+      return;
     }
-  }, [isBluetoothRequiredState, machineRef]);
+
+    trackItwProximityBluetoothNotActivated();
+    Alert.alert(
+      I18n.t(
+        "features.itWallet.presentation.proximity.bluetoothRequired.alert.title"
+      ),
+      I18n.t(
+        "features.itWallet.presentation.proximity.bluetoothRequired.alert.message"
+      ),
+      [
+        {
+          text: I18n.t(
+            "features.itWallet.presentation.proximity.bluetoothRequired.alert.text"
+          ),
+          onPress: closeFlow
+        }
+      ]
+    );
+  }, [machineRef, closeFlow]);
 
   const listItems = useMemo<Array<ListItemInfo>>(
     () => [
@@ -111,10 +110,7 @@ export const ItwActivateBluetoothScreen = () => {
       label: I18n.t(
         "features.itWallet.presentation.proximity.activateBluetooth.actions.secondary"
       ),
-      onPress: () => {
-        machineRef.send({ type: "continue" });
-        navigation.goBack();
-      }
+      onPress: onContinue
     }
   };
 
