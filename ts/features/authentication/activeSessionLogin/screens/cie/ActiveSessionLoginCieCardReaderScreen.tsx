@@ -193,7 +193,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
         cieAuthenticationError({
           reason: eventReason,
           cieDescription,
-          flow: "reauth"
+          flow: loginType
         })
       );
 
