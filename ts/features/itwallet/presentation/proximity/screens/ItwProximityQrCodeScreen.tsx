@@ -1,9 +1,10 @@
 import {
   Alert,
   BodySmall,
+  H6,
   HeaderSecondLevel,
-  Icon,
-  useIOThemeContext,
+  IOButton,
+  IOColors,
   VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
@@ -19,7 +20,6 @@ import {
 } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { useMaxBrightness } from "../../../../../utils/brightness.ts";
-import { ItWalletLogo } from "../../../common/components/ItWalletLogo.tsx";
 import { ItwBrandedBox } from "../../../common/components/ItwBrandedBox.tsx";
 import { itwIsBannerHiddenSelector } from "../../../common/store/selectors/banners";
 import { ITW_ROUTES } from "../../../navigation/routes";
@@ -47,7 +47,6 @@ export const ItwProximityQrCodeScreen = ({
   const { source } = route.params;
 
   const navigation = useIONavigation();
-  const { theme } = useIOThemeContext();
 
   const machineRef = ItwProximityMachineContext.useActorRef();
   const isLoading = ItwProximityMachineContext.useSelector(selectIsLoading);
@@ -111,27 +110,47 @@ export const ItwProximityQrCodeScreen = ({
 
   return (
     <IOScrollView>
-      <ItwBrandedBox
-        variant={isFailure ? "error" : "default"}
-        backgroundVariant={"gradient"}
-      >
-        <VStack space={16}>
-          <View style={styles.logoContainer}>
-            <ItWalletLogo width={134} height={28} />
-            {shouldBlockProximityPresentation && (
-              <Icon name="errorFilled" size={20} color={theme.errorIcon} />
+      <View style={styles.boxShadow}>
+        <ItwBrandedBox
+          variant={isFailure ? "error" : "default"}
+          backgroundVariant={"gradient"}
+        >
+          <VStack space={16}>
+            {!showStatusContent && (
+              <VStack space={8} style={{ marginHorizontal: 16 }}>
+                <H6 style={{ textAlign: "center" }}>
+                  {I18n.t(
+                    "features.itWallet.presentation.proximity.engagement.title"
+                  )}
+                </H6>
+                <BodySmall style={{ textAlign: "center" }}>
+                  {I18n.t(
+                    "features.itWallet.presentation.proximity.engagement.instruction"
+                  )}
+                </BodySmall>
+              </VStack>
             )}
-          </View>
 
-          {!showStatusContent && (
-            <BodySmall style={styles.centeredText}>
-              {I18n.t("features.itWallet.presentation.qrCode.instruction")}
-            </BodySmall>
+            <ItwProximityQrCode source={source} />
+          </VStack>
+        </ItwBrandedBox>
+      </View>
+      <View
+        style={{ alignSelf: "center", marginTop: 32, marginBottom: 24, gap: 8 }}
+      >
+        <BodySmall style={{ textAlign: "center" }}>
+          {I18n.t("features.itWallet.presentation.proximity.engagement.nfc.or")}
+        </BodySmall>
+        <IOButton
+          variant="link"
+          label={I18n.t(
+            "features.itWallet.presentation.proximity.engagement.nfc.action"
           )}
-
-          <ItwProximityQrCode source={source} />
-        </VStack>
-      </ItwBrandedBox>
+          onPress={() => {}}
+          icon="contactless"
+          iconPosition="end"
+        />
+      </View>
       {!isQrCodeInfoBannerHidden && (
         <Animated.View layout={LinearTransition.duration(200)}>
           <VSpacer size={24} />
@@ -145,9 +164,11 @@ export const ItwProximityQrCodeScreen = ({
             testID="itwExpiredBannerTestID"
             variant="error"
             content={I18n.t(
-              "features.itWallet.presentation.qrCode.banner.invalid"
+              "features.itWallet.presentation.proximity.engagement.invalidBanner.content"
             )}
-            action={I18n.t("features.itWallet.presentation.qrCode.reissue.cta")}
+            action={I18n.t(
+              "features.itWallet.presentation.proximity.engagement.invalidBanner.action"
+            )}
             onPress={handleReissuePress}
           />
         </Animated.View>
@@ -157,13 +178,11 @@ export const ItwProximityQrCodeScreen = ({
 };
 
 const styles = StyleSheet.create({
-  logoContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 8
-  },
-  centeredText: {
-    textAlign: "center"
+  boxShadow: {
+    shadowRadius: 8,
+    shadowColor: IOColors.black,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    elevation: 8
   }
 });
