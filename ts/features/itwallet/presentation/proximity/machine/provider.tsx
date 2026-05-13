@@ -1,5 +1,6 @@
 import { createActorContext } from "@xstate/react";
 import { PropsWithChildren } from "react";
+import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector, useIOStore } from "../../../../../store/hooks.ts";
 import { selectItwEnv } from "../../../common/store/selectors/environment.ts";
@@ -28,7 +29,20 @@ export const ItwProximityMachineProvider = ({
 
   return (
     <ItwProximityMachineContext.Provider logic={proximityMachine}>
+      <DebugData />
       {children}
     </ItwProximityMachineContext.Provider>
   );
+};
+
+const DebugData = () => {
+  const context = ItwProximityMachineContext.useSelector(s => s.context);
+  const state = ItwProximityMachineContext.useSelector(s => s.value);
+
+  useDebugInfo({
+    state,
+    context
+  });
+
+  return null;
 };

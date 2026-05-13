@@ -3,15 +3,15 @@ import {
   TransitionPresets
 } from "@react-navigation/stack";
 import { isGestureEnabled } from "../../../../../utils/navigation";
-import { ItwProximityQrCodeScreen } from "../screens/ItwProximityQrCodeScreen.tsx";
 import {
   ItwProximityMachineContext,
   ItwProximityMachineProvider
 } from "../machine/provider";
-import { ItwActivateBluetoothScreen } from "../screens/ItwActivateBluetoothScreen";
-import { ItwGrantPermissionsScreen } from "../screens/ItwGrantPermissionsScreen";
+import { ItwBluetoothActivationScreen } from "../screens/ItwBluetoothActivationScreen.tsx";
+import { ItwBluetoothPermissionsScreen } from "../screens/ItwBluetoothPermissionsScreen.tsx";
 import { ItwProximityClaimsDisclosureScreen } from "../screens/ItwProximityClaimsDisclosureScreen";
 import { ItwProximityFailureScreen } from "../screens/ItwProximityFailureScreen";
+import { ItwProximityQrCodeScreen } from "../screens/ItwProximityQrCodeScreen.tsx";
 import { ItwProximitySendDocumentsResponseScreen } from "../screens/ItwProximitySendDocumentsResponseScreen";
 import { ItwProximityParamsList } from "./ItwProximityParamsList";
 import { ITW_PROXIMITY_ROUTES } from "./routes";
@@ -45,14 +45,14 @@ const InnerNavigator = () => {
         options={TransitionPresets.ModalSlideFromBottomIOS}
       />
       <Stack.Screen
-        name={ITW_PROXIMITY_ROUTES.DEVICE_PERMISSIONS}
-        component={ItwGrantPermissionsScreen}
-        options={{ ...hiddenHeader, gestureEnabled: false }}
+        name={ITW_PROXIMITY_ROUTES.BLUETOOTH_PERMISSIONS}
+        component={ItwBluetoothPermissionsScreen}
+        options={hiddenHeader}
       />
       <Stack.Screen
         name={ITW_PROXIMITY_ROUTES.BLUETOOTH_ACTIVATION}
-        component={ItwActivateBluetoothScreen}
-        options={{ ...hiddenHeader, gestureEnabled: false }}
+        component={ItwBluetoothActivationScreen}
+        options={hiddenHeader}
       />
       <Stack.Screen
         name={ITW_PROXIMITY_ROUTES.CLAIMS_DISCLOSURE}

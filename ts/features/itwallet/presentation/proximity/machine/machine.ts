@@ -85,6 +85,9 @@ export const itwProximityMachine = setup({
             verifierRequest: undefined
           })),
           target: "Bluetooth"
+        },
+        close: {
+          actions: "closeProximity"
         }
       }
     },
@@ -99,8 +102,8 @@ export const itwProximityMachine = setup({
             src: "checkBluetoothPermissions",
             onDone: [
               {
-                guard: ({ event }) => !!event.output,
-                target: "CheckState"
+                guard: ({ event }) => event.output,
+                target: "CheckActivation"
               },
               {
                 guard: ({ event }) => !event.output,
@@ -117,14 +120,11 @@ export const itwProximityMachine = setup({
             "Display the screen prompting the user to grant bluetooth permissions",
           entry: "navigateToBluetoothPermissionsScreen",
           on: {
-            back: {
-              actions: "closeProximity"
-            },
             close: {
               actions: "closeProximity"
             },
             continue: {
-              target: "CheckState"
+              target: "CheckActivation"
             }
           }
         },
@@ -153,9 +153,6 @@ export const itwProximityMachine = setup({
             "Display the screen prompting the user to enable Bluetooth. " +
             "The screen re-checks the Bluetooth status on Continue and only emits the event when enabled.",
           on: {
-            back: {
-              actions: "closeProximity"
-            },
             close: {
               actions: "closeProximity"
             },
@@ -167,14 +164,10 @@ export const itwProximityMachine = setup({
       }
     },
     Presentation: {
-      initial: "Starting",
-      // The QR code screen is the entry point of the proximity stack and may
-      // be covered by the GrantPermissions / EnableBluetooth screens. When we
-      // enter the Presentation state we always navigate back to it so the
-      // generated QR code is displayed.
-      entry: "navigateToQrCodeScreen",
       description:
         "Manages the communication lifecycle between the device and the verifier",
+      initial: "Starting",
+      entry: "navigateToQrCodeScreen",
       invoke: {
         id: "proximityCommunicationLogic",
         src: "proximityCommunicationLogic",
@@ -257,7 +250,7 @@ export const itwProximityMachine = setup({
             "Displays the QR code to initiate proximity communication",
           on: {
             close: {
-              target: "#itwProximityMachine.Idle"
+              actions: "closeProximity"
             }
           }
         },
