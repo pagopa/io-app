@@ -28,6 +28,10 @@ export type QrCodeString = {
   payload: string;
 };
 
+export type StartNfcPresentment = {
+  type: "start-nfc-presentment";
+};
+
 export type DeviceConnecting = {
   type: "device-connecting";
 };
@@ -63,6 +67,7 @@ export type ProximityEvents =
   | Close
   | Retry
   | QrCodeString
+  | StartNfcPresentment
   | DeviceConnecting
   | DeviceConnected
   | DeviceDisconnected

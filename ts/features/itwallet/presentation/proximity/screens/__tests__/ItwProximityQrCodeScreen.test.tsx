@@ -15,7 +15,7 @@ import { ITW_PROXIMITY_ROUTES } from "../../navigation/routes";
 import {
   ItwProximityQrCodeScreen,
   ItwProximityQrCodeScreenNavigationParams
-} from "../ItwProximityQrCodeScreen";
+} from "../ItwProximityNfcPresentmentScreen";
 
 jest.mock("../../analytics", () => ({
   trackItwProximityQrCode: jest.fn()

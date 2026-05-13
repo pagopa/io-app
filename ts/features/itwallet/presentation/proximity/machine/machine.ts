@@ -36,7 +36,8 @@ export const itwProximityMachine = setup({
     navigateToBluetoothPermissionsScreen: notImplemented,
     navigateToBluetoothActivationScreen: notImplemented,
     navigateToNfcActivationScreen: notImplemented,
-    navigateToQrCodeScreen: notImplemented,
+    navigateToQrCodePresentmentScreen: notImplemented,
+    navigateToNfcPresentmentScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
     navigateToClaimsDisclosureScreen: notImplemented,
     navigateToSendDocumentsResponseScreen: notImplemented,
@@ -183,7 +184,7 @@ export const itwProximityMachine = setup({
             onDone: [
               {
                 guard: ({ event }) => event.output,
-                target: "#itwProximityMachine.Presentation"
+                target: "Completed"
               },
               {
                 guard: ({ event }) => !event.output,
@@ -213,14 +214,14 @@ export const itwProximityMachine = setup({
         }
       },
       onDone: {
-        target: "#itwProximityMachine.Presentation"
+        target: "#itwProximityMachine.Presentment"
       }
     },
-    Presentation: {
+    Presentment: {
       description:
         "Manages the communication lifecycle between the device and the verifier",
       initial: "Starting",
-      entry: "navigateToQrCodeScreen",
+      entry: "navigateToQrCodePresentmentScreen",
       invoke: {
         id: "proximityCommunicationLogic",
         src: "proximityCommunicationLogic",
@@ -234,41 +235,44 @@ export const itwProximityMachine = setup({
       },
       on: {
         "qr-code-string": {
-          target: "Presentation.DisplayQrCode",
+          target: "Presentment.DisplayQrCode",
           actions: assign(({ event }) => ({
             qrCodeString: event.payload
           }))
         },
+        "start-nfc-presentment": {
+          actions: "navigateToNfcPresentmentScreen"
+        },
         "device-connecting": {
-          target: "Presentation.Connecting"
+          target: "Presentment.Connecting"
         },
         "device-connected": {
-          target: "Presentation.Connected"
+          target: "Presentment.Connected"
         },
         "device-document-request-received": {
           actions: assign(({ event }) => ({
             proximityDetails: event.proximityDetails,
             verifierRequest: event.verifierRequest
           })),
-          target: "Presentation.ClaimsDisclosure"
+          target: "Presentment.ClaimsDisclosure"
         },
         "device-disconnected": [
           {
             // This event is dispatched when the verifier sends the END (0x02) termination flag after sendDocuments.
             // At this point, the verification process is complete and we can navigate to the success state.
-            guard: stateIn("Presentation.SendingDocuments"),
+            guard: stateIn("Presentment.SendingDocuments"),
             target: "#itwProximityMachine.Success"
           },
           {
             // This event is dispatched when the verifier sends the END (0x02) termination flag before sendDocuments.
             // At this point, the verification process is NOT complete and we can safely close the proximity session.
             actions: "setFailure",
-            target: "Presentation.Terminating"
+            target: "Presentment.Terminating"
           }
         ],
         "device-error": {
           actions: "setFailure",
-          target: "Presentation.Terminating"
+          target: "Presentment.Terminating"
         }
       },
       states: {
@@ -321,10 +325,10 @@ export const itwProximityMachine = setup({
           on: {
             "holder-consent": {
               actions: "setHasGivenConsent",
-              target: "#itwProximityMachine.Presentation.SendingDocuments"
+              target: "#itwProximityMachine.Presentment.SendingDocuments"
             },
             back: {
-              target: "#itwProximityMachine.Presentation.Terminating"
+              target: "#itwProximityMachine.Presentment.Terminating"
             }
           }
         },
@@ -355,7 +359,7 @@ export const itwProximityMachine = setup({
               after: {
                 5000: {
                   target:
-                    "#itwProximityMachine.Presentation.SendingDocuments.Reminder"
+                    "#itwProximityMachine.Presentment.SendingDocuments.Reminder"
                 }
               }
             },
@@ -364,7 +368,7 @@ export const itwProximityMachine = setup({
               after: {
                 10000: {
                   target:
-                    "#itwProximityMachine.Presentation.SendingDocuments.Final"
+                    "#itwProximityMachine.Presentment.SendingDocuments.Final"
                 }
               }
             },
