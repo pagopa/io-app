@@ -1,15 +1,14 @@
 import { ListItemInfo } from "@pagopa/io-app-design-system";
-import { useEffect, useMemo, useRef } from "react";
+import { useCallback, useMemo } from "react";
 import { Alert, Platform } from "react-native";
-import { useFocusEffect, useIsFocused } from "@react-navigation/native";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { IOScrollViewActions } from "../../../../../components/ui/IOScrollView";
 import { openAppSettings } from "../../../../../utils/appSettings";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { ItwProximityMachineContext } from "../machine/provider";
-import { selectIsPermissionsRequiredState } from "../machine/selectors";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { IOScrollViewWithListItems } from "../../../../../components/ui/IOScrollViewWithListItems";
+import { areProximityPermissionsGranted } from "../utils";
 import {
   trackItwProximityBluetoothAccess,
   trackItwProximityBluetoothAccessClose,
@@ -18,30 +17,28 @@ import {
 } from "../analytics";
 
 export const ItwGrantPermissionsScreen = () => {
-  const navigation = useIONavigation();
   const machineRef = ItwProximityMachineContext.useActorRef();
-  const isPermissionRequiredState = ItwProximityMachineContext.useSelector(
-    selectIsPermissionsRequiredState
-  );
-  const isFocused = useIsFocused();
-  const hasShownAlertRef = useRef(false);
+
+  const closeFlow = useCallback(() => {
+    machineRef.send({ type: "back" });
+  }, [machineRef]);
 
   useHeaderSecondLevel({
     title: "",
     goBack: () => {
       trackItwProximityBluetoothAccessClose();
-      navigation.getParent()?.goBack();
+      closeFlow();
     }
   });
 
   useFocusEffect(trackItwProximityBluetoothAccess);
 
-  useEffect(() => {
-    if (!isPermissionRequiredState || !isFocused || hasShownAlertRef.current) {
+  const onContinue = useCallback(async () => {
+    if (await areProximityPermissionsGranted()) {
+      machineRef.send({ type: "continue" });
       return;
     }
-    // eslint-disable-next-line functional/immutable-data
-    hasShownAlertRef.current = true;
+
     trackItwProximityBluetoothAccessDenied();
     Alert.alert(
       I18n.t(
@@ -55,16 +52,11 @@ export const ItwGrantPermissionsScreen = () => {
           text: I18n.t(
             "features.itWallet.presentation.proximity.permissionsRequired.alert.text"
           ),
-          onPress: () => {
-            machineRef.send({ type: "close" });
-            // Pop the entire proximity stack: the parent navigator removes
-            // both this screen and the underlying QR code screen at once.
-            navigation.getParent()?.goBack();
-          }
+          onPress: closeFlow
         }
       ]
     );
-  }, [isPermissionRequiredState, isFocused, machineRef, navigation]);
+  }, [machineRef, closeFlow]);
 
   const listItems = useMemo<Array<ListItemInfo>>(
     () => [
@@ -124,9 +116,7 @@ export const ItwGrantPermissionsScreen = () => {
       label: I18n.t(
         "features.itWallet.presentation.proximity.grantPermissions.actions.secondary"
       ),
-      onPress: () => {
-        machineRef.send({ type: "continue" });
-      }
+      onPress: onContinue
     }
   };
 

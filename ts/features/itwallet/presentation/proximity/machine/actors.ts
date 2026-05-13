@@ -1,13 +1,5 @@
 import { ISO18013_5 } from "@pagopa/io-react-native-iso18013";
-import { Platform } from "react-native";
-import BluetoothStateManager from "react-native-bluetooth-state-manager";
-import {
-  checkMultiple,
-  Permission,
-  PERMISSIONS,
-  requestMultiple,
-  RESULTS
-} from "react-native-permissions";
+import { requestMultiple, RESULTS } from "react-native-permissions";
 import { fromCallback, fromPromise } from "xstate";
 import { assert } from "../../../../../utils/assert";
 import { Env } from "../../../common/utils/environment";
@@ -23,26 +15,16 @@ import {
   getProximityDetails,
   promiseWithTimeout
 } from "../utils/itwProximityPresentationUtils";
+import {
+  areProximityPermissionsGranted,
+  isBluetoothPoweredOn,
+  PROXIMITY_PERMISSIONS_TO_CHECK
+} from "../utils";
 import type { EventsPayload } from "../utils/itwProximityTypeUtils";
 import { Context } from "./context";
 import { ProximityEvents } from "./events";
 
-const PERMISSIONS_TO_CHECK: Array<Permission> =
-  Platform.OS === "android"
-    ? Platform.Version >= 31
-      ? [
-          PERMISSIONS.ANDROID.BLUETOOTH_SCAN,
-          PERMISSIONS.ANDROID.BLUETOOTH_CONNECT,
-          PERMISSIONS.ANDROID.BLUETOOTH_ADVERTISE
-        ] // Android 12 and above: Request new Bluetooth permissions along with location.
-      : [PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION] // Android 9 to Android 11: Only location permission is required for BLE.
-    : [PERMISSIONS.IOS.BLUETOOTH]; // iOS permissions required are Bluetooth and location.
-
 const SEND_RESPONSE_TIMEOUT_MS = 20000;
-
-export type CheckPermissionsInput = {
-  isSilent?: boolean;
-};
 
 export type SendErrorResponseActorOutput = Awaited<
   ReturnType<typeof ISO18013_5.sendErrorResponse>
@@ -62,58 +44,29 @@ export type SendDocumentsActorOutput = Awaited<
 >;
 
 export const createProximityActorsImplementation = (env: Env) => {
-  const checkPermissions = fromPromise<boolean, CheckPermissionsInput>(
-    async ({ input }) => {
-      const isSilent = input?.isSilent || false;
-
-      // Check current permission status
-      const statuses = await checkMultiple(PERMISSIONS_TO_CHECK);
-
-      // Filter out already granted permissions
-      const permissionsToRequest = PERMISSIONS_TO_CHECK.filter(
-        permission => statuses[permission] !== RESULTS.GRANTED
-      );
-
-      if (permissionsToRequest.length > 0) {
-        if (!isSilent) {
-          trackItwProximityBluetoothBlock();
-        }
-        // Request only the missing permissions
-        const requestResults = await requestMultiple(permissionsToRequest);
-
-        const allPermissionsGranted = permissionsToRequest.every(
-          permission => requestResults[permission] === RESULTS.GRANTED
-        );
-
-        if (!isSilent) {
-          const userAction = allPermissionsGranted ? "allow" : "not_allow";
-          trackItwProximityBluetoothBlockAction(userAction);
-        }
-
-        // Verify if all requested permissions are granted
-        return allPermissionsGranted;
-      }
+  const checkPermissions = fromPromise<boolean, void>(async () => {
+    if (await areProximityPermissionsGranted()) {
       return true;
     }
-  );
+
+    // Some permissions are missing: prompt the user.
+    trackItwProximityBluetoothBlock();
+    const requestResults = await requestMultiple(
+      PROXIMITY_PERMISSIONS_TO_CHECK
+    );
+    const allPermissionsGranted = PROXIMITY_PERMISSIONS_TO_CHECK.every(
+      permission => requestResults[permission] === RESULTS.GRANTED
+    );
+
+    trackItwProximityBluetoothBlockAction(
+      allPermissionsGranted ? "allow" : "not_allow"
+    );
+
+    return allPermissionsGranted;
+  });
 
   const checkBluetoothIsActive = fromPromise<boolean, void>(
-    () =>
-      new Promise<boolean>(resolve => {
-        const MAX_WAIT_MS = 3000;
-        const timeoutId = setTimeout(() => {
-          subscription.remove();
-          resolve(false);
-        }, MAX_WAIT_MS);
-
-        const subscription = BluetoothStateManager.onStateChange(state => {
-          if (state !== "Unknown" && state !== "Resetting") {
-            clearTimeout(timeoutId);
-            subscription.remove();
-            resolve(state === "PoweredOn");
-          }
-        }, true);
-      })
+    isBluetoothPoweredOn
   );
 
   const startEngagement = fromPromise<void>(async () => {
