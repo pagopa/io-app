@@ -7,7 +7,6 @@ import { selectItwEnv } from "../../../common/store/selectors/environment.ts";
 import { getEnv } from "../../../common/utils/environment.ts";
 import { createProximityActionsImplementation } from "./actions.ts";
 import { createProximityActorsImplementation } from "./actors.ts";
-import { createProximityGuardsImplementation } from "./guards.ts";
 import { itwProximityMachine } from "./machine.ts";
 
 export const ItwProximityMachineContext =
@@ -23,8 +22,7 @@ export const ItwProximityMachineProvider = ({
 
   const proximityMachine = itwProximityMachine.provide({
     actions: createProximityActionsImplementation(navigation, store),
-    actors: createProximityActorsImplementation(env),
-    guards: createProximityGuardsImplementation()
+    actors: createProximityActorsImplementation(env)
   });
 
   return (

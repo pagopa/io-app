@@ -35,6 +35,7 @@ export const itwProximityMachine = setup({
 
     navigateToBluetoothPermissionsScreen: notImplemented,
     navigateToBluetoothActivationScreen: notImplemented,
+    navigateToNfcActivationScreen: notImplemented,
     navigateToQrCodeScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
     navigateToClaimsDisclosureScreen: notImplemented,
@@ -51,6 +52,7 @@ export const itwProximityMachine = setup({
   actors: {
     checkBluetoothPermissions: fromPromise<boolean>(notImplemented),
     checkBluetoothActivation: fromPromise<boolean>(notImplemented),
+    checkNfcActivation: fromPromise<boolean>(notImplemented),
     proximityCommunicationLogic: fromCallback<
       ProximityEvents,
       ProximityCommunicationLogicInput
@@ -65,7 +67,7 @@ export const itwProximityMachine = setup({
     closeProximityFlow: fromPromise<CloseActorOutput, void>(notImplemented)
   },
   guards: {
-    hasFailure: notImplemented
+    hasFailure: ({ context }) => !!context.failure
   }
 }).createMachine({
   id: "itwProximityMachine",
@@ -135,7 +137,7 @@ export const itwProximityMachine = setup({
             onDone: [
               {
                 guard: ({ event }) => event.output,
-                target: "#itwProximityMachine.Presentation"
+                target: "Completed"
               },
               {
                 guard: ({ event }) => !event.output,
@@ -157,10 +159,62 @@ export const itwProximityMachine = setup({
               actions: "closeProximity"
             },
             continue: {
-              target: "#itwProximityMachine.Presentation"
+              target: "Completed"
             }
           }
+        },
+        Completed: {
+          description: "Bluetooth checks are completed",
+          type: "final"
         }
+      },
+      onDone: {
+        target: "#itwProximityMachine.Nfc"
+      }
+    },
+    Nfc: {
+      tags: [ItwPresentationTags.Loading],
+      description: "Perform all the checks related to NFC",
+      initial: "CheckActivation",
+      states: {
+        CheckActivation: {
+          description: "Check if NFC is enabled",
+          invoke: {
+            src: "checkNfcActivation",
+            onDone: [
+              {
+                guard: ({ event }) => event.output,
+                target: "#itwProximityMachine.Presentation"
+              },
+              {
+                guard: ({ event }) => !event.output,
+                target: "RequireActivation"
+              }
+            ],
+            onError: {
+              target: "RequireActivation"
+            }
+          }
+        },
+        RequireActivation: {
+          entry: "navigateToNfcActivationScreen",
+          description: "Display the screen prompting the user to enable NFC",
+          on: {
+            close: {
+              actions: "closeProximity"
+            },
+            continue: {
+              target: "Completed"
+            }
+          }
+        },
+        Completed: {
+          description: "Nfc checks are completed",
+          type: "final"
+        }
+      },
+      onDone: {
+        target: "#itwProximityMachine.Presentation"
       }
     },
     Presentation: {

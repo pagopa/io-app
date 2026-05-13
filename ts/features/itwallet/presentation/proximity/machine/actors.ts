@@ -5,6 +5,10 @@ import { Env } from "../../../common/utils/environment";
 import { CredentialFormat } from "../../../common/utils/itwTypesUtils";
 import { CredentialsVault } from "../../../credentials/utils/vault";
 import {
+  checkBluetoothActivation,
+  checkBluetoothPermissions
+} from "../utils/ble";
+import {
   generateAcceptedFields,
   getDocuments,
   getProximityDetails,
@@ -16,10 +20,7 @@ import {
   PROXIMITY_PERMISSIONS_TO_CHECK
 } from "../utils";
 import type { EventsPayload } from "../utils/itwProximityTypeUtils";
-import {
-  checkBluetoothPermissions,
-  checkBluetoothActivation
-} from "../utils/ble";
+import { checkNfcActivation } from "../utils/nfc";
 import { Context } from "./context";
 import { ProximityEvents } from "./events";
 
@@ -51,9 +52,7 @@ export const createProximityActorsImplementation = (env: Env) => {
     checkBluetoothActivation
   );
 
-  const checkBluetoothIsActive = fromPromise<boolean, void>(
-    isBluetoothPoweredOn
-  );
+  const checkNfcActivationActor = fromPromise<boolean>(checkNfcActivation);
 
   const startEngagement = fromPromise<void>(async () => {
     // Ensure any existing session is closed before starting a new one
@@ -204,6 +203,7 @@ export const createProximityActorsImplementation = (env: Env) => {
   return {
     checkBluetoothPermissions: checkBluetoothPermissionsActor,
     checkBluetoothActivation: checkBluetoothActivationActor,
+    checkNfcActivation: checkNfcActivationActor,
     startEngagement,
     proximityCommunicationLogic,
     closeProximityFlow,

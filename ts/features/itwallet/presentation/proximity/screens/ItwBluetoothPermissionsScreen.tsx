@@ -39,15 +39,15 @@ export const ItwBluetoothPermissionsScreen = () => {
     trackItwProximityBluetoothAccessDenied();
     Alert.alert(
       I18n.t(
-        "features.itWallet.presentation.proximity.permissionsRequired.alert.title"
+        "features.itWallet.presentation.proximity.bluetooth.permissions.alert.title"
       ),
       I18n.t(
-        "features.itWallet.presentation.proximity.permissionsRequired.alert.message"
+        "features.itWallet.presentation.proximity.bluetooth.permissions.alert.message"
       ),
       [
         {
           text: I18n.t(
-            "features.itWallet.presentation.proximity.permissionsRequired.alert.text"
+            "features.itWallet.presentation.proximity.bluetooth.permissions.alert.text"
           ),
           onPress: () => {
             machineRef.send({ type: "close" });
@@ -60,21 +60,21 @@ export const ItwBluetoothPermissionsScreen = () => {
   return (
     <IOScrollViewWithListItems
       title={I18n.t(
-        "features.itWallet.presentation.proximity.grantPermissions.title"
+        "features.itWallet.presentation.proximity.bluetooth.permissions.title"
       )}
       subtitle={I18n.t(
-        "features.itWallet.presentation.proximity.grantPermissions.subtitle"
+        "features.itWallet.presentation.proximity.bluetooth.permissions.subtitle"
       )}
       listItemHeaderLabel={I18n.t(
-        "features.itWallet.presentation.proximity.grantPermissions.listItems.title"
+        "features.itWallet.presentation.proximity.bluetooth.permissions.listItems.title"
       )}
       renderItems={[
         {
           label: I18n.t(
-            "features.itWallet.presentation.proximity.grantPermissions.listItems.step1.label"
+            "features.itWallet.presentation.proximity.bluetooth.permissions.listItems.step1.label"
           ),
           value: I18n.t(
-            "features.itWallet.presentation.proximity.grantPermissions.listItems.step1.value"
+            "features.itWallet.presentation.proximity.bluetooth.permissions.listItems.step1.value"
           ),
           icon:
             Platform.OS === "ios"
@@ -83,28 +83,28 @@ export const ItwBluetoothPermissionsScreen = () => {
         },
         {
           label: I18n.t(
-            "features.itWallet.presentation.proximity.grantPermissions.listItems.step2.label"
+            "features.itWallet.presentation.proximity.bluetooth.permissions.listItems.step2.label"
           ),
           value: I18n.t(
-            "features.itWallet.presentation.proximity.grantPermissions.listItems.step2.value"
+            "features.itWallet.presentation.proximity.bluetooth.permissions.listItems.step2.value"
           ),
           icon: "systemAppsAndroid"
         },
         {
           label: I18n.t(
-            "features.itWallet.presentation.proximity.grantPermissions.listItems.step3.label"
+            "features.itWallet.presentation.proximity.bluetooth.permissions.listItems.step3.label"
           ),
           value: I18n.t(
-            "features.itWallet.presentation.proximity.grantPermissions.listItems.step3.value"
+            "features.itWallet.presentation.proximity.bluetooth.permissions.listItems.step3.value"
           ),
           icon: "productIOAppBlueBg"
         },
         {
           label: I18n.t(
-            "features.itWallet.presentation.proximity.grantPermissions.listItems.step4.label"
+            "features.itWallet.presentation.proximity.bluetooth.permissions.listItems.step4.label"
           ),
           value: I18n.t(
-            "features.itWallet.presentation.proximity.grantPermissions.listItems.step4.value"
+            "features.itWallet.presentation.proximity.bluetooth.permissions.listItems.step4.value"
           ),
           icon: "systemToggleInstructions"
         }
@@ -113,7 +113,7 @@ export const ItwBluetoothPermissionsScreen = () => {
         type: "TwoButtons",
         primary: {
           label: I18n.t(
-            "features.itWallet.presentation.proximity.grantPermissions.actions.primary"
+            "features.itWallet.presentation.proximity.bluetooth.permissions.actions.primary"
           ),
           onPress: () => {
             trackItwProximityBluetoothAccessGoToSettings();
@@ -122,7 +122,7 @@ export const ItwBluetoothPermissionsScreen = () => {
         },
         secondary: {
           label: I18n.t(
-            "features.itWallet.presentation.proximity.grantPermissions.actions.secondary"
+            "features.itWallet.presentation.proximity.bluetooth.permissions.actions.secondary"
           ),
           onPress: handleContinue
         }

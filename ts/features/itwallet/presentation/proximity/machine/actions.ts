@@ -37,6 +37,12 @@ export const createProximityActionsImplementation = (
     });
   },
 
+  navigateToNfcActivationScreen: () => {
+    navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
+      screen: ITW_PROXIMITY_ROUTES.BLUETOOTH_ACTIVATION
+    });
+  },
+
   navigateToQrCodeScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
       screen: ITW_PROXIMITY_ROUTES.QR_CODE,
