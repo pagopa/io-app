@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.31.0-rc.5](https://github.com/pagopa/io-app/compare/3.31.0-rc.4...3.31.0-rc.5) (2026-05-13)
+
+
+### Bug Fixes
+
+* [[IOCOM-3122](https://pagopa.atlassian.net/browse/IOCOM-3122)] `AppCaughtError` on message and service markdown's error ([#8090](https://github.com/pagopa/io-app/issues/8090)) ([d18f305](https://github.com/pagopa/io-app/commit/d18f305d954fc6c668a933aeae8845db2f644b2e))
+
+
+### Chores
+
+* [[IEL-458](https://pagopa.atlassian.net/browse/IEL-458)] FCI L3 authentication flow tracking ([#8098](https://github.com/pagopa/io-app/issues/8098)) ([7fd8ea9](https://github.com/pagopa/io-app/commit/7fd8ea9c53461f9dd87eb59a0b72afad1e6f7c0d))
+
 ## [3.31.0-rc.4](https://github.com/pagopa/io-app/compare/3.31.0-rc.3...3.31.0-rc.4) (2026-05-13)
 
 
