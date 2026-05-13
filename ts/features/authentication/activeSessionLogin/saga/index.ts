@@ -71,9 +71,9 @@ export function* handleActiveSessionLoginSaga(): Generator<
   void,
   any
 > {
-  const LoginType = yield* select(cieLoginFlowSelector);
+  const loginFlow = yield* select(cieLoginFlowSelector);
 
-  yield* put(analyticsAuthenticationStarted(LoginType));
+  yield* put(analyticsAuthenticationStarted(loginFlow));
 
   yield* fork(watchCieAuthenticationSaga);
 
@@ -92,7 +92,6 @@ export function* handleActiveSessionLoginSaga(): Generator<
   if (success) {
     const token = yield* select(newTokenActiveSessionLoginSelector);
     const idp = yield* select(idpSelectedActiveSessionLoginSelector);
-    const loginFlow = yield* select(cieLoginFlowSelector);
     const fastLoginOptIn = yield* select(
       isActiveSessionFastLoginEnabledSelector
     );
