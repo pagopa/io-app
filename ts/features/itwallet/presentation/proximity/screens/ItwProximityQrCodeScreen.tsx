@@ -10,6 +10,7 @@ import {
 import I18n from "i18next";
 import { useEffect, useLayoutEffect } from "react";
 import { StyleSheet, View } from "react-native";
+import Animated, { LinearTransition } from "react-native-reanimated";
 import { IOScrollView } from "../../../../../components/ui/IOScrollView.tsx";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import {
@@ -132,13 +133,13 @@ export const ItwProximityQrCodeScreen = ({
         </VStack>
       </ItwBrandedBox>
       {!isQrCodeInfoBannerHidden && (
-        <>
+        <Animated.View layout={LinearTransition.duration(200)}>
           <VSpacer size={24} />
           <ItwProximityQrCodeInfoBanner />
-        </>
+        </Animated.View>
       )}
       {shouldBlockProximityPresentation && (
-        <>
+        <Animated.View layout={LinearTransition.duration(200)}>
           <VSpacer size={24} />
           <Alert
             testID="itwExpiredBannerTestID"
@@ -149,7 +150,7 @@ export const ItwProximityQrCodeScreen = ({
             action={I18n.t("features.itWallet.presentation.qrCode.reissue.cta")}
             onPress={handleReissuePress}
           />
-        </>
+        </Animated.View>
       )}
     </IOScrollView>
   );
