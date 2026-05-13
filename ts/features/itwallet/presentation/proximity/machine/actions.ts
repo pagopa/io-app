@@ -43,9 +43,9 @@ export const createProximityActionsImplementation = (
     });
   },
 
-  navigateToQrCodePresentmentScreen: () => {
+  navigatePresentmentScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.QR_CODE_PRESENTMENT,
+      screen: ITW_PROXIMITY_ROUTES.PRESENTMENT,
       params: {}
     });
   },

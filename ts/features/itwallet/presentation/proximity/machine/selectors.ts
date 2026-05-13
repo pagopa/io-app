@@ -24,10 +24,10 @@ export const selectProximityDetails = (snapshot: MachineSnapshot) =>
   snapshot.context.proximityDetails;
 
 export const isInitialLoadingSelector = (snapshot: MachineSnapshot) =>
-  snapshot.matches({ Presentation: { SendingDocuments: "Initial" } });
+  snapshot.matches({ Presentment: { SendingDocuments: "Initial" } });
 
 export const isReminderLoadingSelector = (snapshot: MachineSnapshot) =>
-  snapshot.matches({ Presentation: { SendingDocuments: "Reminder" } });
+  snapshot.matches({ Presentment: { SendingDocuments: "Reminder" } });
 
 export const hasGivenConsentSelector = (snapshot: MachineSnapshot) =>
   snapshot.context.hasGivenConsent;
