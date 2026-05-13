@@ -8,7 +8,7 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { LoginType } from "../../../../activeSessionLogin/screens/analytics";
+import { CieLoginFlowType } from "../../../../common/analytics/cieAnalytics.ts";
 
 export const cieIsSupported = createAsyncAction(
   "CIE_IS_SUPPORTED_REQUEST",
@@ -27,7 +27,7 @@ export type CieAuthenticationErrorReason = CEvent["event"] | "GENERIC";
 export type CieAuthenticationErrorPayload = {
   reason: CieAuthenticationErrorReason;
   cieDescription?: string;
-  flow: LoginType;
+  flow: CieLoginFlowType;
 };
 
 export const cieAuthenticationError = createStandardAction(

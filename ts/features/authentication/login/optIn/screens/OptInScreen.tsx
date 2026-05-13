@@ -28,10 +28,7 @@ import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { ContextualHelpPropsMarkdown } from "../../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { setFastLoginOptSessionLogin } from "../../../activeSessionLogin/store/actions";
-import {
-  cieLoginFlowSelector,
-  isActiveSessionLoginSelector
-} from "../../../activeSessionLogin/store/selectors";
+import { isActiveSessionLoginSelector } from "../../../activeSessionLogin/store/selectors";
 import { AuthenticationParamsList } from "../../../common/navigation/params/AuthenticationParamsList";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import {
@@ -73,7 +70,7 @@ const OptInScreen = () => {
   const accessibilityFirstFocuseViewRef = useRef<View>(null);
   const dispatch = useIODispatch();
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
-  const cieLoginFlowType = useIOSelector(cieLoginFlowSelector);
+  const flow = isActiveSessionLogin ? "reauth" : "auth";
   const {
     securitySuggestionBottomSheet,
     presentSecuritySuggestionBottomSheet
@@ -95,7 +92,7 @@ const OptInScreen = () => {
   const { isDeviceScreenSmall } = useDetectSmallScreen();
 
   useOnFirstRender(() => {
-    trackLoginSessionOptIn(cieLoginFlowType);
+    trackLoginSessionOptIn(flow);
   });
 
   useFocusEffect(() => setAccessibilityFocus(accessibilityFirstFocuseViewRef));
@@ -114,9 +111,9 @@ const OptInScreen = () => {
 
   const navigateToIdpPage = (isLV: boolean) => {
     if (isLV) {
-      void trackLoginSessionOptIn365(store.getState(), cieLoginFlowType);
+      void trackLoginSessionOptIn365(store.getState(), flow);
     } else {
-      void trackLoginSessionOptIn30(store.getState(), cieLoginFlowType);
+      void trackLoginSessionOptIn30(store.getState(), flow);
     }
     navigation.navigate(AUTHENTICATION_ROUTES.MAIN, getNavigationParams());
     if (isActiveSessionLogin) {
@@ -189,7 +186,7 @@ const OptInScreen = () => {
             accessibilityRole: "button",
             label: I18n.t("authentication.opt_in.security_suggests"),
             onPress: () => {
-              trackLoginSessionOptInInfo(cieLoginFlowType);
+              trackLoginSessionOptInInfo(flow);
               return presentSecuritySuggestionBottomSheet();
             }
           }}
