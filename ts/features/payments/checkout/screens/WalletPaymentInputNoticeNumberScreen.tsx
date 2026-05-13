@@ -109,11 +109,8 @@ const WalletPaymentInputNoticeNumberScreen = () => {
               noticeNumber: decodePaymentNoticeNumber(normalizedValue)
             });
           }}
-          counterLimit={
-            inputState.noticeNumberText.length >= MAX_LENGTH_NOTICE_NUMBER
-              ? MAX_LENGTH_NOTICE_NUMBER
-              : undefined
-          }
+          counterLimit={MAX_LENGTH_NOTICE_NUMBER}
+          showCounterOnlyWhenLimitReached
           onValidate={validatePaymentNoticeNumber}
           textInputProps={{
             keyboardType: "number-pad",
