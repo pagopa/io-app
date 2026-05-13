@@ -23,8 +23,6 @@ import {
 } from "../../../authentication/fastLogin/analytics/optinAnalytics.ts";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 
-// TODO MIxpanel events here!
-
 const FciSecurityInfo = () => (
   <View>
     <FeatureInfo
