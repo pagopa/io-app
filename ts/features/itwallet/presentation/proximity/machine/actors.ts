@@ -14,11 +14,6 @@ import {
   getProximityDetails,
   promiseWithTimeout
 } from "../utils/itwProximityPresentationUtils";
-import {
-  areProximityPermissionsGranted,
-  isBluetoothPoweredOn,
-  PROXIMITY_PERMISSIONS_TO_CHECK
-} from "../utils";
 import type { EventsPayload } from "../utils/itwProximityTypeUtils";
 import { checkNfcActivation } from "../utils/nfc";
 import { Context } from "./context";
