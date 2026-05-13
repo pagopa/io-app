@@ -15,4 +15,5 @@ export type FciParamsList = {
   [FCI_ROUTES.SIGNATURE_REQUESTS]: undefined;
   [FCI_ROUTES.NFC_NOT_AVAILABLE]: undefined;
   [FCI_ROUTES.FCI_LOGIN_L3]: undefined;
+  [FCI_ROUTES.LOGIN_OPTIN]: undefined;
 };

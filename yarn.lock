@@ -4377,9 +4377,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-app-design-system@npm:7.1.0":
-  version: 7.1.0
-  resolution: "@pagopa/io-app-design-system@npm:7.1.0"
+"@pagopa/io-app-design-system@npm:7.1.1":
+  version: 7.1.1
+  resolution: "@pagopa/io-app-design-system@npm:7.1.1"
   dependencies:
     auto-changelog: ^2.4.0
     markdown-it: ^14.1.0
@@ -4402,7 +4402,7 @@ __metadata:
     react-native-safe-area-context: "*"
     react-native-svg: "*"
     react-native-worklets: "*"
-  checksum: 99b343387dee086e179bc4f9dced1e8b5b6ace19b021e8386f1b91ef658cfc9ff3ba24341a8e3740bcc3665877602c88820bc29ddb16a8b3b859755bc794eac1
+  checksum: 47223343447fb6d43be99e9c07c0d4707d173cadaf69acb3826618175056bdacd03594af23c541138674af5d2097d32667ad3205ca37c2f62da650a95e0be447
   languageName: node
   linkType: hard
 
@@ -4417,15 +4417,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-cie@npm:1.3.5-rc.2":
-  version: 1.3.5-rc.2
-  resolution: "@pagopa/io-react-native-cie@npm:1.3.5-rc.2"
+"@pagopa/io-react-native-cie@npm:1.3.6":
+  version: 1.3.6
+  resolution: "@pagopa/io-react-native-cie@npm:1.3.6"
   dependencies:
     zod: ^3.24.4
   peerDependencies:
     react: ">=19.1"
     react-native: ">=0.81"
-  checksum: 2a5b3d6e7f1077ce7c73559f33bfc1361900a804524ed1c09be3842269db0ee0d5b3946d863ccf84218f1e3132909783ef0ff314d426747b89a2c220f8fb2a77
+  checksum: a8fcd64ecc60828546d37969603d4681cba407524294970caf2e97c78a0c2ffb37c1fdf0819ae5531b14c41c538860c460f07436be2a074370b97aef8d473b15
   languageName: node
   linkType: hard
 
@@ -13546,9 +13546,9 @@ __metadata:
     "@eslint/eslintrc": ^3.3.5
     "@eslint/js": ^10.0.1
     "@gorhom/bottom-sheet": ^5.2.8
-    "@pagopa/io-app-design-system": 7.1.0
+    "@pagopa/io-app-design-system": 7.1.1
     "@pagopa/io-pagopa-commons": ^3.1.0
-    "@pagopa/io-react-native-cie": 1.3.5-rc.2
+    "@pagopa/io-react-native-cie": 1.3.6
     "@pagopa/io-react-native-cieid": 0.4.0
     "@pagopa/io-react-native-crypto": ^1.2.3
     "@pagopa/io-react-native-http-client": 1.2.0
