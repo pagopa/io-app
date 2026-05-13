@@ -18,7 +18,10 @@ import { ActionType, getType } from "typesafe-actions";
 import { UserDataProcessingChoiceEnum } from "../../definitions/identity/UserDataProcessingChoice";
 import { UserDataProcessingStatusEnum } from "../../definitions/identity/UserDataProcessingStatus";
 import { apiUrlPrefix, zendeskEnabled } from "../config";
-import { watchActiveSessionLoginSaga } from "../features/authentication/activeSessionLogin/saga";
+import {
+  handleNavigateAfterFinishedStandardActiveSessionLoginFlow,
+  watchActiveSessionLoginSaga
+} from "../features/authentication/activeSessionLogin/saga";
 import { authenticationSaga } from "../features/authentication/common/saga/authenticationSaga";
 import { loadSessionInformationSaga } from "../features/authentication/common/saga/loadSessionInformationSaga";
 import {
@@ -42,7 +45,10 @@ import { watchBonusCgnSaga } from "../features/bonus/cgn/saga";
 import { cgnDetails } from "../features/bonus/cgn/store/actions/details";
 import { isCgnDiscoveryBannerClosedSelector } from "../features/bonus/cgn/store/reducers/banners";
 import { isCgnEligibleByAgeSelector } from "../features/bonus/cgn/store/selectors/banners";
-import { watchFciSaga } from "../features/fci/saga";
+import {
+  navigateAfterFinishedFciActiveSessionLoginFlowSaga,
+  watchFciSaga
+} from "../features/fci/saga";
 import { watchFimsSaga } from "../features/fims/common/saga";
 import { startAndReturnIdentificationResult } from "../features/identification/sagas";
 import {
@@ -71,7 +77,6 @@ import { checkAcknowledgedEmailSaga } from "../features/mailCheck/sagas/checkAck
 import { watchEmailNotificationPreferencesSaga } from "../features/mailCheck/sagas/checkEmailNotificationPreferencesSaga";
 import { checkEmailSaga } from "../features/mailCheck/sagas/checkEmailSaga";
 import { watchEmailValidationSaga } from "../features/mailCheck/sagas/emailValidationPollingSaga";
-import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { handleClearAllAttachments } from "../features/messages/saga/handleClearAttachments";
 import { checkAcknowledgedFingerprintSaga } from "../features/onboarding/saga/biometric/checkAcknowledgedFingerprintSaga";
 import { completeOnboardingSaga } from "../features/onboarding/saga/completeOnboardingSaga";
@@ -100,8 +105,6 @@ import {
   watchZendeskGetSessionSaga
 } from "../features/zendesk/saga";
 import { formatRequestedTokenString } from "../features/zendesk/utils";
-import NavigationService from "../navigation/NavigationService";
-import ROUTES from "../navigation/routes";
 import {
   applicationInitialized,
   startApplicationInitialization
@@ -307,12 +310,10 @@ export function* initializeApplicationSaga(
       ? previousSessionToken
       : yield* call(authenticationSaga);
 
-  // TODO: review this logic in order to make it more simple and clear
-  if (isActiveLoginSuccessProp) {
-    NavigationService.navigate(ROUTES.MAIN, {
-      screen: MESSAGES_ROUTES.MESSAGES_HOME
-    });
-  }
+  yield* call(
+    handleNavigateAfterFinishedStandardActiveSessionLoginFlow,
+    isActiveLoginSuccessProp
+  );
 
   // BE CAREFUL where you get lollipop keyInfo.
   // They MUST be placed after authenticationSaga, because they are regenerated with each login attempt.
@@ -395,7 +396,7 @@ export function* initializeApplicationSaga(
   // and is maintained by separate teams
 
   // Start watching for Services actions
-  yield* fork(watchServicesSaga, identityClient);
+  yield* fork(watchServicesSaga, keyInfo, sessionToken);
 
   // Start watching for Messages actions
   yield* fork(watchMessagesSaga);
@@ -405,6 +406,11 @@ export function* initializeApplicationSaga(
 
   // watch FCI saga
   yield* fork(watchFciSaga, sessionToken, keyInfo);
+
+  yield* call(
+    navigateAfterFinishedFciActiveSessionLoginFlowSaga,
+    isActiveLoginSuccessProp
+  );
 
   // whether we asked the user to login again
   const isSessionRefreshed = previousSessionToken !== sessionToken; // Needs further investigation

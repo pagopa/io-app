@@ -5,12 +5,14 @@ import { getType } from "typesafe-actions";
 import { InstitutionsResource } from "../../../../../../definitions/services/InstitutionsResource";
 import { OrganizationFiscalCode } from "../../../../../../definitions/services/OrganizationFiscalCode";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
-import { ServicesClient } from "../../../common/api/__mocks__/servicesClient";
+import { servicesClientManager } from "../../../../../api/ServicesClientManager";
 import {
   SearchPaginatedInstitutionsGetPayload,
   searchPaginatedInstitutionsGet
 } from "../../store/actions";
 import { handleFindInstitutions } from "../handleFindInstitutions";
+
+jest.mock("../../../../../api/ServicesClientManager");
 
 const DEBOUNCE_SEARCH: Millisecond = 500 as Millisecond;
 
@@ -43,13 +45,16 @@ const MOCK_RESPONSE_PAYLOAD: InstitutionsResource = {
 };
 
 describe("handleFindInstitutions", () => {
+  const servicesClient = servicesClientManager.getClient("https://base.url", {
+    token: "mock-bearer-token"
+  });
   describe("when the response is successful", () => {
     it(`should put ${getType(
       searchPaginatedInstitutionsGet.success
     )} with the parsed institutions and pagination data`, () => {
       testSaga(
         handleFindInstitutions,
-        ServicesClient.findInstitutions,
+        servicesClient.findInstitutions,
         searchPaginatedInstitutionsGet.request(DEFAULT_REQUEST_PAYLOAD)
       )
         .next()
@@ -57,7 +62,7 @@ describe("handleFindInstitutions", () => {
         .next()
         .call(
           withRefreshApiCall,
-          ServicesClient.findInstitutions(DEFAULT_REQUEST_PAYLOAD),
+          servicesClient.findInstitutions(DEFAULT_REQUEST_PAYLOAD),
           searchPaginatedInstitutionsGet.request(DEFAULT_REQUEST_PAYLOAD)
         )
         .next(E.right({ status: 200, value: MOCK_RESPONSE_PAYLOAD }))
@@ -75,7 +80,7 @@ describe("handleFindInstitutions", () => {
     )} with the error`, () => {
       testSaga(
         handleFindInstitutions,
-        ServicesClient.findInstitutions,
+        servicesClient.findInstitutions,
         searchPaginatedInstitutionsGet.request(DEFAULT_REQUEST_PAYLOAD)
       )
         .next()
@@ -83,7 +88,7 @@ describe("handleFindInstitutions", () => {
         .next()
         .call(
           withRefreshApiCall,
-          ServicesClient.findInstitutions(DEFAULT_REQUEST_PAYLOAD),
+          servicesClient.findInstitutions(DEFAULT_REQUEST_PAYLOAD),
           searchPaginatedInstitutionsGet.request(DEFAULT_REQUEST_PAYLOAD)
         )
         .next(
