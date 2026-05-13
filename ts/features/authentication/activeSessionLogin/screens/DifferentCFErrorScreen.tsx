@@ -1,28 +1,25 @@
 import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
-import { useIODispatch, useIOSelector } from "../../../../store/hooks";
+import { useIODispatch } from "../../../../store/hooks";
 import { setLoggedOutUserWithDifferentCF } from "../store/actions";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { startApplicationInitialization } from "../../../../store/actions/application";
 import { startupLoadSuccess } from "../../../../store/actions/startup";
 import { StartupStatusEnum } from "../../../../store/reducers/startup";
-import { cieLoginFlowSelector } from "../store/selectors";
 import { trackLoginWithNewCF, trackLoginWithNewCFConfirm } from "./analytics";
 
 export const DifferentCFErrorScreen = () => {
   const dispatch = useIODispatch();
 
-  const cieLoginFlowType = useIOSelector(cieLoginFlowSelector);
-
   useOnFirstRender(() => {
     dispatch(setLoggedOutUserWithDifferentCF());
-    void trackLoginWithNewCF(cieLoginFlowType);
+    void trackLoginWithNewCF();
   });
 
   const handleNavigateToLandingScreen = () => {
     dispatch(startupLoadSuccess(StartupStatusEnum.NOT_AUTHENTICATED));
     dispatch(startApplicationInitialization());
-    void trackLoginWithNewCFConfirm(cieLoginFlowType);
+    void trackLoginWithNewCFConfirm();
   };
 
   return (

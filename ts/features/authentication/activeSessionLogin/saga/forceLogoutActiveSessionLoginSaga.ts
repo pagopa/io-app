@@ -76,7 +76,7 @@ export function* logoutUserAfterActiveSessionLoginSaga(
       yield* put(setFinalizeLoggedOutUserWithDifferentCF());
       yield* call(resetMixpanelSaga);
     } else {
-      yield* put(sessionCorrupted(cieLoginFlowType));
+      yield* put(sessionCorrupted());
       yield* call(resetMixpanelSaga);
       yield* put(startApplicationInitialization());
     }

@@ -1,25 +1,17 @@
 import { mixpanelTrack } from "../../../../../mixpanel";
 import { buildEventProperties } from "../../../../../utils/analytics";
 import { SpidIdp } from "../../../../../utils/idps";
-import { CieLoginFlowType } from "../../../common/analytics/cieAnalytics.ts";
 
 export type LoginType = "auth" | "reauth";
 
-export function trackLoginWithNewCF(flow: CieLoginFlowType) {
-  void mixpanelTrack(
-    "LOGIN_NEW_CF",
-    buildEventProperties("UX", "screen_view", {
-      flow
-    })
-  );
+export function trackLoginWithNewCF() {
+  void mixpanelTrack("LOGIN_NEW_CF", buildEventProperties("UX", "screen_view"));
 }
 
-export function trackLoginWithNewCFConfirm(flow: CieLoginFlowType) {
+export function trackLoginWithNewCFConfirm() {
   void mixpanelTrack(
     "LOGIN_NEW_CF_CONFIRM",
-    buildEventProperties("UX", "action", {
-      flow
-    })
+    buildEventProperties("UX", "action")
   );
 }
 

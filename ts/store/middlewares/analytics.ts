@@ -145,7 +145,7 @@ const trackAction =
       case getType(logoutSuccess):
         return trackLogoutSuccess();
       case getType(sessionCorrupted):
-        return trackSessionCorrupted(action.payload);
+        return trackSessionCorrupted();
       case getType(sessionInformationLoadSuccess):
       case getType(sessionExpired):
       case getType(sessionInvalid):
