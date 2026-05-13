@@ -91,7 +91,7 @@ export const ItwProximityQrCode = ({ source }: Props) => {
       <StatusBox
         iconName="warningFilled"
         description={I18n.t(
-          "features.itWallet.presentation.qrCode.error.message"
+          "features.itWallet.presentation.proximity.engagement.qrCode.error"
         )}
         action={
           <View style={styles.retryActionContainer}>
@@ -111,7 +111,7 @@ export const ItwProximityQrCode = ({ source }: Props) => {
       <StatusBox
         iconName="qrCode"
         description={I18n.t(
-          "features.itWallet.presentation.qrCode.error.invalid"
+          "features.itWallet.presentation.proximity.engagement.invalidBanner.content"
         )}
       />
     );
