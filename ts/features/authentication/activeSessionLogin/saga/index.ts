@@ -71,7 +71,9 @@ export function* handleActiveSessionLoginSaga(): Generator<
   void,
   any
 > {
-  yield* put(analyticsAuthenticationStarted("reauth"));
+  const cieLoginFlowType = yield* select(cieLoginFlowSelector);
+
+  yield* put(analyticsAuthenticationStarted(cieLoginFlowType));
 
   yield* fork(watchCieAuthenticationSaga);
 
@@ -142,7 +144,7 @@ export function* handleActiveSessionLoginSaga(): Generator<
         })
       );
 
-      yield* put(analyticsAuthenticationCompleted("reauth"));
+      yield* put(analyticsAuthenticationCompleted(loginFlow));
 
       yield* put(
         startApplicationInitialization({

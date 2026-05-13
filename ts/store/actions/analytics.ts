@@ -1,13 +1,13 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { LoginType } from "../../features/authentication/activeSessionLogin/screens/analytics";
+import { CieLoginFlowType } from "../../features/authentication/common/analytics/cieAnalytics.ts";
 
 export const analyticsAuthenticationStarted = createStandardAction(
   "ANALYTICS_AUTHENTICATION_STARTED"
-)<LoginType>();
+)<CieLoginFlowType>();
 
 export const analyticsAuthenticationCompleted = createStandardAction(
   "ANALYTICS_AUTHENTICATION_COMPLETED"
-)<LoginType>();
+)<CieLoginFlowType>();
 
 export type AnalyticsActions =
   | ActionType<typeof analyticsAuthenticationStarted>
