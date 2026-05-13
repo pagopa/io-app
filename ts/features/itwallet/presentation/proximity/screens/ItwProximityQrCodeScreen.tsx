@@ -1,74 +1,38 @@
 import {
   Alert,
-  Body,
   BodySmall,
+  HeaderSecondLevel,
   Icon,
-  IOButton,
-  IOColors,
-  IOSkeleton,
-  IOVisualCostants,
   useIOThemeContext,
   VSpacer,
   VStack
 } from "@pagopa/io-app-design-system";
-import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
-import { useCallback, useEffect, useMemo } from "react";
-import { StyleSheet, useWindowDimensions, View } from "react-native";
-import QRCode from "react-native-qrcode-skia";
-import ItwIcon from "../../../../../../img/features/itWallet/brand/itw_icon.svg";
+import { useEffect, useLayoutEffect } from "react";
+import { StyleSheet, View } from "react-native";
 import { IOScrollView } from "../../../../../components/ui/IOScrollView.tsx";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
-import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import {
   IOStackNavigationRouteProps,
   useIONavigation
 } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { useMaxBrightness } from "../../../../../utils/brightness.ts";
-import { emptyContextualHelp } from "../../../../../utils/contextualHelp.ts";
 import { ItWalletLogo } from "../../../common/components/ItWalletLogo.tsx";
-import {
-  ITW_BRANDED_BOX_PADDING,
-  ItwBrandedBox
-} from "../../../common/components/ItwBrandedBox.tsx";
+import { ItwBrandedBox } from "../../../common/components/ItwBrandedBox.tsx";
 import { itwIsBannerHiddenSelector } from "../../../common/store/selectors/banners";
 import { ITW_ROUTES } from "../../../navigation/routes";
-import {
-  trackItwProximityQrCode,
-  trackItwProximityQrCodeLoadingRetry,
-  trackItwStartReissuingPID
-} from "../analytics/index.ts";
+import { trackItwStartReissuingPID } from "../analytics/index";
+import { ItwProximityQrCode as ItwProximityQrCodeTracking } from "../analytics/types";
+import { ItwProximityQrCode } from "../components/ItwProximityQrCode.tsx";
 import { ItwProximityQrCodeInfoBanner } from "../components/ItwProximityQrCodeInfoBanner";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
-import {
-  selectFailure,
-  selectIsBluetoothRequiredState,
-  selectIsLoading,
-  selectIsPermissionsRequiredState,
-  selectQRCodeString
-} from "../machine/selectors.ts";
+import { selectFailure, selectIsLoading } from "../machine/selectors.ts";
 import { ItwProximityParamsList } from "../navigation/ItwProximityParamsList";
 import { shouldBlockProximityQrCodeSelector } from "../store/selectors/credentials";
 
-const QR_CODE_LOGO_SIZE = 52;
-
-type StatusBoxProps = {
-  iconName: "warningFilled" | "qrCode";
-  description: string;
-  action?: React.ReactNode;
-};
-
-const StatusBox = ({ iconName, description, action }: StatusBoxProps) => (
-  <View style={styles.statusBox}>
-    <Icon name={iconName} size={24} color="grey-700" />
-    <Body style={styles.statusDescription}>{description}</Body>
-    {action}
-  </View>
-);
-
 export type ItwProximityQrCodeScreenNavigationParams = {
-  source: "ITW_CREDENTIAL_DETAIL" | "WALLET_HOME";
+  source?: ItwProximityQrCodeTracking["source"];
 };
 
 type ItwProximityQrCodeScreenProps = IOStackNavigationRouteProps<
@@ -79,23 +43,15 @@ type ItwProximityQrCodeScreenProps = IOStackNavigationRouteProps<
 export const ItwProximityQrCodeScreen = ({
   route
 }: ItwProximityQrCodeScreenProps) => {
-  const source = route.params?.source;
-  const { themeType, theme } = useIOThemeContext();
-  const { width } = useWindowDimensions();
+  const { source } = route.params;
 
   const navigation = useIONavigation();
+  const { theme } = useIOThemeContext();
+
   const machineRef = ItwProximityMachineContext.useActorRef();
-  const qrCodeString =
-    ItwProximityMachineContext.useSelector(selectQRCodeString);
   const isLoading = ItwProximityMachineContext.useSelector(selectIsLoading);
   const failure = ItwProximityMachineContext.useSelector(selectFailure);
 
-  const isPermissionsRequired = ItwProximityMachineContext.useSelector(
-    selectIsPermissionsRequiredState
-  );
-  const isBluetoothRequired = ItwProximityMachineContext.useSelector(
-    selectIsBluetoothRequiredState
-  );
   const shouldBlockProximityPresentation = useIOSelector(
     shouldBlockProximityQrCodeSelector
   );
@@ -103,77 +59,41 @@ export const ItwProximityQrCodeScreen = ({
     itwIsBannerHiddenSelector("proximity_qr_code_info")
   );
 
+  const isFailure = !!failure || shouldBlockProximityPresentation;
+  const showStatusContent = !!isLoading || isFailure;
+
   useDebugInfo({
     isLoading,
     failure,
-    isPermissionsRequired,
-    isBluetoothRequired,
-    shouldBlockProximityPresentation,
-    qrCodeString
+    // isPermissionsRequired,
+    // isBluetoothRequired,
+    shouldBlockProximityPresentation
   });
 
-  // Auto-start only on the initial mount. When the flow is closing, the machine
-  // transitions back to Idle briefly before unmount, and we must not restart it.
+  // Auto-start machine on mount.
   useEffect(() => {
-    if (machineRef.getSnapshot().matches("Idle")) {
-      machineRef.send({
-        type: "start"
-      });
-    }
+    machineRef.send({
+      type: "start"
+    });
   }, [machineRef]);
-
-  const isDark = themeType === "dark";
-  const qrCodeSize =
-    width - IOVisualCostants.appMarginDefault * 2 - ITW_BRANDED_BOX_PADDING * 2;
-  const qrCodeColor: IOColors = isDark ? "white" : "black";
 
   useMaxBrightness({ useSmoothTransition: true });
 
-  useHeaderSecondLevel({
-    title: "",
-    canGoBack: true,
-    contextualHelp: emptyContextualHelp,
-    supportRequest: true
-  });
-
-  const qrCodeStatus = useMemo(() => {
-    if (shouldBlockProximityPresentation) {
-      return "PID_expired";
-    }
-    if (failure) {
-      return "generation_failed";
-    }
-    return "valid";
-  }, [shouldBlockProximityPresentation, failure]);
-
-  useFocusEffect(
-    useCallback(() => {
-      if (source) {
-        trackItwProximityQrCode({ source, qr_code_status: qrCodeStatus });
-      }
-    }, [source, qrCodeStatus])
-  );
-
-  // When the screen is removed (back button), dismiss the proximity machine
-  useEffect(
-    () =>
-      navigation.addListener("beforeRemove", () => {
-        machineRef.send({ type: "dismiss" });
-      }),
-    [navigation, machineRef]
-  );
-
-  // If the user denied permissions or didn't enable Bluetooth, go back
-  useEffect(() => {
-    if (isPermissionsRequired || isBluetoothRequired) {
-      navigation.goBack();
-    }
-  }, [isPermissionsRequired, isBluetoothRequired, navigation]);
-
-  const handleRetry = () => {
-    trackItwProximityQrCodeLoadingRetry();
-    machineRef.send({ type: "retry" });
-  };
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      header: () => (
+        <HeaderSecondLevel
+          title={""}
+          type="singleAction"
+          firstAction={{
+            icon: "closeLarge",
+            accessibilityLabel: I18n.t("global.buttons.close"),
+            onPress: () => machineRef.send({ type: "close" })
+          }}
+        />
+      )
+    });
+  }, [navigation, machineRef]);
 
   const handleReissuePress = () => {
     trackItwStartReissuingPID({
@@ -186,64 +106,6 @@ export const ItwProximityQrCodeScreen = ({
         level: "l3"
       }
     });
-  };
-
-  const isFailure = !!failure || shouldBlockProximityPresentation;
-  const showStatusContent = !!isLoading || isFailure;
-
-  const renderQrCodeContent = () => {
-    if (failure !== undefined) {
-      return (
-        <StatusBox
-          iconName="warningFilled"
-          description={I18n.t(
-            "features.itWallet.presentation.qrCode.error.message"
-          )}
-          action={
-            <View style={styles.retryActionContainer}>
-              <IOButton
-                variant="link"
-                label={I18n.t("global.buttons.retry")}
-                onPress={handleRetry}
-              />
-            </View>
-          }
-        />
-      );
-    }
-
-    if (shouldBlockProximityPresentation) {
-      return (
-        <StatusBox
-          iconName="qrCode"
-          description={I18n.t(
-            "features.itWallet.presentation.qrCode.error.invalid"
-          )}
-        />
-      );
-    }
-
-    if (isLoading || !qrCodeString) {
-      return <IOSkeleton shape="square" size={qrCodeSize} radius={16} />;
-    }
-
-    return (
-      <QRCode
-        color={qrCodeColor}
-        value={qrCodeString}
-        size={qrCodeSize}
-        errorCorrectionLevel="H"
-        shapeOptions={{
-          shape: "circle",
-          eyePatternShape: "rounded",
-          eyePatternGap: 0,
-          gap: 0
-        }}
-        logoAreaSize={88}
-        logoAreaBorderRadius={8}
-        logo={<ItwIcon width={QR_CODE_LOGO_SIZE} height={QR_CODE_LOGO_SIZE} />}
-      />
-    );
   };
 
   return (
@@ -266,7 +128,7 @@ export const ItwProximityQrCodeScreen = ({
             </BodySmall>
           )}
 
-          {renderQrCodeContent()}
+          <ItwProximityQrCode source={source} />
         </VStack>
       </ItwBrandedBox>
       {!isQrCodeInfoBannerHidden && (
@@ -302,20 +164,5 @@ const styles = StyleSheet.create({
   },
   centeredText: {
     textAlign: "center"
-  },
-  statusBox: {
-    backgroundColor: IOColors["grey-50"],
-    alignItems: "center",
-    justifyContent: "center",
-    aspectRatio: 1,
-    padding: 16,
-    borderRadius: 16,
-    gap: 8
-  },
-  statusDescription: {
-    textAlign: "center"
-  },
-  retryActionContainer: {
-    marginTop: 0
   }
 });

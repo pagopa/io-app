@@ -2,9 +2,7 @@ import { ItwProximityQrCodeScreenNavigationParams } from "../screens/ItwProximit
 import { ITW_PROXIMITY_ROUTES } from "./routes";
 
 export type ItwProximityParamsList = {
-  [ITW_PROXIMITY_ROUTES.QR_CODE]:
-    | ItwProximityQrCodeScreenNavigationParams
-    | undefined;
+  [ITW_PROXIMITY_ROUTES.QR_CODE]: ItwProximityQrCodeScreenNavigationParams;
   [ITW_PROXIMITY_ROUTES.DEVICE_PERMISSIONS]: undefined;
   [ITW_PROXIMITY_ROUTES.BLUETOOTH_ACTIVATION]: undefined;
   [ITW_PROXIMITY_ROUTES.CLAIMS_DISCLOSURE]: undefined;

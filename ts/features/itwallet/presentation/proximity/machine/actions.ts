@@ -25,7 +25,7 @@ export const createProximityActionsImplementation = (
     }
   ),
 
-  navigateToGrantPermissionsScreen: () => {
+  navigateToBluetoothPermissionsScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
       screen: ITW_PROXIMITY_ROUTES.DEVICE_PERMISSIONS
     });
@@ -39,7 +39,8 @@ export const createProximityActionsImplementation = (
 
   navigateToQrCodeScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.QR_CODE
+      screen: ITW_PROXIMITY_ROUTES.QR_CODE,
+      params: {}
     });
   },
 

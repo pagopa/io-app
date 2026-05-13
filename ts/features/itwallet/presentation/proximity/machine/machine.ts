@@ -3,7 +3,6 @@ import {
   SendErrorResponseActorOutput,
   SendDocumentsActorInput,
   SendDocumentsActorOutput,
-  CheckPermissionsInput,
   CloseActorOutput,
   ProximityCommunicationLogicInput
 } from "./actors";
@@ -34,7 +33,7 @@ export const itwProximityMachine = setup({
      * Navigation
      */
 
-    navigateToGrantPermissionsScreen: notImplemented,
+    navigateToBluetoothPermissionsScreen: notImplemented,
     navigateToBluetoothActivationScreen: notImplemented,
     navigateToQrCodeScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
@@ -50,10 +49,8 @@ export const itwProximityMachine = setup({
     trackQrCodeGenerationOutcome: notImplemented
   },
   actors: {
-    checkPermissions: fromPromise<boolean, CheckPermissionsInput>(
-      notImplemented
-    ),
-    checkBluetoothIsActive: fromPromise<boolean, void>(notImplemented),
+    checkBluetoothPermissions: fromPromise<boolean>(notImplemented),
+    checkBluetoothActivation: fromPromise<boolean>(notImplemented),
     proximityCommunicationLogic: fromCallback<
       ProximityEvents,
       ProximityCommunicationLogicInput
@@ -87,149 +84,82 @@ export const itwProximityMachine = setup({
             proximityDetails: undefined,
             verifierRequest: undefined
           })),
-          target: "Permissions"
-        }
-      }
-    },
-    Permissions: {
-      initial: "CheckingPermissions",
-      description: "Perform all the checks related to the device permissions",
-      states: {
-        CheckingPermissions: {
-          tags: [ItwPresentationTags.Loading],
-          description: "Check if the device permissions have been granted",
-          invoke: {
-            src: "checkPermissions",
-            input: { isSilent: false },
-            onDone: [
-              {
-                guard: ({ event }) => !!event.output,
-                target: "#itwProximityMachine.Bluetooth"
-              },
-              {
-                guard: ({ event }) => !event.output,
-                target: "GrantPermissions"
-              }
-            ],
-            onError: {
-              target: "GrantPermissions"
-            }
-          }
-        },
-        GrantPermissions: {
-          entry: "navigateToGrantPermissionsScreen",
-          description:
-            "Display the screen prompting the user to grant device permissions",
-          on: {
-            back: {
-              target: "#itwProximityMachine.Idle"
-            },
-            continue: {
-              target: "CheckPermissionsSilently"
-            }
-          }
-        },
-        CheckPermissionsSilently: {
-          tags: [ItwPresentationTags.Loading],
-          description: "Check if the device permissions have been granted",
-          invoke: {
-            src: "checkPermissions",
-            input: { isSilent: true },
-            onDone: [
-              {
-                guard: ({ event }) => !!event.output,
-                target: "#itwProximityMachine.Bluetooth"
-              },
-              {
-                guard: ({ event }) => !event.output,
-                target: "PermissionsRequired"
-              }
-            ],
-            onError: {
-              target: "PermissionsRequired"
-            }
-          }
-        },
-        PermissionsRequired: {
-          description:
-            "Display the system alert informing the user that permissions must be granted to proceed",
-          on: {
-            close: {
-              target: "#itwProximityMachine.Idle"
-            },
-            dismiss: {
-              target: "#itwProximityMachine.Idle"
-            }
-          }
+          target: "Bluetooth"
         }
       }
     },
     Bluetooth: {
-      initial: "CheckingBluetoothIsActive",
+      tags: [ItwPresentationTags.Loading],
       description: "Perform all the checks related to Bluetooth",
+      initial: "CheckPermissions",
       states: {
-        CheckingBluetoothIsActive: {
-          tags: [ItwPresentationTags.Loading],
-          description: "Check if Bluetooth is enabled",
+        CheckPermissions: {
+          description: "Check if bluetooth permissions have been granted",
           invoke: {
-            src: "checkBluetoothIsActive",
+            src: "checkBluetoothPermissions",
             onDone: [
               {
                 guard: ({ event }) => !!event.output,
+                target: "CheckState"
+              },
+              {
+                guard: ({ event }) => !event.output,
+                target: "RequirePermissions"
+              }
+            ],
+            onError: {
+              target: "RequirePermissions"
+            }
+          }
+        },
+        RequirePermissions: {
+          description:
+            "Display the screen prompting the user to grant bluetooth permissions",
+          entry: "navigateToBluetoothPermissionsScreen",
+          on: {
+            back: {
+              actions: "closeProximity"
+            },
+            close: {
+              actions: "closeProximity"
+            },
+            continue: {
+              target: "CheckState"
+            }
+          }
+        },
+        CheckActivation: {
+          description: "Check if Bluetooth is enabled",
+          invoke: {
+            src: "checkBluetoothActivation",
+            onDone: [
+              {
+                guard: ({ event }) => event.output,
                 target: "#itwProximityMachine.Presentation"
               },
               {
                 guard: ({ event }) => !event.output,
-                target: "EnableBluetooth"
+                target: "RequireActivation"
               }
             ],
             onError: {
-              target: "EnableBluetooth"
+              target: "RequireActivation"
             }
           }
         },
-        EnableBluetooth: {
+        RequireActivation: {
           entry: "navigateToBluetoothActivationScreen",
           description:
             "Display the screen prompting the user to enable Bluetooth",
           on: {
             back: {
-              target: "#itwProximityMachine.Idle"
+              actions: "closeProximity"
+            },
+            close: {
+              actions: "closeProximity"
             },
             continue: {
-              target: "CheckingBluetoothIsActiveSilently"
-            }
-          }
-        },
-        CheckingBluetoothIsActiveSilently: {
-          tags: [ItwPresentationTags.Loading],
-          description: "Check if Bluetooth is enabled",
-          invoke: {
-            src: "checkBluetoothIsActive",
-            onDone: [
-              {
-                guard: ({ event }) => !!event.output,
-                target: "#itwProximityMachine.Presentation"
-              },
-              {
-                guard: ({ event }) => !event.output,
-                target: "BluetoothRequired"
-              }
-            ],
-            onError: {
-              target: "BluetoothRequired"
-            }
-          }
-        },
-        BluetoothRequired: {
-          description:
-            "Display the system alert informing the user that must enable the Bluetooth to proceed",
-          on: {
-            close: {
-              target: "#itwProximityMachine.Idle"
-            },
-            dismiss: {
-              target: "#itwProximityMachine.Idle"
+              target: "#itwProximityMachine.Presentation"
             }
           }
         }
@@ -320,7 +250,7 @@ export const itwProximityMachine = setup({
           description:
             "Displays the QR code to initiate proximity communication",
           on: {
-            dismiss: {
+            close: {
               target: "#itwProximityMachine.Idle"
             }
           }
@@ -433,6 +363,7 @@ export const itwProximityMachine = setup({
         }
       }
     },
+    // TODO add consents flow
     Success: {
       description: "The documents have been successfully sent to the Verifier",
       on: {
