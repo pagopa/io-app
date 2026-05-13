@@ -43,15 +43,15 @@ export const ItwBluetoothActivationScreen = () => {
     trackItwProximityBluetoothNotActivated();
     Alert.alert(
       I18n.t(
-        "features.itWallet.presentation.proximity.bluetoothRequired.alert.title"
+        "features.itWallet.presentation.proximity.bluetooth.activation.alert.title"
       ),
       I18n.t(
-        "features.itWallet.presentation.proximity.bluetoothRequired.alert.message"
+        "features.itWallet.presentation.proximity.bluetooth.activation.alert.message"
       ),
       [
         {
           text: I18n.t(
-            "features.itWallet.presentation.proximity.bluetoothRequired.alert.text"
+            "features.itWallet.presentation.proximity.bluetooth.activation.alert.text"
           ),
           onPress: () => {
             machineRef.send({ type: "close" });
@@ -64,21 +64,21 @@ export const ItwBluetoothActivationScreen = () => {
   return (
     <IOScrollViewWithListItems
       title={I18n.t(
-        "features.itWallet.presentation.proximity.activateBluetooth.title"
+        "features.itWallet.presentation.proximity.bluetooth.activation.title"
       )}
       subtitle={I18n.t(
-        "features.itWallet.presentation.proximity.activateBluetooth.subtitle"
+        "features.itWallet.presentation.proximity.bluetooth.activation.subtitle"
       )}
       listItemHeaderLabel={I18n.t(
-        "features.itWallet.presentation.proximity.activateBluetooth.listItems.title"
+        "features.itWallet.presentation.proximity.bluetooth.activation.listItems.title"
       )}
       renderItems={[
         {
           label: I18n.t(
-            "features.itWallet.presentation.proximity.activateBluetooth.listItems.step1.label"
+            "features.itWallet.presentation.proximity.bluetooth.activation.listItems.step1.label"
           ),
           value: I18n.t(
-            "features.itWallet.presentation.proximity.activateBluetooth.listItems.step1.value"
+            "features.itWallet.presentation.proximity.bluetooth.activation.listItems.step1.value"
           ),
           icon:
             Platform.OS === "ios"
@@ -87,19 +87,19 @@ export const ItwBluetoothActivationScreen = () => {
         },
         {
           label: I18n.t(
-            "features.itWallet.presentation.proximity.activateBluetooth.listItems.step2.label"
+            "features.itWallet.presentation.proximity.bluetooth.activation.listItems.step2.label"
           ),
           value: I18n.t(
-            "features.itWallet.presentation.proximity.activateBluetooth.listItems.step2.value"
+            "features.itWallet.presentation.proximity.bluetooth.activation.listItems.step2.value"
           ),
           icon: "systemAppsAndroid"
         },
         {
           label: I18n.t(
-            "features.itWallet.presentation.proximity.activateBluetooth.listItems.step3.label"
+            "features.itWallet.presentation.proximity.bluetooth.activation.listItems.step3.label"
           ),
           value: I18n.t(
-            "features.itWallet.presentation.proximity.activateBluetooth.listItems.step3.value"
+            "features.itWallet.presentation.proximity.bluetooth.activation.listItems.step3.value"
           ),
           icon: "systemToggleInstructions"
         }
@@ -108,7 +108,7 @@ export const ItwBluetoothActivationScreen = () => {
         type: "TwoButtons",
         primary: {
           label: I18n.t(
-            "features.itWallet.presentation.proximity.activateBluetooth.actions.primary"
+            "features.itWallet.presentation.proximity.bluetooth.activation.actions.primary"
           ),
           onPress: () => {
             trackItwProximityBluetoothActivationGoToSettings();
@@ -117,7 +117,7 @@ export const ItwBluetoothActivationScreen = () => {
         },
         secondary: {
           label: I18n.t(
-            "features.itWallet.presentation.proximity.activateBluetooth.actions.secondary"
+            "features.itWallet.presentation.proximity.bluetooth.activation.actions.secondary"
           ),
           onPress: handleContinue
         }

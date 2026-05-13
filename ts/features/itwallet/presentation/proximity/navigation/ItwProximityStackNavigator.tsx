@@ -9,6 +9,7 @@ import {
 } from "../machine/provider";
 import { ItwBluetoothActivationScreen } from "../screens/ItwBluetoothActivationScreen.tsx";
 import { ItwBluetoothPermissionsScreen } from "../screens/ItwBluetoothPermissionsScreen.tsx";
+import { ItwNfcActivationScreen } from "../screens/ItwNfcActivationScreen.tsx";
 import { ItwProximityClaimsDisclosureScreen } from "../screens/ItwProximityClaimsDisclosureScreen";
 import { ItwProximityFailureScreen } from "../screens/ItwProximityFailureScreen";
 import { ItwProximityQrCodeScreen } from "../screens/ItwProximityQrCodeScreen.tsx";
@@ -52,6 +53,11 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_PROXIMITY_ROUTES.BLUETOOTH_ACTIVATION}
         component={ItwBluetoothActivationScreen}
+        options={hiddenHeader}
+      />
+      <Stack.Screen
+        name={ITW_PROXIMITY_ROUTES.NFC_ACTIVATION}
+        component={ItwNfcActivationScreen}
         options={hiddenHeader}
       />
       <Stack.Screen
