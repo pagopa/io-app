@@ -6,7 +6,8 @@ import { useIODispatch } from "../../../../store/hooks";
 import {
   setStartActiveSessionLogin,
   setIdpSelectedActiveSessionLogin,
-  setActiveSessionLoginFlow
+  setActiveSessionLoginFlow,
+  setFinishedActiveSessionLoginFlow
 } from "../../../authentication/activeSessionLogin/store/actions";
 import { IdpCIE } from "../../../authentication/login/hooks/useNavigateToLoginMethod";
 import { FCI_ROUTES } from "../../navigation/routes";
@@ -41,6 +42,7 @@ export const FciLoginL3Screen = () => {
             icon: "closeMedium",
             onPress: () => {
               trackFciLoginRequestClose();
+              dispatch(setFinishedActiveSessionLoginFlow());
               dispatch(fciEndRequest());
             },
             accessibilityLabel: i18n.t("global.buttons.close")
