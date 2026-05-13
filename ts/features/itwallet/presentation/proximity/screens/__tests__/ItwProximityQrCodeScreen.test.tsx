@@ -1,21 +1,21 @@
-import { createActor, StateFrom } from "xstate";
 import { createStore } from "redux";
+import { createActor, StateFrom } from "xstate";
+import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { appReducer } from "../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { trackItwProximityQrCode } from "../../analytics";
+import { ProximityFailureType } from "../../machine/failure";
 import { itwProximityMachine } from "../../machine/machine";
 import { ItwProximityMachineContext } from "../../machine/provider";
+import { ItwPresentationTags } from "../../machine/tags";
+import { ItwProximityParamsList } from "../../navigation/ItwProximityParamsList";
+import { ITW_PROXIMITY_ROUTES } from "../../navigation/routes";
 import {
   ItwProximityQrCodeScreen,
   ItwProximityQrCodeScreenNavigationParams
 } from "../ItwProximityQrCodeScreen";
-import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
-import { appReducer } from "../../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../../store/actions/application";
-import { ITW_PROXIMITY_ROUTES } from "../../navigation/routes";
-import { GlobalState } from "../../../../../../store/reducers/types";
-import { ItwPresentationTags } from "../../machine/tags";
-import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
-import { ItwProximityParamsList } from "../../navigation/ItwProximityParamsList";
-import { ProximityFailureType } from "../../machine/failure";
-import { trackItwProximityQrCode } from "../../analytics";
 
 jest.mock("../../analytics", () => ({
   trackItwProximityQrCode: jest.fn()
@@ -30,7 +30,7 @@ jest.mock("react-native-qrcode-skia", () => {
 });
 
 const mockShouldBlockProximityQrCodeSelector = jest.fn(() => false);
-jest.mock("../../store/selectors", () => ({
+jest.mock("../../store/selectors/credentials", () => ({
   shouldBlockProximityQrCodeSelector: () =>
     mockShouldBlockProximityQrCodeSelector()
 }));
