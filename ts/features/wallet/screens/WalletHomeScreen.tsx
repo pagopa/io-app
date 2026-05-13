@@ -185,7 +185,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
               position: "WALLET_HOME"
             });
             navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-              screen: ITW_PROXIMITY_ROUTES.QR_CODE,
+              screen: ITW_PROXIMITY_ROUTES.QR_CODE_PRESENTMENT,
               params: {
                 source: "WALLET_HOME"
               }

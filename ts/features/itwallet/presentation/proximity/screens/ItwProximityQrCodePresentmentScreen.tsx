@@ -21,16 +21,16 @@ import {
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { useMaxBrightness } from "../../../../../utils/brightness.ts";
 import { ItwBrandedBox } from "../../../common/components/ItwBrandedBox.tsx";
-import { itwIsBannerHiddenSelector } from "../../../common/store/selectors/banners";
-import { ITW_ROUTES } from "../../../navigation/routes";
+import { itwIsBannerHiddenSelector } from "../../../common/store/selectors/banners.ts";
+import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { trackItwStartReissuingPID } from "../analytics/index";
-import { ItwProximityQrCode as ItwProximityQrCodeTracking } from "../analytics/types";
+import { ItwProximityQrCode as ItwProximityQrCodeTracking } from "../analytics/types.ts";
 import { ItwProximityQrCode } from "../components/ItwProximityQrCode.tsx";
-import { ItwProximityQrCodeInfoBanner } from "../components/ItwProximityQrCodeInfoBanner";
+import { ItwProximityQrCodeInfoBanner } from "../components/ItwProximityQrCodeInfoBanner.tsx";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
 import { selectFailure, selectIsLoading } from "../machine/selectors.ts";
-import { ItwProximityParamsList } from "../navigation/ItwProximityParamsList";
-import { shouldBlockProximityQrCodeSelector } from "../store/selectors/credentials";
+import { ItwProximityParamsList } from "../navigation/ItwProximityParamsList.ts";
+import { shouldBlockProximityQrCodeSelector } from "../store/selectors/credentials.ts";
 
 export type ItwProximityQrCodeScreenNavigationParams = {
   source?: ItwProximityQrCodeTracking["source"];
@@ -38,10 +38,10 @@ export type ItwProximityQrCodeScreenNavigationParams = {
 
 type ItwProximityQrCodeScreenProps = IOStackNavigationRouteProps<
   ItwProximityParamsList,
-  "ITW_PROXIMITY_QR_CODE"
+  "ITW_PROXIMITY_QR_CODE_PRESENTMENT"
 >;
 
-export const ItwProximityQrCodeScreen = ({
+export const ItwProximityQrCodePresentmentScreen = ({
   route
 }: ItwProximityQrCodeScreenProps) => {
   const { source } = route.params;

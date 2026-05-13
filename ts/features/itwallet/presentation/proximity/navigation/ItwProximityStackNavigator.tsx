@@ -12,7 +12,8 @@ import { ItwBluetoothPermissionsScreen } from "../screens/ItwBluetoothPermission
 import { ItwNfcActivationScreen } from "../screens/ItwNfcActivationScreen.tsx";
 import { ItwProximityClaimsDisclosureScreen } from "../screens/ItwProximityClaimsDisclosureScreen";
 import { ItwProximityFailureScreen } from "../screens/ItwProximityFailureScreen";
-import { ItwProximityQrCodeScreen } from "../screens/ItwProximityQrCodeScreen.tsx";
+import { ItwProximityNfcPresentmentScreen } from "../screens/ItwProximityNfcPresentmentScreen.tsx";
+import { ItwProximityQrCodePresentmentScreen } from "../screens/ItwProximityQrCodePresentmentScreen.tsx";
 import { ItwProximitySendDocumentsResponseScreen } from "../screens/ItwProximitySendDocumentsResponseScreen";
 import { ItwProximityParamsList } from "./ItwProximityParamsList";
 import { ITW_PROXIMITY_ROUTES } from "./routes";
@@ -32,7 +33,7 @@ const InnerNavigator = () => {
 
   return (
     <Stack.Navigator
-      initialRouteName={ITW_PROXIMITY_ROUTES.QR_CODE}
+      initialRouteName={ITW_PROXIMITY_ROUTES.QR_CODE_PRESENTMENT}
       screenOptions={{ gestureEnabled: isGestureEnabled, headerMode: "screen" }}
       screenListeners={{
         beforeRemove: () => {
@@ -41,8 +42,13 @@ const InnerNavigator = () => {
       }}
     >
       <Stack.Screen
-        name={ITW_PROXIMITY_ROUTES.QR_CODE}
-        component={ItwProximityQrCodeScreen}
+        name={ITW_PROXIMITY_ROUTES.QR_CODE_PRESENTMENT}
+        component={ItwProximityQrCodePresentmentScreen}
+        options={TransitionPresets.ModalSlideFromBottomIOS}
+      />
+      <Stack.Screen
+        name={ITW_PROXIMITY_ROUTES.NFC_PRESENTMENT}
+        component={ItwProximityNfcPresentmentScreen}
         options={TransitionPresets.ModalSlideFromBottomIOS}
       />
       <Stack.Screen

@@ -43,10 +43,16 @@ export const createProximityActionsImplementation = (
     });
   },
 
-  navigateToQrCodeScreen: () => {
+  navigateToQrCodePresentmentScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.QR_CODE,
+      screen: ITW_PROXIMITY_ROUTES.QR_CODE_PRESENTMENT,
       params: {}
+    });
+  },
+
+  navigateToNfcPresentmentScreen: () => {
+    navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
+      screen: ITW_PROXIMITY_ROUTES.NFC_PRESENTMENT
     });
   },
 
