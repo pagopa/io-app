@@ -52,14 +52,18 @@ export const activeSessionLoginFlowSelector = (state: GlobalState) =>
   state.features.loginFeatures.activeSessionLogin?.flow;
 
 export const cieLoginFlowSelector = (state: GlobalState): LoginType => {
-  const activeSessionLoginFlow =
-    state.features.loginFeatures.activeSessionLogin?.flow;
-  if (activeSessionLoginFlow === "FCI") {
-    return "FCI_auth";
+  const isActiveSessionLogin =
+    state.features.loginFeatures.activeSessionLogin?.isActiveSessionLogin;
+  if (isActiveSessionLogin) {
+    const activeSessionLoginFlow =
+      state.features.loginFeatures.activeSessionLogin?.flow;
+    if (activeSessionLoginFlow === "FCI") {
+      return "FCI_auth";
+    }
+    return "reauth";
+  } else {
+    return "auth";
   }
-  return state.features.loginFeatures.activeSessionLogin?.isActiveSessionLogin
-    ? "reauth"
-    : "auth";
 };
 
 export const cieIDSelectedSecurityLevelActiveSessionLoginSelector = (
