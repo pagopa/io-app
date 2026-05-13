@@ -31,7 +31,7 @@ describe("itwProximityMachine", () => {
   const navigateToBluetoothPermissionsScreen = jest.fn();
   const navigateToBluetoothActivationScreen = jest.fn();
   const navigateToNfcActivationScreen = jest.fn();
-  const navigatePresentmentScreen = jest.fn();
+  const navigateToPresentmentScreen = jest.fn();
   const navigateToNfcPresentmentScreen = jest.fn();
   const navigateToFailureScreen = jest.fn();
   const navigateToClaimsDisclosureScreen = jest.fn();
@@ -61,7 +61,7 @@ describe("itwProximityMachine", () => {
       navigateToBluetoothPermissionsScreen,
       navigateToBluetoothActivationScreen,
       navigateToNfcActivationScreen,
-      navigatePresentmentScreen,
+      navigateToPresentmentScreen,
       navigateToNfcPresentmentScreen,
       navigateToFailureScreen,
       navigateToClaimsDisclosureScreen,
@@ -219,7 +219,7 @@ describe("itwProximityMachine", () => {
     await waitFor(actor, snapshot =>
       snapshot.matches({ Presentment: "Starting" })
     );
-    expect(navigatePresentmentScreen).toHaveBeenCalledTimes(1);
+    expect(navigateToPresentmentScreen).toHaveBeenCalledTimes(1);
   });
 
   it("inactive bluetooth moves to Bluetooth.RequireActivation", async () => {
@@ -336,7 +336,7 @@ describe("itwProximityMachine", () => {
     await waitFor(actor, snapshot =>
       snapshot.matches({ Presentment: "Starting" })
     );
-    expect(navigatePresentmentScreen).toHaveBeenCalledTimes(1);
+    expect(navigateToPresentmentScreen).toHaveBeenCalledTimes(1);
   });
 
   it("handles the happy path in Presentment", async () => {
