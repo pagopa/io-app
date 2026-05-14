@@ -39,7 +39,7 @@ type Props = {
   items: Array<ClaimDisplayFormat>;
   /**
    * Enable the selection of items with a checkbox.
-   * @default true
+   * @default false
    */
   selectionEnabled?: boolean;
   /**
