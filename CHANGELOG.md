@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.31.0-rc.6](https://github.com/pagopa/io-app/compare/3.31.0-rc.5...3.31.0-rc.6) (2026-05-13)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4292](https://pagopa.atlassian.net/browse/SIW-4292)] Fix Ble permissions and Ble active check ([#8100](https://github.com/pagopa/io-app/issues/8100)) ([1936ae0](https://github.com/pagopa/io-app/commit/1936ae0d8172e2cfc08a8a3bda61fc109f44b18e))
+
 ## [3.31.0-rc.5](https://github.com/pagopa/io-app/compare/3.31.0-rc.4...3.31.0-rc.5) (2026-05-13)
 
 
