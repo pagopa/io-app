@@ -1,60 +1,111 @@
 import {
   H4,
-  HeaderSecondLevel,
+  HStack,
   IOButton,
+  IOColors,
+  IOVisualCostants,
   Pictogram
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { useLayoutEffect } from "react";
-import { Platform, View } from "react-native";
+import { useMemo } from "react";
+import { Platform, StyleSheet, View } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { CircularProgress } from "../../../../../components/ui/CircularProgress.tsx";
 import { IOScrollView } from "../../../../../components/ui/IOScrollView.tsx";
-import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
+import { selectIsLoading, selectIsSuccess } from "../machine/selectors.ts";
 
-export const ItwProximityNfcPresentmentScreen = () => {
-  const navigation = useIONavigation();
+export const ItwProximityNfcPresentmentScreen = () =>
+  Platform.select({
+    ios: <IOsContent />,
+    default: <AndroidContent />
+  });
+
+const IOsContent = () => {
+  const isLoading = ItwProximityMachineContext.useSelector(selectIsLoading);
+  const isSuccess = ItwProximityMachineContext.useSelector(selectIsSuccess);
+  const insets = useSafeAreaInsets();
+
+  const title = useMemo(() => {
+    if (isSuccess) {
+      return I18n.t(
+        "features.itWallet.presentation.proximity.nfcEngagement.success"
+      );
+    }
+
+    if (isLoading) {
+      return I18n.t(
+        "features.itWallet.presentation.proximity.nfcEngagement.sending"
+      );
+    }
+
+    return I18n.t(
+      "features.itWallet.presentation.proximity.nfcEngagement.ready.ios"
+    );
+  }, [isLoading, isSuccess]);
+
+  return (
+    <View style={[styles.container, { marginTop: insets.top }]}>
+      <HStack>
+        <H4>{title} </H4>
+        {isSuccess ? <Pictogram name="success" size={80} /> : null}
+      </HStack>
+    </View>
+  );
+};
+
+const AndroidContent = () => {
   const machineRef = ItwProximityMachineContext.useActorRef();
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      header: () => <HeaderSecondLevel title={""} type="base" />
-    });
-  }, [navigation, machineRef]);
+  const isLoading = ItwProximityMachineContext.useSelector(selectIsLoading);
+  const isSuccess = ItwProximityMachineContext.useSelector(selectIsSuccess);
 
   const handleDismiss = () => {
     machineRef.send({ type: "close" });
   };
 
-  return Platform.select({
-    ios: (
-      <IOScrollView>
-        <H4>
-          {I18n.t(
-            "features.itWallet.presentation.proximity.nfcEngagement.title.ios"
-          )}
-        </H4>
-      </IOScrollView>
-    ),
-    default: (
-      <IOScrollView centerContent={true}>
-        <View style={{ alignItems: "center", gap: 24 }}>
-          <Pictogram size={180} name={"nfcScanAndroid"} />
-          <H4 textStyle={{ textAlign: "center" }}>
-            {I18n.t(
-              "features.itWallet.presentation.proximity.nfcEngagement.title.android"
-            )}
-          </H4>
-          <View style={{ alignSelf: "center" }}>
-            <IOButton
-              label={I18n.t(
-                "features.itWallet.presentation.proximity.nfcEngagement.cta"
+  return (
+    <IOScrollView centerContent={true}>
+      <View style={{ alignItems: "center", gap: 24 }}>
+        <CircularProgress
+          size={240}
+          radius={120}
+          progress={isSuccess ? 100 : 0}
+          strokeColor={IOColors["blueIO-500"]}
+          strokeBgColor={IOColors["grey-200"]}
+          strokeWidth={4}
+        >
+          <Pictogram
+            size={180}
+            name={isSuccess ? "success" : "nfcScanAndroid"}
+          />
+        </CircularProgress>
+        <H4 textStyle={{ textAlign: "center" }}>
+          {isLoading
+            ? I18n.t(
+                "features.itWallet.presentation.proximity.nfcEngagement.sending"
+              )
+            : I18n.t(
+                "features.itWallet.presentation.proximity.nfcEngagement.ready.android"
               )}
-              variant="link"
-              onPress={handleDismiss}
-            />
-          </View>
+        </H4>
+        <View style={{ alignSelf: "center" }}>
+          <IOButton
+            label={I18n.t(
+              "features.itWallet.presentation.proximity.nfcEngagement.cta"
+            )}
+            variant="link"
+            onPress={handleDismiss}
+          />
         </View>
-      </IOScrollView>
-    )
-  });
+      </View>
+    </IOScrollView>
+  );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: IOVisualCostants.appMarginDefault,
+    paddingTop: IOVisualCostants.headerHeight
+  }
+});

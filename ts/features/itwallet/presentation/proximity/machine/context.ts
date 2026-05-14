@@ -1,3 +1,4 @@
+import { ISO18013_5 } from "@pagopa/io-react-native-iso18013";
 import {
   CredentialMetadata,
   WalletInstanceAttestations
@@ -21,6 +22,10 @@ export type Context = {
    * The string used to generate the QR Code
    */
   qrCodeString?: string;
+  /**
+   * The retrieval mode used for the proximity presentation, either "nfc" or "ble".
+   */
+  retrievalMethod?: ISO18013_5.RetrievalMethod;
   /**
    * The failure of the proximity presentation machine
    */

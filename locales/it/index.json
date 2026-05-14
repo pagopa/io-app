@@ -4200,20 +4200,20 @@
               }
             }
           },
-          "loadingScreen": {
+          "connectionLoading": {
             "title": "In attesa di connessione per la verifica...",
             "subtitle": "Attendi qualche secondo..."
           },
-          "loadingStepScreen": {
-            "initial": {
+          "sendDocumentsLoading": {
+            "0": {
               "title": "Stiamo comunicando i tuoi dati per la verifica",
               "subtitle": "Attendi qualche secondo..."
             },
-            "reminder": {
+            "1": {
               "title": "Ancora un po' di pazienza...",
               "subtitle": "Stiamo aspettando una risposta dai sistemi dell’ente che richiede i dati."
             },
-            "final": {
+            "2": {
               "title": "Sembra che le cose vadano un po' a rilento",
               "subtitle": "Ancora un po' di pazienza..."
             }
@@ -4280,10 +4280,12 @@
             }
           },
           "nfcEngagement": {
-            "title": {
+            "ready": {
               "ios": "Pronto per la verifica",
               "android": "Avvicina il telefono al lettore"
             },
+            "sending": "Verifica in corso",
+            "success": "Verifica completata!",
             "cta": "Annulla"
           }
         },

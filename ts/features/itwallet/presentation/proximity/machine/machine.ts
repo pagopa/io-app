@@ -1,4 +1,4 @@
-import { assign, fromCallback, fromPromise, setup, stateIn } from "xstate";
+import { assign, fromCallback, fromPromise, not, setup, stateIn } from "xstate";
 import {
   SendErrorResponseActorOutput,
   SendDocumentsActorInput,
@@ -40,7 +40,7 @@ export const itwProximityMachine = setup({
     navigateToNfcPresentmentScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
     navigateToClaimsDisclosureScreen: notImplemented,
-    navigateToSendDocumentsResponseScreen: notImplemented,
+    navigateToSuccessScreen: notImplemented,
     navigateToWallet: notImplemented,
     closeProximity: notImplemented
   },
@@ -64,7 +64,8 @@ export const itwProximityMachine = setup({
     closeProximityFlow: fromPromise<boolean>(notImplemented)
   },
   guards: {
-    hasFailure: ({ context }) => !!context.failure
+    hasFailure: ({ context }) => !!context.failure,
+    isNfcRetrieval: ({ context }) => context.retrievalMethod === "nfc"
   }
 }).createMachine({
   id: "itwProximityMachine",
@@ -165,51 +166,6 @@ export const itwProximityMachine = setup({
         }
       },
       onDone: {
-        target: "#itwProximityMachine.Nfc"
-      }
-    },
-    Nfc: {
-      tags: [ItwPresentationTags.Loading],
-      description: "Perform all the checks related to NFC",
-      initial: "CheckActivation",
-      states: {
-        CheckActivation: {
-          description: "Check if NFC is enabled",
-          invoke: {
-            src: "checkNfcActivation",
-            onDone: [
-              {
-                guard: ({ event }) => event.output,
-                target: "Completed"
-              },
-              {
-                guard: ({ event }) => !event.output,
-                target: "RequireActivation"
-              }
-            ],
-            onError: {
-              target: "RequireActivation"
-            }
-          }
-        },
-        RequireActivation: {
-          entry: "navigateToNfcActivationScreen",
-          description: "Display the screen prompting the user to enable NFC",
-          on: {
-            close: {
-              actions: "closeProximity"
-            },
-            continue: {
-              target: "Completed"
-            }
-          }
-        },
-        Completed: {
-          description: "Nfc checks are completed",
-          type: "final"
-        }
-      },
-      onDone: {
         target: "#itwProximityMachine.Presentment"
       }
     },
@@ -236,9 +192,6 @@ export const itwProximityMachine = setup({
             qrCodeString: event.payload
           }))
         },
-        "start-nfc-presentment": {
-          target: "#itwProximityMachine.NfcPresentment"
-        },
         "device-connecting": {
           target: "Presentment.Connecting"
         },
@@ -248,7 +201,8 @@ export const itwProximityMachine = setup({
         "device-document-request-received": {
           actions: assign(({ event }) => ({
             proximityDetails: event.proximityDetails,
-            verifierRequest: event.verifierRequest
+            verifierRequest: event.verifierRequest,
+            retrievalMethod: event.retrievalMethod
           })),
           target: "Presentment.ClaimsDisclosure"
         },
@@ -300,10 +254,13 @@ export const itwProximityMachine = setup({
           }
         },
         DisplayQrCode: {
-          tags: [ItwPresentationTags.Presenting],
           description:
             "Displays the QR code to initiate proximity communication",
+          tags: [ItwPresentationTags.Presenting],
           on: {
+            "start-nfc-presentment": {
+              target: "#itwProximityMachine.Nfc"
+            },
             close: {
               actions: "closeProximity"
             }
@@ -311,12 +268,14 @@ export const itwProximityMachine = setup({
         },
         Connecting: {
           description:
-            "Initiates the connection between the device and the verifier"
+            "Initiates the connection between the device and the verifier",
+          tags: [ItwPresentationTags.Loading],
+          entry: "navigateToClaimsDisclosureScreen"
         },
         Connected: {
-          entry: "navigateToClaimsDisclosureScreen",
           description:
-            "The device has successfully established a connection with the verifier"
+            "The device has successfully established a connection with the verifier",
+          tags: [ItwPresentationTags.Loading]
         },
         ClaimsDisclosure: {
           description: "Displays the requested claims",
@@ -331,8 +290,8 @@ export const itwProximityMachine = setup({
           }
         },
         SendingDocuments: {
-          initial: "Initial",
           description: "Sends the required documents to the verifier app",
+          tags: [ItwPresentationTags.Loading, ItwPresentationTags.Sending],
           invoke: {
             id: "sendDocuments",
             src: "sendDocuments",
@@ -349,34 +308,11 @@ export const itwProximityMachine = setup({
               actions: "setFailure",
               target: "#itwProximityMachine.Failure"
             }
-          },
-          states: {
-            Initial: {
-              entry: "navigateToSendDocumentsResponseScreen",
-              description: "Initial loading state",
-              after: {
-                5000: {
-                  target:
-                    "#itwProximityMachine.Presentment.SendingDocuments.Reminder"
-                }
-              }
-            },
-            Reminder: {
-              description: "Loading state when the process is taking too long",
-              after: {
-                10000: {
-                  target:
-                    "#itwProximityMachine.Presentment.SendingDocuments.Final"
-                }
-              }
-            },
-            Final: {
-              description: "Final loading state"
-            }
           }
         },
         Terminating: {
           description: "Terminates the proximity session with the verifier",
+          tags: [ItwPresentationTags.Loading],
           invoke: {
             id: "terminateProximitySession",
             src: "terminateProximitySession",
@@ -386,8 +322,7 @@ export const itwProximityMachine = setup({
                 target: "#itwProximityMachine.Failure"
               },
               {
-                actions: "closeProximity",
-                target: "#itwProximityMachine.Idle"
+                actions: "closeProximity"
               }
             ],
             onError: [
@@ -396,18 +331,18 @@ export const itwProximityMachine = setup({
                 target: "#itwProximityMachine.Failure"
               },
               {
-                actions: "closeProximity",
-                target: "#itwProximityMachine.Idle"
+                actions: "closeProximity"
               }
             ]
           }
         },
         Closing: {
           description: "Close the proximity presentation flow",
+          tags: [ItwPresentationTags.Loading],
           invoke: {
             src: "closeProximityFlow",
             onDone: {
-              target: "#itwProximityMachine.Idle"
+              actions: "closeProximity"
             },
             onError: {
               target: "#itwProximityMachine.Failure",
@@ -417,9 +352,54 @@ export const itwProximityMachine = setup({
         }
       }
     },
+    Nfc: {
+      tags: [ItwPresentationTags.Loading],
+      description: "Perform all the checks related to NFC",
+      initial: "CheckActivation",
+      states: {
+        CheckActivation: {
+          description: "Check if NFC is enabled",
+          invoke: {
+            src: "checkNfcActivation",
+            onDone: [
+              {
+                guard: ({ event }) => event.output,
+                target: "Completed"
+              },
+              {
+                guard: ({ event }) => !event.output,
+                target: "RequireActivation"
+              }
+            ],
+            onError: {
+              target: "RequireActivation"
+            }
+          }
+        },
+        RequireActivation: {
+          entry: "navigateToNfcActivationScreen",
+          description: "Display the screen prompting the user to enable NFC",
+          on: {
+            close: {
+              target: "#itwProximityMachine.Presentment"
+            },
+            continue: {
+              target: "Completed"
+            }
+          }
+        },
+        Completed: {
+          description: "Nfc checks are completed",
+          type: "final"
+        }
+      },
+      onDone: {
+        target: "#itwProximityMachine.NfcPresentment"
+      }
+    },
     NfcPresentment: {
       description:
-        "Manages the communication lifecycle between the device and the verifier",
+        "Manages the NFC communication lifecycle between the device and the verifier",
       initial: "Starting",
       entry: "navigateToNfcPresentmentScreen",
       invoke: {
@@ -483,34 +463,39 @@ export const itwProximityMachine = setup({
               engagementModes: ["nfc"],
               retrievalMethods: ["nfc", "ble"]
             },
-            onDone: {},
+            onDone: {
+              target: "AwaitingConnection"
+            },
             onError: {
               actions: ["setFailure"]
             }
           },
           on: {
             "nfc-stopped": {
-              target: "#itwProximityMachine.Presentment"
+              target: "Terminating"
             },
             retry: {
               target: "Retrying"
             }
           }
         },
+        AwaitingConnection: {
+          description: "Waiting for the verifier to connect via NFC",
+          tags: [ItwPresentationTags.Presenting]
+        },
         Connecting: {
+          tags: [ItwPresentationTags.Loading],
           description:
             "Initiates the connection between the device and the verifier"
         },
         Connected: {
+          tags: [ItwPresentationTags.Loading],
           description:
             "The device has successfully established a connection with the verifier"
         },
         ClaimsDisclosure: {
           description: "Displays the requested claims",
           entry: "navigateToClaimsDisclosureScreen",
-          always: {
-            target: "SendingDocuments"
-          },
           on: {
             "holder-consent": {
               actions: "setHasGivenConsent",
@@ -522,8 +507,8 @@ export const itwProximityMachine = setup({
           }
         },
         SendingDocuments: {
-          initial: "Initial",
           description: "Sends the required documents to the verifier app",
+          tags: [ItwPresentationTags.Loading, ItwPresentationTags.Sending],
           invoke: {
             id: "sendDocuments",
             src: "sendDocuments",
@@ -540,34 +525,11 @@ export const itwProximityMachine = setup({
               actions: "setFailure",
               target: "#itwProximityMachine.Failure"
             }
-          },
-          states: {
-            Initial: {
-              entry: "navigateToSendDocumentsResponseScreen",
-              description: "Initial loading state",
-              after: {
-                5000: {
-                  target:
-                    "#itwProximityMachine.NfcPresentment.SendingDocuments.Reminder"
-                }
-              }
-            },
-            Reminder: {
-              description: "Loading state when the process is taking too long",
-              after: {
-                10000: {
-                  target:
-                    "#itwProximityMachine.NfcPresentment.SendingDocuments.Final"
-                }
-              }
-            },
-            Final: {
-              description: "Final loading state"
-            }
           }
         },
         Terminating: {
           description: "Terminates the proximity session with the verifier",
+          tags: [ItwPresentationTags.Loading],
           invoke: {
             id: "terminateProximitySession",
             src: "terminateProximitySession",
@@ -577,8 +539,7 @@ export const itwProximityMachine = setup({
                 target: "#itwProximityMachine.Failure"
               },
               {
-                actions: "closeProximity",
-                target: "#itwProximityMachine.Idle"
+                actions: "closeProximity"
               }
             ],
             onError: [
@@ -587,18 +548,18 @@ export const itwProximityMachine = setup({
                 target: "#itwProximityMachine.Failure"
               },
               {
-                actions: "closeProximity",
-                target: "#itwProximityMachine.Idle"
+                actions: "closeProximity"
               }
             ]
           }
         },
         Closing: {
           description: "Close the proximity presentation flow",
+          tags: [ItwPresentationTags.Loading],
           invoke: {
             src: "closeProximityFlow",
             onDone: {
-              target: "#itwProximityMachine.Idle"
+              actions: "closeProximity"
             },
             onError: {
               target: "#itwProximityMachine.Failure",
@@ -610,6 +571,12 @@ export const itwProximityMachine = setup({
     },
     Success: {
       description: "The documents have been successfully sent to the Verifier",
+      // The loading tag is used to prevend glitches when navigating to the success screen
+      tags: [ItwPresentationTags.Loading],
+      always: {
+        guard: not("isNfcRetrieval"),
+        actions: "navigateToSuccessScreen"
+      },
       on: {
         close: {
           actions: "navigateToWallet",
@@ -618,7 +585,6 @@ export const itwProximityMachine = setup({
       }
     },
     Failure: {
-      entry: "navigateToFailureScreen",
       description: "This state is reached when an error occurs",
       on: {
         close: {

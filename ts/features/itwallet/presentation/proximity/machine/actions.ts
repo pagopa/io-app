@@ -59,9 +59,9 @@ export const createProximityActionsImplementation = (
     });
   },
 
-  navigateToSendDocumentsResponseScreen: () => {
+  navigateToSuccessScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.SEND_DOCUMENTS_RESPONSE
+      screen: ITW_PROXIMITY_ROUTES.SUCCESS
     });
   },
 

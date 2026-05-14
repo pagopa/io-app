@@ -7,6 +7,9 @@ type MachineSnapshot = StateFrom<ItwProximityMachine>;
 export const selectIsLoading = (snapshot: MachineSnapshot) =>
   snapshot.hasTag(ItwPresentationTags.Loading);
 
+export const selectIsSending = (snapshot: MachineSnapshot) =>
+  snapshot.hasTag(ItwPresentationTags.Sending);
+
 export const selectIsSuccess = (snapshot: MachineSnapshot) =>
   snapshot.matches("Success");
 
@@ -18,12 +21,6 @@ export const selectFailure = (snapshot: MachineSnapshot) =>
 
 export const selectProximityDetails = (snapshot: MachineSnapshot) =>
   snapshot.context.proximityDetails;
-
-export const isInitialLoadingSelector = (snapshot: MachineSnapshot) =>
-  snapshot.matches({ Presentment: { SendingDocuments: "Initial" } });
-
-export const isReminderLoadingSelector = (snapshot: MachineSnapshot) =>
-  snapshot.matches({ Presentment: { SendingDocuments: "Reminder" } });
 
 export const hasGivenConsentSelector = (snapshot: MachineSnapshot) =>
   snapshot.context.hasGivenConsent;

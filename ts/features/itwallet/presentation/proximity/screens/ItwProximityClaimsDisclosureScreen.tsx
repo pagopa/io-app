@@ -3,13 +3,13 @@ import {
   FeatureInfo,
   ForceScrollDownView,
   H2,
+  HeaderSecondLevel,
   IOMarkdownLite,
   VStack
 } from "@pagopa/io-app-design-system";
-import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
-import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent.tsx";
-import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
+import { useLayoutEffect } from "react";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import { generateDynamicUrlSelector } from "../../../../../store/reducers/backendStatus/remoteConfig.ts";
 import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../../urls.ts";
@@ -20,17 +20,23 @@ import { ItwDataExchangeIcons } from "../../../common/components/ItwDataExchange
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog.tsx";
 import { ISSUER_MOCK_NAME } from "../../../common/utils/itwMocksUtils.ts";
-import {
-  trackItwProximityContinuePresentation,
-  trackItwProximityDataShare
-} from "../analytics";
+import { trackItwProximityContinuePresentation } from "../analytics";
 import { ITW_PROXIMITY_SCREENVIEW_EVENTS } from "../analytics/enum";
+import { ItwProximityConnectionLoadingComponent } from "../components/ItwProximityConnectionLoadingComponent.tsx";
 import { ItwProximityPresentationDetails } from "../components/ItwProximityPresentationDetails.tsx";
+import { ItwProximitySendLoadingComponent } from "../components/ItwProximitySendLoadingComponent.tsx";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
-import { selectProximityDetails } from "../machine/selectors.ts";
+import {
+  selectIsLoading,
+  selectIsSending,
+  selectProximityDetails
+} from "../machine/selectors.ts";
 import { ProximityDetails } from "../utils/itwProximityTypeUtils.ts";
 
 export const ItwProximityClaimsDisclosureScreen = () => {
+  const isLoading = ItwProximityMachineContext.useSelector(selectIsLoading);
+  const isSending = ItwProximityMachineContext.useSelector(selectIsSending);
+
   const proximityDetails = ItwProximityMachineContext.useSelector(
     selectProximityDetails
   );
@@ -39,18 +45,15 @@ export const ItwProximityClaimsDisclosureScreen = () => {
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
-  return proximityDetails ? (
-    <ContentView proximityDetails={proximityDetails} />
-  ) : (
-    <LoadingScreenContent
-      title={I18n.t(
-        "features.itWallet.presentation.proximity.loadingScreen.title"
-      )}
-      subtitle={I18n.t(
-        "features.itWallet.presentation.proximity.loadingScreen.subtitle"
-      )}
-    />
-  );
+  if (isSending) {
+    return <ItwProximitySendLoadingComponent />;
+  }
+
+  if (!proximityDetails || isLoading) {
+    return <ItwProximityConnectionLoadingComponent />;
+  }
+
+  return <ContentView proximityDetails={proximityDetails} />;
 };
 
 type ContentViewProps = {
@@ -58,14 +61,13 @@ type ContentViewProps = {
 };
 
 const ContentView = ({ proximityDetails }: ContentViewProps) => {
+  const navigation = useIONavigation();
   const machineRef = ItwProximityMachineContext.useActorRef();
   const dispatch = useIODispatch();
 
   const privacyUrl = useIOSelector(state =>
     generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
   );
-
-  useFocusEffect(trackItwProximityDataShare);
 
   const dismissalDialog = useItwDismissalDialog({
     handleDismiss: () => machineRef.send({ type: "back" }),
@@ -80,7 +82,22 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
     }
   });
 
-  useHeaderSecondLevel({ title: "", goBack: dismissalDialog.show });
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: true,
+      header: () => (
+        <HeaderSecondLevel
+          title={""}
+          type="singleAction"
+          firstAction={{
+            icon: "closeLarge",
+            accessibilityLabel: I18n.t("global.buttons.close"),
+            onPress: dismissalDialog.show
+          }}
+        />
+      )
+    });
+  }, [navigation, machineRef, dismissalDialog]);
 
   const confirmVerifiablePresentation = () =>
     dispatch(

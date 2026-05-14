@@ -8,6 +8,6 @@ export type ItwProximityParamsList = {
   [ITW_PROXIMITY_ROUTES.PRESENTMENT]: ItwProximityPresentmentScreenNavigationParams;
   [ITW_PROXIMITY_ROUTES.NFC_PRESENTMENT]: undefined;
   [ITW_PROXIMITY_ROUTES.CLAIMS_DISCLOSURE]: undefined;
-  [ITW_PROXIMITY_ROUTES.SEND_DOCUMENTS_RESPONSE]: undefined;
+  [ITW_PROXIMITY_ROUTES.SUCCESS]: undefined;
   [ITW_PROXIMITY_ROUTES.FAILURE]: undefined;
 };

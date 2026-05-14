@@ -117,7 +117,7 @@ export const createProximityActorsImplementation = (env: Env) => {
     const handleDocumentRequestReceived = (
       eventPayload: EventsPayload["onDocumentRequestReceived"]
     ) => {
-      const { data } = eventPayload ?? {};
+      const { data, retrievalMethod } = eventPayload ?? {};
 
       try {
         assert(data, "Missing required data");
@@ -133,7 +133,8 @@ export const createProximityActorsImplementation = (env: Env) => {
         sendBack({
           type: "device-document-request-received",
           proximityDetails,
-          verifierRequest: parsedRequest
+          verifierRequest: parsedRequest,
+          retrievalMethod
         });
       } catch (error) {
         // Give some time to show the loading message

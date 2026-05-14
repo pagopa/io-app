@@ -1,3 +1,4 @@
+import { ISO18013_5 } from "@pagopa/io-react-native-iso18013";
 import type {
   ProximityDetails,
   VerifierRequest
@@ -61,6 +62,7 @@ export type DeviceDocumentRequestReceived = {
   type: "device-document-request-received";
   proximityDetails: ProximityDetails;
   verifierRequest: VerifierRequest;
+  retrievalMethod: ISO18013_5.RetrievalMethod;
 };
 
 export type Consent = {

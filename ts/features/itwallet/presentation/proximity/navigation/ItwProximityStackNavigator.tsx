@@ -14,7 +14,7 @@ import { ItwProximityClaimsDisclosureScreen } from "../screens/ItwProximityClaim
 import { ItwProximityFailureScreen } from "../screens/ItwProximityFailureScreen";
 import { ItwProximityNfcPresentmentScreen } from "../screens/ItwProximityNfcPresentmentScreen.tsx";
 import { ItwProximityPresentmentScreen } from "../screens/ItwProximityPresentmentScreen.tsx";
-import { ItwProximitySendDocumentsResponseScreen } from "../screens/ItwProximitySendDocumentsResponseScreen";
+import { ItwProximitySuccessScreen } from "../screens/ItwProximitySuccessScreen.tsx";
 import { ItwProximityParamsList } from "./ItwProximityParamsList";
 import { ITW_PROXIMITY_ROUTES } from "./routes";
 
@@ -64,15 +64,15 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_PROXIMITY_ROUTES.NFC_PRESENTMENT}
         component={ItwProximityNfcPresentmentScreen}
+        options={hiddenHeader}
       />
       <Stack.Screen
         name={ITW_PROXIMITY_ROUTES.CLAIMS_DISCLOSURE}
         component={ItwProximityClaimsDisclosureScreen}
-        options={hiddenHeader}
       />
       <Stack.Screen
-        name={ITW_PROXIMITY_ROUTES.SEND_DOCUMENTS_RESPONSE}
-        component={ItwProximitySendDocumentsResponseScreen}
+        name={ITW_PROXIMITY_ROUTES.SUCCESS}
+        component={ItwProximitySuccessScreen}
         options={hiddenHeader}
       />
       <Stack.Screen
