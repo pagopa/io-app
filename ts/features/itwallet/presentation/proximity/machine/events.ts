@@ -32,6 +32,14 @@ export type StartNfcPresentment = {
   type: "start-nfc-presentment";
 };
 
+export type NfcStarted = {
+  type: "nfc-started";
+};
+
+export type NfcStopped = {
+  type: "nfc-stopped";
+};
+
 export type DeviceConnecting = {
   type: "device-connecting";
 };
@@ -66,6 +74,8 @@ export type ProximityEvents =
   | Continue
   | Close
   | Retry
+  | NfcStarted
+  | NfcStopped
   | QrCodeString
   | StartNfcPresentment
   | DeviceConnecting

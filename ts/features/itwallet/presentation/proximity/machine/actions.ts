@@ -1,14 +1,11 @@
-import { ActionArgs, assign } from "xstate";
+import { assign } from "xstate";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { serializeFailureReason } from "../../../common/utils/itwStoreUtils";
-import { trackItwProximityQrCodeLoadingFailure } from "../analytics";
-import { ITW_PROXIMITY_ROUTES } from "../navigation/routes";
 import { useIOStore } from "../../../../../store/hooks";
 import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors";
+import { ITW_PROXIMITY_ROUTES } from "../navigation/routes";
 import { itwPresentableCredentialsByDocTypeSelector } from "../store/selectors/credentials";
 import { Context } from "./context";
 import { ProximityEvents } from "./events";
-import { mapEventToFailure } from "./failure";
 
 export const createProximityActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>,
@@ -80,16 +77,5 @@ export const createProximityActionsImplementation = (
 
   closeProximity: () => {
     navigation.pop();
-  },
-
-  trackQrCodeGenerationOutcome: ({
-    context,
-    event
-  }: ActionArgs<Context, ProximityEvents, ProximityEvents>) => {
-    if (context.failure) {
-      const failure = mapEventToFailure(event);
-      const serializedFailure = serializeFailureReason(failure);
-      trackItwProximityQrCodeLoadingFailure(serializedFailure);
-    }
   }
 });

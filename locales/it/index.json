@@ -4278,6 +4278,13 @@
               "or": "oppure",
               "action": "Avvia verifica contactless"
             }
+          },
+          "nfcEngagement": {
+            "title": {
+              "ios": "Pronto per la verifica",
+              "android": "Avvicina il telefono al lettore"
+            },
+            "cta": "Annulla"
           }
         },
         "itWalletId": {

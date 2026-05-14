@@ -38,7 +38,6 @@ describe("itwProximityMachine", () => {
   const navigateToSendDocumentsResponseScreen = jest.fn();
   const navigateToWallet = jest.fn();
   const closeProximity = jest.fn();
-  const trackQrCodeGenerationOutcome = jest.fn();
 
   const checkBluetoothPermissions = jest.fn();
   const checkBluetoothActivation = jest.fn();
@@ -67,8 +66,7 @@ describe("itwProximityMachine", () => {
       navigateToClaimsDisclosureScreen,
       navigateToSendDocumentsResponseScreen,
       navigateToWallet,
-      closeProximity,
-      trackQrCodeGenerationOutcome
+      closeProximity
     },
     actors: {
       checkBluetoothPermissions: fromPromise(checkBluetoothPermissions),
@@ -500,29 +498,7 @@ describe("itwProximityMachine", () => {
     expect(closeProximity).toHaveBeenCalledTimes(1);
   });
 
-  it("tracks QR code generation on successful engagement start", async () => {
-    const tracked = new Promise<void>(resolve => {
-      trackQrCodeGenerationOutcome.mockImplementation(() => resolve());
-    });
-    const actor = createActor(mockedMachine);
-
-    checkBluetoothPermissions.mockResolvedValue(true);
-    checkBluetoothActivation.mockResolvedValue(true);
-    checkNfcActivation.mockResolvedValue(true);
-    startEngagement.mockResolvedValue(undefined);
-
-    actor.start();
-    actor.send({ type: "start" });
-
-    await tracked;
-    expect(trackQrCodeGenerationOutcome).toHaveBeenCalledTimes(1);
-    expect(actor.getSnapshot().context.failure).toBeUndefined();
-  });
-
   it("retry from Starting clears the failure after a startEngagement error", async () => {
-    const tracked = new Promise<void>(resolve => {
-      trackQrCodeGenerationOutcome.mockImplementation(() => resolve());
-    });
     const actor = createActor(mockedMachine);
 
     checkBluetoothPermissions.mockResolvedValue(true);
@@ -534,7 +510,6 @@ describe("itwProximityMachine", () => {
 
     actor.start();
     actor.send({ type: "start" });
-    await tracked;
 
     expect(actor.getSnapshot().context.failure?.type).toEqual(
       ProximityFailureType.RELYING_PARTY_GENERIC

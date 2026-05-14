@@ -33,13 +33,14 @@ export const ItwProximityMachineProvider = ({
   );
 };
 
+/**
+ * Convenience component to display debug info about the machine state in the ladybug component.
+ */
 const DebugData = () => {
-  const context = ItwProximityMachineContext.useSelector(s => s.context);
   const state = ItwProximityMachineContext.useSelector(s => s.value);
 
   useDebugInfo({
-    state,
-    context
+    state
   });
 
   return null;

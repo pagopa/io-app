@@ -1,4 +1,5 @@
 import { assert } from "../../../../../utils/assert";
+import { Env } from "../../../common/utils/environment";
 import {
   parseClaims,
   WellKnownClaim
@@ -37,7 +38,8 @@ export const promiseWithTimeout = <T>(
  */
 export const getProximityDetails = (
   request: VerifierRequest["request"],
-  credentialsByType: Record<string, CredentialMetadata>
+  credentialsByType: Record<string, CredentialMetadata>,
+  env: Env
 ): ProximityDetails => {
   // Exclude the WIA document type from the request
   const { [WIA_DOC_TYPE]: _, ...rest } = request;
@@ -45,7 +47,7 @@ export const getProximityDetails = (
   return Object.entries(rest).map(
     ([docType, { isAuthenticated, ...namespaces }]) => {
       // Stop the flow if the verifier (RP) is not trusted
-      if (!isAuthenticated) {
+      if (!isAuthenticated && env.type !== "pre") {
         throw new UntrustedRpError("Untrusted RP");
       }
 

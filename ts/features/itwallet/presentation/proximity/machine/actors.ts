@@ -21,11 +21,14 @@ import { ProximityEvents } from "./events";
 
 const SEND_RESPONSE_TIMEOUT_MS = 20000;
 
+export type StartEngagementActorInput = {
+  engagementModes?: ReadonlyArray<ISO18013_5.EngagementMode>;
+  retrievalMethods?: ReadonlyArray<ISO18013_5.RetrievalMethod>;
+};
+
 export type SendErrorResponseActorOutput = Awaited<
   ReturnType<typeof ISO18013_5.sendErrorResponse>
 >;
-
-export type CloseActorOutput = Awaited<ReturnType<typeof ISO18013_5.close>>;
 
 export type ProximityCommunicationLogicInput = Pick<Context, "credentials">;
 
@@ -49,17 +52,22 @@ export const createProximityActorsImplementation = (env: Env) => {
 
   const checkNfcActivationActor = fromPromise<boolean>(checkNfcActivation);
 
-  const startEngagement = fromPromise<void>(async () => {
-    // Ensure any existing session is closed before starting a new one
-    await ISO18013_5.close().catch(() => null);
+  const startEngagement = fromPromise<void, StartEngagementActorInput>(
+    async ({ input }) => {
+      const { engagementModes = ["qrcode"], retrievalMethods = ["ble"] } =
+        input;
 
-    // Start a new engagement session with QRCode -> Ble configuration
-    await ISO18013_5.startEngagement({
-      engagementModes: ["qrcode"],
-      retrievalMethods: ["ble"],
-      certificates: [[env.X509_CERT_ROOT]]
-    });
-  });
+      // Ensure any existing session is closed before starting a new one
+      await ISO18013_5.close().catch(() => null);
+
+      // Start a new engagement session with QRCode -> Ble configuration
+      await ISO18013_5.startEngagement({
+        engagementModes,
+        retrievalMethods,
+        certificates: [[env.X509_CERT_ROOT]]
+      });
+    }
+  );
 
   const proximityCommunicationLogic = fromCallback<
     ProximityEvents,
@@ -71,6 +79,14 @@ export const createProximityActorsImplementation = (env: Env) => {
       credentials,
       "Missing credentials for proximity communication logic"
     );
+
+    const handleNfcStarted = () => {
+      sendBack({ type: "nfc-started" });
+    };
+
+    const handleNfcStopped = () => {
+      sendBack({ type: "nfc-stopped" });
+    };
 
     const handleQrCodeString = (
       eventPayload: EventsPayload["onQrCodeString"]
@@ -110,7 +126,8 @@ export const createProximityActorsImplementation = (env: Env) => {
         // const credentials = itwCredentialsByTypeSelector(store.getState());
         const proximityDetails = getProximityDetails(
           parsedRequest.request,
-          credentials
+          credentials,
+          env
         );
 
         sendBack({
@@ -131,6 +148,8 @@ export const createProximityActorsImplementation = (env: Env) => {
     };
 
     const listeners = [
+      ISO18013_5.addListener("onNfcStarted", handleNfcStarted),
+      ISO18013_5.addListener("onNfcStopped", handleNfcStopped),
       ISO18013_5.addListener("onQrCodeString", handleQrCodeString),
       ISO18013_5.addListener("onDeviceConnecting", handleDeviceConnecting),
       ISO18013_5.addListener("onDeviceConnected", handleDeviceConnected),
@@ -191,9 +210,7 @@ export const createProximityActorsImplementation = (env: Env) => {
     () => ISO18013_5.sendErrorResponse(ISO18013_5.ErrorCode.SESSION_TERMINATED)
   );
 
-  const closeProximityFlow = fromPromise<CloseActorOutput, void>(
-    ISO18013_5.close
-  );
+  const closeProximityFlow = fromPromise<boolean>(ISO18013_5.close);
 
   return {
     checkBluetoothPermissions: checkBluetoothPermissionsActor,

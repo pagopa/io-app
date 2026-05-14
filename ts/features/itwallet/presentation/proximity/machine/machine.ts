@@ -3,8 +3,8 @@ import {
   SendErrorResponseActorOutput,
   SendDocumentsActorInput,
   SendDocumentsActorOutput,
-  CloseActorOutput,
-  ProximityCommunicationLogicInput
+  ProximityCommunicationLogicInput,
+  StartEngagementActorInput
 } from "./actors";
 import { Context, InitialContext } from "./context";
 import { ProximityEvents } from "./events";
@@ -42,13 +42,7 @@ export const itwProximityMachine = setup({
     navigateToClaimsDisclosureScreen: notImplemented,
     navigateToSendDocumentsResponseScreen: notImplemented,
     navigateToWallet: notImplemented,
-    closeProximity: notImplemented,
-
-    /**
-     * Analytics
-     */
-
-    trackQrCodeGenerationOutcome: notImplemented
+    closeProximity: notImplemented
   },
   actors: {
     checkBluetoothPermissions: fromPromise<boolean>(notImplemented),
@@ -58,14 +52,16 @@ export const itwProximityMachine = setup({
       ProximityEvents,
       ProximityCommunicationLogicInput
     >(notImplemented),
-    startEngagement: fromPromise<void>(notImplemented),
+    startEngagement: fromPromise<void, StartEngagementActorInput>(
+      notImplemented
+    ),
     sendDocuments: fromPromise<
       SendDocumentsActorOutput,
       SendDocumentsActorInput
     >(notImplemented),
     terminateProximitySession:
       fromPromise<SendErrorResponseActorOutput>(notImplemented),
-    closeProximityFlow: fromPromise<CloseActorOutput, void>(notImplemented)
+    closeProximityFlow: fromPromise<boolean>(notImplemented)
   },
   guards: {
     hasFailure: ({ context }) => !!context.failure
@@ -241,7 +237,7 @@ export const itwProximityMachine = setup({
           }))
         },
         "start-nfc-presentment": {
-          actions: "navigateToNfcPresentmentScreen"
+          target: "#itwProximityMachine.NfcPresentment"
         },
         "device-connecting": {
           target: "Presentment.Connecting"
@@ -288,11 +284,13 @@ export const itwProximityMachine = setup({
           description: "Start the proximity and generates the QR code string",
           invoke: {
             src: "startEngagement",
-            onDone: {
-              actions: "trackQrCodeGenerationOutcome"
+            input: {
+              engagementModes: ["qrcode"],
+              retrievalMethods: ["ble"]
             },
+            onDone: {},
             onError: {
-              actions: ["setFailure", "trackQrCodeGenerationOutcome"]
+              actions: ["setFailure"]
             }
           },
           on: {
@@ -419,7 +417,197 @@ export const itwProximityMachine = setup({
         }
       }
     },
-    // TODO add consents flow
+    NfcPresentment: {
+      description:
+        "Manages the communication lifecycle between the device and the verifier",
+      initial: "Starting",
+      entry: "navigateToNfcPresentmentScreen",
+      invoke: {
+        id: "proximityCommunicationLogic",
+        src: "proximityCommunicationLogic",
+        input: ({ context }) => ({
+          credentials: context.credentials
+        }),
+        onError: {
+          actions: "setFailure",
+          target: "#itwProximityMachine.Failure"
+        }
+      },
+      on: {
+        "device-connecting": {
+          target: "NfcPresentment.Connecting"
+        },
+        "device-connected": {
+          target: "NfcPresentment.Connected"
+        },
+        "device-document-request-received": {
+          actions: assign(({ event }) => ({
+            proximityDetails: event.proximityDetails,
+            verifierRequest: event.verifierRequest
+          })),
+          target: "NfcPresentment.ClaimsDisclosure"
+        },
+        "device-disconnected": [
+          {
+            // This event is dispatched when the verifier sends the END (0x02) termination flag after sendDocuments.
+            // At this point, the verification process is complete and we can navigate to the success state.
+            guard: stateIn("NfcPresentment.SendingDocuments"),
+            target: "#itwProximityMachine.Success"
+          },
+          {
+            // This event is dispatched when the verifier sends the END (0x02) termination flag before sendDocuments.
+            // At this point, the verification process is NOT complete and we can safely close the proximity session.
+            actions: "setFailure",
+            target: "NfcPresentment.Terminating"
+          }
+        ],
+        "device-error": {
+          actions: "setFailure",
+          target: "NfcPresentment.Terminating"
+        }
+      },
+      states: {
+        Retrying: {
+          tags: [ItwPresentationTags.Loading],
+          always: {
+            target: "Starting",
+            actions: assign(() => ({ failure: undefined }))
+          }
+        },
+        Starting: {
+          tags: [ItwPresentationTags.Loading],
+          description: "Start the proximity and generates the QR code string",
+          invoke: {
+            src: "startEngagement",
+            input: {
+              engagementModes: ["nfc"],
+              retrievalMethods: ["nfc", "ble"]
+            },
+            onDone: {},
+            onError: {
+              actions: ["setFailure"]
+            }
+          },
+          on: {
+            "nfc-stopped": {
+              target: "#itwProximityMachine.Presentment"
+            },
+            retry: {
+              target: "Retrying"
+            }
+          }
+        },
+        Connecting: {
+          description:
+            "Initiates the connection between the device and the verifier"
+        },
+        Connected: {
+          description:
+            "The device has successfully established a connection with the verifier"
+        },
+        ClaimsDisclosure: {
+          description: "Displays the requested claims",
+          entry: "navigateToClaimsDisclosureScreen",
+          always: {
+            target: "SendingDocuments"
+          },
+          on: {
+            "holder-consent": {
+              actions: "setHasGivenConsent",
+              target: "#itwProximityMachine.NfcPresentment.SendingDocuments"
+            },
+            back: {
+              target: "#itwProximityMachine.NfcPresentment.Terminating"
+            }
+          }
+        },
+        SendingDocuments: {
+          initial: "Initial",
+          description: "Sends the required documents to the verifier app",
+          invoke: {
+            id: "sendDocuments",
+            src: "sendDocuments",
+            input: ({ context }) => ({
+              walletInstanceAttestation: context.walletInstanceAttestation,
+              credentials: context.credentials,
+              verifierRequest: context.verifierRequest
+            }),
+            onDone: {
+              // There's not evidence of the verifier responding to this request.
+              // We are waiting for the onDeviceDisconnected event.
+            },
+            onError: {
+              actions: "setFailure",
+              target: "#itwProximityMachine.Failure"
+            }
+          },
+          states: {
+            Initial: {
+              entry: "navigateToSendDocumentsResponseScreen",
+              description: "Initial loading state",
+              after: {
+                5000: {
+                  target:
+                    "#itwProximityMachine.NfcPresentment.SendingDocuments.Reminder"
+                }
+              }
+            },
+            Reminder: {
+              description: "Loading state when the process is taking too long",
+              after: {
+                10000: {
+                  target:
+                    "#itwProximityMachine.NfcPresentment.SendingDocuments.Final"
+                }
+              }
+            },
+            Final: {
+              description: "Final loading state"
+            }
+          }
+        },
+        Terminating: {
+          description: "Terminates the proximity session with the verifier",
+          invoke: {
+            id: "terminateProximitySession",
+            src: "terminateProximitySession",
+            onDone: [
+              {
+                guard: "hasFailure",
+                target: "#itwProximityMachine.Failure"
+              },
+              {
+                actions: "closeProximity",
+                target: "#itwProximityMachine.Idle"
+              }
+            ],
+            onError: [
+              {
+                guard: "hasFailure",
+                target: "#itwProximityMachine.Failure"
+              },
+              {
+                actions: "closeProximity",
+                target: "#itwProximityMachine.Idle"
+              }
+            ]
+          }
+        },
+        Closing: {
+          description: "Close the proximity presentation flow",
+          invoke: {
+            src: "closeProximityFlow",
+            onDone: {
+              target: "#itwProximityMachine.Idle"
+            },
+            onError: {
+              target: "#itwProximityMachine.Failure",
+              actions: "setFailure"
+            }
+          }
+        }
+      }
+    },
     Success: {
       description: "The documents have been successfully sent to the Verifier",
       on: {
