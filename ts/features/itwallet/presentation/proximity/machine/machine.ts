@@ -586,6 +586,7 @@ export const itwProximityMachine = setup({
     },
     Failure: {
       description: "This state is reached when an error occurs",
+      entry: "navigateToFailureScreen",
       on: {
         close: {
           actions: "closeProximity",
