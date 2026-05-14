@@ -3,7 +3,6 @@ import {
   SendErrorResponseActorOutput,
   SendDocumentsActorInput,
   SendDocumentsActorOutput,
-  CheckPermissionsInput,
   CloseActorOutput,
   ProximityCommunicationLogicInput
 } from "./actors";
@@ -50,9 +49,7 @@ export const itwProximityMachine = setup({
     trackQrCodeGenerationOutcome: notImplemented
   },
   actors: {
-    checkPermissions: fromPromise<boolean, CheckPermissionsInput>(
-      notImplemented
-    ),
+    checkPermissions: fromPromise<boolean, void>(notImplemented),
     checkBluetoothIsActive: fromPromise<boolean, void>(notImplemented),
     proximityCommunicationLogic: fromCallback<
       ProximityEvents,
@@ -100,7 +97,6 @@ export const itwProximityMachine = setup({
           description: "Check if the device permissions have been granted",
           invoke: {
             src: "checkPermissions",
-            input: { isSilent: false },
             onDone: [
               {
                 guard: ({ event }) => !!event.output,
@@ -119,46 +115,15 @@ export const itwProximityMachine = setup({
         GrantPermissions: {
           entry: "navigateToGrantPermissionsScreen",
           description:
-            "Display the screen prompting the user to grant device permissions",
+            "Display the screen prompting the user to grant device permissions. " +
+            "The screen re-checks the permissions on Continue and only emits the event when granted.",
           on: {
             back: {
+              actions: "closeProximity",
               target: "#itwProximityMachine.Idle"
             },
             continue: {
-              target: "CheckPermissionsSilently"
-            }
-          }
-        },
-        CheckPermissionsSilently: {
-          tags: [ItwPresentationTags.Loading],
-          description: "Check if the device permissions have been granted",
-          invoke: {
-            src: "checkPermissions",
-            input: { isSilent: true },
-            onDone: [
-              {
-                guard: ({ event }) => !!event.output,
-                target: "#itwProximityMachine.Bluetooth"
-              },
-              {
-                guard: ({ event }) => !event.output,
-                target: "PermissionsRequired"
-              }
-            ],
-            onError: {
-              target: "PermissionsRequired"
-            }
-          }
-        },
-        PermissionsRequired: {
-          description:
-            "Display the system alert informing the user that permissions must be granted to proceed",
-          on: {
-            close: {
-              target: "#itwProximityMachine.Idle"
-            },
-            dismiss: {
-              target: "#itwProximityMachine.Idle"
+              target: "#itwProximityMachine.Bluetooth"
             }
           }
         }
@@ -191,45 +156,15 @@ export const itwProximityMachine = setup({
         EnableBluetooth: {
           entry: "navigateToBluetoothActivationScreen",
           description:
-            "Display the screen prompting the user to enable Bluetooth",
+            "Display the screen prompting the user to enable Bluetooth. " +
+            "The screen re-checks the Bluetooth status on Continue and only emits the event when enabled.",
           on: {
             back: {
+              actions: "closeProximity",
               target: "#itwProximityMachine.Idle"
             },
             continue: {
-              target: "CheckingBluetoothIsActiveSilently"
-            }
-          }
-        },
-        CheckingBluetoothIsActiveSilently: {
-          tags: [ItwPresentationTags.Loading],
-          description: "Check if Bluetooth is enabled",
-          invoke: {
-            src: "checkBluetoothIsActive",
-            onDone: [
-              {
-                guard: ({ event }) => !!event.output,
-                target: "#itwProximityMachine.Presentation"
-              },
-              {
-                guard: ({ event }) => !event.output,
-                target: "BluetoothRequired"
-              }
-            ],
-            onError: {
-              target: "BluetoothRequired"
-            }
-          }
-        },
-        BluetoothRequired: {
-          description:
-            "Display the system alert informing the user that must enable the Bluetooth to proceed",
-          on: {
-            close: {
-              target: "#itwProximityMachine.Idle"
-            },
-            dismiss: {
-              target: "#itwProximityMachine.Idle"
+              target: "#itwProximityMachine.Presentation"
             }
           }
         }
@@ -237,6 +172,11 @@ export const itwProximityMachine = setup({
     },
     Presentation: {
       initial: "Starting",
+      // The QR code screen is the entry point of the proximity stack and may
+      // be covered by the GrantPermissions / EnableBluetooth screens. When we
+      // enter the Presentation state we always navigate back to it so the
+      // generated QR code is displayed.
+      entry: "navigateToQrCodeScreen",
       description:
         "Manages the communication lifecycle between the device and the verifier",
       invoke: {
