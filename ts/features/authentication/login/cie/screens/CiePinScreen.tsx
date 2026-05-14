@@ -49,7 +49,6 @@ import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventSc
 import { withTrailingPoliceCarLightEmojii } from "../../../../../utils/strings";
 import { openWebUrl } from "../../../../../utils/url";
 import {
-  cieLoginFlowSelector,
   isActiveSessionLoginSelector,
   remoteApiLoginUrlPrefixSelector
 } from "../../../activeSessionLogin/store/selectors";
@@ -93,10 +92,10 @@ const CiePinScreen = () => {
   const dispatch = useIODispatch();
 
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
-  const loginType = useIOSelector(cieLoginFlowSelector);
+  const flow = isActiveSessionLogin ? "reauth" : "auth";
 
   useOnFirstRender(() => {
-    trackLoginCiePinScreen(loginType);
+    trackLoginCiePinScreen(flow);
   });
 
   const requestNfcEnabledCheck = useCallback(
@@ -251,7 +250,7 @@ const CiePinScreen = () => {
               asLink
               accessibilityRole="button"
               onPress={() => {
-                trackLoginCiePinInfo(loginType);
+                trackLoginCiePinInfo(flow);
                 present();
               }}
             >
