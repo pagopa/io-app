@@ -1,6 +1,5 @@
 import {
   ContentWrapper,
-  FeatureInfo,
   ForceScrollDownView,
   H2,
   HeaderSecondLevel,
@@ -119,17 +118,13 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
     <ForceScrollDownView
       footerActions={{
         actions: {
-          type: "TwoButtons",
+          type: "SingleButton",
           primary: {
-            label: I18n.t("global.buttons.continue"),
+            label: I18n.t("global.buttons.confirm"),
             onPress: () => {
               trackItwProximityContinuePresentation();
               confirmVerifiablePresentation();
             }
-          },
-          secondary: {
-            label: I18n.t("global.buttons.cancel"),
-            onPress: dismissalDialog.show
           }
         }
       }}
@@ -139,7 +134,7 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
           <ItwDataExchangeIcons
             requesterLogoUri={require("../../../../../../img/features/itWallet/issuer/IPZS.png")}
           />
-          <VStack space={8}>
+          <VStack space={16}>
             <H2>
               {I18n.t(
                 "features.itWallet.presentation.proximity.selectiveDisclosure.title"
@@ -153,18 +148,6 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
             />
           </VStack>
           <ItwProximityPresentationDetails data={proximityDetails} />
-          <FeatureInfo
-            iconName="fornitori"
-            body={I18n.t(
-              "features.itWallet.presentation.proximity.selectiveDisclosure.disclaimer.0"
-            )}
-          />
-          <FeatureInfo
-            iconName="trashcan"
-            body={I18n.t(
-              "features.itWallet.presentation.proximity.selectiveDisclosure.disclaimer.1"
-            )}
-          />
           <IOMarkdownLite
             content={I18n.t(
               "features.itWallet.presentation.proximity.selectiveDisclosure.tos",

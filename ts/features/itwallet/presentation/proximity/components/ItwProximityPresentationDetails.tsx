@@ -1,20 +1,14 @@
+import { ClaimsSelector, VStack } from "@pagopa/io-app-design-system";
 import { memo } from "react";
 import { View } from "react-native";
-import {
-  ClaimsSelector,
-  ListItemHeader,
-  VStack,
-  useIOTheme
-} from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { useIOSelector } from "../../../../../store/hooks";
 import { itwCredentialNameResolverSelector } from "../../../credentialsCatalogue/store/selectors";
-import { ProximityDetails } from "../utils/itwProximityTypeUtils";
+import { useClaimsDetailsBottomSheet } from "../../common/hooks/useClaimsDetailsBottomSheet";
 import {
   claimsSelectorHeaderGradientsByCredentialType,
   mapClaimsToClaimsSelectorItems
 } from "../../common/utils/itwClaimSelector";
-import { useClaimsDetailsBottomSheet } from "../../common/hooks/useClaimsDetailsBottomSheet";
+import { ProximityDetails } from "../utils/itwProximityTypeUtils";
 
 type ItwProximityPresentationDetailsProps = {
   data: ProximityDetails;
@@ -23,7 +17,6 @@ type ItwProximityPresentationDetailsProps = {
 const ItwProximityPresentationDetails = ({
   data
 }: ItwProximityPresentationDetailsProps) => {
-  const theme = useIOTheme();
   const { present, bottomSheet } = useClaimsDetailsBottomSheet();
   const resolveCredentialName = useIOSelector(
     itwCredentialNameResolverSelector
@@ -31,16 +24,6 @@ const ItwProximityPresentationDetails = ({
 
   return (
     <View>
-      <ListItemHeader
-        label={I18n.t(
-          "features.itWallet.presentation.proximity.selectiveDisclosure.requiredClaims"
-        )}
-        iconName="security"
-        iconColor={theme["icon-decorative"]}
-        description={I18n.t(
-          "features.itWallet.presentation.proximity.selectiveDisclosure.purpose"
-        )}
-      />
       <VStack space={24}>
         {data.map(({ claimsToDisplay, credentialType }) => (
           <ClaimsSelector

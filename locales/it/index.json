@@ -4219,15 +4219,9 @@
             }
           },
           "selectiveDisclosure": {
-            "title": "Dati richiesti",
-            "subtitle": "Saranno mostrati a **{{relyingParty}}** per completare la verifica dei documenti richiesti.",
-            "requiredClaims": "Dati necessari",
-            "purpose": "Finalità: Identificazione",
-            "disclaimer": {
-              "0": "I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.",
-              "1": "I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento."
-            },
-            "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy]({{privacyUrl}}).",
+            "title": "Consenti la verifica di questi dati per procedere",
+            "subtitle": "Saranno condivisi con **{{relyingParty}}** solo per il tempo necessario all’accesso ai servizi richiesti.",
+            "tos": "I tuoi dati saranno trattati in sicurezza. Se prosegui, dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d’uso]({{privacyUrl}}).",
             "alert": {
               "message": "Non potrai completare la verifica del documento."
             }
