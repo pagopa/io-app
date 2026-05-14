@@ -6,19 +6,30 @@ import { useIODispatch } from "../../../../store/hooks";
 import {
   setStartActiveSessionLogin,
   setIdpSelectedActiveSessionLogin,
-  setActiveSessionLoginFlow
+  setActiveSessionLoginFlow,
+  setFinishedActiveSessionLoginFlow
 } from "../../../authentication/activeSessionLogin/store/actions";
 import { IdpCIE } from "../../../authentication/login/hooks/useNavigateToLoginMethod";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { fciEndRequest } from "../../store/actions";
 import { WhatsNewScreenContent } from "../../../../components/screens/WhatsNewScreenContent";
 import { useIsNfcFeatureAvailable } from "../../../pn/aar/hooks/useIsNfcFeatureAvailable";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
+import {
+  trackFciLoginRequest,
+  trackFciLoginRequestClose,
+  trackFciLoginRequestContinue
+} from "../../analytics";
 
 export const FciLoginL3Screen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const isNfcAvailable = useIsNfcFeatureAvailable();
   const { setOptions } = useIONavigation();
+
+  useOnFirstRender(() => {
+    trackFciLoginRequest();
+  });
 
   useEffect(() => {
     setOptions({
@@ -29,7 +40,11 @@ export const FciLoginL3Screen = () => {
           type="singleAction"
           firstAction={{
             icon: "closeMedium",
-            onPress: () => dispatch(fciEndRequest()),
+            onPress: () => {
+              trackFciLoginRequestClose();
+              dispatch(setFinishedActiveSessionLoginFlow());
+              dispatch(fciEndRequest());
+            },
             accessibilityLabel: i18n.t("global.buttons.close")
           }}
         />
@@ -38,10 +53,11 @@ export const FciLoginL3Screen = () => {
   }, [dispatch, setOptions]);
 
   const onPressContinue = () => {
+    trackFciLoginRequestContinue();
     if (isNfcAvailable) {
+      dispatch(setActiveSessionLoginFlow("FCI"));
       dispatch(setStartActiveSessionLogin());
       dispatch(setIdpSelectedActiveSessionLogin(IdpCIE));
-      dispatch(setActiveSessionLoginFlow("FCI"));
       navigation.navigate(FCI_ROUTES.MAIN, {
         screen: FCI_ROUTES.LOGIN_OPTIN
       });

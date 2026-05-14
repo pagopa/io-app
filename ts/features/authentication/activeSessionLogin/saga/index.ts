@@ -21,7 +21,8 @@ import {
   idpSelectedActiveSessionLoginSelector,
   newTokenActiveSessionLoginSelector,
   cieIDSelectedSecurityLevelActiveSessionLoginSelector,
-  activeSessionLoginFlowSelector
+  activeSessionLoginFlowSelector,
+  cieLoginFlowSelector
 } from "../store/selectors";
 import { startApplicationInitialization } from "../../../../store/actions/application";
 import { watchCieAuthenticationSaga } from "../../login/cie/sagas/cie";
@@ -70,7 +71,9 @@ export function* handleActiveSessionLoginSaga(): Generator<
   void,
   any
 > {
-  yield* put(analyticsAuthenticationStarted("reauth"));
+  const loginFlow = yield* select(cieLoginFlowSelector);
+
+  yield* put(analyticsAuthenticationStarted(loginFlow));
 
   yield* fork(watchCieAuthenticationSaga);
 
@@ -99,7 +102,7 @@ export function* handleActiveSessionLoginSaga(): Generator<
     if (idp && idp.id) {
       switch (idp.id) {
         case IdpCIE.id:
-          trackCieLoginSuccess(fastLoginOptIn ? "365" : "30", "reauth");
+          trackCieLoginSuccess(fastLoginOptIn ? "365" : "30", loginFlow);
           break;
         case IdpCIE_ID.id:
           // We currently request only a Level 2 login; however, once in the CieID app, if the only configured method is a Level 3 login, it will be possible to proceed with that higher level of security.
@@ -140,7 +143,7 @@ export function* handleActiveSessionLoginSaga(): Generator<
         })
       );
 
-      yield* put(analyticsAuthenticationCompleted("reauth"));
+      yield* put(analyticsAuthenticationCompleted(loginFlow));
 
       yield* put(
         startApplicationInitialization({

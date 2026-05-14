@@ -7,7 +7,8 @@ import {
   isActiveSessionLoginRemotelyEnabledSelector,
   isActiveSessionLoginEnabledSelector,
   isActiveSessionLoginLocallyEnabledSelector,
-  showSessionExpirationBannerSelector
+  showSessionExpirationBannerSelector,
+  cieLoginFlowSelector
 } from "../store/selectors";
 
 // Mock DeviceInfo for version checks
@@ -177,5 +178,34 @@ describe("showSessionExpirationBannerSelector", () => {
     } as unknown as GlobalState;
 
     expect(showSessionExpirationBannerSelector(state)).toBe(false);
+  });
+});
+
+describe("cieLoginFlowSelector", () => {
+  const getState = (isActiveSessionLogin: boolean, flow?: string) =>
+    ({
+      features: {
+        loginFeatures: {
+          activeSessionLogin: {
+            isActiveSessionLogin,
+            flow
+          }
+        }
+      }
+    }) as unknown as GlobalState;
+
+  it("should return 'auth' when not in an active session login", () => {
+    const state = getState(false);
+    expect(cieLoginFlowSelector(state)).toBe("auth");
+  });
+
+  it("should return 'reauth' when in an active session login without a specific flow", () => {
+    const state = getState(true);
+    expect(cieLoginFlowSelector(state)).toBe("reauth");
+  });
+
+  it("should return 'FCI_auth' when the active session login flow is 'FCI'", () => {
+    const state = getState(true, "FCI");
+    expect(cieLoginFlowSelector(state)).toBe("FCI_auth");
   });
 });
