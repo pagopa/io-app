@@ -10,18 +10,11 @@ import { WhatsNewScreenContent } from "../../../../components/screens/WhatsNewSc
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../../utils/url";
-import { useIODispatch, useIOStore } from "../../../../store/hooks";
+import { useIODispatch } from "../../../../store/hooks";
 import { setFastLoginOptSessionLogin } from "../../../authentication/activeSessionLogin/store/actions";
 import { AUTHENTICATION_ROUTES } from "../../../authentication/common/navigation/routes";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes";
-import {
-  trackLoginSessionOptIn,
-  trackLoginSessionOptIn30,
-  trackLoginSessionOptIn365,
-  trackLoginSessionOptInInfo
-} from "../../../authentication/fastLogin/analytics/optinAnalytics.ts";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 
 const FciSecurityInfo = () => (
   <View>
@@ -69,7 +62,6 @@ const FciSecurityInfo = () => (
 
 export const LoginOptInScreen = () => {
   const navigation = useIONavigation();
-  const store = useIOStore();
   const dispatch = useIODispatch();
   const {
     present: presentFciSecurityBottomSheet,
@@ -86,16 +78,20 @@ export const LoginOptInScreen = () => {
     supportRequest: true
   });
 
-  useOnFirstRender(() => {
-    trackLoginSessionOptIn("FCI_auth");
-  });
+  // TODO: Tracking will be added to a separate branch or pull request.
+  // The task is: https://pagopa.atlassian.net/browse/IEL-458
+  //   useOnFirstRender(() => {
+  //     trackLoginSessionOptIn("fci");
+  //   });
 
   const navigateToLoginPage = (isLV: boolean) => {
-    if (isLV) {
-      void trackLoginSessionOptIn365(store.getState(), "FCI_auth");
-    } else {
-      void trackLoginSessionOptIn30(store.getState(), "FCI_auth");
-    }
+    // TODO: Tracking will be added to a separate branch or pull request.
+    // The task is: https://pagopa.atlassian.net/browse/IEL-458
+    // if (isLV) {
+    //   void trackLoginSessionOptIn365(store.getState(), "fci");
+    // } else {
+    //   void trackLoginSessionOptIn30(store.getState(), "fci");
+    // }
     dispatch(setFastLoginOptSessionLogin(isLV));
     navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
       screen: SETTINGS_ROUTES.AUTHENTICATION,
@@ -135,7 +131,9 @@ export const LoginOptInScreen = () => {
           weight="Semibold"
           asLink
           onPress={() => {
-            trackLoginSessionOptInInfo("FCI_auth");
+            // TODO: Tracking will be added to a separate branch or pull request.
+            // The task is: https://pagopa.atlassian.net/browse/IEL-458
+            // trackLoginSessionOptInInfo("fci");
             presentFciSecurityBottomSheet();
           }}
         >

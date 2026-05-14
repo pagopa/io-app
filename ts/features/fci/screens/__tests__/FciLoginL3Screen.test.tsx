@@ -15,14 +15,9 @@ import {
   setActiveSessionLoginFlow
 } from "../../../authentication/activeSessionLogin/store/actions";
 import { IdpCIE } from "../../../authentication/login/hooks/useNavigateToLoginMethod";
-import {
-  trackFciLoginRequest,
-  trackFciLoginRequestContinue
-} from "../../analytics";
 
 // Mock the NFC hook
 jest.mock("../../../pn/aar/hooks/useIsNfcFeatureAvailable");
-jest.mock("../../analytics");
 
 const mockIsNfcAvailable =
   require("../../../pn/aar/hooks/useIsNfcFeatureAvailable").useIsNfcFeatureAvailable;
@@ -38,12 +33,6 @@ describe("FciLoginL3Screen", () => {
     expect(component.toJSON()).toMatchSnapshot();
   });
 
-  it("should call trackFciLoginRequest on first render", () => {
-    mockIsNfcAvailable.mockReturnValue(true);
-    renderComponent();
-    expect(trackFciLoginRequest).toHaveBeenCalledTimes(1);
-  });
-
   it("should render the screen correctly", () => {
     mockIsNfcAvailable.mockReturnValue(true);
 
@@ -52,17 +41,6 @@ describe("FciLoginL3Screen", () => {
     expect(component).toBeDefined();
     expect(component.getByTestId("FciLoginL3ScreenContent")).toBeDefined();
     expect(component.getByTestId("FciLoginL3SubtitleText")).toBeDefined();
-  });
-
-  it("should call trackFciLoginRequestContinue when continue button is pressed", () => {
-    mockIsNfcAvailable.mockReturnValue(true);
-    const { component } = renderComponent();
-
-    act(() => {
-      fireEvent.press(component.getByTestId("FciLoginL3ContinueButton"));
-    });
-
-    expect(trackFciLoginRequestContinue).toHaveBeenCalledTimes(1);
   });
 
   it("should dispatch active session login actions when continue button is pressed and NFC is available", () => {

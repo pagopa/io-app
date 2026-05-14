@@ -16,33 +16,6 @@ import { SignatureRequestDetailView } from "../../../../definitions/fci/Signatur
 import { buildEventProperties } from "../../../utils/analytics";
 import { SignatureRequestStatusEnum } from "../../../../definitions/fci/SignatureRequestStatus";
 
-export const trackFciLoginRequest = () =>
-  mixpanelTrack("FCI_LOGIN_REQUEST", buildEventProperties("UX", "screen_view"));
-
-export const trackFciLoginRequestContinue = () =>
-  mixpanelTrack(
-    "FCI_LOGIN_REQUEST_CONTINUE",
-    buildEventProperties("UX", "action")
-  );
-
-export const trackFciLoginRequestClose = () =>
-  mixpanelTrack(
-    "FCI_LOGIN_REQUEST_CLOSE",
-    buildEventProperties("UX", "action")
-  );
-
-export const trackFciNfcNotSupported = () =>
-  mixpanelTrack(
-    "FCI_NFC_NOT_SUPPORTED",
-    buildEventProperties("KO", "screen_view")
-  );
-
-export const trackFciNfcNotSupportedClose = () =>
-  mixpanelTrack(
-    "FCI_NFC_NOT_SUPPORTED_CLOSE",
-    buildEventProperties("UX", "action")
-  );
-
 export const trackFciSignatureCancelled = () =>
   mixpanelTrack(
     "FCI_SIGNATURE_CANCELLED",
