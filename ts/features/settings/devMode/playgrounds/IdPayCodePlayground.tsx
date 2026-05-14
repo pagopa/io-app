@@ -9,7 +9,7 @@ import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { ComponentRef, useRef, useState } from "react";
+import { useState } from "react";
 import { ScrollView } from "react-native";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import {
@@ -17,7 +17,6 @@ import {
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
 import { IdPayCodeRoutes } from "../../../idpay/code/navigation/routes";
-import { useInputFocus } from "../../../payments/checkout/hooks/useInputFocus";
 
 export const IdPayCodePlayGround = () => {
   const navigation = useNavigation<IOStackNavigationProp<AppParamsList>>();
@@ -48,9 +47,6 @@ export const IdPayCodePlayGround = () => {
     canGoBack: true
   });
 
-  const textInputRef = useRef<ComponentRef<typeof TextInput>>(null);
-  useInputFocus(textInputRef);
-
   return (
     <ScrollView>
       <ContentWrapper>
@@ -58,7 +54,6 @@ export const IdPayCodePlayGround = () => {
           onChangeText={text => setInitiativeId(text)}
           value={initiativeId ?? ""}
           placeholder="Initiative ID (optional)"
-          ref={textInputRef}
           accessibilityHint="Insert the initiative ID"
           accessibilityLabel="Initiative ID"
         />
