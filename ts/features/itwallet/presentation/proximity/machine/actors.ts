@@ -123,11 +123,9 @@ export const createProximityActorsImplementation = (env: Env) => {
         assert(data, "Missing required data");
 
         const parsedRequest = ISO18013_5.parseVerifierRequest(JSON.parse(data));
-        // const credentials = itwCredentialsByTypeSelector(store.getState());
         const proximityDetails = getProximityDetails(
           parsedRequest.request,
-          credentials,
-          env
+          credentials
         );
 
         sendBack({
