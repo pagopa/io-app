@@ -179,7 +179,7 @@ const buildSnapshot = (
     case "displayQrCode":
       return {
         ...initialSnapshot,
-        value: { Presentment: "DisplayQrCode" },
+        value: { Presentment: "AwaitingConnection" },
         tags: new Set([ItwPresentationTags.Presenting]),
         context: {
           ...initialSnapshot.context,
@@ -204,7 +204,7 @@ const buildSnapshot = (
     case "blocked":
       return {
         ...initialSnapshot,
-        value: { Presentment: "DisplayQrCode" },
+        value: { Presentment: "AwaitingConnection" },
         tags: new Set([ItwPresentationTags.Presenting]),
         context: {
           ...initialSnapshot.context,

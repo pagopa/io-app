@@ -32,8 +32,7 @@ describe("itwProximityMachine", () => {
   const navigateToNfcPresentmentScreen = jest.fn();
   const navigateToFailureScreen = jest.fn();
   const navigateToClaimsDisclosureScreen = jest.fn();
-  const navigateToSendDocumentsResponseScreen = jest.fn();
-  const navigateToWallet = jest.fn();
+  const navigateToSuccessScreen = jest.fn();
   const closeProximity = jest.fn();
 
   const checkBluetoothPermissions = jest.fn();
@@ -42,7 +41,6 @@ describe("itwProximityMachine", () => {
   const startEngagement = jest.fn();
   const sendDocuments = jest.fn();
   const terminateProximitySession = jest.fn();
-  const closeProximityFlow = jest.fn();
 
   const mockedMachine = itwProximityMachine.provide({
     actions: {
@@ -57,12 +55,10 @@ describe("itwProximityMachine", () => {
       navigateToBluetoothPermissionsScreen,
       navigateToBluetoothActivationScreen,
       navigateToNfcActivationScreen,
-      navigateToPresentmentScreen,
       navigateToNfcPresentmentScreen,
       navigateToFailureScreen,
       navigateToClaimsDisclosureScreen,
-      navigateToSendDocumentsResponseScreen,
-      navigateToWallet,
+      navigateToSuccessScreen,
       closeProximity
     },
     actors: {
@@ -72,8 +68,7 @@ describe("itwProximityMachine", () => {
       proximityCommunicationLogic: fromCallback(() => () => {}),
       startEngagement: fromPromise(startEngagement),
       sendDocuments: fromPromise(sendDocuments),
-      terminateProximitySession: fromPromise(terminateProximitySession),
-      closeProximityFlow: fromPromise(closeProximityFlow)
+      terminateProximitySession: fromPromise(terminateProximitySession)
     },
     guards: {
       hasFailure: ({ context }) => !!context.failure
@@ -344,15 +339,9 @@ describe("itwProximityMachine", () => {
 
     actor.send({ type: "qr-code-string", payload: T_QR_CODE });
     expect(actor.getSnapshot().value).toStrictEqual({
-      Presentment: "DisplayQrCode"
+      Presentment: "AwaitingConnection"
     });
     expect(actor.getSnapshot().context.qrCodeString).toEqual(T_QR_CODE);
-
-    actor.send({ type: "start-nfc-presentment" });
-    expect(actor.getSnapshot().value).toStrictEqual({
-      Presentment: "DisplayQrCode"
-    });
-    expect(navigateToNfcPresentmentScreen).toHaveBeenCalledTimes(1);
 
     actor.send({ type: "device-connecting" });
     expect(actor.getSnapshot().value).toStrictEqual({
@@ -363,16 +352,17 @@ describe("itwProximityMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual({
       Presentment: "Connected"
     });
-    expect(navigateToClaimsDisclosureScreen).toHaveBeenCalledTimes(1);
 
     actor.send({
       type: "device-document-request-received",
       proximityDetails: T_PROXIMITY_DETAILS,
-      verifierRequest: T_VERIFIER_REQUEST
+      verifierRequest: T_VERIFIER_REQUEST,
+      retrievalMethod: "ble"
     });
     expect(actor.getSnapshot().value).toStrictEqual({
       Presentment: "ClaimsDisclosure"
     });
+    expect(navigateToClaimsDisclosureScreen).toHaveBeenCalledTimes(1);
     expect(actor.getSnapshot().context.proximityDetails).toEqual(
       T_PROXIMITY_DETAILS
     );
@@ -382,35 +372,34 @@ describe("itwProximityMachine", () => {
 
     actor.send({ type: "holder-consent" });
     await waitFor(actor, snapshot =>
-      snapshot.matches({ Presentment: { SendingDocuments: "Initial" } })
+      snapshot.matches({ Presentment: "SendingDocuments" })
     );
-    expect(actor.getSnapshot().context.hasGivenConsent).toBe(true);
-    expect(navigateToSendDocumentsResponseScreen).toHaveBeenCalledTimes(1);
+    expect(actor.getSnapshot().context.hasGrantedConsent).toBe(true);
 
     actor.send({ type: "device-disconnected" });
     expect(actor.getSnapshot().value).toStrictEqual("Success");
+    expect(navigateToSuccessScreen).toHaveBeenCalledTimes(1);
 
     actor.send({ type: "close" });
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
-    expect(navigateToWallet).toHaveBeenCalledTimes(1);
+    expect(closeProximity).toHaveBeenCalledTimes(1);
   });
 
-  it("close from Presentment.DisplayQrCode calls closeProximity", () => {
+  it("close from Presentment.AwaitingConnection calls closeProximity", () => {
     const actor = createActor(mockedMachine, {
-      snapshot: makeSnapshot({ Presentment: "DisplayQrCode" })
+      snapshot: makeSnapshot({ Presentment: "AwaitingConnection" })
     });
 
     actor.start();
     actor.send({ type: "close" });
 
     expect(actor.getSnapshot().value).toStrictEqual({
-      Presentment: "DisplayQrCode"
+      Presentment: "AwaitingConnection"
     });
     expect(closeProximity).toHaveBeenCalledTimes(1);
   });
 
-  it("moves from SendingDocuments.Initial to Reminder and Final", () => {
-    jest.useFakeTimers();
+  it("holder-consent from ClaimsDisclosure moves to SendingDocuments", () => {
     sendDocuments.mockReturnValue(new Promise(() => {}));
     const actor = createActor(mockedMachine, {
       snapshot: makeSnapshot({ Presentment: "ClaimsDisclosure" })
@@ -420,17 +409,7 @@ describe("itwProximityMachine", () => {
     actor.send({ type: "holder-consent" });
 
     expect(actor.getSnapshot().value).toStrictEqual({
-      Presentment: { SendingDocuments: "Initial" }
-    });
-
-    jest.advanceTimersByTime(5000);
-    expect(actor.getSnapshot().value).toStrictEqual({
-      Presentment: { SendingDocuments: "Reminder" }
-    });
-
-    jest.advanceTimersByTime(10000);
-    expect(actor.getSnapshot().value).toStrictEqual({
-      Presentment: { SendingDocuments: "Final" }
+      Presentment: "SendingDocuments"
     });
   });
 
@@ -453,7 +432,7 @@ describe("itwProximityMachine", () => {
   it("device-disconnected before SendingDocuments moves to Failure", async () => {
     terminateProximitySession.mockResolvedValue(undefined);
     const actor = createActor(mockedMachine, {
-      snapshot: makeSnapshot({ Presentment: "DisplayQrCode" })
+      snapshot: makeSnapshot({ Presentment: "AwaitingConnection" })
     });
 
     actor.start();
@@ -469,7 +448,7 @@ describe("itwProximityMachine", () => {
   it("device-error moves to Failure", async () => {
     terminateProximitySession.mockResolvedValue(undefined);
     const actor = createActor(mockedMachine, {
-      snapshot: makeSnapshot({ Presentment: "DisplayQrCode" })
+      snapshot: makeSnapshot({ Presentment: "AwaitingConnection" })
     });
 
     actor.start();

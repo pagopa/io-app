@@ -1934,7 +1934,9 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
 </View>
 `;
 
-exports[`ItwProximityPresentmentScreen should render error state when QR code generation fails 1`] = `
+exports[
+  `ItwProximityPresentmentScreen should render error state when QR code generation fails 1`
+] = `
 <View
   style={
     {
@@ -4109,7 +4111,9 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
 </View>
 `;
 
-exports[`ItwProximityPresentmentScreen should render loading skeleton when machine is loading 1`] = `
+exports[
+  `ItwProximityPresentmentScreen should render loading skeleton when machine is loading 1`
+] = `
 <View
   style={
     {
@@ -6015,7 +6019,9 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
 </View>
 `;
 
-exports[`ItwProximityPresentmentScreen when credentials are expired should render blocked state with alert banner 1`] = `
+exports[
+  `ItwProximityPresentmentScreen when credentials are expired should render blocked state with alert banner 1`
+] = `
 <View
   style={
     {

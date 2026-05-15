@@ -44,13 +44,6 @@ export const createProximityActionsImplementation = (
     });
   },
 
-  navigateToPresentmentScreen: () => {
-    navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.PRESENTMENT,
-      params: {}
-    });
-  },
-
   navigateToNfcPresentmentScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
       screen: ITW_PROXIMITY_ROUTES.NFC_PRESENTMENT

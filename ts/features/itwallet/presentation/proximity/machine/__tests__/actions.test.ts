@@ -16,14 +16,6 @@ describe("createProximityActionsImplementation", () => {
     jest.clearAllMocks();
   });
 
-  it("pops the proximity navigator on success", () => {
-    const actions = createProximityActionsImplementation(navigation, {} as any);
-
-    actions.navigateToWallet();
-
-    expect(pop).toHaveBeenCalledTimes(1);
-  });
-
   it("pops the proximity navigator when closing the flow", () => {
     const actions = createProximityActionsImplementation(navigation, {} as any);
 

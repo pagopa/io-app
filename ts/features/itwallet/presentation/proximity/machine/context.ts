@@ -20,6 +20,11 @@ export type Context = {
    */
   qrCodeString?: string;
   /**
+   * The engagement mode committed to for the current proximity session.
+   * Defaults to "qrcode"; promoted to "nfc" only after the NFC permission gate succeeds.
+   */
+  engagementMode: ISO18013_5.EngagementMode;
+  /**
    * The retrieval mode used for the proximity presentation, either "nfc" or "ble".
    */
   retrievalMethod?: ISO18013_5.RetrievalMethod;
@@ -45,6 +50,7 @@ export type Context = {
 export const InitialContext: Context = {
   walletInstanceAttestation: undefined,
   credentials: undefined,
+  engagementMode: "qrcode",
   failure: undefined,
   proximityDetails: undefined,
   verifierRequest: undefined

@@ -21,9 +21,19 @@ import { ProximityEvents } from "./events";
 
 const SEND_RESPONSE_TIMEOUT_MS = 20000;
 
+const ENGAGEMENT_CONFIG: Record<
+  ISO18013_5.EngagementMode,
+  {
+    engagementModes: ReadonlyArray<ISO18013_5.EngagementMode>;
+    retrievalMethods: ReadonlyArray<ISO18013_5.RetrievalMethod>;
+  }
+> = {
+  qrcode: { engagementModes: ["qrcode"], retrievalMethods: ["ble"] },
+  nfc: { engagementModes: ["nfc"], retrievalMethods: ["nfc", "ble"] }
+};
+
 export type StartEngagementActorInput = {
-  engagementModes?: ReadonlyArray<ISO18013_5.EngagementMode>;
-  retrievalMethods?: ReadonlyArray<ISO18013_5.RetrievalMethod>;
+  engagementMode: ISO18013_5.EngagementMode;
 };
 
 export type SendErrorResponseActorOutput = Awaited<
@@ -54,13 +64,12 @@ export const createProximityActorsImplementation = (env: Env) => {
 
   const startEngagement = fromPromise<void, StartEngagementActorInput>(
     async ({ input }) => {
-      const { engagementModes = ["qrcode"], retrievalMethods = ["ble"] } =
-        input;
+      const { engagementModes, retrievalMethods } =
+        ENGAGEMENT_CONFIG[input.engagementMode];
 
       // Ensure any existing session is closed before starting a new one
       await ISO18013_5.close().catch(() => null);
 
-      // Start a new engagement session with QRCode -> Ble configuration
       await ISO18013_5.startEngagement({
         engagementModes,
         retrievalMethods,
@@ -210,15 +219,12 @@ export const createProximityActorsImplementation = (env: Env) => {
     () => ISO18013_5.sendErrorResponse(ISO18013_5.ErrorCode.SESSION_TERMINATED)
   );
 
-  const closeProximityFlow = fromPromise<boolean>(ISO18013_5.close);
-
   return {
     checkBluetoothPermissions: checkBluetoothPermissionsActor,
     checkBluetoothActivation: checkBluetoothActivationActor,
     checkNfcActivation: checkNfcActivationActor,
     startEngagement,
     proximityCommunicationLogic,
-    closeProximityFlow,
     sendDocuments,
     terminateProximitySession
   };
