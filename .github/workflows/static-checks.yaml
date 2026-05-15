@@ -67,12 +67,15 @@ jobs:
           else
             yarn test:ci --passWithNoTests --shard=${{ matrix.shard }}/10
           fi
+      - id: rename-coverage
+        if: needs.static-checks.outputs.should_test == 'true' && steps.run-test.outcome == 'success'
+        run: cp coverage/lcov.info coverage/lcov-${{ matrix.shard }}.info
       - id: upload-coverage
         if: needs.static-checks.outputs.should_test == 'true' && steps.run-test.outcome == 'success'
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
           name: coverage-artifact-${{ matrix.shard }}
-          path: coverage/lcov.info
+          path: coverage/lcov-${{ matrix.shard }}.info
           retention-days: 1
   unit-test-gate:
     name: Unit tests result
