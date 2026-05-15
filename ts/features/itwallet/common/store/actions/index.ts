@@ -4,6 +4,7 @@ import { ItwIdentificationActions } from "../../../identification/common/store/a
 import { ItwIssuanceActions } from "../../../issuance/store/actions";
 import { ItwLifecycleActions } from "../../../lifecycle/store/actions";
 import { ItwDebugActions } from "../../../playgrounds/store/actions";
+import { ItwProximityActions } from "../../../presentation/proximity/store/actions";
 import { ItwWalletInstanceActions } from "../../../walletInstance/store/actions";
 import { ItwBannersActions } from "./banners";
 import { ItwEnvironmentActions } from "./environment";
@@ -21,4 +22,5 @@ export type ItwActions =
   | ItwSecurePreferencesActions
   | ItwCredentialsCatalogueActions
   | ItwBannersActions
-  | ItwDebugActions;
+  | ItwDebugActions
+  | ItwProximityActions;
