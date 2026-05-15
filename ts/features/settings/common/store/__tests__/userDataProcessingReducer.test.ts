@@ -1,8 +1,8 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 
-import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/backend/UserDataProcessingChoice";
-import { UserDataProcessingStatusEnum } from "../../../../../../definitions/backend/UserDataProcessingStatus";
-import { UserDataProcessing } from "../../../../../../definitions/backend/UserDataProcessing";
+import { UserDataProcessingChoiceEnum } from "../../../../../../definitions/identity/UserDataProcessingChoice";
+import { UserDataProcessingStatusEnum } from "../../../../../../definitions/identity/UserDataProcessingStatus";
+import { UserDataProcessing } from "../../../../../../definitions/identity/UserDataProcessing";
 import userDataProcessingReducer, {
   INITIAL_STATE,
   UserDataProcessingState

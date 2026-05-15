@@ -1,8 +1,8 @@
 import * as E from "fp-ts/lib/Either";
 import { call, put } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { PathTraversalSafePathParam } from "../../../../../definitions/backend/PathTraversalSafePathParam";
-import { ServicesClient } from "../../common/api/servicesClient";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
+import { ServicesClient } from "../../../../api/ServicesClientManager";
 import { SagaCallReturnType } from "../../../../types/utils";
 import { convertUnknownToError } from "../../../../utils/errors";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
@@ -19,13 +19,11 @@ export function* handleServiceDetails(
   action: ActionType<typeof loadServiceDetail.request>
 ) {
   try {
-    if (!PathTraversalSafePathParam.is(action.payload)) {
+    if (!ServiceId.is(action.payload)) {
       yield* put(
         loadServiceDetail.failure({
           service_id: action.payload,
-          error: new Error(
-            "Unable to decode ServiceId to PathTraversalSafePathParam"
-          )
+          error: new Error("Unable to decode ServiceId to ServiceId")
         })
       );
       return;

@@ -1,6 +1,6 @@
 import { createStore, Store } from "redux";
 import { act, fireEvent, RenderAPI } from "@testing-library/react-native";
-import { InitializedProfile } from "../../../../../definitions/backend/InitializedProfile";
+import { InitializedProfile } from "../../../../../definitions/identity/InitializedProfile";
 import MockZendesk from "../../../../__mocks__/io-react-native-zendesk";
 import * as mixpanel from "../../../../mixpanel";
 import ROUTES from "../../../../navigation/routes";

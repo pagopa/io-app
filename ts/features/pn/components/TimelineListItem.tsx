@@ -1,7 +1,8 @@
 import { useMemo, useState } from "react";
-import { Dimensions, View } from "react-native";
+import { Dimensions, useWindowDimensions, View } from "react-native";
 import {
   Alert,
+  IOMaxFontSizeMultiplier,
   IOVisualCostants,
   ListItemAction
 } from "@pagopa/io-app-design-system";
@@ -81,10 +82,14 @@ export const TimelineListItem = ({
     timelineBottomMargin + timelineItemHeight * history.length
   );
 
+  const { fontScale } = useWindowDimensions();
+  const isFontTooBig = fontScale >= IOMaxFontSizeMultiplier;
+
   const timelineData = useMemo(() => generateTimelineData(history), [history]);
   const { bottomSheet, present } = useIOBottomSheetModal({
     component: <Timeline data={timelineData} footerHeight={footerHeight} />,
     title: I18n.t("features.pn.details.timeline.menuTitle"),
+    forceFullscreen: isFontTooBig,
     footer: !hideFooter ? (
       <View
         onLayout={layoutChangeEvent =>

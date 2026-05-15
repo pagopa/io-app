@@ -1,7 +1,9 @@
 import { testSaga } from "redux-saga-test-plan";
 import { watchServicesSaga } from "..";
-import { BackendClient } from "../../../../../api/backend";
-import { createServicesClient, ServicesClient } from "../../api/servicesClient";
+import {
+  IdentityClient,
+  identityClientManager
+} from "../../../../../api/IdentityClientManager";
 import { apiUrlPrefix } from "../../../../../config";
 import { watchServicesDetailsSaga } from "../../../details/saga";
 import { watchHomeSaga } from "../../../home/saga";
@@ -11,19 +13,43 @@ import { loadServicePreference } from "../../../details/store/actions/preference
 import { watchFavouriteServicesSaga } from "../../../favouriteServices/saga";
 import { specialServicePreferencesSaga } from "../specialServicePreferencesSaga";
 import { isFavouriteServicesEnabledSelector } from "../../store/selectors/remoteConfig";
+import { KeyInfo } from "../../../../lollipop/utils/crypto";
+import {
+  ServicesClient,
+  servicesClientManager
+} from "../../../../../api/ServicesClientManager";
+
+jest.mock("../../../../../api/IdentityClientManager");
+jest.mock("../../../../../api/ServicesClientManager");
 
 describe("index", () => {
   describe("watchServicesSaga", () => {
     it("should follow expected flow", () => {
-      const backendClient = {} as BackendClient;
-      const bearerToken =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.fakePayload.XYZ123abcDEF456ghi789JKL";
+      const keyInfo = {} as KeyInfo;
+      const sessionToken = "mock-session-token";
+      const identityClient = {} as IdentityClient;
       const servicesClient = {} as ServicesClient;
-      testSaga(watchServicesSaga, backendClient, bearerToken)
+
+      testSaga(watchServicesSaga, keyInfo, sessionToken)
         .next()
-        .call(createServicesClient, apiUrlPrefix, bearerToken)
+        .call(
+          [identityClientManager, identityClientManager.getClient],
+          apiUrlPrefix,
+          {
+            keyInfo,
+            token: sessionToken
+          }
+        )
+        .next(identityClient)
+        .call(
+          [servicesClientManager, servicesClientManager.getClient],
+          apiUrlPrefix,
+          {
+            token: sessionToken
+          }
+        )
         .next(servicesClient)
-        .fork(watchServicesDetailsSaga, backendClient, servicesClient)
+        .fork(watchServicesDetailsSaga, identityClient, servicesClient)
         .next()
         .fork(watchHomeSaga, servicesClient)
         .next()
