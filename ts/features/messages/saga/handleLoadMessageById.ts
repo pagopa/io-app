@@ -25,7 +25,10 @@ export function* handleLoadMessageById(
   const sessionToken = yield* select(sessionTokenSelector);
 
   if (!sessionToken) {
-    trackUndefinedBearerToken(UndefinedBearerTokenPhase.messageByIdLoading);
+    yield* call(
+      trackUndefinedBearerToken,
+      UndefinedBearerTokenPhase.messageByIdLoading
+    );
     return;
   }
 
@@ -49,7 +52,8 @@ export function* handleLoadMessageById(
         ? "messageNotFound"
         : "generic";
 
-    const nextAction = handleResponse(
+    const nextAction = yield* call(
+      handleResponse<CreatedMessageWithContentAndAttachments>,
       response,
       (message: CreatedMessageWithContentAndAttachments) =>
         loadMessageById.success(toUIMessage(message)),

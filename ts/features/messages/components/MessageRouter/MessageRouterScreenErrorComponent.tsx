@@ -10,6 +10,7 @@ import { useIOSelector } from "../../../../store/hooks";
 import { GlobalState } from "../../../../store/reducers/types";
 import { messageGetStatusErrorPhaseSelector } from "../../store/reducers/messageGetStatus";
 import { getPaginatedMessageById } from "../../store/reducers/paginatedById";
+import { isTestEnv } from "../../../../utils/environment";
 
 export const MessageRouterScreenErrorComponent = ({
   onRetry,
@@ -71,7 +72,8 @@ const getMessageRouterErrorMap = (
     subtitle: I18n.t("messageDetails.notFound.subtitle"),
     action: {
       label: I18n.t("global.buttons.close"),
-      onPress: onCancel
+      onPress: onCancel,
+      testID: "messageRouterError-close-button"
     }
   },
   thirdPartyError: {
@@ -80,11 +82,13 @@ const getMessageRouterErrorMap = (
     subtitle: I18n.t("messageDetails.remoteContentError.body"),
     action: {
       label: I18n.t("global.buttons.retry"),
-      onPress: onRetry
+      onPress: onRetry,
+      testID: "messageRouterError-retry-button"
     },
     secondaryAction: {
       label: I18n.t("global.buttons.cancel"),
-      onPress: onCancel
+      onPress: onCancel,
+      testID: "messageRouterError-cancel-button"
     }
   },
   genericError: {
@@ -92,11 +96,19 @@ const getMessageRouterErrorMap = (
     title: I18n.t("global.genericError"),
     action: {
       label: I18n.t("global.buttons.retry"),
-      onPress: onRetry
+      onPress: onRetry,
+      testID: "messageRouterError-retry-button"
     },
     secondaryAction: {
       label: I18n.t("global.buttons.cancel"),
-      onPress: onCancel
+      onPress: onCancel,
+      testID: "messageRouterError-cancel-button"
     }
   }
 });
+export const testable = isTestEnv
+  ? {
+      messageRouterErrorVariantSelector,
+      getMessageRouterErrorMap
+    }
+  : undefined;

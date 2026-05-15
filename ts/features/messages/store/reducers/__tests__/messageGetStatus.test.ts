@@ -9,7 +9,9 @@ import { applicationChangeState } from "../../../../../store/actions/application
 import { Action } from "../../../../../store/actions/types";
 import {
   INITIAL_STATE,
+  MessageGetStatusFailurePhaseType,
   blockedFromPushNotificationSelector,
+  messageGetStatusErrorPhaseSelector,
   messageGetStatusReducer,
   messageSuccessDataSelector,
   showSpinnerFromMessageGetStatusSelector
@@ -308,4 +310,31 @@ describe("blockedFromPushNotificationSelector", () => {
     const blockedFromPush = blockedFromPushNotificationSelector(globalState);
     expect(blockedFromPush).toBe(true);
   });
+});
+
+describe("messageGetStatusErrorPhaseSelector", () => {
+  ["idle", "loading", "blocked", "success", "error", "retry"].forEach(
+    status => {
+      const isError = status === "error";
+      const mockErrorPhase =
+        `phase-for-${status}` as MessageGetStatusFailurePhaseType;
+      it(`should return ${isError ? "failurePhase" : "undefined"} for status ${status}`, () => {
+        const globalState = appReducer(
+          undefined,
+          isError
+            ? getMessageDataAction.failure({ phase: mockErrorPhase })
+            : getMessageDataAction.request({
+                messageId: "m1",
+                fromPushNotification: false
+              })
+        );
+        const errorPhase = messageGetStatusErrorPhaseSelector(globalState);
+        if (isError) {
+          expect(errorPhase).toBe(mockErrorPhase);
+        } else {
+          expect(errorPhase).toBeUndefined();
+        }
+      });
+    }
+  );
 });

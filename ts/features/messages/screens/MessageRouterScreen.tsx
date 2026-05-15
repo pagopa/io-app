@@ -145,6 +145,7 @@ export const MessageRouterScreen = (props: NavigationProps): ReactElement => {
   if (isLoading) {
     return (
       <LoadingScreenContent
+        testID="routerScreen-loading"
         title={I18n.t("messageDetails.loadingText")}
         subtitle={I18n.t("messageDetails.pleaseWait")}
         headerVisible
