@@ -4,7 +4,8 @@ import {
   IOButton,
   IOColors,
   IOSkeleton,
-  IOVisualCostants
+  IOVisualCostants,
+  useIOTheme
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
@@ -16,7 +17,6 @@ import ItwIcon from "../../../../../../img/features/itWallet/brand/itw_icon.svg"
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
 import { useIOSelector } from "../../../../../store/hooks";
 import { ITW_BRANDED_BOX_PADDING } from "../../../common/components/ItwBrandedBox";
-import { useItWalletTheme } from "../../../common/utils/theme";
 import {
   trackItwProximityQrCode,
   trackItwProximityQrCodeLoadingRetry
@@ -50,7 +50,7 @@ type Props = {
 };
 
 export const ItwProximityQrCode = ({ source }: Props) => {
-  const itwTheme = useItWalletTheme();
+  const theme = useIOTheme();
   const machineRef = ItwProximityMachineContext.useActorRef();
 
   const qrCodeString =
@@ -124,7 +124,7 @@ export const ItwProximityQrCode = ({ source }: Props) => {
   return (
     <Animated.View entering={FadeIn.duration(200)}>
       <QRCode
-        color={itwTheme["qrcode-color"]}
+        color={theme["textBody-default"]}
         value={qrCodeString}
         size={QR_CODE_SIZE}
         errorCorrectionLevel="H"

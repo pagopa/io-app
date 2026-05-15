@@ -36,9 +36,7 @@ const themeKeys = [
   // Banners
   "banner-background",
   // Cards
-  "card-background",
-  // Proximity
-  "qrcode-color"
+  "card-background"
 ] as const;
 
 export type ItWalletTheme = {
@@ -48,15 +46,13 @@ export type ItWalletTheme = {
 const itWalletLightTheme: ItWalletTheme = {
   "header-background": "#F2F9FF",
   "banner-background": "#F2F9FF",
-  "card-background": "#F2F2F2",
-  "qrcode-color": "#000000"
+  "card-background": "#F2F2F2"
 };
 
 const itWalletDarkTheme: ItWalletTheme = {
   "header-background": "#0F2433",
   "banner-background": "#0F2433",
-  "card-background": "#1A1A1A",
-  "qrcode-color": "#FFFFFF"
+  "card-background": "#1A1A1A"
 };
 
 export const ItWalletThemes = {
