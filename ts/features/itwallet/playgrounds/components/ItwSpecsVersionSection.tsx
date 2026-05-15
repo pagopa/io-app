@@ -16,6 +16,7 @@ import {
 } from "../../common/store/selectors/environment";
 import { itwSetSpecsVersion } from "../../common/store/actions/environment";
 import { itwLifecycleWalletReset } from "../../lifecycle/store/actions";
+import { itwFetchCredentialsCatalogue } from "../../credentialsCatalogue/store/actions";
 
 const itwVersions: ReadonlyArray<ItwVersion> = ["1.0.0", "1.3.3"];
 
@@ -45,6 +46,7 @@ export const ItwSpecsVersionSection = () => {
           onPress: () => {
             dispatch(itwLifecycleWalletReset());
             dispatch(itwSetSpecsVersion(version));
+            dispatch(itwFetchCredentialsCatalogue.request());
           }
         }
       ],

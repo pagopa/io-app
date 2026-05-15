@@ -11,7 +11,10 @@ import {
   newCredentials,
   upcomingCredentials
 } from "../../../common/utils/itwCredentialUtils";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
+import { Locales } from "../../../../../i18n";
+import { persistedPreferencesSelector } from "../../../../../store/reducers/persistedPreferences";
 
 export type CredentialsListEntry = {
   type: string;
@@ -89,12 +92,83 @@ export const itwIsCatalogueEnabledForCredentialsList = (state: GlobalState) =>
   state.features.itWallet.credentialsCatalogue.isEnabledForCredentialsList;
 
 /**
+ * Select the raw catalogue translations pot (all locales).
+ * Only populated for IT-Wallet spec v1.3.3.
+ */
+export const itwCatalogueTranslationsSelector = (state: GlobalState) => {
+  const translations =
+    state.features.itWallet.credentialsCatalogue.translations;
+  // Guard against missing field in persisted state from app versions
+  // prior to migration 13 (before catalogue translations were introduced).
+  if (!translations) {
+    return undefined;
+  }
+  return pot.toUndefined(translations);
+};
+
+/**
+ * Select the catalogue translations for the current app locale.
+ * Returns a flat `l10n_id → string` map, or `undefined` when unavailable.
+ */
+export const itwCatalogueTranslationsByLocaleSelector = createSelector(
+  [itwCatalogueTranslationsSelector, persistedPreferencesSelector],
+  (translations, preferences): Record<string, string> | undefined => {
+    if (!translations) {
+      return undefined;
+    }
+    const locale: Locales = preferences.preferredLanguage ?? "it";
+    return translations[locale];
+  }
+);
+
+/**
+ * Returns a resolver function that resolves a credential display name.
+ * When the credentials catalogue feature flag is enabled, names are resolved using
+ * catalogue translations (v1.3.3+) when available, falling back to the catalogue
+ * static name. When the FF is disabled, always falls back to the hardcoded i18n string.
+ *
+ * This is the single source of truth for credential name resolution across the app.
+ * Use `useItwCredentialName` hook for component use, or call this selector directly
+ * when resolving names for multiple credential types at once.
+ */
+export const itwCredentialNameResolverSelector = createSelector(
+  [
+    itwIsCatalogueEnabledForCredentialsList,
+    itwCredentialsCatalogueByTypesSelector,
+    itwCatalogueTranslationsByLocaleSelector,
+    itwLifecycleIsITWalletValidSelector
+  ],
+  (isCatalogueEnabled, catalogue, translations, withL3Design) =>
+    (credentialType: string | undefined, withDefault: string = ""): string => {
+      if (isCatalogueEnabled && credentialType && catalogue && translations) {
+        const catalogueMeta = catalogue[credentialType];
+        const resolvedName =
+          (catalogueMeta.name_l10n_id &&
+            translations[catalogueMeta.name_l10n_id]) ||
+          catalogueMeta.name;
+        if (resolvedName) {
+          return resolvedName;
+        }
+      }
+      return getCredentialNameFromType(
+        credentialType,
+        withL3Design,
+        withDefault
+      );
+    }
+);
+
+/**
  * Select the list of all obtainable credentials that are available in the catalogue (if enabled),
  * or the hardcoded list otherwise. This list is not filtered any further: it includes all credentials.
  */
 export const itwAvailableCredentialsListSelector = createSelector(
-  [itwIsCatalogueEnabledForCredentialsList, itwCredentialsCatalogueSelector],
-  (isEnabled, catalogue): ReadonlyArray<CredentialsListEntry> => {
+  [
+    itwIsCatalogueEnabledForCredentialsList,
+    itwCredentialsCatalogueSelector,
+    itwCredentialNameResolverSelector
+  ],
+  (isEnabled, catalogue, resolveName): ReadonlyArray<CredentialsListEntry> => {
     if (!isEnabled) {
       return hardcodedCredentialsList;
     }
@@ -102,10 +176,14 @@ export const itwAvailableCredentialsListSelector = createSelector(
     if (!catalogue) {
       return EMPTY_ARRAY;
     }
+
     return catalogue.credentials
       .filter(credential => credential.credential_type !== CredentialType.PID)
       .map(credential => ({
-        name: credential.name ?? credential.credential_type, // TODO: [SIW-4180] handle localized names (name_l10n_id)
+        name: resolveName(
+          credential.credential_type,
+          credential.name ?? credential.credential_type
+        ),
         type: credential.credential_type
       }));
   }

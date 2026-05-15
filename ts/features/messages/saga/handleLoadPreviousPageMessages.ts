@@ -3,7 +3,7 @@ import { ActionType } from "typesafe-actions";
 import { loadPreviousPageMessages as loadPreviousPageMessagesAction } from "../store/actions";
 import { SagaCallReturnType } from "../../../types/utils";
 import { toUIMessage } from "../store/reducers/transformers";
-import { PaginatedPublicMessagesCollection } from "../../../../definitions/backend/PaginatedPublicMessagesCollection";
+import { PaginatedPublicMessagesCollection } from "../../../../definitions/communication/PaginatedPublicMessagesCollection";
 import { convertUnknownToError, getError } from "../../../utils/errors";
 import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import { errorToReason, unknownToReason } from "../utils";
@@ -14,8 +14,7 @@ import {
 } from "../analytics";
 import { handleResponse } from "../utils/responseHandling";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
-import { backendClientManager } from "../../../api/BackendClientManager";
-import { apiUrlPrefix } from "../../../config";
+import { getCommunicationClient } from "./commons";
 
 export function* handleLoadPreviousPageMessages(
   action: ActionType<typeof loadPreviousPageMessagesAction.request>
@@ -31,8 +30,8 @@ export function* handleLoadPreviousPageMessages(
     return;
   }
 
-  const { getMessages } = backendClientManager.getBackendClient(
-    apiUrlPrefix,
+  const { getUserMessages: getMessages } = yield* call(
+    getCommunicationClient,
     sessionToken
   );
 
