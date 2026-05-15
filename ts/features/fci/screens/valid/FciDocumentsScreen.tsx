@@ -293,8 +293,8 @@ const FciDocumentsScreen = () => {
 
   if (
     pot.isLoading(signatureRequest) ||
-    S.isEmpty(downloadPath) ||
-    pot.isError(fciDownloadSelector)
+    pot.isNone(fciDownloadSelector) ||
+    S.isEmpty(downloadPath)
   ) {
     return <LoadingComponent />;
   }

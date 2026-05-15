@@ -23,11 +23,11 @@ const fciDownloadPreviewReducer = (
 ): FciDownloadPreviewState => {
   switch (action.type) {
     case getType(fciDownloadPreview.request):
-      return pot.toLoading(state);
+      return pot.toLoading(pot.none);
     case getType(fciDownloadPreview.success):
       return pot.some(action.payload);
     case getType(fciDownloadPreview.failure):
-      return pot.toError(state, action.payload);
+      return pot.toError(pot.none, action.payload);
     case getType(fciDownloadPreview.cancel):
     case getType(fciClearStateRequest):
       return initialState;
