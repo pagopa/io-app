@@ -13,8 +13,8 @@ import {
   getDocuments,
   getProximityDetails,
   promiseWithTimeout
-} from "../utils/itwProximityPresentationUtils";
-import type { EventsPayload } from "../utils/itwProximityTypeUtils";
+} from "../utils/presentation";
+import type { EventsPayload } from "../utils/types";
 import { checkNfcActivation } from "../utils/nfc";
 import { Context } from "./context";
 import { ProximityEvents } from "./events";

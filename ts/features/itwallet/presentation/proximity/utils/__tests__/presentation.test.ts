@@ -1,9 +1,6 @@
-import { UntrustedRpError } from "../itwProximityErrors";
-import {
-  generateAcceptedFields,
-  getProximityDetails
-} from "../itwProximityPresentationUtils";
-import type { VerifierRequest } from "../itwProximityTypeUtils";
+import { UntrustedRpError } from "../errors";
+import { generateAcceptedFields, getProximityDetails } from "../presentation";
+import type { VerifierRequest } from "../types";
 import { CredentialMetadata } from "../../../../common/utils/itwTypesUtils";
 
 const mockDocType = "org.iso.18013.5.1.mDL";

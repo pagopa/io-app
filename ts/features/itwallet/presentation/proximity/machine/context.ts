@@ -3,10 +3,7 @@ import {
   CredentialMetadata,
   WalletInstanceAttestations
 } from "../../../common/utils/itwTypesUtils";
-import type {
-  ProximityDetails,
-  VerifierRequest
-} from "../utils/itwProximityTypeUtils";
+import type { ProximityDetails, VerifierRequest } from "../utils/types";
 import { ProximityFailure } from "./failure";
 
 export type Context = {

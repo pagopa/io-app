@@ -13,10 +13,7 @@ import {
 } from "../../../../common/utils/itwTypesUtils";
 import { ProximityFailureType } from "../failure";
 import { ItwProximityMachine, itwProximityMachine } from "../machine";
-import {
-  ProximityDetails,
-  VerifierRequest
-} from "../../utils/itwProximityTypeUtils";
+import { ProximityDetails, VerifierRequest } from "../../utils/types";
 
 type MachineSnapshot = StateFrom<ItwProximityMachine>;
 

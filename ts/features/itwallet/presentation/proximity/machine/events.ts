@@ -1,8 +1,5 @@
 import { ISO18013_5 } from "@pagopa/io-react-native-iso18013";
-import type {
-  ProximityDetails,
-  VerifierRequest
-} from "../utils/itwProximityTypeUtils";
+import type { ProximityDetails, VerifierRequest } from "../utils/types";
 
 export type Start = {
   type: "start";

@@ -8,7 +8,7 @@ import {
   claimsSelectorHeaderGradientsByCredentialType,
   mapClaimsToClaimsSelectorItems
 } from "../../common/utils/itwClaimSelector";
-import { ProximityDetails } from "../utils/itwProximityTypeUtils";
+import { ProximityDetails } from "../utils/types";
 
 type ItwProximityPresentationDetailsProps = {
   data: ProximityDetails;

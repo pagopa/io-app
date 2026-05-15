@@ -5,13 +5,13 @@ import {
 } from "../../../common/utils/itwClaimsUtils";
 import { WIA_KEYTAG } from "../../../common/utils/itwCryptoContextUtils";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
-import { TimeoutError, UntrustedRpError } from "./itwProximityErrors";
+import { TimeoutError, UntrustedRpError } from "./errors";
 import type {
   AcceptedFields,
   ProximityDetails,
   RequestedDocument,
   VerifierRequest
-} from "./itwProximityTypeUtils";
+} from "./types";
 
 const WIA_DOC_TYPE = "org.iso.18013.5.1.IT.WalletAttestation";
 

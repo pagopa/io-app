@@ -30,7 +30,7 @@ import {
   selectIsSending,
   selectProximityDetails
 } from "../machine/selectors.ts";
-import { ProximityDetails } from "../utils/itwProximityTypeUtils.ts";
+import { ProximityDetails } from "../utils/types.ts";
 
 export const ItwProximityClaimsDisclosureScreen = () => {
   const isLoading = ItwProximityMachineContext.useSelector(selectIsLoading);
