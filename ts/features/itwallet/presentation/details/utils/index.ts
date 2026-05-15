@@ -18,17 +18,16 @@ const EXCLUDED_CREDENTIAL_STATUSES: ReadonlyArray<ItwCredentialStatus> = [
  *
  * Logic summary:
  * - Excluded statuses ("expired", "expiring", "invalid", "unknown") are never overridden.
+ * - Expired eID → non-excluded credentials display as "invalid".
  * - Offline:
  *   - Show "jwtExpired" only if eID is valid.
  *   - Otherwise, show "valid".
- * - Online:
- *   - Show actual credential status if eID is valid.
- *   - Otherwise, show "valid".
+ * - Online + valid eID → show actual credential status.
  *
  * @param credentialStatus The actual credential status
  * @param eidStatus The current eID status
  * @param isOffline Whether the app is operating offline
- * @returns {ItwCredentialStatus}The display status for the credential
+ * @returns {ItwCredentialStatus} The status to display in the UI
  */
 export const getItwDisplayCredentialStatus = (
   credentialStatus: ItwCredentialStatus,
@@ -41,6 +40,11 @@ export const getItwDisplayCredentialStatus = (
   }
 
   const isEidValid = eidStatus === "valid";
+
+  // Expired eid → all non-excluded credentials display as invalid
+  if (eidStatus === "jwtExpired") {
+    return "invalid";
+  }
 
   // Offline: preserve only jwtExpired if eid is valid
   if (isOffline && isEidValid && credentialStatus === "jwtExpired") {

@@ -108,6 +108,11 @@ export const deriveCredentialAlertType = (
   const isCredentialJwtInvalid =
     isCredentialJwtExpiring || isCredentialJwtExpired;
 
+  // Handle alert if PID credential is expired
+  if (isItwL3 && isEidExpired) {
+    return CredentialAlertType.INVALID_CREDENTIAL;
+  }
+
   // Handle alerts only if the credential JWT is expiring or expired
   if (isCredentialJwtInvalid) {
     /**
@@ -135,27 +140,23 @@ export const deriveCredentialAlertType = (
     if (shouldShowEidAlert) {
       return CredentialAlertType.EID_LIFECYCLE;
     }
-    // 3. Show INVALID_CREDENTIAL when the credential JWT is expired and the user is in L3
-    if (isItwL3 && isCredentialJwtExpired) {
-      return CredentialAlertType.INVALID_CREDENTIAL;
-    }
 
-    // 4. In all other cases where the JWT is invalid but no special condition applies,
+    // 3. In all other cases where the JWT is invalid but no special condition applies,
     // show the generic JWT verification alert
     return CredentialAlertType.JWT_VERIFICATION;
   }
 
-  // 5. If the credential status is "expiring", show the Document Expiring alert
+  // 4. If the credential status is "expiring", show the Document Expiring alert
   if (credentialStatus === "expiring") {
     return CredentialAlertType.DOCUMENT_EXPIRING;
   }
 
-  // 6. If there is a dynamic message provided by the issuer, show the Issuer Dynamic Error alert
+  // 5. If there is a dynamic message provided by the issuer, show the Issuer Dynamic Error alert
   if (message) {
     return CredentialAlertType.ISSUER_DYNAMIC_ERROR;
   }
 
-  // 7. Fallback when the issuer does not provide a message for an expired credential
+  // 6. Fallback when the issuer does not provide a message for an expired credential
   if (credentialStatus === "expired") {
     return CredentialAlertType.DOCUMENT_EXPIRED;
   }

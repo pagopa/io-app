@@ -7,7 +7,10 @@ import {
   CredentialMetadata,
   ItwCredentialStatus
 } from "../../../common/utils/itwTypesUtils.ts";
-import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
+import {
+  itwCredentialStatusSelector,
+  itwCredentialsEidStatusSelector
+} from "../../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 
 type Props = {
@@ -29,8 +32,9 @@ const ItwPresentationCredentialInfoAlert = ({ credential }: Props) => {
     itwCredentialStatusSelector(state, credential.credentialType)
   );
   const withL3Design = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
 
-  if (!validStates.includes(status)) {
+  if (!validStates.includes(status) || eidStatus === "jwtExpired") {
     return null;
   }
 
