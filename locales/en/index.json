@@ -1385,6 +1385,10 @@
       "decodingErrorContent": "Message content cannot be displayed.",
       "decodingErrorHide": "Hide content",
       "decodingErrorShow": "Show anyway"
+    },
+    "notFound": {
+      "title": "This message is not available",
+      "subtitle": "The message you are looking for is not available for this profile. To view your messages, go to the message list."
     }
   },
   "messagePDFPreview": {

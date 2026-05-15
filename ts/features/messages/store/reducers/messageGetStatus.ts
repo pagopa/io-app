@@ -107,10 +107,10 @@ const isSuccessStatus = (
 export const showSpinnerFromMessageGetStatusSelector = (state: GlobalState) =>
   state.entities.messages.messageGetStatus.status !== "error";
 
-export const thirdPartyMessageDetailsErrorSelector = (state: GlobalState) =>
-  state.entities.messages.messageGetStatus.status === "error" &&
-  state.entities.messages.messageGetStatus.failurePhase ===
-    "thirdPartyMessageDetails";
+export const messageGetStatusErrorPhaseSelector = (state: GlobalState) =>
+  state.entities.messages.messageGetStatus.status === "error"
+    ? state.entities.messages.messageGetStatus.failurePhase
+    : undefined;
 
 export const messageSuccessDataSelector = (state: GlobalState) =>
   isSuccessStatus(state.entities.messages.messageGetStatus)
