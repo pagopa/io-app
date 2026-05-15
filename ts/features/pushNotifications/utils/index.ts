@@ -4,6 +4,8 @@ import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import PushNotification from "react-native-push-notification";
 import NotificationsUtils from "react-native-notifications-utils";
 import { isIos } from "../../../utils/platform";
+import { trackAppCaughtError } from "../../../utils/analytics";
+import { unknownToString } from "../../../utils/errors";
 
 export enum AuthorizationStatus {
   NotDetermined = 0,
@@ -34,13 +36,11 @@ export const checkNotificationPermissions = () =>
         });
       }
     } catch (e) {
-      // TODO: Replace Sentry capture exception with a new logging solution
-      // captureException(e);
-      // captureMessage(
-      //   `[PushNotifications] 'checkNotificationPermissions' has thrown an exception on ${
-      //     isIos ? "iOS" : "Android"
-      //   }`
-      // );
+      trackAppCaughtError(
+        "checkNotificationPermissions",
+        `exception thrown on ${isIos ? "iOS" : "Android"}`,
+        unknownToString(e)
+      );
       resolve(false);
     }
   });
@@ -65,13 +65,11 @@ export const requestNotificationPermissions = async () => {
       return permissionStatus === PermissionsAndroid.RESULTS.GRANTED;
     }
   } catch (e) {
-    // TODO: Replace Sentry capture exception with a new logging solution
-    // captureException(e);
-    // captureMessage(
-    //   `[PushNotifications] 'requestNotificationPermissions' has thrown an exception on ${
-    //     isIos ? "iOS" : "Android"
-    //   }`
-    // );
+    trackAppCaughtError(
+      "requestNotificationPermissions",
+      `exception thrown on ${isIos ? "iOS" : "Android"}`,
+      unknownToString(e)
+    );
     return false;
   }
 };

@@ -14,6 +14,9 @@ import {
 import { SpidIdp } from "../../../../../utils/idps";
 import { format } from "../../../../../utils/dates";
 import { AuthenticationState, AuthenticationStateWithIdp } from "../models";
+import { SpidLevel } from "../../../../../../definitions/session_manager/SpidLevel";
+
+export type SpidLevelShort = "L1" | "L2" | "L3";
 
 export const authenticationStateSelector = (
   state: GlobalState
@@ -78,6 +81,43 @@ export const zendeskTokenSelector = (state: GlobalState): string | undefined =>
   isLoggedInWithSessionInfo(state.authentication)
     ? state.authentication.sessionInfo.zendeskToken
     : undefined;
+
+export const spidLevelSelector = (state: GlobalState): SpidLevel | undefined =>
+  isLoggedInWithSessionInfo(state.authentication)
+    ? state.authentication.sessionInfo.spidLevel
+    : undefined;
+
+/**
+ * This function extracts the SPID level (L1, L2, L3) from the full SPID level string
+ * (e.g., "https://www.spid.gov.it/SpidL1") and returns it in a shorter format.
+ * If the input is undefined or does not contain a valid SPID level, it returns undefined.
+ */
+export const extractSpidLevel = (
+  spidLevel?: SpidLevel
+): SpidLevelShort | undefined => {
+  if (spidLevel) {
+    if (spidLevel.includes("L1")) {
+      return "L1";
+    } else if (spidLevel.includes("L2")) {
+      return "L2";
+    } else if (spidLevel.includes("L3")) {
+      return "L3";
+    }
+    return undefined;
+  }
+  return undefined;
+};
+
+/**
+ * Returns the SPID level (L1, L2, L3) from the session info
+ */
+
+export const spidLevelFromSessionInfoSelector = (
+  state: GlobalState
+): SpidLevelShort | undefined => {
+  const spidLevel = spidLevelSelector(state);
+  return extractSpidLevel(spidLevel);
+};
 
 export const walletTokenSelector = (state: GlobalState): string | undefined =>
   isLoggedInWithSessionInfo(state.authentication)

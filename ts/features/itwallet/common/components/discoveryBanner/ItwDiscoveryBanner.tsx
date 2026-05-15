@@ -15,19 +15,6 @@ import { ITW_ROUTES } from "../../../navigation/routes";
 import { useItwDiscoveryBannerType } from "../../hooks/useItwDiscoveryBannerType";
 import { itwCloseBanner } from "../../store/actions/banners";
 
-const bannerConfig = {
-  onboarding: {
-    content: I18n.t("features.itWallet.discovery.banner.home.content"),
-    title: I18n.t("features.itWallet.discovery.banner.home.title"),
-    action: I18n.t("features.itWallet.discovery.banner.home.action")
-  },
-  reactivating: {
-    content: I18n.t("features.itWallet.discovery.banner.homeActive.content"),
-    title: I18n.t("features.itWallet.discovery.banner.homeActive.title"),
-    action: I18n.t("features.itWallet.discovery.banner.homeActive.action")
-  }
-} as const;
-
 export type ItwDiscoveryBannerProps = {
   withTitle?: boolean;
   ignoreMargins?: boolean;
@@ -83,6 +70,19 @@ export const ItwDiscoveryBannerLegacy = ({
   if (!bannerType) {
     return null;
   }
+
+  const bannerConfig = {
+    onboarding: {
+      content: I18n.t("features.itWallet.discovery.banner.home.content"),
+      title: I18n.t("features.itWallet.discovery.banner.home.title"),
+      action: I18n.t("features.itWallet.discovery.banner.home.action")
+    },
+    reactivating: {
+      content: I18n.t("features.itWallet.discovery.banner.homeActive.content"),
+      title: I18n.t("features.itWallet.discovery.banner.homeActive.title"),
+      action: I18n.t("features.itWallet.discovery.banner.homeActive.action")
+    }
+  } as const;
 
   const { content, title, action } = bannerConfig[bannerType];
 

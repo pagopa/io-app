@@ -4,7 +4,7 @@ import {
   checkCurrentWalletInstanceStateSaga,
   getCurrentStatusWalletInstance
 } from "../checkCurrentWalletInstanceStateSaga.ts";
-import { itwSetWalletInstanceRemotelyActive } from "../../../common/store/actions/preferences.ts";
+import { itwSetWalletInstanceRemotelyActive } from "../../../walletInstance/store/actions";
 import { itwLifecycleIsValidSelector } from "../../store/selectors";
 
 describe("checkCurrentWalletInstanceStateSaga", () => {

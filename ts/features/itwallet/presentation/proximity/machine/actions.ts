@@ -1,14 +1,11 @@
 import { ActionArgs, assign } from "xstate";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { useIOStore } from "../../../../../store/hooks";
 import { serializeFailureReason } from "../../../common/utils/itwStoreUtils";
-import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors";
-import {
-  trackItwProximityQrCode,
-  trackItwProximityQrCodeLoadingFailure
-} from "../analytics";
+import { trackItwProximityQrCodeLoadingFailure } from "../analytics";
 import { ITW_PROXIMITY_ROUTES } from "../navigation/routes";
-import { itwPresentableCredentialsByDocTypeSelector } from "../store/selectors";
+import { useIOStore } from "../../../../../store/hooks";
+import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors";
+import { itwPresentableCredentialsByDocTypeSelector } from "../store/selectors/credentials";
 import { Context } from "./context";
 import { ProximityEvents } from "./events";
 import { mapEventToFailure } from "./failure";
@@ -80,8 +77,6 @@ export const createProximityActionsImplementation = (
       const failure = mapEventToFailure(event);
       const serializedFailure = serializeFailureReason(failure);
       trackItwProximityQrCodeLoadingFailure(serializedFailure);
-    } else {
-      trackItwProximityQrCode();
     }
   }
 });

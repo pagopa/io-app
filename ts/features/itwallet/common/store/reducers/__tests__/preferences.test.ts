@@ -3,7 +3,8 @@ import {
   itwSetAuthLevel,
   itwSetClaimValuesHidden,
   itwSetCredentialUpgradeFailed,
-  itwClearCredentialUpgradeFailed
+  itwClearCredentialUpgradeFailed,
+  itwSetIdentificationMode
 } from "../../actions/preferences";
 import reducer, {
   itwPreferencesInitialState,
@@ -26,14 +27,13 @@ describe("IT Wallet preferences reducer", () => {
       isPendingReview: true,
       authLevel: "L2",
       claimValuesHidden: true,
-      isWalletInstanceRemotelyActive: true,
-      isFiscalCodeWhitelisted: true
+      isFiscalCodeWhitelisted: true,
+      identificationMode: "cieId"
     };
 
     const expectedState: ItwPreferencesState = {
       ...itwPreferencesInitialState,
       claimValuesHidden: true,
-      isWalletInstanceRemotelyActive: true,
       isFiscalCodeWhitelisted: true
     };
 
@@ -50,6 +50,16 @@ describe("IT Wallet preferences reducer", () => {
     expect(newState).toEqual({
       ...newState,
       authLevel: "L2"
+    });
+  });
+
+  it("should handle itwSetIdentificationMode action", () => {
+    const action = itwSetIdentificationMode("cieId");
+    const newState = reducer(INITIAL_STATE, action);
+
+    expect(newState).toEqual({
+      ...newState,
+      identificationMode: "cieId"
     });
   });
 
@@ -103,7 +113,6 @@ describe("IT Wallet preferences reducer", () => {
         isPendingReview: true,
         authLevel: "L2",
         claimValuesHidden: true,
-        isWalletInstanceRemotelyActive: true,
         isItwActivationDisabled: true
       },
       action
@@ -112,7 +121,6 @@ describe("IT Wallet preferences reducer", () => {
     expect(newState).toEqual({
       ...itwPreferencesInitialState,
       claimValuesHidden: true,
-      isWalletInstanceRemotelyActive: true,
       isItwActivationDisabled: true
     });
   });

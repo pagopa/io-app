@@ -1,5 +1,5 @@
 import * as O from "fp-ts/lib/Option";
-import { fireEvent } from "@testing-library/react-native";
+import { act, fireEvent } from "@testing-library/react-native";
 import { Store } from "redux";
 import configureMockStore from "redux-mock-store";
 import { ScrollView } from "react-native";
@@ -7,12 +7,38 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import { MessageDetailsBody } from "../MessageDetailsBody";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
+import { trackAppCaughtError } from "../../../../../utils/analytics";
 
 jest.mock("../MessageMarkdown");
-jest.mock("../../../../../components/IOMarkdown");
+
+// eslint-disable-next-line functional/no-let
+let capturedOnError:
+  | ((error: unknown, componentStack: string | undefined) => void)
+  | undefined;
+jest.mock("../../../../../components/IOMarkdown", () => {
+  const { Text, View } = require("react-native");
+  return {
+    __esModule: true,
+    default: (props: { content: string; onError?: typeof capturedOnError }) => {
+      capturedOnError = props.onError;
+      return (
+        <View>
+          <Text>{props.content}</Text>
+        </View>
+      );
+    }
+  };
+});
+
+jest.mock("../../../../../utils/analytics", () => ({
+  ...jest.requireActual<Record<string, unknown>>(
+    "../../../../../utils/analytics"
+  ),
+  trackAppCaughtError: jest.fn()
+}));
 
 jest.mock("react-native-device-info", () => ({
   getReadableVersion: () => "2.0.0.0",
@@ -48,6 +74,20 @@ describe("MessageDetailsBody", () => {
   it(`should match snapshot for message with invalid CTA`, () => {
     const component = renderComponent(true, invalidCTAMarkdown);
     expect(component.toJSON()).toMatchSnapshot();
+  });
+  it("should call trackAppCaughtError when IOMarkdown triggers onError", () => {
+    renderComponent(true, "This is a message with no CTA");
+
+    const testError = "Rendering failure";
+    act(() => {
+      capturedOnError?.(testError, undefined);
+    });
+
+    expect(trackAppCaughtError).toHaveBeenCalledWith(
+      "MessageDetailsBody",
+      "Unable to render message's markdown",
+      testError
+    );
   });
   it("should show an Alert for a message with invalid CTA. The alert should be pressable and display the raw content (upong pushing) and hide it again later", () => {
     const component = renderComponent(true, invalidCTAMarkdown);

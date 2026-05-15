@@ -5,7 +5,7 @@ import * as RA from "fp-ts/lib/ReadonlyArray";
 import { Platform } from "react-native";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { AppFeedbackConfig } from "../../../../definitions/content/AppFeedbackConfig";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { BackendStatus } from "../../../../definitions/content/BackendStatus";
@@ -77,6 +77,52 @@ export const cgnMerchantsModalSelector = createSelector(
         )
       ),
       O.getOrElse(() => false)
+    )
+);
+
+export const isCGNDiscoveryBannerEnabledSelector = (state: GlobalState) =>
+  pipe(
+    state,
+    remoteConfigSelector,
+    O.chainNullableK(
+      config => config.cgn.show_cgn_engagement_banner?.min_app_version
+    ),
+    minAppVersion =>
+      isMinAppVersionSupported(
+        pipe(
+          minAppVersion,
+          O.map(mav => ({ min_app_version: mav }))
+        )
+      )
+  );
+
+export const engagementCGNDiscoveryBannerSelector = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): Banner | undefined =>
+    pipe(
+      remoteConfig,
+      O.map(config => config.cgn.show_cgn_engagement_banner),
+      O.toUndefined
+    )
+);
+
+export const getEYCABaseUrl = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): string =>
+    pipe(
+      remoteConfig,
+      O.chain(config => O.fromNullable(config.cgn.eyca_base_url)),
+      O.getOrElse(() => "")
+    )
+);
+
+export const getEYCADiscountUrl = createSelector(
+  remoteConfigSelector,
+  (remoteConfig): string =>
+    pipe(
+      remoteConfig,
+      O.chain(config => O.fromNullable(config.cgn.eyca_discount_url)),
+      O.getOrElse(() => "")
     )
 );
 

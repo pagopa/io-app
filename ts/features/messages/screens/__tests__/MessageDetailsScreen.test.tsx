@@ -1,6 +1,6 @@
 import { Action, Store, createStore } from "redux";
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
-import { ThirdPartyMessageWithContent } from "../../../../../definitions/backend/ThirdPartyMessageWithContent";
+import { ThirdPartyAttachment } from "../../../../../definitions/communication/ThirdPartyAttachment";
+import { ThirdPartyMessageWithContent } from "../../../../../definitions/communication/ThirdPartyMessageWithContent";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
 import { GlobalState } from "../../../../store/reducers/types";

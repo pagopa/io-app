@@ -129,8 +129,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
             category: "itw",
             credentialType: CredentialType.DRIVING_LICENSE,
             credentialStatus: "valid",
-            issuedAt: mockedMdl.jwt.issuedAt,
-            isMultiCredential: false
+            issuedAt: mockedMdl.jwt.issuedAt
           },
           {
             key: `ITW_${CredentialType.EUROPEAN_DISABILITY_CARD}`,
@@ -138,8 +137,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
             category: "itw",
             credentialType: CredentialType.EUROPEAN_DISABILITY_CARD,
             credentialStatus: "valid",
-            issuedAt: mockedDc.jwt.issuedAt,
-            isMultiCredential: false
+            issuedAt: mockedDc.jwt.issuedAt
           },
           {
             key: `ITW_${CredentialType.EDUCATION_DEGREE}`,
@@ -147,8 +145,7 @@ describe("ITW handleWalletCredentialsRehydration saga", () => {
             category: "itw",
             credentialType: CredentialType.EDUCATION_DEGREE,
             credentialStatus: "valid",
-            issuedAt: mockedEd.jwt.issuedAt,
-            isMultiCredential: true
+            issuedAt: mockedEd.jwt.issuedAt
           }
         ])
       )
