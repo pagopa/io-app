@@ -21,7 +21,7 @@ import { zendeskGetSessionPollingRunningSelector } from "../store/reducers";
 import { startTimer } from "../../../utils/timer";
 import { checkSession } from "../../../features/authentication/common/saga/watchCheckSessionSaga";
 import { isFastLoginEnabledSelector } from "../../authentication/fastLogin/store/selectors";
-import { BackendClient } from "../../../api/backend";
+import { SessionManagerClient } from "../../../api/SessionManagerClientManager";
 import { SagaCallReturnType } from "../../../types/utils";
 import {
   formatRequestedTokenString,
@@ -40,7 +40,7 @@ const ZENDESK_GET_SESSION_POLLING_INTERVAL = ((isDevEnv ? 10 : 60) *
   1000) as Millisecond;
 
 function* zendeskGetSessionPollingLoop(
-  getSession: ReturnType<typeof BackendClient>["getSession"]
+  getSession: SessionManagerClient["getSessionState"]
 ) {
   // eslint-disable-next-line functional/no-let
   let zendeskPollingIsRunning = true;
@@ -66,7 +66,7 @@ function* zendeskGetSessionPollingLoop(
 }
 
 export function* watchZendeskGetSessionSaga(
-  getSession: ReturnType<typeof BackendClient>["getSession"]
+  getSession: SessionManagerClient["getSessionState"]
 ) {
   const isFastLoginEnabled = yield* select(isFastLoginEnabledSelector);
   if (isFastLoginEnabled) {
@@ -110,7 +110,7 @@ export function* watchZendeskSupportSaga() {
  * The goal of this saga is to take Zendesk token from the BE in order to properly report to support.
  */
 function* getZendeskTokenSaga(
-  getSession: ReturnType<typeof BackendClient>["getSession"]
+  getSession: SessionManagerClient["getSessionState"]
 ) {
   try {
     // Define the fields needed for the token request, in this case, the needed field is only 'zendeskToken'
@@ -148,7 +148,7 @@ function* getZendeskTokenSaga(
 }
 
 export function* watchGetZendeskTokenSaga(
-  getSession: ReturnType<typeof BackendClient>["getSession"]
+  getSession: SessionManagerClient["getSessionState"]
 ) {
   yield* takeLatest(getZendeskToken.request, getZendeskTokenSaga, getSession);
 }

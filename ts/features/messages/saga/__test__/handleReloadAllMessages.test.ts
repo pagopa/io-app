@@ -12,21 +12,11 @@ import {
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { handleReloadAllMessages } from "../handleReloadAllMessages";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
-import { backendClientManager } from "../../../../api/BackendClientManager";
+import { getCommunicationClient } from "../commons";
 
-jest.mock("../../../../api/BackendClientManager");
+jest.mock("../commons");
 
 const mockGetMessages = jest.fn();
-const mockBackendClientManager = backendClientManager as jest.Mocked<
-  typeof backendClientManager
->;
-
-beforeEach(() => {
-  jest.clearAllMocks();
-  mockBackendClientManager.getBackendClient.mockReturnValue({
-    getMessages: mockGetMessages
-  } as any);
-});
 
 describe("handleReloadAllMessages", () => {
   const sessionToken = "mockedSessionToken";
@@ -45,6 +35,8 @@ describe("handleReloadAllMessages", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
+        .call(getCommunicationClient, sessionToken)
+        .next({ getUserMessages: mockGetMessages })
         .call(
           withRefreshApiCall,
           mockGetMessages(getMessagesPayload),
@@ -63,6 +55,8 @@ describe("handleReloadAllMessages", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
+        .call(getCommunicationClient, sessionToken)
+        .next({ getUserMessages: mockGetMessages })
         .call(
           withRefreshApiCall,
           mockGetMessages(getMessagesPayload),
@@ -93,6 +87,8 @@ describe("handleReloadAllMessages", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
+        .call(getCommunicationClient, sessionToken)
+        .next({ getUserMessages: mockGetMessages })
         .throw(new Error(defaultRequestError.error.message))
         .put(
           action.failure({

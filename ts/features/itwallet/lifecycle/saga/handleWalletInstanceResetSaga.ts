@@ -5,7 +5,7 @@ import { identity, pipe } from "fp-ts/lib/function";
 import { all, call, put, select } from "typed-redux-saga/macro";
 import { isIos } from "../../../../utils/platform";
 import { walletRemoveCardsByCategory } from "../../../wallet/store/actions/cards";
-import { itwSetWalletInstanceRemotelyActive } from "../../common/store/actions/preferences.ts";
+import { itwSetWalletInstanceRemotelyActive } from "../../walletInstance/store/actions";
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import { CredentialsVault } from "../../credentials/utils/vault";
 import {
@@ -49,8 +49,5 @@ export function* handleWalletInstanceResetSaga() {
     yield* all(itwKeyTags.map(deleteKey));
     // Update every mixpanel property related to the wallet instance and its credentials.
     void updatePropertiesWalletRevoked();
-  } catch (e) {
-    // TODO: Replace Sentry capture exception with a new logging solution
-    // Sentry.captureException(e);
-  }
+  } catch (e) {}
 }

@@ -6,7 +6,7 @@ import {
 } from "../store/actions";
 import { SagaCallReturnType } from "../../../types/utils";
 import { toUIMessage } from "../store/reducers/transformers";
-import { PaginatedPublicMessagesCollection } from "../../../../definitions/backend/PaginatedPublicMessagesCollection";
+import { PaginatedPublicMessagesCollection } from "../../../../definitions/communication/PaginatedPublicMessagesCollection";
 import { getError } from "../../../utils/errors";
 import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import { errorToReason, unknownToReason } from "../utils";
@@ -16,9 +16,8 @@ import {
   UndefinedBearerTokenPhase
 } from "../analytics";
 import { handleResponse } from "../utils/responseHandling";
-import { backendClientManager } from "../../../api/BackendClientManager";
-import { apiUrlPrefix } from "../../../config";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
+import { getCommunicationClient } from "./commons";
 
 export function* handleReloadAllMessages(
   action: ActionType<typeof reloadAllMessages.request>
@@ -34,8 +33,8 @@ export function* handleReloadAllMessages(
     return;
   }
 
-  const { getMessages } = backendClientManager.getBackendClient(
-    apiUrlPrefix,
+  const { getUserMessages: getMessages } = yield* call(
+    getCommunicationClient,
     sessionToken
   );
 

@@ -12,6 +12,9 @@ exports[`itWalletReducer should match snapshot [if this test fails, remember to 
       "kind": "PotNone",
     },
     "isEnabledForCredentialsList": false,
+    "translations": {
+      "kind": "PotNone",
+    },
   },
   "debug": {
     "credentialStatusOverrides": {},
@@ -38,6 +41,7 @@ exports[`itWalletReducer should match snapshot [if this test fails, remember to 
   },
   "walletInstance": {
     "attestation": undefined,
+    "isRemotelyActive": undefined,
     "renewalError": false,
     "status": {
       "kind": "PotNone",
