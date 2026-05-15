@@ -3,7 +3,7 @@ import { ItwStoredCredentialsMocks } from "../../../../../common/utils/itwMocksU
 import {
   areAllPresentableCredentialsExpired,
   shouldBlockProximityQrCodeSelector
-} from "../index";
+} from "../credentials";
 import { CredentialMetadata } from "../../../../../common/utils/itwTypesUtils";
 
 describe("proximity selectors", () => {
