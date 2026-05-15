@@ -27,79 +27,119 @@ const mockCredential: CredentialMetadata = {
   spec_version: "1.0.0"
 };
 
+const mockCredentials: Record<string, CredentialMetadata> = {
+  [mockDocType]: mockCredential
+};
+
 describe("getProximityDetails", () => {
-  it("should throw if the verifier is not marked as trusted", () => {
-    const parsedRequest = {
+  describe("authentication enforcement", () => {
+    const unauthenticatedRequest = {
       request: {
         [mockDocType]: {
-          "org.iso.18013.5.1.aamva": {
-            family_name: false
-          },
-          "org.iso.18013.5.1": {
-            tax_id_code: false
-          },
-          isAuthenticated: true
-        },
-        unknown_credential: {
-          "org.iso.18013.5.1": {
-            unknown_field: true,
-            family_name: true
-          },
+          "org.iso.18013.5.1.aamva": { family_name: false },
           isAuthenticated: false
         }
       }
     } as unknown as VerifierRequest;
 
-    const credentials: Record<string, CredentialMetadata> = {
-      [mockDocType]: mockCredential
-    };
+    it("throws UntrustedRpError for unauthenticated RP by default", () => {
+      expect(() =>
+        getProximityDetails({
+          request: unauthenticatedRequest.request,
+          credentials: mockCredentials
+        })
+      ).toThrow(UntrustedRpError);
+    });
 
-    expect(() =>
-      getProximityDetails(parsedRequest.request, credentials)
-    ).toThrow(UntrustedRpError);
+    it("throws UntrustedRpError for unauthenticated RP when requireAuthenticated = true", () => {
+      expect(() =>
+        getProximityDetails({
+          request: unauthenticatedRequest.request,
+          credentials: mockCredentials,
+          requireAuthenticated: true
+        })
+      ).toThrow(UntrustedRpError);
+    });
+
+    it("does NOT throw for unauthenticated RP when requireAuthenticated = false", () => {
+      expect(() =>
+        getProximityDetails({
+          request: unauthenticatedRequest.request,
+          credentials: mockCredentials,
+          requireAuthenticated: false
+        })
+      ).not.toThrow();
+    });
+
+    it("returns details for unauthenticated RP when requireAuthenticated = false", () => {
+      const result = getProximityDetails({
+        request: unauthenticatedRequest.request,
+        credentials: mockCredentials,
+        requireAuthenticated: false
+      });
+
+      expect(result).toHaveLength(1);
+      expect(result[0].credentialType).toBe(mockCredential.credentialType);
+    });
+
+    it("throws when any doc type in request has unauthenticated RP (default)", () => {
+      const mixedRequest = {
+        request: {
+          [mockDocType]: {
+            "org.iso.18013.5.1.aamva": { family_name: false },
+            isAuthenticated: true
+          },
+          unknown_credential: {
+            "org.iso.18013.5.1": { unknown_field: true },
+            isAuthenticated: false
+          }
+        }
+      } as unknown as VerifierRequest;
+
+      expect(() =>
+        getProximityDetails({
+          request: mixedRequest.request,
+          credentials: mockCredentials
+        })
+      ).toThrow(UntrustedRpError);
+    });
   });
 
-  it("should throw if credential is not found", () => {
+  it("throws if credential is not found for requested docType", () => {
     const parsedRequest = {
       request: {
         unknown_credential: {
-          "org.iso.18013.5.1": {
-            unknown_field: true,
-            family_name: true
-          },
+          "org.iso.18013.5.1": { unknown_field: true },
           isAuthenticated: true
         }
       }
     } as unknown as VerifierRequest;
 
-    expect(() => getProximityDetails(parsedRequest.request, {})).toThrow();
+    expect(() =>
+      getProximityDetails({
+        request: parsedRequest.request,
+        credentials: {}
+      })
+    ).toThrow();
   });
 
-  it("should return parsed claims for a valid request", () => {
+  it("returns parsed claims for a valid authenticated request", () => {
     const parsedRequest = {
       request: {
         [mockDocType]: {
-          "org.iso.18013.5.1.aamva": {
-            family_name: false
-          },
-          "org.iso.18013.5.1": {
-            tax_id_code: false
-          },
+          "org.iso.18013.5.1.aamva": { family_name: false },
+          "org.iso.18013.5.1": { tax_id_code: false },
           isAuthenticated: true
         }
       }
     } as unknown as VerifierRequest;
 
-    const credentials: Record<string, CredentialMetadata> = {
-      [mockDocType]: mockCredential
-    };
+    const result = getProximityDetails({
+      request: parsedRequest.request,
+      credentials: mockCredentials
+    });
 
-    const proximityDetails = getProximityDetails(
-      parsedRequest.request,
-      credentials
-    );
-
-    expect(proximityDetails).toEqual([
+    expect(result).toEqual([
       {
         claimsToDisplay: [
           {
@@ -117,6 +157,51 @@ describe("getProximityDetails", () => {
       }
     ]);
   });
+
+  it("only includes requested fields in claimsToDisplay", () => {
+    const parsedRequest = {
+      request: {
+        [mockDocType]: {
+          "org.iso.18013.5.1.aamva": { family_name: false },
+          isAuthenticated: true
+        }
+      }
+    } as unknown as VerifierRequest;
+
+    const result = getProximityDetails({
+      request: parsedRequest.request,
+      credentials: mockCredentials
+    });
+
+    expect(result[0].claimsToDisplay).toHaveLength(1);
+    expect(result[0].claimsToDisplay[0].id).toBe(
+      "org.iso.18013.5.1.aamva:family_name"
+    );
+  });
+
+  it("excludes WIA doc type from result", () => {
+    const WIA_DOC_TYPE = "org.iso.18013.5.1.IT.WalletAttestation";
+    const requestWithWia = {
+      request: {
+        [mockDocType]: {
+          "org.iso.18013.5.1.aamva": { family_name: false },
+          isAuthenticated: true
+        },
+        [WIA_DOC_TYPE]: {
+          "org.iso.18013.5.1": { some_field: true },
+          isAuthenticated: true
+        }
+      }
+    } as unknown as VerifierRequest;
+
+    const result = getProximityDetails({
+      request: requestWithWia.request,
+      credentials: mockCredentials
+    });
+
+    expect(result).toHaveLength(1);
+    expect(result[0].credentialType).toBe(mockCredential.credentialType);
+  });
 });
 
 describe("generateAcceptedFields", () => {
@@ -124,23 +209,13 @@ describe("generateAcceptedFields", () => {
     const parsedRequest: VerifierRequest = {
       request: {
         credential_A: {
-          "org.iso.18013.5.1.aamva": {
-            family_name: false
-          },
-          "org.iso.18013.5.1": {
-            unknown_field: false,
-            tax_id_code: false
-          },
+          "org.iso.18013.5.1.aamva": { family_name: false },
+          "org.iso.18013.5.1": { unknown_field: false, tax_id_code: false },
           isAuthenticated: true
         },
         credential_B: {
-          "org.iso.18013.5.1.aamva": {
-            family_name: true
-          },
-          "org.iso.18013.5.1": {
-            unknown_field: false,
-            tax_id_code: false
-          },
+          "org.iso.18013.5.1.aamva": { family_name: true },
+          "org.iso.18013.5.1": { unknown_field: false, tax_id_code: false },
           isAuthenticated: true
         }
       }
@@ -150,22 +225,12 @@ describe("generateAcceptedFields", () => {
 
     expect(acceptedFields).toEqual({
       credential_A: {
-        "org.iso.18013.5.1.aamva": {
-          family_name: true
-        },
-        "org.iso.18013.5.1": {
-          unknown_field: true,
-          tax_id_code: true
-        }
+        "org.iso.18013.5.1.aamva": { family_name: true },
+        "org.iso.18013.5.1": { unknown_field: true, tax_id_code: true }
       },
       credential_B: {
-        "org.iso.18013.5.1.aamva": {
-          family_name: true
-        },
-        "org.iso.18013.5.1": {
-          unknown_field: true,
-          tax_id_code: true
-        }
+        "org.iso.18013.5.1.aamva": { family_name: true },
+        "org.iso.18013.5.1": { unknown_field: true, tax_id_code: true }
       }
     });
   });
