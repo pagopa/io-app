@@ -14,7 +14,7 @@ import {
 import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
-import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { useIODispatch, useIOStore } from "../../../../../store/hooks";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { onLoginUriChanged } from "../../../common/utils/login";
 import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
@@ -53,7 +53,8 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
   const navigation = useIONavigation();
   const { forceLogoutAndNavigateToLanding } = useActiveSessionLoginNavigation();
 
-  const loginType = useIOSelector(cieLoginFlowSelector);
+  const store = useIOStore();
+  const [loginType] = useState(() => cieLoginFlowSelector(store.getState()));
 
   useOnFirstRender(() => {
     void trackLoginCieConsentDataUsageScreen(loginType);

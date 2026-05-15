@@ -29,7 +29,11 @@ import HapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
-import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import {
+  useIODispatch,
+  useIOSelector,
+  useIOStore
+} from "../../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { isDevEnv } from "../../../../../utils/environment";
@@ -143,7 +147,8 @@ const ActiveSessionLoginCieCardReaderScreen = ({
     [assistanceToolConfig]
   );
 
-  const loginType = useIOSelector(cieLoginFlowSelector);
+  const store = useIOStore();
+  const [loginType] = useState(() => cieLoginFlowSelector(store.getState()));
 
   const textState = useMemo<TextForState>(() => {
     switch (readingState) {
