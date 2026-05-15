@@ -67,12 +67,15 @@ jobs:
           else
             yarn test:ci --passWithNoTests --shard=${{ matrix.shard }}/10
           fi
+      - id: rename-coverage
+        if: needs.static-checks.outputs.should_test == 'true' && steps.run-test.outcome == 'success'
+        run: cp coverage/lcov.info coverage/lcov-${{ matrix.shard }}.info
       - id: upload-coverage
         if: needs.static-checks.outputs.should_test == 'true' && steps.run-test.outcome == 'success'
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
-          name: coverage
-          path: coverage/lcov.info
+          name: coverage-artifact-${{ matrix.shard }}
+          path: coverage/lcov-${{ matrix.shard }}.info
           retention-days: 1
   unit-test-gate:
     name: Unit tests result
@@ -103,8 +106,13 @@ jobs:
       - id: download-coverage
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
-          name: coverage
-          path: coverage/
+          pattern: coverage-artifact-*
+          path: coverage-tmp/
+      - id: flatten-coverage
+        run: |
+          mkdir -p coverage/
+          find coverage-tmp -name "lcov-*.info" -exec cp {} coverage/ \;
+          ls -la coverage/
       - id: codecov-script
         uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:

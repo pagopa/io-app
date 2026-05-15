@@ -1,4 +1,4 @@
-import { createClient } from "../../../../definitions/pn/client";
+import { createClient } from "../../../../definitions/communication/client";
 import { fetchMaxRetries, fetchTimeout } from "../../../config";
 import { defaultRetryingFetch } from "../../../utils/fetch";
 
