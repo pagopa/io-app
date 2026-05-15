@@ -178,6 +178,9 @@ exports[`featuresPersistor should match snapshot 1`] = `
       },
     },
     "preferences": {},
+    "proximity": {
+      "consents": {},
+    },
     "securePreferences": {
       "offlineAccessCounter": 0,
       "unverifiedCredentialsAccessCounter": 0,
