@@ -63,7 +63,6 @@ import {
 } from "../../../common/analytics/cieAnalytics";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { isScreenReaderEnabledSelector } from "../../../../../store/reducers/preferences";
-import { cieLoginFlowSelector } from "../../store/selectors";
 
 const CIE_ALERT_MESSAGES_CONFIG = Platform.select<
   Parameters<typeof cieManager.start>[0]
@@ -143,8 +142,6 @@ const ActiveSessionLoginCieCardReaderScreen = ({
     [assistanceToolConfig]
   );
 
-  const loginType = useIOSelector(cieLoginFlowSelector);
-
   const textState = useMemo<TextForState>(() => {
     switch (readingState) {
       case ReadingState.completed:
@@ -184,7 +181,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
       errorDescription?: string;
       navigation?: () => void;
     }) => {
-      trackLoginCieCardReadingError(loginType);
+      trackLoginCieCardReadingError("reauth");
 
       const cieDescription =
         errorDescription ?? analyticActions.get(eventReason) ?? "";
@@ -193,7 +190,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
         cieAuthenticationError({
           reason: eventReason,
           cieDescription,
-          flow: loginType
+          flow: "reauth"
         })
       );
 
@@ -202,7 +199,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
       HapticFeedback.trigger(HapticFeedbackTypes.notificationError);
       navAction?.();
     },
-    [dispatch, loginType]
+    [dispatch]
   );
 
   const handleCieSuccess = useCallback(
@@ -215,7 +212,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
 
       setTimeout(
         () => {
-          void trackLoginCieCardReadingSuccess(loginType);
+          void trackLoginCieCardReadingSuccess("reauth");
           navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
             screen:
               AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE_ACTIVE_SESSION_LOGIN,
@@ -227,7 +224,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
           : Platform.select({ ios: 0, default: WAIT_TIMEOUT_NAVIGATION })
       );
     },
-    [choosenTool, navigation, isScreenReaderEnabled, loginType]
+    [choosenTool, navigation, isScreenReaderEnabled]
   );
 
   const handleCieEvent = useCallback(
@@ -339,22 +336,15 @@ const ActiveSessionLoginCieCardReaderScreen = ({
         await cieManager.startListeningNFC();
         setReadingState(ReadingState.waiting_card);
       } catch (e) {
-        trackLoginCieCardReadingError(loginType);
+        trackLoginCieCardReadingError("reauth");
         setReadingState(ReadingState.error);
       }
     },
-    [
-      authorizationUri,
-      ciePin,
-      handleCieError,
-      handleCieEvent,
-      handleCieSuccess,
-      loginType
-    ]
+    [authorizationUri, ciePin, handleCieError, handleCieEvent, handleCieSuccess]
   );
 
   useOnFirstRender(() => {
-    void trackLoginCieCardReaderScreen(loginType);
+    void trackLoginCieCardReaderScreen("reauth");
   });
 
   useEffect(() => {
