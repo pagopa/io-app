@@ -126,6 +126,8 @@ export const createRemoteActorsImplementation = (
 
     const ioWallet = getIoWallet(itwVersion);
 
+    // `getRequestObject` expects a full URL to be passed, so it is reconstructed from the QR code payload.
+    // The host and path segments are actually not relevant, only the query parameters are.
     const authRequestUrl = `${IO_UNIVERSAL_LINK_PREFIX}/itw/auth?${new URLSearchParams(
       qrCodePayload
     )}`;
