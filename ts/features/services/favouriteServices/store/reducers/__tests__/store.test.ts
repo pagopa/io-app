@@ -8,7 +8,7 @@ import {
   removeFavouriteService
 } from "../../actions";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { createMockService } from "../../../__mocks__";
+import { createMockService } from "../../../__mocks__/favouriteServicesMocks";
 import { ServiceId } from "../../../../../../../definitions/services/ServiceId";
 
 const mockedDate = Date.now();

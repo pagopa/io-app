@@ -467,12 +467,6 @@ const ItwCards = () => (
         <DSComponentViewerBox name="ITW Credential">
           <ItwCredentialCard credentialType={CredentialType.EDUCATION_DEGREE} />
         </DSComponentViewerBox>
-        <DSComponentViewerBox name="ITW Multi level Credential">
-          <ItwCredentialCard
-            credentialType={CredentialType.EDUCATION_DEGREE}
-            isMultiCredential={true}
-          />
-        </DSComponentViewerBox>
       </VStack>
     </DesignSystemSection>
     <DesignSystemSection title="Education Enrollment (Gradient Background)">
@@ -480,12 +474,6 @@ const ItwCards = () => (
         <DSComponentViewerBox name="ITW Credential">
           <ItwCredentialCard
             credentialType={CredentialType.EDUCATION_ENROLLMENT}
-          />
-        </DSComponentViewerBox>
-        <DSComponentViewerBox name="ITW Multi level Credential">
-          <ItwCredentialCard
-            credentialType={CredentialType.EDUCATION_ENROLLMENT}
-            isMultiCredential={true}
           />
         </DSComponentViewerBox>
       </VStack>

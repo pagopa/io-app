@@ -10,9 +10,13 @@ import { ScrollView } from "react-native";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useScreenEndMargin } from "../../../../hooks/useScreenEndMargin";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
+import { ItwCardsHeaderSection } from "../components/ItwCardsHeaderSection";
+import { ItwCardsSection } from "../components/ItwCardsSection";
 import { ItwComponentsSection } from "../components/ItwComponentsSection";
+import { ItwCredentialStatusOverrideSection } from "../components/ItwCredentialStatusOverrideSection";
 import { ItwEnvironmentSection } from "../components/ItwEnvironmentSection";
 import { ItwIdentificationScreensSection } from "../components/ItwIdentificationScreensSection";
+import { ItwIso18013Section } from "../components/ItwIso18013Section";
 import { ItwL3ScreensSection } from "../components/ItwL3ScreensSection";
 import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
 import { ItwMiscSection } from "../components/ItwMiscSection";
@@ -39,7 +43,7 @@ const ItwPlayground = () => {
   );
 
   return (
-    <VStack space={16} style={{ flex: 1 }}>
+    <VStack space={16}>
       <TabNavigation
         tabAlignment="start"
         selectedIndex={page}
@@ -47,8 +51,12 @@ const ItwPlayground = () => {
       >
         <TabItem label="Environment" accessibilityLabel="Environment" />
         <TabItem label="Issuance" accessibilityLabel="Issuance" />
+        <TabItem label="ISO-18013" accessibilityLabel="ISO-18013" />
+        <TabItem label="Status" accessibilityLabel="Status" />
         <TabItem label="Screens" accessibilityLabel="Screens" />
         <TabItem label="Components" accessibilityLabel="Components" />
+        <TabItem label="Cards" accessibilityLabel="Cards" />
+        <TabItem label="Header Cards" accessibilityLabel="Header Cards" />
       </TabNavigation>
       <ScrollView
         contentContainerStyle={{
@@ -65,13 +73,17 @@ const ItwPlayground = () => {
             </>
           )}
           {page === 1 && <ItwPidIssuanceSection />}
-          {page === 2 && (
+          {page === 2 && <ItwIso18013Section />}
+          {page === 3 && <ItwCredentialStatusOverrideSection />}
+          {page === 4 && (
             <>
               <ItwL3ScreensSection />
               <ItwIdentificationScreensSection />
             </>
           )}
-          {page === 3 && <ItwComponentsSection />}
+          {page === 5 && <ItwComponentsSection />}
+          {page === 6 && <ItwCardsSection />}
+          {page === 7 && <ItwCardsHeaderSection />}
         </ContentWrapper>
       </ScrollView>
     </VStack>

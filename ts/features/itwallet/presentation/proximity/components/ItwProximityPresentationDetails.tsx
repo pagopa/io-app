@@ -1,19 +1,13 @@
-import { memo } from "react";
-import { View } from "react-native";
 import {
-  ClaimsSelector,
   ListItemHeader,
   VStack,
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils";
+import { memo } from "react";
+import { View } from "react-native";
+import { ItwClaimsSelector } from "../../common/components/ItwClaimsSelector";
 import { ProximityDetails } from "../utils/itwProximityTypeUtils";
-import {
-  claimsSelectorHeaderGradientsByCredentialType,
-  mapClaimsToClaimsSelectorItems
-} from "../../common/utils/itwClaimSelector";
-import { useClaimsDetailsBottomSheet } from "../../common/hooks/useClaimsDetailsBottomSheet";
 
 type ItwProximityPresentationDetailsProps = {
   data: ProximityDetails;
@@ -23,7 +17,6 @@ const ItwProximityPresentationDetails = ({
   data
 }: ItwProximityPresentationDetailsProps) => {
   const theme = useIOTheme();
-  const { present, bottomSheet } = useClaimsDetailsBottomSheet();
 
   return (
     <View>
@@ -39,18 +32,14 @@ const ItwProximityPresentationDetails = ({
       />
       <VStack space={24}>
         {data.map(({ claimsToDisplay, credentialType }) => (
-          <ClaimsSelector
+          <ItwClaimsSelector
             key={credentialType}
-            title={getCredentialNameFromType(credentialType)}
-            items={mapClaimsToClaimsSelectorItems(claimsToDisplay, present)}
+            credentialType={credentialType}
+            items={claimsToDisplay}
             defaultExpanded
             selectionEnabled={false}
-            headerGradientColors={
-              claimsSelectorHeaderGradientsByCredentialType[credentialType]
-            }
           />
         ))}
-        {bottomSheet}
       </VStack>
     </View>
   );

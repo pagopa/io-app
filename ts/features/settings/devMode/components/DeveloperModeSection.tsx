@@ -55,7 +55,7 @@ import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 import { clearCache } from "../../common/store/actions";
 import { isPnRemoteEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig.ts";
 import { fciL3LocalFlag } from "../../../fci/store/actions/index.ts";
-import { fciSecurityLevelLocalFeatureFlagSelector } from "../../../fci/store/reducers/fciSecurityLevelReducer.ts";
+import { fciSecurityLevelLocalFFSelector } from "../../../fci/store/reducers/fciSecurityLevelReducer.ts";
 import ExperimentalDesignEnableSwitch from "./ExperimentalDesignEnableSwitch";
 
 type PlaygroundsNavListItem = {
@@ -465,9 +465,7 @@ const DeveloperTestEnvironmentSection = ({
   const isActiveSessionLoginLocallyEnabled = useIOSelector(
     isActiveSessionLoginLocallyEnabledSelector
   );
-  const fciL3LocalFeatureFlag = useIOSelector(
-    fciSecurityLevelLocalFeatureFlagSelector
-  );
+  const fciL3LocalFeatureFlag = useIOSelector(fciSecurityLevelLocalFFSelector);
 
   const onPagoPAEnvironmentToggle = (enabled: boolean) => {
     if (enabled) {

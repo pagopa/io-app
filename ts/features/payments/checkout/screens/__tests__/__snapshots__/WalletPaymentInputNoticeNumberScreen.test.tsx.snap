@@ -671,14 +671,14 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                                 disableFullscreenUI={true}
                                 editable={true}
                                 importantForAccessibility="yes"
-                                inputAccessoryViewID="noticeNumberInputAccessoryView"
+                                inputAccessoryViewID="keyboardStickyView"
                                 inputMode="numeric"
                                 keyboardType="number-pad"
                                 maxFontSizeMultiplier={1.5}
+                                maxLength={18}
                                 onBlur={[Function]}
                                 onChangeText={[Function]}
                                 onFocus={[Function]}
-                                returnKeyType="done"
                                 selectionColor="#0B3EE3"
                                 style={
                                   [
@@ -899,76 +899,153 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                                 />
                               </View>
                             </View>
+                            <View
+                              accessibilityElementsHidden={false}
+                              importantForAccessibility="auto"
+                              style={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                    "paddingHorizontal": 12,
+                                  },
+                                  {},
+                                ]
+                              }
+                            />
                           </View>
                         </View>
                       </RCTScrollView>
-                      <RCTInputAccessoryView
-                        nativeID="noticeNumberInputAccessoryView"
-                        style={
-                          [
-                            undefined,
-                            {
-                              "position": "absolute",
-                            },
-                          ]
+                      <View
+                        offset={
+                          {
+                            "closed": 0,
+                          }
                         }
                       >
-                        <RCTSafeAreaView
+                        <View
                           style={
-                            [
-                              {
-                                "flex": 1,
-                              },
-                              {
-                                "width": 750,
-                              },
-                            ]
+                            {
+                              "marginBottom": 24,
+                              "paddingHorizontal": 20,
+                            }
                           }
                         >
                           <View
+                            accessibilityLabel="Continua"
+                            accessibilityRole="button"
+                            accessibilityState={
+                              {
+                                "busy": false,
+                                "checked": undefined,
+                                "disabled": false,
+                                "expanded": undefined,
+                                "selected": undefined,
+                              }
+                            }
+                            accessibilityValue={
+                              {
+                                "max": undefined,
+                                "min": undefined,
+                                "now": undefined,
+                                "text": undefined,
+                              }
+                            }
+                            accessible={true}
+                            collapsable={false}
+                            focusable={true}
+                            onBlur={[Function]}
+                            onClick={[Function]}
+                            onFocus={[Function]}
+                            onResponderGrant={[Function]}
+                            onResponderMove={[Function]}
+                            onResponderRelease={[Function]}
+                            onResponderTerminate={[Function]}
+                            onResponderTerminationRequest={[Function]}
+                            onStartShouldSetResponder={[Function]}
                             style={
                               {
-                                "padding": 20,
+                                "alignSelf": "stretch",
+                                "flexShrink": 0,
                               }
                             }
                           >
                             <View
-                              accessibilityLabel="Continua"
-                              accessibilityRole="button"
-                              accessibilityState={
-                                {
-                                  "busy": false,
-                                  "checked": undefined,
-                                  "disabled": false,
-                                  "expanded": undefined,
-                                  "selected": undefined,
-                                }
-                              }
-                              accessibilityValue={
-                                {
-                                  "max": undefined,
-                                  "min": undefined,
-                                  "now": undefined,
-                                  "text": undefined,
-                                }
-                              }
-                              accessible={true}
                               collapsable={false}
-                              focusable={true}
-                              onBlur={[Function]}
-                              onClick={[Function]}
-                              onFocus={[Function]}
-                              onResponderGrant={[Function]}
-                              onResponderMove={[Function]}
-                              onResponderRelease={[Function]}
-                              onResponderTerminate={[Function]}
-                              onResponderTerminationRequest={[Function]}
-                              onStartShouldSetResponder={[Function]}
-                              style={
+                              jestAnimatedProps={
                                 {
-                                  "alignSelf": "stretch",
-                                  "flexShrink": 0,
+                                  "value": {},
                                 }
+                              }
+                              jestAnimatedStyle={
+                                {
+                                  "value": {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                }
+                              }
+                              jestInlineStyle={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "#0B3EE3",
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
+                                  },
+                                  {},
+                                ]
+                              }
+                              style={
+                                [
+                                  {
+                                    "alignItems": "center",
+                                    "borderCurve": "continuous",
+                                    "elevation": 0,
+                                    "flexDirection": "row",
+                                    "justifyContent": "center",
+                                    "overflow": "hidden",
+                                    "textAlignVertical": "center",
+                                  },
+                                  {
+                                    "transform": [
+                                      {
+                                        "scale": 1,
+                                      },
+                                    ],
+                                  },
+                                  {
+                                    "backgroundColor": "rgba(11, 62, 227, 1)",
+                                  },
+                                  {
+                                    "paddingHorizontal": 16,
+                                  },
+                                  {
+                                    "backgroundColor": "#0B3EE3",
+                                    "borderColor": "#FFFFFF",
+                                    "borderRadius": 8,
+                                    "borderWidth": 0,
+                                    "height": 48,
+                                  },
+                                  {},
+                                ]
                               }
                             >
                               <View
@@ -980,77 +1057,43 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                                 }
                                 jestAnimatedStyle={
                                   {
-                                    "value": {
-                                      "backgroundColor": "rgba(11, 62, 227, 1)",
-                                      "transform": [
-                                        {
-                                          "scale": 1,
-                                        },
-                                      ],
-                                    },
+                                    "value": {},
                                   }
                                 }
                                 jestInlineStyle={
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
-                                      "overflow": "hidden",
-                                      "textAlignVertical": "center",
                                     },
                                     {
-                                      "paddingHorizontal": 16,
+                                      "columnGap": 8,
                                     },
-                                    {
-                                      "backgroundColor": "#0B3EE3",
-                                      "borderColor": "#FFFFFF",
-                                      "borderRadius": 8,
-                                      "borderWidth": 0,
-                                      "height": 48,
-                                    },
-                                    {},
+                                    false,
                                   ]
                                 }
                                 style={
                                   [
                                     {
                                       "alignItems": "center",
-                                      "borderCurve": "continuous",
-                                      "elevation": 0,
                                       "flexDirection": "row",
                                       "justifyContent": "center",
-                                      "overflow": "hidden",
-                                      "textAlignVertical": "center",
                                     },
                                     {
-                                      "transform": [
-                                        {
-                                          "scale": 1,
-                                        },
-                                      ],
+                                      "columnGap": 8,
                                     },
-                                    {
-                                      "backgroundColor": "rgba(11, 62, 227, 1)",
-                                    },
-                                    {
-                                      "paddingHorizontal": 16,
-                                    },
-                                    {
-                                      "backgroundColor": "#0B3EE3",
-                                      "borderColor": "#FFFFFF",
-                                      "borderRadius": 8,
-                                      "borderWidth": 0,
-                                      "height": 48,
-                                    },
-                                    {},
+                                    false,
                                   ]
                                 }
                               >
-                                <View
+                                <Text
+                                  accessibilityElementsHidden={true}
+                                  accessible={false}
+                                  allowFontScaling={true}
                                   collapsable={false}
+                                  ellipsizeMode="tail"
+                                  importantForAccessibility="no-hide-descendants"
                                   jestAnimatedProps={
                                     {
                                       "value": {},
@@ -1058,56 +1101,34 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                                   }
                                   jestAnimatedStyle={
                                     {
-                                      "value": {},
+                                      "value": {
+                                        "color": "rgba(255, 255, 255, 1)",
+                                      },
                                     }
                                   }
                                   jestInlineStyle={
                                     [
                                       {
-                                        "alignItems": "center",
-                                        "flexDirection": "row",
-                                        "justifyContent": "center",
+                                        "textAlign": "auto",
                                       },
                                       {
-                                        "columnGap": 8,
+                                        "color": "#FFFFFF",
                                       },
-                                      false,
                                     ]
                                   }
+                                  maxFontSizeMultiplier={1.5}
+                                  numberOfLines={1}
                                   style={
                                     [
+                                      {},
                                       {
-                                        "alignItems": "center",
-                                        "flexDirection": "row",
-                                        "justifyContent": "center",
+                                        "color": undefined,
+                                        "fontFamily": "Titillio",
+                                        "fontSize": 16,
+                                        "fontStyle": "normal",
+                                        "fontWeight": "600",
+                                        "lineHeight": undefined,
                                       },
-                                      {
-                                        "columnGap": 8,
-                                      },
-                                      false,
-                                    ]
-                                  }
-                                >
-                                  <Text
-                                    accessibilityElementsHidden={true}
-                                    accessible={false}
-                                    allowFontScaling={true}
-                                    collapsable={false}
-                                    ellipsizeMode="tail"
-                                    importantForAccessibility="no-hide-descendants"
-                                    jestAnimatedProps={
-                                      {
-                                        "value": {},
-                                      }
-                                    }
-                                    jestAnimatedStyle={
-                                      {
-                                        "value": {
-                                          "color": "rgba(255, 255, 255, 1)",
-                                        },
-                                      }
-                                    }
-                                    jestInlineStyle={
                                       [
                                         {
                                           "textAlign": "auto",
@@ -1115,43 +1136,20 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
                                         {
                                           "color": "#FFFFFF",
                                         },
-                                      ]
-                                    }
-                                    maxFontSizeMultiplier={1.5}
-                                    numberOfLines={1}
-                                    style={
-                                      [
-                                        {},
                                         {
-                                          "color": undefined,
-                                          "fontFamily": "Titillio",
-                                          "fontSize": 16,
-                                          "fontStyle": "normal",
-                                          "fontWeight": "600",
-                                          "lineHeight": undefined,
+                                          "color": "rgba(255, 255, 255, 1)",
                                         },
-                                        [
-                                          {
-                                            "textAlign": "auto",
-                                          },
-                                          {
-                                            "color": "#FFFFFF",
-                                          },
-                                          {
-                                            "color": "rgba(255, 255, 255, 1)",
-                                          },
-                                        ],
-                                      ]
-                                    }
-                                  >
-                                    Continua
-                                  </Text>
-                                </View>
+                                      ],
+                                    ]
+                                  }
+                                >
+                                  Continua
+                                </Text>
                               </View>
                             </View>
                           </View>
-                        </RCTSafeAreaView>
-                      </RCTInputAccessoryView>
+                        </View>
+                      </View>
                     </View>
                   </View>
                 </View>
