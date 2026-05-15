@@ -126,7 +126,7 @@ export const createProximityActorsImplementation = (env: Env) => {
         const proximityDetails = getProximityDetails({
           request: parsedRequest.request,
           credentials,
-          requireAuthenticated: env.type !== "prod"
+          requireAuthenticated: env.type !== "pre"
         });
 
         sendBack({

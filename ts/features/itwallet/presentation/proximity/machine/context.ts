@@ -36,10 +36,10 @@ export type Context = {
    */
   proximityDetails?: ProximityDetails;
   /**
-   * A boolean value indicating whether the user has given consent
+   * A boolean value indicating whether the user has granted consent
    * to share their credentials with the Relying Party
    */
-  hasGivenConsent?: boolean;
+  hasGrantedConsent?: boolean;
 };
 
 export const InitialContext: Context = {

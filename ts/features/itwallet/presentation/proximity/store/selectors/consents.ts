@@ -6,7 +6,7 @@ import { generateConsentKey } from "../utils";
 /**
  * Returns all proximity presentation consents as a record keyed by consent key.
  */
-const itwProximityConsentsRecordSelector = (state: GlobalState) =>
+export const itwProximityConsentsRecordSelector = (state: GlobalState) =>
   state.features.itWallet.proximity.consents;
 
 /**

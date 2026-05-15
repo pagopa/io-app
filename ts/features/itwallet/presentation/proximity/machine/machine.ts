@@ -1,4 +1,12 @@
-import { assign, fromCallback, fromPromise, not, setup, stateIn } from "xstate";
+import {
+  and,
+  assign,
+  fromCallback,
+  fromPromise,
+  not,
+  setup,
+  stateIn
+} from "xstate";
 import {
   SendErrorResponseActorOutput,
   SendDocumentsActorInput,
@@ -27,7 +35,6 @@ export const itwProximityMachine = setup({
      */
 
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
-    setHasGivenConsent: assign({ hasGivenConsent: true }),
 
     /**
      * Navigation
@@ -41,8 +48,20 @@ export const itwProximityMachine = setup({
     navigateToFailureScreen: notImplemented,
     navigateToClaimsDisclosureScreen: notImplemented,
     navigateToSuccessScreen: notImplemented,
-    navigateToWallet: notImplemented,
-    closeProximity: notImplemented
+    closeProximity: notImplemented,
+
+    /**
+     * Consents
+     */
+
+    grantConsent: assign({ hasGrantedConsent: true }),
+    storeConsent: notImplemented,
+
+    /**
+     * Proximity
+     */
+
+    attemptSessionTermination: notImplemented
   },
   actors: {
     checkBluetoothPermissions: fromPromise<boolean>(notImplemented),
@@ -65,7 +84,8 @@ export const itwProximityMachine = setup({
   },
   guards: {
     hasFailure: ({ context }) => !!context.failure,
-    isNfcRetrieval: ({ context }) => context.retrievalMethod === "nfc"
+    isNfcRetrieval: ({ context }) => context.retrievalMethod === "nfc",
+    hasGrantedConsent: notImplemented
   }
 }).createMachine({
   id: "itwProximityMachine",
@@ -202,7 +222,7 @@ export const itwProximityMachine = setup({
           actions: assign(({ event }) => ({
             proximityDetails: event.proximityDetails,
             verifierRequest: event.verifierRequest,
-            retrievalMethod: event.retrievalMethod
+            retrievalMethod: "ble"
           })),
           target: "Presentment.ClaimsDisclosure"
         },
@@ -281,7 +301,7 @@ export const itwProximityMachine = setup({
           description: "Displays the requested claims",
           on: {
             "holder-consent": {
-              actions: "setHasGivenConsent",
+              actions: "grantConsent",
               target: "#itwProximityMachine.Presentment.SendingDocuments"
             },
             back: {
@@ -353,7 +373,6 @@ export const itwProximityMachine = setup({
       }
     },
     Nfc: {
-      tags: [ItwPresentationTags.Loading],
       description: "Perform all the checks related to NFC",
       initial: "CheckActivation",
       states: {
@@ -401,7 +420,6 @@ export const itwProximityMachine = setup({
       description:
         "Manages the NFC communication lifecycle between the device and the verifier",
       initial: "Starting",
-      entry: "navigateToNfcPresentmentScreen",
       invoke: {
         id: "proximityCommunicationLogic",
         src: "proximityCommunicationLogic",
@@ -423,9 +441,10 @@ export const itwProximityMachine = setup({
         "device-document-request-received": {
           actions: assign(({ event }) => ({
             proximityDetails: event.proximityDetails,
-            verifierRequest: event.verifierRequest
+            verifierRequest: event.verifierRequest,
+            retrievalMethod: event.retrievalMethod
           })),
-          target: "NfcPresentment.ClaimsDisclosure"
+          target: "NfcPresentment.EvaluatingGrant"
         },
         "device-disconnected": [
           {
@@ -448,15 +467,14 @@ export const itwProximityMachine = setup({
       },
       states: {
         Retrying: {
-          tags: [ItwPresentationTags.Loading],
           always: {
             target: "Starting",
             actions: assign(() => ({ failure: undefined }))
           }
         },
         Starting: {
-          tags: [ItwPresentationTags.Loading],
           description: "Start the proximity and generates the QR code string",
+          entry: "navigateToNfcPresentmentScreen",
           invoke: {
             src: "startEngagement",
             input: {
@@ -469,7 +487,11 @@ export const itwProximityMachine = setup({
             onError: {
               actions: ["setFailure"]
             }
-          },
+          }
+        },
+        AwaitingConnection: {
+          description: "Waiting for the verifier to connect via NFC",
+          tags: [ItwPresentationTags.Presenting],
           on: {
             "nfc-stopped": {
               target: "Terminating"
@@ -478,10 +500,6 @@ export const itwProximityMachine = setup({
               target: "Retrying"
             }
           }
-        },
-        AwaitingConnection: {
-          description: "Waiting for the verifier to connect via NFC",
-          tags: [ItwPresentationTags.Presenting]
         },
         Connecting: {
           tags: [ItwPresentationTags.Loading],
@@ -493,14 +511,46 @@ export const itwProximityMachine = setup({
           description:
             "The device has successfully established a connection with the verifier"
         },
+        EvaluatingGrant: {
+          always: [
+            {
+              description:
+                "If the user has already granted consent for the current RP ID and proximity details, skip the claims disclosure screen and directly send the documents",
+              guard: and(["hasGrantedConsent", "isNfcRetrieval"]),
+              target: "#itwProximityMachine.NfcPresentment.SendingDocuments"
+            },
+            {
+              description:
+                "Navigate to the claims disclosure screen as in the non-NFC flow",
+              target: "#itwProximityMachine.NfcPresentment.ClaimsDisclosure"
+            }
+          ]
+        },
         ClaimsDisclosure: {
           description: "Displays the requested claims",
           entry: "navigateToClaimsDisclosureScreen",
+          always: {
+            description:
+              "If the retrieval method is NFC the current session should be terminated before retrying again",
+            guard: "isNfcRetrieval",
+            actions: "attemptSessionTermination"
+          },
           on: {
-            "holder-consent": {
-              actions: "setHasGivenConsent",
-              target: "#itwProximityMachine.NfcPresentment.SendingDocuments"
-            },
+            "holder-consent": [
+              {
+                description:
+                  "If the retrieval method is NFC, grant consent and retry the NFC presentment flow to trigger the sendDocuments invocation",
+                guard: "isNfcRetrieval",
+                actions: "grantConsent",
+                target: "#itwProximityMachine.NfcPresentment.Retrying"
+              },
+              {
+                description:
+                  "Grant consent and navigate to the sending documents state",
+                actions: "grantConsent",
+                target: "#itwProximityMachine.NfcPresentment.SendingDocuments"
+              }
+            ],
             back: {
               target: "#itwProximityMachine.NfcPresentment.Terminating"
             }
@@ -579,7 +629,7 @@ export const itwProximityMachine = setup({
       },
       on: {
         close: {
-          actions: "navigateToWallet",
+          actions: "closeProximity",
           target: "Idle"
         }
       }
