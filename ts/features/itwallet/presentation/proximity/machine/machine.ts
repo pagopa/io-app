@@ -397,7 +397,6 @@ export const itwProximityMachine = setup({
         },
         Terminating: {
           description: "Send the session-termination signal to the verifier",
-          tags: [ItwPresentationTags.Loading],
           invoke: {
             id: "terminateProximitySession",
             src: "terminateProximitySession",
