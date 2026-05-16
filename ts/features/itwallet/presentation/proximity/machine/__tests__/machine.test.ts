@@ -28,12 +28,14 @@ describe("itwProximityMachine", () => {
   const navigateToBluetoothPermissionsScreen = jest.fn();
   const navigateToBluetoothActivationScreen = jest.fn();
   const navigateToNfcActivationScreen = jest.fn();
-  const navigateToPresentmentScreen = jest.fn();
   const navigateToNfcPresentmentScreen = jest.fn();
   const navigateToFailureScreen = jest.fn();
   const navigateToClaimsDisclosureScreen = jest.fn();
   const navigateToSuccessScreen = jest.fn();
   const closeProximity = jest.fn();
+
+  const storeConsent = jest.fn();
+  const attemptSessionTermination = jest.fn();
 
   const checkBluetoothPermissions = jest.fn();
   const checkBluetoothActivation = jest.fn();
@@ -59,7 +61,9 @@ describe("itwProximityMachine", () => {
       navigateToFailureScreen,
       navigateToClaimsDisclosureScreen,
       navigateToSuccessScreen,
-      closeProximity
+      closeProximity,
+      storeConsent,
+      attemptSessionTermination
     },
     actors: {
       checkBluetoothPermissions: fromPromise(checkBluetoothPermissions),
@@ -71,7 +75,8 @@ describe("itwProximityMachine", () => {
       terminateProximitySession: fromPromise(terminateProximitySession)
     },
     guards: {
-      hasFailure: ({ context }) => !!context.failure
+      hasFailure: ({ context }) => !!context.failure,
+      hasGrantedConsent: ({ context }) => context.hasGrantedConsent === true
     }
   });
 
@@ -105,14 +110,14 @@ describe("itwProximityMachine", () => {
     expect(onInit).toHaveBeenCalledTimes(1);
   });
 
-  it("close from Idle calls closeProximity", () => {
+  it("close from Idle is ignored", () => {
     const actor = createActor(mockedMachine);
 
     actor.start();
     actor.send({ type: "close" });
 
     expect(actor.getSnapshot().value).toStrictEqual("Idle");
-    expect(closeProximity).toHaveBeenCalledTimes(1);
+    expect(closeProximity).not.toHaveBeenCalled();
   });
 
   it("start moves to Bluetooth.CheckPermissions", () => {
@@ -196,10 +201,9 @@ describe("itwProximityMachine", () => {
     );
   });
 
-  it("active bluetooth and NFC move to Presentment.Starting", async () => {
+  it("active bluetooth moves to Presentment.Starting", async () => {
     checkBluetoothPermissions.mockResolvedValue(true);
     checkBluetoothActivation.mockResolvedValue(true);
-    checkNfcActivation.mockResolvedValue(true);
     startEngagement.mockReturnValue(new Promise(() => {}));
     const actor = createActor(mockedMachine);
 
@@ -209,7 +213,6 @@ describe("itwProximityMachine", () => {
     await waitFor(actor, snapshot =>
       snapshot.matches({ Presentment: "Starting" })
     );
-    expect(navigateToPresentmentScreen).toHaveBeenCalledTimes(1);
   });
 
   it("inactive bluetooth moves to Bluetooth.RequireActivation", async () => {
@@ -256,8 +259,8 @@ describe("itwProximityMachine", () => {
     expect(closeProximity).toHaveBeenCalledTimes(1);
   });
 
-  it("continue from Bluetooth.RequireActivation moves to Nfc.CheckActivation", async () => {
-    checkNfcActivation.mockReturnValue(new Promise(() => {}));
+  it("continue from Bluetooth.RequireActivation moves to Presentment.Starting", async () => {
+    startEngagement.mockReturnValue(new Promise(() => {}));
     const actor = createActor(mockedMachine, {
       snapshot: makeSnapshot({ Bluetooth: "RequireActivation" })
     });
@@ -266,18 +269,32 @@ describe("itwProximityMachine", () => {
     actor.send({ type: "continue" });
 
     await waitFor(actor, snapshot =>
+      snapshot.matches({ Presentment: "Starting" })
+    );
+  });
+
+  it("start-nfc-presentment from AwaitingConnection enters Nfc gate", async () => {
+    checkNfcActivation.mockReturnValue(new Promise(() => {}));
+    const actor = createActor(mockedMachine, {
+      snapshot: makeSnapshot({ Presentment: "AwaitingConnection" })
+    });
+
+    actor.start();
+    actor.send({ type: "start-nfc-presentment" });
+
+    await waitFor(actor, snapshot =>
       snapshot.matches({ Nfc: "CheckActivation" })
     );
   });
 
-  it("inactive NFC moves to Nfc.RequireActivation", async () => {
-    checkBluetoothPermissions.mockResolvedValue(true);
-    checkBluetoothActivation.mockResolvedValue(true);
+  it("inactive NFC from start-nfc-presentment moves to Nfc.RequireActivation", async () => {
     checkNfcActivation.mockResolvedValue(false);
-    const actor = createActor(mockedMachine);
+    const actor = createActor(mockedMachine, {
+      snapshot: makeSnapshot({ Presentment: "AwaitingConnection" })
+    });
 
     actor.start();
-    actor.send({ type: "start" });
+    actor.send({ type: "start-nfc-presentment" });
 
     await waitFor(actor, snapshot =>
       snapshot.matches({ Nfc: "RequireActivation" })
@@ -285,14 +302,14 @@ describe("itwProximityMachine", () => {
     expect(navigateToNfcActivationScreen).toHaveBeenCalledTimes(1);
   });
 
-  it("NFC activation errors move to Nfc.RequireActivation", async () => {
-    checkBluetoothPermissions.mockResolvedValue(true);
-    checkBluetoothActivation.mockResolvedValue(true);
+  it("NFC activation errors from start-nfc-presentment move to Nfc.RequireActivation", async () => {
     checkNfcActivation.mockRejectedValue(new Error("nfc unavailable"));
-    const actor = createActor(mockedMachine);
+    const actor = createActor(mockedMachine, {
+      snapshot: makeSnapshot({ Presentment: "AwaitingConnection" })
+    });
 
     actor.start();
-    actor.send({ type: "start" });
+    actor.send({ type: "start-nfc-presentment" });
 
     await waitFor(actor, snapshot =>
       snapshot.matches({ Nfc: "RequireActivation" })
@@ -300,7 +317,8 @@ describe("itwProximityMachine", () => {
     expect(navigateToNfcActivationScreen).toHaveBeenCalledTimes(1);
   });
 
-  it("close from Nfc.RequireActivation calls closeProximity", () => {
+  it("close from Nfc.RequireActivation returns to Presentment", async () => {
+    startEngagement.mockReturnValue(new Promise(() => {}));
     const actor = createActor(mockedMachine, {
       snapshot: makeSnapshot({ Nfc: "RequireActivation" })
     });
@@ -308,13 +326,12 @@ describe("itwProximityMachine", () => {
     actor.start();
     actor.send({ type: "close" });
 
-    expect(actor.getSnapshot().value).toStrictEqual({
-      Nfc: "RequireActivation"
-    });
-    expect(closeProximity).toHaveBeenCalledTimes(1);
+    await waitFor(actor, snapshot =>
+      snapshot.matches({ Presentment: "Starting" })
+    );
   });
 
-  it("continue from Nfc.RequireActivation moves to Presentment.Starting", async () => {
+  it("continue from Nfc.RequireActivation moves to Presentment.Starting with NFC mode", async () => {
     startEngagement.mockReturnValue(new Promise(() => {}));
     const actor = createActor(mockedMachine, {
       snapshot: makeSnapshot({ Nfc: "RequireActivation" })
@@ -326,7 +343,8 @@ describe("itwProximityMachine", () => {
     await waitFor(actor, snapshot =>
       snapshot.matches({ Presentment: "Starting" })
     );
-    expect(navigateToPresentmentScreen).toHaveBeenCalledTimes(1);
+    expect(actor.getSnapshot().context.engagementMode).toEqual("nfc");
+    expect(navigateToNfcPresentmentScreen).toHaveBeenCalledTimes(1);
   });
 
   it("handles the happy path in Presentment", async () => {
@@ -470,7 +488,11 @@ describe("itwProximityMachine", () => {
     actor.start();
     actor.send({ type: "back" });
 
-    await waitFor(actor, snapshot => snapshot.matches("Idle"));
+    expect(actor.getSnapshot().value).toStrictEqual({
+      Presentment: "Terminating"
+    });
+    // Allow the terminateProximitySession promise to resolve
+    await new Promise(resolve => setTimeout(resolve, 0));
     expect(closeProximity).toHaveBeenCalledTimes(1);
   });
 
@@ -479,7 +501,6 @@ describe("itwProximityMachine", () => {
 
     checkBluetoothPermissions.mockResolvedValue(true);
     checkBluetoothActivation.mockResolvedValue(true);
-    checkNfcActivation.mockResolvedValue(true);
     startEngagement
       .mockRejectedValueOnce(new Error("start failed"))
       .mockReturnValueOnce(new Promise(() => {}));
@@ -487,6 +508,7 @@ describe("itwProximityMachine", () => {
     actor.start();
     actor.send({ type: "start" });
 
+    await waitFor(actor, snapshot => !!snapshot.context.failure);
     expect(actor.getSnapshot().context.failure?.type).toEqual(
       ProximityFailureType.RELYING_PARTY_GENERIC
     );
