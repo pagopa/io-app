@@ -4226,6 +4226,12 @@
               "message": "Non potrai completare la verifica del documento."
             }
           },
+          "storeConsent": {
+            "title": "Vuoi salvare la tua scelta per non ripetere questo passaggio?",
+            "subtitle": "Salva il consenso per saltare questo passaggio alle prossime verifiche contactless per questo servizio",
+            "action": "Sì, salva il consenso",
+            "secondaryAction": "No, chiedimelo ogni volta"
+          },
           "relyingParty": {
             "genericError": {
               "title": "Verifica interrotta",

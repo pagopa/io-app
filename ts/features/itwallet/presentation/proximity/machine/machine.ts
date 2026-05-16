@@ -46,6 +46,7 @@ export const itwProximityMachine = setup({
     navigateToNfcPresentmentScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
     navigateToClaimsDisclosureScreen: notImplemented,
+    navigateToStoreconsentScreen: notImplemented,
     navigateToSuccessScreen: notImplemented,
     closeProximity: notImplemented,
 
@@ -363,7 +364,7 @@ export const itwProximityMachine = setup({
                 // EvaluatingConsent will then skip this screen and go straight to SendingDocuments
                 guard: "isNfcRetrieval",
                 actions: "grantConsent",
-                target: "#itwProximityMachine.Presentment.Retrying"
+                target: "#itwProximityMachine.Presentment.StoreConsent"
               },
               {
                 actions: "grantConsent",
@@ -372,6 +373,20 @@ export const itwProximityMachine = setup({
             ],
             back: {
               target: "#itwProximityMachine.Presentment.Terminating"
+            }
+          }
+        },
+        StoreConsent: {
+          description:
+            "Asks user if he want to save the consent for future requests",
+          entry: "navigateToStoreconsentScreen",
+          on: {
+            "store-consent": {
+              actions: "storeConsent",
+              target: "#itwProximityMachine.Presentment.Retrying"
+            },
+            continue: {
+              target: "#itwProximityMachine.Presentment.Retrying"
             }
           }
         },

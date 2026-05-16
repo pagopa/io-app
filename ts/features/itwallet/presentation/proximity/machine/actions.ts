@@ -56,6 +56,12 @@ export const createProximityActionsImplementation = (
     });
   },
 
+  navigateToStoreconsentScreen: () => {
+    navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
+      screen: ITW_PROXIMITY_ROUTES.STORE_CONSENT
+    });
+  },
+
   navigateToSuccessScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
       screen: ITW_PROXIMITY_ROUTES.SUCCESS

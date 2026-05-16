@@ -66,10 +66,15 @@ export type Consent = {
   type: "holder-consent";
 };
 
+export type StoreConsent = {
+  type: "store-consent";
+};
+
 export type ProximityEvents =
   | Start
   | Back
   | Consent
+  | StoreConsent
   | Continue
   | Close
   | Retry

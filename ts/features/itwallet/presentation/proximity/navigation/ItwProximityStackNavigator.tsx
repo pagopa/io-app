@@ -14,6 +14,7 @@ import { ItwProximityClaimsDisclosureScreen } from "../screens/ItwProximityClaim
 import { ItwProximityFailureScreen } from "../screens/ItwProximityFailureScreen";
 import { ItwProximityNfcPresentmentScreen } from "../screens/ItwProximityNfcPresentmentScreen.tsx";
 import { ItwProximityPresentmentScreen } from "../screens/ItwProximityPresentmentScreen.tsx";
+import { ItwProximityStoreConsentScreen } from "../screens/ItwProximityStoreConsentScreen.tsx";
 import { ItwProximitySuccessScreen } from "../screens/ItwProximitySuccessScreen.tsx";
 import { ItwProximityParamsList } from "./ItwProximityParamsList";
 import { ITW_PROXIMITY_ROUTES } from "./routes";
@@ -69,6 +70,10 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_PROXIMITY_ROUTES.CLAIMS_DISCLOSURE}
         component={ItwProximityClaimsDisclosureScreen}
+      />
+      <Stack.Screen
+        name={ITW_PROXIMITY_ROUTES.STORE_CONSENT}
+        component={ItwProximityStoreConsentScreen}
       />
       <Stack.Screen
         name={ITW_PROXIMITY_ROUTES.SUCCESS}
