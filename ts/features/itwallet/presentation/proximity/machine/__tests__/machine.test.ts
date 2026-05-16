@@ -31,6 +31,7 @@ describe("itwProximityMachine", () => {
   const navigateToNfcPresentmentScreen = jest.fn();
   const navigateToFailureScreen = jest.fn();
   const navigateToClaimsDisclosureScreen = jest.fn();
+  const navigateToStoreconsentScreen = jest.fn();
   const navigateToSuccessScreen = jest.fn();
   const closeProximity = jest.fn();
 
@@ -60,6 +61,7 @@ describe("itwProximityMachine", () => {
       navigateToNfcPresentmentScreen,
       navigateToFailureScreen,
       navigateToClaimsDisclosureScreen,
+      navigateToStoreconsentScreen,
       navigateToSuccessScreen,
       closeProximity,
       storeConsent,
@@ -494,6 +496,54 @@ describe("itwProximityMachine", () => {
     // Allow the terminateProximitySession promise to resolve
     await new Promise(resolve => setTimeout(resolve, 0));
     expect(closeProximity).toHaveBeenCalledTimes(1);
+  });
+
+  it("holder-consent with NFC retrieval moves to StoreConsent", () => {
+    const actor = createActor(mockedMachine, {
+      snapshot: makeSnapshot(
+        { Presentment: "ClaimsDisclosure" },
+        { retrievalMethod: "nfc" }
+      )
+    });
+
+    actor.start();
+    actor.send({ type: "holder-consent" });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      Presentment: "StoreConsent"
+    });
+    expect(actor.getSnapshot().context.hasGrantedConsent).toBe(true);
+    expect(navigateToStoreconsentScreen).toHaveBeenCalledTimes(1);
+  });
+
+  it("store-consent from StoreConsent stores consent and moves to Retrying", () => {
+    startEngagement.mockReturnValue(new Promise(() => {}));
+    const actor = createActor(mockedMachine, {
+      snapshot: makeSnapshot({ Presentment: "StoreConsent" })
+    });
+
+    actor.start();
+    actor.send({ type: "store-consent" });
+
+    expect(storeConsent).toHaveBeenCalledTimes(1);
+    expect(actor.getSnapshot().value).toStrictEqual({
+      Presentment: "Starting"
+    });
+  });
+
+  it("continue from StoreConsent skips storing and moves to Retrying", () => {
+    startEngagement.mockReturnValue(new Promise(() => {}));
+    const actor = createActor(mockedMachine, {
+      snapshot: makeSnapshot({ Presentment: "StoreConsent" })
+    });
+
+    actor.start();
+    actor.send({ type: "continue" });
+
+    expect(storeConsent).not.toHaveBeenCalled();
+    expect(actor.getSnapshot().value).toStrictEqual({
+      Presentment: "Starting"
+    });
   });
 
   it("retry from Starting clears the failure after a startEngagement error", async () => {
