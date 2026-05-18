@@ -151,12 +151,11 @@ diff --git a/src/credential/issuance/api/02-start-user-authorization.ts b/src/cr
 index 4db4c62..2fee6ad 100644
 --- a/src/credential/issuance/api/02-start-user-authorization.ts
 +++ b/src/credential/issuance/api/02-start-user-authorization.ts
-@@ -1,4 +1,5 @@
+@@ -1,3 +1,4 @@
  import type { CryptoContext } from "@pagopa/io-react-native-jwt";
  import type { AuthorizationDetail } from "../../../utils/par";
 +import type { ExtractGrantDetailsResult } from "../../offer/api/types";
  import type { IssuerConfig } from "./IssuerConfig";
- export interface StartUserAuthorizationApi {
 @@ -40,6 +41,7 @@ export interface StartUserAuthorizationApi {
        walletInstanceAttestation: string;
        redirectUri: string;
@@ -181,13 +180,12 @@ diff --git a/src/credential/issuance/v1.3.3/02-start-user-authorization.ts b/src
 index a99eb60..42f9e68 100644
 --- a/src/credential/issuance/v1.3.3/02-start-user-authorization.ts
 +++ b/src/credential/issuance/v1.3.3/02-start-user-authorization.ts
-@@ -21,5 +21,6 @@ export const startUserAuthorization: IssuanceApi["startUserAuthorization"] =
+@@ -21,4 +21,5 @@ export const startUserAuthorization: IssuanceApi["startUserAuthorization"] =
        walletInstanceAttestation,
        redirectUri,
        appFetch = fetch,
 +      credentialOfferGrant,
      } = ctx;
-     const clientId = await wiaCryptoContext.getPublicKey().then((_) => _.kid);
 @@ -70,7 +71,11 @@ export const startUserAuthorization: IssuanceApi["startUserAuthorization"] =
        },
        clientId,

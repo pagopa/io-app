@@ -4548,7 +4548,7 @@ __metadata:
 
 "@pagopa/io-react-native-wallet@patch:@pagopa/io-react-native-wallet@npm%3A3.2.0#./.yarn/patches/@pagopa-io-react-native-wallet-npm-3.2.0-4d0a7649a3.patch::locator=io%40workspace%3A.":
   version: 3.2.0
-  resolution: "@pagopa/io-react-native-wallet@patch:@pagopa/io-react-native-wallet@npm%3A3.2.0#./.yarn/patches/@pagopa-io-react-native-wallet-npm-3.2.0-4d0a7649a3.patch::version=3.2.0&hash=cdccb3&locator=io%40workspace%3A."
+  resolution: "@pagopa/io-react-native-wallet@patch:@pagopa/io-react-native-wallet@npm%3A3.2.0#./.yarn/patches/@pagopa-io-react-native-wallet-npm-3.2.0-4d0a7649a3.patch::version=3.2.0&hash=9cbef8&locator=io%40workspace%3A."
   dependencies:
     "@pagopa/io-wallet-oauth2": 1.2.1
     "@pagopa/io-wallet-oid-federation": 1.2.1
@@ -4574,7 +4574,7 @@ __metadata:
     react: "*"
     react-native: "*"
     react-native-quick-crypto: "*"
-  checksum: b46ab90857ad240fdfaf68a058fc514b8d7c51e122f867b4482fc22aca5d2896a91227c0d2db427e9f5f21adab263266c03f0b55cd328354910747b38e260899
+  checksum: 58b99a0f18b8e0bebaa01e6dd9c195cad57930e24a3bea6d1e583112bdb6372287a3cbb24b4f515a722cb81a6d51c840ffb638cecb64374db291646b159d2a4e
   languageName: node
   linkType: hard
 
