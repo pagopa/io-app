@@ -13,7 +13,8 @@ import {
   ProcessCredentialOfferActorInput,
   ProcessCredentialOfferActorOutput,
   RequestCredentialActorInput,
-  RequestCredentialActorOutput
+  RequestCredentialActorOutput,
+  VerifyTrustFederationActorInput
 } from "./actors";
 import { Context, InitialContext } from "./context";
 import { CredentialIssuanceEvents } from "./events";
@@ -69,7 +70,9 @@ export const itwCredentialIssuanceMachine = setup({
     trackCredentialIssuingDataShareAccepted: notImplemented
   },
   actors: {
-    verifyTrustFederation: fromPromise<void>(notImplemented),
+    verifyTrustFederation: fromPromise<void, VerifyTrustFederationActorInput>(
+      notImplemented
+    ),
     getWalletAttestation:
       fromPromise<GetWalletAttestationActorOutput>(notImplemented),
     requestCredential: fromPromise<
@@ -236,6 +239,9 @@ export const itwCredentialIssuanceMachine = setup({
       tags: [ItwTags.Loading],
       invoke: {
         src: "verifyTrustFederation",
+        input: ({ context }) => ({
+          resolvedCredentialOffer: context.resolvedCredentialOffer
+        }),
         onDone: {
           target: "CheckingWalletInstanceAttestation"
         },
@@ -300,9 +306,7 @@ export const itwCredentialIssuanceMachine = setup({
         src: "requestCredential",
         input: ({ context }) => ({
           credentialType: context.credentialType,
-          authorizationServer:
-            context.resolvedCredentialOffer?.grantDetails.authorizationCodeGrant
-              .authorizationServer,
+          resolvedCredentialOffer: context.resolvedCredentialOffer,
           walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
           skipMdocIssuance: !context.isItWalletValid // Do not request mDoc credentials for non IT-Wallet instances
         }),
