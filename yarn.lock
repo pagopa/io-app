@@ -13658,7 +13658,7 @@ __metadata:
     jest: ^30.2.0
     jwk-thumbprint: ^0.1.4
     lint-staged: ^13.2.0
-    lodash: ^4.17.21
+    lodash: 4.18.0
     mixpanel-react-native: 2.4.1
     mockdate: ^3.0.2
     mockttp: 2.4.0
@@ -13745,7 +13745,7 @@ __metadata:
     unist-util-visit: ^4.1.0
     url-parse: ^1.5.9
     uuid: ^8.3.2
-    validator: ^13.7.0
+    validator: 13.15.22
     xml2js: ^0.5.0
     xss: 1.0.10
     xstate: ^5
@@ -15826,6 +15826,13 @@ __metadata:
   version: 4.1.1
   resolution: "lodash.throttle@npm:4.1.1"
   checksum: 129c0a28cee48b348aef146f638ef8a8b197944d4e9ec26c1890c19d9bf5a5690fe11b655c77a4551268819b32d27f4206343e30c78961f60b561b8608c8c805
+  languageName: node
+  linkType: hard
+
+"lodash@npm:4.18.0":
+  version: 4.18.0
+  resolution: "lodash@npm:4.18.0"
+  checksum: 220e1b40f80425cbde3fcdd0915c0ef87e29cbce5fe9a6c82ad80a1d50cfab713eed7dc97a2f7697b11760796ec45cd1d9daf9767a9bee26da5502af487c9f45
   languageName: node
   linkType: hard
 
@@ -23368,6 +23375,13 @@ __metadata:
   version: 5.0.1
   resolution: "validate-npm-package-name@npm:5.0.1"
   checksum: 0d583a1af23aeffea7748742cf22b6802458736fb8b60323ba5949763824d46f796474b0e1b9206beb716f9d75269e19dbd7795d6b038b29d561be95dd827381
+  languageName: node
+  linkType: hard
+
+"validator@npm:13.15.22":
+  version: 13.15.22
+  resolution: "validator@npm:13.15.22"
+  checksum: 93b1b0b1797aaa984fda1c0529e69745ed87afcfa8a9ea15aa30a70796554a25f254759d2462c2000a692e5c6eae219e32449b86f8a9fd021135758df0dffe03
   languageName: node
   linkType: hard
 
