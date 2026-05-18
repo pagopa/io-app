@@ -111,3 +111,12 @@ Created on **24/04/2026**
 #### Reason:
 
 - Patch to apply an explicit header `minHeight` in `CardContainer` only when `headerTransparent` is enabled and a screen reader is active, improving Android accessibility by ensuring the header area is properly sized for TalkBack.
+
+### @pagopa-io-wallet-oauth2-npm-1.2.1-779d80230d.patch
+
+Created on **18/05/2026**
+
+#### Reason:
+
+- Add `issuerState` support to PAR creation and serialize it as `issuer_state` in both signed and unsigned authorization
+  requests.
