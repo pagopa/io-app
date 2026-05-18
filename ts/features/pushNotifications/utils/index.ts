@@ -1,5 +1,5 @@
 import * as Notifications from "expo-notifications";
-import { Linking } from "react-native";
+import NotificationsUtils from "react-native-notifications-utils";
 import { v4 as uuid } from "uuid";
 import { trackAppCaughtError } from "../../../utils/analytics";
 import { unknownToString } from "../../../utils/errors";
@@ -56,13 +56,6 @@ export const requestNotificationPermissions = async (): Promise<boolean> => {
 };
 
 /**
- * Cancels all pending scheduled (local) notifications.
- * Called during app logout/cache clear to remove any stale SPID-related local notifications.
- */
-export const cancellAllLocalNotifications = () =>
-  Notifications.cancelAllScheduledNotificationsAsync();
-
-/**
  * This is a legacy code that was used to generate a unique Id
  * from client side. It is still used because the backend API
  * requires it as part of the URL's path but it is later not
@@ -72,8 +65,7 @@ export const cancellAllLocalNotifications = () =>
  */
 export const generateInstallationId = () => `001${uuid().replace(/-/g, "")}`;
 
-export const openSystemNotificationSettingsScreen = () => {
-  void Linking.openSettings();
-};
+export const openSystemNotificationSettingsScreen = () =>
+  NotificationsUtils.openSettings();
 
 export const generateTokenRegistrationTime = () => new Date().getTime();

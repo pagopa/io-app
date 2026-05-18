@@ -1,14 +1,13 @@
-import { Linking } from "react-native";
 import * as Notifications from "expo-notifications";
-import * as analytics from "../../../../utils/analytics";
+import NotificationsUtils from "react-native-notifications-utils";
 import {
-  cancellAllLocalNotifications,
   checkNotificationPermissions,
   generateInstallationId,
   generateTokenRegistrationTime,
   openSystemNotificationSettingsScreen,
   requestNotificationPermissions
 } from "..";
+import * as analytics from "../../../../utils/analytics";
 
 jest.mock("expo-notifications", () => ({
   IosAuthorizationStatus: {
@@ -145,21 +144,11 @@ describe("requestNotificationPermissions", () => {
   });
 });
 
-describe("cancellAllLocalNotifications", () => {
-  it("calls Notifications.cancelAllScheduledNotificationsAsync()", async () => {
-    const spy = jest
-      .spyOn(Notifications, "cancelAllScheduledNotificationsAsync")
-      .mockResolvedValue(undefined);
-    await cancellAllLocalNotifications();
-    expect(spy).toHaveBeenCalledTimes(1);
-  });
-});
-
 describe("openSystemNotificationSettingsScreen", () => {
-  it("calls Linking.openSettings()", () => {
+  it("calls NotificationUtils.openSettings()", () => {
     const spy = jest
-      .spyOn(Linking, "openSettings")
-      .mockResolvedValue(undefined);
+      .spyOn(NotificationsUtils, "openSettings")
+      .mockImplementation(() => undefined);
     expect(spy).toHaveBeenCalledTimes(0);
     openSystemNotificationSettingsScreen();
     expect(spy).toHaveBeenCalledTimes(1);

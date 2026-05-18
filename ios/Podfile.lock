@@ -460,6 +460,7 @@ PODS:
     - React-RCTText (= 0.81.5)
     - React-RCTVibration (= 0.81.5)
   - React-callinvoker (0.81.5)
+  - React-Codegen (0.1.0)
   - React-Core (0.81.5):
     - boost
     - DoubleConversion
@@ -2316,6 +2317,13 @@ PODS:
     - Yoga
   - react-native-netinfo (11.4.1):
     - React-Core
+  - react-native-notifications-utils (0.3.0):
+    - RCT-Folly
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Codegen
+    - React-Core
+    - ReactCommon/turbomodule/core
   - react-native-pager-view (7.0.2):
     - boost
     - DoubleConversion
@@ -3676,6 +3684,7 @@ DEPENDENCIES:
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
   - react-native-keyboard-controller (from `../node_modules/react-native-keyboard-controller`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
+  - react-native-notifications-utils (from `../node_modules/react-native-notifications-utils`)
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-pdf (from `../node_modules/react-native-pdf`)
   - react-native-quick-base64 (from `../node_modules/react-native-quick-base64`)
@@ -3745,6 +3754,7 @@ SPEC REPOS:
     - JOSESwift
     - Mixpanel-swift
     - OpenSSL-Universal
+    - React-Codegen
     - SocketRocket
     - SwiftCBOR
     - ZendeskAnswerBotProvidersSDK
@@ -3912,6 +3922,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-keyboard-controller"
   react-native-netinfo:
     :path: "../node_modules/@react-native-community/netinfo"
+  react-native-notifications-utils:
+    :path: "../node_modules/react-native-notifications-utils"
   react-native-pager-view:
     :path: "../node_modules/react-native-pager-view"
   react-native-pdf:
@@ -4075,6 +4087,7 @@ SPEC CHECKSUMS:
   RCTTypeSafety: b99aa872829ee18f6e777e0ef55852521c5a6788
   React: 914f8695f9bf38e6418228c2ffb70021e559f92f
   React-callinvoker: 23cd4e33928608bd0cc35357597568b8b9a5f068
+  React-Codegen: 4b8b4817cea7a54b83851d4c1f91f79aa73de30a
   React-Core: 6a0a97598e9455348113bfe4c573fe8edac34469
   React-CoreModules: a88a6ca48b668401b9780e272e2a607e70f9f955
   React-cxxreact: 06265fd7e8d5c3b6b49e00d328ef76e5f1ae9c8b
@@ -4112,6 +4125,7 @@ SPEC CHECKSUMS:
   react-native-image-picker: b16541b587b275e81a12f9b82f215c5e9b0ccbf3
   react-native-keyboard-controller: 3ee1e63487ea8ba3554db4f131af1ebac5e2da39
   react-native-netinfo: cec9c4e86083cb5b6aba0e0711f563e2fbbff187
+  react-native-notifications-utils: 3e4bfc85db8610c150945472a8976a036a8931a7
   react-native-pager-view: 5c3098839820aa73d75873e7b1a7eb9f119602b7
   react-native-pdf: edc236298f13f1609e42d41e45b8b6ea88ed10f9
   react-native-quick-base64: 6568199bb2ac8e72ecdfdc73a230fbc5c1d3aac4

@@ -13739,6 +13739,7 @@ __metadata:
     react-native-keyboard-controller: ^1.21.7
     react-native-keychain: ^10.0.0
     react-native-linear-gradient: ^2.5.6
+    react-native-notifications-utils: ^0.3.0
     react-native-pager-view: ^7.0.1
     react-native-pdf: 7.0.3
     react-native-permissions: ^5.3.0
@@ -19411,6 +19412,16 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: f980d324e551bbc475c6406bdc5250a08242020cbe653412fa169bbdf51e28a502e225de105b4d696d6a1a1b733d44782469020f4936d8b3ce0e2c78e51cf58f
+  languageName: node
+  linkType: hard
+
+"react-native-notifications-utils@npm:^0.3.0":
+  version: 0.3.0
+  resolution: "react-native-notifications-utils@npm:0.3.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 00b3cc569ff5a62b845e0db116f66c8534f84027b8729136e7cc277f980af4e73a56658a3fbd1a1861e0d44e4791b873366afbfd8e09dca3a418d0edc1adff2e
   languageName: node
   linkType: hard
 
