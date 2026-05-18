@@ -36,7 +36,8 @@ export const requestNotificationPermissions = async (): Promise<boolean> => {
         allowAlert: true,
         allowBadge: true,
         allowSound: true
-      }
+      },
+      android: {}
     });
 
     return (

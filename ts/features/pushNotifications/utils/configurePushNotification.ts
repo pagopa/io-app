@@ -19,17 +19,23 @@ const unhandledForegroundNotificationIds = new Set<string>();
  * @returns a function to remove the registered listeners
  */
 export const configurePushNotificationListeners = (store: Store) => {
+  // check if the app was woken up by a notification interaction,
+  // and if so, handle the notification response before setting up the listeners to avoid any race.
+  // Do note that all other listeners only handle events that are received while the app is running (FG or BG, but not killed)
   handleColdStartNotification(store);
 
+  // Listener for push token updates
   const tokenSubscription = Notifications.addPushTokenListener(
     onPushNotificationTokenReceived(store)
   );
 
+  // listener for the event that fires upon **receiving** a push notification
   const notificationReceivedSubscription =
     Notifications.addNotificationReceivedListener(event =>
       unhandledForegroundNotificationIds.add(event.request.identifier)
     );
 
+  // listener for the event that fires upon **interacting** with a push notification
   const notificationResponseSubscription =
     Notifications.addNotificationResponseReceivedListener(response => {
       const { identifier } = response.notification.request;
@@ -37,6 +43,8 @@ export const configurePushNotificationListeners = (store: Store) => {
         unhandledForegroundNotificationIds.delete(identifier); // returns true on successful delete
       onNotificationResponse(response, isForegroundNotification, store);
     });
+
+  // fetch the push token after setting up the listeners to ensure that it is handled correctly
   void Notifications.getDevicePushTokenAsync();
 
   return () =>
@@ -97,6 +105,7 @@ const onNotificationResponse = (
   // it is crucial that we clear the persisted last notification response as soon as possible
   Notifications.clearLastNotificationResponse();
 
+  // if necessary, handle the messages logic linked to the notification interaction
   handleMessageNotificationInteraction(
     response,
     receivedInForeground,
@@ -108,23 +117,24 @@ const onNotificationResponse = (
 };
 const onPushNotificationTokenReceived =
   (store: Store) => (token: { data?: string | null }) => {
-    if (!token.data) {
+    if (!token || !token.data) {
       trackAppCaughtError(
         "onPushNotificationTokenAvailable",
-        `received a nullish token data (${token.data})`,
+        `received a nullish token. data: (${token})`,
         undefined
       );
       return;
     }
+    const state = store.getState();
+    // dispatch an action to store the new token
     store.dispatch(newPushNotificationsToken(token.data));
-    const userOptedInForAnalytics = hasUserOptedInForAnalytics(
-      store.getState()
-    );
+
+    const userOptedInForAnalytics = hasUserOptedInForAnalytics(state);
     trackNewPushNotificationsTokenGenerated(
       Date.now().toString(),
       userOptedInForAnalytics
     );
-    void updateMixpanelProfileProperties(store.getState());
+    void updateMixpanelProfileProperties(state);
   };
 
 // ---------------------- UTILS ----------------------
