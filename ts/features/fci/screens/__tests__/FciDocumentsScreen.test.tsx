@@ -52,18 +52,20 @@ describe("Test FciDocuments screen", () => {
     expect(component).toBeTruthy();
   });
 
-  it("it should render the content and footer", () => {
+  it("it should render the content and footer", async () => {
     const store = createTestStore();
-    store.dispatch(
-      fciDownloadPreview.success({
-        path: mockSignatureRequestDetailView.documents[0].url
-      })
-    );
     const testComponent = renderComponent(store);
-    expect(testComponent).toBeTruthy();
-    expect(
-      testComponent.getByTestId("FciDocumentsScreenTestID")
-    ).not.toBeNull();
+    await waitFor(() => {
+      store.dispatch(
+        fciDownloadPreview.success({
+          path: mockSignatureRequestDetailView.documents[0].url
+        })
+      );
+      expect(testComponent).toBeTruthy();
+      expect(
+        testComponent.getByTestId("FciDocumentsScreenTestID")
+      ).not.toBeNull();
+    });
   });
 
   type ErrorKindScenario = {
