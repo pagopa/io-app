@@ -40,12 +40,16 @@ export function* checkCurrentWalletInstanceStateSaga(): Generator<
     getCurrentStatusWalletInstance
   );
 
-  const isItwOperationalLocally = yield* select(itwLifecycleIsOperationalSelector);
+  // An operational local wallet instance can exist even without a PID, for example
+  // after a failed activation, and should not be treated as remotely active.
+  const isItwOperationalLocally = yield* select(
+    itwLifecycleIsOperationalSelector
+  );
 
   const itwCanBeReactivated = Boolean(
     remoteWalletInstanceStatus &&
     !remoteWalletInstanceStatus.is_revoked &&
-    !isItwValidLocally
+    !isItwOperationalLocally
   );
 
   yield* put(itwSetWalletInstanceRemotelyActive(itwCanBeReactivated));
