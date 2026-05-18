@@ -29,7 +29,8 @@ import {
   ProcessCredentialOfferActorInput,
   ProcessCredentialOfferActorOutput,
   RequestCredentialActorInput,
-  RequestCredentialActorOutput
+  RequestCredentialActorOutput,
+  VerifyTrustFederationActorInput
 } from "../actors";
 import { Context, InitialContext } from "../context";
 import { CredentialIssuanceFailureType } from "../failure";
@@ -129,7 +130,9 @@ describe("itwCredentialIssuanceMachine", () => {
       trackCredentialIssuingDataShareAccepted
     },
     actors: {
-      verifyTrustFederation: fromPromise<void>(verifyTrustFederation),
+      verifyTrustFederation: fromPromise<void, VerifyTrustFederationActorInput>(
+        verifyTrustFederation
+      ),
       getWalletAttestation:
         fromPromise<GetWalletAttestationActorOutput>(getWalletAttestation),
       requestCredential: fromPromise<
@@ -806,6 +809,12 @@ describe("itwCredentialIssuanceMachine", () => {
       );
       hasValidWalletInstanceAttestation.mockImplementation(() => true);
       hasCredentialIntroContent.mockImplementation(() => false);
+      requestCredential.mockResolvedValue({
+        clientId: T_CLIENT_ID,
+        codeVerifier: T_CODE_VERIFIER,
+        issuerConf: T_ISSUER_CONFIG,
+        requestedCredential: T_REQUESTED_CREDENTIAL
+      });
 
       const actor = createActor(mockedMachine);
       actor.start();
@@ -839,11 +848,22 @@ describe("itwCredentialIssuanceMachine", () => {
 
       actor.send({ type: "confirm-credential-offer" });
 
+      await waitFor(() =>
+        expect(verifyTrustFederation).toHaveBeenCalledWith(
+          expect.objectContaining({
+            input: expect.objectContaining({
+              resolvedCredentialOffer:
+                actor.getSnapshot().context.resolvedCredentialOffer
+            })
+          })
+        )
+      );
       await waitFor(() => expect(requestCredential).toHaveBeenCalledTimes(1));
       expect(requestCredential).toHaveBeenCalledWith(
         expect.objectContaining({
           input: expect.objectContaining({
-            authorizationServer: T_TRUST_ISSUER_BASE_URL
+            resolvedCredentialOffer:
+              actor.getSnapshot().context.resolvedCredentialOffer
           })
         })
       );

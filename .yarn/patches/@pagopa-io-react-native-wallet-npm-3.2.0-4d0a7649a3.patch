@@ -1,5 +1,5 @@
 diff --git a/lib/commonjs/credential/issuance/v1.3.3/01-evaluate-issuer-trust.js b/lib/commonjs/credential/issuance/v1.3.3/01-evaluate-issuer-trust.js
-index 4554fd89419d44b5c0478793392f11144d452885..b6e08f15ef830530cd892b372a26a4592e3a1b68 100644
+index 4554fd8..f94365b 100644
 --- a/lib/commonjs/credential/issuance/v1.3.3/01-evaluate-issuer-trust.js
 +++ b/lib/commonjs/credential/issuance/v1.3.3/01-evaluate-issuer-trust.js
 @@ -13,6 +13,7 @@ const evaluateIssuerTrust = async function (issuerUrl) {
@@ -10,8 +10,40 @@ index 4554fd89419d44b5c0478793392f11144d452885..b6e08f15ef830530cd892b372a26a459
      callbacks: {
        ..._callbacks.partialCallbacks,
        fetch: context.appFetch
+diff --git a/lib/commonjs/credential/issuance/v1.3.3/02-start-user-authorization.js b/lib/commonjs/credential/issuance/v1.3.3/02-start-user-authorization.js
+index 892a4d4..99e3ab5 100644
+--- a/lib/commonjs/credential/issuance/v1.3.3/02-start-user-authorization.js
++++ b/lib/commonjs/credential/issuance/v1.3.3/02-start-user-authorization.js
+@@ -15,7 +15,8 @@ const startUserAuthorization = async (issuerConf, credentialIds, proof, ctx) =>
+     wiaCryptoContext,
+     walletInstanceAttestation,
+     redirectUri,
+-    appFetch = fetch
++    appFetch = fetch,
++    credentialOfferGrant
+   } = ctx;
+   const clientId = await wiaCryptoContext.getPublicKey().then(_ => _.kid);
+   if (!clientId) {
+@@ -53,7 +54,9 @@ const startUserAuthorization = async (issuerConf, credentialIds, proof, ctx) =>
+     },
+     clientId,
+     audience: issuerConf.credential_issuer,
+-    authorization_details: credentialDefinition,
++    authorization_details: credentialOfferGrant ? undefined : credentialDefinition,
++    issuerState: credentialOfferGrant?.issuerState,
++    scope: credentialOfferGrant?.scope,
+     codeChallengeMethodsSupported: ["S256"],
+     responseMode,
+     redirectUri
+@@ -89,4 +92,4 @@ const startUserAuthorization = async (issuerConf, credentialIds, proof, ctx) =>
+   };
+ };
+ exports.startUserAuthorization = startUserAuthorization;
+-//# sourceMappingURL=02-start-user-authorization.js.map
+\ No newline at end of file
++//# sourceMappingURL=02-start-user-authorization.js.map
 diff --git a/lib/module/credential/issuance/v1.3.3/01-evaluate-issuer-trust.js b/lib/module/credential/issuance/v1.3.3/01-evaluate-issuer-trust.js
-index cf0c29967a0bbf76e9493ed60bdce2f8ec1399ba..32d67606d4d14879142c60c59e1c9a0f97ade835 100644
+index cf0c299..3570440 100644
 --- a/lib/module/credential/issuance/v1.3.3/01-evaluate-issuer-trust.js
 +++ b/lib/module/credential/issuance/v1.3.3/01-evaluate-issuer-trust.js
 @@ -7,6 +7,7 @@ export const evaluateIssuerTrust = async function (issuerUrl) {
@@ -22,8 +54,40 @@ index cf0c29967a0bbf76e9493ed60bdce2f8ec1399ba..32d67606d4d14879142c60c59e1c9a0f
      callbacks: {
        ...partialCallbacks,
        fetch: context.appFetch
+diff --git a/lib/module/credential/issuance/v1.3.3/02-start-user-authorization.js b/lib/module/credential/issuance/v1.3.3/02-start-user-authorization.js
+index ae5e186..312150e 100644
+--- a/lib/module/credential/issuance/v1.3.3/02-start-user-authorization.js
++++ b/lib/module/credential/issuance/v1.3.3/02-start-user-authorization.js
+@@ -9,7 +9,8 @@ export const startUserAuthorization = async (issuerConf, credentialIds, proof, c
+     wiaCryptoContext,
+     walletInstanceAttestation,
+     redirectUri,
+-    appFetch = fetch
++    appFetch = fetch,
++    credentialOfferGrant
+   } = ctx;
+   const clientId = await wiaCryptoContext.getPublicKey().then(_ => _.kid);
+   if (!clientId) {
+@@ -47,7 +48,9 @@ export const startUserAuthorization = async (issuerConf, credentialIds, proof, c
+     },
+     clientId,
+     audience: issuerConf.credential_issuer,
+-    authorization_details: credentialDefinition,
++    authorization_details: credentialOfferGrant ? undefined : credentialDefinition,
++    issuerState: credentialOfferGrant?.issuerState,
++    scope: credentialOfferGrant?.scope,
+     codeChallengeMethodsSupported: ["S256"],
+     responseMode,
+     redirectUri
+@@ -82,4 +85,4 @@ export const startUserAuthorization = async (issuerConf, credentialIds, proof, c
+     credentialDefinition
+   };
+ };
+-//# sourceMappingURL=02-start-user-authorization.js.map
+\ No newline at end of file
++//# sourceMappingURL=02-start-user-authorization.js.map
 diff --git a/lib/typescript/credential/issuance/api/01-evaluate-issuer-trust.d.ts b/lib/typescript/credential/issuance/api/01-evaluate-issuer-trust.d.ts
-index 05f69dfb38d02808954e65ed9ea04a60c441ba02..8df98e68be7a24655f94b91ab3c99b16ac09748c 100644
+index 05f69df..b8d10a2 100644
 --- a/lib/typescript/credential/issuance/api/01-evaluate-issuer-trust.d.ts
 +++ b/lib/typescript/credential/issuance/api/01-evaluate-issuer-trust.d.ts
 @@ -6,10 +6,12 @@ export interface EvaluateIssuerTrustApi {
@@ -39,8 +103,34 @@ index 05f69dfb38d02808954e65ed9ea04a60c441ba02..8df98e68be7a24655f94b91ab3c99b16
          appFetch?: GlobalFetch["fetch"];
      }): Promise<{
          issuerConf: IssuerConfig;
+diff --git a/lib/typescript/credential/issuance/api/02-start-user-authorization.d.ts b/lib/typescript/credential/issuance/api/02-start-user-authorization.d.ts
+index c406f50..0d86d9e 100644
+--- a/lib/typescript/credential/issuance/api/02-start-user-authorization.d.ts
++++ b/lib/typescript/credential/issuance/api/02-start-user-authorization.d.ts
+@@ -1,5 +1,6 @@
+ import type { CryptoContext } from "@pagopa/io-react-native-jwt";
+ import type { AuthorizationDetail } from "../../../utils/par";
++import type { ExtractGrantDetailsResult } from "../../offer/api/types";
+ import type { IssuerConfig } from "./IssuerConfig";
+ export interface StartUserAuthorizationApi {
+     /**
+@@ -38,6 +39,7 @@ export interface StartUserAuthorizationApi {
+         walletInstanceAttestation: string;
+         redirectUri: string;
+         appFetch?: GlobalFetch["fetch"];
++        credentialOfferGrant?: ExtractGrantDetailsResult["authorizationCodeGrant"];
+     }): Promise<{
+         issuerRequestUri: string;
+         clientId: string;
+@@ -45,4 +47,4 @@ export interface StartUserAuthorizationApi {
+         credentialDefinition: AuthorizationDetail[];
+     }>;
+ }
+-//# sourceMappingURL=02-start-user-authorization.d.ts.map
+\ No newline at end of file
++//# sourceMappingURL=02-start-user-authorization.d.ts.map
 diff --git a/src/credential/issuance/api/01-evaluate-issuer-trust.ts b/src/credential/issuance/api/01-evaluate-issuer-trust.ts
-index 63487e716c8317cc2b941b1ed285452ae89e0f47..36c3a96f34db7fd9afa4d986034275df328221f3 100644
+index 63487e7..36c3a96 100644
 --- a/src/credential/issuance/api/01-evaluate-issuer-trust.ts
 +++ b/src/credential/issuance/api/01-evaluate-issuer-trust.ts
 @@ -7,11 +7,12 @@ export interface EvaluateIssuerTrustApi {
@@ -57,8 +147,26 @@ index 63487e716c8317cc2b941b1ed285452ae89e0f47..36c3a96f34db7fd9afa4d986034275df
 +    ctx?: { authorizationServer?: string; appFetch?: GlobalFetch["fetch"] }
    ): Promise<{ issuerConf: IssuerConfig }>;
  }
+diff --git a/src/credential/issuance/api/02-start-user-authorization.ts b/src/credential/issuance/api/02-start-user-authorization.ts
+index 4db4c62..2fee6ad 100644
+--- a/src/credential/issuance/api/02-start-user-authorization.ts
++++ b/src/credential/issuance/api/02-start-user-authorization.ts
+@@ -1,4 +1,5 @@
+ import type { CryptoContext } from "@pagopa/io-react-native-jwt";
+ import type { AuthorizationDetail } from "../../../utils/par";
++import type { ExtractGrantDetailsResult } from "../../offer/api/types";
+ import type { IssuerConfig } from "./IssuerConfig";
+ export interface StartUserAuthorizationApi {
+@@ -40,6 +41,7 @@ export interface StartUserAuthorizationApi {
+       walletInstanceAttestation: string;
+       redirectUri: string;
+       appFetch?: GlobalFetch["fetch"];
++      credentialOfferGrant?: ExtractGrantDetailsResult["authorizationCodeGrant"];
+     }
+   ): Promise<{
+     issuerRequestUri: string;
 diff --git a/src/credential/issuance/v1.3.3/01-evaluate-issuer-trust.ts b/src/credential/issuance/v1.3.3/01-evaluate-issuer-trust.ts
-index dcaeadcbf5715aa12b7544239d1aaa6871a1cc7d..7977e5d5228514ae5ee4efcb2924d6a693042934 100644
+index dcaeadc..7977e5d 100644
 --- a/src/credential/issuance/v1.3.3/01-evaluate-issuer-trust.ts
 +++ b/src/credential/issuance/v1.3.3/01-evaluate-issuer-trust.ts
 @@ -14,6 +14,7 @@ export const evaluateIssuerTrust: IssuanceApi["evaluateIssuerTrust"] = async (
@@ -69,3 +177,27 @@ index dcaeadcbf5715aa12b7544239d1aaa6871a1cc7d..7977e5d5228514ae5ee4efcb2924d6a6
      callbacks: {
        ...partialCallbacks,
        fetch: context.appFetch,
+diff --git a/src/credential/issuance/v1.3.3/02-start-user-authorization.ts b/src/credential/issuance/v1.3.3/02-start-user-authorization.ts
+index a99eb60..42f9e68 100644
+--- a/src/credential/issuance/v1.3.3/02-start-user-authorization.ts
++++ b/src/credential/issuance/v1.3.3/02-start-user-authorization.ts
+@@ -21,5 +21,6 @@ export const startUserAuthorization: IssuanceApi["startUserAuthorization"] =
+       walletInstanceAttestation,
+       redirectUri,
+       appFetch = fetch,
++      credentialOfferGrant,
+     } = ctx;
+     const clientId = await wiaCryptoContext.getPublicKey().then((_) => _.kid);
+@@ -70,7 +71,11 @@ export const startUserAuthorization: IssuanceApi["startUserAuthorization"] =
+       },
+       clientId,
+       audience: issuerConf.credential_issuer,
+-      authorization_details: credentialDefinition,
++      authorization_details: credentialOfferGrant
++        ? undefined
++        : credentialDefinition,
++      issuerState: credentialOfferGrant?.issuerState,
++      scope: credentialOfferGrant?.scope,
+       codeChallengeMethodsSupported: ["S256"],
+       responseMode,
+       redirectUri,

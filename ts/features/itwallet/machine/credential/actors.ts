@@ -38,6 +38,11 @@ export type GetWalletAttestationActorOutput = Awaited<
   ReturnType<typeof itwAttestationUtils.getWalletInstanceAttestation>
 >;
 
+export type VerifyTrustFederationActorInput = Pick<
+  Context,
+  "resolvedCredentialOffer"
+>;
+
 export type ObtainAccessTokenActorInput = Partial<
   Omit<
     Parameters<credentialIssuanceUtils.CompleteAuthFlow>[0],
@@ -46,8 +51,12 @@ export type ObtainAccessTokenActorInput = Partial<
 >;
 
 export type RequestCredentialActorInput = Partial<
-  Parameters<credentialIssuanceUtils.RequestCredential>[0]
->;
+  Omit<
+    Parameters<credentialIssuanceUtils.RequestCredential>[0],
+    "credentialOffer"
+  >
+> &
+  Partial<Pick<Context, "resolvedCredentialOffer">>;
 
 export type RequestCredentialActorOutput = Awaited<
   ReturnType<typeof credentialIssuanceUtils.requestCredential>
@@ -85,8 +94,15 @@ export const createCredentialIssuanceActorsImplementation = (
   itwVersion: ItwVersion,
   store: ReturnType<typeof useIOStore>
 ) => {
-  const verifyTrustFederation = fromPromise<void>(async () => {
+  const verifyTrustFederation = fromPromise<
+    void,
+    VerifyTrustFederationActorInput
+  >(async ({ input }) => {
     const ioWallet = getIoWallet(itwVersion);
+    const credentialIssuerUrl =
+      input?.resolvedCredentialOffer?.offer.credential_issuer ??
+      env.WALLET_EAA_PROVIDER_BASE_URL.value(itwVersion);
+
     // Evaluate the issuer trust
     const trustAnchorEntityConfig =
       await ioWallet.Trust.getTrustAnchorEntityConfiguration(
@@ -95,7 +111,7 @@ export const createCredentialIssuanceActorsImplementation = (
 
     // Create the trust chain for the PID provider
     const builtChainJwts = await ioWallet.Trust.buildTrustChain(
-      env.WALLET_EAA_PROVIDER_BASE_URL.value(itwVersion),
+      credentialIssuerUrl,
       trustAnchorEntityConfig
     );
 
@@ -185,6 +201,7 @@ export const createCredentialIssuanceActorsImplementation = (
     const {
       credentialType,
       walletInstanceAttestation,
+      resolvedCredentialOffer,
       skipMdocIssuance = true
     } = input;
 
@@ -196,6 +213,7 @@ export const createCredentialIssuanceActorsImplementation = (
       itwVersion,
       credentialType,
       walletInstanceAttestation,
+      credentialOffer: resolvedCredentialOffer,
       skipMdocIssuance
     });
   });

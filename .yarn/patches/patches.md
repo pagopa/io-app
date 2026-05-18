@@ -137,3 +137,5 @@ Created on **18/05/2026**
 #### Reason:
 
 - Forward the Credential Offer Authorization Server to metadata discovery.
+- Forward Credential Offer grant details to PAR, using `scope` and optional `issuer_state` instead of
+  `authorization_details`.
