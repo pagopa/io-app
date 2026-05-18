@@ -300,6 +300,9 @@ export const itwCredentialIssuanceMachine = setup({
         src: "requestCredential",
         input: ({ context }) => ({
           credentialType: context.credentialType,
+          authorizationServer:
+            context.resolvedCredentialOffer?.grantDetails.authorizationCodeGrant
+              .authorizationServer,
           walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
           skipMdocIssuance: !context.isItWalletValid // Do not request mDoc credentials for non IT-Wallet instances
         }),

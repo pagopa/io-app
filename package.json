@@ -280,7 +280,9 @@
     "@gorhom/bottom-sheet@^5.2.8": "patch:@gorhom/bottom-sheet@npm%3A5.2.8#./.yarn/patches/@gorhom-bottom-sheet-npm-5.2.8-1ad4b8f529.patch",
     "expo-screen-capture@~8.0.9": "patch:expo-screen-capture@npm%3A8.0.9#./.yarn/patches/expo-screen-capture-npm-8.0.9-d1b801bc95.patch",
     "@react-navigation/stack@^6.3.21": "patch:@react-navigation/stack@npm%3A6.4.1#./.yarn/patches/@react-navigation-stack-npm-6.4.1-52dad4e278.patch",
-    "@pagopa/io-wallet-oauth2": "patch:@pagopa/io-wallet-oauth2@npm%3A1.2.1#./.yarn/patches/@pagopa-io-wallet-oauth2-npm-1.2.1-779d80230d.patch"
+    "@pagopa/io-wallet-oauth2": "patch:@pagopa/io-wallet-oauth2@npm%3A1.2.1#./.yarn/patches/@pagopa-io-wallet-oauth2-npm-1.2.1-779d80230d.patch",
+    "@pagopa/io-wallet-oid4vci@1.2.1": "patch:@pagopa/io-wallet-oid4vci@npm%3A1.2.1#./.yarn/patches/@pagopa-io-wallet-oid4vci-npm-1.2.1-b3ea62621d.patch",
+    "@pagopa/io-react-native-wallet@^3.2.0": "patch:@pagopa/io-react-native-wallet@npm%3A3.2.0#./.yarn/patches/@pagopa-io-react-native-wallet-npm-3.2.0-4d0a7649a3.patch"
   },
   "react-native": {
     "path": "path-browserify",
