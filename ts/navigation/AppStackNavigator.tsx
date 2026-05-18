@@ -23,6 +23,7 @@ import { IngressScreen } from "../features/ingress/screens/IngressScreen";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
 import { useItwLinkingOptions } from "../features/itwallet/navigation/useItwLinkingOptions";
 import { storeLinkingUrl } from "../features/linking/actions";
+import { trackIOOpenedFromUniversalAppLink } from "../features/linking/analytics";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import { SETTINGS_ROUTES } from "../features/settings/common/navigation/routes";
@@ -160,6 +161,9 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
   useOnFirstRender(() => {
     void Linking.getInitialURL().then(initialUrl => {
       if (initialUrl) {
+        // Track if the app is opened from a universal link on cold start
+        // This mirrors the behavior in linkingSubscription for warm starts
+        trackIOOpenedFromUniversalAppLink(initialUrl);
         processUtmLink(initialUrl, dispatch);
         /**
          *  We store the initialUrl in the redux store so that
