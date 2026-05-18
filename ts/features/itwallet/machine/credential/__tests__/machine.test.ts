@@ -227,6 +227,13 @@ describe("itwCredentialIssuanceMachine", () => {
       )
     );
     await waitFor(() => expect(requestCredential).toHaveBeenCalledTimes(1));
+    expect(requestCredential).toHaveBeenCalledWith(
+      expect.objectContaining({
+        input: expect.not.objectContaining({
+          authorizationServer: expect.any(String)
+        })
+      })
+    );
 
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
       walletInstanceAttestation: { jwt: T_WIA },
@@ -829,6 +836,17 @@ describe("itwCredentialIssuanceMachine", () => {
         credentialOfferUri: T_OFFER_URI
       });
       expect(actor.getSnapshot().context.resolvedCredentialOffer).toBeDefined();
+
+      actor.send({ type: "confirm-credential-offer" });
+
+      await waitFor(() => expect(requestCredential).toHaveBeenCalledTimes(1));
+      expect(requestCredential).toHaveBeenCalledWith(
+        expect.objectContaining({
+          input: expect.objectContaining({
+            authorizationServer: T_TRUST_ISSUER_BASE_URL
+          })
+        })
+      );
     });
   });
 

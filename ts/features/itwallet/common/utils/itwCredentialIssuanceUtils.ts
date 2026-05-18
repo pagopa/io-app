@@ -35,6 +35,7 @@ export type RequestCredential = (args: {
   credentialType: string;
   walletInstanceAttestation: string;
   skipMdocIssuance: boolean;
+  authorizationServer?: string;
 }) => Promise<{
   clientId: string;
   codeVerifier: string;
@@ -55,7 +56,8 @@ export const requestCredential: RequestCredential = async ({
   itwVersion,
   credentialType,
   walletInstanceAttestation,
-  skipMdocIssuance
+  skipMdocIssuance,
+  authorizationServer
 }) => {
   const ioWallet = getIoWallet(itwVersion);
 
@@ -64,7 +66,8 @@ export const requestCredential: RequestCredential = async ({
 
   // Evaluate issuer trust
   const { issuerConf } = await ioWallet.CredentialIssuance.evaluateIssuerTrust(
-    env.WALLET_EAA_PROVIDER_BASE_URL.value(itwVersion)
+    env.WALLET_EAA_PROVIDER_BASE_URL.value(itwVersion),
+    { authorizationServer }
   );
 
   const credentialIds = getCredentialConfigurationIds(
