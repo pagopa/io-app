@@ -10,9 +10,8 @@ import { itwCredentialNameResolverSelector } from "../../credentialsCatalogue/st
  * For array/loop use cases, use `itwCredentialNameResolverSelector` directly.
  */
 export const useItwCredentialName = (
-  credentialType: string | undefined,
-  withDefault: string = ""
+  credentialType: string | undefined
 ): string => {
   const resolver = useIOSelector(itwCredentialNameResolverSelector);
-  return resolver(credentialType, withDefault);
+  return resolver(credentialType);
 };

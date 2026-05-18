@@ -38,6 +38,7 @@ Every feature lives under `ts/features/<feature>/` and is self-contained:
 
 ## Guidelines
 
+- Before marking any task complete, run `yarn lint`, `yarn prettify`, and `yarn tsc:noemit`. Only finish once all three succeed with zero errors.
 - Never edit anything under `definitions/`. Run `yarn generate` to update them.
 - Never use `fp-ts` in new code; always use native TypeScript equivalents.
 - Always import from `typed-redux-saga/macro`, not bare `redux-saga/effects`.
@@ -48,6 +49,7 @@ Every feature lives under `ts/features/<feature>/` and is self-contained:
 - Always use `useIOTheme()` to access semantic color tokens. Never use raw hex values.
 - All interactive elements must have accessible labels.
 - Use Mixpanel for event tracking. Each feature's `analytics/` folder should export typed track functions.
+- Investigate problems to the root cause and fix them. Never cover up, ignore, or hide a problem just to make it disappear.
 
 ## Navigation
 

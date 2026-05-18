@@ -27,7 +27,6 @@ describe("IT Wallet preferences reducer", () => {
       isPendingReview: true,
       authLevel: "L2",
       claimValuesHidden: true,
-      isWalletInstanceRemotelyActive: true,
       isFiscalCodeWhitelisted: true,
       identificationMode: "cieId"
     };
@@ -35,7 +34,6 @@ describe("IT Wallet preferences reducer", () => {
     const expectedState: ItwPreferencesState = {
       ...itwPreferencesInitialState,
       claimValuesHidden: true,
-      isWalletInstanceRemotelyActive: true,
       isFiscalCodeWhitelisted: true
     };
 
@@ -115,7 +113,6 @@ describe("IT Wallet preferences reducer", () => {
         isPendingReview: true,
         authLevel: "L2",
         claimValuesHidden: true,
-        isWalletInstanceRemotelyActive: true,
         isItwActivationDisabled: true
       },
       action
@@ -124,7 +121,6 @@ describe("IT Wallet preferences reducer", () => {
     expect(newState).toEqual({
       ...itwPreferencesInitialState,
       claimValuesHidden: true,
-      isWalletInstanceRemotelyActive: true,
       isItwActivationDisabled: true
     });
   });

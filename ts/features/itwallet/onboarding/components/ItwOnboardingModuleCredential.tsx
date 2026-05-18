@@ -30,65 +30,6 @@ const credentialIconByType: Record<string, IOIcons> = {
   [CredentialType.EDUCATION_ATTENDANCE]: "messageLegal"
 };
 
-const activeBadge: Badge = {
-  variant: "success",
-  text: I18n.t("features.wallet.onboarding.badge.active")
-};
-
-const activeL3Badge: Badge = {
-  variant: "success",
-  text: I18n.t("features.wallet.onboarding.badge.valid")
-};
-
-const disabledBadge: Badge = {
-  variant: "default",
-  text: I18n.t("features.wallet.onboarding.badge.unavailable")
-};
-
-const requestedBadge: Badge = {
-  variant: "highlight",
-  text: I18n.t("features.wallet.onboarding.badge.requested")
-};
-
-const upcomingBadge: Badge = {
-  variant: "default",
-  text: I18n.t("features.wallet.onboarding.badge.upcoming")
-};
-
-const newBadge: Badge = {
-  variant: "default",
-  text: I18n.t("features.wallet.onboarding.badge.new")
-};
-
-const getBadge = (args: {
-  isActive?: boolean;
-  isDisabled?: boolean;
-  isRequested?: boolean;
-  isUpcoming?: boolean;
-  isNew?: boolean;
-  isL3Enabled: boolean;
-}): Badge | undefined => {
-  const { isActive, isDisabled, isRequested, isUpcoming, isNew, isL3Enabled } =
-    args;
-
-  if (isActive) {
-    return isL3Enabled ? activeL3Badge : activeBadge;
-  }
-  if (isDisabled) {
-    return disabledBadge;
-  }
-  if (isRequested) {
-    return requestedBadge;
-  }
-  if (isUpcoming) {
-    return upcomingBadge;
-  }
-  if (isNew) {
-    return newBadge;
-  }
-  return undefined;
-};
-
 const ItwOnboardingModuleCredential = ({
   type,
   onPress,
@@ -104,18 +45,43 @@ const ItwOnboardingModuleCredential = ({
 }: Props) => {
   const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
 
-  const badge = useMemo(
-    () =>
-      getBadge({
-        isActive,
-        isDisabled,
-        isRequested,
-        isUpcoming,
-        isNew,
-        isL3Enabled
-      }),
-    [isActive, isDisabled, isRequested, isUpcoming, isNew, isL3Enabled]
-  );
+  const badge = useMemo((): Badge | undefined => {
+    if (isActive) {
+      return {
+        variant: "success",
+        text: I18n.t(
+          isL3Enabled
+            ? "features.wallet.onboarding.badge.valid"
+            : "features.wallet.onboarding.badge.active"
+        )
+      };
+    }
+    if (isDisabled) {
+      return {
+        variant: "default",
+        text: I18n.t("features.wallet.onboarding.badge.unavailable")
+      };
+    }
+    if (isRequested) {
+      return {
+        variant: "highlight",
+        text: I18n.t("features.wallet.onboarding.badge.requested")
+      };
+    }
+    if (isUpcoming) {
+      return {
+        variant: "default",
+        text: I18n.t("features.wallet.onboarding.badge.upcoming")
+      };
+    }
+    if (isNew) {
+      return {
+        variant: "default",
+        text: I18n.t("features.wallet.onboarding.badge.new")
+      };
+    }
+    return undefined;
+  }, [isActive, isDisabled, isRequested, isUpcoming, isNew, isL3Enabled]);
 
   const handleOnPress = () => {
     onPress(type);
