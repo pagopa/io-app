@@ -279,7 +279,8 @@
     "react-native@0.81.5": "patch:react-native@npm%3A0.81.5#./.yarn/patches/react-native-npm-0.81.5-d8232ef145.patch",
     "@gorhom/bottom-sheet@^5.2.8": "patch:@gorhom/bottom-sheet@npm%3A5.2.8#./.yarn/patches/@gorhom-bottom-sheet-npm-5.2.8-1ad4b8f529.patch",
     "expo-screen-capture@~8.0.9": "patch:expo-screen-capture@npm%3A8.0.9#./.yarn/patches/expo-screen-capture-npm-8.0.9-d1b801bc95.patch",
-    "@react-navigation/stack@^6.3.21": "patch:@react-navigation/stack@npm%3A6.4.1#./.yarn/patches/@react-navigation-stack-npm-6.4.1-52dad4e278.patch"
+    "@react-navigation/stack@^6.3.21": "patch:@react-navigation/stack@npm%3A6.4.1#./.yarn/patches/@react-navigation-stack-npm-6.4.1-52dad4e278.patch",
+    "@pagopa/io-wallet-oauth2": "patch:@pagopa/io-wallet-oauth2@npm%3A1.2.1#./.yarn/patches/@pagopa-io-wallet-oauth2-npm-1.2.1-779d80230d.patch"
   },
   "react-native": {
     "path": "path-browserify",

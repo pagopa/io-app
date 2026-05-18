@@ -4556,7 +4556,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-wallet-oauth2@npm:, @pagopa/io-wallet-oauth2@npm:1.2.1":
+"@pagopa/io-wallet-oauth2@npm:1.2.1":
   version: 1.2.1
   resolution: "@pagopa/io-wallet-oauth2@npm:1.2.1"
   dependencies:
@@ -4566,6 +4566,19 @@ __metadata:
     js-base64: ^3.7.8
     zod: ^4.3.6
   checksum: c4c836cc751938c66777dc9ca327f5e941a0d64af8f8b294e54ff308db47dda0d4f46d779b30885cba3a3d31cfc381201148a1dfa1dcc7f1fe9f412d76c7bade
+  languageName: node
+  linkType: hard
+
+"@pagopa/io-wallet-oauth2@patch:@pagopa/io-wallet-oauth2@npm%3A1.2.1#./.yarn/patches/@pagopa-io-wallet-oauth2-npm-1.2.1-779d80230d.patch::locator=io%40workspace%3A.":
+  version: 1.2.1
+  resolution: "@pagopa/io-wallet-oauth2@patch:@pagopa/io-wallet-oauth2@npm%3A1.2.1#./.yarn/patches/@pagopa-io-wallet-oauth2-npm-1.2.1-779d80230d.patch::version=1.2.1&hash=55e587&locator=io%40workspace%3A."
+  dependencies:
+    "@openid4vc/oauth2": 0.4.3
+    "@openid4vc/utils": 0.4.3
+    "@pagopa/io-wallet-utils": 1.2.1
+    js-base64: ^3.7.8
+    zod: ^4.3.6
+  checksum: 787353c95c6eff96d56a2ae97cf1a797730554ac796f5374673435843a1be0e037cd8ecd2f126a2499b54b7e3d1f527e82ecf7b0db1de25518ae822f6bde46e0
   languageName: node
   linkType: hard
 
