@@ -62,7 +62,9 @@ export const itwRemoteMachine = setup({
     isItWalletL3Active: notImplemented,
     isEidExpired: notImplemented,
     isSessionExpired: notImplemented,
-    hasValidWalletInstanceAttestation: notImplemented
+    hasValidWalletInstanceAttestation: notImplemented,
+    isOpenIdFederationClient: notImplemented,
+    isX509HashClient: notImplemented
   }
 }).createMachine({
   id: "itwRemoteMachine",
@@ -122,6 +124,20 @@ export const itwRemoteMachine = setup({
         }
       ]
     },
+    EvaluatingClientIdType: {
+      description:
+        "Route to the appropriate flow based on the client_id type - openid_federation or x509_hash",
+      always: [
+        {
+          guard: "isOpenIdFederationClient",
+          target: "EvaluatingRelyingPartyTrust"
+        },
+        {
+          guard: "isX509HashClient",
+          target: "GettingRequestObject"
+        }
+      ]
+    },
     CheckingWalletInstanceAttestation: {
       description: "Check the validity of the Wallet Attestation to present",
       tags: [ItwPresentationTags.Loading],
@@ -131,7 +147,7 @@ export const itwRemoteMachine = setup({
           target: "ObtainingWalletInstanceAttestation"
         },
         {
-          target: "EvaluatingRelyingPartyTrust"
+          target: "EvaluatingClientIdType"
         }
       ]
     },
@@ -142,7 +158,7 @@ export const itwRemoteMachine = setup({
       invoke: {
         src: "getWalletAttestation",
         onDone: {
-          target: "EvaluatingRelyingPartyTrust",
+          target: "EvaluatingClientIdType",
           actions: [
             assign(({ event }) => ({
               walletInstanceAttestation: event.output
