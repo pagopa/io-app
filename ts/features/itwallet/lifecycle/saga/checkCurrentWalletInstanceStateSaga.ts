@@ -40,7 +40,7 @@ export function* checkCurrentWalletInstanceStateSaga(): Generator<
     getCurrentStatusWalletInstance
   );
 
-  const isItwValidLocally = yield* select(itwLifecycleIsOperationalSelector);
+  const isItwOperationalLocally = yield* select(itwLifecycleIsOperationalSelector);
 
   const itwCanBeReactivated = Boolean(
     remoteWalletInstanceStatus &&
