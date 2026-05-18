@@ -61,13 +61,6 @@ export const ItwIssuanceCredentialFailureScreen = () => {
   );
 };
 
-const defaultInvalidStatusMessage = {
-  title: I18n.t("features.itWallet.issuance.notEntitledCredentialError.title"),
-  description: I18n.t(
-    "features.itWallet.issuance.notEntitledCredentialError.body"
-  )
-};
-
 type ContentViewProps = { failure: CredentialIssuanceFailure };
 
 /**
@@ -89,6 +82,14 @@ const ContentView = ({ failure }: ContentViewProps) => {
     credentialType,
     issuerConf
   });
+  const defaultInvalidStatusMessage = {
+    title: I18n.t(
+      "features.itWallet.issuance.notEntitledCredentialError.title"
+    ),
+    description: I18n.t(
+      "features.itWallet.issuance.notEntitledCredentialError.body"
+    )
+  };
 
   const closeIssuance = () => {
     machineRef.send({ type: "close" });

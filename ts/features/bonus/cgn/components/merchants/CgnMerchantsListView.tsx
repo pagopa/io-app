@@ -21,14 +21,9 @@ export const CgnMerchantListViewRenderItem =
   (props: Props): ListRenderItem<OfflineMerchant | OnlineMerchant> =>
   ({ item, index }) => {
     const accessibilityLabel =
-      (item?.numberOfNewDiscounts
-        ? I18n.t("bonus.cgn.merchantsList.categoriesList.a11y", {
-            name: item.name,
-            count: item.numberOfNewDiscounts
-          })
-        : item.newDiscounts
-          ? `${item.name} ${I18n.t("bonus.cgn.merchantsList.news")}`
-          : item.name) + getListItemAccessibilityLabelCount(props.count, index);
+      (item.newDiscounts
+        ? `${item.name} ${I18n.t("bonus.cgn.merchantsList.news")}`
+        : item.name) + getListItemAccessibilityLabelCount(props.count, index);
 
     return (
       <ContentWrapper>
@@ -51,11 +46,7 @@ export const CgnMerchantListViewRenderItem =
                   <Badge
                     accessible={false}
                     variant="cgn"
-                    text={
-                      item.numberOfNewDiscounts
-                        ? item.numberOfNewDiscounts.toString()
-                        : I18n.t("bonus.cgn.merchantsList.news")
-                    }
+                    text={I18n.t("bonus.cgn.merchantsList.news")}
                   />
                 </View>
               )}

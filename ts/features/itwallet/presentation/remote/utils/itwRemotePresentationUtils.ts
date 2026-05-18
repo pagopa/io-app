@@ -197,3 +197,8 @@ export const getRemoteCredentialCombination = (
   }
   return "other_credentials";
 };
+
+export const enum ClientIdPrefix {
+  OPENID_FEDERATION = "openid_federation:",
+  X509_HASH = "x509_hash:"
+}

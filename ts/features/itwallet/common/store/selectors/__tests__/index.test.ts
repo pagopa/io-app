@@ -283,20 +283,20 @@ describe("itwShouldRenderInboxDiscoveryBannerSelector", () => {
   });
 
   it.each`
-    itwEnabled | isL3Enabled | lifecycleValid | isBannerHidden | expected | isWalletInstanceRemotelyActive
+    itwEnabled | isL3Enabled | lifecycleValid | isBannerHidden | expected | isRemotelyActive
     ${true}    | ${true}     | ${false}       | ${false}       | ${true}  | ${false}
     ${true}    | ${true}     | ${false}       | ${true}        | ${false} | ${false}
     ${true}    | ${true}     | ${true}        | ${false}       | ${false} | ${false}
     ${false}   | ${true}     | ${false}       | ${false}       | ${false} | ${false}
     ${true}    | ${true}     | ${false}       | ${false}       | ${false} | ${true}
   `(
-    "should return $expected when itwEnabled=$itwEnabled, isL3Enabled=$isL3Enabled, lifecycleValid=$lifecycleValid, isBannerHidden=$isBannerHidden, isWalletInstanceRemotelyActive=$isWalletInstanceRemotelyActive",
+    "should return $expected when itwEnabled=$itwEnabled, isL3Enabled=$isL3Enabled, lifecycleValid=$lifecycleValid, isBannerHidden=$isBannerHidden, isRemotelyActive=$isRemotelyActive",
     ({
       itwEnabled,
       isL3Enabled,
       lifecycleValid,
       isBannerHidden,
-      isWalletInstanceRemotelyActive,
+      isRemotelyActive,
       expected
     }) => {
       const state = {
@@ -321,11 +321,8 @@ describe("itwShouldRenderInboxDiscoveryBannerSelector", () => {
         .mockReturnValue(lifecycleValid);
       mockItwIsBannerHiddenSelector(isBannerHidden);
       jest
-        .spyOn(
-          preferencesSelectors,
-          "itwIsWalletInstanceRemotelyActiveSelector"
-        )
-        .mockReturnValue(isWalletInstanceRemotelyActive);
+        .spyOn(walletInstanceSelectors, "itwIsRemotelyActiveSelector")
+        .mockReturnValue(isRemotelyActive);
 
       expect(itwShouldRenderInboxDiscoveryBannerSelector(state)).toBe(expected);
     }

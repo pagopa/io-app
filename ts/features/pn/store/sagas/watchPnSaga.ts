@@ -31,7 +31,7 @@ export function* tryLoadSENDPreferences() {
 const tooManyRequestsError = new Error("timeout -- too many requests");
 
 function* handlePnActivation(
-  upsertPnActivation: PnClient["upsertPNActivation"],
+  upsertSendActivation: PnClient["upsertSendActivation"],
   action: ActionType<typeof pnActivationUpsert.request>
 ) {
   const activation_status = action.payload.value;
@@ -47,7 +47,7 @@ function* handlePnActivation(
       },
       isTest
     };
-    const result = yield* call(upsertPnActivation, requestData);
+    const result = yield* call(upsertSendActivation, requestData);
 
     if (E.isRight(result)) {
       switch (result.right.status) {
@@ -114,7 +114,7 @@ export function* watchPnSaga(bearerToken: string): SagaIterator {
   yield* takeLatest(
     pnActivationUpsert.request,
     handlePnActivation,
-    pnClient.upsertPNActivation
+    pnClient.upsertSendActivation
   );
 
   yield* takeLatest(
