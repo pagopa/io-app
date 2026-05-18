@@ -27,7 +27,6 @@ import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsValidSelector
 } from "../../lifecycle/store/selectors";
-import { itwDebugCredentialStatusOverridesSelector } from "../../playgrounds/store/selectors";
 import {
   itwCredentialsRefreshStatusByType,
   itwCredentialsStore
@@ -119,16 +118,8 @@ export function* checkCredentialsStatusAssertion() {
   }
 
   const credentials = yield* select(itwCredentialsSelector);
-  const env = yield* select(selectItwEnv);
-  const credentialStatusOverrides = yield* select(
-    itwDebugCredentialStatusOverridesSelector
-  );
-  const credentialsList = Object.values(credentials);
-  const credentialsToCheck = credentialsList.filter(
-    credential =>
-      (env !== "pre" ||
-        credentialStatusOverrides[credential.credentialType] === undefined) &&
-      shouldRequestStatusAssertion(credential)
+  const credentialsToCheck = Object.values(credentials).filter(
+    shouldRequestStatusAssertion
   );
 
   if (credentialsToCheck.length === 0) {
@@ -181,16 +172,8 @@ export function* handleCredentialStatusAssertionRetry(
   action: ActionType<typeof itwCredentialsRefreshStatusByType>
 ) {
   const credential = yield* select(itwCredentialSelector(action.payload));
-  const env = yield* select(selectItwEnv);
-  const credentialStatusOverrides = yield* select(
-    itwDebugCredentialStatusOverridesSelector
-  );
 
-  if (
-    O.isSome(credential) &&
-    (env !== "pre" ||
-      credentialStatusOverrides[credential.value.credentialType] === undefined)
-  ) {
+  if (O.isSome(credential)) {
     const updatedCredential = yield* call(
       updateCredentialStatusAssertionSaga,
       credential.value

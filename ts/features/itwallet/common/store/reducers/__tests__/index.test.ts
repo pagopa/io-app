@@ -2,7 +2,8 @@ import MockDate from "mockdate";
 import { createMigrate } from "redux-persist";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { applicationChangeState } from "../../../../../../store/actions/application";
-import itWalletReducer, { migrations } from "../index";
+import { CredentialMetadata } from "../../../utils/itwTypesUtils";
+import itWalletReducer, { itwDebugTransform, migrations } from "../index";
 
 describe("itWalletReducer", () => {
   it("should match snapshot [if this test fails, remember to add a migration to the store before updating the snapshot]", () => {
@@ -11,6 +12,34 @@ describe("itWalletReducer", () => {
       applicationChangeState("active")
     );
     expect(itWalletState).toMatchSnapshot();
+  });
+});
+
+describe("itwDebugTransform", () => {
+  it("should not persist credential status overrides", () => {
+    const credential = {
+      credentialId: "credential-id",
+      credentialType: "mDL"
+    } as CredentialMetadata;
+
+    const transformedState = itwDebugTransform.in(
+      {
+        credentialStatusOverrides: {
+          [credential.credentialType]: "invalid"
+        },
+        savedCredentials: {
+          [credential.credentialId]: credential
+        }
+      },
+      "debug"
+    );
+
+    expect(transformedState).toEqual({
+      credentialStatusOverrides: {},
+      savedCredentials: {
+        [credential.credentialId]: credential
+      }
+    });
   });
 });
 
