@@ -12,8 +12,8 @@ import {
 } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import {
-  StartupStatusEnum,
-  isStartupLoaded
+  isStartupLoaded,
+  StartupStatusEnum
 } from "../../../../store/reducers/startup";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
@@ -101,9 +101,11 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
   const fallbackTitle = I18n.t(
     "features.itWallet.issuance.credentialOffer.intro.fallbackTitle"
   );
-  const title =
-    getCredentialNameFromType(credentialTypeOption.value, fallbackTitle) ||
-    fallbackTitle;
+  const title = getCredentialNameFromType(
+    credentialTypeOption.value,
+    false,
+    fallbackTitle
+  );
 
   return (
     <IOScrollView
