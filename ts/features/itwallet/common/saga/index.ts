@@ -80,7 +80,7 @@ export function* watchItwOfflineSaga(): SagaIterator {
   // Ensure Redux and CredentialsVault are coherent
   yield* call(handleItwCredentialsVaultCoherenceSaga);
 
-  // Restore and watch temporary playground status overrides
+  // Watch and restore temporary playground status overrides
   yield* fork(watchItwDebugCredentialStatusOverrides);
   yield* fork(handleWalletCredentialsRehydration);
   // Check if the device has the NFC Feature
