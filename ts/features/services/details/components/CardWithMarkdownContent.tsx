@@ -12,6 +12,8 @@ import { generateMessagesAndServicesRules } from "../../../common/components/IOM
 import { useIOSelector } from "../../../../store/hooks";
 import { Markdown } from "../../../../components/ui/Markdown/Markdown";
 import { isIOMarkdownEnabledForMessagesAndServicesSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { unknownToString } from "../../../../utils/errors";
+import { trackAppCaughtError } from "../../../../utils/analytics";
 
 const CSS_STYLE = `
   body {
@@ -65,6 +67,14 @@ const CardWithMarkdownContent = memo(
           <IOMarkdown
             content={content}
             rules={generateMessagesAndServicesRules(linkTo)}
+            onError={(error, _stack) => {
+              const errorString = unknownToString(error);
+              trackAppCaughtError(
+                "CardWithMarkdownContent",
+                "Unable to render service's markdown",
+                errorString
+              );
+            }}
           />
         );
       }
