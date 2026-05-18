@@ -5,7 +5,7 @@ import {
   getCurrentStatusWalletInstance
 } from "../checkCurrentWalletInstanceStateSaga.ts";
 import { itwSetWalletInstanceRemotelyActive } from "../../../walletInstance/store/actions";
-import { itwLifecycleIsValidSelector } from "../../store/selectors";
+import { itwLifecycleIsOperationalSelector } from "../../store/selectors";
 
 describe("checkCurrentWalletInstanceStateSaga", () => {
   it("Sets the wallet instance as remotely active when remote is active, not revoked, and local is inactive", () => {
@@ -15,10 +15,10 @@ describe("checkCurrentWalletInstanceStateSaga", () => {
     return expectSaga(checkCurrentWalletInstanceStateSaga)
       .provide([
         [matchers.call(getCurrentStatusWalletInstance), remoteStatus],
-        [matchers.select(itwLifecycleIsValidSelector), localStatus]
+        [matchers.select(itwLifecycleIsOperationalSelector), localStatus]
       ])
       .put(itwSetWalletInstanceRemotelyActive(true))
-      .run();
+      .run(false);
   });
 
   it("Sets the wallet instance as not remotely active when remote is revoked", () => {
@@ -28,10 +28,10 @@ describe("checkCurrentWalletInstanceStateSaga", () => {
     return expectSaga(checkCurrentWalletInstanceStateSaga)
       .provide([
         [matchers.call(getCurrentStatusWalletInstance), remoteStatus],
-        [matchers.select(itwLifecycleIsValidSelector), localStatus]
+        [matchers.select(itwLifecycleIsOperationalSelector), localStatus]
       ])
       .put(itwSetWalletInstanceRemotelyActive(false))
-      .run();
+      .run(false);
   });
 
   it("Sets the wallet instance as not remotely active when local is active", () => {
@@ -41,10 +41,10 @@ describe("checkCurrentWalletInstanceStateSaga", () => {
     return expectSaga(checkCurrentWalletInstanceStateSaga)
       .provide([
         [matchers.call(getCurrentStatusWalletInstance), remoteStatus],
-        [matchers.select(itwLifecycleIsValidSelector), localStatus]
+        [matchers.select(itwLifecycleIsOperationalSelector), localStatus]
       ])
       .put(itwSetWalletInstanceRemotelyActive(false))
-      .run();
+      .run(false);
   });
 
   it("Sets the wallet instance as not remotely active when remote status is undefined", () => {
@@ -54,9 +54,9 @@ describe("checkCurrentWalletInstanceStateSaga", () => {
     return expectSaga(checkCurrentWalletInstanceStateSaga)
       .provide([
         [matchers.call(getCurrentStatusWalletInstance), remoteStatus],
-        [matchers.select(itwLifecycleIsValidSelector), localStatus]
+        [matchers.select(itwLifecycleIsOperationalSelector), localStatus]
       ])
       .put(itwSetWalletInstanceRemotelyActive(false))
-      .run();
+      .run(false);
   });
 });
