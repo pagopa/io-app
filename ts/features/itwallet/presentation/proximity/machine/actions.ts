@@ -5,7 +5,7 @@ import { trackItwProximityQrCodeLoadingFailure } from "../analytics";
 import { ITW_PROXIMITY_ROUTES } from "../navigation/routes";
 import { useIOStore } from "../../../../../store/hooks";
 import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors";
-import { itwPresentableCredentialsByDocTypeSelector } from "../store/selectors";
+import { itwPresentableCredentialsByDocTypeSelector } from "../store/selectors/credentials";
 import { Context } from "./context";
 import { ProximityEvents } from "./events";
 import { mapEventToFailure } from "./failure";
