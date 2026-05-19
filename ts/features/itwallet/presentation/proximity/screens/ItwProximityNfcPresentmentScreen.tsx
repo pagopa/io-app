@@ -84,6 +84,24 @@ const AndroidContent = () => {
     machineRef.send({ type: "close" });
   };
 
+  const title = useMemo(() => {
+    if (isSuccess) {
+      return I18n.t(
+        "features.itWallet.presentation.proximity.nfcEngagement.success"
+      );
+    }
+
+    if (isLoading) {
+      return I18n.t(
+        "features.itWallet.presentation.proximity.nfcEngagement.sending"
+      );
+    }
+
+    return I18n.t(
+      "features.itWallet.presentation.proximity.nfcEngagement.ready.android"
+    );
+  }, [isLoading, isSuccess]);
+
   return (
     <IOScrollView centerContent={true}>
       <View style={{ alignItems: "center", gap: 24 }}>
@@ -100,15 +118,7 @@ const AndroidContent = () => {
             name={isSuccess ? "success" : "nfcScanAndroid"}
           />
         </CircularProgress>
-        <H4 textStyle={{ textAlign: "center" }}>
-          {isLoading
-            ? I18n.t(
-                "features.itWallet.presentation.proximity.nfcEngagement.sending"
-              )
-            : I18n.t(
-                "features.itWallet.presentation.proximity.nfcEngagement.ready.android"
-              )}
-        </H4>
+        <H4 textStyle={{ textAlign: "center" }}>{title}</H4>
         <View style={{ alignSelf: "center" }}>
           <IOButton
             label={

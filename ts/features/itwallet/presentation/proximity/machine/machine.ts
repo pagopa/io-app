@@ -43,6 +43,7 @@ export const itwProximityMachine = setup({
     navigateToBluetoothPermissionsScreen: notImplemented,
     navigateToBluetoothActivationScreen: notImplemented,
     navigateToNfcActivationScreen: notImplemented,
+    navigateToPresentmentScreen: notImplemented,
     navigateToNfcPresentmentScreen: notImplemented,
     navigateToFailureScreen: notImplemented,
     navigateToClaimsDisclosureScreen: notImplemented,
@@ -55,7 +56,13 @@ export const itwProximityMachine = setup({
      */
 
     grantConsent: assign({ hasGrantedConsent: true }),
-    storeConsent: notImplemented
+    storeConsent: notImplemented,
+
+    /**
+     * Flow
+     */
+
+    attemptSessionTermination: notImplemented
   },
   actors: {
     checkBluetoothPermissions: fromPromise<boolean>(notImplemented),
@@ -165,7 +172,8 @@ export const itwProximityMachine = setup({
         }
       },
       onDone: {
-        target: "#itwProximityMachine.Presentment"
+        target: "#itwProximityMachine.Presentment",
+        actions: "navigateToPresentmentScreen"
       }
     },
     Nfc: {
@@ -359,6 +367,10 @@ export const itwProximityMachine = setup({
         ClaimsDisclosure: {
           description: "Display the requested claims for review",
           entry: "navigateToClaimsDisclosureScreen",
+          always: {
+            guard: "isNfcRetrieval",
+            actions: "attemptSessionTermination"
+          },
           on: {
             "holder-consent": [
               {

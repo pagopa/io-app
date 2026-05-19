@@ -1,3 +1,4 @@
+import { ISO18013_5 } from "@pagopa/io-react-native-iso18013";
 import { ActionArgs, assign } from "xstate";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIOStore } from "../../../../../store/hooks";
@@ -49,6 +50,13 @@ export const createProximityActionsImplementation = (
     });
   },
 
+  navigateToPresentmentScreen: () => {
+    navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
+      screen: ITW_PROXIMITY_ROUTES.PRESENTMENT,
+      params: {}
+    });
+  },
+
   navigateToClaimsDisclosureScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
       screen: ITW_PROXIMITY_ROUTES.CLAIMS_DISCLOSURE
@@ -75,6 +83,12 @@ export const createProximityActionsImplementation = (
 
   closeProximity: () => {
     navigation.pop();
+  },
+
+  attemptSessionTermination: () => {
+    ISO18013_5.sendErrorResponse(ISO18013_5.ErrorCode.SESSION_TERMINATED).catch(
+      () => null
+    );
   },
 
   storeConsent: ({
