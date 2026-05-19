@@ -29,7 +29,8 @@ export type Context = {
    */
   failure?: RemoteFailure;
   /**
-   * Relying party Entity Configuration metadata
+   * Relying party Entity Configuration metadata (only for OpenID Federation clients).
+   * This value may stay undefined during the entire flow when the RP uses the prefix `x509_hash`.
    */
   rpConf: RelyingPartyConfiguration | undefined;
   /**
