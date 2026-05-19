@@ -60,7 +60,6 @@ export const ItwProximityPresentmentScreen = ({
   );
 
   const isFailure = !!failure || shouldBlockProximityPresentation;
-  const showStatusContent = !!isLoading || isFailure;
 
   useDebugInfo({
     isLoading,
@@ -120,7 +119,7 @@ export const ItwProximityPresentmentScreen = ({
           backgroundVariant={"gradient"}
         >
           <VStack space={16}>
-            {!showStatusContent && (
+            {!isFailure && (
               <VStack space={8} style={{ marginHorizontal: 16 }}>
                 <H6 style={{ textAlign: "center" }}>
                   {I18n.t(
