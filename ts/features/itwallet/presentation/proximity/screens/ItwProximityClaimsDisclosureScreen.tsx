@@ -27,6 +27,7 @@ import { ItwProximitySendLoadingComponent } from "../components/ItwProximitySend
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
 import {
   selectIsLoading,
+  selectIsNfcRetrieval,
   selectIsSending,
   selectProximityDetails
 } from "../machine/selectors.ts";
@@ -61,8 +62,11 @@ type ContentViewProps = {
 
 const ContentView = ({ proximityDetails }: ContentViewProps) => {
   const navigation = useIONavigation();
-  const machineRef = ItwProximityMachineContext.useActorRef();
   const dispatch = useIODispatch();
+
+  const machineRef = ItwProximityMachineContext.useActorRef();
+  const isNfcRetrieval =
+    ItwProximityMachineContext.useSelector(selectIsNfcRetrieval);
 
   const privacyUrl = useIOSelector(state =>
     generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
@@ -98,7 +102,15 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
     });
   }, [navigation, machineRef, dismissalDialog]);
 
-  const confirmVerifiablePresentation = () =>
+  const handleConfirm = () => {
+    trackItwProximityContinuePresentation();
+
+    if (isNfcRetrieval) {
+      // For NFC retrieval, identification request is dispatched in the next screen
+      machineRef.send({ type: "holder-consent" });
+      return;
+    }
+
     dispatch(
       identificationRequest(
         false,
@@ -113,6 +125,7 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
         }
       )
     );
+  };
 
   return (
     <ForceScrollDownView
@@ -121,10 +134,7 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
           type: "SingleButton",
           primary: {
             label: I18n.t("global.buttons.confirm"),
-            onPress: () => {
-              trackItwProximityContinuePresentation();
-              confirmVerifiablePresentation();
-            }
+            onPress: handleConfirm
           }
         }
       }}

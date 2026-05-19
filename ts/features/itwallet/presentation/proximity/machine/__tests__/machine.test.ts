@@ -465,6 +465,39 @@ describe("itwProximityMachine", () => {
     expect(navigateToFailureScreen).toHaveBeenCalledTimes(1);
   });
 
+  it("device-disconnected in ClaimsDisclosure with NFC retrieval is consumed without failure", () => {
+    const actor = createActor(mockedMachine, {
+      snapshot: makeSnapshot(
+        { Presentment: "ClaimsDisclosure" },
+        { retrievalMethod: "nfc" }
+      )
+    });
+
+    actor.start();
+    actor.send({ type: "device-disconnected" });
+
+    // Machine stays in ClaimsDisclosure - the disconnect was expected
+    expect(actor.getSnapshot().value).toStrictEqual({
+      Presentment: "ClaimsDisclosure"
+    });
+    expect(actor.getSnapshot().context.failure).toBeUndefined();
+    expect(navigateToFailureScreen).not.toHaveBeenCalled();
+  });
+
+  it("nfc-stopped from AwaitingConnection closes the proximity flow", () => {
+    const actor = createActor(mockedMachine, {
+      snapshot: makeSnapshot({ Presentment: "AwaitingConnection" })
+    });
+
+    actor.start();
+    actor.send({ type: "nfc-stopped" });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      Presentment: "AwaitingConnection"
+    });
+    expect(closeProximity).toHaveBeenCalledTimes(1);
+  });
+
   it("device-error moves to Failure", async () => {
     terminateProximitySession.mockResolvedValue(undefined);
     const actor = createActor(mockedMachine, {

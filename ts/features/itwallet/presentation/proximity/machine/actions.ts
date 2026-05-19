@@ -1,4 +1,3 @@
-import { ISO18013_5 } from "@pagopa/io-react-native-iso18013";
 import { ActionArgs, assign } from "xstate";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIOStore } from "../../../../../store/hooks";
@@ -76,14 +75,6 @@ export const createProximityActionsImplementation = (
 
   closeProximity: () => {
     navigation.pop();
-  },
-
-  attemptSessionTermination: () => {
-    // We attempt to terminate the session, but we don't await it or handle errors
-    // because we want to ensure the user can proceed with closing the flow even if termination fails
-    ISO18013_5.sendErrorResponse(ISO18013_5.ErrorCode.SESSION_TERMINATED).catch(
-      () => null
-    );
   },
 
   storeConsent: ({

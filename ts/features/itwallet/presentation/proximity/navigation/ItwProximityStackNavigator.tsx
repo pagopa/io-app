@@ -74,6 +74,7 @@ const InnerNavigator = () => {
       <Stack.Screen
         name={ITW_PROXIMITY_ROUTES.STORE_CONSENT}
         component={ItwProximityStoreConsentScreen}
+        options={hiddenHeader}
       />
       <Stack.Screen
         name={ITW_PROXIMITY_ROUTES.SUCCESS}

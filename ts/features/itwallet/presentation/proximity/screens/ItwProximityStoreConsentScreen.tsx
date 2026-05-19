@@ -8,21 +8,26 @@ export const ItwProximityStoreConsentScreen = () => {
   const dispatch = useIODispatch();
   const machineRef = ItwProximityMachineContext.useActorRef();
 
-  const confirmConsentStore = () =>
-    dispatch(
-      identificationRequest(
-        false,
-        true,
-        undefined,
-        {
-          label: I18n.t("global.buttons.cancel"),
-          onCancel: () => undefined
-        },
-        {
-          onSuccess: () => machineRef.send({ type: "store-consent" })
-        }
-      )
-    );
+  const handleContinue =
+    (storeConsent: boolean = false) =>
+    () =>
+      dispatch(
+        identificationRequest(
+          false,
+          true,
+          undefined,
+          {
+            label: I18n.t("global.buttons.cancel"),
+            onCancel: () => undefined
+          },
+          {
+            onSuccess: () =>
+              machineRef.send(
+                storeConsent ? { type: "store-consent" } : { type: "continue" }
+              )
+          }
+        )
+      );
 
   return (
     <OperationResultScreenContent
@@ -37,13 +42,13 @@ export const ItwProximityStoreConsentScreen = () => {
         label: I18n.t(
           "features.itWallet.presentation.proximity.storeConsent.action"
         ),
-        onPress: confirmConsentStore
+        onPress: handleContinue(true)
       }}
       secondaryAction={{
         label: I18n.t(
           "features.itWallet.presentation.proximity.storeConsent.secondaryAction"
         ),
-        onPress: () => machineRef.send({ type: "continue" })
+        onPress: handleContinue()
       }}
     />
   );

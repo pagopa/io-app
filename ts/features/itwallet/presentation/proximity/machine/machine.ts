@@ -55,13 +55,7 @@ export const itwProximityMachine = setup({
      */
 
     grantConsent: assign({ hasGrantedConsent: true }),
-    storeConsent: notImplemented,
-
-    /**
-     * Proximity
-     */
-
-    attemptSessionTermination: notImplemented
+    storeConsent: notImplemented
   },
   actors: {
     checkBluetoothPermissions: fromPromise<boolean>(notImplemented),
@@ -268,6 +262,10 @@ export const itwProximityMachine = setup({
             target: "#itwProximityMachine.Success"
           },
           {
+            // Expected disconnect after intentional session termination for NFC retrieval.
+            guard: "isNfcRetrieval"
+          },
+          {
             // END (0x02) flag received BEFORE sendDocuments: verifier aborted
             actions: "setFailure",
             target: "Presentment.Terminating"
@@ -301,6 +299,10 @@ export const itwProximityMachine = setup({
             onError: {
               actions: ["setFailure"]
             }
+          },
+          always: {
+            guard: "isNfcRetrieval",
+            actions: "navigateToNfcPresentmentScreen"
           },
           on: {
             retry: {
@@ -352,11 +354,6 @@ export const itwProximityMachine = setup({
         ClaimsDisclosure: {
           description: "Display the requested claims for review",
           entry: "navigateToClaimsDisclosureScreen",
-          always: {
-            // NFC retrieval requires terminating the current session before the verifier can restart it
-            guard: "isNfcRetrieval",
-            actions: "attemptSessionTermination"
-          },
           on: {
             "holder-consent": [
               {

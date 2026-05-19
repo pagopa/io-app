@@ -13,6 +13,9 @@ export const selectIsSending = (snapshot: MachineSnapshot) =>
 export const selectIsSuccess = (snapshot: MachineSnapshot) =>
   snapshot.matches("Success");
 
+export const selectIsNfcRetrieval = (snapshot: MachineSnapshot) =>
+  snapshot.context.retrievalMethod === "nfc";
+
 export const selectQRCodeString = (snapshot: MachineSnapshot) =>
   snapshot.context.qrCodeString;
 
