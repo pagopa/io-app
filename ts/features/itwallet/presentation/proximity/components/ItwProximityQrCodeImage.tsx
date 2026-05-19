@@ -9,7 +9,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import QRCode from "react-native-qrcode-skia";
 import Animated, { FadeIn } from "react-native-reanimated";
@@ -58,22 +58,18 @@ export const ItwProximityQrCodeImage = ({ source }: Props) => {
     qrCodeString
   });
 
-  const qrCodeStatus = useMemo(() => {
-    if (shouldBlock) {
-      return "PID_expired";
-    }
-    if (failure) {
-      return "generation_failed";
-    }
-    return "valid";
-  }, [shouldBlock, failure]);
-
   useFocusEffect(
     useCallback(() => {
+      const qrCodeStatus = shouldBlock
+        ? "PID_expired"
+        : failure
+          ? "generation_failed"
+          : "valid";
+
       if (source) {
         trackItwProximityQrCode({ source, qr_code_status: qrCodeStatus });
       }
-    }, [source, qrCodeStatus])
+    }, [source, shouldBlock, failure])
   );
 
   const handleRetry = () => {
