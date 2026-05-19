@@ -3580,6 +3580,10 @@
               "subtitle": "Al terzo tentativo errato, il PIN verrà bloccato. Per sbloccarlo e impostarne un nuovo, dovrai inserire il codice PUK nell’app CieID.",
               "secondaryAction": "Hai dimenticato il PIN?"
             },
+            "wrongCan": {
+              "title": "Il codice inserito non è corretto",
+              "subtitle": "Controllalo e riprova. È il codice a 6 cifre (CAN) stampato sul fronte della Carta di Identità Elettronica, in basso a destra."
+            },
             "locked": {
               "title": "Hai inserito un PIN errato per troppe volte",
               "subtitle": "Il PIN della tua CIE è stato bloccato. Per sbloccarlo e impostarne un nuovo, dovrai inserire il codice PUK nell’app CieID.",
