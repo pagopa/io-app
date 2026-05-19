@@ -34,6 +34,8 @@ import {
 import { isTestEnv } from "../../../../utils/environment";
 import { handleInternalLink } from "../../../../utils/internalLink";
 import { openWebUrl } from "../../../../utils/url";
+import { trackAppCaughtError } from "../../../../utils/analytics";
+import { unknownToReason } from "../../../messages/utils";
 
 type HeadingMargins = {
   marginStart: IOSpacer;
@@ -68,7 +70,8 @@ export const handleOpenLink = (linkTo: (path: string) => void, url: string) => {
     // there are older messages with external http-links
     // that redirect to https upon opening
   } else if (isCustomHandledLink(url)) {
-    Linking.openURL(url).catch(() => {
+    Linking.openURL(url).catch(e => {
+      trackAppCaughtError("handleOpenLink", undefined, unknownToReason(e));
       IOToast.error(I18n.t("global.jserror.title"));
     });
   } else if (isHttpsLink(url) || isHttpLink(url)) {

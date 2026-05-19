@@ -1,7 +1,9 @@
 import { Body, IOToast, MdH1, MdH2, MdH3 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { Linking } from "react-native";
+import * as Analytics from "../../../../../utils/analytics";
 import * as URL from "../../../../../utils/url";
+import { unknownToReason } from "../../../../../features/messages/utils";
 import { testable } from "../customRules";
 
 describe("customRules", () => {
@@ -90,6 +92,20 @@ describe("customRules", () => {
         await Promise.resolve();
         expect(spyOnIOToastError).toHaveBeenCalledWith(
           I18n.t("global.jserror.title")
+        );
+      });
+      it(`should track the error when Linking.openURL rejects for '${url}'`, async () => {
+        const error = new Error("cannot open URL");
+        jest.spyOn(Linking, "openURL").mockRejectedValue(error);
+        const spyOnTrackAppCaughtError = jest
+          .spyOn(Analytics, "trackAppCaughtError")
+          .mockImplementation(() => undefined);
+        testable!.handleOpenLink(linkToMock, url);
+        await Promise.resolve();
+        expect(spyOnTrackAppCaughtError).toHaveBeenCalledWith(
+          "handleOpenLink",
+          undefined,
+          unknownToReason(error)
         );
       });
     });
