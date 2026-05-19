@@ -22,9 +22,15 @@ export const ItwProximityNfcPresentmentScreen = () =>
   });
 
 const IOsContent = () => {
+  const insets = useSafeAreaInsets();
+  const machineRef = ItwProximityMachineContext.useActorRef();
+
   const isLoading = ItwProximityMachineContext.useSelector(selectIsLoading);
   const isSuccess = ItwProximityMachineContext.useSelector(selectIsSuccess);
-  const insets = useSafeAreaInsets();
+
+  const handleDismiss = () => {
+    machineRef.send({ type: "close" });
+  };
 
   const title = useMemo(() => {
     if (isSuccess) {
@@ -45,12 +51,26 @@ const IOsContent = () => {
   }, [isLoading, isSuccess]);
 
   return (
-    <View style={[styles.container, { marginTop: insets.top }]}>
-      <HStack>
-        <H4>{title} </H4>
-        {isSuccess ? <Pictogram name="success" size={80} /> : null}
-      </HStack>
-    </View>
+    <IOScrollView
+      actions={
+        isSuccess
+          ? {
+              type: "SingleButton",
+              primary: {
+                label: I18n.t("global.buttons.close"),
+                onPress: handleDismiss
+              }
+            }
+          : undefined
+      }
+    >
+      <View style={[styles.container, { marginTop: insets.top }]}>
+        <HStack>
+          <H4 style={styles.title}>{title} </H4>
+          {isSuccess ? <Pictogram name="success" size={120} /> : null}
+        </HStack>
+      </View>
+    </IOScrollView>
   );
 };
 
@@ -91,9 +111,11 @@ const AndroidContent = () => {
         </H4>
         <View style={{ alignSelf: "center" }}>
           <IOButton
-            label={I18n.t(
-              "features.itWallet.presentation.proximity.nfcEngagement.cta"
-            )}
+            label={
+              isSuccess
+                ? I18n.t("global.buttons.close")
+                : I18n.t("global.buttons.cancel")
+            }
             variant="link"
             onPress={handleDismiss}
           />
@@ -105,7 +127,10 @@ const AndroidContent = () => {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: IOVisualCostants.appMarginDefault,
     paddingTop: IOVisualCostants.headerHeight
+  },
+  title: {
+    flex: 1,
+    marginTop: 24
   }
 });

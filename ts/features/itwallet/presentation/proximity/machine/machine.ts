@@ -263,7 +263,10 @@ export const itwProximityMachine = setup({
           },
           {
             // Expected disconnect after intentional session termination for NFC retrieval.
-            guard: "isNfcRetrieval"
+            guard: and([
+              stateIn("Presentment.ClaimsDisclosure"),
+              "isNfcRetrieval"
+            ])
           },
           {
             // END (0x02) flag received BEFORE sendDocuments: verifier aborted

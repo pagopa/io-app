@@ -4285,8 +4285,7 @@
               "android": "Avvicina il telefono al lettore"
             },
             "sending": "Verifica in corso",
-            "success": "Verifica completata!",
-            "cta": "Annulla"
+            "success": "Verifica completata!"
           }
         },
         "itWalletId": {
