@@ -62,23 +62,19 @@ const DEFAULT_HEADING_MARGINS: HeadingMargins = {
 };
 
 export const handleOpenLink = (linkTo: (path: string) => void, url: string) => {
-  if (isCustomHandledLink(url)) {
-    Linking.openURL(url).catch(() => {
-      IOToast.error(I18n.t("global.jserror.title"));
-    });
-    return;
-  }
   if (isIoInternalLink(url)) {
     handleInternalLink(linkTo, url);
     // Non-secure HTTP links have to be supported since
     // there are older messages with external http-links
     // that redirect to https upon opening
-    return;
+  } else if (isCustomHandledLink(url)) {
+    Linking.openURL(url).catch(() => {
+      IOToast.error(I18n.t("global.jserror.title"));
+    });
   } else if (isHttpsLink(url) || isHttpLink(url)) {
     openWebUrl(url, () => {
       IOToast.error(I18n.t("global.jserror.title"));
     });
-    return;
   } else {
     IOToast.warning(I18n.t("messageDetails.markdownLinkUnsupported"));
   }
