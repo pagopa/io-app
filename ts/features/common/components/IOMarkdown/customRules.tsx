@@ -13,6 +13,7 @@ import {
   TxtStrNode
 } from "@textlint/ast-node-types";
 import I18n from "i18next";
+import { Linking } from "react-native";
 import {
   accessibleLinkNodeToReactNative,
   headerNodeToReactNative,
@@ -27,7 +28,8 @@ import {
 import {
   isHttpLink,
   isHttpsLink,
-  isIoInternalLink
+  isIoInternalLink,
+  isCustomHandledLink
 } from "../../../../components/ui/Markdown/handlers/link";
 import { isTestEnv } from "../../../../utils/environment";
 import { handleInternalLink } from "../../../../utils/internalLink";
@@ -60,15 +62,23 @@ const DEFAULT_HEADING_MARGINS: HeadingMargins = {
 };
 
 export const handleOpenLink = (linkTo: (path: string) => void, url: string) => {
+  if (isCustomHandledLink(url)) {
+    Linking.openURL(url).catch(() => {
+      IOToast.error(I18n.t("global.jserror.title"));
+    });
+    return;
+  }
   if (isIoInternalLink(url)) {
     handleInternalLink(linkTo, url);
     // Non-secure HTTP links have to be supported since
     // there are older messages with external http-links
     // that redirect to https upon opening
+    return;
   } else if (isHttpsLink(url) || isHttpLink(url)) {
     openWebUrl(url, () => {
       IOToast.error(I18n.t("global.jserror.title"));
     });
+    return;
   } else {
     IOToast.warning(I18n.t("messageDetails.markdownLinkUnsupported"));
   }

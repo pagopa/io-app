@@ -1,5 +1,6 @@
 import { Body, IOToast, MdH1, MdH2, MdH3 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+import { Linking } from "react-native";
 import * as URL from "../../../../../utils/url";
 import { testable } from "../customRules";
 
@@ -66,16 +67,37 @@ describe("customRules", () => {
       })
     );
     [
+      "mailto:user@example.com",
+      "mailto://user@example.com",
+      "tel:+391234567890",
+      "tel://+391234567890",
+      "sms:+391234567890",
+      "sms://+391234567890"
+    ].forEach(url => {
+      it(`should call Linking.openURL for '${url}'`, () => {
+        const spyOnLinkingOpenURL = jest
+          .spyOn(Linking, "openURL")
+          .mockResolvedValue(undefined);
+        testable!.handleOpenLink(linkToMock, url);
+        expect(spyOnLinkingOpenURL).toHaveBeenCalledWith(url);
+      });
+      it(`should show an error toast when Linking.openURL rejects for '${url}'`, async () => {
+        jest
+          .spyOn(Linking, "openURL")
+          .mockRejectedValue(new Error("cannot open URL"));
+        const spyOnIOToastError = jest.spyOn(IOToast, "error");
+        testable!.handleOpenLink(linkToMock, url);
+        await Promise.resolve();
+        expect(spyOnIOToastError).toHaveBeenCalledWith(
+          I18n.t("global.jserror.title")
+        );
+      });
+    });
+    [
       "iosso://",
       "iohandledlink://",
       "clipboard://",
       "clipboard:",
-      "sms://",
-      "sms:",
-      "tel://",
-      "tel:",
-      "mailto://",
-      "mailto:",
       "copy://",
       "copy:"
     ].forEach(protocol => {
