@@ -23,11 +23,7 @@ import {
 } from "../analytics";
 import { ItwProximityQrCode as ItwProximityQrCodeTracking } from "../analytics/types";
 import { ItwProximityMachineContext } from "../machine/provider";
-import {
-  selectFailure,
-  selectIsLoading,
-  selectQRCodeString
-} from "../machine/selectors";
+import { selectFailure, selectQRCodeString } from "../machine/selectors";
 import { shouldBlockProximityQrCodeSelector } from "../store/selectors/credentials";
 
 const QR_CODE_LOGO_SIZE = 52;
@@ -49,13 +45,12 @@ type Props = {
   source?: ItwProximityQrCodeTracking["source"];
 };
 
-export const ItwProximityQrCode = ({ source }: Props) => {
+export const ItwProximityQrCodeImage = ({ source }: Props) => {
   const theme = useIOTheme();
   const machineRef = ItwProximityMachineContext.useActorRef();
 
   const qrCodeString =
     ItwProximityMachineContext.useSelector(selectQRCodeString);
-  const isLoading = ItwProximityMachineContext.useSelector(selectIsLoading);
   const failure = ItwProximityMachineContext.useSelector(selectFailure);
   const shouldBlock = useIOSelector(shouldBlockProximityQrCodeSelector);
 
@@ -117,7 +112,7 @@ export const ItwProximityQrCode = ({ source }: Props) => {
     );
   }
 
-  if (isLoading || !qrCodeString) {
+  if (!qrCodeString) {
     return <IOSkeleton shape="square" size={QR_CODE_SIZE} radius={16} />;
   }
 

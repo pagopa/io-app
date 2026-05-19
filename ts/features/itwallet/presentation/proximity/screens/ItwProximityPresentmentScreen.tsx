@@ -25,7 +25,7 @@ import { itwIsBannerHiddenSelector } from "../../../common/store/selectors/banne
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { trackItwStartReissuingPID } from "../analytics/index";
 import { ItwProximityQrCode as ItwProximityQrCodeTracking } from "../analytics/types.ts";
-import { ItwProximityQrCode } from "../components/ItwProximityQrCode.tsx";
+import { ItwProximityQrCodeImage } from "../components/ItwProximityQrCodeImage.tsx";
 import { ItwProximityQrCodeInfoBanner } from "../components/ItwProximityQrCodeInfoBanner.tsx";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
 import { selectFailure, selectIsLoading } from "../machine/selectors.ts";
@@ -135,7 +135,7 @@ export const ItwProximityPresentmentScreen = ({
               </VStack>
             )}
 
-            <ItwProximityQrCode source={source} />
+            <ItwProximityQrCodeImage source={source} />
           </VStack>
         </ItwBrandedBox>
       </View>
