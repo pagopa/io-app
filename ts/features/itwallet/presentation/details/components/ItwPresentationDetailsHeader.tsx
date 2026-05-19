@@ -20,7 +20,10 @@ import { useTagPropsByStatus } from "../../../common/utils/itwCredentialUtils.ts
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { useThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
-import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
+import {
+  itwCredentialStatusSelector,
+  itwCredentialsEidStatusSelector
+} from "../../../credentials/store/selectors";
 import { useItwDisplayCredentialStatus } from "../hooks/useItwDisplayCredentialStatus";
 import { ItwPresentationCredentialCard } from "./ItwPresentationCredentialCard.tsx";
 
@@ -38,9 +41,15 @@ const ItwPresentationDetailsHeader = ({
 }: ItwPresentationDetailsHeaderProps) => {
   // Credential's header card is always in light mode
   const { color } = useCredentialCardConfig(credential.credentialType, "light");
-  const { status: rawStatus = "valid" } = useIOSelector(state =>
+  const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
+  const { status: credentialRawStatus } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
+  // PID is excluded from itwCredentialStatusSelector, so read its status from eidStatus directly
+  const rawStatus =
+    credential.credentialType === CredentialType.PID
+      ? (eidStatus ?? "valid")
+      : (credentialRawStatus ?? "valid");
   const displayStatus = useItwDisplayCredentialStatus(rawStatus);
   const tagPropsByStatus = useTagPropsByStatus();
   const statusTagProps = tagPropsByStatus[displayStatus];

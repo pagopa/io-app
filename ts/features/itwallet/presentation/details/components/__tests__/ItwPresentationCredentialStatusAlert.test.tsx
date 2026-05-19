@@ -124,7 +124,8 @@ describe("ItwPresentationCredentialStatusAlert", () => {
     ${"jwtExpired"}  | ${"jwtExpired"}  | ${true}   | ${false} | ${undefined}   | ${CredentialAlertType.EID_LIFECYCLE}
     ${"jwtExpired"}  | ${"valid"}       | ${false}  | ${true}  | ${undefined}   | ${CredentialAlertType.JWT_VERIFICATION}
     ${"jwtExpired"}  | ${"jwtExpired"}  | ${false}  | ${true}  | ${undefined}   | ${CredentialAlertType.INVALID_CREDENTIAL}
-    ${"valid"}       | ${"jwtExpired"}  | ${false}  | ${true}  | ${undefined}   | ${CredentialAlertType.INVALID_CREDENTIAL}
+    ${"valid"}       | ${"jwtExpired"}  | ${false}  | ${true}  | ${undefined}   | ${undefined}
+    ${"jwtExpiring"} | ${"jwtExpired"}  | ${false}  | ${true}  | ${undefined}   | ${undefined}
     ${"jwtExpiring"} | ${"valid"}       | ${false}  | ${true}  | ${undefined}   | ${CredentialAlertType.JWT_VERIFICATION}
   `(
     "returns $expected when credential=$credentialStatus, eid=$eidStatus, offline=$isOffline, itwL3=$isItwL3",

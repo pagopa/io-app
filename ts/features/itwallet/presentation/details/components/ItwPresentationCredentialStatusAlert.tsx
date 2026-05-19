@@ -108,9 +108,14 @@ export const deriveCredentialAlertType = (
   const isCredentialJwtInvalid =
     isCredentialJwtExpiring || isCredentialJwtExpired;
 
-  // Handle alert if PID credential is expired
+  // When PID is expired in L3 mode, only show INVALID_CREDENTIAL if the credential
+  // is also jwtExpired (both expired case). When only PID is expired, no alert is
+  // shown here — the PID itself handles its own alert on its detail screen.
   if (isItwL3 && isEidExpired) {
-    return CredentialAlertType.INVALID_CREDENTIAL;
+    if (isCredentialJwtExpired) {
+      return CredentialAlertType.INVALID_CREDENTIAL;
+    }
+    return undefined;
   }
 
   // Handle alerts only if the credential JWT is expiring or expired

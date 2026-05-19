@@ -10,9 +10,9 @@ describe("getItwDisplayCredentialStatus", () => {
       ${"expired"}     | ${"valid"}       | ${true}   | ${"expired"}
       ${"jwtExpired"}  | ${"jwtExpired"}  | ${true}   | ${"invalid"}
       ${"jwtExpiring"} | ${"jwtExpiring"} | ${false}  | ${"valid"}
-      ${"valid"}       | ${"jwtExpired"}  | ${false}  | ${"invalid"}
+      ${"valid"}       | ${"jwtExpired"}  | ${false}  | ${"valid"}
       ${"jwtExpired"}  | ${"jwtExpired"}  | ${false}  | ${"invalid"}
-      ${"jwtExpiring"} | ${"jwtExpired"}  | ${false}  | ${"invalid"}
+      ${"jwtExpiring"} | ${"jwtExpired"}  | ${false}  | ${"jwtExpiring"}
       ${"expiring"}    | ${"jwtExpired"}  | ${false}  | ${"expiring"}
       ${"expired"}     | ${"jwtExpired"}  | ${false}  | ${"expired"}
       ${"jwtExpiring"} | ${"valid"}       | ${false}  | ${"jwtExpiring"}
