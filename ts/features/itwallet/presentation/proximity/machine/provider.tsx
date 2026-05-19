@@ -40,9 +40,14 @@ export const ItwProximityMachineProvider = ({
  */
 const DebugData = () => {
   const state = ItwProximityMachineContext.useSelector(s => s.value);
+  const context = ItwProximityMachineContext.useSelector(({ context: c }) => {
+    const { walletInstanceAttestation, credentials, ...rest } = c;
+    return rest;
+  });
 
   useDebugInfo({
-    state
+    state,
+    context
   });
 
   return null;
