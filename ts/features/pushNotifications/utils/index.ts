@@ -4,17 +4,25 @@ import { v4 as uuid } from "uuid";
 import { trackAppCaughtError } from "../../../utils/analytics";
 import { unknownToString } from "../../../utils/errors";
 import { isIos } from "../../../utils/platform";
+import { isTestEnv } from "../../../utils/environment";
+
+const areNotificationsEnabled = (
+  permissions: Notifications.NotificationPermissionsStatus
+) => {
+  const areNotificationsDisabled = [
+    undefined,
+    Notifications.IosAuthorizationStatus.DENIED,
+    Notifications.IosAuthorizationStatus.NOT_DETERMINED
+  ].includes(permissions.ios?.status);
+  return permissions.granted || !areNotificationsDisabled;
+};
 
 export const checkNotificationPermissions = async (): Promise<boolean> => {
   try {
-    const settings = await Notifications.getPermissionsAsync();
+    const permissions = await Notifications.getPermissionsAsync();
 
-    const areIosNotificationsDisabled = [
-      undefined,
-      Notifications.IosAuthorizationStatus.DENIED,
-      Notifications.IosAuthorizationStatus.NOT_DETERMINED
-    ].includes(settings.ios?.status);
-    return settings.granted || !areIosNotificationsDisabled;
+    const notificationEnabledState = areNotificationsEnabled(permissions);
+    return notificationEnabledState;
   } catch (e) {
     trackAppCaughtError(
       "checkNotificationPermissions",
@@ -40,11 +48,8 @@ export const requestNotificationPermissions = async (): Promise<boolean> => {
       android: {}
     });
 
-    return (
-      permissions.granted ||
-      permissions.ios?.status ===
-        Notifications.IosAuthorizationStatus.AUTHORIZED
-    );
+    const notificationEnabledState = areNotificationsEnabled(permissions);
+    return notificationEnabledState;
   } catch (e) {
     trackAppCaughtError(
       "requestNotificationPermissions",
@@ -69,3 +74,9 @@ export const openSystemNotificationSettingsScreen = () =>
   NotificationsUtils.openSettings();
 
 export const generateTokenRegistrationTime = () => new Date().getTime();
+
+export const testable = isTestEnv
+  ? {
+      areNotificationsEnabled
+    }
+  : undefined;

@@ -5,7 +5,8 @@ import {
   generateInstallationId,
   generateTokenRegistrationTime,
   openSystemNotificationSettingsScreen,
-  requestNotificationPermissions
+  requestNotificationPermissions,
+  testable
 } from "..";
 import * as analytics from "../../../../utils/analytics";
 
@@ -29,55 +30,101 @@ beforeEach(() => {
   jest.resetAllMocks();
 });
 
-describe("checkNotificationPermissions", () => {
-  it.each([
-    {
-      name: "expo status is 'granted'",
-      response: { granted: true, status: "granted" },
-      expected: true
+const NOTIFICATION_PERMISSION_CASES = [
+  {
+    name: "expo status is 'granted'",
+    permissions: { granted: true, status: "granted" },
+    expected: true
+  },
+  {
+    name: "expo status is 'denied'",
+    permissions: { granted: false, status: "denied" },
+    expected: false
+  },
+  {
+    name: "expo status is 'undetermined'",
+    permissions: { granted: false, status: "undetermined" },
+    expected: false
+  },
+  {
+    name: "iOS status is AUTHORIZED",
+    permissions: {
+      granted: false,
+      ios: { status: Notifications.IosAuthorizationStatus.AUTHORIZED }
     },
-    {
-      name: "expo status is 'denied'",
-      response: { granted: false, status: "denied" },
-      expected: false
+    expected: true
+  },
+  {
+    name: "iOS status is DENIED",
+    permissions: {
+      granted: false,
+      ios: { status: Notifications.IosAuthorizationStatus.DENIED }
     },
-    {
-      name: "expo status is 'undetermined'",
-      response: { granted: false, status: "undetermined" },
-      expected: false
+    expected: false
+  },
+  {
+    name: "iOS status is NOT_DETERMINED",
+    permissions: {
+      granted: false,
+      ios: { status: Notifications.IosAuthorizationStatus.NOT_DETERMINED }
     },
-    {
-      name: "iOS status is AUTHORIZED",
-      response: {
-        granted: false,
-        ios: { status: Notifications.IosAuthorizationStatus.AUTHORIZED }
-      },
-      expected: true
+    expected: false
+  },
+  {
+    name: "iOS status is PROVISIONAL",
+    permissions: {
+      granted: false,
+      ios: { status: Notifications.IosAuthorizationStatus.PROVISIONAL }
     },
-    {
-      name: "iOS status is DENIED",
-      response: {
-        granted: false,
-        ios: { status: Notifications.IosAuthorizationStatus.DENIED }
-      },
-      expected: false
+    expected: true
+  },
+  {
+    name: "iOS status is EPHEMERAL",
+    permissions: {
+      granted: false,
+      ios: { status: Notifications.IosAuthorizationStatus.EPHEMERAL }
     },
-    {
-      name: "iOS status is NOT_DETERMINED",
-      response: {
-        granted: false,
-        ios: { status: Notifications.IosAuthorizationStatus.NOT_DETERMINED }
-      },
-      expected: false
-    }
-  ])("returns $expected when $name", async ({ response, expected }) => {
-    jest
-      .spyOn(Notifications, "getPermissionsAsync")
-      .mockResolvedValue(response as any);
-    const result = await checkNotificationPermissions();
-    expect(result).toBe(expected);
-  });
+    expected: true
+  },
+  {
+    name: "iOS status is undefined",
+    permissions: { granted: false, ios: { status: undefined } },
+    expected: false
+  },
+  {
+    name: "ios property is absent",
+    permissions: { granted: false },
+    expected: false
+  }
+];
 
+describe.each(NOTIFICATION_PERMISSION_CASES)(
+  "when $name",
+  ({ permissions, expected }) => {
+    it(`checkNotificationPermissions returns ${expected}`, async () => {
+      jest
+        .spyOn(Notifications, "getPermissionsAsync")
+        .mockResolvedValue(permissions as any);
+      const result = await checkNotificationPermissions();
+      expect(result).toBe(expected);
+    });
+
+    it(`requestNotificationPermissions returns ${expected}`, async () => {
+      jest
+        .spyOn(Notifications, "requestPermissionsAsync")
+        .mockResolvedValue(permissions as any);
+      const result = await requestNotificationPermissions();
+      expect(result).toBe(expected);
+    });
+
+    it(`areNotificationsEnabled returns ${expected}`, () => {
+      const result = testable!.areNotificationsEnabled(permissions as any);
+      expect(result).toBe(expected);
+    });
+  }
+);
+
+describe("checkNotificationPermissions", () => {
   it("returns false and tracks error if getPermissionsAsync throws", async () => {
     const trackSpy = jest
       .spyOn(analytics, "trackAppCaughtError")
@@ -98,33 +145,6 @@ describe("checkNotificationPermissions", () => {
 });
 
 describe("requestNotificationPermissions", () => {
-  it.each([
-    {
-      name: "expo status is 'granted'",
-      response: { granted: true, status: "granted" },
-      expected: true
-    },
-    {
-      name: "expo status is 'denied'",
-      response: { granted: false, status: "denied" },
-      expected: false
-    },
-    {
-      name: "iOS status is AUTHORIZED",
-      response: {
-        granted: false,
-        ios: { status: Notifications.IosAuthorizationStatus.AUTHORIZED }
-      },
-      expected: true
-    }
-  ])("returns $expected when $name", async ({ response, expected }) => {
-    jest
-      .spyOn(Notifications, "requestPermissionsAsync")
-      .mockResolvedValue(response as any);
-    const result = await requestNotificationPermissions();
-    expect(result).toBe(expected);
-  });
-
   it("returns false and tracks error if requestPermissionsAsync throws", async () => {
     const trackSpy = jest
       .spyOn(analytics, "trackAppCaughtError")

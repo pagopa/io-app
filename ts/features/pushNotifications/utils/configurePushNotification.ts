@@ -120,7 +120,7 @@ const onPushNotificationTokenReceived =
     if (!token || !token.data) {
       trackAppCaughtError(
         "onPushNotificationTokenAvailable",
-        `received a nullish token. data: (${token})`,
+        `received a nullish token. { token:${token}, data: ${token?.data} }`,
         undefined
       );
       return;
