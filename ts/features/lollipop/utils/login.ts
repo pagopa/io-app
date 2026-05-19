@@ -3,14 +3,9 @@ import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import * as TE from "fp-ts/lib/TaskEither";
 import { parseStringPromise } from "xml2js";
-import {
-  getRedirects,
-  isLoginUtilsError
-} from "@pagopa/io-react-native-login-utils";
-import URLParse from "url-parse";
+import { isLoginUtilsError } from "@pagopa/io-react-native-login-utils";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import pako from "pako";
-import { last } from "fp-ts/lib/Array";
 import { handleRegenerateEphemeralKey } from "..";
 import { AppDispatch } from "../../../App";
 import { trackLollipopIdpLoginFailure } from "../../../utils/analytics";
@@ -45,6 +40,7 @@ export const lollipopSamlVerify = (
         // Extract the ID parameter (which may not be there, so handle the case).
         // The extracted string is in the format {HashAlgorithmName}-{HashedPublicKey}
         const responseThumbprintWithHashAlgorithm = authnRequest?.$?.ID;
+
         if (!responseThumbprintWithHashAlgorithm) {
           // If the request did not include the ID, treat it as a failure
           onFailure("Missing ID parameter in samlp:AuthnRequest");
@@ -110,9 +106,9 @@ export const regenerateKeyGetRedirectsAndVerifySaml = (
       () => handleRegenerateEphemeralKey(keyTag, isMixpanelEnabled, dispatch),
       E.toError
     ),
-    TE.chain(publicKey =>
+    TE.chain(maybePublicKey =>
       pipe(
-        publicKey,
+        maybePublicKey,
         O.fromNullable,
         O.fold(
           () => TE.left(new Error("Missing publicKey")),
@@ -127,7 +123,10 @@ export const regenerateKeyGetRedirectsAndVerifySaml = (
                     idpId,
                     hashedFiscalCode
                   );
-                  return getRedirects(loginUri, headers, "SAMLRequest");
+                  return Promise.resolve({
+                    url: loginUri,
+                    headers
+                  });
                 },
                 error => {
                   if (isLoginUtilsError(error)) {
@@ -135,33 +134,6 @@ export const regenerateKeyGetRedirectsAndVerifySaml = (
                   }
                   return E.toError(error);
                 }
-              ),
-              TE.chainW(redirects =>
-                pipe(
-                  redirects,
-                  last,
-                  O.fold(
-                    () => TE.left(new Error("Missing Redirects")),
-                    url =>
-                      pipe(
-                        new URLParse(url, true).query.SAMLRequest,
-                        O.fromNullable,
-                        O.fold(
-                          () => TE.left(new Error("Missing SAMLRequest")),
-                          urlEncodedSamlRequest =>
-                            TE.tryCatch(
-                              () =>
-                                verifyLollipopSamlRequestTask(
-                                  url,
-                                  urlEncodedSamlRequest,
-                                  publicKey
-                                ),
-                              E.toError
-                            )
-                        )
-                      )
-                  )
-                )
               )
             )
         )

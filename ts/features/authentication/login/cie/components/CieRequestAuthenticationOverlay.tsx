@@ -113,6 +113,7 @@ type RequestInfoAuthorizedState = {
   requestState: "AUTHORIZED";
   nativeAttempts: number;
   url: string;
+  headers?: Record<string, string | undefined>;
 };
 
 type RequestInfoLoadingState = {
@@ -120,7 +121,15 @@ type RequestInfoLoadingState = {
   nativeAttempts: number;
 };
 
-type RequestInfo = RequestInfoLoadingState | RequestInfoAuthorizedState;
+type RequestInfoIdleState = {
+  requestState: "IDLE";
+  nativeAttempts: number;
+};
+
+type RequestInfo =
+  | RequestInfoLoadingState
+  | RequestInfoAuthorizedState
+  | RequestInfoIdleState;
 
 function retryRequest(
   setInternalState: Dispatch<SetStateAction<InternalState>>,
@@ -182,6 +191,7 @@ const CieWebView = (props: Props) => {
   useEffect(() => {
     if (internalState.authUrl !== undefined) {
       onSuccess(internalState.authUrl);
+      setRequestInfo(prev => ({ ...prev, requestState: "IDLE" }));
       // reset the state when authUrl has been found
       setInternalState(generateResetState());
     }
@@ -242,6 +252,57 @@ const CieWebView = (props: Props) => {
     }
   };
 
+  useEffect(() => {
+    if (requestInfo.requestState === "LOADING") {
+      void pipe(
+        TE.tryCatch(
+          () =>
+            Platform.OS === "android"
+              ? CookieManager.removeSessionCookies()
+              : Promise.resolve(true),
+          () => new Error("Error clearing cookies")
+        ),
+        TE.chain(
+          _ => () =>
+            regenerateKeyGetRedirectsAndVerifySaml(
+              loginUri,
+              ephemeralKeyTag,
+              mixpanelEnabled,
+              isActiveSessionLogin ? isActiveSessionFastLogin : isFastLogin,
+              dispatch,
+              idp?.id,
+              isActiveSessionLogin ? hashedFiscalCode : undefined
+            )
+        ),
+        TE.fold(
+          e => T.of(handleOnError(e)),
+          ({ url, headers }) =>
+            T.of(
+              setRequestInfo({
+                requestState: "AUTHORIZED",
+                nativeAttempts: requestInfo.nativeAttempts,
+                url,
+                headers
+              })
+            )
+        )
+      )();
+    }
+  }, [
+    dispatch,
+    ephemeralKeyTag,
+    handleOnError,
+    hashedFiscalCode,
+    idp?.id,
+    isActiveSessionFastLogin,
+    isActiveSessionLogin,
+    isFastLogin,
+    loginUri,
+    mixpanelEnabled,
+    requestInfo.nativeAttempts,
+    requestInfo.requestState
+  ]);
+
   if (internalState.error) {
     return (
       <ErrorComponent
@@ -251,41 +312,6 @@ const CieWebView = (props: Props) => {
         onClose={props.onClose}
       />
     );
-  }
-
-  if (requestInfo.requestState === "LOADING") {
-    void pipe(
-      TE.tryCatch(
-        () =>
-          Platform.OS === "android"
-            ? CookieManager.removeSessionCookies()
-            : Promise.resolve(true),
-        () => new Error("Error clearing cookies")
-      ),
-      TE.chain(
-        _ => () =>
-          regenerateKeyGetRedirectsAndVerifySaml(
-            loginUri,
-            ephemeralKeyTag,
-            mixpanelEnabled,
-            isActiveSessionLogin ? isActiveSessionFastLogin : isFastLogin,
-            dispatch,
-            idp?.id,
-            isActiveSessionLogin ? hashedFiscalCode : undefined
-          )
-      ),
-      TE.fold(
-        e => T.of(handleOnError(e)),
-        url =>
-          T.of(
-            setRequestInfo({
-              requestState: "AUTHORIZED",
-              nativeAttempts: requestInfo.nativeAttempts,
-              url
-            })
-          )
-      )
-    )();
   }
 
   const WithLoading = withLoadingSpinner(() => (
@@ -304,7 +330,12 @@ const CieWebView = (props: Props) => {
             onError={handleOnError}
             onHttpError={handleOnError}
             onShouldStartLoadWithRequest={handleOnShouldStartLoadWithRequest}
-            source={{ uri: requestInfo.url } as WebViewSource}
+            source={
+              {
+                uri: requestInfo.url,
+                headers: requestInfo.headers
+              } as WebViewSource
+            }
             key={internalState.key}
           />
         )}

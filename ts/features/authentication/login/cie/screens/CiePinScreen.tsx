@@ -126,6 +126,7 @@ const CiePinScreen = () => {
   );
   const isEnabled = useIOSelector(isNfcEnabledSelector);
   const isNfcEnabled = pot.getOrElse(isEnabled, false);
+  const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
   const { present, bottomSheet } = useIOBottomSheetModal({
     component: (
       <View>
@@ -157,7 +158,7 @@ const CiePinScreen = () => {
     if (authUrlGenerated !== undefined) {
       if (cieFlowForDevServerEnabled) {
         const loginUri = getIdpLoginUri(
-          CieEntityIds.PROD,
+          CieEntityIds[useCieUat ? "DEV" : "PROD"],
           3,
           remoteApiLoginUrlPrefix
         );
@@ -187,7 +188,8 @@ const CiePinScreen = () => {
     navigateToCieConsentDataUsage,
     navigation,
     pin,
-    remoteApiLoginUrlPrefix
+    remoteApiLoginUrlPrefix,
+    useCieUat
   ]);
 
   const showModal = useCallback(() => {
@@ -217,8 +219,6 @@ const CiePinScreen = () => {
       setAccessibilityFocus(pinPadViewRef, 300 as Millisecond);
     }, [])
   );
-
-  const useCieUat = useIOSelector(isCieLoginUatEnabledSelector);
 
   useHeaderSecondLevel({
     title: withTrailingPoliceCarLightEmojii("", useCieUat),
