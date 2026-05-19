@@ -322,7 +322,9 @@ export const itwProximityMachine = setup({
               target: "#itwProximityMachine.Nfc"
             },
             "nfc-stopped": {
-              target: "Terminating"
+              // NFC session has ended (HCE modal closed). The transport is already dead,
+              // so sending an error response via Terminating would crash the native module.
+              actions: "closeProximity"
             },
             retry: {
               target: "Retrying"
