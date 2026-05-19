@@ -35,7 +35,7 @@ export const ItwNfcActivationScreen = () => {
             "features.itWallet.presentation.proximity.nfc.activation.alert.action"
           ),
           onPress: () => {
-            // machineRef.send({ type: "close" });
+            void openNfcPreferences();
           }
         },
         {
