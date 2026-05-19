@@ -110,11 +110,11 @@ jobs:
           path: coverage-tmp/
       - id: flatten-coverage
         run: |
-          mkdir -p coverage/
-          find coverage-tmp -name "lcov-*.info" -exec cp {} coverage/ \;
-          ls -la coverage/
+          files=$(find coverage-tmp -name "lcov-*.info" | sort | paste -sd, -)
+          echo "files=$files" >> $GITHUB_OUTPUT
       - id: codecov-script
         uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          directory: coverage/
+          files: ${{ steps.flatten-coverage.outputs.files }}
+          disable_search: true
