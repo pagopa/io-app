@@ -176,7 +176,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   const proximityActionProps: IOScrollViewActions["primary"] | undefined =
     itwFeaturesEnabled && hasPresentableCredentials
       ? {
-          label: I18n.t("features.itWallet.presentation.ctas.showQRCode"),
+          label: I18n.t("features.itWallet.presentation.ctas.present"),
           icon: "productITWallet",
           iconPosition: "end",
           onPress: () => {

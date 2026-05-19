@@ -282,7 +282,7 @@ export const ItwPresentationCredentialDetail = ({
       itwFeaturesEnabled
     ) {
       return {
-        label: I18n.t("features.itWallet.presentation.ctas.showQRCode"),
+        label: I18n.t("features.itWallet.presentation.ctas.present"),
         icon: "productITWallet",
         iconPosition: "end",
         onPress: () => {

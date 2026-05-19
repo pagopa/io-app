@@ -8,12 +8,11 @@ import {
   vec
 } from "@shopify/react-native-skia";
 import { PropsWithChildren } from "react";
-import { LayoutRectangle, StyleSheet } from "react-native";
+import { LayoutRectangle, StyleSheet, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
-import Animated, {
+import {
   Extrapolation,
   interpolate,
-  LinearTransition,
   SensorType,
   useAnimatedReaction,
   useAnimatedSensor,
@@ -145,7 +144,7 @@ export const ItwBrandedBox = ({
   );
 
   return (
-    <Animated.View
+    <View
       onLayout={onLayout}
       style={[
         styles.container,
@@ -154,7 +153,6 @@ export const ItwBrandedBox = ({
           backgroundColor: theme["banner-background"]
         }
       ]}
-      layout={LinearTransition.duration(200)}
     >
       {shouldUseGradientBackground && (
         <LinearGradient
@@ -190,7 +188,7 @@ export const ItwBrandedBox = ({
 
       {/* Box content */}
       {children}
-    </Animated.View>
+    </View>
   );
 };
 
