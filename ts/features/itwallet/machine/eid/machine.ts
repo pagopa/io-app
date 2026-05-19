@@ -1024,6 +1024,9 @@ export const itwEidIssuanceMachine = setup({
             },
             back: {
               target: "DisplayingCieNfcPreparationInstructions"
+            },
+            retry: {
+              target: "#itwEidIssuanceMachine.MrtdPoP.WaitingForCan"
             }
           }
         },
