@@ -1,3 +1,4 @@
+import { ProximityDetails } from "../utils/types";
 import { ConsentData } from "./types";
 
 /**
@@ -21,3 +22,23 @@ export const generateConsentKey = (consent: ConsentData): string => {
 
   return `${consent.rpId}::${sortedCredentials}`;
 };
+
+/**
+ * Generates a consent data from the RP ID and proximity details
+ *
+ * @param rpId The Relying Party ID associated with the consent.
+ * @param proximityDetails List of requested credentials and claims from the
+ * proximity presentation details.
+ *
+ * @returns A ConsentData structure representing the consent details,
+ */
+export const getConsentDataFromProximityDetails = (
+  rpId: string,
+  proximityDetails: ProximityDetails
+): ConsentData => ({
+  rpId,
+  credentials: proximityDetails.map(detail => ({
+    credentialType: detail.credentialType,
+    claimNames: detail.claimsToDisplay.map(claim => claim.id)
+  }))
+});

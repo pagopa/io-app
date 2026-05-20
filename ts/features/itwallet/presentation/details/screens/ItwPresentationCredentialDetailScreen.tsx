@@ -282,7 +282,7 @@ export const ItwPresentationCredentialDetail = ({
       itwFeaturesEnabled
     ) {
       return {
-        label: I18n.t("features.itWallet.presentation.ctas.showQRCode"),
+        label: I18n.t("features.itWallet.presentation.ctas.present"),
         icon: "productITWallet",
         iconPosition: "end",
         onPress: () => {
@@ -291,7 +291,7 @@ export const ItwPresentationCredentialDetail = ({
             position: "ITW_CREDENTIAL_DETAIL"
           });
           navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-            screen: ITW_PROXIMITY_ROUTES.QR_CODE,
+            screen: ITW_PROXIMITY_ROUTES.PRESENTMENT,
             params: {
               source: "ITW_CREDENTIAL_DETAIL"
             }
