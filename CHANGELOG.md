@@ -2,6 +2,44 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.32.0-canary.8216](https://github.com/pagopa/io-app/compare/3.32.0-rc.0...3.32.0-canary.8216) (2026-05-20)
+
+
+### Features
+
+* **itwallet:** migrate background task from react-native-background-fetch to expo-background-task ([22787a1](https://github.com/pagopa/io-app/commit/22787a1e79a77d4d26b1b239f8c51a51214fa83e))
+* [[SIW-4084](https://pagopa.atlassian.net/browse/SIW-4084)] add backgroundFetch feature (store, saga, hook) ([de92afb](https://github.com/pagopa/io-app/commit/de92afb33bd06758a298c89828d89fe9a34aa52c))
+* [[SIW-4084](https://pagopa.atlassian.net/browse/SIW-4084)] add lastStatusUpdateDate to wallet instance state ([af1bc78](https://github.com/pagopa/io-app/commit/af1bc782728b26f56db0a8d6186144bd06de2c11))
+* [[SIW-4084](https://pagopa.atlassian.net/browse/SIW-4084)] export checkWalletInstanceAndCredentialsValiditySaga and add Mixpanel placeholder ([0b5e259](https://github.com/pagopa/io-app/commit/0b5e259cb158999a10a723b918aa24fd6f3fd5ea))
+* [[SIW-4084](https://pagopa.atlassian.net/browse/SIW-4084)] wire background fetch into app bootstrap ([ad9eb4e](https://github.com/pagopa/io-app/commit/ad9eb4e23da886b0b7259d0b5463d7224bf24b1c))
+
+
+### Bug Fixes
+
+* tests ([7aa53f1](https://github.com/pagopa/io-app/commit/7aa53f101d7b065802d10002b886938719bf8844))
+* tests ([63a3b3d](https://github.com/pagopa/io-app/commit/63a3b3d7c769f3d23e8c003fc0c62ed30806f3e0))
+* **itwallet:** restore missing imports in background task tests ([4847373](https://github.com/pagopa/io-app/commit/4847373f6fa59669a7794da7901a63cab6250447))
+
+
+### Chores
+
+* [[SIW-4084](https://pagopa.atlassian.net/browse/SIW-4084)] add react-native-background-fetch dependency ([b1afe4c](https://github.com/pagopa/io-app/commit/b1afe4cf35b092b790e29c5a8fecc46956bb620e))
+* add last fetc tracking ([ee1935e](https://github.com/pagopa/io-app/commit/ee1935eb24eb16e852c6eea7bdc7f5e1d2ab5659))
+* added jest mocks ([5e79891](https://github.com/pagopa/io-app/commit/5e7989144f25a9cb942b9402e75e805de33ee3b1))
+* added playgrounds ([01a3335](https://github.com/pagopa/io-app/commit/01a3335fc3abf1d5128a14e9452abb648dcfaec3))
+* debug function ([b0cb721](https://github.com/pagopa/io-app/commit/b0cb7210e38988b0341bdaf0c047bd555cffba73))
+* mixpanel tracking ([0daa447](https://github.com/pagopa/io-app/commit/0daa4471158da8be75aa2494219f23c9113c5750))
+* move saga ([3c3bb62](https://github.com/pagopa/io-app/commit/3c3bb6268161852d955e7d274624bd262063818a))
+* remove .env var ([c00e4e4](https://github.com/pagopa/io-app/commit/c00e4e481e0abb068f980c832e432260f27a84d2))
+* remove debug ([a00d295](https://github.com/pagopa/io-app/commit/a00d29526ddb551e81c19ee1c16cd2dfc1d9a593))
+* remove selectors ([4667727](https://github.com/pagopa/io-app/commit/466772753231d355c50558e3702657e0b663d07c))
+* remove tests ([b827fd4](https://github.com/pagopa/io-app/commit/b827fd4759ad3eb512d7d0385ac6515456d441b9))
+* remove WI check ([3212db9](https://github.com/pagopa/io-app/commit/3212db954b26119369ab83113a6bf16c561747a8))
+* revert jestSetup.js changes ([7a480f6](https://github.com/pagopa/io-app/commit/7a480f60b4fa9c7bfea25402056a79eec234be00))
+* task registration event tracking ([65884cf](https://github.com/pagopa/io-app/commit/65884cff520aaf4bc9a6ef9043d176e39596381b))
+* update App.tsx formatting ([5ebf8b5](https://github.com/pagopa/io-app/commit/5ebf8b5434a93c81a6f8adc94655b6a70b8def9b))
+* wip ([8da4479](https://github.com/pagopa/io-app/commit/8da4479067fbb3e3de4436d4cea52d9ebf1e0b99))
+
 ## [3.32.0-rc.0](https://github.com/pagopa/io-app/compare/3.31.0-rc.7...3.32.0-rc.0) (2026-05-20)
 
 
