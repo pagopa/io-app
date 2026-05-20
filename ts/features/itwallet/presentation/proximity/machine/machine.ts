@@ -282,10 +282,13 @@ export const itwProximityMachine = setup({
             target: "Presentment.Terminating"
           }
         ],
-        "device-error": {
-          actions: "setFailure",
-          target: "#itwProximityMachine.Failure"
-        }
+        "device-error": [
+          {
+            guard: not(stateIn("Presentment.Terminating")),
+            actions: "setFailure",
+            target: "#itwProximityMachine.Failure"
+          }
+        ]
       },
       states: {
         Retrying: {
