@@ -384,7 +384,7 @@ export const itwProximityMachine = setup({
                 target: "#itwProximityMachine.Presentment.SendingDocuments"
               }
             ],
-            back: {
+            close: {
               target: "#itwProximityMachine.Presentment.Terminating"
             }
           }
@@ -428,24 +428,13 @@ export const itwProximityMachine = setup({
           invoke: {
             id: "terminateProximitySession",
             src: "terminateProximitySession",
-            onDone: [
-              {
-                guard: "hasFailure",
-                target: "#itwProximityMachine.Failure"
-              },
-              {
-                actions: "closeProximity"
-              }
-            ],
-            onError: [
-              {
-                guard: "hasFailure",
-                target: "#itwProximityMachine.Failure"
-              },
-              {
-                actions: "closeProximity"
-              }
-            ]
+            onDone: {
+              actions: "closeProximity"
+            },
+            onError: {
+              // We ignore any failure on purpose and consider presentation terminated
+              actions: "closeProximity"
+            }
           }
         }
       }
