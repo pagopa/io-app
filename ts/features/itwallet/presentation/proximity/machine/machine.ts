@@ -284,7 +284,7 @@ export const itwProximityMachine = setup({
         ],
         "device-error": {
           actions: "setFailure",
-          target: "Presentment.Terminating"
+          target: "#itwProximityMachine.Failure"
         }
       },
       states: {
@@ -343,7 +343,11 @@ export const itwProximityMachine = setup({
         },
         Connecting: {
           description: "Verifier is initiating the connection",
-          tags: [ItwPresentationTags.Loading]
+          tags: [ItwPresentationTags.Loading],
+          always: {
+            guard: not("isNfcRetrieval"),
+            actions: "navigateToClaimsDisclosureScreen"
+          }
         },
         Connected: {
           description: "Verifier connected, waiting for the document request",
