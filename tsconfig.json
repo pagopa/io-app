@@ -14,12 +14,8 @@
     "noUnusedLocals": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true,
-    "useUnknownInCatchVariables": true,
+    "useUnknownInCatchVariables": true
   },
-  "exclude": [
-    "android",
-    "ios",
-    "**/node_modules", 
-    "**/Pods"
-  ]
+  "exclude": ["android", "ios", "**/node_modules", "**/Pods"],
+  "references": []
 }
