@@ -39,15 +39,12 @@ export const ItwProximityMachineProvider = ({
  * Convenience component to display debug info about the machine state in the ladybug component.
  */
 const DebugData = () => {
-  const state = ItwProximityMachineContext.useSelector(s => s.value);
-  const context = ItwProximityMachineContext.useSelector(({ context: c }) => {
-    const { walletInstanceAttestation, credentials, ...rest } = c;
-    return rest;
-  });
+  const state = ItwProximityMachineContext.useSelector(({ value }) => value);
+  const context = ItwProximityMachineContext.useSelector(({ context: c }) => c);
 
   useDebugInfo({
     state,
-    context
+    ...context
   });
 
   return null;
