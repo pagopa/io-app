@@ -15,3 +15,12 @@ export const trackItwStatusListFetchRegistered = () => {
   const props = buildEventProperties("TECH", undefined);
   void mixpanelTrack(enventName, props);
 };
+
+/**
+ * TODO remove once the status list is implemented
+ */
+export const trackItwStatusListLastChecktime = (timestamp: string) => {
+  const enventName = ITW_TECH_EVENTS.ITW_BACKGROUND_TASK_LAST_CHECK_TIME;
+  const props = buildEventProperties("TECH", undefined, { timestamp });
+  void mixpanelTrack(enventName, props);
+};

@@ -3,9 +3,11 @@ import { SagaIterator } from "redux-saga";
 import { call } from "typed-redux-saga/macro";
 import {
   trackItwStatusListFetchRegisterFailure,
-  trackItwStatusListFetchRegistered
+  trackItwStatusListFetchRegistered,
+  trackItwStatusListLastChecktime
 } from "../analytics";
 import { registerItwStatusListFetchTask } from "../tasks";
+import { getLastCheckTimestamp } from "../utils/storage";
 
 /**
  * Registers the ITW Status List fetch task with expo-background-task.
@@ -26,5 +28,25 @@ export function* registerStatusListFetchTaskSaga(): SagaIterator {
     }
   } catch (e) {
     yield* call(trackItwStatusListFetchRegisterFailure, e);
+  }
+}
+
+/**
+ * Tracks the last execution of the ITW Status List fetch task on app open,
+ * to have a baseline for the background fetch frequency.
+ *
+ * TODO: remove once the status list is implemented
+ */
+export function* trackLastStatusListFetchTaskSaga(): SagaIterator {
+  try {
+    const timestamp = yield* call(getLastCheckTimestamp);
+    if (timestamp) {
+      yield* call(
+        trackItwStatusListLastChecktime,
+        new Date(timestamp).toISOString()
+      );
+    }
+  } catch {
+    // Errors are ignored
   }
 }

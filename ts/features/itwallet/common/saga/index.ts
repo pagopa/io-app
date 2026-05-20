@@ -25,7 +25,10 @@ import {
   checkWalletInstanceStateSaga
 } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
 import { checkFiscalCodeEnabledSaga } from "../../trialSystem/saga/checkFiscalCodeIsEnabledSaga";
-import { registerStatusListFetchTaskSaga } from "../../statusList/saga";
+import {
+  registerStatusListFetchTaskSaga,
+  trackLastStatusListFetchTaskSaga
+} from "../../statusList/saga";
 import {
   itwFreezeSimplifiedActivationRequirements,
   itwSetAuthLevel,
@@ -97,6 +100,7 @@ export function* watchItwOfflineSaga(): SagaIterator {
 
   // Register the background task for Wallet Instance status checks
   yield* fork(registerStatusListFetchTaskSaga);
+  yield* fork(trackLastStatusListFetchTaskSaga);
 }
 
 /**
