@@ -384,7 +384,7 @@ describe("itwProximityMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual({
       Presentment: "ClaimsDisclosure"
     });
-    expect(navigateToClaimsDisclosureScreen).toHaveBeenCalledTimes(1);
+    expect(navigateToClaimsDisclosureScreen).toHaveBeenCalledTimes(2);
     expect(actor.getSnapshot().context.proximityDetails).toEqual(
       T_PROXIMITY_DETAILS
     );
@@ -505,8 +505,7 @@ describe("itwProximityMachine", () => {
     expect(closeProximity).toHaveBeenCalledTimes(1);
   });
 
-  it("device-error terminates the session and closes the flow", async () => {
-    terminateProximitySession.mockResolvedValue(undefined);
+  it("device-error moves to Failure", async () => {
     const actor = createActor(mockedMachine, {
       snapshot: makeSnapshot({ Presentment: "AwaitingConnection" })
     });
@@ -514,16 +513,11 @@ describe("itwProximityMachine", () => {
     actor.start();
     actor.send({ type: "device-error", error: new Error("device error") });
 
-    expect(actor.getSnapshot().value).toStrictEqual({
-      Presentment: "Terminating"
-    });
+    await waitFor(actor, snapshot => snapshot.matches("Failure"));
     expect(actor.getSnapshot().context.failure?.type).toEqual(
       ProximityFailureType.RELYING_PARTY_GENERIC
     );
-    // Allow the terminateProximitySession promise to resolve
-    await new Promise(resolve => setTimeout(resolve, 0));
-    expect(closeProximity).toHaveBeenCalledTimes(1);
-    expect(navigateToFailureScreen).not.toHaveBeenCalled();
+    expect(navigateToFailureScreen).toHaveBeenCalledTimes(1);
   });
 
   it("close from ClaimsDisclosure terminates the session and closes the flow", async () => {

@@ -3,7 +3,6 @@ import { ActionArgs, assign } from "xstate";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useIOStore } from "../../../../../store/hooks";
 import { assert } from "../../../../../utils/assert";
-import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors";
 import { ITW_PROXIMITY_ROUTES } from "../navigation/routes";
 import { itwGrantProximityConsent } from "../store/actions";
 import { itwPresentableCredentialsByDocTypeSelector } from "../store/selectors/credentials";
@@ -20,7 +19,6 @@ export const createProximityActionsImplementation = (
       const state = store.getState();
 
       return {
-        walletInstanceAttestation: itwWalletInstanceAttestationSelector(state),
         credentials: itwPresentableCredentialsByDocTypeSelector(state)
       };
     }

@@ -2,7 +2,6 @@ import { ISO18013_5 } from "@pagopa/io-react-native-iso18013";
 import { fromCallback, fromPromise } from "xstate";
 import { assert } from "../../../../../utils/assert";
 import { Env } from "../../../common/utils/environment";
-import { CredentialFormat } from "../../../common/utils/itwTypesUtils";
 import { CredentialsVault } from "../../../credentials/utils/vault";
 import {
   checkBluetoothActivation,
@@ -44,7 +43,7 @@ export type ProximityCommunicationLogicInput = Pick<Context, "credentials">;
 
 export type SendDocumentsActorInput = Pick<
   Context,
-  "walletInstanceAttestation" | "credentials" | "verifierRequest"
+  "credentials" | "verifierRequest"
 >;
 
 export type SendDocumentsActorOutput = Awaited<
@@ -182,22 +181,14 @@ export const createProximityActorsImplementation = (env: Env) => {
     SendDocumentsActorOutput,
     SendDocumentsActorInput
   >(async ({ input }) => {
-    const { verifierRequest, walletInstanceAttestation, credentials } = input;
+    const { verifierRequest, credentials } = input;
 
     assert(credentials, "Missing credentials for sending documents");
     assert(verifierRequest, "Missing verifier request");
-    assert(
-      walletInstanceAttestation,
-      "Missing wallet instance attestation for sending documents"
-    );
-
-    const wiaMdoc = walletInstanceAttestation[CredentialFormat.MDOC];
-    assert(wiaMdoc, "Missing Wallet Attestation in MDOC format");
 
     const documents = await getDocuments(
       verifierRequest.request,
       credentials,
-      wiaMdoc,
       CredentialsVault.get
     );
     // We accept all the fields requested by the verifier app

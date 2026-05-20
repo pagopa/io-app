@@ -1,16 +1,9 @@
 import { ISO18013_5 } from "@pagopa/io-react-native-iso18013";
-import {
-  CredentialMetadata,
-  WalletInstanceAttestations
-} from "../../../common/utils/itwTypesUtils";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import type { ProximityDetails, VerifierRequest } from "../utils/types";
 import { ProximityFailure } from "./failure";
 
 export type Context = {
-  /**
-   * The wallet instance attestation of the wallet. If expired, it will be requested a new one.
-   */
-  walletInstanceAttestation: WalletInstanceAttestations | undefined;
   /**
    * The credentials available in the wallet, to be potentially shared with the Relying Party.
    */
@@ -48,7 +41,6 @@ export type Context = {
 };
 
 export const InitialContext: Context = {
-  walletInstanceAttestation: undefined,
   credentials: undefined,
   engagementMode: "qrcode",
   failure: undefined,

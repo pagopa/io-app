@@ -3,7 +3,6 @@ import {
   parseClaims,
   WellKnownClaim
 } from "../../../common/utils/itwClaimsUtils";
-import { WIA_KEYTAG } from "../../../common/utils/itwCryptoContextUtils";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import { TimeoutError, UntrustedRpError } from "./errors";
 import type {
@@ -100,14 +99,10 @@ export const getProximityDetails: GetProximityDetails = ({
 export const getDocuments = async (
   request: VerifierRequest["request"],
   credentials: Record<string, CredentialMetadata>,
-  wiaMdoc: string,
   getCredential: (credentialId: string) => Promise<string | undefined>
 ): Promise<Array<RequestedDocument>> => {
-  // Exclude the WIA document type from the request
-  const { [WIA_DOC_TYPE]: _, ...rest } = request;
-
   const documents = await Promise.all(
-    Object.entries(rest).map(async ([docType]) => {
+    Object.entries(request).map(async ([docType]) => {
       const credential = credentials[docType];
       // This should be guaranteed by getProximityDetails having already validated credentials
       assert(credential, `Credential not found for docType: ${docType}`);
@@ -126,14 +121,7 @@ export const getDocuments = async (
     })
   );
 
-  return [
-    ...documents,
-    {
-      alias: WIA_KEYTAG,
-      docType: WIA_DOC_TYPE,
-      issuerSignedContent: wiaMdoc
-    }
-  ];
+  return documents;
 };
 
 interface NestedBooleanMap {

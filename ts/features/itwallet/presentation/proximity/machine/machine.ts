@@ -414,7 +414,6 @@ export const itwProximityMachine = setup({
             id: "sendDocuments",
             src: "sendDocuments",
             input: ({ context }) => ({
-              walletInstanceAttestation: context.walletInstanceAttestation,
               credentials: context.credentials,
               verifierRequest: context.verifierRequest
             }),
