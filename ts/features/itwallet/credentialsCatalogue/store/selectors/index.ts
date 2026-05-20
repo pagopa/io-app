@@ -4,7 +4,10 @@ import { constTrue, pipe } from "fp-ts/lib/function";
 import { isAfter } from "date-fns";
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { DigitalCredentialMetadata } from "../../../common/utils/itwCredentialsCatalogueUtils";
+import {
+  DigitalCredentialMetadata,
+  DigitalCredentialsCatalogue
+} from "../../../common/utils/itwCredentialsCatalogueUtils";
 import {
   getCredentialNameFromType,
   l2Credentials,
@@ -40,8 +43,23 @@ const hardcodedCredentialsList: ReadonlyArray<CredentialsListEntry> = [
  * Select the last fetched credentials catalogue.
  * **Note:** the catalogue may be stale.
  */
-export const itwCredentialsCatalogueSelector = (state: GlobalState) =>
-  pot.toUndefined(state.features.itWallet.credentialsCatalogue.catalogue);
+export const itwCredentialsCatalogueSelector = createSelector(
+  (state: GlobalState) =>
+    state.features.itWallet.credentialsCatalogue.catalogue,
+  (cataloguePot): DigitalCredentialsCatalogue | undefined => {
+    const mappedCatalogue = pot.map(cataloguePot, catalogue => ({
+      ...catalogue,
+      credentials: catalogue.credentials.map(credential => ({
+        ...credential,
+        credential_type:
+          credential.credential_type === "PersonIdentificationData"
+            ? CredentialType.PID
+            : credential.credential_type
+      }))
+    }));
+    return pot.toUndefined(mappedCatalogue);
+  }
+);
 
 /**
  * Select whether the credentials catalogue is stale, i.e. the JWT is expired.
