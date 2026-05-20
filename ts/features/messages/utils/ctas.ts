@@ -1,8 +1,4 @@
-import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
-import { Predicate } from "fp-ts/lib/Predicate";
-import { identity, pipe } from "fp-ts/lib/function";
-import FM from "front-matter";
+import FM, { FrontMatterResult } from "front-matter";
 import { Linking } from "react-native";
 import { MessageBodyMarkdown } from "../../../../definitions/communication/MessageBodyMarkdown";
 import { ServiceId } from "../../../../definitions/services/ServiceId";
@@ -11,21 +7,21 @@ import {
   deriveCustomHandledLink,
   isIoInternalLink
 } from "../../../components/ui/Markdown/handlers/link";
-import { trackCTAFrontMatterDecodingError } from "../analytics";
-import { localeFallback, Locales } from "../../../i18n";
+import { localeFallback } from "../../../i18n";
 import {
   CTA,
   CTAS,
-  LocalizedCTAs,
-  LocalizedCTALocales
+  LocalizedCTALocales,
+  LocalizedCTAs
 } from "../../../types/LocalizedCTAs";
+import { isTestEnv } from "../../../utils/environment";
 import {
   getInternalRoute,
   handleInternalLink
 } from "../../../utils/internalLink";
 import { getLocalePrimaryWithFallback } from "../../../utils/locale";
-import { isTestEnv } from "../../../utils/environment";
 import { isFIMSLink } from "../../fims/singleSignOn/utils";
+import { trackCTAFrontMatterDecodingError } from "../analytics";
 
 export type CTAActionType =
   | "io_handled_link"
@@ -51,16 +47,15 @@ export const handleCtaAction = (
   }
 };
 
-const hasMetadataTokenName = (metadata?: ServiceMetadata): boolean =>
-  metadata?.token_name !== undefined;
-
-// a mapping between routes name (the key) and predicates (the value)
-// the predicate says if for that specific route the navigation is allowed
-const internalRoutePredicates: Map<
-  string,
-  Predicate<ServiceMetadata | undefined>
-> = new Map<string, Predicate<ServiceMetadata | undefined>>([
-  ["/services/webview", hasMetadataTokenName]
+/**
+ * a {routeName: isAllowedFunction} map to check
+ * wether the navigation to a specific internal route is allowed
+ */
+const internalRouteIsNavigationAllowedMap = new Map([
+  [
+    "/services/webview",
+    (metadata?: ServiceMetadata) => metadata?.token_name !== undefined
+  ]
 ]);
 
 /**
@@ -68,12 +63,12 @@ const internalRoutePredicates: Map<
  * return the locale supported by the app. If the remote locale is not supported
  * a fallback will be returned
  */
-export const getRemoteLocale = (): Extract<Locales, LocalizedCTALocales> =>
-  pipe(
-    getLocalePrimaryWithFallback(),
-    LocalizedCTALocales.decode,
-    E.getOrElseW(() => localeFallback.locale)
-  );
+export const getRemoteLocale = (): LocalizedCTALocales => {
+  const locale = getLocalePrimaryWithFallback();
+  const isValidLocale = LocalizedCTALocales.is(locale);
+
+  return isValidLocale ? locale : localeFallback.locale;
+};
 
 /**
  * Extract the CTAs if they are nested inside the message markdown content.
@@ -110,19 +105,15 @@ export const getServiceCTAs = (
 export const removeCTAsFromMarkdown = (
   markdownText: MessageBodyMarkdown | string,
   serviceId: ServiceId
-): E.Either<string, string> => {
-  const isValidFrontMatterHeaderEither = containsFrontMatterHeader(
-    markdownText,
-    serviceId
-  );
-  if (E.isLeft(isValidFrontMatterHeaderEither)) {
-    return E.left(markdownText);
+) => {
+  const result = parseFrontMatter(markdownText, serviceId);
+  if (result.status === "failure") {
+    return undefined;
   }
-  const hasFrontMatterHeader = isValidFrontMatterHeaderEither.right;
-  if (!hasFrontMatterHeader) {
-    return E.right(markdownText);
+  if (result.status === "no-header") {
+    return markdownText;
   }
-  return extractBodyAfterFrontMatter(markdownText, serviceId);
+  return result.frontMatter.body;
 };
 
 const getCTAsIfValid = (
@@ -157,27 +148,10 @@ export const localizedCTAsFromFrontMatter = (
   if (frontMatterText == null) {
     return undefined;
   }
-  const isValidFrontMatterHeaderEither = containsFrontMatterHeader(
-    frontMatterText,
-    serviceId
-  );
-  if (E.isLeft(isValidFrontMatterHeaderEither)) {
-    return undefined;
-  }
-  const isValidFrontMatterHeader = isValidFrontMatterHeaderEither.right;
-  if (!isValidFrontMatterHeader) {
-    return undefined;
-  }
-  try {
-    const frontMatter = FM<LocalizedCTAs>(frontMatterText);
-    return frontMatter.attributes;
-  } catch {
-    trackCTAFrontMatterDecodingError(
-      "A failure occourred while parsing or extracting front matter",
-      serviceId
-    );
-    return undefined;
-  }
+  const result = parseFrontMatter<LocalizedCTAs>(frontMatterText, serviceId);
+  return result.status === "success"
+    ? result.frontMatter.attributes
+    : undefined;
 };
 
 export const ctasFromLocalizedCTAs = (
@@ -188,15 +162,15 @@ export const ctasFromLocalizedCTAs = (
     return undefined;
   }
   const typeUncheckedCTAs = localizedCTAs[getRemoteLocale()];
-  const decodedCTAsResult = CTAS.decode(typeUncheckedCTAs);
-  if (E.isRight(decodedCTAsResult)) {
-    return decodedCTAsResult.right;
+  const isValidCtas = CTAS.is(typeUncheckedCTAs);
+  if (!isValidCtas) {
+    trackCTAFrontMatterDecodingError(
+      "A failure occoured while decoding from Localized CTAS to specific CTAs",
+      serviceId
+    );
+    return undefined;
   }
-  trackCTAFrontMatterDecodingError(
-    "A failure occoured while decoding from Localized CTAS to specific CTAs",
-    serviceId
-  );
-  return undefined;
+  return typeUncheckedCTAs;
 };
 
 /**
@@ -243,67 +217,65 @@ const isCtaActionValid = (
   // check if it is an internal navigation
   if (isIoInternalLink(cta.action)) {
     const internalRoute = getInternalRoute(cta.action);
-    return pipe(
-      internalRoutePredicates.get(internalRoute),
-      O.fromNullable,
-      O.map(f => f(serviceMetadata)),
-      O.getOrElse(() => true)
-    );
+    const route = internalRouteIsNavigationAllowedMap.get(internalRoute);
+    if (route === undefined) {
+      return true;
+    }
+    return route(serviceMetadata);
   }
+
   if (isFIMSLink(cta.action)) {
-    return pipe(
-      E.tryCatch(
-        () => new URL(cta.action),
-        () => false
-      ),
-      E.fold(identity, _ => true)
-    );
+    try {
+      const url = new URL(cta.action);
+      return url !== undefined;
+    } catch {
+      return false;
+    }
   }
+
   // check if it is a custom action (it should be composed in a specific format)
   const maybeCustomHandledAction = deriveCustomHandledLink(cta.action);
   return maybeCustomHandledAction !== undefined;
 };
 
-const containsFrontMatterHeader = (
+type FrontMatterParseResult<T> =
+  | { status: "no-header" }
+  | { status: "success"; frontMatter: FrontMatterResult<T> }
+  | { status: "failure" };
+
+const parseFrontMatter = <T>(
   input: string,
   serviceId: ServiceId
-): E.Either<void, boolean> => {
+): FrontMatterParseResult<T> => {
   try {
-    return E.right(FM.test(input));
+    if (!FM.test(input)) {
+      return { status: "no-header" };
+    }
   } catch {
     trackCTAFrontMatterDecodingError(
       "A failure occoured while testing for front matter",
       serviceId
     );
-    return E.left(undefined);
+    return { status: "failure" };
   }
-};
-
-const extractBodyAfterFrontMatter = (
-  text: string,
-  serviceId: ServiceId
-): E.Either<string, string> => {
   try {
-    const frontMatter = FM(text);
-    return E.right(frontMatter.body);
-  } catch (e) {
+    return { status: "success", frontMatter: FM<T>(input) };
+  } catch {
     trackCTAFrontMatterDecodingError(
-      "A failure occourred while parsing or extracting body from input with front matter",
+      "A failure occourred while parsing or extracting front matter",
       serviceId
     );
-    return E.left(text);
+    return { status: "failure" };
   }
 };
 
 export const testable = isTestEnv
   ? {
       areCTAsActionsValid,
-      containsFrontMatterHeader,
+      parseFrontMatter,
       ctasFromLocalizedCTAs,
-      extractBodyAfterFrontMatter,
       getCTAsIfValid,
-      hasMetadataTokenName,
-      internalRoutePredicates,
+      internalRouteIsNavigationAllowedMap,
       isCtaActionValid
     }
   : undefined;

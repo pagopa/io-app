@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`internalRouteIsNavigationAllowedMap should match expected values 1`] = `
+Map {
+  "/services/webview" => [Function],
+}
+`;
