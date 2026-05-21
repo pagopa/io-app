@@ -42,7 +42,6 @@ const renderComponent = (isBannerHidden: boolean) => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   const validEid = {
     ...ItwStoredCredentialsMocks.eid,
-    credentialType: "pid",
     jwt: {
       ...ItwStoredCredentialsMocks.eid.jwt,
       issuedAt: "2026-04-27T00:00:00.000Z",
