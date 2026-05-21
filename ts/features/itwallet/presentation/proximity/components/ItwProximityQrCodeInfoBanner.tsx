@@ -1,16 +1,16 @@
 import { Banner, IOToast } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { useCallback, useMemo } from "react";
 import I18n from "i18next";
+import { useCallback, useMemo } from "react";
 
 import { useIODispatch } from "../../../../../store/hooks";
+import { openWebUrl } from "../../../../../utils/url";
 import {
   trackItwBannerClosure,
   trackItwBannerTap,
   trackItwBannerVisualized
 } from "../../../analytics";
 import { itwCloseBanner } from "../../../common/store/actions/banners";
-import { openWebUrl } from "../../../../../utils/url";
 
 const HOW_AND_WHEN_TO_USE_IO_DOCUMENTS =
   "https://assistenza.ioapp.it/hc/it/articles/31106401885841-Quando-e-come-usare-i-documenti-digitali";
@@ -49,9 +49,15 @@ const ItwProximityQrCodeInfoBanner = () => {
     <Banner
       color="neutral"
       pictogramName="help"
-      title={I18n.t("features.itWallet.presentation.qrCode.banner.title")}
-      content={I18n.t("features.itWallet.presentation.qrCode.banner.content")}
-      action={I18n.t("features.itWallet.presentation.qrCode.banner.action")}
+      title={I18n.t(
+        "features.itWallet.presentation.proximity.engagement.banner.title"
+      )}
+      content={I18n.t(
+        "features.itWallet.presentation.proximity.engagement.banner.content"
+      )}
+      action={I18n.t(
+        "features.itWallet.presentation.proximity.engagement.banner.action"
+      )}
       onPress={handleOnPress}
       labelClose={I18n.t("global.buttons.close")}
       onClose={handleOnClose}
