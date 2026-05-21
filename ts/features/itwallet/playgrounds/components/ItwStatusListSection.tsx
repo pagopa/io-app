@@ -16,8 +16,8 @@ import { ITW_STATUS_LIST_FETCH_TASK } from "../../statusList/tasks";
 import { getLastStatusListCheckTimestamp } from "../../statusList/utils/storage";
 
 export const ItwStatusListSection = () => {
-  const [lastCheck, setLastCheck] = useState<string>();
-  const [age, setAge] = useState<string>("n/a");
+  const [lastCheck, setLastCheck] = useState<string>("n/a");
+  const [age] = useState<string>("n/a");
 
   useEffect(() => {
     getLastStatusListCheckTimestamp()
@@ -25,9 +25,6 @@ export const ItwStatusListSection = () => {
         if (timestamp) {
           const lastCheckDate = new Date(timestamp);
           setLastCheck(lastCheckDate.toLocaleString());
-
-          const ageMinutes = Math.floor((Date.now() - timestamp) / (1000 * 60));
-          setAge(`${ageMinutes} minutes`);
         }
       })
       .catch(() => setLastCheck("n/a"));
@@ -47,6 +44,7 @@ export const ItwStatusListSection = () => {
         loading={false}
         disabled={true}
       />
+      <VSpacer size={16} />
       <IOButton
         variant="solid"
         color="danger"
