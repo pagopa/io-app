@@ -40,7 +40,8 @@ export const sendAarErrorSupportBottomSheetComponent = (
         <ListItemInfoCopy
           label={I18n.t("features.pn.aar.flow.ko.GENERIC.detail.errorCode")}
           accessibilityLabel={I18n.t(
-            "features.pn.aar.flow.ko.GENERIC.detail.errorCode"
+            "features.pn.aar.flow.ko.GENERIC.detail.errorCodeAccessibility",
+            { errorCode: assistanceErrorCode }
           )}
           icon="ladybug"
           value={assistanceErrorCode}

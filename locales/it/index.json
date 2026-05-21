@@ -2373,7 +2373,8 @@
                 "supportTitle": "Contatta l'assistenza",
                 "chat": "Chiedi aiuto in chat",
                 "additionalDataTitle": "Dati aggiuntivi",
-                "errorCode": "Codice errore"
+                "errorCode": "Codice errore",
+                "errorCodeAccessibility": "Codice errore: {{errorCode}}, copia"
               }
             },
             "cieValidation": {
