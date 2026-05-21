@@ -21,7 +21,6 @@ export const START_FLOW_OPTIONS: ReadonlyArray<{
   label: string;
   engagementModes: ReadonlyArray<ISO18013_5.EngagementMode>;
   retrievalMethods: ReadonlyArray<ISO18013_5.RetrievalMethod>;
-  needsNfc?: boolean;
 }> = [
   {
     label: "Start QRCODE->BLE",
@@ -31,26 +30,22 @@ export const START_FLOW_OPTIONS: ReadonlyArray<{
   {
     label: "Start QRCODE->NFC",
     engagementModes: ["qrcode"],
-    retrievalMethods: ["nfc"],
-    needsNfc: true
+    retrievalMethods: ["nfc"]
   },
   {
     label: "Start NFC->BLE",
     engagementModes: ["nfc"],
-    retrievalMethods: ["ble"],
-    needsNfc: true
+    retrievalMethods: ["ble"]
   },
   {
     label: "Start NFC->NFC",
     engagementModes: ["nfc"],
-    retrievalMethods: ["nfc"],
-    needsNfc: true
+    retrievalMethods: ["nfc"]
   },
   {
     label: "Start QRCODE+NFC->BLE+NFC",
     engagementModes: ["qrcode", "nfc"],
-    retrievalMethods: ["ble", "nfc"],
-    needsNfc: true
+    retrievalMethods: ["ble", "nfc"]
   }
 ];
 
@@ -127,13 +122,12 @@ export const ItwProximityPlaygroundScreen = () => {
                 onSwitchValueChange={() => setSkipConsent(v => !v)}
               />
               {START_FLOW_OPTIONS.map(
-                ({ label, engagementModes, retrievalMethods, needsNfc }) => (
+                ({ label, engagementModes, retrievalMethods }) => (
                   <IOButton
                     fullWidth
                     key={label}
                     label={label}
                     onPress={() => startFlow(engagementModes, retrievalMethods)}
-                    disabled={needsNfc}
                   />
                 )
               )}
