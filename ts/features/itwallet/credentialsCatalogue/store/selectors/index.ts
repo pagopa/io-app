@@ -40,8 +40,12 @@ const hardcodedCredentialsList: ReadonlyArray<CredentialsListEntry> = [
 }));
 
 /**
- * Select the last fetched credentials catalogue.
- * **Note:** the catalogue may be stale.
+ * Select the last fetched credentials catalogue. **Note:** the catalogue may be stale.
+ *
+ * The catalogue credentials are mapped to replace the legacy "PersonIdentificationData" credential type with the new "pid".
+ * This ensures the PID can always be identified with the same type, avoiding the need to keep separate values for the same credential.
+ *
+ * The original credential_type can still be found in the raw persisted catalogue, before any transformation.
  */
 export const itwCredentialsCatalogueSelector = createSelector(
   (state: GlobalState) =>

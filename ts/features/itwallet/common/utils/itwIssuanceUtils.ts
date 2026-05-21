@@ -211,10 +211,13 @@ const getPid: GetPid = async ({
   return {
     credential,
     metadata: {
+      // Use the same value for the PID credential type, avoiding separate values for the same credential across IT-Wallet versions.
+      // The credential catalogue is also mapped to use this type to identify the PID.
+      // To get the original type, access `issuerConf.credential_configurations_supported[credential_configuration_id].scope`.
+      credentialType: CredentialType.PID,
       parsedCredential,
       issuerConf,
       keyTag,
-      credentialType: CredentialType.PID,
       credentialId: credential_configuration_id,
       format,
       jwt: {
