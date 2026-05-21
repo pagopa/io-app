@@ -3,15 +3,14 @@ import {
   parseClaims,
   WellKnownClaim
 } from "../../../common/utils/itwClaimsUtils";
-import { WIA_KEYTAG } from "../../../common/utils/itwCryptoContextUtils";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
-import { TimeoutError, UntrustedRpError } from "./itwProximityErrors";
+import { TimeoutError, UntrustedRpError } from "./errors";
 import type {
   AcceptedFields,
   ProximityDetails,
   RequestedDocument,
   VerifierRequest
-} from "./itwProximityTypeUtils";
+} from "./types";
 
 const WIA_DOC_TYPE = "org.iso.18013.5.1.IT.WalletAttestation";
 
@@ -28,24 +27,36 @@ export const promiseWithTimeout = <T>(
   return Promise.race<T>([promise, timeout]);
 };
 
+type GetProximityDetails = (params: {
+  request: VerifierRequest["request"];
+  credentials: Record<string, CredentialMetadata>;
+  requireAuthenticated?: boolean;
+}) => ProximityDetails;
+
 /**
  * Get the Presentation details based on the request from the Verifier.
  *
  * @param request The request from the Verifier, specifying which document types and claims are required
  * @param credentialsByType The credentials object by doc type
+ * @param requireAuthenticated Whether to require the RP to be authenticated,
+ * default is true. If set to false, unauthenticated RPs will be allowed,
+ * which can be useful for testing purposes, but should be used with caution in
+ * production.
+ *
  * @returns The Presentation details
  */
-export const getProximityDetails = (
-  request: VerifierRequest["request"],
-  credentialsByType: Record<string, CredentialMetadata>
-): ProximityDetails => {
+export const getProximityDetails: GetProximityDetails = ({
+  request,
+  credentials: credentialsByType,
+  requireAuthenticated = true
+}) => {
   // Exclude the WIA document type from the request
   const { [WIA_DOC_TYPE]: _, ...rest } = request;
 
   return Object.entries(rest).map(
     ([docType, { isAuthenticated, ...namespaces }]) => {
       // Stop the flow if the verifier (RP) is not trusted
-      if (!isAuthenticated) {
+      if (!isAuthenticated && requireAuthenticated) {
         throw new UntrustedRpError("Untrusted RP");
       }
 
@@ -88,14 +99,10 @@ export const getProximityDetails = (
 export const getDocuments = async (
   request: VerifierRequest["request"],
   credentials: Record<string, CredentialMetadata>,
-  wiaMdoc: string,
   getCredential: (credentialId: string) => Promise<string | undefined>
 ): Promise<Array<RequestedDocument>> => {
-  // Exclude the WIA document type from the request
-  const { [WIA_DOC_TYPE]: _, ...rest } = request;
-
   const documents = await Promise.all(
-    Object.entries(rest).map(async ([docType]) => {
+    Object.entries(request).map(async ([docType]) => {
       const credential = credentials[docType];
       // This should be guaranteed by getProximityDetails having already validated credentials
       assert(credential, `Credential not found for docType: ${docType}`);
@@ -114,14 +121,7 @@ export const getDocuments = async (
     })
   );
 
-  return [
-    ...documents,
-    {
-      alias: WIA_KEYTAG,
-      docType: WIA_DOC_TYPE,
-      issuerSignedContent: wiaMdoc
-    }
-  ];
+  return documents;
 };
 
 interface NestedBooleanMap {
