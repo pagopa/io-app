@@ -254,7 +254,7 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
   }),
 
   // Version 10
-  // Replace the legacy "PersonIdentificationData" credential_type with the new "pid"
+  // Replace the legacy "PersonIdentificationData" credential type with the new "pid"
   "10": (state: MigrationState) => {
     const replaceLegacyPidCredentialType = (credentials: AnyRecord) =>
       Object.fromEntries(
