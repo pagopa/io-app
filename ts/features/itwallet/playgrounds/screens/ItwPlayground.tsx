@@ -9,9 +9,7 @@ import { ReactNode, useCallback, useState } from "react";
 import { ScrollView } from "react-native";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useScreenEndMargin } from "../../../../hooks/useScreenEndMargin";
-import { isDevEnv } from "../../../../utils/environment";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
-import { ItwBackgroundTaskSection } from "../components/ItwBackgroundTaskSection";
 import { ItwCardsHeaderSection } from "../components/ItwCardsHeaderSection";
 import { ItwCardsSection } from "../components/ItwCardsSection";
 import { ItwComponentsSection } from "../components/ItwComponentsSection";
@@ -24,6 +22,7 @@ import { ItwLifecycleSection } from "../components/ItwLifecycleSection";
 import { ItwMiscSection } from "../components/ItwMiscSection";
 import { ItwPidIssuanceSection } from "../components/ItwPidIssuanceSection";
 import { ItwSpecsVersionSection } from "../components/ItwSpecsVersionSection";
+import { ItwStatusListSection } from "../components/ItwStatusListSection";
 
 type PlaygroundTab = {
   label: string;
@@ -74,6 +73,10 @@ const ItwPlayground = () => {
       content: <ItwCredentialStatusOverrideSection />
     },
     {
+      label: "Status List",
+      content: <ItwStatusListSection />
+    },
+    {
       label: "Screens",
       content: (
         <>
@@ -93,15 +96,7 @@ const ItwPlayground = () => {
     {
       label: "Header Cards",
       content: <ItwCardsHeaderSection />
-    },
-    ...(isDevEnv
-      ? [
-          {
-            label: "Task",
-            content: <ItwBackgroundTaskSection />
-          }
-        ]
-      : [])
+    }
   ];
 
   return (

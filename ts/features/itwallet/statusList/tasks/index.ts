@@ -1,5 +1,5 @@
 import * as BackgroundTask from "expo-background-task";
-import { storeLastCheckTimestamp } from "../utils/storage";
+import { storeLastStatusListCheckTimestamp } from "../utils/storage";
 
 /**
  * Identifier for the ITW Status List background fetch task.
@@ -39,7 +39,7 @@ export const itwStatusListFetchTaskHandler =
   async (): Promise<BackgroundTask.BackgroundTaskResult> => {
     try {
       // TODO add WI and credentials check once Status List is implemented
-      await storeLastCheckTimestamp(Date.now());
+      await storeLastStatusListCheckTimestamp(Date.now());
 
       return BackgroundTask.BackgroundTaskResult.Success;
     } catch {

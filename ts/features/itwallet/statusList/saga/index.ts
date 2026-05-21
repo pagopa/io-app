@@ -7,7 +7,7 @@ import {
   trackItwStatusListLastChecktime
 } from "../analytics";
 import { registerItwStatusListFetchTask } from "../tasks";
-import { getLastCheckTimestamp } from "../utils/storage";
+import { getLastStatusListCheckTimestamp } from "../utils/storage";
 
 /**
  * Registers the ITW Status List fetch task with expo-background-task.
@@ -39,9 +39,13 @@ export function* registerStatusListFetchTaskSaga(): SagaIterator {
  */
 export function* trackLastStatusListFetchTaskSaga(): SagaIterator {
   try {
-    const timestamp = yield* call(getLastCheckTimestamp);
-    const date = timestamp ? new Date(timestamp).toISOString() : "never";
-    yield* call(trackItwStatusListLastChecktime, date);
+    const timestamp = yield* call(getLastStatusListCheckTimestamp);
+    if (timestamp) {
+      yield* call(
+        trackItwStatusListLastChecktime,
+        new Date(timestamp).toISOString()
+      );
+    }
   } catch {
     // Errors are ignored
   }

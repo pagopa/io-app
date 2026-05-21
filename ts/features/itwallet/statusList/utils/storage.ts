@@ -10,7 +10,7 @@ const STORAGE_KEY_LAST_CHECK = `${STORAGE_PREFIX}:lastCheck`;
  *
  * @param timestamp The timestamp to store, in milliseconds since the Unix epoch
  */
-export const storeLastCheckTimestamp = async (
+export const storeLastStatusListCheckTimestamp = async (
   timestamp: number
 ): Promise<void> => {
   try {
@@ -27,7 +27,9 @@ export const storeLastCheckTimestamp = async (
  * @returns A promise that resolves to the timestamp of the last check in
  * milliseconds since the Unix epoch
  */
-export const getLastCheckTimestamp = async (): Promise<number | undefined> => {
+export const getLastStatusListCheckTimestamp = async (): Promise<
+  number | undefined
+> => {
   try {
     const raw = await SecureStorage.get(STORAGE_KEY_LAST_CHECK);
     return raw ? parseInt(raw, 10) : undefined;
