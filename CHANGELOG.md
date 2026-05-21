@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.32.0-rc.2](https://github.com/pagopa/io-app/compare/3.32.0-rc.1...3.32.0-rc.2) (2026-05-21)
+
+
+### Bug Fixes
+
+* [[IOCOM-3147](https://pagopa.atlassian.net/browse/IOCOM-3147)] Third party messages attachments url fix ([#8124](https://github.com/pagopa/io-app/issues/8124)) ([358329d](https://github.com/pagopa/io-app/commit/358329df8efd0b7325a997ae77824489a3a5d87a))
+* **IT-Wallet:** [[SIW-4278](https://pagopa.atlassian.net/browse/SIW-4278)] Fix reactivation banner visibility ([#8122](https://github.com/pagopa/io-app/issues/8122)) ([315348c](https://github.com/pagopa/io-app/commit/315348c32c16cb7018819dcfd1ec86ad67d988ed))
+
 ## [3.32.0-rc.1](https://github.com/pagopa/io-app/compare/3.32.0-rc.0...3.32.0-rc.1) (2026-05-20)
 
 
