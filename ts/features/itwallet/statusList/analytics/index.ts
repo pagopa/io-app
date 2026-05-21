@@ -4,23 +4,23 @@ import { ITW_TECH_EVENTS } from "../../analytics/enum";
 
 export const trackItwStatusListFetchRegisterFailure = (reason: unknown) => {
   const enventName = ITW_TECH_EVENTS.ITW_BACKGROUND_TASK_REGISTER_FAILURE;
-  const props = buildEventProperties("TECH", undefined, {
+  const properties = buildEventProperties("TECH", undefined, {
     reason: reason instanceof Error ? reason.message : String(reason)
   });
-  void mixpanelTrack(enventName, props);
+  void mixpanelTrack(enventName, properties);
 };
 
 export const trackItwStatusListFetchRegistered = () => {
-  const enventName = ITW_TECH_EVENTS.ITW_BACKGROUND_TASK_REGISTERED;
-  const props = buildEventProperties("TECH", undefined);
-  void mixpanelTrack(enventName, props);
+  const eventName = ITW_TECH_EVENTS.ITW_BACKGROUND_TASK_REGISTERED;
+  const properties = buildEventProperties("TECH", undefined);
+  void mixpanelTrack(eventName, properties);
 };
 
 /**
  * TODO remove once the status list is implemented
  */
 export const trackItwStatusListLastChecktime = (timestamp: string) => {
-  const enventName = ITW_TECH_EVENTS.ITW_BACKGROUND_TASK_LAST_CHECK_TIME;
-  const props = buildEventProperties("TECH", undefined, { timestamp });
-  void mixpanelTrack(enventName, props);
+  const eventName = ITW_TECH_EVENTS.ITW_BACKGROUND_TASK_LAST_CHECK_TIME;
+  const properties = buildEventProperties("TECH", undefined, { timestamp });
+  void mixpanelTrack(eventName, properties);
 };

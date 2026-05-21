@@ -40,12 +40,8 @@ export function* registerStatusListFetchTaskSaga(): SagaIterator {
 export function* trackLastStatusListFetchTaskSaga(): SagaIterator {
   try {
     const timestamp = yield* call(getLastCheckTimestamp);
-    if (timestamp) {
-      yield* call(
-        trackItwStatusListLastChecktime,
-        new Date(timestamp).toISOString()
-      );
-    }
+    const date = timestamp ? new Date(timestamp).toISOString() : "never";
+    yield* call(trackItwStatusListLastChecktime, date);
   } catch {
     // Errors are ignored
   }

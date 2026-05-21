@@ -68,6 +68,10 @@ export function* watchItwSaga(): SagaIterator {
   yield* call(checkWalletInstanceStateSaga);
   yield* call(checkCurrentWalletInstanceStateSaga);
   yield* call(checkCredentialsStatusAssertion);
+
+  // Register the background task for Wallet Instance status checks
+  yield* fork(registerStatusListFetchTaskSaga);
+  yield* fork(trackLastStatusListFetchTaskSaga);
 }
 
 /**
@@ -97,10 +101,6 @@ export function* watchItwOfflineSaga(): SagaIterator {
 
   // TODO remove this fork when NFC antenna info tracking is not needed anymore
   yield* fork(updateNfcInfoTrackingProperties);
-
-  // Register the background task for Wallet Instance status checks
-  yield* fork(registerStatusListFetchTaskSaga);
-  yield* fork(trackLastStatusListFetchTaskSaga);
 }
 
 /**
