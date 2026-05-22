@@ -5,7 +5,6 @@ import {
   IOThemeContextProvider,
   ToastProvider
 } from "@pagopa/io-app-design-system";
-import * as TaskManager from "expo-task-manager";
 import { JSX } from "react";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { KeyboardProvider } from "react-native-keyboard-controller";
@@ -18,26 +17,9 @@ import { IOAlertVisibleContextProvider } from "./components/StatusMessages/IOAle
 import { StatusMessages } from "./components/StatusMessages/StatusMessages";
 import { LightModalProvider } from "./components/ui/LightModal";
 import { AppFeedbackProvider } from "./features/appReviews/components/AppFeedbackProvider";
-import {
-  ITW_STATUS_LIST_FETCH_TASK,
-  itwStatusListFetchTaskHandler
-} from "./features/itwallet/statusList/tasks";
 import { TourProvider } from "./features/tour/components/TourProvider";
 
-/**
- * BACKGROUND TASKS
- *
- * Background tasks must be defined in the global scope, outside of any React component, and before the app renders.
- * See more details in the Expo documentation: https://docs.expo.dev/versions/latest/sdk/background-task/
- *
- * In case of multiple task definitions, the last registered background task determines the minimum interval
- * for execution (https://docs.expo.dev/versions/latest/sdk/background-task/#multiple-background-tasks)
- *
- */
-TaskManager.defineTask(
-  ITW_STATUS_LIST_FETCH_TASK,
-  itwStatusListFetchTaskHandler
-);
+import "./boot/configureBackgroundTasks";
 
 // Infer the `RootState` and `AppDispatch` types from the store itself export
 export type RootState = ReturnType<typeof store.getState>;

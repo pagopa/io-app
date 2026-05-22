@@ -53,7 +53,7 @@ export const ItwStatusListSection = () => {
         loading={false}
         disabled={true}
       />
-      {__DEV__ && <BackgroundTaskSection />}
+      <BackgroundTaskSection />
     </View>
   );
 };
@@ -147,26 +147,30 @@ const BackgroundTaskSection = () => {
       />
       <Divider />
       <ListItemInfo label="Task name" value={ITW_STATUS_LIST_FETCH_TASK} />
-      <VSpacer size={16} />
-      <IOButton
-        variant="solid"
-        label="Trigger background task worker"
-        onPress={() => {
-          void triggerTaskWorker();
-        }}
-        loading={isTriggering}
-        disabled={isTriggerDisabled}
-      />
-      <VSpacer size={8} />
-      <IOButton
-        variant="outline"
-        label="Refresh background task status"
-        onPress={() => {
-          void refreshStatus();
-        }}
-        loading={isRefreshing}
-        disabled={isRefreshing}
-      />
+      {isDevEnv && (
+        <>
+          <VSpacer size={16} />
+          <IOButton
+            variant="solid"
+            label="Trigger background task worker"
+            onPress={() => {
+              void triggerTaskWorker();
+            }}
+            loading={isTriggering}
+            disabled={isTriggerDisabled}
+          />
+          <VSpacer size={8} />
+          <IOButton
+            variant="outline"
+            label="Refresh background task status"
+            onPress={() => {
+              void refreshStatus();
+            }}
+            loading={isRefreshing}
+            disabled={isRefreshing}
+          />
+        </>
+      )}
     </View>
   );
 };

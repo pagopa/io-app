@@ -1,5 +1,11 @@
 import * as BackgroundTask from "expo-background-task";
+import * as TaskManager from "expo-task-manager";
 import { storeLastStatusListCheckTimestamp } from "../utils/storage";
+import {
+  trackItwStatusListFetchRegistered,
+  trackItwStatusListFetchRegisterFailure,
+  trackItwStatusListFetchUnregistered
+} from "../analytics";
 
 /**
  * Identifier for the ITW Status List background fetch task.
@@ -15,14 +21,46 @@ export const ITW_STATUS_LIST_FETCH_TASK = "io-itw-status-list-fetch";
 export const ITW_STATUS_LIST_FETCH_TASK_INTERVAL_MINUTES = 60 * 4;
 
 /**
- * Registers the ITW Status List background fetch task with expo-background-task.
- *
- * @throws Will throw an error if the registration fails
+ * Registers the ITW Status List background fetch task with expo-background-task
+ * if the background task API is available and the task is not already registered.
  */
 export const registerItwStatusListFetchTask = async (): Promise<void> => {
+  const status: BackgroundTask.BackgroundTaskStatus =
+    await BackgroundTask.getStatusAsync();
+
+  if (status !== BackgroundTask.BackgroundTaskStatus.Available) {
+    trackItwStatusListFetchRegisterFailure("unavailable");
+    return;
+  }
+
+  const isRegistered = await TaskManager.isTaskRegisteredAsync(
+    ITW_STATUS_LIST_FETCH_TASK
+  );
+  if (isRegistered) {
+    return;
+  }
+
   await BackgroundTask.registerTaskAsync(ITW_STATUS_LIST_FETCH_TASK, {
     minimumInterval: ITW_STATUS_LIST_FETCH_TASK_INTERVAL_MINUTES
   });
+  trackItwStatusListFetchRegistered();
+};
+
+/**
+ * Unregister the ITW Status List background fetch task with expo-background-task.
+ *
+ * @throws Will throw an error if the unregistration fails
+ */
+export const unregisterItwStatusListFetchTask = async (): Promise<void> => {
+  const isRegistered = await TaskManager.isTaskRegisteredAsync(
+    ITW_STATUS_LIST_FETCH_TASK
+  );
+  if (!isRegistered) {
+    return;
+  }
+
+  await BackgroundTask.unregisterTaskAsync(ITW_STATUS_LIST_FETCH_TASK);
+  trackItwStatusListFetchUnregistered();
 };
 
 /**

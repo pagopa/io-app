@@ -24,11 +24,8 @@ import {
   checkWalletInstanceInconsistencySaga,
   checkWalletInstanceStateSaga
 } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
+import { watchItwTasksSaga } from "../../statusList/saga";
 import { checkFiscalCodeEnabledSaga } from "../../trialSystem/saga/checkFiscalCodeIsEnabledSaga";
-import {
-  registerStatusListFetchTaskSaga,
-  trackLastStatusListFetchTaskSaga
-} from "../../statusList/saga";
 import {
   itwFreezeSimplifiedActivationRequirements,
   itwSetAuthLevel,
@@ -50,7 +47,8 @@ export function* watchItwSaga(): SagaIterator {
   yield* fork(checkFiscalCodeEnabledSaga);
   // Fetch and process the Digital Credentials Catalogue
   yield* fork(watchItwCredentialsCatalogueSaga);
-
+  // Registers and watches background tasks
+  yield* fork(watchItwTasksSaga);
   // Watch ITW analytics lifecycle (initial sync and reactive updates)
   yield* fork(watchItwAnalyticsSaga);
 
@@ -68,10 +66,6 @@ export function* watchItwSaga(): SagaIterator {
   yield* call(checkWalletInstanceStateSaga);
   yield* call(checkCurrentWalletInstanceStateSaga);
   yield* call(checkCredentialsStatusAssertion);
-
-  // Register the background task for Wallet Instance status checks
-  yield* fork(registerStatusListFetchTaskSaga);
-  yield* fork(trackLastStatusListFetchTaskSaga);
 }
 
 /**

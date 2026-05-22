@@ -1,12 +1,13 @@
-import * as BackgroundTask from "expo-background-task";
 import { SagaIterator } from "redux-saga";
-import { call } from "typed-redux-saga/macro";
+import { call, fork, select, take, takeLatest } from "typed-redux-saga/macro";
+import { itwCredentialsStore } from "../../credentials/store/actions";
+import { itwLifecycleWalletReset } from "../../lifecycle/store/actions";
+import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import { trackItwStatusListLastChecktime } from "../analytics";
 import {
-  trackItwStatusListFetchRegisterFailure,
-  trackItwStatusListFetchRegistered,
-  trackItwStatusListLastChecktime
-} from "../analytics";
-import { registerItwStatusListFetchTask } from "../tasks";
+  registerItwStatusListFetchTask,
+  unregisterItwStatusListFetchTask
+} from "../tasks";
 import { getLastStatusListCheckTimestamp } from "../utils/storage";
 
 /**
@@ -18,17 +19,21 @@ import { getLastStatusListCheckTimestamp } from "../utils/storage";
  * this saga is called (see ts/features/itwallet/background/tasks.ts).
  */
 export function* registerStatusListFetchTaskSaga(): SagaIterator {
-  try {
-    const status: BackgroundTask.BackgroundTaskStatus = yield* call(
-      BackgroundTask.getStatusAsync
-    );
-    if (status === BackgroundTask.BackgroundTaskStatus.Available) {
-      yield* call(registerItwStatusListFetchTask);
-      yield* call(trackItwStatusListFetchRegistered);
-    }
-  } catch (e) {
-    yield* call(trackItwStatusListFetchRegisterFailure, e);
+  const isWalletValid = yield* select(itwLifecycleIsValidSelector);
+  if (!isWalletValid) {
+    // If wallet not valid, wait for a credential store, which is a strong
+    // signal of wallet activation.
+    yield* take(itwCredentialsStore);
   }
+
+  // Register the background task for Status List fetch only for active wallet
+  // instances
+  yield* call(registerItwStatusListFetchTask);
+
+  // Unregister background tasks on wallet reset
+  yield* takeLatest(itwLifecycleWalletReset, function* () {
+    yield* call(unregisterItwStatusListFetchTask);
+  });
 }
 
 /**
@@ -38,15 +43,18 @@ export function* registerStatusListFetchTaskSaga(): SagaIterator {
  * TODO: remove once the status list is implemented
  */
 export function* trackLastStatusListFetchTaskSaga(): SagaIterator {
-  try {
-    const timestamp = yield* call(getLastStatusListCheckTimestamp);
-    if (timestamp) {
-      yield* call(
-        trackItwStatusListLastChecktime,
-        new Date(timestamp).toISOString()
-      );
-    }
-  } catch {
-    // Errors are ignored
+  const timestamp = yield* call(getLastStatusListCheckTimestamp);
+  if (timestamp) {
+    yield* call(
+      trackItwStatusListLastChecktime,
+      new Date(timestamp).toISOString()
+    );
   }
+}
+
+export function* watchItwTasksSaga(): SagaIterator {
+  // TODO: remove once the status list is implemented
+  yield* fork(trackLastStatusListFetchTaskSaga);
+  // Register the background task for Status List fetch only for active wallet instances
+  yield* call(registerStatusListFetchTaskSaga);
 }
