@@ -33,6 +33,7 @@ import { setDebugCurrentRouteName } from "../store/actions/debug";
 import { useIODispatch, useIOSelector, useIOStore } from "../store/hooks";
 import { trackScreen } from "../store/middlewares/navigation";
 import { isCGNEnabledAfterLoadSelector } from "../store/reducers/backendStatus/remoteConfig";
+import { isMixpanelEnabled } from "../store/reducers/persistedPreferences";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import {
   IONavigationDarkTheme,
@@ -163,7 +164,10 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
       if (initialUrl) {
         // Track if the app is opened from a universal link on cold start
         // This mirrors the behavior in linkingSubscription for warm starts
-        trackIOOpenedFromUniversalAppLink(initialUrl);
+        // We read the user's Mixpanel preference from the store to respect their choice
+        const state = store.getState();
+        const mixpanelEnabled = isMixpanelEnabled(state);
+        trackIOOpenedFromUniversalAppLink(initialUrl, mixpanelEnabled);
         processUtmLink(initialUrl, dispatch);
         /**
          *  We store the initialUrl in the redux store so that
