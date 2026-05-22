@@ -23,6 +23,8 @@ jobs:
           fetch-depth: 0
       - id: setup
         uses: ./.github/actions/setup-composite
+      - name: Sets the base and head SHAs required for `nx affected` command
+        uses: nrwl/nx-set-shas@3e9ad7370203c1e93d109be57f3b72eb0eb511b1
       - id: run-tsc
         run: pnpm nx run main-app:tsc-noemit
       - id: run-validate
