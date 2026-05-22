@@ -36,12 +36,12 @@ const mockedState = {
       allPaginated: {
         archive: {
           data: pot.none,
-          lastRequest: O.none,
+          lastRequest: undefined,
           lastUpdateTime: new Date(0)
         },
         inbox: {
           data: pot.none,
-          lastRequest: O.none,
+          lastRequest: undefined,
           lastUpdateTime: new Date(0)
         },
         shownCategory: "INBOX"

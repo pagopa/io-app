@@ -39,8 +39,16 @@ import type {
 } from "./types.ts";
 import { reduceUpsertMessageStatusAttributes } from "./upsertMessageStatusAttributes";
 const ALL_PAGINATED_INITIAL_STATE: AllPaginated = {
-  archive: { data: pot.none, lastRequest: O.none, lastUpdateTime: new Date(0) },
-  inbox: { data: pot.none, lastRequest: O.none, lastUpdateTime: new Date(0) },
+  archive: {
+    data: pot.none,
+    lastRequest: undefined,
+    lastUpdateTime: new Date(0)
+  },
+  inbox: {
+    data: pot.none,
+    lastRequest: undefined,
+    lastUpdateTime: new Date(0)
+  },
   shownCategory: "INBOX"
 };
 
@@ -167,26 +175,32 @@ export const emptyListReasonSelector = (
 export const shouldShowFooterListComponentSelector = (
   state: GlobalState,
   category: MessageListCategory
-) =>
-  pipe(
+) => {
+  const pagePot = pipe(
     state,
     messageCollectionFromCategory(category),
-    messagePagePotByLastRequest(nextLastRequestSet),
-    O.map(isSomeLoadingOrSomeUpdating),
-    O.getOrElse(constFalse)
+    messagePagePotByLastRequest(nextLastRequestSet)
   );
+  if (pagePot === undefined) {
+    return false;
+  }
+  return isSomeLoadingOrSomeUpdating(pagePot);
+};
 
 export const shouldShowRefreshControllOnListSelector = (
   state: GlobalState,
   category: MessageListCategory
-) =>
-  pipe(
+) => {
+  const pagePot = pipe(
     state,
     messageCollectionFromCategory(category),
-    messagePagePotByLastRequest(allAndPreviousLastRequestSet),
-    O.map(isSomeLoadingOrSomeUpdating),
-    O.getOrElse(constFalse)
+    messagePagePotByLastRequest(allAndPreviousLastRequestSet)
   );
+  if (pagePot === undefined) {
+    return false;
+  }
+  return isSomeLoadingOrSomeUpdating(pagePot);
+};
 
 export const messagePagePotFromCategorySelector =
   (category: MessageListCategory) => (state: GlobalState) =>
@@ -330,15 +344,13 @@ const messagePotToToastReportableErrorOrUndefined = (
 
 const messagePagePotByLastRequest =
   (lastRequestValues: Set<LastRequestValues>) =>
-  (messageCollection: Collection) =>
-    pipe(
-      messageCollection.lastRequest,
-      O.filter(lastRequest => lastRequestValues.has(lastRequest)),
-      O.fold(
-        () => O.none,
-        () => O.some(messageCollection.data)
-      )
-    );
+  (messageCollection: Collection): MessagePagePot | undefined => {
+    const { lastRequest } = messageCollection;
+    if (lastRequest !== undefined && lastRequestValues.has(lastRequest)) {
+      return messageCollection.data;
+    }
+    return undefined;
+  };
 
 const nextLastRequestSet = new Set<LastRequestValues>(["next"]);
 const allAndPreviousLastRequestSet = new Set<LastRequestValues>([

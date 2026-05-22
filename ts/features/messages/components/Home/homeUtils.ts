@@ -140,7 +140,7 @@ export const getLoadNextPageMessagesActionIfAllowed = (
   // Check that there are more pages to load
   const messagePagePot =
     category === "INBOX" ? allPaginated.inbox.data : allPaginated.archive.data;
-  const lastRequest =
+  const lastRequestValue =
     category === "INBOX"
       ? allPaginated.inbox.lastRequest
       : allPaginated.archive.lastRequest;
@@ -158,9 +158,6 @@ export const getLoadNextPageMessagesActionIfAllowed = (
   if (isStrictSomeError(messagePagePot)) {
     // Make sure not to block the request if the error happened on
     // another one (like the pull to refresh)
-    const lastRequestValue = O.isSome(lastRequest)
-      ? lastRequest.value
-      : undefined;
     if (lastRequestValue === "next") {
       const millisecondsAfterLastError =
         comparisonTimeInCaseOfError.getTime() -
