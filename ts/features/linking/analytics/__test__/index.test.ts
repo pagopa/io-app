@@ -158,7 +158,7 @@ describe("index", () => {
         );
       });
 
-      it("should enqueue event when isMixpanelEnabled is null (not yet decided)", () => {
+      it("should NOT enqueue event when isMixpanelEnabled is null (not yet decided)", () => {
         const spyOnEnqueueMixpanelEvent = jest
           .spyOn(MIXPANEL, "enqueueMixpanelEvent")
           .mockReturnValue(undefined);
@@ -170,10 +170,10 @@ describe("index", () => {
         trackIOOpenedFromUniversalAppLink(httpsLink, null);
 
         expect(spyOnMixpanelTrack).not.toHaveBeenCalled();
-        expect(spyOnEnqueueMixpanelEvent).toHaveBeenCalledTimes(1);
+        expect(spyOnEnqueueMixpanelEvent).not.toHaveBeenCalled();
       });
 
-      it("should enqueue event when isMixpanelEnabled is undefined (backward compatibility)", () => {
+      it("should NOT enqueue event when isMixpanelEnabled is undefined", () => {
         const spyOnEnqueueMixpanelEvent = jest
           .spyOn(MIXPANEL, "enqueueMixpanelEvent")
           .mockReturnValue(undefined);
@@ -185,7 +185,7 @@ describe("index", () => {
         trackIOOpenedFromUniversalAppLink(httpsLink);
 
         expect(spyOnMixpanelTrack).not.toHaveBeenCalled();
-        expect(spyOnEnqueueMixpanelEvent).toHaveBeenCalledTimes(1);
+        expect(spyOnEnqueueMixpanelEvent).not.toHaveBeenCalled();
       });
 
       it("should NOT enqueue event when isMixpanelEnabled is false", () => {
