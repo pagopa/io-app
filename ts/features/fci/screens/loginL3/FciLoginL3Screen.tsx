@@ -2,7 +2,7 @@ import i18n from "i18next";
 import { useEffect } from "react";
 import { Body, HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { useIODispatch } from "../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   setStartActiveSessionLogin,
   setIdpSelectedActiveSessionLogin,
@@ -20,12 +20,16 @@ import {
   trackFciLoginRequestClose,
   trackFciLoginRequestContinue
 } from "../../analytics";
+import { fastLoginOptInFFEnabled } from "../../../authentication/fastLogin/store/selectors/index.ts";
+import { AUTHENTICATION_ROUTES } from "../../../authentication/common/navigation/routes.ts";
+import { SETTINGS_ROUTES } from "../../../settings/common/navigation/routes.ts";
 
 export const FciLoginL3Screen = () => {
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const isNfcAvailable = useIsNfcFeatureAvailable();
   const { setOptions } = useIONavigation();
+  const isFastLoginOptInFFEnabled = useIOSelector(fastLoginOptInFFEnabled);
 
   useOnFirstRender(() => {
     trackFciLoginRequest();
@@ -58,9 +62,19 @@ export const FciLoginL3Screen = () => {
       dispatch(setActiveSessionLoginFlow("FCI"));
       dispatch(setStartActiveSessionLogin());
       dispatch(setIdpSelectedActiveSessionLogin(IdpCIE));
-      navigation.navigate(FCI_ROUTES.MAIN, {
-        screen: FCI_ROUTES.LOGIN_OPTIN
-      });
+      dispatch(setActiveSessionLoginFlow("FCI"));
+      if (isFastLoginOptInFFEnabled) {
+        navigation.navigate(FCI_ROUTES.MAIN, {
+          screen: FCI_ROUTES.LOGIN_OPTIN
+        });
+      } else {
+        navigation.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
+          screen: SETTINGS_ROUTES.AUTHENTICATION,
+          params: {
+            screen: AUTHENTICATION_ROUTES.CIE_PIN_SCREEN
+          }
+        });
+      }
     } else {
       navigation.navigate(FCI_ROUTES.MAIN, {
         screen: FCI_ROUTES.NFC_NOT_AVAILABLE
