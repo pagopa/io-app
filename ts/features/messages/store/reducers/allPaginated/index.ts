@@ -26,8 +26,6 @@ import {
   setShownMessageCategoryAction,
   upsertMessageStatusAttributes
 } from "../../actions";
-
-// Types used locally within this file
 import { reduceAutomaticMessageRefreshRequest } from "./automaticMessagesRefresh";
 import { reduceLoadNextPage } from "./loadNextPage";
 import { reduceLoadPreviousPage } from "./loadPreviousPage";
@@ -35,11 +33,7 @@ import { reduceReloadAll } from "./reloadAll";
 import type {
   AllPaginated,
   Collection,
-  LastRequestType,
   LastRequestValues,
-  MessageError,
-  MessageOperation,
-  MessageOperationFailure,
   MessagePage,
   MessagePagePot
 } from "./types.ts";
@@ -48,18 +42,6 @@ const ALL_PAGINATED_INITIAL_STATE: AllPaginated = {
   archive: { data: pot.none, lastRequest: O.none, lastUpdateTime: new Date(0) },
   inbox: { data: pot.none, lastRequest: O.none, lastUpdateTime: new Date(0) },
   shownCategory: "INBOX"
-};
-
-// Re-export public types for backward compatibility
-export type {
-  AllPaginated,
-  LastRequestType,
-  LastRequestValues,
-  MessageError,
-  MessageOperation,
-  MessageOperationFailure,
-  MessagePage,
-  MessagePagePot
 };
 
 /**

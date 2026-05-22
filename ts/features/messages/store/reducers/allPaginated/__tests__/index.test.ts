@@ -19,19 +19,21 @@ import {
 } from "../../../actions";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import reducer, {
-  AllPaginated,
   isLoadingOrUpdatingInbox,
   shownMessageCategorySelector,
-  MessagePagePot,
   messageListForCategorySelector,
-  MessagePage,
   emptyListReasonSelector,
   shouldShowFooterListComponentSelector,
-  LastRequestType,
   messagePagePotFromCategorySelector,
   shouldShowRefreshControllOnListSelector,
   isPaymentMessageWithPaidNoticeSelector
 } from "..";
+import {
+  AllPaginated,
+  LastRequestType,
+  MessagePage,
+  MessagePagePot
+} from "../types";
 import { pageSize } from "../../../../../../config";
 import { UIMessage } from "../../../../types";
 import { clearCache } from "../../../../../settings/common/store/actions";

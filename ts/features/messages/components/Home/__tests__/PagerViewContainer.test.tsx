@@ -15,7 +15,7 @@ import {
   reloadAllMessages,
   setShownMessageCategoryAction
 } from "../../../store/actions";
-import { MessagePagePot } from "../../../store/reducers/allPaginated";
+import { MessagePagePot } from "../../../store/reducers/allPaginated/types";
 import { MessageListCategory } from "../../../types/messageListCategory";
 import { PagerViewContainer } from "../PagerViewContainer";
 

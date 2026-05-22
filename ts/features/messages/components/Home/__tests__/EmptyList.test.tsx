@@ -11,7 +11,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import {
   MessagePage,
   MessagePagePot
-} from "../../../store/reducers/allPaginated";
+} from "../../../store/reducers/allPaginated/types";
 import { UIMessage } from "../../../types";
 import { reloadAllMessages } from "../../../store/actions";
 import { pageSize } from "../../../../../config";
