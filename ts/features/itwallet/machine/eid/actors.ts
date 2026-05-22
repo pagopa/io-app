@@ -51,6 +51,8 @@ import type {
   MrtdPoPContext
 } from "./context";
 
+export type CreateWalletInstanceActorParams = { isRenewal: boolean };
+
 export type RequestAccessTokenActorParams = {
   walletInstanceAttestation: string | undefined;
   authenticationContext: AuthenticationContext | undefined;
@@ -144,21 +146,34 @@ export const createEidIssuanceActorsImplementation = (
     );
   }),
 
-  createWalletInstance: fromPromise<string>(async () => {
-    const sessionToken = sessionTokenSelector(store.getState());
-    assert(sessionToken, "sessionToken is undefined");
+  createWalletInstance: fromPromise<string, CreateWalletInstanceActorParams>(
+    async ({ input }) => {
+      const sessionToken = sessionTokenSelector(store.getState());
+      assert(sessionToken, "sessionToken is undefined");
 
-    // Reset the wallet store to prevent having dirty state before registering a new wallet instance
-    store.dispatch(itwLifecycleStoresReset());
+      // Reset the wallet store to prevent having dirty state before registering a new wallet instance.
+      // This is skipped for renewal otherwise the entire wallet is lost if the user abandons the flow.
+      if (!input.isRenewal) {
+        store.dispatch(itwLifecycleStoresReset());
+      }
 
-    // Await the integrity preparation before requesting the integrity key tag
-    await ensureIntegrityServiceIsStoreReadyOrThrow(store);
+      // Await the integrity preparation before requesting the integrity key tag
+      await ensureIntegrityServiceIsStoreReadyOrThrow(store);
 
-    const hardwareKeyTag = await getIntegrityHardwareKeyTag();
-    await registerWalletInstance(env, itwVersion, hardwareKeyTag, sessionToken);
+      const hardwareKeyTag = await getIntegrityHardwareKeyTag();
+      await registerWalletInstance(
+        env,
+        itwVersion,
+        hardwareKeyTag,
+        sessionToken,
+        {
+          isRenewal: input.isRenewal
+        }
+      );
 
-    return hardwareKeyTag;
-  }),
+      return hardwareKeyTag;
+    }
+  ),
 
   getWalletAttestation: fromPromise<
     WalletInstanceAttestations,
