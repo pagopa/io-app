@@ -39,12 +39,12 @@ export const FimsHistorySuccessListItem = ({
         <Icon size={16} name="calendar" />
         <HSpacer size={4} />
         <Caption color={theme["textBody-tertiary"]}>
-          {/* eslint-disable i18next/no-literal-string */}
+          {}
           {dateToAccessibilityReadableFormat(
             consent.timestamp,
             "DD/MM/YYYY, HH:mm"
           )}
-          {/* eslint-enable i18next/no-literal-string */}
+          {}
         </Caption>
       </View>
 
@@ -89,7 +89,7 @@ export const FimsHistoryFailureListItem = ({
           <Icon name="calendar" size={16} color="grey-300" />
           <HSpacer size={4} />
           <Caption color={theme["textBody-tertiary"]}>
-            {/* eslint-disable-next-line i18next/no-literal-string */}
+            {}
             {dateToAccessibilityReadableFormat(item.timestamp, "DD,MM,YYYY")}
           </Caption>
         </View>

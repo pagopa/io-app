@@ -34,7 +34,7 @@ const MessageDetailsHeaderContent = ({
     <H3 accessibilityRole="header" testID="message-header-subject">
       {subject}
     </H3>
-    {/* eslint-disable i18next/no-literal-string */}
+    {}
     {createdAt && (
       <BodySmall weight="Regular" testID="date">
         {`${new Intl.DateTimeFormat("it", {
@@ -47,7 +47,7 @@ const MessageDetailsHeaderContent = ({
         }).format(createdAt)}`}
       </BodySmall>
     )}
-    {/* eslint-enable i18next/no-literal-string */}
+    {}
   </VStack>
 );
 
