@@ -353,7 +353,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                           resizeMode="contain"
                           source={
                             {
-                              "testUri": "../../../img/onboarding/notification_white.png",
+                              "testUri": "../../../apps/main-app/img/onboarding/notification_white.png",
                             }
                           }
                           style={
@@ -889,7 +889,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
                           resizeMode="contain"
                           source={
                             {
-                              "testUri": "../../../img/onboarding/notification_white.png",
+                              "testUri": "../../../apps/main-app/img/onboarding/notification_white.png",
                             }
                           }
                           style={
@@ -1425,7 +1425,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                           resizeMode="contain"
                           source={
                             {
-                              "testUri": "../../../img/onboarding/notification_white.png",
+                              "testUri": "../../../apps/main-app/img/onboarding/notification_white.png",
                             }
                           }
                           style={
@@ -1961,7 +1961,7 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
                           resizeMode="contain"
                           source={
                             {
-                              "testUri": "../../../img/onboarding/notification_white.png",
+                              "testUri": "../../../apps/main-app/img/onboarding/notification_white.png",
                             }
                           }
                           style={

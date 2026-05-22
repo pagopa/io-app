@@ -282,7 +282,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 resizeMode="contain"
                                 source={
                                   {
-                                    "testUri": "../../../img/onboarding/notification_white.png",
+                                    "testUri": "../../../apps/main-app/img/onboarding/notification_white.png",
                                   }
                                 }
                                 style={
@@ -1945,7 +1945,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 resizeMode="contain"
                                 source={
                                   {
-                                    "testUri": "../../../img/onboarding/notification_white.png",
+                                    "testUri": "../../../apps/main-app/img/onboarding/notification_white.png",
                                   }
                                 }
                                 style={
@@ -3609,7 +3609,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 resizeMode="contain"
                                 source={
                                   {
-                                    "testUri": "../../../img/onboarding/notification_white.png",
+                                    "testUri": "../../../apps/main-app/img/onboarding/notification_white.png",
                                   }
                                 }
                                 style={
@@ -5273,7 +5273,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                 resizeMode="contain"
                                 source={
                                   {
-                                    "testUri": "../../../img/onboarding/notification_white.png",
+                                    "testUri": "../../../apps/main-app/img/onboarding/notification_white.png",
                                   }
                                 }
                                 style={
@@ -6937,7 +6937,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                 resizeMode="contain"
                                 source={
                                   {
-                                    "testUri": "../../../img/onboarding/notification_white.png",
+                                    "testUri": "../../../apps/main-app/img/onboarding/notification_white.png",
                                   }
                                 }
                                 style={
