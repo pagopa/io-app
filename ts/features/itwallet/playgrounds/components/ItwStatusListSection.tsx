@@ -142,12 +142,9 @@ const BackgroundTaskSection = () => {
     }
   }, [refreshStatus, toast]);
 
-  useOnFirstRender(
-    () => {
-      void refreshStatus();
-    },
-    () => isDevEnv
-  );
+  useOnFirstRender(() => {
+    void refreshStatus();
+  });
 
   const isTriggerDisabled =
     isRefreshing ||
@@ -186,16 +183,6 @@ const BackgroundTaskSection = () => {
             }}
             loading={isTriggering}
             disabled={isTriggerDisabled}
-          />
-          <VSpacer size={8} />
-          <IOButton
-            variant="outline"
-            label="Refresh background task status"
-            onPress={() => {
-              void refreshStatus();
-            }}
-            loading={isRefreshing}
-            disabled={isRefreshing}
           />
         </>
       )}
