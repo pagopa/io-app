@@ -361,7 +361,7 @@ exports[`ServicesHeaderSection component should match the snapshot for service h
               onError={[Function]}
               source={
                 {
-                  "testUri": "../../../apps/main-app/img/test/logo.png",
+                  "testUri": "../../../img/test/logo.png",
                 }
               }
               style={

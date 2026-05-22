@@ -504,7 +504,7 @@ exports[`OrganizationHeader component should match the snapshot for a TPM denomi
                                 onError={[Function]}
                                 source={
                                   {
-                                    "testUri": "../../../apps/main-app/img/test/logo.png",
+                                    "testUri": "../../../img/test/logo.png",
                                   }
                                 }
                                 style={
@@ -1016,7 +1016,7 @@ exports[`OrganizationHeader component should match the snapshot for a non third-
                                 onError={[Function]}
                                 source={
                                   {
-                                    "testUri": "../../../apps/main-app/img/test/logo.png",
+                                    "testUri": "../../../img/test/logo.png",
                                   }
                                 }
                                 style={

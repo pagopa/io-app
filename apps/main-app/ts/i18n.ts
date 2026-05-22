@@ -17,7 +17,7 @@ import { PreferredLanguageEnum } from "../definitions/session_manager/PreferredL
 
 const resources = {
   it: {
-    index: { ...it }
+    index: it
   },
   en: {
     index: en

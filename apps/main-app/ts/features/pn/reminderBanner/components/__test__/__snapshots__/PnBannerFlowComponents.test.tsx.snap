@@ -380,7 +380,7 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
                             resizeMode="contain"
                             source={
                               {
-                                "testUri": "../../../apps/main-app/img/features/pn/activationLandingHero.png",
+                                "testUri": "../../../img/features/pn/activationLandingHero.png",
                               }
                             }
                             style={
