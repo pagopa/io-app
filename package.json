@@ -5,8 +5,8 @@
   "scripts": {
     "prepare": "husky install",
     "validate": "nx affected --targets=lint,test --configuration=ci",
-    "prettify": "prettier --write \"(ts|locales)/**/*.(ts|tsx|json)\"",
-    "prettier:check": "prettier --check \"(ts|locales)/**/*.(ts|tsx|json)\""
+    "prettify": "prettier --write \"**/(src|ts|locales)/**/*.(ts|tsx|json)\"",
+    "prettier:check": "prettier --check \"**/(src|ts|locales)/**/*.(ts|tsx|json)\""
   },
   "devDependencies": {
     "@nx/eslint": "22.7.2",
