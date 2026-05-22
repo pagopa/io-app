@@ -1,15 +1,14 @@
-import { getType } from "typesafe-actions";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import { getType } from "typesafe-actions";
+import { startApplicationInitialization } from "../../../../store/actions/application";
+import { Action } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
 import {
   SuccessGetMessageDataActionType,
   getMessageDataAction,
   reloadAllMessages,
   resetGetMessageDataAction
 } from "../actions";
-import { Action } from "../../../../store/actions/types";
-import { GlobalState } from "../../../../store/reducers/types";
-import { startApplicationInitialization } from "../../../../store/actions/application";
-import { MessageRouterScreenErrorVariant } from "../../components/MessageRouter/MessageRouterScreenErrorComponent";
 import { getPaginatedMessageById } from "./paginatedById";
 
 export type MessageGetStatusFailurePhaseType =
@@ -130,6 +129,10 @@ export const retryDataAfterFastLoginSessionExpirationSelector = (
     ? state.entities.messages.messageGetStatus.data
     : undefined;
 
+export type MessageRouterScreenErrorVariant =
+  | "messageNotFound"
+  | "thirdPartyError"
+  | "genericError";
 export const messageRouterScreenErrorVariantSelector = (
   state: GlobalState,
   messageId: string

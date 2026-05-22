@@ -7,7 +7,10 @@ import {
 import { useIOSelector } from "../../../../store/hooks";
 import { GlobalState } from "../../../../store/reducers/types";
 import { isTestEnv } from "../../../../utils/environment";
-import { messageRouterScreenErrorVariantSelector } from "../../store/reducers/messageGetStatus";
+import {
+  MessageRouterScreenErrorVariant,
+  messageRouterScreenErrorVariantSelector
+} from "../../store/reducers/messageGetStatus";
 
 export const MessageRouterScreenErrorComponent = ({
   onRetry,
@@ -31,11 +34,6 @@ export const MessageRouterScreenErrorComponent = ({
 };
 
 // -------------- Selector and utils for error handling --------------
-
-export type MessageRouterScreenErrorVariant =
-  | "messageNotFound"
-  | "thirdPartyError"
-  | "genericError";
 
 const getMessageRouterErrorMap = (
   onRetry: () => void,
