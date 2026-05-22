@@ -1,23 +1,17 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as B from "fp-ts/lib/boolean";
-import { constFalse, constUndefined, pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
-import * as RA from "fp-ts/lib/ReadonlyArray";
 import { getType } from "typesafe-actions";
 import { MessageCategory } from "../../../../../../definitions/communication/MessageCategory";
 import { Action } from "../../../../../store/actions/types";
 import { paymentsByRptIdSelector } from "../../../../../store/reducers/entities/payments";
 import { GlobalState } from "../../../../../store/reducers/types";
-import { foldK, isSomeLoadingOrSomeUpdating } from "../../../../../utils/pot";
+import {
+  isLoadingOrUpdating,
+  isSomeLoadingOrSomeUpdating
+} from "../../../../../utils/pot";
 import { isTextIncludedCaseInsensitive } from "../../../../../utils/strings";
 import { clearCache } from "../../../../settings/common/store/actions";
-import { UIMessage } from "../../../types";
-import {
-  MessageListCategory,
-  foldK as messageListCategoryFoldK
-} from "../../../types/messageListCategory";
+import { MessageListCategory } from "../../../types/messageListCategory";
 import { emptyMessageArray } from "../../../utils";
-import { foldMessageCategoryK } from "../../../utils/messageCategory";
 import {
   loadNextPageMessages,
   loadPreviousPageMessages,
@@ -106,11 +100,10 @@ const reducer = (
  * that triggered the load/update.
  * @param state
  */
-export const isLoadingOrUpdatingInbox = (state: GlobalState) =>
-  pipe(
-    state.entities.messages.allPaginated.inbox.data,
-    inboxPot => pot.isLoading(inboxPot) || pot.isUpdating(inboxPot)
-  );
+export const isLoadingOrUpdatingInbox = (state: GlobalState) => {
+  const inboxPot = state.entities.messages.allPaginated.inbox.data;
+  return isLoadingOrUpdating(inboxPot);
+};
 
 export const shownMessageCategorySelector = (state: GlobalState) =>
   state.entities.messages.allPaginated.shownCategory;
@@ -118,69 +111,54 @@ export const shownMessageCategorySelector = (state: GlobalState) =>
 export const messageListForCategorySelector = (
   state: GlobalState,
   category: MessageListCategory
-) =>
-  pipe(
-    state,
-    messagePagePotFromCategorySelector(category),
-    foldK(
-      () => emptyMessageArray,
-      constUndefined,
-      constUndefined,
-      _ => emptyMessageArray,
-      messagePage => messagePage.page,
-      messagePage => messagePage.page,
-      (messagePage, _) => messagePage.page,
-      (messagePage, _) => messagePage.page
-    )
-  );
+) => {
+  const categoryPot = messagePagePotFromCategorySelector(category, state);
+  if (pot.isSome(categoryPot)) {
+    return categoryPot.value.page;
+  }
+  switch (categoryPot.kind) {
+    case "PotNone":
+    case "PotNoneError":
+      return emptyMessageArray;
+    default: // noneLoading or noneUpdating
+      return undefined;
+  }
+};
 
 export const messageCountForCategorySelector = (
   state: GlobalState,
   shownCategory: MessageListCategory
-) =>
-  pipe(
-    state,
-    messagePagePotFromCategorySelector(shownCategory),
-    foldK(
-      () => 0,
-      () => 0,
-      () => 0,
-      () => 0,
-      messagePage => messagePage.page.length,
-      messagePage => messagePage.page.length,
-      (messagePage, _) => messagePage.page.length,
-      (messagePage, _) => messagePage.page.length
-    )
-  );
-
+) => {
+  const categoryPot = messagePagePotFromCategorySelector(shownCategory, state);
+  if (pot.isSome(categoryPot)) {
+    return categoryPot.value.page.length;
+  }
+  return 0;
+};
 export const emptyListReasonSelector = (
   state: GlobalState,
   category: MessageListCategory
-): "noData" | "error" | "notEmpty" =>
-  pipe(
-    state,
-    messagePagePotFromCategorySelector(category),
-    foldK(
-      () => "noData",
-      () => "notEmpty",
-      () => "notEmpty",
-      () => "error",
-      reasonFromMessagePageContainer,
-      reasonFromMessagePageContainer,
-      (container, _) => reasonFromMessagePageContainer(container),
-      (container, _) => reasonFromMessagePageContainer(container)
-    )
-  );
+): "noData" | "error" | "notEmpty" => {
+  const categoryPot = messagePagePotFromCategorySelector(category, state);
+  if (pot.isSome(categoryPot)) {
+    return reasonFromMessagePageContainer(categoryPot.value);
+  }
+  switch (categoryPot.kind) {
+    case "PotNone":
+      return "noData";
+    case "PotNoneError":
+      return "error";
+    default: // noneLoading or noneUpdating
+      return "notEmpty";
+  }
+};
 
 export const shouldShowFooterListComponentSelector = (
   state: GlobalState,
   category: MessageListCategory
 ) => {
-  const pagePot = pipe(
-    state,
-    messageCollectionFromCategory(category),
-    messagePagePotByLastRequest(nextLastRequestSet)
-  );
+  const categoryPot = messageCollectionFromCategory(category, state);
+  const pagePot = messagePagePotByLastRequest(new Set(["next"]), categoryPot);
   if (pagePot === undefined) {
     return false;
   }
@@ -191,10 +169,10 @@ export const shouldShowRefreshControllOnListSelector = (
   state: GlobalState,
   category: MessageListCategory
 ) => {
-  const pagePot = pipe(
-    state,
-    messageCollectionFromCategory(category),
-    messagePagePotByLastRequest(allAndPreviousLastRequestSet)
+  const categoryPot = messageCollectionFromCategory(category, state);
+  const pagePot = messagePagePotByLastRequest(
+    new Set(["all", "previous"]),
+    categoryPot
   );
   if (pagePot === undefined) {
     return false;
@@ -202,13 +180,13 @@ export const shouldShowRefreshControllOnListSelector = (
   return isSomeLoadingOrSomeUpdating(pagePot);
 };
 
-export const messagePagePotFromCategorySelector =
-  (category: MessageListCategory) => (state: GlobalState) =>
-    pipe(
-      state,
-      messageCollectionFromCategory(category),
-      messageCollection => messageCollection.data
-    );
+export const messagePagePotFromCategorySelector = (
+  category: MessageListCategory,
+  state: GlobalState
+) => {
+  const collection = messageCollectionFromCategory(category, state);
+  return collection.data;
+};
 
 /**
  * This method checks if there is a local record of a processed payment
@@ -224,138 +202,105 @@ export const messagePagePotFromCategorySelector =
 export const isPaymentMessageWithPaidNoticeSelector = (
   state: GlobalState,
   category: MessageCategory
-) =>
-  pipe(
-    category,
-    foldMessageCategoryK(
-      constFalse,
-      paymentCategory =>
-        pipe(
-          state,
-          paymentsByRptIdSelector,
-          paymentRecord => !!paymentRecord[paymentCategory.rptId]
-        ),
-      constFalse
-    )
-  );
+) => {
+  if (category.tag !== "PAYMENT") {
+    return false;
+  }
+  const paymentsByRptId = paymentsByRptIdSelector(state);
+  return !!paymentsByRptId[category.rptId];
+};
 
-const messageCollectionFromCategory =
-  (category: MessageListCategory) => (state: GlobalState) =>
-    pipe(state.entities.messages.allPaginated, allPaginated =>
-      pipe(
-        category,
-        messageListCategoryFoldK(
-          () => allPaginated.inbox,
-          () => allPaginated.archive
-        )
-      )
-    );
+const messageCollectionFromCategory = (
+  category: MessageListCategory,
+  state: GlobalState
+) => {
+  const allPaginated = state.entities.messages.allPaginated;
+  switch (category) {
+    case "INBOX":
+      return allPaginated.inbox;
+    case "ARCHIVE":
+      return allPaginated.archive;
+  }
+};
 
-const reasonFromMessagePageContainer = (
-  container: MessagePage
-): "notEmpty" | "noData" => (container.page.length > 0 ? "notEmpty" : "noData");
+const reasonFromMessagePageContainer = (container: MessagePage) =>
+  container.page.length > 0 ? "notEmpty" : "noData";
 
-export const inboxMessagesErrorReasonSelector = (state: GlobalState) =>
-  pipe(
-    state.entities.messages.allPaginated.inbox.data,
-    messagePotToToastReportableErrorOrUndefined
-  );
+export const inboxMessagesErrorReasonSelector = (state: GlobalState) => {
+  const inboxPot = state.entities.messages.allPaginated.inbox.data;
+  return messagePotToToastReportableErrorOrUndefined(inboxPot);
+};
 
-export const archiveMessagesErrorReasonSelector = (state: GlobalState) =>
-  pipe(
-    state.entities.messages.allPaginated.archive.data,
-    messagePotToToastReportableErrorOrUndefined
-  );
+export const archiveMessagesErrorReasonSelector = (state: GlobalState) => {
+  const archivePot = state.entities.messages.allPaginated.archive.data;
+  return messagePotToToastReportableErrorOrUndefined(archivePot);
+};
 
 export const paginatedMessageFromIdForCategorySelector = (
   state: GlobalState,
   messageId: string,
-  category: MessageListCategory
-) =>
-  pipe(
-    state,
-    messagePagePotFromCategorySelector(category),
-    pot.toOption,
-    O.map(messagePage => messagePage.page),
-    O.chain(RA.findFirst(message => message.id === messageId)),
-    O.toUndefined
+  messageCategory: MessageListCategory
+) => {
+  const categoryPot = messagePagePotFromCategorySelector(
+    messageCategory,
+    state
   );
+  const undefinedCategory = pot.toUndefined(categoryPot);
+
+  const firstMessage = undefinedCategory?.page.find(
+    message => message.id === messageId
+  );
+
+  return firstMessage;
+};
 
 export const searchMessagesUncachedSelector = (
   state: GlobalState,
   searchText: string,
   minQueryLength: number
-) =>
-  pipe(searchText.trim(), trimmedSearchText =>
-    pipe(
-      trimmedSearchText.length >= minQueryLength,
-      B.fold(
-        () => [] as ReadonlyArray<UIMessage>,
-        () =>
-          pipe(
-            state.entities.messages.allPaginated.inbox.data,
-            pot.toOption,
-            O.map(inboxData => inboxData.page),
-            O.getOrElse(() => [] as ReadonlyArray<UIMessage>),
-            inboxMessages =>
-              pipe(
-                state.entities.messages.allPaginated.archive.data,
-                pot.toOption,
-                O.map(archiveData => archiveData.page),
-                O.getOrElseW(() => [] as ReadonlyArray<UIMessage>),
-                archiveMessages => inboxMessages.concat(archiveMessages)
-              ),
-            inboxAndArchiveMessages =>
-              inboxAndArchiveMessages.filter(message =>
-                isTextIncludedCaseInsensitive(
-                  [
-                    message.title,
-                    message.organizationName,
-                    message.serviceName
-                  ].join(" "),
-                  searchText
-                )
-              ),
-            filteredMessages =>
-              [...filteredMessages].sort((a, b) =>
-                b.id.localeCompare(a.id, "en")
-              )
-          )
+) => {
+  if (searchText.trim().length < minQueryLength) {
+    return emptyMessageArray;
+  }
+  const {
+    inbox: { data: inboxData },
+    archive: { data: archiveData }
+  } = state.entities.messages.allPaginated;
+
+  const inboxMessages = pot.toUndefined(inboxData)?.page ?? emptyMessageArray;
+  const archiveMessages =
+    pot.toUndefined(archiveData)?.page ?? emptyMessageArray;
+
+  const filteredMessages = [...inboxMessages, ...archiveMessages].filter(
+    message =>
+      isTextIncludedCaseInsensitive(
+        [message.title, message.organizationName, message.serviceName].join(
+          " "
+        ),
+        searchText
       )
-    )
   );
+  return [...filteredMessages].sort((a, b) => b.id.localeCompare(a.id, "en"));
+};
 
 const messagePotToToastReportableErrorOrUndefined = (
   messagePagePot: MessagePagePot
-) =>
-  pipe(
-    messagePagePot,
-    foldK(
-      constUndefined,
-      constUndefined,
-      constUndefined,
-      constUndefined,
-      constUndefined,
-      constUndefined,
-      constUndefined,
-      (_value, messageError) => messageError.reason
-    )
-  );
+) => {
+  if (messagePagePot.kind === "PotSomeError") {
+    return messagePagePot.error.reason;
+  }
+  return undefined;
+};
 
-const messagePagePotByLastRequest =
-  (lastRequestValues: Set<LastRequestValues>) =>
-  (messageCollection: Collection): MessagePagePot | undefined => {
-    const { lastRequest } = messageCollection;
-    if (lastRequest !== undefined && lastRequestValues.has(lastRequest)) {
-      return messageCollection.data;
-    }
-    return undefined;
-  };
-
-const nextLastRequestSet = new Set<LastRequestValues>(["next"]);
-const allAndPreviousLastRequestSet = new Set<LastRequestValues>([
-  "all",
-  "previous"
-]);
+const messagePagePotByLastRequest = (
+  lastRequestValues: Set<LastRequestValues>,
+  messageCollection: Collection
+): MessagePagePot | undefined => {
+  const { lastRequest } = messageCollection;
+  if (lastRequest !== undefined && lastRequestValues.has(lastRequest)) {
+    return messageCollection.data;
+  }
+  return undefined;
+};
 
 export default reducer;
