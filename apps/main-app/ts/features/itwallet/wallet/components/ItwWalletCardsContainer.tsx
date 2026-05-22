@@ -99,6 +99,10 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
       const isStacked = cards.length > 0;
       return (
         <View style={styles.cardsWrapper}>
+          <ListItemHeader
+            testID={"walletCardsCategoryItwIdCardHeaderTestID"}
+            label={I18n.t("features.wallet.cards.categories.itw")}
+          />
           <ItwWalletIdCard isStacked={isStacked} />
         </View>
       );

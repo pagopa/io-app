@@ -1,15 +1,15 @@
-import { createActor } from "xstate";
 import { createStore } from "redux";
+import { createActor } from "xstate";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { appReducer } from "../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { ITW_ROUTES } from "../../../../navigation/routes";
 import { ProximityFailure, ProximityFailureType } from "../../machine/failure";
 import { itwProximityMachine } from "../../machine/machine";
 import { ItwProximityMachineContext } from "../../machine/provider";
+import { TimeoutError, UntrustedRpError } from "../../utils/errors";
 import { ItwProximityFailureScreen } from "../ItwProximityFailureScreen";
-import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
-import { GlobalState } from "../../../../../../store/reducers/types";
-import { ITW_ROUTES } from "../../../../navigation/routes";
-import { appReducer } from "../../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../../store/actions/application";
-import { TimeoutError, UntrustedRpError } from "../../utils/itwProximityErrors";
 
 describe("ItwProximityFailureScreen", () => {
   test.each<ProximityFailure>([

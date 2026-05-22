@@ -48,6 +48,5 @@
       "core-js",
       "postinstall-postinstall"
     ]
-  },
-  "dependencies": {}
+  }
 }

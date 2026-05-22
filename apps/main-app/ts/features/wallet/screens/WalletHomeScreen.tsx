@@ -30,7 +30,7 @@ import { itwLifecycleIsITWalletValidSelector } from "../../itwallet/lifecycle/st
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 import { trackItwProximityShowQrCode } from "../../itwallet/presentation/proximity/analytics";
 import { ITW_PROXIMITY_ROUTES } from "../../itwallet/presentation/proximity/navigation/routes";
-import { hasPresentableCredentialsSelector } from "../../itwallet/presentation/proximity/store/selectors";
+import { hasPresentableCredentialsSelector } from "../../itwallet/presentation/proximity/store/selectors/credentials";
 import {
   ITW_TOUR_GROUP_ID,
   ITW_TOUR_STEP_QR_BUTTON
@@ -176,7 +176,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
   const proximityActionProps: IOScrollViewActions["primary"] | undefined =
     itwFeaturesEnabled && hasPresentableCredentials
       ? {
-          label: I18n.t("features.itWallet.presentation.ctas.showQRCode"),
+          label: I18n.t("features.itWallet.presentation.ctas.present"),
           icon: "productITWallet",
           iconPosition: "end",
           onPress: () => {
@@ -185,7 +185,7 @@ const WalletHomeScreen = ({ route }: ScreenProps) => {
               position: "WALLET_HOME"
             });
             navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-              screen: ITW_PROXIMITY_ROUTES.QR_CODE,
+              screen: ITW_PROXIMITY_ROUTES.PRESENTMENT,
               params: {
                 source: "WALLET_HOME"
               }

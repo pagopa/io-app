@@ -280,6 +280,9 @@ jest.mock("@pagopa/io-react-native-cie", () => ({
   CieManager: jest.fn()
 }));
 
+jest.mock("react-native-keyboard-controller", () =>
+  require("react-native-keyboard-controller/jest")
+);
 jest.mock("@pagopa/io-react-native-iso18013", () => ({
   ISO18013_5: {
     ErrorCode: {

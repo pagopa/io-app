@@ -1,6 +1,5 @@
 import {
   Alert,
-  ClaimsSelector,
   ListItemCheckbox,
   ListItemHeader,
   VSpacer,
@@ -11,13 +10,7 @@ import I18n from "i18next";
 import { memo, useMemo } from "react";
 import { View } from "react-native";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo";
-import { useIOSelector } from "../../../../../store/hooks";
-import { itwCredentialNameResolverSelector } from "../../../credentialsCatalogue/store/selectors";
-import { useClaimsDetailsBottomSheet } from "../../common/hooks/useClaimsDetailsBottomSheet";
-import {
-  claimsSelectorHeaderGradientsByCredentialType,
-  mapClaimsToClaimsSelectorItems
-} from "../../common/utils/itwClaimSelector";
+import { ItwClaimsSelector } from "../../common/components/ItwClaimsSelector";
 import { ItwRemoteMachineContext } from "../machine/provider";
 import { selectPresentationDetails } from "../machine/selectors";
 import {
@@ -30,43 +23,30 @@ const RequestedCredentialsBlock = ({
   credentials
 }: {
   credentials: EnrichedPresentationDetails;
-}) => {
-  const { present, bottomSheet } = useClaimsDetailsBottomSheet();
-  const resolveCredentialName = useIOSelector(
-    itwCredentialNameResolverSelector
-  );
-
-  return (
-    <VStack space={24}>
-      {credentials
-        .filter(c => c.format === "dc+sd-jwt") // TODO: [SIW-3998] Support MDOC remote presentation
-        .filter(c => c.claimsToDisplay.length > 0)
-        .map(c => {
-          const credentialType = getCredentialTypeByVct(c.vct);
-
-          const title = credentialType
-            ? resolveCredentialName(credentialType)
-            : "";
-
-          const headerGradientColors = credentialType
-            ? claimsSelectorHeaderGradientsByCredentialType[credentialType]
-            : undefined;
-
-          return (
-            <ClaimsSelector
-              key={c.id}
-              title={title}
-              items={mapClaimsToClaimsSelectorItems(c.claimsToDisplay, present)}
-              defaultExpanded
-              selectionEnabled={false}
-              headerGradientColors={headerGradientColors}
-            />
-          );
-        })}
-      {bottomSheet}
-    </VStack>
-  );
-};
+}) => (
+  <VStack space={24}>
+    {credentials
+      .filter(c => c.format === "dc+sd-jwt") // TODO: [SIW-3998] Support MDOC remote presentation
+      .filter(c => c.claimsToDisplay.length > 0)
+      .map(c => ({
+        id: c.id,
+        credentialType: getCredentialTypeByVct(c.vct),
+        claimsToDisplay: c.claimsToDisplay
+      }))
+      // This should never happen, but we need to filter out credentials with undefined type to support the null
+      // assertion in the map function below.
+      .filter(c => c.credentialType !== undefined)
+      .map(({ id, credentialType, claimsToDisplay }) => (
+        <ItwClaimsSelector
+          key={id}
+          credentialType={credentialType!}
+          items={claimsToDisplay}
+          defaultExpanded
+          selectionEnabled={false}
+        />
+      ))}
+  </VStack>
+);
 
 const ItwRemotePresentationDetails = () => {
   const theme = useIOTheme();

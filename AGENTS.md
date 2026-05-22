@@ -39,6 +39,7 @@ Every feature lives under `ts/features/<feature>/` and is self-contained:
 ## Guidelines
 
 - Never edit anything under `definitions/`. Run `pnpm generate` to update them.
+- Before marking any task complete, run `pnpm nx affected --target=lint`, `pnpm prettify`, and `pnpm nx run main-app:tsc-noemit`. Only finish once all three succeed with zero errors.
 - Never use `fp-ts` in new code; always use native TypeScript equivalents.
 - Always import from `typed-redux-saga/macro`, not bare `redux-saga/effects`.
 - The `tsc:noemit` check must pass. Never add `@ts-ignore` without a comment explaining why.

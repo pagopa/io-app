@@ -268,6 +268,27 @@ describe("ItwWalletCardsContainer", () => {
     expect(queryByTestId(`walletCardTestID_itw_itw_5`)).not.toBeNull();
   });
 
+  it("should render the new ITW id card header when new wallet is renderable", () => {
+    jest
+      .spyOn(walletSelectors, "shouldRenderItwCardsContainerSelector")
+      .mockReturnValue(true);
+    const newItWalletSpy = jest
+      .spyOn(itwSelectors, "itwShouldRenderNewItWalletSelector")
+      .mockReturnValue(true);
+    jest
+      .spyOn(walletSelectors, "selectWalletCardsByCategory")
+      .mockReturnValue([]);
+
+    const { queryByTestId } = renderComponent(<ItwWalletCardsContainer />);
+
+    expect(
+      queryByTestId("walletCardsCategoryItwIdCardHeaderTestID")
+    ).not.toBeNull();
+    expect(queryByTestId("walletCardsCategoryItwHeaderTestID")).toBeNull();
+
+    newItWalletSpy.mockRestore();
+  });
+
   it.each([
     ["valid", 0],
     ["jwtExpiring", 1],
