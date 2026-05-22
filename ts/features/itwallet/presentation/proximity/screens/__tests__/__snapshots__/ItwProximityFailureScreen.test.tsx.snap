@@ -1,6 +1,8 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[`ItwProximityFailureScreen should render failure screen for RELYING_PARTY_GENERIC 1`] = `
+exports[
+  `ItwProximityFailureScreen should render failure screen for RELYING_PARTY_GENERIC 1`
+] = `
 <View
   style={
     {
@@ -824,7 +826,9 @@ L'app può condividere i tuoi dati solo con enti e soggetti autorizzati.
 </View>
 `;
 
-exports[`ItwProximityFailureScreen should render failure screen for TIMEOUT 1`] = `
+exports[
+  `ItwProximityFailureScreen should render failure screen for TIMEOUT 1`
+] = `
 <View
   style={
     {
@@ -1689,7 +1693,9 @@ L'app può condividere i tuoi dati solo con enti e soggetti autorizzati.
 </View>
 `;
 
-exports[`ItwProximityFailureScreen should render failure screen for UNTRUSTED_RP 1`] = `
+exports[
+  `ItwProximityFailureScreen should render failure screen for UNTRUSTED_RP 1`
+] = `
 <View
   style={
     {
