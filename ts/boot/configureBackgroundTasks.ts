@@ -1,3 +1,10 @@
+import * as TaskManager from "expo-task-manager";
+
+import {
+  ITW_STATUS_LIST_FETCH_TASK,
+  itwStatusListFetchTaskHandler
+} from "../features/itwallet/statusList/tasks";
+
 /**
  * BACKGROUND TASKS
  *
@@ -8,14 +15,6 @@
  * for execution (https://docs.expo.dev/versions/latest/sdk/background-task/#multiple-background-tasks)
  *
  */
-
-import * as TaskManager from "expo-task-manager";
-
-import {
-  ITW_STATUS_LIST_FETCH_TASK,
-  itwStatusListFetchTaskHandler
-} from "../features/itwallet/statusList/tasks";
-
 TaskManager.defineTask(
   ITW_STATUS_LIST_FETCH_TASK,
   itwStatusListFetchTaskHandler
