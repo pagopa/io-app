@@ -39,12 +39,10 @@ export const FimsHistorySuccessListItem = ({
         <Icon size={16} name="calendar" />
         <HSpacer size={4} />
         <Caption color={theme["textBody-tertiary"]}>
-          {}
           {dateToAccessibilityReadableFormat(
             consent.timestamp,
             "DD/MM/YYYY, HH:mm"
           )}
-          {}
         </Caption>
       </View>
 
