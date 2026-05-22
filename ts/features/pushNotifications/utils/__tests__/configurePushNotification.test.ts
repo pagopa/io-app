@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
 import * as E from "fp-ts/lib/Either";
 import { constUndefined } from "fp-ts/lib/function";
 import PushNotification, {
