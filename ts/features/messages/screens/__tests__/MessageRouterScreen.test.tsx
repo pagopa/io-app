@@ -1,4 +1,4 @@
-import { act } from "@testing-library/react-native";
+import { act, fireEvent } from "@testing-library/react-native";
 import { AnyAction, Dispatch, createStore } from "redux";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { appReducer } from "../../../../store/reducers";
@@ -18,8 +18,8 @@ import PN_ROUTES from "../../../pn/navigation/routes";
 const mockReplace = jest.fn();
 const mockNavigate = jest.fn();
 const mockGoBack = jest.fn();
-const mockErrorComponent = jest.fn(_props => null);
 
+jest.mock("../../components/MessageRouter/MessageRouterScreenErrorComponent");
 jest.mock("../../../../navigation/params/AppParamsList", () => ({
   useIONavigation: () => ({
     replace: mockReplace,
@@ -27,14 +27,6 @@ jest.mock("../../../../navigation/params/AppParamsList", () => ({
     goBack: mockGoBack
   })
 }));
-
-jest.mock(
-  "../../components/MessageRouter/MessageRouterScreenErrorComponent",
-  () => ({
-    MessageRouterScreenErrorComponent: (props: { onCancel: () => void }) =>
-      mockErrorComponent(props)
-  })
-);
 
 const MESSAGE_ID = "01HGRNT85KP8TC5APFQWAA3HJK";
 
@@ -60,14 +52,19 @@ describe("MessageRouterScreen", () => {
   });
 
   it("renders the loading component when isLoading is true", () => {
-    const { getByTestId } = renderScreen(MESSAGE_ID, false, "loading");
-    expect(getByTestId("routerScreen-loading")).toBeTruthy();
-    expect(mockErrorComponent).not.toHaveBeenCalled();
+    const { getByTestId, toJSON } = renderScreen(MESSAGE_ID, false, "loading");
+    const loadingComponent = getByTestId("routerScreen-loading");
+    expect(loadingComponent).toBeTruthy();
+    expect(mockReplace).not.toHaveBeenCalled();
+    expect(mockNavigate).not.toHaveBeenCalled();
+    expect(toJSON()).toMatchSnapshot();
   });
 
   it("renders the error component when not loading", () => {
-    renderScreen(MESSAGE_ID, false, "error");
-    expect(mockErrorComponent).toHaveBeenCalled();
+    const { getByTestId, toJSON } = renderScreen(MESSAGE_ID, false, "error");
+    const errorComponent = getByTestId("mock-msgRouterErrorComponent");
+    expect(errorComponent).toBeTruthy();
+    expect(toJSON()).toMatchSnapshot();
   });
 
   it("dispatches getMessageDataAction.request on first render", () => {
@@ -192,18 +189,24 @@ describe("MessageRouterScreen", () => {
   });
 
   it("dispatches cancel action and navigates back when cancel is triggered", () => {
-    const { mockedDispatch } = renderScreen(MESSAGE_ID, false, "error");
-    act(() => {
-      mockErrorComponent.mock.calls[0][0].onCancel();
-    });
+    const { getByTestId, mockedDispatch } = renderScreen(
+      MESSAGE_ID,
+      false,
+      "error"
+    );
+    const cancelButton = getByTestId("messageRouterError-cancel-button");
+    fireEvent.press(cancelButton);
     expect(mockedDispatch).toHaveBeenCalledWith(cancelGetMessageDataAction());
     expect(mockGoBack).toHaveBeenCalled();
   });
   it("dispatches the getMessageData action when retry is triggered", () => {
-    const { mockedDispatch } = renderScreen(MESSAGE_ID, false, "error");
-    act(() => {
-      mockErrorComponent.mock.calls[0][0].onRetry();
-    });
+    const { getByTestId, mockedDispatch } = renderScreen(
+      MESSAGE_ID,
+      false,
+      "error"
+    );
+    const retryButton = getByTestId("messageRouterError-retry-button");
+    fireEvent.press(retryButton);
     expect(mockedDispatch).toHaveBeenCalledWith(
       getMessageDataAction.request({
         messageId: MESSAGE_ID,

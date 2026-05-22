@@ -1,4 +1,5 @@
 import { getType } from "typesafe-actions";
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import {
   SuccessGetMessageDataActionType,
   getMessageDataAction,
@@ -8,6 +9,8 @@ import {
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
 import { startApplicationInitialization } from "../../../../store/actions/application";
+import { MessageRouterScreenErrorVariant } from "../../components/MessageRouter/MessageRouterScreenErrorComponent";
+import { getPaginatedMessageById } from "./paginatedById";
 
 export type MessageGetStatusFailurePhaseType =
   | "none"
@@ -126,3 +129,24 @@ export const retryDataAfterFastLoginSessionExpirationSelector = (
   isRetryStatus(state.entities.messages.messageGetStatus)
     ? state.entities.messages.messageGetStatus.data
     : undefined;
+
+export const messageRouterScreenErrorVariantSelector = (
+  state: GlobalState,
+  messageId: string
+): MessageRouterScreenErrorVariant => {
+  const messageGetErrorPhase = messageGetStatusErrorPhaseSelector(state);
+  const messagePot = getPaginatedMessageById(state, messageId);
+  const paginatedErrorKind = pot.isError(messagePot)
+    ? messagePot.error.kind
+    : undefined;
+  if (
+    messageGetErrorPhase === "paginatedMessage" &&
+    paginatedErrorKind === "messageNotFound"
+  ) {
+    return "messageNotFound";
+  }
+  if (messageGetErrorPhase === "thirdPartyMessageDetails") {
+    return "thirdPartyError";
+  }
+  return "genericError";
+};

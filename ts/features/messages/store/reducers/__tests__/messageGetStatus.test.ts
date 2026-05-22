@@ -1,7 +1,9 @@
 import { appReducer } from "../../../../../store/reducers";
 import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import {
+  LoadMessageByIdFailureKind,
   getMessageDataAction,
+  loadMessageById,
   reloadAllMessages,
   resetGetMessageDataAction
 } from "../../actions";
@@ -13,6 +15,7 @@ import {
   blockedFromPushNotificationSelector,
   messageGetStatusErrorPhaseSelector,
   messageGetStatusReducer,
+  messageRouterScreenErrorVariantSelector,
   messageSuccessDataSelector,
   showSpinnerFromMessageGetStatusSelector
 } from "../messageGetStatus";
@@ -310,6 +313,80 @@ describe("blockedFromPushNotificationSelector", () => {
     const blockedFromPush = blockedFromPushNotificationSelector(globalState);
     expect(blockedFromPush).toBe(true);
   });
+});
+
+describe("messageRouterScreenErrorVariantSelector", () => {
+  const TEST_MESSAGE_ID = "test-message-id";
+
+  type Scenario = {
+    name: string;
+    failurePhase: MessageGetStatusFailurePhaseType;
+    byIdFailureKind: LoadMessageByIdFailureKind | undefined;
+    expectedVariant: "messageNotFound" | "genericError" | "thirdPartyError";
+  };
+
+  const scenarios: Array<Scenario> = [
+    {
+      name: "returns messageNotFound when failure phase is paginatedMessage and error kind is messageNotFound",
+      failurePhase: "paginatedMessage",
+      byIdFailureKind: "messageNotFound",
+      expectedVariant: "messageNotFound"
+    },
+    {
+      name: "returns genericError when failure phase is paginatedMessage and error kind is not messageNotFound",
+      failurePhase: "paginatedMessage",
+      byIdFailureKind: "generic",
+      expectedVariant: "genericError"
+    },
+    {
+      name: "returns thirdPartyError when failure phase is thirdPartyMessageDetails",
+      failurePhase: "thirdPartyMessageDetails",
+      byIdFailureKind: undefined,
+      expectedVariant: "thirdPartyError"
+    },
+    {
+      name: "returns genericError for other failure phases",
+      failurePhase: "messageDetails",
+      byIdFailureKind: undefined,
+      expectedVariant: "genericError"
+    },
+    {
+      name: "returns thirdPartyError when failure phase is thirdPartyMessageDetails, no matter the byId error kind",
+      failurePhase: "thirdPartyMessageDetails",
+      byIdFailureKind: "messageNotFound",
+      expectedVariant: "thirdPartyError"
+    },
+    {
+      name: "returns genericError for other failure phases, no matter the byId error kind",
+      failurePhase: "messageDetails",
+      byIdFailureKind: "messageNotFound",
+      expectedVariant: "genericError"
+    }
+  ];
+
+  it.each(scenarios)(
+    "$name",
+    ({ failurePhase, byIdFailureKind, expectedVariant }) => {
+      const stateAfterFailure = appReducer(
+        undefined,
+        getMessageDataAction.failure({ phase: failurePhase })
+      );
+      const globalState =
+        byIdFailureKind !== undefined
+          ? appReducer(
+              stateAfterFailure,
+              loadMessageById.failure({
+                id: TEST_MESSAGE_ID,
+                error: new Error(),
+                kind: byIdFailureKind
+              })
+            )
+          : stateAfterFailure;
+      expect(
+        messageRouterScreenErrorVariantSelector(globalState, TEST_MESSAGE_ID)
+      ).toBe(expectedVariant);
+    }
+  );
 });
 
 describe("messageGetStatusErrorPhaseSelector", () => {

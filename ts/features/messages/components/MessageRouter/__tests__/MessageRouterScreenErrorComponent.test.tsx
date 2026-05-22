@@ -1,16 +1,9 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
-import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
-import {
-  MessageGetStatusFailurePhaseType,
-  messageGetStatusErrorPhaseSelector
-} from "../../../store/reducers/messageGetStatus";
-import { getPaginatedMessageById } from "../../../store/reducers/paginatedById";
 import {
   MessageRouterScreenErrorComponent,
   testable
@@ -21,21 +14,14 @@ jest.mock("../../../../../components/ui/AnimatedPictogram", () => ({
   IOAnimatedPictogramsAssets: {}
 }));
 
+const mockVariantSelector = jest.fn();
 jest.mock("../../../store/reducers/messageGetStatus", () => ({
   ...jest.requireActual("../../../store/reducers/messageGetStatus"),
-  messageGetStatusErrorPhaseSelector: jest.fn()
+  messageRouterScreenErrorVariantSelector: (...props: any) =>
+    mockVariantSelector(...props)
 }));
 
-jest.mock("../../../store/reducers/paginatedById", () => ({
-  ...jest.requireActual("../../../store/reducers/paginatedById"),
-  getPaginatedMessageById: jest.fn()
-}));
-
-const mockPhaseSelector = jest.mocked(messageGetStatusErrorPhaseSelector);
-const mockPaginatedSelector = jest.mocked(getPaginatedMessageById);
-
-const { messageRouterErrorVariantSelector, getMessageRouterErrorMap } =
-  testable!;
+const { getMessageRouterErrorMap } = testable!;
 
 const TEST_MESSAGE_ID = "test-message-id";
 
@@ -47,10 +33,6 @@ type Variant = keyof ReturnType<typeof getMessageRouterErrorMap>;
 type VariantScenario = {
   name: string;
   variant: Variant;
-  /** Value returned by `messageGetStatusErrorPhaseSelector` for this scenario */
-  errorPhase: MessageGetStatusFailurePhaseType;
-  /** Error kind returned by `getPaginatedMessageById`, when it should be an error pot */
-  paginatedErrorKind: "messageNotFound" | undefined;
   primaryTestId: string;
   secondaryTestId: string | null;
   /** Whether the primary button dispatches `onCancel` instead of `onRetry` */
@@ -61,8 +43,6 @@ const variantScenarios: Array<VariantScenario> = [
   {
     name: "messageNotFound",
     variant: "messageNotFound",
-    errorPhase: "paginatedMessage",
-    paginatedErrorKind: "messageNotFound",
     primaryTestId: "messageRouterError-close-button",
     secondaryTestId: null,
     primaryIsCancel: true
@@ -70,8 +50,6 @@ const variantScenarios: Array<VariantScenario> = [
   {
     name: "thirdPartyError",
     variant: "thirdPartyError",
-    errorPhase: "thirdPartyMessageDetails",
-    paginatedErrorKind: undefined,
     primaryTestId: "messageRouterError-retry-button",
     secondaryTestId: "messageRouterError-cancel-button",
     primaryIsCancel: false
@@ -79,8 +57,6 @@ const variantScenarios: Array<VariantScenario> = [
   {
     name: "genericError",
     variant: "genericError",
-    errorPhase: "messageDetails",
-    paginatedErrorKind: undefined,
     primaryTestId: "messageRouterError-retry-button",
     secondaryTestId: "messageRouterError-cancel-button",
     primaryIsCancel: false
@@ -97,37 +73,13 @@ describe("getMessageRouterErrorMap", () => {
 });
 
 variantScenarios.forEach(
-  ({
-    name,
-    variant,
-    errorPhase,
-    paginatedErrorKind,
-    primaryTestId,
-    secondaryTestId,
-    primaryIsCancel
-  }) => {
+  ({ name, variant, primaryTestId, secondaryTestId, primaryIsCancel }) => {
     describe(`variant: ${name}`, () => {
       beforeEach(() => {
         jest.resetAllMocks();
         jest.clearAllMocks();
         jest.restoreAllMocks();
-        mockPhaseSelector.mockReturnValue(errorPhase);
-        mockPaginatedSelector.mockReturnValue(
-          paginatedErrorKind !== undefined
-            ? pot.toError(pot.none, {
-                error: new Error(),
-                kind: paginatedErrorKind
-              })
-            : pot.none
-        );
-      });
-
-      it("messageRouterErrorVariantSelector returns correct variant", () => {
-        const result = messageRouterErrorVariantSelector(
-          {} as GlobalState,
-          TEST_MESSAGE_ID
-        );
-        expect(result).toBe(variant);
+        mockVariantSelector.mockReturnValue(variant);
       });
 
       it("MessageRouterScreenErrorComponent matches snapshot", () => {

@@ -1,16 +1,13 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
 import I18n from "i18next";
 import { useMemo } from "react";
-import { createSelector } from "reselect";
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
 } from "../../../../components/screens/OperationResultScreenContent";
 import { useIOSelector } from "../../../../store/hooks";
 import { GlobalState } from "../../../../store/reducers/types";
-import { messageGetStatusErrorPhaseSelector } from "../../store/reducers/messageGetStatus";
-import { getPaginatedMessageById } from "../../store/reducers/paginatedById";
 import { isTestEnv } from "../../../../utils/environment";
+import { messageRouterScreenErrorVariantSelector } from "../../store/reducers/messageGetStatus";
 
 export const MessageRouterScreenErrorComponent = ({
   onRetry,
@@ -22,7 +19,7 @@ export const MessageRouterScreenErrorComponent = ({
   messageId: string;
 }) => {
   const errorVariant = useIOSelector((state: GlobalState) =>
-    messageRouterErrorVariantSelector(state, messageId)
+    messageRouterScreenErrorVariantSelector(state, messageId)
   );
   const errorMap = useMemo(
     () => getMessageRouterErrorMap(onRetry, onCancel),
@@ -35,36 +32,16 @@ export const MessageRouterScreenErrorComponent = ({
 
 // -------------- Selector and utils for error handling --------------
 
-type MessageRouterErrorVariant =
+export type MessageRouterScreenErrorVariant =
   | "messageNotFound"
   | "thirdPartyError"
   | "genericError";
-
-const messageRouterErrorVariantSelector = createSelector(
-  messageGetStatusErrorPhaseSelector,
-  (state: GlobalState, messageId: string) => {
-    const messagePot = getPaginatedMessageById(state, messageId);
-    return pot.isError(messagePot) ? messagePot.error.kind : undefined;
-  },
-  (messageGetErrorPhase, paginatedErrorKind): MessageRouterErrorVariant => {
-    if (
-      messageGetErrorPhase === "paginatedMessage" &&
-      paginatedErrorKind === "messageNotFound"
-    ) {
-      return "messageNotFound";
-    }
-    if (messageGetErrorPhase === "thirdPartyMessageDetails") {
-      return "thirdPartyError";
-    }
-    return "genericError";
-  }
-);
 
 const getMessageRouterErrorMap = (
   onRetry: () => void,
   onCancel: () => void
 ): {
-  [key in MessageRouterErrorVariant]: OperationResultScreenContentProps;
+  [key in MessageRouterScreenErrorVariant]: OperationResultScreenContentProps;
 } => ({
   messageNotFound: {
     pictogram: "empty",
@@ -108,7 +85,6 @@ const getMessageRouterErrorMap = (
 });
 export const testable = isTestEnv
   ? {
-      messageRouterErrorVariantSelector,
       getMessageRouterErrorMap
     }
   : undefined;
