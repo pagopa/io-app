@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
 const PagoPATestIndicator = () => (
   <View style={styles.indicatoWrapper}>
     <Icon name="productPagoPA" color="grey-850" size={20} />
-    { }
     <Text
       style={{
         fontSize: 8,
@@ -32,7 +31,6 @@ const PagoPATestIndicator = () => (
     >
       Test
     </Text>
-    { }
   </View>
 );
 

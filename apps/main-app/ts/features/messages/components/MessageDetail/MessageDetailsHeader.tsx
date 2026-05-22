@@ -34,7 +34,6 @@ const MessageDetailsHeaderContent = ({
     <H3 accessibilityRole="header" testID="message-header-subject">
       {subject}
     </H3>
-    { }
     {createdAt && (
       <BodySmall weight="Regular" testID="date">
         {`${new Intl.DateTimeFormat("it", {
@@ -47,7 +46,6 @@ const MessageDetailsHeaderContent = ({
         }).format(createdAt)}`}
       </BodySmall>
     )}
-    { }
   </VStack>
 );
 

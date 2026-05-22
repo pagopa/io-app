@@ -37,7 +37,6 @@ const CieLoginConfigScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
-       
       title={{ label: "CIE Login Settings" }}
       testID="CieLoginConfigScreen"
       includeContentMargins
