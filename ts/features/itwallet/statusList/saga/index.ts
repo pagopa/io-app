@@ -12,11 +12,6 @@ import { getLastStatusListCheckTimestamp } from "../utils/storage";
 
 /**
  * Registers the ITW Status List fetch task with expo-background-task.
- *
- * This is a fire-and-forget operation: if the background task API is not
- * available (e.g. restricted by the OS), the registration is silently skipped.
- * The task must be defined in global scope via TaskManager.defineTask before
- * this saga is called (see ts/features/itwallet/background/tasks.ts).
  */
 export function* registerStatusListFetchTaskSaga(): SagaIterator {
   const isWalletValid = yield* select(itwLifecycleIsValidSelector);
