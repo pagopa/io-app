@@ -25,7 +25,7 @@ export const trackItwStatusListFetchUnregistered = () => {
 /**
  * TODO remove once the status list is implemented
  */
-export const trackItwStatusListLastChecktime = (timestamp: string) => {
+export const trackItwStatusListLastCheckTime = (timestamp: string) => {
   const eventName = ITW_TECH_EVENTS.ITW_BACKGROUND_TASK_LAST_CHECK_TIME;
   const properties = buildEventProperties("TECH", undefined, { timestamp });
   void mixpanelTrack(eventName, properties);

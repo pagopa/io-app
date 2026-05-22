@@ -3,12 +3,12 @@ import { call, fork, select, take, takeLatest } from "typed-redux-saga/macro";
 import { itwCredentialsStore } from "../../credentials/store/actions";
 import { itwLifecycleWalletReset } from "../../lifecycle/store/actions";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
-import { trackItwStatusListLastChecktime } from "../analytics";
 import {
   registerItwStatusListFetchTask,
   unregisterItwStatusListFetchTask
 } from "../tasks";
 import { getLastStatusListCheckTimestamp } from "../utils/storage";
+import { trackItwStatusListLastCheckTime } from "../analytics";
 
 /**
  * Registers the ITW Status List fetch task with expo-background-task.
@@ -30,7 +30,6 @@ export function* registerStatusListFetchTaskSaga(): SagaIterator {
     yield* call(unregisterItwStatusListFetchTask);
   });
 }
-
 /**
  * Tracks the last execution of the ITW Status List fetch task on app open,
  * to have a baseline for the background fetch frequency.
@@ -41,7 +40,7 @@ export function* trackLastStatusListFetchTaskSaga(): SagaIterator {
   const timestamp = yield* call(getLastStatusListCheckTimestamp);
   if (timestamp) {
     yield* call(
-      trackItwStatusListLastChecktime,
+      trackItwStatusListLastCheckTime,
       new Date(timestamp).toISOString()
     );
   }

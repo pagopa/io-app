@@ -1,42 +1,64 @@
 import {
   Divider,
   IOButton,
-  IOToast,
   ListItemHeader,
   ListItemInfo,
+  ListItemInfoCopy,
+  useIOToast,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { format } from "date-fns";
 import * as BackgroundTask from "expo-background-task";
 import * as TaskManager from "expo-task-manager";
 import { useCallback, useEffect, useState } from "react";
 import { Alert, View } from "react-native";
+import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { isDevEnv } from "../../../../utils/environment";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { ITW_STATUS_LIST_FETCH_TASK } from "../../statusList/tasks";
-import { getLastStatusListCheckTimestamp } from "../../statusList/utils/storage";
+import {
+  getLastStatusListCheckTimestamp,
+  getLastStatusListFetchTimestamp
+} from "../../statusList/utils/storage";
+
+const formatDate = (timestamp: number | undefined): string =>
+  timestamp ? format(new Date(timestamp), "DD/MM/YY HH:mm:ss") : "n/a";
+
+const formatAge = (lastFetchTime: number | undefined): string => {
+  if (!lastFetchTime) {
+    return "n/a";
+  }
+
+  const diffInMs = Date.now() - lastFetchTime;
+  const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
+  const diffInMinutes = Math.floor((diffInMs % (1000 * 60 * 60)) / (1000 * 60));
+
+  return `${diffInHours}h ${diffInMinutes}m`;
+};
 
 export const ItwStatusListSection = () => {
-  const [lastCheck, setLastCheck] = useState<string>("n/a");
-  const [age] = useState<string>("n/a");
+  const [lastCheckTime, setLastCheckTime] = useState<number>();
+  const [lastFetchTime, setLastFetchTime] = useState<number>();
 
   useEffect(() => {
     getLastStatusListCheckTimestamp()
-      .then(timestamp => {
-        if (timestamp) {
-          const lastCheckDate = new Date(timestamp);
-          setLastCheck(lastCheckDate.toLocaleString());
-        }
-      })
-      .catch(() => setLastCheck("n/a"));
+      .then(setLastCheckTime)
+      .catch(() => setLastCheckTime(undefined));
+
+    getLastStatusListFetchTimestamp()
+      .then(setLastFetchTime)
+      .catch(() => setLastFetchTime(undefined));
   }, []);
 
   return (
     <View>
       <ListItemHeader label="Status List" />
-      <ListItemInfo label="Last check" value={lastCheck} />
+      <ListItemInfo label="Last check" value={formatDate(lastCheckTime)} />
       <Divider />
-      <ListItemInfo label="Age" value={age} />
-      <VSpacer size={16} />
+      <ListItemInfo label="Last fetch" value={formatDate(lastFetchTime)} />
+      <Divider />
+      <ListItemInfo label="Age" value={formatAge(lastFetchTime)} />
+      <VSpacer size={8} />
       <IOButton
         variant="solid"
         label="Refresh Status List"
@@ -44,7 +66,7 @@ export const ItwStatusListSection = () => {
         loading={false}
         disabled={true}
       />
-      <VSpacer size={16} />
+      <VSpacer size={8} />
       <IOButton
         variant="solid"
         color="danger"
@@ -53,12 +75,14 @@ export const ItwStatusListSection = () => {
         loading={false}
         disabled={true}
       />
+      <VSpacer size={16} />
       <BackgroundTaskSection />
     </View>
   );
 };
 
 const BackgroundTaskSection = () => {
+  const toast = useIOToast();
   const [status, setStatus] = useState<BackgroundTask.BackgroundTaskStatus>();
   const [isTaskRegistered, setIsTaskRegistered] = useState<boolean>();
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -89,8 +113,6 @@ const BackgroundTaskSection = () => {
   };
 
   const refreshStatus = useCallback(async () => {
-    setIsRefreshing(true);
-
     try {
       const [backgroundTaskStatus, taskRegistered] = await Promise.all([
         BackgroundTask.getStatusAsync(),
@@ -111,14 +133,14 @@ const BackgroundTaskSection = () => {
 
     try {
       await BackgroundTask.triggerTaskWorkerForTestingAsync();
-      IOToast.show("Background task worker triggered");
+      toast.show("Background task worker triggered");
       await refreshStatus();
     } catch (error) {
       Alert.alert("Background task test failed", getAlertMessage(error));
     } finally {
       setIsTriggering(false);
     }
-  }, [refreshStatus]);
+  }, [refreshStatus, toast]);
 
   useOnFirstRender(
     () => {
@@ -146,7 +168,13 @@ const BackgroundTaskSection = () => {
         value={getTaskRegistrationLabel(isTaskRegistered)}
       />
       <Divider />
-      <ListItemInfo label="Task name" value={ITW_STATUS_LIST_FETCH_TASK} />
+      <ListItemInfoCopy
+        label="Task name"
+        value={ITW_STATUS_LIST_FETCH_TASK}
+        onPress={() =>
+          clipboardSetStringWithFeedback(ITW_STATUS_LIST_FETCH_TASK)
+        }
+      />
       {isDevEnv && (
         <>
           <VSpacer size={16} />

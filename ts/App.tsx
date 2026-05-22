@@ -19,8 +19,6 @@ import { LightModalProvider } from "./components/ui/LightModal";
 import { AppFeedbackProvider } from "./features/appReviews/components/AppFeedbackProvider";
 import { TourProvider } from "./features/tour/components/TourProvider";
 
-import "./boot/configureBackgroundTasks";
-
 // Infer the `RootState` and `AppDispatch` types from the store itself export
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

@@ -1,11 +1,11 @@
 import * as BackgroundTask from "expo-background-task";
 import * as TaskManager from "expo-task-manager";
-import { storeLastStatusListCheckTimestamp } from "../utils/storage";
 import {
   trackItwStatusListFetchRegistered,
   trackItwStatusListFetchRegisterFailure,
   trackItwStatusListFetchUnregistered
 } from "../analytics";
+import { storeLastStatusListCheckTimestamp } from "../utils/storage";
 
 /**
  * Identifier for the ITW Status List background fetch task.
@@ -64,23 +64,22 @@ export const unregisterItwStatusListFetchTask = async (): Promise<void> => {
 };
 
 /**
- * Handler for the ITW Status List fetch task.
- *
- * IMPORTANT: This functions is headless and cannot access to the redux store
- * or any other app context.
+ * Register the ITW Status List fetch task handler with expo-task-manager.
+ * Important: must be defined at module level.
  *
  * Checks whether the Status List needs to be refreshed (i.e. last
  * check was more than 24 hours ago) and, if so, fetches it and updates the
  * last check timestamp.
  */
-export const itwStatusListFetchTaskHandler =
-  async (): Promise<BackgroundTask.BackgroundTaskResult> => {
-    try {
-      // TODO add WI and credentials check once Status List is implemented
-      await storeLastStatusListCheckTimestamp(Date.now());
+TaskManager.defineTask(ITW_STATUS_LIST_FETCH_TASK, async () => {
+  try {
+    const now = Date.now();
+    await storeLastStatusListCheckTimestamp(now);
 
-      return BackgroundTask.BackgroundTaskResult.Success;
-    } catch {
-      return BackgroundTask.BackgroundTaskResult.Failed;
-    }
-  };
+    // TODO Add Status List fetch logic here
+
+    return BackgroundTask.BackgroundTaskResult.Success;
+  } catch {
+    return BackgroundTask.BackgroundTaskResult.Failed;
+  }
+});
