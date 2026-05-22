@@ -1,3 +1,4 @@
+/* eslint-disable functional/immutable-data */
 import { remark } from "remark";
 import remarkDirective from "remark-directive";
 import remarkRehype from "remark-rehype";
@@ -16,13 +17,12 @@ function customPlugin() {
         node.type === "leafDirective" ||
         node.type === "containerDirective"
       ) {
-        // eslint-disable-next-line functional/immutable-data
         const data = node.data || (node.data = {});
         const hast = h(node.name, node.attributes);
 
-        // eslint-disable-next-line functional/immutable-data
+        // @ts-expect-error type mismatch
         data.hName = hast.tagName;
-        // eslint-disable-next-line functional/immutable-data
+        // @ts-expect-error type mismatch
         data.hProperties = hast.properties;
       }
     });
