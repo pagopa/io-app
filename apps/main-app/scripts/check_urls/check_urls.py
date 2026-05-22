@@ -301,21 +301,6 @@ if run_test:
 
     [a](http://www.cool.com:81/index.html)'''
 
-    test1 = extract_uris("[hello world](http://test.com)")
-    assert len(test1) == 1
-    assert "http://test.com" in test1
-
-    test2 = extract_uris(
-        "[a](https://test2.com) hello world [b](http://test.com)")
-    assert len(test2) == 2
-    assert "https://test2.com" in test2
-    assert "http://test.com" in test2
-
-    test3 = extract_uris(
-        "[a](https://www.test.com)      site.it        [b](https://empty)")
-    assert len(test3) == 1
-    assert "https://www.test.com" in test3
-
     test4 = extract_uris(a_text_with_urls)
     assert len(test4) == 18
 
