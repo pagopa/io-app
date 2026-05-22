@@ -16,13 +16,11 @@ import {
   ItwEidInfoBottomSheetTitle
 } from "../../common/components/ItwEidInfoBottomSheetContent";
 import { ItwEidLifecycleAlert } from "../../common/components/ItwEidLifecycleAlert";
-import { ItwL2EngagementBanner } from "../../common/components/ItwL2EngagementBanner.tsx";
 import { ItwWalletReadyBanner } from "../../common/components/ItwWalletReadyBanner";
 import { useItwPendingReviewRequest } from "../../common/hooks/useItwPendingReviewRequest";
 import { useItwStatusIconColor } from "../../common/hooks/useItwStatusIconColor.ts";
 import {
   itwShouldHideEidLifecycleAlert,
-  itwShouldRenderL2EngagementBannerSelector,
   itwShouldRenderNewItWalletSelector,
   itwShouldRenderUpgradeBannerSelector
 } from "../../common/store/selectors";
@@ -51,9 +49,6 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
   const shouldHideEidAlert = useIOSelector(itwShouldHideEidLifecycleAlert);
   const shouldRenderUpgradeBanner = useIOSelector(
     itwShouldRenderUpgradeBannerSelector
-  );
-  const shouldRenderL2EngagementBanner = useIOSelector(
-    itwShouldRenderL2EngagementBannerSelector
   );
 
   const cards = useIOSelector(state =>
@@ -96,15 +91,11 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
 
   const sectionHeader = useMemo((): React.ReactElement => {
     if (isNewItwRenderable) {
-      const isStacked = cards.length > 0;
       return (
-        <View style={styles.cardsWrapper}>
-          <ListItemHeader
-            testID={"walletCardsCategoryItwIdCardHeaderTestID"}
-            label={I18n.t("features.wallet.cards.categories.itw")}
-          />
-          <ItwWalletIdCard isStacked={isStacked} />
-        </View>
+        <ListItemHeader
+          testID={"walletCardsCategoryItwIdCardHeaderTestID"}
+          label={I18n.t("features.wallet.cards.categories.itw")}
+        />
       );
     }
     return (
@@ -128,14 +119,15 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
         }}
       />
     );
-  }, [iconColor, isNewItwRenderable, eidInfoBottomSheet.present, cards.length]);
+  }, [iconColor, isNewItwRenderable, eidInfoBottomSheet.present]);
 
   return (
     <View>
       {sectionHeader}
-      <VStack space={16}>
-        {shouldRenderUpgradeBanner && <ItwDiscoveryBanner flow="wallet" />}
-        {shouldRenderL2EngagementBanner && <ItwL2EngagementBanner />}
+      <VStack space={8}>
+        {shouldRenderUpgradeBanner && (
+          <ItwDiscoveryBanner flow="wallet" style={{ marginVertical: 8 }} />
+        )}
         <ItwWalletReadyBanner />
         {!shouldHideEidAlert && (
           <ItwEidLifecycleAlert
@@ -144,11 +136,11 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
             currentScreenName={currentScreenName}
           />
         )}
-        {/* Dummy view to add space in case there is another component */}
-        <View />
       </VStack>
-      {cards.length > 0 && (
-        <View style={styles.cardsWrapper}>
+
+      <View style={styles.cardsWrapper}>
+        {isNewItwRenderable && <ItwWalletIdCard isStacked={cards.length > 0} />}
+        {cards.length > 0 && (
           <GuidedTour
             groupId={ITW_TOUR_GROUP_ID}
             index={ITW_TOUR_STEP_CREDENTIALS}
@@ -163,8 +155,8 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
               cards={cards}
             />
           </GuidedTour>
-        </View>
-      )}
+        )}
+      </View>
       {eidInfoBottomSheet.bottomSheet}
     </View>
   );
