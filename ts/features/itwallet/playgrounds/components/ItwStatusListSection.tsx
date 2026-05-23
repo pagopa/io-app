@@ -11,7 +11,7 @@ import { format } from "date-fns";
 import * as BackgroundTask from "expo-background-task";
 import * as TaskManager from "expo-task-manager";
 import { useCallback, useEffect, useState } from "react";
-import { Alert, View } from "react-native";
+import { View } from "react-native";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { isDevEnv } from "../../../../utils/environment";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
@@ -83,83 +83,45 @@ export const ItwStatusListSection = () => {
 
 const BackgroundTaskSection = () => {
   const toast = useIOToast();
-  const [status, setStatus] = useState<BackgroundTask.BackgroundTaskStatus>();
   const [isTaskRegistered, setIsTaskRegistered] = useState<boolean>();
-  const [isRefreshing, setIsRefreshing] = useState(false);
-  const [isTriggering, setIsTriggering] = useState(false);
 
   const getAlertMessage = (error: unknown) =>
     error instanceof Error ? error.message : String(error);
-
-  const getBackgroundTaskStatusLabel = (
-    s?: BackgroundTask.BackgroundTaskStatus
-  ) => {
-    switch (s) {
-      case BackgroundTask.BackgroundTaskStatus.Available:
-        return "Available";
-      case BackgroundTask.BackgroundTaskStatus.Restricted:
-        return "Restricted";
-      default:
-        return "Unknown";
-    }
-  };
 
   const getTaskRegistrationLabel = (isRegistered?: boolean) => {
     if (isRegistered === undefined) {
       return "Unknown";
     }
-
     return isRegistered ? "Registered" : "Not registered";
   };
 
   const refreshStatus = useCallback(async () => {
     try {
-      const [backgroundTaskStatus, taskRegistered] = await Promise.all([
-        BackgroundTask.getStatusAsync(),
-        TaskManager.isTaskRegisteredAsync(ITW_STATUS_LIST_FETCH_TASK)
-      ]);
-
-      setStatus(backgroundTaskStatus);
+      const taskRegistered = await TaskManager.isTaskRegisteredAsync(
+        ITW_STATUS_LIST_FETCH_TASK
+      );
       setIsTaskRegistered(taskRegistered);
     } catch (error) {
-      Alert.alert("Background task status failed", getAlertMessage(error));
-    } finally {
-      setIsRefreshing(false);
+      toast.error(`Background task status failed: ${getAlertMessage(error)}`);
     }
-  }, []);
-
-  const triggerTaskWorker = useCallback(async () => {
-    setIsTriggering(true);
-
-    try {
-      await BackgroundTask.triggerTaskWorkerForTestingAsync();
-      toast.show("Background task worker triggered");
-      await refreshStatus();
-    } catch (error) {
-      Alert.alert("Background task test failed", getAlertMessage(error));
-    } finally {
-      setIsTriggering(false);
-    }
-  }, [refreshStatus, toast]);
+  }, [toast]);
 
   useOnFirstRender(() => {
     void refreshStatus();
   });
 
-  const isTriggerDisabled =
-    isRefreshing ||
-    isTriggering ||
-    status !== BackgroundTask.BackgroundTaskStatus.Available ||
-    isTaskRegistered !== true;
+  const triggerTaskWorker = useCallback(async () => {
+    try {
+      await BackgroundTask.triggerTaskWorkerForTestingAsync();
+      toast.show("Background task worker triggered");
+    } catch (error) {
+      toast.error(`Background task test failed: ${getAlertMessage(error)}`);
+    }
+  }, [toast]);
 
   return (
     <View>
       <ListItemHeader label="Background task" />
-      <ListItemInfo
-        label="Service availability"
-        value={getBackgroundTaskStatusLabel(status)}
-      />
-      <Divider />
       <ListItemInfo
         label="Task registration"
         value={getTaskRegistrationLabel(isTaskRegistered)}
@@ -181,8 +143,7 @@ const BackgroundTaskSection = () => {
             onPress={() => {
               void triggerTaskWorker();
             }}
-            loading={isTriggering}
-            disabled={isTriggerDisabled}
+            disabled={isTaskRegistered !== true}
           />
         </>
       )}

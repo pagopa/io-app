@@ -16,12 +16,6 @@ export const trackItwStatusListFetchRegistered = () => {
   void mixpanelTrack(eventName, properties);
 };
 
-export const trackItwStatusListFetchUnregistered = () => {
-  const eventName = ITW_TECH_EVENTS.ITW_BACKGROUND_TASK_UNREGISTERED;
-  const properties = buildEventProperties("TECH", undefined);
-  void mixpanelTrack(eventName, properties);
-};
-
 /**
  * TODO remove once the status list is implemented
  */
