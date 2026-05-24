@@ -14,6 +14,7 @@ import {
   CredentialAccessToken,
   CredentialBundle,
   CredentialFormat,
+  CredentialOfferResolved,
   IssuerConfiguration,
   RequestObject
 } from "./itwTypesUtils";
@@ -28,6 +29,8 @@ import { getWalletUnitAttestation } from "./itwAttestationUtils";
  * Currently only the mDL must be requested sequentially because of locking issues.
  */
 const SEQUENTIAL_ISSUANCE_CREDENTIALS = ["mDL"];
+const NO_REQUESTABLE_CREDENTIAL_CONFIGURATIONS_ERROR_MESSAGE =
+  "No requestable credential configurations found";
 
 export type RequestCredential = (args: {
   env: Env;
@@ -35,6 +38,8 @@ export type RequestCredential = (args: {
   credentialType: string;
   walletInstanceAttestation: string;
   skipMdocIssuance: boolean;
+  authorizationServer?: string;
+  credentialOffer?: CredentialOfferResolved;
 }) => Promise<{
   clientId: string;
   codeVerifier: string;
@@ -55,23 +60,40 @@ export const requestCredential: RequestCredential = async ({
   itwVersion,
   credentialType,
   walletInstanceAttestation,
-  skipMdocIssuance
+  skipMdocIssuance,
+  authorizationServer,
+  credentialOffer
 }) => {
   const ioWallet = getIoWallet(itwVersion);
 
   // Get WIA crypto context
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
+  const credentialOfferGrant =
+    credentialOffer?.grantDetails.authorizationCodeGrant;
+  const credentialIssuerUrl =
+    credentialOffer?.offer.credential_issuer ??
+    env.WALLET_EAA_PROVIDER_BASE_URL.value(itwVersion);
 
   // Evaluate issuer trust
   const { issuerConf } = await ioWallet.CredentialIssuance.evaluateIssuerTrust(
-    env.WALLET_EAA_PROVIDER_BASE_URL.value(itwVersion)
+    credentialIssuerUrl,
+    {
+      authorizationServer:
+        credentialOfferGrant?.authorizationServer ?? authorizationServer
+    }
   );
 
-  const credentialIds = getCredentialConfigurationIds(
-    issuerConf,
-    credentialType,
-    skipMdocIssuance
-  );
+  const credentialIds = credentialOffer
+    ? getCredentialConfigurationIdsFromOffer(
+        issuerConf,
+        credentialOffer,
+        skipMdocIssuance
+      )
+    : getCredentialConfigurationIds(
+        issuerConf,
+        credentialType,
+        skipMdocIssuance
+      );
 
   // Start user authorization
   const { issuerRequestUri, clientId, codeVerifier } =
@@ -82,7 +104,8 @@ export const requestCredential: RequestCredential = async ({
       {
         walletInstanceAttestation,
         redirectUri: env.ISSUANCE_REDIRECT_URI,
-        wiaCryptoContext
+        wiaCryptoContext,
+        credentialOfferGrant
       }
     );
 
@@ -245,6 +268,37 @@ const getCredentialConfigurationIds = (
     );
 
   return supportedConfigurationsByScope[credentialType] || [];
+};
+
+const getCredentialConfigurationIdsFromOffer = (
+  issuerConfig: IssuerConfiguration,
+  credentialOffer: CredentialOfferResolved,
+  skipMdocIssuance: boolean
+) => {
+  const { credential_configurations_supported } = issuerConfig;
+  const requestableConfigurationIds =
+    credentialOffer.offer.credential_configuration_ids.filter(
+      credentialConfigurationId => {
+        const configuration =
+          credential_configurations_supported[credentialConfigurationId];
+
+        if (!configuration) {
+          throw new Error(
+            `Credential configuration '${credentialConfigurationId}' is not supported by the issuer`
+          );
+        }
+
+        return (
+          !skipMdocIssuance || configuration.format !== CredentialFormat.MDOC
+        );
+      }
+    );
+
+  if (requestableConfigurationIds.length === 0) {
+    throw new Error(NO_REQUESTABLE_CREDENTIAL_CONFIGURATIONS_ERROR_MESSAGE);
+  }
+
+  return requestableConfigurationIds;
 };
 
 type RequestAndParseCredentialParams = {

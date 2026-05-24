@@ -21,6 +21,7 @@ import { fciLinkingOptions } from "../features/fci/navigation/FciStackNavigator"
 import { idPayLinkingOptions } from "../features/idpay/common/navigation/linking";
 import { IngressScreen } from "../features/ingress/screens/IngressScreen";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
+import { ITW_CREDENTIAL_OFFER_LINKING_PREFIXES } from "../features/itwallet/offer/utils";
 import { useItwLinkingOptions } from "../features/itwallet/navigation/useItwLinkingOptions";
 import { storeLinkingUrl } from "../features/linking/actions";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
@@ -107,7 +108,11 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
 
   const linking: LinkingOptions<AppParamsList> = {
     enabled: !isTestEnv, // disable linking in test env
-    prefixes: [IO_INTERNAL_LINK_PREFIX, IO_UNIVERSAL_LINK_PREFIX],
+    prefixes: [
+      IO_INTERNAL_LINK_PREFIX,
+      IO_UNIVERSAL_LINK_PREFIX,
+      ...ITW_CREDENTIAL_OFFER_LINKING_PREFIXES
+    ],
     config: {
       initialRouteName: ROUTES.MAIN,
       screens: {

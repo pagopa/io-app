@@ -111,3 +111,31 @@ Created on **24/04/2026**
 #### Reason:
 
 - Patch to apply an explicit header `minHeight` in `CardContainer` only when `headerTransparent` is enabled and a screen reader is active, improving Android accessibility by ensuring the header area is properly sized for TalkBack.
+
+### @pagopa-io-wallet-oauth2-npm-1.2.1-779d80230d.patch
+
+Created on **18/05/2026**
+
+#### Reason:
+
+- Add `issuerState` support to PAR creation and serialize it as `issuer_state` in both signed and unsigned authorization
+  requests.
+
+### @pagopa-io-wallet-oid4vci-npm-1.2.1-b3ea62621d.patch
+
+Created on **18/05/2026**
+
+#### Reason:
+
+- Allow credential offer flows to select the Authorization Server declared by the offer when issuer metadata exposes
+  multiple authorization servers.
+
+### @pagopa-io-react-native-wallet-npm-3.2.0-4d0a7649a3.patch
+
+Created on **18/05/2026**
+
+#### Reason:
+
+- Forward the Credential Offer Authorization Server to metadata discovery.
+- Forward Credential Offer grant details to PAR, using `scope` and optional `issuer_state` instead of
+  `authorization_details`.

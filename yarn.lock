@@ -4514,7 +4514,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-wallet@npm:^3.2.0":
+"@pagopa/io-react-native-wallet@npm:3.2.0":
   version: 3.2.0
   resolution: "@pagopa/io-react-native-wallet@npm:3.2.0"
   dependencies:
@@ -4546,6 +4546,38 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pagopa/io-react-native-wallet@patch:@pagopa/io-react-native-wallet@npm%3A3.2.0#./.yarn/patches/@pagopa-io-react-native-wallet-npm-3.2.0-4d0a7649a3.patch::locator=io%40workspace%3A.":
+  version: 3.2.0
+  resolution: "@pagopa/io-react-native-wallet@patch:@pagopa/io-react-native-wallet@npm%3A3.2.0#./.yarn/patches/@pagopa-io-react-native-wallet-npm-3.2.0-4d0a7649a3.patch::version=3.2.0&hash=9cbef8&locator=io%40workspace%3A."
+  dependencies:
+    "@pagopa/io-wallet-oauth2": 1.2.1
+    "@pagopa/io-wallet-oid-federation": 1.2.1
+    "@pagopa/io-wallet-oid4vci": 1.2.1
+    "@pagopa/io-wallet-oid4vp": 1.2.1
+    "@pagopa/io-wallet-utils": 1.2.1
+    "@sd-jwt/core": ^0.19.0
+    "@sd-jwt/crypto-nodejs": ^0.19.0
+    "@sd-jwt/jwt-status-list": ^0.19.0
+    "@sd-jwt/types": ^0.19.0
+    dcql: ^3.0.0
+    js-base64: ^3.7.8
+    js-sha256: ^0.11.1
+    jsrsasign: ^11.1.0
+    parse-url: ^10.0.3
+    react-native-url-polyfill: ^2.0.0
+    uuid: ^11.0.3
+    zod: ^4.3.6
+  peerDependencies:
+    "@pagopa/io-react-native-crypto": "*"
+    "@pagopa/io-react-native-iso18013": "*"
+    "@pagopa/io-react-native-jwt": "*"
+    react: "*"
+    react-native: "*"
+    react-native-quick-crypto: "*"
+  checksum: 58b99a0f18b8e0bebaa01e6dd9c195cad57930e24a3bea6d1e583112bdb6372287a3cbb24b4f515a722cb81a6d51c840ffb638cecb64374db291646b159d2a4e
+  languageName: node
+  linkType: hard
+
 "@pagopa/io-react-native-zendesk@npm:^0.3.30":
   version: 0.3.30
   resolution: "@pagopa/io-react-native-zendesk@npm:0.3.30"
@@ -4556,7 +4588,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-wallet-oauth2@npm:, @pagopa/io-wallet-oauth2@npm:1.2.1":
+"@pagopa/io-wallet-oauth2@npm:1.2.1":
   version: 1.2.1
   resolution: "@pagopa/io-wallet-oauth2@npm:1.2.1"
   dependencies:
@@ -4566,6 +4598,19 @@ __metadata:
     js-base64: ^3.7.8
     zod: ^4.3.6
   checksum: c4c836cc751938c66777dc9ca327f5e941a0d64af8f8b294e54ff308db47dda0d4f46d779b30885cba3a3d31cfc381201148a1dfa1dcc7f1fe9f412d76c7bade
+  languageName: node
+  linkType: hard
+
+"@pagopa/io-wallet-oauth2@patch:@pagopa/io-wallet-oauth2@npm%3A1.2.1#./.yarn/patches/@pagopa-io-wallet-oauth2-npm-1.2.1-779d80230d.patch::locator=io%40workspace%3A.":
+  version: 1.2.1
+  resolution: "@pagopa/io-wallet-oauth2@patch:@pagopa/io-wallet-oauth2@npm%3A1.2.1#./.yarn/patches/@pagopa-io-wallet-oauth2-npm-1.2.1-779d80230d.patch::version=1.2.1&hash=55e587&locator=io%40workspace%3A."
+  dependencies:
+    "@openid4vc/oauth2": 0.4.3
+    "@openid4vc/utils": 0.4.3
+    "@pagopa/io-wallet-utils": 1.2.1
+    js-base64: ^3.7.8
+    zod: ^4.3.6
+  checksum: 787353c95c6eff96d56a2ae97cf1a797730554ac796f5374673435843a1be0e037cd8ecd2f126a2499b54b7e3d1f527e82ecf7b0db1de25518ae822f6bde46e0
   languageName: node
   linkType: hard
 
@@ -4594,6 +4639,22 @@ __metadata:
     "@pagopa/io-wallet-utils": 1.2.1
     zod: ^4.3.6
   checksum: a3171ef054a9d9f1eb47170b6b029de6adef48c7a27982afbcbdd934b83c99ef2d62b07e96429a9b511ffb4ee1559be01aa795e611d07da943d179c36e855c19
+  languageName: node
+  linkType: hard
+
+"@pagopa/io-wallet-oid4vci@patch:@pagopa/io-wallet-oid4vci@npm%3A1.2.1#./.yarn/patches/@pagopa-io-wallet-oid4vci-npm-1.2.1-b3ea62621d.patch::locator=io%40workspace%3A.":
+  version: 1.2.1
+  resolution: "@pagopa/io-wallet-oid4vci@patch:@pagopa/io-wallet-oid4vci@npm%3A1.2.1#./.yarn/patches/@pagopa-io-wallet-oid4vci-npm-1.2.1-b3ea62621d.patch::version=1.2.1&hash=df9e37&locator=io%40workspace%3A."
+  dependencies:
+    "@openid4vc/oauth2": 0.4.3
+    "@openid4vc/openid4vci": 0.4.3
+    "@openid4vc/utils": 0.4.3
+    "@pagopa/io-wallet-oauth2": 1.2.1
+    "@pagopa/io-wallet-oid-federation": 1.2.1
+    "@pagopa/io-wallet-oid4vp": 1.2.1
+    "@pagopa/io-wallet-utils": 1.2.1
+    zod: ^4.3.6
+  checksum: 105efe4d291b3bbc76c8a2e6e66fa0d5f59225ee13c83b285430e78ccfd1dfe45157840c148c3a67ff1f51bbfb72c18945b3813e4ae3d1c286428b01b08c0842
   languageName: node
   linkType: hard
 
@@ -13645,7 +13706,7 @@ __metadata:
     jest: ^30.2.0
     jwk-thumbprint: ^0.1.4
     lint-staged: ^13.2.0
-    lodash: ^4.17.21
+    lodash: 4.18.0
     mixpanel-react-native: 2.4.1
     mockdate: ^3.0.2
     mockttp: 2.4.0
@@ -13732,7 +13793,7 @@ __metadata:
     unist-util-visit: ^4.1.0
     url-parse: ^1.5.9
     uuid: ^8.3.2
-    validator: ^13.7.0
+    validator: 13.15.22
     xml2js: ^0.5.0
     xss: 1.0.10
     xstate: ^5
@@ -15813,6 +15874,13 @@ __metadata:
   version: 4.1.1
   resolution: "lodash.throttle@npm:4.1.1"
   checksum: 129c0a28cee48b348aef146f638ef8a8b197944d4e9ec26c1890c19d9bf5a5690fe11b655c77a4551268819b32d27f4206343e30c78961f60b561b8608c8c805
+  languageName: node
+  linkType: hard
+
+"lodash@npm:4.18.0":
+  version: 4.18.0
+  resolution: "lodash@npm:4.18.0"
+  checksum: 220e1b40f80425cbde3fcdd0915c0ef87e29cbce5fe9a6c82ad80a1d50cfab713eed7dc97a2f7697b11760796ec45cd1d9daf9767a9bee26da5502af487c9f45
   languageName: node
   linkType: hard
 
@@ -23355,6 +23423,13 @@ __metadata:
   version: 5.0.1
   resolution: "validate-npm-package-name@npm:5.0.1"
   checksum: 0d583a1af23aeffea7748742cf22b6802458736fb8b60323ba5949763824d46f796474b0e1b9206beb716f9d75269e19dbd7795d6b038b29d561be95dd827381
+  languageName: node
+  linkType: hard
+
+"validator@npm:13.15.22":
+  version: 13.15.22
+  resolution: "validator@npm:13.15.22"
+  checksum: 93b1b0b1797aaa984fda1c0529e69745ed87afcfa8a9ea15aa30a70796554a25f254759d2462c2000a692e5c6eae219e32449b86f8a9fd021135758df0dffe03
   languageName: node
   linkType: hard
 

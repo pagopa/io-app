@@ -3633,6 +3633,11 @@
         "credentialIntro": {
           "subtitle": "Leggi con attenzione cosa troverai."
         },
+        "credentialOffer": {
+          "intro": {
+            "fallbackTitle": "Aggiungi un documento al tuo Portafoglio"
+          }
+        },
         "credentialPreview": {
           "loading": "Attendi ancora qualche secondo, senza uscire dall’app",
           "title": "{{credential}}: ecco l'anteprima dei tuoi dati",

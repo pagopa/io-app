@@ -1,5 +1,6 @@
 import { CryptoContext } from "@pagopa/io-react-native-jwt";
 import {
+  CredentialOfferResolved,
   CredentialAccessToken,
   CredentialBundle,
   IssuerConfiguration,
@@ -60,6 +61,10 @@ export type Context = {
    * The credentials catalogue as a dictionary, with an entry for each credential type.
    */
   credentialsCatalogue: Record<string, DigitalCredentialMetadata> | undefined;
+
+  credentialOfferUri: string | undefined;
+  resolvedCredentialOffer: CredentialOfferResolved | undefined;
+
   /**
    * The access token obtained from the Issuer. If the session with the Wallet Provider expires
    * before requesting the credential, this token is used to retry the request.
@@ -84,5 +89,7 @@ export const InitialContext: Context = {
   credentials: undefined,
   failure: undefined,
   credentialsCatalogue: undefined,
+  credentialOfferUri: undefined,
+  resolvedCredentialOffer: undefined,
   accessToken: undefined
 };

@@ -26,8 +26,11 @@ import {
   ObtainCredentialActorInput,
   ObtainCredentialActorOutput,
   ObtainStatusAssertionActorInput,
+  ProcessCredentialOfferActorInput,
+  ProcessCredentialOfferActorOutput,
   RequestCredentialActorInput,
-  RequestCredentialActorOutput
+  RequestCredentialActorOutput,
+  VerifyTrustFederationActorInput
 } from "../actors";
 import { Context, InitialContext } from "../context";
 import { CredentialIssuanceFailureType } from "../failure";
@@ -70,6 +73,11 @@ const T_STORED_STATUS_ASSERTION: CredentialMetadata["storedStatusAssertion"] = {
   parsedStatusAssertion: ItwStatusAssertionMocks.mdl
 };
 
+const T_OFFER_URI =
+  "openid-credential-offer://?credential_offer_uri=https://eaa.wallet.ipzs.it/offers/123";
+const T_CREDENTIAL_TYPE = "education_degree";
+const T_TRUST_ISSUER_BASE_URL = "https://eaa.wallet.ipzs.it";
+
 describe("itwCredentialIssuanceMachine", () => {
   const onInit = jest.fn();
   const navigateToTrustIssuerScreen = jest.fn();
@@ -77,6 +85,7 @@ describe("itwCredentialIssuanceMachine", () => {
   const navigateToFailureScreen = jest.fn();
   const navigateToWallet = jest.fn();
   const navigateToCredentialIntroductionScreen = jest.fn();
+  const navigateToCardOnboardingScreen = jest.fn();
   const closeIssuance = jest.fn();
   const storeWalletInstanceAttestation = jest.fn();
   const storeCredential = jest.fn();
@@ -92,6 +101,7 @@ describe("itwCredentialIssuanceMachine", () => {
   const obtainAccessToken = jest.fn();
   const obtainCredential = jest.fn();
   const obtainStatusAssertion = jest.fn();
+  const processCredentialOffer = jest.fn();
   const waitForSessionRefresh = jest.fn();
 
   const isSessionExpired = jest.fn();
@@ -109,6 +119,7 @@ describe("itwCredentialIssuanceMachine", () => {
       navigateToCredentialIntroductionScreen,
       navigateToFailureScreen,
       navigateToWallet,
+      navigateToCardOnboardingScreen,
       closeIssuance,
       storeWalletInstanceAttestation,
       storeCredential,
@@ -119,7 +130,9 @@ describe("itwCredentialIssuanceMachine", () => {
       trackCredentialIssuingDataShareAccepted
     },
     actors: {
-      verifyTrustFederation: fromPromise<void>(verifyTrustFederation),
+      verifyTrustFederation: fromPromise<void, VerifyTrustFederationActorInput>(
+        verifyTrustFederation
+      ),
       getWalletAttestation:
         fromPromise<GetWalletAttestationActorOutput>(getWalletAttestation),
       requestCredential: fromPromise<
@@ -138,7 +151,11 @@ describe("itwCredentialIssuanceMachine", () => {
         ReadonlyArray<CredentialBundle>,
         ObtainStatusAssertionActorInput
       >(obtainStatusAssertion),
-      waitForSessionRefresh: fromCallback(waitForSessionRefresh)
+      waitForSessionRefresh: fromCallback(waitForSessionRefresh),
+      processCredentialOffer: fromPromise<
+        ProcessCredentialOfferActorOutput,
+        ProcessCredentialOfferActorInput
+      >(processCredentialOffer)
     },
     guards: {
       isSessionExpired,
@@ -213,6 +230,13 @@ describe("itwCredentialIssuanceMachine", () => {
       )
     );
     await waitFor(() => expect(requestCredential).toHaveBeenCalledTimes(1));
+    expect(requestCredential).toHaveBeenCalledWith(
+      expect.objectContaining({
+        input: expect.not.objectContaining({
+          authorizationServer: expect.any(String)
+        })
+      })
+    );
 
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
       walletInstanceAttestation: { jwt: T_WIA },
@@ -768,6 +792,82 @@ describe("itwCredentialIssuanceMachine", () => {
       snapshot.matches("CredentialIntroduction")
     );
     expect(navigateToCredentialIntroductionScreen).toHaveBeenCalledTimes(1);
+  });
+
+  describe("Credential Offer flow", () => {
+    it("Should process a credential offer and populate the resolved offer in context", async () => {
+      processCredentialOffer.mockImplementation(() =>
+        Promise.resolve({
+          offer: { credential_issuer: T_TRUST_ISSUER_BASE_URL },
+          grantDetails: {
+            authorizationCodeGrant: {
+              scope: T_CREDENTIAL_TYPE,
+              authorizationServer: T_TRUST_ISSUER_BASE_URL
+            }
+          }
+        })
+      );
+      hasValidWalletInstanceAttestation.mockImplementation(() => true);
+      hasCredentialIntroContent.mockImplementation(() => false);
+      requestCredential.mockResolvedValue({
+        clientId: T_CLIENT_ID,
+        codeVerifier: T_CODE_VERIFIER,
+        issuerConf: T_ISSUER_CONFIG,
+        requestedCredential: T_REQUESTED_CREDENTIAL
+      });
+
+      const actor = createActor(mockedMachine);
+      actor.start();
+
+      expect(actor.getSnapshot().value).toStrictEqual("Idle");
+
+      actor.send({
+        type: "start-credential-offer",
+        itwCredentialOfferUri: T_OFFER_URI
+      });
+
+      expect(onInit).toHaveBeenCalledTimes(1);
+      expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
+        credentialOfferUri: T_OFFER_URI,
+        mode: "issuance"
+      });
+
+      await waitFor(() =>
+        expect(processCredentialOffer).toHaveBeenCalledTimes(1)
+      );
+
+      await waitForActor(actor, snapshot =>
+        snapshot.matches("CredentialOfferResolved")
+      );
+
+      expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
+        credentialType: T_CREDENTIAL_TYPE,
+        credentialOfferUri: T_OFFER_URI
+      });
+      expect(actor.getSnapshot().context.resolvedCredentialOffer).toBeDefined();
+
+      actor.send({ type: "confirm-credential-offer" });
+
+      await waitFor(() =>
+        expect(verifyTrustFederation).toHaveBeenCalledWith(
+          expect.objectContaining({
+            input: expect.objectContaining({
+              resolvedCredentialOffer:
+                actor.getSnapshot().context.resolvedCredentialOffer
+            })
+          })
+        )
+      );
+      await waitFor(() => expect(requestCredential).toHaveBeenCalledTimes(1));
+      expect(requestCredential).toHaveBeenCalledWith(
+        expect.objectContaining({
+          input: expect.objectContaining({
+            resolvedCredentialOffer:
+              actor.getSnapshot().context.resolvedCredentialOffer
+          })
+        })
+      );
+    });
   });
 
   it("Should wait for session refresh then retry the credential request", async () => {
