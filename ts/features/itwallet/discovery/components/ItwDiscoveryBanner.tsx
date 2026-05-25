@@ -12,7 +12,6 @@ import {
 import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum";
 import { ItwEngagementBanner } from "../../common/components/ItwEngagementBanner";
 import { itwCloseBanner } from "../../common/store/actions/banners";
-import { itwIsRemotelyActiveSelector } from "../../walletInstance/store/selectors";
 import {
   itwIsMdlPresentSelector,
   itwIsWalletEmptySelector
@@ -22,6 +21,7 @@ import {
   itwLifecycleIsValidSelector
 } from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { itwIsRemotelyActiveSelector } from "../../walletInstance/store/selectors";
 
 type Props = {
   /** Flow type to determine dismissal logic and tracking properties  */
