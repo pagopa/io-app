@@ -1,14 +1,15 @@
 import { SagaIterator } from "redux-saga";
 import { call, fork, select, take, takeLatest } from "typed-redux-saga/macro";
+import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 import { itwCredentialsStore } from "../../credentials/store/actions";
 import { itwLifecycleWalletReset } from "../../lifecycle/store/actions";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import { trackItwStatusListLastCheckTime } from "../analytics";
 import {
   registerItwStatusListFetchTask,
   unregisterItwStatusListFetchTask
 } from "../tasks";
 import { getLastStatusListCheckTimestamp } from "../utils/storage";
-import { trackItwStatusListLastCheckTime } from "../analytics";
 
 /**
  * Registers the ITW Status List fetch task with expo-background-task.
@@ -47,6 +48,14 @@ export function* trackLastStatusListFetchTaskSaga(): SagaIterator {
 }
 
 export function* watchItwTasksSaga(): SagaIterator {
+  const isWhitelisted = yield* select(itwIsL3EnabledSelector);
+  if (!isWhitelisted) {
+    // If the user is not whitelisted for L3 features, we can skip background
+    // task sagas as they won't have access to IT Wallet features that require
+    // status list checks.
+    return;
+  }
+
   // TODO: remove once the status list is implemented
   yield* fork(trackLastStatusListFetchTaskSaga);
   // Register the background task for Status List fetch only for active wallet instances
