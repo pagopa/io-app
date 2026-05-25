@@ -1499,7 +1499,7 @@
         },
         "TIMEOUT": {
           "title": "La sessione è scaduta",
-          "subtitle": "Non è stato addebitato alcun importo.\\nPer la tua sicurezza, hai a disposizione un tempo limitato per completare l’operazione."
+          "subtitle": "Non è stato addebitato alcun importo.\nPer la tua sicurezza, hai a disposizione un tempo limitato per completare l’operazione."
         },
         "CIRCUIT_ERROR": {
           "title": "Il circuito della carta non è supportato"
@@ -1517,7 +1517,7 @@
         },
         "EXCESSIVE_AMOUNT": {
           "title": "Autorizzazione negata",
-          "subtitle": "Non è stato addebitato alcun importo.\\nProbabilmente hai sforato i limiti di spesa previsti dalla tua banca."
+          "subtitle": "Non è stato addebitato alcun importo.\nProbabilmente hai sforato i limiti di spesa previsti dalla tua banca."
         },
         "INVALID_METHOD": {
           "title": "Il metodo di pagamento non è supportato"
