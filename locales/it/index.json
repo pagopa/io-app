@@ -3140,7 +3140,7 @@
           "expired": "Scaduta",
           "expiring": "In scadenza",
           "pending": "In lavorazione",
-          "invalid": "Non valida",
+          "invalid": "Non valido",
           "verificationExpiring": "Azione richiesta",
           "verificationExpired": "Azione richiesta",
           "upgradePending": "Da aggiornare",
@@ -3848,9 +3848,11 @@
           "jwtVerification": {
             "content": {
               "jwtExpiring": "Verifica la versione digitale del tuo documento entro il {{date}} per continuare a usarlo senza limitazioni.",
-              "jwtExpired": "Verifica ora la versione digitale del tuo documento per continuare a usarlo senza limitazioni."
+              "jwtExpired": "La versione digitale del documento è scaduta il {{date}}.",
+              "invalid": "Conferma la tua identità per continuare a usare i tuoi documenti senza limitazioni."
             },
-            "action": "Inizia"
+            "action": "Aggiorna documento digitale",
+            "actionInvalid": "Conferma identità"
           }
         },
         "bottomSheets": {

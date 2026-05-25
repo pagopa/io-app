@@ -128,11 +128,8 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
 
   return (
     <View>
-      {sectionHeader}
-      <VStack space={8}>
-        {shouldRenderUpgradeBanner && (
-          <ItwDiscoveryBanner flow="wallet" style={{ marginVertical: 8 }} />
-        )}
+      <VStack space={16}>
+        {shouldRenderUpgradeBanner && <ItwDiscoveryBanner flow="wallet" />}
         {shouldRenderL2EngagementBanner && <ItwL2EngagementBanner />}
         <ItwWalletReadyBanner />
         {!shouldHideEidAlert && (
@@ -144,6 +141,7 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
         )}
       </VStack>
 
+      {sectionHeader}
       <View style={styles.cardsWrapper}>
         {isNewItwRenderable && <ItwWalletIdCard isStacked={cards.length > 0} />}
         {cards.length > 0 && (
