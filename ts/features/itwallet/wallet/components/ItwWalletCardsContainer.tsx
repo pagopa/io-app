@@ -96,15 +96,11 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
 
   const sectionHeader = useMemo((): React.ReactElement => {
     if (isNewItwRenderable) {
-      const isStacked = cards.length > 0;
       return (
-        <View style={styles.cardsWrapper}>
-          <ListItemHeader
-            testID={"walletCardsCategoryItwIdCardHeaderTestID"}
-            label={I18n.t("features.wallet.cards.categories.itw")}
-          />
-          <ItwWalletIdCard isStacked={isStacked} />
-        </View>
+        <ListItemHeader
+          testID={"walletCardsCategoryItwIdCardHeaderTestID"}
+          label={I18n.t("features.wallet.cards.categories.itw")}
+        />
       );
     }
     return (
@@ -128,11 +124,10 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
         }}
       />
     );
-  }, [iconColor, isNewItwRenderable, eidInfoBottomSheet.present, cards.length]);
+  }, [iconColor, isNewItwRenderable, eidInfoBottomSheet.present]);
 
   return (
     <View>
-      {sectionHeader}
       <VStack space={16}>
         {shouldRenderUpgradeBanner && <ItwDiscoveryBanner flow="wallet" />}
         {shouldRenderL2EngagementBanner && <ItwL2EngagementBanner />}
@@ -144,11 +139,12 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
             currentScreenName={currentScreenName}
           />
         )}
-        {/* Dummy view to add space in case there is another component */}
-        <View />
       </VStack>
-      {cards.length > 0 && (
-        <View style={styles.cardsWrapper}>
+
+      {sectionHeader}
+      <View style={styles.cardsWrapper}>
+        {isNewItwRenderable && <ItwWalletIdCard isStacked={cards.length > 0} />}
+        {cards.length > 0 && (
           <GuidedTour
             groupId={ITW_TOUR_GROUP_ID}
             index={ITW_TOUR_STEP_CREDENTIALS}
@@ -163,8 +159,8 @@ export const ItwWalletCardsContainer = withWalletCategoryFilter("itw", () => {
               cards={cards}
             />
           </GuidedTour>
-        </View>
-      )}
+        )}
+      </View>
       {eidInfoBottomSheet.bottomSheet}
     </View>
   );

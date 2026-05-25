@@ -332,36 +332,6 @@ exports[`getCredentialCardConfig when color scheme is [dark] should match snapsh
 }
 `;
 
-exports[`getCredentialCardConfig when color scheme is [dark] should match snapshot for type [PersonIdentificationData] 1`] = `
-{
-  "background": {
-    "angle": 217,
-    "colors": [
-      "#233966",
-      "#26344B",
-      "#233966",
-    ],
-    "positions": [
-      0.0349,
-      0.4887,
-      0.9425,
-    ],
-    "type": "linear",
-  },
-  "borderColor": "#738199",
-  "color": "#24375A",
-  "overlay": {
-    "card": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pid_card.png",
-    },
-    "header": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pid_header.png",
-    },
-  },
-  "titleColor": "#C4DCF5",
-}
-`;
-
 exports[`getCredentialCardConfig when color scheme is [dark] should match snapshot for type [a] 1`] = `
 {
   "background": {
@@ -602,6 +572,36 @@ exports[`getCredentialCardConfig when color scheme is [dark] should match snapsh
 }
 `;
 
+exports[`getCredentialCardConfig when color scheme is [dark] should match snapshot for type [pid] 1`] = `
+{
+  "background": {
+    "angle": 217,
+    "colors": [
+      "#233966",
+      "#26344B",
+      "#233966",
+    ],
+    "positions": [
+      0.0349,
+      0.4887,
+      0.9425,
+    ],
+    "type": "linear",
+  },
+  "borderColor": "#738199",
+  "color": "#24375A",
+  "overlay": {
+    "card": {
+      "testUri": "../../../img/features/itWallet/cards/overlay/pid_card.png",
+    },
+    "header": {
+      "testUri": "../../../img/features/itWallet/cards/overlay/pid_header.png",
+    },
+  },
+  "titleColor": "#C4DCF5",
+}
+`;
+
 exports[`getCredentialCardConfig when color scheme is [dark] should match snapshot for type [residency] 1`] = `
 {
   "background": {
@@ -755,40 +755,6 @@ exports[`getCredentialCardConfig when color scheme is [light] should match snaps
     },
   },
   "titleColor": "#032D5C",
-}
-`;
-
-exports[`getCredentialCardConfig when color scheme is [light] should match snapshot for type [PersonIdentificationData] 1`] = `
-{
-  "background": {
-    "angle": 217,
-    "colors": [
-      "#EAF6FF",
-      "#F6FBFF",
-      "#EAF6FF",
-      "#F9F9F9",
-      "#EAF6FF",
-    ],
-    "positions": [
-      0.0349,
-      0.2514,
-      0.4646,
-      0.7143,
-      0.9425,
-    ],
-    "type": "linear",
-  },
-  "borderColor": "#4F99E2",
-  "color": "#EAF6FF",
-  "overlay": {
-    "card": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pid_card_dark.png",
-    },
-    "header": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pid_header.png",
-    },
-  },
-  "titleColor": "#115486",
 }
 `;
 
@@ -1024,6 +990,40 @@ exports[`getCredentialCardConfig when color scheme is [light] should match snaps
 }
 `;
 
+exports[`getCredentialCardConfig when color scheme is [light] should match snapshot for type [pid] 1`] = `
+{
+  "background": {
+    "angle": 217,
+    "colors": [
+      "#EAF6FF",
+      "#F6FBFF",
+      "#EAF6FF",
+      "#F9F9F9",
+      "#EAF6FF",
+    ],
+    "positions": [
+      0.0349,
+      0.2514,
+      0.4646,
+      0.7143,
+      0.9425,
+    ],
+    "type": "linear",
+  },
+  "borderColor": "#4F99E2",
+  "color": "#EAF6FF",
+  "overlay": {
+    "card": {
+      "testUri": "../../../img/features/itWallet/cards/overlay/pid_card_dark.png",
+    },
+    "header": {
+      "testUri": "../../../img/features/itWallet/cards/overlay/pid_header.png",
+    },
+  },
+  "titleColor": "#115486",
+}
+`;
+
 exports[`getCredentialCardConfig when color scheme is [light] should match snapshot for type [residency] 1`] = `
 {
   "background": {
@@ -1177,40 +1177,6 @@ exports[`getCredentialCardConfig when color scheme is [undefined] should match s
     },
   },
   "titleColor": "#032D5C",
-}
-`;
-
-exports[`getCredentialCardConfig when color scheme is [undefined] should match snapshot for type [PersonIdentificationData] 1`] = `
-{
-  "background": {
-    "angle": 217,
-    "colors": [
-      "#EAF6FF",
-      "#F6FBFF",
-      "#EAF6FF",
-      "#F9F9F9",
-      "#EAF6FF",
-    ],
-    "positions": [
-      0.0349,
-      0.2514,
-      0.4646,
-      0.7143,
-      0.9425,
-    ],
-    "type": "linear",
-  },
-  "borderColor": "#4F99E2",
-  "color": "#EAF6FF",
-  "overlay": {
-    "card": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pid_card_dark.png",
-    },
-    "header": {
-      "testUri": "../../../img/features/itWallet/cards/overlay/pid_header.png",
-    },
-  },
-  "titleColor": "#115486",
 }
 `;
 
@@ -1443,6 +1409,40 @@ exports[`getCredentialCardConfig when color scheme is [undefined] should match s
     "showCornerOverlay": true,
   },
   "titleColor": "#2B2F33",
+}
+`;
+
+exports[`getCredentialCardConfig when color scheme is [undefined] should match snapshot for type [pid] 1`] = `
+{
+  "background": {
+    "angle": 217,
+    "colors": [
+      "#EAF6FF",
+      "#F6FBFF",
+      "#EAF6FF",
+      "#F9F9F9",
+      "#EAF6FF",
+    ],
+    "positions": [
+      0.0349,
+      0.2514,
+      0.4646,
+      0.7143,
+      0.9425,
+    ],
+    "type": "linear",
+  },
+  "borderColor": "#4F99E2",
+  "color": "#EAF6FF",
+  "overlay": {
+    "card": {
+      "testUri": "../../../img/features/itWallet/cards/overlay/pid_card_dark.png",
+    },
+    "header": {
+      "testUri": "../../../img/features/itWallet/cards/overlay/pid_header.png",
+    },
+  },
+  "titleColor": "#115486",
 }
 `;
 
