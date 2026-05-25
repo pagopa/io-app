@@ -29,11 +29,7 @@ export const getCredentialStatus = (
   options: GetCredentialStatusOptions = {}
 ): ItwCredentialStatus => {
   const { expiringDays = DEFAULT_EXPIRING_DAYS } = options;
-  const {
-    jwt,
-    parsedCredential,
-    storedStatusAssertion: statusAssertion
-  } = credential;
+  const { jwt, parsedCredential, validity } = credential;
 
   const now = Date.now();
 
@@ -48,15 +44,16 @@ export const getCredentialStatus = (
   );
 
   const isIssuerAttestedExpired =
-    statusAssertion?.credentialStatus === "invalid" &&
-    statusAssertion.errorCode === "credential_expired";
+    validity?.type === "status_assertion" &&
+    validity.status === "invalid" &&
+    validity.errorCode === "credential_expired";
 
   if (isIssuerAttestedExpired || documentExpireDays <= 0) {
     return "expired";
   }
 
   // Invalid must prevail over non-expired statuses
-  if (statusAssertion?.credentialStatus === "invalid") {
+  if (validity?.status === "invalid") {
     return "invalid";
   }
 
@@ -78,7 +75,7 @@ export const getCredentialStatus = (
 
   // We could not determine the status of the credential.
   // This happens when the status assertion API call fails.
-  if (statusAssertion?.credentialStatus === "unknown") {
+  if (validity?.status === "unknown") {
     return "unknown";
   }
 
@@ -90,28 +87,32 @@ export const getCredentialStatus = (
  * The message is dynamic and extracted from the issuer configuration.
  */
 export const getCredentialStatusObject = (credential: CredentialMetadata) => {
-  const { storedStatusAssertion, issuerConf, credentialId } = credential;
+  const { validity, issuerConf, credentialId } = credential;
 
-  const errorCode =
-    storedStatusAssertion?.credentialStatus === "invalid"
-      ? storedStatusAssertion.errorCode
-      : undefined;
+  if (validity?.type === "status_assertion") {
+    const errorCode =
+      validity.status === "invalid" ? validity.errorCode : undefined;
+    const message = pipe(
+      O.fromNullable(errorCode),
+      O.chain(code =>
+        O.tryCatch(() =>
+          Errors.extractErrorMessageFromIssuerConf(code, {
+            issuerConf,
+            credentialType: credentialId
+          })
+        )
+      ),
+      O.toUndefined
+    );
 
-  const message = pipe(
-    O.fromNullable(errorCode),
-    O.chain(code =>
-      O.tryCatch(() =>
-        Errors.extractErrorMessageFromIssuerConf(code, {
-          issuerConf,
-          credentialType: credentialId
-        })
-      )
-    ),
-    O.toUndefined
-  );
+    return {
+      status: getCredentialStatus(credential),
+      message
+    };
+  }
 
+  // TODO: extract error message from catalogue with status list
   return {
-    status: getCredentialStatus(credential),
-    message
+    status: getCredentialStatus(credential)
   };
 };

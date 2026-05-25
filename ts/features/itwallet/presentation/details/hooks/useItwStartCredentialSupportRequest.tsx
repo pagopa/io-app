@@ -21,26 +21,22 @@ export const useItwStartCredentialSupportRequest = (
   const { startItwZendeskSupport } = useItwZendeskSupport();
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
+  const errorCode =
+    credential.validity?.type === "status_assertion"
+      ? credential.validity.status === "invalid"
+        ? credential.validity.errorCode
+        : undefined
+      : credential.validity?.status;
+
   return useCallback(() => {
     trackWalletCredentialSupport(
       getMixPanelCredential(credential.credentialType, isItwL3)
     );
-
-    const statusAssertion = credential.storedStatusAssertion;
-    const errorCode =
-      statusAssertion?.credentialStatus !== "valid"
-        ? statusAssertion?.errorCode
-        : undefined;
 
     startItwZendeskSupport({
       subcategory: ZendeskSubcategoryValue.IT_WALLET_AGGIUNTA_DOCUMENTI,
       errorCode,
       logData: errorCode
     });
-  }, [
-    credential.credentialType,
-    credential.storedStatusAssertion,
-    isItwL3,
-    startItwZendeskSupport
-  ]);
+  }, [credential.credentialType, errorCode, isItwL3, startItwZendeskSupport]);
 };

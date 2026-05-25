@@ -76,7 +76,8 @@ export const shouldShowMdlUpdateDigitalCredential = (
 
   return (
     status === "invalid" &&
-    credential.storedStatusAssertion?.credentialStatus === "invalid" &&
-    credential.storedStatusAssertion.errorCode === "credential_invalid"
+    credential.validity?.type === "status_assertion" &&
+    credential.validity?.status === "invalid" &&
+    credential.validity?.errorCode === "credential_invalid"
   );
 };
