@@ -166,9 +166,7 @@ export const createEidIssuanceActorsImplementation = (
         itwVersion,
         hardwareKeyTag,
         sessionToken,
-        {
-          isRenewal: input.isRenewal
-        }
+        { isRenewal: input.isRenewal }
       );
 
       return hardwareKeyTag;
