@@ -23,6 +23,12 @@
       "plugin": "@nx/jest/plugin",
       "options": {
         "targetName": "test"
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "changedSince": "master"
+        }
       }
     },
     {
