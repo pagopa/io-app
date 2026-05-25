@@ -5,11 +5,12 @@ import rehypeFormat from "rehype-format";
 import rehypeStringify from "rehype-stringify";
 import { visit } from "unist-util-visit";
 import { h } from "hastscript";
+import { Root } from "mdast";
 
 // This Plugin is used to convert the markdown directives to custom blocks including classes and ids
 // source https://github.com/remarkjs/remark-directive#use
 function customPlugin() {
-  return (tree: any) => {
+  return (tree: Root) => {
     visit(tree, node => {
       if (
         node.type === "textDirective" ||
@@ -18,7 +19,7 @@ function customPlugin() {
       ) {
         // eslint-disable-next-line functional/immutable-data
         const data = node.data || (node.data = {});
-        const hast = h(node.name as string, node.attributes); // Casting is required because after migrating to pnpm, the Root type gives an error as it doesn't contain either tagName or properties
+        const hast = h(node.name, node.attributes);
 
         // eslint-disable-next-line functional/immutable-data
         data.hName = hast.tagName;
