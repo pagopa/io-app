@@ -1991,10 +1991,34 @@
           "title": "Enable L3 check for the signature flow",
           "description": "By enabling this toggle, you activate the L3 check for the signature flow, which requires a new L3 login for users who do not have the L3 authentication level (CIE + PIN)"
         },
-        "title": "Confirm your identity to sign the documents",
-        "subtitle": "This is a security step necessary to associate the signature with your identity (or to issue the signature request?)\nYou will need the Electronic Identity Card.",
-        "secondaryAction": "What should I do?",
-        "toast": "Functionality not yet available"
+        "landingPage": {
+          "title": "Please have your electronic ID card and PIN to hand",
+          "subtitle": "Before signing, we need to verify your identity. This step protects your signature and ensures its validity."
+        },
+        "optinLogin": {
+          "title": "Would you like to enable quick access?",
+          "description": "With quick access, we’ll only ask you to verify your digital identity once a year, rather than every 30 days. After that, you can simply use your face, fingerprint or access code.",
+          "descriptionButton": "How to protect your login",
+          "primaryAction": "Continue with quick access",
+          "secondaryAction": "Re-authorise access every 30 days"
+        },
+        "securityBottomsheet": {
+          "title": "How to protect your login",
+          "featureInfo1": "You can log out of the app even if you lose your device.",
+          "featureInfo1Action": "Go to website",
+          "featureInfo2": "If you’re thinking someone might be using your digital identity, you can block access to the app via the website.",
+          "featureInfo2Action": "Manage access",
+          "featureInfo3": "If you log in to IO on a device that isn't yours, remember to log out of the app."
+        },
+        "nfcNotAvailable": {
+          "title": "Your device does not support CIE reading",
+          "description": "The device you are using does not support login via the Electronic Identity Card (CIE).",
+          "featureInfoText": [
+            "To read the CIE, you need a device with an NFC chip.",
+            "An Android 8 or iOS 15.1 operating system or later is required."
+          ],
+          "cta": "I understand"
+        }
       },
       "abort": {
         "title": "Quit signing",
@@ -2051,7 +2075,7 @@
       },
       "qtspTos": {
         "title": "Almost there!",
-        "subTitle": "To sign, you must accept the terms and conditions of the service and confirm that you have read the privacy policy of the signature provider."
+        "subTitle": "To sign, you must accept the terms and conditions of the service and confirm that you have read the privacy policy of the signature provider **Namirial S.p.A.**"
       },
       "documents": {
         "footer": {

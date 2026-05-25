@@ -1,14 +1,14 @@
+import { ISO18013_5 } from "@pagopa/io-react-native-iso18013";
 import { ActionArgs, assign } from "xstate";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { serializeFailureReason } from "../../../common/utils/itwStoreUtils";
-import { trackItwProximityQrCodeLoadingFailure } from "../analytics";
-import { ITW_PROXIMITY_ROUTES } from "../navigation/routes";
 import { useIOStore } from "../../../../../store/hooks";
-import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors";
-import { itwPresentableCredentialsByDocTypeSelector } from "../store/selectors";
+import { assert } from "../../../../../utils/assert";
+import { ITW_PROXIMITY_ROUTES } from "../navigation/routes";
+import { itwGrantProximityConsent } from "../store/actions";
+import { itwPresentableCredentialsByDocTypeSelector } from "../store/selectors/credentials";
+import { getConsentDataFromProximityDetails } from "../store/utils";
 import { Context } from "./context";
 import { ProximityEvents } from "./events";
-import { mapEventToFailure } from "./failure";
 
 export const createProximityActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>,
@@ -19,15 +19,14 @@ export const createProximityActionsImplementation = (
       const state = store.getState();
 
       return {
-        walletInstanceAttestation: itwWalletInstanceAttestationSelector(state),
         credentials: itwPresentableCredentialsByDocTypeSelector(state)
       };
     }
   ),
 
-  navigateToGrantPermissionsScreen: () => {
+  navigateToBluetoothPermissionsScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.DEVICE_PERMISSIONS
+      screen: ITW_PROXIMITY_ROUTES.BLUETOOTH_PERMISSIONS
     });
   },
 
@@ -37,9 +36,22 @@ export const createProximityActionsImplementation = (
     });
   },
 
-  navigateToQrCodeScreen: () => {
+  navigateToNfcActivationScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.QR_CODE
+      screen: ITW_PROXIMITY_ROUTES.BLUETOOTH_ACTIVATION
+    });
+  },
+
+  navigateToNfcPresentmentScreen: () => {
+    navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
+      screen: ITW_PROXIMITY_ROUTES.NFC_PRESENTMENT
+    });
+  },
+
+  navigateToPresentmentScreen: () => {
+    navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
+      screen: ITW_PROXIMITY_ROUTES.PRESENTMENT,
+      params: {}
     });
   },
 
@@ -49,14 +61,16 @@ export const createProximityActionsImplementation = (
     });
   },
 
-  navigateToSendDocumentsResponseScreen: () => {
+  navigateToStoreconsentScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.SEND_DOCUMENTS_RESPONSE
+      screen: ITW_PROXIMITY_ROUTES.STORE_CONSENT
     });
   },
 
-  navigateToWallet: () => {
-    navigation.pop();
+  navigateToSuccessScreen: () => {
+    navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
+      screen: ITW_PROXIMITY_ROUTES.SUCCESS
+    });
   },
 
   navigateToFailureScreen: () => {
@@ -69,14 +83,25 @@ export const createProximityActionsImplementation = (
     navigation.pop();
   },
 
-  trackQrCodeGenerationOutcome: ({
-    context,
-    event
+  attemptSessionTermination: () => {
+    ISO18013_5.sendErrorResponse(ISO18013_5.ErrorCode.SESSION_TERMINATED).catch(
+      () => null
+    );
+  },
+
+  storeConsent: ({
+    context
   }: ActionArgs<Context, ProximityEvents, ProximityEvents>) => {
-    if (context.failure) {
-      const failure = mapEventToFailure(event);
-      const serializedFailure = serializeFailureReason(failure);
-      trackItwProximityQrCodeLoadingFailure(serializedFailure);
-    }
+    assert(
+      context.proximityDetails,
+      "ProximityDetails must be present in context to store consent"
+    );
+
+    const consentData = getConsentDataFromProximityDetails(
+      "IPZS", // TODO - use actual RP ID when available instead of hardcoding
+      context.proximityDetails
+    );
+
+    store.dispatch(itwGrantProximityConsent(consentData));
   }
 });
