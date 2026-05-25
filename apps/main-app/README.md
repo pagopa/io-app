@@ -450,7 +450,7 @@ The React Native documentation provides a [useful guide](https://reactnative.dev
 > For building the app on an iOS physical device, a few additional steps are necessary:
 > - If you're not part of the PagoPA S.p.A. organization then you must change the `Bundle Identifier` to something unique. This adjustment can be made in the `Signing (Debug)`
 > section of Xcode;
-> - In order to test the CIE authentication flow, run `pnpm cie-ios:prod` before building the app. The process can be reverted by running `pnpm cie-ios:dev`.
+> - In order to test the CIE authentication flow, run `pnpm nx run main-app:cie-ios-prod` before building the app. The process can be reverted by running `pnpm nx run main-app:cie-ios-dev`.
 
 
 

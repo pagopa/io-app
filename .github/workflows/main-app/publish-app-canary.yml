@@ -156,9 +156,7 @@ jobs:
         with:
           bundler-cache: true
       - id: prepare-ios-build
-        run: |
-          cd apps/main-app
-          ./scripts/ios-release-build.sh
+        run: ./apps/main-app/scripts/ios-release-build.sh
         env:
           APP_STORE_API_KEY_ID: ${{secrets.APP_STORE_API_KEY_ID}}
           APP_STORE_API_PRIVATE_KEY: ${{secrets.APP_STORE_API_PRIVATE_KEY}}
