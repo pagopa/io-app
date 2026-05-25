@@ -2579,18 +2579,13 @@ describe("itwEidIssuanceMachine", () => {
 
     const actor = createActor(mockedMachine);
     actor.start();
-
     actor.send({ type: "start", mode: "upgrade", level: "l3" });
     actor.send({ type: "accept-tos" });
 
     await waitForActor(actor, s => s.matches("WalletInstanceCreation"));
     expect(createWalletInstance).toHaveBeenNthCalledWith(
       1,
-      expect.objectContaining({
-        input: {
-          isRenewal: true
-        }
-      })
+      expect.objectContaining({ input: { isRenewal: true } })
     );
   });
 
@@ -2602,7 +2597,6 @@ describe("itwEidIssuanceMachine", () => {
 
     const actor = createActor(mockedMachine);
     actor.start();
-
     actor.send({ type: "start", mode: "issuance", level: "l3" });
     actor.send({ type: "accept-tos" });
 
