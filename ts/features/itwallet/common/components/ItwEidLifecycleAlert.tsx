@@ -137,15 +137,7 @@ export const ItwEidLifecycleAlert = ({
         };
       }
 
-      const isPidDetailScreen =
-        currentScreenName === ITW_ROUTES.PRESENTATION.PID_DETAIL;
-
       const baseProps = eIDAlertPropsMap[eidStatus];
-
-      if (isPidDetailScreen && eidStatus === "jwtExpired") {
-        const { action, onPress, ...rest } = baseProps;
-        return rest;
-      }
 
       return baseProps;
     }, [eidStatus, eid.jwt.issuedAt, eid.jwt.expiration, nameSpace]);

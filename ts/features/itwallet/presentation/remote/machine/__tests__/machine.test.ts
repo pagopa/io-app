@@ -54,6 +54,8 @@ describe("itwRemoteMachine", () => {
   const isItWalletL3Active = jest.fn();
   const isEidExpired = jest.fn();
   const hasValidWalletInstanceAttestation = jest.fn().mockReturnValue(true);
+  const isOpenIdFederationClient = jest.fn();
+  const isX509HashClient = jest.fn();
 
   const evaluateRelyingPartyTrust = jest.fn();
   const getRequestObject = jest.fn();
@@ -99,7 +101,9 @@ describe("itwRemoteMachine", () => {
     guards: {
       isItWalletL3Active,
       isEidExpired,
-      hasValidWalletInstanceAttestation
+      hasValidWalletInstanceAttestation,
+      isOpenIdFederationClient,
+      isX509HashClient
     }
   });
 
@@ -221,6 +225,7 @@ describe("itwRemoteMachine", () => {
 
     isItWalletL3Active.mockReturnValue(true);
     isEidExpired.mockReturnValue(false);
+    isOpenIdFederationClient.mockReturnValue(true);
     evaluateRelyingPartyTrust.mockRejectedValue(new Error("test"));
 
     actor.send({
@@ -260,6 +265,7 @@ describe("itwRemoteMachine", () => {
 
     isItWalletL3Active.mockReturnValue(true);
     isEidExpired.mockReturnValue(false);
+    isOpenIdFederationClient.mockReturnValue(true);
     evaluateRelyingPartyTrust.mockResolvedValue({
       rpConf
     });
@@ -406,8 +412,8 @@ describe("itwRemoteMachine", () => {
   it("should transition to failure when an error occurs in GettingPresentationDetails", async () => {
     isItWalletL3Active.mockReturnValue(true);
     isEidExpired.mockReturnValue(false);
+    isOpenIdFederationClient.mockReturnValue(true);
     evaluateRelyingPartyTrust.mockResolvedValue({
-      rpSubject: T_CLIENT_ID,
       rpConf: {} as RelyingPartyConfiguration
     });
     getRequestObject.mockResolvedValue("encoded-jwt");
@@ -455,7 +461,7 @@ describe("itwRemoteMachine", () => {
   it("should transition to Failure when an error occurs in EvaluatingRelyingPartyTrust", async () => {
     isItWalletL3Active.mockReturnValue(true);
     isEidExpired.mockReturnValue(false);
-
+    isOpenIdFederationClient.mockReturnValue(true);
     evaluateRelyingPartyTrust.mockImplementation(() => {
       throw new Error("Trust evaluation failed");
     });
@@ -524,5 +530,50 @@ describe("itwRemoteMachine", () => {
     expect(
       storeWalletInstanceAttestation.mock.lastCall.at(0).event.output
     ).toEqual(mockWalletAttestation);
+  });
+
+  it("should handle clients of type OpenID Federation", async () => {
+    isItWalletL3Active.mockReturnValue(true);
+    isEidExpired.mockReturnValue(false);
+    hasValidWalletInstanceAttestation.mockReturnValue(true);
+    isOpenIdFederationClient.mockReturnValue(true);
+    evaluateRelyingPartyTrust.mockResolvedValue({});
+
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    actor.send({
+      type: "start",
+      payload: qrCodePayload,
+      flowType: T_FLOW_TYPE
+    });
+
+    expect(actor.getSnapshot().value).toEqual("EvaluatingRelyingPartyTrust");
+    expect(evaluateRelyingPartyTrust).toHaveBeenCalledTimes(1);
+
+    const intermediateSnapshot = await waitFor(actor, s =>
+      s.matches("GettingRequestObject")
+    );
+    expect(intermediateSnapshot.value).toStrictEqual("GettingRequestObject");
+  });
+
+  it("should handle clients of type X509 Hash", async () => {
+    isItWalletL3Active.mockReturnValue(true);
+    isEidExpired.mockReturnValue(false);
+    hasValidWalletInstanceAttestation.mockReturnValue(true);
+    isOpenIdFederationClient.mockReturnValue(false);
+    isX509HashClient.mockReturnValue(true);
+
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    actor.send({
+      type: "start",
+      payload: qrCodePayload,
+      flowType: T_FLOW_TYPE
+    });
+
+    expect(actor.getSnapshot().value).toEqual("GettingRequestObject");
+    expect(evaluateRelyingPartyTrust).not.toHaveBeenCalled();
   });
 });
