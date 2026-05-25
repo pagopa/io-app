@@ -9,6 +9,13 @@
     "prettier:check": "prettier --check \"**/(src|ts|locales)/**/*.(ts|tsx|json)\""
   },
   "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/plugin-transform-export-namespace-from": "^7.27.1",
+    "@babel/plugin-transform-regenerator": "^7.18.6",
+    "@babel/preset-env": "^7.25.3",
+    "@babel/runtime": "^7.25.0",
+    "@react-native/babel-preset": "0.81.5",
+    "@react-native/metro-config": "0.81.5",
     "@nx/eslint": "22.7.2",
     "@nx/jest": "22.7.2",
     "@nx/js": "22.7.2",

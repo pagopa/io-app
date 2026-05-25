@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable functional/immutable-data */
+const path = require("path");
 const { getDefaultConfig, mergeConfig } = require("@react-native/metro-config");
+
+const workspaceRoot = path.resolve(__dirname, "../..");
 
 const {
   resolver: { sourceExts, assetExts }
@@ -13,6 +16,7 @@ const {
  * @type {import('@react-native/metro-config').MetroConfig}
  */
 const config = {
+  watchFolders: [workspaceRoot],
   transformer: {
     babelTransformerPath: require.resolve(
       "react-native-svg-transformer/react-native"
@@ -21,6 +25,10 @@ const config = {
   resolver: {
     sourceExts: [...sourceExts, "svg"],
     assetExts: assetExts.filter(ext => ext !== "svg"),
+    nodeModulesPaths: [
+      path.resolve(__dirname, "node_modules"),
+      path.resolve(workspaceRoot, "node_modules")
+    ],
 
     resolveRequest: (context, moduleName, platform) => {
       if (moduleName === "crypto") {
