@@ -14,7 +14,7 @@ import {
 import { originSchemasWhiteList } from "../../../common/utils/originSchemasWhiteList";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
-import { useIODispatch, useIOStore } from "../../../../../store/hooks";
+import { useIODispatch } from "../../../../../store/hooks";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import { onLoginUriChanged } from "../../../common/utils/login";
 import { AUTH_ERRORS } from "../../../common/components/AuthErrorComponent";
@@ -23,7 +23,6 @@ import {
   activeSessionLoginSuccess,
   setFinishedActiveSessionLoginFlow
 } from "../../store/actions";
-import { CieConsentDataUsageScreenNavigationParams } from "../../../login/cie/screens/CieConsentDataUsageScreen";
 import { LoaderComponent } from "../../shared/components/LoaderComponent";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import ROUTES from "../../../../../navigation/routes";
@@ -35,26 +34,29 @@ import {
   trackLoginCieDataSharingError
 } from "../../../common/analytics/cieAnalytics";
 import { trackLoginFailure } from "../../../common/analytics";
-import { cieLoginFlowSelector } from "../../store/selectors";
+import { ReauthLoginType } from "../analytics";
+
+export type ActiveSessionLoginCieConsentDataUsageScreenNavigationParams = {
+  cieConsentUri: string;
+  errorCodeDebugMode?: string;
+  loginType: ReauthLoginType;
+};
 
 const ActiveSessionLoginCieConsentDataUsageScreen = () => {
   const route =
     useRoute<
       Route<
         typeof AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE_ACTIVE_SESSION_LOGIN,
-        CieConsentDataUsageScreenNavigationParams
+        ActiveSessionLoginCieConsentDataUsageScreenNavigationParams
       >
     >();
-  const { cieConsentUri } = route.params;
+  const { cieConsentUri, loginType } = route.params;
   const acsUrl = `${cieConsentUri}${ACS_PATH}`;
   const dispatch = useIODispatch();
   const [hasError, setHasError] = useState<boolean>(false);
   const [isLoginSuccess, setIsLoginSuccess] = useState<boolean | undefined>();
   const navigation = useIONavigation();
   const { forceLogoutAndNavigateToLanding } = useActiveSessionLoginNavigation();
-
-  const store = useIOStore();
-  const [loginType] = useState(() => cieLoginFlowSelector(store.getState()));
 
   useOnFirstRender(() => {
     void trackLoginCieConsentDataUsageScreen(loginType);

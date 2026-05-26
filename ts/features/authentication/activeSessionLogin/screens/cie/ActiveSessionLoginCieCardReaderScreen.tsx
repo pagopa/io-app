@@ -29,11 +29,7 @@ import HapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
-import {
-  useIODispatch,
-  useIOSelector,
-  useIOStore
-} from "../../../../../store/hooks";
+import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { setAccessibilityFocus } from "../../../../../utils/accessibility";
 import { isDevEnv } from "../../../../../utils/environment";
@@ -67,7 +63,13 @@ import {
 } from "../../../common/analytics/cieAnalytics";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { isScreenReaderEnabledSelector } from "../../../../../store/reducers/preferences";
-import { cieLoginFlowSelector } from "../../store/selectors";
+import { ReauthLoginType } from "../analytics";
+
+export type ActiveSessionCieCardReaderScreenNavigationParams = {
+  ciePin: string;
+  authorizationUri: string;
+  loginType: ReauthLoginType;
+};
 
 const CIE_ALERT_MESSAGES_CONFIG = Platform.select<
   Parameters<typeof cieManager.start>[0]
@@ -123,7 +125,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
   navigation,
   route
 }: ActiveSessionLoginCieCardReaderScreenProps) => {
-  const { authorizationUri, ciePin } = route.params;
+  const { authorizationUri, ciePin, loginType } = route.params;
 
   const theme = useIOTheme();
   const dispatch = useIODispatch();
@@ -146,9 +148,6 @@ const ActiveSessionLoginCieCardReaderScreen = ({
     () => assistanceToolRemoteConfig(assistanceToolConfig),
     [assistanceToolConfig]
   );
-
-  const store = useIOStore();
-  const [loginType] = useState(() => cieLoginFlowSelector(store.getState()));
 
   const textState = useMemo<TextForState>(() => {
     switch (readingState) {
@@ -224,7 +223,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
           navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
             screen:
               AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE_ACTIVE_SESSION_LOGIN,
-            params: { cieConsentUri }
+            params: { cieConsentUri, loginType }
           });
         },
         isScreenReaderEnabled
