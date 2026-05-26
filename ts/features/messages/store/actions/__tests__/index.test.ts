@@ -224,15 +224,18 @@ describe("index", () => {
       expect(action.payload).toEqual(message);
     });
   });
-  describe("loadMessageById.failure", () => {
-    it("should match expected type and payload", () => {
-      const error = Error("An error occurred");
-      const action = loadMessageById.failure({
-        id: messageId,
-        error
+  (["generic", "messageNotFound"] as const).forEach(kind => {
+    describe("loadMessageById.failure", () => {
+      it(`should match expected type and payload with kind '${kind}'`, () => {
+        const error = Error("An error occurred");
+        const action = loadMessageById.failure({
+          id: messageId,
+          error,
+          kind
+        });
+        expect(action.type).toBe("MESSAGE_BY_ID_LOAD_FAILURE");
+        expect(action.payload).toEqual({ id: messageId, error, kind });
       });
-      expect(action.type).toBe("MESSAGE_BY_ID_LOAD_FAILURE");
-      expect(action.payload).toEqual({ id: messageId, error });
     });
   });
 

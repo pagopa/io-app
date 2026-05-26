@@ -9,11 +9,11 @@ import {
 } from "../actions";
 import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
 import { itwCredentialsRemoveByType } from "../../../../credentials/store/actions";
-import { ConsentData } from "../types";
+import { ConsentData, ProximityConsents } from "../types";
 import { generateConsentKey } from "../utils";
 
 export type ItwProximityState = {
-  consents: Record<string, ConsentData>;
+  consents: ProximityConsents;
 };
 
 export const itwProximityInitialState: ItwProximityState = {
