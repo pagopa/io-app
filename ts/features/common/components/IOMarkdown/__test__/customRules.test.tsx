@@ -3,8 +3,8 @@ import I18n from "i18next";
 import { Linking } from "react-native";
 import * as Analytics from "../../../../../utils/analytics";
 import * as URL from "../../../../../utils/url";
-import { unknownToReason } from "../../../../../features/messages/utils";
 import { testable } from "../customRules";
+import { unknownToString } from "../../../../../utils/errors";
 
 describe("customRules", () => {
   afterEach(() => {
@@ -105,7 +105,7 @@ describe("customRules", () => {
         expect(spyOnTrackAppCaughtError).toHaveBeenCalledWith(
           "handleOpenLink",
           undefined,
-          unknownToReason(error)
+          unknownToString(error)
         );
       });
     });
