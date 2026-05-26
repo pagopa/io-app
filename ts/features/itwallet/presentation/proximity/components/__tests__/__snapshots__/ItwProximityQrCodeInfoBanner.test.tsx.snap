@@ -150,7 +150,7 @@ exports[`ItwProximityQrCodeInfoBanner should match snapshot 1`] = `
                     }
                   }
                 >
-                  ITW_PROXIMITY_QR_CODE
+                  ITW_PROXIMITY_PRESENTMENT
                 </Text>
               </View>
               <View

@@ -37,8 +37,8 @@ export const attachmentDownloadUrl = (
   messageId: string,
   attachment: ThirdPartyAttachment
 ) =>
-  `${apiUrlPrefix}/api/v1/third-party-messages/${messageId}/attachments/${attachment.url.replace(
-    /^\//g, // note that attachmentUrl might contains a / at the beginning, so let's strip it
+  `${apiUrlPrefix}/api/communication/v1/third-party-messages/${messageId}/attachments/${attachment.url.replace(
+    /^\//g, // note that attachmentUrl might contain a / at the beginning, so let's strip it
     ""
   )}`;
 

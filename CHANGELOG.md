@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.32.0-rc.2](https://github.com/pagopa/io-app/compare/3.32.0-rc.1...3.32.0-rc.2) (2026-05-21)
+
+
+### Bug Fixes
+
+* [[IOCOM-3147](https://pagopa.atlassian.net/browse/IOCOM-3147)] Third party messages attachments url fix ([#8124](https://github.com/pagopa/io-app/issues/8124)) ([358329d](https://github.com/pagopa/io-app/commit/358329df8efd0b7325a997ae77824489a3a5d87a))
+* **IT-Wallet:** [[SIW-4278](https://pagopa.atlassian.net/browse/SIW-4278)] Fix reactivation banner visibility ([#8122](https://github.com/pagopa/io-app/issues/8122)) ([315348c](https://github.com/pagopa/io-app/commit/315348c32c16cb7018819dcfd1ec86ad67d988ed))
+
+## [3.32.0-rc.1](https://github.com/pagopa/io-app/compare/3.32.0-rc.0...3.32.0-rc.1) (2026-05-20)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4169](https://pagopa.atlassian.net/browse/SIW-4169)] Proximity NFC presentment flow ([#8107](https://github.com/pagopa/io-app/issues/8107)) ([63c8d8e](https://github.com/pagopa/io-app/commit/63c8d8e892c9b8ababc9eb66aa8925857bed7fa8)), closes [/#diff-630f1d93f8c51993bd958092aa8569047e21eb15bfc439474c16a2715aa00859L4104-R4105](https://github.com/pagopa///issues/diff-630f1d93f8c51993bd958092aa8569047e21eb15bfc439474c16a2715aa00859L4104-R4105) [/#diff-630f1d93f8c51993bd958092aa8569047e21eb15bfc439474c16a2715aa00859R4130-R4137](https://github.com/pagopa///issues/diff-630f1d93f8c51993bd958092aa8569047e21eb15bfc439474c16a2715aa00859R4130-R4137) [/#diff-630f1d93f8c51993bd958092aa8569047e21eb15bfc439474c16a2715aa00859L4152-R4194](https://github.com/pagopa///issues/diff-630f1d93f8c51993bd958092aa8569047e21eb15bfc439474c16a2715aa00859L4152-R4194) [/#diff-630f1d93f8c51993bd958092aa8569047e21eb15bfc439474c16a2715aa00859L4178-R4238](https://github.com/pagopa///issues/diff-630f1d93f8c51993bd958092aa8569047e21eb15bfc439474c16a2715aa00859L4178-R4238) [/#diff-630f1d93f8c51993bd958092aa8569047e21eb15bfc439474c16a2715aa00859L4235-R4292](https://github.com/pagopa///issues/diff-630f1d93f8c51993bd958092aa8569047e21eb15bfc439474c16a2715aa00859L4235-R4292) [/#diff-67efb65f2cac337ee5f40b0a87998b8a2bad1d95af6cbb7aa3fba055f14f7339L1-L32](https://github.com/pagopa///issues/diff-67efb65f2cac337ee5f40b0a87998b8a2bad1d95af6cbb7aa3fba055f14f7339L1-L32) [/#diff-67efb65f2cac337ee5f40b0a87998b8a2bad1d95af6cbb7aa3fba055f14f7339L46](https://github.com/pagopa///issues/diff-67efb65f2cac337ee5f40b0a87998b8a2bad1d95af6cbb7aa3fba055f14f7339L46) [/#diff-0bec5ab327bc2e0ea1024f9c5229299eeb97007aa70e7f5131fd3545a2e7ecf9L11-R16](https://github.com/pagopa///issues/diff-0bec5ab327bc2e0ea1024f9c5229299eeb97007aa70e7f5131fd3545a2e7ecf9L11-R16) [/#diff-0bec5ab327bc2e0ea1024f9c5229299eeb97007aa70e7f5131fd3545a2e7ecf9L147-R148](https://github.com/pagopa///issues/diff-0bec5ab327bc2e0ea1024f9c5229299eeb97007aa70e7f5131fd3545a2e7ecf9L147-R148) [/#diff-0bec5ab327bc2e0ea1024f9c5229299eeb97007aa70e7f5131fd3545a2e7ecf9R157](https://github.com/pagopa///issues/diff-0bec5ab327bc2e0ea1024f9c5229299eeb97007aa70e7f5131fd3545a2e7ecf9R157) [/#diff-0bec5ab327bc2e0ea1024f9c5229299eeb97007aa70e7f5131fd3545a2e7ecf9L191-R193](https://github.com/pagopa///issues/diff-0bec5ab327bc2e0ea1024f9c5229299eeb97007aa70e7f5131fd3545a2e7ecf9L191-R193) [/#diff-8fe439effa6489ad942766109936e3ed59ac17ec8ba35e5187c9bf846eb932d1L24](https://github.com/pagopa///issues/diff-8fe439effa6489ad942766109936e3ed59ac17ec8ba35e5187c9bf846eb932d1L24) [/#diff-8fe439effa6489ad942766109936e3ed59ac17ec8ba35e5187c9bf846eb932d1L34-R48](https://github.com/pagopa///issues/diff-8fe439effa6489ad942766109936e3ed59ac17ec8ba35e5187c9bf846eb932d1L34-R48) [/#diff-8fe439effa6489ad942766109936e3ed59ac17ec8ba35e5187c9bf846eb932d1L130-L136](https://github.com/pagopa///issues/diff-8fe439effa6489ad942766109936e3ed59ac17ec8ba35e5187c9bf846eb932d1L130-L136)
+
 ## [3.32.0-rc.0](https://github.com/pagopa/io-app/compare/3.31.0-rc.7...3.32.0-rc.0) (2026-05-20)
 
 
