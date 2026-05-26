@@ -91,11 +91,16 @@ export const cancelGetMessageDataAction = createAction(
 /**
  * Load a single message given its ID
  */
+export type LoadMessageByIdFailureKind = "generic" | "messageNotFound";
 export const loadMessageById = createAsyncAction(
   "MESSAGE_BY_ID_LOAD_REQUEST",
   "MESSAGE_BY_ID_LOAD_SUCCESS",
   "MESSAGE_BY_ID_LOAD_FAILURE"
-)<{ id: string }, UIMessage, { id: string; error: Error }>();
+)<
+  { id: string },
+  UIMessage,
+  { id: string; error: Error; kind: LoadMessageByIdFailureKind }
+>();
 
 /**
  * Load a single message's details given its ID
