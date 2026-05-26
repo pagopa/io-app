@@ -1,4 +1,4 @@
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { ThirdPartyAttachment } from "../../../../../definitions/communication/ThirdPartyAttachment";
 import {
   attachmentContentType,
   attachmentDisplayName,
@@ -189,13 +189,13 @@ describe("attachments", () => {
   describe("attachmentDownloadUrl", () => {
     it("should construct the download URL correctly", () => {
       const attachment = { url: "some/path" } as ThirdPartyAttachment;
-      const expectedUrl = `/api/v1/third-party-messages/${messageId}/attachments/some/path`;
+      const expectedUrl = `/api/communication/v1/third-party-messages/${messageId}/attachments/some/path`;
       const url = attachmentDownloadUrl(messageId, attachment);
       expect(url).toBe(expectedUrl);
     });
     it("should strip leading slash from attachment url", () => {
       const attachment = { url: "/some/path" } as ThirdPartyAttachment;
-      const expectedUrl = `/api/v1/third-party-messages/${messageId}/attachments/some/path`;
+      const expectedUrl = `/api/communication/v1/third-party-messages/${messageId}/attachments/some/path`;
       const url = attachmentDownloadUrl(messageId, attachment);
       expect(url).toBe(expectedUrl);
     });

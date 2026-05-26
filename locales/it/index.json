@@ -374,26 +374,15 @@
             "title": "I tuoi dati di utilizzo",
             "description": "Se condividi i tuoi dati, ci aiuti a migliorare la tua esperienza su IO e a fornirti assistenza mirata.",
             "why": {
-              "description": {
-                "one": "Usiamo ",
-                "two": "solo i dati necessari ",
-                "three": "a monitorare il funzionamento dell’app e a migliorare i servizi offerti."
-              },
+              "description": "Usiamo **solo i dati necessari** a monitorare il funzionamento dell'app e a migliorare i servizi offerti.",
               "cta": "Perché raccogliamo i dati"
             },
             "security": {
-              "description": {
-                "one": "Adottiamo misure di sicurezza per ",
-                "two": "proteggere ",
-                "three": "i tuoi dati."
-              },
+              "description": "Adottiamo misure di sicurezza per **proteggere** i tuoi dati.",
               "cta": "Come proteggiamo i dati"
             },
             "gdpr": {
-              "description": {
-                "one": "Collaboriamo solo con fornitori che trattano i dati in modo ",
-                "two": "trasparente e sicuro."
-              },
+              "description": "Collaboriamo solo con fornitori che trattano i dati in modo **trasparente e sicuro.**",
               "cta": "Chi sono i fornitori"
             },
             "additionalInformation": {
@@ -716,7 +705,7 @@
         },
         "bottom_sheet": {
           "title": "Dove trovo il PIN della CIE?",
-          "content": "Il codice PIN è composto da 8 cifre ed è diviso in due parti:\n- le prime 4 cifre le hai ricevute all’anagrafe;\n- le ultime 4 cifre le hai ricevute a casa con la CIE. \nMettile insieme e inseriscile in quest’ordine.",
+          "content": "Il codice PIN è composto da 8 cifre ed è diviso in due parti:\n- le prime 4 cifre le hai ricevute all’anagrafe;\n- le ultime 4 cifre le hai ricevute a casa con la CIE. \n\nMettile insieme e inseriscile in quest’ordine.",
           "link": "Hai dimenticato il PIN?",
           "cta": {
             "label": "Dove trovo il PIN della CIE?"
@@ -1510,7 +1499,7 @@
         },
         "TIMEOUT": {
           "title": "La sessione è scaduta",
-          "subtitle": "Non è stato addebitato alcun importo.\\nPer la tua sicurezza, hai a disposizione un tempo limitato per completare l’operazione."
+          "subtitle": "Non è stato addebitato alcun importo.\nPer la tua sicurezza, hai a disposizione un tempo limitato per completare l’operazione."
         },
         "CIRCUIT_ERROR": {
           "title": "Il circuito della carta non è supportato"
@@ -1528,7 +1517,7 @@
         },
         "EXCESSIVE_AMOUNT": {
           "title": "Autorizzazione negata",
-          "subtitle": "Non è stato addebitato alcun importo.\\nProbabilmente hai sforato i limiti di spesa previsti dalla tua banca."
+          "subtitle": "Non è stato addebitato alcun importo.\nProbabilmente hai sforato i limiti di spesa previsti dalla tua banca."
         },
         "INVALID_METHOD": {
           "title": "Il metodo di pagamento non è supportato"
@@ -1727,12 +1716,12 @@
     "showMoreDataBottomSheet": {
       "title": "Dati identificativi",
       "messageId": "ID messaggio",
-      "messageIdAccessibility": "ID messaggio, copia",
+      "messageIdAccessibility": "ID messaggio: {{messageId}}, copia",
       "pagoPAHeader": "Avviso pagoPA",
       "noticeCode": "Codice Avviso",
-      "noticeCodeAccessibility": "Codice avviso, copia",
+      "noticeCodeAccessibility": "Codice avviso: {{paymentNoticeNumber}}, copia",
       "entityFiscalCode": "Codice Fiscale Ente",
-      "entityFiscalCodeAccessibility": "Codice fiscale ente, copia"
+      "entityFiscalCodeAccessibility": "Codice fiscale ente: {{creditorTaxId}}, copia"
     },
     "contactsBottomSheet": {
       "title": "Assistenza",
@@ -1747,6 +1736,10 @@
       "decodingErrorContent": "Il contenuto del messaggio non può essere mostrato correttamente.",
       "decodingErrorHide": "Nascondi contenuto",
       "decodingErrorShow": "Mostra comunque"
+    },
+    "notFound": {
+      "title": "Il messaggio non è disponibile",
+      "subtitle": "Il messaggio che stai cercando non è disponibile per il profilo attuale. Vai alla lista messaggi per vedere le tue comunicazioni."
     }
   },
   "messagePDFPreview": {
@@ -2282,6 +2275,11 @@
           "placeholder": "Referer"
         },
         "send": "Invia"
+      },
+      "engagement": {
+        "banner": {
+          "cta": "Attiva Carta Giovani"
+        }
       }
     },
     "cdc": {
@@ -2379,7 +2377,8 @@
                 "supportTitle": "Contatta l'assistenza",
                 "chat": "Chiedi aiuto in chat",
                 "additionalDataTitle": "Dati aggiuntivi",
-                "errorCode": "Codice errore"
+                "errorCode": "Codice errore",
+                "errorCodeAccessibility": "Codice errore: {{errorCode}}, copia"
               }
             },
             "cieValidation": {
@@ -2664,7 +2663,7 @@
         "infoSection": {
           "title": "Informazioni sulla notifica",
           "iun": "Codice IUN",
-          "iunAccessibility": "Codice IUN, copia",
+          "iunAccessibility": "Codice IUN : {{iun}}, copia",
           "iunSectionTitle": "Notifica"
         },
         "timeline": {
@@ -2796,6 +2795,40 @@
           }
         }
       },
+      "requestL3": {
+        "localFlag": {
+          "title": "Attivazione check L3 per il flusso di firma",
+          "description": "Attivando questo toggle attivi il check L3 per il flusso di firma, che prevede una nuova login L3 per gli utenti che non possiedono il livello di autenticazione L3 (CIE + PIN)"
+        },
+        "landingPage": {
+          "title": "Prepara la tua Carta di Identità Elettronica e il PIN",
+          "subtitle": "Prima di firmare dobbiamo verificare la tua identità. Questo passaggio protegge la tua firma e ne garantisce la validità."
+        },
+        "optinLogin": {
+          "title": "Vuoi attivare l’accesso rapido?",
+          "description": "Con l’accesso rapido chiederemo la tua l'identità digitale una sola volta all'anno invece che ogni 30 giorni. Poi ti basterà usare il volto, l’impronta o il codice.",
+          "descriptionButton": "Come proteggere il tuo accesso",
+          "primaryAction": "Continua con l’accesso rapido",
+          "secondaryAction": "Rinnova l’accesso ogni 30 giorni",
+          "securityBottomsheet": {
+            "title": "Come proteggere il tuo accesso",
+            "featureInfo1": "Puoi uscire dall’app anche se perdi il dispositivo.",
+            "featureInfo1Action": "Vai al sito",
+            "featureInfo2": "Se temi che qualcuno possa usare la tua identità digitale, puoi bloccare l’accesso all’app entrando dal web.",
+            "featureInfo2Action": "Gestisci l’accesso",
+            "featureInfo3": "Se accedi a IO con un dispositivo non tuo, ricordati di uscire dall’app."
+          }
+        },
+        "nfcNotAvailable": {
+          "title": "Il tuo dispositivo non supporta la lettura della CIE",
+          "description": "Il dispositivo che stai utilizzando non supporta l’accesso con Carta d’Identità Elettronica (CIE).",
+          "featureInfoText": [
+            "Per leggere la CIE è necessario un dispositivo con chip NFC.",
+            "È richiesto un sistema operativo Android 8 o iOS 15.1 o superiori."
+          ],
+          "cta": "Ho capito"
+        }
+      },
       "abort": {
         "title": "Annulla la firma",
         "content": "Vuoi annullare la firma di **{{dossierTitle}}**?",
@@ -2852,7 +2885,7 @@
       },
       "qtspTos": {
         "title": "Ci siamo quasi!",
-        "subTitle": "Per firmare, devi accettare i termini e condizioni del servizio e confermare di avere letto l’informativa privacy del fornitore della firma."
+        "subTitle": "Per firmare, devi accettare i termini e condizioni del servizio e confermare di avere letto l’informativa privacy del fornitore della firma **Namirial S.p.A.**"
       },
       "documents": {
         "footer": {
@@ -2872,12 +2905,6 @@
       "signatureFieldInfo": {
         "title": "Cosa sono le clausole vessatorie?",
         "subTitle": "Sono delle clausole che segnalano condizioni particolari a cui prestare attenzione e che devono essere accettate. Devono inoltre essere, per legge, facilmente identificabili per far sì che chi firma sia informato del loro contenuto prima di apporre la firma."
-      },
-      "requestL3": {
-        "localFlag": {
-          "title": "Attivazione check L3 per il flusso di firma",
-          "description": "Attivando questo toggle attivi il check L3 per il flusso di firma, che prevede una nuova login L3 per gli utenti che non possiedono il livello di autenticazione L3 (CIE + PIN)"
-        }
       }
     },
     "wallet": {
@@ -3097,6 +3124,7 @@
         "mdl": "Patente di guida",
         "dc": "Carta Europea della Disabilità",
         "ts": "Tessera Sanitaria - Tessera europea di assicurazione malattia",
+        "av": "Età certificata",
         "ed": "Titoli accademici",
         "ee": "Iscrizioni accademiche",
         "res": "Attestato di residenza",
@@ -3117,7 +3145,7 @@
           "expired": "Scaduta",
           "expiring": "In scadenza",
           "pending": "In lavorazione",
-          "invalid": "Non valida",
+          "invalid": "Non valido",
           "verificationExpiring": "Azione richiesta",
           "verificationExpired": "Azione richiesta",
           "upgradePending": "Da aggiornare",
@@ -3129,6 +3157,7 @@
         "button": "Mostra dettagli",
         "supportTitle": "Contatta l'assistenza",
         "supportDescription": "Prendi nota del codice di errore, potrebbe servirti per richiedere assistenza.",
+        "helpCenter": "Visita il centro assistenza",
         "phone": "Chiama {{phoneNumber}}",
         "landline": "Da telefono fisso",
         "chat": "Chiedi aiuto in chat",
@@ -3342,21 +3371,28 @@
         },
         "modeSelection": {
           "section": {
-            "issuance": "Attiva {{ feature }}",
-            "reissuance": "Conferma periodica dell'identità"
+            "l2": "Conferma identità",
+            "l3-issuance": "Attiva IT-Wallet",
+            "l3-reissuance": "Conferma periodica dell’identità"
           },
           "title": {
-            "issuance": "Conferma la tua identità",
-            "reissuance": "Scegli come continuare"
+            "l2": "Scegli come identificarti",
+            "l3-issuance": "Conferma la tua identità",
+            "l3-reissuance": "Scegli come continuare"
           },
           "description": {
-            "issuance": "È un passaggio di sicurezza necessario per associare i documenti digitali alla tua identità. ",
-            "reissuance": "È un passaggio necessario per continuare ad usare {{ feature }} senza limitazioni."
+            "l2-issuance": "È un passaggio necessario per garantire la sicurezza dei tuoi dati.",
+            "l2-reissuance": "È un passaggio necessario per continuare ad usare Documenti su IO senza limitazioni.",
+            "l3-issuance": "È un passaggio di sicurezza necessario per associare i documenti digitali alla tua identità.",
+            "l3-reissuance": "È un passaggio necessario per continuare ad usare IT-Wallet senza limitazioni."
           },
           "noCieCta": "Non hai la Carta di Identità Elettronica?",
           "mode": {
             "ciePin": {
-              "title": "Continua con CIE + PIN",
+              "title": {
+                "default": "Usa CIE + PIN",
+                "l3": "Continua con CIE + PIN"
+              },
               "subtitle": {
                 "default": "Dovrai usare la Carta di Identità Elettronica (CIE) e inserire il suo PIN di 8 cifre.",
                 "l3": "Ha una durata di 12 mesi"
@@ -3371,7 +3407,10 @@
               }
             },
             "cieId": {
-              "title": "Continua con l’app CieID",
+              "title": {
+                "default": "Usa l'app CieID",
+                "l3": "Continua con l’app CieID"
+              },
               "subtitle": {
                 "default": "Dovrai usare credenziali e app CieID",
                 "l3": "Ha una durata di 12 mesi"
@@ -3385,7 +3424,7 @@
             },
             "spid": {
               "title": {
-                "default": "Continua con SPID",
+                "default": "Usa SPID",
                 "l3": "Continua con SPID + CIE"
               },
               "subtitle": {
@@ -3546,6 +3585,10 @@
               "subtitle": "Al terzo tentativo errato, il PIN verrà bloccato. Per sbloccarlo e impostarne un nuovo, dovrai inserire il codice PUK nell’app CieID.",
               "secondaryAction": "Hai dimenticato il PIN?"
             },
+            "wrongCan": {
+              "title": "Il codice inserito non è corretto",
+              "subtitle": "Controllalo e riprova. È il codice a 6 cifre (CAN) stampato sul fronte della Carta di Identità Elettronica, in basso a destra."
+            },
             "locked": {
               "title": "Hai inserito un PIN errato per troppe volte",
               "subtitle": "Il PIN della tua CIE è stato bloccato. Per sbloccarlo e impostarne un nuovo, dovrai inserire il codice PUK nell’app CieID.",
@@ -3677,6 +3720,11 @@
           "body": "Assicurati di avere il documento fisico valido prima di richiedere la sua versione digitale.",
           "primaryAction": "Ho capito"
         },
+        "pidAnprMismatchError": {
+          "title": "Non puoi proseguire con la richiesta",
+          "body": "Abbiamo rilevato incongruenze nei tuoi dati su ANPR (Anagrafe nazionale della popolazione residente).",
+          "primaryAction": "Contatta l'assistenza"
+        },
         "issuerNotTrustedCommonError": {
           "title": "Un problema non permette di continuare",
           "subtitle": "Si è verificato un errore tecnico che impedisce di ottenere {{credential}}. Riprova.\nSe il problema persiste, contatta l’assistenza.",
@@ -3805,9 +3853,11 @@
           "jwtVerification": {
             "content": {
               "jwtExpiring": "Verifica la versione digitale del tuo documento entro il {{date}} per continuare a usarlo senza limitazioni.",
-              "jwtExpired": "Verifica ora la versione digitale del tuo documento per continuare a usarlo senza limitazioni."
+              "jwtExpired": "La versione digitale del documento è scaduta il {{date}}.",
+              "invalid": "Conferma la tua identità per continuare a usare i tuoi documenti senza limitazioni."
             },
-            "action": "Inizia"
+            "action": "Aggiorna documento digitale",
+            "actionInvalid": "Conferma identità"
           }
         },
         "bottomSheets": {
@@ -3827,9 +3877,9 @@
               },
               "itw": {
                 "valid": "Hai attivato il tuo ID con CIE il {{date}}.",
-                "expiring": "Rinnova il tuo ID per continuare ad usare IT-Wallet entro il {{date}}.",
-                "expired": "Rinnova il tuo ID per continuare ad usare IT-Wallet.",
-                "action": "Rinnova ID"
+                "expiring": "Conferma la tua indentità entro il {{date}} per continuare a usare i tuoi documenti senza limitazioni.",
+                "expired": "Conferma la tua identità per continuare a usare i tuoi documenti senza limitazioni.",
+                "action": "Conferma identità"
               }
             }
           },
@@ -3875,6 +3925,12 @@
           "fiscalCode": {
             "label": "Il tuo Codice Fiscale",
             "action": "Premi per ingrandire e visualizzare il codice a barre a tutto schermo"
+          },
+          "ageVerification": {
+            "usageBanner": {
+              "title": "Dove usare Età certificata?",
+              "content": "Puoi usarla per accedere a servizi online destinati agli adulti: dimostri la tua maggiore età e la tua identità resta anonima."
+            }
           },
           "status": {
             "valid": "Valida",
@@ -3927,7 +3983,7 @@
           "trustmark": "Mostra certificato di autenticità",
           "openPdf": "Mostra documento",
           "shareButton": "Salva o condividi",
-          "showQRCode": "Mostra codice QR"
+          "present": "Avvia verifica"
         },
         "eid": {
           "verificationExpired": {
@@ -4052,68 +4108,97 @@
           }
         },
         "proximity": {
-          "grantPermissions": {
-            "title": "Consenti a IO di accedere al Bluetooth",
-            "subtitle": "Per farlo, devi modificare le preferenze nelle impostazioni di sistema del tuo dispositivo.",
-            "listItems": {
-              "title": "Ecco come:",
-              "step1": {
-                "label": "Step 1",
-                "value": "Vai su \"Impostazioni\""
+          "bluetooth": {
+            "permissions": {
+              "title": "Consenti a IO di accedere al Bluetooth",
+              "subtitle": "Per farlo, devi modificare le preferenze nelle impostazioni di sistema del tuo dispositivo.",
+              "listItems": {
+                "title": "Ecco come:",
+                "step1": {
+                  "label": "Step 1",
+                  "value": "Vai su \"Impostazioni\""
+                },
+                "step2": {
+                  "label": "Step 2",
+                  "value": "Seleziona \"App\""
+                },
+                "step3": {
+                  "label": "Step 3",
+                  "value": "Seleziona \"IO\""
+                },
+                "step4": {
+                  "label": "Step 4",
+                  "value": "Consenti l’accesso a Bluetooth"
+                }
               },
-              "step2": {
-                "label": "Step 2",
-                "value": "Seleziona \"App\""
+              "actions": {
+                "primary": "Apri impostazioni",
+                "secondary": "Continua"
               },
-              "step3": {
-                "label": "Step 3",
-                "value": "Seleziona \"IO\""
-              },
-              "step4": {
-                "label": "Step 4",
-                "value": "Consenti l’accesso a Bluetooth"
+              "alert": {
+                "title": "È richiesto l’accesso al Bluetooth per continuare",
+                "message": "Vai a Impostazioni e modifica le preferenze, poi riprova.",
+                "text": "Ho capito"
               }
             },
-            "actions": {
-              "primary": "Apri impostazioni",
-              "secondary": "Continua"
-            }
-          },
-          "activateBluetooth": {
-            "title": "Attiva il Bluetooth per continuare",
-            "subtitle": "Per farlo, devi modificare le preferenze nelle impostazioni di sistema del tuo dispositivo.",
-            "listItems": {
-              "title": "Ecco come:",
-              "step1": {
-                "label": "Step 1",
-                "value": "Vai su \"Impostazioni\""
+            "activation": {
+              "title": "Attiva il Bluetooth per continuare",
+              "subtitle": "Per farlo, devi modificare le preferenze nelle impostazioni di sistema del tuo dispositivo.",
+              "listItems": {
+                "title": "Ecco come:",
+                "step1": {
+                  "label": "Step 1",
+                  "value": "Vai su \"Impostazioni\""
+                },
+                "step2": {
+                  "label": "Step 2",
+                  "value": "Seleziona \"Bluetooth\""
+                },
+                "step3": {
+                  "label": "Step 3",
+                  "value": "Consenti l’utilizzo del Bluetooth"
+                }
               },
-              "step2": {
-                "label": "Step 2",
-                "value": "Seleziona \"Bluetooth\""
+              "actions": {
+                "primary": "Apri impostazioni",
+                "secondary": "Continua"
               },
-              "step3": {
-                "label": "Step 3",
-                "value": "Consenti l’utilizzo del Bluetooth"
+              "alert": {
+                "title": "È richiesto l’utilizzo del Bluetooth per continuare",
+                "message": "Vai a Impostazioni e modifica le preferenze, poi riprova.",
+                "text": "Ho capito"
               }
-            },
-            "actions": {
-              "primary": "Apri impostazioni",
-              "secondary": "Continua"
             }
           },
-          "permissionsRequired": {
-            "alert": {
-              "title": "È richiesto l’accesso al Bluetooth per continuare",
-              "message": "Vai a Impostazioni e modifica le preferenze, poi riprova.",
-              "text": "Ho capito"
-            }
-          },
-          "bluetoothRequired": {
-            "alert": {
-              "title": "È richiesto l’utilizzo del Bluetooth per continuare",
-              "message": "Vai a Impostazioni e modifica le preferenze, poi riprova.",
-              "text": "Ho capito"
+          "nfc": {
+            "activation": {
+              "title": "Attiva l’NFC per continuare",
+              "subtitle": "Per consentire a IO di leggere la tua CIE, attiva l’NFC dalle Impostazioni del tuo dispositivo.",
+              "listItems": {
+                "title": "Ecco come:",
+                "step1": {
+                  "label": "Step 1",
+                  "value": "Vai su \"Impostazioni\""
+                },
+                "step2": {
+                  "label": "Step 2",
+                  "value": "Cerca la funzionalità \"NFC\""
+                },
+                "step3": {
+                  "label": "Step 3",
+                  "value": "Attiva la funzionalità"
+                }
+              },
+              "actions": {
+                "primary": "Apri impostazioni",
+                "secondary": "Continua"
+              },
+              "alert": {
+                "title": "È richiesto l’utilizzo del Bluetooth per continuare",
+                "message": "Attiva l’NFC per permettere la verifica dei tuoi documenti digitali",
+                "action": "Attiva NFC",
+                "close": "Chiudi"
+              }
             }
           },
           "mdl": {
@@ -4126,37 +4211,37 @@
               }
             }
           },
-          "loadingScreen": {
+          "connectionLoading": {
             "title": "In attesa di connessione per la verifica...",
             "subtitle": "Attendi qualche secondo..."
           },
-          "loadingStepScreen": {
-            "initial": {
+          "sendDocumentsLoading": {
+            "0": {
               "title": "Stiamo comunicando i tuoi dati per la verifica",
               "subtitle": "Attendi qualche secondo..."
             },
-            "reminder": {
+            "1": {
               "title": "Ancora un po' di pazienza...",
               "subtitle": "Stiamo aspettando una risposta dai sistemi dell’ente che richiede i dati."
             },
-            "final": {
+            "2": {
               "title": "Sembra che le cose vadano un po' a rilento",
               "subtitle": "Ancora un po' di pazienza..."
             }
           },
           "selectiveDisclosure": {
-            "title": "Dati richiesti",
-            "subtitle": "Saranno mostrati a **{{relyingParty}}** per completare la verifica dei documenti richiesti.",
-            "requiredClaims": "Dati necessari",
-            "purpose": "Finalità: Identificazione",
-            "disclaimer": {
-              "0": "I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.",
-              "1": "I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento."
-            },
-            "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy]({{privacyUrl}}).",
+            "title": "Consenti la verifica di questi dati per procedere",
+            "subtitle": "Saranno condivisi con **{{relyingParty}}** solo per il tempo necessario all’accesso ai servizi richiesti.",
+            "tos": "I tuoi dati saranno trattati in sicurezza. Se prosegui, dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d’uso]({{privacyUrl}}).",
             "alert": {
               "message": "Non potrai completare la verifica del documento."
             }
+          },
+          "storeConsent": {
+            "title": "Vuoi salvare la tua scelta per non ripetere questo passaggio?",
+            "subtitle": "Salva il consenso per saltare questo passaggio alle prossime verifiche contactless per questo servizio",
+            "action": "Sì, salva il consenso",
+            "secondaryAction": "No, chiedimelo ogni volta"
           },
           "relyingParty": {
             "genericError": {
@@ -4183,24 +4268,44 @@
           "success": {
             "title": "Fatto!",
             "subtitle": "La verifica è stata completata con successo."
-          }
-        },
-        "qrCode": {
-          "instruction": "Mostra questo codice QR a chi verifica i tuoi documenti digitali",
-          "error": {
-            "message": "Abbiamo avuto un problema nel generare il QR Code.",
-            "invalid": "Non puoi far verificare i tuoi documenti digitali."
           },
-          "banner": {
-            "invalid": "Conferma la tua identità per continuare a usare i tuoi documenti senza limitazioni."
+          "engagement": {
+            "title": "Avvia una verifica",
+            "instruction": "Mostra il codice QR a chi verifica i tuoi documenti digitali",
+            "qrCode": {
+              "error": "Abbiamo avuto un problema nel generare il QR Code."
+            },
+            "invalidBanner": {
+              "content": "Non puoi far verificare i tuoi documenti digitali.",
+              "action": "Conferma identità"
+            },
+            "banner": {
+              "title": "Come funziona il QR Code?",
+              "content": "Ti consente di far verificare i documenti digitali che hai aggiunto al Portafoglio.",
+              "action": "Scopri di più",
+              "invalid": "Conferma la tua identità per continuare a usare i tuoi documenti senza limitazioni."
+            },
+            "nfc": {
+              "or": "oppure",
+              "action": "Avvia verifica contactless"
+            }
           },
-          "reissue": {
-            "cta": "Conferma identità"
+          "nfcEngagement": {
+            "ready": {
+              "ios": "Pronto per la verifica",
+              "android": "Avvicina il telefono al lettore"
+            },
+            "sending": "Verifica in corso",
+            "success": "Verifica completata!"
           }
         },
         "itWalletId": {
           "description": "È il tuo pass digitale per dimostrare chi sei, accedere ai servizi online e ottenere nuovi documenti.",
           "listItemHeader": "Dati del mio IT-Wallet ID",
+          "banner": {
+            "title": "Cos'è IT-Wallet ID?",
+            "content": "È il cuore del tuo Portafoglio IT-Wallet: ti consente di ottenere i documenti digitali, dimostrare chi sei e accedere ai servizi online"
+          },
           "cta": {
             "info": "Parte di IT-Wallet",
             "revoke": "Disattiva IT-Wallet"

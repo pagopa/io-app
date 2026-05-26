@@ -3,7 +3,10 @@ import { expectSaga } from "redux-saga-test-plan";
 import { select } from "redux-saga/effects";
 import { addFavouriteServiceSuccess } from "../../store/actions";
 import { favouriteServiceByIdSelector } from "../../store/selectors";
-import { createMockService, createMockServiceDetails } from "../../__mocks__";
+import {
+  createMockService,
+  createMockServiceDetails
+} from "../../__mocks__/favouriteServicesMocks";
 import { handleSyncFavouriteService } from "../handleSyncFavouriteService";
 import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { loadServiceDetail } from "../../../details/store/actions/details";

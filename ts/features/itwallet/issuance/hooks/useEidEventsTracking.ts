@@ -70,7 +70,11 @@ export const useEidEventsTracking = ({
       return trackItwUnsupportedDevice(failure);
     }
 
-    if (failure.type === IssuanceFailureType.ISSUER_GENERIC && identification) {
+    if (
+      (failure.type === IssuanceFailureType.ISSUER_GENERIC ||
+        failure.type === IssuanceFailureType.PID_ANPR_CREDENTIAL_NOT_FOUND) &&
+      identification
+    ) {
       trackItwIdRequestFailure({
         ITW_ID_method: identification.mode,
         reason: failure.reason,

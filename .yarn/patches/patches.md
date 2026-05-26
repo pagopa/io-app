@@ -18,20 +18,6 @@ Created on **15/12/2021**
     - `getMacAddress`
     - `getMacAddressSync`
 
-
-### react-native-push-notification-npm-8.1.1-bcb0d8a65e.patch
-Created on **10/05/2021**
-
-#### Reason:
-- Add backwards compatibility to the legacy GCM format (this patch will be removed in a next version) for Android notification.
-
-Updated on **31/01/2024**
-
-#### Reason:
-- Adds a guard to prevent a crash on Android SDK 34 (Android 14) when using Exact Alarms without having requested user's permission first.
-  This works since we are not using local notifications anymore (and the library has to be replaced - since it is deprecated) and the
-  remote notifications do not trigger the Exact Alarms API.
-
 ### react-native-screen-brightness-npm-2.0.0-alpha-22c6aeb21e.patch
 Created on **16/08/2021**
 
@@ -103,3 +89,11 @@ Created on **23/03/2026**
 #### Reason:
 
 - Patch to remove the black layer on screen while recording the app
+
+### @react-navigation-stack-npm-6.4.1-52dad4e278.patch
+
+Created on **24/04/2026**
+
+#### Reason:
+
+- Patch to apply an explicit header `minHeight` in `CardContainer` only when `headerTransparent` is enabled and a screen reader is active, improving Android accessibility by ensuring the header area is properly sized for TalkBack.

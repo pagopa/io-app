@@ -1,15 +1,25 @@
-import { createActor, StateFrom } from "xstate";
 import { createStore } from "redux";
+import { createActor, StateFrom } from "xstate";
+import { IOStackNavigationProp } from "../../../../../../navigation/params/AppParamsList";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { appReducer } from "../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
+import { trackItwProximityQrCode } from "../../analytics";
+import { ProximityFailureType } from "../../machine/failure";
 import { itwProximityMachine } from "../../machine/machine";
 import { ItwProximityMachineContext } from "../../machine/provider";
-import { ItwProximityQrCodeScreen } from "../ItwProximityQrCodeScreen";
-import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
-import { appReducer } from "../../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../../store/actions/application";
-import { ITW_PROXIMITY_ROUTES } from "../../navigation/routes";
-import { GlobalState } from "../../../../../../store/reducers/types";
 import { ItwPresentationTags } from "../../machine/tags";
-import { ProximityFailureType } from "../../machine/failure";
+import { ItwProximityParamsList } from "../../navigation/ItwProximityParamsList";
+import { ITW_PROXIMITY_ROUTES } from "../../navigation/routes";
+import {
+  ItwProximityPresentmentScreen,
+  ItwProximityPresentmentScreenNavigationParams
+} from "../ItwProximityPresentmentScreen";
+
+jest.mock("../../analytics", () => ({
+  trackItwProximityQrCode: jest.fn()
+}));
 
 jest.mock("react-native-qrcode-skia", () => {
   const React = jest.requireActual("react");
@@ -20,27 +30,64 @@ jest.mock("react-native-qrcode-skia", () => {
 });
 
 const mockShouldBlockProximityQrCodeSelector = jest.fn(() => false);
-jest.mock("../../store/selectors", () => ({
+jest.mock("../../store/selectors/credentials", () => ({
   shouldBlockProximityQrCodeSelector: () =>
     mockShouldBlockProximityQrCodeSelector()
 }));
 
-describe("ItwProximityQrCodeScreen", () => {
+describe("ItwProximityPresentmentScreen", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("should render loading skeleton when machine is loading", () => {
-    expect(renderComponent({ machineState: "loading" })).toMatchSnapshot();
+    expect(
+      renderComponent({ machineState: "loading" }, { source: "WALLET_HOME" })
+    ).toMatchSnapshot();
   });
 
   it("should render QR code when ready", () => {
     expect(
-      renderComponent({
-        machineState: "displayQrCode",
-        qrCodeString: "mock-qr-code-string"
-      })
+      renderComponent(
+        {
+          machineState: "displayQrCode",
+          qrCodeString: "mock-qr-code-string"
+        },
+        { source: "WALLET_HOME" }
+      )
     ).toMatchSnapshot();
   });
 
   it("should render error state when QR code generation fails", () => {
-    expect(renderComponent({ machineState: "error" })).toMatchSnapshot();
+    expect(
+      renderComponent({ machineState: "error" }, { source: "WALLET_HOME" })
+    ).toMatchSnapshot();
+  });
+
+  it("should track qr code screen view with valid status", () => {
+    renderComponent(
+      {
+        machineState: "displayQrCode",
+        qrCodeString: "mock-qr-code-string"
+      },
+      { source: "WALLET_HOME" }
+    );
+
+    expect(trackItwProximityQrCode).toHaveBeenCalledTimes(1);
+    expect(trackItwProximityQrCode).toHaveBeenCalledWith({
+      source: "WALLET_HOME",
+      qr_code_status: "valid"
+    });
+  });
+
+  it("should track qr code screen view with generation_failed status", () => {
+    renderComponent({ machineState: "error" }, { source: "WALLET_HOME" });
+
+    expect(trackItwProximityQrCode).toHaveBeenCalledTimes(1);
+    expect(trackItwProximityQrCode).toHaveBeenCalledWith({
+      source: "WALLET_HOME",
+      qr_code_status: "generation_failed"
+    });
   });
 
   describe("when credentials are expired", () => {
@@ -53,7 +100,19 @@ describe("ItwProximityQrCodeScreen", () => {
     });
 
     it("should render blocked state with alert banner", () => {
-      expect(renderComponent({ machineState: "blocked" })).toMatchSnapshot();
+      expect(
+        renderComponent({ machineState: "blocked" }, { source: "WALLET_HOME" })
+      ).toMatchSnapshot();
+    });
+
+    it("should track qr code screen view with PID_expired status", () => {
+      renderComponent({ machineState: "blocked" }, { source: "WALLET_HOME" });
+
+      expect(trackItwProximityQrCode).toHaveBeenCalledTimes(1);
+      expect(trackItwProximityQrCode).toHaveBeenCalledWith({
+        source: "WALLET_HOME",
+        qr_code_status: "PID_expired"
+      });
     });
   });
 });
@@ -64,19 +123,41 @@ type RenderOptions =
   | { machineState: "error" }
   | { machineState: "blocked" };
 
-const renderComponent = (options: RenderOptions) => {
+const renderComponent = (
+  options: RenderOptions,
+  routeParams: ItwProximityPresentmentScreenNavigationParams
+) => {
   const initialState = appReducer(undefined, applicationChangeState("active"));
   const initialSnapshot = createActor(itwProximityMachine).getSnapshot();
 
   const snapshot = buildSnapshot(initialSnapshot, options);
 
+  const mockNavigation = new Proxy(
+    {},
+    {
+      get: () => jest.fn()
+    }
+  ) as unknown as IOStackNavigationProp<
+    ItwProximityParamsList,
+    "ITW_PROXIMITY_PRESENTMENT"
+  >;
+
+  const route = {
+    key: "ITW_PROXIMITY_PRESENTMENT",
+    name: ITW_PROXIMITY_ROUTES.PRESENTMENT,
+    params: routeParams
+  };
+
   return renderScreenWithNavigationStoreContext<GlobalState>(
     () => (
       <ItwProximityMachineContext.Provider options={{ snapshot }}>
-        <ItwProximityQrCodeScreen />
+        <ItwProximityPresentmentScreen
+          navigation={mockNavigation}
+          route={route}
+        />
       </ItwProximityMachineContext.Provider>
     ),
-    ITW_PROXIMITY_ROUTES.QR_CODE,
+    ITW_PROXIMITY_ROUTES.PRESENTMENT,
     {},
     createStore(appReducer, initialState as any)
   );
@@ -90,7 +171,7 @@ const buildSnapshot = (
     case "loading":
       return {
         ...initialSnapshot,
-        value: { Presentation: "Starting" },
+        value: { Presentment: "Starting" },
         tags: new Set([ItwPresentationTags.Loading]),
         context: { ...initialSnapshot.context }
       };
@@ -98,7 +179,7 @@ const buildSnapshot = (
     case "displayQrCode":
       return {
         ...initialSnapshot,
-        value: { Presentation: "DisplayQrCode" },
+        value: { Presentment: "AwaitingConnection" },
         tags: new Set([ItwPresentationTags.Presenting]),
         context: {
           ...initialSnapshot.context,
@@ -109,7 +190,7 @@ const buildSnapshot = (
     case "error":
       return {
         ...initialSnapshot,
-        value: { Presentation: "Starting" },
+        value: { Presentment: "Starting" },
         tags: new Set([ItwPresentationTags.Loading]),
         context: {
           ...initialSnapshot.context,
@@ -123,7 +204,7 @@ const buildSnapshot = (
     case "blocked":
       return {
         ...initialSnapshot,
-        value: { Presentation: "DisplayQrCode" },
+        value: { Presentment: "AwaitingConnection" },
         tags: new Set([ItwPresentationTags.Presenting]),
         context: {
           ...initialSnapshot.context,

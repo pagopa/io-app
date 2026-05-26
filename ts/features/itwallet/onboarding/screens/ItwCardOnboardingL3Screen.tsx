@@ -63,11 +63,6 @@ const MAX_INDEX = 1;
 const NFC_NOT_SUPPORTED_FAQ_URL =
   "https://assistenza.ioapp.it/hc/it/articles/35541811236113-Cosa-serve-per-usare-IT-Wallet";
 
-const activeBadge: Badge = {
-  variant: "success",
-  text: I18n.t("features.wallet.onboarding.badge.active")
-};
-
 export type ItwCardOnboardingL3NavigationParams = {
   page?: number;
 };
@@ -244,15 +239,19 @@ const OtherCardsOnboardingSection = () => {
     });
   };
 
-  const cgnBaseProps = useMemo(
-    () => ({
+  const cgnBaseProps = useMemo(() => {
+    const activeBadge: Badge = {
+      variant: "success",
+      text: I18n.t("features.wallet.onboarding.badge.active")
+    };
+
+    return {
       testID: "cgnModuleTestID",
       label: I18n.t("features.wallet.onboarding.options.cgn"),
       onPress: !isCgnActive ? startCgnActivation : undefined,
       badge: isCgnActive ? activeBadge : undefined
-    }),
-    [startCgnActivation, isCgnActive]
-  );
+    };
+  }, [startCgnActivation, isCgnActive]);
 
   const cgnModule = useMemo(
     () =>

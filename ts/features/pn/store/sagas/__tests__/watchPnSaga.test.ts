@@ -2,7 +2,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as E from "fp-ts/lib/Either";
 import { expectSaga, testSaga } from "redux-saga-test-plan";
 import { call, select } from "redux-saga/effects";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 import { pnMessagingServiceIdSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { isPnTestEnabledSelector } from "../../../../../store/reducers/persistedPreferences";
 import { loadServicePreference } from "../../../../services/details/store/actions/preference";
@@ -24,7 +24,7 @@ const mockBearerToken = "mock-token";
 const mockServiceId = "service-id" as ServiceId;
 const mockUpsertPNActivation = jest.fn();
 const mockPnClient: Partial<CLIENT.PnClient> = {
-  upsertPNActivation: mockUpsertPNActivation
+  upsertSendActivation: mockUpsertPNActivation
 };
 
 // Extract functions from testable export
@@ -224,7 +224,7 @@ describe("watchPnSaga", () => {
         .takeLatest(
           pnActivationUpsert.request,
           handlePnActivation,
-          mockPnClient.upsertPNActivation
+          mockPnClient.upsertSendActivation
         )
         .next()
         .takeLatest(

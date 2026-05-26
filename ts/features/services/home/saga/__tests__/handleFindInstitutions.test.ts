@@ -4,12 +4,14 @@ import { getType } from "typesafe-actions";
 import { InstitutionsResource } from "../../../../../../definitions/services/InstitutionsResource";
 import { OrganizationFiscalCode } from "../../../../../../definitions/services/OrganizationFiscalCode";
 import { withRefreshApiCall } from "../../../../authentication/fastLogin/saga/utils";
-import { ServicesClient } from "../../../common/api/__mocks__/servicesClient";
 import {
   PaginatedInstitutionsGetPayload,
   paginatedInstitutionsGet
 } from "../../store/actions";
 import { handleFindInstitutions } from "../handleFindInstitutions";
+import { servicesClientManager } from "../../../../../api/ServicesClientManager";
+
+jest.mock("../../../../../api/ServicesClientManager");
 
 const DEFAULT_REQUEST_PAYLOAD: PaginatedInstitutionsGetPayload = {
   limit: 3,
@@ -40,19 +42,22 @@ const MOCK_RESPONSE_PAYLOAD: InstitutionsResource = {
 };
 
 describe("handleFindInstitutions", () => {
+  const servicesClient = servicesClientManager.getClient("https://base.url", {
+    token: "mock-bearer-tokenyj "
+  });
   describe("when the response is successful", () => {
     it(`should put ${getType(
       paginatedInstitutionsGet.success
     )} with the parsed institutions and pagination data`, () => {
       testSaga(
         handleFindInstitutions,
-        ServicesClient.findInstitutions,
+        servicesClient.findInstitutions,
         paginatedInstitutionsGet.request(DEFAULT_REQUEST_PAYLOAD)
       )
         .next()
         .call(
           withRefreshApiCall,
-          ServicesClient.findInstitutions(DEFAULT_REQUEST_PAYLOAD),
+          servicesClient.findInstitutions(DEFAULT_REQUEST_PAYLOAD),
           paginatedInstitutionsGet.request(DEFAULT_REQUEST_PAYLOAD)
         )
         .next(E.right({ status: 200, value: MOCK_RESPONSE_PAYLOAD }))
@@ -70,13 +75,13 @@ describe("handleFindInstitutions", () => {
     )} with the error`, () => {
       testSaga(
         handleFindInstitutions,
-        ServicesClient.findInstitutions,
+        servicesClient.findInstitutions,
         paginatedInstitutionsGet.request(DEFAULT_REQUEST_PAYLOAD)
       )
         .next()
         .call(
           withRefreshApiCall,
-          ServicesClient.findInstitutions(DEFAULT_REQUEST_PAYLOAD),
+          servicesClient.findInstitutions(DEFAULT_REQUEST_PAYLOAD),
           paginatedInstitutionsGet.request(DEFAULT_REQUEST_PAYLOAD)
         )
         .next(

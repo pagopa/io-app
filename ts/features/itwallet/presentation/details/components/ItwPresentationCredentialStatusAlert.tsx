@@ -1,10 +1,10 @@
 import { Alert, IOButton, IOToast, VStack } from "@pagopa/io-app-design-system";
-import { useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { memo, useCallback } from "react";
 import { View } from "react-native";
+import { useRoute } from "@react-navigation/native";
 import IOMarkdown from "../../../../../components/IOMarkdown";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { format } from "../../../../../utils/dates.ts";
@@ -38,6 +38,7 @@ import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors
 import { ItwEidLifecycleAlert } from "../../../common/components/ItwEidLifecycleAlert";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { useItwIssuerDynamicErrorBottomSheet } from "../hooks/useItwIssuerDynamicErrorBottomSheet";
+import { ITW_ROUTES } from "../../../navigation/routes.ts";
 
 type Props = {
   credential: CredentialMetadata;
@@ -45,6 +46,7 @@ type Props = {
 
 const excludedCredentialTypes = [
   CredentialType.PID,
+  CredentialType.AGE_VERIFICATION,
   CredentialType.EDUCATION_DEGREE,
   CredentialType.EDUCATION_ENROLLMENT,
   CredentialType.RESIDENCY,
@@ -71,7 +73,8 @@ export enum CredentialAlertType {
   JWT_VERIFICATION = "JWT_VERIFICATION",
   DOCUMENT_EXPIRING = "DOCUMENT_EXPIRING",
   ISSUER_DYNAMIC_ERROR = "ISSUER_DYNAMIC_ERROR",
-  DOCUMENT_EXPIRED = "DOCUMENT_EXPIRED"
+  DOCUMENT_EXPIRED = "DOCUMENT_EXPIRED",
+  INVALID_CREDENTIAL = "INVALID_CREDENTIAL"
 }
 
 type CredentialAlertProps = {
@@ -105,6 +108,16 @@ export const deriveCredentialAlertType = (
   const isCredentialJwtInvalid =
     isCredentialJwtExpiring || isCredentialJwtExpired;
 
+  // When PID is expired in L3 mode, only show INVALID_CREDENTIAL if the credential
+  // is also jwtExpired (both expired case). When only PID is expired, no alert is
+  // shown here — the PID itself handles its own alert on its detail screen.
+  if (isItwL3 && isEidExpired) {
+    if (isCredentialJwtExpired) {
+      return CredentialAlertType.INVALID_CREDENTIAL;
+    }
+    return undefined;
+  }
+
   // Handle alerts only if the credential JWT is expiring or expired
   if (isCredentialJwtInvalid) {
     /**
@@ -132,6 +145,7 @@ export const deriveCredentialAlertType = (
     if (shouldShowEidAlert) {
       return CredentialAlertType.EID_LIFECYCLE;
     }
+
     // 3. In all other cases where the JWT is invalid but no special condition applies,
     // show the generic JWT verification alert
     return CredentialAlertType.JWT_VERIFICATION;
@@ -162,13 +176,13 @@ export const deriveCredentialAlertType = (
  */
 const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
   const navigation = useIONavigation();
+  const { name: currentScreenName } = useRoute();
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
   const { status, message } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const offlineAccessReason = useIOSelector(offlineAccessReasonSelector);
-  const { name: currentScreenName } = useRoute();
 
   const trackCredentialAlertEvent = (action: CredentialAlertEvents): void => {
     if (!status) {
@@ -251,6 +265,28 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
           )}
         />
       );
+    case CredentialAlertType.INVALID_CREDENTIAL:
+      return (
+        <Alert
+          testID="itwExpiredBannerTestID"
+          variant="error"
+          content={I18n.t(
+            "features.itWallet.presentation.alerts.jwtVerification.content.invalid"
+          )}
+          action={I18n.t(
+            `features.itWallet.presentation.alerts.jwtVerification.actionInvalid`
+          )}
+          onPress={() => {
+            navigation.navigate(ITW_ROUTES.MAIN, {
+              screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
+              params: {
+                eidReissuing: true,
+                level: isItwL3 ? "l3" : "l2"
+              }
+            });
+          }}
+        />
+      );
   }
 };
 
@@ -282,7 +318,7 @@ const JwtVerificationAlert = ({
         { date: format(credential.jwt.expiration, "DD-MM-YYYY") }
       )}
       action={I18n.t(
-        "features.itWallet.presentation.alerts.jwtVerification.action"
+        `features.itWallet.presentation.alerts.jwtVerification.action`
       )}
       onPress={beginCredentialIssuance}
     />

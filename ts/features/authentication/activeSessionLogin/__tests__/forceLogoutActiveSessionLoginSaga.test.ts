@@ -15,24 +15,11 @@ import { sessionCorrupted } from "../../common/store/actions";
 import { sessionTokenSelector } from "../../common/store/selectors";
 import { startApplicationInitialization } from "../../../../store/actions/application";
 import { resetMixpanelSaga } from "../../../../sagas/mixpanel";
-import { getKeyInfo } from "../../../lollipop/saga";
-import { KeyInfo } from "../../../lollipop/utils/crypto";
 import * as error from "../../../../utils/errors";
 import * as analytics from "../../common/analytics";
 import * as messagesAnalytics from "../../../messages/analytics";
 
 const sessionToken = "mock-session-token";
-
-const defaultKeyInfo: KeyInfo = {
-  keyTag: "FAKE_KEY_TAG",
-  publicKey: {
-    crv: "P_256",
-    kty: "EC",
-    x: "nDbpq45jXUKfWxodyvec3F1e+r0oTSqhakbauVmB59Y=",
-    y: "CtI6Cozk4O5OJ4Q6WyjiUw9/K6TyU0aDdssd25YHZxg="
-  },
-  publicKeyThumbprint: "FAKE_THUMBPRINT"
-};
 
 const setLoggedOutUserWithDifferentCFAction = setLoggedOutUserWithDifferentCF();
 const logoutBeforeSessionCorruptedAction = logoutBeforeSessionCorrupted();
@@ -41,22 +28,18 @@ jest.mock("../../../../utils/supportAssistance", () => ({
   resetAssistanceData: jest.fn()
 }));
 
-// Mock logout function that will be extracted from backend client
+// Mock logout function that will be extracted from session manager client
 const mockLogout = jest.fn();
 
-jest.mock("../../../../api/BackendClientManager", () => ({
-  backendClientManager: {
-    getBackendClient: jest.fn(() => ({
+jest.mock("../../../../api/SessionManagerClientManager", () => ({
+  sessionManagerClientManager: {
+    getClient: jest.fn(() => ({
       logout: mockLogout
     }))
   }
 }));
 
 jest.mock("../../../lollipop/saga", () => ({
-  // eslint-disable-next-line object-shorthand, require-yield
-  getKeyInfo: function* () {
-    return defaultKeyInfo;
-  },
   // eslint-disable-next-line object-shorthand, require-yield
   deleteCurrentLollipopKeyAndGenerateNewKeyTag: function* () {
     return;
@@ -111,8 +94,6 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
-        .call(getKeyInfo)
-        .next(defaultKeyInfo)
         .call(mockLogout, {})
         .next(successResponse) // Mock logout API success
         .put(sessionCorrupted())
@@ -136,8 +117,6 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
-        .call(getKeyInfo)
-        .next(defaultKeyInfo)
         .call(mockLogout, {})
         .next(successResponse) // Mock logout API success
         .put(setFinalizeLoggedOutUserWithDifferentCF())
@@ -164,8 +143,6 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
-        .call(getKeyInfo)
-        .next(defaultKeyInfo)
         .call(mockLogout, {})
         .next(errorResponse) // Mock logout API error
         .put(sessionCorrupted())
@@ -195,8 +172,6 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
-        .call(getKeyInfo)
-        .next(defaultKeyInfo)
         .call(mockLogout, {})
         .next(errorResponse) // Mock logout API error
         .put(setFinalizeLoggedOutUserWithDifferentCF())
@@ -229,8 +204,6 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
-        .call(getKeyInfo)
-        .next(defaultKeyInfo)
         .call(mockLogout, {})
         .next(leftResponse) // Mock validation error
         .put(sessionCorrupted())
@@ -264,8 +237,6 @@ describe("logoutUserAfterActiveSessionLoginSaga", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
-        .call(getKeyInfo)
-        .next(defaultKeyInfo)
         .call(mockLogout, {})
         .throw(thrownError) // Mock exception during API call
         .put(sessionCorrupted())

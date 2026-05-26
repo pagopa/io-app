@@ -8,15 +8,18 @@ import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { flow, pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import { useEffect, useRef, useState } from "react";
 import { Keyboard, Platform, View } from "react-native";
 import { KeyboardStickyView } from "react-native-keyboard-controller";
-import I18n from "i18next";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { useFooterActionsMargin } from "../../../../hooks/useFooterActionsMargin";
 import {
   AppParamsList,
   IOStackNavigationProp
 } from "../../../../navigation/params/AppParamsList";
+import { useIOSelector } from "../../../../store/hooks";
+import { isScreenReaderEnabledSelector } from "../../../../store/reducers/preferences";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
@@ -27,9 +30,6 @@ import * as analytics from "../analytics";
 import { usePagoPaPayment } from "../hooks/usePagoPaPayment";
 import { PaymentsCheckoutParamsList } from "../navigation/params";
 import { TextInputValidationRefProps } from "../types";
-import { useIOSelector } from "../../../../store/hooks";
-import { isScreenReaderEnabledSelector } from "../../../../store/reducers/preferences";
-import { useFooterActionsMargin } from "../../../../hooks/useFooterActionsMargin";
 
 export type WalletPaymentInputFiscalCodeScreenNavigationParams = {
   paymentNoticeNumber: O.Option<PaymentNoticeNumberFromString>;

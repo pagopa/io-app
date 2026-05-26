@@ -357,7 +357,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
     </View>
   </View>,
   <View
-    accessibilityLabel="Codice errore"
+    accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.errorCodeAccessibility"
     accessibilityRole="button"
     accessibilityState={
       {
@@ -955,7 +955,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
     </View>
   </View>,
   <View
-    accessibilityLabel="Codice errore"
+    accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.errorCodeAccessibility"
     accessibilityRole="button"
     accessibilityState={
       {
@@ -1553,7 +1553,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
     </View>
   </View>,
   <View
-    accessibilityLabel="Codice errore"
+    accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.errorCodeAccessibility"
     accessibilityRole="button"
     accessibilityState={
       {
@@ -2455,7 +2455,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
     </View>
   </View>,
   <View
-    accessibilityLabel="Codice errore"
+    accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.errorCodeAccessibility"
     accessibilityRole="button"
     accessibilityState={
       {
@@ -3053,7 +3053,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
     </View>
   </View>,
   <View
-    accessibilityLabel="Codice errore"
+    accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.errorCodeAccessibility"
     accessibilityRole="button"
     accessibilityState={
       {
@@ -3651,7 +3651,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
     </View>
   </View>,
   <View
-    accessibilityLabel="Codice errore"
+    accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.errorCodeAccessibility"
     accessibilityRole="button"
     accessibilityState={
       {

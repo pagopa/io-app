@@ -4,7 +4,6 @@
  * Set up of the testing environment
  */
 
-
 import mockAsyncStorage from "@react-native-async-storage/async-storage/jest/async-storage-mock";
 import mockClipboard from "@react-native-clipboard/clipboard/jest/clipboard-mock.js";
 import nodeFetch from "node-fetch";
@@ -68,7 +67,7 @@ global.CanvasKit = {
 jest.mock("react-native-quick-crypto", () => ({}));
 jest.mock("@pagopa/io-react-native-zendesk", () => mockZendesk);
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
-jest.mock("@react-native-community/push-notification-ios", () => jest.fn());
+jest.mock("expo-notifications", () => ({}));
 jest.mock("@react-native-cookies/cookies", () => jest.fn());
 jest.mock("react-native-share", () => jest.fn());
 jest.mock("@react-native-clipboard/clipboard", () => mockClipboard);
@@ -266,15 +265,6 @@ jest.mock("react-native-bluetooth-state-manager", () => ({
   getState: jest.fn().mockResolvedValue(true)
 }));
 
-jest.mock("@pagopa/io-react-native-iso18013", () => ({
-  CBOR: {
-    decodeIssuerSigned: jest.fn(() => Promise.resolve("test"))
-  },
-  COSE: {
-    verify: jest.fn(() => Promise.resolve(true))
-  }
-}));
-
 jest.mock("@pagopa/io-react-native-cie", () => ({
   CieManager: jest.fn()
 }));
@@ -282,3 +272,22 @@ jest.mock("@pagopa/io-react-native-cie", () => ({
 jest.mock("react-native-keyboard-controller", () =>
   require("react-native-keyboard-controller/jest")
 );
+jest.mock("@pagopa/io-react-native-iso18013", () => ({
+  ISO18013_5: {
+    ErrorCode: {
+      CBOR_DECODING: 11,
+      SESSION_ENCRYPTION: 10,
+      SESSION_TERMINATED: 20
+    },
+    addListener: jest.fn(),
+    startEngagement: jest.fn(),
+    close: jest.fn(),
+    generateResponse: jest.fn(),
+    sendErrorResponse: jest.fn(),
+    sendResponse: jest.fn(),
+    parseVerifierRequest: jest.fn()
+  },
+  ISO18013_7: {},
+  CBOR: {},
+  COSE: {}
+}));
