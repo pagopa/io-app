@@ -357,7 +357,7 @@ exports[`sendAarErrorSupportBottomSheetComponent should match the snapshot with 
     </View>
   </View>,
   <View
-    accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.errorCodeAccessibility"
+    accessibilityLabel="Codice errore: ERROR_123, copia"
     accessibilityRole="button"
     accessibilityState={
       {

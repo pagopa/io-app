@@ -369,7 +369,7 @@ const generateCredentialCardConfig = (
   credentialDomain?: string
 ): CredentialCardConfig => {
   const theme =
-    ItWalletThemes[colorScheme === "unspecified" ? "light" : colorScheme];
+    ItWalletThemes[colorScheme !== "unspecified" ? colorScheme : "light"];
   const isLight = colorScheme !== "dark";
 
   const color =
@@ -436,7 +436,7 @@ export const getCredentialCardConfig = (
       // Selects the appropriate credential card configuration based on the
       // current color scheme.
       return staticConfig[
-        colorScheme !== "unspecified" ? colorScheme : "light"
+        colorScheme && colorScheme !== "unspecified" ? colorScheme : "light"
       ];
     }
     return staticConfig;
