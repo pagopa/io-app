@@ -1,6 +1,10 @@
 import { mixpanelTrack } from "../../../../mixpanel";
 import { buildEventProperties } from "../../../../utils/analytics";
-import { ItwFlow, ItwScreenFlowContext } from "../../analytics/utils/types";
+import {
+  ItwFlow,
+  ItwIdMethod,
+  ItwScreenFlowContext
+} from "../../analytics/utils/types";
 import {
   TrackITWalletSpidIDPSelected,
   TrackItWalletCieCardVerifyFailure,
@@ -301,5 +305,15 @@ export const trackItwFallbackL2FlowExit = (
   void mixpanelTrack(
     ITW_IDENTIFICATION_ACTIONS_EVENTS.ITW_FALLBACK_L2_FLOW_EXIT,
     buildEventProperties("UX", "action", itwFallbackL2Flow)
+  );
+};
+
+export const trackItWalletErrorCan = (
+  cie_reading_progress: number,
+  ITW_ID_method?: ItwIdMethod
+) => {
+  void mixpanelTrack(
+    ITW_IDENTIFICATION_ERRORS_EVENTS.ITW_CIE_CAN_ERROR,
+    buildEventProperties("UX", "error", { cie_reading_progress, ITW_ID_method })
   );
 };

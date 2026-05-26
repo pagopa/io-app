@@ -3,8 +3,8 @@ import I18n from "i18next";
 import { View } from "react-native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
-import { ITW_ROUTES } from "../../navigation/routes";
 import { itwIsWalletEmptySelector } from "../../credentials/store/selectors";
+import { ITW_ROUTES } from "../../navigation/routes";
 import { itwIsActivationDisabledSelector } from "../store/selectors/preferences";
 
 export const ItwL2EngagementBanner = () => {
