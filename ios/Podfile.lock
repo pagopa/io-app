@@ -45,6 +45,7 @@ PODS:
   - ExpoAsset (12.0.12):
     - ExpoModulesCore
   - ExpoBackgroundTask (1.0.10):
+    - ExpoModulesCore
   - ExpoDevice (8.0.10):
     - ExpoModulesCore
   - ExpoFileSystem (19.0.21):
