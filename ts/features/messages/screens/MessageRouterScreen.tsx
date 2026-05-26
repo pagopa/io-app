@@ -1,7 +1,6 @@
 import I18n from "i18next";
 import { ReactElement, useCallback, useEffect, useRef } from "react";
 import LoadingScreenContent from "../../../components/screens/LoadingScreenContent";
-import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 import {
   IOStackNavigationRouteProps,
@@ -18,11 +17,11 @@ import {
   getMessageDataAction,
   SuccessGetMessageDataActionType
 } from "../store/actions";
+import { MessageRouterScreenErrorComponent } from "../components/MessageRouter/MessageRouterScreenErrorComponent";
 import {
   blockedFromPushNotificationSelector,
   messageSuccessDataSelector,
-  showSpinnerFromMessageGetStatusSelector,
-  thirdPartyMessageDetailsErrorSelector
+  showSpinnerFromMessageGetStatusSelector
 } from "../store/reducers/messageGetStatus";
 
 export type MessageRouterScreenRouteParams = {
@@ -42,9 +41,7 @@ export const MessageRouterScreen = (props: NavigationProps): ReactElement => {
   const navigation = useIONavigation();
   const isFirstRendering = useRef(true);
   const isLoading = useIOSelector(showSpinnerFromMessageGetStatusSelector);
-  const thirdPartyMessageDetailsError = useIOSelector(
-    thirdPartyMessageDetailsErrorSelector
-  );
+
   const messageSuccessDataOrUndefined = useIOSelector(
     messageSuccessDataSelector
   );
@@ -140,42 +137,26 @@ export const MessageRouterScreen = (props: NavigationProps): ReactElement => {
   ]);
 
   useHeaderSecondLevel({
+    headerShown: isLoading,
     goBack: onCancelCallback,
     supportRequest: true,
     title: ""
   });
-
   if (isLoading) {
     return (
       <LoadingScreenContent
+        testID="routerScreen-loading"
         title={I18n.t("messageDetails.loadingText")}
         subtitle={I18n.t("messageDetails.pleaseWait")}
         headerVisible
       />
     );
   }
-
   return (
-    <OperationResultScreenContent
-      action={{
-        label: I18n.t("global.buttons.retry"),
-        onPress: getMessageDataCallback
-      }}
-      pictogram="umbrella"
-      secondaryAction={{
-        label: I18n.t("global.buttons.cancel"),
-        onPress: onCancelCallback
-      }}
-      subtitle={
-        thirdPartyMessageDetailsError
-          ? I18n.t("messageDetails.remoteContentError.body")
-          : undefined
-      }
-      title={
-        thirdPartyMessageDetailsError
-          ? I18n.t("messageDetails.remoteContentError.title")
-          : I18n.t("global.genericError")
-      }
+    <MessageRouterScreenErrorComponent
+      onRetry={getMessageDataCallback}
+      onCancel={onCancelCallback}
+      messageId={messageId}
     />
   );
 };

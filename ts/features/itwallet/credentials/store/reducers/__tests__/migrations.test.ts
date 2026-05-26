@@ -867,4 +867,55 @@ describe("ITW credentials reducer migrations", () => {
 
     expect(nextState).toStrictEqual(persistedStateAt9);
   });
+
+  it("should migrate from 9 to 10 (replace legacy PersonIdentificationData with pid)", () => {
+    const inputCredentials = {
+      dc_sd_jwt_PersonIdentificationData: {
+        credentialId: "dc_sd_jwt_PersonIdentificationData",
+        credentialType: "PersonIdentificationData",
+        format: "dc+sd-jwt",
+        credential: "sd-jwt-credential-string",
+        parsedCredential: {},
+        spec_version: "1.0.0"
+      },
+      mso_mdoc_mDL: {
+        credentialId: "mso_mdoc_mDL",
+        credentialType: "mDL",
+        format: "mso_mdoc",
+        credential: "mdoc-credential-string",
+        parsedCredential: {},
+        spec_version: "1.0.0"
+      }
+    };
+
+    const basePersistedStateAt9 = {
+      credentials: inputCredentials,
+      legacyCredentials: {},
+      _persist: {
+        version: 9,
+        rehydrated: false
+      }
+    };
+
+    const persistedStateAt10 = {
+      credentials: {
+        ...inputCredentials,
+        dc_sd_jwt_PersonIdentificationData: {
+          ...inputCredentials.dc_sd_jwt_PersonIdentificationData,
+          credentialType: "pid"
+        }
+      },
+      legacyCredentials: {},
+      _persist: {
+        version: 9,
+        rehydrated: false
+      }
+    };
+
+    const from9To10Migration = itwCredentialsStateMigrations[10];
+    expect(from9To10Migration).toBeDefined();
+    const nextState = from9To10Migration(basePersistedStateAt9);
+
+    expect(nextState).toStrictEqual(persistedStateAt10);
+  });
 });

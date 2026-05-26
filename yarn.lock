@@ -3739,6 +3739,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ide/backoff@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "@ide/backoff@npm:1.0.0"
+  checksum: 05860fd05952c83e7bc2f23e5f25b9301a60d99254ee4a8d63f5907da0f908af9db718c9027dd2cdaec8203fa05e9dd6afaca767e7e69cefd0a0eef33d9a17ea
+  languageName: node
+  linkType: hard
+
 "@isaacs/balanced-match@npm:^4.0.1":
   version: 4.0.1
   resolution: "@isaacs/balanced-match@npm:4.0.1"
@@ -4514,15 +4521,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-react-native-wallet@npm:^3.2.0":
-  version: 3.2.0
-  resolution: "@pagopa/io-react-native-wallet@npm:3.2.0"
+"@pagopa/io-react-native-wallet@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "@pagopa/io-react-native-wallet@npm:3.3.0"
   dependencies:
-    "@pagopa/io-wallet-oauth2": 1.2.1
-    "@pagopa/io-wallet-oid-federation": 1.2.1
-    "@pagopa/io-wallet-oid4vci": 1.2.1
-    "@pagopa/io-wallet-oid4vp": 1.2.1
-    "@pagopa/io-wallet-utils": 1.2.1
+    "@pagopa/io-wallet-oauth2": 1.4.0
+    "@pagopa/io-wallet-oid-federation": 1.4.0
+    "@pagopa/io-wallet-oid4vci": 1.4.0
+    "@pagopa/io-wallet-oid4vp": 1.4.0
+    "@pagopa/io-wallet-utils": 1.4.0
     "@sd-jwt/core": ^0.19.0
     "@sd-jwt/crypto-nodejs": ^0.19.0
     "@sd-jwt/jwt-status-list": ^0.19.0
@@ -4542,7 +4549,7 @@ __metadata:
     react: "*"
     react-native: "*"
     react-native-quick-crypto: "*"
-  checksum: 6de6694e0f1978b0d85335ef74bce2404e9caa98c35324040bc78ef54f503b37ddb46b4dbc6652300326f1a6449017cd9ade856af2cad8e2d248fc7e42cc7a7b
+  checksum: 2bae0c856b94c26b3f39763a16db62fdd0e3139ff502130dc7079d98db6bf77353a2c3538513b555c053d695e2fae58755526edf4f4fddba2a2507645cf42e73
   languageName: node
   linkType: hard
 
@@ -4556,7 +4563,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-wallet-oauth2@npm:, @pagopa/io-wallet-oauth2@npm:1.2.1":
+"@pagopa/io-wallet-oauth2@npm:":
   version: 1.2.1
   resolution: "@pagopa/io-wallet-oauth2@npm:1.2.1"
   dependencies:
@@ -4569,7 +4576,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-wallet-oid-federation@npm:, @pagopa/io-wallet-oid-federation@npm:1.2.1":
+"@pagopa/io-wallet-oauth2@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@pagopa/io-wallet-oauth2@npm:1.4.0"
+  dependencies:
+    "@openid4vc/oauth2": 0.4.3
+    "@openid4vc/utils": 0.4.3
+    "@pagopa/io-wallet-oid-federation": 1.4.0
+    "@pagopa/io-wallet-utils": 1.4.0
+    js-base64: ^3.7.8
+    zod: ^4.3.6
+  checksum: 01983cf57df4b11ae72899f76c7db2bfb4c0c4d6ef47f4c59e546c00a9cb186d459f3721c98e8139849dd51286a56b7279441eeed39262055d3f8b115b52f6a9
+  languageName: node
+  linkType: hard
+
+"@pagopa/io-wallet-oid-federation@npm:":
   version: 1.2.1
   resolution: "@pagopa/io-wallet-oid-federation@npm:1.2.1"
   dependencies:
@@ -4581,25 +4602,36 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pagopa/io-wallet-oid4vci@npm:1.2.1":
-  version: 1.2.1
-  resolution: "@pagopa/io-wallet-oid4vci@npm:1.2.1"
+"@pagopa/io-wallet-oid-federation@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@pagopa/io-wallet-oid-federation@npm:1.4.0"
+  dependencies:
+    "@pagopa/io-wallet-utils": ""
+    buffer: ^6.0.3
+    zod: ^4.3.6
+  checksum: 119905ec486ea06a5584222e3cb1ff51a8c2de639772373fdc4e899f2407a86a67d80a3ea8b21869b89cfddf577fce69f6290e3defdb368c1cbf7a666f47c4d3
+  languageName: node
+  linkType: hard
+
+"@pagopa/io-wallet-oid4vci@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@pagopa/io-wallet-oid4vci@npm:1.4.0"
   dependencies:
     "@openid4vc/oauth2": 0.4.3
     "@openid4vc/openid4vci": 0.4.3
     "@openid4vc/utils": 0.4.3
-    "@pagopa/io-wallet-oauth2": 1.2.1
-    "@pagopa/io-wallet-oid-federation": 1.2.1
-    "@pagopa/io-wallet-oid4vp": 1.2.1
-    "@pagopa/io-wallet-utils": 1.2.1
+    "@pagopa/io-wallet-oauth2": 1.4.0
+    "@pagopa/io-wallet-oid-federation": 1.4.0
+    "@pagopa/io-wallet-oid4vp": 1.4.0
+    "@pagopa/io-wallet-utils": 1.4.0
     zod: ^4.3.6
-  checksum: a3171ef054a9d9f1eb47170b6b029de6adef48c7a27982afbcbdd934b83c99ef2d62b07e96429a9b511ffb4ee1559be01aa795e611d07da943d179c36e855c19
+  checksum: 53951aab850284d8b44290a8367adc8c2b7265f49111b8cf05b0a9c88fe252152790b4bc219b545a98c01bbc8550c979e70687c7b9b018a6f591483a2a9109ab
   languageName: node
   linkType: hard
 
-"@pagopa/io-wallet-oid4vp@npm:1.2.1":
-  version: 1.2.1
-  resolution: "@pagopa/io-wallet-oid4vp@npm:1.2.1"
+"@pagopa/io-wallet-oid4vp@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@pagopa/io-wallet-oid4vp@npm:1.4.0"
   dependencies:
     "@openid4vc/oauth2": 0.4.3
     "@openid4vc/openid4vp": 0.4.3
@@ -4608,7 +4640,7 @@ __metadata:
     "@pagopa/io-wallet-oid-federation": ""
     "@pagopa/io-wallet-utils": ""
     zod: ^4.3.6
-  checksum: fb8353d1f8e021dfcee07a14360fbf70b66c75e929e6943d1c96ab94cde945de61d4c06f5a79fe553c5d87213b738f23e11b4cc5d48d29f5e22610204ee234c2
+  checksum: f1a0883a24b2e5dad0420b4c7b73f63a9af75294a8d4fc52bb98516b4b8d890d0901c41228734ba59739623561d2202bc73c9058c3c70cf5b05c76ca4c2efee4
   languageName: node
   linkType: hard
 
@@ -4619,6 +4651,17 @@ __metadata:
     "@openid4vc/utils": 0.4.3
     zod: ^4.3.6
   checksum: d79bd990f7640cbb0317aa1ae6bc1b274f5303e8cfdc8d305745e3a2efd8c73b9925e5250b800474c7bfcf05fc1d7745db6e6dd99d40a17ae320f4ee6631dbd7
+  languageName: node
+  linkType: hard
+
+"@pagopa/io-wallet-utils@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@pagopa/io-wallet-utils@npm:1.4.0"
+  dependencies:
+    "@openid4vc/oauth2": 0.4.3
+    "@openid4vc/utils": 0.4.3
+    zod: ^4.3.6
+  checksum: b94c024805e98c87a0a9aa8146b8108965735e90185334d4617dda3db7b829a076df408a72c95f6d540cc073c566f548c74392996a3e00491cff7c9d7bcb6c8a
   languageName: node
   linkType: hard
 
@@ -4929,18 +4972,6 @@ __metadata:
   peerDependencies:
     react-native: ">=0.59"
   checksum: d347ae522da6b8c045d6378754d4928bdf23cc85b74571b91fa8a03fa168bdac5e3c65eb97eac0dd0c7cbd20e782f99d41b090fb79ce7d815cbaf6fb5d1abe37
-  languageName: node
-  linkType: hard
-
-"@react-native-community/push-notification-ios@npm:^1.8.0":
-  version: 1.8.0
-  resolution: "@react-native-community/push-notification-ios@npm:1.8.0"
-  dependencies:
-    invariant: ^2.2.4
-  peerDependencies:
-    react: ">=16.6.3"
-    react-native: ">=0.58.4"
-  checksum: 38cbd8f1a6e3a061689cc7742417be76dd29b632d7573c0cb887cd45570c5b891f15296c8f03e6df9e42ea23fad3476bfa669ace81b4dea56700f8215f5a43d3
   languageName: node
   linkType: hard
 
@@ -6129,13 +6160,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-native-push-notification@npm:^8.1.1":
-  version: 8.1.1
-  resolution: "@types/react-native-push-notification@npm:8.1.1"
-  checksum: 72ceeac02c3de98729be79dd4347bf0d3a9f21f85b879814d11abf5b5a1bb2525a39522df265e4fb24ba7fdad80e8f01f4fd94baabd0da5a9ce23697d18903c0
-  languageName: node
-  linkType: hard
-
 "@types/react@npm:*":
   version: 19.1.8
   resolution: "@types/react@npm:19.1.8"
@@ -7299,6 +7323,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"assert@npm:^2.0.0":
+  version: 2.1.0
+  resolution: "assert@npm:2.1.0"
+  dependencies:
+    call-bind: ^1.0.2
+    is-nan: ^1.3.2
+    object-is: ^1.1.5
+    object.assign: ^4.1.4
+    util: ^0.12.5
+  checksum: 1ed1cabba9abe55f4109b3f7292b4e4f3cf2953aad8dc148c0b3c3bd676675c31b1abb32ef563b7d5a19d1715bf90d1e5f09fad2a4ee655199468902da80f7c2
+  languageName: node
+  linkType: hard
+
 "ast-types-flow@npm:^0.0.7":
   version: 0.0.7
   resolution: "ast-types-flow@npm:0.0.7"
@@ -8259,6 +8296,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"badgin@npm:^1.1.5":
+  version: 1.2.3
+  resolution: "badgin@npm:1.2.3"
+  checksum: 8c53fb0c35ec0bbf25a84be42e56e1291c958138182cdf91693ade955d7f52f36fd282ed00f31b741024aec6bdb10080bbe20a73138aac14a096838aaac76d95
+  languageName: node
+  linkType: hard
+
 "bail@npm:^1.0.0":
   version: 1.0.5
   resolution: "bail@npm:1.0.5"
@@ -8723,6 +8767,18 @@ __metadata:
     es-errors: ^1.3.0
     function-bind: ^1.1.2
   checksum: b2863d74fcf2a6948221f65d95b91b4b2d90cfe8927650b506141e669f7d5de65cea191bf788838bc40d13846b7886c5bc5c84ab96c3adbcf88ad69a72fcdc6b
+  languageName: node
+  linkType: hard
+
+"call-bind@npm:^1.0.0":
+  version: 1.0.9
+  resolution: "call-bind@npm:1.0.9"
+  dependencies:
+    call-bind-apply-helpers: ^1.0.2
+    es-define-property: ^1.0.1
+    get-intrinsic: ^1.3.0
+    set-function-length: ^1.2.2
+  checksum: fb5a8037bd7e2417ebda428f7ba57cbb3152e92f355aa8a20a4b2be9657f67b84e3812502620047ccf12c6542584a7d5bfb8d080cb636eb178b270bec0bfc010
   languageName: node
   linkType: hard
 
@@ -11640,6 +11696,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-application@npm:~7.0.8":
+  version: 7.0.8
+  resolution: "expo-application@npm:7.0.8"
+  peerDependencies:
+    expo: "*"
+  checksum: 15b6db7b4854b50a396e54e143b57187711788aa45e1719e4b4b4c5b9d29b7f97efe2d1256ced47d8c2ad95fe88a367b1f2be27e06a8dd17b38251b403fb8585
+  languageName: node
+  linkType: hard
+
 "expo-asset@npm:~12.0.12":
   version: 12.0.12
   resolution: "expo-asset@npm:12.0.12"
@@ -11664,6 +11729,17 @@ __metadata:
     expo: "*"
     react-native: "*"
   checksum: 71b1bbfe2d1ecce68c1d55f443627c25b4c940c62fb1d19fe8aa0ab437324cfc18efb73bdc61cd476d811f70a774355be79379aecb3a3b91548d252dc11f8bfb
+  languageName: node
+  linkType: hard
+
+"expo-device@npm:~8.0.10":
+  version: 8.0.10
+  resolution: "expo-device@npm:8.0.10"
+  dependencies:
+    ua-parser-js: ^0.7.33
+  peerDependencies:
+    expo: "*"
+  checksum: 1e035233a34f44305425ab0ffcaa465f3459dd992ca582552707f48c4c7fd79fb83214f45efff3aa6523418185bc0d706b2238d7008a98aedeb0874ed62e6c52
   languageName: node
   linkType: hard
 
@@ -11724,6 +11800,25 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 43460a60dbff91660dd02be488f62feb91b4599ea1370656f2f5c3750422cbcfc861f0d66c84fd1227be2a0cbcb448d78805c1c0f9cd050581d4dfbc33ca2ead
+  languageName: node
+  linkType: hard
+
+"expo-notifications@npm:~0.32.17":
+  version: 0.32.17
+  resolution: "expo-notifications@npm:0.32.17"
+  dependencies:
+    "@expo/image-utils": ^0.8.8
+    "@ide/backoff": ^1.0.0
+    abort-controller: ^3.0.0
+    assert: ^2.0.0
+    badgin: ^1.1.5
+    expo-application: ~7.0.8
+    expo-constants: ~18.0.13
+  peerDependencies:
+    expo: "*"
+    react: "*"
+    react-native: "*"
+  checksum: 8d75e152387ee33ae70f300f23ea37a8c097b7ad3b580ed520fc8325a33b6587660cbb6ada8cd6b7e825d1528db0f7243133a6674b2173da94cfad700fcfe84b
   languageName: node
   linkType: hard
 
@@ -13557,7 +13652,7 @@ __metadata:
     "@pagopa/io-react-native-jwt": ^2.1.0
     "@pagopa/io-react-native-login-utils": 1.2.0
     "@pagopa/io-react-native-secure-storage": ^0.2.1
-    "@pagopa/io-react-native-wallet": ^3.2.0
+    "@pagopa/io-react-native-wallet": ^3.3.0
     "@pagopa/io-react-native-zendesk": ^0.3.30
     "@pagopa/openapi-codegen-ts": ^14.2.0
     "@pagopa/react-native-cie": ^1.5.0
@@ -13568,7 +13663,6 @@ __metadata:
     "@react-native-community/cli-platform-android": 20.0.0
     "@react-native-community/cli-platform-ios": 20.0.0
     "@react-native-community/netinfo": 11.4.1
-    "@react-native-community/push-notification-ios": ^1.8.0
     "@react-native-cookies/cookies": ^6.2.1
     "@react-native-documents/picker": ^10.1.2
     "@react-native/babel-preset": 0.81.5
@@ -13597,7 +13691,6 @@ __metadata:
     "@types/pako": ^2.0.0
     "@types/react": ^19.1.0
     "@types/react-native-background-timer": ^2.0.0
-    "@types/react-native-push-notification": ^8.1.1
     "@types/redux-logger": ^3.0.6
     "@types/redux-mock-store": ^1.0.2
     "@types/semver": ^6.2.0
@@ -13631,6 +13724,9 @@ __metadata:
     eslint-plugin-react-native-a11y: ^3.3.0
     eslint-plugin-sonarjs: ^3.0.7
     expo: ^54.0.33
+    expo-constants: ~18.0.13
+    expo-device: ~8.0.10
+    expo-notifications: ~0.32.17
     expo-screen-capture: ~8.0.9
     fp-ts: ^2.12.1
     front-matter: ^4.0.2
@@ -13684,7 +13780,6 @@ __metadata:
     react-native-pdf: 7.0.3
     react-native-permissions: ^5.3.0
     react-native-pulsar: ^1.0.2
-    react-native-push-notification: ^8.1.1
     react-native-qrcode-skia: ^0.4.0
     react-native-qrcode-svg: ^6.3.12
     react-native-quick-base64: ^2.2.2
@@ -14109,6 +14204,16 @@ __metadata:
   version: 2.0.3
   resolution: "is-map@npm:2.0.3"
   checksum: e6ce5f6380f32b141b3153e6ba9074892bbbbd655e92e7ba5ff195239777e767a976dcd4e22f864accaf30e53ebf961ab1995424aef91af68788f0591b7396cc
+  languageName: node
+  linkType: hard
+
+"is-nan@npm:^1.3.2":
+  version: 1.3.2
+  resolution: "is-nan@npm:1.3.2"
+  dependencies:
+    call-bind: ^1.0.0
+    define-properties: ^1.1.3
+  checksum: 5dfadcef6ad12d3029d43643d9800adbba21cf3ce2ec849f734b0e14ee8da4070d82b15fdb35138716d02587c6578225b9a22779cab34888a139cc43e4e3610a
   languageName: node
   linkType: hard
 
@@ -17712,6 +17817,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"object-is@npm:^1.1.5":
+  version: 1.1.6
+  resolution: "object-is@npm:1.1.6"
+  dependencies:
+    call-bind: ^1.0.7
+    define-properties: ^1.2.1
+  checksum: 3ea22759967e6f2380a2cbbd0f737b42dc9ddb2dfefdb159a1b927fea57335e1b058b564bfa94417db8ad58cddab33621a035de6f5e5ad56d89f2dd03e66c6a1
+  languageName: node
+  linkType: hard
+
 "object-keys@npm:^1.1.1":
   version: 1.1.1
   resolution: "object-keys@npm:1.1.1"
@@ -19406,26 +19521,6 @@ __metadata:
     react-native: "*"
     react-native-worklets: "*"
   checksum: fe28e05155951064edbfb6eb900b024567579e3a193829f7f9b9df772fdcee8521cbed6dea6a7bc252cab99117577407ba0e065994ccb0b87ce25b83a31ce937
-  languageName: node
-  linkType: hard
-
-"react-native-push-notification@npm:8.1.1":
-  version: 8.1.1
-  resolution: "react-native-push-notification@npm:8.1.1"
-  peerDependencies:
-    "@react-native-community/push-notification-ios": ^1.10.1
-    react-native: ">=0.33"
-  checksum: 64d500c1163eaa4eee549e6e2f8204cac643f91ae918a227e9d93f8261afdebbdaa7ba5d12da0039155cbf6a599032dd15be4ebe53737cbeeadec4469893f00d
-  languageName: node
-  linkType: hard
-
-"react-native-push-notification@patch:react-native-push-notification@npm%3A8.1.1#./.yarn/patches/react-native-push-notification-npm-8.1.1-bcb0d8a65e.patch::locator=io%40workspace%3A.":
-  version: 8.1.1
-  resolution: "react-native-push-notification@patch:react-native-push-notification@npm%3A8.1.1#./.yarn/patches/react-native-push-notification-npm-8.1.1-bcb0d8a65e.patch::version=8.1.1&hash=409487&locator=io%40workspace%3A."
-  peerDependencies:
-    "@react-native-community/push-notification-ios": ^1.10.1
-    react-native: ">=0.33"
-  checksum: ae70b5cccabc6b48808b47bc59c5bd610f8b4cb10d3d624ab411ae0d2fe9d62afd41ebab95be69dab5922ef2f665a7daaee6debf2000a8f86cdec0f5330f9a69
   languageName: node
   linkType: hard
 
@@ -22825,6 +22920,15 @@ __metadata:
     tsc: bin/tsc
     tsserver: bin/tsserver
   checksum: 8bb8d86819ac86a498eada254cad7fb69c5f74778506c700c2a712daeaff21d3a6f51fd0d534fe16903cb010d1b74f89437a3d02d4d0ff5ca2ba9a4660de8497
+  languageName: node
+  linkType: hard
+
+"ua-parser-js@npm:^0.7.33":
+  version: 0.7.41
+  resolution: "ua-parser-js@npm:0.7.41"
+  bin:
+    ua-parser-js: script/cli.js
+  checksum: c14ea0ba52585f0c363375b30d511d972bf1842855b6d6f4a411e6a27c936c7eb1f96e53e2d321fe3c587f0420677dcabd8977622be71da51edc8521e595b9b9
   languageName: node
   linkType: hard
 

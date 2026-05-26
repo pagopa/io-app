@@ -57,7 +57,7 @@ export const CREDENTIALS_MAP: Record<
   string,
   Record<MixPanelCredentialVersion, MixPanelCredential> | MixPanelCredential
 > = {
-  PersonIdentificationData: { V2: "ITW_ID_V2", V3: "ITW_PID" },
+  pid: { V2: "ITW_ID_V2", V3: "ITW_PID" },
   mDL: { V2: "ITW_PG_V2", V3: "ITW_PG_V3" },
   EuropeanHealthInsuranceCard: { V2: "ITW_TS_V2", V3: "ITW_TS_V3" },
   EuropeanDisabilityCard: { V2: "ITW_CED_V2", V3: "ITW_CED_V3" },
