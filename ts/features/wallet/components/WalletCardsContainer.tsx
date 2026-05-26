@@ -63,7 +63,9 @@ const WalletCardsContainer = () => {
     return (
       <>
         {shouldRenderL2EngagementBanner && <ItwL2EngagementBanner />}
-        {shouldRenderItwDiscoveryBanner && <ItwDiscoveryBanner />}
+        {shouldRenderItwDiscoveryBanner && (
+          <ItwDiscoveryBanner style={{ marginVertical: 8 }} />
+        )}
         <View testID="walletCardsContainerTestID" style={styles.walletContent}>
           {shouldRenderItwCardsContainer && <ItwWalletCardsContainer />}
           <OtherWalletCardsContainer />
@@ -144,9 +146,7 @@ export {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    gap: 16,
-    marginTop: 16
+    flex: 1
   },
   walletContent: {
     flex: 1,
