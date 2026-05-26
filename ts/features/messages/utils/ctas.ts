@@ -44,9 +44,9 @@ export const handleCtaAction = (
   } else if (isFIMSLink(cta.action)) {
     fimsCallback(cta.text, cta.action);
   } else {
-    const maybeHandledAction = deriveCustomHandledLink(cta.action);
-    if (E.isRight(maybeHandledAction)) {
-      Linking.openURL(maybeHandledAction.right.url).catch(() => 0);
+    const customHandledAction = deriveCustomHandledLink(cta.action);
+    if (customHandledAction != null) {
+      Linking.openURL(customHandledAction).catch(() => 0);
     }
   }
 };
@@ -261,7 +261,7 @@ const isCtaActionValid = (
   }
   // check if it is a custom action (it should be composed in a specific format)
   const maybeCustomHandledAction = deriveCustomHandledLink(cta.action);
-  return E.isRight(maybeCustomHandledAction);
+  return maybeCustomHandledAction != null;
 };
 
 const containsFrontMatterHeader = (
