@@ -28,7 +28,9 @@ export const trackItwStatusListLastCheckTime = (timestamp: string) => {
  */
 export const registerStatusListProperties = async () => {
   const lastCheckTime = await getLastStatusListCheckTimestamp();
-  const lastCheckDate = lastCheckTime ? new Date(lastCheckTime) : undefined;
+  const lastCheckDate = lastCheckTime
+    ? new Date(lastCheckTime).toISOString()
+    : undefined;
 
   registerSuperProperties({
     ITW_BACKGROUND_LAST_CHECK_TIME: lastCheckDate
