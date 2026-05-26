@@ -1,10 +1,13 @@
 import { SagaIterator } from "redux-saga";
-import { call, fork, select, take, takeLatest } from "typed-redux-saga/macro";
+import { call, select, take, takeLatest } from "typed-redux-saga/macro";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 import { itwCredentialsStore } from "../../credentials/store/actions";
 import { itwLifecycleWalletReset } from "../../lifecycle/store/actions";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
-import { trackItwStatusListLastCheckTime } from "../analytics";
+import {
+  registerStatusListProperties,
+  trackItwStatusListLastCheckTime
+} from "../analytics";
 import {
   registerItwStatusListFetchTask,
   unregisterItwStatusListFetchTask
@@ -56,8 +59,11 @@ export function* watchItwTasksSaga(): SagaIterator {
     return;
   }
 
-  // TODO: remove once the status list is implemented
-  yield* fork(trackLastStatusListFetchTaskSaga);
   // Register the background task for Status List fetch only for active wallet instances
   yield* call(registerStatusListFetchTaskSaga);
+
+  // Register Status List super properties
+  yield* call(registerStatusListProperties);
+  // Track the last execution of the ITW Status List fetch task
+  yield* call(trackLastStatusListFetchTaskSaga);
 }
