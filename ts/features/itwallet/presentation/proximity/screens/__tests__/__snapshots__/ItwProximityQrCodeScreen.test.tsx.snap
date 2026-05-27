@@ -6524,7 +6524,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                           ]
                                         }
                                       >
-                                        Non puoi far verificare i tuoi documenti digitali.
+                                        Conferma la tua identità per continuare a usare il tuo portafoglio IT-Wallet.
                                       </Text>
                                       <Text
                                         allowFontScaling={true}
