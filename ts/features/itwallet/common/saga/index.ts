@@ -24,7 +24,6 @@ import {
   checkWalletInstanceStateSaga
 } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
 import { checkFiscalCodeEnabledSaga } from "../../trialSystem/saga/checkFiscalCodeIsEnabledSaga.ts";
-import { watchItwDebugCredentialStatusOverrides } from "../../playgrounds/saga";
 import {
   itwFreezeSimplifiedActivationRequirements,
   itwSetAuthLevel,
@@ -80,8 +79,6 @@ export function* watchItwOfflineSaga(): SagaIterator {
   // Ensure Redux and CredentialsVault are coherent
   yield* call(handleItwCredentialsVaultCoherenceSaga);
 
-  // Watch and restore temporary playground status overrides
-  yield* fork(watchItwDebugCredentialStatusOverrides);
   yield* fork(handleWalletCredentialsRehydration);
   // Check if the device has the NFC Feature
   yield* fork(checkHasNfcFeatureSaga);
