@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "prepare": "husky install",
-    "validate": "nx affected --targets=lint,test --configuration=ci",
+    "validate": "nx affected --targets=lint,test,tsc-noemit --configuration=ci",
     "prettify": "prettier --write \"**/(src|ts|locales)/**/*.(ts|tsx|json)\"",
     "prettier:check": "prettier --check \"**/(src|ts|locales)/**/*.(ts|tsx|json)\""
   },
@@ -16,17 +16,19 @@
     "@babel/runtime": "^7.25.0",
     "@react-native/babel-preset": "0.81.5",
     "@react-native/metro-config": "0.81.5",
-    "@nx/eslint": "22.7.2",
-    "@nx/jest": "22.7.2",
-    "@nx/js": "22.7.2",
+    "@nx/eslint": "catalog:",
+    "@nx/jest": "catalog:",
+    "@nx/js": "catalog:",
     "@swc-node/register": "~1.11.1",
     "@swc/core": "~1.15.5",
     "@swc/helpers": "~0.5.18",
+    "eslint": "catalog:",
     "husky": "^8.0.0",
-    "jest": "~30.3.0",
-    "nx": "22.7.2",
+    "jest": "catalog:",
+    "nx": "catalog:",
+    "prettier": "catalog:",
     "tslib": "^2.3.0",
-    "typescript": "^5.8.3"
+    "typescript": "catalog:"
   },
   "packageManager": "pnpm@10.33.0+sha512.10568bb4a6afb58c9eb3630da90cc9516417abebd3fabbe6739f0ae795728da1491e9db5a544c76ad8eb7570f5c4bb3d6c637b2cb41bfdcdb47fa823c8649319",
   "pnpm": {

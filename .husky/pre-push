@@ -9,7 +9,7 @@ echo "$unstagedFiles"
 
 # Compile the project
 echo "🔨 compiling..."
-pnpm nx run main-app:tsc-noemit
+pnpm nx affected --target=tsc-noemit
 
 # Run lintier
 echo "🧹 running linter..."  

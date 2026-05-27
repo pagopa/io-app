@@ -4,6 +4,72 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+catalogs:
+  default:
+    '@nx/eslint':
+      specifier: 22.7.2
+      version: 22.7.2
+    '@nx/jest':
+      specifier: 22.7.2
+      version: 22.7.2
+    '@nx/js':
+      specifier: 22.7.2
+      version: 22.7.2
+    '@react-native/eslint-config':
+      specifier: 0.85.0-rc.7
+      version: 0.85.0-rc.7
+    '@react-native/typescript-config':
+      specifier: 0.81.5
+      version: 0.81.5
+    '@types/jest':
+      specifier: ^30.0.0
+      version: 30.0.0
+    eslint:
+      specifier: ^9.39.4
+      version: 9.39.4
+    jest:
+      specifier: ~30.3.0
+      version: 30.3.0
+    nx:
+      specifier: 22.7.2
+      version: 22.7.2
+    prettier:
+      specifier: ^3.8.1
+      version: 3.8.2
+    react:
+      specifier: 19.1.0
+      version: 19.1.0
+    react-native:
+      specifier: 0.81.5
+      version: 0.81.5
+    react-native-gesture-handler:
+      specifier: ^2.28.0
+      version: 2.31.0
+    react-native-reanimated:
+      specifier: 4.2.2
+      version: 4.2.2
+    react-native-safe-area-context:
+      specifier: ^5.6.2
+      version: 5.7.0
+    react-native-screens:
+      specifier: 4.16.0
+      version: 4.16.0
+    react-redux:
+      specifier: 8.1.3
+      version: 8.1.3
+    react-test-renderer:
+      specifier: 19.1.0
+      version: 19.1.0
+    redux:
+      specifier: 4.1.1
+      version: 4.1.1
+    typescript:
+      specifier: ^5.8.3
+      version: 5.9.3
+    xstate:
+      specifier: ^5
+      version: 5.17.4
+
 overrides:
   pretty-format>react-is: 19.0.0
   '@babel/plugin-transform-typescript': ^7.23.6
@@ -65,13 +131,13 @@ importers:
         specifier: ^7.25.0
         version: 7.28.6
       '@nx/eslint':
-        specifier: 22.7.2
+        specifier: 'catalog:'
         version: 22.7.2(@babel/traverse@7.29.0)(@nx/jest@22.7.2(@babel/traverse@7.29.0)(@swc-node/register@1.11.1(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@swc/core@1.15.33(@swc/helpers@0.5.21))(@swc/types@0.1.26)(typescript@5.9.3))(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@16.9.6)(babel-plugin-macros@3.1.0)(nx@22.7.2(@swc-node/register@1.11.1(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@swc/core@1.15.33(@swc/helpers@0.5.21))(@swc/types@0.1.26)(typescript@5.9.3))(@swc/core@1.15.33(@swc/helpers@0.5.21)))(typescript@5.9.3))(@swc-node/register@1.11.1(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@swc/core@1.15.33(@swc/helpers@0.5.21))(@swc/types@0.1.26)(typescript@5.9.3))(@swc/core@1.15.33(@swc/helpers@0.5.21))(@zkochan/js-yaml@0.0.7)(eslint@9.39.4)(nx@22.7.2(@swc-node/register@1.11.1(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@swc/core@1.15.33(@swc/helpers@0.5.21))(@swc/types@0.1.26)(typescript@5.9.3))(@swc/core@1.15.33(@swc/helpers@0.5.21)))
       '@nx/jest':
-        specifier: 22.7.2
+        specifier: 'catalog:'
         version: 22.7.2(@babel/traverse@7.29.0)(@swc-node/register@1.11.1(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@swc/core@1.15.33(@swc/helpers@0.5.21))(@swc/types@0.1.26)(typescript@5.9.3))(@swc/core@1.15.33(@swc/helpers@0.5.21))(@types/node@16.9.6)(babel-plugin-macros@3.1.0)(nx@22.7.2(@swc-node/register@1.11.1(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@swc/core@1.15.33(@swc/helpers@0.5.21))(@swc/types@0.1.26)(typescript@5.9.3))(@swc/core@1.15.33(@swc/helpers@0.5.21)))(typescript@5.9.3)
       '@nx/js':
-        specifier: 22.7.2
+        specifier: 'catalog:'
         version: 22.7.2(@babel/traverse@7.29.0)(@swc-node/register@1.11.1(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@swc/core@1.15.33(@swc/helpers@0.5.21))(@swc/types@0.1.26)(typescript@5.9.3))(@swc/core@1.15.33(@swc/helpers@0.5.21))(nx@22.7.2(@swc-node/register@1.11.1(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@swc/core@1.15.33(@swc/helpers@0.5.21))(@swc/types@0.1.26)(typescript@5.9.3))(@swc/core@1.15.33(@swc/helpers@0.5.21)))
       '@react-native/babel-preset':
         specifier: 0.81.5
@@ -88,20 +154,26 @@ importers:
       '@swc/helpers':
         specifier: ~0.5.18
         version: 0.5.21
+      eslint:
+        specifier: 'catalog:'
+        version: 9.39.4
       husky:
         specifier: ^8.0.0
         version: 8.0.3
       jest:
-        specifier: ~30.3.0
+        specifier: 'catalog:'
         version: 30.3.0(@types/node@16.9.6)(babel-plugin-macros@3.1.0)
       nx:
-        specifier: 22.7.2
+        specifier: 'catalog:'
         version: 22.7.2(@swc-node/register@1.11.1(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@swc/core@1.15.33(@swc/helpers@0.5.21))(@swc/types@0.1.26)(typescript@5.9.3))(@swc/core@1.15.33(@swc/helpers@0.5.21))
+      prettier:
+        specifier: 'catalog:'
+        version: 3.8.2
       tslib:
         specifier: ^2.3.0
         version: 2.8.1
       typescript:
-        specifier: ^5.8.3
+        specifier: 'catalog:'
         version: 5.9.3
 
   apps/main-app:
@@ -118,9 +190,6 @@ importers:
       '@babel/plugin-transform-react-jsx':
         specifier: ^7.25.9
         version: 7.28.6(@babel/core@7.29.0)
-      '@babel/plugin-transform-regenerator':
-        specifier: ^7.18.6
-        version: 7.25.9(@babel/core@7.29.0)
       '@craftzdog/react-native-buffer':
         specifier: ^6.1.1
         version: 6.1.1(react-native@0.81.5(patch_hash=707e4553fbc3e532ebfe875389c54a1058f9ecab68ae03fb9e45d5d9c2d33eb5)(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.81.5(@babel/core@7.29.0))(@types/react@19.1.8)(react@19.1.0))(react@19.1.0)
@@ -281,13 +350,13 @@ importers:
         specifier: ^1.17.1
         version: 1.17.1
       react:
-        specifier: 19.1.0
+        specifier: 'catalog:'
         version: 19.1.0
       react-i18next:
         specifier: ^15.7.2
         version: 15.7.2(i18next@25.4.2(typescript@5.9.3))(react-native@0.81.5(patch_hash=707e4553fbc3e532ebfe875389c54a1058f9ecab68ae03fb9e45d5d9c2d33eb5)(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.81.5(@babel/core@7.29.0))(@types/react@19.1.8)(react@19.1.0))(react@19.1.0)(typescript@5.9.3)
       react-native:
-        specifier: 0.81.5
+        specifier: 'catalog:'
         version: 0.81.5(patch_hash=707e4553fbc3e532ebfe875389c54a1058f9ecab68ae03fb9e45d5d9c2d33eb5)(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.81.5(@babel/core@7.29.0))(@types/react@19.1.8)(react@19.1.0)
       react-native-android-open-settings:
         specifier: ^1.3.0
@@ -329,7 +398,7 @@ importers:
         specifier: ^2.18.0
         version: 2.18.0(react-native-windows@0.80.1(@babel/core@7.29.0)(@types/react@19.1.8)(react-native@0.81.5(patch_hash=707e4553fbc3e532ebfe875389c54a1058f9ecab68ae03fb9e45d5d9c2d33eb5)(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.81.5(@babel/core@7.29.0))(@types/react@19.1.8)(react@19.1.0))(react@19.1.0)(tslib@1.14.1)(typescript@5.9.3))(react-native@0.81.5(patch_hash=707e4553fbc3e532ebfe875389c54a1058f9ecab68ae03fb9e45d5d9c2d33eb5)(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.81.5(@babel/core@7.29.0))(@types/react@19.1.8)(react@19.1.0))
       react-native-gesture-handler:
-        specifier: ^2.28.0
+        specifier: 'catalog:'
         version: 2.31.0(react-native@0.81.5(patch_hash=707e4553fbc3e532ebfe875389c54a1058f9ecab68ae03fb9e45d5d9c2d33eb5)(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.81.5(@babel/core@7.29.0))(@types/react@19.1.8)(react@19.1.0))(react@19.1.0)
       react-native-haptic-feedback:
         specifier: ^2.3.3
@@ -377,16 +446,16 @@ importers:
         specifier: ^0.7.17
         version: 0.7.17(react-native@0.81.5(patch_hash=707e4553fbc3e532ebfe875389c54a1058f9ecab68ae03fb9e45d5d9c2d33eb5)(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.81.5(@babel/core@7.29.0))(@types/react@19.1.8)(react@19.1.0))(react@19.1.0)
       react-native-reanimated:
-        specifier: 4.2.2
+        specifier: 'catalog:'
         version: 4.2.2(react-native-worklets@0.7.4(@babel/core@7.29.0)(react-native@0.81.5(patch_hash=707e4553fbc3e532ebfe875389c54a1058f9ecab68ae03fb9e45d5d9c2d33eb5)(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.81.5(@babel/core@7.29.0))(@types/react@19.1.8)(react@19.1.0))(react@19.1.0))(react-native@0.81.5(patch_hash=707e4553fbc3e532ebfe875389c54a1058f9ecab68ae03fb9e45d5d9c2d33eb5)(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.81.5(@babel/core@7.29.0))(@types/react@19.1.8)(react@19.1.0))(react@19.1.0)
       react-native-safe-area-context:
-        specifier: ^5.6.2
+        specifier: 'catalog:'
         version: 5.7.0(react-native@0.81.5(patch_hash=707e4553fbc3e532ebfe875389c54a1058f9ecab68ae03fb9e45d5d9c2d33eb5)(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.81.5(@babel/core@7.29.0))(@types/react@19.1.8)(react@19.1.0))(react@19.1.0)
       react-native-screen-brightness:
         specifier: ^2.0.0-alpha
         version: 2.0.0-alpha(patch_hash=4f443b13d6a490e938411ab96cdc448af5a31d16d2dd808b375d16231796557d)
       react-native-screens:
-        specifier: 4.16.0
+        specifier: 'catalog:'
         version: 4.16.0(react-native@0.81.5(patch_hash=707e4553fbc3e532ebfe875389c54a1058f9ecab68ae03fb9e45d5d9c2d33eb5)(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.81.5(@babel/core@7.29.0))(@types/react@19.1.8)(react@19.1.0))(react@19.1.0)
       react-native-share:
         specifier: ^12.0.9
@@ -413,10 +482,10 @@ importers:
         specifier: ^1.0.3
         version: 1.0.3
       react-redux:
-        specifier: 8.1.3
+        specifier: 'catalog:'
         version: 8.1.3(@types/react@19.1.8)(react-native@0.81.5(patch_hash=707e4553fbc3e532ebfe875389c54a1058f9ecab68ae03fb9e45d5d9c2d33eb5)(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.81.5(@babel/core@7.29.0))(@types/react@19.1.8)(react@19.1.0))(react@19.1.0)(redux@4.1.1)
       redux:
-        specifier: 4.1.1
+        specifier: 'catalog:'
         version: 4.1.1
       redux-logger:
         specifier: 3.0.6
@@ -482,7 +551,7 @@ importers:
         specifier: 1.0.10
         version: 1.0.10
       xstate:
-        specifier: ^5
+        specifier: 'catalog:'
         version: 5.17.4
     devDependencies:
       '@eslint/compat':
@@ -507,10 +576,10 @@ importers:
         specifier: 20.0.0
         version: 20.0.0
       '@react-native/eslint-config':
-        specifier: 0.85.0-rc.7
+        specifier: 'catalog:'
         version: 0.85.0-rc.7(eslint@9.39.4)(jest@30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@7.0.1))(prettier@3.8.2)(typescript@5.9.3)
       '@react-native/typescript-config':
-        specifier: 0.81.5
+        specifier: 'catalog:'
         version: 0.81.5
       '@stylistic/eslint-plugin-js':
         specifier: ^2.1.0
@@ -534,7 +603,7 @@ importers:
         specifier: ^3.0.1
         version: 3.3.5
       '@types/jest':
-        specifier: ^30.0.0
+        specifier: 'catalog:'
         version: 30.0.0
       '@types/lodash':
         specifier: ^4.14.157
@@ -603,7 +672,7 @@ importers:
         specifier: ^2.4.1
         version: 2.4.2
       eslint:
-        specifier: ^9.39.4
+        specifier: 'catalog:'
         version: 9.39.4
       eslint-config-prettier:
         specifier: ^10.1.8
@@ -639,7 +708,7 @@ importers:
         specifier: ^7.0.0
         version: 7.0.1
       jest:
-        specifier: ^30.2.0
+        specifier: 'catalog:'
         version: 30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@7.0.1)
       lint-staged:
         specifier: ^13.2.0
@@ -659,9 +728,6 @@ importers:
       postinstall-postinstall:
         specifier: ^1.0.0
         version: 1.0.0
-      prettier:
-        specifier: ^3.8.1
-        version: 3.8.2
       react-native-get-random-values:
         specifier: ^1.11.0
         version: 1.11.0(react-native@0.81.5(patch_hash=707e4553fbc3e532ebfe875389c54a1058f9ecab68ae03fb9e45d5d9c2d33eb5)(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.81.5(@babel/core@7.29.0))(@types/react@19.1.8)(react@19.1.0))
@@ -669,7 +735,7 @@ importers:
         specifier: 1.5.1
         version: 1.5.1(react-native-svg@15.15.4(react-native@0.81.5(patch_hash=707e4553fbc3e532ebfe875389c54a1058f9ecab68ae03fb9e45d5d9c2d33eb5)(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.81.5(@babel/core@7.29.0))(@types/react@19.1.8)(react@19.1.0))(react@19.1.0))(react-native@0.81.5(patch_hash=707e4553fbc3e532ebfe875389c54a1058f9ecab68ae03fb9e45d5d9c2d33eb5)(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.81.5(@babel/core@7.29.0))(@types/react@19.1.8)(react@19.1.0))(typescript@5.9.3)
       react-test-renderer:
-        specifier: 19.1.0
+        specifier: 'catalog:'
         version: 19.1.0(react@19.1.0)
       reactotron-react-native:
         specifier: ^5.1.18
@@ -692,9 +758,6 @@ importers:
       ts-node:
         specifier: ^7.0.1
         version: 7.0.1
-      typescript:
-        specifier: ^5.8.3
-        version: 5.9.3
       typescript-eslint:
         specifier: ^8.58.0
         version: 8.58.1(eslint@9.39.4)(typescript@5.9.3)
@@ -5046,10 +5109,6 @@ packages:
     resolution: {integrity: sha512-eGuFFw7Upda+g4p+QHvnW0RyTX/SVeJBDM/gCtMARO0cLuT2HcEKnTPvhjV6aGeqrCB/sbNop0Kszm0jsaWU4A==}
     engines: {node: '>=4'}
     hasBin: true
-
-  esquery@1.5.0:
-    resolution: {integrity: sha512-YQLXUplAwJgCydQ78IMJywZCceoqk1oH01OERdSAJc/7U2AylwjhSCLDEtqwg811idIS/9fIU5GjG73IgjKMVg==}
-    engines: {node: '>=0.10'}
 
   esquery@1.7.0:
     resolution: {integrity: sha512-Ap6G0WQwcU/LHsvLwON1fAQX9Zp0A2Y6Y/cJBl9r/JbW90Zyg4/zbG6zzKa2OTALELarYHmKu0GhpM5EO+7T0g==}
@@ -12618,7 +12677,9 @@ snapshots:
       metro-runtime: 0.83.5
     transitivePeerDependencies:
       - '@babel/core'
+      - bufferutil
       - supports-color
+      - utf-8-validate
 
   '@react-native/new-app-screen@0.80.0-nightly-20250506-3ac16dd6a(@types/react@19.1.8)(react-native@0.81.5(patch_hash=707e4553fbc3e532ebfe875389c54a1058f9ecab68ae03fb9e45d5d9c2d33eb5)(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.81.5(@babel/core@7.29.0))(@types/react@19.1.8)(react@19.1.0))(react@19.1.0)':
     dependencies:
@@ -15631,7 +15692,7 @@ snapshots:
       eslint-scope: 8.4.0
       eslint-visitor-keys: 4.2.1
       espree: 10.4.0
-      esquery: 1.5.0
+      esquery: 1.7.0
       esutils: 2.0.3
       fast-deep-equal: 3.1.3
       file-entry-cache: 8.0.0
@@ -15655,10 +15716,6 @@ snapshots:
       eslint-visitor-keys: 4.2.1
 
   esprima@4.0.1: {}
-
-  esquery@1.5.0:
-    dependencies:
-      estraverse: 5.3.0
 
   esquery@1.7.0:
     dependencies:

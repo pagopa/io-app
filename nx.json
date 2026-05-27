@@ -16,39 +16,46 @@
       "!{projectRoot}/jestSetup.[jt]s",
       "!{projectRoot}/jestGlobalSetup.[jt]s"
     ],
-    "sharedGlobals": []
+    "sharedGlobals": [],
+    "typecheck": [
+      "{projectRoot}/tsconfig.json",
+      "{projectRoot}/**/*.ts",
+      "{projectRoot}/**/*.tsx",
+      "{projectRoot}/**/*.d.ts",
+      "{projectRoot}/locales/**/*.json",
+      "!{projectRoot}/android/**",
+      "!{projectRoot}/ios/**",
+      "!{projectRoot}/coverage/**",
+      "!{projectRoot}/dist/**",
+      "!{projectRoot}/**/Pods/**",
+      { "externalDependencies": ["typescript"] }
+    ]
+  },
+  "targetDefaults": {
+    "test": {
+      "configurations": {
+        "ci": {
+          "ci": true
+        }
+      }
+    },
+    "tsc-noemit": {
+      "cache": true,
+      "inputs": ["typecheck"],
+      "outputs": []
+    }
   },
   "plugins": [
     {
       "plugin": "@nx/jest/plugin",
       "options": {
         "targetName": "test"
-      },
-      "configurations": {
-        "ci": {
-          "ci": true,
-          "changedSince": "master"
-        }
       }
     },
     {
       "plugin": "@nx/eslint/plugin",
       "options": {
         "targetName": "lint"
-      }
-    },
-    {
-      "plugin": "@nx/js/typescript",
-      "options": {
-        "typecheck": {
-          "targetName": "typecheck"
-        },
-        "build": {
-          "targetName": "build",
-          "configName": "tsconfig.lib.json",
-          "buildDepsName": "build-deps",
-          "watchDepsName": "watch-deps"
-        }
       }
     }
   ]

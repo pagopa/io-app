@@ -1,25 +1,8 @@
 {
-  "extends": "@react-native/typescript-config",
-  "include": ["**/*.ts", "**/*.tsx"],
+  "extends": ["@react-native/typescript-config", "../../tsconfig.json"],
   "compilerOptions": {
-    "jsx": "react-jsx",
-    "target": "esnext",
-    "lib": ["es6", "dom", "es2019", "es2022"],
-    "importHelpers": true,
-    "noImplicitAny": true,
-    "preserveConstEnums": true,
-    "allowJs": false,
-    "noImplicitReturns": true,
-    "noUnusedParameters": true,
-    "noUnusedLocals": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "useUnknownInCatchVariables": true,
+    "jsx": "react-jsx"
   },
-  "exclude": [
-    "android",
-    "ios",
-    "**/node_modules", 
-    "**/Pods"
-  ]
+  "include": ["**/*.ts", "**/*.tsx"],
+  "exclude": ["android", "ios", "**/node_modules", "**/Pods", "dist"]
 }
