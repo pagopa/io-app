@@ -9,7 +9,7 @@ PODS:
     - ExpoModulesCore
   - EXConstants (55.0.16):
     - ExpoModulesCore
-  - Expo (55.0.8):
+  - Expo (55.0.26):
     - boost
     - DoubleConversion
     - ExpoModulesCore
@@ -44,17 +44,17 @@ PODS:
     - ExpoModulesCore
   - ExpoDevice (55.0.17):
     - ExpoModulesCore
-  - ExpoDomWebView (55.0.3):
+  - ExpoDomWebView (55.0.6):
     - ExpoModulesCore
   - ExpoFileSystem (55.0.22):
     - ExpoModulesCore
-  - ExpoFont (55.0.4):
+  - ExpoFont (55.0.8):
     - ExpoModulesCore
-  - ExpoKeepAwake (55.0.4):
+  - ExpoKeepAwake (55.0.8):
     - ExpoModulesCore
-  - ExpoLogBox (55.0.7):
+  - ExpoLogBox (55.0.12):
     - React-Core
-  - ExpoModulesCore (55.0.17):
+  - ExpoModulesCore (55.0.25):
     - boost
     - DoubleConversion
     - ExpoModulesJSI
@@ -85,14 +85,14 @@ PODS:
     - RNWorklets
     - SocketRocket
     - Yoga
-  - ExpoModulesJSI (55.0.17):
+  - ExpoModulesJSI (55.0.25):
     - hermes-engine
     - React-Core
     - React-runtimescheduler
     - ReactCommon
   - ExpoNotifications (55.0.23):
     - ExpoModulesCore
-  - ExpoScreenCapture (55.0.9):
+  - ExpoScreenCapture (55.0.14):
     - ExpoModulesCore
   - fast_float (8.0.0)
   - FBLazyVector (0.83.6)
@@ -4341,18 +4341,18 @@ SPEC CHECKSUMS:
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
   EXApplication: 82a44fa8236bb644a805ee21e64054eeb01d22ea
   EXConstants: dadbeba983acc30f855a919658a2b34fbd86615d
-  Expo: 4549ce2f30c9f20554f315905dd950671a0793f1
+  Expo: fb8cded217862a2c6fc046a6cc68aa83a2ed15f0
   ExpoAsset: 7721c5c4ae2a7c3c8147a046727ac6c020b05648
   ExpoDevice: b8a65afe42c3c5934eb6983870672fe785b39dea
-  ExpoDomWebView: f101fb3db4b6eec4163fca51f7507189b7e48661
+  ExpoDomWebView: b2e9d601f9cb77d3c97da73234e175b64be91928
   ExpoFileSystem: 61e663d0bbd1a973d324530d1d6ee559a5e5192c
-  ExpoFont: 1aa465cf9f8ac6b670405becba8b15473581b2dd
-  ExpoKeepAwake: 7f3b28c361c37389b18841bb52a58003b39fcb33
-  ExpoLogBox: 89b634d5a8a64c4a6a7caad8f9985a28463c7002
-  ExpoModulesCore: 733d882367cd2725a6b48de516d9b2aa10f98a3f
-  ExpoModulesJSI: 7345645083e98be9c33c10027601aff2e445ba72
+  ExpoFont: a7e34a75bdfb703fa07a0e87807f836236608c76
+  ExpoKeepAwake: d0eb7a0719500d2a43fbf29b6f79e84d70c75ebf
+  ExpoLogBox: a678d36477ab9544fe63e0b5328a0716539b6774
+  ExpoModulesCore: cc07ebf5b947a239f1669cb5856d905cb2b093f7
+  ExpoModulesJSI: 964334271fc77832736f66ee1785761cdc778dbe
   ExpoNotifications: 61c46aa5df088ff0ad41de0504a86a92333aec55
-  ExpoScreenCapture: 35fea6139d824fbdb1fd6003fdf2020420837749
+  ExpoScreenCapture: aefcd749919380ee0b4d59bb60c1a150aac201c6
   fast_float: b32c788ed9c6a8c584d114d0047beda9664e7cc6
   FBLazyVector: 06b1c8278e6e1b31ef68e9e14c296b7872e79e48
   fmt: 530618a01105dae0fa3a2f27c81ae11fa8f67eac
@@ -4375,7 +4375,7 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-login-utils: 4d4e00aeb67ffbb36dc6f5fcfc17e088ef5b9f34
   pagopa-io-react-native-secure-storage: 64dcc5dff82ec5ce136d7904bc076d70db157dec
   pagopa-react-native-zendesk: 9436edab6731dd9b64b72f1f2e039c166f0161b9
-  Pulsar: ed489192a2174d4ec4346a18d415eefaa05bc36d
+  Pulsar: 7cbdae6f59ebf7f6a568045976298fe623394d7a
   RCT-Folly: b29feb752b08042c62badaef7d453f3bb5e6ae23
   RCTDeprecation: c5e70bcdbc24b9edbca24b96f3997319f01ba8fb
   RCTRequired: 7fbf6c9b97de59aab5c6a1ca5a5d91555d5ba403
@@ -4474,7 +4474,7 @@ SPEC CHECKSUMS:
   RNCClipboard: 4b58c780f63676367640f23c8e114e9bd0cf86ac
   RNDeviceInfo: d863506092aef7e7af3a1c350c913d867d795047
   RNFS: 4f02bbb5c95d71bade3d36a1b6514305ccefc4c9
-  RNGestureHandler: 73726300d4c5ca4d80378cae85f9dad8908b3289
+  RNGestureHandler: 884f03ad24511911552480eb2058266db0b177ce
   RNKeychain: a2c134ab796272c3d605e035ab727591000b30f3
   RNPermissions: 17e12d62da7494e48c47ccb800a6214d036cfc19
   RNQrGenerator: 3318e98283e861e9d93e58111fc4de8e03e2ddb3
@@ -4482,8 +4482,8 @@ SPEC CHECKSUMS:
   RNReanimated: 18324d3313d6477e1d12836c20c3ee30afb5de30
   RNScreens: 0bbf16c074ae6bb1058a7bf2d1ae017f4306797c
   RNShare: 1dba46787d6e5543e05655efaefa0e4bb98380d9
-  RNSVG: ba3c3bc3cf413f32d1a7012274fe503c6fc1eadd
-  RNWorklets: 01efdd402d236a13651ea5ea5437ca85a44e7afa
+  RNSVG: 3405336c4507ee0bafb02b08058d57216daa2c50
+  RNWorklets: a3184955a41f2be46898a937e2821469c8c8da42
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   SwiftCBOR: b873af28a9cc66003852fdc79a41852a7e54009a
   VisionCamera: 7187b3dac1ff3071234ead959ce311875748e14f
