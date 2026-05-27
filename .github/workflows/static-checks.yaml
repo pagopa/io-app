@@ -37,11 +37,11 @@ jobs:
       - id: setup
         uses: ./.github/actions/setup-composite
       - id: run-tsc
-        run: yarn tsc:noemit
+        run: pnpm tsc:noemit
       - id: run-lint
-        run: yarn lint
+        run: pnpm lint
       - id: run-prettier
-        run: yarn prettier:check
+        run: pnpm prettier:check
   unit-test:
     name: Unit tests
     runs-on: ubuntu-latest
@@ -70,9 +70,9 @@ jobs:
         if: needs.static-checks.outputs.should_test == 'true'
         run: |
           if [ "${{ github.event_name }}" = "pull_request" ] && [ "${{ needs.static-checks.outputs.workflow_changed }}" != "true" ]; then
-            yarn test:ci --passWithNoTests --shard=${{ matrix.shard }}/10 --findRelatedTests ${{ needs.static-checks.outputs.changed_files }}
+            pnpm test:ci --passWithNoTests --shard=${{ matrix.shard }}/10 --findRelatedTests ${{ needs.static-checks.outputs.changed_files }}
           else
-            yarn test:ci --passWithNoTests --shard=${{ matrix.shard }}/10
+            pnpm test:ci --passWithNoTests --shard=${{ matrix.shard }}/10
           fi
       - id: rename-coverage
         if: needs.static-checks.outputs.should_test == 'true' && steps.run-test.outcome == 'success'

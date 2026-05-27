@@ -26,7 +26,7 @@ export enum CredentialType {
   EUROPEAN_HEALTH_INSURANCE_CARD = "EuropeanHealthInsuranceCard",
   EUROPEAN_DISABILITY_CARD = "EuropeanDisabilityCard",
   DRIVING_LICENSE = "mDL",
-  PID = "PersonIdentificationData",
+  PID = "pid",
   AGE_VERIFICATION = "age_verification",
   EDUCATION_DEGREE = "education_degree",
   EDUCATION_ENROLLMENT = "education_enrollment",

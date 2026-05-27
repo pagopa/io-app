@@ -18,20 +18,20 @@ exports[`getThemeColorByCredentialType when color scheme is dark when L3 is [fal
 }
 `;
 
-exports[`getThemeColorByCredentialType when color scheme is dark when L3 is [false] should match the snapshot for [PersonIdentificationData] when L3 is enabled 1`] = `
-{
-  "backgroundColor": "#295699",
-  "statusBarStyle": "light-content",
-  "textColor": "#032D5C",
-  "variant": "contrast",
-}
-`;
-
 exports[`getThemeColorByCredentialType when color scheme is dark when L3 is [false] should match the snapshot for [mDL] when L3 is enabled 1`] = `
 {
   "backgroundColor": "#744C63",
   "statusBarStyle": "light-content",
   "textColor": "#652035",
+  "variant": "contrast",
+}
+`;
+
+exports[`getThemeColorByCredentialType when color scheme is dark when L3 is [false] should match the snapshot for [pid] when L3 is enabled 1`] = `
+{
+  "backgroundColor": "#295699",
+  "statusBarStyle": "light-content",
+  "textColor": "#032D5C",
   "variant": "contrast",
 }
 `;
@@ -54,20 +54,20 @@ exports[`getThemeColorByCredentialType when color scheme is dark when L3 is [tru
 }
 `;
 
-exports[`getThemeColorByCredentialType when color scheme is dark when L3 is [true] should match the snapshot for [PersonIdentificationData] when L3 is enabled 1`] = `
-{
-  "backgroundColor": "#24375A",
-  "statusBarStyle": "light-content",
-  "textColor": "#C4DCF5",
-  "variant": "contrast",
-}
-`;
-
 exports[`getThemeColorByCredentialType when color scheme is dark when L3 is [true] should match the snapshot for [mDL] when L3 is enabled 1`] = `
 {
   "backgroundColor": "#2A092E",
   "statusBarStyle": "light-content",
   "textColor": "#FADCF5",
+  "variant": "contrast",
+}
+`;
+
+exports[`getThemeColorByCredentialType when color scheme is dark when L3 is [true] should match the snapshot for [pid] when L3 is enabled 1`] = `
+{
+  "backgroundColor": "#24375A",
+  "statusBarStyle": "light-content",
+  "textColor": "#C4DCF5",
   "variant": "contrast",
 }
 `;
@@ -90,20 +90,20 @@ exports[`getThemeColorByCredentialType when color scheme is light when L3 is [fa
 }
 `;
 
-exports[`getThemeColorByCredentialType when color scheme is light when L3 is [false] should match the snapshot for [PersonIdentificationData] when L3 is enabled 1`] = `
-{
-  "backgroundColor": "#295699",
-  "statusBarStyle": "light-content",
-  "textColor": "#032D5C",
-  "variant": "contrast",
-}
-`;
-
 exports[`getThemeColorByCredentialType when color scheme is light when L3 is [false] should match the snapshot for [mDL] when L3 is enabled 1`] = `
 {
   "backgroundColor": "#744C63",
   "statusBarStyle": "light-content",
   "textColor": "#652035",
+  "variant": "contrast",
+}
+`;
+
+exports[`getThemeColorByCredentialType when color scheme is light when L3 is [false] should match the snapshot for [pid] when L3 is enabled 1`] = `
+{
+  "backgroundColor": "#295699",
+  "statusBarStyle": "light-content",
+  "textColor": "#032D5C",
   "variant": "contrast",
 }
 `;
@@ -126,20 +126,20 @@ exports[`getThemeColorByCredentialType when color scheme is light when L3 is [tr
 }
 `;
 
-exports[`getThemeColorByCredentialType when color scheme is light when L3 is [true] should match the snapshot for [PersonIdentificationData] when L3 is enabled 1`] = `
-{
-  "backgroundColor": "#EAF6FF",
-  "statusBarStyle": "dark-content",
-  "textColor": "#115486",
-  "variant": "neutral",
-}
-`;
-
 exports[`getThemeColorByCredentialType when color scheme is light when L3 is [true] should match the snapshot for [mDL] when L3 is enabled 1`] = `
 {
   "backgroundColor": "#FADCF5",
   "statusBarStyle": "dark-content",
   "textColor": "#652035",
+  "variant": "neutral",
+}
+`;
+
+exports[`getThemeColorByCredentialType when color scheme is light when L3 is [true] should match the snapshot for [pid] when L3 is enabled 1`] = `
+{
+  "backgroundColor": "#EAF6FF",
+  "statusBarStyle": "dark-content",
+  "textColor": "#115486",
   "variant": "neutral",
 }
 `;
