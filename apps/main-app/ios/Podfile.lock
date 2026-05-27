@@ -5,7 +5,11 @@ PODS:
     - React
   - CieSDK (0.1.21)
   - DoubleConversion (1.1.6)
+  - EXApplication (7.0.8):
+    - ExpoModulesCore
   - EXConstants (18.0.13):
+    - ExpoModulesCore
+  - EXNotifications (0.32.17):
     - ExpoModulesCore
   - Expo (54.0.33):
     - boost
@@ -39,6 +43,8 @@ PODS:
     - SocketRocket
     - Yoga
   - ExpoAsset (12.0.12):
+    - ExpoModulesCore
+  - ExpoDevice (8.0.10):
     - ExpoModulesCore
   - ExpoFileSystem (19.0.21):
     - ExpoModulesCore
@@ -3124,8 +3130,6 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - RNCPushNotificationIOS (1.8.0):
-    - React-Core
   - RNDeviceInfo (14.0.4):
     - React-Core
   - RNFS (2.18.0):
@@ -3609,9 +3613,12 @@ DEPENDENCIES:
   - boost (from `../../../node_modules/react-native/third-party-podspecs/boost.podspec`)
   - BVLinearGradient (from `../../../node_modules/react-native-linear-gradient`)
   - DoubleConversion (from `../../../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
+  - EXApplication (from `../../../node_modules/expo-application/ios`)
   - EXConstants (from `../../../node_modules/expo-constants/ios`)
+  - EXNotifications (from `../../../node_modules/expo-notifications/ios`)
   - Expo (from `../../../node_modules/expo`)
   - ExpoAsset (from `../../../node_modules/expo-asset/ios`)
+  - ExpoDevice (from `../../../node_modules/expo-device/ios`)
   - ExpoFileSystem (from `../../../node_modules/expo-file-system/ios`)
   - ExpoFont (from `../../../node_modules/expo-font/ios`)
   - ExpoKeepAwake (from `../../../node_modules/expo-keep-awake/ios`)
@@ -3725,7 +3732,6 @@ DEPENDENCIES:
   - RNCalendarEvents (from `../../../node_modules/react-native-calendar-events`)
   - "RNCAsyncStorage (from `../../../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCClipboard (from `../../../node_modules/@react-native-clipboard/clipboard`)"
-  - "RNCPushNotificationIOS (from `../../../node_modules/@react-native-community/push-notification-ios`)"
   - RNDeviceInfo (from `../../../node_modules/react-native-device-info`)
   - RNFS (from `../../../node_modules/react-native-fs`)
   - RNGestureHandler (from `../../../node_modules/react-native-gesture-handler`)
@@ -3774,12 +3780,18 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native-linear-gradient"
   DoubleConversion:
     :podspec: "../../../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
+  EXApplication:
+    :path: "../../../node_modules/expo-application/ios"
   EXConstants:
     :path: "../../../node_modules/expo-constants/ios"
+  EXNotifications:
+    :path: "../../../node_modules/expo-notifications/ios"
   Expo:
     :path: "../../../node_modules/expo"
   ExpoAsset:
     :path: "../../../node_modules/expo-asset/ios"
+  ExpoDevice:
+    :path: "../../../node_modules/expo-device/ios"
   ExpoFileSystem:
     :path: "../../../node_modules/expo-file-system/ios"
   ExpoFont:
@@ -4005,8 +4017,6 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/@react-native-async-storage/async-storage"
   RNCClipboard:
     :path: "../../../node_modules/@react-native-clipboard/clipboard"
-  RNCPushNotificationIOS:
-    :path: "../../../node_modules/@react-native-community/push-notification-ios"
   RNDeviceInfo:
     :path: "../../../node_modules/react-native-device-info"
   RNFS:
@@ -4042,9 +4052,12 @@ SPEC CHECKSUMS:
   BVLinearGradient: 44fd36b87f318e7933c4c91a6991442a5e3f5bcf
   CieSDK: 832ee98a89d0fc79c1a429c6ad8f31a056741d59
   DoubleConversion: cb417026b2400c8f53ae97020b2be961b59470cb
+  EXApplication: 1e98d4b1dccdf30627f92917f4b2c5a53c330e5f
   EXConstants: fce59a631a06c4151602843667f7cfe35f81e271
+  EXNotifications: c67e92b9fdfe785ff9dbdc5f4c0ff935de357da7
   Expo: ffcd2fb31776b663b84501a2568cab7dd7c0f9cb
   ExpoAsset: f867e55ceb428aab99e1e8c082b5aee7c159ea18
+  ExpoDevice: 6327c3c200816795708885adf540d26ecab83d1a
   ExpoFileSystem: 858a44267a3e6e9057e0888ad7c7cfbf55d52063
   ExpoFont: f543ce20a228dd702813668b1a07b46f51878d47
   ExpoKeepAwake: 55f75eca6499bb9e4231ebad6f3e9cb8f99c0296
@@ -4163,7 +4176,6 @@ SPEC CHECKSUMS:
   RNCalendarEvents: f90f73666b6bcbb3cc8a491ffbb5e48c0db3de37
   RNCAsyncStorage: a38d050067936ce8617a322dd4c63fce66429e5e
   RNCClipboard: 4b58c780f63676367640f23c8e114e9bd0cf86ac
-  RNCPushNotificationIOS: 9f3ee8e3b19b6d1941990d0e6306e89fc7610c83
   RNDeviceInfo: d863506092aef7e7af3a1c350c913d867d795047
   RNFS: 4f02bbb5c95d71bade3d36a1b6514305ccefc4c9
   RNGestureHandler: 34b762f216d07210ac2300c5ec561c53bb25ccbc
@@ -4193,6 +4205,6 @@ SPEC CHECKSUMS:
   ZendeskSupportSDK: ae9d470360e00f2e0694cad4b118a80af018e8ef
   ZXingObjC: 8898711ab495761b2dbbdec76d90164a6d7e14c5
 
-PODFILE CHECKSUM: c7fe401ad299f9758a990b2541db814e3a1cf9ad
+PODFILE CHECKSUM: dc109e41e5c3b621a94e11dd308c3502c4db5db5
 
 COCOAPODS: 1.15.2

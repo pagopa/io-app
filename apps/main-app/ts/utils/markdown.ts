@@ -6,11 +6,12 @@ import rehypeFormat from "rehype-format";
 import rehypeStringify from "rehype-stringify";
 import { visit } from "unist-util-visit";
 import { h } from "hastscript";
+import { Root } from "mdast";
 
 // This Plugin is used to convert the markdown directives to custom blocks including classes and ids
 // source https://github.com/remarkjs/remark-directive#use
 function customPlugin() {
-  return (tree: any) => {
+  return (tree: Root) => {
     visit(tree, node => {
       if (
         node.type === "textDirective" ||

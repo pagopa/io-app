@@ -42,7 +42,6 @@
       "react-native-barcode-builder@2.0.0": "patches/react-native-barcode-builder@2.0.0.patch",
       "react-native-calendar-events@2.2.0": "patches/react-native-calendar-events@2.2.0.patch",
       "react-native-device-info@14.0.4": "patches/react-native-device-info@14.0.4.patch",
-      "react-native-push-notification@8.1.1": "patches/react-native-push-notification@8.1.1.patch",
       "react-native-screen-brightness@2.0.0-alpha": "patches/react-native-screen-brightness@2.0.0-alpha.patch",
       "react-native-webview@13.16.0": "patches/react-native-webview@13.16.0.patch",
       "react-native-pdf@7.0.3": "patches/react-native-pdf@7.0.3.patch",

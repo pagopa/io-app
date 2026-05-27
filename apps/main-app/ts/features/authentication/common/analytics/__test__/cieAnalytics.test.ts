@@ -1,5 +1,4 @@
-import { mixpanelTrack } from "../../../../../mixpanel";
-import { buildEventProperties } from "../../../../../utils/analytics";
+import * as mixpanelModule from "../../../../../mixpanel";
 import {
   trackLoginCiePinScreen,
   trackLoginCiePinInfo,
@@ -10,101 +9,74 @@ import {
   trackLoginCieDataSharingError
 } from "../cieAnalytics";
 
-jest.mock("../../../../../mixpanel", () => ({
-  mixpanelTrack: jest.fn()
-}));
-
-jest.mock("../../../../../utils/analytics", () => ({
-  buildEventProperties: jest.fn()
-}));
-
 describe("cieAnalytics", () => {
+  const mixpanelTrackSpy = jest
+    .spyOn(mixpanelModule, "mixpanelTrack")
+    .mockImplementation();
+
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
-  it("tracks LOGIN_CIE_PIN screen view", () => {
-    const mockProps = { mock: true };
-    (buildEventProperties as jest.Mock).mockReturnValue(mockProps);
-    trackLoginCiePinScreen();
-    expect(mixpanelTrack).toHaveBeenCalledWith("LOGIN_CIE_PIN", mockProps);
-    expect(buildEventProperties).toHaveBeenCalledWith("UX", "screen_view", {
-      flow: "auth"
+  describe.each([
+    { flow: "auth" as const, label: "auth" },
+    { flow: "reauth" as const, label: "reauth" },
+    { flow: "FCI_auth" as const, label: "FCI_auth" }
+  ])("with flow=$label", ({ flow }) => {
+    it("trackLoginCiePinScreen sends correct event", () => {
+      trackLoginCiePinScreen(flow);
+      expect(mixpanelTrackSpy).toHaveBeenCalledWith(
+        "LOGIN_CIE_PIN",
+        expect.objectContaining({ flow })
+      );
     });
-  });
 
-  it("tracks LOGIN_CIE_PIN_INFO action", () => {
-    const mockProps = { mock: true };
-    (buildEventProperties as jest.Mock).mockReturnValue(mockProps);
-    trackLoginCiePinInfo();
-    expect(mixpanelTrack).toHaveBeenCalledWith("LOGIN_CIE_PIN_INFO", mockProps);
-    expect(buildEventProperties).toHaveBeenCalledWith("UX", "action", {
-      flow: "auth"
+    it("trackLoginCiePinInfo sends correct event", () => {
+      trackLoginCiePinInfo(flow);
+      expect(mixpanelTrackSpy).toHaveBeenCalledWith(
+        "LOGIN_CIE_PIN_INFO",
+        expect.objectContaining({ flow })
+      );
     });
-  });
 
-  it("tracks LOGIN_CIE_CARD_READER screen view", () => {
-    const mockProps = { mock: true };
-    (buildEventProperties as jest.Mock).mockReturnValue(mockProps);
-    trackLoginCieCardReaderScreen();
-    expect(mixpanelTrack).toHaveBeenCalledWith(
-      "LOGIN_CIE_CARD_READER",
-      mockProps
-    );
-    expect(buildEventProperties).toHaveBeenCalledWith("UX", "screen_view", {
-      flow: "auth"
+    it("trackLoginCieCardReaderScreen sends correct event", () => {
+      trackLoginCieCardReaderScreen(flow);
+      expect(mixpanelTrackSpy).toHaveBeenCalledWith(
+        "LOGIN_CIE_CARD_READER",
+        expect.objectContaining({ flow })
+      );
     });
-  });
 
-  it("tracks LOGIN_CIE_CARD_READING_SUCCESS confirm", () => {
-    const mockProps = { mock: true };
-    (buildEventProperties as jest.Mock).mockReturnValue(mockProps);
-    trackLoginCieCardReadingSuccess();
-    expect(mixpanelTrack).toHaveBeenCalledWith(
-      "LOGIN_CIE_CARD_READING_SUCCESS",
-      mockProps
-    );
-    expect(buildEventProperties).toHaveBeenCalledWith("UX", "confirm", {
-      flow: "auth"
+    it("trackLoginCieCardReadingSuccess sends correct event", () => {
+      trackLoginCieCardReadingSuccess(flow);
+      expect(mixpanelTrackSpy).toHaveBeenCalledWith(
+        "LOGIN_CIE_CARD_READING_SUCCESS",
+        expect.objectContaining({ flow })
+      );
     });
-  });
 
-  it("tracks LOGIN_CIE_CONSENT_DATA_USAGE screen view", () => {
-    const mockProps = { mock: true };
-    (buildEventProperties as jest.Mock).mockReturnValue(mockProps);
-    trackLoginCieConsentDataUsageScreen();
-    expect(mixpanelTrack).toHaveBeenCalledWith(
-      "LOGIN_CIE_CONSENT_DATA_USAGE",
-      mockProps
-    );
-    expect(buildEventProperties).toHaveBeenCalledWith("UX", "screen_view", {
-      flow: "auth"
+    it("trackLoginCieConsentDataUsageScreen sends correct event", () => {
+      trackLoginCieConsentDataUsageScreen(flow);
+      expect(mixpanelTrackSpy).toHaveBeenCalledWith(
+        "LOGIN_CIE_CONSENT_DATA_USAGE",
+        expect.objectContaining({ flow })
+      );
     });
-  });
 
-  it("tracks LOGIN_CIE_CARD_READING_ERROR with KO category", () => {
-    const mockProps = { mock: true };
-    (buildEventProperties as jest.Mock).mockReturnValue(mockProps);
-    trackLoginCieCardReadingError();
-    expect(mixpanelTrack).toHaveBeenCalledWith(
-      "LOGIN_CIE_CARD_READING_ERROR",
-      mockProps
-    );
-    expect(buildEventProperties).toHaveBeenCalledWith("KO", undefined, {
-      flow: "auth"
+    it("trackLoginCieCardReadingError sends correct event", () => {
+      trackLoginCieCardReadingError(flow);
+      expect(mixpanelTrackSpy).toHaveBeenCalledWith(
+        "LOGIN_CIE_CARD_READING_ERROR",
+        expect.objectContaining({ flow })
+      );
     });
-  });
 
-  it("tracks LOGIN_CIE_DATA_SHARING_ERROR with KO category", () => {
-    const mockProps = { mock: true };
-    (buildEventProperties as jest.Mock).mockReturnValue(mockProps);
-    trackLoginCieDataSharingError();
-    expect(mixpanelTrack).toHaveBeenCalledWith(
-      "LOGIN_CIE_DATA_SHARING_ERROR",
-      mockProps
-    );
-    expect(buildEventProperties).toHaveBeenCalledWith("KO", undefined, {
-      flow: "auth"
+    it("trackLoginCieDataSharingError sends correct event", () => {
+      trackLoginCieDataSharingError(flow);
+      expect(mixpanelTrackSpy).toHaveBeenCalledWith(
+        "LOGIN_CIE_DATA_SHARING_ERROR",
+        expect.objectContaining({ flow })
+      );
     });
   });
 });

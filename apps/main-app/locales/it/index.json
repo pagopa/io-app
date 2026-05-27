@@ -1736,6 +1736,10 @@
       "decodingErrorContent": "Il contenuto del messaggio non può essere mostrato correttamente.",
       "decodingErrorHide": "Nascondi contenuto",
       "decodingErrorShow": "Mostra comunque"
+    },
+    "notFound": {
+      "title": "Il messaggio non è disponibile",
+      "subtitle": "Il messaggio che stai cercando non è disponibile per il profilo attuale. Vai alla lista messaggi per vedere le tue comunicazioni."
     }
   },
   "messagePDFPreview": {
@@ -2373,7 +2377,8 @@
                 "supportTitle": "Contatta l'assistenza",
                 "chat": "Chiedi aiuto in chat",
                 "additionalDataTitle": "Dati aggiuntivi",
-                "errorCode": "Codice errore"
+                "errorCode": "Codice errore",
+                "errorCodeAccessibility": "Codice errore: {{errorCode}}, copia"
               }
             },
             "cieValidation": {
@@ -3140,7 +3145,7 @@
           "expired": "Scaduta",
           "expiring": "In scadenza",
           "pending": "In lavorazione",
-          "invalid": "Non valida",
+          "invalid": "Non valido",
           "verificationExpiring": "Azione richiesta",
           "verificationExpired": "Azione richiesta",
           "upgradePending": "Da aggiornare",
@@ -3848,9 +3853,11 @@
           "jwtVerification": {
             "content": {
               "jwtExpiring": "Verifica la versione digitale del tuo documento entro il {{date}} per continuare a usarlo senza limitazioni.",
-              "jwtExpired": "Verifica ora la versione digitale del tuo documento per continuare a usarlo senza limitazioni."
+              "jwtExpired": "La versione digitale del documento è scaduta il {{date}}.",
+              "invalid": "Conferma la tua identità per continuare a usare i tuoi documenti senza limitazioni."
             },
-            "action": "Inizia"
+            "action": "Aggiorna documento digitale",
+            "actionInvalid": "Conferma identità"
           }
         },
         "bottomSheets": {
