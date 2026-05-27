@@ -8,6 +8,7 @@ import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
 import ActiveSessionLoginCieConsentDataUsageScreen from "../screens/cie/ActiveSessionLoginCieConsentDataUsageScreen";
 import * as loginUtils from "../../common/utils/login";
 import { runConsentScreenSuite } from "../shared/CieContentDataUsageCommonSuite";
+import { useIOStore } from "../../../../store/hooks";
 
 jest.mock("react-native-webview", () => {
   const { View } = require("react-native");
@@ -39,6 +40,7 @@ const onLoginUriChangedSpy = jest
 const renderActive = () => {
   const initial = appReducer(undefined, applicationChangeState("active"));
   const store = createStore(appReducer, initial as any);
+  (useIOStore as jest.Mock).mockReturnValue(store);
   return renderScreenWithNavigationStoreContext(
     () => <ActiveSessionLoginCieConsentDataUsageScreen />,
     AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE_ACTIVE_SESSION_LOGIN,

@@ -45,10 +45,7 @@
     "dev:pod-update": "cd ios && NO_INTERNAL_MODULE=1 bundle exec pod update && cd .."
   },
   "lint-staged": {
-    "*.{ts,tsx}": [
-      "prettier --write",
-      "eslint --fix"
-    ]
+    "*.{ts,tsx}": ["prettier --write", "eslint --fix"]
   },
   "dependencies": {
     "@babel/plugin-transform-class-properties": "^7.25.9",
@@ -69,14 +66,13 @@
     "@pagopa/io-react-native-jwt": "^2.1.0",
     "@pagopa/io-react-native-login-utils": "1.2.0",
     "@pagopa/io-react-native-secure-storage": "^0.2.1",
-    "@pagopa/io-react-native-wallet": "^3.2.0",
+    "@pagopa/io-react-native-wallet": "^3.3.0",
     "@pagopa/io-react-native-zendesk": "^0.3.30",
     "@pagopa/react-native-cie": "^1.5.0",
     "@pagopa/ts-commons": "^10.15.0",
     "@react-native-async-storage/async-storage": "^2.0.0",
     "@react-native-clipboard/clipboard": "^1.16.3",
     "@react-native-community/netinfo": "11.4.1",
-    "@react-native-community/push-notification-ios": "^1.8.0",
     "@react-native-cookies/cookies": "^6.2.1",
     "@react-native-documents/picker": "^10.1.2",
     "@react-navigation/bottom-tabs": "6.5.11",
@@ -98,6 +94,9 @@
     "date-fns": "^1.29.0",
     "eslint-plugin-react-native": "^4.0.0",
     "expo": "^54.0.33",
+    "expo-constants": "~18.0.13",
+    "expo-device": "~8.0.10",
+    "expo-notifications": "~0.32.17",
     "expo-screen-capture": "~8.0.9",
     "fp-ts": "^2.12.1",
     "front-matter": "^4.0.2",
@@ -140,7 +139,6 @@
     "react-native-pdf": "7.0.3",
     "react-native-permissions": "^5.3.0",
     "react-native-pulsar": "^1.0.2",
-    "react-native-push-notification": "^8.1.1",
     "react-native-qrcode-skia": "^0.4.0",
     "react-native-qrcode-svg": "^6.3.12",
     "react-native-quick-base64": "^2.2.2",
@@ -214,7 +212,6 @@
     "@types/pako": "^2.0.0",
     "@types/react": "^19.1.0",
     "@types/react-native-background-timer": "^2.0.0",
-    "@types/react-native-push-notification": "^8.1.1",
     "@types/redux-logger": "^3.0.6",
     "@types/redux-mock-store": "^1.0.2",
     "@types/semver": "^6.2.0",
@@ -296,7 +293,6 @@
       "react-native-barcode-builder@2.0.0": "patches/react-native-barcode-builder@2.0.0.patch",
       "react-native-calendar-events@2.2.0": "patches/react-native-calendar-events@2.2.0.patch",
       "react-native-device-info@14.0.4": "patches/react-native-device-info@14.0.4.patch",
-      "react-native-push-notification@8.1.1": "patches/react-native-push-notification@8.1.1.patch",
       "react-native-screen-brightness@2.0.0-alpha": "patches/react-native-screen-brightness@2.0.0-alpha.patch",
       "react-native-webview@13.16.0": "patches/react-native-webview@13.16.0.patch",
       "react-native-pdf@7.0.3": "patches/react-native-pdf@7.0.3.patch",
