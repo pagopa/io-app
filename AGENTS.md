@@ -1,21 +1,21 @@
 # Repository guidelines
 
 Uses TypeScript, React Native + Expo modules, Redux, Redux-Saga, XState v5
-Package manager: `yarn`
+Package manager: `pnpm`
 
 ## Build, Lint, Test
 
-- `yarn sync` - full setup (first time / after pull)
-- `yarn setup` - Install deps + hooks
-- `yarn start` - Start Metro bundler
-- `yarn run-ios` - Run on iOS simulator
-- `yarn dev:run-android` - Run on Android emulator
-- `yarn generate` - Generate API models from OpenAPI
-- `yarn test:dev` - Run tests
-- `yarn tsc:noemit` - TypeScript type-check (no emit)
-- `yarn lint` - Lint
-- `yarn lint-autofix` - Lint + autofix
-- `yarn prettify` - Format code
+- `pnpm sync` - full setup (first time / after pull)
+- `pnpm setup` - Install deps + hooks
+- `pnpm start` - Start Metro bundler
+- `pnpm run-ios` - Run on iOS simulator
+- `pnpm dev:run-android` - Run on Android emulator
+- `pnpm generate` - Generate API models from OpenAPI
+- `pnpm test:dev` - Run tests
+- `pnpm tsc:noemit` - TypeScript type-check (no emit)
+- `pnpm lint` - Lint
+- `pnpm lint-autofix` - Lint + autofix
+- `pnpm prettify` - Format code
 
 ## Feature Structure
 
@@ -38,8 +38,8 @@ Every feature lives under `ts/features/<feature>/` and is self-contained:
 
 ## Guidelines
 
-- Before marking any task complete, run `yarn lint`, `yarn prettify`, and `yarn tsc:noemit`. Only finish once all three succeed with zero errors.
-- Never edit anything under `definitions/`. Run `yarn generate` to update them.
+- Before marking any task complete, run `pnpm lint`, `pnpm prettify`, and `pnpm tsc:noemit`. Only finish once all three succeed with zero errors.
+- Never edit anything under `definitions/`. Run `pnpm generate` to update them.
 - Never use `fp-ts` in new code; always use native TypeScript equivalents.
 - Always import from `typed-redux-saga/macro`, not bare `redux-saga/effects`.
 - The `tsc:noemit` check must pass. Never add `@ts-ignore` without a comment explaining why.
@@ -105,7 +105,7 @@ Every feature lives under `ts/features/<feature>/` and is self-contained:
 Before pushing:
 1. Review the full diff. Keep only intentional, task-related changes. Remove anything unrelated.
 2. Ensure the code follows project standards and architectural boundaries.
-3. Run yarn `tsc:noEmit`, `yarn lint`, and all relevant tests. Fix all issues. Do not proceed if anything fails.
+3. Run pnpm `tsc:noEmit`, `pnpm lint`, and all relevant tests. Fix all issues. Do not proceed if anything fails.
 4. Rebase your branch onto master. Resolve all conflicts. If conflicts are complex, stop and ask for guidance.
 
 Then push the branch to the remote and open the PR creation page in the browser with title and body pre-filled.
