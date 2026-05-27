@@ -19,11 +19,11 @@ const execAsync = util.promisify(exec);
 const majorVersionDeltaWarning = 3;
 
 /**
- * Execute the command "yarn outdated --json" and return the results as string
+ * Execute the command "pnpm outdated --json" and return the results as string
  */
 const readOutdatedJson = async (): Promise<string> => {
   try {
-    const std = await execAsync("yarn outdated --json");
+    const std = await execAsync("pnpm outdated --json");
     return std.stdout;
   } catch (e) {
     const code = (e as any).code;
@@ -35,7 +35,7 @@ const readOutdatedJson = async (): Promise<string> => {
       return stdout;
     } else {
       throw new Error(
-        `Error ${code} while executing 'yarn outdated --json': ${message}`,
+        `Error ${code} while executing 'pnpm outdated --json': ${message}`,
         { cause: e }
       );
     }
@@ -100,7 +100,7 @@ const destinationChannel = "#io_dev_app_feed";
 
 /**
  * The main script workflow orchestrator:
- * - Execute yarn outdated --json and extract the JSON results
+ * - Execute pnpm outdated --json and extract the JSON results
  * - Decode the JSON as {@link DependenciesTable}
  * - Convert {@link DependenciesTable} in {@link OutdatedStats} (aggregate stats by type, severity)
  *   TODO: - Save the result
@@ -109,7 +109,7 @@ const destinationChannel = "#io_dev_app_feed";
  */
 const main = async () => {
   try {
-    console.log("Executing yarn outdated --json");
+    console.log("Executing pnpm outdated --json");
     const rawJSON = await readOutdatedJson();
     console.log("Convert the json to OutdatedStats");
 

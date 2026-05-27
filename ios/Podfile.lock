@@ -393,7 +393,7 @@ PODS:
     - ZendeskChatSDK
     - ZendeskMessagingAPISDK
     - ZendeskSupportSDK
-  - Pulsar (1.0.2):
+  - Pulsar (1.3.0):
     - boost
     - DoubleConversion
     - fast_float
@@ -2258,7 +2258,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - react-native-keyboard-controller (1.21.7):
+  - react-native-keyboard-controller (1.21.8):
     - boost
     - DoubleConversion
     - fast_float
@@ -2276,7 +2276,7 @@ PODS:
     - React-graphics
     - React-ImageManager
     - React-jsi
-    - react-native-keyboard-controller/common (= 1.21.7)
+    - react-native-keyboard-controller/common (= 1.21.8)
     - React-NativeModulesApple
     - React-RCTFabric
     - React-renderercss
@@ -2287,7 +2287,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - react-native-keyboard-controller/common (1.21.7):
+  - react-native-keyboard-controller/common (1.21.8):
     - boost
     - DoubleConversion
     - fast_float
@@ -2412,7 +2412,9 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - react-native-safe-area-context (5.6.2):
+  - react-native-randombytes (3.6.2):
+    - React-Core
+  - react-native-safe-area-context (5.7.0):
     - boost
     - DoubleConversion
     - fast_float
@@ -2430,8 +2432,8 @@ PODS:
     - React-graphics
     - React-ImageManager
     - React-jsi
-    - react-native-safe-area-context/common (= 5.6.2)
-    - react-native-safe-area-context/fabric (= 5.6.2)
+    - react-native-safe-area-context/common (= 5.7.0)
+    - react-native-safe-area-context/fabric (= 5.7.0)
     - React-NativeModulesApple
     - React-RCTFabric
     - React-renderercss
@@ -2442,7 +2444,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - react-native-safe-area-context/common (5.6.2):
+  - react-native-safe-area-context/common (5.7.0):
     - boost
     - DoubleConversion
     - fast_float
@@ -2470,7 +2472,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - react-native-safe-area-context/fabric (5.6.2):
+  - react-native-safe-area-context/fabric (5.7.0):
     - boost
     - DoubleConversion
     - fast_float
@@ -3132,7 +3134,7 @@ PODS:
     - React-Core
   - RNFS (2.18.0):
     - React
-  - RNGestureHandler (2.29.1):
+  - RNGestureHandler (2.31.0):
     - boost
     - DoubleConversion
     - fast_float
@@ -3426,7 +3428,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - RNSVG (15.15.1):
+  - RNSVG (15.15.4):
     - boost
     - DoubleConversion
     - fast_float
@@ -3452,10 +3454,10 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - RNSVG/common (= 15.15.1)
+    - RNSVG/common (= 15.15.4)
     - SocketRocket
     - Yoga
-  - RNSVG/common (15.15.1):
+  - RNSVG/common (15.15.4):
     - boost
     - DoubleConversion
     - fast_float
@@ -3483,37 +3485,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - RNWorklets (0.7.2):
-    - boost
-    - DoubleConversion
-    - fast_float
-    - fmt
-    - glog
-    - hermes-engine
-    - RCT-Folly
-    - RCT-Folly/Fabric
-    - RCTRequired
-    - RCTTypeSafety
-    - React-Core
-    - React-debug
-    - React-Fabric
-    - React-featureflags
-    - React-graphics
-    - React-hermes
-    - React-ImageManager
-    - React-jsi
-    - React-NativeModulesApple
-    - React-RCTFabric
-    - React-renderercss
-    - React-rendererdebug
-    - React-utils
-    - ReactCodegen
-    - ReactCommon/turbomodule/bridging
-    - ReactCommon/turbomodule/core
-    - RNWorklets/worklets (= 0.7.2)
-    - SocketRocket
-    - Yoga
-  - RNWorklets/worklets (0.7.2):
+  - RNWorklets (0.7.4):
     - boost
     - DoubleConversion
     - fast_float
@@ -3540,10 +3512,40 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - RNWorklets/worklets/apple (= 0.7.2)
+    - RNWorklets/worklets (= 0.7.4)
     - SocketRocket
     - Yoga
-  - RNWorklets/worklets/apple (0.7.2):
+  - RNWorklets/worklets (0.7.4):
+    - boost
+    - DoubleConversion
+    - fast_float
+    - fmt
+    - glog
+    - hermes-engine
+    - RCT-Folly
+    - RCT-Folly/Fabric
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-hermes
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - RNWorklets/worklets/apple (= 0.7.4)
+    - SocketRocket
+    - Yoga
+  - RNWorklets/worklets/apple (0.7.4):
     - boost
     - DoubleConversion
     - fast_float
@@ -3689,6 +3691,7 @@ DEPENDENCIES:
   - react-native-pdf (from `../node_modules/react-native-pdf`)
   - react-native-quick-base64 (from `../node_modules/react-native-quick-base64`)
   - react-native-quick-crypto (from `../node_modules/react-native-quick-crypto`)
+  - react-native-randombytes (from `../node_modules/react-native-randombytes`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-screen-brightness (from `../node_modules/react-native-screen-brightness`)
   - "react-native-skia (from `../node_modules/@shopify/react-native-skia`)"
@@ -3932,6 +3935,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-quick-base64"
   react-native-quick-crypto:
     :path: "../node_modules/react-native-quick-crypto"
+  react-native-randombytes:
+    :path: "../node_modules/react-native-randombytes"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-screen-brightness:
@@ -4080,7 +4085,7 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-login-utils: 4d4e00aeb67ffbb36dc6f5fcfc17e088ef5b9f34
   pagopa-io-react-native-secure-storage: 64dcc5dff82ec5ce136d7904bc076d70db157dec
   pagopa-react-native-zendesk: 9436edab6731dd9b64b72f1f2e039c166f0161b9
-  Pulsar: ed489192a2174d4ec4346a18d415eefaa05bc36d
+  Pulsar: 7cbdae6f59ebf7f6a568045976298fe623394d7a
   RCT-Folly: 846fda9475e61ec7bcbf8a3fe81edfcaeb090669
   RCTDeprecation: 5eb1d2eeff5fb91151e8a8eef45b6c7658b6c897
   RCTRequired: cebcf9442fc296c9b89ac791dfd463021d9f6f23
@@ -4123,14 +4128,15 @@ SPEC CHECKSUMS:
   react-native-fingerprint-scanner: 91bf6825709dd7bd3abc4588a4772eb097a2b2d8
   react-native-get-random-values: d16467cf726c618e9c7a8c3c39c31faa2244bbba
   react-native-image-picker: b16541b587b275e81a12f9b82f215c5e9b0ccbf3
-  react-native-keyboard-controller: 3ee1e63487ea8ba3554db4f131af1ebac5e2da39
+  react-native-keyboard-controller: d543b2ca3fd062e794b4087a3fe0340159545503
   react-native-netinfo: cec9c4e86083cb5b6aba0e0711f563e2fbbff187
   react-native-notifications-utils: 3e4bfc85db8610c150945472a8976a036a8931a7
   react-native-pager-view: 5c3098839820aa73d75873e7b1a7eb9f119602b7
   react-native-pdf: edc236298f13f1609e42d41e45b8b6ea88ed10f9
   react-native-quick-base64: 6568199bb2ac8e72ecdfdc73a230fbc5c1d3aac4
   react-native-quick-crypto: dac9db2adb0a61b4881909b6db7c51eaaada66a8
-  react-native-safe-area-context: c00143b4823773bba23f2f19f85663ae89ceb460
+  react-native-randombytes: 4eeddad82d1fd57adda1cd5beffe67d041c9d6de
+  react-native-safe-area-context: befb5404eb8a16fdc07fa2bebab3568ecabcbb8a
   react-native-screen-brightness: 16a7b26d12d89654fc6a2e9ff1e55c1a4a10afcb
   react-native-skia: 03e8994164f792bc9fa464ed475e7f8edce36d0e
   react-native-splash-screen: a43276f9cf4b2e65d7ce30efe372ffc528064293
@@ -4172,7 +4178,7 @@ SPEC CHECKSUMS:
   RNCClipboard: 4b58c780f63676367640f23c8e114e9bd0cf86ac
   RNDeviceInfo: d863506092aef7e7af3a1c350c913d867d795047
   RNFS: 4f02bbb5c95d71bade3d36a1b6514305ccefc4c9
-  RNGestureHandler: 29bbca60c881e5243e219e3fe0016060002ed389
+  RNGestureHandler: 34b762f216d07210ac2300c5ec561c53bb25ccbc
   RNKeychain: a2c134ab796272c3d605e035ab727591000b30f3
   RNPermissions: 17e12d62da7494e48c47ccb800a6214d036cfc19
   RNQrGenerator: 60eab4f7c9e3f09db78029636fe356dca5cb585f
@@ -4180,8 +4186,8 @@ SPEC CHECKSUMS:
   RNReanimated: 28141b41781ded169829afdb6fd80f3498de254e
   RNScreens: 0bbf16c074ae6bb1058a7bf2d1ae017f4306797c
   RNShare: 1dba46787d6e5543e05655efaefa0e4bb98380d9
-  RNSVG: d260beec1775108e1bd065a0ed666ff2c5565158
-  RNWorklets: 5dd32e6d649594b9a938cdd75673dffb2266e119
+  RNSVG: 681be694d501c0af971615811d4f2ea9baf58966
+  RNWorklets: ca03ce776c15a592ef0700386071466810c41ea0
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   SwiftCBOR: b873af28a9cc66003852fdc79a41852a7e54009a
   VisionCamera: 7187b3dac1ff3071234ead959ce311875748e14f

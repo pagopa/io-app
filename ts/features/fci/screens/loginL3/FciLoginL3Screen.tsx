@@ -59,6 +59,7 @@ export const FciLoginL3Screen = () => {
   const onPressContinue = () => {
     trackFciLoginRequestContinue();
     if (isNfcAvailable) {
+      dispatch(setActiveSessionLoginFlow("FCI"));
       dispatch(setStartActiveSessionLogin());
       dispatch(setIdpSelectedActiveSessionLogin(IdpCIE));
       dispatch(setActiveSessionLoginFlow("FCI"));
