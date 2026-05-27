@@ -9,7 +9,7 @@ type MigrationState = PersistedState & Record<string, any>;
 
 type AnyRecord = Record<string, any>;
 
-export const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 9;
+export const CURRENT_REDUX_ITW_CREDENTIALS_STORE_VERSION = 10;
 
 export const itwCredentialsStateMigrations: MigrationManifest = {
   // Version 0
@@ -244,12 +244,34 @@ export const itwCredentialsStateMigrations: MigrationManifest = {
   "9": (state: MigrationState) => ({
     ...state,
     legacyCredentials: state.credentials,
-    credentials: Object.values<Record<string, any>>(state.credentials).reduce(
+    credentials: Object.values<AnyRecord>(state.credentials).reduce(
       (acc, { credential: _, ...c }) => ({
         ...acc,
         [c.credentialId]: c
       }),
       {}
     )
-  })
+  }),
+
+  // Version 10
+  // Replace the legacy "PersonIdentificationData" credential type with the new "pid"
+  "10": (state: MigrationState) => {
+    const replaceLegacyPidCredentialType = (credentials: AnyRecord) =>
+      Object.fromEntries(
+        Object.entries<AnyRecord>(credentials).map(([key, credential]) => [
+          key,
+          credential.credentialType === "PersonIdentificationData"
+            ? { ...credential, credentialType: "pid" }
+            : credential
+        ])
+      );
+
+    return {
+      ...state,
+      legacyCredentials: replaceLegacyPidCredentialType(
+        state.legacyCredentials
+      ),
+      credentials: replaceLegacyPidCredentialType(state.credentials)
+    };
+  }
 };

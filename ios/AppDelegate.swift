@@ -4,10 +4,9 @@ import Expo
 import React
 import React_RCTAppDelegate
 import ReactAppDependencyProvider
-import UserNotifications
  
 @main
-class AppDelegate: ExpoAppDelegate, UNUserNotificationCenterDelegate {
+class AppDelegate: ExpoAppDelegate {
   var window: UIWindow?
  
   var reactNativeDelegate: ReactNativeDelegate?
@@ -32,40 +31,10 @@ class AppDelegate: ExpoAppDelegate, UNUserNotificationCenterDelegate {
       in: window,
       launchOptions: launchOptions
     )
-
-    // Notifications: set UNUserNotificationCenter delegate
-    let center = UNUserNotificationCenter.current()
-    center.delegate = self
     
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 
-  // react-native-push-notification-ios
-  override func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-    RNCPushNotificationIOS.didRegisterForRemoteNotifications(withDeviceToken: deviceToken)
-  }
-  
-  // react-native-push-notification-ios
-  override func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-    RNCPushNotificationIOS.didReceiveRemoteNotification(userInfo, fetchCompletionHandler: completionHandler)
-  }
-  
-  // react-native-push-notification-ios
-  override func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-    RNCPushNotificationIOS.didFailToRegisterForRemoteNotificationsWithError(error)
-  }
-  
-  // react-native-push-notification-ios
-  func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-    RNCPushNotificationIOS.didReceive(response)
-    completionHandler()
-  }
-  
-  // react-native-push-notification-ios
-  func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-    completionHandler([.sound, .alert, .badge])
-  }
-  
   // Deep linking
   override func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
     return RCTLinkingManager.application(app, open: url, options: options)

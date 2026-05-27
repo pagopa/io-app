@@ -29,6 +29,9 @@ import issuanceReducer, {
 import itwDebugReducer, {
   ItwDebugState
 } from "../../../playgrounds/store/reducer";
+import itwProximityReducer, {
+  ItwProximityState
+} from "../../../presentation/proximity/store/reducers";
 import wiaReducer, {
   ItwWalletInstanceState
 } from "../../../walletInstance/store/reducers";
@@ -48,6 +51,7 @@ export type ItWalletState = {
   preferences: ItwPreferencesState;
   securePreferences: ItwSecurePreferencesState & PersistPartial;
   credentialsCatalogue: ItwCredentialsCatalogueState;
+  proximity: ItwProximityState & PersistPartial;
   banners: ItwBannersState;
   debug: ItwDebugState;
 };
@@ -63,6 +67,7 @@ const itwReducer = combineReducers({
   preferences: preferencesReducer,
   securePreferences: securePreferencesReducer,
   credentialsCatalogue: itwCredentialsCatalogueReducer,
+  proximity: itwProximityReducer,
   banners: bannersReducer,
   debug: itwDebugReducer
 });
