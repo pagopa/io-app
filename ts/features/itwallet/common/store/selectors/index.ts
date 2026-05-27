@@ -154,15 +154,21 @@ export const itwShouldRenderAgeVerificationUsageDetailsBannerSelector = (
  * When the ITW upgrade banner is displayed, the eID lifecycle alert
  * is hidden so that the user does not need to perform eID reissuance.
  * The alert is hidden if:
- * - The new IT Wallet design is being rendered
- * - The L3 upgrade banner is being displayed
+ * - The new IT Wallet design is being rendered (unless the eID is expired)
+ * - The L3 upgrade banner is being displayed (unless the eID is expired)
  * - The eID is expiring and the device is offline
  */
-export const itwShouldHideEidLifecycleAlert = (state: GlobalState): boolean =>
-  itwShouldRenderNewItWalletSelector(state) ||
-  itwShouldRenderL3UpgradeBannerSelector(state) ||
-  (itwCredentialsEidStatusSelector(state) === "jwtExpiring" &&
-    !isConnectedSelector(state));
+export const itwShouldHideEidLifecycleAlert = (state: GlobalState): boolean => {
+  if (itwCredentialsEidStatusSelector(state) === "jwtExpired") {
+    return false;
+  }
+  return (
+    itwShouldRenderNewItWalletSelector(state) ||
+    itwShouldRenderL3UpgradeBannerSelector(state) ||
+    (itwCredentialsEidStatusSelector(state) === "jwtExpiring" &&
+      !isConnectedSelector(state))
+  );
+};
 
 /**
  * Returns whether the new IT-Wallet activation banner should be rendered.

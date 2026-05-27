@@ -383,6 +383,7 @@ export const createEidIssuanceActorsImplementation = (
       const credential = await issuanceUtils.getPid({
         authorizedCredential,
         itwVersion,
+        env,
         accessToken: input.accessToken,
         ...input.authenticationContext
       });
