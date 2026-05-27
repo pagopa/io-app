@@ -21,9 +21,7 @@ function customPlugin() {
         const data = node.data || (node.data = {});
         const hast = h(node.name, node.attributes);
 
-        // @ts-expect-error type mismatch
         data.hName = hast.tagName;
-        // @ts-expect-error type mismatch
         data.hProperties = hast.properties;
       }
     });
