@@ -12,6 +12,7 @@ import { GlobalState } from "../store/reducers/types";
 import { initiateAarFlow } from "../features/pn/aar/store/actions";
 import { IO_LOGIN_CIE_URL_SCHEME } from "../features/authentication/login/cie/utils/cie";
 import { trackIOOpenedFromUniversalAppLink } from "../features/linking/analytics";
+import { isMixpanelEnabled } from "../store/reducers/persistedPreferences";
 import {
   getCredentialOfferInternalRoute,
   isPotentialCredentialOfferInvocation
@@ -33,12 +34,14 @@ export const linkingSubscription =
       // track if the app is opened from a universal link, but only if the url
       // is an https link, to avoid tracking custom scheme deep links that are
       // not universal links
-      trackIOOpenedFromUniversalAppLink(url);
+      // We read the user's Mixpanel preference from the store to respect their choice
+      const state = store.getState();
+      const mixpanelEnabled = isMixpanelEnabled(state);
+      trackIOOpenedFromUniversalAppLink(url, mixpanelEnabled);
       // Message archiving/restoring hides the bottom tab bar so we must make
       // sure that either it is disabled or we manually deactivate it, otherwise
       // a deep link may initiate a navigation flow that will later deliver the
       // user to a screen where the tab bar is hidden (while it should be shown)
-      const state = store.getState();
       const isArchivingDisabled = isArchivingDisabledSelector(state);
       if (!isArchivingDisabled) {
         // Auto-reset does not provide feedback to the user
