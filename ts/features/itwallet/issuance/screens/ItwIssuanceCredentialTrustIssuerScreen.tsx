@@ -1,6 +1,5 @@
 import {
   ContentWrapper,
-  FeatureInfo,
   ForceScrollDownView,
   H2,
   ListItemHeader,
