@@ -161,7 +161,7 @@ export const trackFciDocOpeningFailure = (
 ) =>
   mixpanelTrack(
     "FCI_DOC_OPENING_FAILURE",
-    buildEventProperties("KO", "control", { reason })
+    buildEventProperties("KO", "screen_view", { reason })
   );
 
 export const trackFciDocOpeningFailureAction = (
