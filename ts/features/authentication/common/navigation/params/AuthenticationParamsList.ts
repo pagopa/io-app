@@ -8,6 +8,8 @@ import { ChosenIdentifier } from "../../../login/optIn/screens/OptInScreen";
 import { UnlockAccessProps } from "../../../login/unlockAccess/components/UnlockAccessComponent";
 import { AUTHENTICATION_ROUTES } from "../routes";
 import { CieIdLoginProps } from "../../../login/cie/shared/utils";
+import { ActiveSessionLoginCieConsentDataUsageScreenNavigationParams } from "../../../activeSessionLogin/screens/cie/ActiveSessionLoginCieConsentDataUsageScreen.tsx";
+import { ActiveSessionCieCardReaderScreenNavigationParams } from "../../../activeSessionLogin/screens/cie/ActiveSessionLoginCieCardReaderScreen.tsx";
 
 export type AuthenticationParamsList = {
   [AUTHENTICATION_ROUTES.LANDING]: undefined;
@@ -43,7 +45,7 @@ export type AuthenticationParamsList = {
   // Active session login
   [AUTHENTICATION_ROUTES.LANDING_ACTIVE_SESSION_LOGIN]: undefined;
   [AUTHENTICATION_ROUTES.CIE_ID_ACTIVE_SESSION_LOGIN]: CieIdLoginProps;
-  [AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE_ACTIVE_SESSION_LOGIN]: CieConsentDataUsageScreenNavigationParams;
-  [AUTHENTICATION_ROUTES.CIE_CARD_READER_SCREEN_ACTIVE_SESSION_LOGIN]: CieCardReaderScreenNavigationParams;
+  [AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE_ACTIVE_SESSION_LOGIN]: ActiveSessionLoginCieConsentDataUsageScreenNavigationParams;
+  [AUTHENTICATION_ROUTES.CIE_CARD_READER_SCREEN_ACTIVE_SESSION_LOGIN]: ActiveSessionCieCardReaderScreenNavigationParams;
   [AUTHENTICATION_ROUTES.IDP_LOGIN_ACTIVE_SESSION_LOGIN]: undefined;
 };

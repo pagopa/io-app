@@ -23,7 +23,6 @@ import {
   activeSessionLoginSuccess,
   setFinishedActiveSessionLoginFlow
 } from "../../store/actions";
-import { CieConsentDataUsageScreenNavigationParams } from "../../../login/cie/screens/CieConsentDataUsageScreen";
 import { LoaderComponent } from "../../shared/components/LoaderComponent";
 import { MESSAGES_ROUTES } from "../../../../messages/navigation/routes";
 import ROUTES from "../../../../../navigation/routes";
@@ -35,16 +34,23 @@ import {
   trackLoginCieDataSharingError
 } from "../../../common/analytics/cieAnalytics";
 import { trackLoginFailure } from "../../../common/analytics";
+import { ReauthLoginType } from "../analytics";
+
+export type ActiveSessionLoginCieConsentDataUsageScreenNavigationParams = {
+  cieConsentUri: string;
+  errorCodeDebugMode?: string;
+  loginType: ReauthLoginType;
+};
 
 const ActiveSessionLoginCieConsentDataUsageScreen = () => {
   const route =
     useRoute<
       Route<
         typeof AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE_ACTIVE_SESSION_LOGIN,
-        CieConsentDataUsageScreenNavigationParams
+        ActiveSessionLoginCieConsentDataUsageScreenNavigationParams
       >
     >();
-  const { cieConsentUri } = route.params;
+  const { cieConsentUri, loginType } = route.params;
   const acsUrl = `${cieConsentUri}${ACS_PATH}`;
   const dispatch = useIODispatch();
   const [hasError, setHasError] = useState<boolean>(false);
@@ -53,7 +59,7 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
   const { forceLogoutAndNavigateToLanding } = useActiveSessionLoginNavigation();
 
   useOnFirstRender(() => {
-    void trackLoginCieConsentDataUsageScreen("reauth");
+    void trackLoginCieConsentDataUsageScreen(loginType);
   });
 
   const navigateToErrorScreen = useCallback(
@@ -97,17 +103,17 @@ const ActiveSessionLoginCieConsentDataUsageScreen = () => {
         dispatch(activeSessionLoginFailure());
       }
       if (code === "22") {
-        trackLoginCieDataSharingError("reauth");
+        trackLoginCieDataSharingError(loginType);
       }
       setHasError(true);
       navigateToErrorScreen(code || message);
       trackLoginFailure({
         reason: `login CIE failure with code ${code || message || "n/a"}`,
         idp: "cie",
-        flow: "reauth"
+        flow: loginType
       });
     },
-    [dispatch, navigateToErrorScreen]
+    [dispatch, navigateToErrorScreen, loginType]
   );
 
   const handleLoadingError = useCallback(
