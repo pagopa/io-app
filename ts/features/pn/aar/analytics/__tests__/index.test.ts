@@ -79,6 +79,14 @@ type TrackingTestWithUserType = TrackingTestBase<
   (userType: SendUserType) => void
 >;
 
+type TrackingTestWithErrorDetails = TrackingTestBase<
+  (
+    name: string | undefined,
+    message: string | undefined,
+    nfcDetected: boolean | undefined
+  ) => void
+>;
+
 type TrackingTestWithError = TrackingTestBase<(error: string) => void>;
 
 const sendUserTypes: ReadonlyArray<SendUserType> = [
@@ -92,6 +100,14 @@ const sendAarScreens: ReadonlyArray<SendAarScreen> = [
   "NFC_ACTIVATION"
 ];
 
+const complexTrackingTests: ReadonlyArray<TrackingTestWithErrorDetails> = [
+  {
+    name: "trackSendAarMandateCieCardReadingFailure",
+    fn: trackSendAarMandateCieCardReadingFailure,
+    eventName: "SEND_MANDATE_CIE_CARD_READING_FAILURE",
+    eventProps: { event_category: "KO", event_type: undefined }
+  }
+];
 // Configuration for simple tracking tests
 const simpleTrackingTests: ReadonlyArray<TrackingTestBase> = [
   {
@@ -314,12 +330,6 @@ const simpleTrackingTests: ReadonlyArray<TrackingTestBase> = [
     name: "trackSendAarMandateCieCanCodeError",
     fn: trackSendAarMandateCieCanCodeError,
     eventName: "SEND_MANDATE_CIE_CAN_ERROR",
-    eventProps: { event_category: "KO", event_type: undefined }
-  },
-  {
-    name: "trackSendAarMandateCieCardReadingFailure",
-    fn: trackSendAarMandateCieCardReadingFailure,
-    eventName: "SEND_MANDATE_CIE_CARD_READING_FAILURE",
     eventProps: { event_category: "KO", event_type: undefined }
   },
   {
@@ -734,6 +744,19 @@ describe("index", () => {
     ({ fn, eventName, eventProps }) => {
       it("should call 'mixpanelTrack' with proper event name and properties", () => {
         fn();
+
+        expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+        expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
+        expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(eventName);
+        expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual(eventProps);
+      });
+    }
+  );
+  describe.each(complexTrackingTests)(
+    "$name",
+    ({ fn, eventName, eventProps }) => {
+      it("should call 'mixpanelTrack' with proper event name and properties", () => {
+        fn("errorName", "errorMessage", true);
 
         expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
         expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
