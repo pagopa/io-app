@@ -239,20 +239,6 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
           iconColor={theme["icon-default"]}
         />
         <ItwRequestedClaimsList items={requiredClaims} />
-        <VSpacer size={24} />
-        <FeatureInfo
-          iconName="fornitori"
-          body={I18n.t(
-            "features.itWallet.issuance.credentialAuth.disclaimer.0"
-          )}
-        />
-        <VSpacer size={24} />
-        <FeatureInfo
-          iconName="trashcan"
-          body={I18n.t(
-            "features.itWallet.issuance.credentialAuth.disclaimer.1"
-          )}
-        />
         <VSpacer size={32} />
         <IOMarkdown
           content={I18n.t("features.itWallet.issuance.credentialAuth.tos", {

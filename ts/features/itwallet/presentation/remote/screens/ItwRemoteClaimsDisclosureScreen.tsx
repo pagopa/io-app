@@ -137,18 +137,6 @@ const ContentView = () => {
             />
           </VStack>
           <ItwRemotePresentationDetails />
-          <FeatureInfo
-            iconName="fornitori"
-            body={I18n.t(
-              "features.itWallet.presentation.selectiveDisclosure.disclaimer.0"
-            )}
-          />
-          <FeatureInfo
-            iconName="trashcan"
-            body={I18n.t(
-              "features.itWallet.presentation.selectiveDisclosure.disclaimer.1"
-            )}
-          />
           <IOMarkdownLite
             content={I18n.t(
               "features.itWallet.presentation.selectiveDisclosure.tos",
