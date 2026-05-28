@@ -1,0 +1,68 @@
+name: Promote latest build to beta
+on: workflow_dispatch
+jobs:
+  distribute-android:
+    name: Distribute Android build to closed testing track
+    environment: prod
+    runs-on: ubuntu-24.04
+    steps:
+      - id: checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+      - id: setup-ruby
+        uses: ruby/setup-ruby@e65c17d16e57e481586a6a5a0282698790062f92 # v1.300.0
+        with:
+          bundler-cache: true
+      - id: build-release-android
+        run: |
+          cd apps/main-app
+          ./scripts/android-release.sh ./android/app
+          cd android
+          bundle exec fastlane promote_internal_to_alpha
+        shell: bash
+        env:
+          ENCODED_IOAPP_JSON_KEY_FILE: ${{secrets.ENCODED_IOAPP_JSON_KEY_FILE}}
+  distribute-ios:
+    name: Distribute iOS build to TestFlight external testers
+    environment: prod
+    runs-on: macos-26-xlarge
+    steps:
+      - id: checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+      - id: setup-ruby
+        uses: ruby/setup-ruby@e65c17d16e57e481586a6a5a0282698790062f92 # v1.300.0
+        with:
+          bundler-cache: true
+      - id: prepare-ios-build
+        run: ./apps/main-app/scripts/ios-release-build.sh
+        env:
+          APP_STORE_API_KEY_ID: ${{secrets.APP_STORE_API_KEY_ID}}
+          APP_STORE_API_PRIVATE_KEY: ${{secrets.APP_STORE_API_PRIVATE_KEY}}
+      - id: distribute-app-testflight
+        run: |
+          cd apps/main-app/ios
+          bundle exec fastlane distribute_beta_testflight
+        env:
+          LC_ALL: en_US.UTF-8
+          LANG: en_US.UTF-8
+          APP_STORE_API_KEY_ID: ${{secrets.APP_STORE_API_KEY_ID}}
+          APP_STORE_API_PRIVATE_KEY: ${{secrets.APP_STORE_API_PRIVATE_KEY}}
+          APP_STORE_API_KEY_ISSUER_ID: ${{secrets.APP_STORE_API_KEY_ISSUER_ID}}
+  notify-new-version:
+    name: Send notification about new beta version on Slack
+    environment: dev
+    runs-on: ubuntu-24.04
+    needs:
+        - distribute-android
+        - distribute-ios
+    steps:
+      - id: checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: ./.github/actions/setup-pnpm
+      - id: send-notification
+        run: 'pnpm ts-node --skip-project -O ''{"lib":["es2015"]}'' scripts/ts/notifyNewAppVersion/notifyNewAppVersion.ts'
+        env: 
+          IO_APP_SLACK_HELPER_BOT_TOKEN: ${{ secrets.IO_APP_SLACK_HELPER_BOT_TOKEN }}
