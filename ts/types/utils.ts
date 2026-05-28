@@ -1,11 +1,11 @@
-/* eslint-disable */
-
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { Pot } from "@pagopa/ts-commons/lib/pot";
+// eslint-disable-next-line no-restricted-imports
 import { Effect } from "redux-saga/effects";
 import { PayloadAC, PayloadMetaAC } from "typesafe-actions/dist/type-helpers";
 
 export type SagaCallReturnType<
-  T extends (...args: any[]) => any,
+  T extends (...args: Array<any>) => any,
   R = ReturnType<T>
 > =
   R extends Generator<infer _, infer B0, infer _>
@@ -55,9 +55,9 @@ export type XOR<T, U> = T | U extends object
 
 type Values<T extends {}> = T[keyof T];
 
-type Tuplize<T extends any[]> = Pick<
+type Tuplize<T extends Array<any>> = Pick<
   T,
-  Exclude<keyof T, Extract<keyof any[], string> | number>
+  Exclude<keyof T, Extract<keyof Array<any>, string> | number>
 >;
 
 type _OneOf<T extends {}> = Values<{
@@ -69,7 +69,7 @@ type _OneOf<T extends {}> = Values<{
 /**
  * Ensure that the types T extends any[] are mutually exclusive
  */
-export type OneOf<T extends any[]> = _OneOf<Tuplize<T>>;
+export type OneOf<T extends Array<any>> = _OneOf<Tuplize<T>>;
 
 /**
  * Create an object with the passed key and value, enforcing type safety.
