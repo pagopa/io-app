@@ -3,14 +3,14 @@ import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
-import { NetworkError } from "../../../../utils/errors";
 import { fciClearStateRequest, fciDownloadPreview } from "../actions";
+import { FciNetworkError } from "../../utils/errors.ts";
 
 export type FciDownload = {
   path: string;
 };
 
-export type FciDownloadPreviewState = pot.Pot<FciDownload, NetworkError>;
+export type FciDownloadPreviewState = pot.Pot<FciDownload, FciNetworkError>;
 
 const initialState: FciDownloadPreviewState = pot.none;
 
@@ -23,11 +23,11 @@ const fciDownloadPreviewReducer = (
 ): FciDownloadPreviewState => {
   switch (action.type) {
     case getType(fciDownloadPreview.request):
-      return pot.toLoading(state);
+      return pot.toLoading(pot.none);
     case getType(fciDownloadPreview.success):
       return pot.some(action.payload);
     case getType(fciDownloadPreview.failure):
-      return pot.toError(state, action.payload);
+      return pot.toError(pot.none, action.payload);
     case getType(fciDownloadPreview.cancel):
     case getType(fciClearStateRequest):
       return initialState;

@@ -17,6 +17,7 @@ import { SignatureRequestList } from "../../../../../definitions/fci/SignatureRe
 import { Document } from "../reducers/fciSignatureFieldDrawing";
 import { SignatureFieldAttrType } from "../../components/DocumentWithSignature";
 import { EnvironmentEnum } from "../../../../../definitions/fci/Environment";
+import { FciNetworkError } from "../../utils/errors.ts";
 
 /**
  * get and handle the signatureRequest from id
@@ -69,7 +70,7 @@ export const fciDownloadPreview = createAsyncAction(
   "FCI_DOWNLOAD_PREVIEW_SUCCESS",
   "FCI_DOWNLOAD_PREVIEW_FAILURE",
   "FCI_DOWNLOAD_PREVIEW_CANCEL"
-)<{ url: string }, { path: string }, NetworkError, void>();
+)<{ url: string }, { path: string }, FciNetworkError, void>();
 
 export const fciDownloadPreviewClear = createStandardAction(
   "FCI_DOWNLOAD_PREVIEW_CLEAR"
