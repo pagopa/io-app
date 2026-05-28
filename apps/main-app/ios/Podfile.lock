@@ -2563,6 +2563,34 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
+  - react-native-worklets-core (1.6.3):
+    - boost
+    - DoubleConversion
+    - fast_float
+    - fmt
+    - glog
+    - hermes-engine
+    - RCT-Folly
+    - RCT-Folly/Fabric
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - SocketRocket
+    - Yoga
   - React-NativeModulesApple (0.81.5):
     - boost
     - DoubleConversion
@@ -3578,10 +3606,16 @@ PODS:
   - SwiftCBOR (0.6.0)
   - VisionCamera (4.7.3):
     - VisionCamera/Core (= 4.7.3)
+    - VisionCamera/FrameProcessors (= 4.7.3)
     - VisionCamera/React (= 4.7.3)
   - VisionCamera/Core (4.7.3)
+  - VisionCamera/FrameProcessors (4.7.3):
+    - React
+    - React-callinvoker
+    - react-native-worklets-core
   - VisionCamera/React (4.7.3):
     - React-Core
+    - VisionCamera/FrameProcessors
   - Yoga (0.0.0)
   - ZendeskAnswerBotProvidersSDK (6.0.0):
     - ZendeskSupportProvidersSDK (~> 9.0.0)
@@ -3697,6 +3731,7 @@ DEPENDENCIES:
   - "react-native-skia (from `../../../node_modules/@shopify/react-native-skia`)"
   - react-native-splash-screen (from `../../../node_modules/react-native-splash-screen`)
   - react-native-webview (from `../../../node_modules/react-native-webview`)
+  - react-native-worklets-core (from `../../../node_modules/react-native-worklets-core`)
   - React-NativeModulesApple (from `../../../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-oscompat (from `../../../node_modules/react-native/ReactCommon/oscompat`)
   - React-perflogger (from `../../../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -3947,6 +3982,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native-splash-screen"
   react-native-webview:
     :path: "../../../node_modules/react-native-webview"
+  react-native-worklets-core:
+    :path: "../../../node_modules/react-native-worklets-core"
   React-NativeModulesApple:
     :path: "../../../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios"
   React-oscompat:
@@ -4141,6 +4178,7 @@ SPEC CHECKSUMS:
   react-native-skia: 03e8994164f792bc9fa464ed475e7f8edce36d0e
   react-native-splash-screen: a43276f9cf4b2e65d7ce30efe372ffc528064293
   react-native-webview: 654f794a7686b47491cf43aa67f7f428bea00eed
+  react-native-worklets-core: aaaac7d17f7e576592369a54f30e96fe4875c983
   React-NativeModulesApple: ebf2ce72b35870036900d6498b33724386540a71
   React-oscompat: eb0626e8ba1a2c61673c991bf9dc21834898475d
   React-perflogger: 509e1f9a3ee28df71b0a66de806ac515ce951246
@@ -4190,7 +4228,7 @@ SPEC CHECKSUMS:
   RNWorklets: 0925b0aa236d157a57e290418ac612de063ae8a7
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   SwiftCBOR: b873af28a9cc66003852fdc79a41852a7e54009a
-  VisionCamera: 7187b3dac1ff3071234ead959ce311875748e14f
+  VisionCamera: 0044a94f7489f19e19d5938e97dfc36f4784af3c
   Yoga: 728df40394d49f3f471688747cf558158b3a3bd1
   ZendeskAnswerBotProvidersSDK: 2f3d0e38acdbd4507862b4e4a7b28d3764072854
   ZendeskAnswerBotSDK: e7d57bc3b41033e6e1df65d928610a79cd6c025b
