@@ -314,6 +314,8 @@ describe("getCredentialTypeByVct - https format", () => {
 describe("getCredentialTypeByVct - urn format", () => {
   test.each([
     [CredentialType.PID, "urn:it-wallet:pid:1"],
+    [CredentialType.PID, "urn:it-wallet:pid:1.2.3"],
+    [CredentialType.PID, "urn:it-wallet:pid"],
     [CredentialType.DRIVING_LICENSE, "urn:it-wallet:mDL:1"],
     [
       CredentialType.EUROPEAN_DISABILITY_CARD,
