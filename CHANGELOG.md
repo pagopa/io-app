@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.33.0-rc.1](https://github.com/pagopa/io-app/compare/3.33.0-rc.0...3.33.0-rc.1) (2026-05-28)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4337](https://pagopa.atlassian.net/browse/SIW-4337)] Update QR code screen to show expired credentials banner ([#8132](https://github.com/pagopa/io-app/issues/8132)) ([92fec7e](https://github.com/pagopa/io-app/commit/92fec7e5fdf4eddf53d75348ee71bdcdfebe3a7d))
+
+
+### Chores
+
+* [[IEL-199](https://pagopa.atlassian.net/browse/IEL-199),[IEL-278](https://pagopa.atlassian.net/browse/IEL-278)] FCI added unavailable document screen ([#8078](https://github.com/pagopa/io-app/issues/8078)) ([0675324](https://github.com/pagopa/io-app/commit/06753247e2a4284d295233abd0e922decf419e5e))
+
 ## [3.33.0-rc.0](https://github.com/pagopa/io-app/compare/3.32.0-rc.2...3.33.0-rc.0) (2026-05-27)
 
 
