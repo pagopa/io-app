@@ -227,7 +227,7 @@ importers:
         specifier: ^0.2.1
         version: 0.2.1(react-native@0.81.5(patch_hash=707e4553fbc3e532ebfe875389c54a1058f9ecab68ae03fb9e45d5d9c2d33eb5)(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.81.5(@babel/core@7.29.0))(@types/react@19.1.8)(react@19.1.0))(react@19.1.0)
       '@pagopa/io-react-native-wallet':
-        specifier: ^3.2.0
+        specifier: ^3.3.0
         version: 3.3.0(90e4dbcbc74cab9a0e2d8a4bac39553d)
       '@pagopa/io-react-native-zendesk':
         specifier: ^0.3.30
