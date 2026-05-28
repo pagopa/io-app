@@ -25,6 +25,18 @@ export type ValidateMrtdPoPChallengeParams = {
   ias: CredentialIssuance.MRTDPoP.IasPayload;
 };
 
+const getRedirectQuery = (url: string): URLSearchParams => {
+  const queryStart = url.indexOf("?");
+  return new URLSearchParams(queryStart >= 0 ? url.slice(queryStart + 1) : "");
+};
+
+/**
+ * Checks if the PID Provider requires the MRTD PoP step by looking for
+ * `challenge_info` in the post-auth redirect.
+ */
+export const isMrtdPoPChallengeRequired = (authRedirectUrl: string): boolean =>
+  getRedirectQuery(authRedirectUrl).has("challenge_info");
+
 export const initMrtdPoPChallenge = async ({
   itwVersion,
   authRedirectUrl,

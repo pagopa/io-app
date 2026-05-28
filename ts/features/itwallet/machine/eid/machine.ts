@@ -175,7 +175,7 @@ export const itwEidIssuanceMachine = setup({
      */
 
     initMrtdPoPChallenge: fromPromise<
-      MrtdPoPContext,
+      MrtdPoPContext | null,
       InitMrtdPoPChallengeActorParams
     >(notImplemented),
     validateMrtdPoPChallenge: fromPromise<
@@ -910,7 +910,7 @@ export const itwEidIssuanceMachine = setup({
       states: {
         InitializingChallenge: {
           description:
-            "Initializes the MRTD PoP challenge with the callbackUrl obtained from the primary authentication (SPID/CieID)",
+            "Initializes the MRTD PoP challenge. Returns `null` when `challenge_info` is absent (LoA High), skipping directly to issuance.",
           tags: [ItwTags.Loading],
           invoke: {
             src: "initMrtdPoPChallenge",
@@ -918,12 +918,18 @@ export const itwEidIssuanceMachine = setup({
               authenticationContext: context.authenticationContext,
               walletInstanceAttestation: context.walletInstanceAttestation?.jwt
             }),
-            onDone: {
-              target: "DisplayingCanPreparationInstructions",
-              actions: assign(({ event }) => ({
-                mrtdContext: event.output
-              }))
-            },
+            onDone: [
+              {
+                guard: ({ event }) => event.output === null,
+                target: "#itwEidIssuanceMachine.Issuance"
+              },
+              {
+                target: "DisplayingCanPreparationInstructions",
+                actions: assign(({ event }) => ({
+                  mrtdContext: event.output ?? undefined
+                }))
+              }
+            ],
             onError: {
               actions: "setFailure",
               target: "#itwEidIssuanceMachine.Failure"
