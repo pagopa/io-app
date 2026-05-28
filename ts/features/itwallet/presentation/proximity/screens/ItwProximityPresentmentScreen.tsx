@@ -23,14 +23,14 @@ import { useMaxBrightness } from "../../../../../utils/brightness.ts";
 import { ItwBrandedBox } from "../../../common/components/ItwBrandedBox.tsx";
 import { itwIsBannerHiddenSelector } from "../../../common/store/selectors/banners.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
-import { trackItwStartReissuingPID } from "../analytics/index";
+import { trackItwStartReissuingPID } from "../analytics";
 import { ItwProximityQrCode as ItwProximityQrCodeTracking } from "../analytics/types.ts";
 import { ItwProximityQrCodeImage } from "../components/ItwProximityQrCodeImage.tsx";
 import { ItwProximityQrCodeInfoBanner } from "../components/ItwProximityQrCodeInfoBanner.tsx";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
 import { selectFailure, selectIsLoading } from "../machine/selectors.ts";
 import { ItwProximityParamsList } from "../navigation/ItwProximityParamsList.ts";
-import { shouldBlockProximityQrCodeSelector } from "../store/selectors/credentials.ts";
+import { shouldShowExpiredProximityCredentialsBannerSelector } from "../store/selectors/credentials.ts";
 
 export type ItwProximityPresentmentScreenNavigationParams = {
   source?: ItwProximityQrCodeTracking["source"];
@@ -52,21 +52,21 @@ export const ItwProximityPresentmentScreen = ({
   const isLoading = ItwProximityMachineContext.useSelector(selectIsLoading);
   const failure = ItwProximityMachineContext.useSelector(selectFailure);
 
-  const shouldBlockProximityPresentation = useIOSelector(
-    shouldBlockProximityQrCodeSelector
+  const shouldShowExpiredCredentialsBanner = useIOSelector(
+    shouldShowExpiredProximityCredentialsBannerSelector
   );
   const isQrCodeInfoBannerHidden = useIOSelector(
     itwIsBannerHiddenSelector("proximity_qr_code_info")
   );
 
-  const isFailure = !!failure || shouldBlockProximityPresentation;
+  const isFailure = !!failure;
 
   useDebugInfo({
     isLoading,
     failure,
     // isPermissionsRequired,
     // isBluetoothRequired,
-    shouldBlockProximityPresentation
+    shouldShowExpiredCredentialsBanner
   });
 
   // Auto-start machine on mount.
@@ -113,6 +113,25 @@ export const ItwProximityPresentmentScreen = ({
 
   return (
     <IOScrollView>
+      {shouldShowExpiredCredentialsBanner && (
+        <Animated.View
+          layout={LinearTransition.duration(200)}
+          style={styles.expiredBanner}
+        >
+          <Alert
+            testID="itwExpiredBannerTestID"
+            variant="error"
+            content={I18n.t(
+              "features.itWallet.presentation.proximity.engagement.invalidBanner.content"
+            )}
+            action={I18n.t(
+              "features.itWallet.presentation.proximity.engagement.invalidBanner.action"
+            )}
+            onPress={handleReissuePress}
+          />
+        </Animated.View>
+      )}
+
       <View style={styles.boxShadow}>
         <ItwBrandedBox
           variant={isFailure ? "error" : "default"}
@@ -162,28 +181,14 @@ export const ItwProximityPresentmentScreen = ({
           <ItwProximityQrCodeInfoBanner />
         </Animated.View>
       )}
-
-      {shouldBlockProximityPresentation && (
-        <Animated.View layout={LinearTransition.duration(200)}>
-          <VSpacer size={24} />
-          <Alert
-            testID="itwExpiredBannerTestID"
-            variant="error"
-            content={I18n.t(
-              "features.itWallet.presentation.proximity.engagement.invalidBanner.content"
-            )}
-            action={I18n.t(
-              "features.itWallet.presentation.proximity.engagement.invalidBanner.action"
-            )}
-            onPress={handleReissuePress}
-          />
-        </Animated.View>
-      )}
     </IOScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  expiredBanner: {
+    marginBottom: 24
+  },
   boxShadow: {
     shadowRadius: 8,
     shadowColor: IOColors.black,
