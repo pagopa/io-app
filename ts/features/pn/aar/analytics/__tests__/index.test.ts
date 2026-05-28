@@ -92,13 +92,24 @@ const sendAarScreens: ReadonlyArray<SendAarScreen> = [
   "NFC_ACTIVATION"
 ];
 
-type TrackingTestWithErrorDetails = TrackingTestBase<
-  (
-    name: string | undefined,
-    message: string | undefined,
-    nfcDetected: boolean | undefined
-  ) => void
->;
+type TrackingTestWithErrorDetails = Omit<
+  TrackingTestBase<
+    (
+      name: string | undefined,
+      message: string | undefined,
+      nfcDetected: boolean | undefined
+    ) => void
+  >,
+  "eventProps"
+> & {
+  eventProps: {
+    event_category: Parameters<typeof buildEventProperties>[0];
+    event_type: Parameters<typeof buildEventProperties>[1];
+    name: string | undefined;
+    message: string | undefined;
+    nfc_detected: boolean | undefined;
+  };
+};
 
 // Configuration for simple tracking tests
 const simpleTrackingTests: ReadonlyArray<TrackingTestBase> = [
