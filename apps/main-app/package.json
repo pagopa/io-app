@@ -5,7 +5,7 @@
   "scripts": {
     "start": "react-native start",
     "setup": "pnpm install && pnpm prepare",
-    "sync": "pnpm setup && bundle && pnpm dev:pod-install && pnpm generate",
+    "sync": "pnpm setup && bundle && pnpm dev-pod-install && pnpm generate",
     "run-ios": "react-native run-ios",
     "run-android": "react-native run-android",
     "dev-run-android": "pnpm run-android --mode=productionDebug --active-arch-only",
