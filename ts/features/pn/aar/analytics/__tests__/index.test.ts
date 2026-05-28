@@ -79,14 +79,6 @@ type TrackingTestWithUserType = TrackingTestBase<
   (userType: SendUserType) => void
 >;
 
-type TrackingTestWithErrorDetails = TrackingTestBase<
-  (
-    name: string | undefined,
-    message: string | undefined,
-    nfcDetected: boolean | undefined
-  ) => void
->;
-
 type TrackingTestWithError = TrackingTestBase<(error: string) => void>;
 
 const sendUserTypes: ReadonlyArray<SendUserType> = [
@@ -100,14 +92,14 @@ const sendAarScreens: ReadonlyArray<SendAarScreen> = [
   "NFC_ACTIVATION"
 ];
 
-const complexTrackingTests: ReadonlyArray<TrackingTestWithErrorDetails> = [
-  {
-    name: "trackSendAarMandateCieCardReadingFailure",
-    fn: trackSendAarMandateCieCardReadingFailure,
-    eventName: "SEND_MANDATE_CIE_CARD_READING_FAILURE",
-    eventProps: { event_category: "KO", event_type: undefined }
-  }
-];
+type TrackingTestWithErrorDetails = TrackingTestBase<
+  (
+    name: string | undefined,
+    message: string | undefined,
+    nfcDetected: boolean | undefined
+  ) => void
+>;
+
 // Configuration for simple tracking tests
 const simpleTrackingTests: ReadonlyArray<TrackingTestBase> = [
   {
@@ -431,6 +423,20 @@ const trackingTestsWithError: ReadonlyArray<TrackingTestWithError> = [
   }
 ];
 
+const trackSendAarMandateCieCardReadingFailureTest: TrackingTestWithErrorDetails =
+  {
+    name: "trackSendAarMandateCieCardReadingFailure",
+    fn: trackSendAarMandateCieCardReadingFailure,
+    eventName: "SEND_MANDATE_CIE_CARD_READING_FAILURE",
+    eventProps: {
+      event_category: "KO",
+      event_type: undefined,
+      name: "errorName",
+      message: "errorMessage",
+      nfc_detected: true
+    }
+  };
+
 describe("index", () => {
   const spiedOnMockedMixpanelTrack = jest
     .spyOn(mixpanel, "mixpanelTrack")
@@ -752,19 +758,24 @@ describe("index", () => {
       });
     }
   );
-  describe.each(complexTrackingTests)(
-    "$name",
-    ({ fn, eventName, eventProps }) => {
-      it("should call 'mixpanelTrack' with proper event name and properties", () => {
-        fn("errorName", "errorMessage", true);
+  describe(trackSendAarMandateCieCardReadingFailureTest.name, () => {
+    it("should call 'mixpanelTrack' with proper event name and properties", () => {
+      trackSendAarMandateCieCardReadingFailureTest.fn(
+        "errorName",
+        "errorMessage",
+        true
+      );
 
-        expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
-        expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
-        expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(eventName);
-        expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual(eventProps);
-      });
-    }
-  );
+      expect(spiedOnMockedMixpanelTrack.mock.calls.length).toBe(1);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0].length).toBe(2);
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][0]).toBe(
+        trackSendAarMandateCieCardReadingFailureTest.eventName
+      );
+      expect(spiedOnMockedMixpanelTrack.mock.calls[0][1]).toEqual(
+        trackSendAarMandateCieCardReadingFailureTest.eventProps
+      );
+    });
+  });
   describe.each(trackingTestsWithError)(
     "$name",
     ({ fn, eventName, eventProps }) => {
