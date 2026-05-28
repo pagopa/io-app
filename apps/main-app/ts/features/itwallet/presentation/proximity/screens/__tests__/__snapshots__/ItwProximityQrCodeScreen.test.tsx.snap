@@ -6072,7 +6072,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
 </View>
 `;
 
-exports[`ItwProximityPresentmentScreen when credentials are expired should render blocked state with alert banner 1`] = `
+exports[`ItwProximityPresentmentScreen when credentials are expired should render QR code with alert banner 1`] = `
 <View
   style={
     {
@@ -6305,6 +6305,255 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                       >
                         <View>
                           <View
+                            collapsable={false}
+                            jestAnimatedProps={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestAnimatedStyle={
+                              {
+                                "value": {},
+                              }
+                            }
+                            jestInlineStyle={
+                              {
+                                "marginBottom": 24,
+                              }
+                            }
+                            layout={
+                              LinearTransition {
+                                "build": [Function],
+                                "durationV": 200,
+                                "randomizeDelay": false,
+                                "reduceMotionV": "system",
+                              }
+                            }
+                            style={
+                              [
+                                {
+                                  "marginBottom": 24,
+                                },
+                              ]
+                            }
+                          >
+                            <View
+                              accessibilityRole="button"
+                              accessibilityState={
+                                {
+                                  "busy": undefined,
+                                  "checked": undefined,
+                                  "disabled": undefined,
+                                  "expanded": undefined,
+                                  "selected": undefined,
+                                }
+                              }
+                              accessibilityValue={
+                                {
+                                  "max": undefined,
+                                  "min": undefined,
+                                  "now": undefined,
+                                  "text": undefined,
+                                }
+                              }
+                              accessible={true}
+                              collapsable={false}
+                              focusable={true}
+                              onBlur={[Function]}
+                              onClick={[Function]}
+                              onFocus={[Function]}
+                              onResponderGrant={[Function]}
+                              onResponderMove={[Function]}
+                              onResponderRelease={[Function]}
+                              onResponderTerminate={[Function]}
+                              onResponderTerminationRequest={[Function]}
+                              onStartShouldSetResponder={[Function]}
+                              onTouchEnd={[Function]}
+                              testID="itwExpiredBannerTestID"
+                            >
+                              <View
+                                collapsable={false}
+                                jestAnimatedProps={
+                                  {
+                                    "value": {},
+                                  }
+                                }
+                                jestAnimatedStyle={
+                                  {
+                                    "value": {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                  }
+                                }
+                                jestInlineStyle={
+                                  [
+                                    {
+                                      "borderCurve": "continuous",
+                                      "borderRadius": 12,
+                                      "padding": 16,
+                                    },
+                                    {
+                                      "backgroundColor": "#FFD9D9",
+                                    },
+                                  ]
+                                }
+                                style={
+                                  [
+                                    {
+                                      "borderCurve": "continuous",
+                                      "borderRadius": 12,
+                                      "padding": 16,
+                                    },
+                                    {
+                                      "backgroundColor": "#FFD9D9",
+                                    },
+                                    {
+                                      "transform": [
+                                        {
+                                          "scale": 1,
+                                        },
+                                      ],
+                                    },
+                                  ]
+                                }
+                              >
+                                <View
+                                  style={
+                                    {
+                                      "alignItems": "center",
+                                      "display": "flex",
+                                      "flexDirection": "row",
+                                      "gap": 18,
+                                    }
+                                  }
+                                >
+                                  <RNSVGSvgView
+                                    accessibilityElementsHidden={true}
+                                    accessibilityLabel=""
+                                    accessible={false}
+                                    align="xMidYMid"
+                                    bbHeight={36}
+                                    bbWidth={36}
+                                    color="#5D1313"
+                                    focusable={false}
+                                    height={36}
+                                    importantForAccessibility="no-hide-descendants"
+                                    meetOrSlice={0}
+                                    minX={0}
+                                    minY={0}
+                                    style={
+                                      [
+                                        {
+                                          "backgroundColor": "transparent",
+                                          "borderWidth": 0,
+                                        },
+                                        {
+                                          "flex": 0,
+                                          "height": 36,
+                                          "width": 36,
+                                        },
+                                      ]
+                                    }
+                                    vbHeight={24}
+                                    vbWidth={24}
+                                    width={36}
+                                  >
+                                    <RNSVGGroup
+                                      fill={
+                                        {
+                                          "payload": 4278190080,
+                                          "type": 0,
+                                        }
+                                      }
+                                    >
+                                      <RNSVGPath
+                                        clipRule={0}
+                                        d="M7.00702 1c-.73494 0-1.41405.39209-1.78152 1.02856L.2756 11.0274c-.36747.6365-.36747 1.4206 0 2.0571l4.9499 8.8783c.36747.6365 1.04658 1.0286 1.78152 1.0286h9.94288c.7349 0 1.414-.3921 1.7815-1.0286l4.993-8.8783c.3675-.6365.3675-1.4206 0-2.0571l-4.993-8.99884C18.3639 1.39209 17.6848 1 16.9499 1H7.00702Zm5.02608 13.5549c.5676 0 1.0283-.4601 1.0283-1.0277V5.52583c0-.56758-.4601-1.02769-1.0277-1.02769-.5676 0-1.0282.46011-1.0282 1.02769v8.00137c0 .5676.4601 1.0277 1.0276 1.0277Zm0 1.9431c.8436 0 1.5275.6839 1.5275 1.5275 0 .8436-.6839 1.5275-1.5275 1.5275-.8436 0-1.5274-.6839-1.5274-1.5275 0-.8436.6838-1.5275 1.5274-1.5275Z"
+                                        fill={
+                                          {
+                                            "type": 2,
+                                          }
+                                        }
+                                        fillRule={0}
+                                        propList={
+                                          [
+                                            "fill",
+                                            "fillRule",
+                                          ]
+                                        }
+                                      />
+                                    </RNSVGGroup>
+                                  </RNSVGSvgView>
+                                  <View
+                                    style={
+                                      {
+                                        "flex": 1,
+                                        "marginBottom": -6,
+                                        "marginTop": -6,
+                                      }
+                                    }
+                                  >
+                                    <View
+                                      style={
+                                        {
+                                          "display": "flex",
+                                          "flexDirection": "column",
+                                          "gap": 12,
+                                        }
+                                      }
+                                    >
+                                      <Text
+                                        allowFontScaling={true}
+                                        dynamicTypeRamp="body"
+                                        maxFontSizeMultiplier={1.5}
+                                        style={
+                                          [
+                                            {},
+                                            {
+                                              "color": "#5D1313",
+                                              "fontFamily": "Titillio",
+                                              "fontSize": 16,
+                                              "fontStyle": "normal",
+                                              "fontWeight": "400",
+                                              "lineHeight": 24,
+                                            },
+                                          ]
+                                        }
+                                      >
+                                        Conferma la tua identità per continuare a usare il tuo portafoglio IT-Wallet.
+                                      </Text>
+                                      <Text
+                                        allowFontScaling={true}
+                                        ellipsizeMode="tail"
+                                        maxFontSizeMultiplier={1.5}
+                                        numberOfLines={1}
+                                        style={
+                                          [
+                                            {},
+                                            {
+                                              "color": "#5D1313",
+                                              "fontFamily": "Titillio",
+                                              "fontSize": 16,
+                                              "fontStyle": "normal",
+                                              "fontWeight": "600",
+                                              "lineHeight": 20,
+                                            },
+                                          ]
+                                        }
+                                      >
+                                        Conferma identità
+                                      </Text>
+                                    </View>
+                                  </View>
+                                </View>
+                              </View>
+                            </View>
+                          </View>
+                          <View
                             style={
                               {
                                 "elevation": 8,
@@ -6511,13 +6760,13 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                           <skLinearGradient
                                             colors={
                                               [
-                                                "rgba(255, 87, 87, 1)",
-                                                "rgba(255, 189, 189, 1)",
-                                                "rgba(255, 87, 87, 1)",
-                                                "rgba(252, 205, 205, 1)",
-                                                "rgba(255, 87, 87, 1)",
-                                                "rgba(255, 189, 189, 1)",
                                                 "rgba(220, 227, 252, 1)",
+                                                "rgba(25, 104, 240, 1)",
+                                                "rgba(255, 179, 87, 1)",
+                                                "rgba(205, 210, 252, 1)",
+                                                "rgba(25, 104, 240, 1)",
+                                                "rgba(255, 234, 189, 1)",
+                                                "rgba(255, 179, 87, 1)",
                                               ]
                                             }
                                             end={
@@ -6693,86 +6942,26 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                 <View
                                   style={
                                     {
-                                      "alignItems": "center",
-                                      "aspectRatio": 1,
-                                      "backgroundColor": "#F4F5F8",
-                                      "borderRadius": 16,
+                                      "display": "flex",
+                                      "flexDirection": "column",
                                       "gap": 8,
-                                      "justifyContent": "center",
-                                      "padding": 16,
+                                      "marginHorizontal": 16,
                                     }
                                   }
                                 >
-                                  <RNSVGSvgView
-                                    accessibilityElementsHidden={true}
-                                    accessibilityLabel=""
-                                    accessible={false}
-                                    align="xMidYMid"
-                                    bbHeight={24}
-                                    bbWidth={24}
-                                    color="#555C70"
-                                    focusable={false}
-                                    height={24}
-                                    importantForAccessibility="no-hide-descendants"
-                                    meetOrSlice={0}
-                                    minX={0}
-                                    minY={0}
-                                    style={
-                                      [
-                                        {
-                                          "backgroundColor": "transparent",
-                                          "borderWidth": 0,
-                                        },
-                                        {
-                                          "flex": 0,
-                                          "height": 24,
-                                          "width": 24,
-                                        },
-                                      ]
-                                    }
-                                    vbHeight={24}
-                                    vbWidth={24}
-                                    width={24}
-                                  >
-                                    <RNSVGGroup
-                                      fill={
-                                        {
-                                          "payload": 4278190080,
-                                          "type": 0,
-                                        }
-                                      }
-                                    >
-                                      <RNSVGPath
-                                        clipRule={0}
-                                        d="M0 3a3 3 0 0 1 3-3h5a3 3 0 0 1 3 3v5a3 3 0 0 1-3 3H3a3 3 0 0 1-3-3V3Zm3-1a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H3ZM0 16a3 3 0 0 1 3-3h5a3 3 0 0 1 3 3v5a3 3 0 0 1-3 3H3a3 3 0 0 1-3-3v-5Zm3-1a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h5a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3ZM16 0a3 3 0 0 0-3 3v5a3 3 0 0 0 3 3h5a3 3 0 0 0 3-3V3a3 3 0 0 0-3-3h-5Zm-1 3a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1V3Zm-1.5 13.681a.5.5 0 0 1-.5-.5V13.5a.5.5 0 0 1 .5-.5h2.637a.5.5 0 0 1 .5.5v3.181H13.5Zm6.819 0h-3.682v3.637H13.5a.5.5 0 0 0-.5.5V23.5a.5.5 0 0 0 .5.5h3.137v-3.681h3.681V24H23.5a.5.5 0 0 0 .5-.5v-3.181h-3.681v-3.637Zm0 0V13.5a.5.5 0 0 1 .5-.5H23.5a.5.5 0 0 1 .5.5v3.181h-3.681ZM5 4a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H5ZM4 18a1 1 0 0 1 1-1h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-1ZM18 4a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1h-1Z"
-                                        fill={
-                                          {
-                                            "type": 2,
-                                          }
-                                        }
-                                        fillRule={0}
-                                        propList={
-                                          [
-                                            "fill",
-                                            "fillRule",
-                                          ]
-                                        }
-                                      />
-                                    </RNSVGGroup>
-                                  </RNSVGSvgView>
                                   <Text
                                     allowFontScaling={true}
-                                    dynamicTypeRamp="body"
+                                    dynamicTypeRamp="headline"
                                     maxFontSizeMultiplier={1.5}
                                     style={
                                       [
                                         {},
                                         {
-                                          "color": "#555C70",
+                                          "color": "#0E0F13",
                                           "fontFamily": "Titillio",
                                           "fontSize": 16,
                                           "fontStyle": "normal",
-                                          "fontWeight": "400",
+                                          "fontWeight": "600",
                                           "lineHeight": 24,
                                         },
                                         {
@@ -6781,8 +6970,56 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                       ]
                                     }
                                   >
-                                    Non puoi far verificare i tuoi documenti digitali.
+                                    Avvia una verifica
                                   </Text>
+                                  <Text
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="footnote"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#555C70",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 14,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "400",
+                                          "lineHeight": 21,
+                                        },
+                                        {
+                                          "textAlign": "center",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Mostra il codice QR a chi verifica i tuoi documenti digitali
+                                  </Text>
+                                </View>
+                                <View
+                                  collapsable={false}
+                                  entering={
+                                    FadeIn {
+                                      "build": [Function],
+                                      "durationV": 200,
+                                      "randomizeDelay": false,
+                                      "reduceMotionV": "system",
+                                    }
+                                  }
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                >
+                                  <View
+                                    testID="qrcode"
+                                  />
                                 </View>
                               </View>
                             </View>
@@ -7649,250 +7886,6 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                           />
                                         </RNSVGGroup>
                                       </RNSVGSvgView>
-                                    </View>
-                                  </View>
-                                </View>
-                              </View>
-                            </View>
-                          </View>
-                          <View
-                            collapsable={false}
-                            jestAnimatedProps={
-                              {
-                                "value": {},
-                              }
-                            }
-                            jestAnimatedStyle={
-                              {
-                                "value": {},
-                              }
-                            }
-                            layout={
-                              LinearTransition {
-                                "build": [Function],
-                                "durationV": 200,
-                                "randomizeDelay": false,
-                                "reduceMotionV": "system",
-                              }
-                            }
-                          >
-                            <View
-                              style={
-                                {
-                                  "height": 24,
-                                }
-                              }
-                            />
-                            <View
-                              accessibilityRole="button"
-                              accessibilityState={
-                                {
-                                  "busy": undefined,
-                                  "checked": undefined,
-                                  "disabled": undefined,
-                                  "expanded": undefined,
-                                  "selected": undefined,
-                                }
-                              }
-                              accessibilityValue={
-                                {
-                                  "max": undefined,
-                                  "min": undefined,
-                                  "now": undefined,
-                                  "text": undefined,
-                                }
-                              }
-                              accessible={true}
-                              collapsable={false}
-                              focusable={true}
-                              onBlur={[Function]}
-                              onClick={[Function]}
-                              onFocus={[Function]}
-                              onResponderGrant={[Function]}
-                              onResponderMove={[Function]}
-                              onResponderRelease={[Function]}
-                              onResponderTerminate={[Function]}
-                              onResponderTerminationRequest={[Function]}
-                              onStartShouldSetResponder={[Function]}
-                              onTouchEnd={[Function]}
-                              testID="itwExpiredBannerTestID"
-                            >
-                              <View
-                                collapsable={false}
-                                jestAnimatedProps={
-                                  {
-                                    "value": {},
-                                  }
-                                }
-                                jestAnimatedStyle={
-                                  {
-                                    "value": {
-                                      "transform": [
-                                        {
-                                          "scale": 1,
-                                        },
-                                      ],
-                                    },
-                                  }
-                                }
-                                jestInlineStyle={
-                                  [
-                                    {
-                                      "borderCurve": "continuous",
-                                      "borderRadius": 12,
-                                      "padding": 16,
-                                    },
-                                    {
-                                      "backgroundColor": "#FFD9D9",
-                                    },
-                                  ]
-                                }
-                                style={
-                                  [
-                                    {
-                                      "borderCurve": "continuous",
-                                      "borderRadius": 12,
-                                      "padding": 16,
-                                    },
-                                    {
-                                      "backgroundColor": "#FFD9D9",
-                                    },
-                                    {
-                                      "transform": [
-                                        {
-                                          "scale": 1,
-                                        },
-                                      ],
-                                    },
-                                  ]
-                                }
-                              >
-                                <View
-                                  style={
-                                    {
-                                      "alignItems": "center",
-                                      "display": "flex",
-                                      "flexDirection": "row",
-                                      "gap": 18,
-                                    }
-                                  }
-                                >
-                                  <RNSVGSvgView
-                                    accessibilityElementsHidden={true}
-                                    accessibilityLabel=""
-                                    accessible={false}
-                                    align="xMidYMid"
-                                    bbHeight={36}
-                                    bbWidth={36}
-                                    color="#5D1313"
-                                    focusable={false}
-                                    height={36}
-                                    importantForAccessibility="no-hide-descendants"
-                                    meetOrSlice={0}
-                                    minX={0}
-                                    minY={0}
-                                    style={
-                                      [
-                                        {
-                                          "backgroundColor": "transparent",
-                                          "borderWidth": 0,
-                                        },
-                                        {
-                                          "flex": 0,
-                                          "height": 36,
-                                          "width": 36,
-                                        },
-                                      ]
-                                    }
-                                    vbHeight={24}
-                                    vbWidth={24}
-                                    width={36}
-                                  >
-                                    <RNSVGGroup
-                                      fill={
-                                        {
-                                          "payload": 4278190080,
-                                          "type": 0,
-                                        }
-                                      }
-                                    >
-                                      <RNSVGPath
-                                        clipRule={0}
-                                        d="M7.00702 1c-.73494 0-1.41405.39209-1.78152 1.02856L.2756 11.0274c-.36747.6365-.36747 1.4206 0 2.0571l4.9499 8.8783c.36747.6365 1.04658 1.0286 1.78152 1.0286h9.94288c.7349 0 1.414-.3921 1.7815-1.0286l4.993-8.8783c.3675-.6365.3675-1.4206 0-2.0571l-4.993-8.99884C18.3639 1.39209 17.6848 1 16.9499 1H7.00702Zm5.02608 13.5549c.5676 0 1.0283-.4601 1.0283-1.0277V5.52583c0-.56758-.4601-1.02769-1.0277-1.02769-.5676 0-1.0282.46011-1.0282 1.02769v8.00137c0 .5676.4601 1.0277 1.0276 1.0277Zm0 1.9431c.8436 0 1.5275.6839 1.5275 1.5275 0 .8436-.6839 1.5275-1.5275 1.5275-.8436 0-1.5274-.6839-1.5274-1.5275 0-.8436.6838-1.5275 1.5274-1.5275Z"
-                                        fill={
-                                          {
-                                            "type": 2,
-                                          }
-                                        }
-                                        fillRule={0}
-                                        propList={
-                                          [
-                                            "fill",
-                                            "fillRule",
-                                          ]
-                                        }
-                                      />
-                                    </RNSVGGroup>
-                                  </RNSVGSvgView>
-                                  <View
-                                    style={
-                                      {
-                                        "flex": 1,
-                                        "marginBottom": -6,
-                                        "marginTop": -6,
-                                      }
-                                    }
-                                  >
-                                    <View
-                                      style={
-                                        {
-                                          "display": "flex",
-                                          "flexDirection": "column",
-                                          "gap": 12,
-                                        }
-                                      }
-                                    >
-                                      <Text
-                                        allowFontScaling={true}
-                                        dynamicTypeRamp="body"
-                                        maxFontSizeMultiplier={1.5}
-                                        style={
-                                          [
-                                            {},
-                                            {
-                                              "color": "#5D1313",
-                                              "fontFamily": "Titillio",
-                                              "fontSize": 16,
-                                              "fontStyle": "normal",
-                                              "fontWeight": "400",
-                                              "lineHeight": 24,
-                                            },
-                                          ]
-                                        }
-                                      >
-                                        Non puoi far verificare i tuoi documenti digitali.
-                                      </Text>
-                                      <Text
-                                        allowFontScaling={true}
-                                        ellipsizeMode="tail"
-                                        maxFontSizeMultiplier={1.5}
-                                        numberOfLines={1}
-                                        style={
-                                          [
-                                            {},
-                                            {
-                                              "color": "#5D1313",
-                                              "fontFamily": "Titillio",
-                                              "fontSize": 16,
-                                              "fontStyle": "normal",
-                                              "fontWeight": "600",
-                                              "lineHeight": 20,
-                                            },
-                                          ]
-                                        }
-                                      >
-                                        Conferma identità
-                                      </Text>
                                     </View>
                                   </View>
                                 </View>
