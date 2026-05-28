@@ -316,6 +316,7 @@ describe("getCredentialTypeByVct - urn format", () => {
     [CredentialType.PID, "urn:it-wallet:pid:1"],
     [CredentialType.PID, "urn:it-wallet:pid:1.2.3"],
     [CredentialType.PID, "urn:it-wallet:pid"],
+    [CredentialType.PID, "urn:eudi:pid:it:1"],
     [CredentialType.DRIVING_LICENSE, "urn:it-wallet:mDL:1"],
     [
       CredentialType.EUROPEAN_DISABILITY_CARD,
