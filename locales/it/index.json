@@ -4280,7 +4280,7 @@
               "error": "Abbiamo avuto un problema nel generare il QR Code."
             },
             "invalidBanner": {
-              "content": "Non puoi far verificare i tuoi documenti digitali.",
+              "content": "Conferma la tua identità per continuare a usare il tuo portafoglio IT-Wallet.",
               "action": "Conferma identità"
             },
             "banner": {
