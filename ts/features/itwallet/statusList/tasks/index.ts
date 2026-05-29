@@ -4,6 +4,7 @@ import {
   trackItwStatusListFetchRegistered,
   trackItwStatusListFetchRegisterFailure
 } from "../analytics";
+import { backgroundRefresh } from "../utils/cache";
 import { storeLastStatusListCheckTimestamp } from "../utils/storage";
 
 /**
@@ -75,9 +76,7 @@ TaskManager.defineTask(ITW_STATUS_LIST_FETCH_TASK, async () => {
   try {
     const now = Date.now();
     await storeLastStatusListCheckTimestamp(now);
-
-    // TODO Add Status List fetch logic here
-
+    await backgroundRefresh();
     return BackgroundTask.BackgroundTaskResult.Success;
   } catch {
     return BackgroundTask.BackgroundTaskResult.Failed;
