@@ -11,7 +11,7 @@ index dfaf18aaccb6e16cd96a69778b16e09b6f95839e..48daa1f0b5554546aa4b935cfeb66022
  import { ModalPresentationContext } from "../../utils/ModalPresentationContext.js";
  import { useKeyboardManager } from "../../utils/useKeyboardManager.js";
  import { Card } from "./Card.js";
-@@ -135,6 +135,20 @@ function CardContainerInner({
+@@ -135,6 +135,24 @@ function CardContainerInner({
    const {
      colors
    } = useTheme();
@@ -22,6 +22,10 @@ index dfaf18aaccb6e16cd96a69778b16e09b6f95839e..48daa1f0b5554546aa4b935cfeb66022
 +      if (isMounted) {
 +        setIsScreenReaderEnabled(enabled);
 +      }
++    }).catch(() => {
++      // Swallow rejection: in environments without the native module
++      // (e.g. Jest), the promise rejects with null and would otherwise
++      // surface as an unhandled rejection during test teardown.
 +    });
 +    const subscription = AccessibilityInfo.addEventListener('screenReaderChanged', setIsScreenReaderEnabled);
 +    return () => {
@@ -32,7 +36,7 @@ index dfaf18aaccb6e16cd96a69778b16e09b6f95839e..48daa1f0b5554546aa4b935cfeb66022
    React.useEffect(() => {
      const listener = scene.progress.next?.addListener?.(({
        value
-@@ -161,6 +175,7 @@ function CardContainerInner({
+@@ -161,6 +179,7 @@ function CardContainerInner({
      gestureVelocityImpact,
      headerMode,
      headerShown,
@@ -40,7 +44,7 @@ index dfaf18aaccb6e16cd96a69778b16e09b6f95839e..48daa1f0b5554546aa4b935cfeb66022
      transitionSpec
    } = scene.descriptor.options;
    const {
-@@ -242,7 +257,10 @@ function CardContainerInner({
+@@ -242,7 +261,10 @@ function CardContainerInner({
              getPreviousScene,
              getFocusedRoute,
              onContentHeightChange: onHeaderHeightChange,
@@ -65,7 +69,7 @@ index da56613edb9c0df85338e9aa3de06e48f9fa04c2..378a79a6590445481c1a25ddbe0024b0
  
  import type { Layout, Scene } from '../../types';
  import { ModalPresentationContext } from '../../utils/ModalPresentationContext';
-@@ -176,6 +176,28 @@ function CardContainerInner({
+@@ -176,6 +176,34 @@ function CardContainerInner({
    };
  
    const { colors } = useTheme();
@@ -75,11 +79,17 @@ index da56613edb9c0df85338e9aa3de06e48f9fa04c2..378a79a6590445481c1a25ddbe0024b0
 +  React.useEffect(() => {
 +    let isMounted = true;
 +
-+    AccessibilityInfo.isScreenReaderEnabled().then((enabled) => {
-+      if (isMounted) {
-+        setIsScreenReaderEnabled(enabled);
-+      }
-+    });
++    AccessibilityInfo.isScreenReaderEnabled()
++      .then((enabled) => {
++        if (isMounted) {
++          setIsScreenReaderEnabled(enabled);
++        }
++      })
++      .catch(() => {
++        // Swallow rejection: in environments without the native module
++        // (e.g. Jest), the promise rejects with null and would otherwise
++        // surface as an unhandled rejection during test teardown.
++      });
 +
 +    const subscription = AccessibilityInfo.addEventListener(
 +      'screenReaderChanged',
@@ -94,7 +104,7 @@ index da56613edb9c0df85338e9aa3de06e48f9fa04c2..378a79a6590445481c1a25ddbe0024b0
  
    React.useEffect(() => {
      const listener = scene.progress.next?.addListener?.(
-@@ -205,6 +227,7 @@ function CardContainerInner({
+@@ -205,6 +233,7 @@ function CardContainerInner({
      gestureVelocityImpact,
      headerMode,
      headerShown,
@@ -102,7 +112,7 @@ index da56613edb9c0df85338e9aa3de06e48f9fa04c2..378a79a6590445481c1a25ddbe0024b0
      transitionSpec,
    } = scene.descriptor.options;
  
-@@ -297,7 +320,15 @@ function CardContainerInner({
+@@ -297,7 +326,15 @@ function CardContainerInner({
                    getPreviousScene,
                    getFocusedRoute,
                    onContentHeightChange: onHeaderHeightChange,
