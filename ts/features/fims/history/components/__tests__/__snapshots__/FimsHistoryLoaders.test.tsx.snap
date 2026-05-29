@@ -187,9 +187,7 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
       >
         <RNSScreen
           activityState={2}
-          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -206,13 +204,11 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
             ]
           }
           sheetCornerRadius={-1}
-          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
-          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -223,7 +219,6 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
               "zIndex": undefined,
             }
           }
-          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
@@ -1064,9 +1059,7 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
       >
         <RNSScreen
           activityState={2}
-          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1083,13 +1076,11 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
             ]
           }
           sheetCornerRadius={-1}
-          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
-          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -1100,7 +1091,6 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
               "zIndex": undefined,
             }
           }
-          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
@@ -1941,9 +1931,7 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
       >
         <RNSScreen
           activityState={2}
-          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1960,13 +1948,11 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
             ]
           }
           sheetCornerRadius={-1}
-          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
-          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -1977,7 +1963,6 @@ exports[`fimsHistoryItemsFooter should match snapshot for show first divider == 
               "zIndex": undefined,
             }
           }
-          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
@@ -2818,9 +2803,7 @@ exports[`loadingFimsHistoryItem should match snapshot 1`] = `
       >
         <RNSScreen
           activityState={2}
-          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2837,13 +2820,11 @@ exports[`loadingFimsHistoryItem should match snapshot 1`] = `
             ]
           }
           sheetCornerRadius={-1}
-          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
-          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -2854,7 +2835,6 @@ exports[`loadingFimsHistoryItem should match snapshot 1`] = `
               "zIndex": undefined,
             }
           }
-          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}

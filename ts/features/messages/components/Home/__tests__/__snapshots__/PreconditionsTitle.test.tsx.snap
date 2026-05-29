@@ -187,9 +187,7 @@ exports[`PreconditionsTitle should match snapshot when title content is 'empty' 
       >
         <RNSScreen
           activityState={2}
-          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -206,13 +204,11 @@ exports[`PreconditionsTitle should match snapshot when title content is 'empty' 
             ]
           }
           sheetCornerRadius={-1}
-          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
-          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -223,7 +219,6 @@ exports[`PreconditionsTitle should match snapshot when title content is 'empty' 
               "zIndex": undefined,
             }
           }
-          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
@@ -510,9 +505,7 @@ exports[`PreconditionsTitle should match snapshot when title content is 'header'
       >
         <RNSScreen
           activityState={2}
-          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -529,13 +522,11 @@ exports[`PreconditionsTitle should match snapshot when title content is 'header'
             ]
           }
           sheetCornerRadius={-1}
-          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
-          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -546,7 +537,6 @@ exports[`PreconditionsTitle should match snapshot when title content is 'header'
               "zIndex": undefined,
             }
           }
-          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
@@ -860,9 +850,7 @@ exports[`PreconditionsTitle should match snapshot when title content is 'header'
       >
         <RNSScreen
           activityState={2}
-          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -879,13 +867,11 @@ exports[`PreconditionsTitle should match snapshot when title content is 'header'
             ]
           }
           sheetCornerRadius={-1}
-          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
-          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -896,7 +882,6 @@ exports[`PreconditionsTitle should match snapshot when title content is 'header'
               "zIndex": undefined,
             }
           }
-          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
@@ -1181,9 +1166,7 @@ exports[`PreconditionsTitle should match snapshot when title content is 'loading
       >
         <RNSScreen
           activityState={2}
-          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1200,13 +1183,11 @@ exports[`PreconditionsTitle should match snapshot when title content is 'loading
             ]
           }
           sheetCornerRadius={-1}
-          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
-          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -1217,7 +1198,6 @@ exports[`PreconditionsTitle should match snapshot when title content is 'loading
               "zIndex": undefined,
             }
           }
-          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
@@ -1566,9 +1546,7 @@ exports[`PreconditionsTitle should match snapshot when title content is undefine
       >
         <RNSScreen
           activityState={2}
-          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1585,13 +1563,11 @@ exports[`PreconditionsTitle should match snapshot when title content is undefine
             ]
           }
           sheetCornerRadius={-1}
-          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
-          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -1602,7 +1578,6 @@ exports[`PreconditionsTitle should match snapshot when title content is undefine
               "zIndex": undefined,
             }
           }
-          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}

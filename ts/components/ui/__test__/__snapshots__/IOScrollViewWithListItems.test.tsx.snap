@@ -187,9 +187,7 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
       >
         <RNSScreen
           activityState={2}
-          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -206,13 +204,11 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
             ]
           }
           sheetCornerRadius={-1}
-          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
-          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -223,7 +219,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
               "zIndex": undefined,
             }
           }
-          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
@@ -1217,9 +1212,7 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
       >
         <RNSScreen
           activityState={2}
-          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1236,13 +1229,11 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
             ]
           }
           sheetCornerRadius={-1}
-          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
-          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -1253,7 +1244,6 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
               "zIndex": undefined,
             }
           }
-          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
@@ -1988,9 +1978,7 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle with markdown corr
       >
         <RNSScreen
           activityState={2}
-          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2007,13 +1995,11 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle with markdown corr
             ]
           }
           sheetCornerRadius={-1}
-          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
-          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -2024,7 +2010,6 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle with markdown corr
               "zIndex": undefined,
             }
           }
-          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}

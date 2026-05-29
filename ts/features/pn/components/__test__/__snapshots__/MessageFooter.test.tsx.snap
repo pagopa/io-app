@@ -187,9 +187,7 @@ exports[`MessageFooter should match snapshot for cancelled PN notification 1`] =
       >
         <RNSScreen
           activityState={2}
-          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -206,13 +204,11 @@ exports[`MessageFooter should match snapshot for cancelled PN notification 1`] =
             ]
           }
           sheetCornerRadius={-1}
-          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
-          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -223,7 +219,6 @@ exports[`MessageFooter should match snapshot for cancelled PN notification 1`] =
               "zIndex": undefined,
             }
           }
-          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
@@ -508,9 +503,7 @@ exports[`MessageFooter should match snapshot for hidden button 1`] = `
       >
         <RNSScreen
           activityState={2}
-          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -527,13 +520,11 @@ exports[`MessageFooter should match snapshot for hidden button 1`] = `
             ]
           }
           sheetCornerRadius={-1}
-          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
-          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -544,7 +535,6 @@ exports[`MessageFooter should match snapshot for hidden button 1`] = `
               "zIndex": undefined,
             }
           }
-          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
@@ -829,9 +819,7 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
       >
         <RNSScreen
           activityState={2}
-          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -848,13 +836,11 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
             ]
           }
           sheetCornerRadius={-1}
-          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
-          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -865,7 +851,6 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
               "zIndex": undefined,
             }
           }
-          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
@@ -1474,9 +1459,7 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
       >
         <RNSScreen
           activityState={2}
-          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1493,13 +1476,11 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
             ]
           }
           sheetCornerRadius={-1}
-          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
-          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -1510,7 +1491,6 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
               "zIndex": undefined,
             }
           }
-          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}

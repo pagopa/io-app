@@ -58,9 +58,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is active 1`]
       >
         <RNSScreen
           activityState={2}
-          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -77,13 +75,11 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is active 1`]
             ]
           }
           sheetCornerRadius={-1}
-          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
-          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -94,7 +90,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is active 1`]
               "zIndex": undefined,
             }
           }
-          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
@@ -176,9 +171,12 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is active 1`]
                     <View
                       pointerEvents="box-none"
                       style={
-                        {
-                          "zIndex": 1,
-                        }
+                        [
+                          {
+                            "zIndex": 1,
+                          },
+                          null,
+                        ]
                       }
                     >
                       <View
@@ -1188,9 +1186,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not active
       >
         <RNSScreen
           activityState={2}
-          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1207,13 +1203,11 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not active
             ]
           }
           sheetCornerRadius={-1}
-          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
-          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -1224,7 +1218,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not active
               "zIndex": undefined,
             }
           }
-          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
@@ -1306,9 +1299,12 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not active
                     <View
                       pointerEvents="box-none"
                       style={
-                        {
-                          "zIndex": 1,
-                        }
+                        [
+                          {
+                            "zIndex": 1,
+                          },
+                          null,
+                        ]
                       }
                     >
                       <View
@@ -2318,9 +2314,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not enable
       >
         <RNSScreen
           activityState={2}
-          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2337,13 +2331,11 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not enable
             ]
           }
           sheetCornerRadius={-1}
-          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
-          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -2354,7 +2346,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not enable
               "zIndex": undefined,
             }
           }
-          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
@@ -2436,9 +2427,12 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not enable
                     <View
                       pointerEvents="box-none"
                       style={
-                        {
-                          "zIndex": 1,
-                        }
+                        [
+                          {
+                            "zIndex": 1,
+                          },
+                          null,
+                        ]
                       }
                     >
                       <View
@@ -3053,9 +3047,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
       >
         <RNSScreen
           activityState={2}
-          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3072,13 +3064,11 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
             ]
           }
           sheetCornerRadius={-1}
-          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
-          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -3089,7 +3079,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
               "zIndex": undefined,
             }
           }
-          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
@@ -3171,9 +3160,12 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
                     <View
                       pointerEvents="box-none"
                       style={
-                        {
-                          "zIndex": 1,
-                        }
+                        [
+                          {
+                            "zIndex": 1,
+                          },
+                          null,
+                        ]
                       }
                     >
                       <View
@@ -4183,9 +4175,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when servicePreference cou
       >
         <RNSScreen
           activityState={2}
-          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4202,13 +4192,11 @@ exports[`ServiceDetailsScreenPn should match snapshot when servicePreference cou
             ]
           }
           sheetCornerRadius={-1}
-          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
-          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -4219,7 +4207,6 @@ exports[`ServiceDetailsScreenPn should match snapshot when servicePreference cou
               "zIndex": undefined,
             }
           }
-          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
@@ -4301,9 +4288,12 @@ exports[`ServiceDetailsScreenPn should match snapshot when servicePreference cou
                     <View
                       pointerEvents="box-none"
                       style={
-                        {
-                          "zIndex": 1,
-                        }
+                        [
+                          {
+                            "zIndex": 1,
+                          },
+                          null,
+                        ]
                       }
                     >
                       <View

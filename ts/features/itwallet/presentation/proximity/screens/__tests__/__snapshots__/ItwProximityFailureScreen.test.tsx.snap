@@ -1,8 +1,6 @@
 // Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
-exports[
-  `ItwProximityFailureScreen should render failure screen for RELYING_PARTY_GENERIC 1`
-] = `
+exports[`ItwProximityFailureScreen should render failure screen for RELYING_PARTY_GENERIC 1`] = `
 <View
   style={
     {
@@ -189,9 +187,7 @@ exports[
       >
         <RNSScreen
           activityState={2}
-          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -208,13 +204,11 @@ exports[
             ]
           }
           sheetCornerRadius={-1}
-          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
-          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -225,7 +219,6 @@ exports[
               "zIndex": undefined,
             }
           }
-          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
@@ -826,9 +819,7 @@ L'app può condividere i tuoi dati solo con enti e soggetti autorizzati.
 </View>
 `;
 
-exports[
-  `ItwProximityFailureScreen should render failure screen for TIMEOUT 1`
-] = `
+exports[`ItwProximityFailureScreen should render failure screen for TIMEOUT 1`] = `
 <View
   style={
     {
@@ -1015,9 +1006,7 @@ exports[
       >
         <RNSScreen
           activityState={2}
-          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1034,13 +1023,11 @@ exports[
             ]
           }
           sheetCornerRadius={-1}
-          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
-          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -1051,7 +1038,6 @@ exports[
               "zIndex": undefined,
             }
           }
-          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
@@ -1693,9 +1679,7 @@ L'app può condividere i tuoi dati solo con enti e soggetti autorizzati.
 </View>
 `;
 
-exports[
-  `ItwProximityFailureScreen should render failure screen for UNTRUSTED_RP 1`
-] = `
+exports[`ItwProximityFailureScreen should render failure screen for UNTRUSTED_RP 1`] = `
 <View
   style={
     {
@@ -1882,9 +1866,7 @@ exports[
       >
         <RNSScreen
           activityState={2}
-          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1901,13 +1883,11 @@ exports[
             ]
           }
           sheetCornerRadius={-1}
-          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
-          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -1918,7 +1898,6 @@ exports[
               "zIndex": undefined,
             }
           }
-          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}

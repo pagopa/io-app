@@ -58,9 +58,7 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
       >
         <RNSScreen
           activityState={2}
-          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
-          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -77,13 +75,11 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
             ]
           }
           sheetCornerRadius={-1}
-          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
-          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -94,7 +90,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
               "zIndex": undefined,
             }
           }
-          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
@@ -176,9 +171,12 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
                     <View
                       pointerEvents="box-none"
                       style={
-                        {
-                          "zIndex": 1,
-                        }
+                        [
+                          {
+                            "zIndex": 1,
+                          },
+                          null,
+                        ]
                       }
                     >
                       <View
