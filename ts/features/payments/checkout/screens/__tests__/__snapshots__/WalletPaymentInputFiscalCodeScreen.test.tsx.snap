@@ -629,6 +629,7 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                   }
                                 }
                                 accessible={true}
+                                autoFocus={false}
                                 blurOnSubmit={true}
                                 cursorColor="#0B3EE3"
                                 disableFullscreenUI={true}
