@@ -10,6 +10,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -21,64 +22,28 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
+          aria-hidden={false}
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -93,6 +58,39 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
             }
           >
             <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "opacity": 1,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="auto"
+                style={
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "flex": 1,
+                    "shadowColor": "rgba(0, 0, 0, 1)",
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.3,
+                    "shadowRadius": 0,
+                  }
+                }
+              />
+            </View>
+            <View
               pointerEvents="none"
               style={
                 {
@@ -103,11 +101,16 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
             <View
               pointerEvents="box-none"
               style={
-                {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
-                }
+                [
+                  {
+                    "alignItems": "stretch",
+                    "flex": 1,
+                    "flexDirection": "row",
+                  },
+                  {
+                    "marginHorizontal": 5,
+                  },
+                ]
               }
             >
               <View
@@ -115,10 +118,11 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-start",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -137,14 +141,15 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                 }
               >
                 <Text
-                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
+                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
+                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -158,10 +163,11 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-end",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-end",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -181,7 +187,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -198,11 +206,13 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -213,34 +223,14 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -248,35 +238,22 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -294,17 +271,10 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -329,7 +299,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and no 
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -923,6 +892,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -934,64 +904,28 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
+          aria-hidden={false}
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -1006,6 +940,39 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
             }
           >
             <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "opacity": 1,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="auto"
+                style={
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "flex": 1,
+                    "shadowColor": "rgba(0, 0, 0, 1)",
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.3,
+                    "shadowRadius": 0,
+                  }
+                }
+              />
+            </View>
+            <View
               pointerEvents="none"
               style={
                 {
@@ -1016,11 +983,16 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
             <View
               pointerEvents="box-none"
               style={
-                {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
-                }
+                [
+                  {
+                    "alignItems": "stretch",
+                    "flex": 1,
+                    "flexDirection": "row",
+                  },
+                  {
+                    "marginHorizontal": 5,
+                  },
+                ]
               }
             >
               <View
@@ -1028,10 +1000,11 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-start",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -1050,14 +1023,15 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                 }
               >
                 <Text
-                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
+                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
+                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -1071,10 +1045,11 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-end",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-end",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -1094,7 +1069,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1111,11 +1088,13 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -1126,34 +1105,14 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -1161,35 +1120,22 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -1207,17 +1153,10 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1242,7 +1181,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with both CTAs and vis
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -2050,6 +1988,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTA and no pay
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -2061,64 +2000,28 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTA and no pay
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
+          aria-hidden={false}
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -2133,6 +2036,39 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTA and no pay
             }
           >
             <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "opacity": 1,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="auto"
+                style={
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "flex": 1,
+                    "shadowColor": "rgba(0, 0, 0, 1)",
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.3,
+                    "shadowRadius": 0,
+                  }
+                }
+              />
+            </View>
+            <View
               pointerEvents="none"
               style={
                 {
@@ -2143,11 +2079,16 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTA and no pay
             <View
               pointerEvents="box-none"
               style={
-                {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
-                }
+                [
+                  {
+                    "alignItems": "stretch",
+                    "flex": 1,
+                    "flexDirection": "row",
+                  },
+                  {
+                    "marginHorizontal": 5,
+                  },
+                ]
               }
             >
               <View
@@ -2155,10 +2096,11 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTA and no pay
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-start",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -2177,14 +2119,15 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTA and no pay
                 }
               >
                 <Text
-                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
+                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
+                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -2198,10 +2141,11 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTA and no pay
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-end",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-end",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -2221,7 +2165,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTA and no pay
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2238,11 +2184,13 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTA and no pay
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -2253,34 +2201,14 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTA and no pay
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -2288,35 +2216,22 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTA and no pay
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -2334,17 +2249,10 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTA and no pay
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2369,7 +2277,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTA and no pay
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -2402,6 +2309,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -2413,64 +2321,28 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
+          aria-hidden={false}
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -2485,6 +2357,39 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
             }
           >
             <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "opacity": 1,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="auto"
+                style={
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "flex": 1,
+                    "shadowColor": "rgba(0, 0, 0, 1)",
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.3,
+                    "shadowRadius": 0,
+                  }
+                }
+              />
+            </View>
+            <View
               pointerEvents="none"
               style={
                 {
@@ -2495,11 +2400,16 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
             <View
               pointerEvents="box-none"
               style={
-                {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
-                }
+                [
+                  {
+                    "alignItems": "stretch",
+                    "flex": 1,
+                    "flexDirection": "row",
+                  },
+                  {
+                    "marginHorizontal": 5,
+                  },
+                ]
               }
             >
               <View
@@ -2507,10 +2417,11 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-start",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -2529,14 +2440,15 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                 }
               >
                 <Text
-                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
+                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
+                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -2550,10 +2462,11 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-end",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-end",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -2573,7 +2486,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2590,11 +2505,13 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -2605,34 +2522,14 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -2640,35 +2537,22 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -2686,17 +2570,10 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2721,7 +2598,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and enabl
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -3066,6 +2942,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and hidde
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -3077,64 +2954,28 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and hidde
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
+          aria-hidden={false}
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -3149,6 +2990,39 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and hidde
             }
           >
             <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "opacity": 1,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="auto"
+                style={
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "flex": 1,
+                    "shadowColor": "rgba(0, 0, 0, 1)",
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.3,
+                    "shadowRadius": 0,
+                  }
+                }
+              />
+            </View>
+            <View
               pointerEvents="none"
               style={
                 {
@@ -3159,11 +3033,16 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and hidde
             <View
               pointerEvents="box-none"
               style={
-                {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
-                }
+                [
+                  {
+                    "alignItems": "stretch",
+                    "flex": 1,
+                    "flexDirection": "row",
+                  },
+                  {
+                    "marginHorizontal": 5,
+                  },
+                ]
               }
             >
               <View
@@ -3171,10 +3050,11 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and hidde
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-start",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -3193,14 +3073,15 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and hidde
                 }
               >
                 <Text
-                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
+                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
+                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -3214,10 +3095,11 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and hidde
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-end",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-end",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -3237,7 +3119,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and hidde
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3254,11 +3138,13 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and hidde
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -3269,34 +3155,14 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and hidde
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -3304,35 +3170,22 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and hidde
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -3350,17 +3203,10 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and hidde
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3385,7 +3231,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and hidde
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -3418,6 +3263,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -3429,64 +3275,28 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
+          aria-hidden={false}
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -3501,6 +3311,39 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
             }
           >
             <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "opacity": 1,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="auto"
+                style={
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "flex": 1,
+                    "shadowColor": "rgba(0, 0, 0, 1)",
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.3,
+                    "shadowRadius": 0,
+                  }
+                }
+              />
+            </View>
+            <View
               pointerEvents="none"
               style={
                 {
@@ -3511,11 +3354,16 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
             <View
               pointerEvents="box-none"
               style={
-                {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
-                }
+                [
+                  {
+                    "alignItems": "stretch",
+                    "flex": 1,
+                    "flexDirection": "row",
+                  },
+                  {
+                    "marginHorizontal": 5,
+                  },
+                ]
               }
             >
               <View
@@ -3523,10 +3371,11 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-start",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -3545,14 +3394,15 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                 }
               >
                 <Text
-                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
+                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
+                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -3566,10 +3416,11 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-end",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-end",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -3589,7 +3440,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3606,11 +3459,13 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -3621,34 +3476,14 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -3656,35 +3491,22 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -3702,17 +3524,10 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3737,7 +3552,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with no CTAs and loadi
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -4226,6 +4040,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -4237,64 +4052,28 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
+          aria-hidden={false}
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -4309,6 +4088,39 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
             }
           >
             <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "opacity": 1,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="auto"
+                style={
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "flex": 1,
+                    "shadowColor": "rgba(0, 0, 0, 1)",
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.3,
+                    "shadowRadius": 0,
+                  }
+                }
+              />
+            </View>
+            <View
               pointerEvents="none"
               style={
                 {
@@ -4319,11 +4131,16 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
             <View
               pointerEvents="box-none"
               style={
-                {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
-                }
+                [
+                  {
+                    "alignItems": "stretch",
+                    "flex": 1,
+                    "flexDirection": "row",
+                  },
+                  {
+                    "marginHorizontal": 5,
+                  },
+                ]
               }
             >
               <View
@@ -4331,10 +4148,11 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-start",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -4353,14 +4171,15 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                 }
               >
                 <Text
-                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
+                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
+                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -4374,10 +4193,11 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-end",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-end",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -4397,7 +4217,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4414,11 +4236,13 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -4429,34 +4253,14 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -4464,35 +4268,22 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -4510,17 +4301,10 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -4545,7 +4329,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and no pa
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -4902,6 +4685,7 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -4913,64 +4697,28 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
+          aria-hidden={false}
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -4985,6 +4733,39 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
             }
           >
             <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "opacity": 1,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="auto"
+                style={
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "flex": 1,
+                    "shadowColor": "rgba(0, 0, 0, 1)",
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.3,
+                    "shadowRadius": 0,
+                  }
+                }
+              />
+            </View>
+            <View
               pointerEvents="none"
               style={
                 {
@@ -4995,11 +4776,16 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
             <View
               pointerEvents="box-none"
               style={
-                {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
-                }
+                [
+                  {
+                    "alignItems": "stretch",
+                    "flex": 1,
+                    "flexDirection": "row",
+                  },
+                  {
+                    "marginHorizontal": 5,
+                  },
+                ]
               }
             >
               <View
@@ -5007,10 +4793,11 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-start",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -5029,14 +4816,15 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                 }
               >
                 <Text
-                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
+                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
+                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -5050,10 +4838,11 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-end",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-end",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -5073,7 +4862,9 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -5090,11 +4881,13 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -5105,34 +4898,14 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -5140,35 +4913,22 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -5186,17 +4946,10 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -5221,7 +4974,6 @@ exports[`MessageDetailsStickyFooter should match snapshot with one CTA and visib
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >

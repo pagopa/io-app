@@ -10,6 +10,7 @@ exports[`MessageRouterScreen renders the error component when not loading 1`] = 
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -21,15 +22,32 @@ exports[`MessageRouterScreen renders the error component when not loading 1`] = 
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
+      <View
+        pointerEvents="box-none"
+        style={
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "end": 0,
+                "position": "absolute",
+                "start": 0,
+                "top": 0,
+              },
+            ],
+          ]
+        }
+      />
       <RNSScreenContainer
         onLayout={[Function]}
         style={
@@ -40,7 +58,9 @@ exports[`MessageRouterScreen renders the error component when not loading 1`] = 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -57,11 +77,13 @@ exports[`MessageRouterScreen renders the error component when not loading 1`] = 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -72,34 +94,14 @@ exports[`MessageRouterScreen renders the error component when not loading 1`] = 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -107,35 +109,22 @@ exports[`MessageRouterScreen renders the error component when not loading 1`] = 
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -153,17 +142,10 @@ exports[`MessageRouterScreen renders the error component when not loading 1`] = 
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -188,10 +170,20 @@ exports[`MessageRouterScreen renders the error component when not loading 1`] = 
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
+                    <View
+                      pointerEvents="box-none"
+                      style={
+                        [
+                          {
+                            "zIndex": 1,
+                          },
+                          null,
+                        ]
+                      }
+                    />
                     <View
                       style={
                         {
@@ -641,10 +633,6 @@ exports[`MessageRouterScreen renders the error component when not loading 1`] = 
                         </View>
                       </View>
                     </View>
-                    <View
-                      collapsable={false}
-                      pointerEvents="box-none"
-                    />
                   </View>
                 </View>
               </View>
@@ -652,20 +640,6 @@ exports[`MessageRouterScreen renders the error component when not loading 1`] = 
           </View>
         </RNSScreen>
       </RNSScreenContainer>
-      <View
-        collapsable={false}
-        pointerEvents="box-none"
-        style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
-        }
-      />
     </View>
   </RNCSafeAreaProvider>
 </View>
@@ -681,6 +655,7 @@ exports[`MessageRouterScreen renders the loading component when isLoading is tru
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -692,15 +667,32 @@ exports[`MessageRouterScreen renders the loading component when isLoading is tru
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
+      <View
+        pointerEvents="box-none"
+        style={
+          [
+            {
+              "zIndex": 1,
+            },
+            [
+              {
+                "height": 44,
+              },
+              {
+                "end": 0,
+                "position": "absolute",
+                "start": 0,
+                "top": 0,
+              },
+            ],
+          ]
+        }
+      />
       <RNSScreenContainer
         onLayout={[Function]}
         style={
@@ -711,7 +703,9 @@ exports[`MessageRouterScreen renders the loading component when isLoading is tru
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -728,11 +722,13 @@ exports[`MessageRouterScreen renders the loading component when isLoading is tru
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -743,34 +739,14 @@ exports[`MessageRouterScreen renders the loading component when isLoading is tru
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -778,35 +754,22 @@ exports[`MessageRouterScreen renders the loading component when isLoading is tru
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -824,17 +787,10 @@ exports[`MessageRouterScreen renders the loading component when isLoading is tru
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -859,324 +815,22 @@ exports[`MessageRouterScreen renders the loading component when isLoading is tru
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
                     <View
+                      pointerEvents="box-none"
                       style={
-                        {
-                          "flex": 1,
-                        }
+                        [
+                          {
+                            "zIndex": 1,
+                          },
+                          null,
+                        ]
                       }
                     >
-                      <RNCSafeAreaView
-                        edges={
-                          {
-                            "bottom": "additive",
-                            "left": "off",
-                            "right": "off",
-                            "top": "off",
-                          }
-                        }
-                        style={
-                          [
-                            {
-                              "flex": 1,
-                              "justifyContent": "center",
-                            },
-                            {
-                              "backgroundColor": "#FFFFFF",
-                            },
-                          ]
-                        }
-                        testID="routerScreen-loading"
-                      >
-                        <View
-                          style={
-                            {
-                              "flex": 1,
-                              "paddingHorizontal": 24,
-                            }
-                          }
-                        >
-                          <View
-                            style={
-                              {
-                                "alignItems": "center",
-                                "display": "flex",
-                                "flex": 1,
-                                "flexDirection": "column",
-                                "gap": 24,
-                                "justifyContent": "center",
-                              }
-                            }
-                          >
-                            <View
-                              accessibilityElementsHidden={true}
-                              accessible={false}
-                              importantForAccessibility="no-hide-descendants"
-                            >
-                              <View
-                                accessibilityHint="Attendi il caricamento del contenuto"
-                                accessibilityLabel="Caricamento in corso"
-                                accessibilityRole="progressbar"
-                                accessible={true}
-                                style={
-                                  {
-                                    "height": 48,
-                                    "width": 48,
-                                  }
-                                }
-                                testID="LoadingIndicator"
-                              >
-                                <View
-                                  collapsable={false}
-                                  jestAnimatedProps={
-                                    {
-                                      "value": {},
-                                    }
-                                  }
-                                  jestAnimatedStyle={
-                                    {
-                                      "value": {},
-                                    }
-                                  }
-                                  jestInlineStyle={
-                                    {
-                                      "animationDuration": 850,
-                                      "animationIterationCount": "infinite",
-                                      "animationName": {
-                                        "from": {
-                                          "transform": [
-                                            {
-                                              "rotateZ": "0deg",
-                                            },
-                                          ],
-                                        },
-                                        "to": {
-                                          "transform": [
-                                            {
-                                              "rotateZ": "360deg",
-                                            },
-                                          ],
-                                        },
-                                      },
-                                      "animationTimingFunction": "linear",
-                                      "transformOrigin": "center",
-                                    }
-                                  }
-                                  style={
-                                    [
-                                      {
-                                        "transformOrigin": "center",
-                                      },
-                                    ]
-                                  }
-                                  testID="LoadingSpinnerAnimatedTestID"
-                                >
-                                  <RNSVGSvgView
-                                    align="xMidYMid"
-                                    bbHeight={48}
-                                    bbWidth={48}
-                                    fill="none"
-                                    focusable={false}
-                                    height={48}
-                                    meetOrSlice={0}
-                                    minX={0}
-                                    minY={0}
-                                    style={
-                                      [
-                                        {
-                                          "backgroundColor": "transparent",
-                                          "borderWidth": 0,
-                                        },
-                                        {
-                                          "flex": 0,
-                                          "height": 48,
-                                          "width": 48,
-                                        },
-                                      ]
-                                    }
-                                    vbHeight={48}
-                                    vbWidth={48}
-                                    width={48}
-                                  >
-                                    <RNSVGGroup
-                                      fill={null}
-                                      propList={
-                                        [
-                                          "fill",
-                                        ]
-                                      }
-                                    >
-                                      <RNSVGDefs>
-                                        <RNSVGLinearGradient
-                                          gradient={
-                                            [
-                                              0,
-                                              736995,
-                                              1,
-                                              -16040221,
-                                            ]
-                                          }
-                                          gradientTransform={null}
-                                          gradientUnits={0}
-                                          name="_r_0_-secondHalf"
-                                          x1="0%"
-                                          x2="100%"
-                                          y1="0%"
-                                          y2="0%"
-                                        />
-                                        <RNSVGLinearGradient
-                                          gradient={
-                                            [
-                                              0,
-                                              -16040221,
-                                              1,
-                                              -16040221,
-                                            ]
-                                          }
-                                          gradientTransform={null}
-                                          gradientUnits={0}
-                                          name="_r_0_-firstHalf"
-                                          x1="0%"
-                                          x2="100%"
-                                          y1="0%"
-                                          y2="0%"
-                                        />
-                                      </RNSVGDefs>
-                                      <RNSVGGroup
-                                        fill={
-                                          {
-                                            "payload": 4278190080,
-                                            "type": 0,
-                                          }
-                                        }
-                                        propList={
-                                          [
-                                            "strokeWidth",
-                                          ]
-                                        }
-                                        strokeWidth={5}
-                                      >
-                                        <RNSVGPath
-                                          d="M 2.5 24 A 21.5 21.5 0 0 1 45.5 24"
-                                          fill={
-                                            {
-                                              "payload": 4278190080,
-                                              "type": 0,
-                                            }
-                                          }
-                                          propList={
-                                            [
-                                              "stroke",
-                                            ]
-                                          }
-                                          stroke={
-                                            {
-                                              "brushRef": "_r_0_-secondHalf",
-                                              "type": 1,
-                                            }
-                                          }
-                                        />
-                                        <RNSVGPath
-                                          d="M 45.5 24 A 21.5 21.5 0 0 1 2.5 24"
-                                          fill={
-                                            {
-                                              "payload": 4278190080,
-                                              "type": 0,
-                                            }
-                                          }
-                                          propList={
-                                            [
-                                              "stroke",
-                                            ]
-                                          }
-                                          stroke={
-                                            {
-                                              "brushRef": "_r_0_-firstHalf",
-                                              "type": 1,
-                                            }
-                                          }
-                                        />
-                                        <RNSVGPath
-                                          d="M 2.5 24 A 21.5 21.5 0 0 1 2.5 22.75"
-                                          fill={
-                                            {
-                                              "payload": 4278190080,
-                                              "type": 0,
-                                            }
-                                          }
-                                          propList={
-                                            [
-                                              "stroke",
-                                              "strokeLinecap",
-                                            ]
-                                          }
-                                          stroke={
-                                            {
-                                              "payload": 4278927075,
-                                              "type": 0,
-                                            }
-                                          }
-                                          strokeLinecap={1}
-                                        />
-                                      </RNSVGGroup>
-                                    </RNSVGGroup>
-                                  </RNSVGSvgView>
-                                </View>
-                              </View>
-                            </View>
-                            <View
-                              style={
-                                {
-                                  "alignItems": "center",
-                                  "display": "flex",
-                                  "flexDirection": "column",
-                                  "gap": 8,
-                                }
-                              }
-                            >
-                              <Text
-                                accessibilityLabel="Stiamo caricando il messaggio"
-                                allowFontScaling={true}
-                                dynamicTypeRamp="title2"
-                                maxFontSizeMultiplier={1.5}
-                                style={
-                                  [
-                                    {},
-                                    {
-                                      "color": "#2B2E38",
-                                      "fontFamily": "Titillio",
-                                      "fontSize": 22,
-                                      "fontStyle": "normal",
-                                      "fontWeight": "600",
-                                      "lineHeight": 33,
-                                    },
-                                    {
-                                      "textAlign": "center",
-                                    },
-                                  ]
-                                }
-                              >
-                                Stiamo caricando il messaggio
-                              </Text>
-                              <Text>
-                                Attendi qualche secondo
-                              </Text>
-                            </View>
-                          </View>
-                        </View>
-                      </RNCSafeAreaView>
-                    </View>
-                    <View
-                      collapsable={false}
-                      pointerEvents="box-none"
-                    >
                       <View
-                        accessibilityElementsHidden={false}
-                        importantForAccessibility="auto"
+                        aria-hidden={false}
                         onLayout={[Function]}
                         pointerEvents="box-none"
                         style={null}
@@ -1653,6 +1307,313 @@ exports[`MessageRouterScreen renders the loading component when isLoading is tru
                         </View>
                       </View>
                     </View>
+                    <View
+                      style={
+                        {
+                          "flex": 1,
+                        }
+                      }
+                    >
+                      <RNCSafeAreaView
+                        edges={
+                          {
+                            "bottom": "additive",
+                            "left": "off",
+                            "right": "off",
+                            "top": "off",
+                          }
+                        }
+                        style={
+                          [
+                            {
+                              "flex": 1,
+                              "justifyContent": "center",
+                            },
+                            {
+                              "backgroundColor": "#FFFFFF",
+                            },
+                          ]
+                        }
+                        testID="routerScreen-loading"
+                      >
+                        <View
+                          style={
+                            {
+                              "flex": 1,
+                              "paddingHorizontal": 24,
+                            }
+                          }
+                        >
+                          <View
+                            style={
+                              {
+                                "alignItems": "center",
+                                "display": "flex",
+                                "flex": 1,
+                                "flexDirection": "column",
+                                "gap": 24,
+                                "justifyContent": "center",
+                              }
+                            }
+                          >
+                            <View
+                              accessibilityElementsHidden={true}
+                              accessible={false}
+                              importantForAccessibility="no-hide-descendants"
+                            >
+                              <View
+                                accessibilityHint="Attendi il caricamento del contenuto"
+                                accessibilityLabel="Caricamento in corso"
+                                accessibilityRole="progressbar"
+                                accessible={true}
+                                style={
+                                  {
+                                    "height": 48,
+                                    "width": 48,
+                                  }
+                                }
+                                testID="LoadingIndicator"
+                              >
+                                <View
+                                  collapsable={false}
+                                  jestAnimatedProps={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestAnimatedStyle={
+                                    {
+                                      "value": {},
+                                    }
+                                  }
+                                  jestInlineStyle={
+                                    {
+                                      "animationDuration": 850,
+                                      "animationIterationCount": "infinite",
+                                      "animationName": {
+                                        "from": {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "0deg",
+                                            },
+                                          ],
+                                        },
+                                        "to": {
+                                          "transform": [
+                                            {
+                                              "rotateZ": "360deg",
+                                            },
+                                          ],
+                                        },
+                                      },
+                                      "animationTimingFunction": "linear",
+                                      "transformOrigin": "center",
+                                    }
+                                  }
+                                  style={
+                                    [
+                                      {
+                                        "transformOrigin": "center",
+                                      },
+                                    ]
+                                  }
+                                  testID="LoadingSpinnerAnimatedTestID"
+                                >
+                                  <RNSVGSvgView
+                                    align="xMidYMid"
+                                    bbHeight={48}
+                                    bbWidth={48}
+                                    fill="none"
+                                    focusable={false}
+                                    height={48}
+                                    meetOrSlice={0}
+                                    minX={0}
+                                    minY={0}
+                                    style={
+                                      [
+                                        {
+                                          "backgroundColor": "transparent",
+                                          "borderWidth": 0,
+                                        },
+                                        {
+                                          "flex": 0,
+                                          "height": 48,
+                                          "width": 48,
+                                        },
+                                      ]
+                                    }
+                                    vbHeight={48}
+                                    vbWidth={48}
+                                    width={48}
+                                  >
+                                    <RNSVGGroup
+                                      fill={null}
+                                      propList={
+                                        [
+                                          "fill",
+                                        ]
+                                      }
+                                    >
+                                      <RNSVGDefs>
+                                        <RNSVGLinearGradient
+                                          gradient={
+                                            [
+                                              0,
+                                              736995,
+                                              1,
+                                              -16040221,
+                                            ]
+                                          }
+                                          gradientTransform={null}
+                                          gradientUnits={0}
+                                          name="_r_0_-secondHalf"
+                                          x1="0%"
+                                          x2="100%"
+                                          y1="0%"
+                                          y2="0%"
+                                        />
+                                        <RNSVGLinearGradient
+                                          gradient={
+                                            [
+                                              0,
+                                              -16040221,
+                                              1,
+                                              -16040221,
+                                            ]
+                                          }
+                                          gradientTransform={null}
+                                          gradientUnits={0}
+                                          name="_r_0_-firstHalf"
+                                          x1="0%"
+                                          x2="100%"
+                                          y1="0%"
+                                          y2="0%"
+                                        />
+                                      </RNSVGDefs>
+                                      <RNSVGGroup
+                                        fill={
+                                          {
+                                            "payload": 4278190080,
+                                            "type": 0,
+                                          }
+                                        }
+                                        propList={
+                                          [
+                                            "strokeWidth",
+                                          ]
+                                        }
+                                        strokeWidth={5}
+                                      >
+                                        <RNSVGPath
+                                          d="M 2.5 24 A 21.5 21.5 0 0 1 45.5 24"
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                          propList={
+                                            [
+                                              "stroke",
+                                            ]
+                                          }
+                                          stroke={
+                                            {
+                                              "brushRef": "_r_0_-secondHalf",
+                                              "type": 1,
+                                            }
+                                          }
+                                        />
+                                        <RNSVGPath
+                                          d="M 45.5 24 A 21.5 21.5 0 0 1 2.5 24"
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                          propList={
+                                            [
+                                              "stroke",
+                                            ]
+                                          }
+                                          stroke={
+                                            {
+                                              "brushRef": "_r_0_-firstHalf",
+                                              "type": 1,
+                                            }
+                                          }
+                                        />
+                                        <RNSVGPath
+                                          d="M 2.5 24 A 21.5 21.5 0 0 1 2.5 22.75"
+                                          fill={
+                                            {
+                                              "payload": 4278190080,
+                                              "type": 0,
+                                            }
+                                          }
+                                          propList={
+                                            [
+                                              "stroke",
+                                              "strokeLinecap",
+                                            ]
+                                          }
+                                          stroke={
+                                            {
+                                              "payload": 4278927075,
+                                              "type": 0,
+                                            }
+                                          }
+                                          strokeLinecap={1}
+                                        />
+                                      </RNSVGGroup>
+                                    </RNSVGGroup>
+                                  </RNSVGSvgView>
+                                </View>
+                              </View>
+                            </View>
+                            <View
+                              style={
+                                {
+                                  "alignItems": "center",
+                                  "display": "flex",
+                                  "flexDirection": "column",
+                                  "gap": 8,
+                                }
+                              }
+                            >
+                              <Text
+                                accessibilityLabel="Stiamo caricando il messaggio"
+                                allowFontScaling={true}
+                                dynamicTypeRamp="title2"
+                                maxFontSizeMultiplier={1.5}
+                                style={
+                                  [
+                                    {},
+                                    {
+                                      "color": "#2B2E38",
+                                      "fontFamily": "Titillio",
+                                      "fontSize": 22,
+                                      "fontStyle": "normal",
+                                      "fontWeight": "600",
+                                      "lineHeight": 33,
+                                    },
+                                    {
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
+                              >
+                                Stiamo caricando il messaggio
+                              </Text>
+                              <Text>
+                                Attendi qualche secondo
+                              </Text>
+                            </View>
+                          </View>
+                        </View>
+                      </RNCSafeAreaView>
+                    </View>
                   </View>
                 </View>
               </View>
@@ -1660,20 +1621,6 @@ exports[`MessageRouterScreen renders the loading component when isLoading is tru
           </View>
         </RNSScreen>
       </RNSScreenContainer>
-      <View
-        collapsable={false}
-        pointerEvents="box-none"
-        style={
-          {
-            "height": 44,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-            "zIndex": 1,
-          }
-        }
-      />
     </View>
   </RNCSafeAreaProvider>
 </View>
