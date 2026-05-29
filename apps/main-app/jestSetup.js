@@ -11,7 +11,10 @@ import { NativeModules, AccessibilityInfo, AppState } from "react-native";
 import mockRNDeviceInfo from "react-native-device-info/jest/react-native-device-info-mock";
 import mockZendesk from "./ts/__mocks__/io-react-native-zendesk.ts";
 import { initI18n } from "./ts/i18n.ts";
+import "react-native-gesture-handler/jestSetup";
+import { setUpTests } from "react-native-reanimated";
 
+setUpTests();
 void initI18n();
 
 const mockRNQRGenerator = {
@@ -80,11 +83,6 @@ jest.mock("react-native-worklets", () =>
   require("react-native-worklets/lib/module/mock")
 );
 
-// Setup react-native-reanimated for testing (v4.x)
-// See: https://docs.swmansion.com/react-native-reanimated/docs/guides/testing/
-const { setUpTests } = require("react-native-reanimated");
-setUpTests();
-
 jest.mock("react-native-blob-util", () => ({
   DocumentDir: () => jest.fn(),
   polyfill: () => jest.fn()
@@ -150,6 +148,29 @@ jest.mock("react-native-permissions", () =>
 
 jest.mock("react-native", () => {
   const RN = jest.requireActual("react-native"); // use original implementation, which comes with mocks out of the box
+
+  // Eagerly load specific react-native exports to avoid "Jest environment has
+  // been torn down" errors. In React Native 0.81+, many exports are lazy
+  // getters that call require() internally. When @react-navigation/stack v7's
+  // Card.tsx and helpers access these inside setTimeout callbacks that fire
+  // after jest tears down the environment, the require() calls throw a
+  // ReferenceError. Replacing the specific getters with pre-loaded plain
+  // properties prevents any require() call in those post-teardown callbacks.
+  //
+  // Properties known to be accessed in @react-navigation/stack v7 timeouts:
+  //   - Animated (Card.tsx: spec.animation === 'spring' ? Animated.spring : ...)
+  //   - Keyboard (useKeyboardManager.tsx: Keyboard.dismiss())
+  const eagerLoad = (prop) => {
+    const value = RN[prop];
+    Object.defineProperty(RN, prop, {
+      value,
+      writable: true,
+      configurable: true,
+      enumerable: true
+    });
+  };
+  eagerLoad("Animated");
+  eagerLoad("Keyboard");
 
   // eslint-disable-next-line functional/immutable-data
   RN.NativeModules.JailMonkey = jest.requireActual("jail-monkey");
