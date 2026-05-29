@@ -10,6 +10,7 @@ exports[`SendAarCieValidationErrors CieExpiredComponent should match snapshot 1`
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -21,64 +22,28 @@ exports[`SendAarCieValidationErrors CieExpiredComponent should match snapshot 1`
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
+          aria-hidden={false}
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -93,6 +58,39 @@ exports[`SendAarCieValidationErrors CieExpiredComponent should match snapshot 1`
             }
           >
             <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "opacity": 1,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="auto"
+                style={
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "flex": 1,
+                    "shadowColor": "rgba(0, 0, 0, 1)",
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.3,
+                    "shadowRadius": 0,
+                  }
+                }
+              />
+            </View>
+            <View
               pointerEvents="none"
               style={
                 {
@@ -103,11 +101,16 @@ exports[`SendAarCieValidationErrors CieExpiredComponent should match snapshot 1`
             <View
               pointerEvents="box-none"
               style={
-                {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
-                }
+                [
+                  {
+                    "alignItems": "stretch",
+                    "flex": 1,
+                    "flexDirection": "row",
+                  },
+                  {
+                    "marginHorizontal": 5,
+                  },
+                ]
               }
             >
               <View
@@ -115,10 +118,11 @@ exports[`SendAarCieValidationErrors CieExpiredComponent should match snapshot 1`
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-start",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -137,14 +141,15 @@ exports[`SendAarCieValidationErrors CieExpiredComponent should match snapshot 1`
                 }
               >
                 <Text
-                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
+                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
+                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -158,10 +163,11 @@ exports[`SendAarCieValidationErrors CieExpiredComponent should match snapshot 1`
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-end",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-end",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -215,32 +221,11 @@ exports[`SendAarCieValidationErrors CieExpiredComponent should match snapshot 1`
           }
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -248,35 +233,22 @@ exports[`SendAarCieValidationErrors CieExpiredComponent should match snapshot 1`
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -294,17 +266,10 @@ exports[`SendAarCieValidationErrors CieExpiredComponent should match snapshot 1`
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -329,7 +294,6 @@ exports[`SendAarCieValidationErrors CieExpiredComponent should match snapshot 1`
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -1126,6 +1090,7 @@ exports[`SendAarCieValidationErrors CieValidationExpiredTtlComponent should matc
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -1137,64 +1102,28 @@ exports[`SendAarCieValidationErrors CieValidationExpiredTtlComponent should matc
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
+          aria-hidden={false}
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -1209,6 +1138,39 @@ exports[`SendAarCieValidationErrors CieValidationExpiredTtlComponent should matc
             }
           >
             <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "opacity": 1,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="auto"
+                style={
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "flex": 1,
+                    "shadowColor": "rgba(0, 0, 0, 1)",
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.3,
+                    "shadowRadius": 0,
+                  }
+                }
+              />
+            </View>
+            <View
               pointerEvents="none"
               style={
                 {
@@ -1219,11 +1181,16 @@ exports[`SendAarCieValidationErrors CieValidationExpiredTtlComponent should matc
             <View
               pointerEvents="box-none"
               style={
-                {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
-                }
+                [
+                  {
+                    "alignItems": "stretch",
+                    "flex": 1,
+                    "flexDirection": "row",
+                  },
+                  {
+                    "marginHorizontal": 5,
+                  },
+                ]
               }
             >
               <View
@@ -1231,10 +1198,11 @@ exports[`SendAarCieValidationErrors CieValidationExpiredTtlComponent should matc
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-start",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -1253,14 +1221,15 @@ exports[`SendAarCieValidationErrors CieValidationExpiredTtlComponent should matc
                 }
               >
                 <Text
-                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
+                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
+                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -1274,10 +1243,11 @@ exports[`SendAarCieValidationErrors CieValidationExpiredTtlComponent should matc
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-end",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-end",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -1331,32 +1301,11 @@ exports[`SendAarCieValidationErrors CieValidationExpiredTtlComponent should matc
           }
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -1364,35 +1313,22 @@ exports[`SendAarCieValidationErrors CieValidationExpiredTtlComponent should matc
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -1410,17 +1346,10 @@ exports[`SendAarCieValidationErrors CieValidationExpiredTtlComponent should matc
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -1445,7 +1374,6 @@ exports[`SendAarCieValidationErrors CieValidationExpiredTtlComponent should matc
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -1919,6 +1847,7 @@ exports[`SendAarCieValidationErrors GenericCieValidationErrorComponent should ma
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -1930,64 +1859,28 @@ exports[`SendAarCieValidationErrors GenericCieValidationErrorComponent should ma
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
+          aria-hidden={false}
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -2002,6 +1895,39 @@ exports[`SendAarCieValidationErrors GenericCieValidationErrorComponent should ma
             }
           >
             <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "opacity": 1,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="auto"
+                style={
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "flex": 1,
+                    "shadowColor": "rgba(0, 0, 0, 1)",
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.3,
+                    "shadowRadius": 0,
+                  }
+                }
+              />
+            </View>
+            <View
               pointerEvents="none"
               style={
                 {
@@ -2012,11 +1938,16 @@ exports[`SendAarCieValidationErrors GenericCieValidationErrorComponent should ma
             <View
               pointerEvents="box-none"
               style={
-                {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
-                }
+                [
+                  {
+                    "alignItems": "stretch",
+                    "flex": 1,
+                    "flexDirection": "row",
+                  },
+                  {
+                    "marginHorizontal": 5,
+                  },
+                ]
               }
             >
               <View
@@ -2024,10 +1955,11 @@ exports[`SendAarCieValidationErrors GenericCieValidationErrorComponent should ma
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-start",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -2046,14 +1978,15 @@ exports[`SendAarCieValidationErrors GenericCieValidationErrorComponent should ma
                 }
               >
                 <Text
-                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
+                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
+                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -2067,10 +2000,11 @@ exports[`SendAarCieValidationErrors GenericCieValidationErrorComponent should ma
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-end",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-end",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -2124,32 +2058,11 @@ exports[`SendAarCieValidationErrors GenericCieValidationErrorComponent should ma
           }
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -2157,35 +2070,22 @@ exports[`SendAarCieValidationErrors GenericCieValidationErrorComponent should ma
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -2203,17 +2103,10 @@ exports[`SendAarCieValidationErrors GenericCieValidationErrorComponent should ma
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -2238,7 +2131,6 @@ exports[`SendAarCieValidationErrors GenericCieValidationErrorComponent should ma
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >
@@ -2948,6 +2840,7 @@ exports[`SendAarCieValidationErrors UnrelatedCieComponent should match snapshot 
 >
   <RNCSafeAreaProvider
     onInsetsChange={[Function]}
+    onLayout={[Function]}
     style={
       [
         {
@@ -2959,64 +2852,28 @@ exports[`SendAarCieValidationErrors UnrelatedCieComponent should match snapshot 
   >
     <View
       style={
-        [
-          {
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-          },
-          undefined,
-        ]
+        {
+          "flex": 1,
+        }
       }
     >
       <View
-        collapsable={false}
         pointerEvents="box-none"
         style={
-          {
-            "zIndex": 1,
-          }
+          [
+            {
+              "zIndex": 1,
+            },
+            false,
+          ]
         }
       >
         <View
-          accessibilityElementsHidden={false}
-          importantForAccessibility="auto"
+          aria-hidden={false}
           onLayout={[Function]}
           pointerEvents="box-none"
           style={null}
         >
-          <View
-            collapsable={false}
-            pointerEvents="box-none"
-            style={
-              {
-                "bottom": 0,
-                "left": 0,
-                "opacity": 1,
-                "position": "absolute",
-                "right": 0,
-                "top": 0,
-                "zIndex": 0,
-              }
-            }
-          >
-            <View
-              collapsable={false}
-              style={
-                {
-                  "backgroundColor": "#FFFFFF",
-                  "borderBottomColor": "rgb(216, 216, 216)",
-                  "flex": 1,
-                  "shadowColor": "rgb(216, 216, 216)",
-                  "shadowOffset": {
-                    "height": 0.5,
-                    "width": 0,
-                  },
-                  "shadowOpacity": 0.85,
-                  "shadowRadius": 0,
-                }
-              }
-            />
-          </View>
           <View
             collapsable={false}
             pointerEvents="box-none"
@@ -3031,6 +2888,39 @@ exports[`SendAarCieValidationErrors UnrelatedCieComponent should match snapshot 
             }
           >
             <View
+              collapsable={false}
+              pointerEvents="box-none"
+              style={
+                {
+                  "bottom": 0,
+                  "left": 0,
+                  "opacity": 1,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                }
+              }
+            >
+              <View
+                collapsable={false}
+                pointerEvents="auto"
+                style={
+                  {
+                    "backgroundColor": "#FFFFFF",
+                    "borderBottomColor": "rgb(216, 216, 216)",
+                    "flex": 1,
+                    "shadowColor": "rgba(0, 0, 0, 1)",
+                    "shadowOffset": {
+                      "height": 0.5,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.3,
+                    "shadowRadius": 0,
+                  }
+                }
+              />
+            </View>
+            <View
               pointerEvents="none"
               style={
                 {
@@ -3041,11 +2931,16 @@ exports[`SendAarCieValidationErrors UnrelatedCieComponent should match snapshot 
             <View
               pointerEvents="box-none"
               style={
-                {
-                  "alignItems": "stretch",
-                  "flex": 1,
-                  "flexDirection": "row",
-                }
+                [
+                  {
+                    "alignItems": "stretch",
+                    "flex": 1,
+                    "flexDirection": "row",
+                  },
+                  {
+                    "marginHorizontal": 5,
+                  },
+                ]
               }
             >
               <View
@@ -3053,10 +2948,11 @@ exports[`SendAarCieValidationErrors UnrelatedCieComponent should match snapshot 
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-start",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-start",
                     "marginStart": 0,
                     "opacity": 1,
                   }
@@ -3075,14 +2971,15 @@ exports[`SendAarCieValidationErrors UnrelatedCieComponent should match snapshot 
                 }
               >
                 <Text
-                  accessibilityRole="header"
                   aria-level="1"
                   collapsable={false}
                   numberOfLines={1}
                   onLayout={[Function]}
+                  role="heading"
                   style={
                     {
                       "color": "rgb(28, 28, 30)",
+                      "fontFamily": "System",
                       "fontSize": 17,
                       "fontWeight": "600",
                     }
@@ -3096,10 +2993,11 @@ exports[`SendAarCieValidationErrors UnrelatedCieComponent should match snapshot 
                 pointerEvents="box-none"
                 style={
                   {
-                    "alignItems": "flex-end",
+                    "alignItems": "center",
                     "flexBasis": 0,
+                    "flexDirection": "row",
                     "flexGrow": 1,
-                    "justifyContent": "center",
+                    "justifyContent": "flex-end",
                     "marginEnd": 0,
                     "opacity": 1,
                   }
@@ -3153,32 +3051,11 @@ exports[`SendAarCieValidationErrors UnrelatedCieComponent should match snapshot 
           }
         >
           <View
+            aria-hidden={false}
             collapsable={false}
-            style={
-              {
-                "opacity": 1,
-              }
-            }
-          />
-          <View
-            accessibilityElementsHidden={false}
-            closing={false}
-            collapsable={false}
-            gestureVelocityImpact={0.3}
-            importantForAccessibility="auto"
-            onClose={[Function]}
-            onGestureBegin={[Function]}
-            onGestureCanceled={[Function]}
-            onGestureEnd={[Function]}
-            onOpen={[Function]}
-            onTransition={[Function]}
             pointerEvents="box-none"
             style={
               [
-                {
-                  "display": "flex",
-                  "overflow": undefined,
-                },
                 {
                   "bottom": 0,
                   "left": 0,
@@ -3186,35 +3063,22 @@ exports[`SendAarCieValidationErrors UnrelatedCieComponent should match snapshot 
                   "right": 0,
                   "top": 0,
                 },
+                {
+                  "display": "flex",
+                  "overflow": undefined,
+                  "visibility": "visible",
+                },
               ]
             }
-            transitionSpec={
-              {
-                "close": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-                "open": {
-                  "animation": "spring",
-                  "config": {
-                    "damping": 500,
-                    "mass": 3,
-                    "overshootClamping": true,
-                    "restDisplacementThreshold": 10,
-                    "restSpeedThreshold": 10,
-                    "stiffness": 1000,
-                  },
-                },
-              }
-            }
           >
+            <View
+              collapsable={false}
+              style={
+                {
+                  "opacity": 1,
+                }
+              }
+            />
             <View
               collapsable={false}
               pointerEvents="box-none"
@@ -3232,17 +3096,10 @@ exports[`SendAarCieValidationErrors UnrelatedCieComponent should match snapshot 
                 needsOffscreenAlphaCompositing={false}
                 onGestureHandlerEvent={[Function]}
                 onGestureHandlerStateChange={[Function]}
+                pointerEvents="box-none"
                 style={
                   {
                     "flex": 1,
-                    "transform": [
-                      {
-                        "translateX": 0,
-                      },
-                      {
-                        "translateX": 0,
-                      },
-                    ],
                   }
                 }
               >
@@ -3267,7 +3124,6 @@ exports[`SendAarCieValidationErrors UnrelatedCieComponent should match snapshot 
                     style={
                       {
                         "flex": 1,
-                        "flexDirection": "column-reverse",
                       }
                     }
                   >

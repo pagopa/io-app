@@ -33,7 +33,8 @@ jest.mock("@react-navigation/native", () => ({
     "@react-navigation/native"
   ),
   useNavigation: () => ({
-    navigate: mockNavigate
+    navigate: mockNavigate,
+    addListener: jest.fn(() => jest.fn())
   })
 }));
 
