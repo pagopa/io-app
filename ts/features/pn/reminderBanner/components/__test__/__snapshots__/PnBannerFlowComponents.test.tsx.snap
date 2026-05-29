@@ -187,7 +187,9 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -204,11 +206,13 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -219,6 +223,7 @@ exports[`PnBannerFlowComponents CtaScreen should correctly render and match snap
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
@@ -1316,7 +1321,9 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1333,11 +1340,13 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -1348,6 +1357,7 @@ exports[`PnBannerFlowComponents ErrorScreen should render with correct test ID, 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
@@ -2065,7 +2075,9 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2082,11 +2094,13 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -2097,6 +2111,7 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
@@ -2671,7 +2686,9 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2688,11 +2705,13 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -2703,6 +2722,7 @@ exports[`PnBannerFlowComponents LoadingScreen should display loading component w
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
@@ -3277,7 +3297,9 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot and dispatch
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3294,11 +3316,13 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot and dispatch
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -3309,6 +3333,7 @@ exports[`PnBannerFlowComponents SuccessScreen should match snapshot and dispatch
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}

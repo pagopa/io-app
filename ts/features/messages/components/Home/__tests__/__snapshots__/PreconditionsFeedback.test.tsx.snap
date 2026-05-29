@@ -187,7 +187,9 @@ exports[`PreconditionsFeedback should match snapshot with title and no subtitle 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -204,11 +206,13 @@ exports[`PreconditionsFeedback should match snapshot with title and no subtitle 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -219,6 +223,7 @@ exports[`PreconditionsFeedback should match snapshot with title and no subtitle 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
@@ -714,7 +719,9 @@ exports[`PreconditionsFeedback should match snapshot with title and subtitle 1`]
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -731,11 +738,13 @@ exports[`PreconditionsFeedback should match snapshot with title and subtitle 1`]
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -746,6 +755,7 @@ exports[`PreconditionsFeedback should match snapshot with title and subtitle 1`]
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}

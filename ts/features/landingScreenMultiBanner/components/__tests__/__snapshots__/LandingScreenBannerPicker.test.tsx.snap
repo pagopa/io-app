@@ -187,7 +187,9 @@ exports[`LandingBannerPicker should correctly render a banner if passed a valid 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -204,11 +206,13 @@ exports[`LandingBannerPicker should correctly render a banner if passed a valid 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -219,6 +223,7 @@ exports[`LandingBannerPicker should correctly render a banner if passed a valid 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
@@ -563,7 +568,9 @@ exports[`LandingBannerPicker should not render a banner if no id is passed: noBa
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -580,11 +587,13 @@ exports[`LandingBannerPicker should not render a banner if no id is passed: noBa
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -595,6 +604,7 @@ exports[`LandingBannerPicker should not render a banner if no id is passed: noBa
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}

@@ -187,7 +187,9 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -204,11 +206,13 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -219,6 +223,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
@@ -733,7 +738,9 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -750,11 +757,13 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -765,6 +774,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
@@ -1279,7 +1289,9 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1296,11 +1308,13 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -1311,6 +1325,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
@@ -1825,7 +1840,9 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -1842,11 +1859,13 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -1857,6 +1876,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
@@ -2371,7 +2391,9 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -2388,11 +2410,13 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -2403,6 +2427,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
@@ -3128,7 +3153,9 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3145,11 +3172,13 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -3160,6 +3189,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
@@ -3885,7 +3915,9 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -3902,11 +3934,13 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -3917,6 +3951,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
@@ -4642,7 +4677,9 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
       >
         <RNSScreen
           activityState={2}
+          androidResetScreenShadowStateOnOrientationChangeEnabled={true}
           collapsable={false}
+          fullScreenSwipeEnabled="undefined"
           gestureResponseDistance={
             {
               "bottom": -1,
@@ -4659,11 +4696,13 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
             ]
           }
           sheetCornerRadius={-1}
+          sheetDefaultResizeAnimationEnabled={true}
           sheetElevation={24}
           sheetExpandsWhenScrolledToEdge={true}
           sheetGrabberVisible={false}
           sheetInitialDetent={0}
           sheetLargestUndimmedDetent={-1}
+          sheetShouldOverflowTopInset={false}
           style={
             {
               "bottom": 0,
@@ -4674,6 +4713,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
               "zIndex": undefined,
             }
           }
+          synchronousShadowStateUpdatesEnabled={false}
         >
           <View
             aria-hidden={false}
