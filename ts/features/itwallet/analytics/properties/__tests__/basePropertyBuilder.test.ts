@@ -5,6 +5,7 @@ import {
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
+import * as credentialsSelectors from "../../../credentials/store/selectors";
 
 describe("buildItwBaseProperties", () => {
   afterEach(() => {
@@ -41,6 +42,40 @@ describe("buildItwBaseProperties", () => {
         "ITW_CED_V2"
       ])
     );
+  });
+
+  it("maps simplified activation from an existing L3 PID to CIE PIN IT-Wallet status", () => {
+    jest
+      .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+      .mockReturnValue(true);
+    jest
+      .spyOn(credentialsSelectors, "itwCredentialsEidStatusSelector")
+      .mockReturnValue("valid");
+
+    const initialState = appReducer(
+      undefined,
+      applicationChangeState("active")
+    );
+    const state = {
+      ...initialState,
+      features: {
+        ...initialState.features,
+        itWallet: {
+          ...initialState.features.itWallet,
+          preferences: {
+            ...initialState.features.itWallet.preferences,
+            authLevel: "L3" as const,
+            identificationMode: "ciePin" as const
+          }
+        }
+      }
+    };
+
+    const result = buildItwBaseProperties(state);
+
+    expect(result.ITW_STATUS_V2).toBe("L3 (cie_pin)");
+    expect(result.ITW_PID).toBe("valid");
+    expect(result).not.toHaveProperty("ITW_ID_V2");
   });
 });
 

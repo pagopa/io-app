@@ -15,6 +15,7 @@ import {
   trackItwIdVerifiedDocument,
   trackSaveCredentialSuccess
 } from "../../analytics";
+import { updateItwStatusAndPIDProperties } from "../../analytics/properties/propertyUpdaters";
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
 import {
   itwClearSimplifiedActivationRequirements,
@@ -314,6 +315,15 @@ export const createEidIssuanceActionsImplementation = (
 
   clearSimplifiedActivationRequirements: () => {
     store.dispatch(itwClearSimplifiedActivationRequirements());
+  },
+
+  storeSimplifiedActivationAuthLevel: () => {
+    store.dispatch(itwSetAuthLevel("L3"));
+    store.dispatch(itwSetIdentificationMode("ciePin"));
+  },
+
+  syncItwStatusAndPIDProperties: () => {
+    updateItwStatusAndPIDProperties(store.getState());
   },
 
   storeCredentialUpgradeFailures: ({

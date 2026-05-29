@@ -89,8 +89,10 @@ const trackWalletInstanceCreation = jest.fn();
 const trackWalletInstanceRevocation = jest.fn();
 const trackIdentificationMethodSelected = jest.fn();
 const storeAuthLevel = jest.fn();
+const storeSimplifiedActivationAuthLevel = jest.fn();
 const freezeSimplifiedActivationRequirements = jest.fn();
 const clearSimplifiedActivationRequirements = jest.fn();
+const syncItwStatusAndPIDProperties = jest.fn();
 const navigateToCieCanScreen = jest.fn();
 const navigateToCieInternalAuthAndMrtdScreen = jest.fn();
 const trackItwIdAuthenticationCompleted = jest.fn();
@@ -159,8 +161,10 @@ describe("itwEidIssuanceMachine", () => {
       trackWalletInstanceRevocation,
       trackIdentificationMethodSelected,
       storeAuthLevel,
+      storeSimplifiedActivationAuthLevel,
       freezeSimplifiedActivationRequirements,
       clearSimplifiedActivationRequirements,
+      syncItwStatusAndPIDProperties,
       trackItwIdAuthenticationCompleted,
       trackItwIdVerifiedDocument
     },
@@ -2191,6 +2195,17 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "accept-ipzs-privacy" });
     expect(actor.getSnapshot().value).toStrictEqual("Success");
     expect(clearSimplifiedActivationRequirements).toHaveBeenCalledTimes(1);
+    expect(storeSimplifiedActivationAuthLevel).toHaveBeenCalledTimes(1);
+    expect(syncItwStatusAndPIDProperties).toHaveBeenCalledTimes(1);
+    expect(
+      clearSimplifiedActivationRequirements.mock.invocationCallOrder[0]
+    ).toBeLessThan(syncItwStatusAndPIDProperties.mock.invocationCallOrder[0]);
+    expect(
+      storeSimplifiedActivationAuthLevel.mock.invocationCallOrder[0]
+    ).toBeLessThan(syncItwStatusAndPIDProperties.mock.invocationCallOrder[0]);
+    expect(
+      syncItwStatusAndPIDProperties.mock.invocationCallOrder[0]
+    ).toBeLessThan(trackWalletInstanceCreation.mock.invocationCallOrder[0]);
   });
 
   it("Should start the simplified activation flow with credentials upgrade only", async () => {
@@ -2225,6 +2240,17 @@ describe("itwEidIssuanceMachine", () => {
     );
 
     expect(clearSimplifiedActivationRequirements).toHaveBeenCalledTimes(1);
+    expect(storeSimplifiedActivationAuthLevel).toHaveBeenCalledTimes(1);
+    expect(syncItwStatusAndPIDProperties).toHaveBeenCalledTimes(1);
+    expect(
+      clearSimplifiedActivationRequirements.mock.invocationCallOrder[0]
+    ).toBeLessThan(syncItwStatusAndPIDProperties.mock.invocationCallOrder[0]);
+    expect(
+      storeSimplifiedActivationAuthLevel.mock.invocationCallOrder[0]
+    ).toBeLessThan(syncItwStatusAndPIDProperties.mock.invocationCallOrder[0]);
+    expect(
+      syncItwStatusAndPIDProperties.mock.invocationCallOrder[0]
+    ).toBeLessThan(trackWalletInstanceCreation.mock.invocationCallOrder[0]);
     expect(navigateToUpgradeCredentialsScreen).toHaveBeenCalledTimes(1);
   });
 

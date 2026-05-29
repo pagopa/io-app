@@ -92,6 +92,7 @@ export const itwEidIssuanceMachine = setup({
     resetWalletInstance: notImplemented,
     freezeSimplifiedActivationRequirements: notImplemented,
     clearSimplifiedActivationRequirements: notImplemented,
+    storeSimplifiedActivationAuthLevel: notImplemented,
 
     /**
      * Analytics
@@ -100,6 +101,7 @@ export const itwEidIssuanceMachine = setup({
     trackWalletInstanceCreation: notImplemented,
     trackWalletInstanceRevocation: notImplemented,
     trackIdentificationMethodSelected: notImplemented,
+    syncItwStatusAndPIDProperties: notImplemented,
     trackItwIdAuthenticationCompleted: notImplemented,
     trackItwIdVerifiedDocument: notImplemented,
     /**
@@ -495,6 +497,8 @@ export const itwEidIssuanceMachine = setup({
       description: "State that manages the wallet's simplified activation flow",
       entry: [
         "clearSimplifiedActivationRequirements",
+        "storeSimplifiedActivationAuthLevel",
+        "syncItwStatusAndPIDProperties",
         "trackWalletInstanceCreation"
       ],
       always: [
