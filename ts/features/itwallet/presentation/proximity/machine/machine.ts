@@ -310,9 +310,16 @@ export const itwProximityMachine = setup({
             onDone: {
               target: "AwaitingConnection"
             },
-            onError: {
-              actions: ["setFailure"]
-            }
+            onError: [
+              {
+                guard: "isNfcRetrieval",
+                actions: "setFailure",
+                target: "#itwProximityMachine.Failure"
+              },
+              {
+                actions: "setFailure"
+              }
+            ]
           },
           always: {
             guard: "isNfcRetrieval",
