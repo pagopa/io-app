@@ -96,7 +96,7 @@ describe("ActiveSessionIdpLoginScreen", () => {
 
   it("should navigate to AuthErrorScreen when requestState is error", () => {
     const mockReplace = jest.fn();
-    // eslint-disable-next-line functional/immutable-data, @typescript-eslint/no-var-requires
+    // eslint-disable-next-line functional/immutable-data
     require("@react-navigation/native").useNavigation = () => ({
       replace: mockReplace,
       addListener: jest.fn(() => jest.fn())
