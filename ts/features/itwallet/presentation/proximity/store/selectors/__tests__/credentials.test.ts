@@ -2,7 +2,7 @@ import MockDate from "mockdate";
 import { ItwStoredCredentialsMocks } from "../../../../../common/utils/itwMocksUtils";
 import {
   areAllPresentableCredentialsExpired,
-  shouldBlockProximityQrCodeSelector
+  shouldShowExpiredProximityCredentialsBannerSelector
 } from "../credentials";
 import { CredentialMetadata } from "../../../../../common/utils/itwTypesUtils";
 
@@ -34,7 +34,7 @@ describe("proximity selectors", () => {
     ).toBe(true);
   });
 
-  it("does not block when at least one presentable credential is valid", () => {
+  it("does not show the banner when at least one presentable credential is valid", () => {
     MockDate.set(new Date(2024, 0, 20));
 
     const validMdl: CredentialMetadata = {
@@ -52,13 +52,16 @@ describe("proximity selectors", () => {
       storedStatusAssertion: { credentialStatus: "valid" }
     };
     expect(
-      shouldBlockProximityQrCodeSelector.resultFunc("jwtExpired", {
-        "org.iso.18013.5.1.mDL": validMdl
-      })
+      shouldShowExpiredProximityCredentialsBannerSelector.resultFunc(
+        "jwtExpired",
+        {
+          "org.iso.18013.5.1.mDL": validMdl
+        }
+      )
     ).toBe(false);
   });
 
-  it("blocks when PID is expired and all presentable credentials are expired", () => {
+  it("shows the banner when PID is expired and all presentable credentials are expired", () => {
     MockDate.set(new Date(2024, 0, 20));
 
     const expiredMdl: CredentialMetadata = {
@@ -75,9 +78,12 @@ describe("proximity selectors", () => {
     };
 
     expect(
-      shouldBlockProximityQrCodeSelector.resultFunc("jwtExpired", {
-        "org.iso.18013.5.1.mDL": expiredMdl
-      })
+      shouldShowExpiredProximityCredentialsBannerSelector.resultFunc(
+        "jwtExpired",
+        {
+          "org.iso.18013.5.1.mDL": expiredMdl
+        }
+      )
     ).toBe(true);
   });
 });

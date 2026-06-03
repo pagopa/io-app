@@ -5,6 +5,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import I18n from "i18next";
+import { Platform } from "react-native";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
 import { TabIconComponent } from "../components/ui/TabIconComponent";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
@@ -22,6 +23,9 @@ import { MainTabParamsList } from "./params/MainTabParamsList";
 import ROUTES from "./routes";
 
 const Tab = createBottomTabNavigator<MainTabParamsList>();
+const tabBarLabelLineHeight = 16;
+const androidTabLabelNudgeUp = -2;
+const androidTabItemPaddingBottom = 2;
 
 export const MainTabNavigator = () => {
   const theme = useIOTheme();
@@ -43,14 +47,26 @@ export const MainTabNavigator = () => {
     >
       <Tab.Navigator
         screenOptions={{
-          tabBarLabelStyle: makeFontStyleObject(
-            11,
-            typefacePreference === "comfortable"
-              ? "Titillio"
-              : "TitilliumSansPro",
-            14,
-            "Regular"
-          ),
+          tabBarLabelStyle: {
+            ...makeFontStyleObject(
+              11,
+              typefacePreference === "comfortable"
+                ? "Titillio"
+                : "TitilliumSansPro",
+              tabBarLabelLineHeight,
+              "Regular"
+            ),
+            ...(Platform.OS === "android"
+              ? {
+                  includeFontPadding: true,
+                  marginTop: androidTabLabelNudgeUp
+                }
+              : {})
+          },
+          tabBarItemStyle:
+            Platform.OS === "android"
+              ? { paddingBottom: androidTabItemPaddingBottom }
+              : undefined,
           tabBarHideOnKeyboard: true,
           tabBarAllowFontScaling: false,
           tabBarActiveTintColor: IOColors[theme["interactiveElem-default"]],
