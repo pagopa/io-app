@@ -33,9 +33,6 @@ const mockedInitiative = {
 } as InitiativeDTO;
 
 describe("Test IdPayInitiativeDetailsScreen screen", () => {
-  beforeEach(() => {
-    jest.useFakeTimers();
-  });
   it("should render the screen correctly", () => {
     const { component } = renderComponent();
     expect(component).toBeTruthy();

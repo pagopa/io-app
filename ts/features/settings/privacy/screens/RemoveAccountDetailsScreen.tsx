@@ -237,7 +237,7 @@ const RemoveAccountDetails = () => {
             )}
             value={otherMotivation}
             onChangeText={setOtherMotivation}
-            ref={textInputRef}
+            inputRef={textInputRef}
             textInputProps={{
               inputMode: "text",
               returnKeyType: "done",

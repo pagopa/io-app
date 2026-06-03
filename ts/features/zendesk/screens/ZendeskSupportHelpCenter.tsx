@@ -5,6 +5,7 @@ import {
   FooterActions,
   H4,
   HeaderSecondLevel,
+  IOMarkdownLite,
   IOToast,
   ListItemInfo,
   useIOTheme,
@@ -25,7 +26,7 @@ import {
 } from "react";
 import { FlatList, ListRenderItemInfo, Platform } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
-import { InitializedProfile } from "../../../../definitions/backend/InitializedProfile";
+import { InitializedProfile } from "../../../../definitions/identity/InitializedProfile";
 import IOMarkdown from "../../../components/IOMarkdown";
 import {
   IOScrollView,
@@ -222,7 +223,7 @@ const FaqManager = (props: FaqManagerProps) => {
           ListHeaderComponent={<VSpacer size={8} />}
           scrollEnabled={false}
           data={contextualHelpData.faqs}
-          keyExtractor={c => c.title}
+          keyExtractor={(item, index) => `${item.title}-${index}`}
           renderItem={renderFaqItem}
           ItemSeparatorComponent={() => <VSpacer size={8} />}
           ListFooterComponent={<VSpacer size={8} />}
@@ -431,7 +432,7 @@ const ZendeskSupportHelpCenter = () => {
             <ListItemInfo
               numberOfLines={5}
               value={
-                <IOMarkdown
+                <IOMarkdownLite
                   content={I18n.t(
                     "support.helpCenter.supportComponent.messageProblem"
                   )}
@@ -442,7 +443,7 @@ const ZendeskSupportHelpCenter = () => {
             <ListItemInfo
               numberOfLines={3}
               value={
-                <IOMarkdown
+                <IOMarkdownLite
                   content={I18n.t(
                     "support.helpCenter.supportComponent.appProblem"
                   )}
@@ -453,7 +454,7 @@ const ZendeskSupportHelpCenter = () => {
             <ListItemInfo
               numberOfLines={2}
               value={
-                <IOMarkdown
+                <IOMarkdownLite
                   content={I18n.t(
                     "support.helpCenter.supportComponent.checkRequests"
                   )}

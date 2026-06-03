@@ -1,4 +1,8 @@
-import { RequestObject } from "../../../common/utils/itwTypesUtils";
+import {
+  CredentialMetadata,
+  RequestObject,
+  WalletInstanceAttestations
+} from "../../../common/utils/itwTypesUtils";
 import {
   EnrichedPresentationDetails,
   ItwRemoteFlowType,
@@ -9,6 +13,14 @@ import { RemoteFailure } from "./failure";
 
 export type Context = {
   /**
+   * The wallet instance attestation of the wallet. If expired, it will be requested a new one.
+   */
+  walletInstanceAttestation: WalletInstanceAttestations | undefined;
+  /**
+   * The credentials available in the wallet, to be potentially shared with the Relying Party.
+   */
+  credentials: Record<string, CredentialMetadata> | undefined;
+  /**
    * The remote request payload for the remote presentation
    */
   payload: ItwRemoteRequestPayload | undefined;
@@ -17,7 +29,8 @@ export type Context = {
    */
   failure?: RemoteFailure;
   /**
-   * Relying party Entity Configuration metadata
+   * Relying party Entity Configuration metadata (only for OpenID Federation clients).
+   * This value may stay undefined during the entire flow when the RP uses the prefix `x509_hash`.
    */
   rpConf: RelyingPartyConfiguration | undefined;
   /**
@@ -49,6 +62,8 @@ export type Context = {
 };
 
 export const InitialContext: Context = {
+  walletInstanceAttestation: undefined,
+  credentials: undefined,
   payload: undefined,
   failure: undefined,
   rpConf: undefined,

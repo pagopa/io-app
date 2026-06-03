@@ -7,7 +7,7 @@ import { Errors } from "@pagopa/io-react-native-wallet";
 import { sessionTokenSelector } from "../../../../authentication/common/store/selectors";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { getWalletInstanceStatus } from "../../../common/utils/itwAttestationUtils";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import { itwIntegrityServiceStatusSelector } from "../../../issuance/store/selectors";
 
 import { checkIntegrityServiceReadySaga } from "../checkIntegrityServiceReadySaga";
@@ -25,10 +25,10 @@ jest.mock("@pagopa/io-react-native-crypto", () => ({
 
 describe("checkWalletInstanceStateSaga", () => {
   const mockPid = {
-    credentialType: "PersonIdentificationData",
+    credentialType: "pid",
     credentialId: "dc_sd_jwt_PersonIdentificationData",
     format: "dc+sd-jwt"
-  } as StoredCredential;
+  } as CredentialMetadata;
   // TODO: improve the mocked store's typing, do not use DeepPartial
   it("Does not check the wallet state when the wallet is INSTALLED", () => {
     const store: DeepPartial<GlobalState> = {

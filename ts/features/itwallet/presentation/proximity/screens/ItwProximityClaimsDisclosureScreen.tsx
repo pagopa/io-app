@@ -1,17 +1,14 @@
 import {
   ContentWrapper,
-  FeatureInfo,
   ForceScrollDownView,
   H2,
+  HeaderSecondLevel,
   IOMarkdownLite,
   VStack
 } from "@pagopa/io-app-design-system";
-import { useFocusEffect } from "@react-navigation/native";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent.tsx";
-import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
+import { useLayoutEffect } from "react";
+import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks.ts";
 import { generateDynamicUrlSelector } from "../../../../../store/reducers/backendStatus/remoteConfig.ts";
 import { ITW_IPZS_PRIVACY_URL_BODY } from "../../../../../urls.ts";
@@ -22,17 +19,24 @@ import { ItwDataExchangeIcons } from "../../../common/components/ItwDataExchange
 import { useItwDisableGestureNavigation } from "../../../common/hooks/useItwDisableGestureNavigation.ts";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog.tsx";
 import { ISSUER_MOCK_NAME } from "../../../common/utils/itwMocksUtils.ts";
-import {
-  trackItwProximityContinuePresentation,
-  trackItwProximityDataShare
-} from "../analytics";
+import { trackItwProximityContinuePresentation } from "../analytics";
 import { ITW_PROXIMITY_SCREENVIEW_EVENTS } from "../analytics/enum";
+import { ItwProximityConnectionLoadingComponent } from "../components/ItwProximityConnectionLoadingComponent.tsx";
 import { ItwProximityPresentationDetails } from "../components/ItwProximityPresentationDetails.tsx";
+import { ItwProximitySendLoadingComponent } from "../components/ItwProximitySendLoadingComponent.tsx";
 import { ItwProximityMachineContext } from "../machine/provider.tsx";
-import { selectProximityDetails } from "../machine/selectors.ts";
-import { ProximityDetails } from "../utils/itwProximityTypeUtils.ts";
+import {
+  selectIsLoading,
+  selectIsNfcRetrieval,
+  selectIsSending,
+  selectProximityDetails
+} from "../machine/selectors.ts";
+import { ProximityDetails } from "../utils/types.ts";
 
 export const ItwProximityClaimsDisclosureScreen = () => {
+  const isLoading = ItwProximityMachineContext.useSelector(selectIsLoading);
+  const isSending = ItwProximityMachineContext.useSelector(selectIsSending);
+
   const proximityDetails = ItwProximityMachineContext.useSelector(
     selectProximityDetails
   );
@@ -41,26 +45,15 @@ export const ItwProximityClaimsDisclosureScreen = () => {
   useItwDisableGestureNavigation();
   useAvoidHardwareBackButton();
 
-  return pipe(
-    proximityDetails,
-    O.fromNullable,
-    O.fold(
-      // If proximityDetails is not present in the context, we can safely assume that the loading phase is still in progress.
-      // An undefined proximityDetails cannot be stored in the context, as any failure causes the machine to transition
-      // to the Failure state.
-      () => (
-        <LoadingScreenContent
-          title={I18n.t(
-            "features.itWallet.presentation.proximity.loadingScreen.title"
-          )}
-          subtitle={I18n.t(
-            "features.itWallet.presentation.proximity.loadingScreen.subtitle"
-          )}
-        />
-      ),
-      details => <ContentView proximityDetails={details} />
-    )
-  );
+  if (isSending) {
+    return <ItwProximitySendLoadingComponent />;
+  }
+
+  if (!proximityDetails || isLoading) {
+    return <ItwProximityConnectionLoadingComponent />;
+  }
+
+  return <ContentView proximityDetails={proximityDetails} />;
 };
 
 type ContentViewProps = {
@@ -68,17 +61,19 @@ type ContentViewProps = {
 };
 
 const ContentView = ({ proximityDetails }: ContentViewProps) => {
-  const machineRef = ItwProximityMachineContext.useActorRef();
+  const navigation = useIONavigation();
   const dispatch = useIODispatch();
+
+  const machineRef = ItwProximityMachineContext.useActorRef();
+  const isNfcRetrieval =
+    ItwProximityMachineContext.useSelector(selectIsNfcRetrieval);
 
   const privacyUrl = useIOSelector(state =>
     generateDynamicUrlSelector(state, "io_showcase", ITW_IPZS_PRIVACY_URL_BODY)
   );
 
-  useFocusEffect(trackItwProximityDataShare);
-
   const dismissalDialog = useItwDismissalDialog({
-    handleDismiss: () => machineRef.send({ type: "back" }),
+    handleDismiss: () => machineRef.send({ type: "close" }),
     customLabels: {
       body: I18n.t(
         "features.itWallet.presentation.proximity.selectiveDisclosure.alert.message"
@@ -90,9 +85,32 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
     }
   });
 
-  useHeaderSecondLevel({ title: "", goBack: dismissalDialog.show });
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: true,
+      header: () => (
+        <HeaderSecondLevel
+          title={""}
+          type="singleAction"
+          firstAction={{
+            icon: "closeLarge",
+            accessibilityLabel: I18n.t("global.buttons.close"),
+            onPress: dismissalDialog.show
+          }}
+        />
+      )
+    });
+  }, [navigation, machineRef, dismissalDialog]);
 
-  const confirmVerifiablePresentation = () =>
+  const handleConfirm = () => {
+    trackItwProximityContinuePresentation();
+
+    if (isNfcRetrieval) {
+      // For NFC retrieval, identification request is dispatched in the next screen
+      machineRef.send({ type: "holder-consent" });
+      return;
+    }
+
     dispatch(
       identificationRequest(
         false,
@@ -107,22 +125,16 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
         }
       )
     );
+  };
 
   return (
     <ForceScrollDownView
       footerActions={{
         actions: {
-          type: "TwoButtons",
+          type: "SingleButton",
           primary: {
-            label: I18n.t("global.buttons.continue"),
-            onPress: () => {
-              trackItwProximityContinuePresentation();
-              confirmVerifiablePresentation();
-            }
-          },
-          secondary: {
-            label: I18n.t("global.buttons.cancel"),
-            onPress: dismissalDialog.show
+            label: I18n.t("global.buttons.confirm"),
+            onPress: handleConfirm
           }
         }
       }}
@@ -132,7 +144,7 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
           <ItwDataExchangeIcons
             requesterLogoUri={require("../../../../../../img/features/itWallet/issuer/IPZS.png")}
           />
-          <VStack space={8}>
+          <VStack space={16}>
             <H2>
               {I18n.t(
                 "features.itWallet.presentation.proximity.selectiveDisclosure.title"
@@ -146,18 +158,6 @@ const ContentView = ({ proximityDetails }: ContentViewProps) => {
             />
           </VStack>
           <ItwProximityPresentationDetails data={proximityDetails} />
-          <FeatureInfo
-            iconName="fornitori"
-            body={I18n.t(
-              "features.itWallet.presentation.proximity.selectiveDisclosure.disclaimer.0"
-            )}
-          />
-          <FeatureInfo
-            iconName="trashcan"
-            body={I18n.t(
-              "features.itWallet.presentation.proximity.selectiveDisclosure.disclaimer.1"
-            )}
-          />
           <IOMarkdownLite
             content={I18n.t(
               "features.itWallet.presentation.proximity.selectiveDisclosure.tos",

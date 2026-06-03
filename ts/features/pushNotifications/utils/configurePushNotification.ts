@@ -1,268 +1,159 @@
-import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as E from "fp-ts/lib/Either";
-import * as t from "io-ts";
-import PushNotificationIOS from "@react-native-community/push-notification-ios";
-import { captureMessage } from "@sentry/react-native";
-import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
+import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
-import PushNotification, {
-  ReceivedNotification
-} from "react-native-push-notification";
-import { readableReport } from "@pagopa/ts-commons/lib/reporters";
-import { maximumItemsFromAPI, pageSize } from "../../../config";
-import {
-  loadPreviousPageMessages,
-  reloadAllMessages
-} from "../../messages/store/actions";
-import {
-  trackMessageNotificationParsingFailure,
-  trackMessageNotificationTap
-} from "../../messages/analytics";
-import { newPushNotificationsToken } from "../store/actions/installation";
-import { updateNotificationsPendingMessage } from "../store/actions/pendingMessage";
-import { isLoadingOrUpdating } from "../../../utils/pot";
-import { isArchivingInProcessingModeSelector } from "../../messages/store/reducers/archiving";
-import { GlobalState } from "../../../store/reducers/types";
-import { trackNewPushNotificationsTokenGenerated } from "../analytics";
-import { isTestEnv } from "../../../utils/environment";
 import { updateMixpanelProfileProperties } from "../../../mixpanelConfig/profileProperties";
 import { Store } from "../../../store/actions/types";
 import { isMixpanelEnabled } from "../../../store/reducers/persistedPreferences";
+import { GlobalState } from "../../../store/reducers/types";
+import { trackAppCaughtError } from "../../../utils/analytics";
+import { isTestEnv } from "../../../utils/environment";
+import { trackNewPushNotificationsTokenGenerated } from "../analytics";
+import { newPushNotificationsToken } from "../store/actions/installation";
+import { handleMessageNotificationInteraction } from "./pushNotificationHandlers";
 
+const unhandledForegroundNotificationIds = new Set<string>();
 /**
- * Helper type used to validate the notification payload.
- * The message_id can be in different places depending on the platform.
+ * Registers listeners for push notifications and push token updates,
+ * handles any pending notification response from a cold start,
+ * and fetches the device push token.
+ * @param store the redux store, needed to dispatch actions from the notification listeners
+ * @returns a function to remove the registered listeners
  */
-const NotificationPayload = t.partial({
-  message_id: NonEmptyString,
-  data: t.partial({
-    message_id: NonEmptyString
-  })
-});
+export const configurePushNotificationListeners = (store: Store) => {
+  // check if the app was woken up by a notification interaction,
+  // and if so, handle the notification response before setting up the listeners to avoid any race.
+  // Do note that all other listeners only handle events that are received while the app is running (FG or BG, but not killed)
+  handleColdStartNotification(store);
 
-export const configurePushNotifications = (store: Store) => {
-  // Create the default channel used for notifications, the callback return false if the channel already exists
-  PushNotification.createChannel(
-    {
-      channelId: "io_default_notification_channel",
-      channelName: "IO default notification channel",
-      playSound: true,
-      soundName: "default",
-      importance: 4,
-      vibrate: true
-    },
-    _created => null
+  // Listener for push token updates
+  const tokenSubscription = Notifications.addPushTokenListener(
+    onPushNotificationTokenReceived(store)
   );
-  PushNotification.configure({
-    onRegister: token => onPushNotificationTokenAvailable(store, token),
-    onNotification: notification =>
-      onPushNotificationReceived(notification, store),
-    // Only for iOS, we need to customize push notification prompt.
-    // We delay the push notification promt until opt-in screen
-    // during onboarding where permission is clearly required
-    requestPermissions: Platform.OS !== "ios"
+
+  // listener for the event that fires upon **receiving** a push notification
+  const notificationReceivedSubscription =
+    Notifications.addNotificationReceivedListener(event =>
+      unhandledForegroundNotificationIds.add(event.request.identifier)
+    );
+
+  // listener for the event that fires upon **interacting** with a push notification
+  const notificationResponseSubscription =
+    Notifications.addNotificationResponseReceivedListener(response => {
+      const { identifier } = response.notification.request;
+      const isForegroundNotification =
+        unhandledForegroundNotificationIds.delete(identifier); // returns true on successful delete
+      onNotificationResponse(response, isForegroundNotification, store);
+    });
+
+  // fetch the push token after setting up the listeners to ensure that it is handled correctly
+  void Notifications.getDevicePushTokenAsync();
+
+  return () =>
+    removePushNotificationListeners([
+      tokenSubscription,
+      notificationReceivedSubscription,
+      notificationResponseSubscription
+    ]);
+};
+
+export const initializePushNotifications = () => {
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowBanner: true,
+      shouldShowList: true,
+      shouldPlaySound: true,
+      shouldSetBadge: false
+    })
   });
 };
 
-const onPushNotificationTokenAvailable = (
-  store: Store,
-  token: {
-    os: string;
-    token: string;
-  }
-) => {
-  if (token == null || token.token == null) {
-    captureMessage(
-      `onPushNotificationTokenAvailable received a nullish token (or inner 'token' instance) (${token})`
-    );
+export const setupAndroidNotificationChannel = async (): Promise<void> => {
+  if (Platform.OS !== "android") {
     return;
   }
-  // Dispatch an action to save the token in the store
-  store.dispatch(newPushNotificationsToken(token.token));
-
-  const userOptedInForAnalytics = hasUserOptedInForAnalytics(store.getState());
-  handleTrackingOfTokenGeneration(userOptedInForAnalytics);
-
-  const state = store.getState();
-  void updateMixpanelProfileProperties(state);
+  await Notifications.setNotificationChannelAsync(
+    "io_default_notification_channel",
+    {
+      name: "IO default notification channel",
+      importance: Notifications.AndroidImportance.HIGH,
+      vibrationPattern: [0, 250, 250, 250],
+      sound: "default"
+    }
+  );
 };
 
-const onPushNotificationReceived = (
-  notification: Omit<ReceivedNotification, "userInfo">,
+// ----------------------  HANDLERS ----------------------
+
+const handleColdStartNotification = (store: Store) => {
+  const lastResponse = Notifications.getLastNotificationResponse();
+  if (!lastResponse) {
+    return;
+  }
+  onNotificationResponse(lastResponse, false, store);
+};
+
+const onNotificationResponse = (
+  response: Notifications.NotificationResponse,
+  receivedInForeground: boolean,
   store: Store
 ) => {
-  const userOptedInForAnalytics = hasUserOptedInForAnalytics(store.getState());
-  if (notification.userInteraction) {
-    const messageId = messageIdFromPushNotification(
-      notification,
-      userOptedInForAnalytics
-    );
-    if (messageId != null) {
-      handleMessagePushNotification(
-        notification.foreground,
-        messageId,
-        store,
-        userOptedInForAnalytics
-      );
-    }
-  }
-
-  // Signal the system that the notification has been processed (this
-  // is mandatory even if there was an errore. Failing to do so can
-  // lead the system to not deliver push notifications anymore)
-  notification.finish(PushNotificationIOS.FetchResult.NoData);
-};
-
-const messageIdFromPushNotification = (
-  notification: Omit<ReceivedNotification, "userInfo">,
-  userAnalyticsOptIn: boolean
-) => {
-  // Try to decode the notification's payload
-  const payloadDecodeEither = NotificationPayload.decode(notification);
-  if (E.isLeft(payloadDecodeEither)) {
-    // The notification payload is not valid, we need to track the error
-    handleTrackingOfDecodingFailure(
-      readableReport(payloadDecodeEither.left),
-      userAnalyticsOptIn
-    );
-    return undefined;
-  }
-  const payload = payloadDecodeEither.right;
-
-  // Push notification payload is different between iOS and Android but
-  // we don't use Platform.OS and check for a specific path. Instead,
-  // we use a fallback mechanism if the first check fails. In this way,
-  // the backend implementation can be fixed in the future without
-  // having to also update and upgrade the global minimum app-version.
-
-  // On iOS, the message_id is stored in the top-level payload
-  const messageIdOniOS = payload.message_id;
-  if (messageIdOniOS != null) {
-    return messageIdOniOS;
-  }
-  // On Android, the message_id is stored in the payload.data property
-  const messageIdOnAndroid = payload.data?.message_id;
-  if (messageIdOnAndroid == null) {
-    // In this case, there was no message_id, so we track the error
-    handleTrackingOfDecodingFailure(
-      "No 'messageId' found in push notification payload data",
-      userAnalyticsOptIn
-    );
-    return undefined;
-  }
-  return messageIdOnAndroid;
-};
-
-const handleMessagePushNotification = (
-  receivedInForeground: boolean,
-  messageId: string,
-  store: Store,
-  userAnalyticsOptIn: boolean
-) => {
-  // This kind of tracking either tracks the event directly
-  // or it enqueues it for a later mixpanel initialization
-  trackMessageNotificationTap(messageId, userAnalyticsOptIn);
-
-  // We have a different behaviour based on the app status
-  if (receivedInForeground) {
-    // The App is in foreground so just refresh the messages list
-    handleForegroundMessageReload(store);
-  } else {
-    // The App was closed/in background and has been now opened clicking
-    // on the push notification.
-    // Save the message id of the notification in the store so the App can
-    // navigate to the message detail screen as soon as possible (if
-    // needed after the user login/insert the unlock code)
-    store.dispatch(
-      updateNotificationsPendingMessage({
-        id: messageId,
-        foreground: false
-      })
-    );
-  }
-};
-
-/**
- * Decide how to refresh the messages based on pagination.
- * It only reloads Inbox since Archive is never changed server-side.
- */
-const handleForegroundMessageReload = (store: Store) => {
-  const state = store.getState();
-  // Make sure there are not progressing message loadings and
-  // that the system is not processing any message archiving/restoring
-  const allPaginated = state.entities.messages.allPaginated;
-  const isProcessingArchivingOrRestoring =
-    isArchivingInProcessingModeSelector(state);
-  if (
-    isLoadingOrUpdating(allPaginated.archive.data) ||
-    isLoadingOrUpdating(allPaginated.inbox.data) ||
-    isProcessingArchivingOrRestoring
-  ) {
+  const { identifier } = response.notification.request;
+  if (identifier == null) {
+    // safeguard against ghost intent notifications sent by certain android OSes
     return;
   }
+  // in order to avoid handling the same notification multiple times,
+  // it is crucial that we clear the persisted last notification response as soon as possible
+  Notifications.clearLastNotificationResponse();
 
-  const { inbox: inboxIndexes } =
-    getArchiveAndInboxNextAndPreviousPageIndexes(state);
-  if (pot.isNone(inboxIndexes)) {
-    // nothing in the collection, refresh
-    store.dispatch(
-      reloadAllMessages.request({ pageSize, filter: {}, fromUserAction: false })
-    );
-  } else if (pot.isSome(inboxIndexes)) {
-    // something in the collection, get the maximum amount of new ones only,
-    // assuming that the message will be there
-    store.dispatch(
-      loadPreviousPageMessages.request({
-        cursor: inboxIndexes.value.previous,
-        pageSize: maximumItemsFromAPI,
-        filter: {},
-        fromUserAction: false
-      })
-    );
-  }
+  // if necessary, handle the messages logic linked to the notification interaction
+  handleMessageNotificationInteraction(
+    response,
+    receivedInForeground,
+    store,
+    hasUserOptedInForAnalytics(store.getState())
+  );
+
+  void Notifications.dismissNotificationAsync(identifier);
 };
+const onPushNotificationTokenReceived =
+  (store: Store) => (token: { data?: string | null }) => {
+    if (!token || !token.data) {
+      trackAppCaughtError(
+        "onPushNotificationTokenAvailable",
+        `received a nullish token. { token:${token}, data: ${token?.data} }`,
+        undefined
+      );
+      return;
+    }
+    const state = store.getState();
+    // dispatch an action to store the new token
+    store.dispatch(newPushNotificationsToken(token.data));
 
-const getArchiveAndInboxNextAndPreviousPageIndexes = (state: GlobalState) => {
-  const { archive, inbox } = state.entities.messages.allPaginated;
-  return {
-    archive: pot.map(archive.data, ({ previous, next }) => ({
-      previous,
-      next
-    })),
-    inbox: pot.map(inbox.data, ({ previous, next }) => ({ previous, next }))
+    const userOptedInForAnalytics = hasUserOptedInForAnalytics(state);
+    trackNewPushNotificationsTokenGenerated(
+      Date.now().toString(),
+      userOptedInForAnalytics
+    );
+    void updateMixpanelProfileProperties(state);
   };
-};
 
-const handleTrackingOfTokenGeneration = (userAnalyticsOptIn: boolean) =>
-  trackNewPushNotificationsTokenGenerated(
-    Date.now().toString(),
-    userAnalyticsOptIn
-  );
-
-const handleTrackingOfDecodingFailure = (
-  reason: t.Errors | string,
-  userAnalyticsOptIn: boolean
-) =>
-  trackMessageNotificationParsingFailure(
-    Date.now().toString(),
-    reason,
-    userAnalyticsOptIn
-  );
+// ---------------------- UTILS ----------------------
 
 const hasUserOptedInForAnalytics = (state: GlobalState) =>
   isMixpanelEnabled(state) ?? false;
 
+const removePushNotificationListeners = (
+  subscriptions: Array<Notifications.EventSubscription>
+) => {
+  subscriptions.forEach(s => s.remove());
+};
+
 export const testable = isTestEnv
   ? {
-      NotificationPayload,
-      getArchiveAndInboxNextAndPreviousPageIndexes,
-      handleForegroundMessageReload,
-      handleMessagePushNotification,
-      handleTrackingOfDecodingFailure,
-      handleTrackingOfTokenGeneration,
-      hasUserOptedInForAnalytics,
-      messageIdFromPushNotification,
-      onPushNotificationReceived,
-      onPushNotificationTokenAvailable
+      unhandledForegroundNotificationIds,
+      handleColdStartNotification,
+      onNotificationResponse,
+      onPushNotificationTokenReceived,
+      hasUserOptedInForAnalytics
     }
   : undefined;

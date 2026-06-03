@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { StateFrom, createActor, fromPromise, waitFor } from "xstate";
+import { StateFrom, assign, createActor, fromPromise, waitFor } from "xstate";
 import { ItwRemoteMachine, itwRemoteMachine } from "../machine.ts";
 import {
   EnrichedPresentationDetails,
@@ -18,6 +18,7 @@ import {
 } from "../actors.ts";
 import { Context, InitialContext } from "../context.ts";
 import {
+  CredentialMetadata,
   RequestObject,
   WalletInstanceAttestations
 } from "../../../../common/utils/itwTypesUtils.ts";
@@ -28,6 +29,8 @@ const T_CLIENT_ID = "clientId";
 const T_REQUEST_URI = "https://example.com";
 const T_STATE = "state";
 const T_REDIRECT_URI = "https://example.com/redirect";
+const T_WIA: WalletInstanceAttestations = { jwt: "test-wia" };
+const T_CREDENTIALS: Record<string, CredentialMetadata> = {};
 
 const qrCodePayload: ItwRemoteRequestPayload = {
   client_id: T_CLIENT_ID,
@@ -51,6 +54,8 @@ describe("itwRemoteMachine", () => {
   const isItWalletL3Active = jest.fn();
   const isEidExpired = jest.fn();
   const hasValidWalletInstanceAttestation = jest.fn().mockReturnValue(true);
+  const isOpenIdFederationClient = jest.fn();
+  const isX509HashClient = jest.fn();
 
   const evaluateRelyingPartyTrust = jest.fn();
   const getRequestObject = jest.fn();
@@ -60,6 +65,10 @@ describe("itwRemoteMachine", () => {
 
   const mockedMachine = itwRemoteMachine.provide({
     actions: {
+      onInit: assign({
+        walletInstanceAttestation: T_WIA,
+        credentials: T_CREDENTIALS
+      }),
       navigateToDiscoveryScreen,
       navigateToFailureScreen,
       navigateToClaimsDisclosureScreen,
@@ -92,7 +101,9 @@ describe("itwRemoteMachine", () => {
     guards: {
       isItWalletL3Active,
       isEidExpired,
-      hasValidWalletInstanceAttestation
+      hasValidWalletInstanceAttestation,
+      isOpenIdFederationClient,
+      isX509HashClient
     }
   });
 
@@ -214,6 +225,8 @@ describe("itwRemoteMachine", () => {
 
     isItWalletL3Active.mockReturnValue(true);
     isEidExpired.mockReturnValue(false);
+    isOpenIdFederationClient.mockReturnValue(true);
+    evaluateRelyingPartyTrust.mockRejectedValue(new Error("test"));
 
     actor.send({
       type: "start",
@@ -224,6 +237,7 @@ describe("itwRemoteMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual(
       "EvaluatingRelyingPartyTrust"
     );
+    actor.stop();
   });
 
   it("should complete the presentation without errors", async () => {
@@ -234,7 +248,7 @@ describe("itwRemoteMachine", () => {
       subject: T_CLIENT_ID
     } as RelyingPartyConfiguration;
     const presentationDetails = [] as EnrichedPresentationDetails;
-    const unverifiedRequestObject = "";
+    const unverifiedRequestObject = "encoded-jwt";
     const requestObject = {
       ...({} as RequestObject),
       client_id: T_CLIENT_ID,
@@ -251,6 +265,7 @@ describe("itwRemoteMachine", () => {
 
     isItWalletL3Active.mockReturnValue(true);
     isEidExpired.mockReturnValue(false);
+    isOpenIdFederationClient.mockReturnValue(true);
     evaluateRelyingPartyTrust.mockResolvedValue({
       rpConf
     });
@@ -276,6 +291,8 @@ describe("itwRemoteMachine", () => {
     });
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
+      walletInstanceAttestation: T_WIA,
+      credentials: T_CREDENTIALS,
       payload: qrCodePayload,
       flowType: T_FLOW_TYPE
     });
@@ -295,6 +312,8 @@ describe("itwRemoteMachine", () => {
     expect(evaluateRelyingPartyTrust).toHaveBeenCalledTimes(1);
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
+      walletInstanceAttestation: T_WIA,
+      credentials: T_CREDENTIALS,
       payload: qrCodePayload,
       flowType: T_FLOW_TYPE,
       rpConf
@@ -307,6 +326,8 @@ describe("itwRemoteMachine", () => {
     expect(getRequestObject).toHaveBeenCalledTimes(1);
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
+      walletInstanceAttestation: T_WIA,
+      credentials: T_CREDENTIALS,
       requestObjectEncodedJwt: unverifiedRequestObject,
       payload: qrCodePayload,
       flowType: T_FLOW_TYPE,
@@ -322,6 +343,8 @@ describe("itwRemoteMachine", () => {
     expect(getPresentationDetails).toHaveBeenCalledTimes(1);
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
+      walletInstanceAttestation: T_WIA,
+      credentials: T_CREDENTIALS,
       requestObjectEncodedJwt: unverifiedRequestObject,
       payload: qrCodePayload,
       flowType: T_FLOW_TYPE,
@@ -343,6 +366,8 @@ describe("itwRemoteMachine", () => {
     actor.send({ type: "toggle-credential", credentialIds: ["cred03"] });
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
+      walletInstanceAttestation: T_WIA,
+      credentials: T_CREDENTIALS,
       requestObjectEncodedJwt: unverifiedRequestObject,
       payload: qrCodePayload,
       flowType: T_FLOW_TYPE,
@@ -363,6 +388,8 @@ describe("itwRemoteMachine", () => {
     expect(sendAuthorizationResponse).toHaveBeenCalledTimes(1);
     expect(actor.getSnapshot().context).toStrictEqual<Context>({
       ...InitialContext,
+      walletInstanceAttestation: T_WIA,
+      credentials: T_CREDENTIALS,
       requestObjectEncodedJwt: unverifiedRequestObject,
       payload: qrCodePayload,
       flowType: T_FLOW_TYPE,
@@ -385,8 +412,11 @@ describe("itwRemoteMachine", () => {
   it("should transition to failure when an error occurs in GettingPresentationDetails", async () => {
     isItWalletL3Active.mockReturnValue(true);
     isEidExpired.mockReturnValue(false);
-    evaluateRelyingPartyTrust.mockResolvedValue({});
-    getRequestObject.mockReturnValue("");
+    isOpenIdFederationClient.mockReturnValue(true);
+    evaluateRelyingPartyTrust.mockResolvedValue({
+      rpConf: {} as RelyingPartyConfiguration
+    });
+    getRequestObject.mockResolvedValue("encoded-jwt");
     getPresentationDetails.mockRejectedValue({ message: "ERROR" });
 
     const actor = createActor(mockedMachine);
@@ -431,7 +461,7 @@ describe("itwRemoteMachine", () => {
   it("should transition to Failure when an error occurs in EvaluatingRelyingPartyTrust", async () => {
     isItWalletL3Active.mockReturnValue(true);
     isEidExpired.mockReturnValue(false);
-
+    isOpenIdFederationClient.mockReturnValue(true);
     evaluateRelyingPartyTrust.mockImplementation(() => {
       throw new Error("Trust evaluation failed");
     });
@@ -500,5 +530,50 @@ describe("itwRemoteMachine", () => {
     expect(
       storeWalletInstanceAttestation.mock.lastCall.at(0).event.output
     ).toEqual(mockWalletAttestation);
+  });
+
+  it("should handle clients of type OpenID Federation", async () => {
+    isItWalletL3Active.mockReturnValue(true);
+    isEidExpired.mockReturnValue(false);
+    hasValidWalletInstanceAttestation.mockReturnValue(true);
+    isOpenIdFederationClient.mockReturnValue(true);
+    evaluateRelyingPartyTrust.mockResolvedValue({});
+
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    actor.send({
+      type: "start",
+      payload: qrCodePayload,
+      flowType: T_FLOW_TYPE
+    });
+
+    expect(actor.getSnapshot().value).toEqual("EvaluatingRelyingPartyTrust");
+    expect(evaluateRelyingPartyTrust).toHaveBeenCalledTimes(1);
+
+    const intermediateSnapshot = await waitFor(actor, s =>
+      s.matches("GettingRequestObject")
+    );
+    expect(intermediateSnapshot.value).toStrictEqual("GettingRequestObject");
+  });
+
+  it("should handle clients of type X509 Hash", async () => {
+    isItWalletL3Active.mockReturnValue(true);
+    isEidExpired.mockReturnValue(false);
+    hasValidWalletInstanceAttestation.mockReturnValue(true);
+    isOpenIdFederationClient.mockReturnValue(false);
+    isX509HashClient.mockReturnValue(true);
+
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    actor.send({
+      type: "start",
+      payload: qrCodePayload,
+      flowType: T_FLOW_TYPE
+    });
+
+    expect(actor.getSnapshot().value).toEqual("GettingRequestObject");
+    expect(evaluateRelyingPartyTrust).not.toHaveBeenCalled();
   });
 });

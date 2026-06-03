@@ -1,19 +1,8 @@
+import { VStack } from "@pagopa/io-app-design-system";
 import { memo } from "react";
 import { View } from "react-native";
-import {
-  ClaimsSelector,
-  ListItemHeader,
-  VStack,
-  useIOTheme
-} from "@pagopa/io-app-design-system";
-import I18n from "i18next";
-import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils";
-import { ProximityDetails } from "../utils/itwProximityTypeUtils";
-import {
-  claimsSelectorHeaderGradientsByCredentialType,
-  mapClaimsToClaimsSelectorItems
-} from "../../common/utils/itwClaimSelector";
-import { useClaimsDetailsBottomSheet } from "../../common/hooks/useClaimsDetailsBottomSheet";
+import { ItwClaimsSelector } from "../../common/components/ItwClaimsSelector";
+import { ProximityDetails } from "../utils/types";
 
 type ItwProximityPresentationDetailsProps = {
   data: ProximityDetails;
@@ -21,40 +10,21 @@ type ItwProximityPresentationDetailsProps = {
 
 const ItwProximityPresentationDetails = ({
   data
-}: ItwProximityPresentationDetailsProps) => {
-  const theme = useIOTheme();
-  const { present, bottomSheet } = useClaimsDetailsBottomSheet();
-
-  return (
-    <View>
-      <ListItemHeader
-        label={I18n.t(
-          "features.itWallet.presentation.proximity.selectiveDisclosure.requiredClaims"
-        )}
-        iconName="security"
-        iconColor={theme["icon-decorative"]}
-        description={I18n.t(
-          "features.itWallet.presentation.proximity.selectiveDisclosure.purpose"
-        )}
-      />
-      <VStack space={24}>
-        {data.map(({ claimsToDisplay, credentialType }) => (
-          <ClaimsSelector
-            key={credentialType}
-            title={getCredentialNameFromType(credentialType)}
-            items={mapClaimsToClaimsSelectorItems(claimsToDisplay, present)}
-            defaultExpanded
-            selectionEnabled={false}
-            headerGradientColors={
-              claimsSelectorHeaderGradientsByCredentialType[credentialType]
-            }
-          />
-        ))}
-        {bottomSheet}
-      </VStack>
-    </View>
-  );
-};
+}: ItwProximityPresentationDetailsProps) => (
+  <View>
+    <VStack space={24}>
+      {data.map(({ claimsToDisplay, credentialType }) => (
+        <ItwClaimsSelector
+          key={credentialType}
+          credentialType={credentialType}
+          items={claimsToDisplay}
+          defaultExpanded
+          selectionEnabled={false}
+        />
+      ))}
+    </VStack>
+  </View>
+);
 
 const MemoizedItwProximityPresentationDetails = memo(
   ItwProximityPresentationDetails

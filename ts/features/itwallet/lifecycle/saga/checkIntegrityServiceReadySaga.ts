@@ -1,4 +1,3 @@
-import * as Sentry from "@sentry/react-native";
 import { call, delay, put, race, select, take } from "typed-redux-saga/macro";
 import { ReduxSagaEffect } from "../../../../types/utils";
 import { selectItwEnv } from "../../common/store/selectors/environment.ts";
@@ -66,6 +65,5 @@ export function* warmUpIntegrityServiceSaga(): Generator<
     yield* put(itwSetIntegrityServiceStatus(isReady ? "ready" : "unavailable"));
   } catch (e) {
     yield* put(itwSetIntegrityServiceStatus("error"));
-    Sentry.captureException(e);
   }
 }

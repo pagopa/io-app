@@ -1,15 +1,15 @@
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import * as E from "fp-ts/lib/Either";
+import { isDefined } from "../../../../../utils/guards";
 import {
   WellKnownClaim,
   parseClaims
 } from "../../../common/utils/itwClaimsUtils";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils";
 import { getCredentialStatus } from "../../../common/utils/itwCredentialStatusUtils";
 import { validCredentialStatuses } from "../../../common/utils/itwCredentialUtils";
-import { isDefined } from "../../../../../utils/guards";
-import { CredentialType } from "../../../common/utils/itwMocksUtils";
 import { getIoWallet } from "../../../common/utils/itwIoWallet";
+import { CredentialType } from "../../../common/utils/itwMocksUtils";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import { ItwRemoteCredentialCombination } from "../analytics/utils/types";
 import {
   EnrichedPresentationDetails,
@@ -42,6 +42,7 @@ const credentialTypesByVct: { [vct: string]: CredentialType } = {
  * @param vct credential vct
  * @returns credential type as string, undefine if not found
  */
+// TODO: [SIW-4342] Handle the new vct format as URN.
 export const getCredentialTypeByVct = (vct: string): string | undefined => {
   // Extracts the name from the vct. For example:
   // From "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/personidentificationdata"
@@ -80,7 +81,7 @@ export const validateItwPresentationQrCodeParams = (
  */
 export const enrichPresentationDetails = (
   presentationDetails: PresentationDetails,
-  credentialsByType: Record<string, StoredCredential | undefined>
+  credentialsByType: Record<string, CredentialMetadata | undefined>
 ): EnrichedPresentationDetails =>
   presentationDetails
     .filter(isPresentationDetailSdJwt) // TODO: [SIW-3998] Support MDOC remote presentation
@@ -153,7 +154,7 @@ export const groupCredentialsByPurpose = (
  */
 export const getInvalidCredentials = (
   presentationDetails: PresentationDetails,
-  credentialsByType: Record<string, StoredCredential | undefined>
+  credentialsByType: Record<string, CredentialMetadata | undefined>
 ) =>
   presentationDetails
     .filter(isPresentationDetailSdJwt) // TODO: [SIW-3998] Support MDOC remote presentation
@@ -197,3 +198,8 @@ export const getRemoteCredentialCombination = (
   }
   return "other_credentials";
 };
+
+export const enum ClientIdPrefix {
+  OPENID_FEDERATION = "openid_federation:",
+  X509_HASH = "x509_hash:"
+}

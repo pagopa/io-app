@@ -7,13 +7,9 @@ import {
   RadialGradient as SkiaRadialGradient,
   vec
 } from "@shopify/react-native-skia";
-import { PropsWithChildren, useState } from "react";
-import {
-  LayoutChangeEvent,
-  LayoutRectangle,
-  StyleSheet,
-  View
-} from "react-native";
+import { PropsWithChildren } from "react";
+import { LayoutRectangle, StyleSheet, View } from "react-native";
+import LinearGradient from "react-native-linear-gradient";
 import {
   Extrapolation,
   interpolate,
@@ -23,7 +19,7 @@ import {
   useDerivedValue,
   useSharedValue
 } from "react-native-reanimated";
-import LinearGradient from "react-native-linear-gradient";
+import { useLayoutSize } from "../hooks/useLayoutSize";
 import { useItWalletTheme } from "../utils/theme";
 import { ItwBrandedSkiaBorder } from "./ItwBrandedSkiaBorder";
 import { ItwSkiaBrandedGradientVariant } from "./ItwBrandedSkiaGradient";
@@ -58,10 +54,7 @@ export const ItwBrandedBox = ({
   const shouldUseGradientBackground =
     isLightMode && backgroundVariant === "gradient";
 
-  const [size, setSize] = useState<{ width: number; height: number }>({
-    width: 0,
-    height: 0
-  });
+  const { size, onLayout } = useLayoutSize();
 
   /* Styles */
   const lightSkiaOpacity = isLightMode ? 0.4 : 0.05;
@@ -150,14 +143,9 @@ export const ItwBrandedBox = ({
     </SkiaGroup>
   );
 
-  const handleOnLayout = (event: LayoutChangeEvent) => {
-    const { width, height } = event.nativeEvent.layout;
-    setSize({ width, height });
-  };
-
   return (
     <View
-      onLayout={handleOnLayout}
+      onLayout={onLayout}
       style={[
         styles.container,
         {
@@ -204,10 +192,12 @@ export const ItwBrandedBox = ({
   );
 };
 
+export const ITW_BRANDED_BOX_PADDING = 16;
+
 const styles = StyleSheet.create({
   container: {
     borderCurve: "continuous",
-    padding: 16,
+    padding: ITW_BRANDED_BOX_PADDING,
     gap: 6,
     overflow: "hidden"
   }

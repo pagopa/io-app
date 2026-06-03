@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`sendAarErrorSupportBottomSheetComponent should match the snapshot with error code 1`] = `
 [
@@ -357,7 +357,7 @@ exports[`sendAarErrorSupportBottomSheetComponent should match the snapshot with 
     </View>
   </View>,
   <View
-    accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.errorCode"
+    accessibilityLabel="features.pn.aar.flow.ko.GENERIC.detail.errorCodeAccessibility"
     accessibilityRole="button"
     accessibilityState={
       {

@@ -1,20 +1,21 @@
 import { getType } from "typesafe-actions";
 import { Action } from "../../../../../store/actions/types";
+import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
+import { IdentificationContext } from "../../../machine/eid/context.ts";
+import { CredentialMetadata, ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
 import {
+  itwClearCredentialUpgradeFailed,
+  itwClearSimplifiedActivationRequirements,
+  itwDisableItwActivation,
+  itwFreezeSimplifiedActivationRequirements,
   itwSetAuthLevel,
   itwSetClaimValuesHidden,
-  itwSetFiscalCodeWhitelisted,
-  itwSetReviewPending,
-  itwSetWalletInstanceRemotelyActive,
-  itwFreezeSimplifiedActivationRequirements,
-  itwClearSimplifiedActivationRequirements,
-  itwSetPidReissuingSurveyHidden,
   itwSetCredentialUpgradeFailed,
-  itwClearCredentialUpgradeFailed,
-  itwDisableItwActivation
+  itwSetFiscalCodeWhitelisted,
+  itwSetIdentificationMode,
+  itwSetPidReissuingSurveyHidden,
+  itwSetReviewPending
 } from "../actions/preferences";
-import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
-import { ItwAuthLevel, StoredCredential } from "../../utils/itwTypesUtils.ts";
 
 export type ItwPreferencesState = {
   // Indicates whether the user should see the modal to review the app.
@@ -23,9 +24,6 @@ export type ItwPreferencesState = {
   authLevel?: ItwAuthLevel;
   // Indicates whether the claim values should be hidden in credential details
   claimValuesHidden?: boolean;
-  // Indicates whether the user has an already active wallet instance
-  // but the actual local wallet is not active
-  isWalletInstanceRemotelyActive?: boolean;
   // Indicates whether the fiscal code is whitelisted for L3 features
   isFiscalCodeWhitelisted?: boolean;
   // Indicates whether the user should activate IT-Wallet with the simplified flow,
@@ -35,10 +33,12 @@ export type ItwPreferencesState = {
   // the reissuing flow only for the first time
   isPidReissuingSurveyHidden?: boolean;
   // Credential that failed to upgrade by type
-  credentialUpgradeFailed?: ReadonlyArray<StoredCredential["credentialType"]>;
+  credentialUpgradeFailed?: ReadonlyArray<CredentialMetadata["credentialType"]>;
   // Indicates whether the IT-Wallet activation should be disabled
   // because the user's device does not support NFC
   isItwActivationDisabled?: boolean;
+  // Indicates the identification mode used for the user
+  identificationMode?: IdentificationContext["mode"];
 };
 
 export const itwPreferencesInitialState: ItwPreferencesState = {};
@@ -66,13 +66,6 @@ const reducer = (
       return {
         ...state,
         claimValuesHidden: action.payload
-      };
-    }
-
-    case getType(itwSetWalletInstanceRemotelyActive): {
-      return {
-        ...state,
-        isWalletInstanceRemotelyActive: action.payload
       };
     }
 
@@ -106,6 +99,7 @@ const reducer = (
         ...state,
         credentialUpgradeFailed: action.payload
       };
+
     case getType(itwClearCredentialUpgradeFailed):
       return {
         ...state,
@@ -124,22 +118,26 @@ const reducer = (
     case getType(itwLifecycleStoresReset):
       // When the wallet is being reset, we need to persist only the preferences:
       // - claimValuesHidden
-      // - isWalletInstanceRemotelyActive: the correct value will be set in the saga related to the wallet deactivation
       // - isFiscalCodeWhitelisted: avoids to have the value undefined after a wallet reset
       // - isItwActivationDisabled: should persist across wallet resets
       const {
         claimValuesHidden,
-        isWalletInstanceRemotelyActive,
         isFiscalCodeWhitelisted,
         isItwActivationDisabled
       } = state;
       return {
         ...itwPreferencesInitialState,
         claimValuesHidden,
-        isWalletInstanceRemotelyActive,
         isFiscalCodeWhitelisted,
         isItwActivationDisabled
       };
+
+    case getType(itwSetIdentificationMode): {
+      return {
+        ...state,
+        identificationMode: action.payload
+      };
+    }
 
     default:
       return state;

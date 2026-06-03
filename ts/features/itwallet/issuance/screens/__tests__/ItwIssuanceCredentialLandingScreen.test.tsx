@@ -1,14 +1,15 @@
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import configureMockStore from "redux-mock-store";
+import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import ROUTES from "../../../../../navigation/routes";
-import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import * as preferencesSelectors from "../../../common/store/selectors/preferences";
 import * as credentialsSelectors from "../../../credentials/store/selectors";
+import * as issuanceAnalytics from "../../../issuance/analytics";
+import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes";
 import { ItwIssuanceCredentialLandingScreen } from "../ItwIssuanceCredentialLandingScreen";
 
@@ -16,6 +17,7 @@ const mockReplace = jest.fn();
 const mockNavigate = jest.fn();
 const mockPopToTop = jest.fn();
 const mockReset = jest.fn();
+const mockTrackItwAlreadyHasCredential = jest.fn();
 
 jest.mock("@react-navigation/native", () => ({
   ...jest.requireActual("@react-navigation/native"),
@@ -23,8 +25,15 @@ jest.mock("@react-navigation/native", () => ({
     replace: mockReplace,
     navigate: mockNavigate,
     popToTop: mockPopToTop,
-    reset: mockReset
+    reset: mockReset,
+    addListener: jest.fn(() => jest.fn())
   })
+}));
+
+jest.mock("../../analytics", () => ({
+  ...jest.requireActual("../../analytics"),
+  trackItwAlreadyHasCredential: (credential: unknown) =>
+    mockTrackItwAlreadyHasCredential(credential)
 }));
 
 describe("ItwIssuanceCredentialLandingScreen", () => {
@@ -35,12 +44,12 @@ describe("ItwIssuanceCredentialLandingScreen", () => {
   describe("Navigation scenarios", () => {
     test.each`
       credentialStatus | pidStatus    | isItwValid | isWhitelisted | expectedRoute                                  | expectedParams
-      ${undefined}     | ${undefined} | ${false}   | ${false}      | ${ITW_ROUTES.DISCOVERY.INFO}                   | ${{ animationEnabled: false, level: "l2", credentialType: "mDL" }}
-      ${undefined}     | ${undefined} | ${false}   | ${true}       | ${ITW_ROUTES.DISCOVERY.INFO}                   | ${{ animationEnabled: false, level: "l3", credentialType: "mDL" }}
-      ${undefined}     | ${undefined} | ${true}    | ${false}      | ${ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER} | ${{ animationEnabled: false, credentialType: "mDL" }}
-      ${undefined}     | ${undefined} | ${true}    | ${true}       | ${ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER} | ${{ animationEnabled: false, credentialType: "mDL" }}
-      ${"jwtExpired"}  | ${undefined} | ${false}   | ${false}      | ${ITW_ROUTES.DISCOVERY.INFO}                   | ${{ animationEnabled: false, level: "l2", credentialType: "mDL" }}
-      ${"jwtExpiring"} | ${undefined} | ${true}    | ${false}      | ${ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER} | ${{ animationEnabled: false, credentialType: "mDL" }}
+      ${undefined}     | ${undefined} | ${false}   | ${false}      | ${ITW_ROUTES.DISCOVERY.INFO}                   | ${{ disableAnimation: true, level: "l2", credentialType: "mDL" }}
+      ${undefined}     | ${undefined} | ${false}   | ${true}       | ${ITW_ROUTES.DISCOVERY.INFO}                   | ${{ disableAnimation: true, level: "l3", credentialType: "mDL" }}
+      ${undefined}     | ${undefined} | ${true}    | ${false}      | ${ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER} | ${{ disableAnimation: true, credentialType: "mDL" }}
+      ${undefined}     | ${undefined} | ${true}    | ${true}       | ${ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER} | ${{ disableAnimation: true, credentialType: "mDL" }}
+      ${"jwtExpired"}  | ${undefined} | ${false}   | ${false}      | ${ITW_ROUTES.DISCOVERY.INFO}                   | ${{ disableAnimation: true, level: "l2", credentialType: "mDL" }}
+      ${"jwtExpiring"} | ${undefined} | ${true}    | ${false}      | ${ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER} | ${{ disableAnimation: true, credentialType: "mDL" }}
     `(
       "navigates to $expectedRoute when credentialStatus=$credentialStatus, pidStatus=$pidStatus, isItwValid=$isItwValid, isWhitelisted=$isWhitelisted",
       ({
@@ -77,6 +86,16 @@ describe("ItwIssuanceCredentialLandingScreen", () => {
         )
       ).toBeTruthy();
       expect(mockReplace).not.toHaveBeenCalled();
+    });
+
+    it("tracks the already updated KO when the credential is already valid", () => {
+      mockSelectors({ credentialStatus: "valid" });
+
+      renderComponent();
+
+      expect(mockTrackItwAlreadyHasCredential).toHaveBeenCalledWith(
+        "ITW_PG_V2"
+      );
     });
 
     it("primary action navigates to wallet home", () => {
@@ -213,12 +232,63 @@ describe("ItwIssuanceCredentialLandingScreen", () => {
       expect(mockReplace).not.toHaveBeenCalled();
     });
   });
+
+  describe("Landing error screen", () => {
+    it("renders the error screen as fallback", () => {
+      mockSelectors({
+        credentialStatus: undefined,
+        pidStatus: undefined,
+        isItwValid: true
+      });
+
+      const { getByText } = renderComponent();
+
+      expect(
+        getByText(I18n.t(`features.itWallet.issuance.landingError.title`))
+      ).toBeTruthy();
+    });
+
+    it("primary action navigates to CTA message", () => {
+      mockSelectors({
+        credentialStatus: undefined,
+        pidStatus: undefined,
+        isItwValid: true
+      });
+
+      const { getByText } = renderComponent();
+
+      fireEvent.press(
+        getByText(I18n.t(`features.itWallet.issuance.landingError.action`))
+      );
+
+      expect(mockPopToTop).toHaveBeenCalled();
+    });
+
+    it("does not track failure analytics when navigation occurs", () => {
+      const trackSpy = jest.spyOn(
+        issuanceAnalytics,
+        "trackItwIssuanceFromMsgFailure"
+      );
+
+      mockSelectors({
+        credentialStatus: undefined,
+        pidStatus: undefined,
+        isItwValid: true
+      });
+
+      renderComponent();
+
+      expect(mockReplace).toHaveBeenCalled();
+      expect(trackSpy).not.toHaveBeenCalled();
+    });
+  });
 });
 
 type MockSelectorOptions = {
   credentialStatus?: string;
   pidStatus?: string;
   isItwValid?: boolean;
+  isItwL3?: boolean;
   isWhitelisted?: boolean;
 };
 
@@ -226,11 +296,15 @@ const mockSelectors = ({
   credentialStatus,
   pidStatus,
   isItwValid = false,
+  isItwL3 = false,
   isWhitelisted = false
 }: MockSelectorOptions = {}) => {
   jest
     .spyOn(lifecycleSelectors, "itwLifecycleIsValidSelector")
     .mockReturnValue(isItwValid);
+  jest
+    .spyOn(lifecycleSelectors, "itwLifecycleIsITWalletValidSelector")
+    .mockReturnValue(isItwL3);
   jest
     .spyOn(preferencesSelectors, "itwIsL3EnabledSelector")
     .mockReturnValue(isWhitelisted);

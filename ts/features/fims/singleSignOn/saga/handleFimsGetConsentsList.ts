@@ -6,7 +6,6 @@ import {
   setCookie
 } from "@pagopa/io-react-native-http-client";
 import { supportsInAppBrowser } from "@pagopa/io-react-native-login-utils";
-import * as Sentry from "@sentry/react-native";
 import * as E from "fp-ts/lib/Either";
 import { identity, pipe } from "fp-ts/lib/function";
 import { call, put, select } from "typed-redux-saga/macro";
@@ -22,6 +21,9 @@ import { OIDCError } from "../../../../../definitions/fims_sso/OIDCError";
 import { FimsErrorStateType } from "../store/reducers";
 import { preferredLanguageSelector } from "../../../../store/reducers/persistedPreferences";
 import { preferredLanguageToString } from "../../common/utils";
+import { trackAppCaughtError } from "../../../../utils/analytics";
+import { unknownToString } from "../../../../utils/errors";
+import { isTestEnv } from "../../../../utils/environment";
 import {
   computeAndTrackAuthenticationError,
   deallocateFimsAndRenewFastLoginSession,
@@ -221,10 +223,15 @@ const safeParseFailureResponseBody = (failureResponseBody: string) => {
   try {
     return JSON.parse(failureResponseBody);
   } catch (e) {
-    Sentry.captureException(e);
-    Sentry.captureMessage(
-      `handleFimsGetConsentsList.safeParseFailureResponseBody: JSON.parse threw an exception on a ${failureResponseBody?.length}-character long input string`
+    trackAppCaughtError(
+      "safeParseFailureResponseBody",
+      `JSON.parse threw an exception on a ${failureResponseBody?.length}-character long input string`,
+      unknownToString(e)
     );
     return undefined;
   }
 };
+
+export const testable = isTestEnv
+  ? { safeParseFailureResponseBody }
+  : undefined;

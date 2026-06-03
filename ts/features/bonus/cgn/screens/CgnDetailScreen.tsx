@@ -13,8 +13,7 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { useNavigation } from "@react-navigation/native";
 
 import I18n from "i18next";
-import { ReactElement } from "react";
-import { connect } from "react-redux";
+import { ReactElement, useCallback } from "react";
 import { Card } from "../../../../../definitions/cgn/Card";
 import {
   CardActivated,
@@ -34,21 +33,17 @@ import SectionStatusComponent from "../../../../components/SectionStatus";
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
-import { Dispatch } from "../../../../store/actions/types";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
-  cgnMerchantVersionSelector,
+  getEYCADiscountUrl,
   isCGNEnabledSelector
 } from "../../../../store/reducers/backendStatus/remoteConfig";
-import { GlobalState } from "../../../../store/reducers/types";
 import { formatDateAsShortFormat } from "../../../../utils/dates";
 import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
 import { capitalizeTextName } from "../../../../utils/strings";
 import { openWebUrl } from "../../../../utils/url";
 import { profileSelector } from "../../../settings/common/store/selectors";
 import { loadAvailableBonuses } from "../../common/store/actions/availableBonusesTypes";
-import { availableBonusTypesSelectorFromId } from "../../common/store/selectors";
-import { ID_CGN_TYPE } from "../../common/utils";
 import { CgnAnimatedBackground } from "../components/CgnAnimatedBackground";
 import { CgnCardStatus } from "../components/CgnCardStatus";
 import CgnOwnershipInformation from "../components/detail/CgnOwnershipInformation";
@@ -59,9 +54,8 @@ import { useCgnUnsubscribe } from "../hooks/useCgnUnsubscribe";
 import { CgnDetailsParamsList } from "../navigation/params";
 import CGN_ROUTES from "../navigation/routes";
 import { cgnActivationStart } from "../store/actions/activation";
-import { cgnDetails } from "../store/actions/details";
+import { cgnDetails as cgnDetailsAction } from "../store/actions/details";
 import { cgnEycaStatus } from "../store/actions/eyca/details";
-import { cgnUnsubscribe } from "../store/actions/unsubscribe";
 import {
   cgnDetailSelector,
   cgnDetailsInformationSelector,
@@ -72,11 +66,7 @@ import {
   EycaDetailsState
 } from "../store/reducers/eyca/details";
 import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
-import { EYCA_WEBSITE_DISCOUNTS_PAGE_URL } from "../utils/constants";
 import { canEycaCardBeShown } from "../utils/eyca";
-
-type Props = ReturnType<typeof mapStateToProps> &
-  ReturnType<typeof mapDispatchToProps>;
 
 function getLogoUris(card: Card | undefined, eycaDetails: EycaDetailsState) {
   const canCgnLogoBeShown = CardActivated.is(card);
@@ -106,21 +96,29 @@ export const cgnCardColors: NonNullable<
 /**
  * Screen to display all the information about the active CGN
  */
-const CgnDetailScreen = (props: Props): ReactElement => {
+const CgnDetailScreen = (): ReactElement => {
   const navigation =
     useNavigation<IOStackNavigationProp<CgnDetailsParamsList, "CGN_DETAILS">>();
   const dispatch = useIODispatch();
 
+  const potCgnDetails = useIOSelector(cgnDetailSelector);
+  const cgnDetails = useIOSelector(cgnDetailsInformationSelector);
+  const isCgnEnabled = useIOSelector(isCGNEnabledSelector);
+  const isCgnInfoLoading = useIOSelector(isCgnDetailsLoading);
+  const eycaDetails = useIOSelector(eycaDetailSelector);
+  const unsubscriptionStatus = useIOSelector(cgnUnsubscribeSelector);
+  const currentProfile = useIOSelector(profileSelector);
+
   // to display EYCA info component the CGN initiative needs to be enabled by remote
   const canDisplayEycaDetails =
-    canEycaCardBeShown(props.eycaDetails) &&
-    props.isCgnEnabled &&
-    CardActivated.is(props.cgnDetails);
+    canEycaCardBeShown(eycaDetails) &&
+    isCgnEnabled &&
+    CardActivated.is(cgnDetails);
 
-  const loadCGN = () => {
-    props.loadCgnDetails();
-    props.loadEycaDetails();
-  };
+  const loadCGN = useCallback(() => {
+    dispatch(cgnDetailsAction.request());
+    dispatch(cgnEycaStatus.request());
+  }, [dispatch]);
 
   useActionOnFocus(loadCGN);
 
@@ -131,20 +129,17 @@ const CgnDetailScreen = (props: Props): ReactElement => {
 
   const { requestUnsubscription } = useCgnUnsubscribe();
 
-  const eycaDetails = useIOSelector(eycaDetailSelector);
-
-  const logoUris = getLogoUris(props.cgnDetails, eycaDetails);
-
-  const currentProfile = useIOSelector(profileSelector);
+  const logoUris = getLogoUris(cgnDetails, eycaDetails);
 
   const theme = useIOTheme();
+  const eycaDiscountPage = useIOSelector(getEYCADiscountUrl);
 
   const startCgnActivation = () => {
     dispatch(loadAvailableBonuses.request());
     dispatch(cgnActivationStart());
   };
 
-  if (pot.isError(props.potCgnDetails)) {
+  if (pot.isError(potCgnDetails)) {
     // subText is a blank space to avoid default value when it is undefined
     return (
       <OperationResultScreenContent
@@ -164,12 +159,12 @@ const CgnDetailScreen = (props: Props): ReactElement => {
     );
   }
 
-  if (props.isCgnInfoLoading || isLoading(props.unsubscriptionStatus)) {
+  if (isCgnInfoLoading || isLoading(unsubscriptionStatus)) {
     return <BonusCardScreenComponent isLoading cardColors={cgnCardColors} />;
   }
 
   const showDiscoverCta =
-    props.isCgnEnabled && props.cgnDetails?.status === StatusEnum.ACTIVATED;
+    isCgnEnabled && cgnDetails?.status === StatusEnum.ACTIVATED;
 
   const onPressShowCgnDiscounts = () => {
     navigation.navigate(CGN_ROUTES.DETAILS.MERCHANTS.CATEGORIES);
@@ -190,7 +185,7 @@ const CgnDetailScreen = (props: Props): ReactElement => {
           "bonus.cgn.detail.cta.eyca.showEycaDiscounts"
         ),
         onPress: () =>
-          openWebUrl(EYCA_WEBSITE_DISCOUNTS_PAGE_URL, () =>
+          openWebUrl(eycaDiscountPage, () =>
             IOToast.error(I18n.t("bonus.cgn.generic.linkError"))
           )
       };
@@ -200,7 +195,7 @@ const CgnDetailScreen = (props: Props): ReactElement => {
         : { type: "SingleButton", primary };
     }
 
-    if (CardExpired.is(props.cgnDetails)) {
+    if (CardExpired.is(cgnDetails)) {
       return {
         type: "SingleButton",
         primary: {
@@ -214,7 +209,7 @@ const CgnDetailScreen = (props: Props): ReactElement => {
     return undefined;
   })();
 
-  if (!props.cgnDetails) {
+  if (!cgnDetails) {
     return (
       <OperationResultScreenContent
         pictogram="cardFavourite"
@@ -241,9 +236,7 @@ const CgnDetailScreen = (props: Props): ReactElement => {
       organizationName={I18n.t("bonus.cgn.departmentName")}
       cardBackground={<CgnAnimatedBackground />}
       actions={footerActions}
-      status={
-        props.cgnDetails ? <CgnCardStatus card={props.cgnDetails} /> : undefined
-      }
+      status={cgnDetails ? <CgnCardStatus card={cgnDetails} /> : undefined}
       cardColors={cgnCardColors}
       cardFooter={
         <H4
@@ -265,19 +258,19 @@ const CgnDetailScreen = (props: Props): ReactElement => {
       <VSpacer size={16} />
       <ContentWrapper style={{ flex: 1 }}>
         <VStack space={16}>
-          {CardRevoked.is(props.cgnDetails) && (
+          {CardRevoked.is(cgnDetails) && (
             <Alert
               variant="error"
               content={I18n.t("bonus.cgn.detail.information.revoked", {
-                reason: props.cgnDetails.revocation_reason
+                reason: cgnDetails.revocation_reason
               })}
             />
           )}
-          {CardExpired.is(props.cgnDetails) && (
+          {CardExpired.is(cgnDetails) && (
             <Alert
               variant="error"
               content={I18n.t("bonus.cgn.detail.information.expired", {
-                date: formatDateAsShortFormat(props.cgnDetails.expiration_date)
+                date: formatDateAsShortFormat(cgnDetails.expiration_date)
               })}
             />
           )}
@@ -286,9 +279,9 @@ const CgnDetailScreen = (props: Props): ReactElement => {
           {/* Renders status information including activation
           and expiring date and a badge that represents the CGN status
           ACTIVATED - EXPIRED - REVOKED */}
-          {props.cgnDetails && <CgnStatusDetail cgnDetail={props.cgnDetails} />}
+          {cgnDetails && <CgnStatusDetail cgnDetail={cgnDetails} />}
           {canDisplayEycaDetails && <EycaDetailComponent />}
-          {CardActivated.is(props.cgnDetails) && <CgnUnsubscribe />}
+          {CardActivated.is(cgnDetails) && <CgnUnsubscribe />}
         </VStack>
       </ContentWrapper>
       <SectionStatusComponent sectionKey={"cgn"} />
@@ -296,21 +289,4 @@ const CgnDetailScreen = (props: Props): ReactElement => {
   );
 };
 
-const mapStateToProps = (state: GlobalState) => ({
-  potCgnDetails: cgnDetailSelector(state),
-  cgnDetails: cgnDetailsInformationSelector(state),
-  isCgnEnabled: isCGNEnabledSelector(state),
-  isCgnInfoLoading: isCgnDetailsLoading(state),
-  isMerchantV2Enabled: cgnMerchantVersionSelector(state),
-  cgnBonusInfo: availableBonusTypesSelectorFromId(ID_CGN_TYPE)(state),
-  eycaDetails: eycaDetailSelector(state),
-  unsubscriptionStatus: cgnUnsubscribeSelector(state)
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  unsubscribe: () => dispatch(cgnUnsubscribe.request()),
-  loadEycaDetails: () => dispatch(cgnEycaStatus.request()),
-  loadCgnDetails: () => dispatch(cgnDetails.request())
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(CgnDetailScreen);
+export default CgnDetailScreen;

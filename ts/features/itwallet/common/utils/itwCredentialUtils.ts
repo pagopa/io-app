@@ -1,14 +1,14 @@
 import { IOColors, Tag, useIOTheme } from "@pagopa/io-app-design-system";
-import { pipe } from "fp-ts/lib/function";
-import * as O from "fp-ts/lib/Option";
 import { SdJwt, Mdoc } from "@pagopa/io-react-native-wallet";
 import I18n from "i18next";
 import { isBefore } from "date-fns";
+import { ItwIridescentBorderVariant } from "../components/ItwBrandedSkiaBorder";
 import { CredentialType } from "./itwMocksUtils";
 import {
+  CredentialBundle,
   CredentialFormat,
+  CredentialMetadata,
   ItwCredentialStatus,
-  StoredCredential,
   StoredVerification
 } from "./itwTypesUtils";
 
@@ -19,18 +19,13 @@ export const l2Credentials = [
   CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
 ] as const;
 
-// Credentials that can be actively requested and obtained by the user
-export const availableCredentials = [
-  CredentialType.DRIVING_LICENSE,
-  CredentialType.EUROPEAN_DISABILITY_CARD,
-  CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD
-] as const;
-
 // New credentials that can be actively requested and obtained by the user
 export const newCredentials = [
   CredentialType.EDUCATION_DEGREE,
   CredentialType.EDUCATION_ENROLLMENT,
-  CredentialType.RESIDENCY
+  CredentialType.RESIDENCY,
+  CredentialType.EDUCATION_DIPLOMA,
+  CredentialType.EDUCATION_ATTENDANCE
 ] as const;
 
 export type NewCredential = (typeof newCredentials)[number];
@@ -38,11 +33,7 @@ export type NewCredential = (typeof newCredentials)[number];
 export type L2Credential = (typeof l2Credentials)[number];
 
 // Credentials that will be available in the future
-// TODO: [SIW-3923] remove once IPZS releases new credentials in PROD
-export const upcomingCredentials = [
-  CredentialType.EDUCATION_DIPLOMA,
-  CredentialType.EDUCATION_ATTENDANCE
-] as ReadonlyArray<string>;
+export const upcomingCredentials = [] as ReadonlyArray<string>;
 
 export const isUpcomingCredential = (type: string): boolean =>
   upcomingCredentials.includes(type);
@@ -54,7 +45,7 @@ export const isL2Credential = (
   type: string | undefined
 ): type is L2Credential => l2Credentials.includes(type as L2Credential);
 
-export const itwGetCredentialNameByCredentialType = (
+const getCredentialNameByType = (
   isItwCredential: boolean
 ): Record<string, string> => ({
   [CredentialType.EUROPEAN_DISABILITY_CARD]: I18n.t(
@@ -70,6 +61,9 @@ export const itwGetCredentialNameByCredentialType = (
     isItwCredential
       ? "features.itWallet.credentialName.pid"
       : "features.itWallet.credentialName.eid"
+  ),
+  [CredentialType.AGE_VERIFICATION]: I18n.t(
+    "features.itWallet.credentialName.av"
   ),
   [CredentialType.EDUCATION_DEGREE]: I18n.t(
     "features.itWallet.credentialName.ed"
@@ -87,15 +81,16 @@ export const itwGetCredentialNameByCredentialType = (
 });
 
 export const getCredentialNameFromType = (
-  credentialType: string | undefined,
-  withDefault: string = "",
-  isItwCredential: boolean = false
-): string =>
-  pipe(
-    O.fromNullable(credentialType),
-    O.map(type => itwGetCredentialNameByCredentialType(isItwCredential)[type]),
-    O.getOrElse(() => withDefault)
-  );
+  type: string | undefined,
+  isItwCredential: boolean = false,
+  withDefault: string = ""
+): string => {
+  if (!type) {
+    return withDefault;
+  }
+  const name = type && getCredentialNameByType(isItwCredential)[type];
+  return name || withDefault || type;
+};
 
 export const useBorderColorByStatus: () => {
   [key in ItwCredentialStatus]: string;
@@ -113,7 +108,21 @@ export const useBorderColorByStatus: () => {
   };
 };
 
-export const tagPropsByStatus: { [key in ItwCredentialStatus]?: Tag } = {
+export const borderVariantByStatus: {
+  [key in ItwCredentialStatus]: ItwIridescentBorderVariant;
+} = {
+  valid: "default",
+  expiring: "warning",
+  jwtExpiring: "warning",
+  expired: "error",
+  jwtExpired: "error",
+  invalid: "error",
+  unknown: "default"
+};
+
+export const useTagPropsByStatus = (): {
+  [key in ItwCredentialStatus]?: Tag;
+} => ({
   invalid: {
     variant: "error",
     text: I18n.t("features.itWallet.card.status.invalid")
@@ -139,7 +148,7 @@ export const tagPropsByStatus: { [key in ItwCredentialStatus]?: Tag } = {
     icon: { name: "infoFilled", color: "grey-450" },
     text: I18n.t("features.itWallet.card.status.unknown")
   }
-};
+});
 
 /**
  * List of statuses that make a credential valid, especially for UI purposes.
@@ -150,20 +159,22 @@ export const validCredentialStatuses: Array<ItwCredentialStatus> = [
   "jwtExpiring"
 ];
 
+type ExtractVerification = (args: {
+  format: CredentialMetadata["format"];
+  parsedCredential: CredentialMetadata["parsedCredential"];
+  credential: CredentialBundle["credential"];
+}) => StoredVerification | undefined;
+
 /**
  * Extracts the verification object from a stored credential based on its format.
- * Only persists `trust_framework` and `assurance_level`, excluding `evidence`
- * which is being dropped in spec v1.3.3.
  * @param credential - The stored credential fields needed to extract verification
- * @returns The slim verification object or undefined if extraction fails
+ * @returns The verification object or undefined if extraction fails
  */
-export const extractVerification = ({
+export const extractVerification: ExtractVerification = ({
   format,
-  credential,
-  parsedCredential
-}: Pick<StoredCredential, "format" | "credential" | "parsedCredential">):
-  | StoredVerification
-  | undefined => {
+  parsedCredential,
+  credential
+}) => {
   try {
     const verification = (() => {
       switch (format) {
@@ -193,13 +204,11 @@ export const extractVerification = ({
  * `"it_l2+document_proof"` indicates that the credential has been issued with
  * a substantial authentication (SPID, CieID) plus an MRTD PoP verification,
  *
- * @param storedCredential - The stored credential to check
+ * @param metadata - The metadata of the credential to check
  * @returns boolean indicating if the credential is an ITW credential (L3)
  */
-export const isItwCredential = (
-  storedCredential: StoredCredential
-): boolean => {
-  const verification = storedCredential.verification;
+export const isItwCredential = (metadata: CredentialMetadata): boolean => {
+  const verification = metadata.verification;
   return (
     verification?.assurance_level === "high" ||
     verification?.trust_framework === "it_l2+document_proof"

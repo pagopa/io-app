@@ -1,33 +1,20 @@
 name: Actions to setup environment for all workflows
 description: "This action collects the steps to setup any job"
+inputs:
+  generate-api:
+    description: "Whether to generate API clients and upload the artifact"
+    required: false
+    default: "true"
 runs:
   using: "composite"
-  steps:    
-    - id: setup-node
-      uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
-      with:
-        node-version-file: ".node-version"    
-    - name: Enable Corepack and prepare Yarn
-      shell: bash
-      run: |
-        corepack enable
-        corepack prepare --activate
-    - id: yarn-cache
-      uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
-      with:
-        path: |
-          **/node_modules
-        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}-${{ hashFiles('**/package.json') }}
-        restore-keys: |
-          ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          ${{ runner.os }}-yarn-
-    - name: Install dependencies
-      run: yarn install --frozen-lockfile
-      shell: bash
+  steps:
+    - uses: ./.github/actions/setup-pnpm
     - id: generate-api-client
-      run: yarn generate
+      if: inputs.generate-api == 'true'
+      run: pnpm generate
       shell: bash
     - id: upload-clients-artifact
+      if: inputs.generate-api == 'true'
       uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
       with:
         name: api-client

@@ -1,4 +1,3 @@
-import * as Sentry from "@sentry/react-native";
 import { Appearance, ColorSchemeName } from "react-native";
 import {
   isMixpanelInstanceInitialized,
@@ -22,6 +21,8 @@ import { LoginSessionDuration } from "../features/authentication/fastLogin/analy
 import { checkNotificationPermissions } from "../features/pushNotifications/utils";
 import { TrackCgnStatus } from "../features/bonus/cgn/analytics";
 import { isConnectedSelector } from "../features/connectivity/store/selectors";
+import { trackAppCaughtError } from "../utils/analytics.ts";
+import { unknownToString } from "../utils/errors.ts";
 import {
   cdcStatusHandler,
   cgnStatusHandler,
@@ -101,7 +102,11 @@ export const updateMixpanelSuperProperties = async (
 
     registerSuperProperties(superPropertiesObject);
   } catch (e) {
-    Sentry.captureException(e);
+    trackAppCaughtError(
+      "updateMixpanelSuperProperties",
+      undefined,
+      unknownToString(e)
+    );
   }
 };
 

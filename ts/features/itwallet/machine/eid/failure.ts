@@ -3,6 +3,7 @@ import { type IntegrityError } from "@pagopa/io-react-native-integrity";
 import { Errors, Trust } from "@pagopa/io-react-native-wallet";
 import {
   isAssertionGenerationError,
+  isAnprPid404Failure,
   isFederationError,
   isLocalIntegrityError
 } from "../../common/utils/itwFailureUtils";
@@ -20,6 +21,7 @@ export enum IssuanceFailureType {
   UNSUPPORTED_DEVICE = "UNSUPPORTED_DEVICE",
   HARDWARE_KEY_INVALID = "HARDWARE_KEY_INVALID",
   NOT_MATCHING_IDENTITY = "NOT_MATCHING_IDENTITY",
+  PID_ANPR_CREDENTIAL_NOT_FOUND = "PID_ANPR_CREDENTIAL_NOT_FOUND",
   ISSUER_GENERIC = "ISSUER_GENERIC",
   WALLET_PROVIDER_GENERIC = "WALLET_PROVIDER_GENERIC",
   WALLET_REVOCATION_ERROR = "WALLET_REVOCATION_ERROR",
@@ -34,6 +36,7 @@ export enum IssuanceFailureType {
 export type ReasonTypeByFailure = {
   [IssuanceFailureType.WALLET_PROVIDER_GENERIC]: Errors.WalletProviderResponseError;
   [IssuanceFailureType.ISSUER_GENERIC]: Errors.IssuerResponseError;
+  [IssuanceFailureType.PID_ANPR_CREDENTIAL_NOT_FOUND]: Errors.IssuerResponseError;
   [IssuanceFailureType.UNSUPPORTED_DEVICE]:
     | IntegrityError
     | CryptoError
@@ -97,6 +100,13 @@ export const mapEventToFailure = (
   ) {
     return {
       type: IssuanceFailureType.MRTD_CHALLENGE_INIT_ERROR,
+      reason: error
+    };
+  }
+
+  if (isAnprPid404Failure(error)) {
+    return {
+      type: IssuanceFailureType.PID_ANPR_CREDENTIAL_NOT_FOUND,
       reason: error
     };
   }

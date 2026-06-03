@@ -58,7 +58,6 @@ export const IdPayCodePlayGround = () => {
           onChangeText={text => setInitiativeId(text)}
           value={initiativeId ?? ""}
           placeholder="Initiative ID (optional)"
-          ref={textInputRef}
           accessibilityHint="Insert the initiative ID"
           accessibilityLabel="Initiative ID"
         />

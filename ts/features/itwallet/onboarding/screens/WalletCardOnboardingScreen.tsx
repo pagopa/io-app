@@ -29,18 +29,13 @@ import { selectItwEnv } from "../../common/store/selectors/environment";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 import { isItwEnabledSelector } from "../../common/store/selectors/remoteConfig";
 import {
-  availableCredentials,
-  newCredentials,
-  upcomingCredentials
+  isL2Credential,
+  isUpcomingCredential
 } from "../../common/utils/itwCredentialUtils";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingModuleCredentialsList.tsx";
 import { AsyncCredentialsCatalogue } from "../components/AsyncCredentialsCatalogueWrapper.tsx";
-
-const activeBadge: Badge = {
-  variant: "success",
-  text: I18n.t("features.wallet.onboarding.badge.active")
-};
+import { itwAvailableCredentialsListSelector } from "../../credentialsCatalogue/store/selectors";
 
 const WalletCardOnboardingScreen = () => {
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
@@ -78,22 +73,22 @@ const ItwCredentialOnboardingSection = () => {
   const env = useIOSelector(selectItwEnv);
   const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
 
+  const catalogueCredentials = useIOSelector(
+    itwAvailableCredentialsListSelector
+  );
+
   // Show upcoming credentials only if L3 is enabled and env is "pre"
   const shouldShowUpcoming = isL3Enabled && env === "pre";
 
   const credentialsToDisplay = useMemo(() => {
     if (shouldShowUpcoming) {
-      return [
-        ...availableCredentials,
-        ...newCredentials,
-        ...upcomingCredentials
-      ];
-    } else if (isL3Enabled) {
-      return [...availableCredentials, ...newCredentials];
-    } else {
-      return [...availableCredentials];
+      return catalogueCredentials;
     }
-  }, [isL3Enabled, shouldShowUpcoming]);
+    if (isL3Enabled) {
+      return catalogueCredentials.filter(c => !isUpcomingCredential(c.type));
+    }
+    return catalogueCredentials.filter(c => isL2Credential(c.type));
+  }, [catalogueCredentials, isL3Enabled, shouldShowUpcoming]);
 
   return (
     <View>
@@ -102,7 +97,7 @@ const ItwCredentialOnboardingSection = () => {
       />
       <AsyncCredentialsCatalogue>
         <ItwOnboardingModuleCredentialsList
-          credentialTypesToDisplay={credentialsToDisplay}
+          credentialsToDisplay={credentialsToDisplay}
         />
       </AsyncCredentialsCatalogue>
     </View>
@@ -129,21 +124,24 @@ const OtherCardsOnboardingSection = (props: { showTitle?: boolean }) => {
     });
   };
 
-  const cgnModule = useMemo(
-    () =>
-      isCgnLoading ? (
-        <ModuleCredential testID="cgnModuleLoadingTestID" isLoading={true} />
-      ) : (
-        <ModuleCredential
-          testID="cgnModuleTestID"
-          image={require("../../../../../img/bonus/cgn/cgn_logo.png")}
-          label={I18n.t("features.wallet.onboarding.options.cgn")}
-          onPress={!isCgnActive ? startCgnActivation : undefined}
-          badge={isCgnActive ? activeBadge : undefined}
-        />
-      ),
-    [isCgnActive, isCgnLoading, startCgnActivation]
-  );
+  const cgnModule = useMemo(() => {
+    const activeBadge: Badge = {
+      variant: "success",
+      text: I18n.t("features.wallet.onboarding.badge.active")
+    };
+
+    return isCgnLoading ? (
+      <ModuleCredential testID="cgnModuleLoadingTestID" isLoading={true} />
+    ) : (
+      <ModuleCredential
+        testID="cgnModuleTestID"
+        image={require("../../../../../img/bonus/cgn/cgn_logo.png")}
+        label={I18n.t("features.wallet.onboarding.options.cgn")}
+        onPress={!isCgnActive ? startCgnActivation : undefined}
+        badge={isCgnActive ? activeBadge : undefined}
+      />
+    );
+  }, [isCgnActive, isCgnLoading, startCgnActivation]);
 
   return (
     <View>

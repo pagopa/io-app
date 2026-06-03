@@ -8,17 +8,20 @@ import {
   trackWalletCredentialShowAuthSource,
   trackWalletCredentialShowIssuer
 } from "../../analytics";
-import { getMixPanelCredential } from "../../analytics/utils/index.ts";
-import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors/index.ts";
+import { getMixPanelCredential } from "../../analytics/utils";
+import {
+  itwCatalogueTranslationsByLocaleSelector,
+  itwCredentialsCatalogueByTypesSelector
+} from "../../credentialsCatalogue/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { useItwInfoBottomSheet } from "../hooks/useItwInfoBottomSheet";
 import { isItwCredential } from "../utils/itwCredentialUtils.ts";
 import { getAuthSource, getItwAuthSource } from "../utils/itwMetadataUtils.ts";
 import { CredentialType } from "../utils/itwMocksUtils";
-import { StoredCredential } from "../utils/itwTypesUtils";
+import { CredentialMetadata } from "../utils/itwTypesUtils.ts";
 
 type ItwIssuanceMetadataProps = {
-  credential: StoredCredential;
+  credential: CredentialMetadata;
   isPreview?: boolean;
 };
 
@@ -107,10 +110,17 @@ export const ItwIssuanceMetadata = ({
     itwCredentialsCatalogueByTypesSelector
   );
 
+  const translationsByLocale = useIOSelector(
+    itwCatalogueTranslationsByLocaleSelector
+  );
+
   const authSource =
     credentialsFromCatalogue &&
     credentialsFromCatalogue[credential.credentialType]
-      ? getItwAuthSource(credentialsFromCatalogue[credential.credentialType])
+      ? getItwAuthSource(
+          credentialsFromCatalogue[credential.credentialType],
+          translationsByLocale
+        )
       : getAuthSource(credential);
 
   const releasedByKey =

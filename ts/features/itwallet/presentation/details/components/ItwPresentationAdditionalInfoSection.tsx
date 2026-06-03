@@ -1,14 +1,15 @@
 import { memo } from "react";
-import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
-import { itwShouldRenderWalletUpgradeMDLDetailsBannerSelector } from "../../../common/store/selectors";
 import { useIOSelector } from "../../../../../store/hooks";
-import { ItwPresentationNewCredentialValidityAlert } from "./ItwPresentationNewCredentialValidityAlert";
+import { itwShouldRenderWalletUpgradeMDLDetailsBannerSelector } from "../../../common/store/selectors";
+import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
 import { ItwPresentationFiscalCode } from "./ItwPresentationFiscalCode.tsx";
+import { ItwPresentationNewCredentialValidityAlert } from "./ItwPresentationNewCredentialValidityAlert";
 import { ItwPresentationWalletUpgradeMDLDetailsBanner } from "./ItwPresentationWalletUpgradeMDLDetailsBanner";
+import { ItwPresentationAgeVerificationUsageBanner } from "./ItwPresentationAgeVerificationUsageBanner";
 
 type Props = {
-  credential: StoredCredential;
+  credential: CredentialMetadata;
 };
 
 /**
@@ -24,11 +25,15 @@ const ItwPresentationAdditionalInfoSection = ({ credential }: Props) => {
     case CredentialType.EDUCATION_DEGREE:
     case CredentialType.EDUCATION_ENROLLMENT:
     case CredentialType.RESIDENCY:
+    case CredentialType.EDUCATION_DIPLOMA:
+    case CredentialType.EDUCATION_ATTENDANCE:
       return (
         <ItwPresentationNewCredentialValidityAlert
           credentialType={credential.credentialType}
         />
       );
+    case CredentialType.AGE_VERIFICATION:
+      return <ItwPresentationAgeVerificationUsageBanner />;
     case CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD:
       return <ItwPresentationFiscalCode />;
     case CredentialType.DRIVING_LICENSE:

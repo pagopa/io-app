@@ -1,7 +1,7 @@
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { identity } from "lodash";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import * as appVersion from "../../../../utils/appVersion";
 import { GlobalState } from "../../types";
 import {
@@ -25,7 +25,9 @@ import {
   sendEstimateTimelinesUrlSelector,
   sendShowAbstractSelector,
   sendVisitTheWebsiteUrlSelector,
-  isSendLollipopPlaygroundEnabledSelector
+  isSendLollipopPlaygroundEnabledSelector,
+  isCGNDiscoveryBannerEnabledSelector,
+  engagementCGNDiscoveryBannerSelector
 } from "../remoteConfig";
 
 describe("remoteConfig", () => {
@@ -1314,5 +1316,101 @@ describe("isSendLollipopPlaygroundEnabledSelector", () => {
     } as GlobalState;
     const output = isSendLollipopPlaygroundEnabledSelector(state);
     expect(output).toBe(true);
+  });
+});
+
+describe("isCGNDiscoveryBannerEnabledSelector", () => {
+  it("should return false if remoteConfig is not set", () => {
+    const state = {
+      remoteConfig: O.none
+    } as GlobalState;
+    expect(isCGNDiscoveryBannerEnabledSelector(state)).toBe(false);
+  });
+
+  it("should return false if remote version is higher than App version", () => {
+    const state = {
+      remoteConfig: O.some({
+        cgn: {
+          show_cgn_engagement_banner: {
+            min_app_version: {
+              android: "2.0.0.0",
+              ios: "2.0.0.0"
+            }
+          }
+        }
+      })
+    } as GlobalState;
+    jest.spyOn(appVersion, "getAppVersion").mockImplementation(() => "1.0.0.0");
+    expect(isCGNDiscoveryBannerEnabledSelector(state)).toBe(false);
+  });
+
+  it("should return true if remote version is lower or equals than App version", () => {
+    const state = {
+      remoteConfig: O.some({
+        cgn: {
+          show_cgn_engagement_banner: {
+            min_app_version: {
+              android: "1.0.0.0",
+              ios: "1.0.0.0"
+            }
+          }
+        }
+      })
+    } as GlobalState;
+
+    const equalsVersionState = {
+      remoteConfig: O.some({
+        cgn: {
+          show_cgn_engagement_banner: {
+            min_app_version: {
+              android: "2.0.0.0",
+              ios: "2.0.0.0"
+            }
+          }
+        }
+      })
+    } as GlobalState;
+
+    jest.spyOn(appVersion, "getAppVersion").mockImplementation(() => "2.0.0.0");
+    expect(isCGNDiscoveryBannerEnabledSelector(state)).toBe(true);
+    expect(isCGNDiscoveryBannerEnabledSelector(equalsVersionState)).toBe(true);
+  });
+});
+
+describe("engagementCGNDiscoveryBannerSelector", () => {
+  it("should return undefined if remoteConfig is not set", () => {
+    const state = {
+      remoteConfig: O.none
+    } as GlobalState;
+    expect(engagementCGNDiscoveryBannerSelector(state)).toBeUndefined();
+  });
+
+  it("should return the correct configuration if remoteConfig is set", () => {
+    const state = {
+      remoteConfig: O.some({
+        cgn: {
+          show_cgn_engagement_banner: {
+            min_app_version: {
+              android: "1.0.0.0",
+              ios: "1.0.0.0"
+            },
+            description: {
+              "it-IT": "test",
+              "en-EN": "test"
+            }
+          }
+        }
+      })
+    } as GlobalState;
+    expect(engagementCGNDiscoveryBannerSelector(state)).toEqual({
+      min_app_version: {
+        android: "1.0.0.0",
+        ios: "1.0.0.0"
+      },
+      description: {
+        "it-IT": "test",
+        "en-EN": "test"
+      }
+    });
   });
 });

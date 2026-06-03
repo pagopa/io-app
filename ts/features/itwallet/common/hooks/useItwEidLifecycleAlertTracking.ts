@@ -5,7 +5,6 @@ import { ItwJwtCredentialStatus } from "../utils/itwTypesUtils";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 
 type Props = {
-  isItw: boolean;
   maybeEidStatus: ItwJwtCredentialStatus | undefined;
   navigation: ReturnType<typeof useIONavigation>;
   currentScreenName?: string;
@@ -27,7 +26,6 @@ type Props = {
  * - If the eID status is valid, no visualized event is sent.
  * - If `isItw` is true, no tracking is sent at all.
  *
- * @param isItw Whether IT Wallet is active disables tracking entirely
  * @param maybeEidStatus The current eID status
  * @param navigation Navigation object to listen for focus/blur events
  * @param skipViewTracking Flag to disable only the view tracking (visualized)
@@ -36,7 +34,6 @@ type Props = {
  * @returns trackAlertTap callback to track tap interactions on the alert
  */
 export const useItwEidLifecycleAlertTracking = ({
-  isItw,
   maybeEidStatus,
   navigation,
   skipViewTracking = false,
@@ -47,7 +44,7 @@ export const useItwEidLifecycleAlertTracking = ({
   const isEidInvalid =
     maybeEidStatus === "jwtExpiring" || maybeEidStatus === "jwtExpired";
 
-  const shouldTrackVisualization = !skipViewTracking && isEidInvalid && !isItw;
+  const shouldTrackVisualization = !skipViewTracking && isEidInvalid;
 
   const trackingProperties = useMemo(
     () => ({
@@ -92,10 +89,8 @@ export const useItwEidLifecycleAlertTracking = ({
   }, [navigation, shouldTrackVisualization, trackingProperties]);
 
   const trackAlertTap = useCallback(() => {
-    if (!isItw) {
-      trackItwBannerTap(trackingProperties);
-    }
-  }, [isItw, trackingProperties]);
+    trackItwBannerTap(trackingProperties);
+  }, [trackingProperties]);
 
   return { trackAlertTap };
 };

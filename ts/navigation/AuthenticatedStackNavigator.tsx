@@ -243,7 +243,11 @@ const AuthenticatedStackNavigator = () => {
         screenOptions={{
           headerShown: false,
           /* Avoid buggy modal behavior on Android */
-          presentation: Platform.OS === "ios" ? "modal" : "card"
+          ...(Platform.OS === "ios"
+            ? {
+                presentation: "modal"
+              }
+            : TransitionPresets.ScaleFromCenterAndroid)
         }}
       >
         <Stack.Screen

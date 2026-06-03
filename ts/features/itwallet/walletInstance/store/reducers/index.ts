@@ -13,7 +13,10 @@ import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import {
   itwWalletInstanceAttestationStore,
   itwUpdateWalletInstanceStatus,
-  itwSetWalletInstanceRenewalError
+  itwSetWalletInstanceRenewalError,
+  itwWalletUnitAttestationsStore,
+  itwWalletUnitAttestationsRemoveById,
+  itwSetWalletInstanceRemotelyActive
 } from "../actions";
 import {
   WalletInstanceStatus,
@@ -36,17 +39,30 @@ export type ItwWalletInstanceState = {
    * Used to prevent re-entering the recovery block on subsequent actor retries.
    */
   renewalError: boolean;
+  /**
+   * Record of Wallet Unit Attestations keyed by ID. They are not stored on
+   * credentials to avoid duplication (one WUA might contain multiple keys)
+   * and to avoid bloating the stored credential unnecessarily.
+   */
+  walletUnitAttestations: Record<string, string>;
+  /**
+   * Indicates whether the user has an already active wallet instance
+   * but the actual local wallet is not active.
+   */
+  isRemotelyActive?: boolean;
 };
 
 export const itwWalletInstanceInitialState: ItwWalletInstanceState = {
   attestation: undefined,
   status: pot.none,
-  renewalError: false
+  renewalError: false,
+  walletUnitAttestations: {},
+  isRemotelyActive: undefined
 };
 
 type MigrationState = PersistedState & Record<string, any>;
 
-const CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION = 2;
+const CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION = 4;
 
 export const migrations: MigrationManifest = {
   // Convert status into a pot for better async handling
@@ -65,6 +81,16 @@ export const migrations: MigrationManifest = {
   "2": (state: MigrationState) => ({
     ...state,
     renewalError: false
+  }),
+  // Add Wallet Unit Attestations
+  "3": (state: MigrationState) => ({
+    ...state,
+    walletUnitAttestations: {}
+  }),
+  // Add isRemotelyActive
+  "4": (state: MigrationState) => ({
+    ...state,
+    isRemotelyActive: undefined
   })
 };
 
@@ -75,6 +101,7 @@ const reducer = (
   switch (action.type) {
     case getType(itwWalletInstanceAttestationStore): {
       return {
+        ...state,
         status: pot.none,
         attestation: action.payload,
         renewalError: false
@@ -108,8 +135,40 @@ const reducer = (
         renewalError: action.payload
       };
 
+    case getType(itwWalletUnitAttestationsStore): {
+      return {
+        ...state,
+        walletUnitAttestations: {
+          ...state.walletUnitAttestations,
+          ...action.payload
+        }
+      };
+    }
+
+    case getType(itwWalletUnitAttestationsRemoveById): {
+      return {
+        ...state,
+        walletUnitAttestations: Object.fromEntries(
+          Object.entries(state.walletUnitAttestations).filter(
+            ([id]) => !action.payload.includes(id)
+          )
+        )
+      };
+    }
+
+    case getType(itwSetWalletInstanceRemotelyActive): {
+      return {
+        ...state,
+        isRemotelyActive: action.payload
+      };
+    }
+
     case getType(itwLifecycleStoresReset):
-      return { ...itwWalletInstanceInitialState };
+      return {
+        ...itwWalletInstanceInitialState,
+        // Should be persisted on wallet resets
+        isRemotelyActive: state.isRemotelyActive
+      };
 
     default:
       return state;
@@ -120,7 +179,8 @@ const itwWalletInstancePersistConfig: PersistConfig = {
   key: "itwWalletInstance",
   storage: createSecureStorage(),
   version: CURRENT_REDUX_ITW_WALLET_INSTANCE_STORE_VERSION,
-  migrate: createMigrate(migrations, { debug: isDevEnv })
+  migrate: createMigrate(migrations, { debug: isDevEnv }),
+  blacklist: ["isRemotelyActive"] satisfies Array<keyof ItwWalletInstanceState>
 };
 
 const persistedReducer = persistReducer(

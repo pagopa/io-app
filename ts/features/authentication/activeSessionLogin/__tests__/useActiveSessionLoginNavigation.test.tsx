@@ -4,6 +4,7 @@ import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
 import { setFinishedActiveSessionLoginFlow } from "../store/actions";
 import ROUTES from "../../../../navigation/routes";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
+import { cieLoginFlowSelector } from "../store/selectors";
 
 // Mock dependencies
 const mockPopToTop = jest.fn();
@@ -66,7 +67,12 @@ describe("useActiveSessionLoginNavigation", () => {
   });
 
   it("navigateToCieCardReaderScreen - active session", () => {
-    mockSelector.mockReturnValue(true);
+    mockSelector.mockImplementation(selector => {
+      if (selector === cieLoginFlowSelector) {
+        return "reauth";
+      }
+      return true;
+    });
 
     const { result } = renderHook(() => useActiveSessionLoginNavigation());
 
@@ -81,13 +87,19 @@ describe("useActiveSessionLoginNavigation", () => {
       screen: AUTHENTICATION_ROUTES.CIE_CARD_READER_SCREEN_ACTIVE_SESSION_LOGIN,
       params: {
         ciePin: "1234",
-        authorizationUri: "auth-uri"
+        authorizationUri: "auth-uri",
+        loginType: "reauth"
       }
     });
   });
 
   it("navigateToCieCardReaderScreen - not active session", () => {
-    mockSelector.mockReturnValue(false);
+    mockSelector.mockImplementation(selector => {
+      if (selector === cieLoginFlowSelector) {
+        return "auth";
+      }
+      return false;
+    });
 
     const { result } = renderHook(() => useActiveSessionLoginNavigation());
 
@@ -108,7 +120,12 @@ describe("useActiveSessionLoginNavigation", () => {
   });
 
   it("navigateToCieConsentDataUsage - active session", () => {
-    mockSelector.mockReturnValue(true);
+    mockSelector.mockImplementation(selector => {
+      if (selector === cieLoginFlowSelector) {
+        return "reauth";
+      }
+      return true;
+    });
 
     const { result } = renderHook(() => useActiveSessionLoginNavigation());
 
@@ -121,13 +138,19 @@ describe("useActiveSessionLoginNavigation", () => {
     expect(mockNavigate).toHaveBeenCalledWith(AUTHENTICATION_ROUTES.MAIN, {
       screen: AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE_ACTIVE_SESSION_LOGIN,
       params: {
-        cieConsentUri: "consent-uri"
+        cieConsentUri: "consent-uri",
+        loginType: "reauth"
       }
     });
   });
 
   it("navigateToCieConsentDataUsage - not active session", () => {
-    mockSelector.mockReturnValue(false);
+    mockSelector.mockImplementation(selector => {
+      if (selector === cieLoginFlowSelector) {
+        return "auth";
+      }
+      return false;
+    });
 
     const { result } = renderHook(() => useActiveSessionLoginNavigation());
 

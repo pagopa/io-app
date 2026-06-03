@@ -1,7 +1,6 @@
 import { createStore, Store } from "redux";
 import { act, fireEvent, RenderAPI } from "@testing-library/react-native";
-import { ReactTestInstance } from "react-test-renderer";
-import { InitializedProfile } from "../../../../../definitions/backend/InitializedProfile";
+import { InitializedProfile } from "../../../../../definitions/identity/InitializedProfile";
 import MockZendesk from "../../../../__mocks__/io-react-native-zendesk";
 import * as mixpanel from "../../../../mixpanel";
 import ROUTES from "../../../../navigation/routes";
@@ -60,7 +59,7 @@ describe("the ZendeskAskPermissions screen", () => {
       globalState as any
     );
     renderComponent(store, true);
-    expect(zendeskSupportFailureSpy).toBeCalled();
+    expect(zendeskSupportFailureSpy).toHaveBeenCalled();
   });
   it("should render the screen container", () => {
     const store: Store<GlobalState> = createStore(
@@ -229,9 +228,9 @@ describe("the ZendeskAskPermissions screen", () => {
     const component: RenderAPI = renderComponent(store, false);
     const cancelButton = component.getByTestId("cancelButtonId");
     fireEvent(cancelButton, "onPress");
-    expect(handleItemOnPressSpy).toBeCalled();
-    expect(mixpanelTrackSpy).toBeCalled();
-    expect(zendeskSupportCompletedSpy).toBeCalled();
+    expect(handleItemOnPressSpy).toHaveBeenCalled();
+    expect(mixpanelTrackSpy).toHaveBeenCalled();
+    expect(zendeskSupportCompletedSpy).toHaveBeenCalled();
   });
 
   describe("when the continue button is pressed", () => {
@@ -247,11 +246,10 @@ describe("the ZendeskAskPermissions screen", () => {
       });
       const component: RenderAPI = renderComponent(store, false);
 
-      const continueButton: ReactTestInstance =
-        component.getByTestId("continueButtonId");
+      const continueButton = component.getByTestId("continueButtonId");
       fireEvent(continueButton, "onPress");
-      expect(mixpanelTrackSpy).toBeCalled();
-      expect(MockZendesk.openTicket).toBeCalled();
+      expect(mixpanelTrackSpy).toHaveBeenCalled();
+      expect(MockZendesk.openTicket).toHaveBeenCalled();
     });
   });
 });

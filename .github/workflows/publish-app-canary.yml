@@ -8,6 +8,7 @@ jobs:
     name: Prepare canary release
     needs: run-static-checks
     runs-on: ubuntu-24.04
+    environment: canary
     outputs:
       canaryVersion: ${{ steps.github-release-creation.outputs.CANARY_VERSION }}
     steps:
@@ -15,23 +16,21 @@ jobs:
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           fetch-depth: 0
-      - id: setup-node
-        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+      - uses: ./.github/actions/setup-pnpm
+      - id: setup-ruby
+        uses: ruby/setup-ruby@e65c17d16e57e481586a6a5a0282698790062f92 # v1.300.0
         with:
-          node-version-file: ".node-version"
-      - id: yarn-cache
-        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
+          bundler-cache: true
+      - id: resolve-canary-version-code
+        run: |
+          echo $ENCODED_IOAPP_JSON_KEY_FILE | base64 --decode > /tmp/json-key.json
+          cd android
+          bundle exec fastlane current_canary_version_code
         env:
-          cache-name: cache-node-modules
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
-      - id: install-packages
-        run: yarn install --frozen-lockfile
+          ENCODED_IOAPP_JSON_KEY_FILE: ${{ secrets.ENCODED_IOAPP_JSON_KEY_FILE }}
       - id: replace-version-with-canary
         run: |
-          UPDATED_BUILD_CODE=$(git rev-list HEAD --count)
+          UPDATED_BUILD_CODE=${{ steps.resolve-canary-version-code.outputs.CURRENT_CANARY_VERSION_CODE }}
           node scripts/canary/replaceCanaryVersion.js $UPDATED_BUILD_CODE
           mv ios/fastlane/Matchfile ios/fastlane/Matchfile_prod
           mv ios/fastlane/Matchfile_canary ios/fastlane/Matchfile
@@ -40,7 +39,7 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add .; git commit -m "Replace Matchfile for canary" --no-verify;
-          yarn release-canary
+          pnpm release-canary
       - id: push-tags
         run: |
           APP_VERSION=$(node -p -e "require('./package.json').version")
@@ -73,20 +72,7 @@ jobs:
           sudo apt-get clean || true
           echo "After cleanup:"
           df -h
-      - id: setup-node
-        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
-        with:
-          node-version-file: ".node-version"
-      - id: yarn-cache
-        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
-        env:
-          cache-name: cache-node-modules
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
-      - id: install-packages
-        run: yarn install --frozen-lockfile
+      - uses: ./.github/actions/setup-pnpm
       - id: download-api-client
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
@@ -105,7 +91,6 @@ jobs:
           ENCODED_IOAPP_GOOGLE_SERVICES_JSON_FILE: ${{secrets.ENCODED_IOAPP_GOOGLE_SERVICES_JSON_FILE}}
           ENCODED_IOAPP_JSON_KEY_FILE: ${{secrets.ENCODED_IOAPP_JSON_KEY_FILE}}
           ENCODED_IO_APP_RELEASE_KEYSTORE: ${{secrets.ENCODED_IO_APP_RELEASE_KEYSTORE}}
-          ENCODED_IO_APP_SENTRY_PROPERTIES: ${{secrets.ENCODED_IO_APP_SENTRY_PROPERTIES}}
           IO_APP_RELEASE_STORE_FILE : ${{secrets.IO_APP_RELEASE_STORE_FILE}}
           IO_APP_RELEASE_STORE_PASSWORD: ${{secrets.IO_APP_RELEASE_STORE_PASSWORD}}
           IO_APP_RELEASE_KEY_ALIAS: ${{secrets.IO_APP_RELEASE_KEY_ALIAS}}
@@ -157,20 +142,7 @@ jobs:
         with:
           fetch-depth: 0
           ref: ${{ needs.prepare-canary-release.outputs.canaryVersion }}
-      - id: setup-node
-        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
-        with:
-          node-version-file: ".node-version"
-      - id: yarn-cache
-        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
-        env:
-          cache-name: cache-node-modules
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
-      - id: install-packages
-        run: yarn install --frozen-lockfile
+      - uses: ./.github/actions/setup-pnpm
       - id: download-api-client
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
@@ -185,7 +157,6 @@ jobs:
         env:
           APP_STORE_API_KEY_ID: ${{secrets.APP_STORE_API_KEY_ID}}
           APP_STORE_API_PRIVATE_KEY: ${{secrets.APP_STORE_API_PRIVATE_KEY}}
-          ENCODED_IO_APP_SENTRY_PROPERTIES: ${{secrets.ENCODED_IO_APP_SENTRY_PROPERTIES}}
       - id: add-ssh-deploy-key
         run: |
           echo -e "Host github.com

@@ -1,22 +1,22 @@
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useEffect, useRef, useState } from "react";
-import * as O from "fp-ts/lib/Option";
+import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent.tsx";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent.tsx";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel.tsx";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList.ts";
-import { getCredentialNameFromType } from "../../../common/utils/itwCredentialUtils.ts";
-import { StoredCredential } from "../../../common/utils/itwTypesUtils.ts";
 import { useIODispatch } from "../../../../../store/hooks.ts";
+import { useItwCredentialName } from "../../../common/hooks/useItwCredentialName";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
+import { itwCredentialsRefreshStatusByType } from "../../../credentials/store/actions";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider.tsx";
 import {
   selectCredentialTypeOption,
   selectIsLoading
 } from "../../../machine/credential/selectors.ts";
-import { itwCredentialsRefreshStatusByType } from "../../../credentials/store/actions/index.ts";
-import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent.tsx";
 
 type Props = {
-  credential: StoredCredential;
+  credential: CredentialMetadata;
 };
 
 /**
@@ -40,7 +40,7 @@ export const ItwPresentationCredentialUnknownStatus = ({
   );
 
   const navigation = useIONavigation();
-  const credentialName = getCredentialNameFromType(credential.credentialType);
+  const credentialName = useItwCredentialName(credential.credentialType);
   const previousAssertionRef = useRef(credential.storedStatusAssertion);
 
   useHeaderSecondLevel({

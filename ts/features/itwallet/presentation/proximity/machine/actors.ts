@@ -1,231 +1,195 @@
-import { constUndefined } from "fp-ts/lib/function";
-import { fromCallback, fromPromise } from "xstate";
-import { Platform } from "react-native";
-import {
-  checkMultiple,
-  Permission,
-  PERMISSIONS,
-  requestMultiple,
-  RESULTS
-} from "react-native-permissions";
-import BluetoothStateManager from "react-native-bluetooth-state-manager";
 import { ISO18013_5 } from "@pagopa/io-react-native-iso18013";
+import { fromCallback, fromPromise } from "xstate";
+import { assert } from "../../../../../utils/assert";
+import { Env } from "../../../common/utils/environment";
+import { CredentialsVault } from "../../../credentials/utils/vault";
+import {
+  checkBluetoothActivation,
+  checkBluetoothPermissions
+} from "../utils/ble";
 import {
   generateAcceptedFields,
   getDocuments,
   getProximityDetails,
   promiseWithTimeout
-} from "../utils/itwProximityPresentationUtils";
-import { assert } from "../../../../../utils/assert";
-import {
-  trackItwProximityBluetoothBlock,
-  trackItwProximityBluetoothBlockAction
-} from "../analytics";
-import type { EventsPayload } from "../utils/itwProximityTypeUtils";
-import { useIOStore } from "../../../../../store/hooks";
-import { itwPresentableCredentialsByDocTypeSelector } from "../store/selectors";
-import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors";
-import { CredentialFormat } from "../../../common/utils/itwTypesUtils";
-import { Env } from "../../../common/utils/environment";
-import { ProximityEvents } from "./events";
+} from "../utils/presentation";
+import type { EventsPayload } from "../utils/types";
+import { checkNfcActivation } from "../utils/nfc";
 import { Context } from "./context";
-
-const PERMISSIONS_TO_CHECK: Array<Permission> =
-  Platform.OS === "android"
-    ? Platform.Version >= 31
-      ? [
-          PERMISSIONS.ANDROID.BLUETOOTH_SCAN,
-          PERMISSIONS.ANDROID.BLUETOOTH_CONNECT,
-          PERMISSIONS.ANDROID.BLUETOOTH_ADVERTISE
-        ] // Android 12 and above: Request new Bluetooth permissions along with location.
-      : [PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION] // Android 9 to Android 11: Only location permission is required for BLE.
-    : [PERMISSIONS.IOS.BLUETOOTH]; // iOS permissions required are Bluetooth and location.
+import { ProximityEvents } from "./events";
 
 const SEND_RESPONSE_TIMEOUT_MS = 20000;
 
-export type CheckPermissionsInput = {
-  isSilent?: boolean;
+const ENGAGEMENT_CONFIG: Record<
+  ISO18013_5.EngagementMode,
+  {
+    engagementModes: ReadonlyArray<ISO18013_5.EngagementMode>;
+    retrievalMethods: ReadonlyArray<ISO18013_5.RetrievalMethod>;
+  }
+> = {
+  qrcode: { engagementModes: ["qrcode"], retrievalMethods: ["ble"] },
+  nfc: { engagementModes: ["nfc"], retrievalMethods: ["nfc", "ble"] }
 };
 
-export type StartProximityFlowInput = {
-  isRestarting?: boolean;
-} | void;
-
-export type GetQrCodeStringActorOutput = Awaited<
-  ReturnType<typeof ISO18013_5.getQrCodeString>
->;
+export type StartEngagementActorInput = {
+  engagementMode: ISO18013_5.EngagementMode;
+};
 
 export type SendErrorResponseActorOutput = Awaited<
   ReturnType<typeof ISO18013_5.sendErrorResponse>
 >;
 
-export type CloseActorOutput = Awaited<ReturnType<typeof ISO18013_5.close>>;
+export type ProximityCommunicationLogicInput = Pick<Context, "credentials">;
 
-export type SendDocumentsActorInput = Pick<Context, "verifierRequest">;
+export type SendDocumentsActorInput = Pick<
+  Context,
+  "credentials" | "verifierRequest"
+>;
 
 export type SendDocumentsActorOutput = Awaited<
   ReturnType<typeof ISO18013_5.sendResponse>
 >;
 
-export const createProximityActorsImplementation = (
-  env: Env,
-  store: ReturnType<typeof useIOStore>
-) => {
-  const checkPermissions = fromPromise<boolean, CheckPermissionsInput>(
+export const createProximityActorsImplementation = (env: Env) => {
+  const checkBluetoothPermissionsActor = fromPromise<boolean>(
+    checkBluetoothPermissions
+  );
+
+  const checkBluetoothActivationActor = fromPromise<boolean>(
+    checkBluetoothActivation
+  );
+
+  const checkNfcActivationActor = fromPromise<boolean>(checkNfcActivation);
+
+  const startEngagement = fromPromise<void, StartEngagementActorInput>(
     async ({ input }) => {
-      const isSilent = input?.isSilent || false;
+      const { engagementModes, retrievalMethods } =
+        ENGAGEMENT_CONFIG[input.engagementMode];
 
-      // Check current permission status
-      const statuses = await checkMultiple(PERMISSIONS_TO_CHECK);
+      // Ensure any existing session is closed before starting a new one
+      await ISO18013_5.close().catch(() => null);
 
-      // Filter out already granted permissions
-      const permissionsToRequest = PERMISSIONS_TO_CHECK.filter(
-        permission => statuses[permission] !== RESULTS.GRANTED
-      );
-
-      if (permissionsToRequest.length > 0) {
-        if (!isSilent) {
-          trackItwProximityBluetoothBlock();
-        }
-        // Request only the missing permissions
-        const requestResults = await requestMultiple(permissionsToRequest);
-
-        const allPermissionsGranted = permissionsToRequest.every(
-          permission => requestResults[permission] === RESULTS.GRANTED
-        );
-
-        if (!isSilent) {
-          const userAction = allPermissionsGranted ? "allow" : "not_allow";
-          trackItwProximityBluetoothBlockAction(userAction);
-        }
-
-        // Verify if all requested permissions are granted
-        return allPermissionsGranted;
-      }
-      return true;
+      await ISO18013_5.startEngagement({
+        engagementModes,
+        retrievalMethods,
+        certificates: [[env.X509_CERT_ROOT]]
+      });
     }
   );
 
-  const checkBluetoothIsActive = fromPromise<boolean, void>(async () => {
-    const bluetoothState = await BluetoothStateManager.getState();
+  const proximityCommunicationLogic = fromCallback<
+    ProximityEvents,
+    ProximityCommunicationLogicInput
+  >(({ sendBack, input }) => {
+    const { credentials } = input;
 
-    return bluetoothState === "PoweredOn";
-  });
+    assert(
+      credentials,
+      "Missing credentials for proximity communication logic"
+    );
 
-  const startProximityFlow = fromPromise<void, StartProximityFlowInput>(
-    async ({ input }) => {
-      if (input?.isRestarting) {
-        // The proximity flow must be closed before restarting
-        await ISO18013_5.close().catch(constUndefined);
-      }
-      await ISO18013_5.start({ certificates: [[env.X509_CERT_ROOT]] });
-    }
-  );
+    const handleNfcStarted = () => {
+      sendBack({ type: "nfc-started" });
+    };
 
-  const generateQrCodeString = fromPromise<GetQrCodeStringActorOutput, void>(
-    ISO18013_5.getQrCodeString
-  );
+    const handleNfcStopped = () => {
+      sendBack({ type: "nfc-stopped" });
+    };
 
-  const proximityCommunicationLogic = fromCallback<ProximityEvents>(
-    ({ sendBack }) => {
-      const handleDeviceConnecting = () => {
-        sendBack({ type: "device-connecting" });
-      };
+    const handleQrCodeString = (
+      eventPayload: EventsPayload["onQrCodeString"]
+    ) => {
+      sendBack({ type: "qr-code-string", payload: eventPayload.data });
+    };
 
-      const handleDeviceConnected = () => {
-        sendBack({ type: "device-connected" });
-      };
+    const handleDeviceConnecting = () => {
+      sendBack({ type: "device-connecting" });
+    };
 
-      const handleDeviceDisconnected = () => {
-        sendBack({ type: "device-disconnected" });
-      };
+    const handleDeviceConnected = () => {
+      sendBack({ type: "device-connected" });
+    };
 
-      const handleError = (eventPayload: EventsPayload["onError"]) => {
-        const { error } = eventPayload ?? {};
-        sendBack({
-          type: "device-error",
-          error
+    const handleDeviceDisconnected = () => {
+      sendBack({ type: "device-disconnected" });
+    };
+
+    const handleError = (eventPayload: EventsPayload["onError"]) => {
+      const { error } = eventPayload ?? {};
+      sendBack({
+        type: "device-error",
+        error
+      });
+    };
+
+    const handleDocumentRequestReceived = (
+      eventPayload: EventsPayload["onDocumentRequestReceived"]
+    ) => {
+      const { data, retrievalMethod } = eventPayload ?? {};
+
+      try {
+        assert(data, "Missing required data");
+
+        const parsedRequest = ISO18013_5.parseVerifierRequest(JSON.parse(data));
+        const proximityDetails = getProximityDetails({
+          request: parsedRequest.request,
+          credentials,
+          requireAuthenticated: env.type !== "pre"
         });
-      };
 
-      const handleDocumentRequestReceived = (
-        eventPayload: EventsPayload["onDocumentRequestReceived"]
-      ) => {
-        const { data } = eventPayload ?? {};
-
-        try {
-          assert(data, "Missing required data");
-
-          const parsedRequest = ISO18013_5.parseVerifierRequest(
-            JSON.parse(data)
-          );
-          const credentials = itwPresentableCredentialsByDocTypeSelector(
-            store.getState()
-          );
-          const proximityDetails = getProximityDetails(
-            parsedRequest.request,
-            credentials
-          );
-
+        sendBack({
+          type: "device-document-request-received",
+          proximityDetails,
+          verifierRequest: parsedRequest,
+          retrievalMethod
+        });
+      } catch (error) {
+        // Give some time to show the loading message
+        // and avoid glitches in the UI.
+        setTimeout(() => {
           sendBack({
-            type: "device-document-request-received",
-            proximityDetails,
-            verifierRequest: parsedRequest
+            type: "device-error",
+            error
           });
-        } catch (error) {
-          // Give some time to show the loading message
-          // and avoid glitches in the UI.
-          setTimeout(() => {
-            sendBack({
-              type: "device-error",
-              error
-            });
-          }, 500);
-        }
-      };
+        }, 500);
+      }
+    };
 
-      const listeners = [
-        ISO18013_5.addListener("onDeviceConnecting", handleDeviceConnecting),
-        ISO18013_5.addListener("onDeviceConnected", handleDeviceConnected),
-        ISO18013_5.addListener(
-          "onDocumentRequestReceived",
-          handleDocumentRequestReceived
-        ),
-        ISO18013_5.addListener(
-          "onDeviceDisconnected",
-          handleDeviceDisconnected
-        ),
-        ISO18013_5.addListener("onError", handleError)
-      ];
+    const listeners = [
+      ISO18013_5.addListener("onNfcStarted", handleNfcStarted),
+      ISO18013_5.addListener("onNfcStopped", handleNfcStopped),
+      ISO18013_5.addListener("onQrCodeString", handleQrCodeString),
+      ISO18013_5.addListener("onDeviceConnecting", handleDeviceConnecting),
+      ISO18013_5.addListener("onDeviceConnected", handleDeviceConnected),
+      ISO18013_5.addListener(
+        "onDocumentRequestReceived",
+        handleDocumentRequestReceived
+      ),
+      ISO18013_5.addListener("onDeviceDisconnected", handleDeviceDisconnected),
+      ISO18013_5.addListener("onError", handleError)
+    ];
 
-      return () => {
-        // Remove event listeners
-        listeners.forEach(listener => listener.remove());
-        // Close the Bluetooth connection and clear all resources
-        void ISO18013_5.close().catch(constUndefined);
-      };
-    }
-  );
+    return () => {
+      // Remove event listeners
+      listeners.forEach(listener => listener.remove());
+      // Close the Bluetooth connection and clear all resources
+      void ISO18013_5.close().catch(() => null);
+    };
+  });
 
   const sendDocuments = fromPromise<
     SendDocumentsActorOutput,
     SendDocumentsActorInput
   >(async ({ input }) => {
-    const { verifierRequest } = input;
-    assert(verifierRequest, "Missing required verifierRequest");
+    const { verifierRequest, credentials } = input;
 
-    const credentials = itwPresentableCredentialsByDocTypeSelector(
-      store.getState()
-    );
-    const wiaMdoc = itwWalletInstanceAttestationSelector(store.getState())?.[
-      CredentialFormat.MDOC
-    ];
-    assert(wiaMdoc, "Missing Wallet Attestation in MDOC format");
+    assert(credentials, "Missing credentials for sending documents");
+    assert(verifierRequest, "Missing verifier request");
 
-    const documents = getDocuments(
+    const documents = await getDocuments(
       verifierRequest.request,
       credentials,
-      wiaMdoc
+      CredentialsVault.get
     );
     // We accept all the fields requested by the verifier app
     const acceptedFields = generateAcceptedFields(verifierRequest.request);
@@ -246,18 +210,13 @@ export const createProximityActorsImplementation = (
     () => ISO18013_5.sendErrorResponse(ISO18013_5.ErrorCode.SESSION_TERMINATED)
   );
 
-  const closeProximityFlow = fromPromise<CloseActorOutput, void>(
-    ISO18013_5.close
-  );
-
   return {
-    checkPermissions,
-    checkBluetoothIsActive,
-    closeProximityFlow,
-    generateQrCodeString,
+    checkBluetoothPermissions: checkBluetoothPermissionsActor,
+    checkBluetoothActivation: checkBluetoothActivationActor,
+    checkNfcActivation: checkNfcActivationActor,
+    startEngagement,
     proximityCommunicationLogic,
     sendDocuments,
-    startProximityFlow,
     terminateProximitySession
   };
 };

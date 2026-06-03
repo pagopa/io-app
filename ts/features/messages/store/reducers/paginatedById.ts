@@ -1,17 +1,18 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
+import { Action } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
+import { clearCache } from "../../../settings/common/store/actions";
+import { UIMessage } from "../../types";
 import {
   loadMessageById,
+  LoadMessageByIdFailureKind,
   loadNextPageMessages,
   loadPreviousPageMessages,
   reloadAllMessages,
   upsertMessageStatusAttributes,
   UpsertMessageStatusAttributesPayload
 } from "../actions";
-import { clearCache } from "../../../settings/common/store/actions";
-import { Action } from "../../../../store/actions/types";
-import { GlobalState } from "../../../../store/reducers/types";
-import { UIMessage } from "../../types";
 
 // State
 
@@ -19,7 +20,10 @@ import { UIMessage } from "../../types";
  * An object containing all the fetched messages keyed by id.
  */
 export type PaginatedById = Readonly<{
-  [key: string]: pot.Pot<UIMessage, Error>;
+  [key: string]: pot.Pot<
+    UIMessage,
+    { error: Error; kind: LoadMessageByIdFailureKind }
+  >;
 }>;
 
 const INITIAL_STATE: PaginatedById = {};
@@ -70,10 +74,10 @@ const reduceLoadMessageById = (
     case getType(loadMessageById.failure):
       return {
         ...state,
-        [action.payload.id]: pot.toError(
-          state[action.payload.id] ?? pot.none,
-          action.payload.error
-        )
+        [action.payload.id]: pot.toError(state[action.payload.id] ?? pot.none, {
+          error: action.payload.error,
+          kind: action.payload.kind
+        })
       };
     default:
       return state;
@@ -115,3 +119,11 @@ export const getPaginatedMessageById = (
   state: GlobalState,
   messageId: string
 ) => state.entities.messages.paginatedById[messageId] ?? pot.none;
+
+export const getPaginatedMessageErrorKindById = (
+  state: GlobalState,
+  messageId: string
+) => {
+  const messagePot = getPaginatedMessageById(state, messageId);
+  return pot.isError(messagePot) ? messagePot.error.kind : undefined;
+};

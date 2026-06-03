@@ -322,7 +322,7 @@
       "evidence"
     ]
   },
-  "credentialType": "PersonIdentificationData",
+  "credentialType": "pid",
   "jwt": {
     "expiration": "2030-11-22T14:09:41Z",
     "issuedAt": "2024-11-13T14:09:41Z"

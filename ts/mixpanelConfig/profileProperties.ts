@@ -1,5 +1,4 @@
 import * as O from "fp-ts/lib/Option";
-import * as Sentry from "@sentry/react-native";
 import { getPeople, isMixpanelInstanceInitialized } from "../mixpanel.ts";
 import { GlobalState } from "../store/reducers/types";
 import { LoginSessionDuration } from "../features/authentication/fastLogin/analytics/optinAnalytics";
@@ -25,6 +24,8 @@ import {
   PNServiceStatus
 } from "../features/pn/analytics/index.ts";
 import { isPnServiceEnabled } from "../features/pn/reminderBanner/reducer/bannerDismiss.ts";
+import { trackAppCaughtError } from "../utils/analytics.ts";
+import { unknownToString } from "../utils/errors.ts";
 import {
   cdcStatusHandler,
   cgnStatusHandler,
@@ -115,7 +116,11 @@ export const updateMixpanelProfileProperties = async (
 
     getPeople()?.set(profilePropertiesObject);
   } catch (e) {
-    Sentry.captureException(e);
+    trackAppCaughtError(
+      "updateMixpanelProfileProperties",
+      undefined,
+      unknownToString(e)
+    );
   }
 };
 

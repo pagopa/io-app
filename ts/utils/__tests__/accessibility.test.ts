@@ -1,5 +1,6 @@
 import { AccessibilityInfo } from "react-native";
 import {
+  formatStringToSpacedString,
   getAccessibleAmountText,
   getListItemAccessibilityLabelCount,
   isScreenReaderEnabled
@@ -56,6 +57,16 @@ describe("getAccessibleAmountText", () => {
     const result = getAccessibleAmountText();
 
     expect(result).toBeUndefined();
+  });
+});
+
+describe("formatStringToSpacedString", () => {
+  test.each([
+    { input: "01234567890", expected: "0 1 2 3 4 5 6 7 8 9 0" },
+    { input: "", expected: "" },
+    { input: "A", expected: "A" }
+  ])("$input → $expected", ({ input, expected }) => {
+    expect(formatStringToSpacedString(input)).toBe(expected);
   });
 });
 

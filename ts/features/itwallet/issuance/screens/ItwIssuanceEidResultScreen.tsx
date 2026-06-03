@@ -10,14 +10,14 @@ import {
   trackBackToWallet,
   trackItwCredentialReissuingFailed
 } from "../analytics";
-import { getMixPanelCredential } from "../../analytics/utils/index.ts";
+import { getMixPanelCredential } from "../../analytics/utils";
 import { ItwReissuanceFeedbackBanner } from "../../common/components/ItwReissuanceFeedbackBanner.tsx";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
-import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
-import { StoredCredential } from "../../common/utils/itwTypesUtils.ts";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors/index.ts";
-import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
+import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
+import { CredentialMetadata } from "../../common/utils/itwTypesUtils.ts";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
+import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
   selectCredentialType,
   selectIsLoading,
@@ -38,6 +38,8 @@ export const ItwIssuanceEidResultScreen = () => {
   const credentialType =
     ItwEidIssuanceMachineContext.useSelector(selectCredentialType);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isEidMachineLoading =
+    ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
 
   const itw_flow = isItwL3 ? "L3" : "reissuing_eID";
 
@@ -68,14 +70,16 @@ export const ItwIssuanceEidResultScreen = () => {
   const handleBackToWallet = () => machineRef.send({ type: "go-to-wallet" });
 
   useEffect(() => {
-    if (credentialType) {
+    // When the EID issuance was triggered by a credential request, the credential
+    // issuance must not start prematurely while the EID machine is still loading.
+    if (credentialType && !isEidMachineLoading) {
       credentialMachineRef.send({
         type: "select-credential",
         mode: "issuance",
         credentialType
       });
     }
-  }, [credentialType, credentialMachineRef]);
+  }, [credentialType, credentialMachineRef, isEidMachineLoading]);
 
   if (credentialType) {
     return <ItwIssuanceEidCredentialTriggerContent />;
@@ -123,10 +127,13 @@ export const ItwIssuanceEidResultScreen = () => {
 const ItwIssuanceEidUpgradeResultContent = ({
   failedCredentials
 }: {
-  failedCredentials: ReadonlyArray<StoredCredential>;
+  failedCredentials: ReadonlyArray<CredentialMetadata>;
 }) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
+  const failedCredentialName = useItwCredentialName(
+    failedCredentials[0]?.credentialType
+  );
 
   const handleBackToWallet = () => machineRef.send({ type: "go-to-wallet" });
 
@@ -143,9 +150,7 @@ const ItwIssuanceEidUpgradeResultContent = ({
     const title =
       failedCredentials.length === 1
         ? I18n.t("features.itWallet.issuance.upgrade.failure.title", {
-            credentialName: getCredentialNameFromType(
-              failedCredentials[0].credentialType
-            )
+            credentialName: failedCredentialName
           })
         : I18n.t("features.itWallet.issuance.upgrade.failure.titleMany");
 

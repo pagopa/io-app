@@ -3,6 +3,7 @@ import {
   Body,
   ContentWrapper,
   H2,
+  IOMarkdown,
   OTPInput,
   useIOToast,
   VSpacer
@@ -28,7 +29,6 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { IdpData } from "../../../../../../definitions/content/IdpData";
-import IOMarkdown from "../../../../../components/IOMarkdown";
 import {
   BottomTopAnimation,
   LightModalContext
@@ -49,6 +49,7 @@ import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventSc
 import { withTrailingPoliceCarLightEmojii } from "../../../../../utils/strings";
 import { openWebUrl } from "../../../../../utils/url";
 import {
+  cieLoginFlowSelector,
   isActiveSessionLoginSelector,
   remoteApiLoginUrlPrefixSelector
 } from "../../../activeSessionLogin/store/selectors";
@@ -92,10 +93,10 @@ const CiePinScreen = () => {
   const dispatch = useIODispatch();
 
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
-  const flow = isActiveSessionLogin ? "reauth" : "auth";
+  const loginType = useIOSelector(cieLoginFlowSelector);
 
   useOnFirstRender(() => {
-    trackLoginCiePinScreen(flow);
+    trackLoginCiePinScreen(loginType);
   });
 
   const requestNfcEnabledCheck = useCallback(
@@ -250,7 +251,7 @@ const CiePinScreen = () => {
               asLink
               accessibilityRole="button"
               onPress={() => {
-                trackLoginCiePinInfo(flow);
+                trackLoginCiePinInfo(loginType);
                 present();
               }}
             >

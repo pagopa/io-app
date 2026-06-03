@@ -63,8 +63,10 @@ const WalletCardsContainer = () => {
     return (
       <>
         {shouldRenderL2EngagementBanner && <ItwL2EngagementBanner />}
-        {shouldRenderItwDiscoveryBanner && <ItwDiscoveryBanner />}
-        <View testID="walletCardsContainerTestID" style={styles.content}>
+        {shouldRenderItwDiscoveryBanner && (
+          <ItwDiscoveryBanner style={{ marginVertical: 8 }} />
+        )}
+        <View testID="walletCardsContainerTestID" style={styles.walletContent}>
           {shouldRenderItwCardsContainer && <ItwWalletCardsContainer />}
           <OtherWalletCardsContainer />
         </View>
@@ -119,18 +121,20 @@ const OtherWalletCardsContainer = withWalletCategoryFilter("other", () => {
   }
 
   return (
-    <WalletCardsCategoryContainer
-      key="cards_category_other"
-      testID="otherWalletCardsContainerTestID"
-      cards={cards}
-      header={
-        <ListItemHeader
-          testID={"walletCardsCategoryOtherHeaderTestID"}
-          label={I18n.t("features.wallet.cards.categories.other")}
+    <View>
+      <ListItemHeader
+        testID={"walletCardsCategoryOtherHeaderTestID"}
+        label={I18n.t("features.wallet.cards.categories.other")}
+      />
+      <View style={styles.cardsWrapper}>
+        <WalletCardsCategoryContainer
+          key="cards_category_other"
+          testID="otherWalletCardsContainerTestID"
+          cards={cards}
         />
-      }
-      bottomElement={<WalletCardsCategoryRetryErrorBanner />}
-    />
+      </View>
+      <WalletCardsCategoryRetryErrorBanner />
+    </View>
   );
 });
 
@@ -142,12 +146,13 @@ export {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    gap: 16,
-    marginTop: 16
+    flex: 1
   },
-  content: {
+  walletContent: {
     flex: 1,
     gap: 8
+  },
+  cardsWrapper: {
+    marginHorizontal: -8
   }
 });

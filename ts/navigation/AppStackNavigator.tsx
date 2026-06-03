@@ -12,7 +12,6 @@ import {
 import { PropsWithChildren, ReactElement, useEffect, useRef } from "react";
 
 import { Linking, View } from "react-native";
-import { ReactNavigationInstrumentation } from "../App";
 import { useStoredExperimentalDesign } from "../common/context/DSExperimentalContext";
 import { useStoredFontPreference } from "../common/context/DSTypefaceContext";
 import LoadingSpinnerOverlay from "../components/LoadingSpinnerOverlay";
@@ -23,6 +22,7 @@ import { idPayLinkingOptions } from "../features/idpay/common/navigation/linking
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
 import { useItwLinkingOptions } from "../features/itwallet/navigation/useItwLinkingOptions";
 import { storeLinkingUrl } from "../features/linking/actions";
+import { trackIOOpenedFromUniversalAppLink } from "../features/linking/analytics";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import { SETTINGS_ROUTES } from "../features/settings/common/navigation/routes";
@@ -32,6 +32,7 @@ import { setDebugCurrentRouteName } from "../store/actions/debug";
 import { useIODispatch, useIOSelector, useIOStore } from "../store/hooks";
 import { trackScreen } from "../store/middlewares/navigation";
 import { isCGNEnabledAfterLoadSelector } from "../store/reducers/backendStatus/remoteConfig";
+import { isMixpanelEnabled } from "../store/reducers/persistedPreferences";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import {
   IONavigationDarkTheme,
@@ -93,9 +94,7 @@ export const AppStackNavigator = (): ReactElement => {
   return <AuthenticatedStackNavigator />;
 };
 
-type InnerNavigationContainerProps = PropsWithChildren<{
-  routingInstrumentation?: ReactNavigationInstrumentation;
-}>;
+type InnerNavigationContainerProps = PropsWithChildren;
 
 const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
   const routeNameRef = useRef<string>(undefined);
@@ -163,6 +162,12 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
   useOnFirstRender(() => {
     void Linking.getInitialURL().then(initialUrl => {
       if (initialUrl) {
+        // Track if the app is opened from a universal link on cold start
+        // This mirrors the behavior in linkingSubscription for warm starts
+        // We read the user's Mixpanel preference from the store to respect their choice
+        const state = store.getState();
+        const mixpanelEnabled = isMixpanelEnabled(state);
+        trackIOOpenedFromUniversalAppLink(initialUrl, mixpanelEnabled);
         processUtmLink(initialUrl, dispatch);
         /**
          *  We store the initialUrl in the redux store so that
@@ -188,11 +193,6 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
       linking={linking}
       fallback={<LoadingSpinnerOverlay isLoading={true} />}
       onReady={() => {
-        if (props.routingInstrumentation) {
-          props.routingInstrumentation.registerNavigationContainer(
-            navigationRef
-          );
-        }
         NavigationService.setNavigationReady();
         routeNameRef.current = navigationRef.current?.getCurrentRoute()?.name;
       }}
@@ -223,12 +223,8 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
  * Wraps the NavigationContainer with the AppStackNavigator (Root navigator of the app)
  * @constructor
  */
-export const IONavigationContainer = ({
-  routingInstrumentation
-}: {
-  routingInstrumentation?: ReactNavigationInstrumentation;
-}) => (
-  <InnerNavigationContainer routingInstrumentation={routingInstrumentation}>
+export const IONavigationContainer = () => (
+  <InnerNavigationContainer>
     <AppStackNavigator />
   </InnerNavigationContainer>
 );

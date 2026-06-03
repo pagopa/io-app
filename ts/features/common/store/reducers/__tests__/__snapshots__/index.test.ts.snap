@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`featuresPersistor should match snapshot 1`] = `
 {
@@ -44,6 +44,9 @@ exports[`featuresPersistor should match snapshot 1`] = `
     },
     "qtspClauses": {
       "kind": "PotNone",
+    },
+    "securityLevel": {
+      "localFeatureFlag": false,
     },
     "signature": {
       "kind": "PotNone",
@@ -145,11 +148,20 @@ exports[`featuresPersistor should match snapshot 1`] = `
     "banners": {},
     "credentials": {
       "credentials": {},
+      "legacyCredentials": {},
     },
     "credentialsCatalogue": {
       "catalogue": {
         "kind": "PotNone",
       },
+      "isEnabledForCredentialsList": false,
+      "translations": {
+        "kind": "PotNone",
+      },
+    },
+    "debug": {
+      "credentialStatusOverrides": {},
+      "savedCredentials": undefined,
     },
     "environment": {
       "env": "prod",
@@ -166,19 +178,25 @@ exports[`featuresPersistor should match snapshot 1`] = `
       },
     },
     "preferences": {},
+    "proximity": {
+      "consents": {},
+    },
     "securePreferences": {
       "offlineAccessCounter": 0,
       "unverifiedCredentialsAccessCounter": 0,
     },
     "walletInstance": {
       "attestation": undefined,
+      "isRemotelyActive": undefined,
       "renewalError": false,
       "status": {
         "kind": "PotNone",
       },
+      "walletUnitAttestations": {},
     },
   },
   "landingBanners": {
+    "CGN_ENGAGEMENT_BANNER": true,
     "ITW_DISCOVERY": true,
     "IT_WALLET_DISCOVERY": true,
     "LV_EXPIRATION_REMINDER": true,

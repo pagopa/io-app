@@ -8,7 +8,14 @@ const DESIGN_SYSTEM_ROUTES = {
     PICTOGRAMS: { route: "DESIGN_SYSTEM_PICTOGRAMS", title: "Pictograms" },
     LOGOS: { route: "DESIGN_SYSTEM_LOGOS", title: "Logos" },
     LOADERS: { route: "DESIGN_SYSTEM_LOADERS", title: "Loaders" },
-    HAPTIC_FEEDBACK: { route: "DESIGN_SYSTEM_HAPTIC", title: "Haptic Feedback" }
+    HAPTIC_FEEDBACK: {
+      route: "DESIGN_SYSTEM_HAPTIC",
+      title: "Haptic Feedback"
+    },
+    HAPTIC_FEEDBACK_PULSAR: {
+      route: "DESIGN_SYSTEM_HAPTIC_PULSAR",
+      title: "Haptic Feedback (Pulsar)"
+    }
   },
   COMPONENTS: {
     BUTTONS: { route: "DESIGN_SYSTEM_BUTTONS", title: "Buttons" },

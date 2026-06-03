@@ -15,18 +15,18 @@ import IOMarkdown from "../../../../components/IOMarkdown";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { trackItwStartDeactivation } from "../../analytics";
-import { trackCredentialDetail } from "../../presentation/details/analytics";
 import { mapPIDStatusToMixpanel } from "../../analytics/utils";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import {
   itwCredentialsEidSelector,
   itwCredentialsEidStatusSelector
 } from "../../credentials/store/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { trackCredentialDetail } from "../../presentation/details/analytics";
+import { ITW_PRESENTATION_DETAILS_SCREENVIEW_EVENTS } from "../../presentation/details/analytics/enum";
 import { useItwStatusIconColor } from "../hooks/useItwStatusIconColor";
 import { parseClaims, WellKnownClaim } from "../utils/itwClaimsUtils";
-import { StoredCredential } from "../utils/itwTypesUtils";
-import { ITW_PRESENTATION_DETAILS_SCREENVIEW_EVENTS } from "../../presentation/details/analytics/enum";
+import { CredentialMetadata } from "../utils/itwTypesUtils";
 import { ItwCredentialClaim } from "./ItwCredentialClaim";
 import { ItwEidLifecycleAlert } from "./ItwEidLifecycleAlert";
 
@@ -55,16 +55,18 @@ export const ItwEidInfoBottomSheetTitle = ({
 
 type ItwEidInfoBottomSheetContentProps = {
   navigation: ReturnType<typeof useIONavigation>;
+  currentScreenName?: string;
 };
 
 const ItwEidInfoBottomSheetContent = ({
-  navigation
+  navigation,
+  currentScreenName
 }: ItwEidInfoBottomSheetContentProps) => {
   const eidOption = useIOSelector(itwCredentialsEidSelector);
   const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
 
-  const Content = ({ credential }: { credential: StoredCredential }) => {
+  const Content = ({ credential }: { credential: CredentialMetadata }) => {
     const claims = parseClaims(credential.parsedCredential, {
       exclude: [WellKnownClaim.unique_id, WellKnownClaim.content]
     });
@@ -96,7 +98,11 @@ const ItwEidInfoBottomSheetContent = ({
             "features.itWallet.presentation.bottomSheets.eidInfo.contentTop"
           )}
         />
-        <ItwEidLifecycleAlert navigation={navigation} skipViewTracking={true} />
+        <ItwEidLifecycleAlert
+          navigation={navigation}
+          currentScreenName={currentScreenName}
+          skipViewTracking={true}
+        />
         <View>
           {claims.map((claim, index) => (
             <Fragment key={index}>

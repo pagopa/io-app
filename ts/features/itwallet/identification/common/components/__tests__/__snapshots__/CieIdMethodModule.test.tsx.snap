@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
 
 exports[`CieIdMethodModule renders correctly for L2 1`] = `
 <View
@@ -156,7 +156,7 @@ exports[`CieIdMethodModule renders correctly for L2 1`] = `
                 ]
               }
             >
-              Continua con l’app CieID
+              Usa l'app CieID
             </Text>
             <Text
               allowFontScaling={true}

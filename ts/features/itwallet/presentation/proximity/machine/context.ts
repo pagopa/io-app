@@ -1,19 +1,26 @@
-import type {
-  ProximityDetails,
-  VerifierRequest
-} from "../utils/itwProximityTypeUtils";
+import { ISO18013_5 } from "@pagopa/io-react-native-iso18013";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
+import type { ProximityDetails, VerifierRequest } from "../utils/types";
 import { ProximityFailure } from "./failure";
 
 export type Context = {
+  /**
+   * The credentials available in the wallet, to be potentially shared with the Relying Party.
+   */
+  credentials: Record<string, CredentialMetadata> | undefined;
   /**
    * The string used to generate the QR Code
    */
   qrCodeString?: string;
   /**
-   * A boolean value indicating whether an error occurs
-   * during the `qrCodeString` generation process
+   * The engagement mode committed to for the current proximity session.
+   * Defaults to "qrcode"; promoted to "nfc" only after the NFC permission gate succeeds.
    */
-  isQRCodeGenerationError?: boolean;
+  engagementMode: ISO18013_5.EngagementMode;
+  /**
+   * The retrieval mode used for the proximity presentation, either "nfc" or "ble".
+   */
+  retrievalMethod?: ISO18013_5.RetrievalMethod;
   /**
    * The failure of the proximity presentation machine
    */
@@ -27,13 +34,15 @@ export type Context = {
    */
   proximityDetails?: ProximityDetails;
   /**
-   * A boolean value indicating whether the user has given consent
+   * A boolean value indicating whether the user has granted consent
    * to share their credentials with the Relying Party
    */
-  hasGivenConsent?: boolean;
+  hasGrantedConsent?: boolean;
 };
 
 export const InitialContext: Context = {
+  credentials: undefined,
+  engagementMode: "qrcode",
   failure: undefined,
   proximityDetails: undefined,
   verifierRequest: undefined

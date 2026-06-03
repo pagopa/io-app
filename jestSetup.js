@@ -11,7 +11,10 @@ import { NativeModules, AccessibilityInfo, AppState } from "react-native";
 import mockRNDeviceInfo from "react-native-device-info/jest/react-native-device-info-mock";
 import mockZendesk from "./ts/__mocks__/io-react-native-zendesk.ts";
 import { initI18n } from "./ts/i18n.ts";
+import "react-native-gesture-handler/jestSetup";
+import { setUpTests } from "react-native-reanimated";
 
+setUpTests();
 void initI18n();
 
 const mockRNQRGenerator = {
@@ -30,6 +33,12 @@ jest.mock("expo-screen-capture", () => ({}));
 jest.mock("react-native-haptic-feedback", () => ({
   ...jest.requireActual("react-native-haptic-feedback"),
   trigger: jest.fn()
+}));
+
+jest.mock("react-native-pulsar", () => ({
+  Presets: {
+    System: new Proxy({}, { get: () => jest.fn() })
+  }
 }));
 
 // eslint-disable-next-line functional/immutable-data
@@ -60,9 +69,10 @@ global.CanvasKit = {
   }))
 };
 
+jest.mock("react-native-quick-crypto", () => ({}));
 jest.mock("@pagopa/io-react-native-zendesk", () => mockZendesk);
 jest.mock("@react-native-async-storage/async-storage", () => mockAsyncStorage);
-jest.mock("@react-native-community/push-notification-ios", () => jest.fn());
+jest.mock("expo-notifications", () => ({}));
 jest.mock("@react-native-cookies/cookies", () => jest.fn());
 jest.mock("react-native-share", () => jest.fn());
 jest.mock("@react-native-clipboard/clipboard", () => mockClipboard);
@@ -72,11 +82,6 @@ jest.mock("@react-native-clipboard/clipboard", () => mockClipboard);
 jest.mock("react-native-worklets", () =>
   require("react-native-worklets/lib/module/mock")
 );
-
-// Setup react-native-reanimated for testing (v4.x)
-// See: https://docs.swmansion.com/react-native-reanimated/docs/guides/testing/
-const { setUpTests } = require("react-native-reanimated");
-setUpTests();
 
 jest.mock("react-native-blob-util", () => ({
   DocumentDir: () => jest.fn(),
@@ -88,16 +93,11 @@ NativeModules.PlatformConstants = NativeModules.PlatformConstants || {
   forceTouchAvailable: false
 };
 
-// We need to override the global fetch and AbortController to make the tests
-// compatible with node-fetch
-
-const {
-  AbortController
-} = require("abortcontroller-polyfill/dist/cjs-ponyfill");
+// node-fetch is required instead of native fetch because @pagopa/ts-commons
+// abort error handling checks reason.type === "aborted" (node-fetch's shape),
+// which differs from native fetch's DOMException with name === "AbortError"
 // eslint-disable-next-line functional/immutable-data
 global.fetch = nodeFetch;
-// eslint-disable-next-line functional/immutable-data
-global.AbortController = AbortController;
 
 jest.mock("remark-directive", () => jest.fn());
 jest.mock("remark-rehype", () => jest.fn());
@@ -129,8 +129,6 @@ jest.mock("@gorhom/bottom-sheet", () => {
   };
 });
 
-jest.mock("@sentry/react-native");
-
 jest.mock("@pagopa/io-app-design-system", () => {
   const actual = jest.requireActual("@pagopa/io-app-design-system");
   const React = require("react");
@@ -142,21 +140,37 @@ jest.mock("@pagopa/io-app-design-system", () => {
   };
 });
 
-jest.mock("react-native-device-info", () => mockRNDeviceInfo);
-
 jest.mock("react-native-pdf", () => jest.fn());
 
 jest.mock("react-native-permissions", () =>
   require("react-native-permissions/mock")
 );
 
-const mockSubscription = {
-  callback: jest.fn(),
-  remove: jest.fn()
-};
-
 jest.mock("react-native", () => {
   const RN = jest.requireActual("react-native"); // use original implementation, which comes with mocks out of the box
+
+  // Eagerly load specific react-native exports to avoid "Jest environment has
+  // been torn down" errors. In React Native 0.81+, many exports are lazy
+  // getters that call require() internally. When @react-navigation/stack v7's
+  // Card.tsx and helpers access these inside setTimeout callbacks that fire
+  // after jest tears down the environment, the require() calls throw a
+  // ReferenceError. Replacing the specific getters with pre-loaded plain
+  // properties prevents any require() call in those post-teardown callbacks.
+  //
+  // Properties known to be accessed in @react-navigation/stack v7 timeouts:
+  //   - Animated (Card.tsx: spec.animation === 'spring' ? Animated.spring : ...)
+  //   - Keyboard (useKeyboardManager.tsx: Keyboard.dismiss())
+  const eagerLoad = (prop) => {
+    const value = RN[prop];
+    Object.defineProperty(RN, prop, {
+      value,
+      writable: true,
+      configurable: true,
+      enumerable: true
+    });
+  };
+  eagerLoad("Animated");
+  eagerLoad("Keyboard");
 
   // eslint-disable-next-line functional/immutable-data
   RN.NativeModules.JailMonkey = jest.requireActual("jail-monkey");
@@ -182,6 +196,7 @@ jest.mock("react-native/Libraries/TurboModule/TurboModuleRegistry", () => {
     getEnforcing: name => {
       // List of TurboModules libraries to mock.
       const modulesToMock = [
+        "IoReactNativeHttpClient",
         "RNDocumentPicker",
         "RNHapticFeedback",
         "RNCWebViewModule",
@@ -210,7 +225,9 @@ jest.mock(
     };
   }
 );
-jest.spyOn(AppState, "addEventListener").mockImplementation(() => ({remove: jest.fn()}));
+jest
+  .spyOn(AppState, "addEventListener")
+  .mockImplementation(() => ({ remove: jest.fn() }));
 
 jest.mock("mixpanel-react-native", () => ({
   __esModule: true,
@@ -282,4 +299,27 @@ jest.mock("@pagopa/io-react-native-iso18013", () => ({
 
 jest.mock("@pagopa/io-react-native-cie", () => ({
   CieManager: jest.fn()
+}));
+
+jest.mock("react-native-keyboard-controller", () =>
+  require("react-native-keyboard-controller/jest")
+);
+jest.mock("@pagopa/io-react-native-iso18013", () => ({
+  ISO18013_5: {
+    ErrorCode: {
+      CBOR_DECODING: 11,
+      SESSION_ENCRYPTION: 10,
+      SESSION_TERMINATED: 20
+    },
+    addListener: jest.fn(),
+    startEngagement: jest.fn(),
+    close: jest.fn(),
+    generateResponse: jest.fn(),
+    sendErrorResponse: jest.fn(),
+    sendResponse: jest.fn(),
+    parseVerifierRequest: jest.fn()
+  },
+  ISO18013_7: {},
+  CBOR: {},
+  COSE: {}
 }));

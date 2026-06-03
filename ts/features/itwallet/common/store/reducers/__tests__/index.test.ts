@@ -178,4 +178,42 @@ describe("itWalletReducer migrations", () => {
       credentialsCatalogue: { catalogue: pot.none }
     });
   });
+
+  it("should migrate the store to version 12: add isEnabledForCredentialsList flag", async () => {
+    const previousState = {
+      _persist: { version: 11, rehydrated: false },
+      credentialsCatalogue: { catalogue: pot.none }
+    };
+
+    const newState = await migrate(previousState, 12);
+
+    expect(newState).toEqual({
+      _persist: { version: 11, rehydrated: false },
+      credentialsCatalogue: {
+        catalogue: pot.none,
+        isEnabledForCredentialsList: false
+      }
+    });
+  });
+
+  it("should migrate the store to version 13: add translations pot to credentialsCatalogue", async () => {
+    const previousState = {
+      _persist: { version: 12, rehydrated: false },
+      credentialsCatalogue: {
+        catalogue: pot.none,
+        isEnabledForCredentialsList: false
+      }
+    };
+
+    const newState = await migrate(previousState, 13);
+
+    expect(newState).toEqual({
+      _persist: { version: 12, rehydrated: false },
+      credentialsCatalogue: {
+        catalogue: pot.none,
+        isEnabledForCredentialsList: false,
+        translations: pot.none
+      }
+    });
+  });
 });

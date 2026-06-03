@@ -1,5 +1,6 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { ItwAuthLevel, StoredCredential } from "../../utils/itwTypesUtils.ts";
+import { ItwAuthLevel, CredentialMetadata } from "../../utils/itwTypesUtils.ts";
+import { IdentificationContext } from "../../../machine/eid/context.ts";
 
 export const itwSetReviewPending = createStandardAction(
   "ITW_SET_REVIEW_PENDING"
@@ -12,10 +13,6 @@ export const itwSetAuthLevel = createStandardAction("ITW_SET_AUTH_LEVEL")<
 export const itwSetClaimValuesHidden = createStandardAction(
   "ITW_SET_CLAIM_VALUES_HIDDEN"
 )<boolean>();
-
-export const itwSetWalletInstanceRemotelyActive = createStandardAction(
-  "ITW_SET_WALLET_INSTANCE_REMOTELY_ACTIVE"
-)<boolean | undefined>();
 
 export const itwSetFiscalCodeWhitelisted = createStandardAction(
   "ITW_SET_FISCAL_CODE_WHITELISTED"
@@ -35,25 +32,29 @@ export const itwSetPidReissuingSurveyHidden = createStandardAction(
 
 export const itwSetCredentialUpgradeFailed = createStandardAction(
   "ITW_SET_CREDENTIAL_UPGRADE_FAILED"
-)<ReadonlyArray<StoredCredential["credentialType"]>>();
+)<ReadonlyArray<CredentialMetadata["credentialType"]>>();
 
 export const itwClearCredentialUpgradeFailed = createStandardAction(
   "ITW_CLEAR_CREDENTIAL_UPGRADE_FAILED"
-)<StoredCredential["credentialType"]>();
+)<CredentialMetadata["credentialType"]>();
 
 export const itwDisableItwActivation = createStandardAction(
   "ITW_DISABLE_ITW_ACTIVATION"
 )();
 
+export const itwSetIdentificationMode = createStandardAction(
+  "ITW_SET_IDENTIFICATION_MODE"
+)<IdentificationContext["mode"] | undefined>();
+
 export type ItwPreferencesActions =
   | ActionType<typeof itwSetReviewPending>
   | ActionType<typeof itwSetAuthLevel>
   | ActionType<typeof itwSetClaimValuesHidden>
-  | ActionType<typeof itwSetWalletInstanceRemotelyActive>
   | ActionType<typeof itwSetFiscalCodeWhitelisted>
   | ActionType<typeof itwFreezeSimplifiedActivationRequirements>
   | ActionType<typeof itwClearSimplifiedActivationRequirements>
   | ActionType<typeof itwSetPidReissuingSurveyHidden>
   | ActionType<typeof itwSetCredentialUpgradeFailed>
   | ActionType<typeof itwClearCredentialUpgradeFailed>
-  | ActionType<typeof itwDisableItwActivation>;
+  | ActionType<typeof itwDisableItwActivation>
+  | ActionType<typeof itwSetIdentificationMode>;

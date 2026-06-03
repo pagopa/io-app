@@ -11,6 +11,7 @@ import {
   trackItWalletCieCardVerifyFailure,
   trackItWalletCiePinForgotten,
   trackItWalletCiePukForgotten,
+  trackItWalletErrorCan,
   trackItWalletErrorCardReading,
   trackItWalletErrorPin,
   trackItWalletLastErrorPin,
@@ -48,7 +49,8 @@ type ItwCieCardReadFailureContentProps = Extract<
 export const ItwCieCardReadFailureContent = ({
   failure,
   progress,
-  onRetry
+  onRetry,
+  origin
 }: ItwCieCardReadFailureContentProps) => {
   const issuanceActor = ItwEidIssuanceMachineContext.useActorRef();
   const isL3 = ItwEidIssuanceMachineContext.useSelector(
@@ -64,8 +66,14 @@ export const ItwCieCardReadFailureContent = ({
   useFocusEffect(
     useCallback(
       () =>
-        trackError({ failure, isL3, identification, readProgress: progress }),
-      [failure, isL3, progress, identification]
+        trackError({
+          failure,
+          isL3,
+          identification,
+          readProgress: progress,
+          origin
+        }),
+      [failure, isL3, progress, identification, origin]
     )
   );
 
@@ -205,6 +213,20 @@ export const ItwCieCardReadFailureContent = ({
             primaryAction={closeAction}
           />
         );
+      case "WRONG_CAN":
+        return (
+          <CieCardReadContent
+            title={I18n.t(
+              `features.itWallet.identification.cie.failure.wrongCan.title`
+            )}
+            subtitle={I18n.t(
+              `features.itWallet.identification.cie.failure.wrongCan.subtitle`
+            )}
+            pictogram="attention"
+            primaryAction={retryAction}
+            secondaryAction={closeAction}
+          />
+        );
     }
   }
 
@@ -228,13 +250,15 @@ type TrackErrorParams = {
   isL3: boolean;
   readProgress?: number;
   identification?: IdentificationContext;
+  origin?: string;
 };
 
 const trackError = ({
   failure,
   isL3,
   readProgress,
-  identification
+  identification,
+  origin
   // eslint-disable-next-line complexity
 }: TrackErrorParams) => {
   const itw_flow: ItwFlow = isL3 ? "L3" : "L2";
@@ -295,6 +319,9 @@ const trackError = ({
           ITW_ID_method: identification?.mode
         });
         return;
+      case "WRONG_CAN":
+        trackItWalletErrorCan(progress, identification?.mode);
+        return;
 
       case "CANCELLED_BY_USER":
         trackItWalletCardReadingClose({
@@ -307,7 +334,8 @@ const trackError = ({
   }
 
   trackItWalletCieCardReadingUnexpectedFailure({
-    reason: failure?.name ?? "UNEXPECTED_ERROR",
+    reason: failure.name ?? "UNEXPECTED_ERROR",
+    origin: origin ?? "ITW_CIE_CARD_READING",
     cie_reading_progress: progress,
     itw_flow,
     ITW_ID_method: identification?.mode

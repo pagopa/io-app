@@ -1,4 +1,5 @@
-import { StoredCredential } from "../../../../common/utils/itwTypesUtils";
+import { CredentialType } from "../../../../common/utils/itwMocksUtils";
+import { CredentialMetadata } from "../../../../common/utils/itwTypesUtils";
 import {
   enrichPresentationDetails,
   getCredentialTypeByVct,
@@ -8,7 +9,6 @@ import {
   PresentationDetails,
   type EnrichedPresentationDetails
 } from "../itwRemoteTypeUtils";
-import { CredentialType } from "../../../../common/utils/itwMocksUtils";
 
 type Expected = ReturnType<typeof groupCredentialsByPurpose>;
 
@@ -192,7 +192,7 @@ describe("enrichPresentationDetails", () => {
         name: { "it-IT": "Cognome", "en-US": "Surname" }
       }
     }
-  } as unknown as StoredCredential;
+  } as unknown as CredentialMetadata;
 
   it("should include all disclosures that are found in the parsed credential", () => {
     const [result] = enrichPresentationDetails(
@@ -211,7 +211,7 @@ describe("enrichPresentationDetails", () => {
           presentationFrame: { name: true, surname: true }
         }
       ],
-      { PersonIdentificationData: storedCredentialMock }
+      { pid: storedCredentialMock }
     );
 
     expect(result.claimsToDisplay).toEqual([
@@ -238,7 +238,7 @@ describe("enrichPresentationDetails", () => {
           presentationFrame: { name: true, surname: true, iat: true }
         }
       ],
-      { PersonIdentificationData: storedCredentialMock }
+      { pid: storedCredentialMock }
     );
 
     expect(result.claimsToDisplay).toEqual([
@@ -264,7 +264,7 @@ describe("enrichPresentationDetails", () => {
     };
     expect(
       enrichPresentationDetails([missingCredentialDetails], {
-        PersonIdentificationData: storedCredentialMock
+        pid: storedCredentialMock
       })
     ).toEqual([
       {
