@@ -70,7 +70,7 @@
     "@pagopa/io-react-native-login-utils": "1.2.0",
     "@pagopa/io-react-native-secure-storage": "^0.2.1",
     "@pagopa/io-react-native-wallet": "^3.3.0",
-    "@pagopa/io-react-native-zendesk": "github:pagopa/io-react-native-zendesk#IOPLT-000-dark-mode",
+    "@pagopa/io-react-native-zendesk": "0.3.32-4",
     "@pagopa/react-native-cie": "^1.5.0",
     "@pagopa/ts-commons": "^10.15.0",
     "@react-native-async-storage/async-storage": "^2.0.0",
