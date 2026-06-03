@@ -197,7 +197,8 @@ export const createCredentialIssuanceActorsImplementation = (
       codeVerifier,
       issuerConf,
       walletInstanceAttestation,
-      requestedCredential
+      requestedCredential,
+      responseMode
     } = input;
     const eid = itwCredentialsEidSelector(store.getState());
 
@@ -223,6 +224,7 @@ export const createCredentialIssuanceActorsImplementation = (
       issuerConf,
       walletInstanceAttestation,
       requestedCredential,
+      responseMode,
       pid
     });
     return accessToken;

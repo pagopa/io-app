@@ -238,12 +238,7 @@ export const itwCredentialIssuanceMachine = setup({
         }),
         onDone: {
           target: "DisplayingTrustIssuer",
-          actions: assign(({ event }) => ({
-            clientId: event.output.clientId,
-            codeVerifier: event.output.codeVerifier,
-            requestedCredential: event.output.requestedCredential,
-            issuerConf: event.output.issuerConf
-          }))
+          actions: assign(({ event }) => event.output)
         },
         onError: {
           target: "#itwCredentialIssuanceMachine.Failure",
