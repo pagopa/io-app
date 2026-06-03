@@ -246,7 +246,8 @@ describe("linkingSubscription", () => {
       });
 
       expect(mockTrackIOOpenedFromUniversalAppLink).toHaveBeenCalledWith(
-        credentialOfferUrl
+        credentialOfferUrl,
+        null // Default value for isMixpanelEnabled in initial state
       );
       expect(mockProcessUtmLink).toHaveBeenCalledWith(
         credentialOfferUrl,
