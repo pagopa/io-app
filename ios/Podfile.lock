@@ -361,7 +361,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - pagopa-react-native-zendesk (0.3.30):
+  - pagopa-react-native-zendesk (0.3.32-4):
     - boost
     - DoubleConversion
     - fast_float
@@ -4084,7 +4084,7 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-jwt: 3a558398517a730dabf61928fe2e92aee75ef2a0
   pagopa-io-react-native-login-utils: 4d4e00aeb67ffbb36dc6f5fcfc17e088ef5b9f34
   pagopa-io-react-native-secure-storage: 64dcc5dff82ec5ce136d7904bc076d70db157dec
-  pagopa-react-native-zendesk: 9436edab6731dd9b64b72f1f2e039c166f0161b9
+  pagopa-react-native-zendesk: acb73ebe8c68388787e51ed2f2080ea6c1d4b392
   Pulsar: 7cbdae6f59ebf7f6a568045976298fe623394d7a
   RCT-Folly: 846fda9475e61ec7bcbf8a3fe81edfcaeb090669
   RCTDeprecation: 5eb1d2eeff5fb91151e8a8eef45b6c7658b6c897
