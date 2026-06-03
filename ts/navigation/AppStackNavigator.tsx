@@ -19,10 +19,10 @@ import FocusAwareStatusBar from "../components/ui/FocusAwareStatusBar";
 import { cgnLinkingOptions } from "../features/bonus/cgn/navigation/navigator";
 import { fciLinkingOptions } from "../features/fci/navigation/FciStackNavigator";
 import { idPayLinkingOptions } from "../features/idpay/common/navigation/linking";
-import { IngressScreen } from "../features/ingress/screens/IngressScreen";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
 import { useItwLinkingOptions } from "../features/itwallet/navigation/useItwLinkingOptions";
 import { storeLinkingUrl } from "../features/linking/actions";
+import { trackIOOpenedFromUniversalAppLink } from "../features/linking/analytics";
 import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import { SETTINGS_ROUTES } from "../features/settings/common/navigation/routes";
@@ -32,6 +32,7 @@ import { setDebugCurrentRouteName } from "../store/actions/debug";
 import { useIODispatch, useIOSelector, useIOStore } from "../store/hooks";
 import { trackScreen } from "../store/middlewares/navigation";
 import { isCGNEnabledAfterLoadSelector } from "../store/reducers/backendStatus/remoteConfig";
+import { isMixpanelEnabled } from "../store/reducers/persistedPreferences";
 import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import { isTestEnv } from "../utils/environment";
 import { useOnFirstRender } from "../utils/hooks/useOnFirstRender";
@@ -41,6 +42,7 @@ import {
 } from "../utils/navigation";
 import { IONavigationDarkTheme, IONavigationLightTheme } from "./theme";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
+import IngressStackNavigator from "./IngressStackNavigator";
 import NavigationService, {
   navigationRef,
   setMainNavigatorReady
@@ -74,16 +76,16 @@ export const AppStackNavigator = (): ReactElement => {
     dispatch(startApplicationInitialization());
   }, [dispatch]);
 
+  if (startupStatus === StartupStatusEnum.INITIAL) {
+    return <IngressStackNavigator />;
+  }
+
   if (startupStatus === StartupStatusEnum.OFFLINE) {
     return <OfflineStackNavigator />;
   }
 
   if (startupStatus === StartupStatusEnum.NOT_AUTHENTICATED) {
     return <NotAuthenticatedStackNavigator />;
-  }
-
-  if (startupStatus === StartupStatusEnum.INITIAL) {
-    return <IngressScreen />;
   }
 
   return <AuthenticatedStackNavigator />;
@@ -157,6 +159,12 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
   useOnFirstRender(() => {
     void Linking.getInitialURL().then(initialUrl => {
       if (initialUrl) {
+        // Track if the app is opened from a universal link on cold start
+        // This mirrors the behavior in linkingSubscription for warm starts
+        // We read the user's Mixpanel preference from the store to respect their choice
+        const state = store.getState();
+        const mixpanelEnabled = isMixpanelEnabled(state);
+        trackIOOpenedFromUniversalAppLink(initialUrl, mixpanelEnabled);
         processUtmLink(initialUrl, dispatch);
         /**
          *  We store the initialUrl in the redux store so that

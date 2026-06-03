@@ -63,6 +63,13 @@ import {
 } from "../../../common/analytics/cieAnalytics";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
 import { isScreenReaderEnabledSelector } from "../../../../../store/reducers/preferences";
+import { ReauthLoginType } from "../analytics";
+
+export type ActiveSessionCieCardReaderScreenNavigationParams = {
+  ciePin: string;
+  authorizationUri: string;
+  loginType: ReauthLoginType;
+};
 
 const CIE_ALERT_MESSAGES_CONFIG = Platform.select<
   Parameters<typeof cieManager.start>[0]
@@ -118,7 +125,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
   navigation,
   route
 }: ActiveSessionLoginCieCardReaderScreenProps) => {
-  const { authorizationUri, ciePin } = route.params;
+  const { authorizationUri, ciePin, loginType } = route.params;
 
   const theme = useIOTheme();
   const dispatch = useIODispatch();
@@ -181,7 +188,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
       errorDescription?: string;
       navigation?: () => void;
     }) => {
-      trackLoginCieCardReadingError("reauth");
+      trackLoginCieCardReadingError(loginType);
 
       const cieDescription =
         errorDescription ?? analyticActions.get(eventReason) ?? "";
@@ -190,7 +197,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
         cieAuthenticationError({
           reason: eventReason,
           cieDescription,
-          flow: "reauth"
+          flow: loginType
         })
       );
 
@@ -199,7 +206,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
       HapticFeedback.trigger(HapticFeedbackTypes.notificationError);
       navAction?.();
     },
-    [dispatch]
+    [dispatch, loginType]
   );
 
   const handleCieSuccess = useCallback(
@@ -212,11 +219,11 @@ const ActiveSessionLoginCieCardReaderScreen = ({
 
       setTimeout(
         () => {
-          void trackLoginCieCardReadingSuccess("reauth");
+          void trackLoginCieCardReadingSuccess(loginType);
           navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
             screen:
               AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE_ACTIVE_SESSION_LOGIN,
-            params: { cieConsentUri }
+            params: { cieConsentUri, loginType }
           });
         },
         isScreenReaderEnabled
@@ -224,7 +231,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
           : Platform.select({ ios: 0, default: WAIT_TIMEOUT_NAVIGATION })
       );
     },
-    [choosenTool, navigation, isScreenReaderEnabled]
+    [choosenTool, navigation, isScreenReaderEnabled, loginType]
   );
 
   const handleCieEvent = useCallback(
@@ -336,15 +343,22 @@ const ActiveSessionLoginCieCardReaderScreen = ({
         await cieManager.startListeningNFC();
         setReadingState(ReadingState.waiting_card);
       } catch (e) {
-        trackLoginCieCardReadingError("reauth");
+        trackLoginCieCardReadingError(loginType);
         setReadingState(ReadingState.error);
       }
     },
-    [authorizationUri, ciePin, handleCieError, handleCieEvent, handleCieSuccess]
+    [
+      authorizationUri,
+      ciePin,
+      handleCieError,
+      handleCieEvent,
+      handleCieSuccess,
+      loginType
+    ]
   );
 
   useOnFirstRender(() => {
-    void trackLoginCieCardReaderScreen("reauth");
+    void trackLoginCieCardReaderScreen(loginType);
   });
 
   useEffect(() => {

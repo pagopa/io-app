@@ -2,7 +2,10 @@ import { useCallback } from "react";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
-import { isActiveSessionLoginSelector } from "../store/selectors";
+import {
+  cieLoginFlowSelector,
+  isActiveSessionLoginSelector
+} from "../store/selectors";
 import {
   logoutBeforeSessionCorrupted,
   setFinishedActiveSessionLoginFlow
@@ -16,6 +19,7 @@ const useActiveSessionLoginNavigation = () => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
   const isActiveSessionLogin = useIOSelector(isActiveSessionLoginSelector);
+  const loginType = useIOSelector(cieLoginFlowSelector);
 
   const navigateToAuthenticationScreen = useCallback(() => {
     if (isActiveSessionLogin) {
@@ -35,32 +39,44 @@ const useActiveSessionLoginNavigation = () => {
     ciePin,
     authorizationUri
   }: CieCardReaderScreenNavigationParams) => {
-    const route = isActiveSessionLogin
-      ? AUTHENTICATION_ROUTES.CIE_CARD_READER_SCREEN_ACTIVE_SESSION_LOGIN
-      : AUTHENTICATION_ROUTES.CIE_CARD_READER_SCREEN;
+    const params = {
+      ciePin,
+      authorizationUri
+    };
 
-    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-      screen: route,
-      params: {
-        ciePin,
-        authorizationUri
-      }
-    });
+    if (loginType === "auth") {
+      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+        screen: AUTHENTICATION_ROUTES.CIE_CARD_READER_SCREEN,
+        params
+      });
+    } else {
+      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+        screen:
+          AUTHENTICATION_ROUTES.CIE_CARD_READER_SCREEN_ACTIVE_SESSION_LOGIN,
+        params: { ...params, loginType }
+      });
+    }
   };
 
   const navigateToCieConsentDataUsage = ({
     cieConsentUri
   }: CieConsentDataUsageScreenNavigationParams) => {
-    const route = isActiveSessionLogin
-      ? AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE_ACTIVE_SESSION_LOGIN
-      : AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE;
+    const params = {
+      cieConsentUri
+    };
 
-    navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
-      screen: route,
-      params: {
-        cieConsentUri
-      }
-    });
+    if (loginType === "auth") {
+      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+        screen: AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE,
+        params
+      });
+    } else {
+      navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
+        screen:
+          AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE_ACTIVE_SESSION_LOGIN,
+        params: { ...params, loginType }
+      });
+    }
   };
 
   const forceLogoutAndNavigateToLanding = () => {

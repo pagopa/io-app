@@ -14,7 +14,8 @@ jobs:
       cancel-in-progress: true
     outputs:
       changed_files: ${{ steps.changed-files.outputs.files }}
-      should_test: ${{ github.event_name != 'pull_request' || steps.changed-files.outputs.files != '' }}
+      workflow_changed: ${{ steps.workflow-changed.outputs.changed == '1' }}
+      should_test: ${{ github.event_name != 'pull_request' || steps.changed-files.outputs.files != '' || steps.workflow-changed.outputs.changed == '1' }}
     steps:
       - id: checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -27,14 +28,20 @@ jobs:
             | grep -E '\.(ts|tsx|js|jsx|json)$' \
             | tr '\n' ' ')
           echo "files=$FILES" >> $GITHUB_OUTPUT
+      - id: workflow-changed
+        if: github.event_name == 'pull_request'
+        run: |
+          CHANGED=$(git diff --name-only --diff-filter=ACMR origin/${{ github.base_ref }}...HEAD \
+            | grep -cE '^\.github/workflows/static-checks\.yaml$' || true)
+          echo "changed=$CHANGED" >> $GITHUB_OUTPUT
       - id: setup
         uses: ./.github/actions/setup-composite
       - id: run-tsc
-        run: yarn tsc:noemit
+        run: pnpm tsc:noemit
       - id: run-lint
-        run: yarn lint
+        run: pnpm lint
       - id: run-prettier
-        run: yarn prettier:check
+        run: pnpm prettier:check
   unit-test:
     name: Unit tests
     runs-on: ubuntu-latest
@@ -62,10 +69,10 @@ jobs:
       - id: run-test
         if: needs.static-checks.outputs.should_test == 'true'
         run: |
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            yarn test:ci --passWithNoTests --shard=${{ matrix.shard }}/10 --findRelatedTests ${{ needs.static-checks.outputs.changed_files }}
+          if [ "${{ github.event_name }}" = "pull_request" ] && [ "${{ needs.static-checks.outputs.workflow_changed }}" != "true" ]; then
+            pnpm test:ci --passWithNoTests --shard=${{ matrix.shard }}/10 --findRelatedTests ${{ needs.static-checks.outputs.changed_files }}
           else
-            yarn test:ci --passWithNoTests --shard=${{ matrix.shard }}/10
+            pnpm test:ci --passWithNoTests --shard=${{ matrix.shard }}/10
           fi
       - id: rename-coverage
         if: needs.static-checks.outputs.should_test == 'true' && steps.run-test.outcome == 'success'
@@ -110,11 +117,11 @@ jobs:
           path: coverage-tmp/
       - id: flatten-coverage
         run: |
-          mkdir -p coverage/
-          find coverage-tmp -name "lcov-*.info" -exec cp {} coverage/ \;
-          ls -la coverage/
+          files=$(find coverage-tmp -name "lcov-*.info" | sort | paste -sd, -)
+          echo "files=$files" >> $GITHUB_OUTPUT
       - id: codecov-script
         uses: codecov/codecov-action@57e3a136b779b570ffcdbf80b3bdc90e7fab3de2 # v6.0.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          directory: coverage/
+          files: ${{ steps.flatten-coverage.outputs.files }}
+          disable_search: true
