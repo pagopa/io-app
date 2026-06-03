@@ -223,7 +223,7 @@ const FaqManager = (props: FaqManagerProps) => {
           ListHeaderComponent={<VSpacer size={8} />}
           scrollEnabled={false}
           data={contextualHelpData.faqs}
-          keyExtractor={c => c.title}
+          keyExtractor={(item, index) => `${item.title}-${index}`}
           renderItem={renderFaqItem}
           ItemSeparatorComponent={() => <VSpacer size={8} />}
           ListFooterComponent={<VSpacer size={8} />}

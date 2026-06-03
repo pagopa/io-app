@@ -1,3 +1,4 @@
+import { IOThemeContextProvider } from "@pagopa/io-app-design-system";
 import { render } from "@testing-library/react-native";
 import { Text } from "react-native";
 import { ItwBrandedBox } from "../ItwBrandedBox";
@@ -7,9 +8,11 @@ describe("ItwBrandedBox", () => {
     "should render correctly for variant %s",
     variant => {
       const { toJSON } = render(
-        <ItwBrandedBox variant={variant}>
-          <Text>Test Content</Text>
-        </ItwBrandedBox>
+        <IOThemeContextProvider theme="light">
+          <ItwBrandedBox variant={variant}>
+            <Text>Test Content</Text>
+          </ItwBrandedBox>
+        </IOThemeContextProvider>
       );
       expect(toJSON()).toMatchSnapshot();
     }

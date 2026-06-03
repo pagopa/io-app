@@ -34,7 +34,7 @@ describe("handleDownloadAttachment", () => {
 
   it("handleRequestInit should follow the proper flow and return the enhanced lollipop headers", () => {
     const data = fetchParametersCommonInputData();
-    const attachmentFullUrl = `https://base.url/api/v1/third-party-messages/${data.messageId}/attachments/${data.attachmentFullUrl}`;
+    const attachmentFullUrl = `https://base.url/api/communication/v1/third-party-messages/${data.messageId}/attachments/${data.attachmentFullUrl}`;
     testSaga(
       handleRequestInit,
       {
@@ -64,7 +64,7 @@ describe("handleDownloadAttachment", () => {
 
   it("handleRequestInit should follow the proper flow and return standard headers when lollipopRequestInit fails", () => {
     const data = fetchParametersCommonInputData();
-    const attachmentFullUrl = `https://base.url/api/v1/third-party-messages/${data.messageId}/attachments/${data.attachmentFullUrl}`;
+    const attachmentFullUrl = `https://base.url/api/communication/v1/third-party-messages/${data.messageId}/attachments/${data.attachmentFullUrl}`;
     testSaga(
       handleRequestInit,
       {
