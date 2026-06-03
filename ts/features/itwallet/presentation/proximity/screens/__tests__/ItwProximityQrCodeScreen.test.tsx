@@ -29,10 +29,12 @@ jest.mock("react-native-qrcode-skia", () => {
   };
 });
 
-const mockShouldBlockProximityQrCodeSelector = jest.fn(() => false);
+const mockShouldShowExpiredProximityCredentialsBannerSelector = jest.fn(
+  () => false
+);
 jest.mock("../../store/selectors/credentials", () => ({
-  shouldBlockProximityQrCodeSelector: () =>
-    mockShouldBlockProximityQrCodeSelector()
+  shouldShowExpiredProximityCredentialsBannerSelector: () =>
+    mockShouldShowExpiredProximityCredentialsBannerSelector()
 }));
 
 describe("ItwProximityPresentmentScreen", () => {
@@ -92,21 +94,34 @@ describe("ItwProximityPresentmentScreen", () => {
 
   describe("when credentials are expired", () => {
     beforeEach(() => {
-      mockShouldBlockProximityQrCodeSelector.mockReturnValue(true);
+      mockShouldShowExpiredProximityCredentialsBannerSelector.mockReturnValue(
+        true
+      );
     });
 
     afterEach(() => {
-      mockShouldBlockProximityQrCodeSelector.mockReturnValue(false);
+      mockShouldShowExpiredProximityCredentialsBannerSelector.mockReturnValue(
+        false
+      );
     });
 
-    it("should render blocked state with alert banner", () => {
+    it("should render QR code with alert banner", () => {
       expect(
-        renderComponent({ machineState: "blocked" }, { source: "WALLET_HOME" })
+        renderComponent(
+          {
+            machineState: "displayQrCode",
+            qrCodeString: "mock-qr-code-string"
+          },
+          { source: "WALLET_HOME" }
+        )
       ).toMatchSnapshot();
     });
 
     it("should track qr code screen view with PID_expired status", () => {
-      renderComponent({ machineState: "blocked" }, { source: "WALLET_HOME" });
+      renderComponent(
+        { machineState: "displayQrCode", qrCodeString: "mock-qr-code-string" },
+        { source: "WALLET_HOME" }
+      );
 
       expect(trackItwProximityQrCode).toHaveBeenCalledTimes(1);
       expect(trackItwProximityQrCode).toHaveBeenCalledWith({
@@ -120,8 +135,7 @@ describe("ItwProximityPresentmentScreen", () => {
 type RenderOptions =
   | { machineState: "loading" }
   | { machineState: "displayQrCode"; qrCodeString: string }
-  | { machineState: "error" }
-  | { machineState: "blocked" };
+  | { machineState: "error" };
 
 const renderComponent = (
   options: RenderOptions,
@@ -198,17 +212,6 @@ const buildSnapshot = (
             type: ProximityFailureType.UNEXPECTED,
             reason: new Error("test error")
           }
-        }
-      };
-
-    case "blocked":
-      return {
-        ...initialSnapshot,
-        value: { Presentment: "AwaitingConnection" },
-        tags: new Set([ItwPresentationTags.Presenting]),
-        context: {
-          ...initialSnapshot.context,
-          qrCodeString: "mock-qr-code-string"
         }
       };
   }

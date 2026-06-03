@@ -4,7 +4,7 @@ import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
-import { useRef, useState } from "react";
+import { ComponentRef, useRef, useState } from "react";
 import { Keyboard, View } from "react-native";
 import { KeyboardStickyView } from "react-native-keyboard-controller";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
@@ -20,8 +20,8 @@ import {
   validatePaymentNoticeNumber
 } from "../../common/utils/validation";
 import * as analytics from "../analytics";
+import { useInputFocus } from "../hooks/useInputFocus";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
-import { TextInputValidationRefProps } from "../types";
 import { trimAndLimitValue } from "../utils";
 
 type InputState = {
@@ -62,7 +62,9 @@ const WalletPaymentInputNoticeNumberScreen = () => {
 
   const textInputWrapperRef = useRef<View>(null);
 
-  const textInputRef = useRef<TextInputValidationRefProps>(null);
+  const textInputRef = useRef<ComponentRef<typeof TextInputValidation>>(null);
+
+  useInputFocus(textInputRef);
 
   const { bottomMargin } = useFooterActionsMargin();
 
@@ -115,7 +117,6 @@ const WalletPaymentInputNoticeNumberScreen = () => {
             inputMode: "numeric",
             inputAccessoryViewID: "keyboardStickyView"
           }}
-          autoFocus
         />
       </IOScrollViewWithLargeHeader>
       <KeyboardStickyView offset={{ closed: 0 }}>
