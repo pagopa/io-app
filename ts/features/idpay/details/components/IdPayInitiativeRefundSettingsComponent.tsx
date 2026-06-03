@@ -4,7 +4,7 @@ import {
   ListItemNav,
   ListItemNavAlert
 } from "@pagopa/io-app-design-system";
-import { useNavigation } from "@react-navigation/core";
+import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { View } from "react-native";
