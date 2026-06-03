@@ -24,7 +24,7 @@ import {
 import { ItwProximityQrCode as ItwProximityQrCodeTracking } from "../analytics/types";
 import { ItwProximityMachineContext } from "../machine/provider";
 import { selectFailure, selectQRCodeString } from "../machine/selectors";
-import { shouldBlockProximityQrCodeSelector } from "../store/selectors/credentials";
+import { shouldShowExpiredProximityCredentialsBannerSelector } from "../store/selectors/credentials";
 
 const QR_CODE_LOGO_SIZE = 52;
 
@@ -52,7 +52,9 @@ export const ItwProximityQrCodeImage = ({ source }: Props) => {
   const qrCodeString =
     ItwProximityMachineContext.useSelector(selectQRCodeString);
   const failure = ItwProximityMachineContext.useSelector(selectFailure);
-  const shouldBlock = useIOSelector(shouldBlockProximityQrCodeSelector);
+  const shouldShowExpiredBanner = useIOSelector(
+    shouldShowExpiredProximityCredentialsBannerSelector
+  );
 
   useDebugInfo({
     qrCodeString
@@ -60,7 +62,7 @@ export const ItwProximityQrCodeImage = ({ source }: Props) => {
 
   useFocusEffect(
     useCallback(() => {
-      const qrCodeStatus = shouldBlock
+      const qrCodeStatus = shouldShowExpiredBanner
         ? "PID_expired"
         : failure
           ? "generation_failed"
@@ -69,7 +71,7 @@ export const ItwProximityQrCodeImage = ({ source }: Props) => {
       if (source) {
         trackItwProximityQrCode({ source, qr_code_status: qrCodeStatus });
       }
-    }, [source, shouldBlock, failure])
+    }, [source, shouldShowExpiredBanner, failure])
   );
 
   const handleRetry = () => {
@@ -93,17 +95,6 @@ export const ItwProximityQrCodeImage = ({ source }: Props) => {
             />
           </View>
         }
-      />
-    );
-  }
-
-  if (shouldBlock) {
-    return (
-      <StatusBox
-        iconName="qrCode"
-        description={I18n.t(
-          "features.itWallet.presentation.proximity.engagement.invalidBanner.content"
-        )}
       />
     );
   }
