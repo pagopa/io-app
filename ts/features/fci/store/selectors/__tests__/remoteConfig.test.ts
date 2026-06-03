@@ -2,7 +2,7 @@ import * as O from "fp-ts/lib/Option";
 import * as appVersion from "../../../../../utils/appVersion";
 import {
   fciSecurityLevelCheckHelpCenterUrlSelector,
-  isFciSecurityLevelCheckEnabledSelector
+  isFciSecurityLevelCheckRemoteFFEnabledSelector
 } from "../remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types.ts";
 
@@ -14,17 +14,19 @@ const makeState = (fci: object): GlobalState =>
 const mockAppVersion = (v: string) =>
   jest.spyOn(appVersion, "getAppVersion").mockReturnValue(v);
 
-describe("isFciSecurityLevelCheckEnabledSelector", () => {
+describe("isFciSecurityLevelCheckRemoteFFEnabledSelector", () => {
   afterEach(() => jest.restoreAllMocks());
 
   it("returns false when remoteConfig is none", () => {
-    expect(isFciSecurityLevelCheckEnabledSelector(noneState)).toBe(false);
+    expect(isFciSecurityLevelCheckRemoteFFEnabledSelector(noneState)).toBe(
+      false
+    );
   });
 
   it("returns false when fci min_app_version is not satisfied", () => {
     mockAppVersion("1.0.0.0");
     expect(
-      isFciSecurityLevelCheckEnabledSelector(
+      isFciSecurityLevelCheckRemoteFFEnabledSelector(
         makeState({
           min_app_version: { ios: "2.0.0.0", android: "2.0.0.0" },
           security_level_check: {
@@ -38,7 +40,7 @@ describe("isFciSecurityLevelCheckEnabledSelector", () => {
   it("returns false when security_level_check min_app_version is not satisfied", () => {
     mockAppVersion("1.0.0.0");
     expect(
-      isFciSecurityLevelCheckEnabledSelector(
+      isFciSecurityLevelCheckRemoteFFEnabledSelector(
         makeState({
           min_app_version: { ios: "1.0.0.0", android: "1.0.0.0" },
           security_level_check: {
@@ -52,7 +54,7 @@ describe("isFciSecurityLevelCheckEnabledSelector", () => {
   it("returns false when security_level_check is absent", () => {
     mockAppVersion("2.0.0.0");
     expect(
-      isFciSecurityLevelCheckEnabledSelector(
+      isFciSecurityLevelCheckRemoteFFEnabledSelector(
         makeState({ min_app_version: { ios: "1.0.0.0", android: "1.0.0.0" } })
       )
     ).toBe(false);
@@ -61,7 +63,7 @@ describe("isFciSecurityLevelCheckEnabledSelector", () => {
   it("returns true when both min_app_version gates are satisfied", () => {
     mockAppVersion("3.0.0.0");
     expect(
-      isFciSecurityLevelCheckEnabledSelector(
+      isFciSecurityLevelCheckRemoteFFEnabledSelector(
         makeState({
           min_app_version: { ios: "1.0.0.0", android: "1.0.0.0" },
           security_level_check: {
@@ -75,7 +77,7 @@ describe("isFciSecurityLevelCheckEnabledSelector", () => {
   it("returns true when both min_app_version gates are satisfied (Security Level min version Equals App version)", () => {
     mockAppVersion("2.0.0.0");
     expect(
-      isFciSecurityLevelCheckEnabledSelector(
+      isFciSecurityLevelCheckRemoteFFEnabledSelector(
         makeState({
           min_app_version: { ios: "1.0.0.0", android: "1.0.0.0" },
           security_level_check: {

@@ -12,7 +12,7 @@ import {
 import { dismissPnActivationReminderBanner } from "../../../store/actions";
 import * as bannerDismiss from "../bannerDismiss";
 import { ServicesState } from "../../../../services/common/store/reducers";
-import { ServiceId } from "../../../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 
 type PnBannerDismissState = bannerDismiss.PnBannerDismissState & PersistPartial;
 

@@ -25,7 +25,7 @@ jest.mock("@pagopa/io-react-native-crypto", () => ({
 
 describe("checkWalletInstanceStateSaga", () => {
   const mockPid = {
-    credentialType: "PersonIdentificationData",
+    credentialType: "pid",
     credentialId: "dc_sd_jwt_PersonIdentificationData",
     format: "dc+sd-jwt"
   } as CredentialMetadata;

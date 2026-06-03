@@ -12,6 +12,13 @@ exports[`itWalletReducer should match snapshot [if this test fails, remember to 
       "kind": "PotNone",
     },
     "isEnabledForCredentialsList": false,
+    "translations": {
+      "kind": "PotNone",
+    },
+  },
+  "debug": {
+    "credentialStatusOverrides": {},
+    "savedCredentials": undefined,
   },
   "environment": {
     "env": "prod",
@@ -28,12 +35,16 @@ exports[`itWalletReducer should match snapshot [if this test fails, remember to 
     },
   },
   "preferences": {},
+  "proximity": {
+    "consents": {},
+  },
   "securePreferences": {
     "offlineAccessCounter": 0,
     "unverifiedCredentialsAccessCounter": 0,
   },
   "walletInstance": {
     "attestation": undefined,
+    "isRemotelyActive": undefined,
     "renewalError": false,
     "status": {
       "kind": "PotNone",

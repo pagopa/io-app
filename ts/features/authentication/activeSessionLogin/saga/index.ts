@@ -20,7 +20,9 @@ import {
   isActiveSessionFastLoginEnabledSelector,
   idpSelectedActiveSessionLoginSelector,
   newTokenActiveSessionLoginSelector,
-  cieIDSelectedSecurityLevelActiveSessionLoginSelector
+  cieIDSelectedSecurityLevelActiveSessionLoginSelector,
+  activeSessionLoginFlowSelector,
+  cieLoginFlowSelector
 } from "../store/selectors";
 import { startApplicationInitialization } from "../../../../store/actions/application";
 import { watchCieAuthenticationSaga } from "../../login/cie/sagas/cie";
@@ -37,6 +39,9 @@ import {
   analyticsAuthenticationCompleted,
   analyticsAuthenticationStarted
 } from "../../../../store/actions/analytics";
+import NavigationService from "../../../../navigation/NavigationService";
+import ROUTES from "../../../../navigation/routes";
+import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
 
 export function* watchActiveSessionLoginSaga() {
   yield* takeLatest(
@@ -45,12 +50,30 @@ export function* watchActiveSessionLoginSaga() {
   );
 }
 
+export function* handleNavigateAfterFinishedStandardActiveSessionLoginFlow(
+  isActiveLoginSuccessProp?: boolean
+) {
+  const activeSessionLoginFlow = yield* select(activeSessionLoginFlowSelector);
+
+  if (isActiveLoginSuccessProp && activeSessionLoginFlow !== "FCI") {
+    // If the user is logging in from the active session login flow, we can be sure that the session is valid
+    // and we can directly navigate him to the home screen, skipping all the checks about pending background
+    // actions and session expiration blocking screen.
+    yield* call(NavigationService.navigate, ROUTES.MAIN, {
+      screen: MESSAGES_ROUTES.MESSAGES_HOME
+    });
+  }
+  return;
+}
+
 export function* handleActiveSessionLoginSaga(): Generator<
   ReduxSagaEffect,
   void,
   any
 > {
-  yield* put(analyticsAuthenticationStarted("reauth"));
+  const loginFlow = yield* select(cieLoginFlowSelector);
+
+  yield* put(analyticsAuthenticationStarted(loginFlow));
 
   yield* fork(watchCieAuthenticationSaga);
 
@@ -79,7 +102,7 @@ export function* handleActiveSessionLoginSaga(): Generator<
     if (idp && idp.id) {
       switch (idp.id) {
         case IdpCIE.id:
-          trackCieLoginSuccess(fastLoginOptIn ? "365" : "30", "reauth");
+          trackCieLoginSuccess(fastLoginOptIn ? "365" : "30", loginFlow);
           break;
         case IdpCIE_ID.id:
           // We currently request only a Level 2 login; however, once in the CieID app, if the only configured method is a Level 3 login, it will be possible to proceed with that higher level of security.
@@ -120,7 +143,7 @@ export function* handleActiveSessionLoginSaga(): Generator<
         })
       );
 
-      yield* put(analyticsAuthenticationCompleted("reauth"));
+      yield* put(analyticsAuthenticationCompleted(loginFlow));
 
       yield* put(
         startApplicationInitialization({

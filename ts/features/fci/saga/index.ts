@@ -16,6 +16,7 @@ import {
   identificationSuccess
 } from "../../identification/store/actions";
 import {
+  fciSignatureRequestIdSelector,
   fciSignatureRequestSelector,
   FciSignatureRequestState
 } from "../store/reducers/fciSignatureRequest";
@@ -46,6 +47,11 @@ import {
 import { fciDocumentSignaturesSelector } from "../store/reducers/fciDocumentSignatures";
 import { KeyInfo } from "../../lollipop/utils/crypto";
 import { createFciClient } from "../api/backendFci";
+import { spidLevelFromSessionInfoSelector } from "../../authentication/common/store/selectors";
+import { isFciSecurityLevelCheckEnabledSelector } from "../store/reducers/fciSecurityLevelReducer";
+import { isTestEnv } from "../../../utils/environment";
+import { activeSessionLoginFlowSelector } from "../../authentication/activeSessionLogin/store/selectors";
+import { setActiveSessionLoginFlow } from "../../authentication/activeSessionLogin/store/actions";
 import { handleGetSignatureRequestById } from "./networking/handleGetSignatureRequestById";
 import { handleGetQtspMetadata } from "./networking/handleGetQtspMetadata";
 import { handleCreateFilledDocument } from "./networking/handleCreateFilledDocument";
@@ -175,10 +181,7 @@ function* watchFciQtspClausesSaga(): SagaIterator {
   }
 }
 
-/**
- * Handle the FCI start requests saga
- */
-function* watchFciStartSaga(): SagaIterator {
+function* standardFciFlowStartSaga(): SagaIterator {
   yield* call(
     NavigationService.dispatchNavigationAction,
     StackActions.replace(FCI_ROUTES.MAIN, {
@@ -200,6 +203,33 @@ function* watchFciStartSaga(): SagaIterator {
 }
 
 /**
+ * Handle the FCI start requests saga
+ */
+function* watchFciStartSaga(): SagaIterator {
+  const spidLevel = yield* select(spidLevelFromSessionInfoSelector);
+  const isFciSecurityLevelCheckEnabled = yield* select(
+    isFciSecurityLevelCheckEnabledSelector
+  );
+
+  if (!isFciSecurityLevelCheckEnabled) {
+    yield* call(standardFciFlowStartSaga);
+    return;
+  } else {
+    if (spidLevel === "L3") {
+      yield* call(standardFciFlowStartSaga);
+      return;
+    }
+    yield* call(
+      NavigationService.dispatchNavigationAction,
+      StackActions.push(FCI_ROUTES.MAIN, {
+        screen: FCI_ROUTES.FCI_LOGIN_L3
+      })
+    );
+    return;
+  }
+}
+
+/**
  * Handle the FCI signature request retry saga
  */
 function* watchFciSignatureRequestRetrySaga(
@@ -216,6 +246,11 @@ function* watchFciSignatureRequestRetrySaga(
 
     if (isActionOf(fciSignatureRequestFromId.success, result)) {
       if (result.payload.id === action.payload) {
+        /**
+         * when restarting the flow from 'DocumentUnavailableScreen',
+         * FciDocumentsScreen will still get pot error if not reset
+         */
+        yield* put(fciDownloadPreview.cancel());
         // start a new signing flow
         yield* put(fciStartRequest());
         return;
@@ -328,3 +363,34 @@ function* watchFciEndSaga(): SagaIterator {
     CommonActions.navigate(ROUTES.MAIN)
   );
 }
+
+export function* navigateAfterFinishedFciActiveSessionLoginFlowSaga(
+  isActiveLoginSuccessProp: boolean
+): SagaIterator {
+  const signatureRequestId = yield* select(fciSignatureRequestIdSelector);
+  const activeSessionLoginFlow = yield* select(activeSessionLoginFlowSelector);
+  yield* put(setActiveSessionLoginFlow(undefined));
+
+  if (
+    isActiveLoginSuccessProp &&
+    signatureRequestId &&
+    activeSessionLoginFlow === "FCI"
+  ) {
+    yield* put(fciSignatureRequestRetryFromId(signatureRequestId));
+  }
+  return;
+}
+
+export const testable = isTestEnv
+  ? {
+      watchIdentificationPinResetSaga,
+      watchFciQtspClausesSaga,
+      standardFciFlowStartSaga,
+      watchFciStartSaga,
+      watchFciSignatureRequestRetrySaga,
+      clearFciDownloadPreview,
+      watchFciSigningRequestSaga,
+      clearAllFciFiles,
+      watchFciEndSaga
+    }
+  : undefined;

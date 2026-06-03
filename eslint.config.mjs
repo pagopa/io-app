@@ -257,7 +257,12 @@ export default defineConfig([
       // REDUX SAGA
       "typed-redux-saga/delegate-effects": "error",
 
-      // IMPORTS
+      'import/no-extraneous-dependencies': ['error', {
+        devDependencies: true, 
+        optionalDependencies: false,
+        peerDependencies: false,
+      }],
+
       "no-restricted-imports": [
         "error",
         {

@@ -6,7 +6,7 @@ import { renderScreenWithNavigationStoreContext } from "../../../../../utils/tes
 import { Preconditions } from "../Preconditions";
 import { MESSAGES_ROUTES } from "../../../navigation/routes";
 import * as messagePrecondition from "../../../store/reducers/messagePrecondition";
-import { TagEnum } from "../../../../../../definitions/backend/MessageCategoryBase";
+import { TagEnum } from "../../../../../../definitions/communication/MessageCategoryBase";
 import * as analytics from "../../../analytics";
 import {
   idlePreconditionStatusAction,
@@ -33,7 +33,8 @@ jest.mock("@react-navigation/native", () => ({
     "@react-navigation/native"
   ),
   useNavigation: () => ({
-    navigate: mockNavigate
+    navigate: mockNavigate,
+    addListener: jest.fn(() => jest.fn())
   })
 }));
 

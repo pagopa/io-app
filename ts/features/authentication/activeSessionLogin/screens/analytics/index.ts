@@ -2,7 +2,8 @@ import { mixpanelTrack } from "../../../../../mixpanel";
 import { buildEventProperties } from "../../../../../utils/analytics";
 import { SpidIdp } from "../../../../../utils/idps";
 
-export type LoginType = "auth" | "reauth";
+export type ReauthLoginType = "reauth" | "FCI_auth";
+export type LoginType = "auth" | ReauthLoginType;
 
 export function trackLoginWithNewCF() {
   void mixpanelTrack("LOGIN_NEW_CF", buildEventProperties("UX", "screen_view"));

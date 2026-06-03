@@ -11,6 +11,7 @@ import {
   trackItWalletCieCardVerifyFailure,
   trackItWalletCiePinForgotten,
   trackItWalletCiePukForgotten,
+  trackItWalletErrorCan,
   trackItWalletErrorCardReading,
   trackItWalletErrorPin,
   trackItWalletLastErrorPin,
@@ -212,6 +213,20 @@ export const ItwCieCardReadFailureContent = ({
             primaryAction={closeAction}
           />
         );
+      case "WRONG_CAN":
+        return (
+          <CieCardReadContent
+            title={I18n.t(
+              `features.itWallet.identification.cie.failure.wrongCan.title`
+            )}
+            subtitle={I18n.t(
+              `features.itWallet.identification.cie.failure.wrongCan.subtitle`
+            )}
+            pictogram="attention"
+            primaryAction={retryAction}
+            secondaryAction={closeAction}
+          />
+        );
     }
   }
 
@@ -302,6 +317,9 @@ const trackError = ({
           cie_reading_progress: progress,
           ITW_ID_method: identification?.mode
         });
+        return;
+      case "WRONG_CAN":
+        trackItWalletErrorCan(progress, identification?.mode);
         return;
 
       case "CANCELLED_BY_USER":

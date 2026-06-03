@@ -10,7 +10,6 @@ import ROUTES from "../../../../navigation/routes";
 import { useIOSelector } from "../../../../store/hooks";
 import { getMixPanelCredential } from "../../analytics/utils";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
-import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import {
   itwCredentialsEidStatusSelector,
   itwCredentialStatusSelector
@@ -21,8 +20,11 @@ import {
 } from "../../lifecycle/store/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
 import { ITW_ROUTES } from "../../navigation/routes";
-import { trackItwAlreadyHasCredential } from "../analytics";
-import { trackItwIssuanceFromMsgFailure } from "../../issuance/analytics";
+import {
+  trackItwAlreadyHasCredential,
+  trackItwIssuanceFromMsgFailure
+} from "../analytics";
+import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 
 export type ItwIssuanceCredentialLandingScreenNavigationParams = {
   credentialType: string;
@@ -50,6 +52,7 @@ export const ItwIssuanceCredentialLandingScreen = ({
     itwCredentialStatusSelector(state, credentialType)
   );
   const pidStatus = useIOSelector(itwCredentialsEidStatusSelector);
+  const credentialName = useItwCredentialName(credentialType);
   const mixPanelCredential = useMemo(
     () => getMixPanelCredential(credentialType, isItwL3),
     [credentialType, isItwL3]
@@ -93,9 +96,9 @@ export const ItwIssuanceCredentialLandingScreen = ({
     if (!isItwValid) {
       // ITW not active, redirect to discovery info screen
       navigation.replace(ITW_ROUTES.DISCOVERY.INFO, {
-        animationEnabled: false,
         level: isWhitelisted ? "l3" : "l2",
-        credentialType
+        credentialType,
+        disableAnimation: true
       });
       return;
     }
@@ -103,8 +106,8 @@ export const ItwIssuanceCredentialLandingScreen = ({
     if (isItwValid) {
       // ITW active, proceed to credential issuance
       navigation.replace(ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER, {
-        animationEnabled: false,
-        credentialType
+        credentialType,
+        disableAnimation: true
       });
       return;
     }
@@ -128,7 +131,7 @@ export const ItwIssuanceCredentialLandingScreen = ({
       <OperationResultScreenContent
         pictogram="identity"
         title={I18n.t(`features.itWallet.issuance.confirmIdentity.title`, {
-          credential: getCredentialNameFromType(credentialType)
+          credential: credentialName
         })}
         subtitle={I18n.t(
           `features.itWallet.issuance.confirmIdentity.subtitle`,
@@ -170,7 +173,7 @@ export const ItwIssuanceCredentialLandingScreen = ({
         subtitle={I18n.t(
           `features.itWallet.issuance.credentialAlreadyUpdated.subtitle`,
           {
-            credential: getCredentialNameFromType(credentialType)
+            credential: credentialName
           }
         )}
         action={{

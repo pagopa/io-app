@@ -50,7 +50,11 @@ const AuthenticationStackNavigator = () => (
     <Stack.Screen
       name={AUTHENTICATION_ROUTES.LANDING}
       component={LandingScreen}
-      options={{ headerShown: true }}
+      options={{
+        headerShown: true,
+        // The title is set to an empty string to prevent the default title from being shown in the header (Android glitch).
+        title: ""
+      }}
     />
 
     <Stack.Screen

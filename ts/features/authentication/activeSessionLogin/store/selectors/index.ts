@@ -8,6 +8,7 @@ import { GlobalState } from "../../../../../store/reducers/types";
 import { sessionInfoSelector } from "../../../common/store/selectors";
 import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
 import { apiLoginUrlPrefix } from "../../../../../config";
+import { LoginType } from "../../screens/analytics";
 
 export const isActiveSessionLoginLocallyEnabledSelector = (
   state: GlobalState
@@ -46,6 +47,24 @@ export const newTokenActiveSessionLoginSelector = (state: GlobalState) =>
 export const isActiveSessionFastLoginEnabledSelector = (state: GlobalState) =>
   state.features.loginFeatures.activeSessionLogin?.loginInfo?.fastLoginOptIn ??
   false;
+
+export const activeSessionLoginFlowSelector = (state: GlobalState) =>
+  state.features.loginFeatures.activeSessionLogin?.flow;
+
+export const cieLoginFlowSelector = (state: GlobalState): LoginType => {
+  const isActiveSessionLogin =
+    state.features.loginFeatures.activeSessionLogin?.isActiveSessionLogin;
+  if (isActiveSessionLogin) {
+    const activeSessionLoginFlow =
+      state.features.loginFeatures.activeSessionLogin?.flow;
+    if (activeSessionLoginFlow === "FCI") {
+      return "FCI_auth";
+    }
+    return "reauth";
+  } else {
+    return "auth";
+  }
+};
 
 export const cieIDSelectedSecurityLevelActiveSessionLoginSelector = (
   state: GlobalState

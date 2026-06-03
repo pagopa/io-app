@@ -1,7 +1,7 @@
 import { ActionType } from "typesafe-actions";
-import { TagEnum } from "../../../../../../definitions/backend/MessageCategoryBase";
-import { TagEnum as PaymentTagEnum } from "../../../../../../definitions/backend/MessageCategoryPayment";
-import { TagEnum as SENDTagEnum } from "../../../../../../definitions/backend/MessageCategoryPN";
+import { TagEnum } from "../../../../../../definitions/communication/MessageCategoryBase";
+import { TagEnum as PaymentTagEnum } from "../../../../../../definitions/communication/MessageCategoryPayment";
+import { TagEnum as SENDTagEnum } from "../../../../../../definitions/communication/MessageCategoryPN";
 import {
   errorPreconditionStatusAction,
   idlePreconditionStatusAction,
@@ -41,7 +41,7 @@ import {
 } from "../messagePrecondition";
 import { GlobalState } from "../../../../../store/reducers/types";
 import * as backendStatus from "../../../../../store/reducers/backendStatus/remoteConfig";
-import { MessageCategory } from "../../../../../../definitions/backend/MessageCategory";
+import { MessageCategory } from "../../../../../../definitions/communication/MessageCategory";
 
 const messageId = "01J1FJADCJ53SN4A11J3TBSKQE";
 const categoryTag = TagEnum.GENERIC;

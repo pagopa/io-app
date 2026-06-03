@@ -17,17 +17,14 @@ import { ItwEngagementBanner } from "../../common/components/ItwEngagementBanner
 import { ItwSkeumorphicCard } from "../../common/components/ItwSkeumorphicCard";
 import { FlipGestureDetector } from "../../common/components/ItwSkeumorphicCard/FlipGestureDetector";
 import { getCredentialStatusObject } from "../../common/utils/itwCredentialStatusUtils";
-import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
 import {
   CredentialType,
   ItwStoredCredentialsMocks
 } from "../../common/utils/itwMocksUtils";
-import {
-  CredentialMetadata,
-  ItwCredentialStatus
-} from "../../common/utils/itwTypesUtils";
+import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import { ItwRequestedClaimsList } from "../../issuance/components/ItwRequestedClaimsList";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { ItwClaimsSelector } from "../../presentation/common/components/ItwClaimsSelector";
 import { ItwPresentationCredentialCardFlipButton } from "../../presentation/details/components/ItwPresentationCredentialCardFlipButton";
 
 const ItwWalletBrandSection = () => {
@@ -77,32 +74,6 @@ const ItwWalletBrandSection = () => {
     </View>
   );
 };
-
-const ALL_CREDENTIAL_STATUSES: ReadonlyArray<ItwCredentialStatus> = [
-  "valid",
-  "expiring",
-  "expired",
-  "jwtExpiring",
-  "jwtExpired",
-  "invalid",
-  "unknown"
-];
-
-const ItwPidCardSection = () => (
-  <View style={{ paddingBottom: 24 }}>
-    <ListItemHeader label="IT-Wallet ID card" />
-    <VStack space={8}>
-      {ALL_CREDENTIAL_STATUSES.map(status => (
-        <DSComponentViewerBox key={status} name={status}>
-          <ItwCredentialCard
-            credentialType={CredentialType.PID}
-            credentialStatus={status}
-          />
-        </DSComponentViewerBox>
-      ))}
-    </VStack>
-  </View>
-);
 
 const ItwEngagementBannerSection = () => (
   <View
@@ -261,12 +232,98 @@ export const ItwClaimsListSection = () => {
   );
 };
 
+const claimsSelectorItems: Array<{
+  id: string;
+  label: string;
+  value: unknown;
+}> = [
+  { id: "given_name", label: "Nome", value: "Mario" },
+  { id: "family_name", label: "Cognome", value: "Rossi" },
+  { id: "birth_date", label: "Data di nascita", value: "1990-03-15" },
+  {
+    id: "place_of_birth",
+    label: "Luogo di nascita",
+    value: { country: "IT", locality: "Roma" }
+  },
+  {
+    id: "portrait",
+    label: "Foto",
+    value:
+      "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+  },
+  { id: "is_over_18", label: "Maggiorenne", value: true },
+  { id: "is_over_65", label: "Over 65", value: false },
+  { id: "nationalities", label: "Nazionalità", value: ["IT", "FR", "DE"] },
+  {
+    id: "driving_privileges",
+    label: "Categorie patente",
+    value: [
+      {
+        vehicle_category_code: "AM",
+        issue_date: "2015-06-01",
+        expiry_date: "2030-06-01"
+      },
+      {
+        vehicle_category_code: "B",
+        issue_date: "2018-09-15",
+        expiry_date: "2028-09-15"
+      }
+    ]
+  },
+  {
+    id: "address",
+    label: "Indirizzo",
+    value: {
+      street: { value: "Via Roma 42", name: "Via" },
+      city: { value: "Milano", name: "Città" },
+      postal_code: { value: "20100", name: "CAP" }
+    }
+  },
+  {
+    id: "long_value",
+    label: "Campo con valore molto lungo per testare il wrapping del testo",
+    value:
+      "Questo è un valore particolarmente lungo che serve a verificare il comportamento del componente quando il contenuto testuale eccede le dimensioni normali della cella"
+  },
+  { id: "empty_value", label: "Campo vuoto", value: "" }
+];
+
+const claimsSelectorCredentialTypes: Array<string> = [
+  CredentialType.PID,
+  CredentialType.DRIVING_LICENSE,
+  CredentialType.EUROPEAN_DISABILITY_CARD,
+  CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
+  CredentialType.AGE_VERIFICATION,
+  CredentialType.EDUCATION_ATTENDANCE,
+  CredentialType.EDUCATION_DEGREE,
+  CredentialType.EDUCATION_DIPLOMA,
+  CredentialType.EDUCATION_ENROLLMENT,
+  CredentialType.RESIDENCY,
+  "Unknown Credential",
+  "Unknown Credential Type with Ridicolously Long Long Long Long Name"
+];
+
+const ItwClaimsSelectorSection = () => (
+  <VStack space={8}>
+    <ListItemHeader label="ClaimsSelector" />
+    {claimsSelectorCredentialTypes.map(credentialType => (
+      <ItwClaimsSelector
+        credentialType={credentialType}
+        key={credentialType}
+        items={claimsSelectorItems}
+        defaultExpanded={false}
+        selectionEnabled={false}
+      />
+    ))}
+  </VStack>
+);
+
 export const ItwComponentsSection = () => (
   <>
     <ItwWalletBrandSection />
-    <ItwPidCardSection />
     <ItwEngagementBannerSection />
     <ItwSkeumorphicCredentialSection />
     <ItwClaimsListSection />
+    <ItwClaimsSelectorSection />
   </>
 );
