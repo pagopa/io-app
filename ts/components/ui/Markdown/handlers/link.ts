@@ -1,5 +1,3 @@
-import { IOToast } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
 import { IO_INTERNAL_LINK_PREFIX } from "../../../../utils/navigation";
 import { openWebUrl } from "../../../../utils/url";
 
@@ -10,6 +8,13 @@ export const isHttpsLink = (href: string): boolean =>
   href.toLowerCase().startsWith("https://");
 export const isHttpLink = (href: string): boolean =>
   href.toLowerCase().startsWith("http://");
+export const isCustomHandledLink = (href: string): boolean => {
+  try {
+    return /^(mailto:|tel:|sms:)/i.test(href.trim());
+  } catch {
+    return false;
+  }
+};
 
 /**
  * URL schemas supported by CustomHandledLink.
@@ -62,11 +67,4 @@ export function handleLinkMessage(href: string) {
     // FIXME: Whitelist allowed domains: https://www.pivotaltracker.com/story/show/158470128
     openWebUrl(href);
   }
-}
-
-// try to open the given url. If it fails an error toast will shown
-export function openLink(url: string, customError?: string) {
-  const error = customError || I18n.t("global.genericError");
-  const getErrorToast = () => IOToast.error(error);
-  openWebUrl(url, getErrorToast);
 }

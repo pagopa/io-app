@@ -2883,6 +2883,10 @@
         "content": "Riceverai un messaggio su IO con l’esito della tua richiesta.",
         "cta": "Chiudi"
       },
+      "documentUnavailablePage": {
+        "title": "Non siamo riusciti a recuperare i documenti",
+        "subtitle": "Riprova tra qualche minuto."
+      },
       "qtspTos": {
         "title": "Ci siamo quasi!",
         "subTitle": "Per firmare, devi accettare i termini e condizioni del servizio e confermare di avere letto l’informativa privacy del fornitore della firma **Namirial S.p.A.**"
@@ -4268,7 +4272,7 @@
               "error": "Abbiamo avuto un problema nel generare il QR Code."
             },
             "invalidBanner": {
-              "content": "Non puoi far verificare i tuoi documenti digitali.",
+              "content": "Conferma la tua identità per continuare a usare il tuo portafoglio IT-Wallet.",
               "action": "Conferma identità"
             },
             "banner": {
