@@ -69,6 +69,7 @@ exports[`MessageRouterScreen renders the error component when not loading 1`] = 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -714,6 +715,7 @@ exports[`MessageRouterScreen renders the loading component when isLoading is tru
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

@@ -69,6 +69,7 @@ exports[`SendQRScanFlowScreen should match snapshot when an app update is requir
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1409,6 +1410,7 @@ exports[`SendQRScanFlowScreen should match snapshot when no app update is requir
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

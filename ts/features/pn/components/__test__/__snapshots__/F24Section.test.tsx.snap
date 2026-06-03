@@ -198,6 +198,7 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -519,6 +520,7 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -840,6 +842,7 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1161,6 +1164,7 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1482,6 +1486,7 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1803,6 +1808,7 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2124,6 +2130,7 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2445,6 +2452,7 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2766,6 +2774,7 @@ exports[`F24Section should match snapshot (list: [], cancelled false, opening so
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -3087,6 +3096,7 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -3408,6 +3418,7 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -3729,6 +3740,7 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -4050,6 +4062,7 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -4371,6 +4384,7 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -4692,6 +4706,7 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -5013,6 +5028,7 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -5334,6 +5350,7 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -5655,6 +5672,7 @@ exports[`F24Section should match snapshot (list: [], cancelled true, opening sou
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -5976,6 +5994,7 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -6297,6 +6316,7 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -6618,6 +6638,7 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -6939,6 +6960,7 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -7260,6 +7282,7 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -7581,6 +7604,7 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -7902,6 +7926,7 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -8223,6 +8248,7 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -8544,6 +8570,7 @@ exports[`F24Section should match snapshot (list: [], cancelled undefined, openin
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -8865,6 +8892,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -9295,6 +9323,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -9725,6 +9754,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -10155,6 +10185,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -10585,6 +10616,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -11015,6 +11047,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -11445,6 +11478,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -11875,6 +11909,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -12305,6 +12340,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled false, ope
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -12735,6 +12771,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -13056,6 +13093,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -13377,6 +13415,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -13698,6 +13737,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -14019,6 +14059,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -14340,6 +14381,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -14661,6 +14703,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -14982,6 +15025,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -15303,6 +15347,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled true, open
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -15624,6 +15669,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -16054,6 +16100,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -16484,6 +16531,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -16914,6 +16962,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -17344,6 +17393,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -17774,6 +17824,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -18204,6 +18255,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -18634,6 +18686,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -19064,6 +19117,7 @@ exports[`F24Section should match snapshot (list: [F24 F24], cancelled undefined,
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -19494,6 +19548,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -19924,6 +19979,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -20354,6 +20410,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -20784,6 +20841,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -21214,6 +21272,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -21644,6 +21703,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -22074,6 +22134,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -22504,6 +22565,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -22934,6 +22996,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -23364,6 +23427,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -23685,6 +23749,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -24006,6 +24071,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -24327,6 +24393,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -24648,6 +24715,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -24969,6 +25037,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -25290,6 +25359,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -25611,6 +25681,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -25932,6 +26003,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -26253,6 +26325,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -26683,6 +26756,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -27113,6 +27187,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -27543,6 +27618,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -27973,6 +28049,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -28403,6 +28480,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -28833,6 +28911,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -29263,6 +29342,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -29693,6 +29773,7 @@ exports[`F24Section should match snapshot (list: [F24 undefined F24], cancelled 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -30123,6 +30204,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -30605,6 +30687,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -31087,6 +31170,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -31569,6 +31653,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -32051,6 +32136,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -32533,6 +32619,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -33015,6 +33102,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -33497,6 +33585,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -33979,6 +34068,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled false, opening
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -34461,6 +34551,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -34782,6 +34873,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -35103,6 +35195,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -35424,6 +35517,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -35745,6 +35839,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -36066,6 +36161,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -36387,6 +36483,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -36708,6 +36805,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -37029,6 +37127,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled true, opening 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -37350,6 +37449,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -37832,6 +37932,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -38314,6 +38415,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -38796,6 +38898,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -39278,6 +39381,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -39760,6 +39864,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -40242,6 +40347,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -40724,6 +40830,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -41206,6 +41313,7 @@ exports[`F24Section should match snapshot (list: [F24], cancelled undefined, ope
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -41688,6 +41796,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -42170,6 +42279,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -42652,6 +42762,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -43134,6 +43245,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -43616,6 +43728,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -44098,6 +44211,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -44580,6 +44694,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -45062,6 +45177,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -45544,6 +45660,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled fals
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -46026,6 +46143,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -46347,6 +46465,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -46668,6 +46787,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -46989,6 +47109,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -47310,6 +47431,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -47631,6 +47753,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -47952,6 +48075,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -48273,6 +48397,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -48594,6 +48719,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled true
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -48915,6 +49041,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -49397,6 +49524,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -49879,6 +50007,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -50361,6 +50490,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -50843,6 +50973,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -51325,6 +51456,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -51807,6 +51939,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -52289,6 +52422,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -52771,6 +52905,7 @@ exports[`F24Section should match snapshot (list: [undefined F24], cancelled unde
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -53253,6 +53388,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -53574,6 +53710,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -53895,6 +54032,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -54216,6 +54354,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -54537,6 +54676,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -54858,6 +54998,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -55179,6 +55320,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -55500,6 +55642,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -55821,6 +55964,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled false, o
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -56142,6 +56286,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -56463,6 +56608,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -56784,6 +56930,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -57105,6 +57252,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -57426,6 +57574,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -57747,6 +57896,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -58068,6 +58218,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -58389,6 +58540,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -58710,6 +58862,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled true, op
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -59031,6 +59184,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -59352,6 +59506,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -59673,6 +59828,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -59994,6 +60150,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -60315,6 +60472,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -60636,6 +60794,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -60957,6 +61116,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -61278,6 +61438,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -61599,6 +61760,7 @@ exports[`F24Section should match snapshot (list: [undefined], cancelled undefine
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

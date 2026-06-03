@@ -69,6 +69,7 @@ exports[`PreferencesScreen should match snapshot 1`] = `
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

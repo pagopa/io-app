@@ -69,6 +69,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -807,6 +808,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1940,6 +1942,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

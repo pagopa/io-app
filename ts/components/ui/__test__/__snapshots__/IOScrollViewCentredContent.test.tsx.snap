@@ -198,6 +198,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1362,6 +1363,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2989,6 +2991,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -4390,6 +4393,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -5325,6 +5329,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -6723,6 +6728,7 @@ exports[`IOScrollViewCentredContent should match snapshot, with     description,
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -7895,6 +7901,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -9056,6 +9063,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -10680,6 +10688,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -12078,6 +12087,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -13010,6 +13020,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -14405,6 +14416,7 @@ exports[`IOScrollViewCentredContent should match snapshot, without  description,
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

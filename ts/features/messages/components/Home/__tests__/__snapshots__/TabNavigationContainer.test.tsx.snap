@@ -198,6 +198,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -960,6 +961,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

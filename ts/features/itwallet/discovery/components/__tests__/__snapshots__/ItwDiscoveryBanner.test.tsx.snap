@@ -198,6 +198,7 @@ exports[`ItwDiscoveryBanner skeleton should render skeleton while remote wallet 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -574,6 +575,7 @@ exports[`ItwDiscoveryBanner snapshots should match snapshot for MDL upgrade bann
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1737,6 +1739,7 @@ exports[`ItwDiscoveryBanner snapshots should match snapshot for activation banne
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2900,6 +2903,7 @@ exports[`ItwDiscoveryBanner snapshots should match snapshot for default upgrade 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -4063,6 +4067,7 @@ exports[`ItwDiscoveryBanner snapshots should match snapshot for empty wallet ban
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -5069,6 +5074,7 @@ exports[`ItwDiscoveryBanner snapshots should match snapshot for reactivation ban
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

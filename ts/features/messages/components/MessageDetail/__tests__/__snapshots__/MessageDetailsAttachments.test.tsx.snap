@@ -198,6 +198,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -519,6 +520,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -840,6 +842,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1161,6 +1164,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1482,6 +1486,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1803,6 +1808,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2124,6 +2130,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2445,6 +2452,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2766,6 +2774,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -3087,6 +3096,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -3408,6 +3418,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -3729,6 +3740,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -4050,6 +4062,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -4371,6 +4384,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -4692,6 +4706,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -5013,6 +5028,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -5334,6 +5350,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -5655,6 +5672,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -5976,6 +5994,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -6297,6 +6316,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -6618,6 +6638,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -6939,6 +6960,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -7260,6 +7282,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -7581,6 +7604,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -7902,6 +7926,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -8223,6 +8248,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -8544,6 +8570,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -8865,6 +8892,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -9186,6 +9214,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -9507,6 +9536,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -9828,6 +9858,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -10149,6 +10180,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -10470,6 +10502,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -10791,6 +10824,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -11112,6 +11146,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -11433,6 +11468,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -11754,6 +11790,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -12075,6 +12112,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -12396,6 +12434,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -12717,6 +12756,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -13038,6 +13078,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -13359,6 +13400,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -13680,6 +13722,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -14001,6 +14044,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -14322,6 +14366,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -14643,6 +14688,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -14964,6 +15010,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -15285,6 +15332,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -15606,6 +15654,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -15927,6 +15976,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -16248,6 +16298,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -16569,6 +16620,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -16890,6 +16942,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -17211,6 +17264,7 @@ exports[`MessageDetailsAttachments should match snapshot (0 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -17532,6 +17586,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -17983,6 +18038,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -18434,6 +18490,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -18885,6 +18942,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -19336,6 +19394,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -19787,6 +19846,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -20238,6 +20298,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -20689,6 +20750,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -21140,6 +21202,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -21591,6 +21654,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -22042,6 +22106,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -22493,6 +22558,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -22944,6 +23010,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -23395,6 +23462,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -23846,6 +23914,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -24297,6 +24366,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -24748,6 +24818,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -25199,6 +25270,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -25650,6 +25722,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -26101,6 +26174,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -26552,6 +26626,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -27003,6 +27078,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -27454,6 +27530,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -27905,6 +27982,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -28356,6 +28434,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -28807,6 +28886,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -29258,6 +29338,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -29709,6 +29790,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -30157,6 +30239,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -30605,6 +30688,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -31053,6 +31137,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -31501,6 +31586,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -31949,6 +32035,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -32397,6 +32484,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -32845,6 +32933,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -33293,6 +33382,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -33741,6 +33831,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -34189,6 +34280,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -34637,6 +34729,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -35085,6 +35178,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -35533,6 +35627,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -35981,6 +36076,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -36429,6 +36525,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -36877,6 +36974,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -37325,6 +37423,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -37773,6 +37872,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -38221,6 +38321,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -38669,6 +38770,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -39117,6 +39219,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -39565,6 +39668,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -40013,6 +40117,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -40461,6 +40566,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -40909,6 +41015,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -41357,6 +41464,7 @@ exports[`MessageDetailsAttachments should match snapshot (1 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -41805,6 +41913,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -42400,6 +42509,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -42995,6 +43105,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -43590,6 +43701,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -44185,6 +44297,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -44780,6 +44893,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -45375,6 +45489,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -46042,6 +46157,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -46709,6 +46825,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -47376,6 +47493,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -47971,6 +48089,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -48566,6 +48685,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -49161,6 +49281,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -49756,6 +49877,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -50351,6 +50473,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -50946,6 +51069,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -51613,6 +51737,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -52280,6 +52405,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -52947,6 +53073,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -53542,6 +53669,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -54137,6 +54265,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -54732,6 +54861,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -55327,6 +55457,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -55922,6 +56053,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -56517,6 +56649,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -57184,6 +57317,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -57851,6 +57985,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has ba
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -58518,6 +58653,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -59110,6 +59246,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -59702,6 +59839,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -60294,6 +60432,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -60886,6 +61025,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -61478,6 +61618,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -62070,6 +62211,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -62734,6 +62876,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -63398,6 +63541,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -64062,6 +64206,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -64654,6 +64799,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -65246,6 +65392,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -65838,6 +65985,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -66430,6 +66578,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -67022,6 +67171,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -67614,6 +67764,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -68278,6 +68429,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -68942,6 +69094,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -69606,6 +69759,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -70198,6 +70352,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -70790,6 +70945,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -71382,6 +71538,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -71974,6 +72131,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -72566,6 +72724,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -73158,6 +73317,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -73822,6 +73982,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -74486,6 +74647,7 @@ exports[`MessageDetailsAttachments should match snapshot (4 attachments) (has no
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

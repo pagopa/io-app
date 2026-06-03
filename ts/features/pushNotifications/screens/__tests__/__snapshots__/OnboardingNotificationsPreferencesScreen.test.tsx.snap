@@ -69,6 +69,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1705,6 +1706,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -3342,6 +3344,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -4979,6 +4982,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -6616,6 +6620,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

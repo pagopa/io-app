@@ -198,6 +198,7 @@ exports[`MessageDetailsContent component should match snapshot when user type is
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -562,6 +563,7 @@ exports[`MessageDetailsContent component should match snapshot when user type is
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -968,6 +970,7 @@ exports[`MessageDetailsContent component should match snapshot when user type is
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1352,6 +1355,7 @@ exports[`MessageDetailsContent component should match snapshot when user type is
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1778,6 +1782,7 @@ exports[`MessageDetailsContent component should match snapshot when user type is
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2142,6 +2147,7 @@ exports[`MessageDetailsContent component should match snapshot when user type is
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2548,6 +2554,7 @@ exports[`MessageDetailsContent component should match snapshot when user type is
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2932,6 +2939,7 @@ exports[`MessageDetailsContent component should match snapshot when user type is
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -3358,6 +3366,7 @@ exports[`MessageDetailsContent component should match snapshot when user type is
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -3723,6 +3732,7 @@ exports[`MessageDetailsContent component should match snapshot when user type is
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -4111,6 +4121,7 @@ exports[`MessageDetailsContent component should match snapshot when user type is
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -4496,6 +4507,7 @@ exports[`MessageDetailsContent component should match snapshot when user type is
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -4904,6 +4916,7 @@ exports[`MessageDetailsContent component should match snapshot when user type is
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -5269,6 +5282,7 @@ exports[`MessageDetailsContent component should match snapshot when user type is
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -5657,6 +5671,7 @@ exports[`MessageDetailsContent component should match snapshot when user type is
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -6042,6 +6057,7 @@ exports[`MessageDetailsContent component should match snapshot when user type is
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -6450,6 +6466,7 @@ exports[`MessageDetailsContent component should match snapshot when user type is
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -6815,6 +6832,7 @@ exports[`MessageDetailsContent component should match snapshot when user type is
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -7203,6 +7221,7 @@ exports[`MessageDetailsContent component should match snapshot when user type is
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -7588,6 +7607,7 @@ exports[`MessageDetailsContent component should match snapshot when user type is
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -7996,6 +8016,7 @@ exports[`MessageDetailsContent component should match snapshot when user type is
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -8361,6 +8382,7 @@ exports[`MessageDetailsContent component should match snapshot when user type is
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -8749,6 +8771,7 @@ exports[`MessageDetailsContent component should match snapshot when user type is
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -9134,6 +9157,7 @@ exports[`MessageDetailsContent component should match snapshot when user type is
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

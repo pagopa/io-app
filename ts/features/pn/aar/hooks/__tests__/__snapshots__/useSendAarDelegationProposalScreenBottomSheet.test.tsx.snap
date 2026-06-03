@@ -200,6 +200,7 @@ exports[`useSendAarDelegationProposalScreenBottomSheet should render the correct
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

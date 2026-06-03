@@ -198,6 +198,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -669,6 +670,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1140,6 +1142,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1611,6 +1614,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

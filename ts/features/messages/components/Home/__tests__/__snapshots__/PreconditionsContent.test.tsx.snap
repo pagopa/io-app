@@ -198,6 +198,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'co
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -578,6 +579,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'co
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -899,6 +901,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'er
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1431,6 +1434,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'lo
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2273,6 +2277,7 @@ exports[`PreconditionsContent should match snapshot when content category is 'up
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2835,6 +2840,7 @@ exports[`PreconditionsContent should match snapshot when content category is und
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

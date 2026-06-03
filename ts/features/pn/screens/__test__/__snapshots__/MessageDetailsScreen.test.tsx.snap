@@ -69,6 +69,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -707,6 +708,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1345,6 +1347,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1983,6 +1986,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2751,6 +2755,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -3519,6 +3524,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -4287,6 +4293,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -5055,6 +5062,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -5823,6 +5831,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -6591,6 +6600,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -7470,6 +7480,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -8349,6 +8360,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -9228,6 +9240,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -10107,6 +10120,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -10986,6 +11000,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -11865,6 +11880,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -12595,6 +12611,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -13325,6 +13342,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

@@ -198,6 +198,7 @@ exports[`SendAarCieCardReadingScreen should match the snapshot for the flowType 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -519,6 +520,7 @@ exports[`SendAarCieCardReadingScreen should match the snapshot for the flowType 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -840,6 +842,7 @@ exports[`SendAarCieCardReadingScreen should match the snapshot for the flowType 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1161,6 +1164,7 @@ exports[`SendAarCieCardReadingScreen should match the snapshot for the flowType 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1506,6 +1510,7 @@ exports[`SendAarCieCardReadingScreen should match the snapshot for the flowType 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1827,6 +1832,7 @@ exports[`SendAarCieCardReadingScreen should match the snapshot for the flowType 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2148,6 +2154,7 @@ exports[`SendAarCieCardReadingScreen should match the snapshot for the flowType 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2469,6 +2476,7 @@ exports[`SendAarCieCardReadingScreen should match the snapshot for the flowType 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2790,6 +2798,7 @@ exports[`SendAarCieCardReadingScreen should match the snapshot for the flowType 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -3408,6 +3417,7 @@ exports[`SendAarCieCardReadingScreen should match the snapshot for the flowType 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -3729,6 +3739,7 @@ exports[`SendAarCieCardReadingScreen should match the snapshot for the flowType 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -4050,6 +4061,7 @@ exports[`SendAarCieCardReadingScreen should match the snapshot for the flowType 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -4371,6 +4383,7 @@ exports[`SendAarCieCardReadingScreen should match the snapshot for the flowType 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -4692,6 +4705,7 @@ exports[`SendAarCieCardReadingScreen should match the snapshot for the flowType 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -5013,6 +5027,7 @@ exports[`SendAarCieCardReadingScreen should match the snapshot for the flowType 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -5334,6 +5349,7 @@ exports[`SendAarCieCardReadingScreen should match the snapshot for the flowType 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

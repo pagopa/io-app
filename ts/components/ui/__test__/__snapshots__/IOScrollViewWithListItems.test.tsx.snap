@@ -198,6 +198,7 @@ exports[`IOScrollViewWithListItems Rendering renders correctly with default prop
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1228,6 +1229,7 @@ exports[`IOScrollViewWithListItems Rendering renders correctly without optional 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1999,6 +2001,7 @@ exports[`IOScrollViewWithListItems Rendering renders subtitle with markdown corr
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

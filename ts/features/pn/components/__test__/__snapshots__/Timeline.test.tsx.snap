@@ -198,6 +198,7 @@ exports[`Timeline component should match the snapshot, default data 1`] = `
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2645,6 +2646,7 @@ exports[`Timeline component should match the snapshot, empty data 1`] = `
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

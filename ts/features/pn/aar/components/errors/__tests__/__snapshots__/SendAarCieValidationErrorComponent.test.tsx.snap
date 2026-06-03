@@ -198,6 +198,7 @@ exports[`SendAarCieValidationErrors CieExpiredComponent should match snapshot 1`
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1283,6 +1284,7 @@ exports[`SendAarCieValidationErrors CieValidationExpiredTtlComponent should matc
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2045,6 +2047,7 @@ exports[`SendAarCieValidationErrors GenericCieValidationErrorComponent should ma
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -3043,6 +3046,7 @@ exports[`SendAarCieValidationErrors UnrelatedCieComponent should match snapshot 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

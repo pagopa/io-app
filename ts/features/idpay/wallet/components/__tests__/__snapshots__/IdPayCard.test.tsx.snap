@@ -198,6 +198,7 @@ exports[`IdPayCard should match the snapshot 1`] = `
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

@@ -198,6 +198,7 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -774,6 +775,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1404,6 +1406,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2265,6 +2268,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -3126,6 +3130,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -4226,6 +4231,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -5326,6 +5332,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -7474,6 +7481,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
