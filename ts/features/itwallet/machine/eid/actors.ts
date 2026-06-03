@@ -270,7 +270,7 @@ export const createEidIssuanceActorsImplementation = (
   ),
 
   initMrtdPoPChallenge: fromPromise<
-    MrtdPoPContext | null,
+    MrtdPoPContext,
     InitMrtdPoPChallengeActorParams
   >(async ({ input }) => {
     assert(input.authenticationContext, "authenticationContext is undefined");
@@ -278,15 +278,6 @@ export const createEidIssuanceActorsImplementation = (
       input.walletInstanceAttestation,
       "walletInstanceAttestation is undefined"
     );
-
-    // Skip MRTD PoP when `challenge_info` is absent (LoA High authentication)
-    if (
-      !mrtdUtils.isMrtdPoPChallengeRequired(
-        input.authenticationContext.callbackUrl
-      )
-    ) {
-      return null;
-    }
 
     return mrtdUtils.initMrtdPoPChallenge({
       itwVersion,

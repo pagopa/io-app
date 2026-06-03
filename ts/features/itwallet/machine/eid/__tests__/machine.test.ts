@@ -188,7 +188,7 @@ describe("itwEidIssuanceMachine", () => {
         StartAuthFlowActorParams
       >(startAuthFlow),
       initMrtdPoPChallenge: fromPromise<
-        MrtdPoPContext | null,
+        MrtdPoPContext,
         InitMrtdPoPChallengeActorParams
       >(initMrtdPoPChallenge),
       validateMrtdPoPChallenge: fromPromise<
@@ -2333,12 +2333,12 @@ describe("itwEidIssuanceMachine", () => {
 
     actor.send({
       type: "user-identification-completed",
-      authRedirectUrl: "http://spid.test.it"
+      authRedirectUrl: "http://spid.test.it?challenge_info=mock_challenge"
     });
 
     expect(actor.getSnapshot().context).toMatchObject({
       authenticationContext: {
-        callbackUrl: "http://spid.test.it"
+        callbackUrl: "http://spid.test.it?challenge_info=mock_challenge"
       }
     });
 
@@ -2499,7 +2499,7 @@ describe("itwEidIssuanceMachine", () => {
     );
   });
 
-  it("Should skip MRTD PoP and go straight to Issuance when challenge_info is absent (LoA High)", async () => {
+  it("Should skip MrtdPoP state entirely and go straight to Issuance when challenge_info is absent (LoA High)", async () => {
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
     ).getSnapshot();
@@ -2522,8 +2522,7 @@ describe("itwEidIssuanceMachine", () => {
 
     await waitFor(() => expect(startAuthFlow).toHaveBeenCalledTimes(1));
 
-    // No challenge_info → initMrtdPoPChallenge resolves to null → skip MRTD
-    initMrtdPoPChallenge.mockImplementation(() => Promise.resolve(null));
+    // No challenge_info → requiresMrtdVerification guard is false → MrtdPoP is skipped entirely
     requestAccessToken.mockImplementation(() =>
       Promise.resolve(T_ACCESS_TOKEN)
     );
@@ -2540,8 +2539,6 @@ describe("itwEidIssuanceMachine", () => {
       authRedirectUrl: "https://wallet.test.it/cb?code=abc&state=xyz"
     });
 
-    await waitFor(() => expect(initMrtdPoPChallenge).toHaveBeenCalledTimes(1));
-
     await waitForActor(actor, s =>
       s.matches({ Issuance: "DisplayingPreview" })
     );
@@ -2550,6 +2547,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().context.authenticationContext).toMatchObject({
       callbackUrl: "https://wallet.test.it/cb?code=abc&state=xyz"
     });
+    expect(initMrtdPoPChallenge).not.toHaveBeenCalled();
     expect(validateMrtdPoPChallenge).not.toHaveBeenCalled();
   });
 

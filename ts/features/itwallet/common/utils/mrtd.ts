@@ -6,6 +6,7 @@ import {
 import { WIA_KEYTAG } from "./itwCryptoContextUtils";
 import { IssuerConfiguration } from "./itwTypesUtils";
 import { getIoWallet } from "./itwIoWallet";
+export { isMrtdPoPChallengeRequired } from "./mrtdUrl";
 
 export type InitMrtdPoPChallengeParams = {
   itwVersion: ItwVersion;
@@ -24,18 +25,6 @@ export type ValidateMrtdPoPChallengeParams = {
   mrtd: CredentialIssuance.MRTDPoP.MrtdPayload;
   ias: CredentialIssuance.MRTDPoP.IasPayload;
 };
-
-const getRedirectQuery = (url: string): URLSearchParams => {
-  const queryStart = url.indexOf("?");
-  return new URLSearchParams(queryStart >= 0 ? url.slice(queryStart + 1) : "");
-};
-
-/**
- * Checks if the PID Provider requires the MRTD PoP step by looking for
- * `challenge_info` in the post-auth redirect.
- */
-export const isMrtdPoPChallengeRequired = (authRedirectUrl: string): boolean =>
-  getRedirectQuery(authRedirectUrl).has("challenge_info");
 
 export const initMrtdPoPChallenge = async ({
   itwVersion,

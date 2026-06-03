@@ -18,6 +18,7 @@ import {
 } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import { itwCredentialUpgradeMachine } from "../upgrade/machine.ts";
+import { isMrtdPoPChallengeRequired } from "../../common/utils/mrtdUrl";
 import {
   GetWalletAttestationActorParams,
   InitMrtdPoPChallengeActorParams,
@@ -175,7 +176,7 @@ export const itwEidIssuanceMachine = setup({
      */
 
     initMrtdPoPChallenge: fromPromise<
-      MrtdPoPContext | null,
+      MrtdPoPContext,
       InitMrtdPoPChallengeActorParams
     >(notImplemented),
     validateMrtdPoPChallenge: fromPromise<
@@ -220,9 +221,12 @@ export const itwEidIssuanceMachine = setup({
     isL3FeaturesEnabled: ({ context }) => context.level === "l3",
     isEligibleForItwSimplifiedActivation: notImplemented,
     requiresMrtdVerification: ({ context }) =>
-      // MRTD PoP verification is a step required for SPID and CieID identification modes
-      // when issuing an L3 PID
-      context.level === "l3" && context.identification?.mode !== "ciePin",
+      // MRTD PoP verification is required for SPID and CieID identification modes
+      // when issuing an L3 PID and the PID Provider signals a challenge via `challenge_info`.
+      context.level === "l3" &&
+      context.identification?.mode !== "ciePin" &&
+      context.authenticationContext !== undefined &&
+      isMrtdPoPChallengeRequired(context.authenticationContext.callbackUrl),
     isWalletValid: notImplemented
   }
 }).createMachine({
@@ -910,7 +914,7 @@ export const itwEidIssuanceMachine = setup({
       states: {
         InitializingChallenge: {
           description:
-            "Initializes the MRTD PoP challenge. Returns `null` when `challenge_info` is absent (LoA High), skipping directly to issuance.",
+            "Initializes the MRTD PoP challenge. The machine only enters this state when `challenge_info` is present in the callback URL.",
           tags: [ItwTags.Loading],
           invoke: {
             src: "initMrtdPoPChallenge",
@@ -918,18 +922,12 @@ export const itwEidIssuanceMachine = setup({
               authenticationContext: context.authenticationContext,
               walletInstanceAttestation: context.walletInstanceAttestation?.jwt
             }),
-            onDone: [
-              {
-                guard: ({ event }) => event.output === null,
-                target: "#itwEidIssuanceMachine.Issuance"
-              },
-              {
-                target: "DisplayingCanPreparationInstructions",
-                actions: assign(({ event }) => ({
-                  mrtdContext: event.output ?? undefined
-                }))
-              }
-            ],
+            onDone: {
+              target: "DisplayingCanPreparationInstructions",
+              actions: assign(({ event }) => ({
+                mrtdContext: event.output
+              }))
+            },
             onError: {
               actions: "setFailure",
               target: "#itwEidIssuanceMachine.Failure"
