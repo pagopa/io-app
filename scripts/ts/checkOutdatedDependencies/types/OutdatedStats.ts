@@ -23,7 +23,7 @@ export type OutdatedStats = {
 };
 
 /**
- * Convert a raw row extracted from yarn outdated --json to {@link OutdatedPackage}
+ * Convert a raw row extracted from pnpm outdated --json to {@link OutdatedPackage}
  * @param row
  */
 export const toOutdatedPackage = (
