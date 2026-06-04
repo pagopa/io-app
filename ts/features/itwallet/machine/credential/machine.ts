@@ -281,7 +281,8 @@ export const itwCredentialIssuanceMachine = setup({
               requestedCredential: context.requestedCredential,
               codeVerifier: context.codeVerifier,
               issuerConf: context.issuerConf,
-              walletInstanceAttestation: context.walletInstanceAttestation?.jwt
+              walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
+              responseMode: context.responseMode
             }),
             onDone: {
               target: "ObtainingCredential",
