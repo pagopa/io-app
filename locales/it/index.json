@@ -3395,6 +3395,7 @@
             "ciePin": {
               "title": {
                 "default": "Usa CIE + PIN",
+                "default_reissuance": "Continua con CIE + PIN",
                 "l3": "Continua con CIE + PIN"
               },
               "subtitle": {
@@ -3413,6 +3414,7 @@
             "cieId": {
               "title": {
                 "default": "Usa l'app CieID",
+                "default_reissuance": "Continua con l’app CieID",
                 "l3": "Continua con l’app CieID"
               },
               "subtitle": {
@@ -3429,6 +3431,7 @@
             "spid": {
               "title": {
                 "default": "Usa SPID",
+                "default_reissuance": "Continua con SPID",
                 "l3": "Continua con SPID + CIE"
               },
               "subtitle": {
