@@ -3486,12 +3486,12 @@
           "readingCard": {
             "android": {
               "idle": {
-                "title": "Appoggia la CIE alla parte alta del telefono",
+                "title": "Poggia il retro del telefono sulla CIE",
                 "action": "Annulla"
               },
               "reading": {
-                "title": "La lettura è in corso",
-                "subtitle": "Non muovere la carta.",
+                "title": "La lettura è in corso...",
+                "subtitle": "Non muovere il telefono.",
                 "action": "Annulla"
               },
               "completed": {
