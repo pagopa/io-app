@@ -322,7 +322,12 @@ describe("itwEidIssuanceMachine", () => {
     );
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
-    await waitFor(() => expect(createWalletInstance).toHaveBeenCalledTimes(1));
+    await waitFor(() =>
+      expect(createWalletInstance).toHaveBeenNthCalledWith(
+        1,
+        expect.objectContaining({ input: { isRenewal: false } })
+      )
+    );
     await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(1));
     await waitFor(() =>
       expect(storeIntegrityKeyTag).toHaveBeenCalledWith(
@@ -1761,7 +1766,12 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
-    await waitFor(() => expect(createWalletInstance).toHaveBeenCalledTimes(1));
+    await waitFor(() =>
+      expect(createWalletInstance).toHaveBeenNthCalledWith(
+        1,
+        expect.objectContaining({ input: { isRenewal: false } })
+      )
+    );
     await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
