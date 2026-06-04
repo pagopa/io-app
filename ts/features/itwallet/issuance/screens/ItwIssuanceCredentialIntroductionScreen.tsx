@@ -2,7 +2,6 @@ import {
   ContentWrapper,
   H2,
   IOColors,
-  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
@@ -75,7 +74,6 @@ export const ContentView = ({
     ItwCredentialIssuanceMachineContext.useSelector(selectIsLoading);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const credentialName = useItwCredentialName(credentialType);
-  const theme = useIOTheme();
   const mixPanelCredential = useMemo(
     () => getMixPanelCredential(credentialType, isItwL3),
     [credentialType, isItwL3]
