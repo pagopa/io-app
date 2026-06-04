@@ -28,7 +28,7 @@ const ENGAGEMENT_CONFIG: Record<
   }
 > = {
   qrcode: { engagementModes: ["qrcode"], retrievalMethods: ["ble"] },
-  nfc: { engagementModes: ["nfc"], retrievalMethods: ["nfc", "ble"] }
+  nfc: { engagementModes: ["nfc"], retrievalMethods: ["nfc"] }
 };
 
 export type StartEngagementActorInput = {
@@ -172,7 +172,7 @@ export const createProximityActorsImplementation = (env: Env) => {
     return () => {
       // Remove event listeners
       listeners.forEach(listener => listener.remove());
-      // Close the Bluetooth connection and clear all resources
+      // Close connection and clear all resources
       void ISO18013_5.close().catch(() => null);
     };
   });
