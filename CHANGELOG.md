@@ -2,6 +2,42 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.33.0-rc.3](https://github.com/pagopa/io-app/compare/3.33.0-rc.2...3.33.0-rc.3) (2026-06-03)
+
+
+### Features
+
+* [[IOCOM-3114](https://pagopa.atlassian.net/browse/IOCOM-3114)] messages markdown custom link handling ([#8119](https://github.com/pagopa/io-app/issues/8119)) ([7a7d728](https://github.com/pagopa/io-app/commit/7a7d7289563b52cf080c00487414a5eff3a8b38e))
+
+
+### Chores
+
+* [[IEL-534](https://pagopa.atlassian.net/browse/IEL-534)] additional properties for MP event SEND_MANDATE_CIE_CARD_READING_FAILURE ([#8141](https://github.com/pagopa/io-app/issues/8141)) ([b182cd3](https://github.com/pagopa/io-app/commit/b182cd31c9deb38514362061c2cdf651708ce77d))
+
+## [3.33.0-rc.2](https://github.com/pagopa/io-app/compare/3.33.0-rc.1...3.33.0-rc.2) (2026-05-29)
+
+
+### Bug Fixes
+
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Dependency drift ([#8144](https://github.com/pagopa/io-app/issues/8144)) ([f9aca58](https://github.com/pagopa/io-app/commit/f9aca588bcc985ce988e5164270b6891a18d8be3))
+
+
+### Chores
+
+* [[IOPLT-1853](https://pagopa.atlassian.net/browse/IOPLT-1853)] Adds new applink to handle universal app link ([#8133](https://github.com/pagopa/io-app/issues/8133)) ([b03d668](https://github.com/pagopa/io-app/commit/b03d6686e4699f1ef23b048fb11d8a98e5971524))
+
+## [3.33.0-rc.1](https://github.com/pagopa/io-app/compare/3.33.0-rc.0...3.33.0-rc.1) (2026-05-28)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4337](https://pagopa.atlassian.net/browse/SIW-4337)] Update QR code screen to show expired credentials banner ([#8132](https://github.com/pagopa/io-app/issues/8132)) ([92fec7e](https://github.com/pagopa/io-app/commit/92fec7e5fdf4eddf53d75348ee71bdcdfebe3a7d))
+
+
+### Chores
+
+* [[IEL-199](https://pagopa.atlassian.net/browse/IEL-199),[IEL-278](https://pagopa.atlassian.net/browse/IEL-278)] FCI added unavailable document screen ([#8078](https://github.com/pagopa/io-app/issues/8078)) ([0675324](https://github.com/pagopa/io-app/commit/06753247e2a4284d295233abd0e922decf419e5e))
+
 ## [3.33.0-rc.0](https://github.com/pagopa/io-app/compare/3.32.0-rc.2...3.33.0-rc.0) (2026-05-27)
 
 
