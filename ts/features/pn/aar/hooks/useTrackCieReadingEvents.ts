@@ -20,9 +20,14 @@ const getNormalizedStatusCode = (readState: CieReadState) => {
   return readState.status;
 };
 
-export const useTrackCieReadingEvents = (readState: CieReadState) => {
+export const useTrackCieReadingEvents = (
+  readState: CieReadState,
+  nfcDetected: boolean | undefined
+) => {
   const statusCode = getNormalizedStatusCode(readState);
-
+  const errorMessage = isErrorState(readState)
+    ? readState.error.message
+    : undefined;
   useEffect(() => {
     switch (statusCode) {
       case ReadStatus.IDLE:
@@ -41,8 +46,12 @@ export const useTrackCieReadingEvents = (readState: CieReadState) => {
         trackSendAarMandateCieCanCodeError();
         break;
       default:
-        trackSendAarMandateCieCardReadingFailure();
+        trackSendAarMandateCieCardReadingFailure(
+          statusCode,
+          errorMessage,
+          nfcDetected
+        );
         break;
     }
-  }, [statusCode]);
+  }, [statusCode, errorMessage, nfcDetected]);
 };
