@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.33.0-rc.3](https://github.com/pagopa/io-app/compare/3.33.0-rc.2...3.33.0-rc.3) (2026-06-03)
+
+
+### Features
+
+* [[IOCOM-3114](https://pagopa.atlassian.net/browse/IOCOM-3114)] messages markdown custom link handling ([#8119](https://github.com/pagopa/io-app/issues/8119)) ([7a7d728](https://github.com/pagopa/io-app/commit/7a7d7289563b52cf080c00487414a5eff3a8b38e))
+
+
+### Chores
+
+* [[IEL-534](https://pagopa.atlassian.net/browse/IEL-534)] additional properties for MP event SEND_MANDATE_CIE_CARD_READING_FAILURE ([#8141](https://github.com/pagopa/io-app/issues/8141)) ([b182cd3](https://github.com/pagopa/io-app/commit/b182cd31c9deb38514362061c2cdf651708ce77d))
+
 ## [3.33.0-rc.2](https://github.com/pagopa/io-app/compare/3.33.0-rc.1...3.33.0-rc.2) (2026-05-29)
 
 
