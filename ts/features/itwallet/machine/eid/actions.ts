@@ -17,8 +17,6 @@ import {
 } from "../../analytics";
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
 import {
-  itwClearSimplifiedActivationRequirements,
-  itwFreezeSimplifiedActivationRequirements,
   itwSetAuthLevel,
   itwSetCredentialUpgradeFailed,
   itwSetIdentificationMode
@@ -306,14 +304,6 @@ export const createEidIssuanceActionsImplementation = (
     // Save the auth level in the preferences
     store.dispatch(itwSetAuthLevel(context.identification?.level));
     store.dispatch(itwSetIdentificationMode(context.identification?.mode));
-  },
-
-  freezeSimplifiedActivationRequirements: () => {
-    store.dispatch(itwFreezeSimplifiedActivationRequirements());
-  },
-
-  clearSimplifiedActivationRequirements: () => {
-    store.dispatch(itwClearSimplifiedActivationRequirements());
   },
 
   storeCredentialUpgradeFailures: ({

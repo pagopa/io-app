@@ -89,8 +89,6 @@ const trackWalletInstanceCreation = jest.fn();
 const trackWalletInstanceRevocation = jest.fn();
 const trackIdentificationMethodSelected = jest.fn();
 const storeAuthLevel = jest.fn();
-const freezeSimplifiedActivationRequirements = jest.fn();
-const clearSimplifiedActivationRequirements = jest.fn();
 const navigateToCieCanScreen = jest.fn();
 const navigateToCieInternalAuthAndMrtdScreen = jest.fn();
 const trackItwIdAuthenticationCompleted = jest.fn();
@@ -118,7 +116,6 @@ const issuedEidMatchesAuthenticatedUser = jest.fn();
 const isSessionExpired = jest.fn();
 const isOperationAborted = jest.fn();
 const hasValidWalletInstanceAttestation = jest.fn();
-const isEligibleForItwSimplifiedActivation = jest.fn();
 const revokeWalletInstance = jest.fn();
 const isWalletValid = jest.fn();
 
@@ -159,8 +156,6 @@ describe("itwEidIssuanceMachine", () => {
       trackWalletInstanceRevocation,
       trackIdentificationMethodSelected,
       storeAuthLevel,
-      freezeSimplifiedActivationRequirements,
-      clearSimplifiedActivationRequirements,
       trackItwIdAuthenticationCompleted,
       trackItwIdVerifiedDocument
     },
@@ -202,7 +197,6 @@ describe("itwEidIssuanceMachine", () => {
       issuedEidMatchesAuthenticatedUser,
       isSessionExpired,
       isOperationAborted,
-      isEligibleForItwSimplifiedActivation,
       hasValidWalletInstanceAttestation,
       isWalletValid
     }
@@ -2166,71 +2160,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(navigateToIdentificationScreen).toHaveBeenCalledTimes(1);
   });
 
-  it("Should start the simplified activation flow without credentials", async () => {
-    hasValidWalletInstanceAttestation.mockImplementation(() => true);
-    isEligibleForItwSimplifiedActivation.mockImplementation(() => true);
-
-    const actor = createActor(mockedMachine);
-    actor.start();
-
-    // Start
-    actor.send({ type: "start", level: "l3", mode: "upgrade" });
-    expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
-
-    // Accept Wallet Provider TOS
-    actor.send({ type: "accept-tos" });
-    expect(actor.getSnapshot().value).toStrictEqual(
-      "TrustFederationVerification"
-    );
-    await waitFor(() => {
-      expect(verifyTrustFederation).toHaveBeenCalledTimes(1);
-    });
-    expect(actor.getSnapshot().value).toStrictEqual("IpzsPrivacyAcceptance");
-
-    // Accept Credential Issuer privacy policy
-    actor.send({ type: "accept-ipzs-privacy" });
-    expect(actor.getSnapshot().value).toStrictEqual("Success");
-    expect(clearSimplifiedActivationRequirements).toHaveBeenCalledTimes(1);
-  });
-
-  it("Should start the simplified activation flow with credentials upgrade only", async () => {
-    isEligibleForItwSimplifiedActivation.mockImplementation(() => true);
-
-    const initialSnapshot: MachineSnapshot = createActor(
-      itwEidIssuanceMachine
-    ).getSnapshot();
-
-    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
-      value: "IpzsPrivacyAcceptance",
-      context: {
-        mode: "upgrade",
-        integrityKeyTag: T_INTEGRITY_KEY,
-        walletInstanceAttestation: { jwt: T_WIA },
-        level: "l3",
-        credentialsToUpgrade: [
-          ItwStoredCredentialsMocks.mdl
-        ] as ReadonlyArray<CredentialMetadata>
-      }
-    });
-
-    const actor = createActor(mockedMachine, { snapshot });
-    actor.start();
-
-    actor.send({ type: "accept-ipzs-privacy" });
-
-    await waitFor(() =>
-      expect(actor.getSnapshot().value).toStrictEqual({
-        CredentialsUpgrade: "Intro"
-      })
-    );
-
-    expect(clearSimplifiedActivationRequirements).toHaveBeenCalledTimes(1);
-    expect(navigateToUpgradeCredentialsScreen).toHaveBeenCalledTimes(1);
-  });
-
   it("Should reach CredentialsUpgrade.Upgrading in simplified flow without eid in context (regression)", done => {
-    isEligibleForItwSimplifiedActivation.mockImplementation(() => true);
-
     const initialSnapshot: MachineSnapshot = createActor(
       itwEidIssuanceMachine
     ).getSnapshot();

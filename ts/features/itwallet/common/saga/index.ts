@@ -25,7 +25,6 @@ import {
 } from "../../lifecycle/saga/checkWalletInstanceStateSaga";
 import { checkFiscalCodeEnabledSaga } from "../../trialSystem/saga/checkFiscalCodeIsEnabledSaga.ts";
 import {
-  itwFreezeSimplifiedActivationRequirements,
   itwSetAuthLevel,
   itwSetFiscalCodeWhitelisted
 } from "../store/actions/preferences.ts";
@@ -129,5 +128,4 @@ const handleAuthLevelSanitizationSaga = function* (
   }
 
   yield* put(itwSetAuthLevel("L3"));
-  yield* put(itwFreezeSimplifiedActivationRequirements());
 };
