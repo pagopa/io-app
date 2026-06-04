@@ -1,6 +1,7 @@
 import {
   ContentWrapper,
   H2,
+  IOColors,
   useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -111,12 +112,7 @@ export const ContentView = ({
       <ContentWrapper marginTop={24}>
         <H2>{credentialName}</H2>
         <VSpacer size={16} />
-        <View
-          style={[
-            styles.contentBox,
-            { backgroundColor: theme["appBackground-secondary"] }
-          ]}
-        >
+        <View style={styles.contentBox}>
           <IOMarkdown content={markdownContent} />
         </View>
       </ContentWrapper>
@@ -133,6 +129,10 @@ const styles = StyleSheet.create({
     opacity: 0.8
   },
   contentBox: {
-    padding: 16
+    borderRadius: 8,
+    borderWidth: 1,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderColor: IOColors["grey-100"]
   }
 });
