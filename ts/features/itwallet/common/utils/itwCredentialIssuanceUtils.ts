@@ -119,7 +119,7 @@ export type CompleteAuthFlow = (args: {
  * for the requested credential(s).
  * This token is then used in {@link obtainCredential} to get the credential from the Issuer.
  * When no response mode is provided the flow expects the code in the query string;
- * the legacy `form_post.jwt mode` must be requested explicitly.
+ * the legacy `form_post.jwt` mode must be requested explicitly.
  * @returns The access token with the authorized credentials.
  */
 export const completeAuthFlow: CompleteAuthFlow = async ({
@@ -141,7 +141,8 @@ export const completeAuthFlow: CompleteAuthFlow = async ({
   await regenerateCryptoKey(DPOP_KEYTAG);
   const dPopCryptoContext = createCryptoContextFor(DPOP_KEYTAG);
 
-  // Complete the user authorization and obtain the code to exchange for the access token
+  // Complete the user authorization and obtain the code to exchange for the access token.
+  // Two modes are supported for backward compatibility with IT-Wallet 1.0.
   const getAuthorizationCode = async (): Promise<string> => {
     if (responseMode === "form_post.jwt") {
       return (
@@ -158,7 +159,7 @@ export const completeAuthFlow: CompleteAuthFlow = async ({
         requestObject,
         issuerConf,
         [pid.metadata.keyTag, pid.credential],
-        env.ISSUANCE_REDIRECT_URI
+        env.ISSUANCE_REDIRECT_URI // The redirect uri must be a valid HTTP url that can be followed
       )
     ).code;
   };
