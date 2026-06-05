@@ -5,11 +5,12 @@ import rehypeFormat from "rehype-format";
 import rehypeStringify from "rehype-stringify";
 import { visit } from "unist-util-visit";
 import { h } from "hastscript";
+import { Root } from "mdast";
 
 // This Plugin is used to convert the markdown directives to custom blocks including classes and ids
 // source https://github.com/remarkjs/remark-directive#use
 function customPlugin() {
-  return (tree: any) => {
+  return (tree: Root) => {
     visit(tree, node => {
       if (
         node.type === "textDirective" ||
@@ -29,13 +30,12 @@ function customPlugin() {
   };
 }
 
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 export const remarkProcessor = remark()
   .use(remarkDirective)
-  .use(customPlugin) // @ts-ignore
-  .use(remarkRehype) // @ts-ignore
-  .use(rehypeFormat) // @ts-ignore
-  .use(rehypeStringify) // @ts-ignore
+  .use(customPlugin)
+  .use(remarkRehype)
+  .use(rehypeFormat)
+  .use(rehypeStringify)
   .use(remarkDirective);
 
 export const markdownToPlainText = (md: string): string =>

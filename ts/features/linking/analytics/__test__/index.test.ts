@@ -7,80 +7,207 @@ describe("index", () => {
   });
 
   describe("trackIOOpenedFromUniversalAppLink", () => {
-    it("should call 'mixpanelTrack' with proper parameters when link is HTTPS", () => {
-      const spyOnMixpanelTrack = jest
-        .spyOn(MIXPANEL, "mixpanelTrack")
-        .mockReturnValue(undefined);
+    describe("when Mixpanel is initialized", () => {
+      beforeEach(() => {
+        jest
+          .spyOn(MIXPANEL, "isMixpanelInstanceInitialized")
+          .mockReturnValue(true);
+      });
 
-      const httpsLink = "https://example.com/path?param=value";
-      trackIOOpenedFromUniversalAppLink(httpsLink);
+      it("should call 'mixpanelTrack' with proper parameters when link is HTTPS", () => {
+        const spyOnMixpanelTrack = jest
+          .spyOn(MIXPANEL, "mixpanelTrack")
+          .mockReturnValue(undefined);
 
-      expect(spyOnMixpanelTrack.mock.calls.length).toBe(1);
-      expect(spyOnMixpanelTrack.mock.calls[0].length).toBe(2);
-      expect(spyOnMixpanelTrack.mock.calls[0][0]).toBe("IO_UNIVERSAL_APP_LINK");
-      expect(spyOnMixpanelTrack.mock.calls[0][1]).toEqual({
-        event_category: "TECH",
-        event_type: undefined,
-        flow: undefined,
-        link_id: "https://example.com/path"
+        const httpsLink = "https://example.com/path?param=value";
+        trackIOOpenedFromUniversalAppLink(httpsLink);
+
+        expect(spyOnMixpanelTrack.mock.calls.length).toBe(1);
+        expect(spyOnMixpanelTrack.mock.calls[0].length).toBe(2);
+        expect(spyOnMixpanelTrack.mock.calls[0][0]).toBe(
+          "IO_UNIVERSAL_APP_LINK"
+        );
+        expect(spyOnMixpanelTrack.mock.calls[0][1]).toEqual({
+          event_category: "TECH",
+          event_type: undefined,
+          flow: undefined,
+          link_id: "https://example.com/path"
+        });
+      });
+
+      it("should call 'mixpanelTrack' with proper parameters when link is HTTP", () => {
+        const spyOnMixpanelTrack = jest
+          .spyOn(MIXPANEL, "mixpanelTrack")
+          .mockReturnValue(undefined);
+
+        const httpLink = "http://example.com/test";
+        trackIOOpenedFromUniversalAppLink(httpLink);
+
+        expect(spyOnMixpanelTrack.mock.calls.length).toBe(1);
+        expect(spyOnMixpanelTrack.mock.calls[0].length).toBe(2);
+        expect(spyOnMixpanelTrack.mock.calls[0][0]).toBe(
+          "IO_UNIVERSAL_APP_LINK"
+        );
+        expect(spyOnMixpanelTrack.mock.calls[0][1]).toEqual({
+          event_category: "TECH",
+          event_type: undefined,
+          flow: undefined,
+          link_id: "http://example.com/test"
+        });
+      });
+
+      it("should extract base path correctly from url with query string", () => {
+        const spyOnMixpanelTrack = jest
+          .spyOn(MIXPANEL, "mixpanelTrack")
+          .mockReturnValue(undefined);
+
+        const linkWithQuery =
+          "https://continua.io.pagopa.it/abcdef?param1=value1&param2=value2";
+        trackIOOpenedFromUniversalAppLink(linkWithQuery);
+
+        expect(spyOnMixpanelTrack.mock.calls.length).toBe(1);
+        expect(spyOnMixpanelTrack.mock.calls[0][1]).toEqual({
+          event_category: "TECH",
+          event_type: undefined,
+          flow: undefined,
+          link_id: "https://continua.io.pagopa.it/abcdef"
+        });
+      });
+
+      it("should extract base path correctly from url with fragment", () => {
+        const spyOnMixpanelTrack = jest
+          .spyOn(MIXPANEL, "mixpanelTrack")
+          .mockReturnValue(undefined);
+
+        const linkWithFragment = "https://example.com/path#fragment";
+        trackIOOpenedFromUniversalAppLink(linkWithFragment);
+
+        expect(spyOnMixpanelTrack.mock.calls.length).toBe(1);
+        expect(spyOnMixpanelTrack.mock.calls[0][1]).toEqual({
+          event_category: "TECH",
+          event_type: undefined,
+          flow: undefined,
+          link_id: "https://example.com/path"
+        });
+      });
+
+      it("should handle HTTPS with uppercase correctly", () => {
+        const spyOnMixpanelTrack = jest
+          .spyOn(MIXPANEL, "mixpanelTrack")
+          .mockReturnValue(undefined);
+
+        const uppercaseLink = "HTTPS://EXAMPLE.COM/path";
+        trackIOOpenedFromUniversalAppLink(uppercaseLink);
+
+        expect(spyOnMixpanelTrack.mock.calls.length).toBe(1);
+        expect(spyOnMixpanelTrack.mock.calls[0][0]).toBe(
+          "IO_UNIVERSAL_APP_LINK"
+        );
+        expect(spyOnMixpanelTrack.mock.calls[0][1]).toEqual({
+          event_category: "TECH",
+          event_type: undefined,
+          flow: undefined,
+          link_id: "HTTPS://EXAMPLE.COM/path"
+        });
+      });
+
+      it("should handle HTTP with mixed case correctly", () => {
+        const spyOnMixpanelTrack = jest
+          .spyOn(MIXPANEL, "mixpanelTrack")
+          .mockReturnValue(undefined);
+
+        const mixedCaseLink = "HtTp://example.com";
+        trackIOOpenedFromUniversalAppLink(mixedCaseLink);
+
+        expect(spyOnMixpanelTrack.mock.calls.length).toBe(1);
+        expect(spyOnMixpanelTrack.mock.calls[0][0]).toBe(
+          "IO_UNIVERSAL_APP_LINK"
+        );
       });
     });
 
-    it("should call 'mixpanelTrack' with proper parameters when link is HTTP", () => {
-      const spyOnMixpanelTrack = jest
-        .spyOn(MIXPANEL, "mixpanelTrack")
-        .mockReturnValue(undefined);
-
-      const httpLink = "http://example.com/test";
-      trackIOOpenedFromUniversalAppLink(httpLink);
-
-      expect(spyOnMixpanelTrack.mock.calls.length).toBe(1);
-      expect(spyOnMixpanelTrack.mock.calls[0].length).toBe(2);
-      expect(spyOnMixpanelTrack.mock.calls[0][0]).toBe("IO_UNIVERSAL_APP_LINK");
-      expect(spyOnMixpanelTrack.mock.calls[0][1]).toEqual({
-        event_category: "TECH",
-        event_type: undefined,
-        flow: undefined,
-        link_id: "http://example.com/test"
+    describe("when Mixpanel is NOT initialized", () => {
+      beforeEach(() => {
+        jest
+          .spyOn(MIXPANEL, "isMixpanelInstanceInitialized")
+          .mockReturnValue(false);
       });
-    });
 
-    it("should extract base path correctly from url with query string", () => {
-      const spyOnMixpanelTrack = jest
-        .spyOn(MIXPANEL, "mixpanelTrack")
-        .mockReturnValue(undefined);
+      it("should enqueue event when isMixpanelEnabled is true", () => {
+        const spyOnEnqueueMixpanelEvent = jest
+          .spyOn(MIXPANEL, "enqueueMixpanelEvent")
+          .mockReturnValue(undefined);
+        const spyOnMixpanelTrack = jest
+          .spyOn(MIXPANEL, "mixpanelTrack")
+          .mockReturnValue(undefined);
 
-      const linkWithQuery =
-        "https://continua.io.pagopa.it/abcdef?param1=value1&param2=value2";
-      trackIOOpenedFromUniversalAppLink(linkWithQuery);
+        const httpsLink = "https://example.com/path";
+        trackIOOpenedFromUniversalAppLink(httpsLink, true);
 
-      expect(spyOnMixpanelTrack.mock.calls.length).toBe(1);
-      expect(spyOnMixpanelTrack.mock.calls[0][1]).toEqual({
-        event_category: "TECH",
-        event_type: undefined,
-        flow: undefined,
-        link_id: "https://continua.io.pagopa.it/abcdef"
+        expect(spyOnMixpanelTrack).not.toHaveBeenCalled();
+        expect(spyOnEnqueueMixpanelEvent).toHaveBeenCalledTimes(1);
+        expect(spyOnEnqueueMixpanelEvent).toHaveBeenCalledWith(
+          "IO_UNIVERSAL_APP_LINK",
+          httpsLink,
+          {
+            event_category: "TECH",
+            event_type: undefined,
+            flow: undefined,
+            link_id: "https://example.com/path"
+          }
+        );
       });
-    });
 
-    it("should extract base path correctly from url with fragment", () => {
-      const spyOnMixpanelTrack = jest
-        .spyOn(MIXPANEL, "mixpanelTrack")
-        .mockReturnValue(undefined);
+      it("should NOT enqueue event when isMixpanelEnabled is null (not yet decided)", () => {
+        const spyOnEnqueueMixpanelEvent = jest
+          .spyOn(MIXPANEL, "enqueueMixpanelEvent")
+          .mockReturnValue(undefined);
+        const spyOnMixpanelTrack = jest
+          .spyOn(MIXPANEL, "mixpanelTrack")
+          .mockReturnValue(undefined);
 
-      const linkWithFragment = "https://example.com/path#fragment";
-      trackIOOpenedFromUniversalAppLink(linkWithFragment);
+        const httpsLink = "https://example.com/path";
+        trackIOOpenedFromUniversalAppLink(httpsLink, null);
 
-      expect(spyOnMixpanelTrack.mock.calls.length).toBe(1);
-      expect(spyOnMixpanelTrack.mock.calls[0][1]).toEqual({
-        event_category: "TECH",
-        event_type: undefined,
-        flow: undefined,
-        link_id: "https://example.com/path"
+        expect(spyOnMixpanelTrack).not.toHaveBeenCalled();
+        expect(spyOnEnqueueMixpanelEvent).not.toHaveBeenCalled();
+      });
+
+      it("should NOT enqueue event when isMixpanelEnabled is undefined", () => {
+        const spyOnEnqueueMixpanelEvent = jest
+          .spyOn(MIXPANEL, "enqueueMixpanelEvent")
+          .mockReturnValue(undefined);
+        const spyOnMixpanelTrack = jest
+          .spyOn(MIXPANEL, "mixpanelTrack")
+          .mockReturnValue(undefined);
+
+        const httpsLink = "https://example.com/path";
+        trackIOOpenedFromUniversalAppLink(httpsLink);
+
+        expect(spyOnMixpanelTrack).not.toHaveBeenCalled();
+        expect(spyOnEnqueueMixpanelEvent).not.toHaveBeenCalled();
+      });
+
+      it("should NOT enqueue event when isMixpanelEnabled is false", () => {
+        const spyOnEnqueueMixpanelEvent = jest
+          .spyOn(MIXPANEL, "enqueueMixpanelEvent")
+          .mockReturnValue(undefined);
+        const spyOnMixpanelTrack = jest
+          .spyOn(MIXPANEL, "mixpanelTrack")
+          .mockReturnValue(undefined);
+
+        const httpsLink = "https://example.com/path";
+        trackIOOpenedFromUniversalAppLink(httpsLink, false);
+
+        expect(spyOnMixpanelTrack).not.toHaveBeenCalled();
+        expect(spyOnEnqueueMixpanelEvent).not.toHaveBeenCalled();
       });
     });
 
     it("should NOT call 'mixpanelTrack' when link is a deep link (not HTTP/HTTPS)", () => {
+      jest
+        .spyOn(MIXPANEL, "isMixpanelInstanceInitialized")
+        .mockReturnValue(true);
       const spyOnMixpanelTrack = jest
         .spyOn(MIXPANEL, "mixpanelTrack")
         .mockReturnValue(undefined);
@@ -92,6 +219,9 @@ describe("index", () => {
     });
 
     it("should NOT call 'mixpanelTrack' when link is not a valid HTTP/HTTPS link", () => {
+      jest
+        .spyOn(MIXPANEL, "isMixpanelInstanceInitialized")
+        .mockReturnValue(true);
       const spyOnMixpanelTrack = jest
         .spyOn(MIXPANEL, "mixpanelTrack")
         .mockReturnValue(undefined);
@@ -100,36 +230,6 @@ describe("index", () => {
       trackIOOpenedFromUniversalAppLink(invalidLink);
 
       expect(spyOnMixpanelTrack.mock.calls.length).toBe(0);
-    });
-
-    it("should handle HTTPS with uppercase correctly", () => {
-      const spyOnMixpanelTrack = jest
-        .spyOn(MIXPANEL, "mixpanelTrack")
-        .mockReturnValue(undefined);
-
-      const uppercaseLink = "HTTPS://EXAMPLE.COM/path";
-      trackIOOpenedFromUniversalAppLink(uppercaseLink);
-
-      expect(spyOnMixpanelTrack.mock.calls.length).toBe(1);
-      expect(spyOnMixpanelTrack.mock.calls[0][0]).toBe("IO_UNIVERSAL_APP_LINK");
-      expect(spyOnMixpanelTrack.mock.calls[0][1]).toEqual({
-        event_category: "TECH",
-        event_type: undefined,
-        flow: undefined,
-        link_id: "HTTPS://EXAMPLE.COM/path"
-      });
-    });
-
-    it("should handle HTTP with mixed case correctly", () => {
-      const spyOnMixpanelTrack = jest
-        .spyOn(MIXPANEL, "mixpanelTrack")
-        .mockReturnValue(undefined);
-
-      const mixedCaseLink = "HtTp://example.com";
-      trackIOOpenedFromUniversalAppLink(mixedCaseLink);
-
-      expect(spyOnMixpanelTrack.mock.calls.length).toBe(1);
-      expect(spyOnMixpanelTrack.mock.calls[0][0]).toBe("IO_UNIVERSAL_APP_LINK");
     });
   });
 });

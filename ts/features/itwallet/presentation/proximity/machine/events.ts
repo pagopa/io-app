@@ -1,14 +1,8 @@
-import type {
-  ProximityDetails,
-  VerifierRequest
-} from "../utils/itwProximityTypeUtils";
+import { ISO18013_5 } from "@pagopa/io-react-native-iso18013";
+import type { ProximityDetails, VerifierRequest } from "../utils/types";
 
 export type Start = {
   type: "start";
-};
-
-export type Back = {
-  type: "back";
 };
 
 export type Close = {
@@ -19,10 +13,6 @@ export type Continue = {
   type: "continue";
 };
 
-export type Dismiss = {
-  type: "dismiss";
-};
-
 export type Retry = {
   type: "retry";
 };
@@ -30,6 +20,18 @@ export type Retry = {
 export type QrCodeString = {
   type: "qr-code-string";
   payload: string;
+};
+
+export type StartNfcPresentment = {
+  type: "start-nfc-presentment";
+};
+
+export type NfcStarted = {
+  type: "nfc-started";
+};
+
+export type NfcStopped = {
+  type: "nfc-stopped";
 };
 
 export type DeviceConnecting = {
@@ -53,21 +55,28 @@ export type DeviceDocumentRequestReceived = {
   type: "device-document-request-received";
   proximityDetails: ProximityDetails;
   verifierRequest: VerifierRequest;
+  retrievalMethod: ISO18013_5.RetrievalMethod;
 };
 
 export type Consent = {
   type: "holder-consent";
 };
 
+export type StoreConsent = {
+  type: "store-consent";
+};
+
 export type ProximityEvents =
   | Start
-  | Back
   | Consent
+  | StoreConsent
   | Continue
   | Close
-  | Dismiss
   | Retry
+  | NfcStarted
+  | NfcStopped
   | QrCodeString
+  | StartNfcPresentment
   | DeviceConnecting
   | DeviceConnected
   | DeviceDisconnected

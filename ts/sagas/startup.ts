@@ -87,7 +87,6 @@ import { watchPnSaga } from "../features/pn/store/sagas/watchPnSaga";
 import { notificationPermissionsListener } from "../features/pushNotifications/sagas/notificationPermissionsListener";
 import { profileAndSystemNotificationsPermissions } from "../features/pushNotifications/sagas/profileAndSystemNotificationsPermissions";
 import { pushNotificationTokenUpload } from "../features/pushNotifications/sagas/pushNotificationTokenUpload";
-import { cancellAllLocalNotifications } from "../features/pushNotifications/utils";
 import { watchServicesSaga } from "../features/services/common/saga";
 import { fetchServicePreferencesForStartup } from "../features/services/details/saga/handleGetServicePreference";
 import {
@@ -207,8 +206,6 @@ export function* initializeApplicationSaga(
   yield* call(initMixpanel);
   yield* call(waitForNavigatorServiceInitialization);
 
-  // remove all local notifications (see function comment)
-  yield* call(cancellAllLocalNotifications);
   yield* call(previousInstallationDataDeleteSaga); // consider to move out of the startup saga
 
   // listen for mixpanel enabling events

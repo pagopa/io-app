@@ -1,13 +1,15 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import { getType } from "typesafe-actions";
+import { startApplicationInitialization } from "../../../../store/actions/application";
+import { Action } from "../../../../store/actions/types";
+import { GlobalState } from "../../../../store/reducers/types";
 import {
   SuccessGetMessageDataActionType,
   getMessageDataAction,
   reloadAllMessages,
   resetGetMessageDataAction
 } from "../actions";
-import { Action } from "../../../../store/actions/types";
-import { GlobalState } from "../../../../store/reducers/types";
-import { startApplicationInitialization } from "../../../../store/actions/application";
+import { getPaginatedMessageById } from "./paginatedById";
 
 export type MessageGetStatusFailurePhaseType =
   | "none"
@@ -107,10 +109,10 @@ const isSuccessStatus = (
 export const showSpinnerFromMessageGetStatusSelector = (state: GlobalState) =>
   state.entities.messages.messageGetStatus.status !== "error";
 
-export const thirdPartyMessageDetailsErrorSelector = (state: GlobalState) =>
-  state.entities.messages.messageGetStatus.status === "error" &&
-  state.entities.messages.messageGetStatus.failurePhase ===
-    "thirdPartyMessageDetails";
+export const messageGetStatusErrorPhaseSelector = (state: GlobalState) =>
+  state.entities.messages.messageGetStatus.status === "error"
+    ? state.entities.messages.messageGetStatus.failurePhase
+    : undefined;
 
 export const messageSuccessDataSelector = (state: GlobalState) =>
   isSuccessStatus(state.entities.messages.messageGetStatus)
@@ -126,3 +128,28 @@ export const retryDataAfterFastLoginSessionExpirationSelector = (
   isRetryStatus(state.entities.messages.messageGetStatus)
     ? state.entities.messages.messageGetStatus.data
     : undefined;
+
+export type MessageRouterScreenErrorVariant =
+  | "messageNotFound"
+  | "thirdPartyError"
+  | "genericError";
+export const messageRouterScreenErrorVariantSelector = (
+  state: GlobalState,
+  messageId: string
+): MessageRouterScreenErrorVariant => {
+  const messageGetErrorPhase = messageGetStatusErrorPhaseSelector(state);
+  const messagePot = getPaginatedMessageById(state, messageId);
+  const paginatedErrorKind = pot.isError(messagePot)
+    ? messagePot.error.kind
+    : undefined;
+  if (
+    messageGetErrorPhase === "paginatedMessage" &&
+    paginatedErrorKind === "messageNotFound"
+  ) {
+    return "messageNotFound";
+  }
+  if (messageGetErrorPhase === "thirdPartyMessageDetails") {
+    return "thirdPartyError";
+  }
+  return "genericError";
+};
