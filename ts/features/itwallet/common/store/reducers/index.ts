@@ -5,6 +5,7 @@ import _ from "lodash";
 import { combineReducers } from "redux";
 import {
   createMigrate,
+  createTransform,
   MigrationManifest,
   PersistConfig,
   PersistedState,
@@ -72,6 +73,21 @@ const itwReducer = combineReducers({
 });
 
 const CURRENT_REDUX_ITW_STORE_VERSION = 14;
+
+/**
+ * Prevents playground radio selections from surviving app restarts while keeping
+ * original credentials available to restore any temporary status override.
+ */
+const debugStateTransform = (state: ItwDebugState): ItwDebugState => ({
+  ...state,
+  credentialStatusOverrides: {}
+});
+
+export const itwDebugTransform = createTransform(
+  debugStateTransform,
+  debugStateTransform,
+  { whitelist: ["debug"] }
+);
 
 export const migrations: MigrationManifest = {
   // Added preferences store
@@ -194,6 +210,7 @@ const itwPersistConfig: PersistConfig = {
     "banners",
     "debug"
   ] satisfies Array<keyof ItWalletState>,
+  transforms: [itwDebugTransform],
   version: CURRENT_REDUX_ITW_STORE_VERSION,
   migrate: createMigrate(migrations, { debug: isDevEnv })
 };
