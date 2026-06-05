@@ -73,7 +73,10 @@ describe("linkingSubscription", () => {
     runEventListenerCallback(addEventListenerSpy, { url: testUrl });
 
     expect(mockTrackIOOpenedFromUniversalAppLink).toHaveBeenCalledTimes(1);
-    expect(mockTrackIOOpenedFromUniversalAppLink).toHaveBeenCalledWith(testUrl);
+    expect(mockTrackIOOpenedFromUniversalAppLink).toHaveBeenCalledWith(
+      testUrl,
+      null // Default value for isMixpanelEnabled in initial state
+    );
   });
 
   it.each([false, true])(

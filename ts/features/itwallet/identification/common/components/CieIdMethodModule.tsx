@@ -15,8 +15,6 @@ export const CieIdMethodModule = ({
   isReissuanceMode = false
 }: Props) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const translationKey =
-    "features.itWallet.identification.modeSelection.mode.cieId";
 
   const handleOnPress = useCallback(() => {
     machineRef.send({ type: "select-identification-mode", mode: "cieId" });
@@ -33,11 +31,15 @@ export const CieIdMethodModule = ({
       <>
         <ModuleNavigationAlt
           testID="CieIDMethodModuleTestIDL3"
-          title={I18n.t(`${translationKey}.title.l3`)}
+          title={I18n.t(
+            `features.itWallet.identification.modeSelection.mode.cieId.title.l3`
+          )}
           subtitle={
             isReissuanceMode
               ? undefined
-              : I18n.t(`${translationKey}.subtitle.l3`)
+              : I18n.t(
+                  `features.itWallet.identification.modeSelection.mode.cieId.subtitle.l3`
+                )
           }
           icon="cie"
           onPress={() => {
@@ -56,10 +58,18 @@ export const CieIdMethodModule = ({
   return (
     <ModuleNavigationAlt
       testID="CieIDMethodModuleTestIDL2"
-      title={I18n.t(
-        `${translationKey}${isReissuanceMode ? ".title.l3" : ".title.default"}`
+      title={
+        isReissuanceMode
+          ? I18n.t(
+              `features.itWallet.identification.modeSelection.mode.cieId.title.default_reissuance`
+            )
+          : I18n.t(
+              `features.itWallet.identification.modeSelection.mode.cieId.title.default`
+            )
+      }
+      subtitle={I18n.t(
+        `features.itWallet.identification.modeSelection.mode.cieId.subtitle.default`
       )}
-      subtitle={I18n.t(`${translationKey}.subtitle.default`)}
       icon="cie"
       onPress={handleOnPress}
     />

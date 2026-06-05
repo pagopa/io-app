@@ -96,7 +96,13 @@ describe("getPaginatedMessage", () => {
       .put(loadMessageById.request({ id: messageId }))
       .next()
       .take([loadMessageById.success, loadMessageById.failure])
-      .next(loadMessageById.failure({ id: messageId, error: new Error() }))
+      .next(
+        loadMessageById.failure({
+          id: messageId,
+          error: new Error(),
+          kind: "generic"
+        })
+      )
       .returns(undefined);
   });
 });

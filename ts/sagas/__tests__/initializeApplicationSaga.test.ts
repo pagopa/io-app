@@ -29,7 +29,6 @@ import { lollipopPublicKeySelector } from "../../features/lollipop/store/reducer
 import { isFastLoginEnabledSelector } from "../../features/authentication/fastLogin/store/selectors";
 import { refreshSessionToken } from "../../features/authentication/fastLogin/store/actions/tokenRefreshActions";
 import { remoteConfigSelector } from "../../store/reducers/backendStatus/remoteConfig";
-import { cancellAllLocalNotifications } from "../../features/pushNotifications/utils";
 import { handleApplicationStartupTransientError } from "../../features/startup/sagas";
 import { startupTransientErrorInitialState } from "../../store/reducers/startup";
 import { isBlockingScreenSelector } from "../../features/ingress/store/selectors";
@@ -115,8 +114,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(testWaitForNavigatorServiceInitialization!)
       .next()
-      .call(cancellAllLocalNotifications)
-      .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
       .next()
@@ -174,8 +171,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(testWaitForNavigatorServiceInitialization!)
       .next()
-      .call(cancellAllLocalNotifications)
-      .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
       .next()
@@ -228,8 +223,6 @@ describe("initializeApplicationSaga", () => {
       .call(initMixpanel)
       .next()
       .call(testWaitForNavigatorServiceInitialization!)
-      .next()
-      .call(cancellAllLocalNotifications)
       .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
@@ -288,8 +281,6 @@ describe("initializeApplicationSaga", () => {
       .call(initMixpanel)
       .next()
       .call(testWaitForNavigatorServiceInitialization!)
-      .next()
-      .call(cancellAllLocalNotifications)
       .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
@@ -360,8 +351,6 @@ describe("initializeApplicationSaga", () => {
       .next()
       .call(testWaitForNavigatorServiceInitialization!)
       .next()
-      .call(cancellAllLocalNotifications)
-      .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
       .next()
@@ -417,8 +406,6 @@ describe("initializeApplicationSaga", () => {
       .call(initMixpanel)
       .next()
       .call(testWaitForNavigatorServiceInitialization!)
-      .next()
-      .call(cancellAllLocalNotifications)
       .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
@@ -481,8 +468,6 @@ describe("initializeApplicationSaga", () => {
       .call(initMixpanel)
       .next()
       .call(testWaitForNavigatorServiceInitialization!)
-      .next()
-      .call(cancellAllLocalNotifications)
       .next()
       .call(previousInstallationDataDeleteSaga)
       .next()
