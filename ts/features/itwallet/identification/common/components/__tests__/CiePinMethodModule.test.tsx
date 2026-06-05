@@ -20,24 +20,20 @@ jest.mock("../../../../analytics", () => ({
 }));
 
 describe("CiePinMethodModule", () => {
-  it("renders correctly for L2 issuance", () => {
-    const { toJSON } = render(
-      <CiePinMethodModule isL3={false} isReissuanceMode={false} />
+  describe.each([true, false])("When isL3 is %s", isL3 => {
+    describe.each([true, false])(
+      "and isReissuance mode is %s",
+      isReissuanceMode => {
+        it("renders correctly", () => {
+          const { toJSON } = render(
+            <CiePinMethodModule
+              isL3={isL3}
+              isReissuanceMode={isReissuanceMode}
+            />
+          );
+          expect(toJSON()).toMatchSnapshot();
+        });
+      }
     );
-    expect(toJSON()).toMatchSnapshot();
-  });
-
-  it("renders correctly for L2 reissuance (shows recommended badge)", () => {
-    const { toJSON } = render(
-      <CiePinMethodModule isL3={false} isReissuanceMode={true} />
-    );
-    expect(toJSON()).toMatchSnapshot();
-  });
-
-  it("renders correctly for L3", () => {
-    const { toJSON } = render(
-      <CiePinMethodModule isL3={true} isReissuanceMode={false} />
-    );
-    expect(toJSON()).toMatchSnapshot();
   });
 });
