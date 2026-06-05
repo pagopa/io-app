@@ -16,7 +16,9 @@ const fciRemoteConfigSelector = (state: GlobalState) =>
  * disabled, false is the default value -> (FCI's Security Level Check
  * disabled)
  */
-export const isFciSecurityLevelCheckEnabledSelector = (state: GlobalState) =>
+export const isFciSecurityLevelCheckRemoteFFEnabledSelector = (
+  state: GlobalState
+) =>
   pipe(
     state,
     fciRemoteConfigSelector,

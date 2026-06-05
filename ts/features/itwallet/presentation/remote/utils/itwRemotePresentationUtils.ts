@@ -44,6 +44,7 @@ const credentialTypesByVct: { [vct: string]: CredentialType } = {
  * @param vct Credential vct
  * @returns Credential type as string, undefine if not found
  */
+// TODO: [SIW-4342] Handle the new vct format as URN.
 export const getCredentialTypeByVct = (vct: string): string | undefined => {
   // Extracts the name from the vct. For example:
   // From "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/personidentificationdata"
@@ -201,3 +202,8 @@ export const getRemoteCredentialCombination = (
   }
   return "other_credentials";
 };
+
+export const enum ClientIdPrefix {
+  OPENID_FEDERATION = "openid_federation:",
+  X509_HASH = "x509_hash:"
+}

@@ -68,7 +68,5 @@ export function* warmUpIntegrityServiceSaga(): Generator<
     yield* put(itwSetIntegrityServiceStatus(isReady ? "ready" : "unavailable"));
   } catch (e) {
     yield* put(itwSetIntegrityServiceStatus("error"));
-    // TODO: Replace Sentry capture exception with a new logging solution
-    // Sentry.captureException(e);
   }
 }

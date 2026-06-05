@@ -8,11 +8,10 @@ import {
 } from "typed-redux-saga/macro";
 import { ActionType, isActionOf } from "typesafe-actions";
 import I18n from "i18next";
-import { MessageStatusArchivingChange } from "../../../../definitions/backend/MessageStatusArchivingChange";
-import { MessageStatusBulkChange } from "../../../../definitions/backend/MessageStatusBulkChange";
-import { MessageStatusChange } from "../../../../definitions/backend/MessageStatusChange";
-import { MessageStatusReadingChange } from "../../../../definitions/backend/MessageStatusReadingChange";
-import { BackendClient } from "../../../api/backend";
+import { MessageStatusArchivingChange } from "../../../../definitions/communication/MessageStatusArchivingChange";
+import { MessageStatusBulkChange } from "../../../../definitions/communication/MessageStatusBulkChange";
+import { MessageStatusChange } from "../../../../definitions/communication/MessageStatusChange";
+import { MessageStatusReadingChange } from "../../../../definitions/communication/MessageStatusReadingChange";
 import {
   upsertMessageStatusAttributes,
   UpsertMessageStatusAttributesPayload
@@ -38,8 +37,8 @@ import { nextQueuedMessageDataUncachedSelector } from "../store/reducers/archivi
 import { paginatedMessageFromIdForCategorySelector } from "../store/reducers/allPaginated";
 import { MessageListCategory } from "../types/messageListCategory";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
-import { backendClientManager } from "../../../api/BackendClientManager";
-import { apiUrlPrefix } from "../../../config";
+import { CommunicationClient } from "../../../api/CommunicationClientManager";
+import { getCommunicationClient } from "./commons";
 
 /**
  * @param payload
@@ -205,8 +204,10 @@ export function* raceUpsertMessageStatusAttributes(
     return;
   }
 
-  const { upsertMessageStatusAttributes: putMessage } =
-    backendClientManager.getBackendClient(apiUrlPrefix, sessionToken);
+  const { upsertMessageStatusAttributes: putMessage } = yield* call(
+    getCommunicationClient,
+    sessionToken
+  );
 
   yield* race({
     task: call(handleUpsertMessageStatusAttributes, putMessage, action),
@@ -215,7 +216,7 @@ export function* raceUpsertMessageStatusAttributes(
 }
 
 export function* handleUpsertMessageStatusAttributes(
-  putMessage: BackendClient["upsertMessageStatusAttributes"],
+  putMessage: CommunicationClient["upsertMessageStatusAttributes"],
   action: ActionType<typeof upsertMessageStatusAttributes.request>
 ) {
   try {

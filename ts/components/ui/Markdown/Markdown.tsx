@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import {
   AppState,
   AppStateStatus,
-  InteractionManager,
   LayoutAnimation,
   Platform,
   ScrollView,
@@ -87,7 +86,7 @@ export const Markdown = (props: MarkdownProps) => {
       useCustomSortedList: boolean = false,
       avoidTextSelection: boolean = false
     ) => {
-      void InteractionManager.runAfterInteractions(() => {
+      requestAnimationFrame(() => {
         if (animated) {
           // Animate the layout change
           // See https://facebook.github.io/react-native/docs/layoutanimation.html

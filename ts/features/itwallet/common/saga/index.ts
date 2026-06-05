@@ -71,6 +71,7 @@ export function* watchItwSaga(): SagaIterator {
  * session
  */
 export function* watchItwOfflineSaga(): SagaIterator {
+  // Watch for changes in the credentials store to keep the wallet in sync
   yield* fork(watchItwCredentialsSaga);
 
   // Migrate legacy credentials to vault

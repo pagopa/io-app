@@ -13,13 +13,6 @@ import {
   DOCUMENTS_ON_IO_FAQ_14_URL_BODY
 } from "../../../../urls";
 
-const closeButtonText = I18n.t(
-  "features.itWallet.walletInstanceRevoked.alert.closeButton"
-);
-const alertCtaText = I18n.t(
-  "features.itWallet.walletInstanceRevoked.alert.cta"
-);
-
 /** Hook to monitor wallet instance status and display alerts if revoked. */
 export const useItwWalletInstanceRevocationAlert = () => {
   const walletInstanceStatus = useIOSelector(itwWalletInstanceStatusSelector);
@@ -65,6 +58,13 @@ const showWalletRevocationAlert = (
   itwDocsOnIOMultipleDevicesUrl: string,
   revocationReason?: WalletInstanceRevocationReason
 ) => {
+  const closeButtonText = I18n.t(
+    "features.itWallet.walletInstanceRevoked.alert.closeButton"
+  );
+  const alertCtaText = I18n.t(
+    "features.itWallet.walletInstanceRevoked.alert.cta"
+  );
+
   switch (revocationReason) {
     case "CERTIFICATE_REVOKED_BY_ISSUER":
       Alert.alert(

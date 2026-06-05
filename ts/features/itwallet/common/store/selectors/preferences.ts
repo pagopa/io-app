@@ -19,15 +19,6 @@ export const itwIsClaimValueHiddenSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.claimValuesHidden ?? false;
 
 /**
- * Returns whether the user has an already active wallet instance but the actual
- * local wallet is not active.
- *
- * @param state The application global state
- */
-export const itwIsWalletInstanceRemotelyActiveSelector = (state: GlobalState) =>
-  state.features.itWallet.preferences.isWalletInstanceRemotelyActive;
-
-/**
  * Returns whether the fiscal code is whitelisted for L3 features.
  *
  * @param state The application global state
@@ -55,6 +46,10 @@ export const itwIsPidReissuingSurveyHiddenSelector = (state: GlobalState) =>
 /** Returns the list of credential types that failed the upgrade process. */
 export const itwCredentialUpgradeFailedSelector = (state: GlobalState) =>
   state.features.itWallet.preferences.credentialUpgradeFailed ?? [];
+
+/** Returns the identification mode used for the user. */
+export const itwIdentificationModeSelector = (state: GlobalState) =>
+  state.features.itWallet.preferences.identificationMode;
 
 /** Returns whether IT Wallet activation is disabled (no nfc). */
 export const itwIsActivationDisabledSelector = (state: GlobalState) =>

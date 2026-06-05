@@ -26,7 +26,11 @@ export type Context = {
   payload: ItwRemoteRequestPayload | undefined;
   /** The failure of the remote presentation machine */
   failure?: RemoteFailure;
-  /** Relying party Entity Configuration metadata */
+  /**
+   * Relying party Entity Configuration metadata (only for OpenID Federation
+   * clients). This value may stay undefined during the entire flow when the RP
+   * uses the prefix `x509_hash`.
+   */
   rpConf: RelyingPartyConfiguration | undefined;
   /**
    * The Encoded Request Object fetched from the Relying Party in the

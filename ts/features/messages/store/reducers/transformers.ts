@@ -1,9 +1,9 @@
-import { CreatedMessageWithContentAndAttachments } from "../../../../../definitions/backend/CreatedMessageWithContentAndAttachments";
-import { EnrichedMessage } from "../../../../../definitions/backend/EnrichedMessage";
-import { MessageCategory } from "../../../../../definitions/backend/MessageCategory";
-import { TagEnum } from "../../../../../definitions/backend/MessageCategoryBase";
-import { MessageStatusAttributes } from "../../../../../definitions/backend/MessageStatusAttributes";
-import { PublicMessage } from "../../../../../definitions/backend/PublicMessage";
+import { CreatedMessageWithContentAndAttachments } from "../../../../../definitions/communication/CreatedMessageWithContentAndAttachments";
+import { EnrichedMessage } from "../../../../../definitions/communication/EnrichedMessage";
+import { MessageCategory } from "../../../../../definitions/communication/MessageCategory";
+import { TagEnum } from "../../../../../definitions/communication/MessageCategoryBase";
+import { MessageStatusAttributes } from "../../../../../definitions/communication/MessageStatusAttributes";
+import { PublicMessage } from "../../../../../definitions/communication/PublicMessage";
 
 import {
   EUCovidCertificate,

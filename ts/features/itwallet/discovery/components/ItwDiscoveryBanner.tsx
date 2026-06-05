@@ -1,4 +1,4 @@
-import { Banner } from "@pagopa/io-app-design-system";
+import { Banner, IOSkeleton } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { ComponentProps, useCallback, useMemo } from "react";
@@ -12,13 +12,16 @@ import {
 import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum";
 import { ItwEngagementBanner } from "../../common/components/ItwEngagementBanner";
 import { itwCloseBanner } from "../../common/store/actions/banners";
-import { itwIsWalletInstanceRemotelyActiveSelector } from "../../common/store/selectors/preferences";
 import {
   itwIsMdlPresentSelector,
   itwIsWalletEmptySelector
 } from "../../credentials/store/selectors";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
+import {
+  itwLifecycleIsITWalletValidSelector,
+  itwLifecycleIsValidSelector
+} from "../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
+import { itwIsRemotelyActiveSelector } from "../../walletInstance/store/selectors";
 
 type Props = {
   /** Flow type to determine dismissal logic and tracking properties */
@@ -45,15 +48,14 @@ export const ItwDiscoveryBanner = ({
   const dispatch = useIODispatch();
   const route = useRoute();
 
-  const isWalletInstanceRemotelyActive = useIOSelector(
-    itwIsWalletInstanceRemotelyActiveSelector
-  );
+  const isRemotelyActive = useIOSelector(itwIsRemotelyActiveSelector);
   const isWalletActive = useIOSelector(itwLifecycleIsValidSelector);
+  const hasItwInstance = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const isWalletEmpty = useIOSelector(itwIsWalletEmptySelector);
   const hasMdl = useIOSelector(itwIsMdlPresentSelector);
 
   const bannerId = useMemo(() => {
-    if (isWalletInstanceRemotelyActive) {
+    if (isRemotelyActive) {
       return "itwDeviceChangedBannerPid";
     }
     if (!isWalletActive) {
@@ -66,7 +68,7 @@ export const ItwDiscoveryBanner = ({
       return "itwDiscoveryItWalletDrivingLicenseIsPresent";
     }
     return "itwDiscoveryItWalletGenericCredentials";
-  }, [isWalletActive, isWalletEmpty, hasMdl, isWalletInstanceRemotelyActive]);
+  }, [isWalletActive, isWalletEmpty, hasMdl, isRemotelyActive]);
 
   const bannerLanding = useMemo(() => {
     if (!isWalletActive || isWalletEmpty) {
@@ -111,7 +113,13 @@ export const ItwDiscoveryBanner = ({
     dispatch(itwCloseBanner(`discovery_${flow}`));
   };
 
-  if (isWalletInstanceRemotelyActive) {
+  if (!hasItwInstance && isRemotelyActive === undefined) {
+    return (
+      <IOSkeleton shape="rectangle" width={"100%"} height={200} radius={8} />
+    );
+  }
+
+  if (isRemotelyActive) {
     return (
       <Banner
         testID="itwReactivationBannerTestID"

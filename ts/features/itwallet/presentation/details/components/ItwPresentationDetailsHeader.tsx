@@ -2,28 +2,28 @@ import {
   Body,
   ContentWrapper,
   H2,
-  IOColors,
   Tag,
   makeFontStyleObject,
   useIOExperimentalDesign
 } from "@pagopa/io-app-design-system";
+import Color from "color";
 import { memo, useMemo } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import ItwAvatar from "../../../../../../img/features/itWallet/brand/itw_avatar.svg";
 import FocusAwareStatusBar from "../../../../../components/ui/FocusAwareStatusBar.tsx";
 import { useIOSelector } from "../../../../../store/hooks.ts";
-import ItwAvatar from "../../../../../../img/features/itWallet/brand/itw_avatar.svg";
+import { useCredentialCardConfig } from "../../../common/components/ItwCredentialCard/config.ts";
 import { ItwCredentialDetailCard } from "../../../common/components/ItwCredentialDetailCard.tsx";
-import { getItwAuthSource } from "../../../common/utils/itwMetadataUtils.ts";
-import {
-  getCredentialNameFromType,
-  tagPropsByStatus
-} from "../../../common/utils/itwCredentialUtils.ts";
+import { useItwAuthSourceName } from "../../../common/hooks/useItwAuthSourceName.ts";
+import { useItwCredentialName } from "../../../common/hooks/useItwCredentialName.ts";
+import { useTagPropsByStatus } from "../../../common/utils/itwCredentialUtils.ts";
 import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { useThemeColorByCredentialType } from "../../../common/utils/itwStyleUtils.ts";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils.ts";
-import { itwCredentialsCatalogueByTypesSelector } from "../../../credentialsCatalogue/store/selectors";
-import { itwCredentialStatusSelector } from "../../../credentials/store/selectors";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
+import {
+  itwCredentialStatusSelector,
+  itwCredentialsEidStatusSelector
+} from "../../../credentials/store/selectors";
 import { useItwDisplayCredentialStatus } from "../hooks/useItwDisplayCredentialStatus";
 import { ItwPresentationCredentialCard } from "./ItwPresentationCredentialCard.tsx";
 
@@ -39,76 +39,50 @@ const credentialsWithSkeumorphicCard: ReadonlyArray<string> = [
 const ItwPresentationDetailsHeader = ({
   credential
 }: ItwPresentationDetailsHeaderProps) => {
-  const { isExperimental } = useIOExperimentalDesign();
-  const withL3Design = useIOSelector(itwLifecycleIsITWalletValidSelector);
-  const { statusBarStyle, backgroundColor, textColor } =
-    useThemeColorByCredentialType(credential.credentialType);
-  const { status: rawStatus = "valid" } = useIOSelector(state =>
+  // Credential's header card is always in light mode
+  const { color } = useCredentialCardConfig(credential.credentialType, "light");
+  const eidStatus = useIOSelector(itwCredentialsEidStatusSelector);
+  const { status: credentialRawStatus } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
+  // PID is excluded from itwCredentialStatusSelector, so read its status from eidStatus directly
+  const rawStatus =
+    credential.credentialType === CredentialType.PID
+      ? (eidStatus ?? "valid")
+      : (credentialRawStatus ?? "valid");
   const displayStatus = useItwDisplayCredentialStatus(rawStatus);
+  const tagPropsByStatus = useTagPropsByStatus();
   const statusTagProps = tagPropsByStatus[displayStatus];
-  const credentialsCatalogue = useIOSelector(
-    itwCredentialsCatalogueByTypesSelector
-  );
-  const authSource = credentialsCatalogue?.[credential.credentialType]
-    ? getItwAuthSource(credentialsCatalogue[credential.credentialType])
-    : undefined;
 
-  const headerContent = useMemo(() => {
-    if (!withL3Design) {
-      if (credentialsWithSkeumorphicCard.includes(credential.credentialType)) {
-        return <ItwPresentationCredentialCard credential={credential} />;
-      }
+  const authSourceName = useItwAuthSourceName(credential.credentialType);
+  const credentialName = useItwCredentialName(credential.credentialType);
 
-      return (
-        <View style={[styles.legacyHeader, { backgroundColor }]}>
-          <ContentWrapper>
-            <Text
-              style={[
-                isExperimental
-                  ? styles.legacyHeaderLabelExperimental
-                  : styles.legacyHeaderLabel,
-                { color: textColor }
-              ]}
-              accessibilityRole="header"
-            >
-              {getCredentialNameFromType(credential.credentialType)}
-            </Text>
-          </ContentWrapper>
-        </View>
-      );
-    }
+  const isLight = useMemo(() => Color(color).isLight(), [color]);
 
-    return (
+  return (
+    <>
+      <FocusAwareStatusBar
+        backgroundColor={color}
+        barStyle={isLight ? "dark-content" : "light-content"}
+      />
+
       <ItwCredentialDetailCard
         credentialType={credential.credentialType}
         credentialStatus={displayStatus}
       >
         <ItwAvatar width={48} height={48} />
         <H2
-          style={{
-            paddingTop: 16,
-            textAlign: "center",
-            color: IOColors["blueIO-850"]
-          }}
+          style={styles.nameText}
+          color={isLight ? "blueItalia-850" : "white"}
         >
-          {getCredentialNameFromType(
-            credential.credentialType,
-            "",
-            withL3Design
-          )}
+          {credentialName}
         </H2>
-        {authSource && (
+        {authSourceName && (
           <Body
-            style={{
-              textAlign: "center",
-              marginHorizontal: 16,
-              paddingTop: 4,
-              color: IOColors["blueIO-850"]
-            }}
+            style={styles.authSourceText}
+            color={isLight ? "blueItalia-850" : "white"}
           >
-            {authSource}
+            {authSourceName}
           </Body>
         )}
         {statusTagProps && (
@@ -117,17 +91,45 @@ const ItwPresentationDetailsHeader = ({
           </View>
         )}
       </ItwCredentialDetailCard>
+    </>
+  );
+};
+
+/**
+ * @deprecated Legacy header component for presentation details, to be used
+ *   until the new design is enabled for all users.
+ */
+const ItwPresentationDetailsHeaderLegacy = ({
+  credential
+}: ItwPresentationDetailsHeaderProps) => {
+  const { isExperimental } = useIOExperimentalDesign();
+  const { statusBarStyle, backgroundColor, textColor } =
+    useThemeColorByCredentialType(credential.credentialType);
+  const credentialName = useItwCredentialName(credential.credentialType);
+
+  const headerContent = useMemo(() => {
+    if (credentialsWithSkeumorphicCard.includes(credential.credentialType)) {
+      return <ItwPresentationCredentialCard credential={credential} />;
+    }
+
+    return (
+      <View style={[styles.legacyHeader, { backgroundColor }]}>
+        <ContentWrapper>
+          <Text
+            style={[
+              isExperimental
+                ? styles.legacyHeaderLabelExperimental
+                : styles.legacyHeaderLabel,
+              { color: textColor }
+            ]}
+            accessibilityRole="header"
+          >
+            {credentialName}
+          </Text>
+        </ContentWrapper>
+      </View>
     );
-  }, [
-    authSource,
-    backgroundColor,
-    credential,
-    displayStatus,
-    isExperimental,
-    statusTagProps,
-    textColor,
-    withL3Design
-  ]);
+  }, [credential, backgroundColor, textColor, isExperimental, credentialName]);
 
   return (
     <>
@@ -141,6 +143,15 @@ const ItwPresentationDetailsHeader = ({
 };
 
 const styles = StyleSheet.create({
+  nameText: {
+    textAlign: "center",
+    marginTop: 16
+  },
+  authSourceText: {
+    textAlign: "center",
+    marginHorizontal: 16,
+    paddingTop: 4
+  },
   legacyHeader: {
     marginTop: -300,
     paddingTop: 300,
@@ -157,4 +168,12 @@ const styles = StyleSheet.create({
 
 const MemoizedItwPresentationDetailsHeader = memo(ItwPresentationDetailsHeader);
 
-export { MemoizedItwPresentationDetailsHeader as ItwPresentationDetailsHeader };
+/** @deprecated */
+const MemoizedItwPresentationDetailsHeaderLegacy = memo(
+  ItwPresentationDetailsHeaderLegacy
+);
+
+export {
+  MemoizedItwPresentationDetailsHeader as ItwPresentationDetailsHeader,
+  MemoizedItwPresentationDetailsHeaderLegacy as ItwPresentationDetailsHeaderLegacy
+};

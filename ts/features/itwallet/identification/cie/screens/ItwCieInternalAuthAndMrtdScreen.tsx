@@ -4,13 +4,13 @@ import { useCallback } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { useOnFirstRender } from "../../../../../utils/hooks/useOnFirstRender";
-import { trackItWalletCieCardReading } from "../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import {
   selectIdentification,
   selectMrtdCallbackUrl
 } from "../../../machine/eid/selectors";
 import { ItwParamsList } from "../../../navigation/ItwParamsList";
+import { trackItWalletCieCardReading } from "../../analytics";
 import { ItwCieCardReadFailureContent } from "../components/ItwCieCardReadFailureContent";
 import { ItwCieCardReadProgressContent } from "../components/ItwCieCardReadProgressContent";
 import { ItwCieAuthorizationWebview } from "../components/ItwCieWebView";
@@ -87,6 +87,16 @@ export const ItwCieInternalAuthAndMrtdScreen = ({ route }: Props) => {
   );
 
   /**
+   * Handles the case where the CAN code is wrong, and we need to retry the
+   * challenge
+   */
+  const handleWrongCanRetry = useCallback(() => {
+    issuanceActor.send({
+      type: "retry"
+    });
+  }, [issuanceActor]);
+
+  /**
    * Step 1: Start CIE MRTD with PACE reading process to sign the challenge and
    * return to the machine the data needed to build the validation URL, from
    * which we will obtain the callback URL.
@@ -97,6 +107,7 @@ export const ItwCieInternalAuthAndMrtdScreen = ({ route }: Props) => {
         can={can}
         challenge={challenge}
         onChallengeSigned={handleChallengeSigned}
+        onWrongCanRetry={handleWrongCanRetry}
       />
     );
   }
@@ -118,20 +129,26 @@ type CieManagerComponentProps = {
   can: string;
   challenge: string;
   onChallengeSigned: (data: InternalAuthAndMrtdResponse) => void;
+  onWrongCanRetry: () => void;
 };
 
 const CieManagerComponent = ({
   can,
   challenge,
-  onChallengeSigned
+  onChallengeSigned,
+  onWrongCanRetry
 }: CieManagerComponentProps) => {
   const { startInternalAuthAndMRTDReading, state } = useCieManager({
     onInternalAuthAndMRTDWithPaceSuccess: onChallengeSigned
   });
 
   const handleRetry = useCallback(() => {
-    void startInternalAuthAndMRTDReading(can, challenge);
-  }, [can, challenge, startInternalAuthAndMRTDReading]);
+    if (state.state === "failure" && state.failure.name === "WRONG_CAN") {
+      onWrongCanRetry();
+    } else {
+      void startInternalAuthAndMRTDReading(can, challenge);
+    }
+  }, [can, challenge, startInternalAuthAndMRTDReading, onWrongCanRetry, state]);
 
   /** Starts the reading process as soon the component is mounted */
   useOnFirstRender(() => {

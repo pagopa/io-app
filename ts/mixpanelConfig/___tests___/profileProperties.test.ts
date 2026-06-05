@@ -1,24 +1,25 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
-import { PushNotificationsContentTypeEnum } from "../../../definitions/backend/PushNotificationsContentType";
-import { ReminderStatusEnum } from "../../../definitions/backend/ReminderStatus";
-import { ServiceId } from "../../../definitions/backend/ServiceId";
+import { PushNotificationsContentTypeEnum } from "../../../definitions/identity/PushNotificationsContentType";
+import { ReminderStatusEnum } from "../../../definitions/identity/ReminderStatus";
+import { ServiceId } from "../../../definitions/services/ServiceId";
 import * as PUSHUTILS from "../../features/pushNotifications/utils";
 import { ServicesState } from "../../features/services/common/store/reducers";
 import { ServicePreferenceResponse } from "../../features/services/details/types/ServicePreferenceResponse";
 import { GlobalState } from "../../store/reducers/types";
 import * as BIOMETRICS from "../../utils/biometrics";
 import * as lifecycleSelectors from "../../features/itwallet/lifecycle/store/selectors";
+import * as analytics from "../../utils/analytics";
 import { updateMixpanelProfileProperties } from "../profileProperties";
 
 // eslint-disable-next-line functional/no-let
-let mockIsMixpanelInitialized = true;
+let mockIsMixpanelInitialized: () => boolean = () => true;
 const mockedSet = jest.fn();
 jest.mock("../../mixpanel", () => ({
   getPeople: () => ({
     set: mockedSet
   }),
-  isMixpanelInstanceInitialized: () => mockIsMixpanelInitialized
+  isMixpanelInstanceInitialized: () => mockIsMixpanelInitialized()
 }));
 
 const pnServiceId = "01G40DWQGKY5GRWSNM4303VNRP" as ServiceId;
@@ -98,7 +99,7 @@ describe("profileProperties", () => {
     reminder_status: ${pushContentReminderTuple[1]},
 })
 `, async () => {
-            mockIsMixpanelInitialized = true;
+            mockIsMixpanelInitialized = () => true;
             const state = generateMockedGlobalState(
               notificationTokenTuple[0],
               pushContentReminderTuple[0] as PushNotificationsContentTypeEnum,
@@ -214,7 +215,7 @@ describe("profileProperties", () => {
       it(`should report 'SEND_STATUS' as '${expectedSendStatus}' for input data ${JSON.stringify(
         testData
       )}`, async () => {
-        mockIsMixpanelInitialized = true;
+        mockIsMixpanelInitialized = () => true;
         const status = generateMockedGlobalState(
           undefined,
           undefined,
@@ -264,11 +265,29 @@ describe("profileProperties", () => {
     });
   });
   it("should not do anything if 'isMixpanelInstanceInitialized' returns 'false'", async () => {
-    mockIsMixpanelInitialized = false;
+    mockIsMixpanelInitialized = () => false;
     const fakeState = {} as GlobalState;
 
     await updateMixpanelProfileProperties(fakeState);
 
+    expect(mockedSet.mock.calls.length).toBe(0);
+  });
+  it("should call trackAppCaughtError with proper parameters when an exception is thrown", async () => {
+    mockIsMixpanelInitialized = () => {
+      throw new Error("mixpanel initialization check failed");
+    };
+    const trackAppCaughtErrorSpy = jest
+      .spyOn(analytics, "trackAppCaughtError")
+      .mockImplementation(() => undefined);
+    const fakeState = {} as GlobalState;
+
+    await updateMixpanelProfileProperties(fakeState);
+
+    expect(trackAppCaughtErrorSpy).toHaveBeenCalledWith(
+      "updateMixpanelProfileProperties",
+      undefined,
+      expect.stringContaining("mixpanel initialization check failed")
+    );
     expect(mockedSet.mock.calls.length).toBe(0);
   });
 });

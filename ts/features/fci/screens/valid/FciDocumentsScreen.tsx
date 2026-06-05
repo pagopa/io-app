@@ -8,7 +8,6 @@ import {
   RouteProp,
   StackActions,
   useIsFocused,
-  useNavigation,
   useRoute
 } from "@react-navigation/native";
 import { pipe } from "fp-ts/lib/function";
@@ -26,7 +25,6 @@ import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import {
-  trackFciDocOpeningFailure,
   trackFciDocOpeningSuccess,
   trackFciDocumentsView,
   trackFciSigningDoc
@@ -42,7 +40,10 @@ import {
   fciUpdateDocumentSignaturesRequest
 } from "../../store/actions";
 import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
-import { fciDownloadPathSelector } from "../../store/reducers/fciDownloadPreview";
+import {
+  fciDownloadPathSelector,
+  fciDownloadPreviewSelector
+} from "../../store/reducers/fciDownloadPreview";
 import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
 import {
   fciSignatureDetailDocumentsSelector,
@@ -54,6 +55,7 @@ import {
   getSignatureFieldsLength
 } from "../../utils/signatureFields";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList.ts";
 
 const styles = StyleSheet.create({
   pdf: {
@@ -74,15 +76,32 @@ const FciDocumentsScreen = () => {
   const currentDoc = route.params.currentDoc ?? 0;
   const documents = useIOSelector(fciSignatureDetailDocumentsSelector);
   const signatureRequest = useIOSelector(fciSignatureRequestSelector);
+  const fciDownloadSelector = useIOSelector(fciDownloadPreviewSelector);
   const downloadPath = useIOSelector(fciDownloadPathSelector);
+  const [hasDocumentLoadError, setHasDocumentLoadError] = useState(false);
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
-  const navigation = useNavigation();
+  const navigation = useIONavigation();
   const documentSignaturesSelector = useIOSelector(
     fciDocumentSignaturesSelector
   );
   const dispatch = useIODispatch();
   const isFocused = useIsFocused();
   const [focusEpoch, setFocusEpoch] = useState(0);
+
+  useEffect(() => {
+    if (
+      !pot.isLoading(signatureRequest) &&
+      (pot.isError(fciDownloadSelector) || hasDocumentLoadError)
+    ) {
+      const errorKind = pot.isError(fciDownloadSelector)
+        ? fciDownloadSelector.error.kind
+        : undefined;
+      navigation.replace(FCI_ROUTES.MAIN, {
+        screen: FCI_ROUTES.DOCUMENT_UNAVAILABLE,
+        params: { errorKind }
+      });
+    }
+  }, [fciDownloadSelector, hasDocumentLoadError, navigation, signatureRequest]);
 
   const {
     footerActionsInlineMeasurements,
@@ -230,7 +249,7 @@ const FciDocumentsScreen = () => {
         setTotalPages(numberOfPages);
         setCurrentPage(page);
       }}
-      onError={_ => trackFciDocOpeningFailure()}
+      onError={_ => setHasDocumentLoadError(true)}
       enablePaging
       style={styles.pdf}
     />
@@ -273,7 +292,11 @@ const FciDocumentsScreen = () => {
     }
   });
 
-  if (pot.isLoading(signatureRequest) || S.isEmpty(downloadPath)) {
+  if (
+    pot.isLoading(signatureRequest) ||
+    pot.isNone(fciDownloadSelector) ||
+    S.isEmpty(downloadPath)
+  ) {
     return <LoadingComponent />;
   }
 

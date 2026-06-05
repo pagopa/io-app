@@ -11,6 +11,7 @@ import { getIoWallet } from "./itwIoWallet";
  * @param sessionToken - The IO session token
  * @param integrityKeyTag - The integrity key tag used for the wallet instance
  *   creation
+ * @throws Error if the wallet instance revocation fails
  */
 export const revokeCurrentWalletInstance = async (
   { WALLET_PROVIDER_BASE_URL }: Env,
@@ -19,20 +20,16 @@ export const revokeCurrentWalletInstance = async (
   integrityKeyTag: string
 ): Promise<void> => {
   const ioWallet = getIoWallet(itwVersion);
+
   const appFetch = createItWalletFetch(
     sessionToken,
     WALLET_PROVIDER_BASE_URL,
     WALLET_PROVIDER_BASE_URL
   );
-  try {
-    await ioWallet.WalletInstance.revokeWalletInstance({
-      walletProviderBaseUrl: WALLET_PROVIDER_BASE_URL,
-      id: integrityKeyTag,
-      appFetch
-    });
-  } catch (e) {
-    // TODO: Replace Sentry capture exception with a new logging solution
-    // Sentry.captureException(e);
-    throw e instanceof Error ? e : new Error("Unknown error");
-  }
+
+  await ioWallet.WalletInstance.revokeWalletInstance({
+    walletProviderBaseUrl: WALLET_PROVIDER_BASE_URL,
+    id: integrityKeyTag,
+    appFetch
+  });
 };

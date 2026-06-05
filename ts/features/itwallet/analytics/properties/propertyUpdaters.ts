@@ -10,12 +10,17 @@ import {
   resetOfflineAccessReason,
   setOfflineAccessReason
 } from "../../../ingress/store/actions";
-import { itwAuthLevelSelector } from "../../common/store/selectors/preferences";
+import {
+  itwAuthLevelSelector,
+  itwIdentificationModeSelector
+} from "../../common/store/selectors/preferences";
 import { isItwAnalyticsCredential } from "../utils";
 import { MixPanelCredential } from "../utils/types";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import {
   buildItwBaseProperties,
-  buildPidProperties
+  buildPidProperties,
+  computeItwStatus
 } from "./basePropertyBuilder";
 import {
   ItwProfileProperties,
@@ -68,7 +73,11 @@ export const updateItwStatusAndPIDProperties = (state: GlobalState) => {
   const pidProperties = buildPidProperties(state);
 
   const properties = {
-    ITW_STATUS_V2: authLevel,
+    ITW_STATUS_V2: computeItwStatus(
+      authLevel,
+      itwIdentificationModeSelector(state),
+      itwLifecycleIsITWalletValidSelector(state)
+    ),
     ...pidProperties
   };
 

@@ -11,24 +11,13 @@ import {
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { handleLoadMessageDetails } from "../handleLoadMessageDetails";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
-import { backendClientManager } from "../../../../api/BackendClientManager";
+import { getCommunicationClient } from "../commons";
 
 const id = paymentValidInvalidAfterDueDate.id;
 
-// Mock the backendClientManager
-jest.mock("../../../../api/BackendClientManager");
+jest.mock("../commons");
 
 const mockGetMessage = jest.fn();
-const mockBackendClientManager = backendClientManager as jest.Mocked<
-  typeof backendClientManager
->;
-
-beforeEach(() => {
-  jest.clearAllMocks();
-  mockBackendClientManager.getBackendClient.mockReturnValue({
-    getMessage: mockGetMessage
-  } as any);
-});
 
 describe("handleLoadMessageDetails", () => {
   const getMessagesPayload = { id };
@@ -42,12 +31,13 @@ describe("handleLoadMessageDetails", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
+        .call(getCommunicationClient, sessionToken)
+        .next({ getUserMessage: mockGetMessage })
         .call(
           withRefreshApiCall,
           mockGetMessage(getMessagesPayload),
           action.request({ id })
         )
-        // .call(getMessage, getMessagesPayload)
         .next(E.right({ status: 200, value: apiPayload }))
         .put(action.success(successLoadMessageDetails))
         .next()
@@ -61,6 +51,8 @@ describe("handleLoadMessageDetails", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
+        .call(getCommunicationClient, sessionToken)
+        .next({ getUserMessage: mockGetMessage })
         .call(
           withRefreshApiCall,
           mockGetMessage(getMessagesPayload),
@@ -84,6 +76,8 @@ describe("handleLoadMessageDetails", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
+        .call(getCommunicationClient, sessionToken)
+        .next({ getUserMessage: mockGetMessage })
         .throw(new Error("I made a boo-boo, sir!"))
         .put(
           action.failure({

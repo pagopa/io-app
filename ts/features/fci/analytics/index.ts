@@ -16,6 +16,33 @@ import { SignatureRequestDetailView } from "../../../../definitions/fci/Signatur
 import { buildEventProperties } from "../../../utils/analytics";
 import { SignatureRequestStatusEnum } from "../../../../definitions/fci/SignatureRequestStatus";
 
+export const trackFciLoginRequest = () =>
+  mixpanelTrack("FCI_LOGIN_REQUEST", buildEventProperties("UX", "screen_view"));
+
+export const trackFciLoginRequestContinue = () =>
+  mixpanelTrack(
+    "FCI_LOGIN_REQUEST_CONTINUE",
+    buildEventProperties("UX", "action")
+  );
+
+export const trackFciLoginRequestClose = () =>
+  mixpanelTrack(
+    "FCI_LOGIN_REQUEST_CLOSE",
+    buildEventProperties("UX", "action")
+  );
+
+export const trackFciNfcNotSupported = () =>
+  mixpanelTrack(
+    "FCI_NFC_NOT_SUPPORTED",
+    buildEventProperties("KO", "screen_view")
+  );
+
+export const trackFciNfcNotSupportedClose = () =>
+  mixpanelTrack(
+    "FCI_NFC_NOT_SUPPORTED_CLOSE",
+    buildEventProperties("UX", "action")
+  );
+
 export const trackFciSignatureCancelled = () =>
   mixpanelTrack(
     "FCI_SIGNATURE_CANCELLED",
@@ -129,10 +156,22 @@ export const trackFciDocOpening = (
 export const trackFciDocumentsView = () =>
   mixpanelTrack("FCI_DOCUMENTS", buildEventProperties("UX", "screen_view"));
 
-export const trackFciDocOpeningFailure = () =>
+export const trackFciDocOpeningFailure = (
+  reason: "expired" | "generic_error"
+) =>
   mixpanelTrack(
     "FCI_DOC_OPENING_FAILURE",
-    buildEventProperties("KO", "control")
+    buildEventProperties("KO", "screen_view", { reason })
+  );
+
+export const trackFciDocOpeningFailureAction = (
+  cta_category: "custom_1" | "custom_2",
+  cta_id: string,
+  reason: "expired" | "generic_error"
+) =>
+  mixpanelTrack(
+    "FCI_DOC_OPENING_FAILURE_ACTION",
+    buildEventProperties("UX", "action", { cta_category, cta_id, reason })
   );
 
 export const trackFciSignatureFieldsView = () =>

@@ -1,6 +1,7 @@
 import {
   AuthorizationDetail,
   createCryptoContextFor,
+  CredentialIssuance,
   ItwVersion
 } from "@pagopa/io-react-native-wallet";
 import { type IdentificationContext } from "../../machine/eid/context";
@@ -18,8 +19,7 @@ import { extractVerification } from "./itwCredentialUtils";
 import { Env } from "./environment";
 import { getIoWallet } from "./itwIoWallet";
 import { AuthorizedCredentialMetadata } from "./itwCredentialIssuanceUtils";
-
-const CREDENTIAL_TYPE = "PersonIdentificationData";
+import { CredentialType } from "./itwMocksUtils";
 
 type StartAuthFlow = (params: {
   env: Env;
@@ -70,7 +70,7 @@ const startAuthFlow: StartAuthFlow = async ({
   const { issuerRequestUri, clientId, codeVerifier, credentialDefinition } =
     await ioWallet.CredentialIssuance.startUserAuthorization(
       issuerConf,
-      ["dc_sd_jwt_PersonIdentificationData"],
+      [getPidSdJwtConfigurationId(issuerConf)],
       withMRTDPoP
         ? { proofType: "mrtd-pop", idpHinting: idpHint }
         : { proofType: "none" },
@@ -156,6 +156,7 @@ const completeAuthFlow: CompleteAuthFlow = async ({
 
 export type GetPid = (args: {
   itwVersion: ItwVersion;
+  env: Env;
   issuerConf: IssuerConfiguration;
   accessToken: CredentialAccessToken;
   clientId: string;
@@ -170,6 +171,7 @@ export type GetPid = (args: {
  */
 const getPid: GetPid = async ({
   itwVersion,
+  env,
   issuerConf,
   clientId,
   accessToken,
@@ -208,16 +210,20 @@ const getPid: GetPid = async ({
       issuerConf,
       credential,
       credential_configuration_id,
-      { credentialCryptoContext, ignoreMissingAttributes: true }
+      { credentialCryptoContext, ignoreMissingAttributes: true },
+      env.X509_CERT_ROOT
     );
 
   return {
     credential,
     metadata: {
+      // Use the same value for the PID credential type, avoiding separate values for the same credential across IT-Wallet versions.
+      // The credential catalogue is also mapped to use this type to identify the PID.
+      // To get the original type, access `issuerConf.credential_configurations_supported[credential_configuration_id].scope`.
+      credentialType: CredentialType.PID,
       parsedCredential,
       issuerConf,
       keyTag,
-      credentialType: CREDENTIAL_TYPE,
       credentialId: credential_configuration_id,
       format,
       jwt: {
@@ -299,4 +305,32 @@ export const getSpidProductionIdpHint = (spidIdpId: string) => {
     throw new Error(`Unknown idp ${spidIdpId}`);
   }
   return SPID_IDP_HINTS[spidIdpId];
+};
+
+const pidScopes = [
+  "PersonIdentificationData", // Legacy 1.0 PID (will be removed in the future)
+  CredentialType.PID // New 1.3+ PID
+];
+
+/**
+ * Get the credential configuration ID for the SD-JWT PID from its scope.
+ * Different versions of IT-Wallet specifications may use different naming
+ * conventions.
+ *
+ * @param issuerConf The issuer configuration obtained from the
+ *   {@link evaluateIssuerTrust}
+ * @returns The PID configuration ID to use for issuance
+ */
+const getPidSdJwtConfigurationId = (
+  issuerConf: CredentialIssuance.IssuerConfig
+): string => {
+  const result = Object.entries(
+    issuerConf.credential_configurations_supported
+  ).find(([, c]) => c.format === "dc+sd-jwt" && pidScopes.includes(c.scope));
+  if (!result) {
+    throw new Error(
+      `No SD-JWT credential with scope ${pidScopes.join(", ")} found in the Issuer Configuration`
+    );
+  }
+  return result[0];
 };

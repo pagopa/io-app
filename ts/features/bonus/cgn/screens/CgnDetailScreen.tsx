@@ -34,7 +34,10 @@ import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
 import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { isCGNEnabledSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
+import {
+  getEYCADiscountUrl,
+  isCGNEnabledSelector
+} from "../../../../store/reducers/backendStatus/remoteConfig";
 import { formatDateAsShortFormat } from "../../../../utils/dates";
 import { useActionOnFocus } from "../../../../utils/hooks/useOnFocus";
 import { capitalizeTextName } from "../../../../utils/strings";
@@ -63,7 +66,6 @@ import {
   EycaDetailsState
 } from "../store/reducers/eyca/details";
 import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
-import { EYCA_WEBSITE_DISCOUNTS_PAGE_URL } from "../utils/constants";
 import { canEycaCardBeShown } from "../utils/eyca";
 
 function getLogoUris(card: Card | undefined, eycaDetails: EycaDetailsState) {
@@ -128,6 +130,7 @@ const CgnDetailScreen = (): ReactElement => {
   const logoUris = getLogoUris(cgnDetails, eycaDetails);
 
   const theme = useIOTheme();
+  const eycaDiscountPage = useIOSelector(getEYCADiscountUrl);
 
   const startCgnActivation = () => {
     dispatch(loadAvailableBonuses.request());
@@ -180,7 +183,7 @@ const CgnDetailScreen = (): ReactElement => {
           "bonus.cgn.detail.cta.eyca.showEycaDiscounts"
         ),
         onPress: () =>
-          openWebUrl(EYCA_WEBSITE_DISCOUNTS_PAGE_URL, () =>
+          openWebUrl(eycaDiscountPage, () =>
             IOToast.error(I18n.t("bonus.cgn.generic.linkError"))
           )
       };

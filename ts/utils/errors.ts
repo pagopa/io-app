@@ -89,3 +89,58 @@ export const serializeError = (error: Error) => ({
   message: error.message,
   stack: error.stack
 });
+
+/**
+ * Safely converts an `unknown` value into a descriptive string.
+ *
+ * @param {unknown} input - The value to be stringified (often from a catch
+ *   block).
+ * @returns {string} A human-readable string representation of the input.
+ */
+export const unknownToString = (input: unknown): string => {
+  if (input === null) {
+    return "null";
+  }
+  if (input === undefined) {
+    return "undefined";
+  }
+
+  // 1. Improved Function Handling
+  // Showing the function name (even if minified) is better than just "function"
+  if (typeof input === "function") {
+    return `function: ${input.name || "(anonymous)"}`;
+  }
+
+  // 2. Error Handling (Fixing the Duplicate Header)
+  if (input instanceof Error) {
+    const header = `${input.name}: ${input.message}`;
+    if (input.stack) {
+      return input.stack.includes(input.message)
+        ? input.stack
+        : `${header}\n${input.stack}`;
+    }
+    return header;
+  }
+
+  // 3. Object Handling (Safe Serialization + Symbols)
+  if (typeof input === "object") {
+    try {
+      return JSON.stringify(input, (_key, value) => {
+        if (typeof value === "bigint") {
+          return `${value.toString()}n`;
+        }
+        if (typeof value === "symbol") {
+          return value.toString();
+        }
+        return value;
+      });
+    } catch {
+      // Use the constructor name, but acknowledge it might be minified
+      const constructorName = input.constructor?.name;
+      return `[Unserializable ${constructorName && constructorName.length > 2 ? constructorName : "Object"}]`;
+    }
+  }
+
+  // 4. Primitive data (Strings, Numbers, Booleans, Symbols, BigInts)
+  return typeof input === "string" ? input : String(input);
+};

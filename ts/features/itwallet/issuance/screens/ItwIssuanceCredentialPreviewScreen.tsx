@@ -25,7 +25,6 @@ import {
 import { getMixPanelCredential } from "../../analytics/utils";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
-import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import {
   CredentialMetadata,
   isMultiLevelCredential
@@ -35,6 +34,7 @@ import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/pr
 import { selectCredentialOption } from "../../machine/credential/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
+import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 
 export const ItwIssuanceCredentialPreviewScreen = () => {
   const credentialOption = ItwCredentialIssuanceMachineContext.useSelector(
@@ -72,6 +72,7 @@ const ContentView = ({ credential }: ContentViewProps) => {
   const route = useRoute();
   const isMultilevel = isMultiLevelCredential(credential);
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const credentialName = useItwCredentialName(credential.credentialType);
   const mixPanelCredential = useMemo(
     () => getMixPanelCredential(credential.credentialType, isItwL3),
     [credential, isItwL3]
@@ -156,7 +157,7 @@ const ContentView = ({ credential }: ContentViewProps) => {
       <ContentWrapper style={{ flexGrow: 1 }}>
         <H2>
           {I18n.t("features.itWallet.issuance.credentialPreview.title", {
-            credential: getCredentialNameFromType(credential.credentialType)
+            credential: credentialName
           })}
         </H2>
         <VSpacer size={24} />

@@ -13,24 +13,12 @@ import {
 } from "../../__mocks__/messages";
 import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils";
 import { handleLoadPreviousPageMessages } from "../handleLoadPreviousPageMessages";
-import { BackendClient } from "../../../../api/__mocks__/backend";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
-import { backendClientManager } from "../../../../api/BackendClientManager";
+import { getCommunicationClient } from "../commons";
 
-// Mock the backendClientManager
-jest.mock("../../../../api/BackendClientManager");
+jest.mock("../commons");
 
 const mockGetMessages = jest.fn();
-const mockBackendClientManager = backendClientManager as jest.Mocked<
-  typeof backendClientManager
->;
-
-beforeEach(() => {
-  jest.clearAllMocks();
-  mockBackendClientManager.getBackendClient.mockReturnValue({
-    getMessages: mockGetMessages
-  } as any);
-});
 
 describe("handleLoadPreviousPageMessages", () => {
   const sessionToken = "mockSessionToken";
@@ -52,9 +40,11 @@ describe("handleLoadPreviousPageMessages", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
+        .call(getCommunicationClient, sessionToken)
+        .next({ getUserMessages: mockGetMessages })
         .call(
           withRefreshApiCall,
-          BackendClient.getMessages(getMessagesPayload),
+          mockGetMessages(getMessagesPayload),
           loadPreviousPageMessages.request(defaultRequestPayload)
         )
         .next(E.right({ status: 200, value: apiPayload }))
@@ -73,9 +63,11 @@ describe("handleLoadPreviousPageMessages", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
+        .call(getCommunicationClient, sessionToken)
+        .next({ getUserMessages: mockGetMessages })
         .call(
           withRefreshApiCall,
-          BackendClient.getMessages(getMessagesPayload),
+          mockGetMessages(getMessagesPayload),
           loadPreviousPageMessages.request(defaultRequestPayload)
         )
         .next(E.right({ status: 500, value: { title: "Backend error" } }))
@@ -99,6 +91,8 @@ describe("handleLoadPreviousPageMessages", () => {
         .next()
         .select(sessionTokenSelector)
         .next(sessionToken)
+        .call(getCommunicationClient, sessionToken)
+        .next({ getUserMessages: mockGetMessages })
         .throw(new Error("I made a boo-boo, sir!"))
         .put(
           action.failure({

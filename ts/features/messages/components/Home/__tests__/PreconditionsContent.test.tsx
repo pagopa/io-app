@@ -81,7 +81,7 @@ const renderComponent = () => {
   const store = createStore(appReducer, initialState as any);
 
   return renderScreenWithNavigationStoreContext(
-    () => <PreconditionsContent footerHeight={84} />,
+    () => <PreconditionsContent footerHeight={84} linkTo={jest.fn()} />,
     MESSAGES_ROUTES.MESSAGES_HOME,
     {},
     store

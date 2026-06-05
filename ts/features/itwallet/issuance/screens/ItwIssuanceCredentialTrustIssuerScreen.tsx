@@ -1,6 +1,5 @@
 import {
   ContentWrapper,
-  FeatureInfo,
   ForceScrollDownView,
   H2,
   ListItemHeader,
@@ -28,10 +27,10 @@ import { getMixPanelCredential } from "../../analytics/utils";
 import { ItwDataExchangeIcons } from "../../common/components/ItwDataExchangeIcons";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import { withOfflineFailureScreen } from "../../common/helpers/withOfflineFailureScreen";
+import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
-import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
 import { ISSUER_MOCK_NAME } from "../../common/utils/itwMocksUtils";
 import {
   CredentialMetadata,
@@ -57,10 +56,10 @@ import {
 import { ItwRequestedClaimsList } from "../components/ItwRequestedClaimsList";
 
 export type ItwIssuanceCredentialTrustIssuerNavigationParams = {
-  animationEnabled?: boolean;
   credentialType?: string;
   isUpgrade?: boolean;
   mode?: CredentialIssuanceMode;
+  disableAnimation?: boolean;
 };
 
 type ScreenProps =
@@ -142,6 +141,8 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   const isIssuing =
     ItwCredentialIssuanceMachineContext.useSelector(selectIsIssuing);
   const theme = useIOTheme();
+  const eidCredentialName = useItwCredentialName(eid.credentialType);
+  const credentialName = useItwCredentialName(credentialType);
 
   const handleContinuePress = () => {
     machineRef.send({ type: "confirm-trust-data" });
@@ -170,7 +171,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   });
   const requiredClaims = claims.map(claim => ({
     claim,
-    source: getCredentialNameFromType(eid.credentialType, "", isItwL3)
+    source: eidCredentialName
   }));
 
   // Added hasScrolledToBottom ref to avoid sending multiple scroll-to-bottom events when navigating between screens
@@ -214,7 +215,7 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
         <VSpacer size={24} />
         <H2>
           {I18n.t("features.itWallet.issuance.credentialAuth.title", {
-            credentialName: getCredentialNameFromType(credentialType)
+            credentialName
           })}
         </H2>
         <VSpacer size={16} />
@@ -235,20 +236,6 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
           iconColor={theme["icon-default"]}
         />
         <ItwRequestedClaimsList items={requiredClaims} />
-        <VSpacer size={24} />
-        <FeatureInfo
-          iconName="fornitori"
-          body={I18n.t(
-            "features.itWallet.issuance.credentialAuth.disclaimer.0"
-          )}
-        />
-        <VSpacer size={24} />
-        <FeatureInfo
-          iconName="trashcan"
-          body={I18n.t(
-            "features.itWallet.issuance.credentialAuth.disclaimer.1"
-          )}
-        />
         <VSpacer size={32} />
         <IOMarkdown
           content={I18n.t("features.itWallet.issuance.credentialAuth.tos", {

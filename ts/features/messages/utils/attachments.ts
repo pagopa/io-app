@@ -1,5 +1,5 @@
 import RNFS from "react-native-fs";
-import { ThirdPartyAttachment } from "../../../../definitions/backend/ThirdPartyAttachment";
+import { ThirdPartyAttachment } from "../../../../definitions/communication/ThirdPartyAttachment";
 import { apiUrlPrefix } from "../../../config";
 
 export const AttachmentsDirectoryPath =
@@ -38,8 +38,8 @@ export const attachmentDownloadUrl = (
   messageId: string,
   attachment: ThirdPartyAttachment
 ) =>
-  `${apiUrlPrefix}/api/v1/third-party-messages/${messageId}/attachments/${attachment.url.replace(
-    /^\//g, // note that attachmentUrl might contains a / at the beginning, so let's strip it
+  `${apiUrlPrefix}/api/communication/v1/third-party-messages/${messageId}/attachments/${attachment.url.replace(
+    /^\//g, // note that attachmentUrl might contain a / at the beginning, so let's strip it
     ""
   )}`;
 

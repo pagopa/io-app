@@ -3,10 +3,14 @@ import * as pot from "@pagopa/ts-commons/lib/pot";
 import { Action } from "../../../../../store/actions/types";
 import { NetworkError } from "../../../../../utils/errors";
 import {
+  itwFetchCatalogueTranslations,
   itwFetchCredentialsCatalogue,
   itwSetCatalogueEnabledForCredentialsList
 } from "../actions";
-import { DigitalCredentialsCatalogue } from "../../../common/utils/itwCredentialsCatalogueUtils";
+import {
+  CatalogueTranslations,
+  DigitalCredentialsCatalogue
+} from "../../../common/utils/itwCredentialsCatalogueUtils";
 
 export type ItwCredentialsCatalogueState = {
   /**
@@ -15,11 +19,18 @@ export type ItwCredentialsCatalogueState = {
    */
   isEnabledForCredentialsList: boolean;
   catalogue: pot.Pot<DigitalCredentialsCatalogue, NetworkError>;
+  /**
+   * Locale bundles fetched from the catalogue's localization endpoints. Only
+   * populated for IT-Wallet spec v1.3.3. Keyed by locale code (e.g. "it"), then
+   * by l10n_id.
+   */
+  translations: pot.Pot<CatalogueTranslations, NetworkError>;
 };
 
 export const itwCredentialsCatalogueState: ItwCredentialsCatalogueState = {
   isEnabledForCredentialsList: false,
-  catalogue: pot.none
+  catalogue: pot.none,
+  translations: pot.none
 };
 
 const reducer = (
@@ -46,6 +57,21 @@ const reducer = (
       return {
         ...state,
         isEnabledForCredentialsList: action.payload
+      };
+    case getType(itwFetchCatalogueTranslations.request):
+      return {
+        ...state,
+        translations: pot.toLoading(state.translations)
+      };
+    case getType(itwFetchCatalogueTranslations.success):
+      return {
+        ...state,
+        translations: pot.some(action.payload)
+      };
+    case getType(itwFetchCatalogueTranslations.failure):
+      return {
+        ...state,
+        translations: pot.toError(state.translations, action.payload)
       };
 
     default:

@@ -8,6 +8,7 @@ import {
   itwSetEnv,
   itwSetSpecsVersion
 } from "../store/actions/environment";
+import { itwDebugReset } from "../../playgrounds/store/actions";
 
 /** Ensures the wallet is correctly reset when the environment changes. */
 function* handleItwEnvironmentChanged(
@@ -23,6 +24,8 @@ function* handleItwEnvironmentChanged(
 
   // Restore IT-Wallet to v1.0.0 when the env changes back to prod.
   yield* put(itwSetSpecsVersion("1.0.0"));
+  // Clear any persisted debug overrides when leaving PRE.
+  yield* put(itwDebugReset());
 }
 
 /** Watch environment actions and triggers the IT Wallet reset. */

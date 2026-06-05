@@ -1,9 +1,6 @@
 import { WalletCard } from "../../../wallet/types";
 import { getCredentialStatus } from "../../common/utils/itwCredentialStatusUtils";
-import {
-  CredentialMetadata,
-  isMultiLevelCredential
-} from "../../common/utils/itwTypesUtils";
+import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 
 export const mapCredentialToWalletCard = (
   credential: CredentialMetadata
@@ -13,6 +10,5 @@ export const mapCredentialToWalletCard = (
   category: "itw",
   credentialType: credential.credentialType,
   credentialStatus: getCredentialStatus(credential),
-  issuedAt: credential.jwt.issuedAt,
-  isMultiCredential: isMultiLevelCredential(credential)
+  issuedAt: credential.jwt.issuedAt
 });

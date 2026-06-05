@@ -1,93 +1,64 @@
-import { v4 as uuid } from "uuid";
-import { PermissionsAndroid } from "react-native";
-import PushNotificationIOS from "@react-native-community/push-notification-ios";
-import PushNotification from "react-native-push-notification";
+import * as Notifications from "expo-notifications";
 import NotificationsUtils from "react-native-notifications-utils";
+import { v4 as uuid } from "uuid";
+import { trackAppCaughtError } from "../../../utils/analytics";
+import { unknownToString } from "../../../utils/errors";
 import { isIos } from "../../../utils/platform";
+import { isTestEnv } from "../../../utils/environment";
 
-export enum AuthorizationStatus {
-  NotDetermined = 0,
-  StatusDenied = 1,
-  Authorized = 2,
-  Provisional = 3,
-  Ephemeral = 4 // This is a state that may be returned by iOS (as a number) but it is not mapped in the iOS library
-}
+const areNotificationsEnabled = (
+  permissions: Notifications.NotificationPermissionsStatus
+) => {
+  const areNotificationsDisabled = [
+    undefined,
+    Notifications.IosAuthorizationStatus.DENIED,
+    Notifications.IosAuthorizationStatus.NOT_DETERMINED
+  ].includes(permissions.ios?.status);
+  return permissions.granted || !areNotificationsDisabled;
+};
 
-export const checkNotificationPermissions = () =>
-  new Promise<boolean>(resolve => {
-    try {
-      if (isIos) {
-        PushNotificationIOS.checkPermissions(({ authorizationStatus }) => {
-          // On iOS, 'authorizationStatus' is the parameter that
-          // reflects the notification permission status ('alert'
-          // is just one of the presentation's options)
-          resolve(
-            authorizationStatus !== undefined &&
-              authorizationStatus !== AuthorizationStatus.NotDetermined &&
-              authorizationStatus !== AuthorizationStatus.StatusDenied
-          );
-        });
-      } else {
-        PushNotification.checkPermissions(data => {
-          // On Android, only 'alert' has a value
-          resolve(!!data.alert);
-        });
-      }
-    } catch (e) {
-      // TODO: Replace Sentry capture exception with a new logging solution
-      // captureException(e);
-      // captureMessage(
-      //   `[PushNotifications] 'checkNotificationPermissions' has thrown an exception on ${
-      //     isIos ? "iOS" : "Android"
-      //   }`
-      // );
-      resolve(false);
-    }
-  });
-
-export const requestNotificationPermissions = async () => {
+export const checkNotificationPermissions = async (): Promise<boolean> => {
   try {
-    if (isIos) {
-      const pushNotificationPermissions =
-        await PushNotificationIOS.requestPermissions({
-          alert: true,
-          badge: true,
-          sound: true
-        });
-      return (
-        pushNotificationPermissions.authorizationStatus ===
-        AuthorizationStatus.Authorized
-      );
-    } else {
-      const permissionStatus = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
-      );
-      return permissionStatus === PermissionsAndroid.RESULTS.GRANTED;
-    }
+    const permissions = await Notifications.getPermissionsAsync();
+
+    const notificationEnabledState = areNotificationsEnabled(permissions);
+    return notificationEnabledState;
   } catch (e) {
-    // TODO: Replace Sentry capture exception with a new logging solution
-    // captureException(e);
-    // captureMessage(
-    //   `[PushNotifications] 'requestNotificationPermissions' has thrown an exception on ${
-    //     isIos ? "iOS" : "Android"
-    //   }`
-    // );
+    trackAppCaughtError(
+      "checkNotificationPermissions",
+      `exception thrown on ${isIos ? "iOS" : "Android"}`,
+      unknownToString(e)
+    );
     return false;
   }
 };
-
 /**
- * Remove all the local notifications related to authentication with spid.
- *
- * With the previous library version (7.3.1 - now 8.1.1),
- * cancelLocalNotifications did not work. At the moment, the "first access spid"
- * is the only kind of scheduled notification and for this reason it is safe to
- * use PushNotification.cancelAllLocalNotifications(); If we add more scheduled
- * notifications, we need to investigate if cancelLocalNotifications works with
- * the new library version
+ * Requests the system-level push notification permission. On iOS, also enables
+ * alert, badge, and sound presentation options. Returns false on error to avoid
+ * blocking the calling flow.
  */
-export const cancellAllLocalNotifications = () =>
-  PushNotification.cancelAllLocalNotifications();
+export const requestNotificationPermissions = async (): Promise<boolean> => {
+  try {
+    const permissions = await Notifications.requestPermissionsAsync({
+      ios: {
+        allowAlert: true,
+        allowBadge: true,
+        allowSound: true
+      },
+      android: {}
+    });
+
+    const notificationEnabledState = areNotificationsEnabled(permissions);
+    return notificationEnabledState;
+  } catch (e) {
+    trackAppCaughtError(
+      "requestNotificationPermissions",
+      `exception thrown on ${isIos ? "iOS" : "Android"}`,
+      unknownToString(e)
+    );
+    return false;
+  }
+};
 
 /**
  * This is a legacy code that was used to generate a unique Id from client side.
@@ -101,3 +72,9 @@ export const openSystemNotificationSettingsScreen = () =>
   NotificationsUtils.openSettings();
 
 export const generateTokenRegistrationTime = () => new Date().getTime();
+
+export const testable = isTestEnv
+  ? {
+      areNotificationsEnabled
+    }
+  : undefined;

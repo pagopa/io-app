@@ -9,7 +9,14 @@ import { isWalletInstanceAttestationValid } from "../../../common/utils/itwAttes
 import { itwCredentialsEidStatusSelector } from "../../../credentials/store/selectors";
 import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { itwWalletInstanceAttestationSelector } from "../../../walletInstance/store/selectors/index.ts";
+import { ClientIdPrefix } from "../utils/itwRemotePresentationUtils";
 import { RemoteEvents } from "./events.ts";
+import { Context } from "./context.ts";
+
+type GuardArgs = {
+  event: RemoteEvents;
+  context: Context;
+};
 
 export const createRemoteGuardsImplementation = (
   itwVersion: ItwVersion,
@@ -39,6 +46,21 @@ export const createRemoteGuardsImplementation = (
     );
   },
 
-  isSessionExpired: ({ event }: { event: RemoteEvents }) =>
-    "error" in event && event.error instanceof ItwSessionExpiredError
+  isSessionExpired: ({ event }: GuardArgs) =>
+    "error" in event && event.error instanceof ItwSessionExpiredError,
+
+  /**
+   * Valid OpenID Federation clients:
+   *
+   * - `openid_federation:https://rp.example`
+   * - `https://rp.example` (no prefix)
+   */
+  isOpenIdFederationClient: ({ context }: GuardArgs) =>
+    Boolean(
+      context.payload?.client_id.startsWith(ClientIdPrefix.OPENID_FEDERATION) ||
+      context.payload?.client_id.startsWith("https://")
+    ),
+
+  isX509HashClient: ({ context }: GuardArgs) =>
+    Boolean(context.payload?.client_id.startsWith(ClientIdPrefix.X509_HASH))
 });

@@ -1,6 +1,7 @@
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { PureComponent } from "react";
+
 import {
   AccessibilityInfo,
   AppState,
@@ -14,22 +15,25 @@ import { connect } from "react-redux";
 import DebugInfoOverlay from "./components/debug/DebugInfoOverlay";
 import PagoPATestIndicatorOverlay from "./components/PagoPATestIndicatorOverlay";
 import { LightModalRoot } from "./components/ui/LightModal";
-import { configurePushNotifications } from "./features/pushNotifications/utils/configurePushNotification";
+import {
+  configurePushNotificationListeners,
+  setupAndroidNotificationChannel
+} from "./features/pushNotifications/utils/configurePushNotification";
+import { useAppThemeConfiguration } from "./hooks/useAppThemeConfiguration";
+import { setLocale } from "./i18n";
 import { IONavigationContainer } from "./navigation/AppStackNavigator";
 import RootModal from "./screens/modal/RootModal";
 import { applicationChangeState } from "./store/actions/application";
 import { setDebugCurrentRouteName } from "./store/actions/debug";
 import { navigateBack } from "./store/actions/navigation";
 import { setScreenReaderEnabled } from "./store/actions/preferences";
+import { Store } from "./store/actions/types";
 import { isDebugModeEnabledSelector } from "./store/reducers/debug";
 import {
   isPagoPATestEnabledSelector,
   preferredLanguageSelector
 } from "./store/reducers/persistedPreferences";
 import { GlobalState } from "./store/reducers/types";
-import { Store } from "./store/actions/types";
-import { useAppThemeConfiguration } from "./hooks/useAppThemeConfiguration";
-import { setLocale } from "./i18n";
 
 type Props = ReturnType<typeof mapStateToProps> &
   typeof mapDispatchToProps & { store: Store };
@@ -44,10 +48,14 @@ type Props = ReturnType<typeof mapStateToProps> &
 class RootContainer extends PureComponent<Props> {
   private subscription: NativeEventSubscription | undefined;
   private accessibilitySubscription: EmitterSubscription | undefined;
+  private clearNotificationHandlers: () => void;
+
   constructor(props: Props) {
     super(props);
-    /* Configure the application to receive push notifications */
-    configurePushNotifications(props.store);
+    void setupAndroidNotificationChannel();
+    this.clearNotificationHandlers = configurePushNotificationListeners(
+      props.store
+    );
   }
 
   private handleApplicationActivity = (activity: AppStateStatus) =>
@@ -95,6 +103,7 @@ class RootContainer extends PureComponent<Props> {
   public componentWillUnmount() {
     this.subscription?.remove();
     this.accessibilitySubscription?.remove();
+    this.clearNotificationHandlers();
   }
 
   public componentDidUpdate() {

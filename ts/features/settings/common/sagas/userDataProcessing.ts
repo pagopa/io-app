@@ -3,8 +3,8 @@ import * as E from "fp-ts/lib/Either";
 import { SagaIterator } from "redux-saga";
 import { call, put, takeEvery } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { UserDataProcessingChoiceEnum } from "../../../../../definitions/backend/UserDataProcessingChoice";
-import { BackendClient } from "../../../../api/backend";
+import { UserDataProcessingChoiceEnum } from "../../../../../definitions/identity/UserDataProcessingChoice";
+import { IdentityClient } from "../../../../api/IdentityClientManager";
 import {
   deleteUserDataProcessing,
   loadUserDataProcessing,
@@ -20,9 +20,7 @@ import { withRefreshApiCall } from "../../../authentication/fastLogin/saga/utils
  * the first request
  */
 export function* loadUserDataProcessingSaga(
-  getUserDataProcessingRequest: ReturnType<
-    typeof BackendClient
-  >["getUserDataProcessingRequest"],
+  getUserDataProcessingRequest: IdentityClient["getUserDataProcessing"],
   action: ActionType<(typeof loadUserDataProcessing)["request"]>
 ): SagaIterator {
   const choice = action.payload;
@@ -66,9 +64,7 @@ export function* loadUserDataProcessingSaga(
 }
 
 export function* upsertUserDataProcessingSaga(
-  postUserDataProcessingRequest: ReturnType<
-    typeof BackendClient
-  >["postUserDataProcessingRequest"],
+  postUserDataProcessingRequest: IdentityClient["upsertUserDataProcessing"],
   action: ActionType<(typeof upsertUserDataProcessing)["request"]>
 ): SagaIterator {
   const choice = action.payload;
@@ -104,9 +100,7 @@ export function* upsertUserDataProcessingSaga(
 }
 
 export function* deleteUserDataProcessingSaga(
-  deleteUserDataProcessingRequest: ReturnType<
-    typeof BackendClient
-  >["deleteUserDataProcessingRequest"],
+  deleteUserDataProcessingRequest: IdentityClient["abortUserDataProcessing"],
   action: ActionType<(typeof deleteUserDataProcessing)["request"]>
 ): SagaIterator {
   const choice = action.payload;
@@ -156,15 +150,9 @@ export function* deleteUserDataProcessingSaga(
  * profile-related data downloading)
  */
 export function* watchUserDataProcessingSaga(
-  getUserDataProcessingRequest: ReturnType<
-    typeof BackendClient
-  >["getUserDataProcessingRequest"],
-  postUserDataProcessingRequest: ReturnType<
-    typeof BackendClient
-  >["postUserDataProcessingRequest"],
-  deleteUserDataProcessingRequest: ReturnType<
-    typeof BackendClient
-  >["deleteUserDataProcessingRequest"]
+  getUserDataProcessingRequest: IdentityClient["getUserDataProcessing"],
+  postUserDataProcessingRequest: IdentityClient["upsertUserDataProcessing"],
+  deleteUserDataProcessingRequest: IdentityClient["abortUserDataProcessing"]
 ): SagaIterator {
   yield* takeEvery(
     loadUserDataProcessing.request,

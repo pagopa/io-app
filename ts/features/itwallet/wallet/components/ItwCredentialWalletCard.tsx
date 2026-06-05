@@ -1,15 +1,21 @@
+import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { withWalletCardBaseComponent } from "../../../wallet/components/WalletCardBaseComponent";
 import { WalletCardPressableBase } from "../../../wallet/components/WalletCardPressableBase";
-import { ItwCredentialCard } from "../../common/components/ItwCredentialCard";
-import { ITW_ROUTES } from "../../navigation/routes";
-import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard";
+import {
+  ItwCredentialCard,
+  ItwCredentialCardLegacy
+} from "../../common/components/ItwCredentialCard";
 import { itwShouldUpgradeCredentialSelector } from "../../common/store/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { ITW_ROUTES } from "../../navigation/routes";
 
 export type ItwCredentialWalletCardProps = ItwCredentialCard & {
-  isPreview?: false; // Cards in wallet cannot be in preview mode
-  onPress?: () => void; // Optional onPress to override press functionality
+  /* Optional onPress to override press functionality */
+  onPress?: () => void;
+  /* Optional override to force the use of the new Itw design, used for testing purposes */
+  withItwDesign?: boolean;
 };
 
 const WrappedItwCredentialCard = (props: ItwCredentialWalletCardProps) => {
@@ -18,6 +24,8 @@ const WrappedItwCredentialCard = (props: ItwCredentialWalletCardProps) => {
   const needsItwUpgrade = useIOSelector(
     itwShouldUpgradeCredentialSelector(credentialType, issuedAt)
   );
+  const withItwDesign =
+    useIOSelector(itwLifecycleIsITWalletValidSelector) || props.withItwDesign;
 
   const handleCredentialUpgrade = useOfflineToastGuard(() =>
     navigation.navigate(ITW_ROUTES.MAIN, {
@@ -49,7 +57,11 @@ const WrappedItwCredentialCard = (props: ItwCredentialWalletCardProps) => {
       onPress={handleOnPress}
       testID="ItwCredentialWalletCardTestID"
     >
-      <ItwCredentialCard {...props} />
+      {withItwDesign ? (
+        <ItwCredentialCard {...props} />
+      ) : (
+        <ItwCredentialCardLegacy {...props} />
+      )}
     </WalletCardPressableBase>
   );
 };

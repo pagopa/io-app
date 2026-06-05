@@ -9,11 +9,14 @@ import {
   walletTokenSelector,
   bpdTokenSelector,
   selectedIdentityProviderSelector,
-  idpSelector
+  idpSelector,
+  extractSpidLevel,
+  spidLevelFromSessionInfoSelector
 } from "../selectors";
 import { format } from "../../../../../utils/dates";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { isLogoutRequested } from "../utils/guards";
+import { SpidLevelEnum } from "../../../../../../definitions/session_manager/SpidLevel";
 
 const mockIdp = { entityId: "idp1", isTestIdp: false };
 
@@ -121,5 +124,94 @@ describe("authentication selectors", () => {
   it("should return Option.some(idp) if logged out with idp", () => {
     const state = createLoggedOutWithIdpState();
     expect(idpSelector(state)).toEqual(O.some(mockIdp));
+  });
+});
+
+describe("extractSpidLevel", () => {
+  it("should return 'L1' when spidLevel contains 'L1'", () => {
+    expect(
+      extractSpidLevel(SpidLevelEnum["https://www.spid.gov.it/SpidL1"])
+    ).toBe("L1");
+  });
+
+  it("should return 'L2' when spidLevel contains 'L2'", () => {
+    expect(
+      extractSpidLevel(SpidLevelEnum["https://www.spid.gov.it/SpidL2"])
+    ).toBe("L2");
+  });
+
+  it("should return 'L3' when spidLevel contains 'L3'", () => {
+    expect(
+      extractSpidLevel(SpidLevelEnum["https://www.spid.gov.it/SpidL3"])
+    ).toBe("L3");
+  });
+
+  it("should return undefined when spidLevel is undefined", () => {
+    expect(extractSpidLevel(undefined)).toBeUndefined();
+  });
+
+  it("should return undefined when spidLevel does not contain valid level", () => {
+    expect(
+      extractSpidLevel("https://www.spid.gov.it/Invalid" as any)
+    ).toBeUndefined();
+  });
+});
+
+describe("spidLevelFromSessionInfoSelector", () => {
+  it("should return 'L1' when logged in with session info containing SpidL1", () => {
+    const state = {
+      authentication: {
+        kind: "LoggedInWithSessionInfo",
+        idp: { entityId: "idp1", isTestIdp: false },
+        sessionToken: "abc",
+        sessionInfo: {
+          spidLevel: SpidLevelEnum["https://www.spid.gov.it/SpidL1"]
+        }
+      }
+    } as any;
+    expect(spidLevelFromSessionInfoSelector(state)).toBe("L1");
+  });
+
+  it("should return 'L2' when logged in with session info containing SpidL2", () => {
+    const state = {
+      authentication: {
+        kind: "LoggedInWithSessionInfo",
+        idp: { entityId: "idp1", isTestIdp: false },
+        sessionToken: "abc",
+        sessionInfo: {
+          spidLevel: SpidLevelEnum["https://www.spid.gov.it/SpidL2"]
+        }
+      }
+    } as any;
+    expect(spidLevelFromSessionInfoSelector(state)).toBe("L2");
+  });
+
+  it("should return 'L3' when logged in with session info containing SpidL3", () => {
+    const state = {
+      authentication: {
+        kind: "LoggedInWithSessionInfo",
+        idp: { entityId: "idp1", isTestIdp: false },
+        sessionToken: "abc",
+        sessionInfo: {
+          spidLevel: SpidLevelEnum["https://www.spid.gov.it/SpidL3"]
+        }
+      }
+    } as any;
+    expect(spidLevelFromSessionInfoSelector(state)).toBe("L3");
+  });
+
+  it("should return undefined when logged in with session info without spidLevel", () => {
+    const state = createLoggedInWithSessionInfoState();
+    expect(spidLevelFromSessionInfoSelector(state)).toBeUndefined();
+  });
+
+  it("should return undefined when not logged in with session info", () => {
+    const state = createLoggedInState();
+    expect(spidLevelFromSessionInfoSelector(state)).toBeUndefined();
+  });
+
+  it("should return undefined when logged out", () => {
+    const state = createLoggedOutWithIdpState();
+    expect(spidLevelFromSessionInfoSelector(state)).toBeUndefined();
   });
 });

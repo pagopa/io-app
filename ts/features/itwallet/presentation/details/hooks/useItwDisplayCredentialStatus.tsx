@@ -13,6 +13,7 @@ import { getItwDisplayCredentialStatus } from "../utils";
  * status shown in the Wallet or credential details screen.
  *
  * @param credentialStatus The actual status of the credential
+ * @param credentialType Optional credential type to skip override for PID
  * @returns {ItwCredentialStatus} The status to display in the UI
  */
 export const useItwDisplayCredentialStatus = (

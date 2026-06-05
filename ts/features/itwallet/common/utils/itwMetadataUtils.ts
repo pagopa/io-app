@@ -1,13 +1,33 @@
 import { pipe } from "fp-ts/function";
 import * as O from "fp-ts/Option";
-import { DigitalCredentialMetadata } from "./itwCredentialsCatalogueUtils.ts";
+import {
+  CatalogueTranslations,
+  DigitalCredentialMetadata
+} from "./itwCredentialsCatalogueUtils.ts";
 import { CredentialMetadata } from "./itwTypesUtils.ts";
 
-export const getItwAuthSource = (credential: DigitalCredentialMetadata) =>
+/**
+ * Get the localized auth source organization name for a catalogue credential.
+ * Resolves `organization_name_l10n_id` via the provided translations when
+ * available, falling back to the static `organization_name` field.
+ *
+ * @param credential - Catalogue metadata for the credential
+ * @param translations - Optional flat translations map for the current locale
+ *   (l10n_id → string)
+ */
+export const getItwAuthSource = (
+  credential: DigitalCredentialMetadata,
+  translations?: Record<string, string>
+) =>
   pipe(
     credential.authentic_sources?.[0],
     O.fromNullable,
-    O.map(source => source.organization_name),
+    O.map(source => {
+      const l10nName =
+        source.organization_name_l10n_id &&
+        translations?.[source.organization_name_l10n_id];
+      return l10nName ?? source.organization_name;
+    }),
     O.toUndefined
   );
 
@@ -26,3 +46,6 @@ export const getAuthSource = (credential: CredentialMetadata) =>
     O.map(config => config.authentic_source),
     O.toUndefined
   );
+
+// Re-export for callers that need the full translations map type
+export type { CatalogueTranslations };

@@ -29,8 +29,8 @@ import {
 } from "../../machine/credential/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import { useCredentialEventsTracking } from "../hooks/useCredentialEventsTracking";
-import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 
 const ASSERTION_FAILED_FAQ_URL =
   "https://assistenza.ioapp.it/hc/it/articles/43824826487953-Provo-ad-aggiungere-un-documento-al-Portafoglio-ma-ricevo-un-errore-dal-mio-dispositivo-Apple";
@@ -61,13 +61,6 @@ export const ItwIssuanceCredentialFailureScreen = () => {
   );
 };
 
-const defaultInvalidStatusMessage = {
-  title: I18n.t("features.itWallet.issuance.notEntitledCredentialError.title"),
-  description: I18n.t(
-    "features.itWallet.issuance.notEntitledCredentialError.body"
-  )
-};
-
 type ContentViewProps = { failure: CredentialIssuanceFailure };
 
 /** Renders the content of the screen */
@@ -80,11 +73,21 @@ const ContentView = ({ failure }: ContentViewProps) => {
     selectIssuerConfigurationOption
   );
   const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const credentialTypeValue = O.toUndefined(credentialType);
+  const credentialName = useItwCredentialName(credentialTypeValue);
 
   const invalidStatusDetails = getCredentialInvalidStatusDetails(failure, {
     credentialType,
     issuerConf
   });
+  const defaultInvalidStatusMessage = {
+    title: I18n.t(
+      "features.itWallet.issuance.notEntitledCredentialError.title"
+    ),
+    description: I18n.t(
+      "features.itWallet.issuance.notEntitledCredentialError.body"
+    )
+  };
 
   const closeIssuance = () => {
     machineRef.send({ type: "close" });
@@ -161,9 +164,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
             subtitle: I18n.t(
               "features.itWallet.issuance.issuerNotTrustedCommonError.subtitle",
               {
-                credential: getCredentialNameFromType(
-                  O.toUndefined(credentialType)
-                )
+                credential: credentialName
               }
             ),
             pictogram: "umbrella",

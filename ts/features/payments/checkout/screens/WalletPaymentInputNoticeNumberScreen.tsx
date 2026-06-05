@@ -3,10 +3,12 @@ import { PaymentNoticeNumberFromString } from "@pagopa/io-pagopa-commons/lib/pag
 import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
-import { useRef, useState } from "react";
-import { InputAccessoryView, Keyboard, Platform, View } from "react-native";
 import I18n from "i18next";
+import { ComponentRef, useRef, useState } from "react";
+import { Keyboard, View } from "react-native";
+import { KeyboardStickyView } from "react-native-keyboard-controller";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
+import { useFooterActionsMargin } from "../../../../hooks/useFooterActionsMargin";
 import {
   AppParamsList,
   IOStackNavigationProp
@@ -18,8 +20,8 @@ import {
   validatePaymentNoticeNumber
 } from "../../common/utils/validation";
 import * as analytics from "../analytics";
+import { useInputFocus } from "../hooks/useInputFocus";
 import { PaymentsCheckoutRoutes } from "../navigation/routes";
-import { TextInputValidationRefProps } from "../types";
 import { trimAndLimitValue } from "../utils";
 
 type InputState = {
@@ -60,7 +62,11 @@ const WalletPaymentInputNoticeNumberScreen = () => {
 
   const textInputWrapperRef = useRef<View>(null);
 
-  const textInputRef = useRef<TextInputValidationRefProps>(null);
+  const textInputRef = useRef<ComponentRef<typeof TextInputValidation>>(null);
+
+  useInputFocus(textInputRef);
+
+  const { bottomMargin } = useFooterActionsMargin();
 
   return (
     <>
@@ -73,17 +79,6 @@ const WalletPaymentInputNoticeNumberScreen = () => {
         canGoback={true}
         contextualHelp={emptyContextualHelp}
         headerActionsProp={{ showHelp: true }}
-        actions={
-          Platform.OS === "android"
-            ? {
-                type: "SingleButton",
-                primary: {
-                  label: I18n.t("global.buttons.continue"),
-                  onPress: handleContinueClick
-                }
-              }
-            : undefined
-        }
         includeContentMargins
         ref={textInputWrapperRef}
       >
@@ -114,33 +109,31 @@ const WalletPaymentInputNoticeNumberScreen = () => {
               noticeNumber: decodePaymentNoticeNumber(normalizedValue)
             });
           }}
-          counterLimit={
-            inputState.noticeNumberText.length >= MAX_LENGTH_NOTICE_NUMBER
-              ? MAX_LENGTH_NOTICE_NUMBER
-              : undefined
-          }
+          counterLimit={MAX_LENGTH_NOTICE_NUMBER}
+          showCounterOnlyWhenLimitReached
           onValidate={validatePaymentNoticeNumber}
           textInputProps={{
             keyboardType: "number-pad",
             inputMode: "numeric",
-            returnKeyType: "done",
-            inputAccessoryViewID: "noticeNumberInputAccessoryView"
+            inputAccessoryViewID: "keyboardStickyView"
           }}
-          autoFocus
         />
       </IOScrollViewWithLargeHeader>
-      {Platform.OS === "ios" && (
-        <InputAccessoryView nativeID="noticeNumberInputAccessoryView">
-          <View style={{ padding: 20 }}>
-            <IOButton
-              fullWidth
-              variant="solid"
-              label={I18n.t("global.buttons.continue")}
-              onPress={handleContinueClick}
-            />
-          </View>
-        </InputAccessoryView>
-      )}
+      <KeyboardStickyView offset={{ closed: 0 }}>
+        <View
+          style={{
+            paddingHorizontal: 20,
+            marginBottom: bottomMargin
+          }}
+        >
+          <IOButton
+            fullWidth
+            variant="solid"
+            label={I18n.t("global.buttons.continue")}
+            onPress={handleContinueClick}
+          />
+        </View>
+      </KeyboardStickyView>
     </>
   );
 };

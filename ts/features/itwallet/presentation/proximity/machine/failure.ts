@@ -1,8 +1,5 @@
-import {
-  TimeoutError,
-  UntrustedRpError
-} from "../utils/itwProximityErrors.tsx";
-import { ProximityEvents } from "./events.ts";
+import { TimeoutError, UntrustedRpError } from "../utils/errors";
+import { ProximityEvents } from "./events";
 
 export enum ProximityFailureType {
   RELYING_PARTY_GENERIC = "RELYING_PARTY_GENERIC",
