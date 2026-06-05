@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.34.0-rc.2](https://github.com/pagopa/io-app/compare/3.34.0-rc.1...3.34.0-rc.2) (2026-06-05)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Disable OTP input autofocus in CIE PIN/CAN screens ([#8153](https://github.com/pagopa/io-app/issues/8153)) ([bb65a88](https://github.com/pagopa/io-app/commit/bb65a882321d41ecb8ea9cf5c1402cc94d4aa131))
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-4343](https://pagopa.atlassian.net/browse/SIW-4343)] Add intro hero image to credential introduction screen and container to markdown ([#8148](https://github.com/pagopa/io-app/issues/8148)) ([6166ccc](https://github.com/pagopa/io-app/commit/6166cccbbc45c662993df9a95f777c96cb9dcdd0))
+* **release:** 3.33.0-rc.4 ([#8155](https://github.com/pagopa/io-app/issues/8155)) ([403ada5](https://github.com/pagopa/io-app/commit/403ada5ecb7a90251f4b78e6b7c974559318bdf4))
+* [[IOPLT-1693](https://pagopa.atlassian.net/browse/IOPLT-1693)] Upgrade to react-native 0.83 and Expo 55 ([#7951](https://github.com/pagopa/io-app/issues/7951)) ([c3116df](https://github.com/pagopa/io-app/commit/c3116df26e4caedfa77945d0ea557f5a8b46c87f)), closes [pagopa/io-app-design-system#551](https://github.com/pagopa/io-app-design-system/issues/551)
+
 ## [3.34.0-rc.1](https://github.com/pagopa/io-app/compare/3.34.0-rc.0...3.34.0-rc.1) (2026-06-04)
 
 
