@@ -99,7 +99,7 @@ importers:
         version: 0.8.3(react-native@0.83.6(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.28.0))(@types/react@19.2.15)(react@19.2.0))(react@19.2.0)
       '@pagopa/io-react-native-jwt':
         specifier: ^2.2.0
-        version: 2.2.0(react-native@0.81.5(patch_hash=707e4553fbc3e532ebfe875389c54a1058f9ecab68ae03fb9e45d5d9c2d33eb5)(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.81.5(@babel/core@7.28.0))(@types/react@19.1.8)(react@19.1.0))(react@19.1.0)
+        version: 2.2.0(react-native@0.83.6(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.28.0))(@types/react@19.2.15)(react@19.2.0))(react@19.2.0)
       '@pagopa/io-react-native-login-utils':
         specifier: 1.2.0
         version: 1.2.0(react-native@0.83.6(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.28.0))(@types/react@19.2.15)(react@19.2.0))(react@19.2.0)
@@ -108,7 +108,7 @@ importers:
         version: 0.2.1(react-native@0.83.6(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.28.0))(@types/react@19.2.15)(react@19.2.0))(react@19.2.0)
       '@pagopa/io-react-native-wallet':
         specifier: 3.4.0
-        version: 3.4.0(717026b40a4501b56af0108928fb7d43)
+        version: 3.4.0(5255fa7d4c50fb58d920fc9a28676b68)
       '@pagopa/io-react-native-zendesk':
         specifier: ^0.3.30
         version: 0.3.30(react-native@0.83.6(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.28.0))(@types/react@19.2.15)(react@19.2.0))(react@19.2.0)
@@ -11960,11 +11960,11 @@ snapshots:
       react-native: 0.83.6(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.28.0))(@types/react@19.2.15)(react@19.2.0)
       zod: 4.3.6
 
-  '@pagopa/io-react-native-jwt@2.2.0(react-native@0.81.5(patch_hash=707e4553fbc3e532ebfe875389c54a1058f9ecab68ae03fb9e45d5d9c2d33eb5)(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.81.5(@babel/core@7.28.0))(@types/react@19.1.8)(react@19.1.0))(react@19.1.0)':
+  '@pagopa/io-react-native-jwt@2.2.0(react-native@0.83.6(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.28.0))(@types/react@19.2.15)(react@19.2.0))(react@19.2.0)':
     dependencies:
       js-base64: 3.7.8
-      react: 19.1.0
-      react-native: 0.81.5(patch_hash=707e4553fbc3e532ebfe875389c54a1058f9ecab68ae03fb9e45d5d9c2d33eb5)(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.81.5(@babel/core@7.28.0))(@types/react@19.1.8)(react@19.1.0)
+      react: 19.2.0
+      react-native: 0.83.6(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.28.0))(@types/react@19.2.15)(react@19.2.0)
       zod: 3.25.76
 
   '@pagopa/io-react-native-login-utils@1.2.0(react-native@0.83.6(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.28.0))(@types/react@19.2.15)(react@19.2.0))(react@19.2.0)':
@@ -11977,11 +11977,11 @@ snapshots:
       react: 19.2.0
       react-native: 0.83.6(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.28.0))(@types/react@19.2.15)(react@19.2.0)
 
-  '@pagopa/io-react-native-wallet@3.4.0(717026b40a4501b56af0108928fb7d43)':
+  '@pagopa/io-react-native-wallet@3.4.0(5255fa7d4c50fb58d920fc9a28676b68)':
     dependencies:
-      '@pagopa/io-react-native-crypto': 1.2.3(react-native@0.81.5(patch_hash=707e4553fbc3e532ebfe875389c54a1058f9ecab68ae03fb9e45d5d9c2d33eb5)(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.81.5(@babel/core@7.28.0))(@types/react@19.1.8)(react@19.1.0))(react@19.1.0)
-      '@pagopa/io-react-native-iso18013': 0.8.3(react-native@0.81.5(patch_hash=707e4553fbc3e532ebfe875389c54a1058f9ecab68ae03fb9e45d5d9c2d33eb5)(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.81.5(@babel/core@7.28.0))(@types/react@19.1.8)(react@19.1.0))(react@19.1.0)
-      '@pagopa/io-react-native-jwt': 2.2.0(react-native@0.81.5(patch_hash=707e4553fbc3e532ebfe875389c54a1058f9ecab68ae03fb9e45d5d9c2d33eb5)(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.81.5(@babel/core@7.28.0))(@types/react@19.1.8)(react@19.1.0))(react@19.1.0)
+      '@pagopa/io-react-native-crypto': 1.2.3(react-native@0.83.6(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.28.0))(@types/react@19.2.15)(react@19.2.0))(react@19.2.0)
+      '@pagopa/io-react-native-iso18013': 0.8.3(react-native@0.83.6(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.28.0))(@types/react@19.2.15)(react@19.2.0))(react@19.2.0)
+      '@pagopa/io-react-native-jwt': 2.2.0(react-native@0.83.6(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.28.0))(@types/react@19.2.15)(react@19.2.0))(react@19.2.0)
       '@pagopa/io-wallet-oauth2': 1.4.2
       '@pagopa/io-wallet-oid-federation': 1.4.2
       '@pagopa/io-wallet-oid4vci': 1.4.2
