@@ -37,7 +37,7 @@ jobs:
       - id: setup
         uses: ./.github/actions/setup-composite
       - id: run-formatter
-        run: yarn prettier:check
+        run: pnpm prettier:check
       - id: run-tsc
         run: pnpm tsc:noemit
       - id: run-lint
