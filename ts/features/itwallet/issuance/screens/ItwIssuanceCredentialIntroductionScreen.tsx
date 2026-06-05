@@ -1,10 +1,16 @@
-import { Body, H2, VSpacer, VStack } from "@pagopa/io-app-design-system";
+import {
+  ContentWrapper,
+  H2,
+  IOColors,
+  VSpacer
+} from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { sequenceS } from "fp-ts/lib/Apply";
 import { useCallback, useMemo } from "react";
+import { Image, StyleSheet, View } from "react-native";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../store/hooks";
 import {
@@ -23,6 +29,9 @@ import {
 } from "../../machine/credential/selectors";
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
+import introHeroSource from "../../../../../img/features/itWallet/issuance/intro_hero.png";
+
+const introHeroUri = Image.resolveAssetSource(introHeroSource).uri;
 
 export const ItwIssuanceCredentialIntroductionScreen = () => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
@@ -83,6 +92,7 @@ export const ContentView = ({
 
   return (
     <IOScrollView
+      includeContentMargins={false}
       actions={{
         type: "SingleButton",
         primary: {
@@ -92,14 +102,35 @@ export const ContentView = ({
         }
       }}
     >
-      <VStack>
+      <Image
+        accessibilityIgnoresInvertColors
+        source={{ uri: introHeroUri }}
+        style={styles.hero}
+      />
+      <ContentWrapper marginTop={24}>
         <H2>{credentialName}</H2>
-        <Body>
-          {I18n.t("features.itWallet.issuance.credentialIntro.subtitle")}
-        </Body>
-      </VStack>
-      <VSpacer size={16} />
-      <IOMarkdown content={markdownContent} />
+        <VSpacer size={16} />
+        <View style={styles.contentBox}>
+          <IOMarkdown content={markdownContent} />
+        </View>
+      </ContentWrapper>
     </IOScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  hero: {
+    width: "100%",
+    height: "auto",
+    resizeMode: "cover",
+    aspectRatio: 4 / 3,
+    opacity: 0.8
+  },
+  contentBox: {
+    borderRadius: 8,
+    borderWidth: 1,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderColor: IOColors["grey-100"]
+  }
+});
