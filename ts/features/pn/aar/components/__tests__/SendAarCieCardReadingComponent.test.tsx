@@ -103,6 +103,10 @@ jest.mock("../../hooks/useTrackCieReadingEvents", () => ({
   useTrackCieReadingEvents: jest.fn()
 }));
 
+jest.mock("../../hooks/useIsNfcFeatureAvailable", () => ({
+  useIsNfcFeatureAvailable: jest.fn().mockReturnValue(true)
+}));
+
 jest.mock("../../analytics");
 const mockedAnalytics = jest.mocked(analytics);
 

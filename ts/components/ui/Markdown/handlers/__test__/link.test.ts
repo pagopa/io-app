@@ -1,5 +1,6 @@
 import {
   deriveCustomHandledLink,
+  isCustomHandledLink,
   isHttpLink,
   isHttpsLink,
   isIoInternalLink
@@ -12,69 +13,19 @@ const loadingCases: ReadonlyArray<
   ["some text", undefined],
   ["iohandledlink://noprotocol:somevalue", undefined],
   ["mailto:somevalue", undefined],
-  [
-    "iohandledlink://http://www.google.com",
-    {
-      schema: "http",
-      url: "http://www.google.com",
-      value: "//www.google.com"
-    }
-  ],
-  [
-    "IOHANDLEDLINK://HTTP://WWW.GOOGLE.COM",
-    {
-      schema: "HTTP",
-      url: "HTTP://WWW.GOOGLE.COM",
-      value: "//WWW.GOOGLE.COM"
-    }
-  ],
+  ["iohandledlink://http://www.google.com", "http://www.google.com"],
+  ["IOHANDLEDLINK://HTTP://WWW.GOOGLE.COM", "HTTP://WWW.GOOGLE.COM"],
   [
     "iohandledlink://iohandledLink://http://www.google.com",
-    {
-      schema: "http",
-      url: "http://www.google.com",
-      value: "//www.google.com"
-    }
+    "http://www.google.com"
   ],
-  [
-    "iohandledlink://https://www.google.com",
-    {
-      schema: "https",
-      url: "https://www.google.com",
-      value: "//www.google.com"
-    }
-  ],
-  [
-    "iohandledlink://copy:123text456",
-    {
-      schema: "copy",
-      url: "copy:123text456",
-      value: "123text456"
-    }
-  ],
-  [
-    "iohandledlink://sms:123456",
-    {
-      schema: "sms",
-      url: "sms:123456",
-      value: "123456"
-    }
-  ],
-  [
-    "iohandledlink://tel:123456",
-    {
-      schema: "tel",
-      url: "tel:123456",
-      value: "123456"
-    }
-  ],
+  ["iohandledlink://https://www.google.com", "https://www.google.com"],
+  ["iohandledlink://copy:123text456", "copy:123text456"],
+  ["iohandledlink://sms:123456", "sms:123456"],
+  ["iohandledlink://tel:123456", "tel:123456"],
   [
     "iohandledlink://mailto:name.surname@email.com",
-    {
-      schema: "mailto",
-      url: "mailto:name.surname@email.com",
-      value: "name.surname@email.com"
-    }
+    "mailto:name.surname@email.com"
   ]
 ];
 
@@ -86,6 +37,43 @@ describe("deriveCustomHandledLink", () => {
       expect(result).toEqual(expectedResult);
     }
   );
+});
+
+describe("isCustomHandledLink", () => {
+  const trueCases = [
+    "mailto:user@example.com",
+    "MAILTO:user@example.com",
+    "mailto://user@example.com",
+    "tel:+391234567890",
+    "TEL:+391234567890",
+    "tel://+391234567890",
+    "sms:+391234567890",
+    "SMS:+391234567890",
+    "sms://+391234567890",
+    "  mailto:user@example.com  "
+  ];
+  const falseCases = [
+    "",
+    "https://example.com",
+    "http://example.com",
+    "ioit://whatever",
+    "iohandledlink://mailto:user@example.com",
+    "copy:something",
+    "clipboard:something",
+    "iosso://whatever"
+  ];
+
+  trueCases.forEach(url => {
+    it(`should return true for '${url}'`, () => {
+      expect(isCustomHandledLink(url)).toBe(true);
+    });
+  });
+
+  falseCases.forEach(url => {
+    it(`should return false for '${url}'`, () => {
+      expect(isCustomHandledLink(url)).toBe(false);
+    });
+  });
 });
 
 describe("isHttpsLink", () => {

@@ -13,6 +13,7 @@ import {
   TxtStrNode
 } from "@textlint/ast-node-types";
 import I18n from "i18next";
+import { Linking } from "react-native";
 import {
   accessibleLinkNodeToReactNative,
   headerNodeToReactNative,
@@ -25,11 +26,14 @@ import {
   Renderer
 } from "../../../../components/IOMarkdown/types";
 import {
+  isCustomHandledLink,
   isHttpLink,
   isHttpsLink,
   isIoInternalLink
 } from "../../../../components/ui/Markdown/handlers/link";
+import { trackAppCaughtError } from "../../../../utils/analytics";
 import { isTestEnv } from "../../../../utils/environment";
+import { unknownToString } from "../../../../utils/errors";
 import { handleInternalLink } from "../../../../utils/internalLink";
 import { openWebUrl } from "../../../../utils/url";
 
@@ -65,6 +69,11 @@ export const handleOpenLink = (linkTo: (path: string) => void, url: string) => {
     // Non-secure HTTP links have to be supported since
     // there are older messages with external http-links
     // that redirect to https upon opening
+  } else if (isCustomHandledLink(url)) {
+    Linking.openURL(url).catch(e => {
+      trackAppCaughtError("handleOpenLink", undefined, unknownToString(e));
+      IOToast.error(I18n.t("global.jserror.title"));
+    });
   } else if (isHttpsLink(url) || isHttpLink(url)) {
     openWebUrl(url, () => {
       IOToast.error(I18n.t("global.jserror.title"));

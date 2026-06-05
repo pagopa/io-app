@@ -1,10 +1,11 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { type GlobalState } from "../../../../../../store/reducers/types";
-import { DigitalCredentialsCatalogue } from "../../../../common/utils/itwCredentialsCatalogueUtils";
+import { type DigitalCredentialsCatalogue } from "../../../../common/utils/itwCredentialsCatalogueUtils";
 import {
   itwAvailableCredentialsListSelector,
   itwCatalogueTranslationsByLocaleSelector,
-  itwCredentialsCatalogueByTypesSelector
+  itwCredentialsCatalogueByTypesSelector,
+  itwCredentialsCatalogueSelector
 } from "..";
 
 const mockCatalogue = {
@@ -60,6 +61,30 @@ const buildState = (
           : "it"
     }
   }) as unknown as GlobalState;
+
+describe("itwCredentialsCatalogueSelector", () => {
+  it("should map the legacy 'PersonIdentificationData' credential type to 'pid'", () => {
+    const state = buildState({
+      catalogue: pot.some({
+        credentials: [
+          {
+            credential_type: "PersonIdentificationData",
+            name: "Legacy PID"
+          },
+          {
+            credential_type: "other",
+            name: "Other Credential"
+          }
+        ]
+      } as DigitalCredentialsCatalogue)
+    });
+
+    expect(itwCredentialsCatalogueSelector(state)?.credentials).toEqual([
+      { credential_type: "pid", name: "Legacy PID" },
+      { credential_type: "other", name: "Other Credential" }
+    ]);
+  });
+});
 
 describe("itwCredentialsCatalogueByTypesSelector", () => {
   it("should return a dictionary mapping credential types to their metadata", () => {

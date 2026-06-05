@@ -88,20 +88,23 @@ export const hasPresentableCredentialsSelector = createSelector(
 );
 
 /**
- * Selector to determine whether the Proximity QR Code screen should be blocked.
- * It is blocked when the PID is expired AND all presentable credentials are expired.
- * In this case the user must reissue the PID, which will renew all documents too.
+ * Selector to determine whether the Proximity QR Code screen should surface the
+ * expired credentials banner.
+ * Even when the PID and all presentable credentials are expired, the wallet
+ * must still allow QR/NFC presentation so the relying party can decide whether
+ * to accept the verification.
  *
  * @param state - The global state.
- * @returns `true` if the Proximity QR Code screen should be blocked, `false` otherwise.
+ * @returns `true` if the expired credentials banner should be shown.
  */
-export const shouldBlockProximityQrCodeSelector = createSelector(
-  itwCredentialsEidStatusSelector,
-  itwPresentableCredentialsByDocTypeSelector,
-  (
-    pidStatus: ItwJwtCredentialStatus | undefined,
-    presentableCredentialsByDocType
-  ) =>
-    pidStatus === "jwtExpired" &&
-    areAllPresentableCredentialsExpired(presentableCredentialsByDocType)
-);
+export const shouldShowExpiredProximityCredentialsBannerSelector =
+  createSelector(
+    itwCredentialsEidStatusSelector,
+    itwPresentableCredentialsByDocTypeSelector,
+    (
+      pidStatus: ItwJwtCredentialStatus | undefined,
+      presentableCredentialsByDocType
+    ) =>
+      pidStatus === "jwtExpired" &&
+      areAllPresentableCredentialsExpired(presentableCredentialsByDocType)
+  );

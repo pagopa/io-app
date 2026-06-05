@@ -41,8 +41,8 @@ export const handleCtaAction = (
     fimsCallback(cta.text, cta.action);
   } else {
     const customHandledAction = deriveCustomHandledLink(cta.action);
-    if (customHandledAction !== undefined) {
-      Linking.openURL(customHandledAction.url).catch(() => 0);
+    if (customHandledAction != null) {
+      Linking.openURL(customHandledAction).catch(() => 0);
     }
   }
 };
@@ -235,7 +235,7 @@ const isCtaActionValid = (
 
   // check if it is a custom action (it should be composed in a specific format)
   const maybeCustomHandledAction = deriveCustomHandledLink(cta.action);
-  return maybeCustomHandledAction !== undefined;
+  return maybeCustomHandledAction != null;
 };
 
 type FrontMatterParseResult<T> =
