@@ -27,10 +27,6 @@ jest.mock("../../../../../../../utils/hooks/bottomSheet", () => ({
   }))
 }));
 
-jest.mock("i18next", () => ({
-  t: (s: string) => s
-}));
-
 describe("useAarGenericErrorBottomSheet", () => {
   describe.each<SendAarZendeskSecondLevelTag>([
     SendAarZendeskSecondLevelTag.IO_PROBLEMA_NOTIFICA_SEND_QR,

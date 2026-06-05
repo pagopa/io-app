@@ -6,6 +6,7 @@ import {
 import { WIA_KEYTAG } from "./itwCryptoContextUtils";
 import { IssuerConfiguration } from "./itwTypesUtils";
 import { getIoWallet } from "./itwIoWallet";
+export { isMrtdPoPChallengeRequired } from "./mrtdUrl";
 
 export type InitMrtdPoPChallengeParams = {
   itwVersion: ItwVersion;

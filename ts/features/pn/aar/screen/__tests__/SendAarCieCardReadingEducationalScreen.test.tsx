@@ -1,3 +1,4 @@
+import I18n from "i18next";
 import { act, fireEvent, waitFor } from "@testing-library/react-native";
 import _ from "lodash";
 import { createStore } from "redux";
@@ -43,10 +44,6 @@ jest.mock("../../../../../store/hooks", () => ({
   useIODispatch: () => mockDispatch
 }));
 
-jest.mock("i18next", () => ({
-  t: (path: string) => path
-}));
-
 describe("SendAarCieCardReadingEducationalScreen", () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -77,7 +74,7 @@ describe("SendAarCieCardReadingEducationalScreen", () => {
   it("should dispatch the right state update action  when the back button is pressed", () => {
     const { getByLabelText } = renderComponent();
 
-    const backButton = getByLabelText("global.buttons.back");
+    const backButton = getByLabelText(I18n.t("global.buttons.back"));
 
     expect(mockDispatch).not.toHaveBeenCalled();
     expect(mockReplace).not.toHaveBeenCalled();
@@ -171,7 +168,7 @@ describe("SendAarCieCardReadingEducationalScreen", () => {
 
       const { getByLabelText } = renderComponent();
 
-      const backButton = getByLabelText("global.buttons.back");
+      const backButton = getByLabelText(I18n.t("global.buttons.back"));
 
       act(() => {
         fireEvent.press(backButton);
