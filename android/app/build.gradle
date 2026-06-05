@@ -119,7 +119,7 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 100155187
-        versionName "3.33.0.4"
+        versionName "3.34.0.1"
         multiDexEnabled true
         manifestPlaceholders = [usesCleartextTraffic: "true"]
         // The resConfigs attribute will remove all not required localized resources while building the application,
