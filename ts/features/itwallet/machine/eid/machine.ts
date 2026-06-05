@@ -778,7 +778,7 @@ export const itwEidIssuanceMachine = setup({
                   target: "CieWarning.PreparationCie"
                 },
                 back: {
-                  target: "PreparationPin"
+                  target: "InsertingCardPin"
                 },
                 close: {
                   actions: "closeIssuance"
