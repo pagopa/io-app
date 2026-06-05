@@ -17,7 +17,7 @@ const itwRemoteConfigSelector = (state: GlobalState) =>
   );
 
 /**
- * Returns the remote config for IT-WALLET
+ * Returns the remote config for Doc IO
  */
 export const isItwEnabledSelector = createSelector(
   itwRemoteConfigSelector,
@@ -128,5 +128,25 @@ export const itwIpzsPrivacyUrlSelector = createSelector(
       itwConfig,
       O.map(itw => itw.ipzs_privacy_url),
       O.toUndefined
+    )
+);
+
+/**
+ * Returns whether the current app version meets the minimum required to use IT Wallet.
+ */
+export const isItwL3SupportedSelector = createSelector(
+  itwRemoteConfigSelector,
+  (itwConfig): boolean =>
+    pipe(
+      itwConfig,
+      O.map(itw =>
+        isVersionSupported(
+          Platform.OS === "ios"
+            ? itw.min_app_version.ios
+            : itw.min_app_version.android,
+          getAppVersion()
+        )
+      ),
+      O.getOrElse(() => false)
     )
 );
