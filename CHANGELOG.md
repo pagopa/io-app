@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.33.0-rc.4](https://github.com/pagopa/io-app/compare/3.33.0-rc.3...3.33.0-rc.4) (2026-06-05)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Disable OTP input autofocus in CIE PIN/CAN screens ([#8153](https://github.com/pagopa/io-app/issues/8153)) ([01fe5b0](https://github.com/pagopa/io-app/commit/01fe5b00d371333547ea994426b02670d2aff744))
+
+
+### Chores
+
+* bump android versionCode ([bbc228a](https://github.com/pagopa/io-app/commit/bbc228a4e6cf573da68a14c914c6daa104ea8602))
+
 ## [3.33.0-rc.3](https://github.com/pagopa/io-app/compare/3.33.0-rc.2...3.33.0-rc.3) (2026-06-03)
 
 
