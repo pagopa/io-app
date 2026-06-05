@@ -6,7 +6,7 @@ import {
 } from "../config.ts";
 
 describe("getCredentialCardConfig", () => {
-  describe.each(["light", "dark", undefined])(
+  describe.each(["light", "dark", "unspecified"])(
     "when color scheme is [%s]",
     colorScheme => {
       test.each([

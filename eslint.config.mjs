@@ -56,7 +56,11 @@ export default defineConfig([
   {
     files: ["**/*.ts", "**/*.tsx"],
     extends: [
-      ...reactNativeConfigWithoutTsPlugin,
+      js.configs.recommended,
+      // Only include rules from tseslint, not the plugin registration,
+      // because @react-native/eslint-config/flat already registers @typescript-eslint
+      ...tseslint.configs.recommended.filter(c => !c.plugins),
+      ...reactNativeConfig,
       ...fixupConfigRules(compat.extends("plugin:react-native-a11y/all"))
     ],
 
@@ -257,11 +261,14 @@ export default defineConfig([
       // REDUX SAGA
       "typed-redux-saga/delegate-effects": "error",
 
-      'import/no-extraneous-dependencies': ['error', {
-        devDependencies: true, 
-        optionalDependencies: false,
-        peerDependencies: false,
-      }],
+      "import/no-extraneous-dependencies": [
+        "error",
+        {
+          devDependencies: true,
+          optionalDependencies: false,
+          peerDependencies: false
+        }
+      ],
 
       "no-restricted-imports": [
         "error",
