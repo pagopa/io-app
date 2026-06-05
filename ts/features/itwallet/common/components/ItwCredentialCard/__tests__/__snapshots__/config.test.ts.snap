@@ -1090,7 +1090,7 @@ exports[`getCredentialCardConfig when color scheme is [light] should match snaps
 }
 `;
 
-exports[`getCredentialCardConfig when color scheme is [undefined] should match snapshot for type [] 1`] = `
+exports[`getCredentialCardConfig when color scheme is [unspecified] should match snapshot for type [] 1`] = `
 {
   "background": {
     "angle": 0,
@@ -1112,7 +1112,7 @@ exports[`getCredentialCardConfig when color scheme is [undefined] should match s
 }
 `;
 
-exports[`getCredentialCardConfig when color scheme is [undefined] should match snapshot for type [EuropeanDisabilityCard] 1`] = `
+exports[`getCredentialCardConfig when color scheme is [unspecified] should match snapshot for type [EuropeanDisabilityCard] 1`] = `
 {
   "background": {
     "center": [
@@ -1148,7 +1148,7 @@ exports[`getCredentialCardConfig when color scheme is [undefined] should match s
 }
 `;
 
-exports[`getCredentialCardConfig when color scheme is [undefined] should match snapshot for type [EuropeanHealthInsuranceCard] 1`] = `
+exports[`getCredentialCardConfig when color scheme is [unspecified] should match snapshot for type [EuropeanHealthInsuranceCard] 1`] = `
 {
   "background": {
     "angle": 249,
@@ -1180,7 +1180,7 @@ exports[`getCredentialCardConfig when color scheme is [undefined] should match s
 }
 `;
 
-exports[`getCredentialCardConfig when color scheme is [undefined] should match snapshot for type [a] 1`] = `
+exports[`getCredentialCardConfig when color scheme is [unspecified] should match snapshot for type [a] 1`] = `
 {
   "background": {
     "angle": 0,
@@ -1202,7 +1202,7 @@ exports[`getCredentialCardConfig when color scheme is [undefined] should match s
 }
 `;
 
-exports[`getCredentialCardConfig when color scheme is [undefined] should match snapshot for type [age_verification] 1`] = `
+exports[`getCredentialCardConfig when color scheme is [unspecified] should match snapshot for type [age_verification] 1`] = `
 {
   "background": {
     "angle": 69,
@@ -1226,7 +1226,7 @@ exports[`getCredentialCardConfig when color scheme is [undefined] should match s
 }
 `;
 
-exports[`getCredentialCardConfig when color scheme is [undefined] should match snapshot for type [education_attendance] 1`] = `
+exports[`getCredentialCardConfig when color scheme is [unspecified] should match snapshot for type [education_attendance] 1`] = `
 {
   "background": {
     "angle": 0,
@@ -1248,7 +1248,7 @@ exports[`getCredentialCardConfig when color scheme is [undefined] should match s
 }
 `;
 
-exports[`getCredentialCardConfig when color scheme is [undefined] should match snapshot for type [education_degree] 1`] = `
+exports[`getCredentialCardConfig when color scheme is [unspecified] should match snapshot for type [education_degree] 1`] = `
 {
   "background": {
     "angle": 0,
@@ -1270,7 +1270,7 @@ exports[`getCredentialCardConfig when color scheme is [undefined] should match s
 }
 `;
 
-exports[`getCredentialCardConfig when color scheme is [undefined] should match snapshot for type [education_diploma] 1`] = `
+exports[`getCredentialCardConfig when color scheme is [unspecified] should match snapshot for type [education_diploma] 1`] = `
 {
   "background": {
     "angle": 0,
@@ -1292,7 +1292,7 @@ exports[`getCredentialCardConfig when color scheme is [undefined] should match s
 }
 `;
 
-exports[`getCredentialCardConfig when color scheme is [undefined] should match snapshot for type [education_enrollment] 1`] = `
+exports[`getCredentialCardConfig when color scheme is [unspecified] should match snapshot for type [education_enrollment] 1`] = `
 {
   "background": {
     "angle": 0,
@@ -1314,7 +1314,7 @@ exports[`getCredentialCardConfig when color scheme is [undefined] should match s
 }
 `;
 
-exports[`getCredentialCardConfig when color scheme is [undefined] should match snapshot for type [eu.europa.ec.eudi.mdl.1] 1`] = `
+exports[`getCredentialCardConfig when color scheme is [unspecified] should match snapshot for type [eu.europa.ec.eudi.mdl.1] 1`] = `
 {
   "background": {
     "angle": 0,
@@ -1336,7 +1336,7 @@ exports[`getCredentialCardConfig when color scheme is [undefined] should match s
 }
 `;
 
-exports[`getCredentialCardConfig when color scheme is [undefined] should match snapshot for type [eu.europa.ec.eudi.pid.1] 1`] = `
+exports[`getCredentialCardConfig when color scheme is [unspecified] should match snapshot for type [eu.europa.ec.eudi.pid.1] 1`] = `
 {
   "background": {
     "angle": 0,
@@ -1358,7 +1358,7 @@ exports[`getCredentialCardConfig when color scheme is [undefined] should match s
 }
 `;
 
-exports[`getCredentialCardConfig when color scheme is [undefined] should match snapshot for type [mDL] 1`] = `
+exports[`getCredentialCardConfig when color scheme is [unspecified] should match snapshot for type [mDL] 1`] = `
 {
   "background": {
     "angle": 249,
@@ -1390,7 +1390,7 @@ exports[`getCredentialCardConfig when color scheme is [undefined] should match s
 }
 `;
 
-exports[`getCredentialCardConfig when color scheme is [undefined] should match snapshot for type [org.iso.someNewCredential] 1`] = `
+exports[`getCredentialCardConfig when color scheme is [unspecified] should match snapshot for type [org.iso.someNewCredential] 1`] = `
 {
   "background": {
     "angle": 0,
@@ -1412,7 +1412,7 @@ exports[`getCredentialCardConfig when color scheme is [undefined] should match s
 }
 `;
 
-exports[`getCredentialCardConfig when color scheme is [undefined] should match snapshot for type [pid] 1`] = `
+exports[`getCredentialCardConfig when color scheme is [unspecified] should match snapshot for type [pid] 1`] = `
 {
   "background": {
     "angle": 217,
@@ -1446,7 +1446,7 @@ exports[`getCredentialCardConfig when color scheme is [undefined] should match s
 }
 `;
 
-exports[`getCredentialCardConfig when color scheme is [undefined] should match snapshot for type [residency] 1`] = `
+exports[`getCredentialCardConfig when color scheme is [unspecified] should match snapshot for type [residency] 1`] = `
 {
   "background": {
     "angle": 0,
@@ -1468,7 +1468,7 @@ exports[`getCredentialCardConfig when color scheme is [undefined] should match s
 }
 `;
 
-exports[`getCredentialCardConfig when color scheme is [undefined] should match snapshot for type [unknown_credential_type] 1`] = `
+exports[`getCredentialCardConfig when color scheme is [unspecified] should match snapshot for type [unknown_credential_type] 1`] = `
 {
   "background": {
     "angle": 0,
@@ -1490,7 +1490,7 @@ exports[`getCredentialCardConfig when color scheme is [undefined] should match s
 }
 `;
 
-exports[`getCredentialCardConfig when color scheme is [undefined] should match snapshot for type [🪪] 1`] = `
+exports[`getCredentialCardConfig when color scheme is [unspecified] should match snapshot for type [🪪] 1`] = `
 {
   "background": {
     "angle": 0,
