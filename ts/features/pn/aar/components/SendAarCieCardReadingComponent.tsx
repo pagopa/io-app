@@ -27,6 +27,7 @@ import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
 import { useTrackCieReadingEvents } from "../hooks/useTrackCieReadingEvents";
 import { setAarFlowState } from "../store/actions";
 import { RecipientInfo, sendAarFlowStates } from "../utils/stateUtils";
+import { useIsNfcFeatureAvailable } from "../hooks/useIsNfcFeatureAvailable";
 import { useAarGenericErrorBottomSheet } from "./errors/hooks/useAarGenericErrorBottomSheet";
 import { SendAarZendeskSecondLevelTag } from "./errors/hooks/useAarStartSendZendeskSupport";
 
@@ -51,7 +52,8 @@ export const SendAarCieCardReadingComponent = ({
   const theme = useIOTheme();
   const { startReading, readState } = useCieInternalAuthAndMrtdReading();
 
-  useTrackCieReadingEvents(readState);
+  const isNfcAvailable = useIsNfcFeatureAvailable();
+  useTrackCieReadingEvents(readState, isNfcAvailable);
 
   const isError = isErrorState(readState);
   const data = isSuccessState(readState) ? readState.data : undefined;
