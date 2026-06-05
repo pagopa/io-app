@@ -3,10 +3,6 @@ import { sendAarErrorSupportBottomSheetComponent } from "../sendAarErrorSupportB
 import * as AnalyticsModule from "../../../analytics";
 import * as ClipboardModule from "../../../../../../utils/clipboard";
 
-jest.mock("i18next", () => ({
-  t: (s: string) => s
-}));
-
 jest.mock("../../../../../../utils/clipboard", () => ({
   clipboardSetStringWithFeedback: jest.fn()
 }));

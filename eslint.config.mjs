@@ -37,7 +37,9 @@ export default defineConfig([
 		files: ['**/*.ts', '**/*.tsx'],
 		extends: [
 			js.configs.recommended,
-			...tseslint.configs.recommended,
+			// Only include rules from tseslint, not the plugin registration,
+			// because @react-native/eslint-config/flat already registers @typescript-eslint
+			...tseslint.configs.recommended.filter(c => !c.plugins),
 			...reactNativeConfig,
 			...fixupConfigRules(compat.extends('plugin:react-native-a11y/all')),
 			prettierConfig

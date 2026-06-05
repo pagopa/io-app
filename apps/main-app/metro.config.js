@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable functional/immutable-data */
 const path = require("path");
-const { getDefaultConfig, mergeConfig } = require("@react-native/metro-config");
+const { getDefaultConfig } = require('@expo/metro-config');
+const { mergeConfig } = require('@react-native/metro-config');
 
 const workspaceRoot = path.resolve(__dirname, "../..");
 
@@ -18,9 +19,8 @@ const {
 const config = {
   watchFolders: [workspaceRoot],
   transformer: {
-    babelTransformerPath: require.resolve(
-      "react-native-svg-transformer/react-native"
-    )
+    babelTransformerPath:
+      require.resolve("react-native-svg-transformer/react-native")
   },
   resolver: {
     sourceExts: [...sourceExts, "svg"],

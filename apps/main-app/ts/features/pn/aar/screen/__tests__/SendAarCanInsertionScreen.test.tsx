@@ -1,3 +1,4 @@
+import I18n from "i18next";
 import { act, fireEvent, waitFor } from "@testing-library/react-native";
 import _ from "lodash";
 import { RefObject } from "react";
@@ -31,15 +32,6 @@ jest.mock("../../analytics", () => ({
 jest.mock("../../../../../store/hooks", () => ({
   ...jest.requireActual("../../../../../store/hooks"),
   useIODispatch: () => mockDispatch
-}));
-
-jest.mock("i18next", () => ({
-  t: (path: string, params?: Record<string, string>) => {
-    if (params?.denomination) {
-      return `${path} ${params.denomination}`;
-    }
-    return path;
-  }
 }));
 
 describe("SendAarCieCanInsertionScreen", () => {
@@ -100,7 +92,7 @@ describe("SendAarCieCanInsertionScreen", () => {
       jest.spyOn(AAR_SELECTORS, "currentAarFlowData").mockReturnValue(aarState);
       const { getByLabelText } = renderComponent();
 
-      const backButton = getByLabelText("global.buttons.back");
+      const backButton = getByLabelText(I18n.t("global.buttons.back"));
 
       act(() => {
         fireEvent.press(backButton);

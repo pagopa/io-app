@@ -28,13 +28,12 @@ function customPlugin() {
   };
 }
 
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 export const remarkProcessor = remark()
   .use(remarkDirective)
-  .use(customPlugin) // @ts-ignore
-  .use(remarkRehype) // @ts-ignore
-  .use(rehypeFormat) // @ts-ignore
-  .use(rehypeStringify) // @ts-ignore
+  .use(customPlugin)
+  .use(remarkRehype)
+  .use(rehypeFormat)
+  .use(rehypeStringify)
   .use(remarkDirective);
 
 export const markdownToPlainText = (md: string): string =>

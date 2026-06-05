@@ -9,27 +9,37 @@ import { appReducer } from "../../../../../store/reducers";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { watchBonusCgnSaga } from "../../saga";
 
-const mockFetch: typeof fetch = async (url, options) => {
-  if (url === "/api/cgn-search/v1/count") {
+const mockFetch: typeof fetch = async (input, init) => {
+  const url =
+    input instanceof Request
+      ? input.url
+      : typeof input === "string"
+        ? input
+        : input.toString();
+  if (url.endsWith("/api/cgn-search/v1/count")) {
     return new Response(JSON.stringify({ count: merchantList.length }), {
-      status: 200
+      status: 200,
+      headers: { "Content-Type": "application/json" }
     });
   }
-  if (url === "/api/cgn-search/v1/search") {
-    const body = JSON.parse(options?.body as string);
+  if (url.endsWith("/api/cgn-search/v1/search")) {
+    const body = JSON.parse(init?.body as string);
     if (body.token === "merchant") {
       return new Response(JSON.stringify({ items: merchantList }), {
-        status: 200
+        status: 200,
+        headers: { "Content-Type": "application/json" }
       });
     }
     if (body.token === "two") {
       return new Response(JSON.stringify({ items: [merchantList[1]] }), {
-        status: 200
+        status: 200,
+        headers: { "Content-Type": "application/json" }
       });
     }
     if (body.token === "four") {
       return new Response(JSON.stringify({ items: [] }), {
-        status: 200
+        status: 200,
+        headers: { "Content-Type": "application/json" }
       });
     }
   }
