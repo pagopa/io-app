@@ -10,8 +10,5 @@ declare module "xss" {
    *   onIgnoreTagAttr, safeAttrValue, escapeHtml }
    * @returns {String}
    */
-  export function filterXSS(html: string, options?: FilterXSSOptions): string {
-    const xss = new FilterXSS(options);
-    return xss.process(html);
-  }
+  export function filterXSS(html: string, options?: FilterXSSOptions): string;
 }
