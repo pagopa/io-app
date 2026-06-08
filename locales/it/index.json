@@ -3395,6 +3395,7 @@
             "ciePin": {
               "title": {
                 "default": "Usa CIE + PIN",
+                "default_reissuance": "Continua con CIE + PIN",
                 "l3": "Continua con CIE + PIN"
               },
               "subtitle": {
@@ -3413,6 +3414,7 @@
             "cieId": {
               "title": {
                 "default": "Usa l'app CieID",
+                "default_reissuance": "Continua con l’app CieID",
                 "l3": "Continua con l’app CieID"
               },
               "subtitle": {
@@ -3429,6 +3431,7 @@
             "spid": {
               "title": {
                 "default": "Usa SPID",
+                "default_reissuance": "Continua con SPID",
                 "l3": "Continua con SPID + CIE"
               },
               "subtitle": {
@@ -3619,14 +3622,10 @@
       },
       "issuance": {
         "credentialAuth": {
-          "title": "{{credentialName}}: dati necessari",
-          "subtitle": "Saranno condivisi con **{{organization}}** per il rilascio della versione digitale del documento.",
+          "title": "Dati necessari per {{credentialName}}",
+          "subtitle": "Saranno condivisi con **{{organization}}** solo per il tempo necessario al rilascio della versione digitale del documento.",
           "requiredClaims": "Dati richiesti",
-          "disclaimer": {
-            "0": "I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.",
-            "1": "I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento."
-          },
-          "tos": "Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy]({{privacyUrl}})."
+          "tos": "I tuoi dati saranno trattati in sicurezza. Premendo **Continua** dichiari di aver letto e compreso l’[Informativa Privacy e i Termini e Condizioni d'uso]({{privacyUrl}})."
         },
         "eidPreview": {
           "title": "Identità verificata",
@@ -4011,18 +4010,14 @@
           }
         },
         "selectiveDisclosure": {
-          "title": "Dati richiesti",
-          "subtitle": "Saranno mostrati a **{{relyingParty}}** per accedere ai servizi richiesti.",
+          "title": "Consenti la verifica di questi dati per continuare",
+          "subtitle": "Saranno condivisi con **{{relyingParty}}** solo per il tempo necessario all'accesso ai servizi richiesti.",
           "requiredClaims": "Dati necessari",
           "optionalClaims": "Dati facoltativi",
           "claimUnavailable": "Non disponibile",
           "optionalClaimsAlert": "I dati facoltativi ti offrono servizi più completi.",
           "missingClaimsAlert": "Alcuni dati facoltativi non sono disponibili nel tuo Portafoglio.",
-          "disclaimer": {
-            "0": "I tuoi dati sono al sicuro e saranno trattati solo per le finalità descritte in informativa Privacy.",
-            "1": "I dati saranno condivisi solo per il tempo necessario al rilascio della versione digitale del documento."
-          },
-          "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy]({{privacyUrl}}).",
+          "tos": "I tuoi dati saranno trattati in sicurezza. Se prosegui, dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d'uso]({{privacyUrl}}).",
           "alert": {
             "message": "Non potrai completare l'accesso ai servizi online."
           },
