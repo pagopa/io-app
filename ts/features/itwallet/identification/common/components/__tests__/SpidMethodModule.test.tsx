@@ -20,13 +20,17 @@ jest.mock("../../../../analytics", () => ({
 }));
 
 describe("SpidMethodModule", () => {
-  it("renders correctly for L2", () => {
-    const { toJSON } = render(<SpidMethodModule isL3={false} />);
-    expect(toJSON()).toMatchSnapshot();
-  });
-
-  it("renders correctly for L3", () => {
-    const { toJSON } = render(<SpidMethodModule isL3={true} />);
-    expect(toJSON()).toMatchSnapshot();
+  describe.each([true, false])("When isL3 is %s", isL3 => {
+    describe.each([true, false])(
+      "and isReissuance mode is %s",
+      isReissuanceMode => {
+        it("renders correctly", () => {
+          const { toJSON } = render(
+            <SpidMethodModule isL3={isL3} isReissuanceMode={isReissuanceMode} />
+          );
+          expect(toJSON()).toMatchSnapshot();
+        });
+      }
+    );
   });
 });

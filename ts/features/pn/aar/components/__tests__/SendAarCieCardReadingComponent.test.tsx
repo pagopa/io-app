@@ -1,3 +1,4 @@
+import I18n from "i18next";
 import { act, fireEvent } from "@testing-library/react-native";
 import { omit } from "lodash";
 import * as RN from "react-native";
@@ -80,9 +81,6 @@ mockUseAarCieErrorBottomSheet.mockImplementation(({ bottomSheet }) => ({
   bottomSheet
 }));
 
-jest.mock("i18next", () => ({
-  t: (path: string) => path
-}));
 jest.mock("../../hooks/useSendAarFlowManager", () => ({
   useSendAarFlowManager: () => ({
     terminateFlow: mockTerminateFlow
@@ -101,6 +99,10 @@ jest.mock("../../hooks/useCieInternalAuthAndMrtdReading", () => {
 
 jest.mock("../../hooks/useTrackCieReadingEvents", () => ({
   useTrackCieReadingEvents: jest.fn()
+}));
+
+jest.mock("../../hooks/useIsNfcFeatureAvailable", () => ({
+  useIsNfcFeatureAvailable: jest.fn().mockReturnValue(true)
 }));
 
 jest.mock("../../analytics");
@@ -277,7 +279,7 @@ describe("SendAarCieCardReadingComponent", () => {
       const { queryByText } = renderComponent();
 
       expect(
-        queryByText("features.pn.aar.flow.cieScanning.idle.title")
+        queryByText(I18n.t("features.pn.aar.flow.cieScanning.idle.title"))
       ).toBeTruthy();
     });
     it("should navigate to scanningAdvisory when the cancelAction is triggered", () => {
@@ -312,10 +314,10 @@ describe("SendAarCieCardReadingComponent", () => {
       const { queryByText } = renderComponent();
 
       expect(
-        queryByText("features.pn.aar.flow.cieScanning.reading.title")
+        queryByText(I18n.t("features.pn.aar.flow.cieScanning.reading.title"))
       ).toBeTruthy();
       expect(
-        queryByText("features.pn.aar.flow.cieScanning.reading.subtitle")
+        queryByText(I18n.t("features.pn.aar.flow.cieScanning.reading.subtitle"))
       ).toBeTruthy();
     });
     it('should change the state to "scanningAdvisory" when the cancelAction is triggered', () => {
@@ -369,7 +371,7 @@ describe("SendAarCieCardReadingComponent", () => {
       const { queryByText } = renderComponent();
 
       const title = queryByText(
-        "features.pn.aar.flow.cieScanning.success.title"
+        I18n.t("features.pn.aar.flow.cieScanning.success.title")
       );
       expect(title).toBeTruthy();
     });
@@ -412,11 +414,13 @@ describe("SendAarCieCardReadingComponent", () => {
         const { queryByText } = renderComponent();
 
         expect(
-          queryByText("features.pn.aar.flow.cieScanning.error.TAG_LOST.title")
+          queryByText(
+            I18n.t("features.pn.aar.flow.cieScanning.error.TAG_LOST.title")
+          )
         ).toBeTruthy();
         expect(
           queryByText(
-            "features.pn.aar.flow.cieScanning.error.TAG_LOST.subtitle"
+            I18n.t("features.pn.aar.flow.cieScanning.error.TAG_LOST.subtitle")
           )
         ).toBeTruthy();
       });
@@ -426,7 +430,7 @@ describe("SendAarCieCardReadingComponent", () => {
         // reset the mock triggered on component mount
         mockStartReading.mockClear();
 
-        const retryAction = queryByText("global.buttons.retry");
+        const retryAction = queryByText(I18n.t("global.buttons.retry"));
 
         expect(retryAction).toBeTruthy();
         expect(
@@ -511,8 +515,12 @@ describe("SendAarCieCardReadingComponent", () => {
 
           const platformizedSubtitleKey =
             platform === "ios"
-              ? "features.pn.aar.flow.cieScanning.error.WRONG_CAN.subtitleIos"
-              : "features.pn.aar.flow.cieScanning.error.WRONG_CAN.subtitleAndroid";
+              ? I18n.t(
+                  "features.pn.aar.flow.cieScanning.error.WRONG_CAN.subtitleIos"
+                )
+              : I18n.t(
+                  "features.pn.aar.flow.cieScanning.error.WRONG_CAN.subtitleAndroid"
+                );
 
           expect(queryByText(platformizedSubtitleKey)).toBeTruthy();
         }
@@ -526,7 +534,9 @@ describe("SendAarCieCardReadingComponent", () => {
         const { queryByText } = renderComponent();
 
         expect(
-          queryByText("features.pn.aar.flow.cieScanning.error.GENERIC.title")
+          queryByText(
+            I18n.t("features.pn.aar.flow.cieScanning.error.GENERIC.title")
+          )
         ).toBeTruthy();
       });
       it("should restart to CAN advisory when the primary action is triggered", () => {
@@ -592,7 +602,7 @@ function testCancelErrorAction() {
 
   expect(mockStartReading).toHaveBeenCalledTimes(1);
 
-  const cancelAction = queryByText("global.buttons.close");
+  const cancelAction = queryByText(I18n.t("global.buttons.close"));
 
   expect(cancelAction).toBeTruthy();
   expect(mockTerminateFlow).not.toHaveBeenCalled();

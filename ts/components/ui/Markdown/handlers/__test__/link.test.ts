@@ -1,5 +1,6 @@
 import {
   deriveCustomHandledLink,
+  isCustomHandledLink,
   isHttpLink,
   isHttpsLink,
   isIoInternalLink
@@ -36,6 +37,43 @@ describe("deriveCustomHandledLink", () => {
       expect(result).toEqual(expectedResult);
     }
   );
+});
+
+describe("isCustomHandledLink", () => {
+  const trueCases = [
+    "mailto:user@example.com",
+    "MAILTO:user@example.com",
+    "mailto://user@example.com",
+    "tel:+391234567890",
+    "TEL:+391234567890",
+    "tel://+391234567890",
+    "sms:+391234567890",
+    "SMS:+391234567890",
+    "sms://+391234567890",
+    "  mailto:user@example.com  "
+  ];
+  const falseCases = [
+    "",
+    "https://example.com",
+    "http://example.com",
+    "ioit://whatever",
+    "iohandledlink://mailto:user@example.com",
+    "copy:something",
+    "clipboard:something",
+    "iosso://whatever"
+  ];
+
+  trueCases.forEach(url => {
+    it(`should return true for '${url}'`, () => {
+      expect(isCustomHandledLink(url)).toBe(true);
+    });
+  });
+
+  falseCases.forEach(url => {
+    it(`should return false for '${url}'`, () => {
+      expect(isCustomHandledLink(url)).toBe(false);
+    });
+  });
 });
 
 describe("isHttpsLink", () => {

@@ -2,6 +2,63 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.34.0-rc.2](https://github.com/pagopa/io-app/compare/3.34.0-rc.1...3.34.0-rc.2) (2026-06-05)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Disable OTP input autofocus in CIE PIN/CAN screens ([#8153](https://github.com/pagopa/io-app/issues/8153)) ([bb65a88](https://github.com/pagopa/io-app/commit/bb65a882321d41ecb8ea9cf5c1402cc94d4aa131))
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-4343](https://pagopa.atlassian.net/browse/SIW-4343)] Add intro hero image to credential introduction screen and container to markdown ([#8148](https://github.com/pagopa/io-app/issues/8148)) ([6166ccc](https://github.com/pagopa/io-app/commit/6166cccbbc45c662993df9a95f777c96cb9dcdd0))
+* **release:** 3.33.0-rc.4 ([#8155](https://github.com/pagopa/io-app/issues/8155)) ([403ada5](https://github.com/pagopa/io-app/commit/403ada5ecb7a90251f4b78e6b7c974559318bdf4))
+* [[IOPLT-1693](https://pagopa.atlassian.net/browse/IOPLT-1693)] Upgrade to react-native 0.83 and Expo 55 ([#7951](https://github.com/pagopa/io-app/issues/7951)) ([c3116df](https://github.com/pagopa/io-app/commit/c3116df26e4caedfa77945d0ea557f5a8b46c87f)), closes [pagopa/io-app-design-system#551](https://github.com/pagopa/io-app-design-system/issues/551)
+
+## [3.34.0-rc.1](https://github.com/pagopa/io-app/compare/3.34.0-rc.0...3.34.0-rc.1) (2026-06-04)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-3911](https://pagopa.atlassian.net/browse/SIW-3911)] skip MRTD PoP challenge when `challenge_info` is absent ([#8139](https://github.com/pagopa/io-app/issues/8139)) ([8a5991a](https://github.com/pagopa/io-app/commit/8a5991a54161e022b402fd59e279180e4eb706d3))
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-4336](https://pagopa.atlassian.net/browse/SIW-4336)] RP and Issuer trust screen copy alignment ([#8140](https://github.com/pagopa/io-app/issues/8140)) ([a7fe60d](https://github.com/pagopa/io-app/commit/a7fe60da76c2beced3451c991d4e77cb7db169ec))
+
+## [3.34.0-rc.0](https://github.com/pagopa/io-app/compare/3.33.0-rc.3...3.34.0-rc.0) (2026-06-04)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Fix Spid copy for L2 reissuance ([#8145](https://github.com/pagopa/io-app/issues/8145)) ([1d84037](https://github.com/pagopa/io-app/commit/1d84037b6b760dab028dc219d584a04ee0367bf3))
+
+## [3.33.0-rc.4](https://github.com/pagopa/io-app/compare/3.33.0-rc.3...3.33.0-rc.4) (2026-06-05)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] Disable OTP input autofocus in CIE PIN/CAN screens ([#8153](https://github.com/pagopa/io-app/issues/8153)) ([01fe5b0](https://github.com/pagopa/io-app/commit/01fe5b00d371333547ea994426b02670d2aff744))
+
+
+### Chores
+
+* bump android versionCode ([bbc228a](https://github.com/pagopa/io-app/commit/bbc228a4e6cf573da68a14c914c6daa104ea8602))
+
+## [3.33.0-rc.3](https://github.com/pagopa/io-app/compare/3.33.0-rc.2...3.33.0-rc.3) (2026-06-03)
+
+
+### Features
+
+* [[IOCOM-3114](https://pagopa.atlassian.net/browse/IOCOM-3114)] messages markdown custom link handling ([#8119](https://github.com/pagopa/io-app/issues/8119)) ([7a7d728](https://github.com/pagopa/io-app/commit/7a7d7289563b52cf080c00487414a5eff3a8b38e))
+
+
+### Chores
+
+* [[IEL-534](https://pagopa.atlassian.net/browse/IEL-534)] additional properties for MP event SEND_MANDATE_CIE_CARD_READING_FAILURE ([#8141](https://github.com/pagopa/io-app/issues/8141)) ([b182cd3](https://github.com/pagopa/io-app/commit/b182cd31c9deb38514362061c2cdf651708ce77d))
+
 ## [3.33.0-rc.2](https://github.com/pagopa/io-app/compare/3.33.0-rc.1...3.33.0-rc.2) (2026-05-29)
 
 
