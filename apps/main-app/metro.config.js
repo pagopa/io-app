@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable functional/immutable-data */
-const { getDefaultConfig } = require('@expo/metro-config');
+const { getDefaultConfig } = require('expo/metro-config');
 const { mergeConfig } = require('@react-native/metro-config');
 
 const {
@@ -14,14 +14,6 @@ const {
  * @type {import('@react-native/metro-config').MetroConfig}
  */
 const config = {
-  server: {
-    // @expo/metro-config sets unstable_serverRoot to the monorepo root to
-    // support web, but Metro uses it to resolve the native entry point path.
-    // Override it back to the app root so that `index.bundle` resolves to
-    // apps/main-app/index.js instead of <monorepo-root>/index.js (which does
-    // not exist), which would cause "unable to resolve ./index" at runtime.
-    unstable_serverRoot: __dirname
-  },
   transformer: {
     babelTransformerPath:
       require.resolve("react-native-svg-transformer/react-native")
