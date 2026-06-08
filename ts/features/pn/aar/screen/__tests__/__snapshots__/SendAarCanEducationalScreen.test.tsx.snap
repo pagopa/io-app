@@ -273,7 +273,7 @@ exports[`SendAarCanEducationalScreen should match the snapshot 1`] = `
                             }
                           >
                             <View
-                              accessibilityLabel="global.buttons.back"
+                              accessibilityLabel="Indietro"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -430,7 +430,7 @@ exports[`SendAarCanEducationalScreen should match the snapshot 1`] = `
                             </View>
                             <View
                               accessibilityElementsHidden={false}
-                              accessibilityLabel="features.pn.aar.flow.cieCanAdvisory.title"
+                              accessibilityLabel="Prepara la Carta di Identità Elettronica (CIE) di "
                               accessibilityRole="header"
                               accessible={true}
                               importantForAccessibility="yes"
@@ -491,7 +491,7 @@ exports[`SendAarCanEducationalScreen should match the snapshot 1`] = `
                                   ]
                                 }
                               >
-                                features.pn.aar.flow.cieCanAdvisory.title
+                                Prepara la Carta di Identità Elettronica (CIE) di 
                               </Text>
                             </View>
                             <View
@@ -505,7 +505,7 @@ exports[`SendAarCanEducationalScreen should match the snapshot 1`] = `
                               }
                             >
                               <View
-                                accessibilityLabel="global.accessibility.contextualHelp.open.label"
+                                accessibilityLabel="Aiuto contestuale"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -739,7 +739,7 @@ exports[`SendAarCanEducationalScreen should match the snapshot 1`] = `
                                 }
                               >
                                 <Text
-                                  accessibilityLabel="features.pn.aar.flow.cieCanAdvisory.title"
+                                  accessibilityLabel="Prepara la Carta di Identità Elettronica (CIE) di "
                                   accessibilityRole="header"
                                   allowFontScaling={true}
                                   dynamicTypeRamp="title1"
@@ -758,7 +758,7 @@ exports[`SendAarCanEducationalScreen should match the snapshot 1`] = `
                                     ]
                                   }
                                 >
-                                  features.pn.aar.flow.cieCanAdvisory.title
+                                  Prepara la Carta di Identità Elettronica (CIE) di 
                                 </Text>
                               </View>
                             </View>
@@ -777,7 +777,7 @@ exports[`SendAarCanEducationalScreen should match the snapshot 1`] = `
                                 }
                               />
                               <Text>
-                                features.pn.aar.flow.cieCanAdvisory.description
+                                Dovrai inserire il codice a 6 cifre (CAN) che trovi sul fronte in basso a destra e poi avvicinare il tuo telefono alla carta.
                               </Text>
                             </View>
                             <View
@@ -994,7 +994,7 @@ exports[`SendAarCanEducationalScreen should match the snapshot 1`] = `
                             }
                           >
                             <View
-                              accessibilityLabel="global.buttons.continue"
+                              accessibilityLabel="Continua"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -1206,7 +1206,7 @@ exports[`SendAarCanEducationalScreen should match the snapshot 1`] = `
                                       ]
                                     }
                                   >
-                                    global.buttons.continue
+                                    Continua
                                   </Text>
                                 </View>
                               </View>
