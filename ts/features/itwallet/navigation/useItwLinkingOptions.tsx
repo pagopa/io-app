@@ -61,7 +61,7 @@ export const useItwLinkingOptions = (): PathConfigMap<AppParamsList> => ({
        *
        * Starts the credential offer issuance flow from an external link.
        */
-      [ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER.INTRO]: {
+      [ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER_INTRO]: {
         path: ITW_CREDENTIAL_OFFER_LINKING_PATH,
         parse: {
           itwCredentialOfferUri: decodeURIComponent

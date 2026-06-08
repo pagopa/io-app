@@ -65,8 +65,8 @@ export type ItwParamsList = {
   [ITW_ROUTES.ISSUANCE.CREDENTIAL_FAILURE]: undefined;
   [ITW_ROUTES.ISSUANCE.UPCOMING_CREDENTIAL]: undefined;
   [ITW_ROUTES.ISSUANCE.UPGRADE_CREDENTIALS]: undefined;
-  [ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER
-    .INTRO]: ItwIssuanceCredentialOfferScreenNavigationParams;
+  [ITW_ROUTES.ISSUANCE
+    .CREDENTIAL_OFFER_INTRO]: ItwIssuanceCredentialOfferScreenNavigationParams;
   // PRESENTATION
   [ITW_ROUTES.PRESENTATION
     .CREDENTIAL_DETAIL]: ItwPresentationCredentialDetailNavigationParams;
