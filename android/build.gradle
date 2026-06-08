@@ -25,7 +25,7 @@ buildscript {
 
 allprojects {
     repositories {
-        jcenter()
+        mavenCentral()
         maven { url 'https://www.jitpack.io' }
        	maven { url 'https://zendesk.jfrog.io/zendesk/repo' }
     }
