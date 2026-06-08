@@ -1,6 +1,6 @@
 {
   "name": "@io-app/main-app",
-  "version": "3.34.0-canary.8222",
+  "version": "3.34.0-canary.8223",
   "private": true,
   "scripts": {
     "start": "react-native start",
