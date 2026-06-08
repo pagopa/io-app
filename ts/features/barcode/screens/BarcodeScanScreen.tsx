@@ -198,7 +198,7 @@ const BarcodeScanScreen = () => {
          * to the screen shown before the scanner.
          */
         navigation.replace(ITW_ROUTES.MAIN, {
-          screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER.INTRO,
+          screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER_INTRO,
           params: {
             itwCredentialOfferUri: barcode.itwCredentialOfferUri
           }
