@@ -130,6 +130,7 @@ jobs:
       - id: upload-android-assets-release
         continue-on-error: true
         run: |
+          cd apps/main-app
           APP_VERSION=$(node -p -e "require('./package.json').version")
           gh release upload $APP_VERSION android/app/build/outputs/bundle/productionRelease/app-production-release.aab#android-app-release.aab android/io-app-universal.apk#io-app-universal.apk
         env:
@@ -160,7 +161,9 @@ jobs:
           bundler-cache: true
           working-directory: apps/main-app
       - id: prepare-ios-build
-        run: ./apps/main-app/scripts/ios-release-build.sh
+        run: | 
+          cd apps/main-app
+          ./scripts/ios-release-build.sh
         env:
           APP_STORE_API_KEY_ID: ${{secrets.APP_STORE_API_KEY_ID}}
           APP_STORE_API_PRIVATE_KEY: ${{secrets.APP_STORE_API_PRIVATE_KEY}}
@@ -196,17 +199,18 @@ jobs:
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
           name: IO.app.dSYM.zip
-          path: ios/IO.app.dSYM.zip
+          path: apps/main-app/ios/IO.app.dSYM.zip
       - id: upload-ipa
         # We don't want to fail whole job if the IPA upload step fails
         continue-on-error: true
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
           name: IO.ipa
-          path: ios/IO.ipa
+          path: apps/main-app/ios/IO.ipa
       - id: upload-ipa-release
         continue-on-error: true
         run: |
+          cd apps/main-app
           APP_VERSION=$(node -p -e "require('./package.json').version")
           gh release upload $APP_VERSION ios/IO.ipa#IO-iOS.ipa
         env:
