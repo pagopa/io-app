@@ -2263,12 +2263,12 @@ describe("itwEidIssuanceMachine", () => {
 
     actor.send({
       type: "user-identification-completed",
-      authRedirectUrl: "http://spid.test.it"
+      authRedirectUrl: "http://spid.test.it?challenge_info=mock_challenge"
     });
 
     expect(actor.getSnapshot().context).toMatchObject({
       authenticationContext: {
-        callbackUrl: "http://spid.test.it"
+        callbackUrl: "http://spid.test.it?challenge_info=mock_challenge"
       }
     });
 
@@ -2427,6 +2427,58 @@ describe("itwEidIssuanceMachine", () => {
         Issuance: "DisplayingPreview"
       })
     );
+  });
+
+  it("Should skip MrtdPoP state entirely and go straight to Issuance when challenge_info is absent (LoA High)", async () => {
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { UserIdentification: "Identification" },
+      context: {
+        level: "l3",
+        mode: "issuance",
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: { jwt: T_WIA }
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, { snapshot });
+    actor.start();
+
+    startAuthFlow.mockImplementation(() => Promise.resolve({}));
+    actor.send({ type: "select-identification-mode", mode: "cieId" });
+
+    await waitFor(() => expect(startAuthFlow).toHaveBeenCalledTimes(1));
+
+    // No challenge_info → requiresMrtdVerification guard is false → MrtdPoP is skipped entirely
+    requestAccessToken.mockImplementation(() =>
+      Promise.resolve(T_ACCESS_TOKEN)
+    );
+    requestEid.mockImplementation(() =>
+      Promise.resolve({
+        credential: { credential: "", metadata: ItwStoredCredentialsMocks.eid },
+        walletUnitAttestations: T_WUA
+      })
+    );
+    issuedEidMatchesAuthenticatedUser.mockImplementation(() => true);
+
+    actor.send({
+      type: "user-identification-completed",
+      authRedirectUrl: "https://wallet.test.it/cb?code=abc&state=xyz"
+    });
+
+    await waitForActor(actor, s =>
+      s.matches({ Issuance: "DisplayingPreview" })
+    );
+
+    expect(actor.getSnapshot().context.mrtdContext).toBeUndefined();
+    expect(actor.getSnapshot().context.authenticationContext).toMatchObject({
+      callbackUrl: "https://wallet.test.it/cb?code=abc&state=xyz"
+    });
+    expect(initMrtdPoPChallenge).not.toHaveBeenCalled();
+    expect(validateMrtdPoPChallenge).not.toHaveBeenCalled();
   });
 
   it("Should wait for session refresh then retry the eID request", async () => {

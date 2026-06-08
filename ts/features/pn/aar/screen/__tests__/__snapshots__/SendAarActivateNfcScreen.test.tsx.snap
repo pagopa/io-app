@@ -353,7 +353,7 @@ exports[`SendAarActivateNfcScreen should match the snapshot 1`] = `
                               }
                             >
                               <View
-                                accessibilityLabel="global.buttons.close"
+                                accessibilityLabel="Chiudi"
                                 accessibilityRole="button"
                                 accessibilityState={
                                   {
@@ -572,7 +572,8 @@ exports[`SendAarActivateNfcScreen should match the snapshot 1`] = `
                               ]
                             }
                           >
-                            features.pn.aar.flow.androidNfcActivation.title
+                            Attiva l’NFC per
+continuare
                           </Text>
                           <View
                             style={
@@ -582,7 +583,7 @@ exports[`SendAarActivateNfcScreen should match the snapshot 1`] = `
                             }
                           />
                           <Text>
-                            features.pn.aar.flow.androidNfcActivation.description
+                            Per consentire a IO di leggere la CIE, attiva l’NFC dalle Impostazioni del tuo dispositivo.
                           </Text>
                           <View
                             style={
@@ -617,7 +618,7 @@ exports[`SendAarActivateNfcScreen should match the snapshot 1`] = `
                                 }
                               >
                                 <View
-                                  accessibilityLabel="features.pn.aar.flow.androidNfcActivation.content.listItemsHeader"
+                                  accessibilityLabel="Come fare"
                                   accessibilityRole="header"
                                   accessible={true}
                                 >
@@ -639,7 +640,7 @@ exports[`SendAarActivateNfcScreen should match the snapshot 1`] = `
                                       ]
                                     }
                                   >
-                                    features.pn.aar.flow.androidNfcActivation.content.listItemsHeader
+                                    Come fare
                                   </Text>
                                 </View>
                               </View>
@@ -647,7 +648,7 @@ exports[`SendAarActivateNfcScreen should match the snapshot 1`] = `
                           </View>
                           <View>
                             <View
-                              accessibilityLabel="features.pn.aar.flow.androidNfcActivation.content.listItems.step1.label; features.pn.aar.flow.androidNfcActivation.content.listItems.step1.value"
+                              accessibilityLabel="Step 1; Apri “Impostazioni”"
                               accessible={true}
                               style={
                                 {
@@ -705,7 +706,7 @@ exports[`SendAarActivateNfcScreen should match the snapshot 1`] = `
                                         ]
                                       }
                                     >
-                                      features.pn.aar.flow.androidNfcActivation.content.listItems.step1.label
+                                      Step 1
                                     </Text>
                                     <Text
                                       allowFontScaling={true}
@@ -726,7 +727,7 @@ exports[`SendAarActivateNfcScreen should match the snapshot 1`] = `
                                         ]
                                       }
                                     >
-                                      features.pn.aar.flow.androidNfcActivation.content.listItems.step1.value
+                                      Apri “Impostazioni”
                                     </Text>
                                   </View>
                                 </View>
@@ -743,7 +744,7 @@ exports[`SendAarActivateNfcScreen should match the snapshot 1`] = `
                           </View>
                           <View>
                             <View
-                              accessibilityLabel="features.pn.aar.flow.androidNfcActivation.content.listItems.step2.label; features.pn.aar.flow.androidNfcActivation.content.listItems.step2.value"
+                              accessibilityLabel="Step 2; Cerca la funzionalità “NFC”"
                               accessible={true}
                               style={
                                 {
@@ -801,7 +802,7 @@ exports[`SendAarActivateNfcScreen should match the snapshot 1`] = `
                                         ]
                                       }
                                     >
-                                      features.pn.aar.flow.androidNfcActivation.content.listItems.step2.label
+                                      Step 2
                                     </Text>
                                     <Text
                                       allowFontScaling={true}
@@ -822,7 +823,7 @@ exports[`SendAarActivateNfcScreen should match the snapshot 1`] = `
                                         ]
                                       }
                                     >
-                                      features.pn.aar.flow.androidNfcActivation.content.listItems.step2.value
+                                      Cerca la funzionalità “NFC”
                                     </Text>
                                   </View>
                                 </View>
@@ -839,7 +840,7 @@ exports[`SendAarActivateNfcScreen should match the snapshot 1`] = `
                           </View>
                           <View>
                             <View
-                              accessibilityLabel="features.pn.aar.flow.androidNfcActivation.content.listItems.step3.label; features.pn.aar.flow.androidNfcActivation.content.listItems.step3.value"
+                              accessibilityLabel="Step 3; Attiva la funzionalità"
                               accessible={true}
                               style={
                                 {
@@ -897,7 +898,7 @@ exports[`SendAarActivateNfcScreen should match the snapshot 1`] = `
                                         ]
                                       }
                                     >
-                                      features.pn.aar.flow.androidNfcActivation.content.listItems.step3.label
+                                      Step 3
                                     </Text>
                                     <Text
                                       allowFontScaling={true}
@@ -918,7 +919,7 @@ exports[`SendAarActivateNfcScreen should match the snapshot 1`] = `
                                         ]
                                       }
                                     >
-                                      features.pn.aar.flow.androidNfcActivation.content.listItems.step3.value
+                                      Attiva la funzionalità
                                     </Text>
                                   </View>
                                 </View>
@@ -1104,7 +1105,7 @@ exports[`SendAarActivateNfcScreen should match the snapshot 1`] = `
                           }
                         >
                           <View
-                            accessibilityLabel="features.pn.aar.flow.androidNfcActivation.primaryAction"
+                            accessibilityLabel="Apri Impostazioni"
                             accessibilityRole="button"
                             accessibilityState={
                               {
@@ -1316,7 +1317,7 @@ exports[`SendAarActivateNfcScreen should match the snapshot 1`] = `
                                     ]
                                   }
                                 >
-                                  features.pn.aar.flow.androidNfcActivation.primaryAction
+                                  Apri Impostazioni
                                 </Text>
                               </View>
                             </View>
@@ -1337,7 +1338,7 @@ exports[`SendAarActivateNfcScreen should match the snapshot 1`] = `
                               }
                             />
                             <View
-                              accessibilityLabel="features.pn.aar.flow.androidNfcActivation.secondaryAction"
+                              accessibilityLabel="Continua"
                               accessibilityRole="button"
                               accessibilityState={
                                 {
@@ -1553,7 +1554,7 @@ exports[`SendAarActivateNfcScreen should match the snapshot 1`] = `
                                       ]
                                     }
                                   >
-                                    features.pn.aar.flow.androidNfcActivation.secondaryAction
+                                    Continua
                                   </Text>
                                 </View>
                               </View>

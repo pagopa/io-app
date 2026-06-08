@@ -57,7 +57,7 @@ describe("Mixpanel module", () => {
     jest.resetModules();
 
     // Get the mocked instance
-    mockMixpanelInstance = new Mixpanel(mixpanelToken, true);
+    mockMixpanelInstance = new Mixpanel(mixpanelToken ?? "", true);
   });
 
   describe("initializeMixPanel", () => {

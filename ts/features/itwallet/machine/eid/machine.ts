@@ -18,6 +18,7 @@ import {
 } from "../../common/utils/itwTypesUtils";
 import { ItwTags } from "../tags";
 import { itwCredentialUpgradeMachine } from "../upgrade/machine.ts";
+import { isMrtdPoPChallengeRequired } from "../../common/utils/mrtdUrl";
 import {
   GetWalletAttestationActorParams,
   InitMrtdPoPChallengeActorParams,
@@ -217,9 +218,12 @@ export const itwEidIssuanceMachine = setup({
     isL2Fallback: ({ context }) => context.level === "l2-fallback",
     isL3FeaturesEnabled: ({ context }) => context.level === "l3",
     requiresMrtdVerification: ({ context }) =>
-      // MRTD PoP verification is a step required for SPID and CieID identification modes
-      // when issuing an L3 PID
-      context.level === "l3" && context.identification?.mode !== "ciePin",
+      // MRTD PoP verification is required for SPID and CieID identification modes
+      // when issuing an L3 PID and the PID Provider signals a challenge via `challenge_info`.
+      context.level === "l3" &&
+      context.identification?.mode !== "ciePin" &&
+      context.authenticationContext !== undefined &&
+      isMrtdPoPChallengeRequired(context.authenticationContext.callbackUrl),
     isWalletValid: notImplemented
   }
 }).createMachine({
@@ -753,7 +757,7 @@ export const itwEidIssuanceMachine = setup({
                   target: "CieWarning.PreparationCie"
                 },
                 back: {
-                  target: "PreparationPin"
+                  target: "InsertingCardPin"
                 },
                 close: {
                   actions: "closeIssuance"
@@ -885,7 +889,7 @@ export const itwEidIssuanceMachine = setup({
       states: {
         InitializingChallenge: {
           description:
-            "Initializes the MRTD PoP challenge with the callbackUrl obtained from the primary authentication (SPID/CieID)",
+            "Initializes the MRTD PoP challenge. The machine only enters this state when `challenge_info` is present in the callback URL.",
           tags: [ItwTags.Loading],
           invoke: {
             src: "initMrtdPoPChallenge",
