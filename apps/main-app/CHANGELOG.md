@@ -2,6 +2,76 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.34.0-canary.8224](https://github.com/pagopa/io-app/compare/3.34.0-rc.2...3.34.0-canary.8224) (2026-06-08)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-3923](https://pagopa.atlassian.net/browse/SIW-3923)] Make ANIST credentials available in prod ([#8065](https://github.com/pagopa/io-app/issues/8065)) ([878c448](https://github.com/pagopa/io-app/commit/878c4485269644befacffb925ad62159ce86b9cf))
+* **IT-Wallet:** [[SIW-4021](https://pagopa.atlassian.net/browse/SIW-4021)] Add 404 fallback credential failed screen ([#8002](https://github.com/pagopa/io-app/issues/8002)) ([b31f0bf](https://github.com/pagopa/io-app/commit/b31f0bf2bc451b16fe8eb34b6d09d8fcd8a84bf6))
+* **IT-Wallet:** [[SIW-4040](https://pagopa.atlassian.net/browse/SIW-4040)] New ITW_STATUS activation values ([#8023](https://github.com/pagopa/io-app/issues/8023)) ([db99816](https://github.com/pagopa/io-app/commit/db99816a6273090df850c7f6900b331dcce15afb))
+* **IT-Wallet:** [[SIW-4066](https://pagopa.atlassian.net/browse/SIW-4066),[SIW-4179](https://pagopa.atlassian.net/browse/SIW-4179)] Credential status simulation  ([#8021](https://github.com/pagopa/io-app/issues/8021)) ([1001a10](https://github.com/pagopa/io-app/commit/1001a105289874501e333d48954f09dba076ba9b))
+* **IT-Wallet:** [[SIW-4077](https://pagopa.atlassian.net/browse/SIW-4077)] New credential cards theme system ([#8059](https://github.com/pagopa/io-app/issues/8059)) ([8954ee0](https://github.com/pagopa/io-app/commit/8954ee038fb2aff9252ff77b498f17fcb7e46168)), closes [/#diff-7cf5237057a1b5808672eea868f1e668c3bc04a0b6e2808114191f48f439c468L5-R145](https://github.com/pagopa///issues/diff-7cf5237057a1b5808672eea868f1e668c3bc04a0b6e2808114191f48f439c468L5-R145) [/#diff-7cf5237057a1b5808672eea868f1e668c3bc04a0b6e2808114191f48f439c468L92-R155](https://github.com/pagopa///issues/diff-7cf5237057a1b5808672eea868f1e668c3bc04a0b6e2808114191f48f439c468L92-R155) [/#diff-7cf5237057a1b5808672eea868f1e668c3bc04a0b6e2808114191f48f439c468L110-L145](https://github.com/pagopa///issues/diff-7cf5237057a1b5808672eea868f1e668c3bc04a0b6e2808114191f48f439c468L110-L145) [/#diff-d61a558b99cf152e5aa033cfdfac340b69f27931d390cea851e996838e1dec5cR1-R112](https://github.com/pagopa///issues/diff-d61a558b99cf152e5aa033cfdfac340b69f27931d390cea851e996838e1dec5cR1-R112) [/#diff-49d56b5067dfd3b7b2ccdcfff01993ac3b340e241c0f034473851c4131a4ab5aR1-R71](https://github.com/pagopa///issues/diff-49d56b5067dfd3b7b2ccdcfff01993ac3b340e241c0f034473851c4131a4ab5aR1-R71) [/#diff-4d7959e1a79b151365c72ec573336f10edd3d2626e5d39fe3b50f68eb6cdb069L1-L58](https://github.com/pagopa///issues/diff-4d7959e1a79b151365c72ec573336f10edd3d2626e5d39fe3b50f68eb6cdb069L1-L58) [/#diff-9d308a8da418c4cf8b5049cc12a64b6bcad4ef4beb27c8aac8ab7bfc95b20b13L470-L475](https://github.com/pagopa///issues/diff-9d308a8da418c4cf8b5049cc12a64b6bcad4ef4beb27c8aac8ab7bfc95b20b13L470-L475) [/#diff-9d308a8da418c4cf8b5049cc12a64b6bcad4ef4beb27c8aac8ab7bfc95b20b13L485-L490](https://github.com/pagopa///issues/diff-9d308a8da418c4cf8b5049cc12a64b6bcad4ef4beb27c8aac8ab7bfc95b20b13L485-L490) [/#diff-0bec5ab327bc2e0ea1024f9c5229299eeb97007aa70e7f5131fd3545a2e7ecf9L10-R10](https://github.com/pagopa///issues/diff-0bec5ab327bc2e0ea1024f9c5229299eeb97007aa70e7f5131fd3545a2e7ecf9L10-R10) [/#diff-0bec5ab327bc2e0ea1024f9c5229299eeb97007aa70e7f5131fd3545a2e7ecf9R27](https://github.com/pagopa///issues/diff-0bec5ab327bc2e0ea1024f9c5229299eeb97007aa70e7f5131fd3545a2e7ecf9R27) [/#diff-0bec5ab327bc2e0ea1024f9c5229299eeb97007aa70e7f5131fd3545a2e7ecf9L61-R62](https://github.com/pagopa///issues/diff-0bec5ab327bc2e0ea1024f9c5229299eeb97007aa70e7f5131fd3545a2e7ecf9L61-R62)
+* **IT-Wallet:** [[SIW-4081](https://pagopa.atlassian.net/browse/SIW-4081)] Add QR code events for mixpanel tracking ([#8029](https://github.com/pagopa/io-app/issues/8029)) ([88d40d7](https://github.com/pagopa/io-app/commit/88d40d713433ce18fde5ac58afeac0875a9719f9))
+* **IT-Wallet:** [[SIW-4152](https://pagopa.atlassian.net/browse/SIW-4152)] Update QR code screen  ([#8083](https://github.com/pagopa/io-app/issues/8083)) ([53c741d](https://github.com/pagopa/io-app/commit/53c741da38e82b8cf1617d426d54a67f26bf5ef3))
+* **IT-Wallet:** [[SIW-4180](https://pagopa.atlassian.net/browse/SIW-4180)] Integrate credential-catalogue translations on `v1.3.3` ([#8055](https://github.com/pagopa/io-app/issues/8055)) ([99ba904](https://github.com/pagopa/io-app/commit/99ba904f90ef59a9d7c73cb00d9861a7ab8400a4))
+* **IT-Wallet:** [[SIW-4214](https://pagopa.atlassian.net/browse/SIW-4214)] Add skeleton to ITW engagement banner ([#8073](https://github.com/pagopa/io-app/issues/8073)) ([b2e2c2e](https://github.com/pagopa/io-app/commit/b2e2c2ef2096fd242ec7ef7667fac90356a1d2ae))
+* [[IOPID-3755](https://pagopa.atlassian.net/browse/IOPID-3755),[IOPID-3756](https://pagopa.atlassian.net/browse/IOPID-3756)] split be client ([#7916](https://github.com/pagopa/io-app/issues/7916)) ([fc6e8c7](https://github.com/pagopa/io-app/commit/fc6e8c75da284c7322f34f0a0db9b59dc680cff8))
+* [[IOPID-3894](https://pagopa.atlassian.net/browse/IOPID-3894),[IOCOM-3097](https://pagopa.atlassian.net/browse/IOCOM-3097)] Replace Sentry events with mixpanel ones ([#8070](https://github.com/pagopa/io-app/issues/8070)) ([144c04a](https://github.com/pagopa/io-app/commit/144c04a2d707373f1c116064a38083aa1a39a7a5))
+* **IT-Wallet:** [[SIW-4159](https://pagopa.atlassian.net/browse/SIW-4159)] Add age verification credential detail UI ([#8048](https://github.com/pagopa/io-app/issues/8048)) ([c4e89ba](https://github.com/pagopa/io-app/commit/c4e89baf97437ad326a726ef0f6520d79348bf1c))
+* **IT-Wallet:** [[SIW-4199](https://pagopa.atlassian.net/browse/SIW-4199)] Alignment of EID issuance flow screens ([#8052](https://github.com/pagopa/io-app/issues/8052)) ([9d367c7](https://github.com/pagopa/io-app/commit/9d367c7dde01a41de26201ae3a3053fcf06ae02c))
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4237](https://pagopa.atlassian.net/browse/SIW-4237)] Update credential reissuing tracking credential property value ([#8071](https://github.com/pagopa/io-app/issues/8071)) ([03aee1a](https://github.com/pagopa/io-app/commit/03aee1a4dab42849989517258620fbe36322b2fe))
+* **IT-Wallet:** [[SIW-4280](https://pagopa.atlassian.net/browse/SIW-4280)] Possible race condition in eID upgrade flow triggered by adding a new credential ([#8079](https://github.com/pagopa/io-app/issues/8079)) ([7ff12de](https://github.com/pagopa/io-app/commit/7ff12de97b8cb9307b676eacfb690a0f80f08fc0))
+* typescript issue ([dbf6d53](https://github.com/pagopa/io-app/commit/dbf6d53ec617745e5d35f8cee72e07643e325a3e))
+
+
+### Chores
+
+* [[IEG-2687](https://pagopa.atlassian.net/browse/IEG-2687)] CGN engagement banner tracking event ([#8062](https://github.com/pagopa/io-app/issues/8062)) ([a1dc49c](https://github.com/pagopa/io-app/commit/a1dc49c612909d6d0353328e8a0c2eb08926eefc))
+* [[IEL-279](https://pagopa.atlassian.net/browse/IEL-279)] Timeline bottomsheet accessibility improved ([#8072](https://github.com/pagopa/io-app/issues/8072)) ([f435934](https://github.com/pagopa/io-app/commit/f435934a7f215c91f425d225a87e28d2598b40c8))
+* [[IEL-324](https://pagopa.atlassian.net/browse/IEL-324),[IEL-332](https://pagopa.atlassian.net/browse/IEL-332)] Update endpoints for FCI and Send API ([#8085](https://github.com/pagopa/io-app/issues/8085)) ([c627d7f](https://github.com/pagopa/io-app/commit/c627d7f7970fa7e8bf6e0026c61412dc8522cee2))
+* [[IEL-358](https://pagopa.atlassian.net/browse/IEL-358)] Accessibility labels with values for messages "Show more data" bottomsheet ([#8066](https://github.com/pagopa/io-app/issues/8066)) ([7eb9222](https://github.com/pagopa/io-app/commit/7eb9222e4f97b05bb42e5e2cf62c8664dc3dea35))
+* [[IOCOM-3119](https://pagopa.atlassian.net/browse/IOCOM-3119)] Proper specs for `PlatformEnum` ([#8081](https://github.com/pagopa/io-app/issues/8081)) ([ef28e4d](https://github.com/pagopa/io-app/commit/ef28e4d28f6c7d56535d945ea15973369b30c28f))
+* [[IOPLT-1801](https://pagopa.atlassian.net/browse/IOPLT-1801)] Replace `forwardRef` with just the `ref` prop ([#8064](https://github.com/pagopa/io-app/issues/8064)) ([6e8f5ba](https://github.com/pagopa/io-app/commit/6e8f5ba09a903d61b4adb3bae00591530db27945))
+* [[IOPLT-1815](https://pagopa.atlassian.net/browse/IOPLT-1815)] Update `io-app-design-system` to `7.1.0` ([#8067](https://github.com/pagopa/io-app/issues/8067)) ([6885677](https://github.com/pagopa/io-app/commit/6885677711251a1ed0d310fd1272d5e47d0b1d79))
+* add eslint rule to avoid ghost dependencies ([f98f8b4](https://github.com/pagopa/io-app/commit/f98f8b46e79ee3bf260a56c1a5d940e445e9fa16))
+* apply patches ([1fbf81f](https://github.com/pagopa/io-app/commit/1fbf81f39a431957889e8d93e1ee27af55b05980))
+* bump pnpm version ([1b1375e](https://github.com/pagopa/io-app/commit/1b1375ec67afaa9e73d9bf123f3886174fe58d13))
+* code review changes ([1189300](https://github.com/pagopa/io-app/commit/1189300e337d211735591d50cdf2e856f64667e6))
+* doc ([f55ab5c](https://github.com/pagopa/io-app/commit/f55ab5c949682dbc24241d2d6e3420129d0726e0))
+* fix missing shell error ([0437252](https://github.com/pagopa/io-app/commit/0437252ae6a5b59612ad3cf269ae007118f6504a))
+* remove download-locales step ([41a923c](https://github.com/pagopa/io-app/commit/41a923ccf481c948de9f40d07674c78c5482a0ed))
+* remove exec ([50d4e75](https://github.com/pagopa/io-app/commit/50d4e7541fc74e12cbd0ee5c54f9ea82b86b5291))
+* remove more yarn references ([d309ff9](https://github.com/pagopa/io-app/commit/d309ff987840bdc6b315ab28618e01174a7c523e))
+* remove outpdated dependencies script ([00fc8eb](https://github.com/pagopa/io-app/commit/00fc8ebd4aecfed9fa28709b161fc4b5353eb11a))
+* remove patch ([e05f4b2](https://github.com/pagopa/io-app/commit/e05f4b2b95c3c8047bc8546b38a56a6b1faca11e))
+* remove postinstall ([62f1a0b](https://github.com/pagopa/io-app/commit/62f1a0b6e49575e7891ab06dd35aa67abbdaddab))
+* remove unused script ([f5c68f5](https://github.com/pagopa/io-app/commit/f5c68f5294d8aab6aa1471b7ae2528bd62f237b0))
+* remove unwanted changes ([e92fcd3](https://github.com/pagopa/io-app/commit/e92fcd3c4b30e5dbfcdc2f8a3ea7b85d29fe5363))
+* remove unwanted changes ([7ad6011](https://github.com/pagopa/io-app/commit/7ad60111d5c7a3f05378a7904720d27a805ecc26))
+* restore postinstall ([0819a52](https://github.com/pagopa/io-app/commit/0819a52f78f6552f08e69f84c18b01c01c14dc59))
+* update patch ([f97f350](https://github.com/pagopa/io-app/commit/f97f35092d9f2d2ec004a3569244e4a94ebca4f4))
+* update patches ([865a415](https://github.com/pagopa/io-app/commit/865a4158ba9ae723e530806fddcfb1df6b975b49))
+* update script ([252b5fa](https://github.com/pagopa/io-app/commit/252b5fa86e505308af82375bc9b992c1e1c7b9d5))
+* **release:** 3.30.0-rc.0 ([ed7cbc5](https://github.com/pagopa/io-app/commit/ed7cbc5f341107709d34853d7010caf771c687c0))
+* **release:** 3.30.0-rc.1 ([9f08087](https://github.com/pagopa/io-app/commit/9f0808784b6d63dc6de8e0218317d9354cd8282d))
+* **release:** 3.30.0-rc.2 ([d622036](https://github.com/pagopa/io-app/commit/d6220363eaec42ace7ee995aaa44cfcf2a05eeb3))
+* **release:** 3.30.0-rc.3 ([3ed6919](https://github.com/pagopa/io-app/commit/3ed69196e9547d1bebfdee30be54f84f8b1343c8))
+* **release:** 3.30.0-rc.4 ([0524627](https://github.com/pagopa/io-app/commit/052462754a2f4d42b9578d188285836d48547906))
+* remove unwanted change ([38fd16c](https://github.com/pagopa/io-app/commit/38fd16c469908a6884886d08759761c27da2a0be))
+* replace yarn with pnpm in more places ([bab2196](https://github.com/pagopa/io-app/commit/bab21967231e2f93fe4b7e4dec57f96804b23d7c))
+* update actions ([4dc1096](https://github.com/pagopa/io-app/commit/4dc1096deadd3b41dfb3663b3432b2010febb5f3))
+* update actions according to official doc ([ff1f067](https://github.com/pagopa/io-app/commit/ff1f0678f26a1e49857bc3bcd1bd97897c1cadeb))
+* update lock ([652987b](https://github.com/pagopa/io-app/commit/652987b84a85fe3d78f8732331104c1ba385d7db))
+* update patches ([9998216](https://github.com/pagopa/io-app/commit/99982166df3ae11567276756a06e5950f3078862))
+* update pnpm ([c75454c](https://github.com/pagopa/io-app/commit/c75454ce46f705ddd6dd0a0945f7e6171c044389))
+* update setup wf ([af9cfda](https://github.com/pagopa/io-app/commit/af9cfda29e263ad5b343c090b1bfbb60465f41bd))
+* update setup wf ([0aaad6f](https://github.com/pagopa/io-app/commit/0aaad6f36c386b2545d851d0118560ce619e153c))
+
 ## [3.34.0-rc.2](https://github.com/pagopa/io-app/compare/3.34.0-rc.1...3.34.0-rc.2) (2026-06-05)
 
 
