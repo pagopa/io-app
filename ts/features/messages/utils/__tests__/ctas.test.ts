@@ -528,11 +528,7 @@ describe("areCTAsActionsValid", () => {
       }
     };
 
-    const hasValidActions = testable!.areCTAsActionsValid(
-      ctas,
-      serviceId,
-      undefined
-    );
+    const hasValidActions = testable!.areCTAsActionsValid(ctas, serviceId);
 
     expect(mockAnalytics.mock.calls.length).toBe(0);
     expect(hasValidActions).toBe(true);
@@ -549,11 +545,7 @@ describe("areCTAsActionsValid", () => {
       }
     };
 
-    const hasValidActions = testable!.areCTAsActionsValid(
-      ctas,
-      serviceId,
-      undefined
-    );
+    const hasValidActions = testable!.areCTAsActionsValid(ctas, serviceId);
 
     expect(mockAnalytics.mock.calls.length).toBe(1);
     expect(mockAnalytics.mock.calls[0].length).toBe(2);
@@ -575,11 +567,7 @@ describe("areCTAsActionsValid", () => {
       }
     };
 
-    const hasValidActions = testable!.areCTAsActionsValid(
-      ctas,
-      serviceId,
-      undefined
-    );
+    const hasValidActions = testable!.areCTAsActionsValid(ctas, serviceId);
 
     expect(mockAnalytics.mock.calls.length).toBe(1);
     expect(mockAnalytics.mock.calls[0].length).toBe(2);
@@ -601,11 +589,7 @@ describe("areCTAsActionsValid", () => {
       }
     };
 
-    const hasValidActions = testable!.areCTAsActionsValid(
-      ctas,
-      serviceId,
-      undefined
-    );
+    const hasValidActions = testable!.areCTAsActionsValid(ctas, serviceId);
 
     expect(mockAnalytics.mock.calls.length).toBe(2);
     expect(mockAnalytics.mock.calls[0].length).toBe(2);
@@ -622,18 +606,12 @@ describe("areCTAsActionsValid", () => {
   });
 });
 
-describe("internalRouteIsNavigationAllowedMap", () => {
-  it("should match expected values", () => {
-    expect(testable!.internalRouteIsNavigationAllowedMap).toMatchSnapshot();
-  });
-});
-
 describe("isCtaActionValid", () => {
   const inputData: ReadonlyArray<[string, boolean]> = [
     ["ioit://whatever", true],
     ["iOiT://whatever", true],
     ["IOIT://whatever", true],
-    ["ioit://services/webview", false],
+    ["ioit://services/webview", true],
     ["iosso://https://relyingParty.url", true],
     ["iOsSo://https://relyingParty.url", true],
     ["IOSSO://https://relyingParty.url", true],

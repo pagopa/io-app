@@ -48,17 +48,6 @@ export const handleCtaAction = (
 };
 
 /**
- * a {routeName: isAllowedFunction} map to check
- * wether the navigation to a specific internal route is allowed
- */
-const internalRouteIsNavigationAllowedMap = new Map([
-  [
-    "/services/webview",
-    (metadata?: ServiceMetadata) => metadata?.token_name !== undefined
-  ]
-]);
-
-/**
  * since remote payload can have a subset of supported locales, this function
  * return the locale supported by the app. If the remote locale is not supported
  * a fallback will be returned
@@ -79,9 +68,8 @@ export const getRemoteLocale = (): LocalizedCTALocales => {
  */
 export const getMessageCTAs = (
   markdown: MessageBodyMarkdown | string,
-  serviceId: ServiceId,
-  serviceMetadata?: ServiceMetadata
-): CTAS | undefined => getCTAsIfValid(markdown, serviceId, serviceMetadata);
+  serviceId: ServiceId
+): CTAS | undefined => getCTAsIfValid(markdown, serviceId);
 
 /**
  * extract the CTAs from a string given in serviceMetadata such as the front-matter of the message
@@ -93,9 +81,7 @@ export const getServiceCTAs = (
   serviceMetadata?: ServiceMetadata
 ): CTAS | undefined => {
   const serviceCta = serviceMetadata?.cta;
-  return serviceCta != null
-    ? getCTAsIfValid(serviceCta, serviceId, serviceMetadata)
-    : undefined;
+  return serviceCta != null ? getCTAsIfValid(serviceCta, serviceId) : undefined;
 };
 
 /**
@@ -118,8 +104,7 @@ export const removeCTAsFromMarkdown = (
 
 const getCTAsIfValid = (
   frontMatterText: string | undefined,
-  serviceId: ServiceId,
-  serviceMetadata?: ServiceMetadata
+  serviceId: ServiceId
 ): CTAS | undefined => {
   const localizedCTAs = localizedCTAsFromFrontMatter(
     frontMatterText,
@@ -134,7 +119,7 @@ const getCTAsIfValid = (
     return undefined;
   }
 
-  if (areCTAsActionsValid(ctas, serviceId, serviceMetadata)) {
+  if (areCTAsActionsValid(ctas, serviceId)) {
     return ctas;
   }
 
@@ -178,12 +163,8 @@ export const ctasFromLocalizedCTAs = (
  * @param ctas
  * @param serviceMetadata
  */
-const areCTAsActionsValid = (
-  ctas: CTAS,
-  serviceId: ServiceId,
-  serviceMetadata?: ServiceMetadata
-): boolean => {
-  const isCTA1Valid = isCtaActionValid(ctas.cta_1, serviceMetadata);
+const areCTAsActionsValid = (ctas: CTAS, serviceId: ServiceId): boolean => {
+  const isCTA1Valid = isCtaActionValid(ctas.cta_1);
   if (!isCTA1Valid) {
     trackCTAFrontMatterDecodingError(
       "The first CTA does not contain a supported action",
@@ -194,7 +175,7 @@ const areCTAsActionsValid = (
   if (ctas.cta_2 == null) {
     return isCTA1Valid;
   }
-  const isCTA2Valid = isCtaActionValid(ctas.cta_2, serviceMetadata);
+  const isCTA2Valid = isCtaActionValid(ctas.cta_2);
   if (!isCTA2Valid) {
     trackCTAFrontMatterDecodingError(
       "The second CTA does not contain a supported action",
@@ -208,20 +189,11 @@ const areCTAsActionsValid = (
  * return a boolean indicating if the cta action is valid or not
  * Checks on servicesMetadata for defined parameter based on predicates defined in internalRoutePredicates map
  * @param cta
- * @param serviceMetadata
  */
-const isCtaActionValid = (
-  cta: CTA,
-  serviceMetadata?: ServiceMetadata
-): boolean => {
+const isCtaActionValid = (cta: CTA): boolean => {
   // check if it is an internal navigation
   if (isIoInternalLink(cta.action)) {
-    const internalRoute = getInternalRoute(cta.action);
-    const route = internalRouteIsNavigationAllowedMap.get(internalRoute);
-    if (route === undefined) {
-      return true;
-    }
-    return route(serviceMetadata);
+    return true;
   }
 
   if (isFIMSLink(cta.action)) {
@@ -275,7 +247,6 @@ export const testable = isTestEnv
       parseFrontMatter,
       ctasFromLocalizedCTAs,
       getCTAsIfValid,
-      internalRouteIsNavigationAllowedMap,
       isCtaActionValid
     }
   : undefined;
