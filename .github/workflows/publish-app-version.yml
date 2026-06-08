@@ -90,6 +90,7 @@ jobs:
           working-directory: apps/main-app
       - id: build-release-android
         run: |
+          cd apps/main-app
           ./scripts/android-release.sh ./android/app
           cd android && bundle exec fastlane alpha
         shell: bash
@@ -105,6 +106,7 @@ jobs:
         # We don't want to fail whole job if the universal APK is not downloaded from the play store
         continue-on-error: true
         run: |
+          cd apps/main-app
           ./scripts/android-release.sh ./android/app          
           cd android
           VERSION_CODE=$(sed -n 's/.*versionCode \(.*\)/\1/p' "app/build.gradle")
@@ -119,14 +121,14 @@ jobs:
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
           name: io-app-universal.apk
-          path: android/io-app-universal.apk
+          path: apps/main-app/android/io-app-universal.apk
       - id: upload-aab
         # We don't want to fail whole job if the AAB upload step fails
         continue-on-error: true
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
           name: app-release.aab
-          path: android/app/build/outputs/bundle/productionRelease/app-production-release.aab
+          path: apps/main-app/android/app/build/outputs/bundle/productionRelease/app-production-release.aab
       - id: upload-android-assets-release
         continue-on-error: true
         run: |

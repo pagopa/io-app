@@ -14,7 +14,7 @@ Package manager: `pnpm`
 - `pnpm nx run main-app:test-dev` - Run tests
 - `pnpm nx tsc-noemit main-app` - TypeScript type-check (no emit)
 - `pnpm nx lint main-app` - Lint
-- `pnpm nx run main-applint-autofix` - Lint + autofix
+- `pnpm nx run main-app:lint-autofix` - Lint + autofix
 - `pnpm prettify` - Format code
 
 ## Feature Structure
