@@ -16,48 +16,24 @@ import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { isDevEnv } from "../../../../utils/environment";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { ITW_STATUS_LIST_FETCH_TASK } from "../../statusList/tasks";
-import {
-  getLastStatusListCheckTimestamp,
-  getLastStatusListFetchTimestamp
-} from "../../statusList/utils/storage";
+import { getLastStatusListCheckTimestamp } from "../../statusList/utils/storage";
 
 const formatDate = (timestamp: number | undefined): string =>
   timestamp ? format(new Date(timestamp), "DD/MM/YY HH:mm:ss") : "n/a";
 
-const formatAge = (lastFetchTime: number | undefined): string => {
-  if (!lastFetchTime) {
-    return "n/a";
-  }
-
-  const diffInMs = Date.now() - lastFetchTime;
-  const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
-  const diffInMinutes = Math.floor((diffInMs % (1000 * 60 * 60)) / (1000 * 60));
-
-  return `${diffInHours}h ${diffInMinutes}m`;
-};
-
 export const ItwStatusListSection = () => {
   const [lastCheckTime, setLastCheckTime] = useState<number>();
-  const [lastFetchTime, setLastFetchTime] = useState<number>();
 
   useEffect(() => {
     getLastStatusListCheckTimestamp()
       .then(setLastCheckTime)
       .catch(() => setLastCheckTime(undefined));
-
-    getLastStatusListFetchTimestamp()
-      .then(setLastFetchTime)
-      .catch(() => setLastFetchTime(undefined));
   }, []);
 
   return (
     <View>
       <ListItemHeader label="Status List" />
       <ListItemInfo label="Last check" value={formatDate(lastCheckTime)} />
-      <Divider />
-      <ListItemInfo label="Last fetch" value={formatDate(lastFetchTime)} />
-      <Divider />
-      <ListItemInfo label="Age" value={formatAge(lastFetchTime)} />
       <VSpacer size={8} />
       <IOButton
         variant="solid"
