@@ -84,6 +84,7 @@ jobs:
         uses: ruby/setup-ruby@e65c17d16e57e481586a6a5a0282698790062f92 # v1.300.0
         with:
           bundler-cache: true
+          working-directory: apps/main-app
       - id: build-release-android
         run: |
           cd apps/main-app
@@ -156,6 +157,7 @@ jobs:
         uses: ruby/setup-ruby@e65c17d16e57e481586a6a5a0282698790062f92 # v1.300.0
         with:
           bundler-cache: true
+          working-directory: apps/main-app
       - id: prepare-ios-build
         run: ./apps/main-app/scripts/ios-release-build.sh
         env:
