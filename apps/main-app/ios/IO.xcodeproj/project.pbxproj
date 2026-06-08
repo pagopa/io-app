@@ -398,7 +398,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"$REACT_NATIVE_PATH/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"$REACT_NATIVE_PATH/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"\\\"$WITH_ENVIRONMENT\\\" \\\"$REACT_NATIVE_XCODE\\\"\"\n";
+			shellScript = "set -e\n\n# In the monorepo, the app root is one level above the ios/ folder ($SRCROOT/..).\n# We pin both BUNDLE_CONFIG and ENTRY_FILE to absolute paths so Metro never\n# falls back to an inferred working directory (which Fastlane / CI can alter).\nexport BUNDLE_CONFIG=\"$SRCROOT/../metro.config.js\"\nexport ENTRY_FILE=\"$SRCROOT/../index.js\"\n\nWITH_ENVIRONMENT=\"$REACT_NATIVE_PATH/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"$REACT_NATIVE_PATH/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"\\\"$WITH_ENVIRONMENT\\\" \\\"$REACT_NATIVE_XCODE\\\"\"\n";
 		};
 		0B3AB38D673D5DA2F3853B63 /* [Expo] Configure project */ = {
 			isa = PBXShellScriptBuildPhase;

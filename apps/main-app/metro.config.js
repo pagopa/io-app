@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable functional/immutable-data */
+const path = require('path');
 const { getDefaultConfig } = require('expo/metro-config');
 const { mergeConfig } = require('@react-native/metro-config');
 
@@ -14,6 +15,9 @@ const {
  * @type {import('@react-native/metro-config').MetroConfig}
  */
 const config = {
+  // Explicitly pin the project root so Metro always resolves modules relative
+  // to apps/main-app, regardless of the process working directory.
+  projectRoot: path.resolve(__dirname),
   transformer: {
     babelTransformerPath:
       require.resolve("react-native-svg-transformer/react-native")
