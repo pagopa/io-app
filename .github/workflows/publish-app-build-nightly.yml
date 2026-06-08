@@ -86,7 +86,8 @@ jobs:
           git push --no-verify --follow-tags origin HEAD:${GITHUB_REF#refs/heads/}
       - id: github-release-creation
         run: |
-          APP_VERSION=$(node -p -e "require('./apps/main-app/package.json').version")
+          cd apps/main-app
+          APP_VERSION=$(node -p -e "require('./package.json').version")
           echo "CURRENT_APP_VERSION=$APP_VERSION" >> $GITHUB_OUTPUT
           gh release create $APP_VERSION --latest --generate-notes
         env:
@@ -156,7 +157,7 @@ jobs:
         uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
         with:
           name: io-app-universal.apk
-          path: android/io-app-universal.apk
+          path: apps/main-app/android/io-app-universal.apk
       - id: upload-aab
         # We don't want to fail whole job if the AAB upload step fails
         continue-on-error: true

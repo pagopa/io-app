@@ -82,7 +82,7 @@ jobs:
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: api-client
-          path: definitions/
+          path: apps/main-app/definitions/
       - id: setup-ruby
         uses: ruby/setup-ruby@e65c17d16e57e481586a6a5a0282698790062f92 # v1.300.0
         with:
@@ -154,7 +154,7 @@ jobs:
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: api-client
-          path: definitions/
+          path: apps/main-app/definitions/
       - id: setup-ruby
         uses: ruby/setup-ruby@e65c17d16e57e481586a6a5a0282698790062f92 # v1.300.0
         with:
@@ -180,7 +180,7 @@ jobs:
       - id: build-upload-app-store
         name: Build & submit to App store
         run: |
-          cd ios
+          cd apps/main-app/ios
           bundle exec fastlane beta_circleci_testflight
         env:
           LC_ALL: en_US.UTF-8
