@@ -41,7 +41,7 @@
     "lollipop_checks:comment": "./scripts/toggle-comments-on-lollipop-checks.sh comment ./ts/sagas/startup.ts",
     "lollipop_checks:uncomment": "./scripts/toggle-comments-on-lollipop-checks.sh uncomment ./ts/sagas/startup.ts",
     "prepare": "husky install",
-    "dev:pod-install": "cd ios && NO_INTERNAL_MODULE=1 bundle exec pod install --repo-update && cd ..",
+    "dev:pod-install": "cd ios && NO_INTERNAL_MODULE=1 bundle exec pod install && cd ..",
     "dev:pod-update": "cd ios && NO_INTERNAL_MODULE=1 bundle exec pod update && cd .."
   },
   "lint-staged": {
