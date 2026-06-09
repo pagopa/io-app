@@ -1,5 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../navigation/routes";
 import { useIODispatch } from "../../../../store/hooks";
 import { refreshSessionToken } from "../../../authentication/fastLogin/store/actions/tokenRefreshActions";
 import { SERVICES_ROUTES } from "../../../services/common/navigation/routes";
@@ -78,7 +79,9 @@ export const createActionsImplementation = (
   const closeOnboarding = () => navigation.popToTop();
 
   const closeOnboardingSuccess = () =>
-    navigation.navigate(SERVICES_ROUTES.SERVICES_HOME);
+    navigation.navigate(ROUTES.MAIN, {
+      screen: SERVICES_ROUTES.SERVICES_HOME
+    });
 
   const navigateToLoadingScreen = () =>
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
