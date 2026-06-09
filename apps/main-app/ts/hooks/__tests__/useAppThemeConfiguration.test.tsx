@@ -85,7 +85,7 @@ describe("useAppThemeConfiguration", () => {
 
     await waitFor(() => {
       expect(mockGetItem).toHaveBeenCalledWith(THEME_PERSISTENCE_KEY);
-      expect(mockSetColorScheme).toHaveBeenCalledWith(null);
+      expect(mockSetColorScheme).toHaveBeenCalledWith("unspecified");
       expect(mockSetTheme).toHaveBeenCalledWith("dark");
       expect(mockUpdateNavigationBarColor).toHaveBeenCalledWith("dark");
       expect(mockSetUserInterfaceStyle).toHaveBeenCalledWith("dark");
