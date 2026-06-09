@@ -1,7 +1,8 @@
 import { Errors } from "@pagopa/io-react-native-wallet";
 import {
   isAnprPid404Failure,
-  isAssertionGenerationError
+  isAssertionGenerationError,
+  isMrtdTaxIdCodeMismatchFailure
 } from "../itwFailureUtils";
 
 describe("isAssertionGenerationError", () => {
@@ -63,5 +64,50 @@ describe("isAnprPid404Failure", () => {
     });
 
     expect(isAnprPid404Failure(error)).toBe(false);
+  });
+});
+
+describe("isMrtdTaxIdCodeMismatchFailure", () => {
+  it("returns true for MRTD tax id code mismatch issuer errors", () => {
+    const error = new Errors.IssuerResponseError({
+      message: "MRTD PoP verification failed",
+      reason: { error: "tax_id_code_mismatch" },
+      statusCode: 400
+    });
+
+    expect(isMrtdTaxIdCodeMismatchFailure(error)).toBe(true);
+  });
+
+  it("returns true for serialized MRTD tax id code mismatch errors", () => {
+    const error = new Error(
+      'message=Http request failed. Expected 202, got 400, url: https://eid.wallet.ipzs.it/1-0/mrtd-pop-verification reason={"error":"tax_id_code_mismatch","error_description":"The tax id code obtained from the Electronic Document does not match the one obtained during authentication"} statusCode=400'
+    );
+
+    expect(isMrtdTaxIdCodeMismatchFailure(error)).toBe(true);
+  });
+
+  it("returns false when the issuer error reason is not tax_id_code_mismatch", () => {
+    const error = new Errors.IssuerResponseError({
+      message: "MRTD PoP verification failed",
+      reason: { error: "unexpected_error" },
+      statusCode: 400
+    });
+
+    expect(isMrtdTaxIdCodeMismatchFailure(error)).toBe(false);
+  });
+
+  it("returns false when the status code is not 400", () => {
+    const error = new Errors.IssuerResponseError({
+      message: "MRTD PoP verification failed",
+      reason: { error: "tax_id_code_mismatch" },
+      statusCode: 500
+    });
+
+    expect(isMrtdTaxIdCodeMismatchFailure(error)).toBe(false);
+  });
+
+  it("returns false for unrelated errors", () => {
+    expect(isMrtdTaxIdCodeMismatchFailure(new Error("UNEXPECTED"))).toBe(false);
+    expect(isMrtdTaxIdCodeMismatchFailure(undefined)).toBe(false);
   });
 });

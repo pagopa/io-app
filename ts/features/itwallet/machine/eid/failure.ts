@@ -2,10 +2,11 @@ import { CryptoError } from "@pagopa/io-react-native-crypto";
 import { type IntegrityError } from "@pagopa/io-react-native-integrity";
 import { Errors, Trust } from "@pagopa/io-react-native-wallet";
 import {
-  isAssertionGenerationError,
   isAnprPid404Failure,
+  isAssertionGenerationError,
   isFederationError,
-  isLocalIntegrityError
+  isLocalIntegrityError,
+  isMrtdTaxIdCodeMismatchFailure
 } from "../../common/utils/itwFailureUtils";
 import { type EidIssuanceEvents } from "./events";
 
@@ -27,7 +28,8 @@ export enum IssuanceFailureType {
   WALLET_REVOCATION_ERROR = "WALLET_REVOCATION_ERROR",
   UNTRUSTED_ISS = "UNTRUSTED_ISS",
   CIE_NOT_REGISTERED = "CIE_NOT_REGISTERED",
-  MRTD_CHALLENGE_INIT_ERROR = "MRTD_CHALLENGE_INIT_ERROR"
+  MRTD_CHALLENGE_INIT_ERROR = "MRTD_CHALLENGE_INIT_ERROR",
+  CIE_NOT_MATCHING_AUTHENTICATION_IDENTITY = "CIE_NOT_MATCHING_AUTHENTICATION_IDENTITY"
 }
 
 /**
@@ -47,6 +49,9 @@ export type ReasonTypeByFailure = {
   [IssuanceFailureType.UNTRUSTED_ISS]: Trust.Errors.FederationError;
   [IssuanceFailureType.CIE_NOT_REGISTERED]: string;
   [IssuanceFailureType.MRTD_CHALLENGE_INIT_ERROR]: Errors.IssuerResponseError;
+  [IssuanceFailureType.CIE_NOT_MATCHING_AUTHENTICATION_IDENTITY]:
+    | Errors.IssuerResponseError
+    | Error;
   [IssuanceFailureType.UNEXPECTED]: unknown;
 };
 
@@ -107,6 +112,13 @@ export const mapEventToFailure = (
   if (isAnprPid404Failure(error)) {
     return {
       type: IssuanceFailureType.PID_ANPR_CREDENTIAL_NOT_FOUND,
+      reason: error
+    };
+  }
+
+  if (isMrtdTaxIdCodeMismatchFailure(error)) {
+    return {
+      type: IssuanceFailureType.CIE_NOT_MATCHING_AUTHENTICATION_IDENTITY,
       reason: error
     };
   }
