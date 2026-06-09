@@ -57,7 +57,7 @@ export const CREDENTIALS_MAP: Record<
   string,
   Record<MixPanelCredentialVersion, MixPanelCredential> | MixPanelCredential
 > = {
-  PersonIdentificationData: { V2: "ITW_ID_V2", V3: "ITW_PID" },
+  pid: { V2: "ITW_ID_V2", V3: "ITW_PID" },
   mDL: { V2: "ITW_PG_V2", V3: "ITW_PG_V3" },
   EuropeanHealthInsuranceCard: { V2: "ITW_TS_V2", V3: "ITW_TS_V3" },
   EuropeanDisabilityCard: { V2: "ITW_CED_V2", V3: "ITW_CED_V3" },
@@ -100,7 +100,14 @@ export type ItwCredentialMixpanelStatus =
 
 export type ItwCredentialActionPosition = "screen" | "bottom_sheet";
 
-export type ItwStatus = "not_active" | "L2" | "L3";
+export type ItwStatus =
+  | "not_active"
+  | "L2"
+  | "L3"
+  | "L2+ (spid_can)"
+  | "L3 (cieid_can)"
+  | "L3 (cieid_pin)"
+  | "L3 (cie_pin)";
 
 // Assuming that the eID status is the same as the PID status
 export type ItwPIDStatus = Extract<

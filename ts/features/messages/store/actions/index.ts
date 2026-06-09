@@ -4,9 +4,9 @@ import {
   createAsyncAction,
   createStandardAction
 } from "typesafe-actions";
-import { PaymentInfoResponse } from "../../../../../definitions/backend/PaymentInfoResponse";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { PaymentInfoResponse } from "../../../../../definitions/communication/PaymentInfoResponse";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
+import { ThirdPartyAttachment } from "../../../../../definitions/communication/ThirdPartyAttachment";
 import { UIMessage, UIMessageDetails } from "../../types";
 import { MessageListCategory } from "../../types/messageListCategory";
 import { ThirdPartyMessageUnion } from "../../types/thirdPartyById";
@@ -91,11 +91,16 @@ export const cancelGetMessageDataAction = createAction(
 /**
  * Load a single message given its ID
  */
+export type LoadMessageByIdFailureKind = "generic" | "messageNotFound";
 export const loadMessageById = createAsyncAction(
   "MESSAGE_BY_ID_LOAD_REQUEST",
   "MESSAGE_BY_ID_LOAD_SUCCESS",
   "MESSAGE_BY_ID_LOAD_FAILURE"
-)<{ id: string }, UIMessage, { id: string; error: Error }>();
+)<
+  { id: string },
+  UIMessage,
+  { id: string; error: Error; kind: LoadMessageByIdFailureKind }
+>();
 
 /**
  * Load a single message's details given its ID

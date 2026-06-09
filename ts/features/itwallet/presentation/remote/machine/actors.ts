@@ -19,6 +19,7 @@ import {
 import { CredentialsVault } from "../../../credentials/utils/vault";
 import { itwIntegrityKeyTagSelector } from "../../../issuance/store/selectors";
 import {
+  ClientIdPrefix,
   enrichPresentationDetails,
   getInvalidCredentials
 } from "../utils/itwRemotePresentationUtils";
@@ -80,6 +81,11 @@ export const createRemoteActorsImplementation = (
     const { qrCodePayload } = input;
     assert(qrCodePayload?.client_id, "Missing required client ID");
 
+    const rpUrl = qrCodePayload.client_id.replace(
+      ClientIdPrefix.OPENID_FEDERATION,
+      ""
+    );
+
     const trustAnchorEntityConfig =
       await ioWallet.Trust.getTrustAnchorEntityConfiguration(
         env.WALLET_TA_BASE_URL
@@ -87,7 +93,7 @@ export const createRemoteActorsImplementation = (
 
     // Create the trust chain for the Relying Party
     const builtChainJwts = await ioWallet.Trust.buildTrustChain(
-      qrCodePayload.client_id,
+      rpUrl,
       trustAnchorEntityConfig
     );
 
@@ -104,9 +110,7 @@ export const createRemoteActorsImplementation = (
 
     // Determine the Relying Party configuration and subject
     const { rpConf } =
-      await ioWallet.RemotePresentation.evaluateRelyingPartyTrust(
-        qrCodePayload.client_id
-      );
+      await ioWallet.RemotePresentation.evaluateRelyingPartyTrust(rpUrl);
 
     return { rpConf };
   });
@@ -122,6 +126,8 @@ export const createRemoteActorsImplementation = (
 
     const ioWallet = getIoWallet(itwVersion);
 
+    // `getRequestObject` expects a full URL to be passed, so it is reconstructed from the QR code payload.
+    // The host and path segments are actually not relevant, only the query parameters are.
     const authRequestUrl = `${IO_UNIVERSAL_LINK_PREFIX}/itw/auth?${new URLSearchParams(
       qrCodePayload
     )}`;
@@ -153,7 +159,6 @@ export const createRemoteActorsImplementation = (
       requestObjectEncodedJwt,
       "Missing required input requestObjectEncodedJwt"
     );
-    assert(rpConf, "Missing required input rpConf");
 
     const wiaSdJwt = walletInstanceAttestation[CredentialFormat.SD_JWT];
     assert(wiaSdJwt, "Missing Wallet Attestation in SD-JWT format");
@@ -165,11 +170,22 @@ export const createRemoteActorsImplementation = (
       await ioWallet.RemotePresentation.verifyRequestObject(
         requestObjectEncodedJwt,
         {
-          rpConf,
           clientId: client_id,
-          state
+          state,
+          rpConf
         }
       );
+
+    // Optional certificate chain validation, if supported by the specs version
+    if (
+      requestObject.x5c &&
+      ioWallet.RemotePresentation.verifyAuthRequestCertificateChain
+    ) {
+      await ioWallet.RemotePresentation.verifyAuthRequestCertificateChain(
+        requestObjectEncodedJwt,
+        { caRootCert: env.X509_CERT_ROOT }
+      );
+    }
 
     assert(requestObject.dcql_query, "Missing required DCQL query");
 
@@ -192,10 +208,7 @@ export const createRemoteActorsImplementation = (
     // Prepare credentials to evaluate the Relying Party request
     const credentialsSdJwt = prepareCredentialsForDcqlEvaluation([
       ...credentialsData,
-      {
-        keyTag: WIA_KEYTAG,
-        credential: wiaSdJwt.endsWith("~") ? wiaSdJwt : `${wiaSdJwt}~`
-      }
+      { keyTag: WIA_KEYTAG, credential: wiaSdJwt }
     ]);
 
     // Evaluate the DCQL query against the credentials contained in the Wallet
@@ -225,7 +238,7 @@ export const createRemoteActorsImplementation = (
       input;
 
     assert(
-      rpConf && presentationDetails && requestObject,
+      presentationDetails && requestObject,
       "Missing required sendAuthorizationResponse actor params"
     );
 

@@ -37,11 +37,6 @@ import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingM
 import { AsyncCredentialsCatalogue } from "../components/AsyncCredentialsCatalogueWrapper.tsx";
 import { itwAvailableCredentialsListSelector } from "../../credentialsCatalogue/store/selectors";
 
-const activeBadge: Badge = {
-  variant: "success",
-  text: I18n.t("features.wallet.onboarding.badge.active")
-};
-
 const WalletCardOnboardingScreen = () => {
   const isItwValid = useIOSelector(itwLifecycleIsValidSelector);
   const isItwEnabled = useIOSelector(isItwEnabledSelector);
@@ -129,21 +124,24 @@ const OtherCardsOnboardingSection = (props: { showTitle?: boolean }) => {
     });
   };
 
-  const cgnModule = useMemo(
-    () =>
-      isCgnLoading ? (
-        <ModuleCredential testID="cgnModuleLoadingTestID" isLoading={true} />
-      ) : (
-        <ModuleCredential
-          testID="cgnModuleTestID"
-          image={require("../../../../../img/bonus/cgn/cgn_logo.png")}
-          label={I18n.t("features.wallet.onboarding.options.cgn")}
-          onPress={!isCgnActive ? startCgnActivation : undefined}
-          badge={isCgnActive ? activeBadge : undefined}
-        />
-      ),
-    [isCgnActive, isCgnLoading, startCgnActivation]
-  );
+  const cgnModule = useMemo(() => {
+    const activeBadge: Badge = {
+      variant: "success",
+      text: I18n.t("features.wallet.onboarding.badge.active")
+    };
+
+    return isCgnLoading ? (
+      <ModuleCredential testID="cgnModuleLoadingTestID" isLoading={true} />
+    ) : (
+      <ModuleCredential
+        testID="cgnModuleTestID"
+        image={require("../../../../../img/bonus/cgn/cgn_logo.png")}
+        label={I18n.t("features.wallet.onboarding.options.cgn")}
+        onPress={!isCgnActive ? startCgnActivation : undefined}
+        badge={isCgnActive ? activeBadge : undefined}
+      />
+    );
+  }, [isCgnActive, isCgnLoading, startCgnActivation]);
 
   return (
     <View>

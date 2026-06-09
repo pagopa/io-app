@@ -25,6 +25,8 @@ const ItwPresentationAdditionalInfoSection = ({ credential }: Props) => {
     case CredentialType.EDUCATION_DEGREE:
     case CredentialType.EDUCATION_ENROLLMENT:
     case CredentialType.RESIDENCY:
+    case CredentialType.EDUCATION_DIPLOMA:
+    case CredentialType.EDUCATION_ATTENDANCE:
       return (
         <ItwPresentationNewCredentialValidityAlert
           credentialType={credential.credentialType}

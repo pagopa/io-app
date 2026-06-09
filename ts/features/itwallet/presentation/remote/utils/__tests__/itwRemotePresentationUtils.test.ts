@@ -211,7 +211,7 @@ describe("enrichPresentationDetails", () => {
           presentationFrame: { name: true, surname: true }
         }
       ],
-      { PersonIdentificationData: storedCredentialMock }
+      { pid: storedCredentialMock }
     );
 
     expect(result.claimsToDisplay).toEqual([
@@ -238,7 +238,7 @@ describe("enrichPresentationDetails", () => {
           presentationFrame: { name: true, surname: true, iat: true }
         }
       ],
-      { PersonIdentificationData: storedCredentialMock }
+      { pid: storedCredentialMock }
     );
 
     expect(result.claimsToDisplay).toEqual([
@@ -264,7 +264,7 @@ describe("enrichPresentationDetails", () => {
     };
     expect(
       enrichPresentationDetails([missingCredentialDetails], {
-        PersonIdentificationData: storedCredentialMock
+        pid: storedCredentialMock
       })
     ).toEqual([
       {

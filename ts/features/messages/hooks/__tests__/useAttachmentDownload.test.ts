@@ -1,7 +1,8 @@
+import I18n from "i18next";
 import { act, renderHook, waitFor } from "@testing-library/react-native";
 import RNFS from "react-native-fs";
-import { ServiceId } from "../../../../../definitions/backend/ServiceId";
-import { ThirdPartyAttachment } from "../../../../../definitions/backend/ThirdPartyAttachment";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
+import { ThirdPartyAttachment } from "../../../../../definitions/communication/ThirdPartyAttachment";
 import { isAarAttachmentTtlError } from "../../../pn/aar/utils/aarErrorMappings";
 import {
   trackPNAttachmentDownloadFailure,
@@ -47,10 +48,6 @@ jest.mock("@pagopa/io-app-design-system", () => ({
   useIOToast: () => ({
     error: mockErrorToast
   })
-}));
-
-jest.mock("i18next", () => ({
-  t: (key: string) => key
 }));
 
 jest.mock("react-native-fs", () => ({
@@ -385,11 +382,11 @@ describe("useAttachmentDownload", () => {
     }>([
       {
         isTtlError: false,
-        expectedToast: "messageDetails.attachments.failing.details"
+        expectedToast: I18n.t("messageDetails.attachments.failing.details")
       },
       {
         isTtlError: true,
-        expectedToast: "messageDetails.attachments.failing.aarTtlError"
+        expectedToast: I18n.t("messageDetails.attachments.failing.aarTtlError")
       }
     ])(
       "should show the expected toast when isTtlError=$isTtlError",

@@ -60,7 +60,6 @@ target 'IO' do
  
   config = use_native_modules!(config_command)
 
-  pod 'RNCPushNotificationIOS', :path => '../node_modules/@react-native-community/push-notification-ios'
   use_react_native!(
     :path => config[:reactNativePath],
     # An absolute path to your application root.
@@ -68,7 +67,6 @@ target 'IO' do
   )
 
   post_install do |installer|
-    # https://github.com/facebook/react-native/blob/main/packages/react-native/scripts/react_native_pods.rb#L197-L202
     react_native_post_install(
       installer,
       config[:reactNativePath],

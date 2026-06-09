@@ -1,17 +1,17 @@
-import { defineConfig, globalIgnores } from "eslint/config";
 import { fixupConfigRules } from "@eslint/compat";
 import { FlatCompat } from "@eslint/eslintrc";
-import { createRequire } from "module";
-import { fileURLToPath } from "url";
-import { dirname } from "path";
-import pagopaConfig from "@pagopa/eslint-config";
-import tseslint from "typescript-eslint";
-import reactNativeConfig from "@react-native/eslint-config/flat";
-import importPlugin from "eslint-plugin-import";
-import functional from "eslint-plugin-functional";
-import sonarjs from "eslint-plugin-sonarjs";
-import i18Next from "eslint-plugin-i18next";
 import js from "@eslint/js";
+import pagopaConfig from "@pagopa/eslint-config";
+import reactNativeConfig from "@react-native/eslint-config/flat";
+import functional from "eslint-plugin-functional";
+import i18Next from "eslint-plugin-i18next";
+import importPlugin from "eslint-plugin-import";
+import sonarjs from "eslint-plugin-sonarjs";
+import { defineConfig, globalIgnores } from "eslint/config";
+import { createRequire } from "module";
+import { dirname } from "path";
+import tseslint from "typescript-eslint";
+import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -56,7 +56,11 @@ export default defineConfig([
   {
     files: ["**/*.ts", "**/*.tsx"],
     extends: [
-      ...reactNativeConfigWithoutTsPlugin,
+      js.configs.recommended,
+      // Only include rules from tseslint, not the plugin registration,
+      // because @react-native/eslint-config/flat already registers @typescript-eslint
+      ...tseslint.configs.recommended.filter(c => !c.plugins),
+      ...reactNativeConfig,
       ...fixupConfigRules(compat.extends("plugin:react-native-a11y/all"))
     ],
 
@@ -261,6 +265,15 @@ export default defineConfig([
       "typed-redux-saga/delegate-effects": "error",
 
       // IMPORTS
+      "import/no-extraneous-dependencies": [
+        "error",
+        {
+          devDependencies: true,
+          optionalDependencies: false,
+          peerDependencies: false
+        }
+      ],
+
       "no-restricted-imports": [
         "error",
         {

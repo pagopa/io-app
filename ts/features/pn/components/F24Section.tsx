@@ -4,7 +4,7 @@ import { useIOSelector } from "../../../store/hooks";
 import { thirdPartyMessageAttachments } from "../../messages/store/reducers/thirdPartyById";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
 import { MessageDetailsAttachmentItem } from "../../messages/components/MessageDetail/MessageDetailsAttachmentItem";
-import { ServiceId } from "../../../../definitions/backend/ServiceId";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
 import {
   SendOpeningSource,
   SendUserType

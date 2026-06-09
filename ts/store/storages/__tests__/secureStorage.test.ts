@@ -1,10 +1,15 @@
 import * as SecureStorage from "@pagopa/io-react-native-secure-storage";
 import createSecureStorage, { isValueNotFoundError } from "../secureStorage";
+import * as analytics from "../../../utils/analytics";
 
 jest.mock("@pagopa/io-react-native-secure-storage", () => ({
   get: jest.fn(),
   put: jest.fn(),
   remove: jest.fn()
+}));
+
+jest.mock("../../../utils/analytics", () => ({
+  trackAppCaughtError: jest.fn()
 }));
 
 describe("SecureStorage", () => {
@@ -29,6 +34,10 @@ describe("SecureStorage", () => {
     const myKey = "myKey";
     const myValue = "myValue";
 
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
     describe("getItem", () => {
       it("should return the value when SecureStorage.get succeeds", async () => {
         (SecureStorage.get as jest.Mock).mockResolvedValue(myValue);
@@ -46,6 +55,7 @@ describe("SecureStorage", () => {
 
         const result = await storage.getItem(myKey);
         expect(result).toBeUndefined();
+        expect(analytics.trackAppCaughtError).not.toHaveBeenCalled();
       });
 
       it("should return undefined AND track error on generic failures", async () => {
@@ -54,6 +64,12 @@ describe("SecureStorage", () => {
 
         const result = await storage.getItem(myKey);
         expect(result).toBeUndefined();
+        expect(analytics.trackAppCaughtError).toHaveBeenCalledTimes(1);
+        expect(analytics.trackAppCaughtError).toHaveBeenCalledWith(
+          "createSecureStorage.getItem",
+          `SecureStorage threw an exception on ${myKey}`,
+          expect.stringContaining("Decryption failed")
+        );
       });
     });
 
@@ -63,6 +79,20 @@ describe("SecureStorage", () => {
 
         await storage.setItem(myKey, myValue);
         expect(SecureStorage.put).toHaveBeenCalledWith(myKey, myValue);
+        expect(analytics.trackAppCaughtError).not.toHaveBeenCalled();
+      });
+
+      it("should track error when SecureStorage.put throws", async () => {
+        const error = new Error("Encryption failed");
+        (SecureStorage.put as jest.Mock).mockRejectedValue(error);
+
+        await storage.setItem(myKey, myValue);
+        expect(analytics.trackAppCaughtError).toHaveBeenCalledTimes(1);
+        expect(analytics.trackAppCaughtError).toHaveBeenCalledWith(
+          "createSecureStorage.setItem",
+          `SecureStorage threw an exception on ${myKey}`,
+          expect.stringContaining("Encryption failed")
+        );
       });
     });
 
@@ -72,6 +102,20 @@ describe("SecureStorage", () => {
 
         await storage.removeItem(myKey);
         expect(SecureStorage.remove).toHaveBeenCalledWith(myKey);
+        expect(analytics.trackAppCaughtError).not.toHaveBeenCalled();
+      });
+
+      it("should track error when SecureStorage.remove throws", async () => {
+        const error = new Error("Remove failed");
+        (SecureStorage.remove as jest.Mock).mockRejectedValue(error);
+
+        await storage.removeItem(myKey);
+        expect(analytics.trackAppCaughtError).toHaveBeenCalledTimes(1);
+        expect(analytics.trackAppCaughtError).toHaveBeenCalledWith(
+          "createSecureStorage.removeItem",
+          `SecureStorage threw an exception on ${myKey}`,
+          expect.stringContaining("Remove failed")
+        );
       });
     });
   });

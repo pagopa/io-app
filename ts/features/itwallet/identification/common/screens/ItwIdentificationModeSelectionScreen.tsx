@@ -36,7 +36,7 @@ export type ItwIdentificationNavigationParams = {
   eidReissuing?: boolean;
   level?: EidIssuanceLevel;
   credentialType?: string;
-  animationEnabled?: boolean;
+  disableAnimation?: boolean;
 };
 
 export type ItwIdentificationModeSelectionScreenProps =

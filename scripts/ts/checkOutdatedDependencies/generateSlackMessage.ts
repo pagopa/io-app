@@ -97,7 +97,7 @@ export const generateSlackMessage = (
 
   return [
     outdatedEmoji[Math.floor(Math.random() * outdatedEmoji.length)] +
-      " `yarn outdated` weekly report for :io-app: App:\n" +
+      " `pnpm outdated` weekly report for :io-app: App:\n" +
       table,
     mostOutdatedSection
   ];

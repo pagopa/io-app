@@ -1,7 +1,7 @@
-import { MessageCategory } from "../../../../definitions/backend/MessageCategory";
-import { TagEnum } from "../../../../definitions/backend/MessageCategoryBase";
-import { MessageCategoryPN } from "../../../../definitions/backend/MessageCategoryPN";
-import { MessageCategoryPayment } from "../../../../definitions/backend/MessageCategoryPayment";
+import { MessageCategory } from "../../../../definitions/communication/MessageCategory";
+import { TagEnum } from "../../../../definitions/communication/MessageCategoryBase";
+import { MessageCategoryPN } from "../../../../definitions/communication/MessageCategoryPN";
+import { MessageCategoryPayment } from "../../../../definitions/communication/MessageCategoryPayment";
 
 export const foldMessageCategoryK =
   <A>(

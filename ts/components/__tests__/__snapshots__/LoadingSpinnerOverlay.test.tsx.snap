@@ -144,7 +144,7 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
                   }
                   gradientTransform={null}
                   gradientUnits={0}
-                  name="«r1»-secondHalf"
+                  name="_r_1_-secondHalf"
                   x1="0%"
                   x2="100%"
                   y1="0%"
@@ -161,7 +161,7 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
                   }
                   gradientTransform={null}
                   gradientUnits={0}
-                  name="«r1»-firstHalf"
+                  name="_r_1_-firstHalf"
                   x1="0%"
                   x2="100%"
                   y1="0%"
@@ -197,7 +197,7 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
                   }
                   stroke={
                     {
-                      "brushRef": "«r1»-secondHalf",
+                      "brushRef": "_r_1_-secondHalf",
                       "type": 1,
                     }
                   }
@@ -217,7 +217,7 @@ exports[`LoadingSpinnerOverlay Should match all-properties and loading snapshot 
                   }
                   stroke={
                     {
-                      "brushRef": "«r1»-firstHalf",
+                      "brushRef": "_r_1_-firstHalf",
                       "type": 1,
                     }
                   }
@@ -702,7 +702,7 @@ exports[`LoadingSpinnerOverlay Should match base loading snapshot 1`] = `
                   }
                   gradientTransform={null}
                   gradientUnits={0}
-                  name="«r0»-secondHalf"
+                  name="_r_0_-secondHalf"
                   x1="0%"
                   x2="100%"
                   y1="0%"
@@ -719,7 +719,7 @@ exports[`LoadingSpinnerOverlay Should match base loading snapshot 1`] = `
                   }
                   gradientTransform={null}
                   gradientUnits={0}
-                  name="«r0»-firstHalf"
+                  name="_r_0_-firstHalf"
                   x1="0%"
                   x2="100%"
                   y1="0%"
@@ -755,7 +755,7 @@ exports[`LoadingSpinnerOverlay Should match base loading snapshot 1`] = `
                   }
                   stroke={
                     {
-                      "brushRef": "«r0»-secondHalf",
+                      "brushRef": "_r_0_-secondHalf",
                       "type": 1,
                     }
                   }
@@ -775,7 +775,7 @@ exports[`LoadingSpinnerOverlay Should match base loading snapshot 1`] = `
                   }
                   stroke={
                     {
-                      "brushRef": "«r0»-firstHalf",
+                      "brushRef": "_r_0_-firstHalf",
                       "type": 1,
                     }
                   }
