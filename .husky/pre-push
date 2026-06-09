@@ -9,11 +9,11 @@ echo "$unstagedFiles"
 
 # Compile the project
 echo "🔨 compiling..."
-pnpm tsc:noemit
+pnpm nx affected --target=tsc-noemit
 
 # Run lintier
 echo "🧹 running linter..."  
-pnpm lint-autofix
+pnpm nx affected --target=lint --fix --cache
 # Run prettifier
 echo "🧼 running formatter..."
 pnpm prettify
