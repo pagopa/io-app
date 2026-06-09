@@ -7,9 +7,11 @@ import {
   itwCredentialsRemove,
   itwCredentialsStore
 } from "../../credentials/store/actions";
+import { itwFetchCredentialsCatalogue } from "../../credentialsCatalogue/store/actions";
 import { updateItwAnalyticsProperties } from "../properties/propertyUpdaters";
 import {
   handleCredentialRemovedAnalytics,
+  handleCredentialsCatalogueLoadedAnalytics,
   handleCredentialStoredAnalytics
 } from "./credentialAnalyticsHandlers";
 
@@ -33,6 +35,10 @@ export function* syncItwAnalyticsProperties() {
 export function* watchItwCredentialsAnalyticsSaga(): SagaIterator {
   yield* takeEvery(itwCredentialsStore, handleCredentialStoredAnalytics);
   yield* takeEvery(itwCredentialsRemove, handleCredentialRemovedAnalytics);
+  yield* takeEvery(
+    itwFetchCredentialsCatalogue.success,
+    handleCredentialsCatalogueLoadedAnalytics
+  );
 }
 
 /**

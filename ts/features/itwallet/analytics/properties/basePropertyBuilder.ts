@@ -16,8 +16,16 @@ import { mapPIDStatusToMixpanel } from "../utils";
 import {
   CREDENTIAL_STATUS_MAP,
   ItwCredentialMixpanelStatus,
-  ItwStatus
+  ItwStatus,
+  ItwThirdPartyCredentials,
+  ItwWalletListCredential
 } from "../utils/types";
+import { itwCredentialsCatalogueByTypesSelector } from "../../credentialsCatalogue/store/selectors";
+import {
+  isL2Credential,
+  isNewCredential,
+  validCredentialStatuses
+} from "../../common/utils/itwCredentialUtils.ts";
 import { ItwBaseProperties } from "./propertyTypes";
 
 /**
@@ -35,6 +43,8 @@ export const buildItwBaseProperties = (
       itwIdentificationModeSelector(state),
       itwLifecycleIsITWalletValidSelector(state)
     ),
+    ITW_THIRD_PARTY_CREDENTIAL: buildThirdPartyCredentialProperty(state),
+    ITW_WALLET_LIST_CREDENTIAL: buildWalletListCredentialProperty(state),
     ...pidProps,
     ...credentialProps
   };
@@ -153,3 +163,69 @@ export const computeItwStatus = (
       return authLevel;
   }
 };
+
+/**
+ * Builds the aggregate Mixpanel status for third-party credentials.
+ * The property ignores PID and historical L2 credentials because it tracks only
+ * credentials obtained through the third-party/catalogue channel.
+ */
+export const buildThirdPartyCredentialProperty = (
+  state: GlobalState
+): ItwThirdPartyCredentials => {
+  const catalogueByType = itwCredentialsCatalogueByTypesSelector(state);
+
+  const thirdPartyCredentials = Object.values(
+    itwCredentialsSelector(state)
+  ).filter(({ credentialType }) =>
+    isThirdPartyCredentialType(credentialType, catalogueByType)
+  );
+
+  if (thirdPartyCredentials.length === 0) {
+    return "not_available";
+  }
+
+  return thirdPartyCredentials.some(credential =>
+    validCredentialStatuses.includes(getCredentialStatus(credential))
+  )
+    ? "valid"
+    : "not_valid";
+};
+
+export const buildWalletListCredentialProperty = (
+  state: GlobalState
+): ItwWalletListCredential => {
+  const catalogueByType = itwCredentialsCatalogueByTypesSelector(state);
+
+  const walletListCredentials = Object.values(
+    itwCredentialsSelector(state)
+  ).filter(({ credentialType }) =>
+    isWalletListCredentialType(credentialType, catalogueByType)
+  );
+
+  if (walletListCredentials.length === 0) {
+    return "not_available";
+  }
+
+  return walletListCredentials.some(credential =>
+    validCredentialStatuses.includes(getCredentialStatus(credential))
+  )
+    ? "valid"
+    : "not_valid";
+};
+
+const isThirdPartyCredentialType = (
+  credentialType: string,
+  catalogueByType: ReturnType<typeof itwCredentialsCatalogueByTypesSelector>
+) =>
+  credentialType !== CredentialType.PID &&
+  !isL2Credential(credentialType) &&
+  (isNewCredential(credentialType) ||
+    catalogueByType?.[credentialType] !== undefined);
+
+const isWalletListCredentialType = (
+  credentialType: string,
+  catalogueByType: ReturnType<typeof itwCredentialsCatalogueByTypesSelector>
+) =>
+  credentialType !== CredentialType.PID &&
+  !isL2Credential(credentialType) &&
+  catalogueByType?.[credentialType] !== undefined;
