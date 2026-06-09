@@ -41,7 +41,7 @@ type SuperProperties = {
   isScreenReaderEnabled: boolean;
   fontScale: number;
   appReadableVersion: string;
-  colorScheme: ColorSchemeName;
+  colorScheme: ColorSchemeName | null | undefined;
   biometricTechnology: BiometricsType;
   isScreenLockSet: boolean;
   LOGIN_SESSION: LoginSessionDuration;

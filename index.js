@@ -17,12 +17,11 @@ import {
 } from "react-native-exception-handler";
 
 import App from "./ts/App";
-import { initI18n } from "./ts/i18n";
+import "./ts/i18n";
 import { isMixpanelInstanceInitialized, mixpanelTrack } from "./ts/mixpanel";
 import { name as appName } from "./app.json";
 import { initializePushNotifications } from "./ts/features/pushNotifications/utils/configurePushNotification";
 
-void initI18n();
 void initializePushNotifications()
 
 const errorHandler = (e, isFatal) => {
