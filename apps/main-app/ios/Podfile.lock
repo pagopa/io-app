@@ -2685,7 +2685,7 @@ PODS:
     - Yoga
   - react-native-screen-brightness (2.0.0-alpha):
     - React
-  - react-native-skia (2.4.18):
+  - react-native-skia (2.6.4):
     - boost
     - DoubleConversion
     - fast_float
@@ -3537,7 +3537,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - RNReanimated (4.2.2):
+  - RNReanimated (4.3.1):
     - boost
     - DoubleConversion
     - fast_float
@@ -3564,11 +3564,12 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - RNReanimated/reanimated (= 4.2.2)
+    - RNReanimated/apple (= 4.3.1)
+    - RNReanimated/common (= 4.3.1)
     - RNWorklets
     - SocketRocket
     - Yoga
-  - RNReanimated/reanimated (4.2.2):
+  - RNReanimated/apple (4.3.1):
     - boost
     - DoubleConversion
     - fast_float
@@ -3595,11 +3596,10 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - RNReanimated/reanimated/apple (= 4.2.2)
     - RNWorklets
     - SocketRocket
     - Yoga
-  - RNReanimated/reanimated/apple (4.2.2):
+  - RNReanimated/common (4.3.1):
     - boost
     - DoubleConversion
     - fast_float
@@ -3773,7 +3773,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - RNWorklets (0.7.4):
+  - RNWorklets (0.8.3):
     - boost
     - DoubleConversion
     - fast_float
@@ -3800,10 +3800,11 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - RNWorklets/worklets (= 0.7.4)
+    - RNWorklets/apple (= 0.8.3)
+    - RNWorklets/common (= 0.8.3)
     - SocketRocket
     - Yoga
-  - RNWorklets/worklets (0.7.4):
+  - RNWorklets/apple (0.8.3):
     - boost
     - DoubleConversion
     - fast_float
@@ -3830,10 +3831,9 @@ PODS:
     - ReactCodegen
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
-    - RNWorklets/worklets/apple (= 0.7.4)
     - SocketRocket
     - Yoga
-  - RNWorklets/worklets/apple (0.7.4):
+  - RNWorklets/common (0.8.3):
     - boost
     - DoubleConversion
     - fast_float
@@ -4468,7 +4468,7 @@ SPEC CHECKSUMS:
   react-native-randombytes: 4eeddad82d1fd57adda1cd5beffe67d041c9d6de
   react-native-safe-area-context: befb5404eb8a16fdc07fa2bebab3568ecabcbb8a
   react-native-screen-brightness: 16a7b26d12d89654fc6a2e9ff1e55c1a4a10afcb
-  react-native-skia: 03e8994164f792bc9fa464ed475e7f8edce36d0e
+  react-native-skia: 80db9e2f8f8b16f8f22b563f0a3874c14026c1e2
   react-native-splash-screen: a43276f9cf4b2e65d7ce30efe372ffc528064293
   react-native-webview: 654f794a7686b47491cf43aa67f7f428bea00eed
   react-native-worklets-core: aaaac7d17f7e576592369a54f30e96fe4875c983
@@ -4517,11 +4517,11 @@ SPEC CHECKSUMS:
   RNPermissions: 17e12d62da7494e48c47ccb800a6214d036cfc19
   RNQrGenerator: 3318e98283e861e9d93e58111fc4de8e03e2ddb3
   RNReactNativeHapticFeedback: be4f1b4bf0398c30b59b76ed92ecb0a2ff3a69c6
-  RNReanimated: 8182ef6e805d04dce3618f1a843cb8d2f9ae23b4
+  RNReanimated: c26dfcd831add485c2ed93de9d7bfb90b035eeaa
   RNScreens: c77cc7a5d1fbc23f0725b54e96eec81118453382
   RNShare: 1dba46787d6e5543e05655efaefa0e4bb98380d9
   RNSVG: 3405336c4507ee0bafb02b08058d57216daa2c50
-  RNWorklets: d9fe4a51421f69ce78bb415a7e0710c15fe61150
+  RNWorklets: b89b501d37972e6419d6f87effe41d6d76157648
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   SwiftCBOR: b873af28a9cc66003852fdc79a41852a7e54009a
   VisionCamera: 0044a94f7489f19e19d5938e97dfc36f4784af3c
