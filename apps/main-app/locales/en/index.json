@@ -1,0 +1,2631 @@
+{
+  "accessibility": {
+    "buttons": {
+      "navigateBack": "Navigate back",
+      "torch": {
+        "turnOn": "Turn on the flashlight",
+        "turnOff": "Turn off the flashlight"
+      }
+    }
+  },
+  "date": {
+    "time": {
+      "minutes_zero": "0 minutes",
+      "minutes_one": "1 minute",
+      "minutes_other": "{{count}} minutes",
+      "seconds_zero": "0 seconds",
+      "seconds_one": "1 second",
+      "seconds_other": "{{count}} seconds"
+    }
+  },
+  "global": {
+    "badges": {
+      "onGoing": "Ongoing",
+      "failed": "Failed",
+      "cancelled": "Cancelled",
+      "reversal": "Reversal"
+    },
+    "modules": {
+      "paymentNotice": {
+        "badges": {
+          "paid": "Paid",
+          "error": "Error",
+          "expired": "Expired",
+          "revoked": "Revoked",
+          "canceled": "Canceled",
+          "inprogress": "Ongoing"
+        }
+      }
+    },
+    "username": "Username",
+    "sectionStatus": {
+      "moreInfo": "Want to know more?"
+    },
+    "accessibility": {
+      "minusSymbol": "minus",
+      "reload": "Reload",
+      "search": "Search",
+      "dateFormat": "MMMM Do YYYY",
+      "alert": "Alert",
+      "activityIndicator": {
+        "label": "Loading",
+        "hint": "Wait for the content load"
+      },
+      "contextualHelp": {
+        "close": "Close the contextual help",
+        "open": {
+          "label": "Contextual Help",
+          "hint": "Access information about the contents of the current screen"
+        }
+      },
+      "list": {
+        "counter": "Element {{index}} of {{total}}"
+      },
+      "progressTracker": "{{index}} of {{total}}"
+    },
+    "date": {
+      "invalid": "invalid date"
+    },
+    "genericError": "There is a temporary problem, please try again.",
+    "genericAlert": "Warning!",
+    "genericWaiting": "Wait a few seconds..",
+    "genericRetry": "Try again",
+    "jserror": {
+      "title": "Unexpected error occurred"
+    },
+    "markdown": {
+      "decodeError": "Message can't be decoded"
+    },
+    "buttons": {
+      "share": "Share",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "settings": "Settings",
+      "continue": "Continue",
+      "notNow": "Maybe later",
+      "retry": "Retry",
+      "back": "Back",
+      "confirm": "Confirm",
+      "close": "Close",
+      "next": "Next",
+      "previous": "Previous",
+      "exit": "Exit",
+      "edit": "Edit",
+      "activate": "Enable",
+      "activate2": "Enable",
+      "show": "Show",
+      "update": "Update",
+      "updateIO": "Update IO",
+      "findOutMore": "Find out more",
+      "whatCanYouDo": "What can you do?"
+    },
+    "navigator": {
+      "messages": "Messages",
+      "wallet": "Wallet",
+      "scan": "Scan",
+      "payments": "Payments",
+      "services": "Services"
+    },
+    "actions": {
+      "retry": "An error occurred, please retry"
+    },
+    "remoteStates": {
+      "loading": "Loading...",
+      "wait": "Wait a few seconds..",
+      "notAvailable": "Not available"
+    }
+  },
+  "tablet": {
+    "message": "The IO interface is optimized for smartphones, but all the functions compatible with your device are still available."
+  },
+  "appFeedback": {
+    "alert": {
+      "title": "Do you like IO app?",
+      "description": "We'll use your answer to improve our services.",
+      "continue": "Yes, I like it",
+      "discard": "I don't like it"
+    }
+  },
+  "rooted": {
+    "title": "Looks like the security of your device has been compromised!",
+    "body": "If you press 'Continue', you agree to continue browsing at your own risk, otherwise close the app.",
+    "learnMoreButton": {
+      "title": "What does it mean?"
+    },
+    "learnMoreBottomsheet": {
+      "title": "Device security"
+    },
+    "bodyiOS": "A **jailbreak** has been performed on your device. This happens when the operating system is modified or incorrectly installed. This could compromise the integrity of the system and the IO application may not function properly.\n\n**What should you do?**\n\nUse the IO app on a device with an intact and up-to-date operating system.\n\nBy continuing, you agree to continue to interact with the services offered at your own risk. Lack of integrity can lead to data theft or other fraudulent activities. You also agree that the app developer shall not be liable in any way for any damage, loss or consequence caused by the IO app in connection with this performance.\n",
+    "bodyAndroid": "You have **root permissions** active on your device. This happens when the operating system is modified or incorrectly installed. This could compromise the integrity of the system and the IO application may not function properly.\n\n**What should you do?**\n\nUse the IO app on a device with an intact and up-to-date operating system.\n\nBy continuing, you agree to continue to interact with the services offered at your own risk. Lack of integrity can lead to data theft or other fraudulent activities. You also agree that the app developer shall not be liable in any way for any damage, loss or consequence caused by the IO app in connection with this performance.\n"
+  },
+  "locales": {
+    "it": "Italian",
+    "en": "English",
+    "de": "German",
+    "fr": "French",
+    "sl": "Slovenian"
+  },
+  "clipboard": {
+    "copyIntoClipboard": "copy to clipboard",
+    "copyFeedback": "Copied to clipboard"
+  },
+  "errors": {
+    "profileUpdateError": "An error occurred while updating your profile."
+  },
+  "permissionRationale": {
+    "calendar": {
+      "title": "Allow calendar access",
+      "message": "You’ll be able to add deadlines to your calendar and set a reminder."
+    }
+  },
+  "startup": {
+    "title": "We are getting ready for your experience on IO",
+    "title2": "Just a little more patience...",
+    "subtitle2": "Please don't close the app, it will only take 20 seconds.",
+    "userDeletePendingAlert": {
+      "title": "Profile deletion in progress",
+      "message": "If you have changed your mind, you can cancel the deletion request within the Privacy section in Settings.",
+      "cta_1": "Go to Settings",
+      "cta_2": "Discard"
+    },
+    "connection_lost": {
+      "title": "It looks like you don't have an active internet connection",
+      "description": "Check your connection and restart the app."
+    },
+    "slowdowns_results_screen": {
+      "title": "Things seem to be going a little slowly at the moment.",
+      "subtitle": "It may depend on our systems or on your device's connection. Please try again in a few minutes."
+    },
+    "cdn_unreachable_results_screen": {
+      "title": "Something went wrong",
+      "subtitle": "Close the app and try again in a few minutes."
+    }
+  },
+  "login": {
+    "help_banner_title": "Need help logging in?",
+    "help_banner_content": "Discover our step-by-step guide to get started easily.",
+    "help_banner_action": "Read how"
+  },
+  "profile": {
+    "fiscalCode": {
+      "accessibility": {
+        "fiscalCodeHint": "Image of barcode and fiscal code. Your fiscal code is: {{fiscalCode}}"
+      },
+      "title": "Your personal documents",
+      "fiscalCode": "Fiscal code",
+      "description": "Use the barcode to communicate your fiscal code when asked.",
+      "help": "**A digital version of your fiscal code is displayed here.** The facsimile does not replace the physical document, but allows to show it and read the barcode from the device itself. In the case of homebody, the data generated in the facsimile may not correspond to your personal data.\n",
+      "copyCode": "Copy fiscal code",
+      "codeCopied": "Fiscal code copied!"
+    },
+    "logout": {
+      "menulabel": "Logout from IO",
+      "alertTitle": "Do you want to logout?",
+      "alertMessage": "You will need to login again with SPID or CIE to use the app.",
+      "activeWiAlertMessage": "You will need to log in again with SPID or CIE to use the app.\n\nIf you log in to IO from a device other than your usual one, the Documenti su IO feature will be reset for security reasons.",
+      "loading": "You're leaving IO",
+      "exit": "Exit"
+    },
+    "errors": {
+      "load": "Error loading the profile",
+      "upsert": "Error creating or updating the profile"
+    },
+    "main": {
+      "forgetCurrentSession": "Forget current session",
+      "clearAsyncStorage": "Clear AsyncStorage",
+      "dumpAsyncStorage": "Dump AsyncStorage content to console",
+      "contextualHelpTitle": "What you can do in Settings section",
+      "contextualHelpContent": "**Settings section lets you manage your data and preferences.** In particular, you can manage your preferences, privacy and account.  \nIn this section you can also access your identity documents in a digital format: interact with the cards in the top part of the screen to see more details.",
+      "developerModeOn": "Developer mode enabled",
+      "cache": {
+        "alert": "Are you sure you want to clear the cache?",
+        "clear": "Clear cache",
+        "cleared": "The cache has been cleared."
+      },
+      "data": {
+        "title": "Your data",
+        "description": "Review your information"
+      },
+      "preferences": {
+        "title": "Preferences",
+        "description": "Customize your app experience"
+      },
+      "security": {
+        "title": "Security and login",
+        "description": "Manage biometric access and unlock code"
+      },
+      "privacy": {
+        "title": "Privacy Policy and Terms of Service",
+        "description": "Your rights and obligations when using IO",
+        "subtitle": "Here you will find information about your rights and obligations regarding your use of the app and the processing of your personal data.",
+        "loading": "Wait few seconds, we're checking your profile...",
+        "status": "status",
+        "errorMessage": "We can't retrieve the status of your request at the moment. Please try again.",
+        "removeAccount": {
+          "title": "Delete your profile",
+          "description": "Delete your account and your personal data",
+          "alert": {
+            "activeBonusTitle": "Delete your profile",
+            "activeBonusDescription": "It seems that you have joined some initiatives on IO. Deleting your profile will not remove your subscriptions to the initiatives you have joined.\n\nTo manage them, go to the Portfolio section, otherwise choose 'Delete'",
+            "oldRequest": "You already asked for your profile to be deleted",
+            "oldRequestSubtitle": "We are processing your request.\n\nIf you have changed your mind or have requested deletion by mistake, please press 'Cancel Removal'.",
+            "cta": {
+              "manageBonus": "Go to Wallet",
+              "continue": "Delete profile",
+              "return": "Return",
+              "cancel": "Cancel deletion"
+            }
+          },
+          "info": {
+            "title": "Delete your profile",
+            "description": "You can delete your IO profile at any time.",
+            "banner": "Your profile will be deleted within 30 days of your request.",
+            "body": "If you decide to continue, you will no longer be able to retrieve the messages or preferences you have set in the app.\n\nAny bonuses or discounts you get via the IO app **won't be available anymore.**\n\nYou can re-subscribe to the IO App at any time by carrying out a new registration procedure with SPID or CIE.",
+            "cta": "Delete"
+          },
+          "details": {
+            "title": "Why delete your IO profile?",
+            "body": "Please tell us why you're deleting your profile so we can improve. If you don't want to share why, just click 'Delete your profile'”.",
+            "question": "What is the reason?",
+            "answer_1": "I no longer consider \"IO\" useful",
+            "answer_2": "I don't feel safe on IO",
+            "answer_3": "I've never used the app",
+            "answer_4": "None of the above",
+            "labelOpenAnswer": "Write here the reason",
+            "cta": "Delete your profile"
+          },
+          "success": {
+            "title": "We've taken over your request.",
+            "body": "We've taken over your request and we will delete your account within 30 days. You can re-subscribe to the IO App at any time with SPID or CIE.",
+            "cta": "Close"
+          }
+        },
+        "exportData": {
+          "cta": "Ask for a copy of the data",
+          "title": "Access your data",
+          "subtitle": "You can download your IO profile data at any time.",
+          "description": "Receive a copy of the data associated with your IO profile",
+          "a11y": "Done. You asked for a copy of your data.",
+          "detail": {
+            "body": "**Your data are:**\n- your tax code;\n- your email address and, if applicable, confirmation of its validation;\n- the text of the Messages you received;\n- your notification preferences.\n\nThe information will be downloaded in YAML format, a standard format for exchanging data between different applications.\n\nYou will get **a message on IO** with a link and password that lasts 15 days.\n\nFor more information see the **[IO Privacy Policy.](privacy://policy)**"
+          },
+          "alert": {
+            "oldRequest": "We are already proceeding to export all your data",
+            "confirmSubtitle": "After processing, you will receive an email containing all your data."
+          },
+          "error": "An error occurred while submit your exporting request, please retry!"
+        },
+        "privacyPolicy": {
+          "title": "Privacy Policy and Terms of Service",
+          "description": "Read the Privacy Policy and the Terms of Service",
+          "updated": "We updated our Terms and conditions",
+          "infobox": "It is necessary to read and accept the Terms and Conditions",
+          "contextualHelpTitlePolicy": "What is the information on the processing of personal data",
+          "contextualHelpContentPolicy": "According to what established by the art. 13 of the EU Regulation n. 2016/679 (commonly known as GDPR), here you can find the complete description of how the IO app handles personal data.\n",
+          "contextualHelpTitle": "Your privacy settings",
+          "contextualHelpContent": "**Here you can find all the information related to your privacy profile:** details on the treatment of personal data, possibility to delete your account and to export all the personal data associated with your profile.\n"
+        },
+        "shareData": {
+          "listItem": {
+            "title": "Share usage data",
+            "description": "Help the IO team to monitor the functioning of the app"
+          },
+          "screen": {
+            "title": "Your usage data",
+            "description": "Sharing your data helps us improve your experience and provide you with targeted assistance.",
+            "why": {
+              "description": "We only collect **the data we need** to monitor how the app is working and to make the services we offer better.",
+              "cta": "Why we collect data"
+            },
+            "security": {
+              "description": "We take data security seriously **and have measures in place to protect** your data.",
+              "cta": "How we keep data safe"
+            },
+            "gdpr": {
+              "description": "We only work with suppliers who process data **in a transparent and secure way.**",
+              "cta": "Who are the suppliers"
+            },
+            "additionalInformation": {
+              "description": "For more information, please read ",
+              "cta": "the Privacy Policy and Terms and Conditions"
+            },
+            "profileSettings": "You can change this choice anytime in Settings > Privacy Policy and Terms of Service",
+            "cta": {
+              "shareData": "Share",
+              "dontShareData": "Please don't share data",
+              "dontShare": "Please don't share data"
+            },
+            "confirmToast": "Preferences updated!"
+          },
+          "alert": {
+            "title": "You've opted not \nto share your data.",
+            "body": "If you confirm, we won't be able to give you the targeted help you need because we might not have the data we need to solve the problem."
+          },
+          "whyBottomSheet": {
+            "title": "Why do we collect data?",
+            "body": "We do not collect data for marketing purposes. \n\nWe use tools that allow us to record data on how you use the app, to **provide you with a better service** and **assist you if needed**."
+          }
+        }
+      },
+      "appInfo": {
+        "title": "About IO",
+        "description": "Learn more about the IO app",
+        "subtitle": "Here you can find more details about the IO app and learn more about its use.",
+        "paragraphTitle": "About IO",
+        "paragraphBody": "**IO, the public services app**, provides an efficient and convenient way for citizens to interact with institutions at the local and national level (municipalities, regions, central agencies) directly from your device. IO allows administrations to contact you in a timely and personalised manner, enabling you to manage operations related to a specific service, such as notices, payments, deadlines and notifications, in a simple and secure manner.",
+        "bannerBody": "Want to know more?",
+        "bannerButton": "Go to IO website"
+      },
+      "developersSectionHeader": "Developers",
+      "testEnvironmentSectionHeader": "Test Environment",
+      "pagoPaEnvironment": {
+        "pagoPAEnvAlert": "This change requires app reboot",
+        "pagoPAEnvAlertLocal": "The pagoPA test environment cannot be enabled with the local app build",
+        "alertConfirmTitle": "Do you want to use the pagoPA test environment?",
+        "alertConfirmMessage": "If you enable the pagoPA test environment you will no longer see the history of your transactions and your saved payment methods, and you can only use payment methods expressly created for this purpose. If you don’t understand what it means not enable this feature.",
+        "alertMessage": "The application must be restarted for the changes to take effect."
+      },
+      "idpay": {
+        "idpayTestAlert": "This change requires app reboot"
+      },
+      "loginEnvironment": {
+        "activeSession": {
+          "playground": {
+            "title": "Active session login playground"
+          }
+        }
+      },
+      "experimentalEnvironment": "Experimental interface",
+      "appVersion": "Version",
+      "debugMode": "Debug mode",
+      "banner": {
+        "close": "Close the banner and do not show it again"
+      },
+      "appearanceBanner": {
+        "title": "Do you want to change the typeface used in the app?",
+        "action": "Edit typeface style"
+      }
+    },
+    "data": {
+      "title": "Your data",
+      "subtitle": "Here you will find your personal and contact data used by the IO app.",
+      "list": {
+        "email": "Email address",
+        "nameSurname": "Name and surname",
+        "fiscalCode": "Fiscal code"
+      }
+    },
+    "security": {
+      "title": "Security and login",
+      "subtitle": "Manage in-app authentication methods.",
+      "list": {
+        "biometric_recognition": {
+          "title": "Biometric recognition",
+          "subtitle": "Use your fingerprint or your face.",
+          "needed_to_disable": "Recognition required to disable"
+        }
+      }
+    },
+    "preferences": {
+      "title": "Preferences",
+      "subtitle": "These settings allow you to customise your IO experience",
+      "genericToastTitle": "Updated preferences!",
+      "contextualHelpTitle": "Your preferences",
+      "contextualHelpContent": "**In the Preferences you can check and change the settings used by all services that communicate to you by using the IO app.** Here you can view and edit the email address, telephone number and language associated to your account, and enable or disable the biometric recognition.\n",
+      "list": {
+        "wip": "In progress",
+        "service_contact": {
+          "title": "Use of services",
+          "subtitle": "Choose who can contact you"
+        },
+        "send_email_messages": {
+          "title": "Forwarding messages by email",
+          "subtitle": "Receive message previews"
+        },
+        "appearance": {
+          "title": "Appearance",
+          "subtitle": "Customize the app to your needs",
+          "typefaceStyle": {
+            "title": "Typeface style",
+            "comfortable": {
+              "title": "Comfortable",
+              "description": "Designed for better text readability"
+            },
+            "standard": {
+              "description": "The usual style with narrow, geometric shapes"
+            }
+          },
+          "theme": {
+            "title": "Theme",
+            "automatic": {
+              "title": "Automatic",
+              "description": "Based on system settings"
+            },
+            "light": "Light",
+            "dark": "Dark"
+          }
+        },
+        "language": {
+          "title": "Language",
+          "subtitle": "Choose the language for the app and for messages"
+        },
+        "preferred_calendar": {
+          "title": "Favourite calendar",
+          "description": "Select calendar"
+        },
+        "preferred_language": {
+          "title": "Favourite language",
+          "subtitle": "These settings allow you to choose the app language and the language of the messages you receive from institutions.",
+          "sections": {
+            "messages": {
+              "title": "In messages",
+              "description": "Some institutions use this setting to send you messages in the chosen language."
+            },
+            "app": {
+              "title": "In the app",
+              "description": "Choose the language you want to use in IO. Some content may only be available in Italian."
+            }
+          },
+          "alert": {
+            "title": "Do you want to change the language to {{lang}}?",
+            "subtitle": "You'll need to restart the application to make this happen"
+          },
+          "toastApp": {
+            "success": {
+              "title": "Done! Restart the app to apply the changes"
+            }
+          },
+          "toastMessages": {
+            "success": {
+              "title": "Done!"
+            }
+          },
+          "banner": {
+            "button": "Learn more"
+          }
+        },
+        "notifications": {
+          "title": "Push notifications",
+          "subtitle": "Allow previews and reminders"
+        }
+      },
+      "language": {
+        "contextualHelpTitle": "How to manage your language setting",
+        "contextualHelpContent": "**At the moment the IO app inherits the language from the device Operating System:** you can change the language directly from your phone settings, and it will be automatically updated in the app as well.    \nThe language of each specific message is instead defined by each Administration: at their discretion, they decide it to send the message in Italian only or translate the content in different languages.\n"
+      },
+      "email": {
+        "forward": {
+          "contextualHelpTitle": "How to handle message forwarding",
+          "contextualHelpContent": "**Here you can enable or disable the forwarding of messages to the mail.**\nIt is possible to enable or disable the forwarding of all the messages you receive via IO to your mailbox, or enable them and disable them on time in the respective service details sheet.\n"
+        }
+      },
+      "calendar": {
+        "contextualHelpTitle": "What is your favorite calendar",
+        "contextualHelpContent": "** Your favorite calendar is by default the one associated with your mail, ** if you registered with a Google account. You can at any time change the email associated with your calendar, in order to receive IO reminders on the calendar you use most.\n",
+        "local_calendar": "Local calendar",
+        "birthday_calendar": "Birthdays"
+      },
+      "notifications": {
+        "title": "Customize push notifications",
+        "subtitle": "Choose how to receive messages and reminders.",
+        "reminders": {
+          "title": "Allow reminders",
+          "description": "Upon request of the sender, receive push notifications close to deadlines"
+        },
+        "preview": {
+          "title": "Show a preview",
+          "description": "Include the sender and subject of the message in the push notification",
+          "link": "More info",
+          "bottomSheet": {
+            "title": "Show a preview",
+            "content": "If this option is enabled, push notifications show the sender and subject of messages, even when the screen is locked. This information is processed by your OS manager and by third-party apps that may be running."
+          }
+        },
+        "error": "An error occurred with your request"
+      }
+    }
+  },
+  "cie": {
+    "title": "Touch the card"
+  },
+  "authentication": {
+    "landing": {
+      "accessibility": {
+        "carousel": {
+          "label": "IO presentation",
+          "hint": "Carousel that contains an introduction guide to IO functionalities. Select to know the content."
+        }
+      },
+      "useful_resources": {
+        "bottomSheet": {
+          "title": "Useful resources",
+          "privacy_policy": "Privacy policy",
+          "manage_access": "Manage access",
+          "io_more_informations": "What you can do with the IO app"
+        }
+      },
+      "session_expired": {
+        "title": "Log in again",
+        "body": "We need to check your identity from time to time for security reasons",
+        "linkButtonLabel": "Read more"
+      },
+      "session_corrupted": {
+        "title": "Log in again",
+        "body": "We had a technical problem, so we need to check your identity again.",
+        "linkButtonLabel": "Can't remember how to log in?"
+      },
+      "active_session_login": {
+        "title": "Log in now",
+        "body": "Log in now to use the app without interruption. That way, it will always be ready when you need it."
+      },
+      "cie_bottom_sheet": {
+        "title": "How do you want to login?",
+        "module_cie_pin": {
+          "title": "Login with CIE + PIN",
+          "subtitle": "Use Electronic Identity Card and PIN"
+        },
+        "module_cie_id": {
+          "title": "Login with CieID",
+          "subtitle": "Use the CieID app",
+          "badge": "New"
+        },
+        "help_banner": {
+          "title": "Not sure what to choose?",
+          "action": "We give you a hand"
+        }
+      },
+      "contextualHelpTitle": "How to register in the IO app",
+      "contextualHelpContent": "**You can register in the IO app by using your SPID identity (Public Digital Identity System) or your CIE (Electronic Identity Card).** Your security is guaranteed thanks to the use of those strong authentication methods.  \nIf you don’t have a SPID identity and you want to request one, you can visit [spid.gov.it](https://www.spid.gov.it) and choose one of the proposed identity providers. If you are interested in applying for the CIE, you can visit the website of your municipality for more information, and book an appointment with them.\n",
+      "loginSpid": "Login with SPID",
+      "loginCie": "Login with CIE",
+      "show_wallet": "Show my Documents",
+      "card0-title": "Welcome to IO!",
+      "card0-content": "Swipe left to see what you can do in the app",
+      "card0-content-accessibility": "Select the previous item to open a chat with the IO team if something is not working as it should.",
+      "card1-title": "Keep your personal documents safe",
+      "card1-content": "With Documenti su IO you always have the digital version of your documents, such as driving licence and health card, at your fingertips",
+      "card2-title": "Receive communications, also with legal value",
+      "card2-content": "Read incoming communications from organisations: by activating the SEND service, you will also receive communications with legal value and save on notification costs.",
+      "card3-title": "Pay pagoPA notice by the method you prefer",
+      "card3-content": "On IO, you can view and download receipts for your pagoPA payments, even if you have not paid in the app",
+      "card4-title": "Access to the services you are most interested in",
+      "card4-content": "Direct access to government services related to health, education, mobility, work and more",
+      "expiredCardTitle": "The CIE verification failed",
+      "expiredCardContent": "The card used is no longer valid or has expired. Use SPID to enter the app."
+    },
+    "cieidUrlErrorScreen": {
+      "title": "We can't authenticate you with the CieID app",
+      "description": "Log in to the app using a different method"
+    },
+    "wizards": {
+      "cie_id_wizard": {
+        "title": "Do you have the CieID app?",
+        "description": "If you have the CieID app on your device, enter the code you have set for the CieID app or use your face or fingerprint.\n\nTo enter the IO app without physically using the Electronic Identity Card, you must first enable Level 1 and Level 2 access in the CieID application.",
+        "actions": {
+          "primary": {
+            "label": "Yes, log in with CieID"
+          },
+          "secondary": {
+            "label": "I don't have CieID"
+          }
+        },
+        "link": "What is CieID?"
+      },
+      "cie_pin_wizard": {
+        "title": "Do you have your Electronic Identity Card and PIN?",
+        "description": "If you have your Electronic Identity Card at hand, you can access IO by entering the card's PIN and bringing it close to the device to allow the data to be read.",
+        "actions": {
+          "primary": {
+            "label": "Yes, enter with CIE + PIN"
+          },
+          "secondary": {
+            "label": "I don't have a CIE and PIN"
+          }
+        },
+        "bottom_sheet": {
+          "title": "Where can I find the CIE PIN?",
+          "content": "The PIN code consists of 8 digits and is divided in two parts:\n- the first 4 digits you received at the registry office;\n- the last 4 digits you received at home with the CIE (Electronic Identification Card). \n\nPut them together and enter in this order.",
+          "link": "Forgotten your PIN?",
+          "cta": {
+            "label": "Where can I find the CIE PIN?"
+          }
+        }
+      },
+      "spid_wizard": {
+        "title": "Do you have SPID?",
+        "description": "If you have SPID, log in to IO by entering your credentials, using your face or fingerprint, or via your SPID provider's app.",
+        "actions": {
+          "primary": {
+            "label": "Yes, login with SPID"
+          },
+          "secondary": {
+            "label": "I don't have SPID"
+          }
+        }
+      },
+      "id_activation_wizard": {
+        "title": "Activate your digital identity!",
+        "description": "You must have an active SPID or CIE (Electronic Identity Card) digital identity to use IO.",
+        "list_items": {
+          "title": "How to activate it",
+          "request_cie": {
+            "label": "Ask for your CIE"
+          },
+          "activate_cie": {
+            "title": "Activate CIE credentials"
+          },
+          "activate_spid": {
+            "title": "Ask for your SPID"
+          }
+        },
+        "actions": {
+          "primary": {
+            "label": "Close"
+          }
+        }
+      }
+    },
+    "auth_errors": {
+      "error_19": {
+        "title": "You’ve made too many access attempts",
+        "subtitle": "It looks like you've entered the wrong username or password too many times. Please check your login details and try again in a few minutes, or contact your SPID identity provider to change your credentials."
+      },
+      "error_20": {
+        "title": "Could not be logged in",
+        "subtitle": "For security reasons, you'll need to use an identity with a higher level of security. For more information, contact your SPID identity provider."
+      },
+      "error_21": {
+        "title": "Too much time",
+        "subtitle": "Too much time has passed since you started logging in: start again from the beginning."
+      },
+      "error_22": {
+        "title": "You haven't agreed to share your data",
+        "subtitle": "To enter, you must agree to share some data"
+      },
+      "error_23": {
+        "title": "Suspended or revoked identity",
+        "subtitle": "Your SPID identity has been suspended or revoked. For more information, please contact your SPID identity provider."
+      },
+      "error_25": {
+        "title": "You've cancelled your login",
+        "subtitle": "To log in, try again anytime."
+      },
+      "error_1001": {
+        "title": "Sorry, you don't meet the minimum age requirement",
+        "subtitle": "You must be at least 18 years old"
+      },
+      "missing_saml_response": {
+        "title": "It was not possible to access",
+        "subtitle": "It is currently not possible to log in with your SPID identity provider. Please try again in a few minutes."
+      },
+      "not_same_cf": {
+        "title": "Is that really you?",
+        "subtitle": "You have logged in with a different identity. To use the app, log in with your credentials.",
+        "button": "Log in again"
+      },
+      "generic": {
+        "title": "Sorry, access was not available.",
+        "subtitle": "A problem occurred while logging in. Please try again in a few minutes."
+      }
+    },
+    "cie_id": {
+      "error_screen": {
+        "title": "Can't log in with CieID?",
+        "cie_pin_supported": {
+          "description": "If you have your Electronic Identity Card handy, use it to access IO.\n\nInsert the CIE PIN and bring it close to the device to allow the data to be read.",
+          "primary_action_label": "Login with CIE + PIN"
+        },
+        "cie_pin_not_supported": {
+          "description": "If you have SPID, log in to IO by entering your credentials. You can also use your face or fingerprint or the code set for your SPID provider's app.",
+          "primary_action_label": "Login with SPID"
+        },
+        "secondary_action_label": "Close"
+      },
+      "cie_not_installed": {
+        "title": "We can't find the CieID app",
+        "description": "To login, you must have the app installed on your device.",
+        "primary_action_label": "Get the app",
+        "link_error": "We could not direct you to the store. Open it manually and search for CieID"
+      }
+    },
+    "cie": {
+      "nfc": {
+        "apduNotSupported": "The operating system doesn't support the reading of the Electronic Identity Card. Try using SPID to enter the app.",
+        "retry": "Retry",
+        "title": "Enable NFC to continue",
+        "subtitle": "To enable IO to read your CIE, activate NFC from your device's settings.",
+        "listItemTitle": "How to do it::",
+        "action": "Open Settings",
+        "listItemValue1": "Open 'Settings'",
+        "listItemValue2": "Search for ‘NFC’ functionality",
+        "listItemValue3": "Turn it on",
+        "activeNfcAlert": "Activate NFC to enable IO to read your CIE!",
+        "activeNFCAlertButton": "Enable NFC"
+      },
+      "pin": {
+        "accessibility": {
+          "label": "Insertion field for Electronic Identity Card pins",
+          "hint": "Enter the 8 digits pin of your Electronic Identity Card in this field.",
+          "deleteLabel": "You have deleted {{number}}"
+        },
+        "pinCardTitle": "Enter the PIN of your ID Card",
+        "incorrectCiePinTitle1": "Wrong PIN",
+        "incorrectCiePinTitle2": "You have entered a wrong PIN twice",
+        "lockedCiePinTitle": "You have entered a wrong PIN too many times",
+        "incorrectCiePinContent1": "You still have 2 attempts left, check it and try again.",
+        "incorrectCiePinContent2": "After the third incorrect attempt, the PIN will be blocked. To unlock it and set a new one, you will need to enter the PUK code into the CieID app.",
+        "incorrectCiePinSecondaryActionLabel2": "Lost your PIN?",
+        "lockedCiePinContent": "The PIN of your CIE has been blocked. To unlock it and set a new one, you will need to enter the PUK code into the CieID app.",
+        "lockedSecondaryActionLabel": "Lost your PUK?",
+        "subtitleCTA": "Where can I find it?",
+        "bottomSheetCTA": "Did you forget your PIN?",
+        "contextualHelpTitle": "Where can I find my PIN and PUK?",
+        "contextualHelpBody": "The **PIN** code consists of 8 digits:  \n• the first 4 digits you received at the registry office;  \n• the last 4 digits you received at home, along with your electronic ID card. \n  \nPlease enter them following this order.  \nThe PUK code is needed to unlock your **PIN**, in case of 3 wrong attempts. **PUK** consists of 8 digits and it's issued along with the **PIN**.\n"
+      },
+      "card": {
+        "title": "Hold your CIE on the back of your phone",
+        "titleiOS": "Place the CIE on your phone, on top.",
+        "layCardMessageHeader": "If the reading doesn't start, move the card to different places and wait a few seconds until you feel a vibration.",
+        "layCardMessageHeaderiOS": "If the card is not read, move it to different places and wait a few seconds.",
+        "layCardMessageFooter": "If you don't know exactly where the NFC sensor is, move the card to different points and wait a few seconds until you feel a vibration.",
+        "cieCardValid": "Done!",
+        "readerCardTitle": "Hold the card for a few seconds",
+        "readerCardFooter": "Hold the card in this position for a few more seconds",
+        "iosAlert": {
+          "readingInstructions": "Keep your electronic ID card on the top of the iPhone.",
+          "moreTags": "More cards have been identified. Please bring one card at a time.",
+          "readingInProgress": "READING IN PROGRESS\nHold the card still for a few seconds...",
+          "readingSuccess": "Done!",
+          "invalidCard": "It seems that this card is not an Electronic Identity Card (CIE).",
+          "tagLost": "You removed the card too soon.",
+          "cardLocked": "The CIE PIN is blocked.",
+          "wrongPin1AttemptLeft": "You have entered a wrong PIN twice",
+          "wrongPin2AttemptLeft": "Wrong PIN",
+          "genericError": "Something went wrong! Please try again."
+        },
+        "error": {
+          "readerCardLostTitle": "You removed the card too soon.",
+          "onTagLost": "Place the card on the back of the device again.",
+          "tryAgain": "Something did not work as expected while we read your CIE. It's probably a temporary issue, please try again!",
+          "generic": "Something did not work as expected while we read your CIE.",
+          "unknownCardContent": "The card used does not seem to be an Electronic Identity Card.",
+          "genericErrorTitle": "We could not retrieve the data from the card",
+          "genericErrorSubtitle": "If you've had the problem a few times, give it a few minutes and try again."
+        }
+      }
+    },
+    "opt_in": {
+      "contextualHelpTitle": "Authentication",
+      "contextualHelpContent": "Here you can find information on how to authenticate on IO and some security tips.",
+      "title": "It is now easier to access!",
+      "identity_check": "You’ll no longer have to identify yourself with SPID or CIE every 30 days, but only once a year or if you log out.",
+      "security_suggests": "Safety tips",
+      "passcode": "Any other time, you’ll just need your fingerprint, face recognition or unlock code.",
+      "notification": "Whenever there is a new authentication to IO, we'll send you an email to let you know. If it’s not you, you can remotely lock access to the app",
+      "button_accept_lv": "Continue with quick access",
+      "button_decline_lv": "Log in with SPID or CIE every 30 days"
+    },
+    "security_suggestions": {
+      "fingerprint": "Do not share your unlock code or biometric recognition with anyone.",
+      "io_logout": "If you lose your device, log out from the web.",
+      "io_lock_access": "If you fear that someone might use your SPID or CIE, lock access to the app after authenticating from the web.",
+      "access_new_device": "If you access IO with someone else's device, remember to log out when you are finished.",
+      "navigate_to_the_site": "Go to website"
+    },
+    "idp_selection": {
+      "contextualHelpTitle": "Who is your Identity Provider",
+      "contextualHelpContent": "**The Identity Provider is the manager of your digital identity.** In order to register in the IO app, you need to first select the Identity Provider that released your SPID identity.\n"
+    },
+    "idp_login": {
+      "headerTitle": "SPID Login",
+      "contextualHelpTitle": "What is your password",
+      "contextualHelpContent": "**In the log in page, you are asked to enter your password.** Your password is the alphanumeric code that you set when you activated your SPID identity.  \nIf you don’t remember it, please select password recovery to start the related procedure with your specific Identity Provider.\n",
+      "poste_id": {
+        "bottom_sheet": {
+          "title": "Log in without a password!",
+          "description": "If you have the Poste ID app, follow these steps:",
+          "feature_2": "Enter your PosteID code or use biometric",
+          "feature_3": "When you see **Autorizzazione concessa** appear, go back to IO and press **Acconsento**"
+        }
+      }
+    },
+    "idp_login_success": {
+      "contentTitle": "Hi, {{name}}!"
+    },
+    "errors": {
+      "network": {
+        "title": "Access problem"
+      }
+    },
+    "unlock": {
+      "title": "Unlock access",
+      "subtitlel2": "In order to use the app, you must first unlock access to IO.",
+      "subtitlel3": "To be able to access the app with all your SPID or CIE identities, unlock access.",
+      "learnmore": "Learn more",
+      "loginIO": "Not now"
+    },
+    "unlockmodal": {
+      "title": "What does it mean?",
+      "description": "If you have blocked access to IO for security reasons, you must first unlock it in order to re-enter the app.\nOtherwise, you can access it in the app by logging in with the **maximum level of safety.** This type of authentication requires a username, password, and physical device, such as CIE.",
+      "title2": "Do you want to unlock access to IO?",
+      "listitem1": "Make sure you have secured your digital identity by changing your login credentials with your Identity Provider.",
+      "listitem2_1": "Access IO from the web, using your SPID or CIE credentials.",
+      "listitem2_2": "Go to the site",
+      "listitem3": "Go to the section *Unlock access to IO* and follow the given steps. When prompted enter the **recovery code** to confirm the operation."
+    }
+  },
+  "email": {
+    "cduScreens": {
+      "validateMail": {
+        "title": "Is this your email?",
+        "subtitle": "To continue using the app, you must confirm that your email is **{{email}}**",
+        "editButton": "No, change email",
+        "validateButton": "Yes, confirm",
+        "help": {
+          "body": "To continue using the app, you must validate your email address."
+        }
+      },
+      "emailAlreadyTaken": {
+        "title": "Edit your email address",
+        "subtitle": "This email address **{{email}}** seems to be already in use on IO. Please enter a different one to continue using the app.",
+        "editButton": "Edit email address",
+        "help": {
+          "body": "This email address seems to be already in use on IO. Please enter a different one to continue using the app."
+        }
+      }
+    },
+    "insert": {
+      "alert": "You are already using this email",
+      "help": {
+        "content": "This page is used to insert or edit your **email** address. The entered email must be validated.\n"
+      },
+      "alertTitle": "This email address is already in use",
+      "alertDescription": "This may happen if you share the same email address with a family member",
+      "alertButton": "Use another email address"
+    },
+    "newinsert": {
+      "title": "What is your email address?",
+      "subtitle": "We will use it to send you communications such as payment receipts or support messages",
+      "label": "Personal email address",
+      "alert": {
+        "title": "{{email}} is already used, insert another one",
+        "description1": "email address already in use",
+        "description2": "Enter an email address different from your current one",
+        "description3": "Already using this email address",
+        "invalidemail": "Enter a valid email address",
+        "validemaila11y": "This email address is valid",
+        "invalidemaila11y": "Sorry, but this email address is invalid."
+      }
+    },
+    "edit": {
+      "title": "Edit email",
+      "subtitle": "Now you use",
+      "upsert_ko": "Error in update email request, try again"
+    },
+    "newvalidate": {
+      "title": "We have sent you an email",
+      "subtitle": "To confirm your address, follow the instructions we have sent to",
+      "link": "Change email address",
+      "buttonlabelsent": "Email sent!",
+      "countdowntext": "Request new email in",
+      "buttonlabelsentagain": "Send email again",
+      "toast": "Done! Check your mailbox."
+    },
+    "newvalidemail": {
+      "title": "Email validated!",
+      "subtitle": "You will receive IO's communications at"
+    }
+  },
+  "onboarding": {
+    "contextualHelpTitle": "How does the biometric recognition work",
+    "contextualHelpContent": "**The biometric recognition via fingerprint is available in case you want to access the IO app faster**, without entering the unlock code every time. In order to use the biometric recognition, you need to enable it from the settings of the phone Operating System. You can always decide whether to keep the biometric recognition active or not in the IO app, by setting the preferences in settings… but we are pretty sure that once you try it, you won’t think of using the app without anymore.\n",
+    "tos": {
+      "accept": "Accept and continue",
+      "error": "We could not load the Privacy Policy and Terms and Conditions"
+    },
+    "unlockCode": {
+      "contextualHelpTitle": "What your unlock code is",
+      "contextualHelpContent": "**The unlock code is the security code that protects your data while using the IO app.** \nThe unlock code is defined by you at the moment of the first log in.  \nIf this is the first time you enter in the application, you are free to set the numeric code you like and save it for any future log in. If you have already set the unlock code in a previous moment but can’t remember it now, please select “Forgotten unlock code\" to set a new code. The unlock code is directly linked to the device on which you’ve set it: in case you change your phone, you will be asked to set it again from scratch at the first log in.\n"
+    },
+    "pin": {
+      "title": "Create an unlock code",
+      "subTitle": "It's a six-digit code you'll use to login and authorize some in-app operations.",
+      "errors": {
+        "invalid": {
+          "title": "Too easy!",
+          "description": "Choose a code that is hard to guess and doesn't contain a single repeated number (e.g. 000000) or a list of ordered numbers (e.g. 123456 or 654321).",
+          "cta": "Choose another code"
+        }
+      },
+      "policy": {
+        "title": "How to choose the code?",
+        "body": "It's a six-digit code you'll use to login and authorize some in-app operations.\n\nChoose a code that's hard to guess and doesn't contain:\n- a single repeated number (e.g. 000000)\n- a list of ordered numbers (e.g. 123456 or 654321)"
+      },
+      "success": {
+        "message": "Done!"
+      }
+    },
+    "pinConfirmation": {
+      "title": "Confirm unlock code",
+      "errors": {
+        "match": {
+          "title": "The code you enter is different than the first one",
+          "cta": "Try again"
+        }
+      }
+    },
+    "alert": {
+      "title": "Do you really want to log out?",
+      "description": "You will have to log in again to use the app"
+    },
+    "exitAlert": {
+      "title": "Do you want to quit IO?",
+      "description": "You will have to log in again with SPID or CIE to use the app."
+    },
+    "biometric": {
+      "available": {
+        "title": "Enable biometric recognition",
+        "settings": "You can always change your choice in Settings > Security",
+        "body": {
+          "text": "You can use your face or fingerprint to enter instead of the unlock code. This will let you access the app and authorise operation and payments more easily and safely.",
+          "notEnrolled": {
+            "text": "You need to configure this in your device settings.",
+            "label": "How to",
+            "step1": {
+              "value": "Go to your device settings"
+            },
+            "step2": {
+              "value": "Set up face or fingerprint"
+            },
+            "step3": {
+              "value": "Enable it in IO under Settings > Security"
+            }
+          }
+        }
+      },
+      "unavailable": {
+        "title": "Protect your device",
+        "subtitle": "IO sends you messages that are relevant to you. Make sure that only you can access the app by setting a code or sign to unlock the device.",
+        "body": {
+          "label": "How to",
+          "step1": {
+            "value": "Go to your device settings"
+          },
+          "step2": {
+            "value": "Set a code or sign to unlock the device"
+          }
+        }
+      }
+    },
+    "thankYouPage": {
+      "title": "Setup completed!"
+    },
+    "notifications": {
+      "continue": "Continue",
+      "preview": {
+        "reminderOnPreviewOnTitle": "You have a notice due soon",
+        "reminderOnPreviewOnMessage": "Log in to pay the notice issued by ACI",
+        "reminderOffPreviewOnMessage": "Summer camp registration is now open",
+        "reminderOnPreviewOffTitle": "You have a notice due tomorrow",
+        "reminderOnPreviewOffMessage": "Log in to pay for it",
+        "reminderOffPreviewOffTitle": "You have a new message",
+        "reminderOffPreviewOffMessage": "Open the app to read the content"
+      }
+    },
+    "infoConsent": {
+      "title": "Enable push notifications not to miss important messages!",
+      "subTitle": "To do so, you'll have to edit the preferences in your device settings.",
+      "openSettings": "Go to Settings",
+      "instructions": {
+        "title": "Here's how:",
+        "ios": {
+          "step1": "Go to \"Settings\"",
+          "step2": "Select \"Notifications\"",
+          "step3": "Enable \"Allow Notifications\""
+        },
+        "android": {
+          "step1": "Go to \"Settings\"",
+          "step2": "Select \"Applications\"",
+          "step3": "Select \"IO\"",
+          "step4": "Select \"Notifications\"",
+          "step5": "Enable notifications"
+        }
+      }
+    }
+  },
+  "datetimes": {
+    "notValid": "Invalid date."
+  },
+  "payment": {
+    "notice": "Notice",
+    "noticeCode": "Notice code",
+    "confirm": {
+      "termsAndConditions": "By continuing, you accept the [Terms and Conditions of Use](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/trasparenza-bancaria/) and confirm that you have read the [Privacy Policy](https://www.pagopa.gov.it/it/prestatori-servizi-di-pagamento/trasparenza-bancaria/) of {{pspName}}.",
+      "a11y": {
+        "announce": "Payment Summary"
+      }
+    }
+  },
+  "wallet": {
+    "methodDetails": {
+      "cardGeneric": "Card",
+      "a11y": {
+        "credit": {
+          "hpan": "Card {{circuit}} ending {{spacedHpan}}"
+        },
+        "bpay": {
+          "phone": "Mobile number: {{phoneNumber}}",
+          "owner": "owned by {{fullOwnerName}}"
+        }
+      },
+      "error": {
+        "title": "This payment method is not available.",
+        "subtitle": "Close the app and reopen it to update your wallet.",
+        "primaryButton": "Back"
+      }
+    },
+    "wallet": "Wallet",
+    "creditCard": {
+      "validUntil": "Valid until {{expDate}}"
+    },
+    "onboarding": {
+      "paymentMethodsList": {
+        "header": {
+          "title": "Add a method",
+          "subtitle": "The method will be stored and can be used to make in-app payments or enroll in compatible initiatives."
+        }
+      },
+      "paypal": {
+        "emailNotAvailable": "not available"
+      },
+      "outcome": {
+        "SUCCESS": {
+          "title": "Payment method added successfully!",
+          "secondaryAction": "Continue"
+        },
+        "AUTH_ERROR": {
+          "secondaryAction": "What can you do?"
+        }
+      }
+    },
+    "alert": {
+      "favorite": "To change this option, select another method from your Wallet and set it as favorite."
+    },
+    "contextualHelpTitle": "About this section",
+    "contextualHelpContent": "**The Wallet section lists your payment methods, your Bonuses and discount cards and the history of transactions made with PagoPA,** the payment platform for the Public Administration. Here you can also pay directly all the payment notices with the PagoPA logo: scan the QR code printed on the paper notice and complete the payment directly in the app. IO currently supports credit/debit card payments, but other payment methods will be added soon.",
+    "delete": {
+      "ios": {
+        "confirm": "Delete method"
+      },
+      "android": {
+        "confirm": "Delete"
+      },
+      "successful": "Method removed!",
+      "failed": "There was a problem, please try again"
+    },
+    "ConfirmPayment": {
+      "cancelPayment": "Cancel the transaction",
+      "identificationMessage": "Confirm the transaction with your unlock code"
+    },
+    "firstTransactionSummary": {
+      "amount": "Amount",
+      "dueDate": "Due date",
+      "recipient": "Payee",
+      "object": "Payment details",
+      "entityCode": "Payee Fiscal Code",
+      "amountInfo": {
+        "title": "Is the amount different from the one on the pagoPA notice?",
+        "message": "When the amount changes, it means it has been updated automatically. \n\nIf it is higher, there may be interest, penalties, or notification costs.\n\nIf the pagoPA notice concerns a legally significant communication, the increase in the amount to be paid may depend on various factors, such as:\n- receiving the communication via registered mail (as printing and delivery costs may be charged to the recipient);\n- the number of delivery attempts.\nFor further details, contact the Payee."
+      },
+      "a11y": {
+        "announce": "Notice Summary"
+      }
+    },
+    "errorTransaction": {
+      "submitBugText": "If you can't solve the problem, please let us know with the '?' icon at the top right. Thank you!"
+    },
+    "continue": "Go to payment",
+    "methods": {
+      "comingSoon": "upcoming",
+      "card": {
+        "pagoPaCapability": {
+          "title": "In app payments",
+          "description": "Pay your notices with pagoPA logo"
+        }
+      }
+    },
+    "dummyCard": {
+      "labels": {
+        "holder": {
+          "label": "Card holder"
+        },
+        "pan": "Card number",
+        "expirationDate": "Expiration date",
+        "securityCode": "Card security code",
+        "securityCode4D": "CIN (4 digits)"
+      },
+      "accessibility": {
+        "button": {
+          "fieldError": "To continue, please fix the {{field}} field",
+          "missingFields": "To continue, please fill out all fields"
+        }
+      }
+    },
+    "QRtoPay": {
+      "settingsAlert": {
+        "title": "It seems access to Photos has been denied",
+        "message": "IO needs access to your gallery to save bonuses and certificates, in addition to uploading screenshots or payment notices",
+        "buttonText": {
+          "settings": "Enable permissions",
+          "cancel": "Cancel"
+        }
+      },
+      "contextualHelpTitle": "How to pay a notice",
+      "contextualHelpContent": "**You can proceed to the spontaneous payment of a notice with pagoPA**, the payment platform for the Public Administration. You can pay starting from a paper notice, framing the QR code you find in the notice and then proceeding with the payment directly from the app. You can also upload a QR code from your phone's gallery or proceed with the manual compilation of the warning recognition data (Notice Code)."
+    },
+    "errors": {
+      "GENERIC_ERROR": "An unexpected error has occurred",
+      "GENERIC_ERROR_SUBTITLE": "You can try again, or contact us to get support."
+    },
+    "newRemove": {
+      "title": "Delete this payment method?",
+      "body": "If you delete this method, it will also be removed from the initiatives where it has been enabled."
+    },
+    "capability": {
+      "title": "Available initiatives"
+    },
+    "payment": {
+      "manual": {
+        "noticeNumber": {
+          "validationError": "It has 18 digits, starts with 0, 1 or 3.",
+          "a11y": "Error. Incorrect notice code. It has 18 digits, you find it near the code QR."
+        },
+        "fiscalCode": {
+          "validationError": "Enter 11 digits.",
+          "a11y": "Error. Tax code of the incorrect creditor. It has 11 digits, you can find it close to the QR code"
+        }
+      },
+      "methodSelection": {
+        "a11y": {
+          "pageStatus": "Page {{currentPage}} of {{totalPages}}"
+        },
+        "yourMethods": "Saved",
+        "otherMethods": "All methods",
+        "latestMethod": "Recently used"
+      },
+      "psp": {
+        "sortBottomSheet": {
+          "a11y": {
+            "default": "Sort handlers by default order",
+            "amount": "Sort handlers by amount",
+            "name": "Sort handlers by name",
+            "announce": "Select the sorting criteria for the handlers"
+          }
+        }
+      },
+      "failure": {
+        "PAYMENT_ONGOING": {
+          "PAA_PAGAMENTO_IN_CORSO": {
+            "title": "There's already an ongoing transaction, please try again later",
+            "subtitle": "If the problem persists, please contact support."
+          },
+          "PPT_PAGAMENTO_IN_CORSO": {
+            "countdownTitle": "There's already an ongoing transaction, try again in {{minutes}} minutes",
+            "countdownExpiredTitle": "There's already an ongoing transaction, please try again later",
+            "subtitle": "If the problem persists, contact support."
+          }
+        },
+        "PAYMENT_CANCELED": {
+          "title": "The Creditor Entity has revoked this notice",
+          "subtitle": "Please contact the Entity for more information.",
+          "action": "What can you do?"
+        },
+        "PSP_PAYMENT_METHOD_NOT_AVAILABLE_ERROR": {
+          "title": "The selected payment method is not available",
+          "subtitle": "This can happen when the amount to be paid is particularly high, or if you are trying to pay a digital stamp duty.",
+          "action": "Select another payment method"
+        }
+      },
+      "outcome": {
+        "SUCCESS": {
+          "subtitle": "The receipt is in the Payments section."
+        },
+        "WAITING_CONFIRMATION_EMAIL": {
+          "subtitle": "The payment has not been completed yet. If you do not receive a confirmation within 15 minutes at {{email}}, please try again."
+        }
+      }
+    }
+  },
+  "cardComponent": {
+    "removeCta": "Remove from Wallet"
+  },
+  "messages": {
+    "accessibility": {
+      "message": {
+        "archive": "archive",
+        "description": "{{newMessage}} {{selected}}, received by {{organizationName}}, {{serviceName}}. {{subject}}. {{receivedAt}}. {{instructions}}",
+        "deselectInstructions": "Press and hold to deselect",
+        "read": "Message",
+        "received_at": "received at",
+        "received_on": "received on",
+        "selectInstructions": "Press and hold to select and later",
+        "selected": "selected",
+        "unarchive": "unarchive",
+        "unread": "Unread message"
+      }
+    },
+    "contextualHelpTitle": "About this section",
+    "contextualHelpContent": "**The Messages section collects all the incoming communication from the different Administrations that offer their services through IO.** By interacting with specific messages, you can directly set reminders for deadlines or proceed to start a payment process.   \nThe messages are divided between received (which contain all the messages arrived in the inbox and not archived), deadlines (which display only messages that contain an expiration date, to facilitate the management of those tasks), and archived (which store all the archived messages). In order to archive a message, it’s enough to do a long press on the area of the message you wish to archive, and then select the “archive” button that appears on the screen.\"\n",
+    "tab": {
+      "inbox": "Inbox",
+      "archive": "Archived"
+    },
+    "contentTitle": "Messages",
+    "loading": "Loading Messages...",
+    "yesterday": "yesterday",
+    "errorLoading": {
+      "senderInfo": "Sender service unknown",
+      "serviceInfo": "Service info unknown",
+      "noTitle": "No title"
+    },
+    "loadingErrorTitle": "Loading messages has failed",
+    "cta": {
+      "archive": "Archive",
+      "unarchive": "Unarchive",
+      "reminder": "Reminder",
+      "reminderCalendarSelect": "In which calendar you want to add the reminder?",
+      "reminderTitle": "Reminder for: {{title}}",
+      "reminderAlertTitle": "An event already exists",
+      "reminderAlertDescription": "There is already an event corresponding to the message selected in the calendar. Do you want to keep the previous one or add a new one?",
+      "reminderAlertKeep": "Keep the previous event",
+      "reminderAlertAdd": "Add a new event",
+      "reminderAddSuccess": "Reminder added",
+      "reminderAddFailure": "Error adding reminder, please retry",
+      "reminderRemoveRequest": {
+        "title": "Are you sure you want to remove this reminder?",
+        "ok": "Remove reminder",
+        "cancel": "Cancel the operation"
+      },
+      "reminderRemoveSuccess": "Reminder removed",
+      "reminderRemoveFailure": "Error removing reminder, please retry",
+      "calendarPermDenied": {
+        "title": "To add the reminder, you need to allow IO to access your calendar",
+        "preferencesTitle": "Enable access",
+        "description": "We do not have access to your calendar. Please enable access to continue.",
+        "ok": "Enable access",
+        "cancel": "Cancel"
+      },
+      "errors": {
+        "fetchCalendars": "Error fetching calendars"
+      }
+    },
+    "badge": {
+      "paid": "Paid"
+    },
+    "archive": {
+      "emptyMessage": {
+        "title": "Your archive is empty.",
+        "subtitle": "Hold on a message to move it to the archive. You can also archive multiple messages at the same time. Archived messages will not be deleted and will be available in search results."
+      }
+    },
+    "inbox": {
+      "emptyMessage": {
+        "title": "Your message list is empty.",
+        "subtitle": "Refresh to check for any new messages."
+      }
+    },
+    "operations": {
+      "generic": {
+        "failure": "Operation failed",
+        "success": "Operation successful!"
+      }
+    },
+    "search": {
+      "emptyState": {
+        "title": "Enter at least three letters"
+      },
+      "input": {
+        "cancel": "Cancel",
+        "clear": "Erase",
+        "placeholderShort": "Enter text"
+      }
+    }
+  },
+  "messageDetails": {
+    "accessibilityAttachmentIcon": "Includes attachments",
+    "headerTitle": "Message",
+    "loadingText": "Loading message details",
+    "pleaseWait": "Wait a few moments",
+    "submitBugText": "If the problem is not resolved, report it with the '?' icon at the top right, thank you!",
+    "remoteContentError": {
+      "title": "The message details could not be retrieved",
+      "body": "We detected an error in the information provided by the sender. Try again in a few minutes. If the issue persists, contact Support."
+    },
+    "attachments": {
+      "loading": "Loading document...",
+      "badFormat": "The attachment format is not supported. Please contact the sender",
+      "corruptedFile": "The attachment is corrupt and can't be opened. Please contact the sender",
+      "downloadFailed": "The attachment is currently not available. Please try again or contact the sender",
+      "failing": {
+        "details": "An error occurred while downloading the attachment. Retry or create a ticket"
+      }
+    },
+    "banner": {
+      "content": "This is a dynamic message: its content may change over time to give you up-to-date information.",
+      "action": "Learn more"
+    },
+    "bottomSheet": {
+      "title": "What's a dynamic message?",
+      "body": "It's a message that the sender can edit **after you've received it**. This way, the information it includes will always be up-to-date.\n\nThe sender can edit the information in a dynamic message only in **specific cases**. For example, to change outdated information or replace an attachment that is no longer valid.\n\nIf the sender needs to share new information or important updates with you, you'll receive a new message."
+    },
+    "footer": {
+      "contacts": "Contact the sender",
+      "showMoreData": "Show more data"
+    },
+    "showMoreDataBottomSheet": {
+      "title": "Identification data",
+      "messageId": "Message ID",
+      "messageIdAccessibility": "Message ID: {{messageId}}, copy",
+      "pagoPAHeader": "pagoPA notice",
+      "noticeCode": "Notice code",
+      "noticeCodeAccessibility": "Notice code: {{paymentNoticeNumber}}, copy",
+      "entityFiscalCode": "Payee fiscal code",
+      "entityFiscalCodeAccessibility": "Payee fiscal code: {{creditorTaxId}}, copy"
+    },
+    "contactsBottomSheet": {
+      "title": "Support",
+      "body": "If you are unclear about the content of the message, contact the Institution that sent it to you.",
+      "actions": {
+        "call": "Call",
+        "email": "Send email"
+      }
+    },
+    "markdownLinkUnsupported": "This link is not supported",
+    "markdown": {
+      "decodingErrorContent": "Message content cannot be displayed.",
+      "decodingErrorHide": "Hide content",
+      "decodingErrorShow": "Show anyway"
+    },
+    "notFound": {
+      "title": "This message is not available",
+      "subtitle": "The message you are looking for is not available for this profile. To view your messages, go to the message list."
+    }
+  },
+  "messagePDFPreview": {
+    "title": "PDF Preview",
+    "singleBtn": "Save or share",
+    "singleBtnAccessibility": "Save or share document",
+    "open": "Open",
+    "save": "Save",
+    "saveAccessibility": "Save document",
+    "savedAtLocation": "Document {{name}} was successfully saved in your Download folder.",
+    "share": "Share",
+    "shareAccessibility": "Share document",
+    "pdfAccessibility": "Preview of the PDF document",
+    "errors": {
+      "previewing": {
+        "title": "Preview is not available",
+        "body": "To view the document, download and open it with a PDF reader app."
+      },
+      "sharing": "An error occurred while sharing the document",
+      "saving": "An error occurred while saving the document"
+    }
+  },
+  "notifications": {
+    "profileBanner": {
+      "title": "Turn on push notifications to know when you get a message on IO.",
+      "cta": "Turn on push notifications"
+    },
+    "modal": {
+      "content": "Turn on push notifications to know immediately when you get a new message.",
+      "primaryButton": "Turn on notificatons",
+      "secondaryButton": "Not now",
+      "title": "Don't miss any important messages!"
+    }
+  },
+  "biometric_recognition": {
+    "needed_to_disable": "Recognition required to disable"
+  },
+  "send_email_messages": {
+    "title": "Forward messages by email",
+    "subtitle": "You want IO to forward message previews to **{{email}}**?",
+    "switch": {
+      "title": "Email a preview",
+      "subtitle": "You will get a preview of the message at your email address if the service allows."
+    }
+  },
+  "services": {
+    "optIn": {
+      "preferences": {
+        "completed": {
+          "title": "Preferences saved!",
+          "body": "You can always see the list of available services by visiting the Services section."
+        },
+        "banner": "You can change this choice anytime in Settings > Preferences",
+        "title": "Who can contact you?",
+        "body": "IO is simple because there's nothing to set up: if an institution or a service have something important to tell you, they can send you a message.",
+        "quickConfig": {
+          "title": "Use quick setup",
+          "successAlert": "You have enabled the quick setup",
+          "body": "You'll receive messages only by the institutions which have something important to tell you. **You can always deactivate communications by services that do not interest you.**"
+        },
+        "manualConfig": {
+          "title": "Configure manually",
+          "successAlert": "You have enabled the manual configuration",
+          "body": {
+            "text1": "No one will contact you. To receive messages, you will have to enable services one by one."
+          },
+          "bottomSheet": {
+            "title": "If you confirm, you won't receive any message",
+            "body": "With manual configuration the services on IO, present and future, will not be able to contact you. To allow the services you are interested in to contact you, you will have to configure them one by one by enabling “Contact you in app” in each service detail page."
+          }
+        }
+      }
+    },
+    "title": "Services",
+    "contextualHelpTitle": "About this section",
+    "contextualHelpContent": "**The Services section displays the list of all the Administrations that offer their services through the IO app**, and gives you access to the detailed list of services associated to each Administration.   \nThe services are divided between local (where you can select the Administrations of your interest based on the area where you live), national (where you can find all the central Administrations whose services cover the entire country), and all (where you can browse the complete list of all the local and national services available on the IO app.   \nWe invite you to use this section in order to explore the different services provided by the application, set up your list of local services and check the details of each of them. Every time a new local or national service arrives on the IO app, you will get a notification so that you can immediately check what’s new, and decide whether for you it’s useful or not to have it in the app.\n",
+    "new": "New",
+    "home": {
+      "bottomSheet": {
+        "content": {
+          "servicesPreferences": {
+            "value": "Who can contact you?",
+            "description": "Choose who can contact you"
+          },
+          "settings": {
+            "value": "Settings",
+            "description": "Manage your data and preferences"
+          }
+        }
+      },
+      "featured": {
+        "services": {
+          "a11y": {
+            "title": "Featured Services"
+          },
+          "title": "Featured",
+          "error": {
+            "banner": {
+              "label": "We couldn't load the list of featured services",
+              "cta": "Try again"
+            }
+          }
+        },
+        "institutions": {
+          "title": "Featured Institutions",
+          "error": {
+            "banner": {
+              "label": "We couldn't load the list of featured institutions",
+              "cta": "Try again"
+            }
+          }
+        }
+      },
+      "institutions": {
+        "title": "National",
+        "error": {
+          "banner": {
+            "label": "We couldn't load the list of national institutions",
+            "cta": "Try again"
+          }
+        }
+      },
+      "searchLink": "Search all available local services",
+      "favourites": "Favourite services"
+    },
+    "institution": {
+      "failure": {
+        "title": "There is a temporary problem. Please try again",
+        "subtitle": "We are retrieving services",
+        "back": "Back",
+        "retry": "Retry"
+      },
+      "header": {
+        "subtitle_one": "{{count}} available service",
+        "subtitle_other": "{{count}} available services"
+      }
+    },
+    "search": {
+      "input": {
+        "placeholder": "Search for a national or local institution",
+        "placeholderShort": "Search for an institution",
+        "cancel": "Cancel",
+        "clear": "Clear"
+      },
+      "emptyState": {
+        "invalidQuery": {
+          "title": "Enter the name of an institution,\nnational or local"
+        },
+        "noResults": {
+          "title": "No results found",
+          "subtitle": "Enter the name of an existing national or local institution."
+        }
+      },
+      "list": {
+        "header": {
+          "title": "Results"
+        }
+      }
+    },
+    "details": {
+      "failure": {
+        "title": "There is a temporary problem. Please try again",
+        "subtitle": "We are retrieving service details",
+        "back": "Back",
+        "retry": "Retry"
+      },
+      "preferences": {
+        "title": "This service can",
+        "inbox": "Contact you in app",
+        "pushNotifications": "Send you push notifications",
+        "messageReadStatus": "Receive read receipts"
+      },
+      "metadata": {
+        "a11y": {
+          "website": "Browse the institution's website",
+          "copyToClipboard": "Copy to clipboard"
+        },
+        "title": "Contacts and info",
+        "website": "Browse Website",
+        "downloadApp": "Download app",
+        "support": "Get support",
+        "phone": "Contact the institution",
+        "email": "Send email",
+        "pec": "Send PEC",
+        "fiscalCode": "Institution's fiscal code",
+        "address": "Address",
+        "serviceId": "Service ID"
+      },
+      "tosAndPrivacy": {
+        "title": "Terms of use and Privacy",
+        "tosLink": "Terms and conditions",
+        "privacyLink": "Privacy information"
+      }
+    },
+    "favouriteServices": {
+      "title": "My favourites",
+      "add": "Add to favourites",
+      "remove": "Remove from favourites",
+      "sortButton": "Sort",
+      "toasts": {
+        "added": "Added to favourites!",
+        "removed": "Removed from favourites!",
+        "limitReached": "Maximum number of favorites reached"
+      },
+      "emptyList": {
+        "title": "Create your favorites list",
+        "subtitle": "Save your favorite services for easy access",
+        "searchAction": "Start searching"
+      },
+      "removeAlert": {
+        "title": "Do you want to remove the service from favorites?",
+        "confirm": "Yes, remove"
+      },
+      "bottomSheet": {
+        "title": "Sort by",
+        "a11y": "Sort favourite services",
+        "content": {
+          "addedAt_desc": "Newest",
+          "name_asc": "Name (A-Z)",
+          "addedAt_asc": "Oldest first"
+        }
+      }
+    }
+  },
+  "identification": {
+    "instructions": {
+      "useFingerPrintOrUnlockCode": "use your **fingerprint** or use your **unlock code**",
+      "useFingerPrintOrUnlockCodeA11y": "use your fingerprint or use your unlock code",
+      "useFaceIdOrUnlockCode": "use your **face** or use your **unlock code**",
+      "useFaceIdOrUnlockCodeA11y": "use your face or use your unlock code",
+      "useUnlockCode": " use your **unlock code**",
+      "useUnlockCodeA11y": "use your unlock code"
+    },
+    "insertDevPin": "Insert the default developer PIN",
+    "title": "Hi {{name}}!",
+    "titleValidation": "Authorise the operation.",
+    "titleOffline": "Hi!",
+    "biometric": {
+      "title": "Biometric identification",
+      "popup": {
+        "title": "Identification required",
+        "sensorDescription": "Login quickly"
+      }
+    },
+    "fail": {
+      "remainingAttempts": "You have {{attempts}} attempts left",
+      "remainingAttemptSingle": "You have {{attempts}} attempt left",
+      "tooManyAttempts": "Too many attempts.",
+      "waitMessage": "Try again in:"
+    },
+    "unlockCode": {
+      "accessibility": {
+        "fingerprint": "Login with your fingerprint",
+        "faceId": "Login with the Face ID"
+      },
+      "reset": {
+        "button": "Did you forget the",
+        "code": "unlock code",
+        "button_short": "Change the unlock code",
+        "subtitle": "Set a new 6-digit code."
+      }
+    },
+    "forgetCode": {
+      "confirmTitle": "Did you forget the unlock code?",
+      "confirmMsg": "To be able to choose a new unlock code you will need to log in again.",
+      "confirmMsgWithTask": "To be able to choose a new unlock code you will need to cancel the current procedure and log in again."
+    }
+  },
+  "openMaps": {
+    "genericError": "An error occurred while opening the map"
+  },
+  "genericError": "An error occurred",
+  "titleUpdateApp": "Update IO!",
+  "msgErrorUpdateApp": "An error occurred while opening the app store",
+  "messageUpdateApp": "IO often introduces small improvements and new features: to continue using the app you need to update it to the latest version..",
+  "openStore": "Open {{storeName}}",
+  "btnUpdateApp": "Update the IO app",
+  "contextualHelp": {
+    "title": "IO helps you"
+  },
+  "bottomSheets": {
+    "ciePin": {
+      "title": "Where can I find my PIN?",
+      "content": "The PIN code consists of 8 digits:  \n\n• the first 4 digits you received at the registry office;  \n• the last 4 digits you received at home, along with your electronic ID card.  \n  \nPlease enter them following this order."
+    }
+  },
+  "faq": {
+    "1": {
+      "title": "What is SPID?",
+      "content": "SPID is the authentication system that allows citizens and businesses to access the online services of public administration and private members with a unique digital identity. The SPID identity is made up of credentials (username and password) which are released to the user and which allow access to all online services."
+    },
+    "2": {
+      "title": "How can you get SPID?",
+      "content": "To get your SPID credentials you must contact Aruba, EtnaHiTech, Infocamere, Infocert, Namirial, Poste, Register, Sielte, Tim, Lepida o TeamSystem. These subjects (called identity providers) offer you different ways to request and obtain SPID, you can choose the one that best suits your needs. All the information on where and how to ask for your SPID credentials on the site [https://www.spid.gov.it/cos-e-spid/come-attivare-spid/](https://www.spid.gov.it/cos-e-spid/come-attivare-spid/).\n"
+    },
+    "3": {
+      "title": "Have you lost your SPID credentials?",
+      "content": "Don't worry: you can recover them at any time. Select your Identity Provider to find out how to proceed: [Aruba](https://guide.pec.it/spid/recupero-dati/procedure-di-recupero-dati-smarriti.aspx), [EtnaHiTech, in case of forgotten password](https://etnaid.eht.eu/signup/forgotPassword), [Infocert](https://my.infocert.it/selfcare/#/recoveryPin), [Namirial](https://portale.namirialtsp.com/private/user/spid_reset.php), [Poste](https://posteid.poste. en/recuperocredenziali.shtml), [Register, in case of forgotten username](https://spid.register.it/selfcare/recovery/username), [Register, in case of forgotten password](https://spid.register.it/selfcare/recovery/password), [Sielte, in case of forgotten password](https://myid.sieltecloud.it/profile/recovery/forgotPassword), [Tim, in case of forgotten username](https://login.id.tim.it/mps/fu.php), [Tim, in case of forgotten password](https://login.id.tim.it/mps/fp.php), [Lepida](https://id.lepida.it/idm/app/recupero_credenziali.jsp), [TeamSystem, in case of forgotten username](https://spid.teamsystem.com/it/auth/usernameLost), [TeamSystem, in case of forgotten password](https://spid.teamsystem.com/it/auth/passwordLost)."
+    },
+    "4": {
+      "title": "What is CIE?",
+      "content": "CIE - the Electronic Identity Card - is a highly secure electronic document, equipped with a radio frequency microprocessor that allows its use in various scenarios, including access to online services. It meets the security needs of our country and replaces the paper version."
+    },
+    "5": {
+      "title": "How can you get CIE?",
+      "content": "You can connect to the address [https://www.prenotazionicie.interno.gov.it](https://www.prenotazionicie.interno.gov.it) and type the name of your municipality, to check whether it uses the CIE Agenda online dating system. If yes, you can proceed to book the appointment directly from the site, without any login. Alternatively, you can always ask for an appointment online on the website of your municipality, or by going to one of the municipal offices."
+    },
+    "6": {
+      "title": "What is an Identity Provider?",
+      "content": "The SPID identity is issued by the Identity Provider, private individuals accredited by AgID who, in compliance with the rules issued by the Agency, provide digital identities and manage user authentication. Your Identity Provider is the person you have chosen as the provider of your SPID identity."
+    },
+    "7": {
+      "title": "How can you choose an Identity Provider?",
+      "content": "Identity Providers provide different registration methods for free or for a fee and the respective SPIDs have different levels of security. Here are some useful parameters to consider if you don't have SPID yet and are deciding which Identity Provider to contact:\n\n- Method of recognition that is most convenient for you when applying (in person, via the Electronic Identity Card (CIE) *, National Service Card (CNS), Digital Signature or via webcam);\n- SPID security level desired;\n- If you are already a customer of one of the Identity Providers, you may have a simplified registration flow;\n- If you are an Italian citizen residing abroad, pay attention to who offers the service for abroad.\n\nFor more information you can consult the [SPID website](https://www.spid.gov.it/cos-e-spid/come-attivare-spid/).\n"
+    },
+    "8": {
+      "title": "Is it possible to have more than one digital identity (SPID)?",
+      "content": "Yes, it is possible to request more than one digital identity - even with different levels of security - with the opportunity to contact different digital identity managers. In case of possession of multiple identities, each citizen is free to log in to IO with the SPID credentials he prefers."
+    }
+  },
+  "bonus": {
+    "state": {
+      "completed": {
+        "caption": "concluded",
+        "description": "This initiative has ended and can no longer be requested"
+      }
+    },
+    "bonusVacanze": {
+      "advice": "By tapping on \"Request the Bonus Vacanze\" you declare that you have read and understood the "
+    },
+    "validity_interval": "from {{from}} until {{to}}",
+    "termsAndConditionFooter": "By pressing “{{ctaText}}” you declare that you are in possession of the requirements and have read and understood the [Guide]({{regulationLink}}) and the [Privacy Policy].",
+    "tos": {
+      "title": "Information on the processing of personal data"
+    },
+    "cgn": {
+      "generic": {
+        "linkError": "The site can't be reached at the moment. Please, try again later."
+      },
+      "merchantSearch": {
+        "goToSearchAccessibilityLabel": "Find a partner",
+        "emptyList": {
+          "shortQuery": {
+            "titleWithCount": "Search among {{merchantCount}} Carta Giovani Nazionale partners",
+            "titleWithoutCount": "Search among Carta Giovani Nazionale partners"
+          },
+          "noResults": {
+            "title": "Nothing found",
+            "subtitle": "Search with different words.\nIf you can't find it, it might be that your partner hasn't joined or there aren't any active opportunities."
+          }
+        },
+        "input": {
+          "placeholder": "Search among partners",
+          "cancel": "Cancel",
+          "clear": "Clear"
+        }
+      },
+      "merchantsList": {
+        "news": "new",
+        "navigationTitle": "Benefits",
+        "screenTitle": "Discover opportunities",
+        "tabs": {
+          "perInitiative": "By category",
+          "perMerchant": "By partner",
+          "a11y": "Filter {{label}}, {{index}} of {{total}}"
+        },
+        "categoriesList": {
+          "a11y": "{{name}}, {{count}} new opportunities found",
+          "bottomSheet": {
+            "cta": "How are categories ordered by?",
+            "title": "How are categories ordered by?",
+            "content": "To facilitate your search and improve your experience, we have organized the categories according to frequency of use. This information is not tied to your profile, but is based on aggregate data from all users who use Carta Giovani Nazionale and have consented to data processing."
+          }
+        },
+        "filter": {
+          "categories": "Categories"
+        },
+        "discountOf": "Discount of {{discount}}%",
+        "a11yTitle": "Category: {{categoryName}}"
+      },
+      "merchantDetail": {
+        "title": {
+          "deals": "Opportunities",
+          "description": "Description",
+          "contactInfo": "Addresses"
+        },
+        "cta": {
+          "website": "Visit the partner's website"
+        },
+        "categories": {
+          "cultureAndEntertainment": "Culture and entertainment",
+          "health": "Health and wellness",
+          "learning": "Education and learning",
+          "home": "Home",
+          "telco": "Telephony and internet",
+          "finance": "Banking and financial services",
+          "travel": "Travels and transportation",
+          "mobility": "Sustainable transport",
+          "job": "Jobs and internships"
+        }
+      },
+      "cta": {
+        "activeBonus": "Activate Carta Giovani Nazionale",
+        "back": "Not now",
+        "deactivateBonus": "Remove from Wallet",
+        "goToDetail": "Use the card"
+      },
+      "detail": {
+        "cta": {
+          "buyers": "Discover CGN opportunities.",
+          "discover": "Discover the benefits",
+          "eyca": {
+            "copy": "Copy EYCA's card number",
+            "bottomSheet": "Check the EYCA website",
+            "showEycaDiscounts": "Discover EYCA opportunities."
+          }
+        },
+        "information": {
+          "revoked": "Attention! This card has been revoked cause {{reason}}",
+          "expired": "Attention! This card expired on {{date}}"
+        },
+        "ownership": "Who can use this Card?",
+        "status": {
+          "eyca": "EYCA card",
+          "eycaPending": "We're linking your Carta Giovani Nazionale to a EYCA Number.",
+          "eycaError": "We had some issues with EYCA's systems.",
+          "eycaBottomSheetTitle": "What is EYCA?",
+          "eycaDescription": "Until 31 years old, your **Carta Giovani Nazionale is a member of the EYCA circuit**(European Youth Card Association).\n\n Use the Card at partners to enjoy cultural activities, shopping, transport, restaurants and accommodation in European countries partecipating in the circuit.",
+          "eycaNumber": "Card number",
+          "badge": {
+            "active": "Active",
+            "revoked": "Revoked",
+            "expired": "Expired"
+          },
+          "date": {
+            "valid_until": "Available until {{date}}",
+            "activated": "Activated on",
+            "expired": "Expired on",
+            "revoked": "Revoked on"
+          },
+          "expiration": {
+            "cgn": "CGN Expiration"
+          },
+          "a11y": {
+            "cardStatus": "Card status: {{status}}"
+          }
+        },
+        "empty": {
+          "title": "You haven't activated the National Youth Card yet",
+          "subtitle": "Activate it now to access all the opportunities dedicated to you. Just a few steps!",
+          "activateCta": "Activate"
+        }
+      },
+      "activation": {
+        "eyca": {
+          "loading": {
+            "caption": "We're processing your request",
+            "subCaption": "Please wait."
+          },
+          "error": {
+            "title": "The EYCA service is not available at the moment.",
+            "body": "We apologize for the issue.\nWe invite you to retry again later."
+          }
+        },
+        "loading": {
+          "caption": "We're activating your Carta Giovani Nazionale",
+          "subCaption": "Please wait..."
+        },
+        "error": {
+          "title": "The Carta Giovani Nazionale service is not available at the moment.",
+          "body": "Sorry, please try again later."
+        },
+        "ineligible": {
+          "title": "We are sorry. You do not have the required characteristics to activate the Carta Giovani Nazionale.",
+          "body": "The Carta Giovani Nazionale is available only to Italian and European citizens residing in Italy, aged 18 to 35."
+        },
+        "alreadyActive": {
+          "title": "Your Carta Giovani Nazionale is already active!",
+          "body": "You can find Carta Giovani in the Wallet section."
+        },
+        "pending": {
+          "title": "Your Carta Giovani Nazionale's activation is in progress.",
+          "body": "You will receive a message when it has been activated."
+        },
+        "success": {
+          "title": "Congratulation!",
+          "body": "Your Carta Giovani Nazionale is active"
+        },
+        "deactivate": {
+          "toast": "Method removed!",
+          "alert": {
+            "title": "Do you want to remove Carta Giovani from the Wallet?",
+            "message": "The card will be deactivated and you will no longer be able to access the available opportunities."
+          },
+          "expired": "Delete Carta Giovani Nazionale"
+        }
+      }
+    },
+    "cdc": {
+      "wallet": {
+        "card": {
+          "title": "Cultura Card",
+          "organization": "Ministry of Culture",
+          "validThrough": "Valid through {{endDate}}"
+        }
+      },
+      "goToService": "Go to the service",
+      "request": "Request Carta della Cultura"
+    }
+  },
+  "features": {
+    "messages": {
+      "pushNotifications": {
+        "banner": {
+          "title": "Don't miss any important messages!",
+          "body": "Turn on push notifications to know when you get a message on IO.",
+          "CTA": "Turn on push notifications"
+        }
+      },
+      "attachmentDownloadFeedback": "Download in progress",
+      "attachments": "Attachments",
+      "badge": {
+        "dueDate": "Expired on {{date}} at {{time}}"
+      },
+      "alert": {
+        "addReminder": "Add reminder",
+        "removeReminder": "Remove reminder",
+        "content": "Expires on {{date}} at {{time}}"
+      },
+      "payments": {
+        "title": "pagoPA notices",
+        "noticeCode": "Notice code",
+        "pay": "Pay"
+      }
+    },
+    "pn": {
+      "details": {
+        "badge": {
+          "legalValue": "Legal value"
+        },
+        "infoSection": {
+          "iun": "IUN code",
+          "iunAccessibility": "IUN code: {{iun}}, copy"
+        }
+      },
+      "lollipopPlayground": {
+        "environmentTitle": "Environment",
+        "uatLabel": "Use UAT",
+        "uatDescription": "Sends Service Activation and AAR requests to the UAT environment",
+        "postBodyLabel": "Post Body",
+        "responseStatusCode": "Response Status Code",
+        "responseBody": "Response Body"
+      }
+    },
+    "fci": {
+      "errors": {
+        "buttons": {
+          "back": "Back",
+          "retry": "Retry",
+          "close": "Close",
+          "assistance": "Open a support request"
+        },
+        "expired": {
+          "title": "The signature request has expired",
+          "subTitle": "If you need help, contact the institution"
+        },
+        "waitForQtsp": {
+          "title": "The signature is being processed",
+          "subTitle": "You will receive a message with the signed documents as soon as they are ready."
+        },
+        "signed": {
+          "title": "You have already signed these documents",
+          "subTitle": "You can find them in the message titled “Signed Documents”."
+        },
+        "generic": {
+          "default": {
+            "title": "There's a problem on our systems",
+            "subTitle": "Try again in a few minutes. If it happens again, contact support."
+          },
+          "update": {
+            "title": "Update the app",
+            "subTitle": "Make sure you have installed the latest version of IO and log in again with SPID or CIE."
+          },
+          "rejected": {
+            "title": "It was not possible to sign the documents.",
+            "subTitle": "Please wait for a new message to sign again, or contact the institution at the address "
+          },
+          "cancelled": {
+            "title": "The signature request has been cancelled",
+            "subTitle": "For further support, write to"
+          },
+          "signing": {
+            "title": "The signature failed",
+            "subTitle": "Due to a technical problem, the signature failed. If the problem persists, contact support."
+          },
+          "wrongUser": {
+            "title": "You cannot sign these documents",
+            "subTitle": "The signature request is not associated with your Tax Code."
+          }
+        }
+      },
+      "requestL3": {
+        "localFlag": {
+          "title": "Enable L3 check for the signature flow",
+          "description": "By enabling this toggle, you activate the L3 check for the signature flow, which requires a new L3 login for users who do not have the L3 authentication level (CIE + PIN)"
+        },
+        "landingPage": {
+          "title": "Please have your electronic ID card and PIN to hand",
+          "subtitle": "Before signing, we need to verify your identity. This step protects your signature and ensures its validity."
+        },
+        "optinLogin": {
+          "title": "Would you like to enable quick access?",
+          "description": "With quick access, we’ll only ask you to verify your digital identity once a year, rather than every 30 days. After that, you can simply use your face, fingerprint or access code.",
+          "descriptionButton": "How to protect your login",
+          "primaryAction": "Continue with quick access",
+          "secondaryAction": "Re-authorise access every 30 days"
+        },
+        "securityBottomsheet": {
+          "title": "How to protect your login",
+          "featureInfo1": "You can log out of the app even if you lose your device.",
+          "featureInfo1Action": "Go to website",
+          "featureInfo2": "If you’re thinking someone might be using your digital identity, you can block access to the app via the website.",
+          "featureInfo2Action": "Manage access",
+          "featureInfo3": "If you log in to IO on a device that isn't yours, remember to log out of the app."
+        },
+        "nfcNotAvailable": {
+          "title": "Your device does not support CIE reading",
+          "description": "The device you are using does not support login via the Electronic Identity Card (CIE).",
+          "featureInfoText": [
+            "To read the CIE, you need a device with an NFC chip.",
+            "An Android 8 or iOS 15.1 operating system or later is required."
+          ],
+          "cta": "I understand"
+        }
+      },
+      "abort": {
+        "title": "Quit signing",
+        "content": "Do you want to quit signing **{{dossierTitle}}**?",
+        "cancel": "Quit signing",
+        "confirm": "Keep signing",
+        "alert": {
+          "title": "Do you want to stop the operation?",
+          "confirm": "Yes, stop it",
+          "cancel": "No, go back"
+        }
+      },
+      "checkService": {
+        "title": "Turn on messages",
+        "content": "To receive the signed documents, you must turn on the setting that allows the service to send you messages. If you don't turn it on, you can complete the signature but you won't receive the signed documents.",
+        "cancel": "Not now",
+        "confirm": "Turn on"
+      },
+      "noFields": {
+        "title": "Sign the entire document",
+        "content": "Do you want to sign the entire document?",
+        "leftButton": "Reread",
+        "rightButton": "Sign"
+      },
+      "signatureFields": {
+        "title": "Sign here",
+        "showOnDocument": "See on document",
+        "accessibility": {
+          "fieldDetailHint": "Go to the page that displays the signature field"
+        },
+        "required": "Required signatures",
+        "optional": "Optional signatures",
+        "unfair": "Unfair terms signatures"
+      },
+      "documentsBar": {
+        "titleLeft": "Document {{currentDoc}} of {{totalDocs}}",
+        "titleRight": "Page {{currentPage}} of {{totalPages}}"
+      },
+      "shareDataScreen": {
+        "title": "Share these data?",
+        "content": "They will enable the digital signature provider to provide the service and certify your signature.",
+        "cancel": "Cancel",
+        "confirm": "Ok",
+        "alertText": "Do you want to change or update your e-mail address?",
+        "alertLink": "Edit email",
+        "name": "Name",
+        "familyName": "Surname",
+        "birthDate": "Date of birth"
+      },
+      "thankYouPage": {
+        "title": "Done!",
+        "content": "You will receive a message on IO with the outcome of your request.",
+        "cta": "Close"
+      },
+      "qtspTos": {
+        "title": "Almost there!",
+        "subTitle": "To sign, you must accept the terms and conditions of the service and confirm that you have read the privacy policy of the signature provider **Namirial S.p.A.**"
+      },
+      "documents": {
+        "footer": {
+          "cancel": "Cancel",
+          "continue": "Go to signature",
+          "backToSignFieldsList": "Back to signatures"
+        }
+      },
+      "requests": {
+        "header": "Signature status",
+        "title": "The status of your signatures",
+        "signed": "Signed",
+        "notAvailable": "Not available",
+        "signingInProgress": "Signature in progress"
+      },
+      "signatureFieldInfo": {
+        "title": "What are restrictive clauses?",
+        "subTitle": "These are clauses that highlight specific conditions to be aware of and that must be accepted. By law, they have to be easily identifiable to make sure the signer is aware of their contents before signing."
+      }
+    },
+    "wallet": {
+      "cards": {
+        "categories": {
+          "all": "All",
+          "other": "Bonus and more"
+        }
+      }
+    },
+    "payments": {
+      "backoff": {
+        "second": "1 second",
+        "seconds": "{{seconds}} seconds",
+        "minute": "1 minute",
+        "minutes": "{{minutes}} minutes",
+        "retryCountDown": "You can try again in {{time}}"
+      },
+      "title": "Payments",
+      "methods": {
+        "error": {
+          "banner": {
+            "label": "The loading of the payment methods failed.",
+            "retryButton": "Retry"
+          }
+        },
+        "banner": {
+          "title": "How do you want to pay?",
+          "content": "Find out which payment methods you can use in the IO app to pay pagoPA notices.",
+          "action": "Discover available payment methods"
+        }
+      },
+      "transactions": {
+        "button": "Show all",
+        "receipt": {
+          "a11y": {
+            "preview": "Receipt preview in PDF format"
+          },
+          "title": "pagoPA Receipt",
+          "shareButton": "Save or share",
+          "download": "Get receipt",
+          "hideFromList": "Hide from list",
+          "delete": {
+            "successful": "The receipt has been hidden",
+            "failed": "An error occurred, please try again"
+          },
+          "hideBanner": {
+            "title": "Do you want to hide this receipt from your list?",
+            "content": "This action is irreversible. The receipt will no longer be shown in your list of receipts.",
+            "accept": "Yes, hide"
+          }
+        },
+        "error": {
+          "banner": {
+            "retryButton": "Retry"
+          }
+        },
+        "filters": {
+          "tabs": {
+            "all": "All",
+            "payer": "I paid for it",
+            "debtor": "In my name"
+          }
+        },
+        "list": {
+          "emptyPayer": {
+            "title": "Here you will see receipts for payments made by you"
+          }
+        }
+      },
+      "details": {
+        "a11y": {
+          "announce": "Payment method details"
+        },
+        "payPal": {
+          "banner": {
+            "title": "Do you want to pay in 3?",
+            "content": "Don't use this method. During a payment, select \"PayPal (Pay in 3 too)\"."
+          }
+        }
+      }
+    },
+    "itWallet": {
+      "issuance": {
+        "landingError": {
+          "title": "Something went wrong",
+          "body": "An error occurred, please try again later.",
+          "action": "Close"
+        }
+      },
+      "verifiableCredentials": {
+        "claims": {
+          "attachments": "Attachments"
+        }
+      },
+      "presentation": {
+        "credentialDetails": {
+          "card": {
+            "front": "Front",
+            "back": "Back",
+            "showFront": "Show front",
+            "showBack": "Show back"
+          },
+          "openCardDocument": "Open document copy",
+          "documentDataTitle": "Document data",
+          "boolClaim": {
+            "false": "No"
+          },
+          "hiddenClaim": "Hidden",
+          "fiscalCode": {
+            "label": "Your Fiscal Code",
+            "action": "Press to enlarge and display the barcode on the entire screen"
+          },
+          "status": {
+            "valid": "Valid",
+            "invalid": "Not valid",
+            "expired": "Expired",
+            "expiring": "Expiring"
+          },
+          "actions": {
+            "removeFromWallet": "Remove from Wallet",
+            "updateDigitalCredential": "Update digital document",
+            "requestAssistance": "Something wrong?",
+            "hideClaimValues": "Hide claim values"
+          }
+        },
+        "ctas": {
+          "openPdf": "Show document",
+          "shareButton": "Save or share"
+        }
+      },
+      "offline": {
+        "session_expired": {
+          "modal": {
+            "footerAction": "Log in again"
+          }
+        }
+      },
+      "playgrounds": {
+        "environment": {
+          "toggle": {
+            "pre": {
+              "value": "Set environment to PRE",
+              "description": "Use pre-production environment. A proxy may be required to access services. This action will reset IT-Wallet state."
+            },
+            "prod": {
+              "value": "Set environment to PROD",
+              "description": "Use production environment. This action will reset IT-Wallet state."
+            }
+          },
+          "alert": {
+            "title": "Set environment to [{{environment}}]",
+            "content": "You are about to access the IT-Wallet test environment.\nThe \"Documenti su IO\" feature, if active, will be automatically disabled."
+          },
+          "banner": {
+            "content": "You are in the IT-Wallet test environment.",
+            "action": "How does it work?"
+          },
+          "bottom_sheet": {
+            "title": "IT-Wallet test environment",
+            "content": "If you had \"Documenti su IO\" enabled, the feature has been automatically disabled.\nTo re-enable it, exit the test environment and enable Documents on IO again.",
+            "action": "Exit test environment"
+          }
+        },
+        "walletL3": {
+          "alert": {
+            "title": "Disable IT Wallet L3",
+            "content": "If you had IT-Wallet enabled, the wallet will be reset and all documents removed."
+          }
+        }
+      }
+    },
+    "tour": {
+      "next": "Next",
+      "back": "Back",
+      "skip": "Skip",
+      "done": "Done",
+      "stepIndicator": "Step {{current}} of {{total}}"
+    }
+  },
+  "support": {
+    "ticketList": {
+      "noTicket": {
+        "title": "There are no ongoing requests",
+        "body": "If you need help, submit a new request."
+      }
+    },
+    "helpCenter": {
+      "header": "Support",
+      "cta": {
+        "contactSupport": "Submit a request",
+        "seeReports": "Current requests"
+      },
+      "supportComponent": {
+        "title": "You didn't find the answer you were looking for?",
+        "messageProblem": "If you have a problem with a message or service, **contact the institution directly**. You will find their contact details in the message.",
+        "appProblem": "If you are experiencing an **issue with the app or one of its features**, please select ‘Open a request’.",
+        "checkRequests": "If you want to **check requests that have already been sent**, click on “Pending requests”."
+      }
+    },
+    "panicMode": {
+      "title": "We cannot help you at the moment",
+      "body": "We know there is a problem and we are working to solve it. If the problem remains, or if you need support on another topic, please try again later."
+    },
+    "errorGetZendeskToken": {
+      "title": "Sorry, we're unable to open a service request at the moment.",
+      "subtitle": "Try again later"
+    },
+    "askPermissions": {
+      "nameSurname": "Name and Surname",
+      "fiscalCode": "Fiscal code",
+      "emailAddress": "Email address",
+      "deviceAndOS": "Device and Operating System",
+      "ipAddress": "IP address",
+      "ipAddressValue": "Including the assumed geographic location",
+      "appVersionsHistory": "App version history",
+      "appVersionsHistoryValue": "To determine if the issue is due to the most recent update",
+      "navigationData": "In-app navigation data",
+      "navigationDataValue": "Such as the the last screen or message displayed in IO.",
+      "stock": "Payment Notice details",
+      "stockValue": "Including the error you just received",
+      "card": "Payment methods details",
+      "cardValue": "Number (encrypted), expiration, network",
+      "fci": "Signature request identifier",
+      "fciValue": "To check the request in progress",
+      "header": "Submit a request",
+      "listTitle": "Ongoing requests",
+      "title": "Do you give us your consent?",
+      "listBody": "To retrieve your ongoing requests, we need to access to some data.",
+      "privacyLink": "Read the privacy policy",
+      "body": "In order to respond to the support request, we need access to some personal data. If you deny consent, you’ll have to send us a generic request via e-mail.",
+      "listHeader": "If you consent, we'll access this data:",
+      "devicePerformance": "Device performance",
+      "devicePerformanceDataAndroid": "Memory and battery level",
+      "devicePerformanceDataiOS": "Memory ({{storage}}) and battery level",
+      "prominentDisclosure": "Access to the device gallery",
+      "prominentDisclosureData": "To upload photos and screenshots",
+      "cta": {
+        "allow": "Agree",
+        "denies": "Deny"
+      },
+      "toast": {
+        "emailClientNotFound": "To get support write us: {{emailAddress}}"
+      }
+    },
+    "chooseCategory": {
+      "header": "Submit a request",
+      "title": {
+        "category": "Select a topic",
+        "subCategory": "Can you give us more details?"
+      },
+      "subTitle": {
+        "category": "Help us understand how we can help you by selecting the topic of your problem: we will reply as soon as possible, during business hours."
+      }
+    }
+  },
+  "idpay": {
+    "barCode": {
+      "resultScreen": {
+        "success": {
+          "copyCodeCta": "Copy code"
+        }
+      }
+    },
+    "code": {
+      "reset": {
+        "title": "ID Pay code",
+        "body": "The code to authorise payments made with your electronic identity card."
+      },
+      "onboarding": {
+        "banner": {
+          "body": "You can reset the code anytime from Settings > Security."
+        }
+      }
+    },
+    "wallet": {
+      "card": {
+        "available": "Available",
+        "validThrough": "Valid through {{endDate}}",
+        "ended": "Expired on {{endDate}}",
+        "showAll": "View all"
+      },
+      "initiativePairing": {
+        "navigation": "Available initiatives",
+        "header": "Which initiatives do you want to enable on this method?",
+        "pendingStatus": "Pending"
+      },
+      "initiativeOnboardedStatus": {
+        "header": "My requests",
+        "ON_WAITING_LIST": {
+          "label": "On waiting list",
+          "accessibilityInfoLabel": "Info button",
+          "bottomSheet": {
+            "title": "On waiting list",
+            "content": "Your request for {{initiativeName}} has been placed on **waiting list**, as there are currently no funds available.\n\n\n###### ***What happens now?***\n\nYou don’t need to do anything: your request remains valid. You will receive a message with the outcome as soon as new resources become available.\n\n\n###### ***Have you enabled notifications?***\n\nIf you haven’t already, enable push notifications to not miss any messages.\n[Read how to do it](https://assistenza.ioapp.it/hc/it/articles/39312288127377-Come-attivare-le-notifiche-push-su-IO)"
+          }
+        },
+        "ON_EVALUATION": {
+          "label": "On evaluation"
+        }
+      }
+    },
+    "initiative": {
+      "details": {
+        "initiativeCard": {
+          "statusLabels": {
+            "NOT_REFUNDABLE": "Active",
+            "NOT_REFUNDABLE_ONLY_IBAN": "Active",
+            "NOT_REFUNDABLE_ONLY_INSTRUMENT": "Active",
+            "UNSUBSCRIBED": "Removed",
+            "SUSPENDED": "Paused",
+            "USED": "Used",
+            "EXPIRED": "Expired",
+            "ACTIVE": "Active",
+            "EXPIRING": "Expiring"
+          }
+        },
+        "initiativeDetailsScreen": {
+          "error": {
+            "title": "The initiative details are currently unavailable",
+            "subtitle": "We’re already working to fix the issue.\nPlease try again later."
+          }
+        }
+      },
+      "discountDetails": {
+        "bottomSheetOptions": {
+          "generateBarcode": "Generate a discount code"
+        },
+        "IDPayCode": {
+          "successScreen": {
+            "body": "If you forget the code, reset it under Settings > Security."
+          }
+        }
+      },
+      "beneficiaryDetails": {
+        "infobox": {
+          "rulesButton": "Read the rules"
+        },
+        "buttons": {
+          "staticCode": "Generate static code"
+        }
+      },
+      "operationDetails": {
+        "discount": {
+          "labels": {
+            "AUTHORIZED": "Authorized"
+          }
+        }
+      },
+      "cie": {
+        "bottomSheet": {
+          "featureThree": "If you forget the code, you can generate another one from Settings > Security."
+        }
+      }
+    },
+    "onboarding": {
+      "beforeContinue": {
+        "text": "By clicking Continue, you declare that you have read, understood, and accepted the [Privacy Policy]({{privacyUrl}}) and the [Terms and Conditions of use]({{tosUrl}}).",
+        "requestBonus": "Request bonus"
+      },
+      "PDNDPrerequisites": {
+        "code": {
+          "FAMILY_UNIT": "Family Unit"
+        },
+        "familyUnitCode": {
+          "ANPR": {
+            "title": "Family Unit"
+          }
+        }
+      },
+      "inputPrerequisites": {
+        "emptyValueError": "Enter the required information to continue"
+      },
+      "multiPrerequisites": {
+        "emptyValueError": "Select an option to continue"
+      },
+      "boolPrerequisites": {
+        "emptyValueError": "Select an option to continue"
+      },
+      "enableMessages": {
+        "cancelAction": "Cancel",
+        "confirmAction": "Ok, active"
+      },
+      "enableNotification": {
+        "title": "Don't risk losing the outcome of your request",
+        "subtitle": "Activate push notifications to know immediately when you receive a new message in the app.",
+        "action": "Activate push notifications",
+        "deny": "Don't activate",
+        "success": "You activated Push notifications"
+      },
+      "disabledScreen": {
+        "title": "You are about to access the initiative",
+        "subtitle": "This may take several minutes. Do not close the app: once everything is ready, you will be able to request your bonus."
+      },
+      "featureDisabled": {
+        "title": "The initiative is not available"
+      },
+      "preferences": {
+        "enableEmailBanner": {
+          "title": "Don't miss important updates",
+          "content": "Enable email forwarding to receive all communications even outside the app.",
+          "cta": "Notify me via email",
+          "successOutcome": "You've enabled email notifications"
+        }
+      },
+      "initiativeImageAltText": "Initiative image"
+    },
+    "configuration": {
+      "headerTitle": "Configure the initiative",
+      "intro": {
+        "title": "We are almost there",
+        "body": "In order to take advantage of the initiative, we need some more information.",
+        "requiredData": {
+          "title": "Required informations:",
+          "ibanTitle": "IBAN in your name",
+          "ibanSubtitle": "In order to receive any refunds",
+          "instrumentTitle": "At least one payment method",
+          "instrumentSubtitle": "Indicate the methods to be enabled for the initiative"
+        },
+        "buttons": {
+          "continue": "Start configuration"
+        }
+      },
+      "instruments": {
+        "instrumentStatus": {
+          "active": "Active",
+          "pendingActivation": "Pending activation",
+          "pendingDeactivation": "Pending deactivation"
+        }
+      },
+      "iban": {
+        "onboarding": {
+          "error": {
+            "iban": "IBAN not valid",
+            "name": "Associates a name with the IBAN"
+          }
+        }
+      }
+    },
+    "unsubscription": {
+      "removeAlert": {
+        "title": "Do you want to delete {{initiativeName}} from the wallet?",
+        "content": "The bonus will be removed."
+      }
+    },
+    "payment": {
+      "authorization": {
+        "discountedAmount": "Discounted amount",
+        "amount": "Total amount",
+        "businessName": "Requested by",
+        "deny": "Deny operation"
+      },
+      "result": {
+        "success": {
+          "title": "Done!"
+        }
+      },
+      "manualInput": {
+        "input": "Discount code"
+      }
+    },
+    "support": {
+      "errorCode": "Error code",
+      "serviceId": "Service ID",
+      "initiativeId": "Initiative ID",
+      "additionalDataTitle": "Additional data",
+      "copyAll": "Copy all"
+    }
+  },
+  "barcodeScan": {
+    "tabs": {
+      "a11y": {
+        "scan": "Scan, 1 of 3",
+        "upload": "Upload an image or a document, 2 of 3",
+        "input": "Type in the notice code data, 3 of 3"
+      }
+    }
+  },
+  "unsupportedDevice": {
+    "title": "This device is no longer compatible with IO",
+    "subtitle": "Make sure your operating system is updated to the latest version. If it is already updated, you will need to log in from a different device to continue using IO.",
+    "cta": {
+      "faq": "Learn more"
+    }
+  },
+  "fastLogin": {
+    "loadingScreen": {
+      "title": "We are checking your identity"
+    },
+    "userInteraction": {
+      "sessionExpired": {
+        "noPin": {
+          "title": "Too much time has passed!",
+          "subtitle": "For security reasons, you must authenticate again with SPID or CIE. You can then resume IO configuration from where you left off.",
+          "submitButtonTitle": "Continue"
+        },
+        "continueNavigation": {
+          "title": "Your session has expired",
+          "subtitle": "Please log in to continue using the app",
+          "submitButtonTitle": "Log in"
+        },
+        "transientError": {
+          "title": "We couldn't authenticate you",
+          "subtitle": "Close the app and try again in a few minutes."
+        }
+      }
+    }
+  },
+  "loginFeatures": {
+    "loginPreferences": {
+      "expirationBanner": {
+        "title": "Quick access is about to expire.",
+        "content": "On {{date}} you will need to log in again with SPID or CIE",
+        "action": {
+          "label": "Read more"
+        }
+      }
+    }
+  },
+  "transaction": {
+    "details": {
+      "error": {
+        "title": "We couldn't retrieve the receipt"
+      }
+    }
+  },
+  "pageNotFound": {
+    "title": "Nothing here!",
+    "subtitle": "This page does not exist or is not available in the version of the app you are using.\nTry updating IO."
+  }
+}

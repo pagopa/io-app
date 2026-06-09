@@ -1,0 +1,324 @@
+import {
+  AuthorizationDetail,
+  createCryptoContextFor,
+  CredentialIssuance,
+  ItwVersion
+} from "@pagopa/io-react-native-wallet";
+import { type IdentificationContext } from "../../machine/eid/context";
+import {
+  CredentialAccessToken,
+  CredentialBundle,
+  IssuerConfiguration
+} from "./itwTypesUtils";
+import {
+  DPOP_KEYTAG,
+  regenerateCryptoKey,
+  WIA_KEYTAG
+} from "./itwCryptoContextUtils";
+import { extractVerification } from "./itwCredentialUtils";
+import { Env } from "./environment";
+import { getIoWallet } from "./itwIoWallet";
+import { AuthorizedCredentialMetadata } from "./itwCredentialIssuanceUtils";
+import { CredentialType } from "./itwMocksUtils";
+
+type StartAuthFlow = (params: {
+  env: Env;
+  itwVersion: ItwVersion;
+  walletAttestation: string;
+  identification: IdentificationContext;
+  withMRTDPoP: boolean;
+}) => Promise<{
+  authUrl: string;
+  issuerConf: IssuerConfiguration;
+  clientId: string;
+  codeVerifier: string;
+  credentialDefinition: AuthorizationDetail;
+  redirectUri: string;
+}>;
+
+/**
+ * Function to start the authentication flow. It must be invoked before
+ * proceeding with the authentication process to get the `authUrl` and other parameters needed later.
+ * After completing the initial authentication flow and obtaining the redirectAuthUrl from the WebView (CIE + PIN & SPID) or Browser (CIEID),
+ * the flow must be completed by invoking `completeAuthFlow`.
+ * @param env - The environment to use for the wallet provider base URL
+ * @param itwVersion - IT-Wallet technical specs version
+ * @param walletAttestation - The wallet attestation.
+ * @param identification - The identification context.
+ * @param withMRTDPoP - Whether to use MRTD PoP proof or not.
+ * @returns Authentication params to use when completing the flow.
+ */
+const startAuthFlow: StartAuthFlow = async ({
+  env,
+  itwVersion,
+  walletAttestation,
+  identification,
+  withMRTDPoP
+}) => {
+  const ioWallet = getIoWallet(itwVersion);
+
+  const idpHint = getIdpHint(identification, env);
+
+  const { issuerConf } = await ioWallet.CredentialIssuance.evaluateIssuerTrust(
+    env.WALLET_PID_PROVIDER_BASE_URL.value(itwVersion)
+  );
+
+  const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
+
+  const { issuerRequestUri, clientId, codeVerifier, credentialDefinition } =
+    await ioWallet.CredentialIssuance.startUserAuthorization(
+      issuerConf,
+      [getPidSdJwtConfigurationId(issuerConf)],
+      withMRTDPoP
+        ? { proofType: "mrtd-pop", idpHinting: idpHint }
+        : { proofType: "none" },
+      {
+        walletInstanceAttestation: walletAttestation,
+        redirectUri: env.ISSUANCE_REDIRECT_URI,
+        wiaCryptoContext
+      }
+    );
+
+  // Obtain the Authorization URL
+  const { authUrl } = await ioWallet.CredentialIssuance.buildAuthorizationUrl(
+    issuerRequestUri,
+    clientId,
+    issuerConf,
+    idpHint
+  );
+
+  return {
+    authUrl,
+    issuerConf,
+    clientId,
+    codeVerifier,
+    credentialDefinition: credentialDefinition[0], // Get the first as only one credential was authorized
+    redirectUri: env.ISSUANCE_REDIRECT_URI
+  };
+};
+
+export type CompleteAuthFlow = (args: {
+  callbackUrl: string;
+  itwVersion: ItwVersion;
+  issuerConf: IssuerConfiguration;
+  codeVerifier: string;
+  walletAttestation: string;
+  redirectUri: string;
+}) => Promise<{
+  accessToken: CredentialAccessToken;
+}>;
+
+/**
+ * Function to complete the authentication flow. It must be invoked after `startAuthFlow`
+ * and after obtaining the final `callbackUrl` from the WebView (CIE + PIN & SPID) or Browser (CIEID).
+ * The rest of the parameters are those obtained from `startAuthFlow` + the wallet attestation.
+ * @param walletAttestation - The wallet attestation.
+ * @param callbackUrl - The callback url from which the code to get the access token is extracted.
+ * @returns The access token with the authorized credentials.
+ */
+const completeAuthFlow: CompleteAuthFlow = async ({
+  callbackUrl,
+  codeVerifier,
+  issuerConf,
+  walletAttestation,
+  redirectUri,
+  itwVersion
+}) => {
+  const ioWallet = getIoWallet(itwVersion);
+  const { code } =
+    await ioWallet.CredentialIssuance.completeUserAuthorizationWithQueryMode(
+      callbackUrl
+    );
+
+  await regenerateCryptoKey(DPOP_KEYTAG);
+  const dPopCryptoContext = createCryptoContextFor(DPOP_KEYTAG);
+  const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
+
+  const { accessToken } = await ioWallet.CredentialIssuance.authorizeAccess(
+    issuerConf,
+    code,
+    redirectUri,
+    codeVerifier,
+    {
+      walletInstanceAttestation: walletAttestation,
+      wiaCryptoContext,
+      dPopCryptoContext
+    }
+  );
+
+  return { accessToken };
+};
+
+export type GetPid = (args: {
+  itwVersion: ItwVersion;
+  env: Env;
+  issuerConf: IssuerConfiguration;
+  accessToken: CredentialAccessToken;
+  clientId: string;
+  authorizedCredential: AuthorizedCredentialMetadata;
+}) => Promise<CredentialBundle>;
+
+/**
+ * Function to get the PID, parse it and return it in {@link CredentialBundle} format.
+ * It must be called after `startAuthFlow` and `completeAuthFlow`.
+ * @returns The stored credential.
+ */
+const getPid: GetPid = async ({
+  itwVersion,
+  env,
+  issuerConf,
+  clientId,
+  accessToken,
+  authorizedCredential
+}) => {
+  const ioWallet = getIoWallet(itwVersion);
+
+  const {
+    keyTag,
+    authDetails: { credential_configuration_id, credential_identifiers },
+    walletUnitAttestationId,
+    walletUnitAttestation
+  } = authorizedCredential;
+
+  const credentialCryptoContext = createCryptoContextFor(keyTag);
+  const dPopCryptoContext = createCryptoContextFor(DPOP_KEYTAG);
+
+  const { credential, format } =
+    await ioWallet.CredentialIssuance.obtainCredential(
+      issuerConf,
+      accessToken,
+      clientId,
+      {
+        credential_configuration_id,
+        credential_identifier: credential_identifiers[0]
+      },
+      {
+        credentialCryptoContext,
+        walletUnitAttestation,
+        dPopCryptoContext
+      }
+    );
+
+  const { parsedCredential, issuedAt, expiration } =
+    await ioWallet.CredentialIssuance.verifyAndParseCredential(
+      issuerConf,
+      credential,
+      credential_configuration_id,
+      { credentialCryptoContext, ignoreMissingAttributes: true },
+      env.X509_CERT_ROOT
+    );
+
+  return {
+    credential,
+    metadata: {
+      // Use the same value for the PID credential type, avoiding separate values for the same credential across IT-Wallet versions.
+      // The credential catalogue is also mapped to use this type to identify the PID.
+      // To get the original type, access `issuerConf.credential_configurations_supported[credential_configuration_id].scope`.
+      credentialType: CredentialType.PID,
+      parsedCredential,
+      issuerConf,
+      keyTag,
+      credentialId: credential_configuration_id,
+      format,
+      jwt: {
+        expiration: expiration.toISOString(),
+        issuedAt: issuedAt?.toISOString()
+      },
+      spec_version: ioWallet.version,
+      verification: extractVerification({
+        format,
+        credential,
+        parsedCredential
+      }),
+      walletUnitAttestationId
+    }
+  };
+};
+
+export { startAuthFlow, completeAuthFlow, getPid };
+
+/**
+ * Consts for the IDP hints in test for SPID and CIE and in production for CIE.
+ * In production for SPID the hint is retrieved from the IDP ID via the {@link getSpidProductionIdpHint} function.
+ */
+const SPID_HINT_TEST = "https://demo.spid.gov.it";
+const CIE_HINT_TEST =
+  "https://collaudo.idserver.servizicie.interno.gov.it/idp/profile/SAML2/POST/SSO";
+const CIE_HINT_PROD =
+  "https://idserver.servizicie.interno.gov.it/idp/profile/SAML2/POST/SSO";
+
+/**
+ * Object of the SPID IDP IDs and the corresponding production hint URLs.
+ */
+const SPID_IDP_HINTS: { [key: string]: string } = {
+  arubaid: "https://loginspid.aruba.it",
+  ehtid: "https://id.eht.eu",
+  infocamereid: "https://loginspid.infocamere.it",
+  infocertid: "https://identity.infocert.it",
+  intesiid: "https://idp.intesigroup.com",
+  lepidaid: "https://id.lepida.it/idp/shibboleth",
+  namirialid: "https://idp.namirialtsp.com/idp",
+  posteid: "https://posteid.poste.it",
+  sielteid: "https://identity.sieltecloud.it",
+  spiditalia: "https://spid.register.it",
+  timid: "https://login.id.tim.it/affwebservices/public/saml2sso",
+  teamsystemid: "https://spid.teamsystem.com/idp"
+};
+
+/**
+ * Get the IDP hint based on the identification context.
+ * If the {@link itwIdpHintTest} is true the hint will be the test one, otherwise the production one.
+ * In production for SPID the hint is retrieved from the IDP ID via the {@link getSpidProductionIdpHint} function,
+ * for CIE the hint is always the same and it's defined in the {@link CIE_HINT_PROD} constant.
+ * @param idCtx the identification context which contains the mode and the IDP ID if the mode is SPID
+ * @param env the environment currently in use
+ * @param isL3 flag that indicates that we need to issue an L3 PID
+ */
+export const getIdpHint = (idCtx: IdentificationContext, env: Env) => {
+  const isSpidMode = idCtx.mode === "spid";
+
+  if (env.type === "pre") {
+    return isSpidMode ? SPID_HINT_TEST : CIE_HINT_TEST;
+  } else {
+    return isSpidMode ? getSpidProductionIdpHint(idCtx.idpId) : CIE_HINT_PROD;
+  }
+};
+
+/**
+ * Map of the SPID IDP IDs and the corresponding production hint URLs.
+ * If the IDP ID is not present in the map an error is thrown.
+ * @param spidIdpId
+ * @throws {@link Error} if the IDP ID is not present in the map
+ * @returns
+ */
+export const getSpidProductionIdpHint = (spidIdpId: string) => {
+  if (!(spidIdpId in SPID_IDP_HINTS)) {
+    throw new Error(`Unknown idp ${spidIdpId}`);
+  }
+  return SPID_IDP_HINTS[spidIdpId];
+};
+
+const pidScopes = [
+  "PersonIdentificationData", // Legacy 1.0 PID (will be removed in the future)
+  CredentialType.PID // New 1.3+ PID
+];
+
+/**
+ * Get the credential configuration ID for the SD-JWT PID from its scope.
+ * Different versions of IT-Wallet specifications may use different naming conventions.
+ * @param issuerConf The issuer configuration obtained from the {@link evaluateIssuerTrust}
+ * @returns The PID configuration ID to use for issuance
+ */
+const getPidSdJwtConfigurationId = (
+  issuerConf: CredentialIssuance.IssuerConfig
+): string => {
+  const result = Object.entries(
+    issuerConf.credential_configurations_supported
+  ).find(([, c]) => c.format === "dc+sd-jwt" && pidScopes.includes(c.scope));
+  if (!result) {
+    throw new Error(
+      `No SD-JWT credential with scope ${pidScopes.join(", ")} found in the Issuer Configuration`
+    );
+  }
+  return result[0];
+};
