@@ -9,7 +9,7 @@ import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { flow, pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
-import { useEffect, useRef, useState } from "react";
+import { ComponentRef, useEffect, useRef, useState } from "react";
 import { Keyboard, Platform, View } from "react-native";
 import { KeyboardStickyView } from "react-native-keyboard-controller";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
@@ -27,9 +27,9 @@ import {
   validateOrganizationFiscalCode
 } from "../../common/utils/validation";
 import * as analytics from "../analytics";
+import { useInputFocus } from "../hooks/useInputFocus";
 import { usePagoPaPayment } from "../hooks/usePagoPaPayment";
 import { PaymentsCheckoutParamsList } from "../navigation/params";
-import { TextInputValidationRefProps } from "../types";
 
 export type WalletPaymentInputFiscalCodeScreenNavigationParams = {
   paymentNoticeNumber: O.Option<PaymentNoticeNumberFromString>;
@@ -55,9 +55,8 @@ const WalletPaymentInputFiscalCodeScreen = () => {
     fiscalCodeText: "",
     fiscalCode: O.none
   });
-
+  const textInputRef = useRef<ComponentRef<typeof TextInputValidation>>(null);
   const textInputWrapperRef = useRef<View>(null);
-  const textInputRef = useRef<TextInputValidationRefProps>(null);
   const screenReaderEnabled = useIOSelector(isScreenReaderEnabledSelector);
   const [showInput, setShowInput] = useState(
     Platform.OS === "ios" || !screenReaderEnabled
@@ -109,6 +108,7 @@ const WalletPaymentInputFiscalCodeScreen = () => {
     analytics.trackPaymentOrganizationDataEntry();
   });
 
+  useInputFocus(textInputRef);
   const { bottomMargin } = useFooterActionsMargin();
 
   return (
@@ -155,7 +155,6 @@ const WalletPaymentInputFiscalCodeScreen = () => {
               inputMode: "numeric",
               inputAccessoryViewID: "keyboardStickyView"
             }}
-            autoFocus
           />
         )}
       </IOScrollViewWithLargeHeader>

@@ -323,9 +323,17 @@ export const trackSendAarMandateCieCanCodeError = () => {
   void mixpanelTrack(eventName, eventProps);
 };
 
-export const trackSendAarMandateCieCardReadingFailure = () => {
+export const trackSendAarMandateCieCardReadingFailure = (
+  name: string | undefined,
+  message: string | undefined,
+  nfcDetected: boolean | undefined
+) => {
   const eventName = "SEND_MANDATE_CIE_CARD_READING_FAILURE";
-  const eventProps = buildEventProperties("KO", undefined);
+  const eventProps = buildEventProperties("KO", undefined, {
+    name,
+    message,
+    nfc_detected: nfcDetected
+  });
   void mixpanelTrack(eventName, eventProps);
 };
 

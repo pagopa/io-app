@@ -8,8 +8,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { useRoute } from "@react-navigation/core";
-import { RouteProp, useFocusEffect } from "@react-navigation/native";
+import { RouteProp, useFocusEffect, useRoute } from "@react-navigation/native";
 import { sequenceS } from "fp-ts/lib/Apply";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
@@ -17,12 +16,12 @@ import I18n from "i18next";
 import { useCallback, useLayoutEffect } from "react";
 import { Linking, View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import {
   InitiativeDTO,
   InitiativeRewardTypeEnum,
   VoucherStatusEnum
 } from "../../../../../definitions/idpay/InitiativeDTO";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { BonusCardScreenComponent } from "../../../../components/BonusCard";
 import { BonusCardCounter } from "../../../../components/BonusCard/BonusCardCounter";
 import { withAppRequiredUpdate } from "../../../../components/helpers/withAppRequiredUpdate";

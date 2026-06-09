@@ -23,7 +23,7 @@ export type BonusCardColorSchemeValues = {
 };
 
 type CardThemeColors = Record<
-  NonNullable<ColorSchemeName>,
+  NonNullable<Exclude<ColorSchemeName, "unspecified">>,
   BonusCardColorSchemeValues
 >;
 
