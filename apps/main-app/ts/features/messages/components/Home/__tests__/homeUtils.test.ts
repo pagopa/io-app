@@ -3,7 +3,11 @@ import * as O from "fp-ts/lib/Option";
 import { ActionType } from "typesafe-actions";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { MessageListCategory } from "../../../types/messageListCategory";
-import * as allPaginated from "../../../store/reducers/allPaginated";
+import {
+  MessageError,
+  MessagePage,
+  MessagePagePot
+} from "../../../store/reducers/allPaginated/types";
 import {
   accessibilityLabelForMessageItem,
   getInitialReloadAllMessagesActionIfNeeded,
@@ -39,8 +43,8 @@ import {
 import { activeSessionLoginInitialState } from "../../../../authentication/activeSessionLogin/store/reducer";
 
 const createGlobalState = (
-  archiveData: allPaginated.MessagePagePot,
-  inboxData: allPaginated.MessagePagePot,
+  archiveData: MessagePagePot,
+  inboxData: MessagePagePot,
   shownCategory: MessageListCategory,
   archivingStatus: ArchivingStatus = "disabled"
 ) =>
@@ -96,8 +100,8 @@ describe("getInitialReloadAllMessagesActionIfNeeded", () => {
     "enabled",
     "processing"
   ];
-  const messagePage = {} as allPaginated.MessagePage;
-  const anError = { reason: "", time: new Date() } as allPaginated.MessageError;
+  const messagePage = {} as MessagePage;
+  const anError = { reason: "", time: new Date() } as MessageError;
   const potValues = [
     pot.none,
     pot.noneLoading,
@@ -110,14 +114,8 @@ describe("getInitialReloadAllMessagesActionIfNeeded", () => {
   ];
   const outputActionShouldBeUndefined = (
     archivingStatus: ArchivingStatus,
-    currentCategoryPot: pot.Pot<
-      allPaginated.MessagePage,
-      allPaginated.MessageError
-    >,
-    oppositeCategoryPot: pot.Pot<
-      allPaginated.MessagePage,
-      allPaginated.MessageError
-    >
+    currentCategoryPot: pot.Pot<MessagePage, MessageError>,
+    oppositeCategoryPot: pot.Pot<MessagePage, MessageError>
   ) =>
     archivingStatus === "processing" ||
     isLoadingOrUpdating(oppositeCategoryPot) ||
