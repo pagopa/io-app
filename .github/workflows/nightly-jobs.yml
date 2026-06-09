@@ -17,7 +17,7 @@ jobs:
         with:
           python-version: '3.8'
       - name: check api specs alignment
-        run: ./scripts/pagopa_api_check.sh
+        run: ./apps/main-app/scripts/pagopa_api_check.sh
         shell: bash
   io_check_uris:
     name: Check URIs validity in app
@@ -34,7 +34,7 @@ jobs:
         run: pip install pipenv
       - name: check uris validity on static texts
         run: |
-          cd scripts/check_urls
+          cd apps/main-app/scripts/check_urls
           pipenv install
           pipenv run python3 check_urls.py
   io_check_cie_button_exists_ios:
@@ -52,7 +52,7 @@ jobs:
         run: pip install pipenv
       - name: check cie button exists on ios
         run: |
-          cd scripts/check_cie_button_exists
+          cd apps/main-app/scripts/check_cie_button_exists
           pipenv install
           pipenv run python3 check_cie_button_exists_ios.py
         shell: bash
