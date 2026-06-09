@@ -5,21 +5,21 @@ Package manager: `pnpm`
 
 ## Build, Lint, Test
 
-- `pnpm sync` - full setup (first time / after pull)
-- `pnpm setup` - Install deps + hooks
-- `pnpm start` - Start Metro bundler
-- `pnpm run-ios` - Run on iOS simulator
-- `pnpm dev:run-android` - Run on Android emulator
-- `pnpm generate` - Generate API models from OpenAPI
-- `pnpm test:dev` - Run tests
-- `pnpm tsc:noemit` - TypeScript type-check (no emit)
-- `pnpm lint` - Lint
-- `pnpm lint-autofix` - Lint + autofix
+- `pnpm nx run main-app:sync` - full setup (first time / after pull)
+- `pnpm nx run main-app:setup` - Install deps + hooks
+- `pnpm nx run main-app:start` - Start Metro bundler
+- `pnpm nx run main-app:run-ios` - Run on iOS simulator
+- `pnpm nx run main-app:dev-run-android` - Run on Android emulator
+- `pnpm nx run main-app:generate` - Generate API models from OpenAPI
+- `pnpm nx run main-app:test-dev` - Run tests
+- `pnpm nx tsc-noemit main-app` - TypeScript type-check (no emit)
+- `pnpm nx lint main-app` - Lint
+- `pnpm nx run main-app:lint-autofix` - Lint + autofix
 - `pnpm prettify` - Format code
 
 ## Feature Structure
 
-Every feature lives under `ts/features/<feature>/` and is self-contained:
+Every feature lives under `apps/main-app/ts/features/<feature>/` and is self-contained:
 
 - `analytics/` — Mixpanel tracking functions
 - `components/` — Feature-specific UI components
@@ -38,22 +38,22 @@ Every feature lives under `ts/features/<feature>/` and is self-contained:
 
 ## Guidelines
 
-- Before marking any task complete, run `pnpm lint`, `pnpm prettify`, and `pnpm tsc:noemit`. Only finish once all three succeed with zero errors.
-- Never edit anything under `definitions/`. Run `pnpm generate` to update them.
+- Never edit anything under `apps/main-app/definitions/`. Run `pnpm nx run main-app:generate` to update them.
+- Before marking any task complete, run `pnpm nx affected --target=lint,tsc-noemit` and `pnpm prettify`. Only finish once all three succeed with zero errors.
 - Never use `fp-ts` in new code; always use native TypeScript equivalents.
 - Always import from `typed-redux-saga/macro`, not bare `redux-saga/effects`.
-- The `tsc:noemit` check must pass. Never add `@ts-ignore` without a comment explaining why.
+- The `tsc-noemit` check must pass. Never add `@ts-ignore` without a comment explaining why.
 - Never use hardcoded user-facing strings: every string must have an `I18n.t(...)` key.
 - Never use magic numbers or hardcoded values. Use enums, string literals, or well documented constants.
 - Always use **`@pagopa/io-app-design-system`** components first. Only build custom components when the design system has no suitable primitive.
 - Always use `useIOTheme()` to access semantic color tokens. Never use raw hex values.
 - All interactive elements must have accessible labels.
-- Use Mixpanel for event tracking. Each feature's `analytics/` folder should export typed track functions.
+- Use Mixpanel for event tracking. Each feature's `apps/main-app/analytics/` folder should export typed track functions.
 - Investigate problems to the root cause and fix them. Never cover up, ignore, or hide a problem just to make it disappear.
 
 ## Navigation
 
-- Always add new routes to both the feature's `navigation/params.ts` and `navigation/routes.ts`, then register the navigator in `ts/navigation/params/AppParamsList.ts` and the root navigator.
+- Always add new routes to both the feature's `apps/main-app/navigation/params.ts` and `apps/main-app/navigation/routes.ts`, then register the navigator in `apps/main-app/ts/navigation/params/AppParamsList.ts` and the root navigator.
 - Always access navigation and route params with the typed hook `useIONavigation()`.
 
 ## Redux
