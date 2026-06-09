@@ -357,10 +357,13 @@ export const useItwProximityFlow = () => {
       ISO18013_5.addListener("onDeviceConnected", handleOnDeviceConnected),
       ISO18013_5.addListener(
         "onDocumentRequestReceived",
-        onDocumentRequestReceived
+        payload => void onDocumentRequestReceived(payload)
       ),
-      ISO18013_5.addListener("onDeviceDisconnected", onDeviceDisconnected),
-      ISO18013_5.addListener("onError", onError)
+      ISO18013_5.addListener(
+        "onDeviceDisconnected",
+        () => void onDeviceDisconnected()
+      ),
+      ISO18013_5.addListener("onError", data => void onError(data))
     ];
 
     return () => {

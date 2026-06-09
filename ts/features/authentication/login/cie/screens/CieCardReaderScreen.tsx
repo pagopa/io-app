@@ -334,7 +334,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
     this.setState({ readingState: ReadingState.completed }, () => {
       this.updateContent();
       setTimeout(
-        async () => {
+        () => {
           trackLoginCieCardReadingSuccess();
           this.props.navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
             screen: AUTHENTICATION_ROUTES.CIE_CONSENT_DATA_USAGE,
@@ -356,7 +356,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
     cieManager
       .start()
       .then(async () => {
-        cieManager.onEvent(this.handleCieEvent);
+        cieManager.onEvent(event => void this.handleCieEvent(event));
         cieManager.onError(this.handleCieError);
         cieManager.onSuccess(this.handleCieSuccess);
         await cieManager.setPin(this.ciePin);
@@ -373,7 +373,7 @@ class CieCardReaderScreen extends PureComponent<Props, State> {
 
   public async startCieiOS(useCieUat: boolean) {
     cieManager.removeAllListeners();
-    cieManager.onEvent(this.handleCieEvent);
+    cieManager.onEvent(event => void this.handleCieEvent(event));
     cieManager.onError(this.handleCieError);
     cieManager.onSuccess(this.handleCieSuccess);
     cieManager.enableLog(isDevEnv);

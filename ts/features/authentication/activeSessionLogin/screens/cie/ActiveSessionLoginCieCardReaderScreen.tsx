@@ -329,7 +329,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
   const startCie = useCallback(
     async (useUat: boolean) => {
       cieManager.removeAllListeners();
-      cieManager.onEvent(handleCieEvent);
+      cieManager.onEvent(event => void handleCieEvent(event));
       cieManager.onError(handleCieError);
       cieManager.onSuccess(handleCieSuccess);
 

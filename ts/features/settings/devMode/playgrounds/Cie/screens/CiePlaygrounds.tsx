@@ -28,12 +28,14 @@ export const CiePlaygrounds = () => {
   });
 
   useAppStateActive(
-    useCallback(async () => {
-      setHasNFC(await CieUtils.hasNfcFeature());
-      setIsNFCEnabled(await CieUtils.isNfcEnabled());
-      setIsCieAuthenticationSupported(
-        await CieUtils.isCieAuthenticationSupported()
-      );
+    useCallback(() => {
+      void (async () => {
+        setHasNFC(await CieUtils.hasNfcFeature());
+        setIsNFCEnabled(await CieUtils.isNfcEnabled());
+        setIsCieAuthenticationSupported(
+          await CieUtils.isCieAuthenticationSupported()
+        );
+      })();
     }, [])
   );
 

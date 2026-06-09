@@ -290,8 +290,8 @@ const useIOBarcodeFileReader = ({
   };
 
   return {
-    showImagePicker,
-    showDocumentPicker,
+    showImagePicker: () => void showImagePicker(),
+    showDocumentPicker: () => void showDocumentPicker(),
     filePickerBottomSheet: filePickerModal.bottomSheet,
     showFilePicker: handleShowFilePickerPressed,
     isLoading,

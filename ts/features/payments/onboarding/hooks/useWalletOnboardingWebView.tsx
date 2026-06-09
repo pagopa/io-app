@@ -168,7 +168,8 @@ export const useWalletOnboardingWebView = ({
 
   return {
     startOnboarding,
-    startContextualOnboarding,
+    startContextualOnboarding: (url: string) =>
+      void startContextualOnboarding(url),
     isLoading,
     isError,
     isPendingOnboarding
