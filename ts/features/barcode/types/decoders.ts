@@ -54,10 +54,6 @@ type StaticDecodedIOBarcode =
   | {
       type: "FCI";
       signatureRequestId: SignatureRequestDetailView["id"];
-    }
-  | {
-      type: "ITW_CREDENTIAL_OFFER";
-      itwCredentialOfferUri: string;
     };
 
 type RuntimeDecodedIOBarcode =
@@ -68,10 +64,14 @@ type RuntimeDecodedIOBarcode =
   | {
       type: "ITW_REMOTE";
       itwRemoteRequestPayload: ItwRemoteRequestPayload;
+    }
+  | {
+      type: "ITW_CREDENTIAL_OFFER";
+      itwCredentialOfferUri: string;
     };
 export type DecodedIOBarcode = StaticDecodedIOBarcode | RuntimeDecodedIOBarcode;
 type ItwCredentialOfferDecodedIOBarcode = Extract<
-  StaticDecodedIOBarcode,
+  RuntimeDecodedIOBarcode,
   { type: "ITW_CREDENTIAL_OFFER" }
 >;
 
@@ -164,21 +164,30 @@ const decodeItwRemoteBarcode: IOBarcodeRuntimeDecoderFn = (
     }))
   );
 
-const decodeItwCredentialOfferBarcode = (
+const itwCredentialOfferSupportedSpecsVersions: ReadonlyArray<
+  ReturnType<typeof selectItwSpecsVersion>
+> = ["1.3.3"];
+
+const isItwCredentialOfferSupportedSpecsVersion = (
+  itwSpecsVersion: ReturnType<typeof selectItwSpecsVersion>
+): boolean =>
+  itwCredentialOfferSupportedSpecsVersions.includes(itwSpecsVersion);
+
+const decodeItwCredentialOfferBarcode: IOBarcodeRuntimeDecoderFn = (
+  state: GlobalState,
   data: string
-): ItwCredentialOfferDecodedIOBarcode | undefined => {
+): O.Option<ItwCredentialOfferDecodedIOBarcode> => {
   const itwCredentialOfferUri = data.trim();
 
-  return isPotentialCredentialOfferInvocation(itwCredentialOfferUri)
-    ? {
+  return isItwCredentialOfferSupportedSpecsVersion(
+    selectItwSpecsVersion(state)
+  ) && isPotentialCredentialOfferInvocation(itwCredentialOfferUri)
+    ? O.some({
         type: "ITW_CREDENTIAL_OFFER",
         itwCredentialOfferUri
-      }
-    : undefined;
+      })
+    : O.none;
 };
-
-const decodeItwCredentialOfferBarcodeOption: IOBarcodeStaticDecoderFn = data =>
-  O.fromNullable(decodeItwCredentialOfferBarcode(data));
 
 const decodeSENDAarBarcode: IOBarcodeRuntimeDecoderFn = (
   state: GlobalState,
@@ -209,13 +218,13 @@ const decodeSENDAarBarcode: IOBarcodeRuntimeDecoderFn = (
 const StaticIOBarcodeDecoders: IOBarcodeStaticDecodersType = {
   IDPAY: decodeIdPayBarcode,
   PAGOPA: decodePagoPABarcode,
-  FCI: decodeFciBarcode,
-  ITW_CREDENTIAL_OFFER: decodeItwCredentialOfferBarcodeOption
+  FCI: decodeFciBarcode
 };
 
 const RuntimeIOBarcodeDecoders: IOBarcodeRuntimeDecodersType = {
   SEND: decodeSENDAarBarcode,
-  ITW_REMOTE: decodeItwRemoteBarcode
+  ITW_REMOTE: decodeItwRemoteBarcode,
+  ITW_CREDENTIAL_OFFER: decodeItwCredentialOfferBarcode
 };
 
 export const IOBarcodeDecoders = {
