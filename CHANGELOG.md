@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.34.0-rc.3](https://github.com/pagopa/io-app/compare/3.34.0-rc.2...3.34.0-rc.3) (2026-06-08)
+
+
+### Bug Fixes
+
+* [[IOPLT-1880](https://pagopa.atlassian.net/browse/IOPLT-1880)] Skia `postinstall` download binaries ([#8158](https://github.com/pagopa/io-app/issues/8158)) ([525a4de](https://github.com/pagopa/io-app/commit/525a4debd848ccf3737615218321cd2ff2653943))
+
 ## [3.34.0-rc.2](https://github.com/pagopa/io-app/compare/3.34.0-rc.1...3.34.0-rc.2) (2026-06-05)
 
 
