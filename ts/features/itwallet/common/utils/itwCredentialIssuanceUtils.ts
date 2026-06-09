@@ -5,6 +5,8 @@ import {
 } from "@pagopa/io-react-native-wallet";
 import { v4 as uuidv4 } from "uuid";
 import { type CryptoContext } from "@pagopa/io-react-native-jwt";
+import { getRedirects } from "@pagopa/io-react-native-login-utils";
+import last from "lodash/last";
 import {
   DPOP_KEYTAG,
   regenerateCryptoKey,
@@ -159,7 +161,12 @@ export const completeAuthFlow: CompleteAuthFlow = async ({
         requestObject,
         issuerConf,
         [pid.metadata.keyTag, pid.credential],
-        env.ISSUANCE_REDIRECT_URI // The redirect uri must be a valid HTTP url that can be followed
+        env.ISSUANCE_REDIRECT_URI, // The redirect uri must be a valid HTTP url that can be followed
+        {
+          // Workaround for a known bug affecting React Native 0.82-0.83 (https://github.com/facebook/react-native/issues/55248)
+          // TODO: it can be removed after upgrading to RN 0.84+
+          fetchFinalRedirectUri: url => getRedirects(url, {}, "code").then(last)
+        }
       )
     ).code;
   };

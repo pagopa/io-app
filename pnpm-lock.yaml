@@ -107,8 +107,8 @@ importers:
         specifier: ^0.2.1
         version: 0.2.1(react-native@0.83.6(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.28.0))(@types/react@19.2.15)(react@19.2.0))(react@19.2.0)
       '@pagopa/io-react-native-wallet':
-        specifier: 3.4.1
-        version: 3.4.1(5255fa7d4c50fb58d920fc9a28676b68)
+        specifier: 3.4.2
+        version: 3.4.2(5255fa7d4c50fb58d920fc9a28676b68)
       '@pagopa/io-react-native-zendesk':
         specifier: ^0.3.30
         version: 0.3.30(react-native@0.83.6(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.28.0))(@types/react@19.2.15)(react@19.2.0))(react@19.2.0)
@@ -2151,8 +2151,8 @@ packages:
       react: '*'
       react-native: '*'
 
-  '@pagopa/io-react-native-wallet@3.4.1':
-    resolution: {integrity: sha512-oYiZLffOYU2Q69fxYE5NMpFo3RqSsur+i4sjqwafJaeiSlEfB/yqeVvdcxE6BqT6j51DU6accxaOgywsga2f5g==}
+  '@pagopa/io-react-native-wallet@3.4.2':
+    resolution: {integrity: sha512-xtk35jnhA0HGnT2WIHfSD40r9Qc3HSDafBS4gK1uxC1WkL5UCl3pI+m0vTJxc0skGAZGsvd8ajugd5J8Y20s+g==}
     engines: {node: '>= 16.0.0'}
     peerDependencies:
       '@pagopa/io-react-native-crypto': '*'
@@ -11953,7 +11953,7 @@ snapshots:
       react: 19.2.0
       react-native: 0.83.6(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.28.0))(@types/react@19.2.15)(react@19.2.0)
 
-  '@pagopa/io-react-native-wallet@3.4.1(5255fa7d4c50fb58d920fc9a28676b68)':
+  '@pagopa/io-react-native-wallet@3.4.2(5255fa7d4c50fb58d920fc9a28676b68)':
     dependencies:
       '@pagopa/io-react-native-crypto': 1.2.3(react-native@0.83.6(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.28.0))(@types/react@19.2.15)(react@19.2.0))(react@19.2.0)
       '@pagopa/io-react-native-iso18013': 0.8.3(react-native@0.83.6(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.28.0))(@types/react@19.2.15)(react@19.2.0))(react@19.2.0)
@@ -12631,7 +12631,7 @@ snapshots:
       eslint: 9.39.4
       eslint-config-prettier: 8.10.0(eslint@9.39.4)
       eslint-plugin-eslint-comments: 3.2.0(eslint@9.39.4)
-      eslint-plugin-ft-flow: 2.0.3(@babel/eslint-parser@7.27.0(@babel/core@7.28.0)(eslint@9.39.4))(eslint@9.39.4)
+      eslint-plugin-ft-flow: 2.0.3(@babel/eslint-parser@7.27.0(@babel/core@7.29.0)(eslint@9.39.4))(eslint@9.39.4)
       eslint-plugin-jest: 29.15.2(@typescript-eslint/eslint-plugin@8.58.1(@typescript-eslint/parser@8.58.1(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(typescript@5.9.3))(eslint@9.39.4)(jest@30.3.0(@types/node@10.17.28)(babel-plugin-macros@3.1.0)(ts-node@7.0.1))(typescript@5.9.3)
       eslint-plugin-react: 7.37.5(eslint@9.39.4)
       eslint-plugin-react-hooks: 7.0.1(eslint@9.39.4)
@@ -15602,7 +15602,7 @@ snapshots:
       eslint: 9.39.4
       ignore: 5.3.2
 
-  eslint-plugin-ft-flow@2.0.3(@babel/eslint-parser@7.27.0(@babel/core@7.28.0)(eslint@9.39.4))(eslint@9.39.4):
+  eslint-plugin-ft-flow@2.0.3(@babel/eslint-parser@7.27.0(@babel/core@7.29.0)(eslint@9.39.4))(eslint@9.39.4):
     dependencies:
       '@babel/eslint-parser': 7.27.0(@babel/core@7.29.0)(eslint@9.39.4)
       eslint: 9.39.4
