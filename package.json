@@ -101,6 +101,7 @@
     "expo-device": "~55.0.17",
     "expo-notifications": "~55.0.23",
     "expo-screen-capture": "~55.0.9",
+    "expo-task-manager": "~55.0.16",
     "fp-ts": "^2.12.1",
     "front-matter": "^4.0.2",
     "hastscript": "^7.0.2",

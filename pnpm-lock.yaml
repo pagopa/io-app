@@ -202,6 +202,9 @@ importers:
       expo-screen-capture:
         specifier: ~55.0.9
         version: 55.0.14(patch_hash=74f8b19daf73b86e72d9d61e5fc0ab2e2362516a40718b4fb9a956cbb56fc7dd)(expo@55.0.26)(react@19.2.0)
+      expo-task-manager:
+        specifier: ~55.0.16
+        version: 55.0.16(expo@55.0.26)(react-native@0.83.6(@babel/core@7.28.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.28.0))(@types/react@19.2.15)(react@19.2.0))
       fp-ts:
         specifier: ^2.12.1
         version: 2.14.0
