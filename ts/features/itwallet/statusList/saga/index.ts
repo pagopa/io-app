@@ -4,15 +4,11 @@ import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences
 import { itwCredentialsStore } from "../../credentials/store/actions";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
-import {
-  registerStatusListProperties,
-  trackItwStatusListLastCheckTime
-} from "../analytics";
+import { registerStatusListProperties } from "../analytics";
 import {
   registerItwStatusListFetchTask,
   unregisterItwStatusListFetchTask
 } from "../tasks";
-import { getLastStatusListCheckTimestamp } from "../utils/storage";
 
 /**
  * Registers the ITW Status List fetch task with expo-background-task.
@@ -34,21 +30,6 @@ export function* registerStatusListFetchTaskSaga(): SagaIterator {
     yield* call(unregisterItwStatusListFetchTask);
   });
 }
-/**
- * Tracks the last execution of the ITW Status List fetch task on app open,
- * to have a baseline for the background fetch frequency.
- *
- * TODO: remove once the status list is implemented
- */
-export function* trackLastStatusListFetchTaskSaga(): SagaIterator {
-  const timestamp = yield* call(getLastStatusListCheckTimestamp);
-  if (timestamp) {
-    yield* call(
-      trackItwStatusListLastCheckTime,
-      new Date(timestamp).toISOString()
-    );
-  }
-}
 
 export function* watchItwTasksSaga(): SagaIterator {
   const isWhitelisted = yield* select(itwIsL3EnabledSelector);
@@ -64,6 +45,4 @@ export function* watchItwTasksSaga(): SagaIterator {
 
   // Register Status List super properties
   yield* call(registerStatusListProperties);
-  // Track the last execution of the ITW Status List fetch task
-  yield* call(trackLastStatusListFetchTaskSaga);
 }
