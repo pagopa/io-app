@@ -61,6 +61,7 @@ import {
   orderSignatureFields
 } from "../../utils/signatureFields";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton.ts";
 
 export type FciSignatureFieldsScreenNavigationParams = Readonly<{
   documentId: DocumentDetailView["id"];
@@ -85,7 +86,9 @@ const FciSignatureFieldsScreen = () => {
   const navigation = useIONavigation();
   const [isClausesChecked, setIsClausesChecked] = useState(false);
   const [isError, setIsError] = useState(false);
-  const { showModal, hideModal } = useContext(LightModalContext);
+  const [isPreviewModalVisible, setIsPreviewModalVisible] = useState(false);
+  const { showModal, hideModal: innerHideModal } =
+    useContext(LightModalContext);
 
   const { footerActionsMeasurements, handleFooterActionsMeasurements } =
     useFooterActionsMeasurements();
@@ -93,6 +96,18 @@ const FciSignatureFieldsScreen = () => {
   useOnFirstRender(() => {
     trackFciSignatureFieldsView();
   });
+
+  useHardwareBackButton(() => {
+    if (!isPreviewModalVisible) {
+      navigation.goBack();
+    }
+    return true;
+  });
+
+  const hideModal = () => {
+    setIsPreviewModalVisible(false);
+    innerHideModal();
+  };
 
   // get signatureFields for the current document
   const docSignatures = useMemo(
@@ -132,8 +147,16 @@ const FciSignatureFieldsScreen = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [docSignatures]);
 
-  const { present, bottomSheet: fciAbortSignature } =
-    useFciAbortSignatureFlow();
+  const { present, bottomSheet: fciAbortSignature } = useFciAbortSignatureFlow({
+    shouldIntercept: () => {
+      if (isPreviewModalVisible) {
+        hideModal();
+      } else {
+        navigation.goBack();
+      }
+      return false;
+    }
+  });
 
   const { present: presentInfo, bottomSheet: fciSignaturefieldInfo } =
     useFciSignatureFieldInfo();
@@ -149,6 +172,7 @@ const FciSignatureFieldsScreen = () => {
         testID={"FciDocumentWithSignatureTestID"}
       />
     );
+    setIsPreviewModalVisible(true);
   };
 
   /**

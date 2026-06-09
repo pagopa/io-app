@@ -12,11 +12,22 @@ import { trackFciUserExit } from "../analytics";
 import { fciEndRequest } from "../store/actions";
 import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
 import { fciSignatureRequestDossierTitleSelector } from "../store/reducers/fciSignatureRequest";
+import { useHardwareBackButtonWhenFocused } from "../../../hooks/useHardwareBackButton.ts";
 
 /**
- * A hook that returns a function to present the abort signature flow bottom sheet
+ * `shouldIntercept` as undefined means that the hook will not intercept the hardware back button and WILL NOT STOP back event propagation.
+ * `shouldIntercept` as true means that the hook will intercept the hardware back button.
+ * `shouldIntercept` as false means that the hook will not intercept the hardware back button and WILL STOP back event propagation.
  */
-export const useFciAbortSignatureFlow = () => {
+type Props = {
+  shouldIntercept?: () => boolean;
+};
+
+/**
+ * A hook that returns a function to present the abort signature flow bottom sheet.
+ * Optionally intercepts the hardware back button based on the `shouldIntercept`, false by default.
+ */
+export const useFciAbortSignatureFlow = (props?: Props) => {
   const dispatch = useIODispatch();
   const route = useRoute();
   const dossierTitle = useIOSelector(fciSignatureRequestDossierTitleSelector);
@@ -85,6 +96,17 @@ export const useFciAbortSignatureFlow = () => {
    * TODO: remove when the experimental design will be enabled by default (SFEQS-2090)
    */
   const present = () => (isExperimental ? showAlert() : presentBs());
+
+  useHardwareBackButtonWhenFocused(() => {
+    const intercept = props?.shouldIntercept?.();
+
+    if (typeof intercept === "undefined") {
+      return false;
+    } else if (intercept) {
+      present();
+    }
+    return true;
+  });
 
   return {
     dismiss,
