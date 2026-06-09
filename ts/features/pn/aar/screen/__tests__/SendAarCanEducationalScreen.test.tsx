@@ -1,3 +1,4 @@
+import I18n from "i18next";
 import { act, fireEvent } from "@testing-library/react-native";
 import _ from "lodash";
 import { Alert } from "react-native";
@@ -46,10 +47,6 @@ jest.mock("../../hooks/useSendAarFlowManager", () => ({
   useSendAarFlowManager: () => ({ terminateFlow: mockTerminateFlow })
 }));
 
-jest.mock("i18next", () => ({
-  t: (path: string) => path
-}));
-
 describe("SendAarCanEducationalScreen", () => {
   beforeEach(jest.clearAllMocks);
 
@@ -70,7 +67,7 @@ describe("SendAarCanEducationalScreen", () => {
     const spyOnSystemAlert = jest.spyOn(Alert, "alert");
     const { getByLabelText } = renderComponent();
 
-    const backButton = getByLabelText("global.buttons.back");
+    const backButton = getByLabelText(I18n.t("global.buttons.back"));
 
     expect(trackSendAarMandateCieReadingClosureAlert).not.toHaveBeenCalled();
     expect(spyOnSystemAlert).not.toHaveBeenCalled();
@@ -85,16 +82,16 @@ describe("SendAarCanEducationalScreen", () => {
     );
     expect(spyOnSystemAlert).toHaveBeenCalledTimes(1);
     expect(spyOnSystemAlert).toHaveBeenCalledWith(
-      "features.pn.aar.flow.cieCanAdvisory.alert.title",
-      "features.pn.aar.flow.cieCanAdvisory.alert.message",
+      I18n.t("features.pn.aar.flow.cieCanAdvisory.alert.title"),
+      I18n.t("features.pn.aar.flow.cieCanAdvisory.alert.message"),
       [
         {
-          text: "features.pn.aar.flow.cieCanAdvisory.alert.confirm",
+          text: I18n.t("features.pn.aar.flow.cieCanAdvisory.alert.confirm"),
           style: "destructive",
           onPress: expect.any(Function)
         },
         {
-          text: "features.pn.aar.flow.cieCanAdvisory.alert.cancel",
+          text: I18n.t("features.pn.aar.flow.cieCanAdvisory.alert.cancel"),
           onPress: expect.any(Function)
         }
       ]
@@ -108,7 +105,7 @@ describe("SendAarCanEducationalScreen", () => {
     const spyOnSystemAlert = jest.spyOn(Alert, "alert");
     const { getByLabelText } = renderComponent();
 
-    const backButton = getByLabelText("global.buttons.back");
+    const backButton = getByLabelText(I18n.t("global.buttons.back"));
 
     act(() => {
       fireEvent.press(backButton);
@@ -142,7 +139,7 @@ describe("SendAarCanEducationalScreen", () => {
     const spyOnSystemAlert = jest.spyOn(Alert, "alert");
     const { getByLabelText } = renderComponent();
 
-    const backButton = getByLabelText("global.buttons.back");
+    const backButton = getByLabelText(I18n.t("global.buttons.back"));
 
     act(() => {
       fireEvent.press(backButton);
@@ -175,7 +172,7 @@ describe("SendAarCanEducationalScreen", () => {
     const spyOnSystemAlert = jest.spyOn(Alert, "alert");
     const { getByLabelText } = renderComponent();
 
-    const backButton = getByLabelText("global.buttons.back");
+    const backButton = getByLabelText(I18n.t("global.buttons.back"));
 
     act(() => {
       fireEvent.press(backButton);
