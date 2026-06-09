@@ -1,0 +1,62 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "defaultBase": "master",
+  "analytics": false,
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "production": [
+      "default",
+      "!{projectRoot}/.eslintrc.json",
+      "!{projectRoot}/eslint.config.mjs",
+      "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
+      "!{projectRoot}/tsconfig.json",
+      "!{projectRoot}/jest.config.[jt]s",
+      "!{projectRoot}/jestGlobalExtendExpectImport.[jt]s",
+      "!{projectRoot}/jestAfterEnvSetup.[jt]s",
+      "!{projectRoot}/jestSetup.[jt]s",
+      "!{projectRoot}/jestGlobalSetup.[jt]s"
+    ],
+    "sharedGlobals": [],
+    "typecheck": [
+      "{projectRoot}/tsconfig.json",
+      "{projectRoot}/**/*.ts",
+      "{projectRoot}/**/*.tsx",
+      "{projectRoot}/**/*.d.ts",
+      "{projectRoot}/locales/**/*.json",
+      "!{projectRoot}/android/**",
+      "!{projectRoot}/ios/**",
+      "!{projectRoot}/coverage/**",
+      "!{projectRoot}/dist/**",
+      "!{projectRoot}/**/Pods/**",
+      { "externalDependencies": ["typescript"] }
+    ]
+  },
+  "targetDefaults": {
+    "test": {
+      "configurations": {
+        "ci": {
+          "ci": true
+        }
+      }
+    },
+    "tsc-noemit": {
+      "cache": true,
+      "inputs": ["typecheck"],
+      "outputs": []
+    }
+  },
+  "plugins": [
+    {
+      "plugin": "@nx/jest/plugin",
+      "options": {
+        "targetName": "test"
+      }
+    },
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      }
+    }
+  ]
+}
