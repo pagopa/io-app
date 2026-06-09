@@ -1,19 +1,18 @@
-import * as E from "fp-ts/lib/Either";
+import { Alert, Body, VSpacer } from "@pagopa/io-app-design-system";
+import { useLinkTo } from "@react-navigation/native";
+import I18n from "i18next";
 import { useMemo, useState } from "react";
 import { ScrollView } from "react-native";
-import { useLinkTo } from "@react-navigation/native";
 import Animated, { FadeInUp } from "react-native-reanimated";
-import { Alert, Body, VSpacer } from "@pagopa/io-app-design-system";
-import I18n from "i18next";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
+import IOMarkdown from "../../../../components/IOMarkdown";
 import { useIOSelector } from "../../../../store/hooks";
 import { isIOMarkdownEnabledForMessagesAndServicesSelector } from "../../../../store/reducers/backendStatus/remoteConfig";
-import IOMarkdown from "../../../../components/IOMarkdown";
-import { removeCTAsFromMarkdown } from "../../utils/ctas";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
-import { generateMessagesAndServicesRules } from "../../../common/components/IOMarkdown/customRules";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { trackAppCaughtError } from "../../../../utils/analytics";
 import { unknownToString } from "../../../../utils/errors";
+import { generateMessagesAndServicesRules } from "../../../common/components/IOMarkdown/customRules";
+import { removeCTAsFromMarkdown } from "../../utils/ctas";
 import { MessageMarkdown } from "./MessageMarkdown";
 
 export type MessageDetailsBodyProps = {
@@ -32,11 +31,11 @@ export const MessageDetailsBody = ({
   const useIOMarkdown = useIOSelector(
     isIOMarkdownEnabledForMessagesAndServicesSelector
   );
-  const markdownWithNoCTAEither = useMemo(
+  const markdownWithNoCta = useMemo(
     () => removeCTAsFromMarkdown(messageMarkdown, serviceId),
     [messageMarkdown, serviceId]
   );
-  if (E.isLeft(markdownWithNoCTAEither)) {
+  if (markdownWithNoCta === undefined) {
     return (
       <>
         <Alert
@@ -55,18 +54,15 @@ export const MessageDetailsBody = ({
         {showRawContent && (
           <Animated.View entering={FadeInUp}>
             <VSpacer size={16} />
-            <Body testID="markdown-decoding-error-raw">
-              {markdownWithNoCTAEither.left}
-            </Body>
+            <Body testID="markdown-decoding-error-raw">{messageMarkdown}</Body>
           </Animated.View>
         )}
       </>
     );
   }
-  const markdownWithNoCTA = markdownWithNoCTAEither.right;
   return useIOMarkdown ? (
     <IOMarkdown
-      content={markdownWithNoCTA}
+      content={markdownWithNoCta}
       rules={generateMessagesAndServicesRules(linkTo)}
       onError={(error, _stack) => {
         const errorString = unknownToString(error);
@@ -85,7 +81,7 @@ export const MessageDetailsBody = ({
         }, 100);
       }}
     >
-      {markdownWithNoCTA}
+      {markdownWithNoCta}
     </MessageMarkdown>
   );
 };

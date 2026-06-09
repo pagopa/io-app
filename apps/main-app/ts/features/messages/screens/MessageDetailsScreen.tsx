@@ -36,7 +36,6 @@ import { MessageDetailsPayment } from "../components/MessageDetail/MessageDetail
 import { userSelectedPaymentRptIdSelector } from "../store/reducers/payments";
 import { MessageDetailsStickyFooter } from "../components/MessageDetail/MessageDetailsStickyFooter";
 import { MessageDetailsScrollViewAdditionalSpace } from "../components/MessageDetail/MessageDetailsScrollViewAdditionalSpace";
-import { serviceMetadataByIdSelector } from "../../services/details/store/selectors";
 import { extractPNOptInMessageInfoIfAvailable } from "../../pn/utils";
 import {
   trackPNOptInMessageCTADisplaySuccess,
@@ -93,12 +92,9 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
   const messageMarkdown =
     useIOSelector(state => messageMarkdownSelector(state, messageId)) ?? "";
 
-  const serviceMetadata = useIOSelector(state =>
-    serviceMetadataByIdSelector(state, serviceId)
-  );
   const maybeCTAs = useMemo(
-    () => getMessageCTAs(messageMarkdown, serviceId, serviceMetadata),
-    [messageMarkdown, serviceId, serviceMetadata]
+    () => getMessageCTAs(messageMarkdown, serviceId),
+    [messageMarkdown, serviceId]
   );
 
   // Use the store since `isPNOptInMessage` is not a selector but an utility
