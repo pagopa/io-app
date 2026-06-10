@@ -7,7 +7,7 @@ import {
   successLoadNextPageMessagesPayload,
   successLoadPreviousPageMessagesPayload,
   successReloadMessagesPayload
-} from "../../../__mocks__/messages";
+} from "../../../../__mocks__/messages";
 import {
   loadNextPageMessages,
   loadPreviousPageMessages,
@@ -16,33 +16,35 @@ import {
   setShownMessageCategoryAction,
   upsertMessageStatusAttributes,
   UpsertMessageStatusAttributesPayload
-} from "../../actions";
-import { GlobalState } from "../../../../../store/reducers/types";
+} from "../../../actions";
+import { GlobalState } from "../../../../../../store/reducers/types";
 import reducer, {
-  AllPaginated,
   isLoadingOrUpdatingInbox,
   shownMessageCategorySelector,
-  MessagePagePot,
   messageListForCategorySelector,
-  MessagePage,
   emptyListReasonSelector,
   shouldShowFooterListComponentSelector,
-  LastRequestType,
   messagePagePotFromCategorySelector,
   shouldShowRefreshControllOnListSelector,
   isPaymentMessageWithPaidNoticeSelector
-} from "../allPaginated";
-import { pageSize } from "../../../../../config";
-import { UIMessage } from "../../../types";
-import { clearCache } from "../../../../settings/common/store/actions";
-import { appReducer } from "../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { MessageListCategory } from "../../../types/messageListCategory";
-import { emptyMessageArray } from "../../../utils";
-import { isSomeLoadingOrSomeUpdating } from "../../../../../utils/pot";
-import { PaymentByRptIdState } from "../../../../../store/reducers/entities/payments";
-import { MessageCategory } from "../../../../../../definitions/communication/MessageCategory";
-import { nextPageLoadingWaitMillisecondsGenerator } from "../../../components/Home/homeUtils";
+} from "..";
+import {
+  AllPaginated,
+  LastRequestType,
+  MessagePage,
+  MessagePagePot
+} from "../types";
+import { pageSize } from "../../../../../../config";
+import { UIMessage } from "../../../../types";
+import { clearCache } from "../../../../../settings/common/store/actions";
+import { appReducer } from "../../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { MessageListCategory } from "../../../../types/messageListCategory";
+import { emptyMessageArray } from "../../../../utils";
+import { isSomeLoadingOrSomeUpdating } from "../../../../../../utils/pot";
+import { PaymentByRptIdState } from "../../../../../../store/reducers/entities/payments";
+import { MessageCategory } from "../../../../../../../definitions/communication/MessageCategory";
+import { nextPageLoadingWaitMillisecondsGenerator } from "../../../../components/Home/homeUtils";
 
 describe("allPaginated reducer", () => {
   describe("given a `reloadAllMessages` action", () => {
