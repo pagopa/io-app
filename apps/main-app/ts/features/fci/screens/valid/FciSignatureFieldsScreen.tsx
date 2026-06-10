@@ -162,6 +162,7 @@ const FciSignatureFieldsScreen = () => {
 
   const onPressDetail = (signatureField: SignatureField) => {
     trackFciShowSignatureFields(fciEnvironment);
+    setIsPreviewModalVisible(true);
     showModal(
       <DocumentWithSignature
         attrs={signatureField.attrs}
@@ -171,7 +172,6 @@ const FciSignatureFieldsScreen = () => {
         testID={"FciDocumentWithSignatureTestID"}
       />
     );
-    setIsPreviewModalVisible(true);
   };
 
   /**
