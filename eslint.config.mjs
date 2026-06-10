@@ -69,7 +69,12 @@ export default defineConfig([
       sourceType: "module",
 
       parserOptions: {
-        project: "tsconfig.json",
+        // `projectService` lets typescript-eslint auto-discover the nearest
+        // tsconfig per file (e.g. apps/main-app/tsconfig.json), which is
+        // required for the nx monorepo layout where this base config lives at
+        // the repository root.
+        projectService: true,
+        tsconfigRootDir: __dirname,
 
         ecmaFeatures: {
           jsx: true
