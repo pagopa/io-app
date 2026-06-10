@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.34.0-canary.8225](https://github.com/pagopa/io-app/compare/3.34.0-rc.4...3.34.0-canary.8225) (2026-06-10)
+
+
+### Bug Fixes
+
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] App doesn't load assets on production build ([fd4c12a](https://github.com/pagopa/io-app/commit/fd4c12a038a106bd89059ae247edda1e25a58a58))
+* **IT-Wallet:** [[SIW-4342](https://pagopa.atlassian.net/browse/SIW-4342)] Support vct as URN in remote presentation ([#8138](https://github.com/pagopa/io-app/issues/8138)) ([12529b1](https://github.com/pagopa/io-app/commit/12529b165926a55ffb820e894dc3504178e2d903))
+
+
+### Chores
+
+* [[IOCOM-3152](https://pagopa.atlassian.net/browse/IOCOM-3152)] removal of FP-ts from allPaginated - collection.lastRequest ([#8129](https://github.com/pagopa/io-app/issues/8129)) ([60b5808](https://github.com/pagopa/io-app/commit/60b58085f2145721e556f9bf178e2ebc43d316d8))
+
 ## [3.34.0-rc.4](https://github.com/pagopa/io-app/compare/3.34.0-rc.3...3.34.0-rc.4) (2026-06-10)
 
 
