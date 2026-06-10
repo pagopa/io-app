@@ -13,6 +13,7 @@ import LoadingScreenContent from "../../../../../components/screens/LoadingScree
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks";
+import { useItwActivationExitSurveyBottomSheet } from "../../../common/hooks/useItwActivationExitSurveyBottomSheet";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import { itwDisabledIdentificationMethodsSelector } from "../../../common/store/selectors/remoteConfig";
 import { isL2Credential } from "../../../common/utils/itwCredentialUtils";
@@ -138,12 +139,28 @@ export const ItwIdentificationModeSelectionScreen = ({
     }
   }, [machineRef, routeName, credentialType, isL2Active]);
 
+  const exitSurvey = useItwActivationExitSurveyBottomSheet({
+    step: "select_method",
+    onAfterDismiss: () => machineRef.send({ type: "close" })
+  });
+
   const dismissalDialog = useItwDismissalDialog({
-    enabled: params.eidReissuing,
-    customLabels: { body: "" },
-    handleDismiss: () => {
-      machineRef.send({ type: "close" });
-    }
+    enabled: level === "l3",
+    customLabels: {
+      title: I18n.t(
+        "features.itWallet.discovery.screen.itw.dismissalDialog.title"
+      ),
+      body: I18n.t(
+        "features.itWallet.discovery.screen.itw.dismissalDialog.body"
+      ),
+      confirmLabel: I18n.t(
+        "features.itWallet.discovery.screen.itw.dismissalDialog.confirm"
+      ),
+      cancelLabel: I18n.t(
+        "features.itWallet.discovery.screen.itw.dismissalDialog.cancel"
+      )
+    },
+    handleDismiss: exitSurvey.present
   });
 
   if (isLoading) {
@@ -151,46 +168,49 @@ export const ItwIdentificationModeSelectionScreen = ({
   }
 
   return (
-    <IOScrollViewWithLargeHeader
-      title={{ section, label: title }}
-      description={description}
-      headerActionsProp={{ showHelp: true }}
-      goBack={params.eidReissuing ? dismissalDialog.show : undefined}
-    >
-      <ContentWrapper>
-        <VSpacer size={8} />
-        <VStack space={16}>
-          {isReissuanceMode && isL3 ? (
-            <GroupedMethodList
-              isCiePinDisabled={isCiePinDisabled}
-              isCieIdDisabled={isCieIdDisabled}
-              isSpidDisabled={isSpidDisabled}
-            />
-          ) : (
-            <DefaultMethodList
-              isCiePinDisabled={isCiePinDisabled}
-              isCieIdDisabled={isCieIdDisabled}
-              isSpidDisabled={isSpidDisabled}
-              isL3={isL3}
-              isReissuanceMode={isReissuanceMode}
-            />
-          )}
-          {!isReissuanceMode && isL3 && (
-            <View style={styles.noCieButtonContainer}>
-              <IOButton
-                variant="link"
-                textAlign="center"
-                label={I18n.t(
-                  "features.itWallet.identification.modeSelection.noCieCta"
-                )}
-                onPress={handleNoCiePress}
-                testID="noCieButtonTestID"
+    <>
+      <IOScrollViewWithLargeHeader
+        title={{ section, label: title }}
+        description={description}
+        headerActionsProp={{ showHelp: true }}
+        goBack={level === "l3" ? dismissalDialog.show : undefined}
+      >
+        <ContentWrapper>
+          <VSpacer size={8} />
+          <VStack space={16}>
+            {isReissuanceMode && isL3 ? (
+              <GroupedMethodList
+                isCiePinDisabled={isCiePinDisabled}
+                isCieIdDisabled={isCieIdDisabled}
+                isSpidDisabled={isSpidDisabled}
               />
-            </View>
-          )}
-        </VStack>
-      </ContentWrapper>
-    </IOScrollViewWithLargeHeader>
+            ) : (
+              <DefaultMethodList
+                isCiePinDisabled={isCiePinDisabled}
+                isCieIdDisabled={isCieIdDisabled}
+                isSpidDisabled={isSpidDisabled}
+                isL3={isL3}
+                isReissuanceMode={isReissuanceMode}
+              />
+            )}
+            {!isReissuanceMode && isL3 && (
+              <View style={styles.noCieButtonContainer}>
+                <IOButton
+                  variant="link"
+                  textAlign="center"
+                  label={I18n.t(
+                    "features.itWallet.identification.modeSelection.noCieCta"
+                  )}
+                  onPress={handleNoCiePress}
+                  testID="noCieButtonTestID"
+                />
+              </View>
+            )}
+          </VStack>
+        </ContentWrapper>
+      </IOScrollViewWithLargeHeader>
+      {exitSurvey.bottomSheet}
+    </>
   );
 };
 

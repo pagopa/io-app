@@ -23,6 +23,7 @@ import {
   trackSaveCredentialToWallet
 } from "../analytics";
 import { getMixPanelCredential } from "../../analytics/utils";
+import { useItwCredentialExitSurveyBottomSheet } from "../../common/hooks/useItwCredentialExitSurveyBottomSheet";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import {
@@ -89,10 +90,20 @@ const ContentView = ({ credential }: ContentViewProps) => {
     }, [mixPanelCredential, isMultilevel])
   );
 
+  const exitSurvey = useItwCredentialExitSurveyBottomSheet({
+    step: "doc_preview",
+    credential: mixPanelCredential,
+    onAfterDismiss: () => machineRef.send({ type: "close" })
+  });
+
   const dismissDialog = useItwDismissalDialog({
     handleDismiss: () => {
-      machineRef.send({ type: "close" });
       trackItwExit({ exit_page: route.name, credential: mixPanelCredential });
+      if (isItwL3) {
+        exitSurvey.present();
+      } else {
+        machineRef.send({ type: "close" });
+      }
     }
   });
 
@@ -133,38 +144,41 @@ const ContentView = ({ credential }: ContentViewProps) => {
   });
 
   return (
-    <ForceScrollDownView
-      contentContainerStyle={{ flexGrow: 1 }}
-      onThresholdCrossed={trackScrollToBottom}
-      footerActions={{
-        actions: {
-          type: "TwoButtons",
-          primary: {
-            icon: "add",
-            iconPosition: "end",
-            label: I18n.t(
-              "features.itWallet.issuance.credentialPreview.actions.primary"
-            ),
-            onPress: handleSaveToWallet
-          },
-          secondary: {
-            label: I18n.t(
-              "features.itWallet.issuance.credentialPreview.actions.secondary"
-            ),
-            onPress: dismissDialog.show
+    <>
+      <ForceScrollDownView
+        contentContainerStyle={{ flexGrow: 1 }}
+        onThresholdCrossed={trackScrollToBottom}
+        footerActions={{
+          actions: {
+            type: "TwoButtons",
+            primary: {
+              icon: "add",
+              iconPosition: "end",
+              label: I18n.t(
+                "features.itWallet.issuance.credentialPreview.actions.primary"
+              ),
+              onPress: handleSaveToWallet
+            },
+            secondary: {
+              label: I18n.t(
+                "features.itWallet.issuance.credentialPreview.actions.secondary"
+              ),
+              onPress: dismissDialog.show
+            }
           }
-        }
-      }}
-    >
-      <ContentWrapper style={{ flexGrow: 1 }}>
-        <H2>
-          {I18n.t("features.itWallet.issuance.credentialPreview.title", {
-            credential: credentialName
-          })}
-        </H2>
-        <VSpacer size={24} />
-        <ItwCredentialPreviewClaimsList data={credential} />
-      </ContentWrapper>
-    </ForceScrollDownView>
+        }}
+      >
+        <ContentWrapper style={{ flexGrow: 1 }}>
+          <H2>
+            {I18n.t("features.itWallet.issuance.credentialPreview.title", {
+              credential: credentialName
+            })}
+          </H2>
+          <VSpacer size={24} />
+          <ItwCredentialPreviewClaimsList data={credential} />
+        </ContentWrapper>
+      </ForceScrollDownView>
+      {exitSurvey.bottomSheet}
+    </>
   );
 };

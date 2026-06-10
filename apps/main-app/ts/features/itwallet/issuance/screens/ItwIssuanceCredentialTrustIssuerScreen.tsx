@@ -28,6 +28,7 @@ import { ItwDataExchangeIcons } from "../../common/components/ItwDataExchangeIco
 import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
 import { withOfflineFailureScreen } from "../../common/helpers/withOfflineFailureScreen";
 import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
+import { useItwCredentialExitSurveyBottomSheet } from "../../common/hooks/useItwCredentialExitSurveyBottomSheet";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import { parseClaims, WellKnownClaim } from "../../common/utils/itwClaimsUtils";
@@ -152,13 +153,23 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
 
   const mixPanelCredential = getMixPanelCredential(credentialType, isItwL3);
 
+  const exitSurvey = useItwCredentialExitSurveyBottomSheet({
+    step: "data_share",
+    credential: mixPanelCredential,
+    onAfterDismiss: () => machineRef.send({ type: "close" })
+  });
+
   const dismissDialog = useItwDismissalDialog({
     handleDismiss: () => {
-      machineRef.send({ type: "close" });
       trackItwExit({
         exit_page: route.name,
         credential: mixPanelCredential
       });
+      if (isItwL3) {
+        exitSurvey.present();
+      } else {
+        machineRef.send({ type: "close" });
+      }
     }
   });
 
@@ -192,61 +203,66 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   };
 
   return (
-    <ForceScrollDownView
-      onThresholdCrossed={trackScrollToBottom}
-      footerActions={{
-        actions: {
-          type: "TwoButtons",
-          primary: {
-            label: I18n.t("global.buttons.continue"),
-            onPress: handleContinuePress,
-            loading: isIssuing
-          },
-          secondary: {
-            label: I18n.t("global.buttons.cancel"),
-            onPress: dismissDialog.show
-          }
-        }
-      }}
-    >
-      <ContentWrapper>
-        <VSpacer size={24} />
-        <ItwDataExchangeIcons
-          requesterLogoUri={require("../../../../../img/features/itWallet/issuer/IPZS.png")}
-        />
-        <VSpacer size={24} />
-        <H2>
-          {I18n.t("features.itWallet.issuance.credentialAuth.title", {
-            credentialName
-          })}
-        </H2>
-        <VSpacer size={16} />
-        <IOMarkdown
-          content={I18n.t(
-            "features.itWallet.issuance.credentialAuth.subtitle",
-            {
-              organization: ISSUER_MOCK_NAME
+    <>
+      <ForceScrollDownView
+        onThresholdCrossed={trackScrollToBottom}
+        footerActions={{
+          actions: {
+            type: "TwoButtons",
+            primary: {
+              label: I18n.t("global.buttons.continue"),
+              onPress: handleContinuePress,
+              loading: isIssuing
+            },
+            secondary: {
+              label: I18n.t("global.buttons.cancel"),
+              onPress: dismissDialog.show
             }
-          )}
-        />
-        <VSpacer size={24} />
-        <ListItemHeader
-          label={I18n.t(
-            "features.itWallet.issuance.credentialAuth.requiredClaims"
-          )}
-          iconName="security"
-          iconColor={theme["icon-default"]}
-        />
-        <ItwRequestedClaimsList items={requiredClaims} />
-        <VSpacer size={32} />
-        <IOMarkdown
-          content={I18n.t("features.itWallet.issuance.credentialAuth.tos", {
-            privacyUrl
-          })}
-          rules={generateItwIOMarkdownRules({ linkCallback: trackOpenItwTos })}
-        />
-      </ContentWrapper>
-    </ForceScrollDownView>
+          }
+        }}
+      >
+        <ContentWrapper>
+          <VSpacer size={24} />
+          <ItwDataExchangeIcons
+            requesterLogoUri={require("../../../../../img/features/itWallet/issuer/IPZS.png")}
+          />
+          <VSpacer size={24} />
+          <H2>
+            {I18n.t("features.itWallet.issuance.credentialAuth.title", {
+              credentialName
+            })}
+          </H2>
+          <VSpacer size={16} />
+          <IOMarkdown
+            content={I18n.t(
+              "features.itWallet.issuance.credentialAuth.subtitle",
+              {
+                organization: ISSUER_MOCK_NAME
+              }
+            )}
+          />
+          <VSpacer size={24} />
+          <ListItemHeader
+            label={I18n.t(
+              "features.itWallet.issuance.credentialAuth.requiredClaims"
+            )}
+            iconName="security"
+            iconColor={theme["icon-default"]}
+          />
+          <ItwRequestedClaimsList items={requiredClaims} />
+          <VSpacer size={32} />
+          <IOMarkdown
+            content={I18n.t("features.itWallet.issuance.credentialAuth.tos", {
+              privacyUrl
+            })}
+            rules={generateItwIOMarkdownRules({
+              linkCallback: trackOpenItwTos
+            })}
+          />
+        </ContentWrapper>
+      </ForceScrollDownView>
+      {exitSurvey.bottomSheet}
+    </>
   );
 };
 
