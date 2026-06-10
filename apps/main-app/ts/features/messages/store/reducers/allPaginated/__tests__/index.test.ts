@@ -92,7 +92,7 @@ describe("allPaginated reducer", () => {
             })
           );
         });
-        it("should set the Archive lastRequest to 'none'", () => {
+        it("should set the Archive lastRequest to 'undefined'", () => {
           expect(reducer(initialState, action).archive.lastRequest).toEqual(
             undefined
           );
@@ -143,7 +143,7 @@ describe("allPaginated reducer", () => {
           );
           expect(reducer(initialState, action).archive.data).toEqual(pot.none);
         });
-        it("should set the Inbox lastRequest to 'none'", () => {
+        it("should set the Inbox lastRequest to 'undefined'", () => {
           expect(reducer(initialState, action).inbox.lastRequest).toEqual(
             undefined
           );
@@ -207,7 +207,7 @@ describe("allPaginated reducer", () => {
           expect(reducer(initialState, action).inbox.data).toEqual(pot.none);
         });
 
-        it("should set the Archive lastRequest to 'none'", () => {
+        it("should set the Archive lastRequest to 'undefined'", () => {
           expect(reducer(initialState, action).archive.lastRequest).toEqual(
             undefined
           );
@@ -270,7 +270,7 @@ describe("allPaginated reducer", () => {
           expect(reducer(initialState, action).archive.data).toEqual(pot.none);
         });
 
-        it("should set the Inbox lastRequest to 'none'", () => {
+        it("should set the Inbox lastRequest to 'undefined'", () => {
           expect(reducer(initialState, action).inbox.lastRequest).toEqual(
             undefined
           );
@@ -362,7 +362,7 @@ describe("allPaginated reducer", () => {
           });
         });
 
-        it("should set the Archive lastRequest to 'none'", () => {
+        it("should set the Archive lastRequest to 'undefined'", () => {
           expect(reducer(initialState, action).archive.lastRequest).toEqual(
             undefined
           );
@@ -453,7 +453,7 @@ describe("allPaginated reducer", () => {
           });
         });
 
-        it("should set the Inbox lastRequest to 'none'", () => {
+        it("should set the Inbox lastRequest to 'undefined'", () => {
           expect(reducer(initialState, action).inbox.lastRequest).toEqual(
             undefined
           );
@@ -1595,7 +1595,7 @@ describe("shouldShowFooterListComponentSelector", () => {
         it(`Footer should be ${
           footerIsVisible ? "visible" : "hidden"
         }, ${category}, '${
-          lastRequest ?? "none"
+          lastRequest
         }' lastRequest, ${messagePagePot.kind}`, () => {
           const state = generateAllPaginatedDataStateForCategory(
             category,
@@ -1661,7 +1661,7 @@ describe("shouldShowRefreshControllOnListSelector", () => {
           (messageRequest === "all" || messageRequest === "previous");
 
         it(`should return ${expectedOutput}, ${category}, '${
-          messageRequest ?? "None"
+          messageRequest
         }' lastRequest, ${messagePagePot.kind}`, () => {
           const state = generateAllPaginatedDataStateForCategory(
             category,

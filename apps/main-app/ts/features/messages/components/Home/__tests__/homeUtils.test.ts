@@ -546,7 +546,7 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
                 }' for '${selectedCategory}' with state '${
                   selectedCategoryData.kind
                 }' where next page index is '${selectedCategoryNextValue}' and lastRequest value is '${
-                  selectedCategoryLastRequestValue ?? "None"
+                  selectedCategoryLastRequestValue
                 }' (time from last error is ${
                   timeOfCheck.getTime() - errorTime.getTime()
                 } milliseconds), opposite category state '${
