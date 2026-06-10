@@ -14,10 +14,18 @@ const {
  *
  * @type {import('@react-native/metro-config').MetroConfig}
  */
+const projectRoot = path.resolve(__dirname);
+
 const config = {
-  // Explicitly pin the project root so Metro always resolves modules relative
-  // to apps/main-app, regardless of the process working directory.
-  projectRoot: path.resolve(__dirname),
+  projectRoot,
+  // Align serverRoot with projectRoot so that Metro computes asset
+  // httpServerLocation relative to apps/main-app (not the monorepo root).
+  // Without this, Expo sets serverRoot to the workspace root which causes
+  // asset paths in the JS bundle to diverge from where saveAssets copies
+  // them during release builds, resulting in missing PNGs at runtime.
+  server: {
+    unstable_serverRoot: projectRoot
+  },
   transformer: {
     babelTransformerPath:
       require.resolve("react-native-svg-transformer/react-native")
