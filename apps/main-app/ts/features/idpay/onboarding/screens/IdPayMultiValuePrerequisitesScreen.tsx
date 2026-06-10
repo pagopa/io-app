@@ -5,6 +5,7 @@ import I18n from "i18next";
 import { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import PagerView from "react-native-pager-view";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import {
   SelfCriteriaMultiDTO,
   _typeEnum as SelfCriteriaMultiTypeEnum
@@ -92,6 +93,10 @@ const MultiValuePrerequisiteItemScreenContent = ({
   initiativeId
 }: MultiValuePrerequisiteItemScreenContentProps) => {
   const machine = IdPayOnboardingMachineContext.useActorRef();
+  const navigation = useIONavigation();
+  const currentPage = IdPayOnboardingMachineContext.useSelector(
+    selectCurrentMultiSelfDeclarationPage
+  );
 
   const [selectedValueIndex, setSelectedValueIndex] = useState<
     number | undefined
@@ -136,7 +141,16 @@ const MultiValuePrerequisiteItemScreenContent = ({
     });
   };
 
-  const handleGoBack = () => machine.send({ type: "back" });
+  // On first page, use navigation.goBack() so RN handles the back animation.
+  // The beforeRemove listener will then send "back" to the machine.
+  // On subsequent pages, only update machine state (PagerView handles the visual change).
+  const handleGoBack = () => {
+    if (currentPage === 0) {
+      navigation.goBack();
+    } else {
+      machine.send({ type: "back" });
+    }
+  };
 
   const selfCriteriaMultiTitle =
     selfDeclaration.description ||

@@ -9,6 +9,7 @@ import I18n from "i18next";
 import { Fragment, useState } from "react";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp";
+import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { trackIDPayOnboardingPDNDAcceptance } from "../analytics";
@@ -24,6 +25,7 @@ import { getPDNDCriteriaDescription } from "../utils/strings";
 const IdPayPDNDPrerequisitesScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
   const machine = useActorRef();
+  const navigation = useIONavigation();
 
   const [authority, setAuthority] = useState<string | undefined>();
 
@@ -36,7 +38,9 @@ const IdPayPDNDPrerequisitesScreen = () => {
   );
 
   const continueOnPress = () => machine.send({ type: "next" });
-  const goBackOnPress = () => machine.send({ type: "back" });
+  // Use navigation.goBack() so RN handles the back animation (right-to-left).
+  // The beforeRemove listener will then send "back" to the machine.
+  const goBackOnPress = () => navigation.goBack();
 
   const { present, bottomSheet } = useIOBottomSheetModal({
     title: I18n.t(
