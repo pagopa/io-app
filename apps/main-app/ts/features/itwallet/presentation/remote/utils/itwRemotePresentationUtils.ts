@@ -29,6 +29,7 @@ const isPresentationDetailSdJwt = <T extends PresentationDetails[number]>(
  */
 const credentialTypesByVct: { [vct: string]: CredentialType } = {
   personidentificationdata: CredentialType.PID,
+  pid: CredentialType.PID,
   mdl: CredentialType.DRIVING_LICENSE,
   europeandisabilitycard: CredentialType.EUROPEAN_DISABILITY_CARD,
   europeanhealthinsurancecard: CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
@@ -42,16 +43,15 @@ const credentialTypesByVct: { [vct: string]: CredentialType } = {
  * @param vct credential vct
  * @returns credential type as string, undefine if not found
  */
-// TODO: [SIW-4342] Handle the new vct format as URN.
 export const getCredentialTypeByVct = (vct: string): string | undefined => {
-  // Extracts the name from the vct. For example:
-  // From "https://pre.ta.wallet.ipzs.it/vct/v1.0.0/personidentificationdata"
-  // Gets "/vct/v1.0.0/personidentificationdata"
-  const match = vct.match(/\/vct(.*)\/([^/]+)$/);
+  // Extracts the name from the vct. The https vct is deprecated and will be removed in the future.
+  const match =
+    vct.match(/^urn:[^:]+:([^:]+)/) || // urn:it-wallet:pid:1 -> urn:it-wallet:pid
+    vct.match(/\/vct.*\/([^/]+)$/); // https://pre.ta.wallet.ipzs.it/vct/v1.0.0/personidentificationdata -> /vct/v1.0.0/personidentificationdata
   // Extracts "personidentificationdata"
-  const name = match ? match[2] : null;
+  const name = match ? match[1] : null;
   // Tries to match the extracted value to a credential type
-  return name ? credentialTypesByVct[name] : undefined;
+  return name ? credentialTypesByVct[name.toLowerCase()] : undefined;
 };
 
 /**
