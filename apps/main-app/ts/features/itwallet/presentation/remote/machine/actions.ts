@@ -35,31 +35,37 @@ export const createRemoteActionsImplementation = (
   }),
 
   navigateToFailureScreen: () => {
-    navigation.navigateDeprecated(ITW_REMOTE_ROUTES.MAIN, {
-      screen: ITW_REMOTE_ROUTES.FAILURE
+    navigation.navigate(ITW_REMOTE_ROUTES.MAIN, {
+      screen: ITW_REMOTE_ROUTES.FAILURE,
+      pop: true
     });
   },
 
   navigateToDiscoveryScreen: () => {
-    navigation.navigateDeprecated(ITW_ROUTES.MAIN, {
+    navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO,
-      params: { level: "l3" } // To continue with the presentation, IT-Wallet must be activated
+      params: { level: "l3" }, // To continue with the presentation, IT-Wallet must be activated
+      pop: true
     });
   },
 
   navigateToClaimsDisclosureScreen: () => {
-    navigation.navigateDeprecated(ITW_REMOTE_ROUTES.MAIN, {
-      screen: ITW_REMOTE_ROUTES.CLAIMS_DISCLOSURE
+    navigation.navigate(ITW_REMOTE_ROUTES.MAIN, {
+      screen: ITW_REMOTE_ROUTES.CLAIMS_DISCLOSURE,
+      pop: true
     });
   },
 
   navigateToBarcodeScanScreen: () => {
-    navigation.navigateDeprecated(ROUTES.BARCODE_SCAN);
+    navigation.navigate(ROUTES.BARCODE_SCAN, undefined, {
+      pop: true
+    });
   },
 
   navigateToAuthResponseScreen: () => {
-    navigation.navigateDeprecated(ITW_REMOTE_ROUTES.MAIN, {
-      screen: ITW_REMOTE_ROUTES.AUTH_RESPONSE
+    navigation.navigate(ITW_REMOTE_ROUTES.MAIN, {
+      screen: ITW_REMOTE_ROUTES.AUTH_RESPONSE,
+      pop: true
     });
   },
 

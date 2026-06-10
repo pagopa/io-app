@@ -25,57 +25,66 @@ export const createProximityActionsImplementation = (
   ),
 
   navigateToBluetoothPermissionsScreen: () => {
-    navigation.navigateDeprecated(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.BLUETOOTH_PERMISSIONS
+    navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
+      screen: ITW_PROXIMITY_ROUTES.BLUETOOTH_PERMISSIONS,
+      pop: true
     });
   },
 
   navigateToBluetoothActivationScreen: () => {
-    navigation.navigateDeprecated(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.BLUETOOTH_ACTIVATION
+    navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
+      screen: ITW_PROXIMITY_ROUTES.BLUETOOTH_ACTIVATION,
+      pop: true
     });
   },
 
   navigateToNfcActivationScreen: () => {
-    navigation.navigateDeprecated(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.BLUETOOTH_ACTIVATION
+    navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
+      screen: ITW_PROXIMITY_ROUTES.BLUETOOTH_ACTIVATION,
+      pop: true
     });
   },
 
   navigateToNfcPresentmentScreen: () => {
-    navigation.navigateDeprecated(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.NFC_PRESENTMENT
+    navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
+      screen: ITW_PROXIMITY_ROUTES.NFC_PRESENTMENT,
+      pop: true
     });
   },
 
   navigateToPresentmentScreen: () => {
-    navigation.navigateDeprecated(ITW_PROXIMITY_ROUTES.MAIN, {
+    navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
       screen: ITW_PROXIMITY_ROUTES.PRESENTMENT,
-      params: {}
+      params: {},
+      pop: true
     });
   },
 
   navigateToClaimsDisclosureScreen: () => {
-    navigation.navigateDeprecated(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.CLAIMS_DISCLOSURE
+    navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
+      screen: ITW_PROXIMITY_ROUTES.CLAIMS_DISCLOSURE,
+      pop: true
     });
   },
 
   navigateToStoreconsentScreen: () => {
-    navigation.navigateDeprecated(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.STORE_CONSENT
+    navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
+      screen: ITW_PROXIMITY_ROUTES.STORE_CONSENT,
+      pop: true
     });
   },
 
   navigateToSuccessScreen: () => {
-    navigation.navigateDeprecated(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.SUCCESS
+    navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
+      screen: ITW_PROXIMITY_ROUTES.SUCCESS,
+      pop: true
     });
   },
 
   navigateToFailureScreen: () => {
-    navigation.navigateDeprecated(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.FAILURE
+    navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
+      screen: ITW_PROXIMITY_ROUTES.FAILURE,
+      pop: true
     });
   },
 
