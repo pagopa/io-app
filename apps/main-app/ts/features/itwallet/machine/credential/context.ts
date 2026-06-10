@@ -49,6 +49,7 @@ export type Context = {
   clientId: string | undefined;
   codeVerifier: string | undefined;
   requestedCredential: RequestObject | undefined;
+  responseMode: string | undefined;
   /**
    * Obtained credentials from the issuer.
    */
@@ -86,6 +87,7 @@ export const InitialContext: Context = {
   clientId: undefined,
   codeVerifier: undefined,
   requestedCredential: undefined,
+  responseMode: undefined,
   credentials: undefined,
   failure: undefined,
   credentialsCatalogue: undefined,

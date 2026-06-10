@@ -1,11 +1,36 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { ActionType } from "typesafe-actions";
+import { maximumItemsFromAPI, pageSize } from "../../../../../config";
+import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
+import {
+  isLoadingOrUpdating,
+  isSomeOrSomeError,
+  isStrictNone,
+  isStrictSome,
+  isStrictSomeError
+} from "../../../../../utils/pot";
+import { activeSessionLoginInitialState } from "../../../../authentication/activeSessionLogin/store/reducer";
+import {
+  loadNextPageMessages,
+  loadPreviousPageMessages,
+  reloadAllMessages
+} from "../../../store/actions";
+import {
+  MessageError,
+  MessagePage,
+  MessagePagePot
+} from "../../../store/reducers/allPaginated/types";
+import {
+  ArchivingStatus,
+  INITIAL_STATE
+} from "../../../store/reducers/archiving";
+import { UIMessage } from "../../../types";
 import { MessageListCategory } from "../../../types/messageListCategory";
-import * as allPaginated from "../../../store/reducers/allPaginated";
 import {
   accessibilityLabelForMessageItem,
+  archiveUnarchiveAccessibilityInstructions,
   getInitialReloadAllMessagesActionIfNeeded,
   getLoadNextPageMessagesActionIfAllowed,
   getLoadPreviousPageMessagesActionIfAllowed,
@@ -14,33 +39,12 @@ import {
   messageListCategoryToViewPageIndex,
   messageViewPageIndexToListCategory,
   nextPageLoadingWaitMillisecondsGenerator,
-  refreshIntervalMillisecondsGenerator,
-  archiveUnarchiveAccessibilityInstructions
+  refreshIntervalMillisecondsGenerator
 } from "../homeUtils";
-import { maximumItemsFromAPI, pageSize } from "../../../../../config";
-import { Action } from "../../../../../store/actions/types";
-import {
-  loadNextPageMessages,
-  loadPreviousPageMessages,
-  reloadAllMessages
-} from "../../../store/actions";
-import { UIMessage } from "../../../types";
-import {
-  isLoadingOrUpdating,
-  isSomeOrSomeError,
-  isStrictNone,
-  isStrictSome,
-  isStrictSomeError
-} from "../../../../../utils/pot";
-import {
-  ArchivingStatus,
-  INITIAL_STATE
-} from "../../../store/reducers/archiving";
-import { activeSessionLoginInitialState } from "../../../../authentication/activeSessionLogin/store/reducer";
 
 const createGlobalState = (
-  archiveData: allPaginated.MessagePagePot,
-  inboxData: allPaginated.MessagePagePot,
+  archiveData: MessagePagePot,
+  inboxData: MessagePagePot,
   shownCategory: MessageListCategory,
   archivingStatus: ArchivingStatus = "disabled"
 ) =>
@@ -96,8 +100,8 @@ describe("getInitialReloadAllMessagesActionIfNeeded", () => {
     "enabled",
     "processing"
   ];
-  const messagePage = {} as allPaginated.MessagePage;
-  const anError = { reason: "", time: new Date() } as allPaginated.MessageError;
+  const messagePage = {} as MessagePage;
+  const anError = { reason: "", time: new Date() } as MessageError;
   const potValues = [
     pot.none,
     pot.noneLoading,
@@ -110,14 +114,8 @@ describe("getInitialReloadAllMessagesActionIfNeeded", () => {
   ];
   const outputActionShouldBeUndefined = (
     archivingStatus: ArchivingStatus,
-    currentCategoryPot: pot.Pot<
-      allPaginated.MessagePage,
-      allPaginated.MessageError
-    >,
-    oppositeCategoryPot: pot.Pot<
-      allPaginated.MessagePage,
-      allPaginated.MessageError
-    >
+    currentCategoryPot: pot.Pot<MessagePage, MessageError>,
+    oppositeCategoryPot: pot.Pot<MessagePage, MessageError>
   ) =>
     archivingStatus === "processing" ||
     isLoadingOrUpdating(oppositeCategoryPot) ||
@@ -448,12 +446,7 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
       { reason: "", time: errorTime }
     )
   ];
-  const lastRequestValues = [
-    O.none,
-    O.some("next"),
-    O.some("previous"),
-    O.some("all")
-  ];
+  const lastRequestValues = [undefined, "next", "previous", "all"];
   const categories: Array<MessageListCategory> = ["INBOX", "ARCHIVE"];
 
   const computeExpectedLoadNextPageMessagesValue = (
@@ -485,8 +478,7 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
         !!selectedCollectionNextValue) ||
         (isStrictSomeError(selectedCollection.data) &&
           !!selectedCollectionNextValue &&
-          (O.isNone(selectedCollection.lastRequest) ||
-            selectedCollection.lastRequest.value !== "next" ||
+          (selectedCollection.lastRequest !== "next" ||
             timeOfCheck.getTime() -
               selectedCollection.data.error.time.getTime() >
               nextPageLoadingWaitMillisecondsGenerator())));
@@ -524,7 +516,7 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
                           lastRequest:
                             selectedCategory === "INBOX"
                               ? selectedCategoryLastRequestValue
-                              : O.none
+                              : undefined
                         },
                         archive: {
                           data:
@@ -534,7 +526,7 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
                           lastRequest:
                             selectedCategory === "ARCHIVE"
                               ? selectedCategoryLastRequestValue
-                              : O.none
+                              : undefined
                         }
                       },
                       archiving: INITIAL_STATE,
@@ -554,9 +546,7 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
                 }' for '${selectedCategory}' with state '${
                   selectedCategoryData.kind
                 }' where next page index is '${selectedCategoryNextValue}' and lastRequest value is '${
-                  O.isSome(selectedCategoryLastRequestValue)
-                    ? selectedCategoryLastRequestValue.value
-                    : "None"
+                  selectedCategoryLastRequestValue
                 }' (time from last error is ${
                   timeOfCheck.getTime() - errorTime.getTime()
                 } milliseconds), opposite category state '${
@@ -726,24 +716,24 @@ describe("getLoadNextPreviousPageMessagesActionIfAllowed", () => {
                             shownCategory === "ARCHIVE"
                               ? {
                                   data: shownCategoryMessagePot,
-                                  lastRequest: O.none,
+                                  lastRequest: undefined,
                                   lastUpdateTime
                                 }
                               : {
                                   data: otherCategoryMessagePot,
-                                  lastRequest: O.none,
+                                  lastRequest: undefined,
                                   lastUpdateTime: new Date(0)
                                 },
                           inbox:
                             shownCategory === "INBOX"
                               ? {
                                   data: shownCategoryMessagePot,
-                                  lastRequest: O.none,
+                                  lastRequest: undefined,
                                   lastUpdateTime
                                 }
                               : {
                                   data: otherCategoryMessagePot,
-                                  lastRequest: O.none,
+                                  lastRequest: undefined,
                                   lastUpdateTime: new Date(0)
                                 },
                           shownCategory

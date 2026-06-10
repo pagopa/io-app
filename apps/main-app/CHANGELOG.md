@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.34.0-rc.4](https://github.com/pagopa/io-app/compare/3.34.0-rc.3...3.34.0-rc.4) (2026-06-10)
+
+
+### Chores
+
+* [[IOCOM-3145](https://pagopa.atlassian.net/browse/IOCOM-3145)] message CTA utils FP-TS removal ([#8121](https://github.com/pagopa/io-app/issues/8121)) ([add1490](https://github.com/pagopa/io-app/commit/add1490665ddf1ea654d629ac22e5cdc03720cb0))
+* [[IOCOM-3146](https://pagopa.atlassian.net/browse/IOCOM-3146)]All paginated reducer split ([#8127](https://github.com/pagopa/io-app/issues/8127)) ([f8f8a4a](https://github.com/pagopa/io-app/commit/f8f8a4a13e0fe8a96257595cc85269563c223196))
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Fixes drift on app version on last nx merge ([#8165](https://github.com/pagopa/io-app/issues/8165)) ([e30569c](https://github.com/pagopa/io-app/commit/e30569c33124b92bb39b994cefb2510177c031d0))
+* **IT-Wallet:** [[SIW-4383](https://pagopa.atlassian.net/browse/SIW-4383)] Support issuance of v1.3 EAAs ([#8151](https://github.com/pagopa/io-app/issues/8151)) ([e2fffc4](https://github.com/pagopa/io-app/commit/e2fffc4fb746923cd2bc76fa23df582ec3c3cae9))
+
 ## [3.34.0-rc.3](https://github.com/pagopa/io-app/compare/3.34.0-rc.2...3.34.0-rc.3) (2026-06-08)
 
 

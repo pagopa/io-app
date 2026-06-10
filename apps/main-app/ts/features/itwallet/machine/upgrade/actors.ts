@@ -97,20 +97,26 @@ export const createCredentialUpgradeActorsImplementation = (
     assert(pid, "PID credential is undefined");
     assert(walletInstanceAttestation, "walletInstanceAttestation is undefined");
 
-    const { requestedCredential, issuerConf, clientId, codeVerifier } =
-      await credentialIssuanceUtils.requestCredential({
-        env,
-        itwVersion,
-        credentialType: credential.credentialType,
-        walletInstanceAttestation,
-        // TODO [SIW-3091]: Update when the L3 PID reissuance flow is ready
-        skipMdocIssuance: !isUpgrade
-      });
+    const {
+      requestedCredential,
+      issuerConf,
+      clientId,
+      codeVerifier,
+      responseMode
+    } = await credentialIssuanceUtils.requestCredential({
+      env,
+      itwVersion,
+      credentialType: credential.credentialType,
+      walletInstanceAttestation,
+      // TODO [SIW-3091]: Update when the L3 PID reissuance flow is ready
+      skipMdocIssuance: !isUpgrade
+    });
 
     const { accessToken } = await credentialIssuanceUtils.completeAuthFlow({
       env,
       itwVersion,
       codeVerifier,
+      responseMode,
       issuerConf,
       walletInstanceAttestation,
       requestedCredential,
