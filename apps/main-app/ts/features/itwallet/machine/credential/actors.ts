@@ -64,6 +64,11 @@ export type ObtainCredentialActorOutput = {
 
 export type ObtainStatusAssertionActorInput = Pick<Context, "credentials">;
 
+export type VerifyTrustFederationActorInput = Pick<
+  Context,
+  "resolvedCredentialOffer"
+>;
+
 export type ProcessCredentialOfferActorInput = {
   credentialOfferUri: string;
 };
@@ -85,8 +90,14 @@ export const createCredentialIssuanceActorsImplementation = (
   itwVersion: ItwVersion,
   store: ReturnType<typeof useIOStore>
 ) => {
-  const verifyTrustFederation = fromPromise<void>(async () => {
+  const verifyTrustFederation = fromPromise<
+    void,
+    VerifyTrustFederationActorInput
+  >(async ({ input }) => {
     const ioWallet = getIoWallet(itwVersion);
+    const credentialIssuer =
+      input.resolvedCredentialOffer?.offer.credential_issuer ??
+      env.WALLET_EAA_PROVIDER_BASE_URL.value(itwVersion);
     // Evaluate the issuer trust
     const trustAnchorEntityConfig =
       await ioWallet.Trust.getTrustAnchorEntityConfiguration(
@@ -95,7 +106,7 @@ export const createCredentialIssuanceActorsImplementation = (
 
     // Create the trust chain for the PID provider
     const builtChainJwts = await ioWallet.Trust.buildTrustChain(
-      env.WALLET_EAA_PROVIDER_BASE_URL.value(itwVersion),
+      credentialIssuer,
       trustAnchorEntityConfig
     );
 
@@ -185,7 +196,8 @@ export const createCredentialIssuanceActorsImplementation = (
     const {
       credentialType,
       walletInstanceAttestation,
-      skipMdocIssuance = true
+      skipMdocIssuance = true,
+      resolvedCredentialOffer
     } = input;
 
     assert(credentialType, "credentialType is undefined");
@@ -196,7 +208,8 @@ export const createCredentialIssuanceActorsImplementation = (
       itwVersion,
       credentialType,
       walletInstanceAttestation,
-      skipMdocIssuance
+      skipMdocIssuance,
+      resolvedCredentialOffer
     });
   });
 

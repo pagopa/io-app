@@ -21,7 +21,7 @@ const CREDENTIAL_OFFER_QUERY_PARAMS = [
 export const ITW_CREDENTIAL_OFFER_LINKING_PATH = "credential-offer" as const;
 const ITW_CREDENTIAL_OFFER_INTERNAL_PATH =
   `itw/${ITW_CREDENTIAL_OFFER_LINKING_PATH}` as const;
-const ITW_CREDENTIAL_OFFER_URI_PARAM = "itwCredentialOfferUri" as const;
+export const ITW_CREDENTIAL_OFFER_URI_PARAM = "itwCredentialOfferUri" as const;
 
 /**
  * Checks if the provided URL is a credential offer invocation accepted by IT Wallet.
@@ -58,3 +58,46 @@ export const getCredentialOfferInternalRoute = (
   `${IO_INTERNAL_LINK_PREFIX}${ITW_CREDENTIAL_OFFER_INTERNAL_PATH}?${ITW_CREDENTIAL_OFFER_URI_PARAM}=${encodeURIComponent(
     credentialOfferUri
   )}`;
+
+/**
+ * Converts external credential offer invocations into the internal route handled by React Navigation.
+ */
+export const normalizeCredentialOfferDeepLink = (url: string): string =>
+  isPotentialCredentialOfferInvocation(url)
+    ? getCredentialOfferInternalRoute(url)
+    : url;
+
+/**
+ * Extracts the original credential offer URI from either a raw invocation or the normalized internal route.
+ */
+export const getCredentialOfferUriFromLinkingUrl = (
+  url: string
+): string | undefined => {
+  if (isPotentialCredentialOfferInvocation(url)) {
+    return url;
+  }
+
+  try {
+    const parsedUrl = new URL(url);
+    const isInternalCredentialOfferRoute =
+      url.startsWith(IO_INTERNAL_LINK_PREFIX) &&
+      parsedUrl.hostname === "itw" &&
+      parsedUrl.pathname.replace(/^\//, "") ===
+        ITW_CREDENTIAL_OFFER_LINKING_PATH;
+
+    const isUniversalCredentialOfferRoute =
+      url.startsWith(IO_UNIVERSAL_LINK_PREFIX) &&
+      parsedUrl.pathname.replace(/^\//, "") ===
+        ITW_CREDENTIAL_OFFER_INTERNAL_PATH;
+
+    if (!isInternalCredentialOfferRoute && !isUniversalCredentialOfferRoute) {
+      return undefined;
+    }
+
+    return (
+      parsedUrl.searchParams.get(ITW_CREDENTIAL_OFFER_URI_PARAM) ?? undefined
+    );
+  } catch {
+    return undefined;
+  }
+};

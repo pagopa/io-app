@@ -13,7 +13,8 @@ import {
   ProcessCredentialOfferActorInput,
   ProcessCredentialOfferActorOutput,
   RequestCredentialActorInput,
-  RequestCredentialActorOutput
+  RequestCredentialActorOutput,
+  VerifyTrustFederationActorInput
 } from "./actors";
 import { Context, InitialContext } from "./context";
 import { CredentialIssuanceEvents } from "./events";
@@ -69,7 +70,9 @@ export const itwCredentialIssuanceMachine = setup({
     trackCredentialIssuingDataShareAccepted: notImplemented
   },
   actors: {
-    verifyTrustFederation: fromPromise<void>(notImplemented),
+    verifyTrustFederation: fromPromise<void, VerifyTrustFederationActorInput>(
+      notImplemented
+    ),
     getWalletAttestation:
       fromPromise<GetWalletAttestationActorOutput>(notImplemented),
     requestCredential: fromPromise<
@@ -173,6 +176,13 @@ export const itwCredentialIssuanceMachine = setup({
           target: "EvaluateFlow",
           actions: assign({ mode: "issuance" as const })
         },
+        "select-credential": {
+          guard: ({ context, event }) =>
+            event.mode === "issuance" &&
+            event.credentialType === context.credentialType,
+          target: "EvaluateFlow",
+          actions: ["onInit", assign({ mode: "issuance" as const })]
+        },
         close: {
           target: "Idle",
           actions: assign({
@@ -236,6 +246,9 @@ export const itwCredentialIssuanceMachine = setup({
       tags: [ItwTags.Loading],
       invoke: {
         src: "verifyTrustFederation",
+        input: ({ context }) => ({
+          resolvedCredentialOffer: context.resolvedCredentialOffer
+        }),
         onDone: {
           target: "CheckingWalletInstanceAttestation"
         },
@@ -301,6 +314,7 @@ export const itwCredentialIssuanceMachine = setup({
         input: ({ context }) => ({
           credentialType: context.credentialType,
           walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
+          resolvedCredentialOffer: context.resolvedCredentialOffer,
           skipMdocIssuance: !context.isItWalletValid // Do not request mDoc credentials for non IT-Wallet instances
         }),
         onDone: {

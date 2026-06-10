@@ -1,6 +1,7 @@
 import {
   getCredentialOfferInternalRoute,
-  isPotentialCredentialOfferInvocation
+  isPotentialCredentialOfferInvocation,
+  normalizeCredentialOfferDeepLink
 } from "..";
 import { IO_INTERNAL_LINK_PREFIX } from "../../../../../utils/navigation";
 
@@ -51,5 +52,22 @@ describe("getCredentialOfferInternalRoute", () => {
     expect(decodeURIComponent(result.slice(prefix.length))).toBe(
       credentialOfferUri
     );
+  });
+});
+
+describe("normalizeCredentialOfferDeepLink", () => {
+  it("returns the internal route for a credential offer invocation", () => {
+    const credentialOfferUri =
+      "openid-credential-offer://?credential_offer=%7B%22credential_issuer%22%3A%22https%3A%2F%2Fissuer.example.com%22%7D";
+
+    expect(normalizeCredentialOfferDeepLink(credentialOfferUri)).toBe(
+      getCredentialOfferInternalRoute(credentialOfferUri)
+    );
+  });
+
+  it("returns the original URL for non credential offer invocations", () => {
+    const url = "https://continua.io.pagopa.it/messages";
+
+    expect(normalizeCredentialOfferDeepLink(url)).toBe(url);
   });
 });

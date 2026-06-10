@@ -99,7 +99,6 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
 
   useEffect(() => {
     if (shouldRedirectToDiscovery) {
-      machineRef.send({ type: "close" });
       navigation.replace(ITW_ROUTES.DISCOVERY.INFO, {
         credentialType: credentialTypeOption.value,
         disableAnimation: true,
@@ -110,7 +109,6 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
     credentialTypeOption,
     isL3Enabled,
     isWalletValid,
-    machineRef,
     navigation,
     resolvedCredentialOfferOption,
     shouldRedirectToDiscovery

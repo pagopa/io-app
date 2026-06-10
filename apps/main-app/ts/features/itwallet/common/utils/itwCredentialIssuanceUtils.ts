@@ -16,6 +16,7 @@ import {
   CredentialAccessToken,
   CredentialBundle,
   CredentialFormat,
+  CredentialOfferResolved,
   IssuerConfiguration,
   RequestObject
 } from "./itwTypesUtils";
@@ -37,6 +38,7 @@ export type RequestCredential = (args: {
   credentialType: string;
   walletInstanceAttestation: string;
   skipMdocIssuance: boolean;
+  resolvedCredentialOffer?: CredentialOfferResolved;
 }) => Promise<{
   clientId: string;
   codeVerifier: string;
@@ -58,7 +60,8 @@ export const requestCredential: RequestCredential = async ({
   itwVersion,
   credentialType,
   walletInstanceAttestation,
-  skipMdocIssuance
+  skipMdocIssuance,
+  resolvedCredentialOffer
 }) => {
   const ioWallet = getIoWallet(itwVersion);
 
@@ -66,15 +69,15 @@ export const requestCredential: RequestCredential = async ({
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
 
   // Evaluate issuer trust
-  const { issuerConf } = await ioWallet.CredentialIssuance.evaluateIssuerTrust(
-    env.WALLET_EAA_PROVIDER_BASE_URL.value(itwVersion)
-  );
+  const credentialIssuer =
+    resolvedCredentialOffer?.offer.credential_issuer ??
+    env.WALLET_EAA_PROVIDER_BASE_URL.value(itwVersion);
+  const { issuerConf } =
+    await ioWallet.CredentialIssuance.evaluateIssuerTrust(credentialIssuer);
 
-  const credentialIds = getCredentialConfigurationIds(
-    issuerConf,
-    credentialType,
-    skipMdocIssuance
-  );
+  const credentialIds =
+    resolvedCredentialOffer?.offer.credential_configuration_ids ??
+    getCredentialConfigurationIds(issuerConf, credentialType, skipMdocIssuance);
 
   // Start user authorization
   const { issuerRequestUri, clientId, codeVerifier, responseMode } =

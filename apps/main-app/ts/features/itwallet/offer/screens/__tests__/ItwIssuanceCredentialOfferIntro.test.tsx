@@ -92,7 +92,7 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
       });
   });
 
-  it("resets the machine and redirects to discovery when the wallet is not valid after resolving the offer", async () => {
+  it("preserves the resolved offer and redirects to discovery when the wallet is not valid", async () => {
     const onDiscoveryParams = jest.fn();
     const { getByTestId } = renderComponent(onDiscoveryParams);
 
@@ -104,7 +104,7 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
       disableAnimation: true,
       level: "l3"
     });
-    expect(machineSend).toHaveBeenCalledWith({ type: "close" });
+    expect(machineSend).not.toHaveBeenCalledWith({ type: "close" });
 
     act(() => {
       jest.runOnlyPendingTimers();
