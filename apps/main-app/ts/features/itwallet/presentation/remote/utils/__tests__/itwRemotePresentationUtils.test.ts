@@ -275,7 +275,7 @@ describe("enrichPresentationDetails", () => {
   });
 });
 
-describe("getCredentialTypeByVct", () => {
+describe("getCredentialTypeByVct - https format", () => {
   test.each([
     [
       CredentialType.PID,
@@ -306,6 +306,33 @@ describe("getCredentialTypeByVct", () => {
       undefined,
       "https://pre.ta.wallet.ipzs.it/schemas/v1.0.0/personidentificationdata.json"
     ]
+  ])("extracts %s from %s", (expected, vct) => {
+    expect(getCredentialTypeByVct(vct)).toEqual(expected);
+  });
+});
+
+describe("getCredentialTypeByVct - urn format", () => {
+  test.each([
+    [CredentialType.PID, "urn:it-wallet:pid:1"],
+    [CredentialType.PID, "urn:it-wallet:pid:1.2.3"],
+    [CredentialType.PID, "urn:it-wallet:pid"],
+    [CredentialType.PID, "urn:eudi:pid:it:1"],
+    [CredentialType.DRIVING_LICENSE, "urn:it-wallet:mDL:1"],
+    [
+      CredentialType.EUROPEAN_DISABILITY_CARD,
+      "urn:it-wallet:EuropeanDisabilityCard:1"
+    ],
+    [
+      CredentialType.EUROPEAN_HEALTH_INSURANCE_CARD,
+      "urn:it-wallet:EuropeanHealthInsuranceCard:1"
+    ],
+    [
+      CredentialType.EDUCATION_ENROLLMENT,
+      "urn:it-wallet:education_enrollment:"
+    ],
+    [CredentialType.EDUCATION_DEGREE, "urn:it-wallet:education_degree:1"],
+    [undefined, "noturn:it-wallet:pid:1"],
+    [undefined, "urn:wrong"]
   ])("extracts %s from %s", (expected, vct) => {
     expect(getCredentialTypeByVct(vct)).toEqual(expected);
   });
