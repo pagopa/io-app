@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="img/io-app-icon.png" width="100" style="display: block" /></br>
+  <img src="apps/main-app/img/io-app-icon.png" width="100" style="display: block" /></br>
   <h3 align="center">IO - The public services app</h3>
 </p>
 
@@ -20,10 +20,10 @@
 
 <p align="center">
     <a href="https://apps.apple.com/it/app/io/id1501681835">
-        <img height="50" src="img/badges/app-store-badge.png" alt="Download on the App Store" />
+        <img height="50" src="apps/main-app/img/badges/app-store-badge.png" alt="Download on the App Store" />
     </a>
     <a href="https://play.google.com/store/apps/details?id=it.pagopa.io.app">
-        <img height="50" src="img/badges/google-play-badge.png" alt="Get it on Google Play"/>
+        <img height="50" src="apps/main-app/img/badges/google-play-badge.png" alt="Get it on Google Play"/>
     </a>
 </p>
 
@@ -351,7 +351,7 @@ Follow the [official tutorial](https://reactnative.dev/docs/environment-setup?gu
 If you have a macOS system, you can follow both the tutorial for iOS and for Android. If you have a Linux or Windows system, you need only to install the development environment for Android.
 
 ## Build the app
-In order to build the app, we use [yarn](https://yarnpkg.com/) for managing javascript dependencies. 
+In order to build the app, we use [pnpm](https://pnpm.io/) for managing javascript dependencies and [nx](https://nx.dev/) to handle monorepo setup.
 As stated [previously](#nodejs-and-ruby), we also use `nodenv` and `rbenv` for managing the environment:
 ```bash
 # Clone the repository
@@ -363,10 +363,12 @@ $ cd io-app
 # Install NodeJS with nodenv, the returned version should match the one in the .node-version file
 $ nodenv install && nodenv version
 
+# CD into main-app folder
+$ cd apps/main-app
 # Install Ruby with rbenv, the returned version should match the one in the .ruby-version file
 $ rbenv install && rbenv version
 
-# Enable corepack and prepare yarn
+# Enable corepack and prepare pnpm
 $ corepack enable
 $ corepack prepare --activate
 
@@ -377,17 +379,20 @@ $ gem install bundle
 # Run this only during the first setup and when Gems dependencies change
 $ bundle install
 
+# CD back to main folder repo
+$ cd ../..
+
 # Install dependencies 
 # Run this only during the first setup and when JS dependencies change
-$ yarn && yarn setup
+$ pnpm install
 
 # Install podfiles when targeting iOS (ignore this step for Android)
 # Run this only during the first setup and when Pods dependencies change
-$ yarn dev:pod-install
+$ pnpm nx run main-app:dev-pod-install
 
 # Generate the definitions from the OpenAPI specs and from the YAML translations
 # Run this only during the first setup and when specs/translations change
-$ yarn generate
+$ pnpm nx run main-app:generate
 ```
 
 ## Environment variables
@@ -396,6 +401,7 @@ $ yarn generate
 You can target the production server by copying the included `.env.production` file to `.env`:
 
 ```bash
+$ cd apps/main-app
 $ cp .env.production .env
 ```
 
@@ -406,6 +412,7 @@ $ cp .env.production .env
 You can also target the [io-dev-api-server](https://github.com/pagopa/io-dev-api-server) for development purposes by copying the included `.env.local` file to `.env`:
 
 ```bash
+$ cd apps/main-app
 $ cp .env.local .env
 ```
 
@@ -416,15 +423,15 @@ An Android Emulator must be [created and launched manually](https://developer.an
 An additional step is necessary because the Android emulator doesn't support the hardware-backed keystore. We've included a script in our `package.json` to comment out this check:
 ```bash
 # Disable hardware-backed keystore check before running the emulator
-yarn lollipop_checks:comment
+pnpm nx run main-app:lollipop_checks-comment
 ```
 
 >[!CAUTION] 
-> Always remember to run `yarn lollipop_checks:uncomment` or discard the changes before opening a PR.
+> Always remember to run `pnpm nx run main-app:lollipop_checks-uncomment` or discard the changes before opening a PR.
 > To automatically revert the changes, run the following command:
 > ```bash
 > # Re-enable hardware-backed keystore check before committing
-> yarn lollipop_checks:uncomment
+> pnpm nx run main-app:lollipop_checks-uncomment
 > ```
 > This is an important check that must be kept enabled.
 > A double check is done by tests in the CI pipeline.
@@ -435,13 +442,13 @@ Then, from your command line, run these commands:
 $ adb reverse tcp:8081 tcp:8081;adb reverse tcp:3000 tcp:3000;adb reverse tcp:9090 tcp:9090
 
 # Run Android build
-$ yarn dev:run-android
+$ pnpm nx run main-app:dev-run-android
 ```
 
 ### iOS Simulator
 ```bash
 # Run iOS build
-$ yarn run-ios
+$ pnpm nx run main-app:run-ios
 ```
 
 ### Physical devices
@@ -450,7 +457,7 @@ The React Native documentation provides a [useful guide](https://reactnative.dev
 > For building the app on an iOS physical device, a few additional steps are necessary:
 > - If you're not part of the PagoPA S.p.A. organization then you must change the `Bundle Identifier` to something unique. This adjustment can be made in the `Signing (Debug)`
 > section of Xcode;
-> - In order to test the CIE authentication flow, run `yarn cie-ios:prod` before building the app. The process can be reverted by running `yarn cie-ios:dev`.
+> - In order to test the CIE authentication flow, run `pnpm nx run main-app:cie-ios-prod` before building the app. The process can be reverted by running `pnpm nx run main-app:cie-ios-dev`.
 
 
 
@@ -470,7 +477,7 @@ This section lists possible solutions to problems you might encounter while buil
     error No simulator available with name "iPhone 13".
     ```
     This happens because new versions of Xcode do not automatically create a simulator for the iPhone 13. 
-    To fix the issue you can either create a new simulator and name it `iPhone 13` or run the command `yarn run-ios --simulator='a valid simulator name'`.
+    To fix the issue you can either create a new simulator and name it `iPhone 13` or run the command `pnpm nx run main-app:run-ios --simulator='a valid simulator name'`.
 
     ---
 
@@ -487,6 +494,7 @@ This section lists possible solutions to problems you might encounter while buil
 ## Main technologies used
 
 * [TypeScript](https://www.typescriptlang.org/)
+* [NX](https://nx.dev)
 * [React Native](https://facebook.github.io/react-native)
 * [Redux](http://redux.js.org/)
 * [Redux Saga](https://redux-saga.js.org/)

@@ -14,8 +14,10 @@ jobs:
         uses: ruby/setup-ruby@e65c17d16e57e481586a6a5a0282698790062f92 # v1.300.0
         with:
           bundler-cache: true
+          working-directory: apps/main-app
       - id: build-release-android
         run: |
+          cd apps/main-app
           ./scripts/android-release.sh ./android/app
           cd android
           bundle exec fastlane promote_internal_to_alpha
@@ -35,14 +37,17 @@ jobs:
         uses: ruby/setup-ruby@e65c17d16e57e481586a6a5a0282698790062f92 # v1.300.0
         with:
           bundler-cache: true
+          working-directory: apps/main-app
       - id: prepare-ios-build
-        run: ./scripts/ios-release-build.sh
+        run: |
+          cd apps/main-app
+          ./scripts/ios-release-build.sh
         env:
           APP_STORE_API_KEY_ID: ${{secrets.APP_STORE_API_KEY_ID}}
           APP_STORE_API_PRIVATE_KEY: ${{secrets.APP_STORE_API_PRIVATE_KEY}}
       - id: distribute-app-testflight
         run: |
-          cd ios
+          cd apps/main-app/ios
           bundle exec fastlane distribute_beta_testflight
         env:
           LC_ALL: en_US.UTF-8
@@ -60,21 +65,8 @@ jobs:
     steps:
       - id: checkout
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - id: setup-node
-        uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
-        with:
-          node-version-file: ".node-version"
-      - id: yarn-cache
-        uses: actions/cache@668228422ae6a00e4ad889ee87cd7109ec5666a7 # v5.0.4
-        env:
-          cache-name: cache-node-modules
-        with:
-          # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/yarn.lock') }}
-      - id: install-packages
-        run: yarn install --frozen-lockfile
+      - uses: ./.github/actions/setup-pnpm
       - id: send-notification
-        run: 'yarn ts-node --skip-project -O ''{"lib":["es2015"]}'' scripts/ts/notifyNewAppVersion/notifyNewAppVersion.ts'
+        run: 'pnpm ts-node --skip-project -O ''{"lib":["es2015"]}'' scripts/ts/notifyNewAppVersion/notifyNewAppVersion.ts'
         env: 
           IO_APP_SLACK_HELPER_BOT_TOKEN: ${{ secrets.IO_APP_SLACK_HELPER_BOT_TOKEN }}
