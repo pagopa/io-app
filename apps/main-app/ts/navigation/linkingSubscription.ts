@@ -14,8 +14,8 @@ import { IO_LOGIN_CIE_URL_SCHEME } from "../features/authentication/login/cie/ut
 import { trackIOOpenedFromUniversalAppLink } from "../features/linking/analytics";
 import { isMixpanelEnabled } from "../store/reducers/persistedPreferences";
 import {
-  getCredentialOfferInternalRoute,
-  isPotentialCredentialOfferInvocation
+  isPotentialCredentialOfferInvocation,
+  normalizeCredentialOfferDeepLink
 } from "../features/itwallet/offer/utils";
 
 // as of writing this, the only deep link that is dispatched after an app wake, but before the login's completion
@@ -74,7 +74,7 @@ export const linkingSubscription =
       // but we track it in the `useOnFirstRender` hook on the AppStackNavigator
       processUtmLink(url, dispatch);
       if (isPotentialCredentialOfferInvocation(url)) {
-        listener(getCredentialOfferInternalRoute(url));
+        listener(normalizeCredentialOfferDeepLink(url));
         return;
       }
       listener(url);
