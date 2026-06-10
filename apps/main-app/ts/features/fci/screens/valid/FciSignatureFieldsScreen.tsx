@@ -87,8 +87,7 @@ const FciSignatureFieldsScreen = () => {
   const [isClausesChecked, setIsClausesChecked] = useState(false);
   const [isError, setIsError] = useState(false);
   const [isPreviewModalVisible, setIsPreviewModalVisible] = useState(false);
-  const { showModal, hideModal: innerHideModal } =
-    useContext(LightModalContext);
+  const { showModal, hideModal } = useContext(LightModalContext);
 
   const { footerActionsMeasurements, handleFooterActionsMeasurements } =
     useFooterActionsMeasurements();
@@ -104,9 +103,9 @@ const FciSignatureFieldsScreen = () => {
     return true;
   });
 
-  const hideModal = () => {
+  const dismissModal = () => {
     setIsPreviewModalVisible(false);
-    innerHideModal();
+    hideModal();
   };
 
   // get signatureFields for the current document
@@ -150,7 +149,7 @@ const FciSignatureFieldsScreen = () => {
   const { present, bottomSheet: fciAbortSignature } = useFciAbortSignatureFlow({
     shouldIntercept: () => {
       if (isPreviewModalVisible) {
-        hideModal();
+        dismissModal();
       } else {
         navigation.goBack();
       }
@@ -167,7 +166,7 @@ const FciSignatureFieldsScreen = () => {
       <DocumentWithSignature
         attrs={signatureField.attrs}
         currentDoc={currentDoc}
-        onClose={hideModal}
+        onClose={dismissModal}
         onError={() => onError()}
         testID={"FciDocumentWithSignatureTestID"}
       />
@@ -180,7 +179,7 @@ const FciSignatureFieldsScreen = () => {
    */
   const onError = () => {
     setIsError(true);
-    hideModal();
+    dismissModal();
   };
 
   const updateDocumentSignatures = (fn: (doc: DocumentToSign) => void) =>
