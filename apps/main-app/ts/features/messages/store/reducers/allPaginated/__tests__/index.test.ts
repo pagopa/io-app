@@ -24,9 +24,9 @@ import reducer, {
   messageListForCategorySelector,
   emptyListReasonSelector,
   shouldShowFooterListComponentSelector,
-  messagePagePotFromCategorySelector,
   shouldShowRefreshControllOnListSelector,
-  isPaymentMessageWithPaidNoticeSelector
+  isPaymentMessageWithPaidNoticeSelector,
+  messagePagePotFromCategorySelector
 } from "..";
 import {
   AllPaginated,
@@ -1619,8 +1619,10 @@ describe("messagePagePotFromCategorySelector", () => {
       category,
       messagePagePot
     );
-    const outputMessagePagePot =
-      messagePagePotFromCategorySelector(category)(state);
+    const outputMessagePagePot = messagePagePotFromCategorySelector(
+      category,
+      state
+    );
     expect(outputMessagePagePot).toStrictEqual(messagePagePot);
   });
 });
