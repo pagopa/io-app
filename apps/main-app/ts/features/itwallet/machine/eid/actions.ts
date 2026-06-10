@@ -62,14 +62,14 @@ export const createEidIssuanceActionsImplementation = (
   navigateToTosScreen: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
+    navigation.navigateDeprecated(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO,
       params: { level: context.level }
     });
   },
 
   navigateToIpzsPrivacyScreen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
+    navigation.navigateDeprecated(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.IPZS_PRIVACY
     });
   },
@@ -77,66 +77,60 @@ export const createEidIssuanceActionsImplementation = (
   navigateToIdentificationScreen: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
+    navigation.navigateDeprecated(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.MODE_SELECTION,
       params: { eidReissuing: context.mode === "reissuance" }
     });
   },
 
   navigateToIdpSelectionScreen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
+    navigation.navigateDeprecated(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.IDP_SELECTION
     });
   },
 
   navigateToSpidLoginScreen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
+    navigation.navigateDeprecated(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.SPID.LOGIN
     });
   },
 
   navigateToCieIdLoginScreen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
+    navigation.navigateDeprecated(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.CIE_ID.LOGIN
     });
   },
 
   navigateToEidPreviewScreen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
+    navigation.navigateDeprecated(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.ISSUANCE.EID_PREVIEW
     });
   },
 
   navigateToSuccessScreen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
+    navigation.navigateDeprecated(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.ISSUANCE.EID_RESULT
     });
   },
 
   navigateToFailureScreen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
+    navigation.navigateDeprecated(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.ISSUANCE.EID_FAILURE
     });
   },
 
   navigateToNfcInstructionsScreen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
+    navigation.navigateDeprecated(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.CIE.ACTIVATE_NFC
     });
   },
 
   navigateToWallet: () => {
     toast.success(I18n.t("features.itWallet.issuance.credentialResult.toast"));
-    navigation.reset({
-      index: 1,
-      routes: [
-        {
-          name: ROUTES.MAIN,
-          params: {
-            screen: ROUTES.WALLET_HOME
-          }
-        }
-      ]
+    navigation.popTo(ROUTES.MAIN, {
+      screen: ROUTES.WALLET_HOME,
+      params: {},
+      pop: true
     });
   },
 
@@ -154,43 +148,43 @@ export const createEidIssuanceActionsImplementation = (
   },
 
   navigateToCieNfcPreparationScreen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
+    navigation.navigateDeprecated(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.NFC_SCREEN
     });
   },
 
   navigateToCiePinPreparationScreen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
+    navigation.navigateDeprecated(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.PIN_SCREEN
     });
   },
 
   navigateToCiePinScreen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
+    navigation.navigateDeprecated(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.CIE.PIN_SCREEN
     });
   },
 
   navigateToCieCardPreparationScreen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
+    navigation.navigateDeprecated(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CARD_SCREEN
     });
   },
 
   navigateToCieCanPreparationScreen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
+    navigation.navigateDeprecated(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.CIE.PREPARATION.CAN_SCREEN
     });
   },
 
   navigateToCieCanScreen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
+    navigation.navigateDeprecated(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.CIE.CAN_SCREEN
     });
   },
 
   navigateToCieAuthenticationScreen: () => {
-    navigation.navigate(ITW_ROUTES.MAIN, {
+    navigation.navigateDeprecated(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.IDENTIFICATION.CIE.AUTH_SCREEN
     });
   },
@@ -248,21 +242,15 @@ export const createEidIssuanceActionsImplementation = (
       navigation.goBack();
       return;
     }
-    navigation.reset({
-      index: 1,
-      routes: [
-        {
-          name: ROUTES.MAIN,
-          params: {
-            screen: ROUTES.WALLET_HOME,
-            params: {
-              requiredEidFeedback:
-                context.mode === "reissuance" &&
-                !itwIsPidReissuingSurveyHiddenSelector(store.getState())
-            }
-          }
-        }
-      ]
+
+    const isSurveyHidden = itwIsPidReissuingSurveyHiddenSelector(
+      store.getState()
+    );
+    const isReissuance = context.mode === "reissuance";
+
+    navigation.popTo(ROUTES.MAIN, {
+      screen: ROUTES.WALLET_HOME,
+      params: { requiredEidFeedback: isReissuance && !isSurveyHidden }
     });
   },
 
