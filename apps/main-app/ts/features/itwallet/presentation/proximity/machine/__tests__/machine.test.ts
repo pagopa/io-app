@@ -37,14 +37,13 @@ describe("itwProximityMachine", () => {
   const closeProximity = jest.fn();
 
   const storeConsent = jest.fn();
-  const attemptSessionTermination = jest.fn();
 
   const checkBluetoothPermissions = jest.fn();
   const checkBluetoothActivation = jest.fn();
   const checkNfcActivation = jest.fn();
   const startEngagement = jest.fn();
   const sendDocuments = jest.fn();
-  const terminateProximitySession = jest.fn();
+  const terminateSession = jest.fn();
 
   const mockedMachine = itwProximityMachine.provide({
     actions: {
@@ -66,8 +65,7 @@ describe("itwProximityMachine", () => {
       navigateToStoreconsentScreen,
       navigateToSuccessScreen,
       closeProximity,
-      storeConsent,
-      attemptSessionTermination
+      storeConsent
     },
     actors: {
       checkBluetoothPermissions: fromPromise(checkBluetoothPermissions),
@@ -76,7 +74,7 @@ describe("itwProximityMachine", () => {
       proximityCommunicationLogic: fromCallback(() => () => {}),
       startEngagement: fromPromise(startEngagement),
       sendDocuments: fromPromise(sendDocuments),
-      terminateProximitySession: fromPromise(terminateProximitySession)
+      terminateSession: fromPromise(terminateSession)
     },
     guards: {
       hasFailure: ({ context }) => !!context.failure,
@@ -452,7 +450,7 @@ describe("itwProximityMachine", () => {
   });
 
   it("device-disconnected before SendingDocuments terminates the session and closes the flow", async () => {
-    terminateProximitySession.mockResolvedValue(undefined);
+    terminateSession.mockResolvedValue(undefined);
     const actor = createActor(mockedMachine, {
       snapshot: makeSnapshot({ Presentment: "AwaitingConnection" })
     });
@@ -521,7 +519,7 @@ describe("itwProximityMachine", () => {
   });
 
   it("close from ClaimsDisclosure terminates the session and closes the flow", async () => {
-    terminateProximitySession.mockResolvedValue(undefined);
+    terminateSession.mockResolvedValue(undefined);
     const actor = createActor(mockedMachine, {
       snapshot: makeSnapshot({ Presentment: "ClaimsDisclosure" })
     });
@@ -553,6 +551,109 @@ describe("itwProximityMachine", () => {
     });
     expect(actor.getSnapshot().context.hasGrantedConsent).toBe(true);
     expect(navigateToStoreconsentScreen).toHaveBeenCalledTimes(1);
+  });
+
+  it("NFC document request without consent terminates the session before disclosing claims", async () => {
+    terminateSession.mockResolvedValue(undefined);
+    const actor = createActor(mockedMachine, {
+      snapshot: makeSnapshot(
+        { Presentment: "Connected" },
+        { engagementMode: "nfc" }
+      )
+    });
+
+    actor.start();
+    actor.send({
+      type: "device-document-request-received",
+      proximityDetails: T_PROXIMITY_DETAILS,
+      verifierRequest: T_VERIFIER_REQUEST,
+      retrievalMethod: "nfc"
+    });
+
+    await waitFor(actor, snapshot =>
+      snapshot.matches({ Presentment: "ClaimsDisclosure" })
+    );
+    expect(terminateSession).toHaveBeenCalledTimes(1);
+    expect(navigateToClaimsDisclosureScreen).toHaveBeenCalledTimes(1);
+    expect(actor.getSnapshot().context.hasGrantedConsent).not.toBe(true);
+  });
+
+  it("NFC termination failure still proceeds to claims disclosure", async () => {
+    terminateSession.mockRejectedValue(new Error("terminate failed"));
+    const actor = createActor(mockedMachine, {
+      snapshot: makeSnapshot(
+        { Presentment: "Connected" },
+        { engagementMode: "nfc" }
+      )
+    });
+
+    actor.start();
+    actor.send({
+      type: "device-document-request-received",
+      proximityDetails: T_PROXIMITY_DETAILS,
+      verifierRequest: T_VERIFIER_REQUEST,
+      retrievalMethod: "nfc"
+    });
+
+    await waitFor(actor, snapshot =>
+      snapshot.matches({ Presentment: "ClaimsDisclosure" })
+    );
+    expect(actor.getSnapshot().context.failure).toBeUndefined();
+    expect(navigateToFailureScreen).not.toHaveBeenCalled();
+  });
+
+  it("device-disconnected during NFC TerminatingForConsent is consumed without failure", async () => {
+    // Never resolves: keep the machine parked in TerminatingForConsent
+    terminateSession.mockReturnValue(new Promise(() => {}));
+    const actor = createActor(mockedMachine, {
+      snapshot: makeSnapshot(
+        { Presentment: "Connected" },
+        { engagementMode: "nfc" }
+      )
+    });
+
+    actor.start();
+    actor.send({
+      type: "device-document-request-received",
+      proximityDetails: T_PROXIMITY_DETAILS,
+      verifierRequest: T_VERIFIER_REQUEST,
+      retrievalMethod: "nfc"
+    });
+
+    await waitFor(actor, snapshot =>
+      snapshot.matches({ Presentment: "TerminatingForConsent" })
+    );
+
+    actor.send({ type: "device-disconnected" });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      Presentment: "TerminatingForConsent"
+    });
+    expect(actor.getSnapshot().context.failure).toBeUndefined();
+    expect(navigateToFailureScreen).not.toHaveBeenCalled();
+  });
+
+  it("NFC document request with prior consent sends documents without re-terminating", async () => {
+    sendDocuments.mockReturnValue(new Promise(() => {}));
+    const actor = createActor(mockedMachine, {
+      snapshot: makeSnapshot(
+        { Presentment: "Connected" },
+        { engagementMode: "nfc", hasGrantedConsent: true }
+      )
+    });
+
+    actor.start();
+    actor.send({
+      type: "device-document-request-received",
+      proximityDetails: T_PROXIMITY_DETAILS,
+      verifierRequest: T_VERIFIER_REQUEST,
+      retrievalMethod: "nfc"
+    });
+
+    await waitFor(actor, snapshot =>
+      snapshot.matches({ Presentment: "SendingDocuments" })
+    );
+    expect(terminateSession).not.toHaveBeenCalled();
   });
 
   it("store-consent from StoreConsent stores consent and moves to Retrying", () => {
