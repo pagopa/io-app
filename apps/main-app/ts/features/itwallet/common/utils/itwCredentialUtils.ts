@@ -204,7 +204,7 @@ export const extractVerification: ExtractVerification = ({
  * v1.0 credentials DO NOT belong to IT-Wallet, even when their assurance level is high/L2+.
  *
  * `"it_l2+document_proof"` indicates that the credential has been issued with
- * a substantial authentication (SPID, CieID) plus an MRTD PoP verification,
+ * a substantial authentication (SPID, CieID) plus an MRTD PoP verification.
  *
  * @param metadata - The metadata of the credential to check
  * @returns boolean indicating if the credential is an ITW credential (L3)

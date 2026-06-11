@@ -7,11 +7,9 @@ import { IO_UNIVERSAL_LINK_PREFIX } from "../../../../../utils/navigation";
 import { sessionTokenSelector } from "../../../../authentication/common/store/selectors";
 import { Env } from "../../../common/utils/environment";
 import { getWalletInstanceAttestation } from "../../../common/utils/itwAttestationUtils";
-import { WIA_KEYTAG } from "../../../common/utils/itwCryptoContextUtils";
 import { getIoWallet } from "../../../common/utils/itwIoWallet";
 import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../../common/utils/itwStoreUtils";
 import {
-  CredentialFormat,
   CredentialMetadata,
   RequestObject,
   WalletInstanceAttestations
@@ -160,9 +158,6 @@ export const createRemoteActorsImplementation = (
       "Missing required input requestObjectEncodedJwt"
     );
 
-    const wiaSdJwt = walletInstanceAttestation[CredentialFormat.SD_JWT];
-    assert(wiaSdJwt, "Missing Wallet Attestation in SD-JWT format");
-
     const ioWallet = getIoWallet(itwVersion);
     const { client_id, state } = qrCodePayload;
 
@@ -206,10 +201,8 @@ export const createRemoteActorsImplementation = (
     );
 
     // Prepare credentials to evaluate the Relying Party request
-    const credentialsSdJwt = prepareCredentialsForDcqlEvaluation([
-      ...credentialsData,
-      { keyTag: WIA_KEYTAG, credential: wiaSdJwt }
-    ]);
+    const credentialsSdJwt =
+      prepareCredentialsForDcqlEvaluation(credentialsData);
 
     // Evaluate the DCQL query against the credentials contained in the Wallet
     const result = await ioWallet.RemotePresentation.evaluateDcqlQuery(

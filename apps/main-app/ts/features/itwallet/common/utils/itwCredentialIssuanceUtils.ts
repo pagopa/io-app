@@ -5,6 +5,8 @@ import {
 } from "@pagopa/io-react-native-wallet";
 import { v4 as uuidv4 } from "uuid";
 import { type CryptoContext } from "@pagopa/io-react-native-jwt";
+import { getRedirects } from "@pagopa/io-react-native-login-utils";
+import last from "lodash/last";
 import {
   DPOP_KEYTAG,
   regenerateCryptoKey,
@@ -40,6 +42,7 @@ export type RequestCredential = (args: {
   codeVerifier: string;
   requestedCredential: RequestObject;
   issuerConf: IssuerConfiguration;
+  responseMode?: string;
 }>;
 
 /**
@@ -74,7 +77,7 @@ export const requestCredential: RequestCredential = async ({
   );
 
   // Start user authorization
-  const { issuerRequestUri, clientId, codeVerifier } =
+  const { issuerRequestUri, clientId, codeVerifier, responseMode } =
     await ioWallet.CredentialIssuance.startUserAuthorization(
       issuerConf,
       credentialIds,
@@ -96,6 +99,7 @@ export const requestCredential: RequestCredential = async ({
   return {
     clientId,
     codeVerifier,
+    responseMode,
     requestedCredential: requestObject,
     issuerConf
   };
@@ -109,12 +113,15 @@ export type CompleteAuthFlow = (args: {
   pid: CredentialBundle;
   codeVerifier: string;
   issuerConf: IssuerConfiguration;
+  responseMode?: string;
 }) => Promise<{ accessToken: CredentialAccessToken }>;
 
 /**
  * Function to complete the authorization flow. It must be used to obtain the access token
  * for the requested credential(s).
  * This token is then used in {@link obtainCredential} to get the credential from the Issuer.
+ * When no response mode is provided the flow expects the code in the query string;
+ * the legacy `form_post.jwt` mode must be requested explicitly.
  * @returns The access token with the authorized credentials.
  */
 export const completeAuthFlow: CompleteAuthFlow = async ({
@@ -124,6 +131,7 @@ export const completeAuthFlow: CompleteAuthFlow = async ({
   issuerConf,
   pid,
   codeVerifier,
+  responseMode,
   walletInstanceAttestation
 }) => {
   const ioWallet = getIoWallet(itwVersion);
@@ -135,21 +143,37 @@ export const completeAuthFlow: CompleteAuthFlow = async ({
   await regenerateCryptoKey(DPOP_KEYTAG);
   const dPopCryptoContext = createCryptoContextFor(DPOP_KEYTAG);
 
-  // Complete the user authorization via form_post.jwt mode
-  const { code } =
-    await ioWallet.CredentialIssuance.completeUserAuthorizationWithFormPostJwtMode(
-      requestObject,
-      issuerConf,
-      pid.credential,
-      {
-        wiaCryptoContext,
-        pidKeyTag: pid.metadata.keyTag
-      }
-    );
+  // Complete the user authorization and obtain the code to exchange for the access token.
+  // Two modes are supported for backward compatibility with IT-Wallet 1.0.
+  const getAuthorizationCode = async (): Promise<string> => {
+    if (responseMode === "form_post.jwt") {
+      return (
+        await ioWallet.CredentialIssuance.completeUserAuthorizationWithFormPostJwtMode(
+          requestObject,
+          issuerConf,
+          [pid.metadata.keyTag, pid.credential],
+          { wiaCryptoContext }
+        )
+      ).code;
+    }
+    return (
+      await ioWallet.CredentialIssuance.completeEaaUserAuthorizationWithQueryMode(
+        requestObject,
+        issuerConf,
+        [pid.metadata.keyTag, pid.credential],
+        env.ISSUANCE_REDIRECT_URI, // The redirect uri must be a valid HTTP url that can be followed
+        {
+          // Workaround for a known bug affecting React Native 0.82-0.83 (https://github.com/facebook/react-native/issues/55248)
+          // TODO: it can be removed after upgrading to RN 0.84+
+          fetchFinalRedirectUri: url => getRedirects(url, {}, "code").then(last)
+        }
+      )
+    ).code;
+  };
 
   return await ioWallet.CredentialIssuance.authorizeAccess(
     issuerConf,
-    code,
+    await getAuthorizationCode(),
     env.ISSUANCE_REDIRECT_URI,
     codeVerifier,
     {
