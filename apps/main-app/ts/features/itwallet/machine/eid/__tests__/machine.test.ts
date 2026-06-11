@@ -344,19 +344,13 @@ describe("itwEidIssuanceMachine", () => {
 
     // Wallet instance creation and attestation obtainment success
 
-    // Navigate to ipzs privacy screen
-    expect(actor.getSnapshot().value).toStrictEqual("IpzsPrivacyAcceptance");
-    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
-
-    // Accept IPZS privacy
-    actor.send({ type: "accept-ipzs-privacy" });
     // Navigate to identification mode selection
-
     await waitFor(() =>
       expect(actor.getSnapshot().value).toStrictEqual({
         UserIdentification: "Identification"
       })
     );
+    expect(actor.getSnapshot().tags).toStrictEqual(new Set());
     expect(navigateToIdentificationScreen).toHaveBeenCalledTimes(1);
 
     /**
@@ -985,6 +979,39 @@ describe("itwEidIssuanceMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: "Identification"
     });
+  });
+
+  it("Should skip IPZS privacy when privacy and ToS have been confirmed from discovery", async () => {
+    hasValidWalletInstanceAttestation.mockImplementation(() => true);
+    verifyTrustFederation.mockImplementation(() => Promise.resolve());
+
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      context: {
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: { jwt: T_WIA }
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, { snapshot });
+    actor.start();
+
+    actor.send({ type: "start", mode: "issuance", level: "l3" });
+    actor.send({ type: "accept-tos" });
+
+    expect(actor.getSnapshot().value).toStrictEqual(
+      "TrustFederationVerification"
+    );
+    await waitFor(() => expect(verifyTrustFederation).toHaveBeenCalledTimes(1));
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: "Identification"
+    });
+    expect(navigateToIpzsPrivacyScreen).not.toHaveBeenCalled();
+    expect(navigateToIdentificationScreen).toHaveBeenCalledTimes(1);
   });
 
   it("Should allow the user to add a new credential once eID issuance is complete", () => {
@@ -2166,7 +2193,7 @@ describe("itwEidIssuanceMachine", () => {
     expect(navigateToIdentificationScreen).toHaveBeenCalledTimes(1);
   });
 
-  it("Should start the simplified activation flow without credentials", async () => {
+  it("Should start the L3 activation flow without credentials", async () => {
     hasValidWalletInstanceAttestation.mockImplementation(() => true);
     isEligibleForItwSimplifiedActivation.mockImplementation(() => true);
 
@@ -2185,12 +2212,10 @@ describe("itwEidIssuanceMachine", () => {
     await waitFor(() => {
       expect(verifyTrustFederation).toHaveBeenCalledTimes(1);
     });
-    expect(actor.getSnapshot().value).toStrictEqual("IpzsPrivacyAcceptance");
-
-    // Accept Credential Issuer privacy policy
-    actor.send({ type: "accept-ipzs-privacy" });
-    expect(actor.getSnapshot().value).toStrictEqual("Success");
-    expect(clearSimplifiedActivationRequirements).toHaveBeenCalledTimes(1);
+    expect(actor.getSnapshot().value).toStrictEqual({
+      UserIdentification: "Identification"
+    });
+    expect(navigateToIdentificationScreen).toHaveBeenCalledTimes(1);
   });
 
   it("Should start the simplified activation flow with credentials upgrade only", async () => {

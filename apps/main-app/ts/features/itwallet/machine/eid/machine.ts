@@ -340,6 +340,10 @@ export const itwEidIssuanceMachine = setup({
             target: "UserIdentification.Identification"
           },
           {
+            guard: "isL3FeaturesEnabled",
+            target: "UserIdentification.Identification"
+          },
+          {
             // If both integrity key tag and wallet instance attestation are valid,
             // we can proceed to the IPZS privacy acceptance
             target: "IpzsPrivacyAcceptance"
@@ -355,7 +359,7 @@ export const itwEidIssuanceMachine = setup({
       after: {
         5000: [
           {
-            guard: or(["isReissuance", "isL2Fallback"]),
+            guard: or(["isReissuance", "isL2Fallback", "isL3FeaturesEnabled"]),
             actions: "navigateToIdentificationScreen"
           },
           {
@@ -434,7 +438,7 @@ export const itwEidIssuanceMachine = setup({
         }),
         onDone: [
           {
-            guard: or(["isReissuance", "isL2Fallback"]),
+            guard: or(["isReissuance", "isL2Fallback", "isL3FeaturesEnabled"]),
             actions: [
               assign(({ event }) => ({
                 walletInstanceAttestation: event.output
