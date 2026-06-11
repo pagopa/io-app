@@ -38,6 +38,18 @@ describe("ItwDiscoveryInfoScreen", () => {
     expect(getByTestId("itwDiscoveryInfoComponentTestID")).toBeTruthy();
   });
 
+  it("should render privacy and terms as a link for level l3", () => {
+    jest
+      .spyOn(identificationSelectors, "itwHasNfcFeatureSelector")
+      .mockReturnValue(true);
+    const { getByText } = renderComponent("l3");
+
+    expect(
+      getByText("Informativa Privacy e i Termini e Condizioni d'uso.").props
+        .accessibilityRole
+    ).toBe("link");
+  });
+
   it("should render ItwNfcNotSupportedComponent for level l3 when NFC is not supported", () => {
     jest
       .spyOn(identificationSelectors, "itwHasNfcFeatureSelector")

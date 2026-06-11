@@ -19,6 +19,7 @@ import {
 import I18n from "i18next";
 import { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
+import { Trans } from "react-i18next";
 import Feature1Image from "../../../../../img/features/itWallet/discovery/feature_1.svg";
 import Feature2Image from "../../../../../img/features/itWallet/discovery/feature_2.svg";
 import Feature3Image from "../../../../../img/features/itWallet/discovery/feature_3.svg";
@@ -37,7 +38,6 @@ import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum.ts";
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog.tsx";
 import { itwIsActivationDisabledSelector } from "../../common/store/selectors/remoteConfig.ts";
-import { generateItwIOMarkdownRules } from "../../common/utils/markdown.tsx";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors/index.ts";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider.tsx";
 import { selectIsLoading } from "../../machine/eid/selectors.ts";
@@ -119,6 +119,7 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
   }, [machineRef, mixPanelCredentialDetails]);
 
   const handleNavigateToPrivacyAndTerms = useCallback(() => {
+    trackOpenItwTos();
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.IPZS_PRIVACY
     });
@@ -132,7 +133,49 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
     title: I18n.t(
       "features.itWallet.discovery.screen.itw.detailsBottomSheet.title"
     ),
-    component: <ItwDetailsBottomSheetContent />,
+    component: (
+      <>
+        <DetailBlock
+          title={I18n.t(
+            "features.itWallet.discovery.screen.itw.details.1.title"
+          )}
+          content={I18n.t(
+            "features.itWallet.discovery.screen.itw.details.1.content"
+          )}
+          icon="security"
+        />
+        <Divider />
+        <DetailBlock
+          title={I18n.t(
+            "features.itWallet.discovery.screen.itw.details.2.title"
+          )}
+          content={I18n.t(
+            "features.itWallet.discovery.screen.itw.details.2.content"
+          )}
+          icon="fiscalCodeIndividual"
+        />
+        <Divider />
+        <DetailBlock
+          title={I18n.t(
+            "features.itWallet.discovery.screen.itw.details.3.title"
+          )}
+          content={I18n.t(
+            "features.itWallet.discovery.screen.itw.details.3.content"
+          )}
+          icon="navQrWallet"
+        />
+        <Divider />
+        <DetailBlock
+          title={I18n.t(
+            "features.itWallet.discovery.screen.itw.details.4.title"
+          )}
+          content={I18n.t(
+            "features.itWallet.discovery.screen.itw.details.4.content"
+          )}
+          icon="euStars"
+        />
+      </>
+    ),
     footer: (
       <FooterActions
         actions={{
@@ -221,14 +264,23 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
               />
             </VStack>
             <VSpacer size={32} />
-            <IOMarkdown
-              content={I18n.t("features.itWallet.discovery.screen.itw.tos")}
-              rules={generateItwIOMarkdownRules({
-                linkCallback: trackOpenItwTos,
-                onPress: handleNavigateToPrivacyAndTerms,
-                paragraphSize: "small"
-              })}
-            />
+            <BodySmall>
+              <Trans
+                i18nKey="features.itWallet.discovery.screen.itw.tos"
+                components={{
+                  continue: <BodySmall weight="Semibold" />,
+                  privacy: (
+                    <BodySmall
+                      accessibilityRole="link"
+                      asLink
+                      avoidPressable
+                      onPress={handleNavigateToPrivacyAndTerms}
+                      weight="Semibold"
+                    />
+                  )
+                }}
+              />
+            </BodySmall>
           </ContentWrapper>
         </ForceScrollDownView>
       </View>
@@ -272,42 +324,6 @@ const FeatureBlock = (props: {
     </HStack>
   );
 };
-
-const ItwDetailsBottomSheetContent = () => (
-  <>
-    <DetailBlock
-      title={I18n.t("features.itWallet.discovery.screen.itw.details.1.title")}
-      content={I18n.t(
-        "features.itWallet.discovery.screen.itw.details.1.content"
-      )}
-      icon="security"
-    />
-    <Divider />
-    <DetailBlock
-      title={I18n.t("features.itWallet.discovery.screen.itw.details.2.title")}
-      content={I18n.t(
-        "features.itWallet.discovery.screen.itw.details.2.content"
-      )}
-      icon="fiscalCodeIndividual"
-    />
-    <Divider />
-    <DetailBlock
-      title={I18n.t("features.itWallet.discovery.screen.itw.details.3.title")}
-      content={I18n.t(
-        "features.itWallet.discovery.screen.itw.details.3.content"
-      )}
-      icon="navQrWallet"
-    />
-    <Divider />
-    <DetailBlock
-      title={I18n.t("features.itWallet.discovery.screen.itw.details.4.title")}
-      content={I18n.t(
-        "features.itWallet.discovery.screen.itw.details.4.content"
-      )}
-      icon="euStars"
-    />
-  </>
-);
 
 const DetailBlock = (props: {
   title: string;

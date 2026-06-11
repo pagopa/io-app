@@ -3305,7 +3305,7 @@
                 "content": "IT-Wallet si integrerà al Portafoglio Digitale Europeo: potrai usare i tuoi documenti con pieno valore legale in tutta Europa."
               }
             },
-            "tos": "Premendo **Continua** dichiari di aver letto e compreso l'[Informativa Privacy e i Termini e Condizioni d'uso]().",
+            "tos": "Premendo <continue>Continua</continue> dichiari di aver letto e compreso l'<privacy>Informativa Privacy e i Termini e Condizioni d'uso.</privacy>",
             "actions": {
               "primary": "Continua",
               "secondary": "Scopri di più su IT-Wallet"

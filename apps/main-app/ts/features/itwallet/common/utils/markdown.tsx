@@ -15,11 +15,6 @@ type Options = {
    */
   linkCallback: () => void;
   /**
-   * Optional action to perform when the link is pressed.
-   * If omitted, the link opens the underlying URL.
-   */
-  onPress?: (url: string) => void;
-  /**
    * The size of the paragraph nodes to render
    */
   paragraphSize?: ParagraphSize;
@@ -32,8 +27,7 @@ type Options = {
  */
 export const generateItwIOMarkdownRules = ({
   paragraphSize,
-  linkCallback,
-  onPress
+  linkCallback
 }: Options) => ({
   Link(link: TxtLinkNode, render: Renderer) {
     return linkNodeToReactNative(
@@ -41,14 +35,10 @@ export const generateItwIOMarkdownRules = ({
       {
         size: paragraphSize,
         onPress: () => {
-          linkCallback();
-          if (onPress) {
-            onPress(link.url);
-            return;
-          }
           openWebUrl(link.url, () =>
             IOToast.error(I18n.t("global.jserror.title"))
           );
+          linkCallback();
         }
       },
       render
