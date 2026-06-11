@@ -4,6 +4,10 @@ import type { VerifierRequest } from "../types";
 import { CredentialMetadata } from "../../../../common/utils/itwTypesUtils";
 
 const mockDocType = "org.iso.18013.5.1.mDL";
+const mockCommonName = "EUDI Proximity Verifier";
+const mockCertificateData = {
+  commonName: mockCommonName
+} as VerifierRequest["request"][string]["certificateData"];
 const mockCredential: CredentialMetadata = {
   credentialType: "MDL",
   credentialId: "mso_mdoc_mDL",
@@ -87,7 +91,8 @@ describe("getProximityDetails", () => {
         request: {
           [mockDocType]: {
             "org.iso.18013.5.1.aamva": { family_name: false },
-            isAuthenticated: true
+            isAuthenticated: true,
+            certificateData: mockCertificateData
           },
           unknown_credential: {
             "org.iso.18013.5.1": { unknown_field: true },
@@ -105,12 +110,75 @@ describe("getProximityDetails", () => {
     });
   });
 
+  describe("certificate commonName enforcement", () => {
+    const buildRequest = (
+      certificateData?: VerifierRequest["request"][string]["certificateData"]
+    ) =>
+      ({
+        request: {
+          [mockDocType]: {
+            "org.iso.18013.5.1.aamva": { family_name: false },
+            isAuthenticated: true,
+            ...(certificateData ? { certificateData } : {})
+          }
+        }
+      }) as unknown as VerifierRequest;
+
+    it("throws UntrustedRpError when commonName is missing (default)", () => {
+      expect(() =>
+        getProximityDetails({
+          request: buildRequest().request,
+          credentials: mockCredentials
+        })
+      ).toThrow(UntrustedRpError);
+    });
+
+    it("throws UntrustedRpError when commonName is missing and requireAuthenticated = true", () => {
+      expect(() =>
+        getProximityDetails({
+          request: buildRequest().request,
+          credentials: mockCredentials,
+          requireAuthenticated: true
+        })
+      ).toThrow(UntrustedRpError);
+    });
+
+    it("does NOT throw when commonName is provided (default)", () => {
+      expect(() =>
+        getProximityDetails({
+          request: buildRequest(mockCertificateData).request,
+          credentials: mockCredentials
+        })
+      ).not.toThrow();
+    });
+
+    it("sets rpId from the certificate commonName", () => {
+      const result = getProximityDetails({
+        request: buildRequest(mockCertificateData).request,
+        credentials: mockCredentials
+      });
+
+      expect(result[0].rpId).toBe(mockCommonName);
+    });
+
+    it("does NOT throw when commonName is missing but requireAuthenticated = false", () => {
+      expect(() =>
+        getProximityDetails({
+          request: buildRequest().request,
+          credentials: mockCredentials,
+          requireAuthenticated: false
+        })
+      ).not.toThrow();
+    });
+  });
+
   it("throws if credential is not found for requested docType", () => {
     const parsedRequest = {
       request: {
         unknown_credential: {
           "org.iso.18013.5.1": { unknown_field: true },
-          isAuthenticated: true
+          isAuthenticated: true,
+          certificateData: mockCertificateData
         }
       }
     } as unknown as VerifierRequest;
@@ -129,7 +197,8 @@ describe("getProximityDetails", () => {
         [mockDocType]: {
           "org.iso.18013.5.1.aamva": { family_name: false },
           "org.iso.18013.5.1": { tax_id_code: false },
-          isAuthenticated: true
+          isAuthenticated: true,
+          certificateData: mockCertificateData
         }
       }
     } as unknown as VerifierRequest;
@@ -141,6 +210,7 @@ describe("getProximityDetails", () => {
 
     expect(result).toEqual([
       {
+        rpId: mockCommonName,
         claimsToDisplay: [
           {
             id: "org.iso.18013.5.1.aamva:family_name",
@@ -163,7 +233,8 @@ describe("getProximityDetails", () => {
       request: {
         [mockDocType]: {
           "org.iso.18013.5.1.aamva": { family_name: false },
-          isAuthenticated: true
+          isAuthenticated: true,
+          certificateData: mockCertificateData
         }
       }
     } as unknown as VerifierRequest;
@@ -185,11 +256,13 @@ describe("getProximityDetails", () => {
       request: {
         [mockDocType]: {
           "org.iso.18013.5.1.aamva": { family_name: false },
-          isAuthenticated: true
+          isAuthenticated: true,
+          certificateData: mockCertificateData
         },
         [WIA_DOC_TYPE]: {
           "org.iso.18013.5.1": { some_field: true },
-          isAuthenticated: true
+          isAuthenticated: true,
+          certificateData: mockCertificateData
         }
       }
     } as unknown as VerifierRequest;
