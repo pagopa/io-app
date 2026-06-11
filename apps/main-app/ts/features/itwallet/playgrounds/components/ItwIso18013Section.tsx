@@ -76,12 +76,6 @@ export const ItwIso18013Section = () => {
                     accessibilityLabel: `Delete consent for ${consent.rpId}`
                   }
                 }}
-                onLongPress={() =>
-                  Alert.alert(
-                    consent.rpId,
-                    `${Object.values(consent.credentials).map(({ credentialType, claimNames }) => `${credentialType}:\n${claimNames.map(claim => `- ${claim}\n`)}`)}\n\nKey: ${key}`
-                  )
-                }
               />
             );
           })}
