@@ -98,7 +98,6 @@ export const createProximityActionsImplementation = (
     );
 
     const consentData = getConsentDataFromProximityDetails(
-      "IPZS", // TODO - use actual RP ID when available instead of hardcoding
       context.proximityDetails
     );
 

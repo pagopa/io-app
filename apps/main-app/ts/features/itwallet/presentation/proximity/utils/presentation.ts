@@ -53,15 +53,26 @@ export const getProximityDetails: GetProximityDetails = ({
   // Exclude the WIA document type from the request
   const { [WIA_DOC_TYPE]: _, ...rest } = request;
 
+  assert(
+    Object.keys(rest).length > 0,
+    "No requested documents found in the Verifier request"
+  );
+
   return Object.entries(rest).map(
-    ([docType, { isAuthenticated, ...namespaces }]) => {
+    ([docType, { isAuthenticated, certificateData, ...namespaces }]) => {
       // Stop the flow if the verifier (RP) is not trusted
       if (!isAuthenticated && requireAuthenticated) {
         throw new UntrustedRpError("Untrusted RP");
       }
 
-      const credential = credentialsByType[docType];
+      // Get the common name from the certificate data as relying party identifier
+      if (!certificateData || !certificateData.commonName) {
+        throw new UntrustedRpError(
+          "Missing certificate data for RP identification"
+        );
+      }
 
+      const credential = credentialsByType[docType];
       assert(credential, `Credential not found for docType: ${docType}`);
       // Extract required fields from the verifier request.
       // Each field is formatted as "namespace:field" to match the structure
@@ -79,13 +90,14 @@ export const getProximityDetails: GetProximityDetails = ({
       );
 
       return {
+        rpId: certificateData.commonName,
         credentialType: credential.credentialType,
         claimsToDisplay: parseClaims(parsedCredential, {
           exclude: [WellKnownClaim.unique_id]
         })
       };
     }
-  );
+  ) as ProximityDetails;
 };
 
 /**
@@ -143,7 +155,7 @@ export const generateAcceptedFields = (
   request: VerifierRequest["request"]
 ): AcceptedFields =>
   Object.entries(request).reduce(
-    (acc, [docType, { isAuthenticated, ...namespaces }]) => ({
+    (acc, [docType, { isAuthenticated, certificateData, ...namespaces }]) => ({
       ...acc,
       [docType]: acceptAllFields(namespaces)
     }),

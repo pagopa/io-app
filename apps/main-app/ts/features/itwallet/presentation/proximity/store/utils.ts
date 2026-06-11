@@ -26,17 +26,15 @@ export const generateConsentKey = (consent: ConsentData): string => {
 /**
  * Generates a consent data from the RP ID and proximity details
  *
- * @param rpId The Relying Party ID associated with the consent.
  * @param proximityDetails List of requested credentials and claims from the
  * proximity presentation details.
  *
  * @returns A ConsentData structure representing the consent details,
  */
 export const getConsentDataFromProximityDetails = (
-  rpId: string,
   proximityDetails: ProximityDetails
 ): ConsentData => ({
-  rpId,
+  rpId: proximityDetails[0].rpId,
   credentials: proximityDetails.map(detail => ({
     credentialType: detail.credentialType,
     claimNames: detail.claimsToDisplay.map(claim => claim.id)
