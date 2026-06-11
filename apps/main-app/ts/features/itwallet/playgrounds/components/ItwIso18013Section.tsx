@@ -16,6 +16,7 @@ import {
   itwRevokeProximityConsentByKey
 } from "../../presentation/proximity/store/actions";
 import { itwProximityConsentsEntriesSelector } from "../../presentation/proximity/store/selectors/consents";
+import { generateConsentKey } from "../../presentation/proximity/store/utils";
 
 export const ItwIso18013Section = () => {
   const navigation = useIONavigation();
@@ -58,28 +59,32 @@ export const ItwIso18013Section = () => {
         <Body>No consents stored</Body>
       ) : (
         <VStack space={8}>
-          {consents.map(({ key, data }) => (
-            <ListItemInfo
-              key={key}
-              label={data.rpId}
-              value={key}
-              numberOfLines={1}
-              endElement={{
-                type: "iconButton",
-                componentProps: {
-                  icon: "trashcan",
-                  onPress: () => handleRevokeConsent(key),
-                  accessibilityLabel: `Delete consent for ${data.rpId}`
+          {consents.map(consent => {
+            const key = generateConsentKey(consent);
+
+            return (
+              <ListItemInfo
+                key={key}
+                label={consent.rpId}
+                value={key}
+                numberOfLines={1}
+                endElement={{
+                  type: "iconButton",
+                  componentProps: {
+                    icon: "trashcan",
+                    onPress: () => handleRevokeConsent(key),
+                    accessibilityLabel: `Delete consent for ${consent.rpId}`
+                  }
+                }}
+                onLongPress={() =>
+                  Alert.alert(
+                    consent.rpId,
+                    `${Object.values(consent.credentials).map(({ credentialType, claimNames }) => `${credentialType}:\n${claimNames.map(claim => `- ${claim}\n`)}`)}\n\nKey: ${key}`
+                  )
                 }
-              }}
-              onLongPress={() =>
-                Alert.alert(
-                  data.rpId,
-                  `${Object.values(data.credentials).map(({ credentialType, claimNames }) => `${credentialType}:\n${claimNames.map(claim => `- ${claim}\n`)}`)}\n\nKey: ${key}`
-                )
-              }
-            />
-          ))}
+              />
+            );
+          })}
           <IOButton
             variant="solid"
             color="danger"
