@@ -1,6 +1,7 @@
 /* eslint-disable functional/immutable-data */
 import { BackHandler } from "react-native";
 import { useCallback, useEffect, useRef } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 
 /**
  * Custom hook to handle the hardware back button on Android devices
@@ -47,4 +48,30 @@ export const useHardwareBackButtonToDismiss = (onDismiss: () => void) => {
       isComponentOpened.current = false;
     }, [])
   };
+};
+
+/**
+ * Extension of {@link useHardwareBackButton} that triggers only when the screen is in focus.
+ */
+export const useHardwareBackButtonWhenFocused = (handler: () => boolean) => {
+  const handlerRef = useRef(handler);
+
+  useEffect(() => {
+    handlerRef.current = handler;
+  }, [handler]);
+
+  const stableHandler = useCallback(() => handlerRef.current(), []);
+
+  useFocusEffect(
+    useCallback(() => {
+      const subscription = BackHandler.addEventListener(
+        "hardwareBackPress",
+        stableHandler
+      );
+
+      return () => {
+        subscription.remove();
+      };
+    }, [stableHandler])
+  );
 };
