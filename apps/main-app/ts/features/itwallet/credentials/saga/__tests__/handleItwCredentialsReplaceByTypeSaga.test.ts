@@ -14,7 +14,14 @@ import { CredentialsVault } from "../../utils/vault";
 import { handleItwCredentialsReplaceByTypeSaga } from "../handleItwCredentialsReplaceByTypeSaga";
 
 jest.mock("../../utils/vault", () => ({
-  CredentialsVault: { removeAll: jest.fn(), storeAll: jest.fn() }
+  CredentialsVault: { removeAll: jest.fn(), storeAll: jest.fn() },
+  vaultIdFor: ({
+    credentialId,
+    keyTag
+  }: {
+    credentialId: string;
+    keyTag?: string;
+  }) => (keyTag === undefined ? credentialId : `${credentialId}:${keyTag}`)
 }));
 jest.mock("@pagopa/io-react-native-crypto", () => ({ deleteKey: jest.fn() }));
 
@@ -47,7 +54,11 @@ const makeState = (
 ): DeepPartial<GlobalState> => ({
   features: {
     itWallet: {
-      credentials: { credentials }
+      credentials: {
+        credentials: Object.values(credentials).reduce<
+          Record<string, CredentialMetadata>
+        >((acc, c) => ({ ...acc, [c.credentialId]: c }), {})
+      }
     }
   }
 });
@@ -77,7 +88,7 @@ describe("handleItwCredentialsReplaceByTypeSaga", () => {
         ]);
         expect(mockDeleteKey).toHaveBeenCalledWith(baseCredential.keyTag);
         expect(mockStoreAll).toHaveBeenCalledWith([
-          { credentialId: newMetadata.credentialId, credential: "raw-jwt" }
+          { vaultId: newMetadata.credentialId, credential: "raw-jwt" }
         ]);
       });
   });

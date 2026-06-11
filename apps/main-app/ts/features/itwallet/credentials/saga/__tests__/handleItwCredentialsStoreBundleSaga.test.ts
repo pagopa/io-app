@@ -10,7 +10,14 @@ import { CredentialsVault } from "../../utils/vault";
 import { handleItwCredentialsStoreBundleSaga } from "../handleItwCredentialsStoreBundleSaga";
 
 jest.mock("../../utils/vault", () => ({
-  CredentialsVault: { storeAll: jest.fn() }
+  CredentialsVault: { storeAll: jest.fn() },
+  vaultIdFor: ({
+    credentialId,
+    keyTag
+  }: {
+    credentialId: string;
+    keyTag?: string;
+  }) => (keyTag === undefined ? credentialId : `${credentialId}:${keyTag}`)
 }));
 jest.mock("../../analytics", () => ({
   trackItwVaultCredentialStoreFailed: jest.fn()
@@ -42,12 +49,43 @@ describe("handleItwCredentialsStoreBundleSaga", () => {
       .run()
       .then(() => {
         expect(mockStoreAll).toHaveBeenCalledTimes(1);
+        // A non-batch credential is stored under its credentialId.
         expect(mockStoreAll).toHaveBeenCalledWith(
           payload.map(b => ({
-            credentialId: b.metadata.credentialId,
+            vaultId: b.metadata.credentialId,
             credential: b.credential
           }))
         );
+      });
+  });
+
+  it("collapses a batch into one metadata with keyTags and stores each copy under a concatenated vault id", () => {
+    mockStoreAll.mockResolvedValue(undefined);
+    const credentialId = ItwStoredCredentialsMocks.mdl.credentialId;
+    const copies: ReadonlyArray<CredentialBundle> = [
+      {
+        credential: "raw-jwt-0",
+        metadata: { ...ItwStoredCredentialsMocks.mdl, keyTag: "key-0" }
+      },
+      {
+        credential: "raw-jwt-1",
+        metadata: { ...ItwStoredCredentialsMocks.mdl, keyTag: "key-1" }
+      }
+    ];
+    const action = itwCredentialsStoreBundle(copies, {});
+
+    return expectSaga(handleItwCredentialsStoreBundleSaga, action)
+      .put(
+        itwCredentialsStore([
+          { ...copies[0].metadata, keyTags: ["key-0", "key-1"] }
+        ])
+      )
+      .run()
+      .then(() => {
+        expect(mockStoreAll).toHaveBeenCalledWith([
+          { vaultId: `${credentialId}:key-0`, credential: "raw-jwt-0" },
+          { vaultId: `${credentialId}:key-1`, credential: "raw-jwt-1" }
+        ]);
       });
   });
 

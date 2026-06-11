@@ -12,7 +12,14 @@ import { CredentialsVault } from "../../utils/vault";
 import { handleItwCredentialsRemoveByTypeSaga } from "../handleItwCredentialsRemoveByTypeSaga";
 
 jest.mock("../../utils/vault", () => ({
-  CredentialsVault: { removeAll: jest.fn() }
+  CredentialsVault: { removeAll: jest.fn() },
+  vaultIdFor: ({
+    credentialId,
+    keyTag
+  }: {
+    credentialId: string;
+    keyTag?: string;
+  }) => (keyTag === undefined ? credentialId : `${credentialId}:${keyTag}`)
 }));
 jest.mock("../../analytics", () => ({
   trackItwVaultCredentialRemoveFailed: jest.fn()
@@ -40,7 +47,11 @@ const baseCredential: CredentialMetadata = {
 const makeState = (credentials: Record<string, CredentialMetadata>) => ({
   features: {
     itWallet: {
-      credentials: { credentials }
+      credentials: {
+        credentials: Object.values(credentials).reduce<
+          Record<string, CredentialMetadata>
+        >((acc, c) => ({ ...acc, [c.credentialId]: c }), {})
+      }
     }
   }
 });
@@ -102,7 +113,7 @@ describe("handleItwCredentialsRemoveByTypeSaga", () => {
         expect(mockTrackRemoveFailed).toHaveBeenCalledWith({
           credential_ids: [credential.credentialId],
           reason: "vault error"
-        });
+        }); // tracks credentialIds, not vault ids
         expect(mockDeleteKey).not.toHaveBeenCalled();
       });
   });

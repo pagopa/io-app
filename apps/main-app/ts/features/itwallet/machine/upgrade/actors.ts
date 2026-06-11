@@ -5,6 +5,7 @@ import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
 import { Env } from "../../common/utils/environment";
 import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
+import { getRepresentativeVaultId } from "../../common/utils/itwCredentialUtils";
 import {
   CredentialAccessToken,
   CredentialBundle,
@@ -74,7 +75,9 @@ export const createCredentialUpgradeActorsImplementation = (
     const pidOption = itwCredentialsEidSelector(state);
     assert(O.isSome(pidOption), "PID credential is not present in the store");
 
-    const pid = await CredentialsVault.get(pidOption.value.credentialId);
+    const pid = await CredentialsVault.get(
+      getRepresentativeVaultId(pidOption.value)
+    );
     assert(pid, "PID credential not found in secure storage");
 
     return {

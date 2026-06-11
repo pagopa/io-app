@@ -7,6 +7,7 @@ import { IO_UNIVERSAL_LINK_PREFIX } from "../../../../../utils/navigation";
 import { sessionTokenSelector } from "../../../../authentication/common/store/selectors";
 import { Env } from "../../../common/utils/environment";
 import { getWalletInstanceAttestation } from "../../../common/utils/itwAttestationUtils";
+import { getRepresentativeVaultId } from "../../../common/utils/itwCredentialUtils";
 import { getIoWallet } from "../../../common/utils/itwIoWallet";
 import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../../common/utils/itwStoreUtils";
 import {
@@ -188,10 +189,12 @@ export const createRemoteActorsImplementation = (
     // The evaluation will require the full credential.
     const credentialsData = await Promise.all(
       Object.values(credentials).map(async c => {
-        const credential = await CredentialsVault.get(c.credentialId);
+        // Present the representative copy (the only one for a non-batch credential).
+        const vaultId = getRepresentativeVaultId(c);
+        const credential = await CredentialsVault.get(vaultId);
         assert(
           credential,
-          `Credential with id ${c.credentialId} not found in secure storage`
+          `Credential with vaultId ${vaultId} not found in secure storage`
         );
         return {
           keyTag: c.keyTag,

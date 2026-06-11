@@ -13,8 +13,8 @@ type CallbackActionMeta = {
  * @internal To properly add a credential, dispatch `itwCredentialsStoreBundle`.
  *
  * This actions stores one or multiple credentials using the CredentialMetadata payload.
- * Credentials are stored using the credential ID as key, the new credential completely
- * overwrites the previous one.
+ * Credentials are grouped by credentialId; within a group, an instance with the same
+ * keyTag is overwritten, otherwise the new instance is appended.
  */
 export const itwCredentialsStore = createStandardAction(
   "@@internal/ITW_CREDENTIALS_STORE"
@@ -22,8 +22,8 @@ export const itwCredentialsStore = createStandardAction(
 
 /**
  * This actions stores one or multiple credentials using the CredentialMetadata payload.
- * Credentials are stored using the credential ID as key, the new credential completely
- * overwrites the previous one.
+ * Credentials are grouped by credentialId; within a group, an instance with the same
+ * keyTag is overwritten, otherwise the new instance is appended.
  * It also accepts optional callbacks in the meta to handle success and failure cases
  * after the credentials are stored in the vault.
  */

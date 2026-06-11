@@ -1,5 +1,5 @@
 import * as SecureStorage from "@pagopa/io-react-native-secure-storage";
-import { CredentialsVault } from "../vault";
+import { CredentialsVault, vaultIdFor } from "../vault";
 
 jest.mock("@pagopa/io-react-native-secure-storage");
 
@@ -12,6 +12,18 @@ const STORAGE_KEY = `itw:credential:${CREDENTIAL_ID}`;
 describe("vault", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+  });
+
+  describe("vaultIdFor", () => {
+    it("returns the credentialId for a non-batch credential", () => {
+      expect(vaultIdFor({ credentialId: CREDENTIAL_ID })).toBe(CREDENTIAL_ID);
+    });
+
+    it("concatenates credentialId and keyTag for a batch copy", () => {
+      expect(vaultIdFor({ credentialId: CREDENTIAL_ID, keyTag: "kt-1" })).toBe(
+        `${CREDENTIAL_ID}:kt-1`
+      );
+    });
   });
 
   describe("list", () => {
@@ -69,8 +81,8 @@ describe("vault", () => {
       mockSecureStorage.put.mockResolvedValue(undefined);
 
       await CredentialsVault.storeAll([
-        { credentialId: "credential1", credential: "value1" },
-        { credentialId: "credential2", credential: "value2" }
+        { vaultId: "credential1", credential: "value1" },
+        { vaultId: "credential2", credential: "value2" }
       ]);
 
       expect(mockSecureStorage.put).toHaveBeenCalledTimes(2);
@@ -99,8 +111,8 @@ describe("vault", () => {
 
       await expect(
         CredentialsVault.storeAll([
-          { credentialId: "credential1", credential: "value1" },
-          { credentialId: "credential2", credential: "value2" }
+          { vaultId: "credential1", credential: "value1" },
+          { vaultId: "credential2", credential: "value2" }
         ])
       ).rejects.toThrow("Storage error");
     });
