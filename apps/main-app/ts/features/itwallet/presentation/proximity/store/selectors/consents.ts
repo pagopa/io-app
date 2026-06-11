@@ -18,6 +18,17 @@ export const itwProximityConsentsSelector = createSelector(
 );
 
 /**
+ * Returns all proximity presentation consents as an array of key-value pairs,
+ * suitable for rendering lists that need both the consent key (for deletion)
+ * and the consent data (for display).
+ */
+export const itwProximityConsentsEntriesSelector = createSelector(
+  itwProximityConsentsRecordSelector,
+  (consents): ReadonlyArray<{ key: string; data: ConsentData }> =>
+    Object.entries(consents).map(([key, data]) => ({ key, data }))
+);
+
+/**
  * Returns all consents that involve the specified credential type.
  */
 export const itwProximityConsentsByCredentialTypeSelector = (
