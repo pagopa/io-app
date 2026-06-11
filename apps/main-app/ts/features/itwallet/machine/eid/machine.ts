@@ -113,6 +113,23 @@ export const itwEidIssuanceMachine = setup({
         level: "L2"
       } as const
     })),
+
+    /**
+     * Updates the CieID identification level to L3 when IPZS confirms native L3
+     * authentication (i.e. challenge_info is absent in the callback URL, meaning
+     * no MRTD PoP is required because the CieID app already authenticated at L3).
+     */
+    updateCieIdIdentificationLevel: assign(({ context, event }) => {
+      assertEvent(event, "user-identification-completed");
+      if (
+        context.identification?.mode !== "cieId" ||
+        context.level !== "l3" ||
+        isMrtdPoPChallengeRequired(event.authRedirectUrl)
+      ) {
+        return {};
+      }
+      return { identification: { mode: "cieId", level: "L3" } as const };
+    }),
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     /**
      * Save the final redirect url in the machine context for later reuse.
@@ -608,7 +625,11 @@ export const itwEidIssuanceMachine = setup({
               on: {
                 "user-identification-completed": {
                   target: "Completed",
-                  actions: ["completeUserIdentification", "storeAuthLevel"]
+                  actions: [
+                    "completeUserIdentification",
+                    "updateCieIdIdentificationLevel",
+                    "storeAuthLevel"
+                  ]
                 },
                 error: {
                   actions: "setFailure",
