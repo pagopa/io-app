@@ -170,6 +170,12 @@ export const sanitizeMarkdownForImages = (
   );
 };
 
+// Even if markdown parser handle form feed characters (\f), iOS text parser causes a blank page after the character due to own parsing rules.
+// To prevent this, we replace all form feed characters with a space character before parsing the markdown.
+export const sanitizeMarkdownFromFormFeed = (
+  inputMarkdownContent: string
+): string => inputMarkdownContent.replace(/\f/g, " ");
+
 const anyWhitespaceCharacterButNewLineSet = new Set([
   " ",
   "\t",
