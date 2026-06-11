@@ -88,7 +88,7 @@ export const useItwDismissalDialog = ({
 
   // Gestures disabled when using dismissal dialogs.
   // TODO: Add proper handling for gesture navigation
-  useItwDisableGestureNavigation();
+  useItwDisableGestureNavigation(enabled);
 
   useHardwareBackButton(() => {
     if (enabled && isFocused) {

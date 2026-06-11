@@ -4,11 +4,18 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 
 /**
  * This hook disables gesture navigation and reenables it when the screen is unfocused
+ *
+ * @param enabled - Parameter to conditionally disable the gesture navigation.
+ * If true, the gesture navigation will be disabled, if false it will be enabled.
+ * Default is true.
  */
-export const useItwDisableGestureNavigation = () => {
+export const useItwDisableGestureNavigation = (disabled: boolean = true) => {
   const navigation = useIONavigation();
   useFocusEffect(
     useCallback(() => {
+      if (disabled === false) {
+        return;
+      }
       // Disable swipe when current screen is focused
       navigation.setOptions({ gestureEnabled: false });
       navigation.getParent()?.setOptions({ gestureEnabled: false });
@@ -16,6 +23,6 @@ export const useItwDisableGestureNavigation = () => {
       return () => {
         navigation.getParent()?.setOptions({ gestureEnabled: true });
       };
-    }, [navigation])
+    }, [navigation, disabled])
   );
 };
