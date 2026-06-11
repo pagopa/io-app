@@ -79,6 +79,7 @@ export const itwProximityMachine = setup({
   guards: {
     hasFailure: ({ context }) => !!context.failure,
     isNfcRetrieval: ({ context }) => context.retrievalMethod === "nfc",
+    isNfcEngagement: ({ context }) => context.engagementMode === "nfc",
     hasGrantedConsent: notImplemented
   }
 }).createMachine({
@@ -354,7 +355,8 @@ export const itwProximityMachine = setup({
           description: "Verifier is initiating the connection",
           tags: [ItwPresentationTags.Loading],
           always: {
-            guard: not("isNfcRetrieval"),
+            // Pre-navigate to the (loading) claims screen for QR engagement only.
+            guard: not("isNfcEngagement"),
             actions: "navigateToClaimsDisclosureScreen"
           }
         },

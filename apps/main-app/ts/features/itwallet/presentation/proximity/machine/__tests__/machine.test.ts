@@ -405,6 +405,37 @@ describe("itwProximityMachine", () => {
     expect(closeProximity).toHaveBeenCalledTimes(1);
   });
 
+  it("device-connecting with QR engagement pre-navigates to claims disclosure", () => {
+    const actor = createActor(mockedMachine, {
+      snapshot: makeSnapshot({ Presentment: "AwaitingConnection" })
+    });
+
+    actor.start();
+    actor.send({ type: "device-connecting" });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      Presentment: "Connecting"
+    });
+    expect(navigateToClaimsDisclosureScreen).toHaveBeenCalledTimes(1);
+  });
+
+  it("device-connecting with NFC engagement does not pre-navigate to claims disclosure", () => {
+    const actor = createActor(mockedMachine, {
+      snapshot: makeSnapshot(
+        { Presentment: "AwaitingConnection" },
+        { engagementMode: "nfc" }
+      )
+    });
+
+    actor.start();
+    actor.send({ type: "device-connecting" });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      Presentment: "Connecting"
+    });
+    expect(navigateToClaimsDisclosureScreen).not.toHaveBeenCalled();
+  });
+
   it("close from Presentment.AwaitingConnection calls closeProximity", () => {
     const actor = createActor(mockedMachine, {
       snapshot: makeSnapshot({ Presentment: "AwaitingConnection" })
