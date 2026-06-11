@@ -66,7 +66,7 @@ export const getProximityDetails: GetProximityDetails = ({
       }
 
       // Get the common name from the certificate data as relying party identifier
-      if (!certificateData || !certificateData.commonName) {
+      if (!certificateData && requireAuthenticated) {
         throw new UntrustedRpError(
           "Missing certificate data for RP identification"
         );
@@ -90,7 +90,7 @@ export const getProximityDetails: GetProximityDetails = ({
       );
 
       return {
-        rpId: certificateData.commonName,
+        rpId: `${certificateData?.commonName}`,
         credentialType: credential.credentialType,
         claimsToDisplay: parseClaims(parsedCredential, {
           exclude: [WellKnownClaim.unique_id]
