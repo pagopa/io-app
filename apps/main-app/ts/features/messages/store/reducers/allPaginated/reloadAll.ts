@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
 import { getType } from "typesafe-actions";
 import { reloadAllMessages } from "../../actions";
 import { Action } from "../../../../../store/actions/types";
@@ -17,7 +16,7 @@ export const reduceReloadAll = (
           archive: {
             ...state.archive,
             data: pot.toLoading(state.archive.data),
-            lastRequest: O.some("all")
+            lastRequest: "all"
           }
         };
       }
@@ -26,7 +25,7 @@ export const reduceReloadAll = (
         inbox: {
           ...state.inbox,
           data: pot.toLoading(state.inbox.data),
-          lastRequest: O.some("all")
+          lastRequest: "all"
         }
       };
     }
@@ -41,7 +40,7 @@ export const reduceReloadAll = (
               previous: action.payload.pagination.previous,
               next: action.payload.pagination.next
             }),
-            lastRequest: O.none,
+            lastRequest: undefined,
             lastUpdateTime: new Date()
           }
         };
@@ -54,7 +53,7 @@ export const reduceReloadAll = (
             previous: action.payload.pagination.previous,
             next: action.payload.pagination.next
           }),
-          lastRequest: O.none,
+          lastRequest: undefined,
           lastUpdateTime: new Date()
         }
       };
