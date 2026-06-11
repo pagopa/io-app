@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.34.0-rc.5](https://github.com/pagopa/io-app/compare/3.34.0-rc.4...3.34.0-rc.5) (2026-06-10)
+
+
+### Bug Fixes
+
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] App doesn't load assets on production build ([#8167](https://github.com/pagopa/io-app/issues/8167)) ([8fec25c](https://github.com/pagopa/io-app/commit/8fec25c55751b12ad2613cd92e004dd118200d1c))
+* **IT-Wallet:** [[SIW-4342](https://pagopa.atlassian.net/browse/SIW-4342)] Support vct as URN in remote presentation ([#8138](https://github.com/pagopa/io-app/issues/8138)) ([12529b1](https://github.com/pagopa/io-app/commit/12529b165926a55ffb820e894dc3504178e2d903))
+
+
+### Chores
+
+* [[IOCOM-3152](https://pagopa.atlassian.net/browse/IOCOM-3152)] removal of FP-ts from allPaginated - collection.lastRequest ([#8129](https://github.com/pagopa/io-app/issues/8129)) ([60b5808](https://github.com/pagopa/io-app/commit/60b58085f2145721e556f9bf178e2ebc43d316d8))
+* [[IOCOM-3153](https://pagopa.atlassian.net/browse/IOCOM-3153)] removal of FP-TS from allPaginated selectors ([#8131](https://github.com/pagopa/io-app/issues/8131)) ([f5007a2](https://github.com/pagopa/io-app/commit/f5007a260a7af49924c42e102b8394d63242e6ec))
+
+## [3.34.0-rc.4](https://github.com/pagopa/io-app/compare/3.34.0-rc.3...3.34.0-rc.4) (2026-06-10)
+
+
+### Chores
+
+* [[IOCOM-3145](https://pagopa.atlassian.net/browse/IOCOM-3145)] message CTA utils FP-TS removal ([#8121](https://github.com/pagopa/io-app/issues/8121)) ([add1490](https://github.com/pagopa/io-app/commit/add1490665ddf1ea654d629ac22e5cdc03720cb0))
+* [[IOCOM-3146](https://pagopa.atlassian.net/browse/IOCOM-3146)]All paginated reducer split ([#8127](https://github.com/pagopa/io-app/issues/8127)) ([f8f8a4a](https://github.com/pagopa/io-app/commit/f8f8a4a13e0fe8a96257595cc85269563c223196))
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] Fixes drift on app version on last nx merge ([#8165](https://github.com/pagopa/io-app/issues/8165)) ([e30569c](https://github.com/pagopa/io-app/commit/e30569c33124b92bb39b994cefb2510177c031d0))
+* **IT-Wallet:** [[SIW-4383](https://pagopa.atlassian.net/browse/SIW-4383)] Support issuance of v1.3 EAAs ([#8151](https://github.com/pagopa/io-app/issues/8151)) ([e2fffc4](https://github.com/pagopa/io-app/commit/e2fffc4fb746923cd2bc76fa23df582ec3c3cae9))
+
 ## [3.34.0-rc.3](https://github.com/pagopa/io-app/compare/3.34.0-rc.2...3.34.0-rc.3) (2026-06-08)
 
 

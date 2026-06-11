@@ -23,6 +23,7 @@ import {
   StatusAssertionError
 } from "../../common/utils/itwCredentialStatusAssertionUtils";
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
+import { getIoWallet } from "../../common/utils/itwIoWallet";
 import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsValidSelector
@@ -111,9 +112,14 @@ export function* updateCredentialStatusAssertionSaga(
  */
 export function* checkCredentialsStatusAssertion() {
   const isWalletValid = yield* select(itwLifecycleIsValidSelector);
+  const itwVersion = yield* select(selectItwSpecsVersion);
 
   // Credentials can be requested only when the wallet is valid, i.e. the eID was issued
   if (!isWalletValid) {
+    return;
+  }
+  // TODO: [SIW-3963] Handle status list integration
+  if (!getIoWallet(itwVersion).CredentialStatus.statusAssertion.isSupported) {
     return;
   }
 
