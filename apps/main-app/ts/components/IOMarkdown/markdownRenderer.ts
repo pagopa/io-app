@@ -174,7 +174,7 @@ export const sanitizeMarkdownForImages = (
 // To prevent this, we replace all form feed characters with a space character before parsing the markdown.
 export const sanitizeMarkdownFromFormFeed = (
   inputMarkdownContent: string
-): string => inputMarkdownContent.replace(/\f/g, " ");
+): string => inputMarkdownContent.replaceAll(/\f/g, " ");
 
 const anyWhitespaceCharacterButNewLineSet = new Set([
   " ",
