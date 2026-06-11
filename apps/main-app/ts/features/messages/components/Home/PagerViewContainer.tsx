@@ -1,21 +1,20 @@
-import { pipe } from "fp-ts/lib/function";
-import { useCallback, useRef, Ref } from "react";
-import { FlatList, NativeSyntheticEvent } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
+import { Ref, useCallback, useRef } from "react";
+import { FlatList, NativeSyntheticEvent } from "react-native";
 import PagerView from "react-native-pager-view";
 import { OnPageSelectedEventData } from "react-native-pager-view/lib/typescript/PagerViewNativeComponent";
-import { useIODispatch, useIOStore } from "../../../../store/hooks";
-import { setShownMessageCategoryAction } from "../../store/actions";
-import { GlobalState } from "../../../../store/reducers/types";
+import SectionStatusComponent from "../../../../components/SectionStatus";
+import { pageSize } from "../../../../config";
 import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPressWhenScreenActive";
+import { useIODispatch, useIOStore } from "../../../../store/hooks";
+import { GlobalState } from "../../../../store/reducers/types";
+import { trackAutoRefresh, trackMessagesPage } from "../../analytics";
+import { setShownMessageCategoryAction } from "../../store/actions";
 import {
   messageCountForCategorySelector,
   shownMessageCategorySelector
 } from "../../store/reducers/allPaginated";
-import { foldK as foldMessageListCategory } from "../../types/messageListCategory";
-import SectionStatusComponent from "../../../../components/SectionStatus";
-import { trackAutoRefresh, trackMessagesPage } from "../../analytics";
-import { pageSize } from "../../../../config";
+import { ArchiveRestoreBar } from "./ArchiveRestoreBar";
 import { MessageList } from "./MessageList";
 import {
   getInitialReloadAllMessagesActionIfNeeded,
@@ -24,7 +23,6 @@ import {
   messageViewPageIndexToListCategory,
   trackMessagePageOnFocusEventIfAllowed
 } from "./homeUtils";
-import { ArchiveRestoreBar } from "./ArchiveRestoreBar";
 
 export const PagerViewContainer = ({ ref }: { ref?: Ref<PagerView> }) => {
   const dispatch = useIODispatch();
@@ -36,20 +34,14 @@ export const PagerViewContainer = ({ ref }: { ref?: Ref<PagerView> }) => {
     store.getState()
   );
 
-  const onTabPressedCallback = useCallback(
-    () =>
-      pipe(
-        store.getState(),
-        shownMessageCategorySelector,
-        foldMessageListCategory(
-          () => inboxFlatListRef,
-          () => archiveFlatListRef
-        ),
-        flatListRef =>
-          flatListRef.current?.scrollToOffset({ animated: true, offset: 0 })
-      ),
-    [store]
-  );
+  const onTabPressedCallback = useCallback(() => {
+    const state = store.getState();
+    const shownCategory = shownMessageCategorySelector(state);
+    const flatlistRef =
+      shownCategory === "INBOX" ? inboxFlatListRef : archiveFlatListRef;
+    flatlistRef.current?.scrollToOffset({ animated: true, offset: 0 });
+  }, [store]);
+
   const loadNewlyReceivedMessagesIfNeededCallback = useCallback(() => {
     const state = store.getState();
     const loadPreviousPageAction =

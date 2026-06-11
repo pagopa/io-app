@@ -50,25 +50,21 @@ export const refreshIntervalMillisecondsGenerator = () => 60000;
 
 export const getInitialReloadAllMessagesActionIfNeeded = (
   state: GlobalState
-): ActionType<typeof reloadAllMessages.request> | undefined =>
-  pipe(state, shownMessageCategorySelector, category =>
-    pipe(
-      state,
-      isDoingAnAsyncOperationOnMessages,
-      B.fold(
-        () =>
-          pipe(
-            state,
-            messagePagePotFromCategorySelector(category),
-            isStrictNone,
-            B.fold(constUndefined, () =>
-              initialReloadAllMessagesFromCategory(category, false)
-            )
-          ),
-        constUndefined
-      )
-    )
+): ActionType<typeof reloadAllMessages.request> | undefined => {
+  const areTasksRunning = isDoingAnAsyncOperationOnMessages(state);
+  if (areTasksRunning) {
+    return undefined;
+  }
+  const shownCategory = shownMessageCategorySelector(state);
+  const messagePagePot = messagePagePotFromCategorySelector(
+    shownCategory,
+    state
   );
+  const isMessagePagePotNone = isStrictNone(messagePagePot);
+  return isMessagePagePotNone
+    ? initialReloadAllMessagesFromCategory(shownCategory, false)
+    : undefined;
+};
 
 export const getMessagesViewPagerInitialPageIndex = (state: GlobalState) =>
   pipe(state, shownMessageCategorySelector, messageListCategoryToViewPageIndex);
@@ -309,8 +305,10 @@ export const trackMessagePageOnFocusEventIfAllowed = (state: GlobalState) => {
   }
 
   const shownMessageCategory = shownMessageCategorySelector(state);
-  const messagePagePot =
-    messagePagePotFromCategorySelector(shownMessageCategory)(state);
+  const messagePagePot = messagePagePotFromCategorySelector(
+    shownMessageCategory,
+    state
+  );
   if (isSomeOrSomeError(messagePagePot)) {
     // Track message category change
     const selectedShownCategory = shownMessageCategorySelector(state);
@@ -324,7 +322,7 @@ export const trackMessageListEndReachedIfAllowed = (
   willLoadNextPageMessages: boolean,
   state: GlobalState
 ) => {
-  const messagePagePot = messagePagePotFromCategorySelector(category)(state);
+  const messagePagePot = messagePagePotFromCategorySelector(category, state);
   if (isSomeOrSomeError(messagePagePot)) {
     trackMessageListEndReached(category, willLoadNextPageMessages);
   }
