@@ -35,6 +35,7 @@ import {
 import { ItwEidIssuanceMachine, itwEidIssuanceMachine } from "../machine";
 import { itwCredentialUpgradeMachine } from "../../upgrade/machine";
 import { CieWarningType } from "../../../identification/cie/utils/types";
+import { IssuanceFailureType } from "../failure";
 
 type MachineSnapshot = StateFrom<ItwEidIssuanceMachine>;
 
@@ -1288,6 +1289,62 @@ describe("itwEidIssuanceMachine", () => {
     expect(requestEid).toHaveBeenCalledTimes(1);
 
     expect(actor.getSnapshot().value).toStrictEqual("Failure");
+  });
+
+  it("Should fail with a not matching identity when the issued eID does not match the authenticated user", async () => {
+    startAuthFlow.mockImplementation(() => Promise.resolve({}));
+    requestAccessToken.mockImplementation(() =>
+      Promise.resolve(T_ACCESS_TOKEN)
+    );
+    requestEid.mockImplementation(() =>
+      Promise.resolve({
+        credential: {
+          credential: "",
+          metadata: ItwStoredCredentialsMocks.eid
+        },
+        walletUnitAttestations: T_WUA
+      })
+    );
+    issuedEidMatchesAuthenticatedUser.mockImplementation(() => false);
+
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { UserIdentification: { CiePin: "PreparationCie" } },
+      context: {
+        level: "l3",
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: { jwt: T_WIA },
+        identification: {
+          mode: "ciePin",
+          level: "L3",
+          pin: "12345678"
+        }
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, {
+      snapshot
+    });
+    actor.start();
+
+    actor.send({ type: "next" });
+
+    await waitFor(() => expect(startAuthFlow).toHaveBeenCalledTimes(1));
+
+    actor.send({
+      type: "user-identification-completed",
+      authRedirectUrl: "http://test.it"
+    });
+
+    await waitForActor(actor, s => s.matches("Failure"));
+
+    expect(actor.getSnapshot().context.failure).toStrictEqual({
+      type: IssuanceFailureType.NOT_MATCHING_IDENTITY,
+      reason: "IT Wallet identity does not match IO identity"
+    });
   });
 
   it("Should handle 401 when creating wallet instance", async () => {

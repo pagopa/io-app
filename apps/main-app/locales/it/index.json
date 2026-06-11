@@ -3709,8 +3709,8 @@
         },
         "notMatchingIdentityError": {
           "title": "Identità non riconosciuta",
-          "body": "Attiva Documenti su IO con la stessa identità utilizzata per accedere all’app IO. Verifica le credenziali di accesso e riprova.",
-          "primaryAction": "Ripeti l'accesso",
+          "body": "L’identità digitale che usi per attivare IT-Wallet deve corrispondere alla stessa persona che ha fatto accesso a IO.",
+          "primaryAction": "Riprova",
           "secondaryAction": "Chiudi"
         },
         "genericError": {
