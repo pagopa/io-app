@@ -567,6 +567,10 @@ export const itwEidIssuanceMachine = setup({
                 actions: "navigateToTosScreen"
               },
               {
+                guard: "isL3FeaturesEnabled",
+                target: "#itwEidIssuanceMachine.TosAcceptance"
+              },
+              {
                 target: "#itwEidIssuanceMachine.IpzsPrivacyAcceptance"
               }
             ],
