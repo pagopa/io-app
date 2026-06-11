@@ -5,7 +5,7 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 /**
  * This hook disables gesture navigation and reenables it when the screen is unfocused
  *
- * @param enabled - Parameter to conditionally disable the gesture navigation.
+ * @param disabled - Parameter to conditionally disable the gesture navigation.
  * If true, the gesture navigation will be disabled, if false it will be enabled.
  * Default is true.
  */
