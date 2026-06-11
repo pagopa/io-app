@@ -13,7 +13,7 @@ export const useItwDisableGestureNavigation = (disabled: boolean = true) => {
   const navigation = useIONavigation();
   useFocusEffect(
     useCallback(() => {
-      if (disabled === false) {
+      if (!disabled) {
         return;
       }
       // Disable swipe when current screen is focused
