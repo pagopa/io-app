@@ -9,9 +9,7 @@ type Props = {
 const i18nNs =
   "features.itWallet.presentation.credentialDetails.newCredentialValidityAlert.content";
 
-/**
- * Alert showing information about the validity of new IT Wallet credentials.
- */
+/** Alert showing information about the validity of new IT Wallet credentials. */
 export const ItwPresentationNewCredentialValidityAlert = ({
   credentialType
 }: Props) => {

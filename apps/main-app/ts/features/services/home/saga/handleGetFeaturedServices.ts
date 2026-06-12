@@ -9,7 +9,8 @@ import { ServicesClient } from "../../../../api/ServicesClientManager";
 import { featuredServicesGet } from "../store/actions";
 
 /**
- * saga to handle the loading of featured services
+ * Saga to handle the loading of featured services
+ *
  * @param getFeaturedServices
  * @param action
  */

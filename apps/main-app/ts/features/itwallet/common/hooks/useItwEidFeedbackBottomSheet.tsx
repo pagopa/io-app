@@ -19,8 +19,11 @@ type ItwEidFeedbackBottomSheetProps = {
 
 /**
  * Hook to open the feedback bottom sheet for the EID reissuance feature.
- * @param onPrimaryAction - Optional primary action to be executed when the primary button is pressed.
- * @param onSecondaryAction - Optional secondary action to be executed when the secondary button is pressed.
+ *
+ * @param onPrimaryAction - Optional primary action to be executed when the
+ *   primary button is pressed.
+ * @param onSecondaryAction - Optional secondary action to be executed when the
+ *   secondary button is pressed.
  */
 export const useItwEidFeedbackBottomSheet = ({
   onPrimaryAction,

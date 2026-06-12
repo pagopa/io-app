@@ -1,7 +1,4 @@
-/**
- * pagoPA backend client, with functions
- * to call the different API available
- */
+/** PagoPA backend client, with functions to call the different API available */
 import * as r from "@pagopa/ts-commons/lib/requests";
 import {
   AddResponseType,
@@ -91,9 +88,7 @@ import { getLocalePrimaryWithFallback } from "../utils/locale";
 import { getLookUpId, pmLookupHeaderKey } from "../utils/pmLookUpId";
 import { fixWalletPspTagsValues } from "../utils/wallet";
 
-/**
- * A decoder that ignores the content of the payload and only decodes the status
- */
+/** A decoder that ignores the content of the payload and only decodes the status */
 const constantEmptyDecoder = composeResponseDecoders(
   composeResponseDecoders(
     composeResponseDecoders(
@@ -192,13 +187,13 @@ type GetWalletsUsingGETExtraT = MapResponseType<
 >;
 
 /**
+ * This patch is needed because 'tags' field (an array of strings) in psp
+ * objects often contains mixed (and duplicated too) values e.g tags =
+ * ["value1",null,null] Psp codec fails decoding 'tags' having these values, so
+ * this getPatchedWalletsUsingGETDecoder alterates the payload just before the
+ * decoding phase making 'tags' an empty array TODO: temporary patch. Remove
+ * this patch once SIA has fixed the spec.
  *
- * This patch is needed because 'tags' field (an array of strings) in psp objects
- * often contains mixed (and duplicated too) values
- * e.g tags = ["value1",null,null]
- * Psp codec fails decoding 'tags' having these values, so this getPatchedWalletsUsingGETDecoder alterates the
- * payload just before the decoding phase making 'tags' an empty array
- * TODO: temporary patch. Remove this patch once SIA has fixed the spec.
  * @see https://www.pivotaltracker.com/story/show/166665367
  */
 const getPatchedWalletsUsingGETDecoder = <O>(

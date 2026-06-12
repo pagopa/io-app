@@ -11,9 +11,7 @@ const i18nNs =
 // TODO: [SIW-4242] replace with the Age Verification Help Center article URL once published.
 const AGE_VERIFICATION_HELP_CENTER_URL = "https://assistenza.ioapp.it/hc/it";
 
-/**
- * Banner showing where the Age Verification credential can be used.
- */
+/** Banner showing where the Age Verification credential can be used. */
 export const ItwPresentationAgeVerificationUsageBanner = () => {
   const dispatch = useIODispatch();
   const shouldRender = useIOSelector(

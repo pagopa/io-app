@@ -30,9 +30,10 @@ const isAuthenticationUrl = (url: string) => {
 };
 
 /**
- * This component renders a WebView that loads the URL obtained from the startAuthFlow.
- * It handles the navigation state changes to detect when the authentication is completed
- * and sends the redirectAuthUrl back to the state machine.
+ * This component renders a WebView that loads the URL obtained from the
+ * startAuthFlow. It handles the navigation state changes to detect when the
+ * authentication is completed and sends the redirectAuthUrl back to the state
+ * machine.
  */
 const ItwCieIdLoginScreen = () => {
   const { ISSUANCE_REDIRECT_URI } = pipe(useIOSelector(selectItwEnv), getEnv);

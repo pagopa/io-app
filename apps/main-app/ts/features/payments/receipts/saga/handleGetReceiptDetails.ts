@@ -9,7 +9,8 @@ import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSession
 
 /**
  * Handle the remote call to get the transaction details from the biz events API
- @param getPaymentMethods
+ *
+ * @param getPaymentMethods
  * @param action
  */
 export function* handleGetReceiptDetails(

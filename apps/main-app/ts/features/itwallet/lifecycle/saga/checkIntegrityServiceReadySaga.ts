@@ -7,17 +7,20 @@ import { itwSetIntegrityServiceStatus } from "../../issuance/store/actions";
 import { itwIntegrityServiceStatusSelector } from "../../issuance/store/selectors";
 
 /**
- * Checks if the integrity service is ready by checking its current status and waiting for updates if needed.
+ * Checks if the integrity service is ready by checking its current status and
+ * waiting for updates if needed.
  *
- * The integrity service can be in one of three states:
- * - "ready": The service is initialized and ready to use
- * - "unavailable": The device does not support the integrity service
- * - "error": An error occurred while initializing the service
+ * The integrity service can be in one of three states: - "ready": The service
+ * is initialized and ready to use - "unavailable": The device does not support
+ * the integrity service - "error": An error occurred while initializing the
+ * service
  *
- * If the service is in an error state, this will trigger a warmup retry via warmUpIntegrityServiceSaga.
- * If the status is not conclusive, it will wait up to 10 seconds for the status to update.
+ * If the service is in an error state, this will trigger a warmup retry via
+ * warmUpIntegrityServiceSaga. If the status is not conclusive, it will wait up
+ * to 10 seconds for the status to update.
  *
- * @returns true if the integrity service becomes ready within the timeout period, false otherwise
+ * @returns True if the integrity service becomes ready within the timeout
+ *   period, false otherwise
  */
 export function* checkIntegrityServiceReadySaga(
   timeout: number = 10000
@@ -51,8 +54,8 @@ export function* checkIntegrityServiceReadySaga(
 }
 
 /**
- * Saga responsible to check whether the integrity service is ready.
- * Works as a warmup process for the integrity service on Android.
+ * Saga responsible to check whether the integrity service is ready. Works as a
+ * warmup process for the integrity service on Android.
  */
 export function* warmUpIntegrityServiceSaga(): Generator<
   ReduxSagaEffect,

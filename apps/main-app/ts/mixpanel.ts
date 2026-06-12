@@ -20,9 +20,7 @@ const uninitializedMixpanelTrackingQueue = new Map<
   EnqueuedMixpanelEvent
 >();
 
-/**
- * Initialize mixpanel at start
- */
+/** Initialize mixpanel at start */
 export const initializeMixPanel = async (state: GlobalState) => {
   if (mixpanel !== undefined) {
     return;
@@ -78,6 +76,7 @@ export const registerSuperProperties = (properties: MixpanelProperties) =>
 
 /**
  * Track an event with properties
+ *
  * @param event
  * @param properties
  */
@@ -87,17 +86,21 @@ export const mixpanelTrack = (
 ) => mixpanel?.track(event, properties);
 
 /**
- * Use this method to enqueue a tracking event when mixpanel has not been initialized yet.
- * Be aware that you should not enqueue an event if the user has chosen to opt-out from tracking.
- * This method does nothing if mixpanel is already initialized.
+ * Use this method to enqueue a tracking event when mixpanel has not been
+ * initialized yet. Be aware that you should not enqueue an event if the user
+ * has chosen to opt-out from tracking. This method does nothing if mixpanel is
+ * already initialized.
  *
- * Normally, you should use this method when you have to track something upon application initialization,
- * before the mixpanel initialization saga has run. In such case, you must check the 'isMixpanelEnabled'
- * preference (in persistedPreferences) from the redux-store, before using this method. Such property
- * maps the opt-in/opt-out user's choice. Rehydration of the property always happens before any saga is run.
+ * Normally, you should use this method when you have to track something upon
+ * application initialization, before the mixpanel initialization saga has run.
+ * In such case, you must check the 'isMixpanelEnabled' preference (in
+ * persistedPreferences) from the redux-store, before using this method. Such
+ * property maps the opt-in/opt-out user's choice. Rehydration of the property
+ * always happens before any saga is run.
  *
  * @param eventName Mixpanel event name
- * @param id Unique identifier for the enqueueing, in case you have to override it later
+ * @param id Unique identifier for the enqueueing, in case you have to override
+ *   it later
  * @param properties Mixpanel properties
  */
 export const enqueueMixpanelEvent = (

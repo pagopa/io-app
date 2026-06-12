@@ -4,10 +4,10 @@ import { isIdPayEnabledSelector } from "../../../../store/reducers/backendStatus
 import { IdPayDisabledScreen } from "../screens/IdPayDisabledScreen";
 
 /**
- * Component that wraps IDPay navigator components and checks if the
- * entire IDPay feature is enabled via the isIdPayEnabled feature flag.
- * If the feature is disabled, it shows the IdPayDisabledScreen instead of rendering
- * the children.
+ * Component that wraps IDPay navigator components and checks if the entire
+ * IDPay feature is enabled via the isIdPayEnabled feature flag. If the feature
+ * is disabled, it shows the IdPayDisabledScreen instead of rendering the
+ * children.
  */
 export function IdPayFeatureFlagGuard({ children }: PropsWithChildren) {
   const isIdPayEnabled = useIOSelector(isIdPayEnabledSelector);

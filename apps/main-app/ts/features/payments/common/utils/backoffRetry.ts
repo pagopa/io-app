@@ -1,17 +1,15 @@
 import I18n from "i18next";
 
-/**
- * This constant defines the seconds delays between each retry attempt.
- */
+/** This constant defines the seconds delays between each retry attempt. */
 export const PAYMENTS_BACKOFF_SECONDS_DELAYS = [1, 10, 60, 180];
 
-/**
- * Constant to define the default value of 1 second in milliseconds
- */
+/** Constant to define the default value of 1 second in milliseconds */
 export const SECONDS_TO_MILLISECONDS = 1000;
 
 /**
- * This function returns the time remaining between the current date and the target date.
+ * This function returns the time remaining between the current date and the
+ * target date.
+ *
  * @returns A string with the time remaining in seconds or minutes.
  */
 export const getTimeRemainingText = (targetDate: number | Date): string => {

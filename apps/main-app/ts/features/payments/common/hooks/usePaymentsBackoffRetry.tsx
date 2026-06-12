@@ -15,10 +15,13 @@ export const usePaymentsBackoffRetry = (id: PaymentsBackoffRetry) => {
   const backoff = useIOSelector(paymentsBackoffRetrySelector(id));
 
   /**
-   * This function check if the user can retry the request meaning that the exponential backoff time is elapsed
-   * If the time is not elapsed, by default a toast error will be shown
-   * @param showToast If true it shows automatically a toast with the time remaining to retry
-   * @returns true if the request can be retried, otherwise false
+   * This function check if the user can retry the request meaning that the
+   * exponential backoff time is elapsed If the time is not elapsed, by default
+   * a toast error will be shown
+   *
+   * @param showToast If true it shows automatically a toast with the time
+   *   remaining to retry
+   * @returns True if the request can be retried, otherwise false
    */
   const canRetryRequest = (showToast: boolean = true) => {
     if (

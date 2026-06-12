@@ -5,9 +5,7 @@ import {
 } from "../properties/propertyTypes";
 import { ItwPIDStatus, MixPanelCredential, CREDENTIALS_MAP } from "./types";
 
-/**
- * Maps an PID status to its corresponding Mixpanel tracking status.
- */
+/** Maps an PID status to its corresponding Mixpanel tracking status. */
 export const mapPIDStatusToMixpanel = (
   status: ItwJwtCredentialStatus | undefined
 ): ItwPIDStatus => {
@@ -25,9 +23,11 @@ export const mapPIDStatusToMixpanel = (
 
 /**
  * Returns the appropriate Mixpanel credential key based on the credential type.
+ *
  * - If the IT Wallet is active, returns the V3 key.
  * - Otherwise, returns the V2 key.
- * - If the credential type does not exist in CREDENTIALS_MAP, returns "UNKNOWN" as a fallback value.
+ * - If the credential type does not exist in CREDENTIALS_MAP, returns "UNKNOWN"
+ *   as a fallback value.
  */
 export function getMixPanelCredential(
   credentialType: string,

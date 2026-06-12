@@ -9,9 +9,7 @@ import {
   DigitalCredentialsCatalogue
 } from "../../../common/utils/itwCredentialsCatalogueUtils";
 
-/**
- * This action handles the Digital Credentials Catalogue fetch
- */
+/** This action handles the Digital Credentials Catalogue fetch */
 export const itwFetchCredentialsCatalogue = createAsyncAction(
   "ITW_CREDENTIALS_CATALOGUE_REQUEST",
   "ITW_CREDENTIALS_CATALOGUE_SUCCESS",
@@ -19,8 +17,8 @@ export const itwFetchCredentialsCatalogue = createAsyncAction(
 )<void, DigitalCredentialsCatalogue, NetworkError>();
 
 /**
- * This action handles the fetch of catalogue locale translations.
- * Only dispatched for IT-Wallet spec v1.3.3.
+ * This action handles the fetch of catalogue locale translations. Only
+ * dispatched for IT-Wallet spec v1.3.3.
  */
 export const itwFetchCatalogueTranslations = createAsyncAction(
   "ITW_CATALOGUE_TRANSLATIONS_REQUEST",

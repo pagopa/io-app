@@ -21,7 +21,8 @@ const Stack = createStackNavigator<CiePlaygroundsParamsList>();
 
 export const CiePlaygroundsNavigator = () => {
   /**
-   * Set CIE logger to local file mode when the playground is mounted, and disable it when unmounted.
+   * Set CIE logger to local file mode when the playground is mounted, and
+   * disable it when unmounted.
    */
   useEffect(() => {
     CieLogger.setLogMode("FILE");

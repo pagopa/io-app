@@ -12,9 +12,7 @@ import { fciSignatureDetailDocumentsSelector } from "../store/reducers/fciSignat
 import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
 import SignatureStatusComponent from "./SignatureStatusComponent";
 
-/**
- * A component to render the cases of success for a signature request
- */
+/** A component to render the cases of success for a signature request */
 const SuccessComponent = (props: {
   signatureRequest: SignatureRequestDetailView;
 }) => {

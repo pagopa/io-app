@@ -11,6 +11,7 @@ import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSession
 
 /**
  * Handle the remote call to start Wallet onboarding payment methods list
+ *
  * @param getPaymentMethods
  * @param action
  */

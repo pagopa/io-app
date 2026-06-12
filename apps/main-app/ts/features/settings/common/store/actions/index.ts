@@ -1,6 +1,4 @@
-/**
- * Action types and action creator related to the Profile.
- */
+/** Action types and action creator related to the Profile. */
 
 import * as O from "fp-ts/lib/Option";
 import { Omit } from "@pagopa/ts-commons/lib/types";

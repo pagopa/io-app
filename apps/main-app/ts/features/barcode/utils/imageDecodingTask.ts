@@ -12,8 +12,8 @@ import { BarcodeFailure } from "../types/failure";
 import { barcodeDetectionTask } from "./barcodeDetectionTask";
 
 /**
- * Maps internal formats to external library formats
- * Necessary to work with the library {@link rn-qr-generator}
+ * Maps internal formats to external library formats Necessary to work with the
+ * library {@link rn-qr-generator}
  */
 const IOBarcodeFormats: { [K in IOBarcodeFormat]: RNQRCodeType } = {
   DATA_MATRIX: "DataMatrix",
@@ -21,9 +21,9 @@ const IOBarcodeFormats: { [K in IOBarcodeFormat]: RNQRCodeType } = {
 };
 
 /**
- * Utility functions to map external formats to internal formats
- * Converts {@link RNQRCodeType} to {@link IOBarcodeFormat}.
- * Returns undefined if no format is found
+ * Utility functions to map external formats to internal formats Converts
+ * {@link RNQRCodeType} to {@link IOBarcodeFormat}. Returns undefined if no format
+ * is found
  */
 const convertToIOBarcodeFormat = (
   format: RNQRCodeType
@@ -36,9 +36,11 @@ const convertToIOBarcodeFormat = (
 
 /**
  * Checks if the detected barcode format is supported
+ *
  * @param type RNQRCodeType
  * @param barcodeFormats Accepted formats
- * @returns TE.Left if the format is not supported, TE.Right with the converted format otherwise
+ * @returns TE.Left if the format is not supported, TE.Right with the converted
+ *   format otherwise
  */
 const checkDetectedBarcodesFormat = (
   type: RNQRCodeType,
@@ -54,6 +56,7 @@ const checkDetectedBarcodesFormat = (
 
 /**
  * Checks if the detected barcodes array is not empty after removing duplicates
+ *
  * @param barcodes List of detected barcodes
  * @returns TE.Left if the array is empty, TE.Right with the array otherwise
  */
@@ -71,11 +74,13 @@ const checkDetectedBarcodesArray = (
 
 /**
  * Decodes the detected barcodes into IOBarcode objects
+ *
  * @param barcodes List of detected barcodes
  * @param format Format of the detected barcodes
  * @param state Global redux state of the application
  * @param barcodeTypes Accepted types of the detected barcodes
- * @returns TE.Left if the content is not supported, TE.Right with the decoded barcodes otherwise
+ * @returns TE.Left if the content is not supported, TE.Right with the decoded
+ *   barcodes otherwise
  */
 const decodeDetectedBarcodes = (
   barcodes: Array<string>,
@@ -103,8 +108,10 @@ const decodeDetectedBarcodes = (
 
 /**
  * Creates a TaskEither that decodes a barcodes from an image URI
+ *
  * @param state Global redux state of the application
- * @param detectOptions object which may contain the uri or the base64 of the image
+ * @param detectOptions Object which may contain the uri or the base64 of the
+ *   image
  * @param barcodeFormats The accepted formats of the barcodes
  * @param acceptedTypes The accepted types of the barcodes
  * @returns Array of decoded barcodes

@@ -9,8 +9,8 @@ type OnboardingAbortAlertUtils = {
 };
 
 /**
- * Return an object used to manage an alert
- * that will trigger the `abortOnboarding` action.
+ * Return an object used to manage an alert that will trigger the
+ * `abortOnboarding` action.
  */
 export const useOnboardingAbortAlert = (): OnboardingAbortAlertUtils => {
   const dispatch = useIODispatch();

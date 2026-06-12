@@ -1,5 +1,6 @@
 /**
  * A reducer for the Installation state.
+ *
  * @flow
  */
 import { getType } from "typesafe-actions";

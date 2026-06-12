@@ -19,7 +19,8 @@ import { fciMetadataServiceIdSelector } from "../store/reducers/fciMetadata";
 import { servicePreferencePotByIdSelector } from "../../services/details/store/selectors";
 
 /**
- * A hook that returns a function to present the abort signature flow bottom sheet
+ * A hook that returns a function to present the abort signature flow bottom
+ * sheet
  */
 export const useFciCheckService = () => {
   const dispatch = useIODispatch();

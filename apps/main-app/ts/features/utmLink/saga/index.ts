@@ -12,9 +12,9 @@ import { trackUtmLink } from "../analytics";
 import { isMixpanelEnabled as isMixpanelEnabledSelector } from "./../../../store/reducers/persistedPreferences";
 
 /**
- * This saga is responsible for tracking the UTM link campaign.
- * It listens for the mixpanel initialization and the UTM link campaign actions.
- * When either action is dispatched, it handles the latest action to avoid race conditions.
+ * This saga is responsible for tracking the UTM link campaign. It listens for
+ * the mixpanel initialization and the UTM link campaign actions. When either
+ * action is dispatched, it handles the latest action to avoid race conditions.
  */
 export function* watchUtmLinkSaga(): SagaIterator {
   yield* takeLatest(

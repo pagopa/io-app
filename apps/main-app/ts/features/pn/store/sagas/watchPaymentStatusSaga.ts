@@ -18,10 +18,10 @@ import {
 import { curriedSendMessageFromIdSelector } from "../reducers";
 
 /**
- * This saga is used to track a mixpanel event which is a report of
- * PN payment updates. Is important to notice that the report is
- * computed only on the payments shown in the message details screen,
- * as to say, not for the payments that may appear later in the bottom sheet.
+ * This saga is used to track a mixpanel event which is a report of PN payment
+ * updates. Is important to notice that the report is computed only on the
+ * payments shown in the message details screen, as to say, not for the payments
+ * that may appear later in the bottom sheet.
  */
 export function* watchPaymentStatusForMixpanelTracking(
   action: ActionType<typeof startPNPaymentStatusTracking>

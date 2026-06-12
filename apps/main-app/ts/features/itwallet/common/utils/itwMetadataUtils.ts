@@ -8,11 +8,12 @@ import { CredentialMetadata } from "./itwTypesUtils.ts";
 
 /**
  * Get the localized auth source organization name for a catalogue credential.
- * Resolves `organization_name_l10n_id` via the provided translations when available,
- * falling back to the static `organization_name` field.
+ * Resolves `organization_name_l10n_id` via the provided translations when
+ * available, falling back to the static `organization_name` field.
  *
  * @param credential - Catalogue metadata for the credential
- * @param translations - Optional flat translations map for the current locale (l10n_id → string)
+ * @param translations - Optional flat translations map for the current locale
+ *   (l10n_id → string)
  */
 export const getItwAuthSource = (
   credential: DigitalCredentialMetadata,
@@ -31,8 +32,9 @@ export const getItwAuthSource = (
   );
 
 /**
- * Get the authentication source for a given credential based on its configuration.
- * This is only valid for legacy credentials (Documenti su IO)
+ * Get the authentication source for a given credential based on its
+ * configuration. This is only valid for legacy credentials (Documenti su IO)
+ *
  * @param credential - The credential to get the authentication source for.
  */
 export const getAuthSource = (credential: CredentialMetadata) =>

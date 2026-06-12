@@ -1,7 +1,7 @@
 /**
- * A reducer for the Profile.
- * It only manages SUCCESS actions because all UI state properties (like loading/error)
- * are managed by different global reducers.
+ * A reducer for the Profile. It only manages SUCCESS actions because all UI
+ * state properties (like loading/error) are managed by different global
+ * reducers.
  */
 
 import * as O from "fp-ts/lib/Option";

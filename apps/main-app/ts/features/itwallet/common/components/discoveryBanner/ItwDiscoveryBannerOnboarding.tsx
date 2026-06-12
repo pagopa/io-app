@@ -14,9 +14,7 @@ import { ITW_ROUTES } from "../../../navigation/routes";
 import { isItwDiscoveryBannerRenderableSelector } from "../../store/selectors";
 import { useItwDiscoveryBannerType } from "../../hooks/useItwDiscoveryBannerType.ts";
 
-/**
- * ITW discovery banner to be displayed in the wallet card onboarding screen
- */
+/** ITW discovery banner to be displayed in the wallet card onboarding screen */
 const ItwDiscoveryBannerOnboarding = () => {
   const navigation = useIONavigation();
   const route = useRoute();

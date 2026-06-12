@@ -1,6 +1,4 @@
-/**
- * A screen to alert the user about the number of attempts remains
- */
+/** A screen to alert the user about the number of attempts remains */
 import I18n from "i18next";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 import useActiveSessionLoginNavigation from "../../../activeSessionLogin/utils/useActiveSessionLoginNavigation";

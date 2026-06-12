@@ -7,14 +7,13 @@ import { clipboardSetStringWithFeedback } from "./clipboard";
 import { openMaps } from "./openMaps";
 import { splitAndTakeFirst } from "./strings";
 
-/**
- * Generic utilities for url parsing
- */
+/** Generic utilities for url parsing */
 
 /**
  * Return the base name of a remote resource from a give path
- * @param resourceUrl the remote resource url
- * @param includeExt if true include the extension part of the resource
+ *
+ * @param resourceUrl The remote resource url
+ * @param includeExt If true include the extension part of the resource
  */
 export function getResourceNameFromUrl(
   resourceUrl: string,
@@ -26,7 +25,8 @@ export function getResourceNameFromUrl(
 }
 
 /**
- * from a given url return the base path excluding query string and fragments
+ * From a given url return the base path excluding query string and fragments
+ *
  * @param url
  */
 export const getUrlBasepath = (url: string): string => {
@@ -48,10 +48,8 @@ export const getUrlBasepath = (url: string): string => {
 
 export type ItemAction = "MAP" | "COPY" | "LINK";
 /**
- * Return the function to:
- * - copy the value, if valueType is COPY
- * - navigate to the map, if valueType is MAP
- * - navigate to a browser, if valueType is LINK
+ * Return the function to: - copy the value, if valueType is COPY - navigate to
+ * the map, if valueType is MAP - navigate to a browser, if valueType is LINK
  */
 export function handleItemOnPress(
   value: string,
@@ -95,8 +93,9 @@ const taskCanOpenUrl = (url: string) =>
   );
 
 /**
- * open the web url if it can ben opened and if it has a valid protocol (http/https)
- * it should be used in place of direct call of Linking.openURL(url) with web urls
+ * Open the web url if it can ben opened and if it has a valid protocol
+ * (http/https) it should be used in place of direct call of
+ * Linking.openURL(url) with web urls
  */
 export const openWebUrl = (url: string, onError: () => void = constNull) => {
   pipe(
@@ -114,8 +113,10 @@ export const openAppStoreUrl = async (onError: () => void = constNull) => {
 };
 
 /**
- * Escape characters with special meaning either inside or outside character sets.
- * Use a simple backslash escape when it’s always valid, and a `\xnn` escape when the simpler form would be disallowed by Unicode patterns’ stricter grammar.
+ * Escape characters with special meaning either inside or outside character
+ * sets. Use a simple backslash escape when it’s always valid, and a `\xnn`
+ * escape when the simpler form would be disallowed by Unicode patterns’
+ * stricter grammar.
  */
 export function escapeStringRegexp(string: string) {
   if (typeof string !== "string") {
@@ -127,9 +128,10 @@ export function escapeStringRegexp(string: string) {
 
 /**
  * Extract the path from a given url if it matches one of the given prefixes
- * @param prefixes  the prefixes to match
- * @param url the url to match
- * @returns the path if the url matches one of the prefixes, undefined otherwise
+ *
+ * @param prefixes The prefixes to match
+ * @param url The url to match
+ * @returns The path if the url matches one of the prefixes, undefined otherwise
  */
 export function extractPathFromURL(
   prefixes: ReadonlyArray<string>,
@@ -161,9 +163,10 @@ export function extractPathFromURL(
 }
 
 /**
- * type guard to check if a value is an ImageURISource
- * @argument value the value to check, can be anything
- * @returns boolean
+ * Type guard to check if a value is an ImageURISource
+ *
+ * @param value The value to check, can be anything
+ * @returns Boolean
  */
 export const isImageUri = (value: unknown): value is ImageURISource =>
   typeof value === "object" && value !== null && "uri" in value;

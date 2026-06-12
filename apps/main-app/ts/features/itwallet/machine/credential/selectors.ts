@@ -35,8 +35,10 @@ export const selectFailureOption = (snapshot: MachineSnapshot) =>
   O.fromNullable(snapshot.context.failure);
 
 /**
- * Select the optional introduction content from the catalogue. The content is set by the
- * Authentic Source and is a markdown text with additional information on the credential.
+ * Select the optional introduction content from the catalogue. The content is
+ * set by the Authentic Source and is a markdown text with additional
+ * information on the credential.
+ *
  * @returns The optional content as Option
  */
 export const selectCredentialIntroContentOption = ({

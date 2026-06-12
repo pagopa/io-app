@@ -150,9 +150,7 @@ export const useTagPropsByStatus = (): {
   }
 });
 
-/**
- * List of statuses that make a credential valid, especially for UI purposes.
- */
+/** List of statuses that make a credential valid, especially for UI purposes. */
 export const validCredentialStatuses: Array<ItwCredentialStatus> = [
   "valid",
   "expiring",
@@ -166,8 +164,11 @@ type ExtractVerification = (args: {
 }) => StoredVerification | undefined;
 
 /**
- * Extracts the verification object from a stored credential based on its format.
- * @param credential - The stored credential fields needed to extract verification
+ * Extracts the verification object from a stored credential based on its
+ * format.
+ *
+ * @param credential - The stored credential fields needed to extract
+ *   verification
  * @returns The verification object or undefined if extraction fails
  */
 export const extractVerification: ExtractVerification = ({
@@ -198,16 +199,17 @@ export const extractVerification: ExtractVerification = ({
 
 /**
  * Checks whether the `assurance_level` field includes `"high"` or the
- * `trust_framework` field is equal to `"it_l2+document_proof"`,
- * and returns `true` only if one of these conditions is met.
+ * `trust_framework` field is equal to `"it_l2+document_proof"`, and returns
+ * `true` only if one of these conditions is met.
  *
- * Currently the assurance level can either be `"high"` or `"https://ta.wallet.ipzs.it/loa/high"`.
+ * Currently the assurance level can either be `"high"` or
+ * `"https://ta.wallet.ipzs.it/loa/high"`.
  *
- * `"it_l2+document_proof"` indicates that the credential has been issued with
- * a substantial authentication (SPID, CieID) plus an MRTD PoP verification.
+ * `"it_l2+document_proof"` indicates that the credential has been issued with a
+ * substantial authentication (SPID, CieID) plus an MRTD PoP verification.
  *
  * @param metadata - The metadata of the credential to check
- * @returns boolean indicating if the credential is an ITW credential (L3)
+ * @returns Boolean indicating if the credential is an ITW credential (L3)
  */
 export const isItwCredential = (metadata: CredentialMetadata): boolean => {
   const verification = metadata.verification;
@@ -219,9 +221,10 @@ export const isItwCredential = (metadata: CredentialMetadata): boolean => {
 
 /**
  * Checks if the credential was issued before the PID.
+ *
  * @param credentialIssuedAt - Credential issuance date
  * @param pidIssuedAt - PID issuance date
- * @returns true if credential was issued before PID, false otherwise
+ * @returns True if credential was issued before PID, false otherwise
  */
 export const isCredentialIssuedBeforePid = (
   credentialIssuedAt?: string,

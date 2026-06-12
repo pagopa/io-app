@@ -18,9 +18,10 @@ import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 
 /**
- *
- * @param {boolean} [isOnboarding=false] A boolean value used to identify when the submit action comes from onboarding process.
- * @returns {object} An object containing the `handleSubmit` function which accepts a pin of type `PinString` used to submit the chosen pin.
+ * @param {boolean} [isOnboarding=false] A boolean value used to identify when
+ *   the submit action comes from onboarding process. Default is `false`
+ * @returns {object} An object containing the `handleSubmit` function which
+ *   accepts a pin of type `PinString` used to submit the chosen pin.
  */
 export const useCreatePin = (props = { isOnboarding: false }) => {
   const { isOnboarding } = props;

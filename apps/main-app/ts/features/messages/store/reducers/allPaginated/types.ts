@@ -20,7 +20,7 @@ export type LastRequestValues = "previous" | "next" | "all";
 
 export type Collection = {
   data: MessagePagePot;
-  /** persist the last action type occurred */
+  /** Persist the last action type occurred */
   lastRequest?: LastRequestValues;
   lastUpdateTime: Date;
 };
@@ -31,9 +31,7 @@ export type MessageOperationFailure = {
   operation: MessageOperation;
 };
 
-/**
- * A list of messages and pagination inbox.
- */
+/** A list of messages and pagination inbox. */
 export type AllPaginated = {
   archive: Collection;
   inbox: Collection;

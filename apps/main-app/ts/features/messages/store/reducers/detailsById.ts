@@ -14,18 +14,14 @@ import { clearCache } from "../../../settings/common/store/actions";
 import { UIMessageDetails } from "../../types";
 import { loadMessageDetails, reloadAllMessages } from "../actions";
 
-/**
- * A list of messages and pagination data.
- */
+/** A list of messages and pagination data. */
 export type DetailsById = {
   [id: string]: pot.Pot<UIMessageDetails, string>;
 };
 
 const INITIAL_STATE: DetailsById = {};
 
-/**
- * A reducer to store all messages details by ID
- */
+/** A reducer to store all messages details by ID */
 export const detailsByIdReducer = (
   state: DetailsById = INITIAL_STATE,
   action: Action
@@ -89,6 +85,7 @@ export const detailsByIdReducer = (
 
 /**
  * Return the message's details, if any.
+ *
  * @param state
  * @param id
  */

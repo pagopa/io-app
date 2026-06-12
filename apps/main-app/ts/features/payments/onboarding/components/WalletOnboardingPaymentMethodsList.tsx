@@ -1,6 +1,6 @@
 /**
- * This component will display the payment methods that can be registered
- * on the app
+ * This component will display the payment methods that can be registered on the
+ * app
  */
 import {
   Divider,
@@ -54,7 +54,8 @@ const PaymentMethodItem = ({
 };
 
 /**
- * This component shows a list of available payment methods that can be onboarded
+ * This component shows a list of available payment methods that can be
+ * onboarded
  */
 const WalletOnboardingPaymentMethodsList = ({
   paymentMethods,

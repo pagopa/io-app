@@ -36,13 +36,13 @@ type GetProximityDetails = (params: {
 /**
  * Get the Presentation details based on the request from the Verifier.
  *
- * @param request The request from the Verifier, specifying which document types and claims are required
+ * @param request The request from the Verifier, specifying which document types
+ *   and claims are required
  * @param credentialsByType The credentials object by doc type
  * @param requireAuthenticated Whether to require the RP to be authenticated,
- * default is true. If set to false, unauthenticated RPs will be allowed,
- * which can be useful for testing purposes, but should be used with caution in
- * production.
- *
+ *   default is true. If set to false, unauthenticated RPs will be allowed,
+ *   which can be useful for testing purposes, but should be used with caution
+ *   in production.
  * @returns The Presentation details
  */
 export const getProximityDetails: GetProximityDetails = ({
@@ -91,7 +91,8 @@ export const getProximityDetails: GetProximityDetails = ({
 /**
  * Get the requested documents based on the request from the Verifier.
  *
- * @param request The request from the Verifier, specifying which document types and claims are required
+ * @param request The request from the Verifier, specifying which document types
+ *   and claims are required
  * @param credentialsByType The credentials object by doc type
  * @param wiaMdoc The WIA in mdoc format
  * @returns The requested documents

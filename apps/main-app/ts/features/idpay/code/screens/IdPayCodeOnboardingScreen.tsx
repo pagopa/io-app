@@ -36,9 +36,7 @@ const IdPayCodeOnboardingScreen = () => {
 
   const isCodeOnboarded = useIOSelector(isIdPayCodeOnboardedSelector);
 
-  /**
-   * Callback to be called when the biometric authentication is successful
-   */
+  /** Callback to be called when the biometric authentication is successful */
   const onBiometricAuthenticationSuccess = () => {
     dispatch(idPayGenerateCode.request({ initiativeId }));
     navigation.replace(IdPayCodeRoutes.IDPAY_CODE_MAIN, {
@@ -49,9 +47,7 @@ const IdPayCodeOnboardingScreen = () => {
     });
   };
 
-  /**
-   * Request biometric authentication to the user
-   */
+  /** Request biometric authentication to the user */
   const requestBiometricAuthentication = () => {
     dispatch(
       identificationRequest(
@@ -70,9 +66,7 @@ const IdPayCodeOnboardingScreen = () => {
     );
   };
 
-  /**
-   * Callback to be called when the user presses the "Start" button
-   */
+  /** Callback to be called when the user presses the "Start" button */
   const handleContinue = () => {
     if (isCodeOnboarded && initiativeId !== undefined) {
       dispatch(idPayEnrollCode.request({ initiativeId }));

@@ -104,7 +104,8 @@ const getTosFooter = (
 const imageHeight: number = 270;
 
 /**
- * A screen to explain how the bonus activation works and how it will be assigned
+ * A screen to explain how the bonus activation works and how it will be
+ * assigned
  */
 const BonusInformationComponent = ({ ref, ...props }: Props) => {
   const { showModal, hideModal } = useContext(LightModalContext);

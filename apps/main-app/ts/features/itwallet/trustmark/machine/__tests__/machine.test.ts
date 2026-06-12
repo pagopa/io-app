@@ -81,9 +81,7 @@ describe("itwTrustmarkMachine", () => {
       input: { credentialType: "MDL" }
     });
 
-    /**
-     * Initial state
-     */
+    /** Initial state */
 
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
 
@@ -95,15 +93,11 @@ describe("itwTrustmarkMachine", () => {
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
-    /**
-     * Start the machine
-     */
+    /** Start the machine */
 
     actor.start();
 
-    /**
-     * Get the trustmark
-     */
+    /** Get the trustmark */
 
     await waitForActor(actor, snapshot =>
       snapshot.matches("DisplayingTrustmark")
@@ -128,9 +122,7 @@ describe("itwTrustmarkMachine", () => {
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set());
 
-    /**
-     * Refresh the trustmark
-     */
+    /** Refresh the trustmark */
 
     jest.advanceTimersByTime(11 * 1000);
 
@@ -147,9 +139,7 @@ describe("itwTrustmarkMachine", () => {
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
-    /**
-     * From here is a loop between the previous states
-     */
+    /** From here is a loop between the previous states */
   });
 
   it("should obtain a new WIA if the current one is expired", async () => {
@@ -168,9 +158,7 @@ describe("itwTrustmarkMachine", () => {
       input: { credentialType: "MDL" }
     });
 
-    /**
-     * Initial state
-     */
+    /** Initial state */
 
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
 
@@ -184,23 +172,17 @@ describe("itwTrustmarkMachine", () => {
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
-    /**
-     * Start the machine
-     */
+    /** Start the machine */
 
     actor.start();
 
-    /**
-     * Update the WIA
-     */
+    /** Update the WIA */
 
     await waitFor(() =>
       expect(getWalletAttestationActor).toHaveBeenCalledTimes(1)
     );
 
-    /**
-     * Get the trustmark
-     */
+    /** Get the trustmark */
 
     await waitForActor(actor, snapshot =>
       snapshot.matches("RefreshingTrustmark")
@@ -214,9 +196,7 @@ describe("itwTrustmarkMachine", () => {
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
-    /**
-     * From here is the same as the previous test
-     */
+    /** From here is the same as the previous test */
   });
 
   it("should handle session expired", async () => {
@@ -237,9 +217,7 @@ describe("itwTrustmarkMachine", () => {
       input: { credentialType: "MDL" }
     });
 
-    /**
-     * Initial state
-     */
+    /** Initial state */
 
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
 
@@ -253,23 +231,17 @@ describe("itwTrustmarkMachine", () => {
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
-    /**
-     * Start the machine
-     */
+    /** Start the machine */
 
     actor.start();
 
-    /**
-     * Update the WIA
-     */
+    /** Update the WIA */
 
     await waitFor(() =>
       expect(getWalletAttestationActor).toHaveBeenCalledTimes(1)
     );
 
-    /**
-     * Handle session expired
-     */
+    /** Handle session expired */
 
     expect(handleSessionExpired).toHaveBeenCalledTimes(1);
   });
@@ -292,9 +264,7 @@ describe("itwTrustmarkMachine", () => {
       input: { credentialType: "mDL" }
     });
 
-    /**
-     * Initial state
-     */
+    /** Initial state */
 
     await waitFor(() => expect(onInit).toHaveBeenCalledTimes(1));
 
@@ -306,15 +276,11 @@ describe("itwTrustmarkMachine", () => {
     });
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
-    /**
-     * Start the machine
-     */
+    /** Start the machine */
 
     actor.start();
 
-    /**
-     * Get the trustmark
-     */
+    /** Get the trustmark */
 
     await waitForActor(actor, snapshot => snapshot.matches("Failure"));
 

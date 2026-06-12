@@ -50,8 +50,8 @@ export const ItwCieAuthenticationScreen = () => {
   const [authorizationUrl, setAuthorizationUrl] = useState<string>();
 
   /**
-   * Handles the completion of the authorization process sending to the
-   * machine the obtained authorization URL.
+   * Handles the completion of the authorization process sending to the machine
+   * the obtained authorization URL.
    */
   const handleAuthorizationComplete = useCallback(
     (authRedirectUrl: string) => {
@@ -64,8 +64,8 @@ export const ItwCieAuthenticationScreen = () => {
   );
 
   /**
-   * If we encounter an error in the webview we need to send the error event to the machine
-   * and to stop the issuance flow
+   * If we encounter an error in the webview we need to send the error event to
+   * the machine and to stop the issuance flow
    */
   const handleWebViewError = useCallback(
     (error: WebViewError) => {
@@ -79,8 +79,8 @@ export const ItwCieAuthenticationScreen = () => {
   }
 
   /**
-   * Step 1: Display the authentication webview to fetch it the service provider url
-   * to start the CIE authentication process
+   * Step 1: Display the authentication webview to fetch it the service provider
+   * url to start the CIE authentication process
    */
   if (serviceProviderUrl === undefined) {
     return (
@@ -93,9 +93,9 @@ export const ItwCieAuthenticationScreen = () => {
   }
 
   /**
-   * Step 2: Once we received the service provider url, the CIE reading process starts
-   * We display the progress or failure content based on the CIE manager state.
-   * We do not have the authorization url yet.
+   * Step 2: Once we received the service provider url, the CIE reading process
+   * starts We display the progress or failure content based on the CIE manager
+   * state. We do not have the authorization url yet.
    */
   if (authorizationUrl === undefined) {
     return (
@@ -108,8 +108,9 @@ export const ItwCieAuthenticationScreen = () => {
   }
 
   /**
-   * Step 3: Once we have the authorization url, we display the authorization webview
-   * where the user will be able to complete the CIE authentication process.
+   * Step 3: Once we have the authorization url, we display the authorization
+   * webview where the user will be able to complete the CIE authentication
+   * process.
    */
   return (
     <ItwCieAuthorizationWebview
@@ -142,9 +143,7 @@ const CieManagerComponent = ({
     void startReading(pin, serviceProviderUrl);
   }, [pin, serviceProviderUrl, startReading]);
 
-  /**
-   * Starts the reading process as soon the component is mounted
-   */
+  /** Starts the reading process as soon the component is mounted */
   useOnFirstRender(() => {
     void startReading(pin, serviceProviderUrl);
   });

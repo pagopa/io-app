@@ -1,6 +1,6 @@
 /**
- * A screen to invite the user to update the app because current version is not supported yet
- *
+ * A screen to invite the user to update the app because current version is not
+ * supported yet
  */
 
 import { FC, useCallback, useEffect, useRef, useState } from "react";

@@ -19,9 +19,7 @@ import { cgnActivationStart } from "../store/actions/activation";
 import { cgnUnsubscribe } from "../store/actions/unsubscribe";
 import { cgnUnsubscribeSelector } from "../store/reducers/unsubscribe";
 
-/**
- * Hook to handle the CGN activation/deactivation
- */
+/** Hook to handle the CGN activation/deactivation */
 const useCgnActivation = (serviceId: ServiceId) => {
   const isFirstRender = useRef<boolean>(true);
 
@@ -89,8 +87,8 @@ const useCgnActivation = (serviceId: ServiceId) => {
 };
 
 /**
- * This hook determines and returns the appropriate primary action prop
- * for activating and deactivating the CGN service.
+ * This hook determines and returns the appropriate primary action prop for
+ * activating and deactivating the CGN service.
  */
 export const useSpecialCtaCgn = (
   serviceId: ServiceId

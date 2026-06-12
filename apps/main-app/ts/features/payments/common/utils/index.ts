@@ -24,8 +24,8 @@ import { AlertVariant, ListItemTransactionStatus } from "./types";
 const TRANSACTION_LOGO_CDN = `${contentRepoUrl}/logos/organizations`;
 
 /**
- * A simple function to get the corresponding translated badge text,
- * based on the transaction status.
+ * A simple function to get the corresponding translated badge text, based on
+ * the transaction status.
  */
 
 export const getBadgePropsByTransactionStatus = (
@@ -61,9 +61,9 @@ export const getBadgePropsByTransactionStatus = (
 };
 
 /**
- * Check if the given payment method is expired
- * right(true) if it is expired, right(false) if it is still valid
- * left if expiring date can't be evaluated
+ * Check if the given payment method is expired right(true) if it is expired,
+ * right(false) if it is still valid left if expiring date can't be evaluated
+ *
  * @param paymentMethod
  */
 export const isPaymentMethodExpired = (
@@ -78,7 +78,8 @@ export const isPaymentMethodExpired = (
   );
 
 /**
- * true if the given paymentMethod supports the given walletFunction
+ * True if the given paymentMethod supports the given walletFunction
+ *
  * @param paymentMethod
  * @param walletFunction
  */
@@ -92,15 +93,13 @@ const hasApplicationEnabled = (
       application.name === walletApplication &&
       application.status === WalletApplicationStatusEnum.ENABLED
   );
-/**
- * return true if the payment method has the payment feature
- */
+/** Return true if the payment method has the payment feature */
 export const hasPaymentFeature = (paymentMethod: WalletInfo): boolean =>
   hasApplicationEnabled(paymentMethod, "PAGOPA");
 
 /**
- * Function that returns a sorted list of psp based on the given sortType
- * The sortType can be: "name", "amount" or "default"
+ * Function that returns a sorted list of psp based on the given sortType The
+ * sortType can be: "name", "amount" or "default"
  */
 export const getSortedPspList = (
   pspList: ReadonlyArray<Bundle>,
@@ -183,8 +182,8 @@ export const mapWalletsToCards = (
   }));
 
 /**
- * Function that returns a formatted payment notice number
- * by placing two spaces between every four numbers
+ * Function that returns a formatted payment notice number by placing two spaces
+ * between every four numbers
  */
 export const formatPaymentNoticeNumber = (noticeNumber: string) =>
   noticeNumber.replace(/(\d{4})/g, "$1  ").trim();

@@ -1,7 +1,7 @@
 /**
- * A reducer to store the services normalized by id
- * It only manages SUCCESS actions because all UI state properties (like * loading/error)
- * are managed by different global reducers.
+ * A reducer to store the services normalized by id It only manages SUCCESS
+ * actions because all UI state properties (like * loading/error) are managed by
+ * different global reducers.
  */
 import { getType } from "typesafe-actions";
 import { Action } from "../../actions/types";
@@ -27,9 +27,7 @@ export type PaidReason = Readonly<
     }
 >;
 
-/**
- * Maps a paid rptId to the resulting completed transaction ID
- */
+/** Maps a paid rptId to the resulting completed transaction ID */
 export type PaymentByRptIdState = Readonly<{
   [key: string]: PaidReason | undefined;
 }>;

@@ -21,6 +21,7 @@ import {
 import * as analytics from "../analytics";
 /**
  * Handle the remote call to hide the transaction receipt
+ *
  * @param action
  */
 export function* handleDisableReceipt(

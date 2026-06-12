@@ -86,9 +86,11 @@ const ItwMetadataIssuanceListItem = ({
 /**
  * Renders additional issuance-related metadata, i.e. releaser and auth source.
  * They are not part of the claims list, thus they're rendered separately.
- * @param credential - the credential with the issuer configuration
- * @param isPreview - whether the component is rendered in preview mode which hides the info button.
- * @returns the list items with the metadata.
+ *
+ * @param credential - The credential with the issuer configuration
+ * @param isPreview - Whether the component is rendered in preview mode which
+ *   hides the info button.
+ * @returns The list items with the metadata.
  */
 export const ItwIssuanceMetadata = ({
   credential,

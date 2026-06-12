@@ -39,7 +39,10 @@ export const paymentsTogglePagoPaCapabilityAction = createAsyncAction(
   "PAYMENTS_TOGGLE_PAGOPA_CAPABILITY_CANCEL"
 )<TogglePagoPaCapabilityPayload, void, NetworkError, void>();
 
-/** This action is used to close/show the PayPal banner into a payment method details of type paypal */
+/**
+ * This action is used to close/show the PayPal banner into a payment method
+ * details of type paypal
+ */
 export const paymentsPayPalBannerSetIsClosedAction = createStandardAction(
   "PAYMENTS_PAYPAL_BANNER_SET_IS_CLOSED"
 )<boolean>();

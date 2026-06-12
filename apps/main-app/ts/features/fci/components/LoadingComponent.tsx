@@ -16,8 +16,9 @@ type Props = WithTestID<
 >;
 
 /**
- * A Component to display an animated spinner.
- * It can be used to display a loading spinner with optionally a caption title and subtitle.
+ * A Component to display an animated spinner. It can be used to display a
+ * loading spinner with optionally a caption title and subtitle.
+ *
  * @deprecated Use `LoadingScreenContent` component instead
  */
 const LoadingComponent = (props: Props) => {

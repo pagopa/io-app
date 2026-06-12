@@ -16,20 +16,15 @@ import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 
 type CieIdHookResult = {
   /**
-   * The authentication url obtained after a successful identification through CieID.
+   * The authentication url obtained after a successful identification through
+   * CieID.
    */
   authUrl: O.Option<string>;
-  /**
-   * Whether the CieID app has been opened separately from IO (iOS only).
-   */
+  /** Whether the CieID app has been opened separately from IO (iOS only). */
   isAppLaunched: boolean;
-  /**
-   * Function that starts the authentication with CieID.
-   */
+  /** Function that starts the authentication with CieID. */
   startCieIdAppAuthentication: (url: string) => void;
-  /**
-   * Function that handles CieID related errors.
-   */
+  /** Function that handles CieID related errors. */
   handleAuthenticationFailure: (error: unknown) => void;
 };
 
@@ -53,6 +48,7 @@ const extractCieIdErrorFromUrl = (url: string) =>
 
 /**
  * Hook that contains CieID related logic and handlers.
+ *
  * @returns CieIdHookResult: {@link CieIdHookResult}
  */
 export const useCieIdApp = (): CieIdHookResult => {

@@ -32,7 +32,8 @@ jest.mock("@pagopa/io-app-design-system", () => ({
 }));
 
 /**
- * Helper function to render a component that uses the hook and executes a function
+ * Helper function to render a component that uses the hook and executes a
+ * function
  */
 const renderWithConnectivityGuard = (
   fn: (...args: Array<any>) => any,

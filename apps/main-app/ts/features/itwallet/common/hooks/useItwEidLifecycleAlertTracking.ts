@@ -15,23 +15,22 @@ type Props = {
 /**
  * Hook for tracking eID lifecycle alerts.
  *
- * This hook handles two types of analytics events:
- * 1. Banner visualized event: triggered the first time the alert becomes visible
- *    when the screen is focused. If the screen loses focus and regains it,
- *    the event can be retracked depending on the focus behavior.
- * 2. Banner tap event: triggered when the user tap the alert.
+ * This hook handles two types of analytics events: 1. Banner visualized event:
+ * triggered the first time the alert becomes visible when the screen is
+ * focused. If the screen loses focus and regains it, the event can be retracked
+ * depending on the focus behavior. 2. Banner tap event: triggered when the user
+ * tap the alert.
  *
- * Tracking rules:
- * - If `skipViewTracking` is true, only the visualized event is skipped.
- * - If the eID status is valid, no visualized event is sent.
- * - If `isItw` is true, no tracking is sent at all.
+ * Tracking rules: - If `skipViewTracking` is true, only the visualized event is
+ * skipped. - If the eID status is valid, no visualized event is sent. - If
+ * `isItw` is true, no tracking is sent at all.
  *
  * @param maybeEidStatus The current eID status
  * @param navigation Navigation object to listen for focus/blur events
  * @param skipViewTracking Flag to disable only the view tracking (visualized)
  * @param currentScreenName Optional screen name to include in tracking
  * @param isOffline Whether the app is in offline mode
- * @returns trackAlertTap callback to track tap interactions on the alert
+ * @returns TrackAlertTap callback to track tap interactions on the alert
  */
 export const useItwEidLifecycleAlertTracking = ({
   maybeEidStatus,

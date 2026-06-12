@@ -127,15 +127,19 @@ const WalletPaymentFailureDetail = ({ failure }: Props) => {
 
   /**
    * Calculates the remaining minutes a user must wait before retrying a payment
-   * that previously failed due to an ongoing payment error (e.g., PPT_PAGAMENTO_IN_CORSO).
+   * that previously failed due to an ongoing payment error (e.g.,
+   * PPT_PAGAMENTO_IN_CORSO).
    *
-   * This function uses both `Date.now()` (wall clock) and `performance.now()` (monotonic clock)
-   * to mitigate the risk of user manipulation of the system clock or time zone changes.
+   * This function uses both `Date.now()` (wall clock) and `performance.now()`
+   * (monotonic clock) to mitigate the risk of user manipulation of the system
+   * clock or time zone changes.
    *
-   * If the discrepancy between the two time sources exceeds a defined threshold (e.g., 60 seconds),
-   * it falls back to the more reliable `performance.now()` to determine the elapsed time.
+   * If the discrepancy between the two time sources exceeds a defined threshold
+   * (e.g., 60 seconds), it falls back to the more reliable `performance.now()`
+   * to determine the elapsed time.
    *
-   * @returns The number of minutes the user must wait before retrying the payment. Returns 0 if no wait is required.
+   * @returns The number of minutes the user must wait before retrying the
+   *   payment. Returns 0 if no wait is required.
    */
   const getPaymentOngoingMinutesToWait = () => {
     const firstTimeFailed = paymentOngoingHistory?.rptId

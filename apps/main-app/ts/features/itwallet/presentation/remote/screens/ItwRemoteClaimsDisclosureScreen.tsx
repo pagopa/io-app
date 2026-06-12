@@ -33,9 +33,9 @@ const ItwRemoteClaimsDisclosureScreen = () => {
   const isLoading = ItwRemoteMachineContext.useSelector(selectIsLoading);
 
   /**
-   * In addition to checking for the loading state,
-   * we need to ensure that the current state is not `ClaimsDisclosure`
-   * to prevent a visual glitch caused by a slight delay in navigation
+   * In addition to checking for the loading state, we need to ensure that the
+   * current state is not `ClaimsDisclosure` to prevent a visual glitch caused
+   * by a slight delay in navigation
    */
   if (isLoading) {
     return (
@@ -51,7 +51,8 @@ const ItwRemoteClaimsDisclosureScreen = () => {
 };
 
 /**
- * The actual content of the screen, with the claims to disclose for the verifiable presentation.
+ * The actual content of the screen, with the claims to disclose for the
+ * verifiable presentation.
  */
 const ContentView = () => {
   const machineRef = ItwRemoteMachineContext.useActorRef();

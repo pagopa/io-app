@@ -15,9 +15,9 @@ export type WalletCardCategoryFilter =
   (typeof walletCardCategoryFilters)[number];
 
 /**
- * Base type definition for all wallet cards.
- * Every card in the wallet must implement these essential properties
- * to ensure proper identification, categorization, and lifecycle management.
+ * Base type definition for all wallet cards. Every card in the wallet must
+ * implement these essential properties to ensure proper identification,
+ * categorization, and lifecycle management.
  */
 type WalletCardBase = {
   /** Unique identifier used to track and reference individual cards */
@@ -26,7 +26,8 @@ type WalletCardBase = {
   category: WalletCardCategory;
   /**
    * Marks a card as hidden. Hidden cards are not displayed in the wallet UI
-   * Usefull when we need to remove card without deleting its data from the wallet
+   * Usefull when we need to remove card without deleting its data from the
+   * wallet
    */
   hidden?: true;
 };

@@ -80,9 +80,7 @@ export const fciDocumentsWithUrlSelector = (
     )
   );
 
-/**
- * @deprecated Use the new {@link fciEnvironmentSelector} instead.
- */
+/** @deprecated Use the new {@link fciEnvironmentSelector} instead. */
 export const fciIssuerEnvironmentSelector = createSelector(
   fciSignatureRequestSelector,
   signatureDetailView =>
@@ -97,9 +95,7 @@ export const fciSignatureRequestIdSelector = createSelector(
     pot.isSome(signatureDetailView) ? signatureDetailView.value.id : undefined
 );
 
-/**
- * Selects the dossier title if present, undefined otherwise.
- */
+/** Selects the dossier title if present, undefined otherwise. */
 export const fciSignatureRequestDossierTitleSelector = (state: GlobalState) => {
   const signatureRequest = state.features.fci.signatureRequest;
   return pot.isSome(signatureRequest)

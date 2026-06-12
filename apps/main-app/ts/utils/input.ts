@@ -25,17 +25,13 @@ export type CreditCardPan = t.TypeOf<typeof CreditCardPan>;
 export const CreditCardHolder = PatternString(`^([\x20-\x5f\x61-\x7d]+)$`);
 
 export type CreditCardHolder = t.TypeOf<typeof CreditCardHolder>;
-/**
- * A string that matches a two digits month number (00-12)
- */
+/** A string that matches a two digits month number (00-12) */
 export const CreditCardExpirationMonth = PatternString("^(0[1-9]|1[0-2])$");
 export type CreditCardExpirationMonth = t.TypeOf<
   typeof CreditCardExpirationMonth
 >;
 
-/**
- * A string that matches a two digits year number (00-99)
- */
+/** A string that matches a two digits year number (00-99) */
 // FIXME: check that expiration year is >= current year
 // (possibly check month as well if year == current year)
 export const CreditCardExpirationYear = PatternString("^[0-9]{2}$");
@@ -43,9 +39,7 @@ export type CreditCardExpirationYear = t.TypeOf<
   typeof CreditCardExpirationYear
 >;
 
-/**
- * A string that matches a credit card CVC code
- */
+/** A string that matches a credit card CVC code */
 export const CreditCardCVC = PatternString("^[0-9]{3,4}$");
 export type CreditCardCVC = t.TypeOf<typeof CreditCardCVC>;
 
@@ -84,9 +78,11 @@ export type CreditCardStateKeys = keyof CreditCardState;
 // TODO: update this function including all the form errors when fp-ts will be updated.
 // Refers to https://dev.to/gcanti/getting-started-with-fp-ts-either-vs-validation-5eja
 /**
- * @param state A pending credit card state objects, containing the card's components.
- * @returns A fp-ts Either containing a valid CreditCard object if right or if it's left undefined if at least one field is none
- * or the label of the first invalid field.
+ * @param state A pending credit card state objects, containing the card's
+ *   components.
+ * @returns A fp-ts Either containing a valid CreditCard object if right or if
+ *   it's left undefined if at least one field is none or the label of the first
+ *   invalid field.
  */
 export function getCreditCardFromState(
   state: CreditCardState
@@ -162,8 +158,8 @@ export function getCreditCardFromState(
 }
 
 /**
- * This function checks if the cardholder charset is admitted.
- * We consider not a valid character an accented character.
+ * This function checks if the cardholder charset is admitted. We consider not a
+ * valid character an accented character.
  *
  * @param cardHolder
  */

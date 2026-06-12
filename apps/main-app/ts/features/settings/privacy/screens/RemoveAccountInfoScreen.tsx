@@ -14,8 +14,8 @@ import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
 import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 
 /**
- * A screen to explain how the account removal works.
- * Here user can ask to delete his account
+ * A screen to explain how the account removal works. Here user can ask to
+ * delete his account
  */
 const RemoveAccountInfo = () => {
   const dispatch = useIODispatch();

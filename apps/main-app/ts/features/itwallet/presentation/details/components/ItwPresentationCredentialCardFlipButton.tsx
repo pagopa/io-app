@@ -9,9 +9,7 @@ type ItwPresentationCredentialCardFlipButtonProps = {
   fullScreen?: boolean;
 };
 
-/**
- * This component renders the flip button for the skeumorphic credential card
- */
+/** This component renders the flip button for the skeumorphic credential card */
 const ItwPresentationCredentialCardFlipButton = ({
   isFlipped,
   handleOnPress,

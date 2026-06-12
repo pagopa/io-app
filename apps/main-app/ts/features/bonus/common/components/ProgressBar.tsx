@@ -11,6 +11,7 @@ type Props = {
 /**
  * In order to fill the first amount of the bar, if there are 0 transactions,
  * the percentage is set to 1
+ *
  * @param progressPercentage
  */
 const calculateStylePercentage = (
@@ -23,8 +24,9 @@ const calculateStylePercentage = (
 
 /**
  * Render a progress bar
+ *
+ * @class
  * @param props
- * @constructor
  */
 export const ProgressBar: FunctionComponent<Props> = props => {
   const isDark = useIOThemeContext().themeType === "dark";

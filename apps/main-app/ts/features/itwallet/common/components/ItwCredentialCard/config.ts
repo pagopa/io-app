@@ -21,9 +21,7 @@ export const CREDENTIAL_BASE_COLORS = [
   "#003366"
 ];
 
-/**
- * Pattern overlay images by credential taxonomy domain
- */
+/** Pattern overlay images by credential taxonomy domain */
 export const CREDENTIAL_CARD_PATTERN_OVERLAYS = {
   BONUSES: require("../../../../../../img/features/itWallet/cards/overlay/pattern/bonus.png"),
   EDUCATION: require("../../../../../../img/features/itWallet/cards/overlay/pattern/education.png"),
@@ -38,32 +36,28 @@ export const CREDENTIAL_CARD_PATTERN_OVERLAYS = {
 
 export type CredentialCardBackground<L extends number = 1 | 2 | 3 | 4 | 5> = {
   /**
-   * Up to 5 color stops, distributed evenly along the gradient line.
-   * At least 2 colors are required for a meaningful gradient.
+   * Up to 5 color stops, distributed evenly along the gradient line. At least 2
+   * colors are required for a meaningful gradient.
    */
   colors: [string, ...Array<string>] & { length: L };
   /**
-   * Optional positions for each color stop, as values between 0 and 1.
-   * When omitted the stops are distributed evenly (equivalent to CSS behaviour).
+   * Optional positions for each color stop, as values between 0 and 1. When
+   * omitted the stops are distributed evenly (equivalent to CSS behaviour).
    * Must have the same length as `colors` when provided.
    */
   positions?: [number, ...Array<number>] & { length: L };
 } & XOR<
   {
-    /**
-     * Type of the gradient, either linearor radial.
-     */
+    /** Type of the gradient, either linearor radial. */
     type: "linear";
     /**
-     * Angle in degrees following the CSS convention:
-     * 0° = bottom → top, 90° = left → right, 135° = top-left → bottom-right.
+     * Angle in degrees following the CSS convention: 0° = bottom → top, 90° =
+     * left → right, 135° = top-left → bottom-right.
      */
     angle: number;
   },
   {
-    /**
-     * Type of the gradient, either linear (default) or radial.
-     */
+    /** Type of the gradient, either linear (default) or radial. */
     type: "radial";
     /**
      * Center of the gradient expressed in percentage values between 0 and 1,
@@ -72,7 +66,8 @@ export type CredentialCardBackground<L extends number = 1 | 2 | 3 | 4 | 5> = {
     center: [number, number];
 
     /**
-     * Radius of the gradient, expressed as a percentage of the card width, between 0 and 1.
+     * Radius of the gradient, expressed as a percentage of the card width,
+     * between 0 and 1.
      */
     radius: number;
   }
@@ -80,53 +75,47 @@ export type CredentialCardBackground<L extends number = 1 | 2 | 3 | 4 | 5> = {
 
 export type CredentialCardOverlay = XOR<
   {
-    /**
-     * A fixed overlay image applied to the credential card
-     */
+    /** A fixed overlay image applied to the credential card */
     card: DataSourceParam;
     /**
-     * Optional fixed overlay image applied to the credential detail header.
-     * If not provided, the card overlay will be used in the header as well.
+     * Optional fixed overlay image applied to the credential detail header. If
+     * not provided, the card overlay will be used in the header as well.
      */
     header?: DataSourceParam;
   },
   {
-    /**
-     * A pattern overlay applied to the credential card and header
-     */
+    /** A pattern overlay applied to the credential card and header */
     pattern: DataSourceParam;
-    /**
-     * Whether to apply the corner overlay on top of the background
-     */
+    /** Whether to apply the corner overlay on top of the background */
     showCornerOverlay?: boolean;
   }
 >;
 
 export type CredentialCardConfig = {
   /**
-   * Base color for the credential, defined by the AS or in static configurations.
+   * Base color for the credential, defined by the AS or in static
+   * configurations.
    */
   color: string;
-  /**
-   * Color used for the credential title text.
-   */
+  /** Color used for the credential title text. */
   titleColor: string;
-  /**
-   * Color used for the card border when the credential is valid.
-   */
+  /** Color used for the card border when the credential is valid. */
   borderColor: string;
   /**
-   * Card background: either a solid colour or a gradient (angle + up to 5 stops).
+   * Card background: either a solid colour or a gradient (angle + up to 5
+   * stops).
    */
   background: CredentialCardBackground;
   /**
-   * Overlay configuration for the credential card, either a fixed image or a pattern
+   * Overlay configuration for the credential card, either a fixed image or a
+   * pattern
    */
   overlay?: CredentialCardOverlay;
 };
 
 /**
- * A credential card configuration that varies based on the app color scheme (light/dark).
+ * A credential card configuration that varies based on the app color scheme
+ * (light/dark).
  */
 export type ThemeAwareCredentialCardConfig = Record<
   "light" | "dark",
@@ -134,7 +123,8 @@ export type ThemeAwareCredentialCardConfig = Record<
 >;
 
 /**
- * Type guard to determine if a credential card configuration is theme-aware or not.
+ * Type guard to determine if a credential card configuration is theme-aware or
+ * not.
  */
 export const isThemeAwareCredentialCardConfig = (
   config: CredentialCardConfig | ThemeAwareCredentialCardConfig
@@ -142,9 +132,9 @@ export const isThemeAwareCredentialCardConfig = (
   "light" in config && "dark" in config;
 
 /**
- * Per-credential static card configuration.
- * Background, title color and border color are set explicitly here.
- * An optional `overlay` PNG image can be provided to render an overlay on top of the background.
+ * Per-credential static card configuration. Background, title color and border
+ * color are set explicitly here. An optional `overlay` PNG image can be
+ * provided to render an overlay on top of the background.
  *
  * ADD MORE CONFIGURATIONS HERE IF NEEDED, ONLY FOR STATIC CREDENTIALS
  */
@@ -314,9 +304,7 @@ export const credentialCardConfigs: Partial<
   }
 };
 
-/**
- * Generates a color based on credential type
- */
+/** Generates a color based on credential type */
 const generateBaseColorFromCredentialType = (
   credentialType: string
 ): string => {
@@ -325,9 +313,9 @@ const generateBaseColorFromCredentialType = (
 };
 
 /**
- * Generates an overlay asset based on credential type and taxonomy domain.
- * If the domain is not provided or does not match any of the defined domains,
- * a default overlay will be generated based on the credential type.
+ * Generates an overlay asset based on credential type and taxonomy domain. If
+ * the domain is not provided or does not match any of the defined domains, a
+ * default overlay will be generated based on the credential type.
  */
 const getOverlayPatterForCredentialType = (
   credentialType: string,
@@ -353,14 +341,14 @@ const getOverlayPatterForCredentialType = (
 /**
  * Generates a credential card configuration based on the provided base color
  * and taxonomy.
+ *
  * @param credentialType The type of the credential
  * @param colorScheme The current app color scheme (light, dark)
  * @param credentialColor An optional base color for the credential, used to
- * generate a configuration
+ *   generate a configuration
  * @param credentialDomain An optional taxonomy domain, used to select the
- * pattern overlay.
- *
- * @return A credential card configuration derived from the provided color
+ *   pattern overlay.
+ * @returns A credential card configuration derived from the provided color
  */
 const generateCredentialCardConfig = (
   credentialType: string,
@@ -414,14 +402,15 @@ const generateCredentialCardConfig = (
 
 /**
  * Returns the card configuration for a given credential type, if it exists.
+ *
  * @param credentialType The type of the credential to get the configuration for
- * the configuration if a static one is not defined for the given type.
+ *   the configuration if a static one is not defined for the given type.
  * @param colorScheme The current app color scheme (light, dark)
  * @param credentialColor An optional base color for the credential, used to
- * generate a configuration if a static one is not defined for the given type.
+ *   generate a configuration if a static one is not defined for the given
+ *   type.
  * @param credentialDomain An optional taxonomy domain, used to select the
- * pattern overlay if a static one is not defined for the given type.
- *
+ *   pattern overlay if a static one is not defined for the given type.
  * @returns The card configuration for the given credential type.
  */
 export const getCredentialCardConfig = (
@@ -452,17 +441,16 @@ export const getCredentialCardConfig = (
 
 /**
  * Custom hook to retrieve the credential card configuration for a given
- * credential type, based on the current app theme and the credential's
- * taxonomy domain (if available).
+ * credential type, based on the current app theme and the credential's taxonomy
+ * domain (if available).
  *
  * The configuration is retrieved from the static `credentialCardConfigs` if
  * available, or generated dynamically based on the credential type and domain.
  *
  * @param credentialType The type of the credential to get the configuration for
  * @param themeOverride An optional color scheme to override the current app t
- * heme, used to select the appropriate configuration when the static
- * configuration is theme-aware.
- *
+ *   heme, used to select the appropriate configuration when the static
+ *   configuration is theme-aware.
  * @returns The card configuration for the given credential type.
  */
 export const useCredentialCardConfig = (

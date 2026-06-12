@@ -127,18 +127,15 @@ export const nativeLoginEnabled = Config.NATIVE_LOGIN_ENABLED === "YES";
 
 /**
  * Help Center URL for the "What to do when the session is expired" article
- * hard-coded for now [by design]( https://www.figma.com/design/BDwCywRh6ibbfuvfq8DavO?node-id=12490-33508#1129981819)
+ * hard-coded for now [by
+ * design](https://www.figma.com/design/BDwCywRh6ibbfuvfq8DavO?node-id=12490-33508#1129981819)
  */
 export const helpCenterHowToDoWhenSessionIsExpiredUrl =
   "https://assistenza.ioapp.it/hc/it/articles/32616176301713" as NonEmptyString;
-/**
- * Help Center URL for the "How to login with SPID" article
- */
+/** Help Center URL for the "How to login with SPID" article */
 export const helpCenterHowToLoginWithSpidUrl =
   "https://assistenza.ioapp.it/hc/it/sections/30616637679505" as NonEmptyString;
-/**
- * Help Center URL for the "How to login with EIC" article
- */
+/** Help Center URL for the "How to login with EIC" article */
 export const helpCenterHowToLoginWithEicUrl =
   "https://assistenza.ioapp.it/hc/it/articles/30724124984593#h_01JF0DQRRPJWY61RAFNG2AKF3R" as NonEmptyString;
 
@@ -224,9 +221,7 @@ export const maximumItemsFromAPI: number = 100;
 export const testOverlayCaption: string | undefined =
   Config.TEST_OVERLAY_CAPTION;
 
-/**
- * Payments
- */
+/** Payments */
 
 // If not defined or invalid we don't want to filter PSPs
 export const POSTE_DATAMATRIX_SCAN_PREFERRED_PSPS:
@@ -240,9 +235,7 @@ export const POSTE_DATAMATRIX_SCAN_PREFERRED_PSPS:
   O.toUndefined
 );
 
-/**
- * IDPay
- */
+/** IDPay */
 
 export const idPayTestToken =
   Config.IDPAY_API_TEST_TOKEN !== "" ? Config.IDPAY_API_TEST_TOKEN : undefined;
