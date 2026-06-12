@@ -13,7 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
-import { ReactNode, useCallback } from "react";
+import { useCallback } from "react";
 import { View } from "react-native";
 import {
   InitiativeDTO,
@@ -50,7 +50,7 @@ import { IdPayInitiativeStatusItem } from "./IdPayInitiativeStatusItem";
 
 type TableRow = WithTestID<{
   label: string;
-  value: string | ReactNode;
+  value?: string;
 }>;
 
 export type BeneficiaryDetailsProps =

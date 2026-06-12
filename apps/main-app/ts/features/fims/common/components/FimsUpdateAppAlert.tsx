@@ -20,7 +20,7 @@ export const FimsUpdateAppAlert = () => {
       pictogram="updateOS"
       action={{
         label: I18n.t("btnUpdateApp"),
-        onPress: () => openAppStoreUrl(),
+        onPress: () => void openAppStoreUrl(),
         testID: "primary-update-app"
       }}
       secondaryAction={{

@@ -4,6 +4,7 @@ import {
   PropsWithChildren,
   useCallback,
   useContext,
+  useMemo,
   useRef
 } from "react";
 import { View } from "react-native";
@@ -253,28 +254,49 @@ export const TourProvider = ({ children }: PropsWithChildren) => {
     []
   );
 
+  const contextValue = useMemo(
+    () => ({
+      registerItem,
+      unregisterItem,
+      registerRegion,
+      unregisterRegion,
+      getMeasurement,
+      getConfig,
+      getCutoutStyle,
+      isRegionItem,
+      registerScrollRef,
+      unregisterScrollRef,
+      getScrollRef,
+      cutoutX,
+      cutoutY,
+      cutoutW,
+      cutoutH,
+      isTracking,
+      overlayAnimatedRef
+    }),
+    [
+      registerItem,
+      unregisterItem,
+      registerRegion,
+      unregisterRegion,
+      getMeasurement,
+      getConfig,
+      getCutoutStyle,
+      isRegionItem,
+      registerScrollRef,
+      unregisterScrollRef,
+      getScrollRef,
+      cutoutX,
+      cutoutY,
+      cutoutW,
+      cutoutH,
+      isTracking,
+      overlayAnimatedRef
+    ]
+  );
+
   return (
-    <TourContext.Provider
-      value={{
-        registerItem,
-        unregisterItem,
-        registerRegion,
-        unregisterRegion,
-        getMeasurement,
-        getConfig,
-        getCutoutStyle,
-        isRegionItem,
-        registerScrollRef,
-        unregisterScrollRef,
-        getScrollRef,
-        cutoutX,
-        cutoutY,
-        cutoutW,
-        cutoutH,
-        isTracking,
-        overlayAnimatedRef
-      }}
-    >
+    <TourContext.Provider value={contextValue}>
       {children}
       <TourOverlay />
     </TourContext.Provider>

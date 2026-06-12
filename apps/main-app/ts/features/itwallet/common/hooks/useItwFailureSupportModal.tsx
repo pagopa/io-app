@@ -138,7 +138,7 @@ export const useItwFailureSupportModal = ({
             label={I18n.t("features.itWallet.support.phone", {
               phoneNumber: value
             })}
-            onPress={() => Linking.openURL(`tel:${value}`)}
+            onPress={() => void Linking.openURL(`tel:${value}`)}
           />
         ))
       ),
@@ -150,7 +150,7 @@ export const useItwFailureSupportModal = ({
             variant="primary"
             icon="chat"
             label={I18n.t("features.itWallet.support.email")}
-            onPress={() => Linking.openURL(`mailto:${value}`)}
+            onPress={() => void Linking.openURL(`mailto:${value}`)}
           />
         ))
       ),
@@ -162,7 +162,7 @@ export const useItwFailureSupportModal = ({
             variant="primary"
             icon="website"
             label={I18n.t("features.itWallet.support.website")}
-            onPress={() => Linking.openURL(value)}
+            onPress={() => void Linking.openURL(value)}
           />
         ))
       ),
@@ -206,7 +206,7 @@ export const useItwFailureSupportModal = ({
                   variant="primary"
                   icon="website"
                   label={I18n.t("features.itWallet.support.visitHelpCenter")}
-                  onPress={() => Linking.openURL(supportLink)}
+                  onPress={() => void Linking.openURL(supportLink)}
                 />
                 <Divider />
               </>

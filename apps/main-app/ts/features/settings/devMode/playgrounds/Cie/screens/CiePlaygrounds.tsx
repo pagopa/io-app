@@ -28,12 +28,14 @@ export const CiePlaygrounds = () => {
   });
 
   useAppStateActive(
-    useCallback(async () => {
-      setHasNFC(await CieUtils.hasNfcFeature());
-      setIsNFCEnabled(await CieUtils.isNfcEnabled());
-      setIsCieAuthenticationSupported(
-        await CieUtils.isCieAuthenticationSupported()
-      );
+    useCallback(() => {
+      void (async () => {
+        setHasNFC(await CieUtils.hasNfcFeature());
+        setIsNFCEnabled(await CieUtils.isNfcEnabled());
+        setIsCieAuthenticationSupported(
+          await CieUtils.isCieAuthenticationSupported()
+        );
+      })();
     }, [])
   );
 
@@ -127,7 +129,7 @@ export const CiePlaygrounds = () => {
             <ListItemNav
               value="Open NFC Settings"
               icon="coggle"
-              onPress={() => CieUtils.openNfcSettings()}
+              onPress={() => void CieUtils.openNfcSettings()}
             />
           </>
         )}
@@ -137,7 +139,7 @@ export const CiePlaygrounds = () => {
             <ListItemNav
               value="View logs"
               icon="docAttach"
-              onPress={obtainLogs}
+              onPress={() => void obtainLogs()}
             />
           </>
         )}

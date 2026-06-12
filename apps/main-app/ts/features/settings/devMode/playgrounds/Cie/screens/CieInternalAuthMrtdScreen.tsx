@@ -229,7 +229,9 @@ export const CieInternalAuthMrtdScreen = () => {
             can.length < 6
           }
           onPress={() =>
-            status === "reading" ? handleStopReading() : handleStartReading()
+            void (status === "reading"
+              ? handleStopReading()
+              : handleStartReading())
           }
         />
         {useSENDChallenge && (

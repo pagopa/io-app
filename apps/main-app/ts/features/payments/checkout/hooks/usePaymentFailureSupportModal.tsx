@@ -186,7 +186,7 @@ const usePaymentFailureSupportModal = ({
               phoneNumber: displayPhoneNumber
             })}
             onPress={() =>
-              Linking.openURL(`tel:${PAGOPA_SUPPORT_PHONE_NUMBER}`)
+              void Linking.openURL(`tel:${PAGOPA_SUPPORT_PHONE_NUMBER}`)
             }
             variant="primary"
             icon="phone"

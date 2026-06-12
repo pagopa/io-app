@@ -65,7 +65,7 @@ export function handleItemOnPress(
     case "COPY":
       return () => clipboardSetStringWithFeedback(value);
     default:
-      return () => Linking.openURL(value).then(onSuccess).catch(onError);
+      return () => void Linking.openURL(value).then(onSuccess).catch(onError);
   }
 }
 

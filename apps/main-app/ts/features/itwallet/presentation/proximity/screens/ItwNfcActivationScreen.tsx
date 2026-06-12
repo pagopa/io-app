@@ -108,7 +108,7 @@ export const ItwNfcActivationScreen = () => {
           label: I18n.t(
             "features.itWallet.presentation.proximity.nfc.activation.actions.secondary"
           ),
-          onPress: handleContinue
+          onPress: () => void handleContinue()
         }
       }}
     />

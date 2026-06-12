@@ -163,7 +163,7 @@ export function useMaxBrightness({
 
         if (progress < 1) {
           // Continue animation
-          requestAnimationFrame(animate);
+          requestAnimationFrame(() => void animate());
         }
       };
 
@@ -230,7 +230,7 @@ export function useMaxBrightness({
         // Listen for app state changes
         appStateSubscription = AppState.addEventListener(
           "change",
-          handleAppStateChange
+          nextAppState => void handleAppStateChange(nextAppState)
         );
       } catch (error) {
         // Ignore

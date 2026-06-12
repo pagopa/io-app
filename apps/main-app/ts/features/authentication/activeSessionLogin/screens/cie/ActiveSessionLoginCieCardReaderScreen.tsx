@@ -329,7 +329,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
   const startCie = useCallback(
     async (useUat: boolean) => {
       cieManager.removeAllListeners();
-      cieManager.onEvent(handleCieEvent);
+      cieManager.onEvent(event => void handleCieEvent(event));
       cieManager.onError(handleCieError);
       cieManager.onSuccess(handleCieSuccess);
 
@@ -393,7 +393,7 @@ const ActiveSessionLoginCieCardReaderScreen = ({
               <IOButton
                 variant="solid"
                 label={I18n.t("authentication.cie.nfc.retry")}
-                onPress={() => startCie(isCieUatEnabled)}
+                onPress={() => void startCie(isCieUatEnabled)}
               />
             </View>
             <VSpacer size={24} />

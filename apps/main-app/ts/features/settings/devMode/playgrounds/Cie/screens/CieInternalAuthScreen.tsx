@@ -156,7 +156,9 @@ export const CieInternalAuthScreen = () => {
           label={status === "reading" ? "Stop" : "Start sign"}
           disabled={challenge.length === 0}
           onPress={() =>
-            status === "reading" ? handleStopReading() : handleStartReading()
+            void (status === "reading"
+              ? handleStopReading()
+              : handleStartReading())
           }
         />
         <VSpacer size={16} />

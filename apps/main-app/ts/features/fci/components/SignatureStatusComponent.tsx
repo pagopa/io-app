@@ -151,7 +151,7 @@ const SignatureStatusComponent = ({
       subtitle={composedSubtitle}
       pictogram={pictogram}
       testID={testID}
-      onSubtitleLinkPress={url => Linking.openURL(url)}
+      onSubtitleLinkPress={url => void Linking.openURL(url)}
       {...operationResultActions()}
     />
   );

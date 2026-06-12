@@ -285,7 +285,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
             action: {
               label: I18n.t("global.buttons.findOutMore"),
               // TODO: replace with the actual URL when available
-              onPress: () => Linking.openURL("https://ioapp.it/")
+              onPress: () => void Linking.openURL("https://ioapp.it/")
             },
             secondaryAction: {
               label: I18n.t("global.buttons.close"),

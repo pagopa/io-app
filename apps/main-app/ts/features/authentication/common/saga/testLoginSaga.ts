@@ -47,15 +47,22 @@ export function* handleTestLogin({
     hashAlgorithm?: string,
     isFastLogin?: boolean
   ): Promise<t.Validation<BasicResponseType<AccessToken>>> {
-    return new Promise((resolve, _) =>
-      backendPublicClient
+    return new Promise((resolve, _) => {
+      void backendPublicClient
         .postTestLogin(
           publicKey,
           hashAlgorithm,
           isFastLogin
         )(login)
-        .then(resolve, e => resolve(E.left([{ context: [], value: e }])))
-    );
+        .then(
+          value => {
+            resolve(value);
+          },
+          e => {
+            resolve(E.left([{ context: [], value: e }]));
+          }
+        );
+    });
   }
   try {
     const testLoginResponse: SagaCallReturnType<typeof postTestLogin> =
