@@ -8,17 +8,29 @@ import type { ProximityDetails } from "../../utils/types";
 const makeClaim = (id: string) => ({ id, label: id, value: id });
 
 describe("generateConsentKey", () => {
-  it("produces the expected format for a single credential with a single claim", () => {
+  const EXPECTED_SHA256_HEX_LENGTH = 64;
+  const SHA256_HEX_REGEX = /^[a-f0-9]+$/;
+  const EXPECTED_LEGACY_CANONICAL_SHA256 =
+    "f89a018080dbb7064e5f690dab9d42550e6e8e682d67d4ff46201c46f5011708";
+
+  it("produces a SHA-256 hex key for a single credential with a single claim", () => {
     const consent: ConsentData = {
       rpId: "rp1",
       credentials: [{ credentialType: "MDL", claimNames: ["given_name"] }]
     };
 
-    expect(generateConsentKey(consent)).toBe("rp1::MDL:given_name");
+    const key = generateConsentKey(consent);
+
+    expect(key).toHaveLength(EXPECTED_SHA256_HEX_LENGTH);
+    expect(key).toMatch(SHA256_HEX_REGEX);
+    expect(key).toBe(EXPECTED_LEGACY_CANONICAL_SHA256);
+    expect(key).not.toContain(consent.rpId);
+    expect(key).not.toContain(consent.credentials[0].credentialType);
+    expect(key).not.toContain(consent.credentials[0].claimNames[0]);
   });
 
   it("sorts claim names alphabetically within a credential", () => {
-    const consent: ConsentData = {
+    const consentA: ConsentData = {
       rpId: "rp1",
       credentials: [
         {
@@ -27,24 +39,36 @@ describe("generateConsentKey", () => {
         }
       ]
     };
+    const consentB: ConsentData = {
+      rpId: "rp1",
+      credentials: [
+        {
+          credentialType: "MDL",
+          claimNames: ["age", "birth_date", "given_name"]
+        }
+      ]
+    };
 
-    expect(generateConsentKey(consent)).toBe(
-      "rp1::MDL:age,birth_date,given_name"
-    );
+    expect(generateConsentKey(consentA)).toBe(generateConsentKey(consentB));
   });
 
   it("sorts credentials alphabetically by credentialType", () => {
-    const consent: ConsentData = {
+    const consentA: ConsentData = {
       rpId: "rp1",
       credentials: [
         { credentialType: "PID", claimNames: ["given_name"] },
         { credentialType: "MDL", claimNames: ["portrait"] }
       ]
     };
+    const consentB: ConsentData = {
+      rpId: "rp1",
+      credentials: [
+        { credentialType: "MDL", claimNames: ["portrait"] },
+        { credentialType: "PID", claimNames: ["given_name"] }
+      ]
+    };
 
-    expect(generateConsentKey(consent)).toBe(
-      "rp1::MDL:portrait::PID:given_name"
-    );
+    expect(generateConsentKey(consentA)).toBe(generateConsentKey(consentB));
   });
 
   it("is deterministic regardless of input order", () => {
@@ -64,6 +88,57 @@ describe("generateConsentKey", () => {
     };
 
     expect(generateConsentKey(consentA)).toBe(generateConsentKey(consentB));
+  });
+
+  it("preserves duplicate credential entries before generating the key", () => {
+    const consentA: ConsentData = {
+      rpId: "rp42",
+      credentials: [
+        { credentialType: "MDL", claimNames: ["birth_date"] },
+        { credentialType: "MDL", claimNames: ["portrait", "birth_date"] }
+      ]
+    };
+    const consentB: ConsentData = {
+      rpId: "rp42",
+      credentials: [
+        { credentialType: "MDL", claimNames: ["birth_date", "portrait"] }
+      ]
+    };
+
+    expect(generateConsentKey(consentA)).not.toBe(generateConsentKey(consentB));
+  });
+
+  test.each([
+    {
+      name: "rpId",
+      consent: {
+        rpId: "rp2",
+        credentials: [{ credentialType: "MDL", claimNames: ["given_name"] }]
+      }
+    },
+    {
+      name: "credential type",
+      consent: {
+        rpId: "rp1",
+        credentials: [{ credentialType: "PID", claimNames: ["given_name"] }]
+      }
+    },
+    {
+      name: "claim",
+      consent: {
+        rpId: "rp1",
+        credentials: [{ credentialType: "MDL", claimNames: ["family_name"] }]
+      }
+    }
+  ])("generates a different key when $name differs", ({ consent }) => {
+    const baseConsent: ConsentData = {
+      rpId: "rp1",
+      credentials: [{ credentialType: "MDL", claimNames: ["given_name"] }]
+    };
+
+    expect(generateConsentKey(consent)).not.toBe(
+      generateConsentKey(baseConsent)
+    );
   });
 
   it("does not mutate the original consent object", () => {

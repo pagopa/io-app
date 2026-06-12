@@ -1,6 +1,6 @@
 import { createSelector } from "reselect";
 import { GlobalState } from "../../../../../../store/reducers/types";
-import { ConsentData } from "../types";
+import { ConsentData, ConsentEntry } from "../types";
 import { generateConsentKey } from "../utils";
 
 /**
@@ -18,11 +18,15 @@ export const itwProximityConsentsSelector = createSelector(
 );
 
 /**
- * Returns all proximity presentation consents
+ * Returns all proximity presentation consents with their generated keys.
  */
 export const itwProximityConsentsEntriesSelector = createSelector(
   itwProximityConsentsRecordSelector,
-  consents => Object.values(consents)
+  (consents): ReadonlyArray<ConsentEntry> =>
+    Object.entries(consents).map(([key, consent]) => ({
+      key,
+      consent
+    }))
 );
 
 /**

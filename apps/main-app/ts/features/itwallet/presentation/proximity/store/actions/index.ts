@@ -18,6 +18,13 @@ export const itwRevokeProximityConsentByKey = createStandardAction(
 )<string>();
 
 /**
+ * Revokes all consents given to the specified RP ID.
+ */
+export const itwRevokeProximityConsentsByRpId = createStandardAction(
+  "ITW_PROXIMITY_CONSENT_REVOKE_BY_RP_ID"
+)<string>();
+
+/**
  * Revokes all consents that involve the specified credential type.
  */
 export const itwRevokeProximityConsentsByCredentialType = createStandardAction(
@@ -34,5 +41,6 @@ export const itwRevokeAllProximityConsents = createStandardAction(
 export type ItwProximityActions =
   | ActionType<typeof itwGrantProximityConsent>
   | ActionType<typeof itwRevokeProximityConsentByKey>
+  | ActionType<typeof itwRevokeProximityConsentsByRpId>
   | ActionType<typeof itwRevokeProximityConsentsByCredentialType>
   | ActionType<typeof itwRevokeAllProximityConsents>;

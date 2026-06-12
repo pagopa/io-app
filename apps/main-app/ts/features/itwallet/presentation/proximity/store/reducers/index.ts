@@ -6,6 +6,7 @@ import {
   itwGrantProximityConsent,
   itwRevokeAllProximityConsents,
   itwRevokeProximityConsentByKey,
+  itwRevokeProximityConsentsByRpId,
   itwRevokeProximityConsentsByCredentialType
 } from "../actions";
 import { itwLifecycleStoresReset } from "../../../../lifecycle/store/actions";
@@ -20,20 +21,6 @@ export type ItwProximityState = {
 export const itwProximityInitialState: ItwProximityState = {
   consents: {}
 };
-
-/**
- * Filters out all consents that involve the specified credential type.
- */
-const filterConsentsByCredentialType = (
-  consents: Record<string, ConsentData>,
-  credentialType: string
-): Record<string, ConsentData> =>
-  Object.fromEntries(
-    Object.entries(consents).filter(
-      ([, consent]) =>
-        !consent.credentials.some(c => c.credentialType === credentialType)
-    )
-  );
 
 const reducer = (
   state: ItwProximityState = itwProximityInitialState,
@@ -66,6 +53,13 @@ const reducer = (
       };
     }
 
+    case getType(itwRevokeProximityConsentsByRpId): {
+      return {
+        ...state,
+        consents: filterConsentsByRpId(state.consents, action.payload)
+      };
+    }
+
     case getType(itwRevokeProximityConsentsByCredentialType): {
       return {
         ...state,
@@ -93,6 +87,31 @@ const reducer = (
       return state;
   }
 };
+
+/**
+ * Filters out all consents that involve the specified credential type.
+ */
+const filterConsentsByCredentialType = (
+  consents: Record<string, ConsentData>,
+  credentialType: string
+): Record<string, ConsentData> =>
+  Object.fromEntries(
+    Object.entries(consents).filter(
+      ([, consent]) =>
+        !consent.credentials.some(c => c.credentialType === credentialType)
+    )
+  );
+
+/**
+ * Filters out all consents given to the specified RP ID.
+ */
+const filterConsentsByRpId = (
+  consents: Record<string, ConsentData>,
+  rpId: string
+): Record<string, ConsentData> =>
+  Object.fromEntries(
+    Object.entries(consents).filter(([, consent]) => consent.rpId !== rpId)
+  );
 
 const CURRENT_REDUX_ITW_PROXIMITY_STORE_VERSION = -1;
 
