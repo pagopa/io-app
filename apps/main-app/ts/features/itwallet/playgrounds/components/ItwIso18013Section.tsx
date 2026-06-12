@@ -5,7 +5,7 @@ import {
   ListItemNav,
   VStack
 } from "@pagopa/io-app-design-system";
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { ITW_ROUTES } from "../../navigation/routes";
@@ -52,6 +52,9 @@ export const ItwIso18013Section = () => {
                   accessibilityLabel: `Delete consent for ${consent.rpId}`
                 }
               }}
+              onLongPress={() =>
+                Alert.alert(consent.rpId, JSON.stringify(consent))
+              }
             />
           ))}
         </VStack>
