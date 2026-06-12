@@ -164,8 +164,15 @@ const FciDocumentsScreen = () => {
     }
   }, [currentDoc, documents, isFocused, fciEnvironment]);
 
-  const { present, bottomSheet: fciAbortSignature } =
-    useFciAbortSignatureFlow();
+  const { present, bottomSheet: fciAbortSignature } = useFciAbortSignatureFlow({
+    shouldIntercept: () => {
+      if (currentDoc <= 0) {
+        return true;
+      }
+      navigation.goBack();
+      return false;
+    }
+  });
 
   const {
     present: showNoSignatureFieldsBs,

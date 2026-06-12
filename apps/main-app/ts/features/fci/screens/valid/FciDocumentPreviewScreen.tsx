@@ -15,6 +15,7 @@ import {
   trackFciTosDocPreviewFailure,
   trackFciTosDocPreviewFailureAction
 } from "../../analytics";
+import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton.ts";
 
 export type FciDocumentPreviewScreenNavigationParams = Readonly<{
   documentUrl: string;
@@ -33,6 +34,11 @@ export const FciDocumentPreviewScreen = (
     contextualHelp: emptyContextualHelp,
     supportRequest: true,
     goBack: () => dispatch(fciDownloadPreviewClear({ path: fciDownloadPath }))
+  });
+
+  useHardwareBackButton(() => {
+    dispatch(fciDownloadPreviewClear({ path: fciDownloadPath }));
+    return true;
   });
 
   useEffect(() => {
