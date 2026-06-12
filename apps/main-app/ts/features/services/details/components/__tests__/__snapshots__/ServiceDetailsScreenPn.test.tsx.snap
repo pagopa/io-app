@@ -69,6 +69,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is active 1`]
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1202,6 +1203,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not active
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2335,6 +2337,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not enable
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -3073,6 +3076,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -4206,6 +4210,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when servicePreference cou
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

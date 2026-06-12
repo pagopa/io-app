@@ -198,6 +198,7 @@ exports[`PreconditionsTitle should match snapshot when title content is 'empty' 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -521,6 +522,7 @@ exports[`PreconditionsTitle should match snapshot when title content is 'header'
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -871,6 +873,7 @@ exports[`PreconditionsTitle should match snapshot when title content is 'header'
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1192,6 +1195,7 @@ exports[`PreconditionsTitle should match snapshot when title content is 'loading
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1577,6 +1581,7 @@ exports[`PreconditionsTitle should match snapshot when title content is undefine
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

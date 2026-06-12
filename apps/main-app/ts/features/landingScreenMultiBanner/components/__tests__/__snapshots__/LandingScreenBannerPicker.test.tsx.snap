@@ -198,6 +198,7 @@ exports[`LandingBannerPicker should correctly render a banner if passed a valid 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -579,6 +580,7 @@ exports[`LandingBannerPicker should not render a banner if no id is passed: noBa
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

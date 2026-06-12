@@ -198,6 +198,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -587,6 +588,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -976,6 +978,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1365,6 +1368,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1754,6 +1758,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2143,6 +2148,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2532,6 +2538,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2921,6 +2928,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -3310,6 +3318,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -3699,6 +3708,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -4088,6 +4098,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -4477,6 +4488,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -4866,6 +4878,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -5255,6 +5268,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -5644,6 +5658,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -6033,6 +6048,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -6422,6 +6438,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -6811,6 +6828,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -7200,6 +7218,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -7589,6 +7608,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -7978,6 +7998,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -8367,6 +8388,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -8756,6 +8778,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -9145,6 +9168,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -9534,6 +9558,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -9923,6 +9948,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -10312,6 +10338,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -10701,6 +10728,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -11090,6 +11118,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -11479,6 +11508,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -11868,6 +11898,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -12257,6 +12288,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -12646,6 +12678,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -13035,6 +13068,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -13424,6 +13458,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -13813,6 +13848,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -14202,6 +14238,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -14591,6 +14628,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -14980,6 +15018,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -15369,6 +15408,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -15758,6 +15798,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -16147,6 +16188,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -16536,6 +16578,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -16925,6 +16968,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -17314,6 +17358,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -17703,6 +17748,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -18092,6 +18138,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -18481,6 +18528,7 @@ exports[`WrappedListItemMessage should match snapshot for message in ARCHIVE, ca
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -18870,6 +18918,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -19259,6 +19308,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -19648,6 +19698,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -20037,6 +20088,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -20426,6 +20478,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -20815,6 +20868,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -21204,6 +21258,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -21593,6 +21648,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -21982,6 +22038,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -22371,6 +22428,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -22760,6 +22818,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -23149,6 +23208,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -23538,6 +23598,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -23927,6 +23988,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -24316,6 +24378,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -24705,6 +24768,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -25094,6 +25158,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -25483,6 +25548,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -25872,6 +25938,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -26261,6 +26328,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -26650,6 +26718,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -27039,6 +27108,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -27428,6 +27498,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -27817,6 +27888,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -28206,6 +28278,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -28595,6 +28668,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -28984,6 +29058,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -29373,6 +29448,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -29762,6 +29838,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -30151,6 +30228,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -30540,6 +30618,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -30929,6 +31008,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -31318,6 +31398,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -31707,6 +31788,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -32096,6 +32178,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -32485,6 +32568,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -32874,6 +32958,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -33263,6 +33348,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -33652,6 +33738,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -34041,6 +34128,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -34430,6 +34518,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -34819,6 +34908,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -35208,6 +35298,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -35597,6 +35688,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -35986,6 +36078,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -36375,6 +36468,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -36764,6 +36858,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -37153,6 +37248,7 @@ exports[`WrappedListItemMessage should match snapshot for message in INBOX, cate
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -37542,6 +37638,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -37931,6 +38028,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -38320,6 +38418,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -38709,6 +38808,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -39098,6 +39198,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -39487,6 +39588,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -39876,6 +39978,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -40265,6 +40368,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -40654,6 +40758,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -41043,6 +41148,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -41432,6 +41538,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -41821,6 +41928,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -42210,6 +42318,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -42599,6 +42708,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -42988,6 +43098,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -43377,6 +43488,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -43766,6 +43878,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -44155,6 +44268,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -44544,6 +44658,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -44933,6 +45048,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -45322,6 +45438,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -45711,6 +45828,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -46100,6 +46218,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -46489,6 +46608,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -46878,6 +46998,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -47267,6 +47388,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -47656,6 +47778,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -48045,6 +48168,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -48434,6 +48558,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -48823,6 +48948,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -49212,6 +49338,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -49601,6 +49728,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -49990,6 +50118,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -50379,6 +50508,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -50768,6 +50898,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -51157,6 +51288,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -51546,6 +51678,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -51935,6 +52068,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -52324,6 +52458,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -52713,6 +52848,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -53102,6 +53238,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -53491,6 +53628,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -53880,6 +54018,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -54269,6 +54408,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -54658,6 +54798,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -55047,6 +55188,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -55436,6 +55578,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -55825,6 +55968,7 @@ exports[`WrappedListItemMessage should match snapshot for message in SEARCH, cat
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

@@ -69,6 +69,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

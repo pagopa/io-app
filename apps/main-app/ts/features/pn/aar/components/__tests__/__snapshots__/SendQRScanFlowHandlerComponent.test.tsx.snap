@@ -69,6 +69,7 @@ exports[`SendQRScanFlowHandlerComponent should match snapshot and track the scre
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

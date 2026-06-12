@@ -198,6 +198,7 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when a redirect_uri i
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1258,6 +1259,7 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when no redirect_uri 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

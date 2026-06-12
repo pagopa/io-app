@@ -198,6 +198,7 @@ exports[`MessageDetailsBody should match snapshot for message with CTA (IOMarkdo
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -525,6 +526,7 @@ exports[`MessageDetailsBody should match snapshot for message with CTA (Old Mark
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -895,6 +897,7 @@ exports[`MessageDetailsBody should match snapshot for message with invalid CTA 1
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1432,6 +1435,7 @@ exports[`MessageDetailsBody should match snapshot for message with no CTA (IOMar
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1759,6 +1763,7 @@ exports[`MessageDetailsBody should match snapshot for message with no CTA (Old M
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

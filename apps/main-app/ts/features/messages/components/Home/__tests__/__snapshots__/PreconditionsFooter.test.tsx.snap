@@ -198,6 +198,7 @@ exports[`PreconditionsFooter should match snapshot for 'content' footer category
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1082,6 +1083,7 @@ exports[`PreconditionsFooter should match snapshot for 'undefined' footer catego
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1403,6 +1405,7 @@ exports[`PreconditionsFooter should match snapshot for 'update' footer category 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2287,6 +2290,7 @@ exports[`PreconditionsFooter should match snapshot for 'view' footer category 1`
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

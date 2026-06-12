@@ -198,6 +198,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1270,6 +1271,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2342,6 +2344,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -3414,6 +3417,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -4437,6 +4441,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -5402,6 +5407,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -6367,6 +6373,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -7332,6 +7339,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -8297,6 +8305,7 @@ exports[`SendAarCieCardReadingComponent should match the snapshot for readState:
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

@@ -198,6 +198,7 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1001,6 +1002,7 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

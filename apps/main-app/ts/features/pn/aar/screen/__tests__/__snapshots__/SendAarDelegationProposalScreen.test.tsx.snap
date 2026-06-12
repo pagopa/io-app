@@ -200,6 +200,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -615,6 +616,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1030,6 +1032,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1445,6 +1448,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1860,6 +1864,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2275,6 +2280,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2690,6 +2696,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -3105,6 +3112,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -3520,6 +3528,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -3935,6 +3944,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -4350,6 +4360,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -4765,6 +4776,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -5180,6 +5192,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -5595,6 +5608,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -6720,6 +6734,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -7135,6 +7150,7 @@ exports[`SendAarDelegationProposalScreen snapshot should match the snapshot in t
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

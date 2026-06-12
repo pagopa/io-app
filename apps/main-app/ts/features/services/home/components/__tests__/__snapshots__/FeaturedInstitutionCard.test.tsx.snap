@@ -198,6 +198,7 @@ exports[`FeaturedInstitutionCard should match the snapshot 1`] = `
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -728,6 +729,7 @@ exports[`FeaturedInstitutionCard should match the snapshot when isNew is true 1`
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

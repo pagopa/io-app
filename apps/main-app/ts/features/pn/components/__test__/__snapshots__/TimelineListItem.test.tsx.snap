@@ -198,6 +198,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -786,6 +787,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1374,6 +1376,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1962,6 +1965,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2550,6 +2554,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -3138,6 +3143,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -3726,6 +3732,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -4514,6 +4521,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -5302,6 +5310,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -6090,6 +6099,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -6878,6 +6888,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -7666,6 +7677,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -8454,6 +8466,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -9042,6 +9055,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -9630,6 +9644,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -10218,6 +10233,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -10806,6 +10822,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -11394,6 +11411,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -11982,6 +12000,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -12770,6 +12789,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -13558,6 +13578,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -14346,6 +14367,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -15134,6 +15156,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -15922,6 +15945,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

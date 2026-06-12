@@ -69,6 +69,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1976,6 +1977,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -4124,6 +4126,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -6060,6 +6063,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

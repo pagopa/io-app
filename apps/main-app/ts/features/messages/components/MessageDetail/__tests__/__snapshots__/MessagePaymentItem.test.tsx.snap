@@ -198,6 +198,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a loading it
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -750,6 +751,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1330,6 +1332,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable-wi
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1889,6 +1892,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
               "top": -1,
             }
           }
+          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
