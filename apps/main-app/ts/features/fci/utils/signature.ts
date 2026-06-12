@@ -28,7 +28,9 @@ const getFileDigest = (url: string) =>
         ReactNativeBlobUtil.config({
           path: savePath(url),
           fileCache: true
-        }).fetch("GET", url),
+        }).fetch("GET", url, {
+          "Cache-Control": "no-store"
+        }),
       E.toError
     ),
     TE.chainW(response => {

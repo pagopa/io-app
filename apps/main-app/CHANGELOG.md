@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.34.0-rc.6](https://github.com/pagopa/io-app/compare/3.34.0-rc.5...3.34.0-rc.6) (2026-06-11)
+
+
+### Bug Fixes
+
+* [[IOPLT-1829](https://pagopa.atlassian.net/browse/IOPLT-1829)] Sanitize Markdown from Form Feed character in order to solve iOS display issues ([#8171](https://github.com/pagopa/io-app/issues/8171)) ([c06e858](https://github.com/pagopa/io-app/commit/c06e858845309521d7ebf52da12ac0f7f35a92e1))
+
 ## [3.34.0-rc.5](https://github.com/pagopa/io-app/compare/3.34.0-rc.4...3.34.0-rc.5) (2026-06-10)
 
 
