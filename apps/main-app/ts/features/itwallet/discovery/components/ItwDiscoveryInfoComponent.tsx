@@ -32,17 +32,14 @@ import { AnimatedImage } from "../../../../components/AnimatedImage.tsx";
 import IOMarkdown from "../../../../components/IOMarkdown/index.tsx";
 import { IOScrollViewWithReveal } from "../../../../components/ui/IOScrollViewWithReveal.tsx";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel.tsx";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../store/hooks.ts";
 import { setAccessibilityFocus } from "../../../../utils/accessibility.ts";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp.ts";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
 import { tosConfigSelector } from "../../../tos/store/selectors/index.ts";
 import { trackOpenItwTos } from "../../analytics";
-import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum.ts";
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
 import { useItwActivationExitSurveyBottomSheet } from "../../common/hooks/useItwActivationExitSurveyBottomSheet.tsx";
-import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog.tsx";
 import { itwIsActivationDisabledSelector } from "../../common/store/selectors/remoteConfig.ts";
 import { generateItwIOMarkdownRules } from "../../common/utils/markdown.tsx";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors/index.ts";
@@ -69,7 +66,6 @@ type Props = {
  */
 export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
-  const navigation = useIONavigation();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const itwActivationDisabled = useIOSelector(itwIsActivationDisabledSelector);
   const { tos_url } = useIOSelector(tosConfigSelector);
@@ -92,31 +88,7 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
 
   const exitSurvey = useItwActivationExitSurveyBottomSheet({
     step: "intro",
-    onAfterDismiss: navigation.goBack
-  });
-
-  const dismissalDialog = useItwDismissalDialog({
-    customLabels: {
-      title: I18n.t(
-        "features.itWallet.discovery.screen.itw.dismissalDialog.title"
-      ),
-      body: I18n.t(
-        "features.itWallet.discovery.screen.itw.dismissalDialog.body"
-      ),
-      confirmLabel: I18n.t(
-        "features.itWallet.discovery.screen.itw.dismissalDialog.confirm"
-      ),
-      cancelLabel: I18n.t(
-        "features.itWallet.discovery.screen.itw.dismissalDialog.cancel"
-      )
-    },
-    handleDismiss: () => {
-      machineRef.send({ type: "close" });
-    },
-    dismissalContext: {
-      screen_name: ITW_SCREENVIEW_EVENTS.ITW_INTRO,
-      itw_flow: "L3"
-    }
+    onAfterDismiss: () => machineRef.send({ type: "close" })
   });
 
   useHeaderSecondLevel({
@@ -125,7 +97,7 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
     title: "",
     goBack: () => {
       trackItwIntroBack("L3");
-      dismissalDialog.show();
+      exitSurvey.present();
     },
     onStartSupportRequest: () => {
       toast.info(I18n.t("features.itWallet.generic.featureUnavailable.title"));
