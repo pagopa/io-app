@@ -5,8 +5,8 @@
   "scripts": {
     "prepare": "husky install",
     "validate": "nx affected --targets=lint,test,tsc-noemit --configuration=ci",
-    "prettify": "prettier --write \"**/(src|ts|locales)/**/*.(ts|tsx|json)\"",
-    "prettier:check": "prettier --check \"**/(src|ts|locales)/**/*.(ts|tsx|json)\""
+    "prettify": "oxfmt \"**/{src,ts,locales}/**/*.{ts,tsx,json}\"",
+    "prettier:check": "oxfmt --check \"**/{src,ts,locales}/**/*.{ts,tsx,json}\""
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
@@ -27,7 +27,7 @@
     "husky": "^8.0.0",
     "jest": "catalog:",
     "nx": "catalog:",
-    "prettier": "catalog:",
+    "oxfmt": "catalog:",
     "tslib": "^2.3.0",
     "typescript": "catalog:"
   },

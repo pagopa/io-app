@@ -31,7 +31,8 @@ const mapStatus: Map<number, StartEycaStatus> = new Map([
 ]);
 
 /**
- * ask for starting activation of EYCA card
+ * Ask for starting activation of EYCA card
+ *
  * @param startEycaActivation
  */
 export function* handleStartActivation(
@@ -61,9 +62,10 @@ export function* handleStartActivation(
 
 type GetEycaStatus = "COMPLETED" | "PROCESSING" | "ERROR" | "NOT_FOUND";
 /**
- * ask for the current status of EYCA activation
- * it returns the status {@link GetEycaStatus} - right case
- * if an error occured it returns a {@link NetworkError} - left case
+ * Ask for the current status of EYCA activation it returns the status
+ * {@link GetEycaStatus} - right case if an error occured it returns a
+ * {@link NetworkError} - left case
+ *
  * @param getEycaActivation
  */
 export function* getActivation(
@@ -115,11 +117,12 @@ export function* getActivation(
 }
 
 /**
- * Function that handles the activation of EYCA card
- * see https://www.pivotaltracker.com/story/show/177062719/comments/222747527
- * first it checks for the status activation
- * depending on that, it could start a polling to wait about completion or ends with a defined state
- * @param getEycaActivation asks for the status of EYCA card activation
+ * Function that handles the activation of EYCA card see
+ * https://www.pivotaltracker.com/story/show/177062719/comments/222747527 first
+ * it checks for the status activation depending on that, it could start a
+ * polling to wait about completion or ends with a defined state
+ *
+ * @param getEycaActivation Asks for the status of EYCA card activation
  */
 export function* handleEycaActivationSaga(
   getEycaActivation: ReturnType<typeof BackendCGN>["getEycaActivation"]

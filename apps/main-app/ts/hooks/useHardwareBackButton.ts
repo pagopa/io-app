@@ -5,9 +5,11 @@ import { useFocusEffect } from "@react-navigation/native";
 
 /**
  * Custom hook to handle the hardware back button on Android devices
- * @param handler - a function that will be called when the user presses the back button.
- *  The function must return true if the back button must not be bubbled up, false otherwise.
- * See more: https://reactnative.dev/docs/backhandler
+ *
+ * @param handler - A function that will be called when the user presses the
+ *   back button. The function must return true if the back button must not be
+ *   bubbled up, false otherwise. See more:
+ *   https://reactnative.dev/docs/backhandler
  */
 export const useHardwareBackButton = (handler: () => boolean) => {
   useEffect(() => {
@@ -23,11 +25,12 @@ export const useHardwareBackButton = (handler: () => boolean) => {
 };
 
 /**
- * custom hook to handle the hardware back button on Android devices
- * - when the component is opened, back button closes the component
- * - when the component is closed, back button event is forwarded to the next handler
- * @param onDismiss: function called when the component is closed
- * @return a function to call when the component is opened
+ * Custom hook to handle the hardware back button on Android devices - when the
+ * component is opened, back button closes the component - when the component is
+ * closed, back button event is forwarded to the next handler
+ *
+ * @param onDismiss: Function called when the component is closed
+ * @returns A function to call when the component is opened
  */
 export const useHardwareBackButtonToDismiss = (onDismiss: () => void) => {
   const isComponentOpened = useRef(false);
@@ -51,7 +54,8 @@ export const useHardwareBackButtonToDismiss = (onDismiss: () => void) => {
 };
 
 /**
- * Extension of {@link useHardwareBackButton} that triggers only when the screen is in focus.
+ * Extension of {@link useHardwareBackButton} that triggers only when the screen
+ * is in focus.
  */
 export const useHardwareBackButtonWhenFocused = (handler: () => boolean) => {
   const handlerRef = useRef(handler);

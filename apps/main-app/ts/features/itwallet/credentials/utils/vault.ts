@@ -5,8 +5,10 @@ const PREFIX = "itw:credential:";
 /**
  * Generates the storage key for a given credential ID.
  *
- * Example:for credentialId "dc_sd_jwt_PersonalIdentificationData",
- * the generated storage key will be "itw:credential:dc_sd_jwt_PersonalIdentificationData"
+ * Example:for credentialId "dc_sd_jwt_PersonalIdentificationData", the
+ * generated storage key will be
+ * "itw:credential:dc_sd_jwt_PersonalIdentificationData"
+ *
  * @param credentialId The credential ID
  * @returns The storage key
  */
@@ -16,8 +18,10 @@ const getStorageKeyFromCredentialId = (credentialId: string): string =>
 /**
  * Extracts the credential ID from a given storage key.
  *
- * Example: for storage key "itw:credential:dc_sd_jwt_PersonalIdentificationData",
- * the extracted credential ID will be "dc_sd_jwt_PersonalIdentificationData"
+ * Example: for storage key
+ * "itw:credential:dc_sd_jwt_PersonalIdentificationData", the extracted
+ * credential ID will be "dc_sd_jwt_PersonalIdentificationData"
+ *
  * @param key The storage key
  * @returns The credential ID
  */
@@ -31,6 +35,7 @@ const getCredentialIdFromStorageKey = (key: string): string => {
 /**
  * Type guard to check if an error is a VALUE_NOT_FOUND error emitted from
  * SecureStorage package
+ *
  * @param e The error to check
  * @returns True if the error is a VALUE_NOT_FOUND error, false otherwise
  */
@@ -39,6 +44,7 @@ const isValueNotFoundError = (e: unknown): e is Error =>
 
 /**
  * Lists all the credential IDs stored in the Secure Storage.
+ *
  * @returns A promise that resolves to an array of credential IDs
  * @throws If the Secure Storage operation fails
  */
@@ -51,7 +57,9 @@ const list = async (): Promise<ReadonlyArray<string>> => {
 
 /**
  * Stores a credential's SD-JWT/MDOC in the Secure Storage.
- * @param credentialId The credential ID (e.g., "dc_sd_jwt_PersonalIdentificationData")
+ *
+ * @param credentialId The credential ID (e.g.,
+ *   "dc_sd_jwt_PersonalIdentificationData")
  * @param credential The credential's SD-JWT/MDOC as a string
  * @throws If the Secure Storage operation fails
  */
@@ -65,7 +73,9 @@ const store = async (
 
 /**
  * Store multiple credentials' SD-JWT/MDOC in the Secure Storage.
- * @param credentials An array of objects containing credentialId and credential string
+ *
+ * @param credentials An array of objects containing credentialId and credential
+ *   string
  * @throws If any Secure Storage operation fails
  */
 const storeAll = async (
@@ -78,9 +88,13 @@ const storeAll = async (
 
 /**
  * Retrieves a credential's SD-JWT/MDOC from the Secure Storage using its type.
- * @param credentialId The credential ID (e.g., "dc_sd_jwt_PersonalIdentificationData")
- * @returns A promise that resolves to the credential's SD-JWT/MDOC as a string, or undefined if not found
- * @throws If the Secure Storage operation fails for reasons other than a missing value
+ *
+ * @param credentialId The credential ID (e.g.,
+ *   "dc_sd_jwt_PersonalIdentificationData")
+ * @returns A promise that resolves to the credential's SD-JWT/MDOC as a string,
+ *   or undefined if not found
+ * @throws If the Secure Storage operation fails for reasons other than a
+ *   missing value
  */
 const get = async (credentialId: string): Promise<string | undefined> => {
   const key = getStorageKeyFromCredentialId(credentialId);
@@ -98,7 +112,9 @@ const get = async (credentialId: string): Promise<string | undefined> => {
 
 /**
  * Removes a credential's SD-JWT/MDOC from the Secure Storage using its type.
- * @param credentialId The credential ID (e.g., "dc_sd_jwt_PersonalIdentificationData")
+ *
+ * @param credentialId The credential ID (e.g.,
+ *   "dc_sd_jwt_PersonalIdentificationData")
  * @throws If the Secure Storage operation fails
  */
 const remove = async (credentialId: string): Promise<void> => {
@@ -107,7 +123,9 @@ const remove = async (credentialId: string): Promise<void> => {
 };
 
 /**
- * Removes all credentials' SD-JWT/MDOCs from the Secure Storage with the given IDs.
+ * Removes all credentials' SD-JWT/MDOCs from the Secure Storage with the given
+ * IDs.
+ *
  * @param credentialIds An array of credential IDs
  * @throws If any Secure Storage operation fails
  */
@@ -117,6 +135,7 @@ const removeAll = async (credentialIds: ReadonlyArray<string>) => {
 
 /**
  * Clears all credentials' SD-JWT/MDOCs from the Secure Storage.
+ *
  * @throws If the Secure Storage operation fails
  */
 const clear = async () => {

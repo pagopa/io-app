@@ -1,8 +1,8 @@
 /**
- * A screen to show the app Terms of Service. If the user accepted an old version
- * of ToS and a new version is available, an alert is displayed to highlight the user
- * has to accept the new version of ToS.
- * This screen is used also as Privacy screen From Profile section.
+ * A screen to show the app Terms of Service. If the user accepted an old
+ * version of ToS and a new version is available, an alert is displayed to
+ * highlight the user has to accept the new version of ToS. This screen is used
+ * also as Privacy screen From Profile section.
  */
 import {
   Alert as AlertDS,
@@ -40,9 +40,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "profile.main.privacy.privacyPolicy.contextualHelpContentPolicy"
 };
 
-/**
- * A screen to show the ToS to the user.
- */
+/** A screen to show the ToS to the user. */
 const OnboardingTosScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
 

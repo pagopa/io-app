@@ -25,7 +25,8 @@ export type AppDispatch = typeof store.dispatch;
 
 /**
  * Main component of the application
- * @constructor
+ *
+ * @class
  */
 const App = (): JSX.Element => (
   <GestureHandlerRootView style={{ flex: 1 }}>

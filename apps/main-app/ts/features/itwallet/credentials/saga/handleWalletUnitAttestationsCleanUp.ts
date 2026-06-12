@@ -5,8 +5,8 @@ import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsByTypeSelector } from "../store/selectors";
 
 /**
- * Saga that checks for Wallet Unit Attestations that are not associated
- * with any credential and removes them from the store.
+ * Saga that checks for Wallet Unit Attestations that are not associated with
+ * any credential and removes them from the store.
  */
 export function* handleWalletUnitAttestationsCleanUp() {
   const allCredentialsByType = yield* select(itwCredentialsByTypeSelector);

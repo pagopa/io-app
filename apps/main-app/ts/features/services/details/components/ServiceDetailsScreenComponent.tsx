@@ -37,8 +37,8 @@ export type ServiceDetailsScreenComponent =
 export type ServiceKind = ServiceDetailsScreenComponent["kind"];
 
 /**
- * This component renders different types of service
- * details screens based on the kind
+ * This component renders different types of service details screens based on
+ * the kind
  */
 export const ServiceDetailsScreenComponent = ({
   children,

@@ -1,7 +1,9 @@
 import customVariables from "../../theme/variables";
 
 /**
- * Calculate the slop in order to have the minimum touchable area necessary for accessibility requirements
+ * Calculate the slop in order to have the minimum touchable area necessary for
+ * accessibility requirements
+ *
  * @param height
  */
 export const calculateSlop = (height: number): number => {

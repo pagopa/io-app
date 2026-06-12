@@ -31,9 +31,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "profile.fiscalCode.help"
 };
 
-/**
- * This screen displays the barcode of the user's tax code.
- */
+/** This screen displays the barcode of the user's tax code. */
 const FiscalCodeScreen = () => {
   useMaxBrightness();
 

@@ -13,8 +13,8 @@ export const ON_SCROLL_END_LISTENER = `window.onscroll=function(){
 };`;
 
 /**
- * This script listens to load and resize events to get the height
- * and also has a fallback timeout to send the height after 300ms
+ * This script listens to load and resize events to get the height and also has
+ * a fallback timeout to send the height after 300ms
  */
 export const GET_CONTENT_HEIGHT_SCRIPT = `
 function sendHeight() {

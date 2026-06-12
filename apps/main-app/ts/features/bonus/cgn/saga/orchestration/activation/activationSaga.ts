@@ -39,9 +39,7 @@ const INITIAL_SCREENS_TO_WALLET_HOME: ReadonlyArray<string> = [
   CGN_ROUTES.DETAILS.DETAILS
 ];
 
-/**
- * This saga handles the CGN activation workflow
- */
+/** This saga handles the CGN activation workflow */
 export function* handleCgnStartActivationSaga(): SagaIterator {
   const initialScreen: ReturnType<typeof NavigationService.getCurrentRoute> =
     yield* call(NavigationService.getCurrentRoute);

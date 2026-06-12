@@ -37,24 +37,30 @@ describe("payments checkout reducer index.ts", () => {
   const createTestStore = () => createStore(appReducer, globalState as any);
 
   /**
-   * A utility function to test Redux action patterns for request, success, and failure states.
-   *
-   * @param actionCreator - An object containing the action creators for request, success, and failure.
-   * @param requestParams - The parameters to be passed to the request action creator.
-   * @param successParams - The parameters to be passed to the success action creator.
-   * @param expectedSuccessState - The expected state after the success action is dispatched.
-   * @param stateSelector - A function to select the relevant part of the state for assertions.
+   * A utility function to test Redux action patterns for request, success, and
+   * failure states.
    *
    * @example
-   * ```typescript
-   * testActionPattern(
-   *   myActionCreator,
-   *   { id: 1 }, // requestParams
-   *   { data: "success" }, // successParams
-   *   { data: "success", loading: false }, // expectedSuccessState
-   *   (state) => state.myFeature // stateSelector
-   * );
-   * ```
+   *   ```typescript
+   *   testActionPattern(
+   *     myActionCreator,
+   *     { id: 1 }, // requestParams
+   *     { data: "success" }, // successParams
+   *     { data: "success", loading: false }, // expectedSuccessState
+   *     state => state.myFeature // stateSelector
+   *   );
+   *   ```;
+   *
+   * @param actionCreator - An object containing the action creators for
+   *   request, success, and failure.
+   * @param requestParams - The parameters to be passed to the request action
+   *   creator.
+   * @param successParams - The parameters to be passed to the success action
+   *   creator.
+   * @param expectedSuccessState - The expected state after the success action
+   *   is dispatched.
+   * @param stateSelector - A function to select the relevant part of the state
+   *   for assertions.
    */
   const testActionPattern = (
     actionCreator: any,

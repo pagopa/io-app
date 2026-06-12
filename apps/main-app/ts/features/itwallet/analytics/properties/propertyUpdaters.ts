@@ -38,8 +38,8 @@ import {
 } from "./superProperties";
 
 /**
- * Performs a full sync of all ITW analytics properties
- * (Profile + Super) using a single state interpretation.
+ * Performs a full sync of all ITW analytics properties (Profile + Super) using
+ * a single state interpretation.
  */
 export const updateItwAnalyticsProperties = (state: GlobalState) => {
   if (!isMixpanelInstanceInitialized()) {
@@ -86,8 +86,9 @@ export const updateItwStatusAndPIDProperties = (state: GlobalState) => {
 };
 
 /**
- * This function is used to set all to not_available / not_active when wallet
- * is revoked or when the wallet section is visualized in empty state
+ * This function is used to set all to not_available / not_active when wallet is
+ * revoked or when the wallet section is visualized in empty state
+ *
  * @param state
  */
 export const updatePropertiesWalletRevoked = () => {
@@ -123,6 +124,7 @@ export const updateCredentialProperties = (
 
 /**
  * Track the reason for offline access on Mixpanel
+ *
  * @param action - The action that was dispatched
  * @param state - The current state of the application
  */

@@ -22,8 +22,8 @@ export function* watchItwAnalyticsSaga(): SagaIterator {
 }
 
 /**
- * Saga that performs a full sync of all ITW analytics properties
- * (Profile + Super) using the current state.
+ * Saga that performs a full sync of all ITW analytics properties (Profile +
+ * Super) using the current state.
  */
 export function* syncItwAnalyticsProperties() {
   const state: GlobalState = yield* select();
@@ -36,8 +36,8 @@ export function* watchItwCredentialsAnalyticsSaga(): SagaIterator {
 }
 
 /**
- * Tracks NFC information for discovery and debugging purposes.
- * TODO remove this function when NFC info tracking is not needed anymore
+ * Tracks NFC information for discovery and debugging purposes. TODO remove this
+ * function when NFC info tracking is not needed anymore
  */
 export function* updateNfcInfoTrackingProperties() {
   try {

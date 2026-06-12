@@ -139,19 +139,28 @@ const styles = StyleSheet.create({
 });
 
 /**
- * The main scrollable container component.
- * It includes full support for custom headers and actions.
+ * The main scrollable container component. It includes full support for custom
+ * headers and actions.
  *
- * @param [headerConfig] Configuration for the header component. Use this only if you need to configure a custom header from scratch.
- * If you need the predefined configuration with default `Back (<)` and `Help (?)` buttons, use `useHeaderSecondLevel`
- * @param {IOScrollViewActions} [actions] Actions to be rendered at the bottom of the `ScrollView`
- * @param [animatedRef] Ref generated through `useAnimatedRef` (used by `useScrollViewOffset` to get the scroll position)
+ * @param [headerConfig] Configuration for the header component. Use this only
+ *   if you need to configure a custom header from scratch. If you need the
+ *   predefined configuration with default `Back (<)` and `Help (?)` buttons,
+ *   use `useHeaderSecondLevel`
+ * @param {IOScrollViewActions} [actions] Actions to be rendered at the bottom
+ *   of the `ScrollView`
+ * @param [animatedRef] Ref generated through `useAnimatedRef` (used by
+ *   `useScrollViewOffset` to get the scroll position)
  * @param {number} [snapOffset] Offset when you need to add a snap point
- * @param {boolean} [excludeSafeAreaMargins=false] Exclude safe area margins at the bottom of the `ScrollView`
- * This is useful if you have a screen with a tab bar at the bottom, or if the bottom margin is already being managed
- * @param {boolean} [excludeEndContentMargin=false] Exclude the end content margin
- * @param {boolean} [includeContentMargins=true] Include horizontal screen margins
- * @param {boolean} [debugMode=false] Enable debug mode. Only for testing purposes
+ * @param {boolean} [excludeSafeAreaMargins=false] Exclude safe area margins at
+ *   the bottom of the `ScrollView` This is useful if you have a screen with a
+ *   tab bar at the bottom, or if the bottom margin is already being managed.
+ *   Default is `false`
+ * @param {boolean} [excludeEndContentMargin=false] Exclude the end content
+ *   margin. Default is `false`
+ * @param {boolean} [includeContentMargins=true] Include horizontal screen
+ *   margins. Default is `true`
+ * @param {boolean} [debugMode=false] Enable debug mode. Only for testing
+ *   purposes. Default is `false`
  */
 export const IOScrollView = ({
   headerConfig,

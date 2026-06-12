@@ -24,8 +24,8 @@ const ALL_CREDENTIAL_TYPES: ReadonlyArray<string> = [
 ];
 
 /**
- * Detail Cards section for ITW Playground.
- * Shows ItwCredentialDetailCard for each credential type and status.
+ * Detail Cards section for ITW Playground. Shows ItwCredentialDetailCard for
+ * each credential type and status.
  */
 export const ItwCardsHeaderSection = () => (
   <VStack space={24}>

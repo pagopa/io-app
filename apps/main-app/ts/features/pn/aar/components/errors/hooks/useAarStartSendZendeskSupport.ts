@@ -21,13 +21,16 @@ export const enum SendAarZendeskSecondLevelTag {
 }
 
 /**
- * Returns a callback that starts a Zendesk support flow for the AAR "send" assistance.
+ * Returns a callback that starts a Zendesk support flow for the AAR "send"
+ * assistance.
  *
  * The returned function:
- * - resets Zendesk custom fields and logs
- * - sets the main category and the AAR sub-category based on the provided second-level tag
- * - optionally appends an error code to the log (if provided and non-empty)
- * - dispatches the actions required to start the Zendesk support flow
+ *
+ * - Resets Zendesk custom fields and logs
+ * - Sets the main category and the AAR sub-category based on the provided
+ *   second-level tag
+ * - Optionally appends an error code to the log (if provided and non-empty)
+ * - Dispatches the actions required to start the Zendesk support flow
  */
 export const useAarStartSendZendeskSupport = (
   secondLevelTag: SendAarZendeskSecondLevelTag

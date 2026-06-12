@@ -6,20 +6,20 @@ import { CreditCardPaymentMethod, PaymentMethod } from "../types/pagopa";
 import { PaymentSupportStatus } from "../types/paymentMethodCapabilities";
 import { hasFunctionEnabled } from "./walletv2";
 
-/**
- * return true if the payment method has the payment feature
- */
+/** Return true if the payment method has the payment feature */
 export const hasPaymentFeature = (paymentMethod: PaymentMethod): boolean =>
   hasFunctionEnabled(paymentMethod, EnableableFunctionsEnum.pagoPA);
 
 /**
- * return true if the payment method has the payment feature and the payment flag enabled
+ * Return true if the payment method has the payment feature and the payment
+ * flag enabled
  */
 export const isEnabledToPay = (paymentMethod: PaymentMethod): boolean =>
   hasPaymentFeature(paymentMethod) && paymentMethod.pagoPA === true;
 
 /**
- * return true if the payment method has the payment feature and the payment flag disabled
+ * Return true if the payment method has the payment feature and the payment
+ * flag disabled
  */
 export const isDisabledToPay = (paymentMethod: PaymentMethod): boolean =>
   hasPaymentFeature(paymentMethod) && paymentMethod.pagoPA === false;
@@ -29,6 +29,7 @@ export const isCobadge = (paymentMethod: CreditCardPaymentMethod) =>
 
 /**
  * Return a custom representation for a payment method who cannot pay
+ *
  * @param paymentMethod
  */
 const paymentNotSupportedCustomRepresentation = (
@@ -41,12 +42,11 @@ const paymentNotSupportedCustomRepresentation = (
 };
 
 /**
- * Check if a payment method is supported or not
- * If the payment method have the enableable function pagoPA, can always pay ("available")
- * "available" -> can pay
- * "arriving" -> will pay
- * "notAvailable" -> can't pay
- * "onboardableNotImplemented" -> can onboard a card that can pay but is not yet implemented
+ * Check if a payment method is supported or not If the payment method have the
+ * enableable function pagoPA, can always pay ("available") "available" -> can
+ * pay "arriving" -> will pay "notAvailable" -> can't pay
+ * "onboardableNotImplemented" -> can onboard a card that can pay but is not yet
+ * implemented
  */
 export const isPaymentSupported = (
   paymentMethod: PaymentMethod

@@ -26,6 +26,7 @@ import { handleWalletPaymentGetContextualOnboardingUrl } from "./networking/hand
 
 /**
  * Handle the pagoPA payments requests
+ *
  * @param bearerToken
  */
 export function* watchPaymentsCheckoutSaga(

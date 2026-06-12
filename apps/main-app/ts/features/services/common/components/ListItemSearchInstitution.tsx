@@ -19,9 +19,7 @@ export type ListItemSearchInstitution = WithTestID<
   {
     value: string | ReactNode;
     avatarProps: AvatarSearchProps;
-    /**
-     * The maximum number of lines to display for the value.
-     */
+    /** The maximum number of lines to display for the value. */
     numberOfLines?: number;
     description?: string | ReactNode;
     onPress: (event: GestureResponderEvent) => void;

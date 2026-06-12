@@ -12,10 +12,10 @@ import { WalletCard, WalletCardCategoryFilter, WalletCardType } from "../types";
 import { CdcWalletCard } from "../../bonus/cdc/wallet/components/CdcWalletCard";
 
 /**
- * Wallet card component mapper which translates a WalletCardType to a
- * component to be rendered inside the wallet.
- * Component MUST be a WalletCardBaseComponent, which can be created
- * using {@see withWalletCardBaseComponent} HOC
+ * Wallet card component mapper which translates a WalletCardType to a component
+ * to be rendered inside the wallet. Component MUST be a
+ * WalletCardBaseComponent, which can be created using
+ * {@see withWalletCardBaseComponent} HOC
  */
 export const walletCardComponentMapper: Record<
   WalletCardType,
@@ -30,7 +30,9 @@ export const walletCardComponentMapper: Record<
 };
 
 /**
- * Function that renders a wallet card using the mapped component inside {@see walletCardComponentMapper}
+ * Function that renders a wallet card using the mapped component inside
+ * {@see walletCardComponentMapper}
+ *
  * @param card - The wallet card object to render
  * @param stacked - Whether the card is stacked or not
  * @returns The rendered card or null if the card is not found
@@ -52,7 +54,9 @@ export const renderWalletCardFn = (
 };
 
 /**
- * A higher-order component which renders a component only if the category filter matches the given category
+ * A higher-order component which renders a component only if the category
+ * filter matches the given category
+ *
  * @param category - The category to filter by
  * @param WrappedComponent - The component to render
  * @returns The component or null if the category filter does not match

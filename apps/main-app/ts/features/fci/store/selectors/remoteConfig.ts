@@ -11,9 +11,10 @@ const fciRemoteConfigSelector = (state: GlobalState) =>
   );
 
 /**
- * Return the remote config about FCI's Security Level Check (if it requires L3 auth) enabled/disabled
- * if there is no data or the local Feature Flag is disabled,
- * false is the default value -> (FCI's Security Level Check disabled)
+ * Return the remote config about FCI's Security Level Check (if it requires L3
+ * auth) enabled/disabled if there is no data or the local Feature Flag is
+ * disabled, false is the default value -> (FCI's Security Level Check
+ * disabled)
  */
 export const isFciSecurityLevelCheckRemoteFFEnabledSelector = (
   state: GlobalState
@@ -30,9 +31,7 @@ export const isFciSecurityLevelCheckRemoteFFEnabledSelector = (
       )
   );
 
-/**
- * Return the remote config help center url for the FCI security level check.
- */
+/** Return the remote config help center url for the FCI security level check. */
 export const fciSecurityLevelCheckHelpCenterUrlSelector = createSelector(
   fciRemoteConfigSelector,
   fciConfig =>

@@ -17,9 +17,7 @@ import ROUTES from "../../../navigation/routes";
 import { OnboardingParamsList } from "./params/OnboardingParamsList";
 
 const Stack = createStackNavigator<OnboardingParamsList>();
-/**
- * The onboarding related stack of screens of the application.
- */
+/** The onboarding related stack of screens of the application. */
 const OnboardingNavigator = () => (
   <Stack.Navigator
     initialRouteName={ROUTES.ONBOARDING_SHARE_DATA}

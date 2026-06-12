@@ -5,9 +5,7 @@ import { Camera, CameraPermissionStatus } from "react-native-vision-camera";
 import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { isAndroid } from "../../../utils/platform";
 
-/**
- * Hook to handle camera permission status with platform specific behavior
- */
+/** Hook to handle camera permission status with platform specific behavior */
 export const useCameraPermissionStatus = () => {
   const navigation = useIONavigation();
   const [cameraPermissionStatus, setCameraPermissionStatus] =
@@ -17,17 +15,13 @@ export const useCameraPermissionStatus = () => {
   const [isNavigationTransitionEnded, setIsNavigationTransitionEnded] =
     useState(false);
 
-  /**
-   * Opens the system prompt to ask camera permission
-   */
+  /** Opens the system prompt to ask camera permission */
   const requestCameraPermission = useCallback(async () => {
     const permissions = await Camera.requestCameraPermission();
     setCameraPermissionStatus(permissions);
   }, []);
 
-  /**
-   * Opens the system settings to allow user to change the camera permission
-   */
+  /** Opens the system settings to allow user to change the camera permission */
   const openCameraSettings = useCallback(() => {
     void Linking.openSettings();
   }, []);
@@ -35,9 +29,10 @@ export const useCameraPermissionStatus = () => {
   /**
    * Checks the camera permission on mount
    *
-   * **Note:** On android devices the app starts with a "denied" permission status,
-   * which does not necessarily mean that the permission was denied by the user.
-   * We need to request the permission to check if the user has denied it.
+   * **Note:** On android devices the app starts with a "denied" permission
+   * status, which does not necessarily mean that the permission was denied by
+   * the user. We need to request the permission to check if the user has denied
+   * it.
    */
   useEffect(() => {
     const permission = Camera.getCameraPermissionStatus();
@@ -51,8 +46,8 @@ export const useCameraPermissionStatus = () => {
   }, [requestCameraPermission, isFocused, isNavigationTransitionEnded]);
 
   /**
-   * Setup listener for app state changes to detect if camera permissions were granted
-   * through system settings after the user returns to the app.
+   * Setup listener for app state changes to detect if camera permissions were
+   * granted through system settings after the user returns to the app.
    */
   useEffect(() => {
     if (cameraPermissionStatus === "denied") {

@@ -20,9 +20,7 @@ export const itwProximityInitialState: ItwProximityState = {
   consents: {}
 };
 
-/**
- * Filters out all consents that involve the specified credential type.
- */
+/** Filters out all consents that involve the specified credential type. */
 const filterConsentsByCredentialType = (
   consents: Record<string, ConsentData>,
   credentialType: string

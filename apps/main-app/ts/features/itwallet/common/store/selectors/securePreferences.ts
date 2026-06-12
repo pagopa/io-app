@@ -12,17 +12,15 @@ const selectSecurePreferencesSlice = (
 ): ItwSecurePreferencesState => state.features.itWallet.securePreferences;
 
 /**
- * Returns the number of offline accesses that the user can perform
- * before being required to return online.
+ * Returns the number of offline accesses that the user can perform before being
+ * required to return online.
  */
 export const itwOfflineAccessCounterSelector = createSelector(
   selectSecurePreferencesSlice,
   securePreferences => securePreferences.offlineAccessCounter
 );
 
-/**
- * Returns `true` if the user has reached the maximum number of offline accesses
- */
+/** Returns `true` if the user has reached the maximum number of offline accesses */
 export const itwIsOfflineAccessLimitReached = createSelector(
   itwOfflineAccessCounterSelector,
   offlineAccessCounter => offlineAccessCounter >= ITW_MAX_OFFLINE_ACCESS_COUNTER
@@ -45,8 +43,8 @@ export const itwUnverifiedCredentialsCounterSelector = createSelector(
 );
 
 /**
- * Returns `true` if the user has reached the maximum number of accesses
- * during IPZS or AS down periods
+ * Returns `true` if the user has reached the maximum number of accesses during
+ * IPZS or AS down periods
  */
 export const itwUnverifiedCredentialsCounterLimitReached = createSelector(
   itwUnverifiedCredentialsCounterSelector,

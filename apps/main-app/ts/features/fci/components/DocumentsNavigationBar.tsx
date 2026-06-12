@@ -77,6 +77,7 @@ const renderNavigationComponent = (
 
 /**
  * A component to render a documents navigation bar with two buttons
+ *
  * @param props
  * @returns
  */

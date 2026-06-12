@@ -1,5 +1,6 @@
 /**
  * FNV-1a 32-bit constants.
+ *
  * @see http://www.isthe.com/chongo/tech/comp/fnv/
  */
 const FNV1A_OFFSET_BASIS_32 = 2166136261;
@@ -9,13 +10,14 @@ const FNV1A_PRIME_32 = 16777619;
  * Computes the FNV-1a 32-bit hash of a string.
  *
  * Produces a deterministic unsigned 32-bit integer from any string input.
- * Useful for generating stable numeric identifiers from string seeds
- * (e.g. consistent color assignments, bucket selection).
+ * Useful for generating stable numeric identifiers from string seeds (e.g.
+ * consistent color assignments, bucket selection).
  *
  * NOT suitable for cryptographic or security-sensitive purposes.
  *
  * @param input - The string to hash.
- * @param seed - Optional seed to vary the hash output. Same input + same seed always returns the same value. Defaults to 0.
+ * @param seed - Optional seed to vary the hash output. Same input + same seed
+ *   always returns the same value. Defaults to 0.
  * @returns An unsigned 32-bit integer in the range [0, 4294967295].
  */
 export const fnv1a = (input: string, seed: number = 0): number => {

@@ -8,10 +8,10 @@ import { memo, useMemo } from "react";
 import { CredentialCardConfig } from "./config";
 
 /**
- * Computes the Skia LinearGradient start/end vectors for a given angle
- * (CSS convention: 0° = bottom→top, 90° = left→right) and canvas dimensions.
- * The resulting line passes through the center and is long enough to cover
- * all four corners of the rectangle.
+ * Computes the Skia LinearGradient start/end vectors for a given angle (CSS
+ * convention: 0° = bottom→top, 90° = left→right) and canvas dimensions. The
+ * resulting line passes through the center and is long enough to cover all four
+ * corners of the rectangle.
  */
 export const getGradientVectors = (
   angle: number,
@@ -38,9 +38,9 @@ type CredentialCardSkiaBackgroundProps = {
 };
 
 /**
- * Skia-renderable background layer for a credential card or detail header.
- * Must be rendered inside a Skia <Canvas>.
- * Memoized to avoid re-renders when dimensions and background config are stable.
+ * Skia-renderable background layer for a credential card or detail header. Must
+ * be rendered inside a Skia <Canvas>. Memoized to avoid re-renders when
+ * dimensions and background config are stable.
  */
 export const SkiaGradientBackground = memo(
   ({ bg, width, height }: CredentialCardSkiaBackgroundProps) => {

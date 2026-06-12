@@ -23,9 +23,7 @@ import {
 import { SignatureConfig } from "../httpSignature/types/SignatureConfig";
 import { KeyInfo } from "./crypto";
 
-/**
- * Decorates the current fetch with LolliPOP headers and http-signature
- */
+/** Decorates the current fetch with LolliPOP headers and http-signature */
 export const lollipopFetch = (
   lollipopConfig: LollipopConfig,
   keyInfo: KeyInfo,
@@ -259,9 +257,7 @@ function extractHttpRequestComponents(input: string, init: RequestInit) {
   return { body, bodyString, inputUrl, method, originalUrl };
 }
 
-/**
- * Add a pair header:value to the current fetch init.headers.
- */
+/** Add a pair header:value to the current fetch init.headers. */
 function addHeader(
   init: RequestInit,
   headerName: string,
@@ -277,7 +273,8 @@ function addHeader(
 }
 
 /**
- * Check if the keyInfo and Request properties are properly initialized for fetching
+ * Check if the keyInfo and Request properties are properly initialized for
+ * fetching
  */
 function toRequestAndKeyInfoForLPFetch(
   keyInfo: KeyInfo,

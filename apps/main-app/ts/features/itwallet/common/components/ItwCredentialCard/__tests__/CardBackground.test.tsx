@@ -101,8 +101,8 @@ describe("CardBackground", () => {
 // --- LegacyCardBackground ---
 
 /**
- * Credential types that have dedicated background images.
- * The image opacity and blend mode vary by colorScheme.
+ * Credential types that have dedicated background images. The image opacity and
+ * blend mode vary by colorScheme.
  */
 const credentialTypesWithImages = [
   CredentialType.DRIVING_LICENSE,
@@ -111,8 +111,8 @@ const credentialTypesWithImages = [
 ];
 
 /**
- * Credential types without dedicated images; they fall back to
- * a LinearGradient derived from `legacyCredentialGradientColors`.
+ * Credential types without dedicated images; they fall back to a LinearGradient
+ * derived from `legacyCredentialGradientColors`.
  */
 const credentialTypesWithGradientFallback = [
   CredentialType.EDUCATION_DEGREE,

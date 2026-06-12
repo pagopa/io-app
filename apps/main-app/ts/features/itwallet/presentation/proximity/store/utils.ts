@@ -2,14 +2,14 @@ import { ProximityDetails } from "../utils/types";
 import { ConsentData } from "./types";
 
 /**
- * Generates a deterministic, human-readable key for a consent based on
- * the RP ID and the credential claims combination.
+ * Generates a deterministic, human-readable key for a consent based on the RP
+ * ID and the credential claims combination.
  *
  * Format: `rpId::credType1:claim1,claim2::credType2:claim3`
  *
- * All segments and claim names are sorted alphabetically to guarantee
- * the same combination always produces the same key, regardless of
- * the order in which credentials or claims are provided.
+ * All segments and claim names are sorted alphabetically to guarantee the same
+ * combination always produces the same key, regardless of the order in which
+ * credentials or claims are provided.
  */
 export const generateConsentKey = (consent: ConsentData): string => {
   const sortedCredentials = [...consent.credentials]
@@ -28,8 +28,7 @@ export const generateConsentKey = (consent: ConsentData): string => {
  *
  * @param rpId The Relying Party ID associated with the consent.
  * @param proximityDetails List of requested credentials and claims from the
- * proximity presentation details.
- *
+ *   proximity presentation details.
  * @returns A ConsentData structure representing the consent details,
  */
 export const getConsentDataFromProximityDetails = (

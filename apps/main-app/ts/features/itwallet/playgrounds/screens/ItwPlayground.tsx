@@ -25,7 +25,8 @@ import { ItwSpecsVersionSection } from "../components/ItwSpecsVersionSection";
 
 /**
  * ITW Playground screen
- * @returns a screen with a list of playgrounds for the ITW
+ *
+ * @returns A screen with a list of playgrounds for the ITW
  */
 const ItwPlayground = () => {
   const eidMachineRef = ItwEidIssuanceMachineContext.useActorRef();

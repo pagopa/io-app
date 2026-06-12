@@ -14,7 +14,8 @@ import { fciEnvironmentSelector } from "../store/reducers/fciEnvironment";
 import { fciSignatureRequestDossierTitleSelector } from "../store/reducers/fciSignatureRequest";
 
 /**
- * A hook that returns a function to present the abort signature flow bottom sheet
+ * A hook that returns a function to present the abort signature flow bottom
+ * sheet
  */
 export const useFciAbortSignatureFlow = () => {
   const dispatch = useIODispatch();
@@ -23,9 +24,7 @@ export const useFciAbortSignatureFlow = () => {
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
   const { isExperimental } = useIOExperimentalDesign();
 
-  /**
-   * Callback function to abort the signature flow.
-   */
+  /** Callback function to abort the signature flow. */
   const abortSignatureFlow = () => {
     trackFciUserExit(route.name, fciEnvironment);
     dispatch(fciEndRequest());
@@ -63,9 +62,7 @@ export const useFciAbortSignatureFlow = () => {
     )
   });
 
-  /**
-   * Show an alert to confirm the abort signature flow.
-   */
+  /** Show an alert to confirm the abort signature flow. */
   const showAlert = () => {
     Alert.alert(I18n.t("features.fci.abort.alert.title"), undefined, [
       {
@@ -80,9 +77,10 @@ export const useFciAbortSignatureFlow = () => {
   };
 
   /**
-   * Overrides the present function of the bottom sheet to show an alert instead if the experimental design is enabled.
-   * This allows us to use an alert without changing single components which use the hook.
-   * TODO: remove when the experimental design will be enabled by default (SFEQS-2090)
+   * Overrides the present function of the bottom sheet to show an alert instead
+   * if the experimental design is enabled. This allows us to use an alert
+   * without changing single components which use the hook. TODO: remove when
+   * the experimental design will be enabled by default (SFEQS-2090)
    */
   const present = () => (isExperimental ? showAlert() : presentBs());
 

@@ -11,8 +11,8 @@ import {
 
 type ServiceListSkeletonProps = {
   /**
-   * Whether to show the avatar. The avatar is shown by default.
-   * Setting this to `false` hides the avatar.
+   * Whether to show the avatar. The avatar is shown by default. Setting this to
+   * `false` hides the avatar.
    */
   avatarShown?: boolean;
   /**
@@ -20,9 +20,7 @@ type ServiceListSkeletonProps = {
    * Setting this to `true` shows the section title.
    */
   sectionTitleShown?: boolean;
-  /**
-   * The number of items in the list. The default value is `3`.
-   */
+  /** The number of items in the list. The default value is `3`. */
   size?: number;
 };
 

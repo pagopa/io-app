@@ -20,9 +20,7 @@ export type CdcCardProps = CitizenStatus;
 // TODO: Edit this logo when the organization logo is available
 const CDC_ORGANIZATION_LOGO = `${contentRepoUrl}/logos/services/01jv4m365chazn5c0fdr62dcvd.png`;
 
-/**
- * Component that renders the CdC wallet card in the wallet
- */
+/** Component that renders the CdC wallet card in the wallet */
 export const CdcCard = (props: CdcCardProps) => {
   const { themeType } = useIOThemeContext();
 

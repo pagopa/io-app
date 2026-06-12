@@ -42,7 +42,7 @@
   },
   "lint-staged": {
     "*.{ts,tsx}": [
-      "prettier --write",
+      "oxfmt",
       "eslint --fix"
     ]
   },

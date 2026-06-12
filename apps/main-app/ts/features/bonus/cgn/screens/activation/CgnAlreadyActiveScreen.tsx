@@ -7,8 +7,8 @@ import CGN_ROUTES from "../../navigation/routes";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 
 /**
- * Screen which is displayed when a user requested a CGN activation
- * but it is yet active
+ * Screen which is displayed when a user requested a CGN activation but it is
+ * yet active
  */
 const CgnAlreadyActiveScreen = () => {
   const dispatch = useIODispatch();

@@ -15,9 +15,7 @@ type ModalStyleProps = {
   };
 };
 
-/**
- * Returns the common style used for modals
- */
+/** Returns the common style used for modals */
 export const useModalStyle = (): ModalStyleProps => {
   const theme = useIOTheme();
   const { themeType } = useIOThemeContext();

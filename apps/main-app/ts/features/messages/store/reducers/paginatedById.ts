@@ -16,9 +16,7 @@ import {
 
 // State
 
-/**
- * An object containing all the fetched messages keyed by id.
- */
+/** An object containing all the fetched messages keyed by id. */
 export type PaginatedById = Readonly<{
   [key: string]: pot.Pot<
     UIMessage,
@@ -30,9 +28,7 @@ const INITIAL_STATE: PaginatedById = {};
 
 // Reducers
 
-/**
- * A reducer to store all fetched messages indexed by id
- */
+/** A reducer to store all fetched messages indexed by id */
 export const reducer = (
   state: PaginatedById = INITIAL_STATE,
   action: Action

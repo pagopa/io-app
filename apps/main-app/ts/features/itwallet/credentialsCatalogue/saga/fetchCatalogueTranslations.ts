@@ -10,10 +10,10 @@ import { itwCredentialsCatalogueSelector } from "../store/selectors";
 /**
  * Fetch locale bundles for the Digital Credentials Catalogue.
  *
- * Translation support depends on the IT-Wallet spec version in use.
- * The underlying `fetchCatalogueTranslations` utility is a no-op (returns `{}`)
- * when the catalogue API does not expose a `fetchTranslations` method (e.g. v1.0.0),
- * so this saga is safe to run regardless of the active spec version.
+ * Translation support depends on the IT-Wallet spec version in use. The
+ * underlying `fetchCatalogueTranslations` utility is a no-op (returns `{}`)
+ * when the catalogue API does not expose a `fetchTranslations` method (e.g.
+ * v1.0.0), so this saga is safe to run regardless of the active spec version.
  *
  * It is also a no-op when the catalogue has not yet been fetched.
  */

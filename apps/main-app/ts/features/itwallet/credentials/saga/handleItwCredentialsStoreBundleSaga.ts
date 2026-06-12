@@ -7,8 +7,8 @@ import {
 import { CredentialsVault } from "../utils/vault";
 
 /**
- * This saga handles the credential store action and ensures the consistency between
- * secure storage and redux store.
+ * This saga handles the credential store action and ensures the consistency
+ * between secure storage and redux store.
  */
 export function* handleItwCredentialsStoreBundleSaga(
   action: ReturnType<typeof itwCredentialsStoreBundle>

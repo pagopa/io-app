@@ -14,9 +14,11 @@ type EffectCallback = (
 ) => void | (() => void | undefined);
 
 /**
- * This custom hook manages the transition of a transaction's status from ACTIVATION_REQUESTED to ACTIVATED.
- * It employs a polling mechanism to continuously check the status, and once the status becomes ACTIVATED,
- * the specified effect is triggered.
+ * This custom hook manages the transition of a transaction's status from
+ * ACTIVATION_REQUESTED to ACTIVATED. It employs a polling mechanism to
+ * continuously check the status, and once the status becomes ACTIVATED, the
+ * specified effect is triggered.
+ *
  * @param effect Function to be executed upon transaction activation
  */
 const useOnTransactionActivationEffect = (effect: EffectCallback) => {

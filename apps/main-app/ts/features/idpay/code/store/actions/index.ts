@@ -7,9 +7,7 @@ import { CheckEnrollmentDTO } from "../../../../../../definitions/idpay/CheckEnr
 import { GenerateCodeRespDTO } from "../../../../../../definitions/idpay/GenerateCodeRespDTO";
 import { NetworkError } from "../../../../../utils/errors";
 
-/**
- * This action requests the CIE enabled status from the server
- */
+/** This action requests the CIE enabled status from the server */
 export const idPayGetCodeStatus = createAsyncAction(
   "IDPAY_GET_CODE_STATUS_REQUEST",
   "IDPAY_GET_CODE_STATUS_SUCCESS",
@@ -20,9 +18,7 @@ type IdPayGenerateCodePayload = {
   initiativeId?: string;
 };
 
-/**
- * This action performs the request to generate the IDPay code from the server
- */
+/** This action performs the request to generate the IDPay code from the server */
 export const idPayGenerateCode = createAsyncAction(
   "IDPAY_GENERATE_CODE_REQUEST",
   "IDPAY_GENERATE_CODE_SUCCESS",
@@ -33,18 +29,14 @@ type IdPayEnrollCodePayload = {
   initiativeId: string;
 };
 
-/**
- * This action performs the request to generate the IDPay code from the server
- */
+/** This action performs the request to generate the IDPay code from the server */
 export const idPayEnrollCode = createAsyncAction(
   "IDPAY_ENROLL_CODE_REQUEST",
   "IDPAY_ENROLL_CODE_SUCCESS",
   "IDPAY_ENROLL_CODE_FAILURE"
 )<IdPayEnrollCodePayload, undefined, NetworkError>();
 
-/**
- * This action resets the IDPay code state in store.
- */
+/** This action resets the IDPay code state in store. */
 export const idPayResetCode =
   createStandardAction("IDPAY_RESET_CODE")<undefined>();
 

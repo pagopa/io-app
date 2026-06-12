@@ -7,8 +7,8 @@ type Props = {
 };
 
 /**
- * Render icons that display the interaction between the wallet
- * and a requester when exchanging user data.
+ * Render icons that display the interaction between the wallet and a requester
+ * when exchanging user data.
  */
 export const ItwDataExchangeIcons = memo(({ requesterLogoUri }: Props) => {
   const theme = useIOTheme();

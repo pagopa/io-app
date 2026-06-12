@@ -24,8 +24,8 @@ const isPresentationDetailSdJwt = <T extends PresentationDetails[number]>(
 
 /**
  * Maps a vct name to the corresponding credential type, used in UI contexts
- * Note: although this list is unlikely to change, you should ensure to have
- * a fallback when dealing with this list to prevent unwanted behaviours
+ * Note: although this list is unlikely to change, you should ensure to have a
+ * fallback when dealing with this list to prevent unwanted behaviours
  */
 const credentialTypesByVct: { [vct: string]: CredentialType } = {
   personidentificationdata: CredentialType.PID,
@@ -39,9 +39,11 @@ const credentialTypesByVct: { [vct: string]: CredentialType } = {
 };
 
 /**
- * Utility function which returns the credentila type associated to the provided vct
- * @param vct credential vct
- * @returns credential type as string, undefine if not found
+ * Utility function which returns the credentila type associated to the provided
+ * vct
+ *
+ * @param vct Credential vct
+ * @returns Credential type as string, undefine if not found
  */
 export const getCredentialTypeByVct = (vct: string): string | undefined => {
   // Extracts the name from the vct. The https vct is deprecated and will be removed in the future.
@@ -73,10 +75,13 @@ export const validateItwPresentationQrCodeParams = (
   );
 
 /**
- * Enrich the result of the presentation request evaluation with localized claim names for UI display.
+ * Enrich the result of the presentation request evaluation with localized claim
+ * names for UI display.
  *
- * @param presentationDetails The presentation details with the credentials to present
- * @param credentialsByType A credentials map to extract the localized claim names
+ * @param presentationDetails The presentation details with the credentials to
+ *   present
+ * @param credentialsByType A credentials map to extract the localized claim
+ *   names
  * @returns The enriched presentation details
  */
 export const enrichPresentationDetails = (
@@ -117,7 +122,8 @@ export const enrichPresentationDetails = (
 /**
  * Given the details of a presentation, group credentials by purpose for the UI.
  *
- * @param presentationDetails The details of the presentation with the requested credentials
+ * @param presentationDetails The details of the presentation with the requested
+ *   credentials
  * @returns An object with required and optional credentials grouped by purpose
  */
 export const groupCredentialsByPurpose = (
@@ -149,9 +155,7 @@ export const groupCredentialsByPurpose = (
   };
 };
 
-/**
- * Return a list of credential types that have an invalid status.
- */
+/** Return a list of credential types that have an invalid status. */
 export const getInvalidCredentials = (
   presentationDetails: PresentationDetails,
   credentialsByType: Record<string, CredentialMetadata | undefined>
@@ -172,8 +176,8 @@ export const getInvalidCredentials = (
     .map(c => c.credentialType);
 
 /**
- * Derives the credential combination type from the presentation details.
- * Used for analytics tracking to monitor success rates by request type.
+ * Derives the credential combination type from the presentation details. Used
+ * for analytics tracking to monitor success rates by request type.
  */
 export const getRemoteCredentialCombination = (
   presentationDetails: EnrichedPresentationDetails

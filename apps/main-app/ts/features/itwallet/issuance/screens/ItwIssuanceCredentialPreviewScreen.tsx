@@ -65,9 +65,7 @@ type ContentViewProps = {
   credential: CredentialMetadata;
 };
 
-/**
- * Renders the content of the screen
- */
+/** Renders the content of the screen */
 const ContentView = ({ credential }: ContentViewProps) => {
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const dispatch = useIODispatch();

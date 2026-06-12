@@ -95,9 +95,9 @@ export function getStrValue({ children }: TxtParentNode): string {
 }
 
 /**
- *
  * @param node The node to scan.
- * @param nodeType If defined this function checks how many nodes of this type wrap the interested node, otherwise it takes all the nodes.
+ * @param nodeType If defined this function checks how many nodes of this type
+ *   wrap the interested node, otherwise it takes all the nodes.
  * @returns The `node` nesting level.
  */
 function getNodeNestingLevel<T extends AnyTxtNode | undefined>(
@@ -115,8 +115,8 @@ function getNodeNestingLevel<T extends AnyTxtNode | undefined>(
 /**
  * Used to get a valid key
  *
- * @param txtNode any Txt node
- * @returns a string to be used as component key inside of map loops.
+ * @param txtNode Any Txt node
+ * @returns A string to be used as component key inside of map loops.
  */
 export function getTxtNodeKey(txtNode: AnyTxtNode): string {
   const encoded = Buffer.from(
@@ -156,14 +156,15 @@ export const handleOpenLink = (url: string) => {
 };
 
 /**
- * This object has as key a`TxtNodeType` and as value a render function related to the `TxtNode` element to display.
+ * This object has as key a`TxtNodeType` and as value a render function related
+ * to the `TxtNode` element to display.
  */
 export const DEFAULT_RULES: IOMarkdownRenderRules = {
   /**
-   *
    * @param header The `Header` node.
    * @param render The renderer function.
-   * @returns A component ranging from `H1` to `H6`, inclusive, depending on the `header.depth` value..
+   * @returns A component ranging from `H1` to `H6`, inclusive, depending on the
+   *   `header.depth` value..
    */
   Header(
     header: TxtHeaderNode,
@@ -362,16 +363,17 @@ export const DEFAULT_RULES: IOMarkdownRenderRules = {
   },
   /**
    * Used to remove comments from the final output.
-   * @returns null.
+   *
+   * @returns Null.
    */
   Comment: () => null,
   /**
-   * @param props The custom `Spacer` component used to add space between the first level content.
+   * @param props The custom `Spacer` component used to add space between the
+   *   first level content.
    * @returns The rendered `VSpacer` component.
    */
   Spacer: ({ key, size }) => <VSpacer key={key} size={size} />,
   /**
-   *
    * @param blockQuote The `BlockQuote` node.
    * @returns The `Banner` component configured with the `BlockQuote` content.
    */

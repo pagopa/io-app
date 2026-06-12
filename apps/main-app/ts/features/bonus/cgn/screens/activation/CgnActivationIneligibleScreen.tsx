@@ -5,8 +5,8 @@ import { useIODispatch } from "../../../../../store/hooks";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 
 /**
- * Screen which is displayed when a user requested a CGN activation
- * but is not eligible for its activation
+ * Screen which is displayed when a user requested a CGN activation but is not
+ * eligible for its activation
  */
 const CgnActivationIneligibleScreen = () => {
   const dispatch = useIODispatch();

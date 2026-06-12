@@ -12,10 +12,10 @@ import { itwCredentialsRemove } from "../store/actions";
 /**
  * Boot-time coherence check between Redux credentials and CredentialsVault.
  *
- * 1. If a credential is in Redux but not in the vault → remove from Redux
- *    (the raw JWT is lost, the credential cannot be presented).
- *    Credentials with a pending legacy migration entry are skipped,
- *    as they will be retried on the next boot.
+ * 1. If a credential is in Redux but not in the vault → remove from Redux (the raw
+ *    JWT is lost, the credential cannot be presented). Credentials with a
+ *    pending legacy migration entry are skipped, as they will be retried on the
+ *    next boot.
  * 2. If a credential is in the vault but not in Redux → remove from vault
  *    (orphaned entry, no corresponding metadata).
  */

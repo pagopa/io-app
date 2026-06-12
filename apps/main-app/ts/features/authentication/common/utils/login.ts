@@ -14,9 +14,7 @@ import {
   trackSessionTokenFragmentFailure,
   trackSessionTokenSource
 } from "../analytics";
-/**
- * Helper functions for handling the SPID login flow through a webview.
- */
+/** Helper functions for handling the SPID login flow through a webview. */
 
 type LoginSuccess = {
   success: true;
@@ -37,8 +35,10 @@ export const getEitherLoginResult = (
   result.success ? E.right(result) : E.left(result);
 
 /**
- * return some(intentFallbackUrl) if the given input is a valid intent and it has the fallback url
- * more info https://developer.chrome.com/docs/multidevice/android/intents/
+ * Return some(intentFallbackUrl) if the given input is a valid intent and it
+ * has the fallback url more info
+ * https://developer.chrome.com/docs/multidevice/android/intents/
+ *
  * @param intentUrl
  */
 export const getIntentFallbackUrl = (intentUrl: string): O.Option<string> => {
@@ -57,6 +57,7 @@ export const getIntentFallbackUrl = (intentUrl: string): O.Option<string> => {
 
 /**
  * Extracts the session token from the URL hash fragment
+ *
  * @param urlParse
  */
 const getTokenFromUrlParse = (urlParse: URLParse): string | undefined => {
@@ -124,7 +125,7 @@ export const extractLoginResult = (
   return undefined;
 };
 
-/** for a given idp id get the relative login uri */
+/** For a given idp id get the relative login uri */
 export const getIdpLoginUri = (
   idpId: string,
   level: number,
@@ -133,8 +134,8 @@ export const getIdpLoginUri = (
   `${apiLoginUrlPrefix}/api/auth/v1/login?authLevel=SpidL${level}&entityID=${idpId}&RelayState=${spidRelayState}`;
 
 /**
- * Extract the login result from the given url.
- * Return true if the url contains login pattern & token
+ * Extract the login result from the given url. Return true if the url contains
+ * login pattern & token
  */
 export const onLoginUriChanged =
   (
@@ -164,22 +165,27 @@ export const onLoginUriChanged =
 /**
  * Generates the headers required for login.
  *
+ * @remarks
+ *   - The `x-pagopa-current-user` header is included only if `hashedFiscalCode`
+ *     is provided.
+ *   - The `x-pagopa-login-type` header is included only if `isFastLogin` is true.
+ *   - The `x-pagopa-idp-id` and `x-pagopa-app-version` headers are used only in
+ *     local/dev environments.
+ *   - The function relies on `isLocalEnv` and `getAppVersion()` from the
+ *     surrounding scope.
+ *   - The `x-pagopa-current-user` header contains the fiscal code hashed using
+ *     the sha256 algorithm. It is used by the backend to verify, during an
+ *     active session login, that the user is logging in with the same fiscal
+ *     code. If a different fiscal code is used, error 1004
+ *     (AUTH_ERRORS.ERROR_1004) will be triggered.
  * @param publicKey - The public key used for authentication, encoded in base64.
  * @param hashAlgorithm - The hash algorithm used for the public key.
  * @param isFastLogin - Indicates if fast login (LV) is enabled.
- * @param idpId - (Optional) The identity provider ID, used in local/dev environments.
- * @param hashedFiscalCode - (Optional) The hashed fiscal code of the current user, used for active session verification.
- *
+ * @param idpId - (Optional) The identity provider ID, used in local/dev
+ *   environments.
+ * @param hashedFiscalCode - (Optional) The hashed fiscal code of the current
+ *   user, used for active session verification.
  * @returns An object containing the necessary headers for the login request.
- *
- * @remarks
- * - The `x-pagopa-current-user` header is included only if `hashedFiscalCode` is provided.
- * - The `x-pagopa-login-type` header is included only if `isFastLogin` is true.
- * - The `x-pagopa-idp-id` and `x-pagopa-app-version` headers are used only in local/dev environments.
- * - The function relies on `isLocalEnv` and `getAppVersion()` from the surrounding scope.
- * - The `x-pagopa-current-user` header contains the fiscal code hashed using the sha256 algorithm.
- * It is used by the backend to verify, during an active session login, that the user is logging in with the same fiscal code.
- * If a different fiscal code is used, error 1004 (AUTH_ERRORS.ERROR_1004) will be triggered.
  */
 export const getLoginHeaders = (
   publicKey: PublicKey,

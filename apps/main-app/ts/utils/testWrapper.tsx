@@ -14,6 +14,7 @@ import * as linkingSubscription from "../navigation/linkingSubscription";
 
 /**
  * This should be used to test component in a new navigator
+ *
  * @param screen
  * @param route
  * @param params

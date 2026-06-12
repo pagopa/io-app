@@ -19,15 +19,14 @@ export const itwLifecycleWalletReset = createStandardAction(
 )<void>();
 
 /**
- * Action used to resume the startup saga after the authenticated user's identity check.
+ * Action used to resume the startup saga after the authenticated user's
+ * identity check.
  */
 export const itwLifecycleIdentityCheckCompleted = createStandardAction(
   "ITW_LIFECYCLE_IDENTITY_CHECK_COMPLETED"
 )<void>();
 
-/**
- * Type for the wallet lifecycle related actions.
- */
+/** Type for the wallet lifecycle related actions. */
 export type ItwLifecycleActions =
   | ActionType<typeof itwLifecycleStoresReset>
   | ActionType<typeof itwLifecycleWalletReset>

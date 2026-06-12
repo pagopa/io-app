@@ -46,9 +46,7 @@ function* checkBackendConnectionStatus(
   }
 }
 
-/**
- * this saga requests and checks the connection status
- */
+/** This saga requests and checks the connection status */
 export function* connectionStatusSaga(
   client: ConnectivityClient
 ): Generator<

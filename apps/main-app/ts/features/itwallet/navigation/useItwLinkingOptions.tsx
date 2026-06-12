@@ -4,8 +4,10 @@ import { ITW_REMOTE_ROUTES } from "../presentation/remote/navigation/routes.ts";
 import { ITW_ROUTES } from "./routes";
 
 /**
- * Hook which returns the linking options for internal navigation routes for the IT Wallet.
- * This hook only defines the static linking configuration and does not conditionally enable or disable routes based on wallet status or lifecycle.
+ * Hook which returns the linking options for internal navigation routes for the
+ * IT Wallet. This hook only defines the static linking configuration and does
+ * not conditionally enable or disable routes based on wallet status or
+ * lifecycle.
  */
 export const useItwLinkingOptions = (): PathConfigMap<AppParamsList> => ({
   [ITW_ROUTES.MAIN]: {
@@ -14,16 +16,19 @@ export const useItwLinkingOptions = (): PathConfigMap<AppParamsList> => ({
       /**
        * Handles https://continua.io.pagopa.it/itw/discovery/info
        *
-       * Redirects to the discovery info screen to start the wallet activation flow.
+       * Redirects to the discovery info screen to start the wallet activation
+       * flow.
        */
       [ITW_ROUTES.LANDING.DISCOVERY]: {
         path: "discovery/info"
       },
 
       /**
-       * Handles https://continua.io.pagopa.it/itw/credential/issuance/:credentialType
+       * Handles
+       * https://continua.io.pagopa.it/itw/credential/issuance/:credentialType
        *
-       * Redirects to the credential issuance flow for the given credential type.
+       * Redirects to the credential issuance flow for the given credential
+       * type.
        */
       [ITW_ROUTES.LANDING.CREDENTIAL_ISSUANCE]: {
         path: "credential/issuance/:credentialType"
@@ -48,7 +53,8 @@ export const useItwLinkingOptions = (): PathConfigMap<AppParamsList> => ({
       },
 
       /**
-       * Handles https://continua.io.pagopa.it/itw/presentation/credential-detail/:credentialType
+       * Handles
+       * https://continua.io.pagopa.it/itw/presentation/credential-detail/:credentialType
        *
        * Opens the credential detail screen for the given credential type.
        */

@@ -14,8 +14,8 @@ export type ServiceType = {
 
 export type FavouriteServiceType = ServiceType & {
   /**
-   * The timestamp, in milliseconds, representing when the service
-   * was added to the favourites.
+   * The timestamp, in milliseconds, representing when the service was added to
+   * the favourites.
    */
   addedAt: number;
 };

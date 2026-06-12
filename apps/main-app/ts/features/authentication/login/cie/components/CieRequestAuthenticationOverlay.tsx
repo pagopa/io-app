@@ -54,10 +54,11 @@ const defaultUserAgent = Platform.select({
 });
 
 /**
- * This JS is injection on every page load. It tries to decrease to 0 the sleeping time of a script.
- * That sleeping is used to allow user to read page content until the content changes to an automatic redirect.
- * This script also tries also to call apriIosUL.
- * If it is defined it starts the authentication process (iOS only).
+ * This JS is injection on every page load. It tries to decrease to 0 the
+ * sleeping time of a script. That sleeping is used to allow user to read page
+ * content until the content changes to an automatic redirect. This script also
+ * tries also to call apriIosUL. If it is defined it starts the authentication
+ * process (iOS only).
  */
 const injectJs =
   Platform.OS === "ios"
@@ -351,12 +352,16 @@ const ErrorComponent = (
   );
 };
 /**
- * A screen to manage the request of authentication once the pin of the user's CIE has been inserted
- * 1) Start the first request with the getIdpLoginUri(CIE_IDP_ID) uri
- * 2) Accepts all the redirects until the uri with the right path is found and stop the loading
- * 3) Dispatch the found uri using the `onSuccess` callback
+ * A screen to manage the request of authentication once the pin of the user's
+ * CIE has been inserted
+ *
+ * 1. Start the first request with the getIdpLoginUri(CIE_IDP_ID) uri
+ * 2. Accepts all the redirects until the uri with the right path is found and stop
+ *    the loading
+ * 3. Dispatch the found uri using the `onSuccess` callback
+ *
+ * @class
  * @param props
- * @constructor
  */
 export const CieRequestAuthenticationOverlay = (props: Props): ReactElement => {
   // Disable android back button

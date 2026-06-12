@@ -13,9 +13,7 @@ const initialState: FciSecurityLevelStateType = {
   localFeatureFlag: false
 };
 
-/**
- * Store security level info for FCI flow
- */
+/** Store security level info for FCI flow */
 export const fciSecurityLevelReducer = (
   state: FciSecurityLevelStateType = initialState,
   action: Action

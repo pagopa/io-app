@@ -29,12 +29,14 @@ import { shouldShowExpiredProximityCredentialsBannerSelector } from "../store/se
 const QR_CODE_LOGO_SIZE = 52;
 
 /**
- * For the QR Code size, we start from the window width and subtract the horizontal padding.
+ * For the QR Code size, we start from the window width and subtract the
+ * horizontal padding.
  */
 const WINDOW_WIDTH = Dimensions.get("window").width;
 
 /**
- * The total size is the window width minus the horizontal screen padding and the branded box padding.
+ * The total size is the window width minus the horizontal screen padding and
+ * the branded box padding.
  */
 const QR_CODE_SIZE =
   WINDOW_WIDTH -

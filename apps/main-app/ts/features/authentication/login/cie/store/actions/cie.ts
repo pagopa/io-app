@@ -1,7 +1,5 @@
 import { Event as CEvent } from "@pagopa/react-native-cie";
-/**
- * Action types and action creator related to authentication by CIE
- */
+/** Action types and action creator related to authentication by CIE */
 
 import {
   ActionType,

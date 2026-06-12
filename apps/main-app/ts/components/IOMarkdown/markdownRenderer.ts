@@ -14,9 +14,9 @@ import { isIos } from "../../utils/platform";
 import { AnyTxtNodeWithSpacer, IOMarkdownRenderRules, Renderer } from "./types";
 
 /**
- *
  * @param rules The `markdown` render rules.
- * @returns A render function for the individual node that applies the provided rendering rules.
+ * @returns A render function for the individual node that applies the provided
+ *   rendering rules.
  */
 export function getRenderMarkdown(
   rules: IOMarkdownRenderRules,
@@ -33,9 +33,13 @@ export function getRenderMarkdown(
 }
 
 /**
- * This component extends the `parse` method of `@textlint/markdown-to-ast` by inserting a custom node with type `Spacer` between first-level nodes that have at least one empty line between them.
+ * This component extends the `parse` method of `@textlint/markdown-to-ast` by
+ * inserting a custom node with type `Spacer` between first-level nodes that
+ * have at least one empty line between them.
  *
- * The spacer node takes a `size` of `8` when a single empty row is encountered, and `16` when 2 or more empty rows are encountered.
+ * The spacer node takes a `size` of `8` when a single empty row is encountered,
+ * and `16` when 2 or more empty rows are encountered.
+ *
  * @param content The `markdown` string to parse.
  * @returns The parsed content.
  */
@@ -82,30 +86,33 @@ function integrateParent<T extends AnyTxtNode>(
 }
 
 /**
- * Converts Markdown reference-style links to inline links
- * since IOMarkdown does not support the former.
+ * Converts Markdown reference-style links to inline links since IOMarkdown does
+ * not support the former.
  *
  * Reference-style links consist of two parts:
+ *
  * 1. The link reference: [text][label] or [text][] (shortcut form)
  * 2. The link definition: [label]: URL "optional title"
  *
  * This function finds all link definitions, then replaces all reference-style
  * links with their corresponding inline format: [text](URL)
  *
- * @param {string} markdownText - The markdown text containing reference-style links
- * @returns {string} The markdown text with reference-style links converted to inline links
- *
  * @example
- * const input = `
+ *   const input = `
  * Check out [Google][1] and [GitHub][gh].
  *
  * [1]: https://google.com "Search Engine"
  * [gh]: https://github.com
  * `;
  *
- * const output = convertReferenceLinksToInline(input);
- * // Result:
- * // Check out [Google](https://google.com) and [GitHub](https://github.com).
+ *   const output = convertReferenceLinksToInline(input);
+ *   // Result:
+ *   // Check out [Google](https://google.com) and [GitHub](https://github.com).
+ *
+ * @param {string} markdownText - The markdown text containing reference-style
+ *   links
+ * @returns {string} The markdown text with reference-style links converted to
+ *   inline links
  */
 export const convertReferenceLinksToInline = (markdownText: string): string => {
   // First, extract all link definitions [label]: URL "optional title"

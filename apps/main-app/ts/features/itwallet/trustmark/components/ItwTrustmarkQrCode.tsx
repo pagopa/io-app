@@ -7,9 +7,7 @@ import { ItwTrustmarkMachineContext } from "../machine/provider";
 import { selectFailure, selectTrustmarkUrl } from "../machine/selectors";
 import { ItwRetryableQRCode } from "../../common/components/ItwRetryableQRCode";
 
-/**
- * Component that renders the QR code of the trustmark
- */
+/** Component that renders the QR code of the trustmark */
 const ItwTrustmarkQrCode = () => {
   const machineRef = ItwTrustmarkMachineContext.useActorRef();
   const trustmarkUrl =

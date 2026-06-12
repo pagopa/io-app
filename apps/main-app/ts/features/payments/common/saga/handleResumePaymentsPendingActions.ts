@@ -3,8 +3,9 @@ import { clearPaymentsPendingActions } from "../store/actions";
 import { selectPagoPaPlatformPendingActions } from "../store/selectors";
 
 /**
- * This handler is used to resume the pending actions that were waiting for the PagoPA session token.
- * It is called after the session token is successfully retrieved.
+ * This handler is used to resume the pending actions that were waiting for the
+ * PagoPA session token. It is called after the session token is successfully
+ * retrieved.
  */
 export function* handleResumePaymentsPendingActions() {
   const pendingActions = yield* select(selectPagoPaPlatformPendingActions);

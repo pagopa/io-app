@@ -5,14 +5,14 @@ import { itwCloseBanner, itwShowBanner } from "../actions/banners";
 import { NonEmptyArray } from "../../../../../types/helpers";
 
 /**
- * Pseudo-infinite duration in days.
- * Used to hide banners "forever" or until app reset/reinstallation.
+ * Pseudo-infinite duration in days. Used to hide banners "forever" or until app
+ * reset/reinstallation.
  */
 const FOREVER = 100 * 365; // approx. 100 years
 
 /**
- * Identifiers for IT Wallet banners
- * To add a new banner add a new id to this type
+ * Identifiers for IT Wallet banners To add a new banner add a new id to this
+ * type
  */
 export type ItwBannerId =
   | "discovery" // (Legacy) Discovery banner for Documenti su IO
@@ -24,8 +24,8 @@ export type ItwBannerId =
   | "proximity_qr_code_info"; // Info banner shown on the proximity QR code screen
 
 /**
- * Mapping between banner identifiers and the duration (expressed in days) for which they should be hidden
- * after each dismissal.
+ * Mapping between banner identifiers and the duration (expressed in days) for
+ * which they should be hidden after each dismissal.
  */
 export const bannerHideDurations: Record<ItwBannerId, NonEmptyArray<number>> = {
   discovery: [6 * 30], // ~6 months
@@ -49,9 +49,7 @@ export type ItwBannersState = Partial<
   >
 >;
 
-/**
- * Initial state for IT Wallet banners
- */
+/** Initial state for IT Wallet banners */
 export const itwBannersInitialState: ItwBannersState = {};
 
 const reducer = (

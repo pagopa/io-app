@@ -16,7 +16,8 @@ type Props = {
 };
 
 /**
- * A hook that returns a function to present the abort signature flow bottom sheet
+ * A hook that returns a function to present the abort signature flow bottom
+ * sheet
  */
 export const useFciNoSignatureFields = (props: Props) => {
   const navigation = useIONavigation();

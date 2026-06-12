@@ -30,8 +30,8 @@ type WalletPaymentSortPspBottomSheetProps = {
 };
 
 /**
- * This custom hook, useSortPspBottomSheet, is designed to display a bottom sheet
- * with the sorting options for the PSPs.
+ * This custom hook, useSortPspBottomSheet, is designed to display a bottom
+ * sheet with the sorting options for the PSPs.
  */
 const useSortPspBottomSheet = ({
   onSortChange

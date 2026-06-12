@@ -77,9 +77,7 @@ type Props = IOStackNavigationRouteProps<
   "ITW_PRESENTATION_CREDENTIAL_DETAIL"
 >;
 
-/**
- * Component that renders the credential detail screen.
- */
+/** Component that renders the credential detail screen. */
 export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   const navigation = useIONavigation();
   const dispatch = useIODispatch();
@@ -88,9 +86,9 @@ export const ItwPresentationCredentialDetailScreen = ({ route }: Props) => {
   const isL3 = useIOSelector(itwIsL3EnabledSelector);
 
   /**
-   * Since the driver’s license is mapped as mDL but from the deeplink provided by iPatente
-   * come in as presentation/credential-detail/MDL, it is necessary to enforce a lowercase
-   * check for this case so the correct key is resolved.
+   * Since the driver’s license is mapped as mDL but from the deeplink provided
+   * by iPatente come in as presentation/credential-detail/MDL, it is necessary
+   * to enforce a lowercase check for this case so the correct key is resolved.
    */
   const normalizedCredentialType = credentialType.replace(
     /^mdl$/i,
@@ -181,9 +179,7 @@ type ItwPresentationCredentialDetailProps = {
   credential: CredentialMetadata;
 };
 
-/**
- * Component that renders the credential detail content.
- */
+/** Component that renders the credential detail content. */
 export const ItwPresentationCredentialDetail = ({
   credential
 }: ItwPresentationCredentialDetailProps) => {
@@ -225,9 +221,7 @@ export const ItwPresentationCredentialDetail = ({
     }, [status, credential, mixPanelCredential])
   );
 
-  /**
-   * Show the credential trustmark screen after user identification
-   */
+  /** Show the credential trustmark screen after user identification */
   const handleTrustmarkPress = () => {
     trackWalletCredentialShowTrustmark(mixPanelCredential);
     dispatch(

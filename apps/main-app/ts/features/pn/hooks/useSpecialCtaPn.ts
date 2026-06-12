@@ -19,9 +19,7 @@ import {
 import { pnActivationUpsert } from "../store/actions";
 import { isLoadingPnActivationSelector } from "../store/reducers/activation";
 
-/**
- * Hook to handle the PN activation/deactivation
- */
+/** Hook to handle the PN activation/deactivation */
 const usePnActivation = (serviceId: ServiceId) => {
   const dispatch = useIODispatch();
 
@@ -62,8 +60,8 @@ const usePnActivation = (serviceId: ServiceId) => {
 };
 
 /**
- * This hook determines and returns the appropriate primary action prop
- * for activating and deactivating the PN service.
+ * This hook determines and returns the appropriate primary action prop for
+ * activating and deactivating the PN service.
  */
 export const useSpecialCtaPn = (
   serviceId: ServiceId,

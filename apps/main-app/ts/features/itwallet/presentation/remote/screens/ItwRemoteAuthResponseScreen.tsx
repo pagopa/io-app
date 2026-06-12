@@ -36,9 +36,9 @@ export const ItwRemoteAuthResponseScreen = () => {
   });
 
   /**
-   * In addition to checking for the loading state,
-   * we need to ensure that the current state is not `Success`
-   * to prevent a visual glitch caused by a slight delay in navigation
+   * In addition to checking for the loading state, we need to ensure that the
+   * current state is not `Success` to prevent a visual glitch caused by a
+   * slight delay in navigation
    */
   if (isLoading || !isSuccess) {
     return (
