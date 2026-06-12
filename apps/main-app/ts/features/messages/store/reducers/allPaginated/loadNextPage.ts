@@ -18,7 +18,7 @@ export const reduceLoadNextPage = (
           archive: {
             ...state.archive,
             data: pot.toLoading(state.archive.data),
-            lastRequest: O.some("next")
+            lastRequest: "next"
           }
         };
       }
@@ -27,7 +27,7 @@ export const reduceLoadNextPage = (
         inbox: {
           ...state.inbox,
           data: pot.toLoading(state.inbox.data),
-          lastRequest: O.some("next")
+          lastRequest: "next"
         }
       };
 
@@ -57,7 +57,7 @@ export const reduceLoadNextPage = (
           archive: {
             ...state.archive,
             data: getNextData(state.archive),
-            lastRequest: O.none
+            lastRequest: undefined
           }
         };
       }
@@ -67,7 +67,7 @@ export const reduceLoadNextPage = (
         inbox: {
           ...state.inbox,
           data: getNextData(state.inbox),
-          lastRequest: O.none
+          lastRequest: undefined
         }
       };
 
