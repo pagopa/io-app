@@ -52,9 +52,11 @@ export function* watchSessionRefreshInOfflineSaga() {
 /**
  * Determines if the device is offline and offline access is available.
  *
- * This saga checks whether: - The device is offline (`isConnectedSelector` is
- * `false`) - The user has a valid IT Wallet instance with credentials and
- * offline access is enabled (`itwOfflineAccessAvailableSelector`)
+ * This saga checks whether:
+ *
+ * - The device is offline (`isConnectedSelector` is `false`)
+ * - The user has a valid IT Wallet instance with credentials and offline access
+ *   is enabled (`itwOfflineAccessAvailableSelector`)
  *
  * @returns {boolean} - Returns `true` if offline access is available and the
  *   device is offline, otherwise `false`.

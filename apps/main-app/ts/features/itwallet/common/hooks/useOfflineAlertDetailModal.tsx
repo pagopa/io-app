@@ -60,13 +60,17 @@ const getOfflineModalLocales = (reason: OfflineAccessReasonEnum) => {
  * information about the current offline state and provide app restart
  * functionality.
  *
- * The modal includes: - A title based on the specific offline reason - Detailed
- * explanation content rendered via IOMarkdown - A button to attempt app restart
- * when connectivity is restored
+ * The modal includes:
  *
- * When the restart button is pressed: - If the device is connected, it will
- * reset the offline state and restart the application - If the device is still
- * offline, it shows an error toast
+ * - A title based on the specific offline reason
+ * - Detailed explanation content rendered via IOMarkdown
+ * - A button to attempt app restart when connectivity is restored
+ *
+ * When the restart button is pressed:
+ *
+ * - If the device is connected, it will reset the offline state and restart the
+ *   application
+ * - If the device is still offline, it shows an error toast
  *
  * @param offlineAccessReason - The specific reason for the offline state, used
  *   to determine the content and behavior of the modal

@@ -106,7 +106,7 @@ const destinationChannel = "#io_dev_app_feed";
  * - Execute pnpm outdated --json and extract the JSON results
  * - Decode the JSON as {@link DependenciesTable}
  * - Convert {@link DependenciesTable} in {@link OutdatedStats} (aggregate stats
- *   by type, severity) TODO: - Save the result
+ *   by type, severity). TODO: Save the result.
  * - Convert {@link OutdatedStats} to a human readable slack message, split in
  *   chunk (string)
  * - Publish the report on slack channel #io_app_dev_feed

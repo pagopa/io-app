@@ -168,9 +168,12 @@ export const WAIT_INITIALIZE_SAGA = 5000 as Millisecond;
 
 /** Handles the application startup and the main application logic loop */
 /**
- * The startup saga is triggered in the following scenarios: - During the root
- * saga initialization - On logout or expired session - On FL session refresh -
- * When accessing the Wallet mini app in offline mode
+ * The startup saga is triggered in the following scenarios:
+ *
+ * - During the root saga initialization
+ * - On logout or expired session
+ * - On FL session refresh
+ * - When accessing the Wallet mini app in offline mode
  */
 // eslint-disable-next-line complexity
 export function* initializeApplicationSaga(

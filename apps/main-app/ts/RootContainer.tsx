@@ -39,11 +39,14 @@ type Props = ReturnType<typeof mapStateToProps> &
   typeof mapDispatchToProps & { store: Store };
 
 /**
- * The main container of the application with: - the Navigator - the
- * IdentificationModal, for authenticating user after login by CIE/SPID - the
- * SystemOffModal, shown if backend is unavailable - the UpdateAppModal, if the
- * backend is not compatible with the installed app version - the root for
- * displaying light modals
+ * The main container of the application with:
+ *
+ * - The Navigator
+ * - The IdentificationModal, for authenticating user after login by CIE/SPID
+ * - The SystemOffModal, shown if backend is unavailable
+ * - The UpdateAppModal, if the backend is not compatible with the installed app
+ *   version
+ * - The root for displaying light modals
  */
 class RootContainer extends PureComponent<Props> {
   private subscription: NativeEventSubscription | undefined;

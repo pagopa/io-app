@@ -176,8 +176,11 @@ export const selectWalletCategoryFilter = (state: GlobalState) =>
 
 /**
  * Checks if a wallet category section should be rendered. A category section is
- * rendered if: - the category filtering is not enabled, or - no category filter
- * is selected, or - the filter matches the given category
+ * rendered if:
+ *
+ * - The category filtering is not enabled, or
+ * - No category filter is selected, or
+ * - The filter matches the given category
  */
 export const shouldRenderWalletCategorySelector = createSelector(
   isWalletCategoryFilteringEnabledSelector,
@@ -189,9 +192,11 @@ export const shouldRenderWalletCategorySelector = createSelector(
 
 /**
  * Determines whether the IT Wallet cards section is rendered in the wallet
- * screen. The section is rendered if: - the IT Wallet feature flag is enabled
- * OR the app is in offline mode - the IT Wallet is in a valid lifecycle state -
- * the IT Wallet WI does not have an error
+ * screen. The section is rendered if:
+ *
+ * - The IT Wallet feature flag is enabled OR the app is in offline mode
+ * - The IT Wallet is in a valid lifecycle state
+ * - The IT Wallet WI does not have an error
  */
 export const shouldRenderItwCardsContainerSelector = (state: GlobalState) =>
   (isItwEnabledSelector(state) || !isConnectedSelector(state)) &&
