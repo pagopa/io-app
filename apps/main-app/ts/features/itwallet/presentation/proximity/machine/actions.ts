@@ -5,7 +5,10 @@ import { assert } from "../../../../../utils/assert";
 import { ITW_PROXIMITY_ROUTES } from "../navigation/routes";
 import { itwGrantProximityConsent } from "../store/actions";
 import { itwPresentableCredentialsByDocTypeSelector } from "../store/selectors/credentials";
-import { getConsentDataFromProximityDetails } from "../store/utils";
+import {
+  generateConsentKey,
+  getConsentDataFromProximityDetails
+} from "../store/utils";
 import { Context } from "./context";
 import { ProximityEvents } from "./events";
 
@@ -81,6 +84,21 @@ export const createProximityActionsImplementation = (
   closeProximity: () => {
     navigation.pop();
   },
+
+  grantConsent: assign<Context, ProximityEvents, unknown, ProximityEvents, any>(
+    ({ context }: ActionArgs<Context, ProximityEvents, ProximityEvents>) => {
+      assert(
+        context.proximityDetails,
+        "ProximityDetails must be present in context to grant consent"
+      );
+
+      const consentData = getConsentDataFromProximityDetails(
+        context.proximityDetails
+      );
+
+      return { grantedConsentKey: generateConsentKey(consentData) };
+    }
+  ),
 
   storeConsent: ({
     context

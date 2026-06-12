@@ -1,6 +1,9 @@
 import { useIOStore } from "../../../../../store/hooks";
 import { itwProximityConsentExistsSelector } from "../store/selectors/consents";
-import { getConsentDataFromProximityDetails } from "../store/utils";
+import {
+  generateConsentKey,
+  getConsentDataFromProximityDetails
+} from "../store/utils";
 import { Context } from "./context";
 
 export const createProximityGuardsImplementation = (
@@ -11,16 +14,17 @@ export const createProximityGuardsImplementation = (
       return false;
     }
 
-    if (context.hasGrantedConsent === true) {
-      // User granted consent for the current session
-      return true;
-    }
-
     const consentData = getConsentDataFromProximityDetails(
       context.proximityDetails
     );
+    const consentKey = generateConsentKey(consentData);
 
-    // Check if user stored the consent for the current RP ID and proximity details
+    // Session consent: user already reviewed this exact request in the current session
+    if (context.grantedConsentKey === consentKey) {
+      return true;
+    }
+
+    // Persisted consent: user stored consent for this exact RP and claims combination
     return itwProximityConsentExistsSelector(consentData)(store.getState());
   }
 });

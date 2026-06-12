@@ -56,7 +56,7 @@ export const itwProximityMachine = setup({
      * Consents
      */
 
-    grantConsent: assign({ hasGrantedConsent: true }),
+    grantConsent: notImplemented,
     storeConsent: notImplemented
   },
   actors: {
@@ -407,7 +407,6 @@ export const itwProximityMachine = setup({
                 target: "#itwProximityMachine.Presentment.StoreConsent"
               },
               {
-                actions: "grantConsent",
                 target: "#itwProximityMachine.Presentment.SendingDocuments"
               }
             ],

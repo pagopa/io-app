@@ -11,6 +11,10 @@ import {
   CredentialMetadata,
   WalletInstanceAttestations
 } from "../../../../common/utils/itwTypesUtils";
+import {
+  generateConsentKey,
+  getConsentDataFromProximityDetails
+} from "../../store/utils";
 import { ProximityFailureType } from "../failure";
 import { ItwProximityMachine, itwProximityMachine } from "../machine";
 import { ProximityDetails, VerifierRequest } from "../../utils/types";
@@ -20,7 +24,26 @@ type MachineSnapshot = StateFrom<ItwProximityMachine>;
 const T_WIA = { jwt: "test-wia" } as WalletInstanceAttestations;
 const T_CREDENTIALS = {} as Record<string, CredentialMetadata>;
 const T_QR_CODE = "mdoc://test-qr-code";
-const T_PROXIMITY_DETAILS = [] as unknown as ProximityDetails;
+const T_PROXIMITY_DETAILS: ProximityDetails = [
+  {
+    rpId: "verifier.example.com",
+    credentialType: "MDL",
+    claimsToDisplay: [
+      { id: "given_name", label: "Given Name", value: "Alice" },
+      { id: "family_name", label: "Family Name", value: "Smith" }
+    ]
+  }
+];
+const T_PROXIMITY_DETAILS_B: ProximityDetails = [
+  {
+    rpId: "other-verifier.example.com",
+    credentialType: "MDL",
+    claimsToDisplay: [
+      { id: "given_name", label: "Given Name", value: "Alice" },
+      { id: "family_name", label: "Family Name", value: "Smith" }
+    ]
+  }
+];
 const T_VERIFIER_REQUEST = {} as VerifierRequest;
 
 describe("itwProximityMachine", () => {
@@ -65,6 +88,18 @@ describe("itwProximityMachine", () => {
       navigateToStoreconsentScreen,
       navigateToSuccessScreen,
       closeProximity,
+      grantConsent: assign(({ context }) => {
+        if (!context.proximityDetails) {
+          throw new Error(
+            "ProximityDetails must be present in context to grant consent"
+          );
+        }
+        return {
+          grantedConsentKey: generateConsentKey(
+            getConsentDataFromProximityDetails(context.proximityDetails)
+          )
+        };
+      }),
       storeConsent
     },
     actors: {
@@ -78,7 +113,16 @@ describe("itwProximityMachine", () => {
     },
     guards: {
       hasFailure: ({ context }) => !!context.failure,
-      hasGrantedConsent: ({ context }) => context.hasGrantedConsent === true
+      hasGrantedConsent: ({ context }) => {
+        if (!context.proximityDetails) {
+          return false;
+        }
+        const consentData = getConsentDataFromProximityDetails(
+          context.proximityDetails
+        );
+        const consentKey = generateConsentKey(consentData);
+        return context.grantedConsentKey === consentKey;
+      }
     }
   });
 
@@ -394,7 +438,11 @@ describe("itwProximityMachine", () => {
     await waitFor(actor, snapshot =>
       snapshot.matches({ Presentment: "SendingDocuments" })
     );
-    expect(actor.getSnapshot().context.hasGrantedConsent).toBe(true);
+    expect(actor.getSnapshot().context.grantedConsentKey).toBe(
+      generateConsentKey(
+        getConsentDataFromProximityDetails(T_PROXIMITY_DETAILS)
+      )
+    );
 
     actor.send({ type: "device-disconnected" });
     expect(actor.getSnapshot().value).toStrictEqual("Success");
@@ -453,7 +501,10 @@ describe("itwProximityMachine", () => {
   it("holder-consent from ClaimsDisclosure moves to SendingDocuments", () => {
     sendDocuments.mockReturnValue(new Promise(() => {}));
     const actor = createActor(mockedMachine, {
-      snapshot: makeSnapshot({ Presentment: "ClaimsDisclosure" })
+      snapshot: makeSnapshot(
+        { Presentment: "ClaimsDisclosure" },
+        { proximityDetails: T_PROXIMITY_DETAILS }
+      )
     });
 
     actor.start();
@@ -467,7 +518,10 @@ describe("itwProximityMachine", () => {
   it("sendDocuments errors move to Failure", async () => {
     sendDocuments.mockRejectedValue(new Error("send failed"));
     const actor = createActor(mockedMachine, {
-      snapshot: makeSnapshot({ Presentment: "ClaimsDisclosure" })
+      snapshot: makeSnapshot(
+        { Presentment: "ClaimsDisclosure" },
+        { proximityDetails: T_PROXIMITY_DETAILS }
+      )
     });
 
     actor.start();
@@ -570,7 +624,7 @@ describe("itwProximityMachine", () => {
     const actor = createActor(mockedMachine, {
       snapshot: makeSnapshot(
         { Presentment: "ClaimsDisclosure" },
-        { retrievalMethod: "nfc" }
+        { retrievalMethod: "nfc", proximityDetails: T_PROXIMITY_DETAILS }
       )
     });
 
@@ -580,7 +634,11 @@ describe("itwProximityMachine", () => {
     expect(actor.getSnapshot().value).toStrictEqual({
       Presentment: "StoreConsent"
     });
-    expect(actor.getSnapshot().context.hasGrantedConsent).toBe(true);
+    expect(actor.getSnapshot().context.grantedConsentKey).toBe(
+      generateConsentKey(
+        getConsentDataFromProximityDetails(T_PROXIMITY_DETAILS)
+      )
+    );
     expect(navigateToStoreconsentScreen).toHaveBeenCalledTimes(1);
   });
 
@@ -606,7 +664,7 @@ describe("itwProximityMachine", () => {
     );
     expect(terminateSession).toHaveBeenCalledTimes(1);
     expect(navigateToClaimsDisclosureScreen).toHaveBeenCalledTimes(1);
-    expect(actor.getSnapshot().context.hasGrantedConsent).not.toBe(true);
+    expect(actor.getSnapshot().context.grantedConsentKey).toBeUndefined();
   });
 
   it("NFC termination failure still proceeds to claims disclosure", async () => {
@@ -703,7 +761,12 @@ describe("itwProximityMachine", () => {
     const actor = createActor(mockedMachine, {
       snapshot: makeSnapshot(
         { Presentment: "Connected" },
-        { engagementMode: "nfc", hasGrantedConsent: true }
+        {
+          engagementMode: "nfc",
+          grantedConsentKey: generateConsentKey(
+            getConsentDataFromProximityDetails(T_PROXIMITY_DETAILS)
+          )
+        }
       )
     });
 
@@ -719,6 +782,36 @@ describe("itwProximityMachine", () => {
       snapshot.matches({ Presentment: "SendingDocuments" })
     );
     expect(terminateSession).not.toHaveBeenCalled();
+  });
+
+  it("NFC document request with mismatched consent key goes through TerminatingForConsent and ClaimsDisclosure", async () => {
+    terminateSession.mockResolvedValue(undefined);
+    const actor = createActor(mockedMachine, {
+      snapshot: makeSnapshot(
+        { Presentment: "Connected" },
+        {
+          engagementMode: "nfc",
+          grantedConsentKey: generateConsentKey(
+            getConsentDataFromProximityDetails(T_PROXIMITY_DETAILS)
+          )
+        }
+      )
+    });
+
+    actor.start();
+    actor.send({
+      type: "device-document-request-received",
+      proximityDetails: T_PROXIMITY_DETAILS_B,
+      verifierRequest: T_VERIFIER_REQUEST,
+      retrievalMethod: "nfc"
+    });
+
+    await waitFor(actor, snapshot =>
+      snapshot.matches({ Presentment: "ClaimsDisclosure" })
+    );
+    expect(terminateSession).toHaveBeenCalledTimes(1);
+    expect(sendDocuments).not.toHaveBeenCalled();
+    expect(navigateToClaimsDisclosureScreen).toHaveBeenCalledTimes(1);
   });
 
   it("store-consent from StoreConsent stores consent and moves to Retrying", () => {
