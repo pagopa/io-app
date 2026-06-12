@@ -203,10 +203,12 @@ export const idPayOnboardingMachine = setup({
         next: [
           {
             guard: "hasMessageConsent",
-            target: "EnableMessage"
+            target: "EnableMessage",
+            actions: assign(() => ({ navigationDirection: "forward" }))
           },
           {
-            target: "LoadingCriteria"
+            target: "LoadingCriteria",
+            actions: assign(() => ({ navigationDirection: "forward" }))
           }
         ]
       }
@@ -290,19 +292,22 @@ export const idPayOnboardingMachine = setup({
         next: [
           {
             actions: assign(({ context }) => ({
-              currentStep: context.currentStep + 1
+              currentStep: context.currentStep + 1,
+              navigationDirection: "forward"
             })),
             guard: "hasSelfDecalrationList",
             target: "DisplayingSelfDeclarationList"
           },
           {
             actions: assign(({ context }) => ({
-              currentStep: context.currentStep + 1
+              currentStep: context.currentStep + 1,
+              navigationDirection: "forward"
             })),
             target: "AcceptingCriteria"
           }
         ],
         back: {
+          actions: assign(() => ({ navigationDirection: "back" })),
           target: "#idpay-onboarding.DisplayingInitiativeInfo"
         }
       }
@@ -335,14 +340,16 @@ export const idPayOnboardingMachine = setup({
             back: [
               {
                 actions: assign(({ context }) => ({
-                  currentStep: context.currentStep - 1
+                  currentStep: context.currentStep - 1,
+                  navigationDirection: "back"
                 })),
                 guard: "hasPdndCriteria",
                 target: "#idpay-onboarding.DisplayingPdndCriteria"
               },
               {
                 actions: assign(({ context }) => ({
-                  currentStep: context.currentStep - 1
+                  currentStep: context.currentStep - 1,
+                  navigationDirection: "back"
                 })),
                 target: "#idpay-onboarding.DisplayingInitiativeInfo"
               }
@@ -360,15 +367,18 @@ export const idPayOnboardingMachine = setup({
                 guard: "hasMultiSelfDeclarationList",
                 target: "DisplayingMultiSelfDeclarationList",
                 actions: assign(({ context }) => ({
-                  currentStep: context.currentStep + 1
+                  currentStep: context.currentStep + 1,
+                  navigationDirection: "forward"
                 }))
               },
               {
                 guard: "hasInputFormDeclaration",
-                target: "DisplayingInputForm"
+                target: "DisplayingInputForm",
+                actions: assign(() => ({ navigationDirection: "forward" }))
               },
               {
-                target: "#idpay-onboarding.AcceptingCriteria"
+                target: "#idpay-onboarding.AcceptingCriteria",
+                actions: assign(() => ({ navigationDirection: "forward" }))
               }
             ]
           }
@@ -392,7 +402,8 @@ export const idPayOnboardingMachine = setup({
                     selfDeclarationsMultiAnswers: {
                       ...context.selfDeclarationsMultiAnswers,
                       [context.selfDeclarationsMultiPage]: event.data
-                    }
+                    },
+                    navigationDirection: "forward"
                   })),
                   target: "EvaluatingMultiSelfDeclarationList"
                 },
@@ -409,7 +420,8 @@ export const idPayOnboardingMachine = setup({
                         0,
                         +context.selfDeclarationsMultiPage - 1
                       ),
-                      currentStep: context.currentStep - 1
+                      currentStep: context.currentStep - 1,
+                      navigationDirection: "back"
                     }))
                   },
                   {
@@ -420,7 +432,8 @@ export const idPayOnboardingMachine = setup({
                         0,
                         +context.selfDeclarationsMultiPage - 1
                       ),
-                      currentStep: context.currentStep - 1
+                      currentStep: context.currentStep - 1,
+                      navigationDirection: "back"
                     }))
                   },
                   {
@@ -431,7 +444,8 @@ export const idPayOnboardingMachine = setup({
                         0,
                         +context.selfDeclarationsMultiPage - 1
                       ),
-                      currentStep: context.currentStep - 1
+                      currentStep: context.currentStep - 1,
+                      navigationDirection: "back"
                     }))
                   },
                   {
@@ -482,7 +496,8 @@ export const idPayOnboardingMachine = setup({
                       ...context.selfDeclarationsTextAnswers,
                       [context.activeTextConsentPage]: event.criteria
                     },
-                    currentStep: context.currentStep + 1
+                    currentStep: context.currentStep + 1,
+                    navigationDirection: "forward"
                   })),
                   target: "EvaluatingInputForm"
                 },
@@ -492,6 +507,7 @@ export const idPayOnboardingMachine = setup({
                       "isFirstMultiTextConsent",
                       "hasMultiSelfDeclarationList"
                     ]),
+                    actions: assign(() => ({ navigationDirection: "back" })),
                     target:
                       "#idpay-onboarding.DisplayingSelfDeclarationList.DisplayingMultiSelfDeclarationList"
                   },
@@ -500,15 +516,18 @@ export const idPayOnboardingMachine = setup({
                       "isFirstMultiTextConsent",
                       "hasBooleanSelfDeclarationList"
                     ]),
+                    actions: assign(() => ({ navigationDirection: "back" })),
                     target:
                       "#idpay-onboarding.DisplayingSelfDeclarationList.DisplayingBooleanSelfDeclarationList"
                   },
                   {
                     guard: and(["isFirstMultiConsentPage", "hasPdndCriteria"]),
+                    actions: assign(() => ({ navigationDirection: "back" })),
                     target: "#idpay-onboarding.DisplayingPdndCriteria"
                   },
                   {
                     guard: "isFirstMultiTextConsent",
+                    actions: assign(() => ({ navigationDirection: "back" })),
                     target: "#idpay-onboarding.DisplayingInitiativeInfo"
                   },
                   {
