@@ -91,8 +91,6 @@ export const itwEidIssuanceMachine = setup({
     storeCredentialUpgradeFailures: notImplemented,
     handleSessionExpired: notImplemented,
     resetWalletInstance: notImplemented,
-    freezeSimplifiedActivationRequirements: notImplemented,
-    clearSimplifiedActivationRequirements: notImplemented,
 
     /**
      * Analytics
@@ -219,7 +217,6 @@ export const itwEidIssuanceMachine = setup({
     isUpgrade: ({ context }) => context.mode === "upgrade",
     isL2Fallback: ({ context }) => context.level === "l2-fallback",
     isL3FeaturesEnabled: ({ context }) => context.level === "l3",
-    isEligibleForItwSimplifiedActivation: notImplemented,
     requiresMrtdVerification: ({ context }) =>
       // MRTD PoP verification is required for SPID and CieID identification modes
       // when issuing an L3 PID and the PID Provider signals a challenge via `challenge_info`.
@@ -485,35 +482,13 @@ export const itwEidIssuanceMachine = setup({
         "This state handles the acceptance of the IPZS privacy policy",
       entry: "navigateToIpzsPrivacyScreen",
       on: {
-        "accept-ipzs-privacy": [
-          {
-            guard: and(["isUpgrade", "isEligibleForItwSimplifiedActivation"]),
-            target: "EvaluatingSimplifiedActivationFlow"
-          },
-          { target: "UserIdentification" }
-        ],
+        "accept-ipzs-privacy": { target: "UserIdentification" },
         error: {
           actions: "setFailure",
           target: "#itwEidIssuanceMachine.Failure"
         },
         back: "#itwEidIssuanceMachine.TosAcceptance"
       }
-    },
-    EvaluatingSimplifiedActivationFlow: {
-      description: "State that manages the wallet's simplified activation flow",
-      entry: [
-        "clearSimplifiedActivationRequirements",
-        "trackWalletInstanceCreation"
-      ],
-      always: [
-        {
-          guard: "hasCredentialsToUpgrade",
-          target: "#itwEidIssuanceMachine.CredentialsUpgrade"
-        },
-        {
-          target: "#itwEidIssuanceMachine.Success"
-        }
-      ]
     },
     UserIdentification: {
       description:
@@ -1193,10 +1168,7 @@ export const itwEidIssuanceMachine = setup({
             }),
             onDone: {
               target: "Completed",
-              actions: [
-                "trackWalletInstanceCreation",
-                "freezeSimplifiedActivationRequirements"
-              ]
+              actions: ["trackWalletInstanceCreation"]
             },
             onError: {
               target: "#itwEidIssuanceMachine.Failure",

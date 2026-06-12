@@ -17,8 +17,6 @@ import {
 } from "../../analytics";
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
 import {
-  itwClearSimplifiedActivationRequirements,
-  itwFreezeSimplifiedActivationRequirements,
   itwSetAuthLevel,
   itwSetCredentialUpgradeFailed,
   itwSetIdentificationMode
@@ -312,14 +310,6 @@ export const createEidIssuanceActionsImplementation = (
     store.dispatch(itwSetIdentificationMode(context.identification?.mode));
   },
 
-  freezeSimplifiedActivationRequirements: () => {
-    store.dispatch(itwFreezeSimplifiedActivationRequirements());
-  },
-
-  clearSimplifiedActivationRequirements: () => {
-    store.dispatch(itwClearSimplifiedActivationRequirements());
-  },
-
   storeCredentialUpgradeFailures: ({
     event
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
@@ -336,14 +326,9 @@ export const createEidIssuanceActionsImplementation = (
   trackWalletInstanceCreation: ({
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
-    const identificationMethod =
-      context.identification?.mode ??
-      // Simplified PID activation skips identification but still requires ITW_ID_method for analytics.
-      (context.level === "l3" ? "ciePin" : undefined);
-
     trackSaveCredentialSuccess({
       credential: context.level === "l3" ? "ITW_PID" : "ITW_ID_V2",
-      ITW_ID_method: identificationMethod,
+      ITW_ID_method: context.identification?.mode,
       credential_details: itwMixPanelCredentialDetailsSelector(store.getState())
     });
   },
