@@ -202,8 +202,8 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                           jestAnimatedStyle={
                             {
                               "value": {
-                                "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
+                                "backgroundColor": "rgba(255, 255, 255, 1)",
+                                "borderColor": "rgba(210, 214, 227, 0)",
                               },
                             }
                           }
@@ -224,8 +224,8 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                               },
                               {},
                               {
-                                "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
+                                "backgroundColor": "rgba(255, 255, 255, 1)",
+                                "borderColor": "rgba(210, 214, 227, 0)",
                               },
                             ]
                           }
@@ -429,10 +429,10 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                               </View>
                             </View>
                             <View
-                              accessibilityElementsHidden={true}
-                              accessibilityLabel=""
+                              accessibilityElementsHidden={false}
+                              accessibilityLabel="I tuoi Documenti su IO sono al sicuro"
                               accessibilityRole="header"
-                              accessible={false}
+                              accessible={true}
                               importantForAccessibility="yes"
                               style={
                                 {
@@ -454,7 +454,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                 jestAnimatedStyle={
                                   {
                                     "value": {
-                                      "opacity": 1,
+                                      "opacity": 0,
                                     },
                                   }
                                 }
@@ -485,12 +485,14 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                                         "textAlign": "center",
                                       },
                                       {
-                                        "opacity": 1,
+                                        "opacity": 0,
                                       },
                                     ],
                                   ]
                                 }
-                              />
+                              >
+                                I tuoi Documenti su IO sono al sicuro
+                              </Text>
                             </View>
                             <View
                               style={
@@ -999,42 +1001,60 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                           >
                             <View>
                               <View
+                                onLayout={[Function]}
                                 style={
                                   {
                                     "paddingHorizontal": 24,
                                   }
                                 }
                               >
-                                <Text
-                                  accessibilityRole="header"
-                                  accessible={true}
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="title1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#0E0F13",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 26,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 34,
-                                      },
-                                    ]
-                                  }
-                                  testID="screen-content-header-title"
-                                >
-                                  I tuoi Documenti su IO sono al sicuro
-                                </Text>
                                 <View
                                   style={
                                     {
-                                      "height": 16,
+                                      "display": "flex",
+                                      "flexDirection": "column",
+                                      "gap": 8,
                                     }
                                   }
-                                />
+                                >
+                                  <Text
+                                    accessibilityLabel="I tuoi Documenti su IO sono al sicuro"
+                                    accessibilityRole="header"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="title1"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0E0F13",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 26,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 34,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    I tuoi Documenti su IO sono al sicuro
+                                  </Text>
+                                </View>
+                              </View>
+                              <View
+                                style={
+                                  {
+                                    "height": 16,
+                                  }
+                                }
+                              />
+                              <View
+                                style={
+                                  {
+                                    "paddingHorizontal": 24,
+                                  }
+                                }
+                              >
                                 <Text>
                                   Premendo **Continua** dichiari di aver letto e compreso l’**Informativa Privacy**.
                                 </Text>
@@ -1723,8 +1743,8 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                           jestAnimatedStyle={
                             {
                               "value": {
-                                "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
+                                "backgroundColor": "rgba(255, 255, 255, 1)",
+                                "borderColor": "rgba(210, 214, 227, 0)",
                               },
                             }
                           }
@@ -1745,8 +1765,8 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                               },
                               {},
                               {
-                                "backgroundColor": "#FFFFFF",
-                                "borderColor": "transparent",
+                                "backgroundColor": "rgba(255, 255, 255, 1)",
+                                "borderColor": "rgba(210, 214, 227, 0)",
                               },
                             ]
                           }
@@ -1950,10 +1970,10 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                               </View>
                             </View>
                             <View
-                              accessibilityElementsHidden={true}
-                              accessibilityLabel=""
+                              accessibilityElementsHidden={false}
+                              accessibilityLabel="IT-Wallet: Informativa Privacy e Termini e Condizioni d’uso"
                               accessibilityRole="header"
-                              accessible={false}
+                              accessible={true}
                               importantForAccessibility="yes"
                               style={
                                 {
@@ -1975,7 +1995,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                 jestAnimatedStyle={
                                   {
                                     "value": {
-                                      "opacity": 1,
+                                      "opacity": 0,
                                     },
                                   }
                                 }
@@ -2006,12 +2026,14 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                                         "textAlign": "center",
                                       },
                                       {
-                                        "opacity": 1,
+                                        "opacity": 0,
                                       },
                                     ],
                                   ]
                                 }
-                              />
+                              >
+                                IT-Wallet: Informativa Privacy e Termini e Condizioni d’uso
+                              </Text>
                             </View>
                             <View
                               style={
@@ -2520,42 +2542,60 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                           >
                             <View>
                               <View
+                                onLayout={[Function]}
                                 style={
                                   {
                                     "paddingHorizontal": 24,
                                   }
                                 }
                               >
-                                <Text
-                                  accessibilityRole="header"
-                                  accessible={true}
-                                  allowFontScaling={true}
-                                  dynamicTypeRamp="title1"
-                                  maxFontSizeMultiplier={1.5}
-                                  style={
-                                    [
-                                      {},
-                                      {
-                                        "color": "#0E0F13",
-                                        "fontFamily": "Titillio",
-                                        "fontSize": 26,
-                                        "fontStyle": "normal",
-                                        "fontWeight": "600",
-                                        "lineHeight": 34,
-                                      },
-                                    ]
-                                  }
-                                  testID="screen-content-header-title"
-                                >
-                                  IT-Wallet: Informativa Privacy e Termini e Condizioni d’uso
-                                </Text>
                                 <View
                                   style={
                                     {
-                                      "height": 16,
+                                      "display": "flex",
+                                      "flexDirection": "column",
+                                      "gap": 8,
                                     }
                                   }
-                                />
+                                >
+                                  <Text
+                                    accessibilityLabel="IT-Wallet: Informativa Privacy e Termini e Condizioni d’uso"
+                                    accessibilityRole="header"
+                                    allowFontScaling={true}
+                                    dynamicTypeRamp="title1"
+                                    maxFontSizeMultiplier={1.5}
+                                    style={
+                                      [
+                                        {},
+                                        {
+                                          "color": "#0E0F13",
+                                          "fontFamily": "Titillio",
+                                          "fontSize": 26,
+                                          "fontStyle": "normal",
+                                          "fontWeight": "600",
+                                          "lineHeight": 34,
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    IT-Wallet: Informativa Privacy e Termini e Condizioni d’uso
+                                  </Text>
+                                </View>
+                              </View>
+                              <View
+                                style={
+                                  {
+                                    "height": 16,
+                                  }
+                                }
+                              />
+                              <View
+                                style={
+                                  {
+                                    "paddingHorizontal": 24,
+                                  }
+                                }
+                              >
                                 <Text>
                                   Premendo **Continua** dichiari di aver letto e compreso l’**Informativa Privacy**.
                                 </Text>
