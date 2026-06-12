@@ -55,6 +55,7 @@ const ItwIpzsPrivacyScreen = () => {
           )
         }}
         headerActionsProp={{ showHelp: true }}
+        contentContainerStyle={{ flexGrow: 1 }}
         actions={{
           type: "SingleButton",
           primary: {

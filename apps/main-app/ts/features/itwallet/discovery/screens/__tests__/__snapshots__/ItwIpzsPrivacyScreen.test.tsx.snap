@@ -970,6 +970,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 disabled) 1`] = `
                             contentContainerStyle={
                               [
                                 {
+                                  "flexGrow": 1,
                                   "paddingBottom": 56,
                                   "paddingHorizontal": 0,
                                 },
@@ -2509,6 +2510,7 @@ exports[`ItwIpzsPrivacyScreen should match the snapshot (L3 enabled) 1`] = `
                             contentContainerStyle={
                               [
                                 {
+                                  "flexGrow": 1,
                                   "paddingBottom": 56,
                                   "paddingHorizontal": 0,
                                 },
