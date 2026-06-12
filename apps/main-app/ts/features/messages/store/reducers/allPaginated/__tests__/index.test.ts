@@ -7,7 +7,7 @@ import {
   successLoadNextPageMessagesPayload,
   successLoadPreviousPageMessagesPayload,
   successReloadMessagesPayload
-} from "../../../__mocks__/messages";
+} from "../../../../__mocks__/messages";
 import {
   loadNextPageMessages,
   loadPreviousPageMessages,
@@ -16,33 +16,37 @@ import {
   setShownMessageCategoryAction,
   upsertMessageStatusAttributes,
   UpsertMessageStatusAttributesPayload
-} from "../../actions";
-import { GlobalState } from "../../../../../store/reducers/types";
+} from "../../../actions";
+import { GlobalState } from "../../../../../../store/reducers/types";
 import reducer, {
-  AllPaginated,
   isLoadingOrUpdatingInbox,
   shownMessageCategorySelector,
-  MessagePagePot,
   messageListForCategorySelector,
-  MessagePage,
   emptyListReasonSelector,
   shouldShowFooterListComponentSelector,
-  LastRequestType,
-  messagePagePotFromCategorySelector,
   shouldShowRefreshControllOnListSelector,
-  isPaymentMessageWithPaidNoticeSelector
-} from "../allPaginated";
-import { pageSize } from "../../../../../config";
-import { UIMessage } from "../../../types";
-import { clearCache } from "../../../../settings/common/store/actions";
-import { appReducer } from "../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../store/actions/application";
-import { MessageListCategory } from "../../../types/messageListCategory";
-import { emptyMessageArray } from "../../../utils";
-import { isSomeLoadingOrSomeUpdating } from "../../../../../utils/pot";
-import { PaymentByRptIdState } from "../../../../../store/reducers/entities/payments";
-import { MessageCategory } from "../../../../../../definitions/communication/MessageCategory";
-import { nextPageLoadingWaitMillisecondsGenerator } from "../../../components/Home/homeUtils";
+  isPaymentMessageWithPaidNoticeSelector,
+  messagePagePotFromCategorySelector
+} from "..";
+import {
+  AllPaginated,
+  LastRequestValues,
+  MessagePage,
+  MessagePagePot
+} from "../types";
+import { pageSize } from "../../../../../../config";
+import { UIMessage } from "../../../../types";
+import { clearCache } from "../../../../../settings/common/store/actions";
+import { appReducer } from "../../../../../../store/reducers";
+import { applicationChangeState } from "../../../../../../store/actions/application";
+import { MessageListCategory } from "../../../../types/messageListCategory";
+import { emptyMessageArray } from "../../../../utils";
+import { isSomeLoadingOrSomeUpdating } from "../../../../../../utils/pot";
+import { PaymentByRptIdState } from "../../../../../../store/reducers/entities/payments";
+import { MessageCategory } from "../../../../../../../definitions/communication/MessageCategory";
+import { nextPageLoadingWaitMillisecondsGenerator } from "../../../../components/Home/homeUtils";
+
+type LastRequestType = LastRequestValues | undefined;
 
 describe("allPaginated reducer", () => {
   describe("given a `reloadAllMessages` action", () => {
@@ -65,7 +69,7 @@ describe("allPaginated reducer", () => {
       });
       it("should set the Archive lastRequest to 'all'", () => {
         expect(reducer(undefined, actionRequest).archive.lastRequest).toEqual(
-          O.some("all")
+          "all"
         );
       });
 
@@ -88,9 +92,9 @@ describe("allPaginated reducer", () => {
             })
           );
         });
-        it("should set the Archive lastRequest to 'none'", () => {
+        it("should set the Archive lastRequest to 'undefined'", () => {
           expect(reducer(initialState, action).archive.lastRequest).toEqual(
-            O.none
+            undefined
           );
         });
       });
@@ -116,7 +120,7 @@ describe("allPaginated reducer", () => {
 
       it("should set the Inbox lastRequest to 'all'", () => {
         expect(reducer(undefined, actionRequest).inbox.lastRequest).toEqual(
-          O.some("all")
+          "all"
         );
       });
 
@@ -139,9 +143,9 @@ describe("allPaginated reducer", () => {
           );
           expect(reducer(initialState, action).archive.data).toEqual(pot.none);
         });
-        it("should set the Inbox lastRequest to 'none'", () => {
+        it("should set the Inbox lastRequest to 'undefined'", () => {
           expect(reducer(initialState, action).inbox.lastRequest).toEqual(
-            O.none
+            undefined
           );
         });
       });
@@ -169,7 +173,7 @@ describe("allPaginated reducer", () => {
       });
       it("should set the Archive lastRequest to `next'", () => {
         expect(reducer(undefined, actionRequest).archive.lastRequest).toEqual(
-          O.some("next")
+          "next"
         );
       });
 
@@ -203,9 +207,9 @@ describe("allPaginated reducer", () => {
           expect(reducer(initialState, action).inbox.data).toEqual(pot.none);
         });
 
-        it("should set the Archive lastRequest to 'none'", () => {
+        it("should set the Archive lastRequest to 'undefined'", () => {
           expect(reducer(initialState, action).archive.lastRequest).toEqual(
-            O.none
+            undefined
           );
         });
       });
@@ -232,7 +236,7 @@ describe("allPaginated reducer", () => {
 
       it("should set the Inbox lastRequest to `next'", () => {
         expect(reducer(undefined, actionRequest).inbox.lastRequest).toEqual(
-          O.some("next")
+          "next"
         );
       });
 
@@ -266,9 +270,9 @@ describe("allPaginated reducer", () => {
           expect(reducer(initialState, action).archive.data).toEqual(pot.none);
         });
 
-        it("should set the Inbox lastRequest to 'none'", () => {
+        it("should set the Inbox lastRequest to 'undefined'", () => {
           expect(reducer(initialState, action).inbox.lastRequest).toEqual(
-            O.none
+            undefined
           );
         });
       });
@@ -296,7 +300,7 @@ describe("allPaginated reducer", () => {
       });
       it("should set the Archive lastRequest to `next'", () => {
         expect(reducer(undefined, actionRequest).archive.lastRequest).toEqual(
-          O.some("previous")
+          "previous"
         );
       });
 
@@ -358,9 +362,9 @@ describe("allPaginated reducer", () => {
           });
         });
 
-        it("should set the Archive lastRequest to 'none'", () => {
+        it("should set the Archive lastRequest to 'undefined'", () => {
           expect(reducer(initialState, action).archive.lastRequest).toEqual(
-            O.none
+            undefined
           );
         });
       });
@@ -387,7 +391,7 @@ describe("allPaginated reducer", () => {
 
       it("should set the Inbox lastRequest to `next'", () => {
         expect(reducer(undefined, actionRequest).inbox.lastRequest).toEqual(
-          O.some("previous")
+          "previous"
         );
       });
 
@@ -449,9 +453,9 @@ describe("allPaginated reducer", () => {
           });
         });
 
-        it("should set the Inbox lastRequest to 'none'", () => {
+        it("should set the Inbox lastRequest to 'undefined'", () => {
           expect(reducer(initialState, action).inbox.lastRequest).toEqual(
-            O.none
+            undefined
           );
         });
       });
@@ -467,7 +471,7 @@ describe("allPaginated reducer", () => {
           previous: "abcde",
           next: "12345"
         }),
-        lastRequest: O.none,
+        lastRequest: undefined,
         lastUpdateTime: new Date(0)
       }
     };
@@ -835,12 +839,12 @@ describe("allPaginated reducer", () => {
     const initialState = {
       archive: {
         data: pot.none,
-        lastRequest: O.none,
+        lastRequest: undefined,
         lastUpdateTime
       },
       inbox: {
         data: pot.none,
-        lastRequest: O.none,
+        lastRequest: undefined,
         lastUpdateTime
       },
       migration: O.none,
@@ -858,12 +862,12 @@ describe("allPaginated reducer", () => {
     const initialState = {
       archive: {
         data: pot.none,
-        lastRequest: O.none,
+        lastRequest: undefined,
         lastUpdateTime
       },
       inbox: {
         data: pot.none,
-        lastRequest: O.none,
+        lastRequest: undefined,
         lastUpdateTime
       },
       migration: O.none,
@@ -879,8 +883,16 @@ describe("allPaginated reducer", () => {
 });
 
 const defaultState: AllPaginated = {
-  inbox: { data: pot.none, lastRequest: O.none, lastUpdateTime: new Date(0) },
-  archive: { data: pot.none, lastRequest: O.none, lastUpdateTime: new Date(0) },
+  inbox: {
+    data: pot.none,
+    lastRequest: undefined,
+    lastUpdateTime: new Date(0)
+  },
+  archive: {
+    data: pot.none,
+    lastRequest: undefined,
+    lastUpdateTime: new Date(0)
+  },
   shownCategory: "INBOX"
 };
 
@@ -951,7 +963,7 @@ describe("isLoadingOrUpdatingInbox selector", () => {
               ...defaultState,
               inbox: {
                 data: inbox,
-                lastRequest: O.none,
+                lastRequest: undefined,
                 lastUpdateTime: new Date(0)
               }
             })
@@ -1570,22 +1582,20 @@ describe("shouldShowFooterListComponentSelector", () => {
     pot.someError(nonEmptyMessagePage, { reason: "", time: new Date() })
   ];
   const lastRequests: Array<LastRequestType> = [
-    O.some("all"),
-    O.some("next"),
-    O.some("previous"),
-    O.none
+    "all",
+    "next",
+    "previous",
+    undefined
   ];
   categories.forEach(category =>
     lastRequests.forEach(lastRequest =>
       messagePagePots.forEach(messagePagePot => {
         const footerIsVisible =
-          O.isSome(lastRequest) &&
-          lastRequest.value === "next" &&
-          isSomeLoadingOrSomeUpdating(messagePagePot);
+          lastRequest === "next" && isSomeLoadingOrSomeUpdating(messagePagePot);
         it(`Footer should be ${
           footerIsVisible ? "visible" : "hidden"
         }, ${category}, '${
-          O.isSome(lastRequest) ? lastRequest.value : "none"
+          lastRequest
         }' lastRequest, ${messagePagePot.kind}`, () => {
           const state = generateAllPaginatedDataStateForCategory(
             category,
@@ -1609,8 +1619,10 @@ describe("messagePagePotFromCategorySelector", () => {
       category,
       messagePagePot
     );
-    const outputMessagePagePot =
-      messagePagePotFromCategorySelector(category)(state);
+    const outputMessagePagePot = messagePagePotFromCategorySelector(
+      category,
+      state
+    );
     expect(outputMessagePagePot).toStrictEqual(messagePagePot);
   });
 });
@@ -1635,10 +1647,10 @@ describe("shouldShowRefreshControllOnListSelector", () => {
     pot.someError(nonEmptyMessagePage, { reason: "", time: new Date() })
   ];
   const messageRequests: ReadonlyArray<LastRequestType> = [
-    O.some("next"),
-    O.some("previous"),
-    O.some("all"),
-    O.none
+    "next",
+    "previous",
+    "all",
+    undefined
   ];
 
   categories.forEach(category =>
@@ -1647,12 +1659,11 @@ describe("shouldShowRefreshControllOnListSelector", () => {
         const expectedOutput =
           (messagePagePot.kind === "PotSomeLoading" ||
             messagePagePot.kind === "PotSomeUpdating") &&
-          O.isSome(messageRequest) &&
-          (messageRequest.value === "all" ||
-            messageRequest.value === "previous");
+          messageRequest !== undefined &&
+          (messageRequest === "all" || messageRequest === "previous");
 
         it(`should return ${expectedOutput}, ${category}, '${
-          O.isSome(messageRequest) ? messageRequest.value : "None"
+          messageRequest
         }' lastRequest, ${messagePagePot.kind}`, () => {
           const state = generateAllPaginatedDataStateForCategory(
             category,
@@ -1793,7 +1804,7 @@ describe("isPaymentMessageWithPaidNoticeSelector", () => {
 const generateAllPaginatedDataStateForCategory = (
   category: MessageListCategory,
   data: MessagePagePot,
-  lastRequest: LastRequestType = O.none
+  lastRequest: LastRequestType = undefined
 ): GlobalState =>
   ({
     entities: {
@@ -1802,11 +1813,11 @@ const generateAllPaginatedDataStateForCategory = (
           inbox:
             category === "INBOX"
               ? { data, lastRequest }
-              : { data: pot.none, lastRequest: O.none },
+              : { data: pot.none, lastRequest: undefined },
           archive:
             category === "ARCHIVE"
               ? { data, lastRequest }
-              : { data: pot.none, lastRequest: O.none }
+              : { data: pot.none, lastRequest: undefined }
         }
       }
     }

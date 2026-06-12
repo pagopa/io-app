@@ -206,8 +206,16 @@ export const createProximityActorsImplementation = (env: Env) => {
     );
   });
 
-  const terminateProximitySession = fromPromise<SendErrorResponseActorOutput>(
-    () => ISO18013_5.sendErrorResponse(ISO18013_5.ErrorCode.SESSION_TERMINATED)
+  const terminateSession = fromPromise<SendErrorResponseActorOutput>(
+    async () => {
+      try {
+        return await ISO18013_5.sendErrorResponse(
+          ISO18013_5.ErrorCode.SESSION_TERMINATED
+        );
+      } finally {
+        await ISO18013_5.close().catch(() => null);
+      }
+    }
   );
 
   return {
@@ -217,6 +225,6 @@ export const createProximityActorsImplementation = (env: Env) => {
     startEngagement,
     proximityCommunicationLogic,
     sendDocuments,
-    terminateProximitySession
+    terminateSession
   };
 };
