@@ -315,6 +315,10 @@ export const itwEidIssuanceMachine = setup({
         ],
         "go-to-ipzs-privacy": {
           actions: "navigateToIpzsPrivacyScreen"
+        },
+        close: {
+          target: "#itwEidIssuanceMachine.Idle",
+          actions: "closeIssuance"
         }
       }
     },

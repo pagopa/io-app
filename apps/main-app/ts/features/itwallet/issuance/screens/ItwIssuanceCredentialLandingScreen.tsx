@@ -9,6 +9,7 @@ import {
 import ROUTES from "../../../../navigation/routes";
 import { useIOSelector } from "../../../../store/hooks";
 import { getMixPanelCredential } from "../../analytics/utils";
+import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 import {
   itwCredentialsEidStatusSelector,
@@ -24,7 +25,6 @@ import {
   trackItwAlreadyHasCredential,
   trackItwIssuanceFromMsgFailure
 } from "../analytics";
-import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 
 export type ItwIssuanceCredentialLandingScreenNavigationParams = {
   credentialType: string;
@@ -181,16 +181,9 @@ export const ItwIssuanceCredentialLandingScreen = ({
             `features.itWallet.issuance.credentialAlreadyUpdated.action`
           ),
           onPress: () =>
-            navigation.reset({
-              index: 1,
-              routes: [
-                {
-                  name: ROUTES.MAIN,
-                  params: {
-                    screen: ROUTES.WALLET_HOME
-                  }
-                }
-              ]
+            navigation.popTo(ROUTES.MAIN, {
+              screen: ROUTES.WALLET_HOME,
+              params: {}
             })
         }}
         secondaryAction={{
