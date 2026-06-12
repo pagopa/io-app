@@ -101,9 +101,9 @@ describe("proximity consent selectors", () => {
       expect(result).toHaveLength(3);
       expect(result).toEqual(
         expect.arrayContaining([
-          { key: mdlKey, consent: mdlConsent },
-          { key: multiKey, consent: multiCredentialConsent },
-          { key: healthKey, consent: healthCardOnlyConsent }
+          [mdlKey, mdlConsent],
+          [multiKey, multiCredentialConsent],
+          [healthKey, healthCardOnlyConsent]
         ])
       );
     });

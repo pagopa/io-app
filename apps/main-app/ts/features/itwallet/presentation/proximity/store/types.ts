@@ -19,15 +19,6 @@ export type ConsentData = {
 };
 
 /**
- * Represents a stored consent together with the deterministic key used for
- * deletion and exact lookup.
- */
-export type ConsentEntry = {
-  key: string;
-  consent: ConsentData;
-};
-
-/**
  * Represents the collection of consents given by the user, indexed by their
  * deterministic lookup key. Each key maps to the readable consent details,
  * including the RP ID and the specific credentials and claims that the user

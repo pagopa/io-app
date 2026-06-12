@@ -4,7 +4,6 @@ import createSecureStorage from "../../../../../../store/storages/secureStorage"
 import { Action } from "../../../../../../store/actions/types";
 import {
   itwGrantProximityConsent,
-  itwRevokeAllProximityConsents,
   itwRevokeProximityConsentByKey,
   itwRevokeProximityConsentsByRpId,
   itwRevokeProximityConsentsByCredentialType
@@ -66,12 +65,6 @@ const reducer = (
         consents: filterConsentsByCredentialType(state.consents, action.payload)
       };
     }
-
-    case getType(itwRevokeAllProximityConsents):
-      return {
-        ...state,
-        consents: {}
-      };
 
     case getType(itwCredentialsRemoveByType): {
       return {

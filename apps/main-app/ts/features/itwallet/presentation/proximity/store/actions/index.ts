@@ -31,16 +31,8 @@ export const itwRevokeProximityConsentsByCredentialType = createStandardAction(
   "ITW_PROXIMITY_CONSENT_REVOKE_BY_CREDENTIAL_TYPE"
 )<string>();
 
-/**
- * Revokes all stored proximity presentation consents.
- */
-export const itwRevokeAllProximityConsents = createStandardAction(
-  "ITW_PROXIMITY_CONSENT_REVOKE_ALL"
-)<void>();
-
 export type ItwProximityActions =
   | ActionType<typeof itwGrantProximityConsent>
   | ActionType<typeof itwRevokeProximityConsentByKey>
   | ActionType<typeof itwRevokeProximityConsentsByRpId>
-  | ActionType<typeof itwRevokeProximityConsentsByCredentialType>
-  | ActionType<typeof itwRevokeAllProximityConsents>;
+  | ActionType<typeof itwRevokeProximityConsentsByCredentialType>;
