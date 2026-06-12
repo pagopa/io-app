@@ -1,5 +1,9 @@
 import { UntrustedRpError } from "../errors";
-import { generateAcceptedFields, getProximityDetails } from "../presentation";
+import {
+  generateAcceptedFields,
+  getProximityDetails,
+  getVerifierIdentity
+} from "../presentation";
 import type { VerifierRequest } from "../types";
 import { CredentialMetadata } from "../../../../common/utils/itwTypesUtils";
 
@@ -34,6 +38,96 @@ const mockCredential: CredentialMetadata = {
 const mockCredentials: Record<string, CredentialMetadata> = {
   [mockDocType]: mockCredential
 };
+
+describe("getVerifierIdentity", () => {
+  describe("when requireAuthenticated is falsy (unauthenticated allowed)", () => {
+    test.each([
+      {
+        name: "undefined requireAuthenticated + commonName present",
+        certificateData: {
+          commonName: mockCommonName
+        } as VerifierRequest["request"][string]["certificateData"],
+        requireAuthenticated: undefined as boolean | undefined,
+        expected: mockCommonName
+      },
+      {
+        name: "false requireAuthenticated + commonName present",
+        certificateData: {
+          commonName: mockCommonName
+        } as VerifierRequest["request"][string]["certificateData"],
+        requireAuthenticated: false,
+        expected: mockCommonName
+      },
+      {
+        name: "undefined requireAuthenticated + no commonName",
+        certificateData:
+          {} as VerifierRequest["request"][string]["certificateData"],
+        requireAuthenticated: undefined as boolean | undefined,
+        expected: "Unknown"
+      },
+      {
+        name: "false requireAuthenticated + no commonName",
+        certificateData:
+          {} as VerifierRequest["request"][string]["certificateData"],
+        requireAuthenticated: false,
+        expected: "Unknown"
+      },
+      {
+        name: "undefined requireAuthenticated + certificateData undefined",
+        certificateData: undefined,
+        requireAuthenticated: undefined as boolean | undefined,
+        expected: "Unknown"
+      },
+      {
+        name: "false requireAuthenticated + certificateData undefined",
+        certificateData: undefined,
+        requireAuthenticated: false,
+        expected: "Unknown"
+      }
+    ])(
+      "returns $expected — $name",
+      ({ certificateData, requireAuthenticated, expected }) => {
+        expect(getVerifierIdentity(certificateData, requireAuthenticated)).toBe(
+          expected
+        );
+      }
+    );
+  });
+
+  describe("when requireAuthenticated is true", () => {
+    it("returns commonName when certificateData has it", () => {
+      const result = getVerifierIdentity(
+        {
+          commonName: mockCommonName
+        } as VerifierRequest["request"][string]["certificateData"],
+        true
+      );
+      expect(result).toBe(mockCommonName);
+    });
+
+    test.each([
+      {
+        name: "certificateData has no commonName",
+        certificateData:
+          {} as VerifierRequest["request"][string]["certificateData"]
+      },
+      {
+        name: "certificateData is undefined",
+        certificateData: undefined
+      }
+    ])("throws UntrustedRpError — $name", ({ certificateData }) => {
+      expect(() => getVerifierIdentity(certificateData, true)).toThrow(
+        UntrustedRpError
+      );
+    });
+
+    it("throws with correct message when commonName missing", () => {
+      expect(() => getVerifierIdentity(undefined, true)).toThrow(
+        "Missing certificate data for RP identification"
+      );
+    });
+  });
+});
 
 describe("getProximityDetails", () => {
   describe("authentication enforcement", () => {
