@@ -4,12 +4,12 @@
 
 publiccodeYmlVersion: "0.2"
 name: IO
-logo: "img/io-app-icon.png"
+logo: "apps/main-app/img/io-app-icon.png"
 releaseDate: "2024-11-21"
 url: "https://github.com/pagopa/io-app"
 applicationSuite: IO
 landingURL: "https://ioapp.it/"
-softwareVersion: 3.29.0-rc.4
+softwareVersion: 3.34.0-rc.3
 developmentStatus: beta
 softwareType: standalone/mobile
 roadmap: "https://ioapp.it/"
