@@ -438,11 +438,9 @@ describe("itwProximityMachine", () => {
     await waitFor(actor, snapshot =>
       snapshot.matches({ Presentment: "SendingDocuments" })
     );
-    expect(actor.getSnapshot().context.grantedConsentKey).toBe(
-      generateConsentKey(
-        getConsentDataFromProximityDetails(T_PROXIMITY_DETAILS)
-      )
-    );
+    // BLE consent does not set grantedConsentKey: that field is only used to skip
+    // the consent screen on NFC re-connections (see EvaluatingConsent).
+    expect(actor.getSnapshot().context.grantedConsentKey).toBeUndefined();
 
     actor.send({ type: "device-disconnected" });
     expect(actor.getSnapshot().value).toStrictEqual("Success");
