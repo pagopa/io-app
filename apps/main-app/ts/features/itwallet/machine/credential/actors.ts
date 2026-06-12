@@ -197,7 +197,8 @@ export const createCredentialIssuanceActorsImplementation = (
       codeVerifier,
       issuerConf,
       walletInstanceAttestation,
-      requestedCredential
+      requestedCredential,
+      responseMode
     } = input;
     const eid = itwCredentialsEidSelector(store.getState());
 
@@ -223,6 +224,7 @@ export const createCredentialIssuanceActorsImplementation = (
       issuerConf,
       walletInstanceAttestation,
       requestedCredential,
+      responseMode,
       pid
     });
     return accessToken;
@@ -294,8 +296,12 @@ export const createCredentialIssuanceActorsImplementation = (
     const requestStatusAssertionOrSkip = async (
       credential: CredentialBundle
     ): Promise<CredentialBundle> => {
-      // Status assertions for mDoc credentials are not supported yet
-      if (credential.metadata.format === CredentialFormat.MDOC) {
+      // Status assertions for mDoc or v1.3+ credentials are not supported
+      // TODO: [SIW-3963] Handle status list integration
+      if (
+        credential.metadata.format === CredentialFormat.MDOC ||
+        !getIoWallet(itwVersion).CredentialStatus.statusAssertion.isSupported
+      ) {
         return credential;
       }
 
