@@ -28,7 +28,6 @@ import Feature5Image from "../../../../../img/features/itWallet/discovery/featur
 import { AnimatedImage } from "../../../../components/AnimatedImage.tsx";
 import IOMarkdown from "../../../../components/IOMarkdown/index.tsx";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel.tsx";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../store/hooks.ts";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp.ts";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet.tsx";
@@ -41,7 +40,6 @@ import { itwIsActivationDisabledSelector } from "../../common/store/selectors/re
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors/index.ts";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider.tsx";
 import { selectIsLoading } from "../../machine/eid/selectors.ts";
-import { ITW_ROUTES } from "../../navigation/routes.ts";
 import {
   trackItWalletActivationStart,
   trackItwDiscoveryPlus,
@@ -59,7 +57,6 @@ type Props = {
 export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
-  const navigation = useIONavigation();
   const itwActivationDisabled = useIOSelector(itwIsActivationDisabledSelector);
   const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
   const mixPanelCredentialDetails = useIOSelector(
@@ -118,12 +115,10 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
     machineRef.send({ type: "accept-tos" });
   }, [machineRef, mixPanelCredentialDetails]);
 
-  const handleNavigateToPrivacyAndTerms = useCallback(() => {
+  const handlePrivacyAndTermsPress = useCallback(() => {
     trackOpenItwTos();
-    navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.DISCOVERY.IPZS_PRIVACY
-    });
-  }, [navigation]);
+    machineRef.send({ type: "go-to-ipzs-privacy" });
+  }, [machineRef]);
 
   const {
     present: presentItwDetailsBottomSheet,
@@ -274,7 +269,7 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
                       accessibilityRole="link"
                       asLink
                       avoidPressable
-                      onPress={handleNavigateToPrivacyAndTerms}
+                      onPress={handlePrivacyAndTermsPress}
                       weight="Semibold"
                     />
                   )

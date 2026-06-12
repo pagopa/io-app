@@ -312,7 +312,10 @@ export const itwEidIssuanceMachine = setup({
             // Verify the trust federation
             target: "TrustFederationVerification"
           }
-        ]
+        ],
+        "go-to-ipzs-privacy": {
+          actions: "navigateToIpzsPrivacyScreen"
+        }
       }
     },
     TrustFederationVerification: {
@@ -335,12 +338,8 @@ export const itwEidIssuanceMachine = setup({
             target: "WalletInstanceAttestationObtainment"
           },
           {
-            // When reissuing or fallback to L2, if both integrity key tag and wallet instance attestation are valid,
-            guard: or(["isReissuance", "isL2Fallback"]),
-            target: "UserIdentification.Identification"
-          },
-          {
-            guard: "isL3FeaturesEnabled",
+            // When reissuing, falling back to L2 or using the L3 flow, if both integrity key tag and wallet instance attestation are valid,
+            guard: or(["isReissuance", "isL2Fallback", "isL3FeaturesEnabled"]),
             target: "UserIdentification.Identification"
           },
           {
@@ -485,6 +484,9 @@ export const itwEidIssuanceMachine = setup({
         "This state handles the acceptance of the IPZS privacy policy",
       entry: "navigateToIpzsPrivacyScreen",
       on: {
+        "accept-tos": {
+          target: "UserIdentification"
+        },
         "accept-ipzs-privacy": [
           {
             guard: and(["isUpgrade", "isEligibleForItwSimplifiedActivation"]),

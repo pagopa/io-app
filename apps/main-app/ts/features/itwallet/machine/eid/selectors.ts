@@ -55,9 +55,6 @@ export const selectMrtdCallbackUrl = (snapshot: MachineSnapshot) =>
 export const selectIsLoading = (snapshot: MachineSnapshot) =>
   snapshot.hasTag(ItwTags.Loading);
 
-export const isTosAcceptanceSelector = (snapshot: MachineSnapshot) =>
-  snapshot.matches("TosAcceptance");
-
 export const selectUpgradeFailedCredentials = (snapshot: MachineSnapshot) =>
   pipe(
     snapshot.context.failedCredentials,

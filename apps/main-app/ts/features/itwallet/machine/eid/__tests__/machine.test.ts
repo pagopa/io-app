@@ -973,8 +973,8 @@ describe("itwEidIssuanceMachine", () => {
     expect(createWalletInstance).toHaveBeenCalledTimes(0);
     expect(getWalletAttestation).toHaveBeenCalledTimes(0);
 
-    // Accept IPZS privacy
-    actor.send({ type: "accept-ipzs-privacy" });
+    // Accept privacy and ToS from IPZS privacy screen
+    actor.send({ type: "accept-tos" });
 
     expect(actor.getSnapshot().value).toStrictEqual({
       UserIdentification: "Identification"
@@ -1012,6 +1012,17 @@ describe("itwEidIssuanceMachine", () => {
     });
     expect(navigateToIpzsPrivacyScreen).not.toHaveBeenCalled();
     expect(navigateToIdentificationScreen).toHaveBeenCalledTimes(1);
+  });
+
+  it("Should navigate to IPZS privacy from ToS acceptance without changing state", () => {
+    const actor = createActor(mockedMachine);
+    actor.start();
+
+    actor.send({ type: "start", mode: "issuance", level: "l3" });
+    actor.send({ type: "go-to-ipzs-privacy" });
+
+    expect(actor.getSnapshot().value).toStrictEqual("TosAcceptance");
+    expect(navigateToIpzsPrivacyScreen).toHaveBeenCalledTimes(1);
   });
 
   it("Should allow the user to add a new credential once eID issuance is complete", () => {

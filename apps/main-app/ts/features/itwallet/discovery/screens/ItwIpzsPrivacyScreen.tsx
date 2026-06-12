@@ -13,7 +13,6 @@ import { trackOpenItwTosAccepted } from "../analytics";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
   isL3FeaturesEnabledSelector,
-  isTosAcceptanceSelector,
   selectIsLoading
 } from "../../machine/eid/selectors";
 import ItwPrivacyWebViewComponent from "../components/ItwPrivacyWebViewComponent";
@@ -30,17 +29,12 @@ const ItwIpzsPrivacyScreen = () => {
   const isL3 = ItwEidIssuanceMachineContext.useSelector(
     isL3FeaturesEnabledSelector
   );
-  const shouldAcceptTos = ItwEidIssuanceMachineContext.useSelector(
-    isTosAcceptanceSelector
-  );
 
   const privacyUrl = useIOSelector(itwIpzsPrivacyUrlSelector);
 
   const handleContinuePress = () => {
     trackOpenItwTosAccepted(isL3 ? "L3" : "L2");
-    machineRef.send({
-      type: shouldAcceptTos ? "accept-tos" : "accept-ipzs-privacy"
-    });
+    machineRef.send({ type: "accept-tos" });
   };
 
   const onLoadEnd = () => {
