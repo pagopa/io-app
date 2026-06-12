@@ -20,6 +20,10 @@ import { cgnLinkingOptions } from "../features/bonus/cgn/navigation/navigator";
 import { fciLinkingOptions } from "../features/fci/navigation/FciStackNavigator";
 import { idPayLinkingOptions } from "../features/idpay/common/navigation/linking";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
+import {
+  ITW_CREDENTIAL_OFFER_LINKING_PREFIXES,
+  normalizeCredentialOfferDeepLink
+} from "../features/itwallet/offer/utils";
 import { useItwLinkingOptions } from "../features/itwallet/navigation/useItwLinkingOptions";
 import { storeLinkingUrl } from "../features/linking/actions";
 import { trackIOOpenedFromUniversalAppLink } from "../features/linking/analytics";
@@ -33,7 +37,7 @@ import { useIODispatch, useIOSelector, useIOStore } from "../store/hooks";
 import { trackScreen } from "../store/middlewares/navigation";
 import { isCGNEnabledAfterLoadSelector } from "../store/reducers/backendStatus/remoteConfig";
 import { isMixpanelEnabled } from "../store/reducers/persistedPreferences";
-import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
+import { isStartupLoaded, StartupStatusEnum } from "../store/reducers/startup";
 import {
   IONavigationDarkTheme,
   IONavigationLightTheme
@@ -109,7 +113,11 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
 
   const linking: LinkingOptions<AppParamsList> = {
     enabled: !isTestEnv, // disable linking in test env
-    prefixes: [IO_INTERNAL_LINK_PREFIX, IO_UNIVERSAL_LINK_PREFIX],
+    prefixes: [
+      IO_INTERNAL_LINK_PREFIX,
+      IO_UNIVERSAL_LINK_PREFIX,
+      ...ITW_CREDENTIAL_OFFER_LINKING_PREFIXES
+    ],
     config: {
       initialRouteName: ROUTES.MAIN,
       screens: {
@@ -179,7 +187,7 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
          *  this handler is called on app wake and thus there
          *  is no risk of overwriting any previously stored deep link
          */
-        dispatch(storeLinkingUrl(initialUrl));
+        dispatch(storeLinkingUrl(normalizeCredentialOfferDeepLink(initialUrl)));
       }
     });
   });

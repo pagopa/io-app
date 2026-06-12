@@ -16,6 +16,7 @@ import { ItwRemoteRequestPayload } from "../../itwallet/presentation/remote/util
 import { validateItwPresentationQrCodeParams } from "../../itwallet/presentation/remote/utils/itwRemotePresentationUtils";
 import { selectItwSpecsVersion } from "../../itwallet/common/store/selectors/environment";
 import { pnAarQRCodeRegexSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import { isPotentialCredentialOfferInvocation } from "../../itwallet/offer/utils";
 import { IOBarcodeType } from "./IOBarcode";
 
 // Discriminated barcode type
@@ -54,6 +55,7 @@ type StaticDecodedIOBarcode =
       type: "FCI";
       signatureRequestId: SignatureRequestDetailView["id"];
     };
+
 type RuntimeDecodedIOBarcode =
   | {
       type: "SEND";
@@ -62,8 +64,16 @@ type RuntimeDecodedIOBarcode =
   | {
       type: "ITW_REMOTE";
       itwRemoteRequestPayload: ItwRemoteRequestPayload;
+    }
+  | {
+      type: "ITW_CREDENTIAL_OFFER";
+      itwCredentialOfferUri: string;
     };
 export type DecodedIOBarcode = StaticDecodedIOBarcode | RuntimeDecodedIOBarcode;
+type ItwCredentialOfferDecodedIOBarcode = Extract<
+  RuntimeDecodedIOBarcode,
+  { type: "ITW_CREDENTIAL_OFFER" }
+>;
 
 // Barcode decoder function which is used to determine the type and content of a barcode
 type IOBarcodeStaticDecoderFn = (data: string) => O.Option<DecodedIOBarcode>;
@@ -154,6 +164,31 @@ const decodeItwRemoteBarcode: IOBarcodeRuntimeDecoderFn = (
     }))
   );
 
+const itwCredentialOfferSupportedSpecsVersions: ReadonlyArray<
+  ReturnType<typeof selectItwSpecsVersion>
+> = ["1.3.3"];
+
+const isItwCredentialOfferSupportedSpecsVersion = (
+  itwSpecsVersion: ReturnType<typeof selectItwSpecsVersion>
+): boolean =>
+  itwCredentialOfferSupportedSpecsVersions.includes(itwSpecsVersion);
+
+const decodeItwCredentialOfferBarcode: IOBarcodeRuntimeDecoderFn = (
+  state: GlobalState,
+  data: string
+): O.Option<ItwCredentialOfferDecodedIOBarcode> => {
+  const itwCredentialOfferUri = data.trim();
+
+  return isItwCredentialOfferSupportedSpecsVersion(
+    selectItwSpecsVersion(state)
+  ) && isPotentialCredentialOfferInvocation(itwCredentialOfferUri)
+    ? O.some({
+        type: "ITW_CREDENTIAL_OFFER",
+        itwCredentialOfferUri
+      })
+    : O.none;
+};
+
 const decodeSENDAarBarcode: IOBarcodeRuntimeDecoderFn = (
   state: GlobalState,
   data: string
@@ -188,7 +223,8 @@ const StaticIOBarcodeDecoders: IOBarcodeStaticDecodersType = {
 
 const RuntimeIOBarcodeDecoders: IOBarcodeRuntimeDecodersType = {
   SEND: decodeSENDAarBarcode,
-  ITW_REMOTE: decodeItwRemoteBarcode
+  ITW_REMOTE: decodeItwRemoteBarcode,
+  ITW_CREDENTIAL_OFFER: decodeItwCredentialOfferBarcode
 };
 
 export const IOBarcodeDecoders = {

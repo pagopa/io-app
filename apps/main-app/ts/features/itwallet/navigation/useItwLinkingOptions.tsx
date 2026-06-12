@@ -1,5 +1,6 @@
 import { PathConfigMap } from "@react-navigation/native";
 import { AppParamsList } from "../../../navigation/params/AppParamsList";
+import { ITW_CREDENTIAL_OFFER_LINKING_PATH } from "../offer/utils";
 import { ITW_REMOTE_ROUTES } from "../presentation/remote/navigation/routes.ts";
 import { ITW_ROUTES } from "./routes";
 
@@ -54,6 +55,17 @@ export const useItwLinkingOptions = (): PathConfigMap<AppParamsList> => ({
        */
       [ITW_ROUTES.PRESENTATION.CREDENTIAL_DETAIL]: {
         path: "presentation/credential-detail/:credentialType"
+      },
+      /**
+       * Handles <https://continua.io.pagopa.it/itw/credential-offer?itwCredentialOfferUri=>...
+       *
+       * Starts the credential offer issuance flow from an external link.
+       */
+      [ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER_INTRO]: {
+        path: ITW_CREDENTIAL_OFFER_LINKING_PATH,
+        parse: {
+          itwCredentialOfferUri: decodeURIComponent
+        }
       }
     }
   },
