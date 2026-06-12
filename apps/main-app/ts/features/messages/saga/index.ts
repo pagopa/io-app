@@ -31,8 +31,7 @@ import {
   handleClearAttachment
 } from "./handleClearAttachments";
 import { handleLoadMessageData } from "./handleLoadMessageData";
-import { handleLoadNextPageMessages } from "./handleLoadNextPageMessages";
-import { handleLoadPreviousPageMessages } from "./handleLoadPreviousPageMessages";
+import { handleLoadPageMessages } from "./handleLoadPageMessages";
 import { handleReloadAllMessages } from "./handleReloadAllMessages";
 import { handleLoadMessageById } from "./handleLoadMessageById";
 import { handleLoadMessageDetails } from "./handleLoadMessageDetails";
@@ -51,12 +50,9 @@ import { handlePaymentUpdateRequests } from "./handlePaymentUpdateRequests";
  * @param bearerToken
  */
 export function* watchMessagesSaga(): SagaIterator {
-  yield* takeLatest(loadNextPageMessages.request, handleLoadNextPageMessages);
+  yield* takeLatest(loadNextPageMessages.request, handleLoadPageMessages);
 
-  yield* takeLatest(
-    loadPreviousPageMessages.request,
-    handleLoadPreviousPageMessages
-  );
+  yield* takeLatest(loadPreviousPageMessages.request, handleLoadPageMessages);
 
   yield* takeLatest(reloadAllMessages.request, handleReloadAllMessages);
 
