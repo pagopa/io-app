@@ -135,6 +135,7 @@ export const IOScrollViewWithLargeHeader = ({
       testID={testID}
       topElement={topElement}
       alwaysBounceVertical={alwaysBounceVertical}
+      contentContainerStyle={{ flexGrow: 1 }}
     >
       <ContentWrapper onLayout={getTitleHeight}>
         <VStack space={8}>
