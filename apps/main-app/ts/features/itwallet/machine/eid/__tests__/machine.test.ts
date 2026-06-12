@@ -2195,7 +2195,6 @@ describe("itwEidIssuanceMachine", () => {
 
   it("Should start the L3 activation flow without credentials", async () => {
     hasValidWalletInstanceAttestation.mockImplementation(() => true);
-    isEligibleForItwSimplifiedActivation.mockImplementation(() => true);
 
     const actor = createActor(mockedMachine);
     actor.start();
