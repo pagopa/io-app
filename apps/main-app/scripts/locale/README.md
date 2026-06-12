@@ -12,8 +12,7 @@ generic `carta`).
 ## Usage
 
 ```sh
-# analyses locales/it/index.json
-python3 scripts/locale/locale_analysis.py
+pnpm nx run main-app:locale-audit
 ```
 
 No third-party dependencies — standard library only (Python 3.8+).

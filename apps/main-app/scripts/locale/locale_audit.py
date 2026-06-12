@@ -1,5 +1,5 @@
 """
-Locale word/phrase frequency & spelling-inconsistency analysis.
+Locale word/phrase frequency & spelling-inconsistency audit.
 
 Analyses the Italian locale (locales/it/index.json) and produces, next to it:
   - word_frequency.csv     single-word / glued-concept frequency ranking
@@ -17,7 +17,7 @@ elision (di/d', una/un', ...), email spelling and brand-casing issues — it doe
 NOT rely on COMPOUND_DEFS, so it catches new issues as the locale evolves.
 
 Usage:
-    python3 scripts/locale/locale_analysis.py
+    pnpm nx run main-app:locale-audit
 """
 
 import csv
