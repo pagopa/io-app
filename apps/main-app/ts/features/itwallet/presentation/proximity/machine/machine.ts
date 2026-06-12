@@ -284,6 +284,15 @@ export const itwProximityMachine = setup({
         ],
         "device-error": [
           {
+            // Expected error during intentional session termination for NFC
+            // retrieval — consumed without failure, matching device-disconnected
+            // behavior for the same teardown window.
+            guard: and([
+              stateIn("Presentment.TerminatingForConsent"),
+              "isNfcRetrieval"
+            ])
+          },
+          {
             guard: not(stateIn("Presentment.Terminating")),
             actions: "setFailure",
             target: "#itwProximityMachine.Failure"

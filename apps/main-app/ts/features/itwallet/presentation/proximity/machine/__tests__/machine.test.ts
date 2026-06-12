@@ -664,6 +664,40 @@ describe("itwProximityMachine", () => {
     expect(navigateToFailureScreen).not.toHaveBeenCalled();
   });
 
+  it("device-error during NFC TerminatingForConsent is consumed without failure", async () => {
+    // Never resolves: keep the machine parked in TerminatingForConsent
+    terminateSession.mockReturnValue(new Promise(() => {}));
+    const actor = createActor(mockedMachine, {
+      snapshot: makeSnapshot(
+        { Presentment: "Connected" },
+        { engagementMode: "nfc" }
+      )
+    });
+
+    actor.start();
+    actor.send({
+      type: "device-document-request-received",
+      proximityDetails: T_PROXIMITY_DETAILS,
+      verifierRequest: T_VERIFIER_REQUEST,
+      retrievalMethod: "nfc"
+    });
+
+    await waitFor(actor, snapshot =>
+      snapshot.matches({ Presentment: "TerminatingForConsent" })
+    );
+
+    actor.send({
+      type: "device-error",
+      error: new Error("expected NFC teardown error")
+    });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      Presentment: "TerminatingForConsent"
+    });
+    expect(actor.getSnapshot().context.failure).toBeUndefined();
+    expect(navigateToFailureScreen).not.toHaveBeenCalled();
+  });
+
   it("NFC document request with prior consent sends documents without re-terminating", async () => {
     sendDocuments.mockReturnValue(new Promise(() => {}));
     const actor = createActor(mockedMachine, {
