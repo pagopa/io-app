@@ -1,6 +1,7 @@
 import { IOToast } from "@pagopa/io-app-design-system";
 import { ActionArgs, assign } from "xstate";
 import I18n from "i18next";
+import { isRouteInNavigationState } from "../../../../utils/navigation";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import ROUTES from "../../../../navigation/routes";
 import { checkCurrentSession } from "../../../authentication/common/store/actions";
@@ -105,8 +106,36 @@ export const createCredentialIssuanceActionsImplementation = (
     });
   },
 
-  closeIssuance: () => {
-    navigation.popToTop();
+  closeIssuance: ({
+    event
+  }: ActionArgs<
+    Context,
+    CredentialIssuanceEvents,
+    CredentialIssuanceEvents
+  >) => {
+    const isWalletInNavigationState = isRouteInNavigationState(
+      navigation.getState(),
+      ROUTES.WALLET_HOME
+    );
+
+    if (!isWalletInNavigationState && navigation.canGoBack()) {
+      navigation.goBack();
+      return;
+    }
+
+    const surveyStep = event.type === "close" ? event.surveyStep : undefined;
+    const surveyCredential =
+      event.type === "close" ? event.surveyCredential : undefined;
+
+    navigation.popTo(ROUTES.MAIN, {
+      screen: ROUTES.WALLET_HOME,
+      params: {
+        credentialExitSurvey:
+          surveyStep && surveyCredential
+            ? { step: surveyStep, credential: surveyCredential }
+            : undefined
+      }
+    });
   },
 
   storeWalletInstanceAttestation: ({

@@ -10,7 +10,11 @@ import {
   trackBackToWallet,
   trackItwCredentialReissuingFailed
 } from "../analytics";
-import { getMixPanelCredential } from "../../analytics/utils";
+import {
+  getMixPanelCredential,
+  toSurveyAuthMethod
+} from "../../analytics/utils";
+import ItwActivationSuccessFeedbackBanner from "../../common/components/ItwActivationSuccessFeedbackBanner";
 import { ItwReissuanceFeedbackBanner } from "../../common/components/ItwReissuanceFeedbackBanner.tsx";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
@@ -20,6 +24,7 @@ import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/pr
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
   selectCredentialType,
+  selectIdentification,
   selectIsLoading,
   selectIssuanceMode,
   selectUpgradeFailedCredentials
@@ -98,6 +103,33 @@ export const ItwIssuanceEidResultScreen = () => {
   }
 
   return (
+    <ItwIssuanceEidIssuanceResultContent
+      onAddCredential={handleAddCredential}
+      onBackToWallet={() => {
+        handleBackToWallet();
+        trackBackToWallet({ exit_page: route.name, credential: "ITW_ID_V2" });
+      }}
+    />
+  );
+};
+
+type ItwIssuanceEidIssuanceResultContentProps = {
+  onAddCredential: () => void;
+  onBackToWallet: () => void;
+};
+
+const ItwIssuanceEidIssuanceResultContent = ({
+  onAddCredential,
+  onBackToWallet
+}: ItwIssuanceEidIssuanceResultContentProps) => {
+  const identification =
+    ItwEidIssuanceMachineContext.useSelector(selectIdentification);
+
+  // This component is only rendered for the "issuance" mode (first activation),
+  // so the user had no active DocIO before — docStatus is always "not_active".
+  const authMethod = toSurveyAuthMethod(identification);
+
+  return (
     <OperationResultScreenContent
       pictogram="success"
       title={I18n.t("features.itWallet.issuance.eidResult.success.title")}
@@ -106,21 +138,20 @@ export const ItwIssuanceEidResultScreen = () => {
         label: I18n.t(
           "features.itWallet.issuance.eidResult.success.primaryAction"
         ),
-        onPress: handleAddCredential
+        onPress: onAddCredential
       }}
       secondaryAction={{
         label: I18n.t(
           "features.itWallet.issuance.eidResult.success.secondaryAction"
         ),
-        onPress: () => {
-          handleBackToWallet();
-          trackBackToWallet({
-            exit_page: route.name,
-            credential: "ITW_ID_V2"
-          });
-        }
+        onPress: onBackToWallet
       }}
-    />
+    >
+      <ItwActivationSuccessFeedbackBanner
+        docStatus="not_active"
+        authMethod={authMethod}
+      />
+    </OperationResultScreenContent>
   );
 };
 
@@ -131,6 +162,8 @@ const ItwIssuanceEidUpgradeResultContent = ({
 }) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
+  const identification =
+    ItwEidIssuanceMachineContext.useSelector(selectIdentification);
   const failedCredentialName = useItwCredentialName(
     failedCredentials[0]?.credentialType
   );
@@ -180,7 +213,12 @@ const ItwIssuanceEidUpgradeResultContent = ({
         ),
         onPress: handleBackToWallet
       }}
-    />
+    >
+      <ItwActivationSuccessFeedbackBanner
+        docStatus="active"
+        authMethod={toSurveyAuthMethod(identification)}
+      />
+    </OperationResultScreenContent>
   );
 };
 
