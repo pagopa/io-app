@@ -24,8 +24,7 @@ import {
   handleClearAttachment
 } from "../handleClearAttachments";
 import { handleLoadMessageData } from "../handleLoadMessageData";
-import { handleLoadNextPageMessages } from "../handleLoadNextPageMessages";
-import { handleLoadPreviousPageMessages } from "../handleLoadPreviousPageMessages";
+import { handleLoadPageMessages } from "../handleLoadPageMessages";
 import { handleReloadAllMessages } from "../handleReloadAllMessages";
 import { handleLoadMessageById } from "../handleLoadMessageById";
 import { handleLoadMessageDetails } from "../handleLoadMessageDetails";
@@ -43,12 +42,9 @@ describe("watchMessagesSaga", () => {
   it("should setup watchers and not retry if no retry data is present", () => {
     testSaga(watchMessagesSaga)
       .next()
-      .takeLatest(loadNextPageMessages.request, handleLoadNextPageMessages)
+      .takeLatest(loadNextPageMessages.request, handleLoadPageMessages)
       .next()
-      .takeLatest(
-        loadPreviousPageMessages.request,
-        handleLoadPreviousPageMessages
-      )
+      .takeLatest(loadPreviousPageMessages.request, handleLoadPageMessages)
       .next()
       .takeLatest(reloadAllMessages.request, handleReloadAllMessages)
       .next()
@@ -105,12 +101,9 @@ describe("watchMessagesSaga", () => {
 
     testSaga(watchMessagesSaga)
       .next()
-      .takeLatest(loadNextPageMessages.request, handleLoadNextPageMessages)
+      .takeLatest(loadNextPageMessages.request, handleLoadPageMessages)
       .next()
-      .takeLatest(
-        loadPreviousPageMessages.request,
-        handleLoadPreviousPageMessages
-      )
+      .takeLatest(loadPreviousPageMessages.request, handleLoadPageMessages)
       .next()
       .takeLatest(reloadAllMessages.request, handleReloadAllMessages)
       .next()

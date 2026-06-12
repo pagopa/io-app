@@ -21,8 +21,7 @@ import {
   upsertMessageStatusAttributes
 } from "../../actions";
 import { reduceAutomaticMessageRefreshRequest } from "./automaticMessagesRefresh.ts";
-import { reduceLoadNextPage } from "./loadNextPage.ts";
-import { reduceLoadPreviousPage } from "./loadPreviousPage.ts";
+import { reduceLoadPage } from "./loadPage.ts";
 import { reduceReloadAll } from "./reloadAll.ts";
 import type {
   AllPaginated,
@@ -67,12 +66,10 @@ const reducer = (
     case getType(loadNextPageMessages.request):
     case getType(loadNextPageMessages.success):
     case getType(loadNextPageMessages.failure):
-      return reduceLoadNextPage(state, action);
-
     case getType(loadPreviousPageMessages.request):
     case getType(loadPreviousPageMessages.success):
     case getType(loadPreviousPageMessages.failure):
-      return reduceLoadPreviousPage(state, action);
+      return reduceLoadPage(state, action);
 
     case getType(upsertMessageStatusAttributes.request):
     case getType(upsertMessageStatusAttributes.success):

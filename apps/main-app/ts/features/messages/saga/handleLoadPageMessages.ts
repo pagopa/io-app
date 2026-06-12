@@ -1,9 +1,9 @@
 import { put, call, select } from "typed-redux-saga/macro";
-import { ActionType } from "typesafe-actions";
+import { ActionType, getType } from "typesafe-actions";
 import { PaginatedPublicMessagesCollection } from "../../../../definitions/communication/PaginatedPublicMessagesCollection";
 import {
   loadNextPageMessages,
-  loadNextPageMessages as loadNextPageMessagesAction
+  loadPreviousPageMessages
 } from "../store/actions";
 import { toUIMessage } from "../store/reducers/transformers";
 import { SagaCallReturnType } from "../../../types/utils";
@@ -12,6 +12,7 @@ import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
 import { errorToReason, unknownToReason } from "../utils";
 import {
   trackLoadNextPageMessagesFailure,
+  trackLoadPreviousPageMessagesFailure,
   trackUndefinedBearerToken,
   UndefinedBearerTokenPhase
 } from "../analytics";
@@ -19,48 +20,67 @@ import { handleResponse } from "../utils/responseHandling";
 import { sessionTokenSelector } from "../../authentication/common/store/selectors";
 import { getCommunicationClient } from "./commons";
 
-export function* handleLoadNextPageMessages(
-  action: ActionType<typeof loadNextPageMessages.request>
+const loadPageMessageUtils = (isFetchingNextPage: boolean) => {
+  const loadMessagePageAction = isFetchingNextPage
+    ? loadNextPageMessages
+    : loadPreviousPageMessages;
+  const phase = isFetchingNextPage
+    ? UndefinedBearerTokenPhase.nextPageMessagesLoading
+    : UndefinedBearerTokenPhase.previousPageMessagesLoading;
+  const trackMessagePageFailure = isFetchingNextPage
+    ? trackLoadNextPageMessagesFailure
+    : trackLoadPreviousPageMessagesFailure;
+  return { loadMessagePageAction, phase, trackMessagePageFailure };
+};
+
+export function* handleLoadPageMessages(
+  action:
+    | ActionType<typeof loadPreviousPageMessages.request>
+    | ActionType<typeof loadNextPageMessages.request>
 ) {
   const { filter, pageSize, cursor, fromUserAction } = action.payload;
+  const isNext = action.type === getType(loadNextPageMessages.request);
+  const { loadMessagePageAction, phase, trackMessagePageFailure } =
+    loadPageMessageUtils(isNext);
 
   const sessionToken = yield* select(sessionTokenSelector);
 
   if (!sessionToken) {
-    trackUndefinedBearerToken(
-      UndefinedBearerTokenPhase.nextPageMessagesLoading
-    );
+    trackUndefinedBearerToken(phase);
     return;
   }
+
   const { getUserMessages: getMessages } = yield* call(
     getCommunicationClient,
     sessionToken
   );
 
   try {
+    const cursorInfo = isNext ? { maximum_id: cursor } : { minimum_id: cursor };
     const response = (yield* call(
       withRefreshApiCall,
       getMessages({
         enrich_result_data: true,
         page_size: pageSize,
-        maximum_id: cursor,
+        ...cursorInfo,
         archived: filter.getArchived
       }),
       action
-    )) as unknown as SagaCallReturnType<typeof getMessages>;
+    )) as SagaCallReturnType<typeof getMessages>;
+
     const nextAction = handleResponse<PaginatedPublicMessagesCollection>(
       response,
-      ({ items, next }: PaginatedPublicMessagesCollection) =>
-        loadNextPageMessagesAction.success({
+      ({ items, next, prev: previous }: PaginatedPublicMessagesCollection) =>
+        loadMessagePageAction.success({
           messages: items.map(toUIMessage),
-          pagination: { next },
+          pagination: isNext ? { next } : { previous },
           filter,
           fromUserAction
         }),
       error => {
         const reason = errorToReason(error);
-        trackLoadNextPageMessagesFailure(reason);
-        return loadNextPageMessagesAction.failure({
+        trackMessagePageFailure(reason);
+        return loadMessagePageAction.failure({
           error: getError(error),
           filter
         });
@@ -72,9 +92,9 @@ export function* handleLoadNextPageMessages(
     }
   } catch (e) {
     const reason = unknownToReason(e);
-    trackLoadNextPageMessagesFailure(reason);
+    trackMessagePageFailure(reason);
     yield* put(
-      loadNextPageMessagesAction.failure({
+      loadMessagePageAction.failure({
         error: convertUnknownToError(e),
         filter
       })
