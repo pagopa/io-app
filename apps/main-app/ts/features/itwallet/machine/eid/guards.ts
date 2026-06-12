@@ -16,7 +16,7 @@ type GuardsImplementationOptions = Partial<{
 
 export const createEidIssuanceGuardsImplementation = (
   store: ReturnType<typeof useIOStore>,
-  itwVersion: ItwVersion,
+  _itwVersion: ItwVersion,
   options?: GuardsImplementationOptions
 ) => ({
   /**
@@ -44,7 +44,7 @@ export const createEidIssuanceGuardsImplementation = (
     pipe(
       O.fromNullable(context.walletInstanceAttestation?.jwt),
       O.map(attestation =>
-        isWalletInstanceAttestationValid(itwVersion, attestation)
+        isWalletInstanceAttestationValid(context.itwVersion!, attestation)
       ),
       O.getOrElse(() => false)
     ),

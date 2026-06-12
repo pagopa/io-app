@@ -33,6 +33,7 @@ import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selec
 import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
+import { selectItwSpecsVersion } from "../../common/store/selectors/environment";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
@@ -52,6 +53,7 @@ export const createEidIssuanceActionsImplementation = (
       return {
         integrityKeyTag: O.toUndefined(storedIntegrityKeyTag),
         walletInstanceAttestation,
+        itwVersion: selectItwSpecsVersion(state), // Get the global IT-Wallet version. This can be overriden during the issuance flow
         credentialsToUpgrade: Object.values(credentials)
       };
     }
