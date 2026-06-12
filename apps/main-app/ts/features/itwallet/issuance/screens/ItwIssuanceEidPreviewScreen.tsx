@@ -38,7 +38,6 @@ import {
   trackItwRequestSuccess,
   trackSaveCredentialToWallet
 } from "../analytics";
-import { useItwActivationExitSurveyBottomSheet } from "../../common/hooks/useItwActivationExitSurveyBottomSheet";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
 
 export const ItwIssuanceEidPreviewScreen = () => {
@@ -104,11 +103,6 @@ const ContentView = ({ eid }: ContentViewProps) => {
     parsedCredential: eid.parsedCredential
   });
 
-  const exitSurvey = useItwActivationExitSurveyBottomSheet({
-    step: "pid_preview",
-    onAfterDismiss: () => machineRef.send({ type: "close" })
-  });
-
   const customLabels = isL3
     ? {
         customLabels: {
@@ -132,11 +126,10 @@ const ContentView = ({ eid }: ContentViewProps) => {
     ...customLabels,
     handleDismiss: () => {
       trackItwExit({ exit_page: route.name, credential: mixPanelCredential });
-      if (isL3) {
-        exitSurvey.present();
-      } else {
-        machineRef.send({ type: "close" });
-      }
+      machineRef.send({
+        type: "close",
+        surveyStep: isL3 ? "pid_preview" : undefined
+      });
     }
   });
 
@@ -167,67 +160,64 @@ const ContentView = ({ eid }: ContentViewProps) => {
   });
 
   return (
-    <>
-      <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
-        <ForceScrollDownView
-          contentContainerStyle={{ flexGrow: 1 }}
-          footerActions={{
-            actions: {
-              type: "TwoButtons",
-              primary: {
-                label: I18n.t(
-                  "features.itWallet.issuance.eidPreview.actions.primary"
-                ),
-                onPress: () => {
-                  trackSaveCredentialToWallet(mixPanelCredential);
-                  handleSaveToWallet();
-                }
-              },
-              secondary: {
-                label: I18n.t(
-                  "features.itWallet.issuance.eidPreview.actions.secondary"
-                ),
-                onPress: dismissDialog.show
+    <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
+      <ForceScrollDownView
+        contentContainerStyle={{ flexGrow: 1 }}
+        footerActions={{
+          actions: {
+            type: "TwoButtons",
+            primary: {
+              label: I18n.t(
+                "features.itWallet.issuance.eidPreview.actions.primary"
+              ),
+              onPress: () => {
+                trackSaveCredentialToWallet(mixPanelCredential);
+                handleSaveToWallet();
               }
+            },
+            secondary: {
+              label: I18n.t(
+                "features.itWallet.issuance.eidPreview.actions.secondary"
+              ),
+              onPress: dismissDialog.show
             }
-          }}
-        >
-          <ContentWrapper style={{ flexGrow: 1 }}>
-            <VStack space={24}>
-              <HStack space={8} style={{ alignItems: "center" }}>
-                {!isL3 && (
-                  <Icon
-                    name="legalValue"
-                    color={theme["interactiveElem-default"]}
-                  />
-                )}
-                <H2>
-                  {isL3
-                    ? I18n.t("features.itWallet.issuance.eidPreview.titleL3")
-                    : I18n.t("features.itWallet.issuance.eidPreview.title")}
-                </H2>
-              </HStack>
-              <IOMarkdownLite
-                content={
-                  isL3
-                    ? I18n.t("features.itWallet.issuance.eidPreview.subtitleL3")
-                    : I18n.t("features.itWallet.issuance.eidPreview.subtitle")
-                }
-              />
-              <ItwCredentialPreviewClaimsList
-                data={eid}
-                releaserVisible={false}
-              />
-              {isL3 && (
-                <BodySmall>
-                  {I18n.t("features.itWallet.issuance.eidPreview.bottomTextL3")}
-                </BodySmall>
+          }
+        }}
+      >
+        <ContentWrapper style={{ flexGrow: 1 }}>
+          <VStack space={24}>
+            <HStack space={8} style={{ alignItems: "center" }}>
+              {!isL3 && (
+                <Icon
+                  name="legalValue"
+                  color={theme["interactiveElem-default"]}
+                />
               )}
-            </VStack>
-          </ContentWrapper>
-        </ForceScrollDownView>
-      </LoadingSpinnerOverlay>
-      {exitSurvey.bottomSheet}
-    </>
+              <H2>
+                {isL3
+                  ? I18n.t("features.itWallet.issuance.eidPreview.titleL3")
+                  : I18n.t("features.itWallet.issuance.eidPreview.title")}
+              </H2>
+            </HStack>
+            <IOMarkdownLite
+              content={
+                isL3
+                  ? I18n.t("features.itWallet.issuance.eidPreview.subtitleL3")
+                  : I18n.t("features.itWallet.issuance.eidPreview.subtitle")
+              }
+            />
+            <ItwCredentialPreviewClaimsList
+              data={eid}
+              releaserVisible={false}
+            />
+            {isL3 && (
+              <BodySmall>
+                {I18n.t("features.itWallet.issuance.eidPreview.bottomTextL3")}
+              </BodySmall>
+            )}
+          </VStack>
+        </ContentWrapper>
+      </ForceScrollDownView>
+    </LoadingSpinnerOverlay>
   );
 };

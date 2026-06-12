@@ -247,7 +247,8 @@ export const createEidIssuanceActionsImplementation = (
   },
 
   closeIssuance: ({
-    context
+    context,
+    event
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     const isWalletInNavigationState = isRouteInNavigationState(
       navigation.getState(),
@@ -263,10 +264,14 @@ export const createEidIssuanceActionsImplementation = (
       store.getState()
     );
     const isReissuance = context.mode === "reissuance";
+    const surveyStep = event.type === "close" ? event.surveyStep : undefined;
 
     navigation.popTo(ROUTES.MAIN, {
       screen: ROUTES.WALLET_HOME,
-      params: { requiredEidFeedback: isReissuance && !isSurveyHidden }
+      params: {
+        requiredEidFeedback: isReissuance && !isSurveyHidden,
+        activationExitSurvey: surveyStep ? { step: surveyStep } : undefined
+      }
     });
   },
 

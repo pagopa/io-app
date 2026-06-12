@@ -1,7 +1,7 @@
 import { Body, IOButton, VStack } from "@pagopa/io-app-design-system";
 import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useMemo, useRef } from "react";
 import { View } from "react-native";
 import { useIOSelector } from "../../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
@@ -30,9 +30,7 @@ export type EidActivationExitStep =
 const eidActivationExitSession = { shown: false };
 
 type Props = {
-  step: EidActivationExitStep;
-  /** Called after the bottom sheet is fully dismissed, regardless of user action. */
-  onAfterDismiss: () => void;
+  step?: EidActivationExitStep;
 };
 
 /**
@@ -44,20 +42,13 @@ type Props = {
  * `onAfterDismiss` is invoked immediately.
  */
 export const useItwActivationExitSurveyBottomSheet = ({
-  step,
-  onAfterDismiss
-}: Props) => {
+  step = "intro"
+}: Props = {}) => {
   const { name: routeName } = useRoute();
   const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
   const docStatus = isWalletValid ? "active" : "not_active";
 
   const skipDeclinedEvent = useRef(false);
-  const onAfterDismissRef = useRef(onAfterDismiss);
-
-  useEffect(() => {
-    // eslint-disable-next-line functional/immutable-data
-    onAfterDismissRef.current = onAfterDismiss;
-  }, [onAfterDismiss]);
 
   const surveyUrl = `${IT_WALLET_SURVEY_EID_ACTIVATION_EXIT}?step=${step}&doc_status=${docStatus}`;
 
@@ -116,13 +107,11 @@ export const useItwActivationExitSurveyBottomSheet = ({
       }
       // eslint-disable-next-line functional/immutable-data
       skipDeclinedEvent.current = false;
-      onAfterDismissRef.current();
     }
   });
 
   const presentSurvey = useCallback(() => {
     if (eidActivationExitSession.shown) {
-      onAfterDismissRef.current();
       return;
     }
     // eslint-disable-next-line functional/immutable-data

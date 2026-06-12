@@ -19,10 +19,7 @@ import { ItwReissuanceFeedbackBanner } from "../../common/components/ItwReissuan
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils.ts";
-import {
-  itwLifecycleIsITWalletValidSelector,
-  itwLifecycleIsValidSelector
-} from "../../lifecycle/store/selectors";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
@@ -127,9 +124,9 @@ const ItwIssuanceEidIssuanceResultContent = ({
 }: ItwIssuanceEidIssuanceResultContentProps) => {
   const identification =
     ItwEidIssuanceMachineContext.useSelector(selectIdentification);
-  const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
 
-  const docStatus = isWalletValid ? "active" : "not_active";
+  // This component is only rendered for the "issuance" mode (first activation),
+  // so the user had no active DocIO before — docStatus is always "not_active".
   const authMethod = toSurveyAuthMethod(identification);
 
   return (
@@ -151,7 +148,7 @@ const ItwIssuanceEidIssuanceResultContent = ({
       }}
     >
       <ItwActivationSuccessFeedbackBanner
-        docStatus={docStatus}
+        docStatus="not_active"
         authMethod={authMethod}
       />
     </OperationResultScreenContent>
@@ -167,7 +164,6 @@ const ItwIssuanceEidUpgradeResultContent = ({
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const identification =
     ItwEidIssuanceMachineContext.useSelector(selectIdentification);
-  const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
   const failedCredentialName = useItwCredentialName(
     failedCredentials[0]?.credentialType
   );
@@ -219,7 +215,7 @@ const ItwIssuanceEidUpgradeResultContent = ({
       }}
     >
       <ItwActivationSuccessFeedbackBanner
-        docStatus={isWalletValid ? "active" : "not_active"}
+        docStatus="active"
         authMethod={toSurveyAuthMethod(identification)}
       />
     </OperationResultScreenContent>

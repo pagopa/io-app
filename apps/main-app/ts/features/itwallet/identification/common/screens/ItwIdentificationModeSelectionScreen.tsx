@@ -13,7 +13,6 @@ import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverl
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks";
-import { useItwActivationExitSurveyBottomSheet } from "../../../common/hooks/useItwActivationExitSurveyBottomSheet";
 import { useItwDismissalDialog } from "../../../common/hooks/useItwDismissalDialog";
 import { itwDisabledIdentificationMethodsSelector } from "../../../common/store/selectors/remoteConfig";
 import { isL2Credential } from "../../../common/utils/itwCredentialUtils";
@@ -139,62 +138,55 @@ export const ItwIdentificationModeSelectionScreen = ({
     }
   }, [machineRef, routeName, credentialType, isL2Active]);
 
-  const exitSurvey = useItwActivationExitSurveyBottomSheet({
-    step: "select_method",
-    onAfterDismiss: () => machineRef.send({ type: "close" })
-  });
-
   const dismissalDialog = useItwDismissalDialog({
     customLabels: { body: "" },
-    handleDismiss: exitSurvey.present
+    handleDismiss: () =>
+      machineRef.send({ type: "close", surveyStep: "select_method" })
   });
 
   return (
-    <>
-      <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
-        <IOScrollViewWithLargeHeader
-          title={{ section, label: title }}
-          description={description}
-          headerActionsProp={{ showHelp: true }}
-          goBack={dismissalDialog.show}
-        >
-          <ContentWrapper>
-            <VSpacer size={8} />
-            <VStack space={16}>
-              {isReissuanceMode && isL3 ? (
-                <GroupedMethodList
-                  isCiePinDisabled={isCiePinDisabled}
-                  isCieIdDisabled={isCieIdDisabled}
-                  isSpidDisabled={isSpidDisabled}
+    <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
+      <IOScrollViewWithLargeHeader
+        title={{ section, label: title }}
+        description={description}
+        headerActionsProp={{ showHelp: true }}
+        goBack={dismissalDialog.show}
+      >
+        <ContentWrapper>
+          <VSpacer size={8} />
+          <VStack space={16}>
+            {isReissuanceMode && isL3 ? (
+              <GroupedMethodList
+                isCiePinDisabled={isCiePinDisabled}
+                isCieIdDisabled={isCieIdDisabled}
+                isSpidDisabled={isSpidDisabled}
+              />
+            ) : (
+              <DefaultMethodList
+                isCiePinDisabled={isCiePinDisabled}
+                isCieIdDisabled={isCieIdDisabled}
+                isSpidDisabled={isSpidDisabled}
+                isL3={isL3}
+                isReissuanceMode={isReissuanceMode}
+              />
+            )}
+            {!isReissuanceMode && isL3 && (
+              <View style={styles.noCieButtonContainer}>
+                <IOButton
+                  variant="link"
+                  textAlign="center"
+                  label={I18n.t(
+                    "features.itWallet.identification.modeSelection.noCieCta"
+                  )}
+                  onPress={handleNoCiePress}
+                  testID="noCieButtonTestID"
                 />
-              ) : (
-                <DefaultMethodList
-                  isCiePinDisabled={isCiePinDisabled}
-                  isCieIdDisabled={isCieIdDisabled}
-                  isSpidDisabled={isSpidDisabled}
-                  isL3={isL3}
-                  isReissuanceMode={isReissuanceMode}
-                />
-              )}
-              {!isReissuanceMode && isL3 && (
-                <View style={styles.noCieButtonContainer}>
-                  <IOButton
-                    variant="link"
-                    textAlign="center"
-                    label={I18n.t(
-                      "features.itWallet.identification.modeSelection.noCieCta"
-                    )}
-                    onPress={handleNoCiePress}
-                    testID="noCieButtonTestID"
-                  />
-                </View>
-              )}
-            </VStack>
-          </ContentWrapper>
-        </IOScrollViewWithLargeHeader>
-      </LoadingSpinnerOverlay>
-      {exitSurvey.bottomSheet}
-    </>
+              </View>
+            )}
+          </VStack>
+        </ContentWrapper>
+      </IOScrollViewWithLargeHeader>
+    </LoadingSpinnerOverlay>
   );
 };
 
