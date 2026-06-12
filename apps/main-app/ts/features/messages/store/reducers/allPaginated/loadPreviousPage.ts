@@ -18,7 +18,7 @@ export const reduceLoadPreviousPage = (
           archive: {
             ...state.archive,
             data: pot.toLoading(state.archive.data),
-            lastRequest: O.some("previous")
+            lastRequest: "previous"
           }
         };
       }
@@ -27,7 +27,7 @@ export const reduceLoadPreviousPage = (
         inbox: {
           ...state.inbox,
           data: pot.toLoading(state.inbox.data),
-          lastRequest: O.some("previous")
+          lastRequest: "previous"
         }
       };
 
@@ -58,7 +58,7 @@ export const reduceLoadPreviousPage = (
           ...state,
           archive: {
             data: getNextData(state.archive),
-            lastRequest: O.none,
+            lastRequest: undefined,
             lastUpdateTime: new Date()
           }
         };
@@ -68,7 +68,7 @@ export const reduceLoadPreviousPage = (
         ...state,
         inbox: {
           data: getNextData(state.inbox),
-          lastRequest: O.none,
+          lastRequest: undefined,
           lastUpdateTime: new Date()
         }
       };
