@@ -313,6 +313,9 @@ export const itwEidIssuanceMachine = setup({
             target: "TrustFederationVerification"
           }
         ],
+        "go-to-ipzs-privacy": {
+          actions: "navigateToIpzsPrivacyScreen"
+        },
         close: {
           target: "#itwEidIssuanceMachine.Idle",
           actions: "closeIssuance"
@@ -339,8 +342,8 @@ export const itwEidIssuanceMachine = setup({
             target: "WalletInstanceAttestationObtainment"
           },
           {
-            // When reissuing or fallback to L2, if both integrity key tag and wallet instance attestation are valid,
-            guard: or(["isReissuance", "isL2Fallback"]),
+            // When reissuing, falling back to L2 or using the L3 flow, if both integrity key tag and wallet instance attestation are valid,
+            guard: or(["isReissuance", "isL2Fallback", "isL3FeaturesEnabled"]),
             target: "UserIdentification.Identification"
           },
           {
@@ -359,7 +362,7 @@ export const itwEidIssuanceMachine = setup({
       after: {
         5000: [
           {
-            guard: or(["isReissuance", "isL2Fallback"]),
+            guard: or(["isReissuance", "isL2Fallback", "isL3FeaturesEnabled"]),
             actions: "navigateToIdentificationScreen"
           },
           {
@@ -438,7 +441,7 @@ export const itwEidIssuanceMachine = setup({
         }),
         onDone: [
           {
-            guard: or(["isReissuance", "isL2Fallback"]),
+            guard: or(["isReissuance", "isL2Fallback", "isL3FeaturesEnabled"]),
             actions: [
               assign(({ event }) => ({
                 walletInstanceAttestation: event.output
@@ -485,6 +488,9 @@ export const itwEidIssuanceMachine = setup({
         "This state handles the acceptance of the IPZS privacy policy",
       entry: "navigateToIpzsPrivacyScreen",
       on: {
+        "accept-tos": {
+          target: "UserIdentification"
+        },
         "accept-ipzs-privacy": [
           {
             guard: and(["isUpgrade", "isEligibleForItwSimplifiedActivation"]),
@@ -565,6 +571,10 @@ export const itwEidIssuanceMachine = setup({
                 guard: "isL2Fallback",
                 target: "#itwEidIssuanceMachine.Idle",
                 actions: "navigateToTosScreen"
+              },
+              {
+                guard: "isL3FeaturesEnabled",
+                target: "#itwEidIssuanceMachine.TosAcceptance"
               },
               {
                 target: "#itwEidIssuanceMachine.IpzsPrivacyAcceptance"

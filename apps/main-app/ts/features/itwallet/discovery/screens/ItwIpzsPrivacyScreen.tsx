@@ -29,7 +29,7 @@ const ItwIpzsPrivacyScreen = () => {
 
   const handleContinuePress = () => {
     trackOpenItwTosAccepted(isL3 ? "L3" : "L2");
-    machineRef.send({ type: "accept-ipzs-privacy" });
+    machineRef.send({ type: "accept-tos" });
   };
 
   const onLoadEnd = () => {

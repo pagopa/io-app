@@ -2,6 +2,8 @@ import {
   BodySmall,
   ContentWrapper,
   Divider,
+  FooterActions,
+  ForceScrollDownView,
   H2,
   H4,
   HStack,
@@ -15,14 +17,9 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { useCallback, useRef, useState } from "react";
+import { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
-import Animated, {
-  useAnimatedRef,
-  useDerivedValue,
-  useScrollOffset,
-  useSharedValue
-} from "react-native-reanimated";
+import { Trans } from "react-i18next";
 import Feature1Image from "../../../../../img/features/itWallet/discovery/feature_1.svg";
 import Feature2Image from "../../../../../img/features/itWallet/discovery/feature_2.svg";
 import Feature3Image from "../../../../../img/features/itWallet/discovery/feature_3.svg";
@@ -30,19 +27,16 @@ import Feature4Image from "../../../../../img/features/itWallet/discovery/featur
 import Feature5Image from "../../../../../img/features/itWallet/discovery/feature_5.svg";
 import { AnimatedImage } from "../../../../components/AnimatedImage.tsx";
 import IOMarkdown from "../../../../components/IOMarkdown/index.tsx";
-import { IOScrollViewWithReveal } from "../../../../components/ui/IOScrollViewWithReveal.tsx";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel.tsx";
 import { useIOSelector } from "../../../../store/hooks.ts";
-import { setAccessibilityFocus } from "../../../../utils/accessibility.ts";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp.ts";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet.tsx";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender.ts";
-import { tosConfigSelector } from "../../../tos/store/selectors/index.ts";
 import { trackOpenItwTos } from "../../analytics";
 import { ITW_SCREENVIEW_EVENTS } from "../../analytics/enum.ts";
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog.tsx";
 import { itwIsActivationDisabledSelector } from "../../common/store/selectors/remoteConfig.ts";
-import { generateItwIOMarkdownRules } from "../../common/utils/markdown.tsx";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors/index.ts";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider.tsx";
 import { selectIsLoading } from "../../machine/eid/selectors.ts";
@@ -51,11 +45,6 @@ import {
   trackItwDiscoveryPlus,
   trackItwIntroBack
 } from "../analytics";
-
-// Offset to avoid to scroll to the block without margins
-const scrollOffset: number = 12;
-// Percentage of the visible block after which the anchor link is hidden
-const intersectionRatio: number = 0.3;
 
 type Props = {
   credentialType?: string;
@@ -69,7 +58,6 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
   const isLoading = ItwEidIssuanceMachineContext.useSelector(selectIsLoading);
   const itwActivationDisabled = useIOSelector(itwIsActivationDisabledSelector);
-  const { tos_url } = useIOSelector(tosConfigSelector);
   const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
   const mixPanelCredentialDetails = useIOSelector(
     itwMixPanelCredentialDetailsSelector
@@ -130,161 +118,172 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
     machineRef.send({ type: "accept-tos" });
   }, [machineRef, mixPanelCredentialDetails]);
 
-  const [productHighlightsLayout, setProductHighlightsLayout] = useState({
-    y: 0,
-    height: 0
+  const handlePrivacyAndTermsPress = useCallback(() => {
+    trackOpenItwTos();
+    machineRef.send({ type: "go-to-ipzs-privacy" });
+  }, [machineRef]);
+
+  const {
+    present: presentItwDetailsBottomSheet,
+    bottomSheet: itwDetailsBottomSheet,
+    dismiss: dismissItwDetailsBottomSheet
+  } = useIOBottomSheetModal({
+    title: I18n.t(
+      "features.itWallet.discovery.screen.itw.detailsBottomSheet.title"
+    ),
+    component: (
+      <>
+        <DetailBlock
+          title={I18n.t(
+            "features.itWallet.discovery.screen.itw.details.1.title"
+          )}
+          content={I18n.t(
+            "features.itWallet.discovery.screen.itw.details.1.content"
+          )}
+          icon="security"
+        />
+        <Divider />
+        <DetailBlock
+          title={I18n.t(
+            "features.itWallet.discovery.screen.itw.details.2.title"
+          )}
+          content={I18n.t(
+            "features.itWallet.discovery.screen.itw.details.2.content"
+          )}
+          icon="fiscalCodeIndividual"
+        />
+        <Divider />
+        <DetailBlock
+          title={I18n.t(
+            "features.itWallet.discovery.screen.itw.details.3.title"
+          )}
+          content={I18n.t(
+            "features.itWallet.discovery.screen.itw.details.3.content"
+          )}
+          icon="navQrWallet"
+        />
+        <Divider />
+        <DetailBlock
+          title={I18n.t(
+            "features.itWallet.discovery.screen.itw.details.4.title"
+          )}
+          content={I18n.t(
+            "features.itWallet.discovery.screen.itw.details.4.content"
+          )}
+          icon="euStars"
+        />
+      </>
+    ),
+    footer: (
+      <FooterActions
+        actions={{
+          type: "SingleButton",
+          primary: {
+            label: I18n.t(
+              "features.itWallet.discovery.screen.itw.detailsBottomSheet.action"
+            ),
+            onPress: () => dismissItwDetailsBottomSheet()
+          }
+        }}
+      />
+    )
   });
 
-  const productHighlightsRef = useRef<View>(null);
-  const animatedRef = useAnimatedRef<Animated.ScrollView>();
-  const scrollPosition = useScrollOffset(animatedRef);
-  const hideAnchorLink = useSharedValue(false);
-
-  useDerivedValue(() => {
-    const threshold: number =
-      productHighlightsLayout.height * (1 - intersectionRatio);
-
-    if (productHighlightsLayout.y > 0) {
-      // eslint-disable-next-line functional/immutable-data
-      hideAnchorLink.value =
-        scrollPosition.value >= productHighlightsLayout.y - threshold;
-    }
-  });
-
-  const handleScrollToHighlights = useCallback(() => {
-    animatedRef.current?.scrollTo({
-      y: productHighlightsLayout.y - scrollOffset,
-      animated: true
-    });
-    setAccessibilityFocus(productHighlightsRef);
+  const handleOpenItwDetailsBottomSheet = useCallback(() => {
     trackItwDiscoveryPlus();
-  }, [animatedRef, productHighlightsLayout]);
+    presentItwDetailsBottomSheet();
+  }, [presentItwDetailsBottomSheet]);
 
   return (
-    <IOScrollViewWithReveal
-      testID="itwDiscoveryInfoComponentTestID"
-      animatedRef={animatedRef}
-      hideAnchorAction={hideAnchorLink}
-      actions={{
-        primary: {
-          loading: isLoading,
-          disabled: itwActivationDisabled,
-          label: I18n.t(
-            "features.itWallet.discovery.screen.itw.actions.primary"
-          ),
-          onPress: handleContinuePress
-        },
-        anchor: {
-          label: I18n.t(
-            "features.itWallet.discovery.screen.itw.actions.anchor"
-          ),
-          onPress: handleScrollToHighlights
-        }
-      }}
-    >
-      <HeroImage />
-      <VSpacer size={24} />
-      <ContentWrapper>
-        <H2>{I18n.t("features.itWallet.discovery.screen.itw.title")}</H2>
-        <VSpacer size={24} />
-        <VStack space={16}>
-          <FeatureBlock
-            image={<Feature1Image width={48} height={48} />}
-            content={I18n.t(
-              "features.itWallet.discovery.screen.itw.features.1"
-            )}
-          />
-          <FeatureBlock
-            image={<Feature2Image width={48} height={48} />}
-            content={I18n.t(
-              "features.itWallet.discovery.screen.itw.features.2"
-            )}
-          />
-          <FeatureBlock
-            image={<Feature3Image width={48} height={48} />}
-            content={I18n.t(
-              "features.itWallet.discovery.screen.itw.features.3"
-            )}
-          />
-          <FeatureBlock
-            image={<Feature4Image width={48} height={48} />}
-            content={I18n.t(
-              "features.itWallet.discovery.screen.itw.features.4"
-            )}
-          />
-          <FeatureBlock
-            image={<Feature5Image width={48} height={48} />}
-            content={I18n.t(
-              "features.itWallet.discovery.screen.itw.features.5"
-            )}
-          />
-        </VStack>
-      </ContentWrapper>
-      <VSpacer size={32} />
-      <View
-        ref={productHighlightsRef}
-        onLayout={event => {
-          setProductHighlightsLayout({
-            y: event.nativeEvent.layout.y,
-            height: event.nativeEvent.layout.height
-          });
-        }}
-      >
-        <ContentWrapper>
-          <Divider />
-          <DetailBlock
-            title={I18n.t(
-              "features.itWallet.discovery.screen.itw.details.1.title"
-            )}
-            content={I18n.t(
-              "features.itWallet.discovery.screen.itw.details.1.content"
-            )}
-            icon="security"
-          />
-          <Divider />
-          <DetailBlock
-            title={I18n.t(
-              "features.itWallet.discovery.screen.itw.details.2.title"
-            )}
-            content={I18n.t(
-              "features.itWallet.discovery.screen.itw.details.2.content"
-            )}
-            icon="fiscalCodeIndividual"
-          />
-          <Divider />
-          <DetailBlock
-            title={I18n.t(
-              "features.itWallet.discovery.screen.itw.details.3.title"
-            )}
-            content={I18n.t(
-              "features.itWallet.discovery.screen.itw.details.3.content"
-            )}
-            icon="navQrWallet"
-          />
-          <Divider />
-          <DetailBlock
-            title={I18n.t(
-              "features.itWallet.discovery.screen.itw.details.4.title"
-            )}
-            content={I18n.t(
-              "features.itWallet.discovery.screen.itw.details.4.content"
-            )}
-            icon="euStars"
-          />
-
+    <>
+      <View style={styles.container} testID="itwDiscoveryInfoComponentTestID">
+        <ForceScrollDownView
+          footerActions={{
+            actions: {
+              type: "TwoButtons",
+              primary: {
+                loading: isLoading,
+                disabled: itwActivationDisabled,
+                label: I18n.t(
+                  "features.itWallet.discovery.screen.itw.actions.primary"
+                ),
+                accessibilityLabel: I18n.t(
+                  "features.itWallet.discovery.screen.itw.actions.primary"
+                ),
+                onPress: handleContinuePress
+              },
+              secondary: {
+                label: I18n.t(
+                  "features.itWallet.discovery.screen.itw.actions.secondary"
+                ),
+                accessibilityLabel: I18n.t(
+                  "features.itWallet.discovery.screen.itw.actions.secondary"
+                ),
+                onPress: handleOpenItwDetailsBottomSheet
+              }
+            }
+          }}
+        >
+          <HeroImage />
           <VSpacer size={24} />
-          <IOMarkdown
-            content={I18n.t("features.itWallet.discovery.screen.itw.tos", {
-              tos_url
-            })}
-            rules={generateItwIOMarkdownRules({
-              linkCallback: trackOpenItwTos,
-              paragraphSize: "small"
-            })}
-          />
-        </ContentWrapper>
+          <ContentWrapper>
+            <H2>{I18n.t("features.itWallet.discovery.screen.itw.title")}</H2>
+            <VSpacer size={24} />
+            <VStack space={16}>
+              <FeatureBlock
+                image={<Feature1Image width={48} height={48} />}
+                content={I18n.t(
+                  "features.itWallet.discovery.screen.itw.features.1"
+                )}
+              />
+              <FeatureBlock
+                image={<Feature2Image width={48} height={48} />}
+                content={I18n.t(
+                  "features.itWallet.discovery.screen.itw.features.2"
+                )}
+              />
+              <FeatureBlock
+                image={<Feature3Image width={48} height={48} />}
+                content={I18n.t(
+                  "features.itWallet.discovery.screen.itw.features.3"
+                )}
+              />
+              <FeatureBlock
+                image={<Feature4Image width={48} height={48} />}
+                content={I18n.t(
+                  "features.itWallet.discovery.screen.itw.features.4"
+                )}
+              />
+              <FeatureBlock
+                image={<Feature5Image width={48} height={48} />}
+                content={I18n.t(
+                  "features.itWallet.discovery.screen.itw.features.5"
+                )}
+              />
+            </VStack>
+            <VSpacer size={32} />
+            <BodySmall>
+              <Trans
+                i18nKey="features.itWallet.discovery.screen.itw.tos"
+                components={{
+                  continue: <BodySmall weight="Semibold" />,
+                  privacy: (
+                    <BodySmall
+                      accessibilityRole="link"
+                      asLink
+                      avoidPressable
+                      onPress={handlePrivacyAndTermsPress}
+                      weight="Semibold"
+                    />
+                  )
+                }}
+              />
+            </BodySmall>
+          </ContentWrapper>
+        </ForceScrollDownView>
       </View>
-    </IOScrollViewWithReveal>
+      {itwDetailsBottomSheet}
+    </>
   );
 };
 
@@ -347,6 +346,9 @@ const DetailBlock = (props: {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
   hero: {
     width: "100%",
     height: "auto",
