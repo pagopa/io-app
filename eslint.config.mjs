@@ -1,7 +1,6 @@
 import { defineConfig, globalIgnores } from "eslint/config";
 import { fixupConfigRules } from "@eslint/compat";
 import { FlatCompat } from "@eslint/eslintrc";
-import { createRequire } from "module";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 import pagopaConfig from "@pagopa/eslint-config";
@@ -12,11 +11,10 @@ import functional from "eslint-plugin-functional";
 import sonarjs from "eslint-plugin-sonarjs";
 import i18Next from "eslint-plugin-i18next";
 import js from "@eslint/js";
+import delegateEffectsRule from "./scripts/eslint/delegate-effects.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const require = createRequire(import.meta.url);
-const delegateEffectsRule = require("./scripts/eslint/delegate-effects.js");
 
 const compat = new FlatCompat({
   baseDirectory: __dirname,
@@ -60,7 +58,7 @@ export default defineConfig([
       // Only include rules from tseslint, not the plugin registration,
       // because @react-native/eslint-config/flat already registers @typescript-eslint
       ...tseslint.configs.recommended.filter(c => !c.plugins),
-      ...reactNativeConfig,
+      ...reactNativeConfigWithoutTsPlugin,
       ...fixupConfigRules(compat.extends("plugin:react-native-a11y/all"))
     ],
 
@@ -69,7 +67,8 @@ export default defineConfig([
       sourceType: "module",
 
       parserOptions: {
-        project: "tsconfig.json",
+        projectService: true,
+        tsconfigRootDir: __dirname,
 
         ecmaFeatures: {
           jsx: true
