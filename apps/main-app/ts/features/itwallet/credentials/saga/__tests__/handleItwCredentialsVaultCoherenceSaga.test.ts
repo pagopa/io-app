@@ -16,14 +16,7 @@ jest.mock("../../utils/vault", () => ({
   CredentialsVault: {
     list: jest.fn(),
     removeAll: jest.fn()
-  },
-  vaultIdFor: ({
-    credentialId,
-    keyTag
-  }: {
-    credentialId: string;
-    keyTag?: string;
-  }) => (keyTag === undefined ? credentialId : `${credentialId}:${keyTag}`)
+  }
 }));
 jest.mock("../../analytics", () => ({
   trackItwVaultCoherenceCheckFailed: jest.fn(),

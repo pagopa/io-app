@@ -12,14 +12,7 @@ import { CredentialsVault } from "../../utils/vault";
 import { handleItwCredentialsRemoveByTypeSaga } from "../handleItwCredentialsRemoveByTypeSaga";
 
 jest.mock("../../utils/vault", () => ({
-  CredentialsVault: { removeAll: jest.fn() },
-  vaultIdFor: ({
-    credentialId,
-    keyTag
-  }: {
-    credentialId: string;
-    keyTag?: string;
-  }) => (keyTag === undefined ? credentialId : `${credentialId}:${keyTag}`)
+  CredentialsVault: { removeAll: jest.fn() }
 }));
 jest.mock("../../analytics", () => ({
   trackItwVaultCredentialRemoveFailed: jest.fn()

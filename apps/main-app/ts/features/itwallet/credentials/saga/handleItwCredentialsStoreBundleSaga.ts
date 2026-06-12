@@ -8,7 +8,7 @@ import {
   itwCredentialsStore,
   itwCredentialsStoreBundle
 } from "../store/actions";
-import { CredentialsVault, vaultIdFor } from "../utils/vault";
+import { CredentialsVault } from "../utils/vault";
 
 type VaultWrite = { vaultId: string; credential: string };
 
@@ -34,18 +34,17 @@ const collapseBundles = (bundles: ReadonlyArray<CredentialBundle>) => {
     (acc, [credentialId, group]) => {
       if (group.length === 1) {
         const [{ metadata, credential }] = group;
+        // Non-batch credential: stored under its credentialId.
         return {
-          writes: [
-            ...acc.writes,
-            { vaultId: vaultIdFor({ credentialId }), credential }
-          ],
+          writes: [...acc.writes, { vaultId: credentialId, credential }],
           metadata: [...acc.metadata, metadata]
         };
       }
 
+      // Batch credential: each copy stored under its own keyTag.
       const keyTags = group.map(({ metadata }) => metadata.keyTag);
       const batchWrites = group.map(({ metadata, credential }) => ({
-        vaultId: vaultIdFor({ credentialId, keyTag: metadata.keyTag }),
+        vaultId: metadata.keyTag,
         credential
       }));
 

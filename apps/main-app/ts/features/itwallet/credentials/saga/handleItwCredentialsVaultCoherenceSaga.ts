@@ -11,14 +11,14 @@ import {
   trackItwVaultCoherenceCheckFailed,
   trackItwVaultOrphanedCredentialsFound
 } from "../analytics";
-import { CredentialsVault, vaultIdFor } from "../utils/vault";
+import { CredentialsVault } from "../utils/vault";
 import { itwCredentialsRemove } from "../store/actions";
 import { itwAllStoredCredentialsSelector } from "../store/selectors";
 
 /**
  * Boot-time coherence check between Redux credentials and CredentialsVault. Credentials are matched
- * by their vault id (see {@link vaultIdFor}): a non-batch credential maps to a single vault id,
- * a batch credential to one per copy.
+ * by their vault id: a non-batch credential maps to a single vault id (its credentialId),
+ * a batch credential to one per copy (each copy's keyTag).
  *
  * 1. If the representative copy of a Redux credential is missing from the vault → remove the whole
  *    credential from Redux, delete its crypto keys and drop any remaining vault copies (the raw
@@ -39,10 +39,9 @@ export function* handleItwCredentialsVaultCoherenceSaga() {
   const legacyCredentials = yield* select(
     (s: GlobalState) => s.features.itWallet.credentials.legacyCredentials
   );
+  // Legacy credentials predate batch support, so each maps to its credentialId.
   const legacyVaultIds = new Set(
-    Object.values(legacyCredentials).map(c =>
-      vaultIdFor({ credentialId: c.credentialId })
-    )
+    Object.values(legacyCredentials).map(c => c.credentialId)
   );
   const isMixpanelEnabled = yield* select(isMixpanelEnabledSelector);
 

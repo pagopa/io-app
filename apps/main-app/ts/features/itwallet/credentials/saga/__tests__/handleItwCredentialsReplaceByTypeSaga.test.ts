@@ -14,14 +14,7 @@ import { CredentialsVault } from "../../utils/vault";
 import { handleItwCredentialsReplaceByTypeSaga } from "../handleItwCredentialsReplaceByTypeSaga";
 
 jest.mock("../../utils/vault", () => ({
-  CredentialsVault: { removeAll: jest.fn(), storeAll: jest.fn() },
-  vaultIdFor: ({
-    credentialId,
-    keyTag
-  }: {
-    credentialId: string;
-    keyTag?: string;
-  }) => (keyTag === undefined ? credentialId : `${credentialId}:${keyTag}`)
+  CredentialsVault: { removeAll: jest.fn(), storeAll: jest.fn() }
 }));
 jest.mock("@pagopa/io-react-native-crypto", () => ({ deleteKey: jest.fn() }));
 

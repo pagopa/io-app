@@ -1,41 +1,19 @@
 import * as SecureStorage from "@pagopa/io-react-native-secure-storage";
 
 const PREFIX = "itw:credential:";
-/**
- * Separator between the credentialId and the per-copy keyTag in the vault key of a batch
- * credential copy. The keyTag is a UUID, so it never contains this character.
- */
-const BATCH_SEPARATOR = ":";
-
-/**
- * Reference to a credential entry in the vault.
- *
- * `keyTag` is provided ONLY when addressing a specific copy of a batch credential. Non-batch
- * credentials are stored under their `credentialId` alone, exactly as before batch support was
- * introduced, so existing installs need no vault migration.
- */
-export type VaultRef = {
-  credentialId: string;
-  keyTag?: string;
-};
-
-/**
- * Builds the vault id (the storage key without the prefix) for a credential entry.
- *
- * - Non-batch credential: `{credentialId}` (e.g. `dc_sd_jwt_PersonalIdentificationData`).
- * - Batch credential copy: `{credentialId}:{keyTag}`.
- *
- * @param ref The vault reference
- * @returns The vault id
- */
-export const vaultIdFor = ({ credentialId, keyTag }: VaultRef): string =>
-  keyTag === undefined
-    ? credentialId
-    : `${credentialId}${BATCH_SEPARATOR}${keyTag}`;
 
 /**
  * Generates the full storage key for a given vault id.
- * @param vaultId The vault id (see {@link vaultIdFor})
+ *
+ * The vault id is a single opaque string chosen by the caller:
+ * - a `credentialId` for a non-batch credential (unchanged from before batch support, so existing
+ *   installs need no migration);
+ * - a `keyTag` (a UUID, globally unique) for a single copy of a batch credential.
+ *
+ * The two namespaces never collide: a `credentialId` is a `_`-delimited identifier
+ * (e.g. `dc_sd_jwt_mDL`) while a `keyTag` is a UUID.
+ *
+ * @param vaultId The vault id
  * @returns The storage key
  */
 const getStorageKeyFromVaultId = (vaultId: string): string =>
@@ -76,7 +54,7 @@ const list = async (): Promise<ReadonlyArray<string>> => {
 
 /**
  * Stores a credential's SD-JWT/MDOC in the Secure Storage.
- * @param vaultId The credential vault id (see {@link vaultIdFor})
+ * @param vaultId The credential vault id (see {@link getStorageKeyFromVaultId})
  * @param credential The credential's SD-JWT/MDOC as a string
  * @throws If the Secure Storage operation fails
  */
@@ -100,7 +78,7 @@ const storeAll = async (
 
 /**
  * Retrieves a credential's SD-JWT/MDOC from the Secure Storage using its vault id.
- * @param vaultId The credential vault id (see {@link vaultIdFor})
+ * @param vaultId The credential vault id (see {@link getStorageKeyFromVaultId})
  * @returns A promise that resolves to the credential's SD-JWT/MDOC as a string, or undefined if not found
  * @throws If the Secure Storage operation fails for reasons other than a missing value
  */
@@ -120,7 +98,7 @@ const get = async (vaultId: string): Promise<string | undefined> => {
 
 /**
  * Removes a credential's SD-JWT/MDOC from the Secure Storage using its vault id.
- * @param vaultId The credential vault id (see {@link vaultIdFor})
+ * @param vaultId The credential vault id (see {@link getStorageKeyFromVaultId})
  * @throws If the Secure Storage operation fails
  */
 const remove = async (vaultId: string): Promise<void> => {

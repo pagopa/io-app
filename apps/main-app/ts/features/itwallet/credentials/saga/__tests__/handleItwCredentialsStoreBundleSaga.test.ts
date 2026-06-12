@@ -10,14 +10,7 @@ import { CredentialsVault } from "../../utils/vault";
 import { handleItwCredentialsStoreBundleSaga } from "../handleItwCredentialsStoreBundleSaga";
 
 jest.mock("../../utils/vault", () => ({
-  CredentialsVault: { storeAll: jest.fn() },
-  vaultIdFor: ({
-    credentialId,
-    keyTag
-  }: {
-    credentialId: string;
-    keyTag?: string;
-  }) => (keyTag === undefined ? credentialId : `${credentialId}:${keyTag}`)
+  CredentialsVault: { storeAll: jest.fn() }
 }));
 jest.mock("../../analytics", () => ({
   trackItwVaultCredentialStoreFailed: jest.fn()
@@ -59,9 +52,8 @@ describe("handleItwCredentialsStoreBundleSaga", () => {
       });
   });
 
-  it("collapses a batch into one metadata with keyTags and stores each copy under a concatenated vault id", () => {
+  it("collapses a batch into one metadata with keyTags and stores each copy under its keyTag", () => {
     mockStoreAll.mockResolvedValue(undefined);
-    const credentialId = ItwStoredCredentialsMocks.mdl.credentialId;
     const copies: ReadonlyArray<CredentialBundle> = [
       {
         credential: "raw-jwt-0",
@@ -82,9 +74,10 @@ describe("handleItwCredentialsStoreBundleSaga", () => {
       )
       .run()
       .then(() => {
+        // Each batch copy is stored under its own keyTag.
         expect(mockStoreAll).toHaveBeenCalledWith([
-          { vaultId: `${credentialId}:key-0`, credential: "raw-jwt-0" },
-          { vaultId: `${credentialId}:key-1`, credential: "raw-jwt-1" }
+          { vaultId: "key-0", credential: "raw-jwt-0" },
+          { vaultId: "key-1", credential: "raw-jwt-1" }
         ]);
       });
   });

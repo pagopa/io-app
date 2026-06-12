@@ -3,7 +3,6 @@ import { SdJwt, Mdoc } from "@pagopa/io-react-native-wallet";
 import I18n from "i18next";
 import { isBefore } from "date-fns";
 import { ItwIridescentBorderVariant } from "../components/ItwBrandedSkiaBorder";
-import { vaultIdFor } from "../../credentials/utils/vault";
 import { CredentialType } from "./itwMocksUtils";
 import {
   CredentialBundle,
@@ -30,32 +29,28 @@ export const getCredentialKeyTags = (
 ): ReadonlyArray<string> => credential.keyTags ?? [credential.keyTag];
 
 /**
- * Returns the vault ids of every copy of a credential (see {@link vaultIdFor}). A non-batch
- * credential maps to a single vault id (`credentialId`); a batch credential maps to one vault id
- * per copy (`{credentialId}:{keyTag}`).
+ * Returns the vault ids of every copy of a credential. A non-batch credential maps to a single
+ * vault id (its `credentialId`); a batch credential maps to one vault id per copy (each copy's
+ * `keyTag`). See {@link CredentialsVault} for the vault id namespacing.
  */
 export const getCredentialVaultIds = (
   credential: Pick<CredentialMetadata, "credentialId" | "keyTags">
 ): ReadonlyArray<string> =>
   isBatchCredential(credential)
-    ? (credential.keyTags ?? []).map(keyTag =>
-        vaultIdFor({ credentialId: credential.credentialId, keyTag })
-      )
-    : [vaultIdFor({ credentialId: credential.credentialId })];
+    ? (credential.keyTags ?? [])
+    : [credential.credentialId];
 
 /**
  * Returns the vault id of the representative copy of a credential, i.e. the one exposed for
- * display and presentation. For a batch credential it is the first copy (`keyTags[0]`).
+ * display and presentation. For a batch credential it is the first copy (`keyTags[0]`), for a
+ * non-batch credential it is the `credentialId`.
  */
 export const getRepresentativeVaultId = (
   credential: Pick<CredentialMetadata, "credentialId" | "keyTags">
 ): string =>
   isBatchCredential(credential)
-    ? vaultIdFor({
-        credentialId: credential.credentialId,
-        keyTag: credential.keyTags?.[0]
-      })
-    : vaultIdFor({ credentialId: credential.credentialId });
+    ? (credential.keyTags?.[0] as string)
+    : credential.credentialId;
 
 // Credentials that can be obtained with valid a Documenti su IO instance
 export const l2Credentials = [
