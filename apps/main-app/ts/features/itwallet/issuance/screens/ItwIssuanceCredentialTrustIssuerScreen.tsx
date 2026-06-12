@@ -173,7 +173,11 @@ const ContentView = ({ credentialType, eid }: ContentViewProps) => {
     }
   });
 
-  useHeaderSecondLevel({ title: "", goBack: dismissDialog.show });
+  useHeaderSecondLevel({
+    title: "",
+    goBack: dismissDialog.show,
+    supportRequest: true
+  });
 
   useDebugInfo({
     parsedCredential: eid.parsedCredential

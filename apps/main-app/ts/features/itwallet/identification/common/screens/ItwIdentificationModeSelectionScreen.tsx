@@ -9,7 +9,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
-import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
+import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks";
@@ -145,35 +145,19 @@ export const ItwIdentificationModeSelectionScreen = ({
   });
 
   const dismissalDialog = useItwDismissalDialog({
-    enabled: level === "l3",
-    customLabels: {
-      title: I18n.t(
-        "features.itWallet.discovery.screen.itw.dismissalDialog.title"
-      ),
-      body: I18n.t(
-        "features.itWallet.discovery.screen.itw.dismissalDialog.body"
-      ),
-      confirmLabel: I18n.t(
-        "features.itWallet.discovery.screen.itw.dismissalDialog.confirm"
-      ),
-      cancelLabel: I18n.t(
-        "features.itWallet.discovery.screen.itw.dismissalDialog.cancel"
-      )
-    },
-    handleDismiss: exitSurvey.present
+    customLabels: { body: "" },
+    handleDismiss: () => {
+      machineRef.send({ type: "close" });
+    }
   });
 
-  if (isLoading) {
-    return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
-  }
-
   return (
-    <>
+    <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
       <IOScrollViewWithLargeHeader
         title={{ section, label: title }}
         description={description}
         headerActionsProp={{ showHelp: true }}
-        goBack={level === "l3" ? dismissalDialog.show : undefined}
+        goBack={dismissalDialog.show}
       >
         <ContentWrapper>
           <VSpacer size={8} />
@@ -209,8 +193,7 @@ export const ItwIdentificationModeSelectionScreen = ({
           </VStack>
         </ContentWrapper>
       </IOScrollViewWithLargeHeader>
-      {exitSurvey.bottomSheet}
-    </>
+    </LoadingSpinnerOverlay>
   );
 };
 

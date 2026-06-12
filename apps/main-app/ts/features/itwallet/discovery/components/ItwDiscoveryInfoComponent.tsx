@@ -110,7 +110,9 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
         "features.itWallet.discovery.screen.itw.dismissalDialog.cancel"
       )
     },
-    handleDismiss: exitSurvey.present,
+    handleDismiss: () => {
+      machineRef.send({ type: "close" });
+    },
     dismissalContext: {
       screen_name: ITW_SCREENVIEW_EVENTS.ITW_INTRO,
       itw_flow: "L3"

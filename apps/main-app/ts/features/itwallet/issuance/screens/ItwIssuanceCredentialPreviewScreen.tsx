@@ -16,14 +16,8 @@ import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { usePreventScreenCapture } from "../../../../utils/hooks/usePreventScreenCapture";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { identificationRequest } from "../../../identification/store/actions";
-import {
-  trackCredentialPreview,
-  trackIssuanceCredentialScrollToBottom,
-  trackItwExit,
-  trackSaveCredentialToWallet
-} from "../analytics";
 import { getMixPanelCredential } from "../../analytics/utils";
-import { useItwCredentialExitSurveyBottomSheet } from "../../common/hooks/useItwCredentialExitSurveyBottomSheet";
+import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwDismissalDialog } from "../../common/hooks/useItwDismissalDialog";
 import {
@@ -34,8 +28,14 @@ import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selec
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import { selectCredentialOption } from "../../machine/credential/selectors";
 import { ITW_ROUTES } from "../../navigation/routes";
+import {
+  trackCredentialPreview,
+  trackIssuanceCredentialScrollToBottom,
+  trackItwExit,
+  trackSaveCredentialToWallet
+} from "../analytics";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
-import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
+import { useItwCredentialExitSurveyBottomSheet } from "../../common/hooks/useItwCredentialExitSurveyBottomSheet";
 
 export const ItwIssuanceCredentialPreviewScreen = () => {
   const credentialOption = ItwCredentialIssuanceMachineContext.useSelector(
@@ -136,7 +136,8 @@ const ContentView = ({ credential }: ContentViewProps) => {
 
   useHeaderSecondLevel({
     title: "",
-    goBack: dismissDialog.show
+    goBack: dismissDialog.show,
+    supportRequest: true
   });
 
   useDebugInfo({

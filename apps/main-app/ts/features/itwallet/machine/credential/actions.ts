@@ -51,40 +51,37 @@ export const createCredentialIssuanceActionsImplementation = (
 
   navigateToCredentialIntroductionScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_INTRODUCTION
+      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_INTRODUCTION,
+      pop: true
     });
   },
 
   navigateToTrustIssuerScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER
+      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER,
+      pop: true
     });
   },
 
   navigateToCredentialPreviewScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW
+      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_PREVIEW,
+      pop: true
     });
   },
 
   navigateToFailureScreen: () => {
     navigation.navigate(ITW_ROUTES.MAIN, {
-      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_FAILURE
+      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_FAILURE,
+      pop: true
     });
   },
 
   navigateToWallet: () => {
     toast.success(I18n.t("features.itWallet.issuance.credentialResult.toast"));
-    navigation.reset({
-      index: 1,
-      routes: [
-        {
-          name: ROUTES.MAIN,
-          params: {
-            screen: ROUTES.WALLET_HOME
-          }
-        }
-      ]
+    navigation.popTo(ROUTES.MAIN, {
+      screen: ROUTES.WALLET_HOME,
+      params: {}
     });
   },
 
