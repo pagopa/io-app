@@ -1,4 +1,3 @@
-/* eslint-disable complexity */
 import * as O from "fp-ts/lib/Option";
 import * as A from "fp-ts/lib/Array";
 import { pipe } from "fp-ts/lib/function";
