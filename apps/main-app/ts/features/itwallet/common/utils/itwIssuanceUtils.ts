@@ -126,7 +126,7 @@ const completeAuthFlow: CompleteAuthFlow = async ({
 }) => {
   const ioWallet = getIoWallet(itwVersion);
   const { code } =
-    await ioWallet.CredentialIssuance.completeUserAuthorizationWithQueryMode(
+    await ioWallet.CredentialIssuance.completePidUserAuthorizationWithQueryMode(
       callbackUrl
     );
 

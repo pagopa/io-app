@@ -34,10 +34,12 @@ export type Context = {
    */
   proximityDetails?: ProximityDetails;
   /**
-   * A boolean value indicating whether the user has granted consent
-   * to share their credentials with the Relying Party
+   * The deterministic consent key for the exact proximity details the user
+   * reviewed and approved in the current session. Used to skip re-consent for
+   * NFC retrieval when the verifier re-issues the same request.
+   * Derived via generateConsentKey(getConsentDataFromProximityDetails(proximityDetails)).
    */
-  hasGrantedConsent?: boolean;
+  grantedConsentKey?: string;
 };
 
 export const InitialContext: Context = {
