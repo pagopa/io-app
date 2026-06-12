@@ -287,7 +287,7 @@ PODS:
     - SocketRocket
     - SwiftCBOR
     - Yoga
-  - pagopa-io-react-native-jwt (2.1.0):
+  - pagopa-io-react-native-jwt (2.2.0):
     - boost
     - DoubleConversion
     - fast_float
@@ -4394,7 +4394,7 @@ SPEC CHECKSUMS:
   FBLazyVector: 06b1c8278e6e1b31ef68e9e14c296b7872e79e48
   fmt: 530618a01105dae0fa3a2f27c81ae11fa8f67eac
   glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
-  hermes-engine: 114d528fdfcd6768839bdd285eb757d15de9ed05
+  hermes-engine: 679e6a22e75c512c1e01359e17888ceb5d18923f
   IoReactNativeCie: d30d9055f74cfc1fd00c8583316c6321abdb7794
   IoReactNativeHttpClient: bc2f2838fe9f959375d4d7e0419b11ebf27af379
   IoReactNativeIso18013: 0095a9b361a2229760992bd71861723a74248b2f
@@ -4408,7 +4408,7 @@ SPEC CHECKSUMS:
   pagopa-io-react-native-cieid: ff8a232612c44f72846202a4b857a4e16ff9db4d
   pagopa-io-react-native-crypto: eb62bb6767b44ea610ce169d855c89604b9e96d9
   pagopa-io-react-native-integrity: 3e84754db0333a531db86f83f786f60a6da22337
-  pagopa-io-react-native-jwt: 3a558398517a730dabf61928fe2e92aee75ef2a0
+  pagopa-io-react-native-jwt: d268a7aa7a0c63e809386209e589224e0c0c04c0
   pagopa-io-react-native-login-utils: 4d4e00aeb67ffbb36dc6f5fcfc17e088ef5b9f34
   pagopa-io-react-native-secure-storage: 64dcc5dff82ec5ce136d7904bc076d70db157dec
   pagopa-react-native-zendesk: 9436edab6731dd9b64b72f1f2e039c166f0161b9

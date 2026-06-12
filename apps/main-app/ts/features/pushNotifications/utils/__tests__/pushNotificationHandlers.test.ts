@@ -13,11 +13,11 @@ import {
 import { maximumItemsFromAPI, pageSize } from "../../../../config";
 import { Store } from "../../../../store/actions/types";
 import { GlobalState } from "../../../../store/reducers/types";
+import { ArchivingStatus } from "../../../messages/store/reducers/archiving";
 import {
   MessagePage,
   MessagePagePot
-} from "../../../messages/store/reducers/allPaginated";
-import { ArchivingStatus } from "../../../messages/store/reducers/archiving";
+} from "../../../messages/store/reducers/allPaginated/types";
 
 jest.mock("../../../messages/analytics");
 
