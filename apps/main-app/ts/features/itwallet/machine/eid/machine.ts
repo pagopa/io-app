@@ -309,7 +309,11 @@ export const itwEidIssuanceMachine = setup({
             // Verify the trust federation
             target: "TrustFederationVerification"
           }
-        ]
+        ],
+        close: {
+          target: "#itwEidIssuanceMachine.Idle",
+          actions: "closeIssuance"
+        }
       }
     },
     TrustFederationVerification: {
