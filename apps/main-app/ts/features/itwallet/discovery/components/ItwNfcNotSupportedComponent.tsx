@@ -39,16 +39,9 @@ export const ItwNfcNotSupportedComponent = () => {
 
   const navigateToWalletHomeScreen = useCallback(
     () =>
-      navigation.reset({
-        index: 1,
-        routes: [
-          {
-            name: ROUTES.MAIN,
-            params: {
-              screen: ROUTES.WALLET_HOME
-            }
-          }
-        ]
+      navigation.popTo(ROUTES.MAIN, {
+        screen: ROUTES.WALLET_HOME,
+        params: {}
       }),
     [navigation]
   );

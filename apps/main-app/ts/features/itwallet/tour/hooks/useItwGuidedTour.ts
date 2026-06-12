@@ -56,7 +56,11 @@ export const useItwGuidedTour = () => {
   useFocusEffect(
     useCallback(() => {
       if (isItwActive && !isCompleted && !offlineAccessReason) {
-        dispatch(startTourAction({ groupId: ITW_TOUR_GROUP_ID }));
+        setTimeout(() => {
+          // Adding a delay to make sure the tour starts after the navigation
+          // transition and other animations are completed,
+          dispatch(startTourAction({ groupId: ITW_TOUR_GROUP_ID }));
+        }, 300);
       }
     }, [dispatch, isItwActive, isCompleted, offlineAccessReason])
   );
