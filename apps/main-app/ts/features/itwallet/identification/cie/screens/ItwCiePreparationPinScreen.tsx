@@ -5,6 +5,7 @@ import { useCallback } from "react";
 import { trackItwCiePinTutorialPin } from "../../analytics";
 import { ItwEidIssuanceMachineContext } from "../../../machine/eid/provider";
 import { isL3FeaturesEnabledSelector } from "../../../machine/eid/selectors";
+import { ItwCiePreparationAnimatedImage } from "../components/ItwCiePreparationAnimatedImage";
 import { ItwCiePreparationScreenContent } from "../components/ItwCiePreparationScreenContent";
 import { useCieInfoBottomSheet } from "../hooks/useCieInfoBottomSheet";
 
@@ -32,7 +33,12 @@ export const ItwCiePreparationPinScreen = () => {
       description={I18n.t(
         `features.itWallet.identification.cie.prepare.pin.description`
       )}
-      imageSrc={require("../../../../../../img/features/itWallet/identification/itw_cie_pin.gif")}
+      imageComponent={
+        <ItwCiePreparationAnimatedImage
+          animatedSource={require("../../../../../../img/features/itWallet/identification/itw_cie_pin.gif")}
+          staticSource={require("../../../../../../img/features/itWallet/identification/itw_cie_pin_static.png")}
+        />
+      }
       actions={{
         type: "SingleButton",
         primary: {

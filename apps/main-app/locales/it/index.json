@@ -3476,6 +3476,10 @@
               "title": "Prepara la tua Carta di Identità Elettronica (CIE)",
               "description": "Dovrai usarla e inserire il suo codice a 6 cifre (CAN) che trovi stampato sul fronte in basso a destra.",
               "cta": "Continua"
+            },
+            "animation": {
+              "pause": "Metti in pausa animazione",
+              "play": "Riproduci animazione"
             }
           },
           "inputPin": {
