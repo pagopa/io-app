@@ -198,7 +198,6 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -750,7 +749,6 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1302,7 +1300,6 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1854,7 +1851,6 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2406,7 +2402,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -3169,7 +3164,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -3932,7 +3926,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -4695,7 +4688,6 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

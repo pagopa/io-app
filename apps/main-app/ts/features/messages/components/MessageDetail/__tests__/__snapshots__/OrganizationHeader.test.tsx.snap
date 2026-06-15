@@ -198,7 +198,6 @@ exports[`OrganizationHeader component should match the snapshot for a TPM denomi
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -700,7 +699,6 @@ exports[`OrganizationHeader component should match the snapshot for a non third-
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

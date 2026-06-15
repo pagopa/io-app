@@ -198,7 +198,6 @@ exports[`LoadingScreenContent should match the snapshot with title, a subtitle, 
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -819,7 +818,6 @@ exports[`LoadingScreenContent should match the snapshot with title, a subtitle, 
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1440,7 +1438,6 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2058,7 +2055,6 @@ exports[`LoadingScreenContent should match the snapshot with title, no children,
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

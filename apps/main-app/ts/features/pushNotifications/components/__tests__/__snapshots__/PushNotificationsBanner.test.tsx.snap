@@ -198,7 +198,6 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

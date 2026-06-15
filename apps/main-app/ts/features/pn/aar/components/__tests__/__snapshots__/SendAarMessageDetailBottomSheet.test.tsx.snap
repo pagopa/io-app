@@ -198,7 +198,6 @@ exports[`BottomSheetContent doesn't render the website section and matches its s
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1199,7 +1198,6 @@ exports[`BottomSheetContent renders the website section with the URL and matches
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2288,7 +2286,6 @@ exports[`BottomSheetContent renders the website section with the URL and matches
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

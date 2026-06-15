@@ -198,7 +198,6 @@ exports[`MessageDetailsHeader component should match the snapshot with a valid t
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -783,7 +782,6 @@ exports[`MessageDetailsHeader component should match the snapshot with default p
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

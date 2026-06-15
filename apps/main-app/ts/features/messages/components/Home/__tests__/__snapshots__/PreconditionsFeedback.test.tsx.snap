@@ -198,7 +198,6 @@ exports[`PreconditionsFeedback should match snapshot with title and no subtitle 
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -731,7 +730,6 @@ exports[`PreconditionsFeedback should match snapshot with title and subtitle 1`]
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

@@ -198,7 +198,6 @@ exports[`CountdownComponent should render correctly when visible is true 1`] = `
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

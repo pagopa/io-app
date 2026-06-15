@@ -198,7 +198,6 @@ exports[`ItwWalletReadyBanner should match snapshot when ITW new interface activ
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -929,7 +928,6 @@ exports[`ItwWalletReadyBanner should match snapshot when ITW new interface activ
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

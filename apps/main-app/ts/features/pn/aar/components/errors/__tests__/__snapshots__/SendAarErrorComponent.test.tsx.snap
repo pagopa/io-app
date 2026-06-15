@@ -198,7 +198,6 @@ exports[`SendAarErrorComponent - Full Test Suite should match snapshot and call 
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

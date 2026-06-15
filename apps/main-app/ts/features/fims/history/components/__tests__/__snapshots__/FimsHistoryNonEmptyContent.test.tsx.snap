@@ -198,7 +198,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1007,7 +1006,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1957,7 +1955,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2772,7 +2769,6 @@ exports[`fimsHistoryNonEmptyContent should fetch automatically to try and fill t
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -3728,7 +3724,6 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -4493,7 +4488,6 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -5399,7 +5393,6 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -5845,7 +5838,6 @@ exports[`fimsHistoryNonEmptyContent should not fetch automatically to try and fi
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

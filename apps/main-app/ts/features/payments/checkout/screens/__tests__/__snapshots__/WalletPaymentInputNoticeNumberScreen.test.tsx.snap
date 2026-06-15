@@ -198,7 +198,6 @@ exports[`WalletPaymentInputNoticeNumberScreen should render the WalletPaymentInp
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

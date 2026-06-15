@@ -198,7 +198,6 @@ exports[`MessageDetailsReminder should match snapshot when the due date is missi
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -520,7 +519,6 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -976,7 +974,6 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

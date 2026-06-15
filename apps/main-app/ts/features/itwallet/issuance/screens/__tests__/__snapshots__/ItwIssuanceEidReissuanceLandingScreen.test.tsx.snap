@@ -198,7 +198,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -520,7 +519,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1584,7 +1582,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2648,7 +2645,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -3639,7 +3635,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -3961,7 +3956,6 @@ exports[`ItwIssuanceEidReissuanceLandingScreen match snapshot for isAnyWalletVal
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

@@ -198,7 +198,6 @@ exports[`OperationResultScreenContent should match the snapshot with default pro
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

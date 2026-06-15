@@ -198,7 +198,6 @@ exports[`MessagePayments should match snapshot when cancelled with payments with
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -520,7 +519,6 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2899,7 +2897,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -5278,7 +5275,6 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -5600,7 +5596,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -7347,7 +7342,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -9094,7 +9088,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -11084,7 +11077,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -13074,7 +13066,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -13681,7 +13672,6 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -14288,7 +14278,6 @@ exports[`MessagePayments should match snapshot when not cancelled, without payme
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -14610,7 +14599,6 @@ exports[`MessagePayments should match snapshot when not cancelled, without payme
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

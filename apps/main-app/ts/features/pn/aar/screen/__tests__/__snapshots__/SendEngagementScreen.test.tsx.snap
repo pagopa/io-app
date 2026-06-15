@@ -198,7 +198,6 @@ exports[`SendEngagementScreen should match snapshot and track screen visualizati
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

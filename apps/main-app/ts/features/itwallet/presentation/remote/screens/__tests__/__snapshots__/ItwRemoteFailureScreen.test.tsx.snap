@@ -198,7 +198,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1726,7 +1725,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2980,7 +2978,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -4275,7 +4272,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_REQUEST
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -5356,7 +5352,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -6870,7 +6865,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -8384,7 +8378,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_G
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -9664,7 +9657,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -11192,7 +11184,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for UNTRUSTED_RP 1`
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -12452,7 +12443,6 @@ exports[`ItwRemoteFailureScreen should render failure screen for WALLET_INACTIVE
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

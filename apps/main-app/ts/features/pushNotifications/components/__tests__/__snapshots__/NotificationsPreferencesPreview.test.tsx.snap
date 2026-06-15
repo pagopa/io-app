@@ -198,7 +198,6 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -704,7 +703,6 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview off, rem
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1210,7 +1208,6 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1716,7 +1713,6 @@ exports[`NotificationsPreferencesPreview should match snapshot, preview on, remi
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

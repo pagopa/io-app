@@ -69,7 +69,6 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1380,7 +1379,6 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

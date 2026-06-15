@@ -198,7 +198,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, no payments 1`] = `
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -569,7 +568,6 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

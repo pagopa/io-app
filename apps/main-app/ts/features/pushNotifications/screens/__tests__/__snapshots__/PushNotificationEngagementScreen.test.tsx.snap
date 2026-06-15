@@ -69,7 +69,6 @@ exports[`PushNotificationEngagementScreen should match snapshot 1`] = `
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1268,7 +1267,6 @@ exports[`PushNotificationEngagementScreen should render a blank page when told t
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

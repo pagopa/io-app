@@ -198,7 +198,6 @@ exports[`MessageDetailsPayment Should match snapshot for no payment data 1`] = `
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -520,7 +519,6 @@ exports[`MessageDetailsPayment Should match snapshot when there are payment data
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

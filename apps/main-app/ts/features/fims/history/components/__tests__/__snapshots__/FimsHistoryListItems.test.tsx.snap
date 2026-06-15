@@ -198,7 +198,6 @@ exports[`FimsHistoryListItems should match snapshot for FailureListItem 1`] = `
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -732,7 +731,6 @@ exports[`FimsHistoryListItems should match snapshot for SuccessListItem 1`] = `
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

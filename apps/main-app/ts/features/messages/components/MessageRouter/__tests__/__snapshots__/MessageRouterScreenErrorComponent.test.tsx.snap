@@ -242,7 +242,6 @@ exports[`variant: genericError MessageRouterScreenErrorComponent matches snapsho
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1281,7 +1280,6 @@ exports[`variant: messageNotFound MessageRouterScreenErrorComponent matches snap
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2043,7 +2041,6 @@ exports[`variant: thirdPartyError MessageRouterScreenErrorComponent matches snap
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

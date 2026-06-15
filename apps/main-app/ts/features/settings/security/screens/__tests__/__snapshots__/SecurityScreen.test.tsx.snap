@@ -198,7 +198,6 @@ exports[`Test SecurityScreen should match snapshot when 'fimsIsHistoryEnabledSel
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

@@ -69,7 +69,6 @@ exports[`LanguagesPreferencesScreen UI Rendering renders the screen with, title,
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

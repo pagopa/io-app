@@ -198,7 +198,6 @@ exports[`Test QtspClauseListItem component should render a QtspClauseListItem co
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

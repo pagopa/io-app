@@ -198,7 +198,6 @@ exports[`ItwProximityFailureScreen should render failure screen for RELYING_PART
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1023,7 +1022,6 @@ exports[`ItwProximityFailureScreen should render failure screen for TIMEOUT 1`] 
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1889,7 +1887,6 @@ exports[`ItwProximityFailureScreen should render failure screen for UNTRUSTED_RP
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

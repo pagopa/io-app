@@ -198,7 +198,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2201,7 +2200,6 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

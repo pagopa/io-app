@@ -198,7 +198,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.none 1`] = `
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -725,7 +724,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneError 1`] = 
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1477,7 +1475,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneLoading 1`] 
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1799,7 +1796,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.noneUpdating 1`]
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2121,7 +2117,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, empty data
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2648,7 +2643,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.some, non-empty 
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -2970,7 +2964,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, empty
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -3497,7 +3490,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someError, non-e
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -3819,7 +3811,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, emp
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -4346,7 +4337,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someLoading, non
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -4668,7 +4658,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, em
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -5195,7 +5184,6 @@ exports[`EmptyList should match snapshot, ARCHIVE category, pot.someUpdating, no
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -5517,7 +5505,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.none 1`] = `
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -6044,7 +6031,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneError 1`] = 
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -6796,7 +6782,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneLoading 1`] 
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -7118,7 +7103,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.noneUpdating 1`]
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -7440,7 +7424,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, empty data
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -7967,7 +7950,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.some, non-empty 
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -8289,7 +8271,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, empty
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -8816,7 +8797,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someError, non-e
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -9138,7 +9118,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, emp
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -9665,7 +9644,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someLoading, non
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -9987,7 +9965,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, em
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -10514,7 +10491,6 @@ exports[`EmptyList should match snapshot, INBOX   category, pot.someUpdating, no
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={

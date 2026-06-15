@@ -198,7 +198,6 @@ exports[`MessageFooter should match snapshot for cancelled PN notification 1`] =
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -520,7 +519,6 @@ exports[`MessageFooter should match snapshot for hidden button 1`] = `
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -842,7 +840,6 @@ exports[`MessageFooter should match snapshot for visibleEnabled button 1`] = `
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
@@ -1488,7 +1485,6 @@ exports[`MessageFooter should match snapshot for visibleLoading button 1`] = `
               "top": -1,
             }
           }
-          ios26AllowInteractionsDuringTransition={true}
           onGestureCancel={[Function]}
           pointerEvents="box-none"
           sheetAllowedDetents={
