@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.35.0-rc.0](https://github.com/pagopa/io-app/compare/3.34.0-rc.7...3.35.0-rc.0) (2026-06-15)
+
+
+### Chores
+
+* [[IOPLT-1783](https://pagopa.atlassian.net/browse/IOPLT-1783)] Remove dead code from `ts/theme` ([#8045](https://github.com/pagopa/io-app/issues/8045)) ([f4fa9e0](https://github.com/pagopa/io-app/commit/f4fa9e0332ef50b39856ab2ad32ed66d5b846219))
+* **IT-Wallet:** [[SIW-4332](https://pagopa.atlassian.net/browse/SIW-4332)] Renew wallet instance when upgrading to IT-Wallet ([#8149](https://github.com/pagopa/io-app/issues/8149)) ([b7045e9](https://github.com/pagopa/io-app/commit/b7045e9a96f232e48992d7a84618d5df63cbb05d))
+
+## [3.34.0-rc.7](https://github.com/pagopa/io-app/compare/3.34.0-rc.6...3.34.0-rc.7) (2026-06-12)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4378](https://pagopa.atlassian.net/browse/SIW-4378)] Improve NFC proximity presentment flow ([#8146](https://github.com/pagopa/io-app/issues/8146)) ([347c0e8](https://github.com/pagopa/io-app/commit/347c0e8c3f30f230631dc82ff8ea7e213a995a3d))
+* [[SIW-000](https://pagopa.atlassian.net/browse/SIW-000)] fix IPZS privacy screen layout regression ([#8175](https://github.com/pagopa/io-app/issues/8175)) ([fe30197](https://github.com/pagopa/io-app/commit/fe30197d9aa839c7acd432c0426be47c7a729f01))
+* **IT-Wallet:** [[SIW-4435](https://pagopa.atlassian.net/browse/SIW-4435)] Improve navigation flows after React Navigation upgrade ([#8169](https://github.com/pagopa/io-app/issues/8169)) ([03f45cd](https://github.com/pagopa/io-app/commit/03f45cd1f22489555e829db530ff0d9861f038e2))
+* [[IEL-596](https://pagopa.atlassian.net/browse/IEL-596)] Update document fetch request to include Cache-Control header ([#8173](https://github.com/pagopa/io-app/issues/8173)) ([7896430](https://github.com/pagopa/io-app/commit/7896430cb7fd7e5cef0b164e78ff59376a580e1a))
+
+
+### Chores
+
+* [[IOPLT-000](https://pagopa.atlassian.net/browse/IOPLT-000)] `react-native-screens` patch ([#8174](https://github.com/pagopa/io-app/issues/8174)) ([2b28b94](https://github.com/pagopa/io-app/commit/2b28b94cde5733b9fe059f8004bb0303a2da71f9))
+
 ## [3.34.0-rc.6](https://github.com/pagopa/io-app/compare/3.34.0-rc.5...3.34.0-rc.6) (2026-06-11)
 
 
