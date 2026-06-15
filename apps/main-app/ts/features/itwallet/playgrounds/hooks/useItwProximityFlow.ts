@@ -20,6 +20,7 @@ import {
   RESULTS
 } from "react-native-permissions";
 import { KEYTAG, WELL_KNOWN_CREDENTIALS } from "../mocks/proximity";
+import { getEnv } from "../../common/utils/environment";
 
 interface NestedBooleanMap {
   [key: string]: boolean | NestedBooleanMap;
@@ -43,7 +44,7 @@ const generateAcceptedFields = (
   request: ISO18013_5.VerifierRequest["request"]
 ): ISO18013_5.AcceptedFields =>
   Object.entries(request).reduce(
-    (acc, [docType, { isAuthenticated: _, ...namespaces }]) => ({
+    (acc, [docType, { isAuthenticated, certificateData, ...namespaces }]) => ({
       ...acc,
       [docType]: acceptAllFields(namespaces)
     }),
@@ -150,6 +151,7 @@ export const useItwProximityFlow = () => {
   const retrievalMethod = useRef<ISO18013_5.RetrievalMethod | undefined>(
     undefined
   );
+  const env = getEnv("pre");
 
   const handleQrCodeString = useCallback(
     (payload: ISO18013_5.EventsPayload["onQrCodeString"]) => {
@@ -202,7 +204,8 @@ export const useItwProximityFlow = () => {
       try {
         await ISO18013_5.startEngagement({
           engagementModes,
-          retrievalMethods
+          retrievalMethods,
+          certificates: [[env.X509_CERT_ROOT]]
         });
         setStatus(PROXIMITY_STATUS.ENGAGEMENT);
       } catch (e) {
@@ -213,7 +216,7 @@ export const useItwProximityFlow = () => {
         );
       }
     },
-    []
+    [env]
   );
 
   const closeFlow = useCallback(async (sendError: boolean = false) => {
