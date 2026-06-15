@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.35.0-rc.0](https://github.com/pagopa/io-app/compare/3.34.0-rc.7...3.35.0-rc.0) (2026-06-15)
+
+
+### Chores
+
+* [[IOPLT-1783](https://pagopa.atlassian.net/browse/IOPLT-1783)] Remove dead code from `ts/theme` ([#8045](https://github.com/pagopa/io-app/issues/8045)) ([f4fa9e0](https://github.com/pagopa/io-app/commit/f4fa9e0332ef50b39856ab2ad32ed66d5b846219))
+* **IT-Wallet:** [[SIW-4332](https://pagopa.atlassian.net/browse/SIW-4332)] Renew wallet instance when upgrading to IT-Wallet ([#8149](https://github.com/pagopa/io-app/issues/8149)) ([b7045e9](https://github.com/pagopa/io-app/commit/b7045e9a96f232e48992d7a84618d5df63cbb05d))
+
 ## [3.34.0-rc.7](https://github.com/pagopa/io-app/compare/3.34.0-rc.6...3.34.0-rc.7) (2026-06-12)
 
 
