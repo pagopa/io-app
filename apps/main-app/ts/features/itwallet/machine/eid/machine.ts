@@ -283,8 +283,8 @@ export const itwEidIssuanceMachine = setup({
             credentialType: event.credentialType,
             itwVersion:
               event.mode === "upgrade" || event.level === "l3"
-                ? "1.3.3"
-                : "1.0.0"
+                ? "1.3.3" // Override the ITW version from the global store set on machine init
+                : context.itwVersion
           })),
           target: "EvaluatingIssuanceMode"
         },
