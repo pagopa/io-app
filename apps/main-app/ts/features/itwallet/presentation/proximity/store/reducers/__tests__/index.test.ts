@@ -3,6 +3,7 @@ import { itwLifecycleStoresReset } from "../../../../../lifecycle/store/actions"
 import {
   itwGrantProximityConsent,
   itwRevokeProximityConsentByKey,
+  itwRevokeProximityConsentsByRpId,
   itwRevokeProximityConsentsByCredentialType
 } from "../../actions";
 import { ConsentData } from "../../types";
@@ -197,6 +198,34 @@ describe("itwProximityReducer", () => {
       );
 
       expect(Object.keys(state.consents)).toHaveLength(1);
+    });
+  });
+
+  describe("itwRevokeProximityConsentsByRpId", () => {
+    it("should remove all consents for the specified RP ID", () => {
+      const multiCredentialConsentForSameRpId: ConsentData = {
+        ...multiCredentialConsent,
+        rpId: "rp-001"
+      };
+      const mdlKey = generateConsentKey(mdlConsent);
+      const multiKey = generateConsentKey(multiCredentialConsentForSameRpId);
+      const healthKey = generateConsentKey(healthCardOnlyConsent);
+
+      const stateWithConsents: ItwProximityState = {
+        consents: {
+          [mdlKey]: mdlConsent,
+          [multiKey]: multiCredentialConsentForSameRpId,
+          [healthKey]: healthCardOnlyConsent
+        }
+      };
+
+      const state = reducer(
+        stateWithConsents,
+        itwRevokeProximityConsentsByRpId("rp-001")
+      );
+
+      expect(Object.keys(state.consents)).toHaveLength(1);
+      expect(state.consents[healthKey]).toEqual(healthCardOnlyConsent);
     });
   });
 
