@@ -536,12 +536,6 @@ export const itwEidIssuanceMachine = setup({
                 target: "#itwEidIssuanceMachine.UserIdentification.CieID"
               }
             ],
-            // TODO: this event seems unused... remove
-            "go-to-l2-identification": {
-              target:
-                "#itwEidIssuanceMachine.UserIdentification.Identification",
-              actions: assign({ level: "l2-fallback", itwVersion: "1.0.0" })
-            },
             "go-to-cie-warning": {
               target:
                 "#itwEidIssuanceMachine.UserIdentification.CiePin.CieWarning.Identification"
@@ -860,12 +854,6 @@ export const itwEidIssuanceMachine = setup({
                 }
               },
               on: {
-                // TODO: this event seems unused... remove
-                "go-to-l2-identification": {
-                  target:
-                    "#itwEidIssuanceMachine.UserIdentification.Identification",
-                  actions: assign({ level: "l2-fallback", itwVersion: "1.0.0" })
-                },
                 close: {
                   actions: "closeIssuance"
                 }
