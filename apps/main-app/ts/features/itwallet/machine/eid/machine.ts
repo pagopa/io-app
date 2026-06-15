@@ -277,14 +277,18 @@ export const itwEidIssuanceMachine = setup({
       description: "The machine is in idle, ready to start the issuance flow",
       on: {
         start: {
-          actions: assign(({ event, context }) => ({
+          actions: assign(({ event }) => ({
             mode: event.mode,
             level: event.level,
             credentialType: event.credentialType,
+            // Override the IT-Wallet version from the global store set on machine init.
+            // This is necessary because a user might use a different IT-Wallet version outside this machine:
+            // - User has 1.0 PID and is upgrading (1.0 -> 1.3)
+            // - User is whitelisted but falls back to L2 (1.3 -> 1.0)
             itwVersion:
               event.mode === "upgrade" || event.level === "l3"
-                ? "1.3.3" // Override the ITW version from the global store set on machine init
-                : context.itwVersion
+                ? "1.3.3"
+                : "1.0.0"
           })),
           target: "EvaluatingIssuanceMode"
         },
