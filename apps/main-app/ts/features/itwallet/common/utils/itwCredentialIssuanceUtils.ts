@@ -607,7 +607,8 @@ export type ObtainCredentialsBatch = (args: {
  * Obtains multiple copies of a credential from the issuer in a single batch request, using
  * `obtainCredentialsBatch` from the wallet SDK. Each authorization detail is requested with its
  * own set of crypto contexts (one per copy) and all returned credentials are verified and packaged
- * into {@link CredentialBundle}s with unique `credentialId`s.
+ * into {@link CredentialBundle}s. All copies of the same credential share the `credentialId`
+ * (the issuer's `credential_configuration_id`); copies are told apart by their unique `keyTag`.
  *
  * Keys MUST be generated beforehand via {@link generateBatchKeysWithWalletUnitAttestation}.
  *

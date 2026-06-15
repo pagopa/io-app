@@ -13,8 +13,9 @@ import {
 } from "./itwTypesUtils";
 
 /**
- * A credential is a batch when it holds more than one copy (e.g. one-time-use credentials obtained
- * in batch), tracked by the `keyTags` array.
+ * A credential is a batch when it tracks its copies through the `keyTags` array (e.g. one-time-use
+ * credentials obtained in batch). A batch credential stays a batch even when down to a single
+ * remaining copy, so any non-empty `keyTags` array marks it as such.
  */
 export const isBatchCredential = (
   credential: Pick<CredentialMetadata, "keyTags">
@@ -43,14 +44,12 @@ export const getCredentialVaultIds = (
 /**
  * Returns the vault id of the representative copy of a credential, i.e. the one exposed for
  * display and presentation. For a batch credential it is the first copy (`keyTags[0]`), for a
- * non-batch credential it is the `credentialId`.
+ * non-batch credential it is the `credentialId`. Falls back to `credentialId` if the batch array
+ * is unexpectedly empty (e.g. corrupted state) to avoid returning an invalid vault id.
  */
 export const getRepresentativeVaultId = (
   credential: Pick<CredentialMetadata, "credentialId" | "keyTags">
-): string =>
-  isBatchCredential(credential)
-    ? (credential.keyTags?.[0] as string)
-    : credential.credentialId;
+): string => credential.keyTags?.[0] ?? credential.credentialId;
 
 // Credentials that can be obtained with valid a Documenti su IO instance
 export const l2Credentials = [

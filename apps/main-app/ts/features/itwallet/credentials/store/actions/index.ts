@@ -12,18 +12,20 @@ type CallbackActionMeta = {
 /**
  * @internal To properly add a credential, dispatch `itwCredentialsStoreBundle`.
  *
- * This actions stores one or multiple credentials using the CredentialMetadata payload.
- * Credentials are grouped by credentialId; within a group, an instance with the same
- * keyTag is overwritten, otherwise the new instance is appended.
+ * This action stores one or multiple credentials using the CredentialMetadata payload.
+ * The store keeps a single metadata per `credentialId`, so storing overwrites any previous
+ * value for that id. Batch copies are collapsed into one metadata (carrying `keyTags`) before
+ * dispatch, so this action never appends multiple instances of the same credential.
  */
 export const itwCredentialsStore = createStandardAction(
   "@@internal/ITW_CREDENTIALS_STORE"
 )<ReadonlyArray<CredentialMetadata>>();
 
 /**
- * This actions stores one or multiple credentials using the CredentialMetadata payload.
- * Credentials are grouped by credentialId; within a group, an instance with the same
- * keyTag is overwritten, otherwise the new instance is appended.
+ * This action stores one or multiple credentials using the CredentialBundle payload.
+ * The handling saga writes each credential's raw bytes to the vault and collapses batch copies
+ * into a single metadata (carrying `keyTags`) per `credentialId` before dispatching
+ * `itwCredentialsStore`, which keeps one metadata per `credentialId`.
  * It also accepts optional callbacks in the meta to handle success and failure cases
  * after the credentials are stored in the vault.
  */
