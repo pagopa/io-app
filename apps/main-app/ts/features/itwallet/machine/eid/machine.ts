@@ -316,6 +316,12 @@ export const itwEidIssuanceMachine = setup({
         "go-to-ipzs-privacy": {
           actions: "navigateToIpzsPrivacyScreen"
         },
+        "accept-ipzs-privacy": [
+          {
+            // The IPZS privacy can be opened from the Discovery screen in the L3 flow.
+            target: "TrustFederationVerification"
+          }
+        ],
         close: {
           target: "#itwEidIssuanceMachine.Idle",
           actions: "closeIssuance"
@@ -342,7 +348,7 @@ export const itwEidIssuanceMachine = setup({
             target: "WalletInstanceAttestationObtainment"
           },
           {
-            // When reissuing, falling back to L2 or using the L3 flow, if both integrity key tag and wallet instance attestation are valid,
+            // When reissuing, fallback to L2 or L3, if both integrity key tag and wallet instance attestation are valid,
             guard: or(["isReissuance", "isL2Fallback", "isL3FeaturesEnabled"]),
             target: "UserIdentification.Identification"
           },
