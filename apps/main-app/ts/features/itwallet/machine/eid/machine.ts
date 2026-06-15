@@ -319,7 +319,11 @@ export const itwEidIssuanceMachine = setup({
             // Verify the trust federation
             target: "TrustFederationVerification"
           }
-        ]
+        ],
+        close: {
+          target: "#itwEidIssuanceMachine.Idle",
+          actions: "closeIssuance"
+        }
       }
     },
     TrustFederationVerification: {
@@ -331,7 +335,7 @@ export const itwEidIssuanceMachine = setup({
         input: ({ context }) => ({ itwVersion: context.itwVersion! }),
         onDone: [
           {
-            // When no integrity hardware key exists,
+            // When no integrity hardware key exists or the user is upgrading to IT-Wallet
             // we need to create a new integrity key tag and a new wallet instance
             guard: or([not("hasIntegrityKeyTag"), "isUpgrade"]),
             target: "WalletInstanceCreation"

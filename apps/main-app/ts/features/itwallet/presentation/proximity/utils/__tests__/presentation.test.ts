@@ -1,9 +1,17 @@
 import { UntrustedRpError } from "../errors";
-import { generateAcceptedFields, getProximityDetails } from "../presentation";
+import {
+  generateAcceptedFields,
+  getProximityDetails,
+  getVerifierIdentity
+} from "../presentation";
 import type { VerifierRequest } from "../types";
 import { CredentialMetadata } from "../../../../common/utils/itwTypesUtils";
 
 const mockDocType = "org.iso.18013.5.1.mDL";
+const mockCommonName = "EUDI Proximity Verifier";
+const mockCertificateData = {
+  commonName: mockCommonName
+} as VerifierRequest["request"][string]["certificateData"];
 const mockCredential: CredentialMetadata = {
   credentialType: "MDL",
   credentialId: "mso_mdoc_mDL",
@@ -30,6 +38,96 @@ const mockCredential: CredentialMetadata = {
 const mockCredentials: Record<string, CredentialMetadata> = {
   [mockDocType]: mockCredential
 };
+
+describe("getVerifierIdentity", () => {
+  describe("when requireAuthenticated is falsy (unauthenticated allowed)", () => {
+    test.each([
+      {
+        name: "undefined requireAuthenticated + commonName present",
+        certificateData: {
+          commonName: mockCommonName
+        } as VerifierRequest["request"][string]["certificateData"],
+        requireAuthenticated: undefined as boolean | undefined,
+        expected: mockCommonName
+      },
+      {
+        name: "false requireAuthenticated + commonName present",
+        certificateData: {
+          commonName: mockCommonName
+        } as VerifierRequest["request"][string]["certificateData"],
+        requireAuthenticated: false,
+        expected: mockCommonName
+      },
+      {
+        name: "undefined requireAuthenticated + no commonName",
+        certificateData:
+          {} as VerifierRequest["request"][string]["certificateData"],
+        requireAuthenticated: undefined as boolean | undefined,
+        expected: "Unknown"
+      },
+      {
+        name: "false requireAuthenticated + no commonName",
+        certificateData:
+          {} as VerifierRequest["request"][string]["certificateData"],
+        requireAuthenticated: false,
+        expected: "Unknown"
+      },
+      {
+        name: "undefined requireAuthenticated + certificateData undefined",
+        certificateData: undefined,
+        requireAuthenticated: undefined as boolean | undefined,
+        expected: "Unknown"
+      },
+      {
+        name: "false requireAuthenticated + certificateData undefined",
+        certificateData: undefined,
+        requireAuthenticated: false,
+        expected: "Unknown"
+      }
+    ])(
+      "returns $expected — $name",
+      ({ certificateData, requireAuthenticated, expected }) => {
+        expect(getVerifierIdentity(certificateData, requireAuthenticated)).toBe(
+          expected
+        );
+      }
+    );
+  });
+
+  describe("when requireAuthenticated is true", () => {
+    it("returns commonName when certificateData has it", () => {
+      const result = getVerifierIdentity(
+        {
+          commonName: mockCommonName
+        } as VerifierRequest["request"][string]["certificateData"],
+        true
+      );
+      expect(result).toBe(mockCommonName);
+    });
+
+    test.each([
+      {
+        name: "certificateData has no commonName",
+        certificateData:
+          {} as VerifierRequest["request"][string]["certificateData"]
+      },
+      {
+        name: "certificateData is undefined",
+        certificateData: undefined
+      }
+    ])("throws UntrustedRpError — $name", ({ certificateData }) => {
+      expect(() => getVerifierIdentity(certificateData, true)).toThrow(
+        UntrustedRpError
+      );
+    });
+
+    it("throws with correct message when commonName missing", () => {
+      expect(() => getVerifierIdentity(undefined, true)).toThrow(
+        "Missing certificate data for RP identification"
+      );
+    });
+  });
+});
 
 describe("getProximityDetails", () => {
   describe("authentication enforcement", () => {
@@ -87,7 +185,8 @@ describe("getProximityDetails", () => {
         request: {
           [mockDocType]: {
             "org.iso.18013.5.1.aamva": { family_name: false },
-            isAuthenticated: true
+            isAuthenticated: true,
+            certificateData: mockCertificateData
           },
           unknown_credential: {
             "org.iso.18013.5.1": { unknown_field: true },
@@ -105,12 +204,75 @@ describe("getProximityDetails", () => {
     });
   });
 
+  describe("certificate commonName enforcement", () => {
+    const buildRequest = (
+      certificateData?: VerifierRequest["request"][string]["certificateData"]
+    ) =>
+      ({
+        request: {
+          [mockDocType]: {
+            "org.iso.18013.5.1.aamva": { family_name: false },
+            isAuthenticated: true,
+            ...(certificateData ? { certificateData } : {})
+          }
+        }
+      }) as unknown as VerifierRequest;
+
+    it("throws UntrustedRpError when commonName is missing (default)", () => {
+      expect(() =>
+        getProximityDetails({
+          request: buildRequest().request,
+          credentials: mockCredentials
+        })
+      ).toThrow(UntrustedRpError);
+    });
+
+    it("throws UntrustedRpError when commonName is missing and requireAuthenticated = true", () => {
+      expect(() =>
+        getProximityDetails({
+          request: buildRequest().request,
+          credentials: mockCredentials,
+          requireAuthenticated: true
+        })
+      ).toThrow(UntrustedRpError);
+    });
+
+    it("does NOT throw when commonName is provided (default)", () => {
+      expect(() =>
+        getProximityDetails({
+          request: buildRequest(mockCertificateData).request,
+          credentials: mockCredentials
+        })
+      ).not.toThrow();
+    });
+
+    it("sets rpId from the certificate commonName", () => {
+      const result = getProximityDetails({
+        request: buildRequest(mockCertificateData).request,
+        credentials: mockCredentials
+      });
+
+      expect(result[0].rpId).toBe(mockCommonName);
+    });
+
+    it("does NOT throw when commonName is missing but requireAuthenticated = false", () => {
+      expect(() =>
+        getProximityDetails({
+          request: buildRequest().request,
+          credentials: mockCredentials,
+          requireAuthenticated: false
+        })
+      ).not.toThrow();
+    });
+  });
+
   it("throws if credential is not found for requested docType", () => {
     const parsedRequest = {
       request: {
         unknown_credential: {
           "org.iso.18013.5.1": { unknown_field: true },
-          isAuthenticated: true
+          isAuthenticated: true,
+          certificateData: mockCertificateData
         }
       }
     } as unknown as VerifierRequest;
@@ -129,7 +291,8 @@ describe("getProximityDetails", () => {
         [mockDocType]: {
           "org.iso.18013.5.1.aamva": { family_name: false },
           "org.iso.18013.5.1": { tax_id_code: false },
-          isAuthenticated: true
+          isAuthenticated: true,
+          certificateData: mockCertificateData
         }
       }
     } as unknown as VerifierRequest;
@@ -141,6 +304,7 @@ describe("getProximityDetails", () => {
 
     expect(result).toEqual([
       {
+        rpId: mockCommonName,
         claimsToDisplay: [
           {
             id: "org.iso.18013.5.1.aamva:family_name",
@@ -163,7 +327,8 @@ describe("getProximityDetails", () => {
       request: {
         [mockDocType]: {
           "org.iso.18013.5.1.aamva": { family_name: false },
-          isAuthenticated: true
+          isAuthenticated: true,
+          certificateData: mockCertificateData
         }
       }
     } as unknown as VerifierRequest;
@@ -185,11 +350,13 @@ describe("getProximityDetails", () => {
       request: {
         [mockDocType]: {
           "org.iso.18013.5.1.aamva": { family_name: false },
-          isAuthenticated: true
+          isAuthenticated: true,
+          certificateData: mockCertificateData
         },
         [WIA_DOC_TYPE]: {
           "org.iso.18013.5.1": { some_field: true },
-          isAuthenticated: true
+          isAuthenticated: true,
+          certificateData: mockCertificateData
         }
       }
     } as unknown as VerifierRequest;
