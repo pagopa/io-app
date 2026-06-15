@@ -26,16 +26,14 @@ jest.mock("@pagopa/io-react-native-login-utils", () => ({
 
 describe("Lollipop regenerate key, get redirects and verification", () => {
   it("should be succeded", async () => {
-    const result = await regenerateKeyGetRedirectsAndVerifySaml(
-      "loginUri",
-      "keyTag",
-      false,
-      false,
-      dispatch
-    );
-    expect(E.isLeft(result)).toBeTruthy();
-    if (E.isLeft(result)) {
-      expect(result.left).toEqual(new Error("Missing SAMLRequest"));
-    }
+    await expect(
+      regenerateKeyGetRedirectsAndVerifySaml(
+        "loginUri",
+        "keyTag",
+        false,
+        false,
+        dispatch
+      )
+    ).rejects.toEqual(new Error("Missing SAMLRequest"));
   });
 });

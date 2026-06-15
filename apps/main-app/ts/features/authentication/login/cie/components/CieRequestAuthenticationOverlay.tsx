@@ -1,9 +1,13 @@
 import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
-import { LoginUtilsError } from "@pagopa/io-react-native-login-utils";
+import {
+  isLoginUtilsError,
+  LoginUtilsError
+} from "@pagopa/io-react-native-login-utils";
 import CookieManager from "@react-native-cookies/cookies";
 import { pipe } from "fp-ts/lib/function";
 import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
+import * as E from "fp-ts/lib/Either";
 import {
   createRef,
   Dispatch,
@@ -262,17 +266,20 @@ const CieWebView = (props: Props) => {
             : Promise.resolve(true),
         () => new Error("Error clearing cookies")
       ),
-      TE.chain(
-        _ => () =>
-          regenerateKeyGetRedirectsAndVerifySaml(
-            loginUri,
-            ephemeralKeyTag,
-            mixpanelEnabled,
-            isActiveSessionLogin ? isActiveSessionFastLogin : isFastLogin,
-            dispatch,
-            idp?.id,
-            isActiveSessionLogin ? hashedFiscalCode : undefined
-          )
+      TE.chain(_ =>
+        TE.tryCatch(
+          () =>
+            regenerateKeyGetRedirectsAndVerifySaml(
+              loginUri,
+              ephemeralKeyTag,
+              mixpanelEnabled,
+              isActiveSessionLogin ? isActiveSessionFastLogin : isFastLogin,
+              dispatch,
+              idp?.id,
+              isActiveSessionLogin ? hashedFiscalCode : undefined
+            ),
+          e => (isLoginUtilsError(e) ? e : E.toError(e))
+        )
       ),
       TE.fold(
         e => T.of(handleOnError(e)),

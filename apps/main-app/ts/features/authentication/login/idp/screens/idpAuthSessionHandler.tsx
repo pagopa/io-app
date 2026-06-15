@@ -1,5 +1,6 @@
 /* eslint-disable import/order */
 import {
+  isLoginUtilsError,
   LoginUtilsError,
   Error as LoginUtilsErrorType,
   openAuthenticationSession
@@ -303,14 +304,17 @@ export const AuthSessionPage = () => {
 
   if (loginUri && requestInfo.requestState === "LOADING") {
     void pipe(
-      () =>
-        regenerateKeyGetRedirectsAndVerifySaml(
-          loginUri,
-          ephemeralKeyTag,
-          mixpanelEnabled,
-          isActiveSessionLogin ? isActiveSessionFastLogin : isFastLogin,
-          dispatch
-        ),
+      TE.tryCatch(
+        () =>
+          regenerateKeyGetRedirectsAndVerifySaml(
+            loginUri,
+            ephemeralKeyTag,
+            mixpanelEnabled,
+            isActiveSessionLogin ? isActiveSessionFastLogin : isFastLogin,
+            dispatch
+          ),
+        e => (isLoginUtilsError(e) ? e : E.toError(e))
+      ),
       TE.fold(
         () =>
           T.of(
