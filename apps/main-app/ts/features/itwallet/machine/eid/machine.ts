@@ -282,11 +282,9 @@ export const itwEidIssuanceMachine = setup({
             level: event.level,
             credentialType: event.credentialType,
             itwVersion:
-              event.mode === "upgrade"
+              event.mode === "upgrade" || event.level === "l3"
                 ? "1.3.3"
-                : event.level === "l2-fallback"
-                  ? "1.0.0"
-                  : context.itwVersion
+                : "1.0.0"
           })),
           target: "EvaluatingIssuanceMode"
         },
@@ -1242,6 +1240,7 @@ export const itwEidIssuanceMachine = setup({
               assert(context.mode, "Issuance mode must be defined");
 
               return {
+                itwVersion: context.itwVersion!,
                 credentials: context.credentialsToUpgrade,
                 issuanceMode: context.mode
               };

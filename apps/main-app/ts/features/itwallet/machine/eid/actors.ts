@@ -51,7 +51,7 @@ import type {
   MrtdPoPContext
 } from "./context";
 
-export type WithItwVersion<T = { [k: string]: any }> = T & {
+export type WithItwVersion<T = { [K: string]: any }> = T & {
   itwVersion: ItwVersion;
 };
 
@@ -431,7 +431,7 @@ export const createEidIssuanceActorsImplementation = (
 
   credentialUpgradeMachine: itwCredentialUpgradeMachine.provide({
     actions: createCredentialUpgradeActionsImplementation(store),
-    actors: createCredentialUpgradeActorsImplementation(env, "1.3.3", store) // Upgrade must always use 1.3 specs
+    actors: createCredentialUpgradeActorsImplementation(env, store)
   }),
 
   ...createCommonActorsImplementation(store)
