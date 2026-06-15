@@ -1,4 +1,3 @@
-import * as E from "fp-ts/lib/Either";
 import { PublicKey } from "@pagopa/io-react-native-crypto";
 import { LoginUtilsError } from "@pagopa/io-react-native-login-utils";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../login";
