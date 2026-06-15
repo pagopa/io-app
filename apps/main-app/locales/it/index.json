@@ -3972,7 +3972,6 @@
           },
           "newCredentialValidityAlert": {
             "content": {
-              "proof_of_age": "La tua attestazione di maggiore età digitale ha piena validità ufficiale.",
               "education_degree": "I tuoi titoli accademici digitali hanno piena validità ufficiale.",
               "education_enrollment": "Le tue iscrizioni accademiche digitali hanno piena validità ufficiale.",
               "residency": "Il tuo attestato di residenza digitale ha piena validità ufficiale.",
