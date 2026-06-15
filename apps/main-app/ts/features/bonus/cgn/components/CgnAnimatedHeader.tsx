@@ -34,7 +34,7 @@ const CgnAnimatedHeader = ({ children, ref }: CgnAnimatedHeaderProps) => (
       pointerEvents="box-none"
     >
       <View
-        style={{ ...StyleSheet.absoluteFillObject, zIndex: 0 }}
+        style={{ ...StyleSheet.absoluteFill, zIndex: 0 }}
         pointerEvents="none"
       >
         <CgnAnimatedBackground />
