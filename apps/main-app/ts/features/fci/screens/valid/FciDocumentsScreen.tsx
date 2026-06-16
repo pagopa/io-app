@@ -165,13 +165,7 @@ const FciDocumentsScreen = () => {
   }, [currentDoc, documents, isFocused, fciEnvironment]);
 
   const { present, bottomSheet: fciAbortSignature } = useFciAbortSignatureFlow({
-    shouldIntercept: () => {
-      if (currentDoc <= 0) {
-        return true;
-      }
-      navigation.goBack();
-      return false;
-    }
+    showDialogOnBack: currentDoc <= 0
   });
 
   const {

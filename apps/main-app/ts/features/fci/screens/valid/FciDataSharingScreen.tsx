@@ -50,10 +50,7 @@ const FciDataSharingScreen = (): ReactElement => {
   const email = useIOSelector(profileEmailSelector);
 
   const { present, bottomSheet: fciAbortSignature } = useFciAbortSignatureFlow({
-    shouldIntercept: () => {
-      navigation.goBack();
-      return false;
-    }
+    showDialogOnBack: false
   });
 
   useOnFirstRender(() => {

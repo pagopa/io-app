@@ -6,6 +6,7 @@ import {
 import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { Alert } from "react-native";
+import { useIONavigation } from "../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { trackFciUserExit } from "../analytics";
@@ -15,20 +16,22 @@ import { fciSignatureRequestDossierTitleSelector } from "../store/reducers/fciSi
 import { useHardwareBackButtonWhenFocused } from "../../../hooks/useHardwareBackButton.ts";
 
 /**
- * `shouldIntercept` as undefined means that the hook will not intercept the hardware back button and WILL NOT STOP back event propagation.
- * `shouldIntercept` as true means that the hook will intercept the hardware back button.
- * `shouldIntercept` as false means that the hook will not intercept the hardware back button and WILL STOP back event propagation.
+ * `showDialogOnBack` — when `true` (default), pressing back shows the abort confirmation dialog.
+ *   When `false`, back is handled internally: calls `onBackPress` if provided, otherwise `navigation.goBack()`.
+ * `onBackPress` — custom back handler used when `showDialogOnBack` is `false`.
  */
 type Props = {
-  shouldIntercept?: () => boolean;
+  showDialogOnBack?: boolean;
+  onBackPress?: () => void;
 };
 
 /**
  * A hook that returns a function to present the abort signature flow bottom sheet.
- * Optionally intercepts the hardware back button based on the `shouldIntercept`, false by default.
+ * Always intercepts the hardware back button; behavior is controlled via {@link Props}.
  */
 export const useFciAbortSignatureFlow = (props?: Props) => {
   const dispatch = useIODispatch();
+  const navigation = useIONavigation();
   const route = useRoute();
   const dossierTitle = useIOSelector(fciSignatureRequestDossierTitleSelector);
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
@@ -98,11 +101,9 @@ export const useFciAbortSignatureFlow = (props?: Props) => {
   const present = () => (isExperimental ? showAlert() : presentBs());
 
   useHardwareBackButtonWhenFocused(() => {
-    const intercept = props?.shouldIntercept?.();
-
-    if (typeof intercept === "undefined") {
-      return false;
-    } else if (intercept) {
+    if (props?.showDialogOnBack === false) {
+      (props.onBackPress ?? navigation.goBack)();
+    } else {
       present();
     }
     return true;

@@ -147,13 +147,13 @@ const FciSignatureFieldsScreen = () => {
   }, [docSignatures]);
 
   const { present, bottomSheet: fciAbortSignature } = useFciAbortSignatureFlow({
-    shouldIntercept: () => {
+    showDialogOnBack: false,
+    onBackPress: () => {
       if (isPreviewModalVisible) {
         dismissModal();
       } else {
         navigation.goBack();
       }
-      return false;
     }
   });
 

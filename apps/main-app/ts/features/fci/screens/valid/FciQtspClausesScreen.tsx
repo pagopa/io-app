@@ -85,10 +85,7 @@ const FciQtspClausesScreen = () => {
 
   const { present: showAbort, bottomSheet: fciAbortSignature } =
     useFciAbortSignatureFlow({
-      shouldIntercept: () => {
-        navigation.goBack();
-        return false;
-      }
+      showDialogOnBack: false
     });
 
   const openUrl = (url: string) => {
