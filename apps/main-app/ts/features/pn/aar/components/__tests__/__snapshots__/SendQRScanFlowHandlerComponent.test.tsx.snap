@@ -464,6 +464,7 @@ exports[`SendQRScanFlowHandlerComponent should match snapshot and track the scre
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {

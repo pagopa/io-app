@@ -796,6 +796,7 @@ exports[`PushNotificationsBanner should render correctly and call 'trackPushNoti
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {

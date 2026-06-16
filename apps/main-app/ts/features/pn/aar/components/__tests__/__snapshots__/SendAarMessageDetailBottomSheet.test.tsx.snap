@@ -334,6 +334,7 @@ exports[`BottomSheetContent doesn't render the website section and matches its s
                             meetOrSlice={0}
                             minX={0}
                             minY={0}
+                            pointerEvents="none"
                             style={
                               [
                                 {
@@ -441,6 +442,7 @@ exports[`BottomSheetContent doesn't render the website section and matches its s
                             meetOrSlice={0}
                             minX={0}
                             minY={0}
+                            pointerEvents="none"
                             style={
                               [
                                 {
@@ -1334,6 +1336,7 @@ exports[`BottomSheetContent renders the website section with the URL and matches
                             meetOrSlice={0}
                             minX={0}
                             minY={0}
+                            pointerEvents="none"
                             style={
                               [
                                 {
@@ -1441,6 +1444,7 @@ exports[`BottomSheetContent renders the website section with the URL and matches
                             meetOrSlice={0}
                             minX={0}
                             minY={0}
+                            pointerEvents="none"
                             style={
                               [
                                 {
@@ -1548,6 +1552,7 @@ exports[`BottomSheetContent renders the website section with the URL and matches
                             meetOrSlice={0}
                             minX={0}
                             minY={0}
+                            pointerEvents="none"
                             style={
                               [
                                 {
@@ -2422,6 +2427,7 @@ exports[`BottomSheetContent renders the website section with the URL and matches
                             meetOrSlice={0}
                             minX={0}
                             minY={0}
+                            pointerEvents="none"
                             style={
                               [
                                 {
@@ -2529,6 +2535,7 @@ exports[`BottomSheetContent renders the website section with the URL and matches
                             meetOrSlice={0}
                             minX={0}
                             minY={0}
+                            pointerEvents="none"
                             style={
                               [
                                 {
@@ -2636,6 +2643,7 @@ exports[`BottomSheetContent renders the website section with the URL and matches
                             meetOrSlice={0}
                             minX={0}
                             minY={0}
+                            pointerEvents="none"
                             style={
                               [
                                 {

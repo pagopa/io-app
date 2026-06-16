@@ -463,6 +463,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -658,6 +659,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -2099,6 +2101,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -2294,6 +2297,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -3736,6 +3740,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -3931,6 +3936,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -5373,6 +5379,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -5568,6 +5575,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when not
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -7010,6 +7018,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -7205,6 +7214,7 @@ exports[`OnboardingNotificationsPreferencesScreen should match snapshot when upd
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {

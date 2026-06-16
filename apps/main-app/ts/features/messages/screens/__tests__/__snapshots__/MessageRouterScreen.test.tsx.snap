@@ -1027,6 +1027,7 @@ exports[`MessageRouterScreen renders the loading component when isLoading is tru
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -1257,6 +1258,7 @@ exports[`MessageRouterScreen renders the loading component when isLoading is tru
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
