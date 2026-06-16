@@ -1,4 +1,3 @@
-import customVariables from "../../../../theme/variables";
 import {
   Markdown,
   MarkdownProps
@@ -8,7 +7,7 @@ type Props = Omit<MarkdownProps, "cssStyle">;
 
 const MESSAGE_CSS_STYLE = `
 body {
-  lineHeight: ${customVariables.lineHeightBase}px;
+  lineHeight: 24px;
 }
 
 h1, h2, h3, h4, h5, h6 {
