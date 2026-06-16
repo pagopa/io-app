@@ -321,12 +321,9 @@ describe("itwEidIssuanceMachine", () => {
     );
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
-    await waitFor(() =>
-      expect(createWalletInstance).toHaveBeenNthCalledWith(
-        1,
-        expect.objectContaining({ input: { isRenewal: false } })
-      )
-    );
+    expect(createWalletInstance).toHaveBeenCalledTimes(1);
+    expect(createWalletInstance.mock.lastCall?.[0].input.isRenewal).toBe(false);
+
     await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(1));
     await waitFor(() =>
       expect(storeIntegrityKeyTag).toHaveBeenCalledWith(
@@ -1765,12 +1762,9 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
-    await waitFor(() =>
-      expect(createWalletInstance).toHaveBeenNthCalledWith(
-        1,
-        expect.objectContaining({ input: { isRenewal: false } })
-      )
-    );
+    expect(createWalletInstance).toHaveBeenCalledTimes(1);
+    expect(createWalletInstance.mock.lastCall?.[0].input.isRenewal).toBe(false);
+
     await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
@@ -2540,10 +2534,8 @@ describe("itwEidIssuanceMachine", () => {
     actor.send({ type: "accept-tos" });
 
     await waitForActor(actor, s => s.matches("WalletInstanceCreation"));
-    expect(createWalletInstance).toHaveBeenNthCalledWith(
-      1,
-      expect.objectContaining({ input: { isRenewal: true } })
-    );
+    expect(createWalletInstance).toHaveBeenCalledTimes(1);
+    expect(createWalletInstance.mock.lastCall?.[0].input.isRenewal).toBe(true);
   });
 
   it("Should NOT re-create the Wallet Instance in the regular flow (no upgrade)", async () => {
