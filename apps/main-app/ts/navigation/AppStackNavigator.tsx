@@ -20,7 +20,11 @@ import { cgnLinkingOptions } from "../features/bonus/cgn/navigation/navigator";
 import { fciLinkingOptions } from "../features/fci/navigation/FciStackNavigator";
 import { idPayLinkingOptions } from "../features/idpay/common/navigation/linking";
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
-import { ITW_CREDENTIAL_OFFER_LINKING_PREFIXES } from "../features/itwallet/offer/utils";
+import {
+  getCredentialOfferInternalRoute,
+  isPotentialCredentialOfferInvocation,
+  ITW_CREDENTIAL_OFFER_LINKING_PREFIXES
+} from "../features/itwallet/offer/utils";
 import { useItwLinkingOptions } from "../features/itwallet/navigation/useItwLinkingOptions";
 import { storeLinkingUrl } from "../features/linking/actions";
 import { trackIOOpenedFromUniversalAppLink } from "../features/linking/analytics";
@@ -150,6 +154,12 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
         ...idPayLinkingOptions,
         [ROUTES.PAGE_NOT_FOUND]: "*"
       }
+    },
+    getInitialURL: async () => {
+      const url = await Linking.getInitialURL();
+      return url && isPotentialCredentialOfferInvocation(url)
+        ? getCredentialOfferInternalRoute(url)
+        : url;
     },
     subscribe: linkingSubscription(dispatch, store)
   };

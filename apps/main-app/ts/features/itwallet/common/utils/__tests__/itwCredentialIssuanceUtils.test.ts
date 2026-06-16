@@ -1,12 +1,39 @@
 import { generate } from "@pagopa/io-react-native-crypto";
-import { generateKeysWithWalletUnitAttestation } from "../itwCredentialIssuanceUtils";
-import { CredentialAccessToken } from "../itwTypesUtils";
+import { createCryptoContextFor } from "@pagopa/io-react-native-wallet";
+import {
+  generateKeysWithWalletUnitAttestation,
+  requestCredential
+} from "../itwCredentialIssuanceUtils";
+import {
+  CredentialAccessToken,
+  CredentialOfferResolved,
+  CredentialFormat,
+  IssuerConfiguration
+} from "../itwTypesUtils";
 import { Env } from "../environment";
 import { getWalletUnitAttestation } from "../itwAttestationUtils";
+import { getIoWallet } from "../itwIoWallet";
 
 jest.mock("@pagopa/io-react-native-crypto", () => ({ generate: jest.fn() }));
+jest.mock("@pagopa/io-react-native-wallet", () => ({
+  createCryptoContextFor: jest.fn(),
+  Errors: {
+    IssuerResponseErrorCodes: {
+      CredentialInvalidStatus: "CredentialInvalidStatus"
+    },
+    isIssuerResponseError: jest.fn()
+  },
+  Trust: {
+    Errors: {
+      FederationError: class FederationError extends Error {}
+    }
+  }
+}));
 jest.mock("../itwAttestationUtils", () => ({
   getWalletUnitAttestation: jest.fn()
+}));
+jest.mock("../itwIoWallet", () => ({
+  getIoWallet: jest.fn()
 }));
 
 describe("generateKeysWithWalletUnitAttestation", () => {
@@ -27,6 +54,9 @@ describe("generateKeysWithWalletUnitAttestation", () => {
   };
 
   it("should generate a wallet unit attestation when supported, skipping direct key generation", async () => {
+    (getIoWallet as jest.Mock).mockReturnValue({
+      WalletUnitAttestation: { isSupported: true }
+    });
     (getWalletUnitAttestation as jest.Mock).mockImplementation(() => "wua-jwt");
 
     const result = await generateKeysWithWalletUnitAttestation(
@@ -55,6 +85,10 @@ describe("generateKeysWithWalletUnitAttestation", () => {
   });
 
   it("should only generate keys when the wallet unit attestation is not supported", async () => {
+    (getIoWallet as jest.Mock).mockReturnValue({
+      WalletUnitAttestation: { isSupported: false }
+    });
+
     const result = await generateKeysWithWalletUnitAttestation(
       mockAccessToken,
       {
@@ -76,5 +110,165 @@ describe("generateKeysWithWalletUnitAttestation", () => {
         }
       }
     ]);
+  });
+});
+
+describe("requestCredential", () => {
+  const mockWiaCryptoContext = { tag: "wia-crypto-context" };
+  const mockRequestObject = { request_uri: "request-uri" };
+  const evaluateIssuerTrust = jest.fn();
+  const startUserAuthorization = jest.fn();
+  const getRequestedCredentialToBePresented = jest.fn();
+  const validateCredentialOffer = jest.fn();
+
+  const env = {
+    WALLET_EAA_PROVIDER_BASE_URL: {
+      value: jest.fn(() => "https://catalogue-issuer.example.com")
+    },
+    ISSUANCE_REDIRECT_URI: "ioit://issuance"
+  } as unknown as Env;
+
+  const issuerConf = {
+    credential_issuer: "https://issuer.example.com",
+    authorization_servers: ["https://auth.example.com"],
+    pushed_authorization_request_endpoint: "https://auth.example.com/par",
+    authorization_endpoint: "https://auth.example.com/authorize",
+    token_endpoint: "https://auth.example.com/token",
+    nonce_endpoint: "https://issuer.example.com/nonce",
+    credential_endpoint: "https://issuer.example.com/credential",
+    status_assertion_endpoint: "https://issuer.example.com/status",
+    keys: [],
+    credential_configurations_supported: {
+      "dc-sd-jwt": {
+        format: CredentialFormat.SD_JWT,
+        scope: "offer-scope",
+        vct: "https://issuer.example.com/vct",
+        display: [],
+        claims: []
+      },
+      "mso-mdoc": {
+        format: CredentialFormat.MDOC,
+        scope: "offer-scope",
+        doctype: "org.iso.18013.5.1.mDL",
+        display: [],
+        claims: []
+      }
+    },
+    federation_entity: {}
+  } satisfies IssuerConfiguration;
+
+  const credentialOffer = {
+    credential_issuer: "https://issuer.example.com",
+    credential_configuration_ids: ["dc-sd-jwt", "mso-mdoc"],
+    grants: {
+      authorization_code: {
+        authorization_server: "https://auth.example.com",
+        issuer_state: "issuer-state",
+        scope: "offer-scope"
+      }
+    }
+  } satisfies CredentialOfferResolved["offer"];
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    (createCryptoContextFor as jest.Mock).mockReturnValue(mockWiaCryptoContext);
+    evaluateIssuerTrust.mockResolvedValue({ issuerConf });
+    startUserAuthorization.mockResolvedValue({
+      issuerRequestUri: "issuer-request-uri",
+      clientId: "client-id",
+      codeVerifier: "code-verifier",
+      responseMode: "query"
+    });
+    getRequestedCredentialToBePresented.mockResolvedValue(mockRequestObject);
+    validateCredentialOffer.mockResolvedValue(undefined);
+    (getIoWallet as jest.Mock).mockReturnValue({
+      CredentialIssuance: {
+        evaluateIssuerTrust,
+        startUserAuthorization,
+        getRequestedCredentialToBePresented
+      },
+      CredentialsOffer: {
+        validateCredentialOffer
+      }
+    });
+  });
+
+  it("uses credential offer issuer, validates the offer against issuer metadata and forwards scope and issuer state", async () => {
+    await requestCredential({
+      env,
+      itwVersion: "1.3.3",
+      credentialType: "ignored-catalogue-scope",
+      walletInstanceAttestation: "wallet-instance-attestation",
+      skipMdocIssuance: true,
+      credentialOffer: {
+        offer: credentialOffer,
+        grantDetails: {
+          grantType: "authorization_code",
+          authorizationCodeGrant: {
+            scope: "offer-scope",
+            issuerState: "issuer-state",
+            authorizationServer: "https://auth.example.com"
+          }
+        }
+      }
+    });
+
+    expect(evaluateIssuerTrust).toHaveBeenCalledWith(
+      "https://issuer.example.com",
+      { authorizationServer: "https://auth.example.com" }
+    );
+    expect(validateCredentialOffer).toHaveBeenCalledWith({
+      offer: credentialOffer,
+      credentialIssuerMetadata: {
+        authorization_servers: ["https://auth.example.com"]
+      }
+    });
+    expect(evaluateIssuerTrust.mock.invocationCallOrder[0]).toBeLessThan(
+      validateCredentialOffer.mock.invocationCallOrder[0]
+    );
+    expect(validateCredentialOffer.mock.invocationCallOrder[0]).toBeLessThan(
+      startUserAuthorization.mock.invocationCallOrder[0]
+    );
+    expect(startUserAuthorization).toHaveBeenCalledWith(
+      issuerConf,
+      ["dc-sd-jwt"],
+      { proofType: "none" },
+      expect.objectContaining({
+        walletInstanceAttestation: "wallet-instance-attestation",
+        redirectUri: "ioit://issuance",
+        wiaCryptoContext: mockWiaCryptoContext,
+        scope: "offer-scope",
+        issuerState: "issuer-state"
+      })
+    );
+    expect(startUserAuthorization.mock.calls[0][3]).not.toHaveProperty(
+      "credentialOfferGrant"
+    );
+  });
+
+  it("keeps catalogue issuance unchanged and does not validate a credential offer", async () => {
+    await requestCredential({
+      env,
+      itwVersion: "1.3.3",
+      credentialType: "offer-scope",
+      walletInstanceAttestation: "wallet-instance-attestation",
+      skipMdocIssuance: true
+    });
+
+    expect(evaluateIssuerTrust).toHaveBeenCalledWith(
+      "https://catalogue-issuer.example.com",
+      { authorizationServer: undefined }
+    );
+    expect(validateCredentialOffer).not.toHaveBeenCalled();
+    expect(startUserAuthorization).toHaveBeenCalledWith(
+      issuerConf,
+      ["dc-sd-jwt"],
+      { proofType: "none" },
+      expect.not.objectContaining({
+        scope: expect.anything(),
+        issuerState: expect.anything(),
+        credentialOfferGrant: expect.anything()
+      })
+    );
   });
 });

@@ -246,7 +246,8 @@ describe("linkingSubscription", () => {
       });
 
       expect(mockTrackIOOpenedFromUniversalAppLink).toHaveBeenCalledWith(
-        credentialOfferUrl
+        credentialOfferUrl,
+        null
       );
       expect(mockProcessUtmLink).toHaveBeenCalledWith(
         credentialOfferUrl,
