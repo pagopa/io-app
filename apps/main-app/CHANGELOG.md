@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.35.0-rc.1](https://github.com/pagopa/io-app/compare/3.35.0-rc.0...3.35.0-rc.1) (2026-06-16)
+
+
+### Chores
+
+* [[IOPLT-1881](https://pagopa.atlassian.net/browse/IOPLT-1881)] Add locale audit script to spot content inconsistencies ([#8159](https://github.com/pagopa/io-app/issues/8159)) ([6c85b60](https://github.com/pagopa/io-app/commit/6c85b6019458ef84070c893d23d34acad13187b2))
+
 ## [3.35.0-rc.0](https://github.com/pagopa/io-app/compare/3.34.0-rc.7...3.35.0-rc.0) (2026-06-15)
 
 
