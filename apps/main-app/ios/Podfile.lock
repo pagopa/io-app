@@ -3336,7 +3336,7 @@ PODS:
     - React-perflogger (= 0.83.6)
     - React-utils (= 0.83.6)
     - SocketRocket
-  - ReactNativeBottomSheet (0.15.0):
+  - ReactNativeBottomSheet (0.15.1):
     - boost
     - DoubleConversion
     - fast_float
@@ -4554,7 +4554,7 @@ SPEC CHECKSUMS:
   ReactAppDependencyProvider: 3ec8fc5d32ad422f5b805523a5a5ea5556d8b3a2
   ReactCodegen: b5e0bd4a5fbd1b5ce1ad51fa6f9a15239912022e
   ReactCommon: e788387a0b387a927a2a5d041fab09472fe8dedc
-  ReactNativeBottomSheet: a8bf0d6d78c7d13c7561cb4b74d7dffc39b260e3
+  ReactNativeBottomSheet: 03b2317ce62b9f686e6caad94fe5124534791831
   ReactNativeExceptionHandler: 6a2aace92f300a745c8b04461b9a99edd1d26cd6
   RNBluetoothStateManager: 929f132d0dacf65cb4767a11e2803e47fdda9e73
   RNCalendarEvents: f90f73666b6bcbb3cc8a491ffbb5e48c0db3de37
