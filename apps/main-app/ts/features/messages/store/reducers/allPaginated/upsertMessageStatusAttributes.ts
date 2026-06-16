@@ -141,10 +141,6 @@ export const reduceUpsertMessageStatusAttributes = (
       }
       return state;
     }
-
-    case getType(upsertMessageStatusAttributes.success): {
-      return state;
-    }
     default:
       return state;
   }
