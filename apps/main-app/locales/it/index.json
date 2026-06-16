@@ -3489,7 +3489,7 @@
           "readingCard": {
             "android": {
               "idle": {
-                "title": "Poggia il retro del telefono sulla CIE",
+                "title": "Poggia il retro del telefono sulla CIE.",
                 "action": "Annulla"
               },
               "reading": {
@@ -3504,13 +3504,13 @@
             },
             "ios": {
               "idle": {
-                "title": "Appoggia il retro del telefono sulla CIE",
-                "status": "⚪⚪⚪⚪⚪⚪⚪⚪\nSe la lettura non parte, rimuovi la cover del telefono."
+                "title": "Poggia il retro del telefono sulla CIE.",
+                "status": "⚪⚪⚪⚪⚪⚪⚪⚪\nPosiziona il telefono sulla CIE per iniziare la lettura."
               },
               "reading": {
                 "title": "Lettura in corso...",
                 "subtitle": "Non muovere la carta.",
-                "status": "La lettura è in corso, non muovere o spostare la carta. "
+                "status": "Non muovere il telefono."
               },
               "completed": {
                 "title": "Lettura completata!",
