@@ -1095,7 +1095,6 @@ export const itwEidIssuanceMachine = setup({
       }
     },
     Issuance: {
-      entry: "navigateToEidPreviewScreen",
       initial: "RequestingAccessToken",
       states: {
         WaitingForSessionRefresh: {
@@ -1176,6 +1175,7 @@ export const itwEidIssuanceMachine = setup({
           ]
         },
         DisplayingPreview: {
+          entry: "navigateToEidPreviewScreen",
           on: {
             "add-to-wallet": {
               target: "StoringCredential"

@@ -56,6 +56,13 @@ const T_ACCESS_TOKEN: CredentialAccessToken = {
     }
   ]
 };
+const T_EID_REQUEST_OUTPUT: RequestEidActorOutput = {
+  credential: {
+    credential: "",
+    metadata: ItwStoredCredentialsMocks.eid
+  },
+  walletUnitAttestations: T_WUA
+};
 
 /**
  * Actions
@@ -272,14 +279,11 @@ describe("itwEidIssuanceMachine", () => {
     requestAccessToken.mockImplementation(() =>
       Promise.resolve(T_ACCESS_TOKEN)
     );
-    requestEid.mockImplementation(() =>
-      Promise.resolve({
-        credential: {
-          credential: "",
-          metadata: ItwStoredCredentialsMocks.eid
-        },
-        walletUnitAttestations: T_WUA
-      })
+    requestEid.mockImplementation(
+      () =>
+        new Promise<RequestEidActorOutput>(resolve => {
+          setTimeout(() => resolve(T_EID_REQUEST_OUTPUT), 10);
+        })
     );
     issuedEidMatchesAuthenticatedUser.mockImplementation(() => true);
 
@@ -457,15 +461,17 @@ describe("itwEidIssuanceMachine", () => {
         callbackUrl: "http://test.it"
       }
     });
-    expect(navigateToEidPreviewScreen).toHaveBeenCalledTimes(1);
+    expect(navigateToEidPreviewScreen).not.toHaveBeenCalled();
 
     // EID obtained
+    jest.advanceTimersByTime(10);
 
     await waitFor(() =>
       expect(actor.getSnapshot().value).toStrictEqual({
         Issuance: "DisplayingPreview"
       })
     );
+    expect(navigateToEidPreviewScreen).toHaveBeenCalledTimes(1);
 
     actor.send({ type: "add-to-wallet" });
 
@@ -507,7 +513,7 @@ describe("itwEidIssuanceMachine", () => {
     requestAccessToken.mockImplementation(() =>
       Promise.resolve(T_ACCESS_TOKEN)
     );
-    requestEid.mockImplementation(() => Promise.resolve({}));
+    requestEid.mockImplementation(() => Promise.resolve(T_EID_REQUEST_OUTPUT));
     issuedEidMatchesAuthenticatedUser.mockImplementation(() => true);
 
     const initialSnapshot: MachineSnapshot = createActor(
@@ -580,10 +586,14 @@ describe("itwEidIssuanceMachine", () => {
         callbackUrl: "http://cieid.test.it"
       }
     });
-    expect(navigateToEidPreviewScreen).toHaveBeenCalledTimes(1);
     expect(requestEid).toHaveBeenCalledTimes(1);
 
-    /** Last part is the same as the previous test */
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual({
+        Issuance: "DisplayingPreview"
+      })
+    );
+    expect(navigateToEidPreviewScreen).toHaveBeenCalledTimes(1);
   });
 
   it("Should set CieID identification level to L2 in L2 fallback mode", async () => {
@@ -779,6 +789,8 @@ describe("itwEidIssuanceMachine", () => {
     requestAccessToken.mockImplementation(() =>
       Promise.resolve(T_ACCESS_TOKEN)
     );
+    requestEid.mockImplementation(() => Promise.resolve(T_EID_REQUEST_OUTPUT));
+    issuedEidMatchesAuthenticatedUser.mockImplementation(() => true);
 
     actor.send({
       type: "user-identification-completed",
@@ -798,9 +810,12 @@ describe("itwEidIssuanceMachine", () => {
         callbackUrl: "http://test.it"
       }
     });
+    await waitFor(() =>
+      expect(actor.getSnapshot().value).toStrictEqual({
+        Issuance: "DisplayingPreview"
+      })
+    );
     expect(navigateToEidPreviewScreen).toHaveBeenCalledTimes(1);
-
-    /** Last part is the same as the previous test */
   });
 
   it("Should display NFC instructions (Cie+PIN)", async () => {
@@ -1351,6 +1366,8 @@ describe("itwEidIssuanceMachine", () => {
 
     await waitForActor(actor, s => s.matches("Failure"));
 
+    expect(navigateToEidPreviewScreen).not.toHaveBeenCalled();
+    expect(navigateToFailureScreen).toHaveBeenCalledTimes(1);
     expect(actor.getSnapshot().context.failure).toStrictEqual({
       type: IssuanceFailureType.NOT_MATCHING_IDENTITY,
       reason: "IT Wallet identity does not match IO identity"
@@ -1580,8 +1597,6 @@ describe("itwEidIssuanceMachine", () => {
         callbackUrl: "http://test.it"
       }
     });
-    expect(navigateToEidPreviewScreen).toHaveBeenCalledTimes(1);
-
     // EID obtained
 
     await waitFor(() =>
@@ -1589,6 +1604,7 @@ describe("itwEidIssuanceMachine", () => {
         Issuance: "DisplayingPreview"
       })
     );
+    expect(navigateToEidPreviewScreen).toHaveBeenCalledTimes(1);
 
     actor.send({ type: "add-to-wallet" });
 
@@ -2560,7 +2576,6 @@ describe("itwEidIssuanceMachine", () => {
       })
     );
 
-    expect(navigateToEidPreviewScreen).toHaveBeenCalledTimes(1);
     expect(requestEid).toHaveBeenCalledTimes(1);
 
     // EID obtained
@@ -2569,6 +2584,7 @@ describe("itwEidIssuanceMachine", () => {
         Issuance: "DisplayingPreview"
       })
     );
+    expect(navigateToEidPreviewScreen).toHaveBeenCalledTimes(1);
   });
 
   it("Should skip MrtdPoP state entirely and go straight to Issuance when challenge_info is absent (LoA High)", async () => {
