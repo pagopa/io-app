@@ -266,6 +266,51 @@ function* watchFciSignatureRequestRetrySaga(
 }
 
 /**
+ * Handle the FCI signing flow resume after a successful L3 active-session login.
+ * Navigates to a dedicated loading screen first so that FciRouterScreen (and
+ * SuccessComponent) is unmounted before the signature request is re-fetched.
+ * This eliminates the race where SuccessComponent.useEffect would also dispatch
+ * fciStartRequest() concurrently with this saga.
+ */
+function* resumeFciSigningFlowSaga(signatureRequestId: string): SagaIterator {
+  yield* call(
+    NavigationService.dispatchNavigationAction,
+    StackActions.replace(FCI_ROUTES.MAIN, {
+      screen: FCI_ROUTES.RESUME
+    })
+  );
+
+  yield* put(fciSignatureRequestFromId.request(signatureRequestId));
+
+  while (true) {
+    const result = yield* take([
+      fciSignatureRequestFromId.success,
+      fciSignatureRequestFromId.failure
+    ]);
+
+    if (isActionOf(fciSignatureRequestFromId.success, result)) {
+      if (result.payload.id === signatureRequestId) {
+        yield* put(fciDownloadPreview.cancel());
+        yield* put(fciStartRequest());
+        return;
+      }
+      continue;
+    }
+
+    if (isActionOf(fciSignatureRequestFromId.failure, result)) {
+      yield* call(
+        NavigationService.dispatchNavigationAction,
+        StackActions.replace(FCI_ROUTES.MAIN, {
+          screen: FCI_ROUTES.ROUTER,
+          params: { signatureRequestId }
+        })
+      );
+      return;
+    }
+  }
+}
+
+/**
  * Clears cached file for the fci document preview
  * and reset the state to empty.
  */
@@ -376,7 +421,7 @@ export function* navigateAfterFinishedFciActiveSessionLoginFlowSaga(
     signatureRequestId &&
     activeSessionLoginFlow === "FCI"
   ) {
-    yield* put(fciSignatureRequestRetryFromId(signatureRequestId));
+    yield* call(resumeFciSigningFlowSaga, signatureRequestId);
   }
   return;
 }
@@ -388,6 +433,7 @@ export const testable = isTestEnv
       standardFciFlowStartSaga,
       watchFciStartSaga,
       watchFciSignatureRequestRetrySaga,
+      resumeFciSigningFlowSaga,
       clearFciDownloadPreview,
       watchFciSigningRequestSaga,
       clearAllFciFiles,

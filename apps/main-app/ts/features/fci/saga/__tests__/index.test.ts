@@ -58,6 +58,7 @@ const {
   standardFciFlowStartSaga,
   watchFciStartSaga,
   watchFciSignatureRequestRetrySaga,
+  resumeFciSigningFlowSaga,
   clearFciDownloadPreview,
   watchFciSigningRequestSaga,
   clearAllFciFiles,
@@ -162,7 +163,7 @@ describe("FCI Saga Tests", () => {
     const signatureRequestId = "test-signature-id" as NonEmptyString;
     const action = fciSignatureRequestRetryFromId(signatureRequestId);
 
-    it("should retry signature request and start new flow on success", () =>
+    it("should cancel download preview and dispatch fciStartRequest on success", () =>
       expectSaga(watchFciSignatureRequestRetrySaga, action)
         .put(fciSignatureRequestFromId.request(signatureRequestId))
         .dispatch(
@@ -171,6 +172,7 @@ describe("FCI Saga Tests", () => {
             id: signatureRequestId
           })
         )
+        .put(fciDownloadPreview.cancel())
         .put(fciStartRequest())
         .run());
 
@@ -183,6 +185,43 @@ describe("FCI Saga Tests", () => {
           })
         )
         .not.put(fciStartRequest())
+        .run());
+  });
+
+  describe("resumeFciSigningFlowSaga", () => {
+    const signatureRequestId = "test-signature-id" as NonEmptyString;
+
+    it("should navigate to resume screen, then cancel preview and start flow on success", () =>
+      expectSaga(resumeFciSigningFlowSaga, signatureRequestId)
+        .call(
+          NavigationService.dispatchNavigationAction,
+          StackActions.replace(FCI_ROUTES.MAIN, {
+            screen: FCI_ROUTES.RESUME
+          })
+        )
+        .put(fciSignatureRequestFromId.request(signatureRequestId))
+        .dispatch(
+          fciSignatureRequestFromId.success({
+            ...mockSignatureRequestDetailView,
+            id: signatureRequestId
+          })
+        )
+        .put(fciDownloadPreview.cancel())
+        .put(fciStartRequest())
+        .run());
+
+    it("should navigate back to router when signature request fails", () =>
+      expectSaga(resumeFciSigningFlowSaga, signatureRequestId)
+        .put(fciSignatureRequestFromId.request(signatureRequestId))
+        .dispatch(fciSignatureRequestFromId.failure({ kind: "timeout" }))
+        .not.put(fciStartRequest())
+        .call(
+          NavigationService.dispatchNavigationAction,
+          StackActions.replace(FCI_ROUTES.MAIN, {
+            screen: FCI_ROUTES.ROUTER,
+            params: { signatureRequestId }
+          })
+        )
         .run());
   });
 
@@ -291,10 +330,11 @@ describe("FCI Saga Tests", () => {
             matchers.select(fciSignatureRequestIdSelector),
             mockSignatureRequestId
           ],
-          [matchers.select(activeSessionLoginFlowSelector), "FCI"]
+          [matchers.select(activeSessionLoginFlowSelector), "FCI"],
+          [matchers.call.fn(resumeFciSigningFlowSaga), undefined]
         ])
         .put(setActiveSessionLoginFlow(undefined))
-        .put(fciSignatureRequestRetryFromId(mockSignatureRequestId))
+        .call(resumeFciSigningFlowSaga, mockSignatureRequestId)
         .run();
     });
 
@@ -313,7 +353,7 @@ describe("FCI Saga Tests", () => {
           [matchers.select(activeSessionLoginFlowSelector), "FCI"]
         ])
         .put(setActiveSessionLoginFlow(undefined))
-        .not.put(fciSignatureRequestRetryFromId(mockSignatureRequestId))
+        .not.call.fn(resumeFciSigningFlowSaga)
         .run();
     });
 
@@ -324,7 +364,7 @@ describe("FCI Saga Tests", () => {
           [matchers.select(activeSessionLoginFlowSelector), "FCI"]
         ])
         .put(setActiveSessionLoginFlow(undefined))
-        .not.put.actionType("FCI_SIGNATURE_REQUEST_RETRY_FROM_ID")
+        .not.call.fn(resumeFciSigningFlowSaga)
         .run());
 
     it("should not resume FCI flow when activeSessionLoginFlow is not FCI", () => {
@@ -342,7 +382,7 @@ describe("FCI Saga Tests", () => {
           [matchers.select(activeSessionLoginFlowSelector), undefined]
         ])
         .put(setActiveSessionLoginFlow(undefined))
-        .not.put(fciSignatureRequestRetryFromId(mockSignatureRequestId))
+        .not.call.fn(resumeFciSigningFlowSaga)
         .run();
     });
   });
