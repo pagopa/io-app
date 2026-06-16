@@ -367,11 +367,19 @@ export const itwProximityMachine = setup({
             // Pre-navigate to the (loading) claims screen for QR engagement only.
             guard: not("isNfcEngagement"),
             actions: "navigateToClaimsDisclosureScreen"
+          },
+          on: {
+            // NFC session has ended (HCE modal closed)
+            "nfc-stopped": "Terminating"
           }
         },
         Connected: {
           description: "Verifier connected, waiting for the document request",
-          tags: [ItwPresentationTags.Loading]
+          tags: [ItwPresentationTags.Loading],
+          on: {
+            // NFC session has ended (HCE modal closed)
+            "nfc-stopped": "Terminating"
+          }
         },
         EvaluatingConsent: {
           description:
@@ -466,6 +474,7 @@ export const itwProximityMachine = setup({
           }
         },
         Terminating: {
+          tags: [ItwPresentationTags.Loading],
           description: "Send the session-termination signal to the verifier",
           invoke: {
             id: "terminateSession",
