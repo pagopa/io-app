@@ -8,6 +8,7 @@ import {
   IOColorsTints,
   IOThemeDark,
   IOThemeLight,
+  IOVisualCostants,
   VStack,
   hexToRgba,
   themeStatusColorsDarkMode,
@@ -15,7 +16,6 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { ColorValue, Dimensions, StyleSheet, Text, View } from "react-native";
-import themeVariables from "../../../theme/variables";
 import { DesignSystemScreen } from "../components/DesignSystemScreen";
 
 const macroSectionMargin = 48;
@@ -65,16 +65,16 @@ const styles = StyleSheet.create({
   },
   darkModeWrapper: {
     right: 0,
-    marginRight: themeVariables.contentPadding * -1,
-    marginLeft: themeVariables.contentPadding * -1,
+    marginRight: IOVisualCostants.appMarginDefault * -1,
+    marginLeft: IOVisualCostants.appMarginDefault * -1,
     backgroundColor: IOColors.black,
     borderTopLeftRadius: 24,
     borderBottomLeftRadius: 24
   },
   lightModeWrapper: {
     left: 0,
-    marginRight: themeVariables.contentPadding * -1,
-    marginLeft: themeVariables.contentPadding * -1,
+    marginRight: IOVisualCostants.appMarginDefault * -1,
+    marginLeft: IOVisualCostants.appMarginDefault * -1,
     backgroundColor: IOColors.white,
     borderTopRightRadius: 24,
     borderBottomRightRadius: 24
@@ -145,7 +145,7 @@ const ColorThemeGroup = ({
                         isSameColorValue && {
                           width:
                             Dimensions.get("window").width -
-                            themeVariables.contentPadding -
+                            IOVisualCostants.appMarginDefault -
                             colorItemGutter +
                             colorItemPadding
                         }
