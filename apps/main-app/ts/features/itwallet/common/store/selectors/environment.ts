@@ -8,6 +8,12 @@ import { itwIsL3EnabledSelector } from "./preferences";
 export const selectItwEnv = (state: GlobalState) =>
   state.features.itWallet.environment.env ?? "prod";
 
+/**
+ * Select the IT-Wallet specification version depending on the user configuration.
+ *
+ * The version is derived from the whitelist status and the optional presence of a PID,
+ * and it is used for every API call to the IT-Wallet ecosystem actors.
+ */
 export const selectItwSpecsVersion = createSelector(
   itwIsL3EnabledSelector,
   itwCredentialsEidSelector,

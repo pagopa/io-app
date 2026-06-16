@@ -12,6 +12,7 @@ import { Input } from "./input";
 export type Context = {
   /**
    * IT-Wallet technical specifications version to upgrade credentials, for routing to the correct issuer API.
+   * The version is inherited from the eID issuance machine via input.
    */
   itwVersion: ItwVersion;
   /**

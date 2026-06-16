@@ -51,9 +51,10 @@ export const createEidIssuanceActionsImplementation = (
       const credentials = itwCredentialsSelector(state);
 
       return {
+        // Get the IT-Wallet version from the global store; this can be overriden during the issuance flow.
+        itwVersion: selectItwSpecsVersion(state),
         integrityKeyTag: O.toUndefined(storedIntegrityKeyTag),
         walletInstanceAttestation,
-        itwVersion: selectItwSpecsVersion(state), // Get the global IT-Wallet version. This can be overriden during the issuance flow
         credentialsToUpgrade: Object.values(credentials)
       };
     }

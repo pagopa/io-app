@@ -334,7 +334,7 @@ export const itwEidIssuanceMachine = setup({
       tags: [ItwTags.Loading],
       invoke: {
         src: "verifyTrustFederation",
-        input: ({ context }) => ({ itwVersion: context.itwVersion! }),
+        input: ({ context }) => ({ itwVersion: context.itwVersion }),
         onDone: [
           {
             // When no integrity hardware key exists or the user is upgrading to IT-Wallet
@@ -386,7 +386,7 @@ export const itwEidIssuanceMachine = setup({
       invoke: {
         src: "createWalletInstance",
         input: ({ context }) => ({
-          itwVersion: context.itwVersion!,
+          itwVersion: context.itwVersion,
           isRenewal: context.mode === "upgrade"
         }),
         onDone: {
@@ -416,7 +416,7 @@ export const itwEidIssuanceMachine = setup({
       entry: "navigateToWalletRevocationScreen",
       invoke: {
         src: "revokeWalletInstance",
-        input: ({ context }) => ({ itwVersion: context.itwVersion! }),
+        input: ({ context }) => ({ itwVersion: context.itwVersion }),
         onDone: {
           actions: [
             "trackWalletInstanceRevocation",
@@ -450,7 +450,7 @@ export const itwEidIssuanceMachine = setup({
         src: "getWalletAttestation",
         input: ({ context }) => ({
           integrityKeyTag: context.integrityKeyTag,
-          itwVersion: context.itwVersion!
+          itwVersion: context.itwVersion
         }),
         onDone: [
           {
@@ -578,7 +578,7 @@ export const itwEidIssuanceMachine = setup({
               invoke: {
                 src: "startAuthFlow",
                 input: ({ context }) => ({
-                  itwVersion: context.itwVersion!,
+                  itwVersion: context.itwVersion,
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
                   identification: context.identification,
@@ -656,7 +656,7 @@ export const itwEidIssuanceMachine = setup({
                 src: "startAuthFlow",
 
                 input: ({ context }) => ({
-                  itwVersion: context.itwVersion!,
+                  itwVersion: context.itwVersion,
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
                   identification: context.identification,
@@ -793,7 +793,7 @@ export const itwEidIssuanceMachine = setup({
               invoke: {
                 src: "startAuthFlow",
                 input: ({ context }) => ({
-                  itwVersion: context.itwVersion!,
+                  itwVersion: context.itwVersion,
                   walletInstanceAttestation:
                     context.walletInstanceAttestation?.jwt,
                   identification: context.identification,
@@ -910,7 +910,7 @@ export const itwEidIssuanceMachine = setup({
           invoke: {
             src: "initMrtdPoPChallenge",
             input: ({ context }) => ({
-              itwVersion: context.itwVersion!,
+              itwVersion: context.itwVersion,
               authenticationContext: context.authenticationContext,
               walletInstanceAttestation: context.walletInstanceAttestation?.jwt
             }),
@@ -1034,7 +1034,7 @@ export const itwEidIssuanceMachine = setup({
             id: "validateMrtdPoPChallenge",
             src: "validateMrtdPoPChallenge",
             input: ({ context }) => ({
-              itwVersion: context.itwVersion!,
+              itwVersion: context.itwVersion,
               authenticationContext: context.authenticationContext,
               mrtdContext: context.mrtdContext,
               walletInstanceAttestation: context.walletInstanceAttestation?.jwt
@@ -1097,7 +1097,7 @@ export const itwEidIssuanceMachine = setup({
           invoke: {
             src: "requestAccessToken",
             input: ({ context }) => ({
-              itwVersion: context.itwVersion!,
+              itwVersion: context.itwVersion,
               authenticationContext: context.authenticationContext,
               walletInstanceAttestation: context.walletInstanceAttestation?.jwt
             }),
@@ -1114,7 +1114,7 @@ export const itwEidIssuanceMachine = setup({
           invoke: {
             src: "requestEid",
             input: ({ context }) => ({
-              itwVersion: context.itwVersion!,
+              itwVersion: context.itwVersion,
               identification: context.identification,
               authenticationContext: context.authenticationContext,
               walletInstanceAttestation: context.walletInstanceAttestation?.jwt,
@@ -1232,7 +1232,7 @@ export const itwEidIssuanceMachine = setup({
               assert(context.mode, "Issuance mode must be defined");
 
               return {
-                itwVersion: context.itwVersion!,
+                itwVersion: context.itwVersion,
                 credentials: context.credentialsToUpgrade,
                 issuanceMode: context.mode
               };

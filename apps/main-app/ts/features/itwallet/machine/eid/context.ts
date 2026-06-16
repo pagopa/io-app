@@ -94,7 +94,7 @@ export type Context = {
    * the issuance machine must be able to use different versions.
    * This is a local value used only during the issuance flow.
    */
-  itwVersion: ItwVersion | undefined;
+  itwVersion: ItwVersion;
   /**
    * The mode of eID issuance. This determines the flow and actions available in the
    * eID issuance process. Defaults to "issuance" if not specified.
@@ -164,7 +164,7 @@ export type Context = {
 };
 
 export const InitialContext: Context = {
-  itwVersion: undefined,
+  itwVersion: "1.0.0", // Initial value to satisfy type constraints. It is assigned in the `onInit` action.
   mode: undefined,
   level: undefined,
   integrityKeyTag: undefined,
