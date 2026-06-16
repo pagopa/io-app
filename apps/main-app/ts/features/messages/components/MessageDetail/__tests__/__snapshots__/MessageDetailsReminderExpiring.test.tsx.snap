@@ -417,6 +417,7 @@ exports[`MessageDetailsReminderExpiring should match snapshot 1`] = `
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {

@@ -382,6 +382,7 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is active 1`
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -612,6 +613,7 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is active 1`
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -1120,6 +1122,7 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is not enabl
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -1350,6 +1353,7 @@ exports[`ServiceDetailsScreenCdc should match snapshot when service is not enabl
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
