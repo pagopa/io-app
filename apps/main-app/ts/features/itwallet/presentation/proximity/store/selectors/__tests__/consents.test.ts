@@ -2,6 +2,7 @@ import { ConsentData } from "../../types";
 import { generateConsentKey } from "../../utils";
 import {
   itwProximityConsentsSelector,
+  itwProximityConsentsEntriesSelector,
   itwProximityConsentsByCredentialTypeSelector,
   itwProximityConsentExistsSelector,
   itwProximityConsentsByRpIdSelector
@@ -91,6 +92,23 @@ describe("proximity consent selectors", () => {
     });
   });
 
+  describe("itwProximityConsentsEntriesSelector", () => {
+    it("should return all consents with their generated keys", () => {
+      const result = itwProximityConsentsEntriesSelector(
+        stateWithConsents as GlobalState
+      );
+
+      expect(result).toHaveLength(3);
+      expect(result).toEqual(
+        expect.arrayContaining([
+          [mdlKey, mdlConsent],
+          [multiKey, multiCredentialConsent],
+          [healthKey, healthCardOnlyConsent]
+        ])
+      );
+    });
+  });
+
   describe("itwProximityConsentsByCredentialTypeSelector", () => {
     it("should return all consents involving the specified credential type", () => {
       const result = itwProximityConsentsByCredentialTypeSelector("MDL")(
@@ -175,6 +193,19 @@ describe("proximity consent selectors", () => {
       };
 
       const result = itwProximityConsentExistsSelector(differentClaimsConsent)(
+        stateWithConsents as GlobalState
+      );
+
+      expect(result).toBe(false);
+    });
+
+    it("should return false when only a single credential from a multi-credential consent matches", () => {
+      const singleCredentialConsent: ConsentData = {
+        rpId: multiCredentialConsent.rpId,
+        credentials: [multiCredentialConsent.credentials[0]]
+      };
+
+      const result = itwProximityConsentExistsSelector(singleCredentialConsent)(
         stateWithConsents as GlobalState
       );
 
