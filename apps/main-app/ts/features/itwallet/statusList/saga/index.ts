@@ -4,7 +4,6 @@ import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences
 import { itwCredentialsStore } from "../../credentials/store/actions";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
-import { registerStatusListProperties } from "../analytics";
 import {
   registerItwStatusListFetchTask,
   unregisterItwStatusListFetchTask
@@ -44,5 +43,6 @@ export function* watchItwTasksSaga(): SagaIterator {
   yield* fork(registerStatusListFetchTaskSaga);
 
   // Register Status List super properties
-  yield* call(registerStatusListProperties);
+  // TODO [SIW-4474] Add super property registration
+  // yield* call(registerStatusListProperties);
 }
