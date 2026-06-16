@@ -700,6 +700,7 @@ exports[`ItwRemoteAuthResponseScreen should match snapshot when a redirect_uri i
                                         meetOrSlice={0}
                                         minX={0}
                                         minY={0}
+                                        pointerEvents="none"
                                         style={
                                           [
                                             {
