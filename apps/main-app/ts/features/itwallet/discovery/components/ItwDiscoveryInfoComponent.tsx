@@ -8,6 +8,7 @@ import {
   H4,
   HStack,
   Icon,
+  IOMarkdownLite,
   IOColors,
   IOIcons,
   useIOTheme,
@@ -19,7 +20,6 @@ import {
 import I18n from "i18next";
 import { useCallback } from "react";
 import { StyleSheet, View } from "react-native";
-import { Trans } from "react-i18next";
 import Feature1Image from "../../../../../img/features/itWallet/discovery/feature_1.svg";
 import Feature2Image from "../../../../../img/features/itWallet/discovery/feature_2.svg";
 import Feature3Image from "../../../../../img/features/itWallet/discovery/feature_3.svg";
@@ -262,23 +262,13 @@ export const ItwDiscoveryInfoComponent = ({ credentialType }: Props) => {
               />
             </VStack>
             <VSpacer size={32} />
-            <BodySmall>
-              <Trans
-                i18nKey="features.itWallet.discovery.screen.itw.tos"
-                components={{
-                  continue: <BodySmall weight="Semibold" />,
-                  privacy: (
-                    <BodySmall
-                      accessibilityRole="link"
-                      asLink
-                      avoidPressable
-                      onPress={handlePrivacyAndTermsPress}
-                      weight="Semibold"
-                    />
-                  )
-                }}
-              />
-            </BodySmall>
+            <IOMarkdownLite
+              content={I18n.t("features.itWallet.discovery.screen.itw.tos", {
+                privacyUrl: "itw-privacy-and-terms"
+              })}
+              small
+              onLinkPress={handlePrivacyAndTermsPress}
+            />
           </ContentWrapper>
         </ForceScrollDownView>
       </View>
