@@ -205,12 +205,10 @@ export const idPayOnboardingMachine = setup({
         next: [
           {
             guard: "hasMessageConsent",
-            target: "EnableMessage",
-            actions: assign(() => ({ navigationDirection: "forward" }))
+            target: "EnableMessage"
           },
           {
-            target: "LoadingCriteria",
-            actions: assign(() => ({ navigationDirection: "forward" }))
+            target: "LoadingCriteria"
           }
         ]
       }
@@ -294,16 +292,14 @@ export const idPayOnboardingMachine = setup({
         next: [
           {
             actions: assign(({ context }) => ({
-              currentStep: context.currentStep + 1,
-              navigationDirection: "forward"
+              currentStep: context.currentStep + 1
             })),
             guard: "hasSelfDecalrationList",
             target: "DisplayingSelfDeclarationList"
           },
           {
             actions: assign(({ context }) => ({
-              currentStep: context.currentStep + 1,
-              navigationDirection: "forward"
+              currentStep: context.currentStep + 1
             })),
             target: "AcceptingCriteria"
           }
@@ -369,18 +365,15 @@ export const idPayOnboardingMachine = setup({
                 guard: "hasMultiSelfDeclarationList",
                 target: "DisplayingMultiSelfDeclarationList",
                 actions: assign(({ context }) => ({
-                  currentStep: context.currentStep + 1,
-                  navigationDirection: "forward"
+                  currentStep: context.currentStep + 1
                 }))
               },
               {
                 guard: "hasInputFormDeclaration",
-                target: "DisplayingInputForm",
-                actions: assign(() => ({ navigationDirection: "forward" }))
+                target: "DisplayingInputForm"
               },
               {
-                target: "#idpay-onboarding.AcceptingCriteria",
-                actions: assign(() => ({ navigationDirection: "forward" }))
+                target: "#idpay-onboarding.AcceptingCriteria"
               }
             ]
           }
@@ -404,8 +397,7 @@ export const idPayOnboardingMachine = setup({
                     selfDeclarationsMultiAnswers: {
                       ...context.selfDeclarationsMultiAnswers,
                       [context.selfDeclarationsMultiPage]: event.data
-                    },
-                    navigationDirection: "forward"
+                    }
                   })),
                   target: "EvaluatingMultiSelfDeclarationList"
                 },
@@ -498,8 +490,7 @@ export const idPayOnboardingMachine = setup({
                       ...context.selfDeclarationsTextAnswers,
                       [context.activeTextConsentPage]: event.criteria
                     },
-                    currentStep: context.currentStep + 1,
-                    navigationDirection: "forward"
+                    currentStep: context.currentStep + 1
                   })),
                   target: "EvaluatingInputForm"
                 },
