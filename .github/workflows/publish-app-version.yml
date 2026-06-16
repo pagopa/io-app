@@ -35,13 +35,13 @@ jobs:
           
           if [[ ${{ github.event.inputs.releaseLevel }} == "major" ]]; then
             echo "Bumping the major version"
-            pnpm start-breaking-cycle
+            pnpm nx run main-app:start-breaking-cycle
           elif [[ ${{ github.event.inputs.releaseLevel }} == "minor" ]]; then
             echo "Bumping the minor version"
-            pnpm start-release-cycle
+            pnpm nx run main-app:start-release-cycle
           elif [[ ${{ github.event.inputs.releaseLevel }} == "patch" ]]; then
             echo "Bumping the patch version"
-            pnpm start-fix-cycle
+            pnpm nx run main-app:start-fix-cycle
           else
             echo "Unknown release level: ${{ github.event.inputs.releaseLevel }}"
             exit 1
@@ -51,6 +51,7 @@ jobs:
           git push --no-verify --follow-tags origin HEAD:${GITHUB_REF#refs/heads/}
       - id: github-release-creation
         run: |
+          cd apps/main-app
           APP_VERSION=$(node -p -e "require('./package.json').version")
           echo "CURRENT_APP_VERSION=$APP_VERSION" >> $GITHUB_OUTPUT
           gh release create $APP_VERSION --latest --generate-notes

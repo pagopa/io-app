@@ -17,12 +17,6 @@ export const trackItwStatusListFetchRegistered = () => {
   void mixpanelTrack(eventName, properties);
 };
 
-export const trackItwStatusListLastCheckTime = (timestamp: string) => {
-  const eventName = ITW_TECH_EVENTS.ITW_BACKGROUND_TASK_LAST_CHECK_TIME;
-  const properties = buildEventProperties("TECH", undefined, { timestamp });
-  void mixpanelTrack(eventName, properties);
-};
-
 /**
  * Registers ITW Status List related properties to Mixpanel
  */

@@ -11,10 +11,7 @@ import {
   unregisterItwStatusListFetchTask
 } from "../tasks";
 import { getLastStatusListCheckTimestamp } from "../utils/storage";
-import {
-  registerStatusListProperties,
-  trackItwStatusListLastCheckTime
-} from "../analytics";
+import { trackItwStatusListLastCheckTime } from "../analytics";
 
 /**
  * Registers the ITW Status List fetch task with expo-background-task.
@@ -73,8 +70,8 @@ export function* watchItwTasksSaga(): SagaIterator {
   yield* fork(registerStatusListFetchTaskSaga);
   // Run startup coherence for the Status List Token cache
   yield* fork(startupStatusListCoherenceSaga);
+
   // Register Status List super properties
-  yield* call(registerStatusListProperties);
-  // Track the last execution of the ITW Status List fetch task
-  yield* call(trackLastStatusListFetchTaskSaga);
+  // TODO [SIW-4474] Add super property registration
+  // yield* call(registerStatusListProperties);
 }
