@@ -5,7 +5,6 @@ import I18n from "i18next";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { isLoadingSelector } from "../../common/machine/selectors";
 import IdPayOnboardingStepper from "../components/IdPayOnboardingStepper";
 import { IdPayOnboardingMachineContext } from "../machine/provider";
@@ -52,8 +51,6 @@ const InputFormVerificationContent = ({
 }: MultiValuePrerequisiteItemScreenContentProps) => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
   const machine = useActorRef();
-  const navigation = useIONavigation();
-  const currentPage = useSelector(selectCurrentInputTextNumber);
 
   const isLoading = useSelector(isLoadingSelector);
   const [value, setValue] = useState("");
@@ -78,16 +75,7 @@ const InputFormVerificationContent = ({
     });
   };
 
-  // On first page, use navigation.goBack() so RN handles the back animation.
-  // The beforeRemove listener will then send "back" to the machine.
-  // On subsequent pages, only update machine state (PagerView handles the visual change).
-  const goBackOnPress = () => {
-    if (currentPage === 0) {
-      navigation.goBack();
-    } else {
-      machine.send({ type: "back" });
-    }
-  };
+  const goBackOnPress = () => machine.send({ type: "back" });
 
   return (
     <LoadingSpinnerOverlay isLoading={isLoading}>

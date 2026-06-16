@@ -10,9 +10,6 @@ import * as Context from "./context";
 
 type NavigationActionParams = { context: Context.Context };
 
-const preventBackNavigation = (args: NavigationActionParams) =>
-  args.context.navigationDirection === "back";
-
 export const createActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>,
   dispatch: ReturnType<typeof useIODispatch>
@@ -20,50 +17,40 @@ export const createActionsImplementation = (
   const navigateToInitiativeDetailsScreen = ({
     context
   }: NavigationActionParams) => {
-    if (preventBackNavigation({ context })) {
-      return;
-    }
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
       screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS,
-      params: {}
+      params: {},
+      pop: context.navigationDirection === "back"
     });
   };
   const navigateToPdndCriteriaScreen = ({
     context
   }: NavigationActionParams) => {
-    if (preventBackNavigation({ context })) {
-      return;
-    }
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
-      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE
+      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE,
+      pop: context.navigationDirection === "back"
     });
   };
   const navigateToBoolSelfDeclarationListScreen = ({
     context
   }: NavigationActionParams) => {
-    if (preventBackNavigation({ context })) {
-      return;
-    }
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
-      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS
+      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS,
+      pop: context.navigationDirection === "back"
     });
   };
   const navigateToMultiSelfDeclarationListScreen = ({
     context
   }: NavigationActionParams) => {
-    if (preventBackNavigation({ context })) {
-      return;
-    }
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
-      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS
+      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS,
+      pop: context.navigationDirection === "back"
     });
   };
   const navigateToInputFormScreen = ({ context }: NavigationActionParams) => {
-    if (preventBackNavigation({ context })) {
-      return;
-    }
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
-      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_INPUT_FORM
+      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_INPUT_FORM,
+      pop: context.navigationDirection === "back"
     });
   };
 

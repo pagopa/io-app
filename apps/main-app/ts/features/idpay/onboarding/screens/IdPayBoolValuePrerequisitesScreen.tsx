@@ -8,7 +8,6 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import { View } from "react-native";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { _typeEnum as SelfConsentBoolTypeEnum } from "../../../../../definitions/idpay/SelfConsentBoolDTO";
 import { SelfCriteriaBoolDTO } from "../../../../../definitions/idpay/SelfCriteriaBoolDTO";
 import IOMarkdown from "../../../../components/IOMarkdown";
@@ -33,7 +32,6 @@ import {
 const IdPayBoolValuePrerequisitesScreen = () => {
   const { useActorRef, useSelector } = IdPayOnboardingMachineContext;
   const machine = useActorRef();
-  const navigation = useIONavigation();
 
   const initiative = useSelector(selectInitiative);
 
@@ -65,10 +63,7 @@ const IdPayBoolValuePrerequisitesScreen = () => {
     machine.send({ type: "next" });
   };
 
-  // Use navigation.goBack() so React Navigation handles the back animation
-  // (right-to-left). The beforeRemove listener in the navigator will then
-  // send the "back" event to the machine to keep state in sync.
-  const goBackOnPress = () => navigation.goBack();
+  const goBackOnPress = () => machine.send({ type: "back" });
 
   const toggleCriteria =
     (criteria: SelfCriteriaBoolDTO) => (value: boolean) => {
