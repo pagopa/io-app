@@ -1,9 +1,5 @@
 import { applicationChangeState } from "../../../../../../store/actions/application";
-import {
-  itwSetSpecsVersion,
-  itwResetEnv,
-  itwSetEnv
-} from "../../actions/environment";
+import { itwResetEnv, itwSetEnv } from "../../actions/environment";
 import reducer from "../environment";
 
 describe("IT Wallet environment reducer", () => {
@@ -24,11 +20,5 @@ describe("IT Wallet environment reducer", () => {
     const action = itwResetEnv();
     const newState = reducer(undefined, action);
     expect(newState).toEqual({ env: "prod", itWalletSpecsVersion: "1.0.0" });
-  });
-
-  it("should handle itwSetSpecsVersion action", () => {
-    const action = itwSetSpecsVersion("1.3.3");
-    const newState = reducer(undefined, action);
-    expect(newState).toEqual({ env: "prod", itWalletSpecsVersion: "1.3.3" });
   });
 });
