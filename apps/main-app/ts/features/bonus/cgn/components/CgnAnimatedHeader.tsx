@@ -63,13 +63,17 @@ const CgnAnimatedHeader = ({
       ref={ref}
     >
       <View
-        style={{
-          height: HEIGHT,
-          borderTopLeftRadius: CARD_BORDER_RADIUS,
-          borderTopRightRadius: CARD_BORDER_RADIUS,
-          overflow: "hidden",
-          justifyContent: "flex-end"
-        }}
+        style={[
+          {
+            height: HEIGHT,
+            overflow: "hidden",
+            justifyContent: "flex-end"
+          },
+          Platform.OS === "ios" && {
+            borderTopLeftRadius: CARD_BORDER_RADIUS,
+            borderTopRightRadius: CARD_BORDER_RADIUS
+          }
+        ]}
         pointerEvents="box-none"
       >
         <View
