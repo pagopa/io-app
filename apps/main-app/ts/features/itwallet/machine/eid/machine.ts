@@ -20,6 +20,7 @@ import { ItwTags } from "../tags";
 import { itwCredentialUpgradeMachine } from "../upgrade/machine.ts";
 import { isMrtdPoPChallengeRequired } from "../../common/utils/mrtdUrl";
 import {
+  CreateWalletInstanceActorParams,
   GetWalletAttestationActorParams,
   InitMrtdPoPChallengeActorParams,
   RequestAccessTokenActorParams,
@@ -173,7 +174,9 @@ export const itwEidIssuanceMachine = setup({
      * WI actors
      */
 
-    createWalletInstance: fromPromise<string>(notImplemented),
+    createWalletInstance: fromPromise<string, CreateWalletInstanceActorParams>(
+      notImplemented
+    ),
     revokeWalletInstance: fromPromise<void>(notImplemented),
     getWalletAttestation: fromPromise<
       WalletInstanceAttestations,
@@ -329,7 +332,11 @@ export const itwEidIssuanceMachine = setup({
             // Verify the trust federation
             target: "TrustFederationVerification"
           }
-        ]
+        ],
+        close: {
+          target: "#itwEidIssuanceMachine.Idle",
+          actions: "closeIssuance"
+        }
       }
     },
     TrustFederationVerification: {
@@ -340,9 +347,9 @@ export const itwEidIssuanceMachine = setup({
         src: "verifyTrustFederation",
         onDone: [
           {
-            // When no integrity hardware key exists,
+            // When no integrity hardware key exists or the user is upgrading to IT-Wallet
             // we need to create a new integrity key tag and a new wallet instance
-            guard: not("hasIntegrityKeyTag"),
+            guard: or([not("hasIntegrityKeyTag"), "isUpgrade"]),
             target: "WalletInstanceCreation"
           },
           {
@@ -388,6 +395,7 @@ export const itwEidIssuanceMachine = setup({
       tags: [ItwTags.Loading],
       invoke: {
         src: "createWalletInstance",
+        input: ({ context }) => ({ isRenewal: context.mode === "upgrade" }),
         onDone: {
           actions: [
             assign(({ event }) => ({

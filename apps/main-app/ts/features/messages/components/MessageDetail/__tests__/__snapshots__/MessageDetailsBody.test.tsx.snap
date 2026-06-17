@@ -1114,6 +1114,7 @@ exports[`MessageDetailsBody should match snapshot for message with invalid CTA 1
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
