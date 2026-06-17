@@ -195,6 +195,7 @@ exports[`CieIdMethodModule When isL3 is false and isReissuance mode is false ren
         meetOrSlice={0}
         minX={0}
         minY={0}
+        pointerEvents="none"
         style={
           [
             {
@@ -439,6 +440,7 @@ exports[`CieIdMethodModule When isL3 is false and isReissuance mode is true rend
         meetOrSlice={0}
         minX={0}
         minY={0}
+        pointerEvents="none"
         style={
           [
             {
@@ -683,6 +685,7 @@ exports[`CieIdMethodModule When isL3 is true and isReissuance mode is false rend
         meetOrSlice={0}
         minX={0}
         minY={0}
+        pointerEvents="none"
         style={
           [
             {
@@ -907,6 +910,7 @@ exports[`CieIdMethodModule When isL3 is true and isReissuance mode is true rende
         meetOrSlice={0}
         minX={0}
         minY={0}
+        pointerEvents="none"
         style={
           [
             {

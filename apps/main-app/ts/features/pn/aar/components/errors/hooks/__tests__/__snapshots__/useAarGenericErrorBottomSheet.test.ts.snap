@@ -220,6 +220,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
           meetOrSlice={0}
           minX={0}
           minY={0}
+          pointerEvents="none"
           style={
             [
               {
@@ -542,6 +543,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
           meetOrSlice={0}
           minX={0}
           minY={0}
+          pointerEvents="none"
           style={
             [
               {
@@ -818,6 +820,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
           meetOrSlice={0}
           minX={0}
           minY={0}
+          pointerEvents="none"
           style={
             [
               {
@@ -1140,6 +1143,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
           meetOrSlice={0}
           minX={0}
           minY={0}
+          pointerEvents="none"
           style={
             [
               {
@@ -1416,6 +1420,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
           meetOrSlice={0}
           minX={0}
           minY={0}
+          pointerEvents="none"
           style={
             [
               {
@@ -1738,6 +1743,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
           meetOrSlice={0}
           minX={0}
           minY={0}
+          pointerEvents="none"
           style={
             [
               {
@@ -2014,6 +2020,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
           meetOrSlice={0}
           minX={0}
           minY={0}
+          pointerEvents="none"
           style={
             [
               {
@@ -2318,6 +2325,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
           meetOrSlice={0}
           minX={0}
           minY={0}
+          pointerEvents="none"
           style={
             [
               {
@@ -2640,6 +2648,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
           meetOrSlice={0}
           minX={0}
           minY={0}
+          pointerEvents="none"
           style={
             [
               {
@@ -2916,6 +2925,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
           meetOrSlice={0}
           minX={0}
           minY={0}
+          pointerEvents="none"
           style={
             [
               {
@@ -3238,6 +3248,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
           meetOrSlice={0}
           minX={0}
           minY={0}
+          pointerEvents="none"
           style={
             [
               {
@@ -3514,6 +3525,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
           meetOrSlice={0}
           minX={0}
           minY={0}
+          pointerEvents="none"
           style={
             [
               {
@@ -3836,6 +3848,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
           meetOrSlice={0}
           minX={0}
           minY={0}
+          pointerEvents="none"
           style={
             [
               {
@@ -4112,6 +4125,7 @@ exports[`useAarGenericErrorBottomSheet ZendeskSecondLevelTag: "io_problema_notif
           meetOrSlice={0}
           minX={0}
           minY={0}
+          pointerEvents="none"
           style={
             [
               {

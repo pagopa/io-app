@@ -574,6 +574,7 @@ exports[`WalletPaymentInputFiscalCodeScreen should render the WalletPaymentInput
                                 meetOrSlice={0}
                                 minX={0}
                                 minY={0}
+                                pointerEvents="none"
                                 style={
                                   [
                                     {

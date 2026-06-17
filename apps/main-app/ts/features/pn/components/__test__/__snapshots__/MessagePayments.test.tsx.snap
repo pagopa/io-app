@@ -922,6 +922,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -1208,6 +1209,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -1494,6 +1496,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -1780,6 +1783,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -2066,6 +2070,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -2352,6 +2357,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -2638,6 +2644,7 @@ exports[`MessagePayments should match snapshot when cancelled, with payments, wi
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -3300,6 +3307,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -3586,6 +3594,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -3872,6 +3881,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -4158,6 +4168,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -4444,6 +4455,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -4730,6 +4742,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -5016,6 +5029,7 @@ exports[`MessagePayments should match snapshot when cancelled, without payments,
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -5943,6 +5957,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -6228,6 +6243,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -6513,6 +6529,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -6798,6 +6815,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -7083,6 +7101,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -7689,6 +7708,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -7974,6 +7994,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -8259,6 +8280,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -8544,6 +8566,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -8829,6 +8852,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with five (ma
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -9435,6 +9459,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -9720,6 +9745,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -10005,6 +10031,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -10290,6 +10317,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -10575,6 +10603,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -11424,6 +11453,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -11709,6 +11739,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -11994,6 +12025,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -12279,6 +12311,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -12564,6 +12597,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with more-tha
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -13413,6 +13447,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -14019,6 +14054,7 @@ exports[`MessagePayments should match snapshot when not cancelled, with one paya
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {

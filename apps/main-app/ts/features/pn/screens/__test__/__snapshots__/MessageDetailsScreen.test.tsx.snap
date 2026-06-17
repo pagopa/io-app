@@ -464,6 +464,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -1102,6 +1103,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -1740,6 +1742,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -2296,6 +2299,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -2527,6 +2531,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -3064,6 +3069,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -3295,6 +3301,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -3832,6 +3839,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -4063,6 +4071,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -4600,6 +4609,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -4831,6 +4841,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -5368,6 +5379,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -5599,6 +5611,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -6136,6 +6149,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -6367,6 +6381,7 @@ exports[`MessageDetailsScreen should match the snapshot when everything went fin
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -6904,6 +6919,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -7135,6 +7151,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -7783,6 +7800,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -8014,6 +8032,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -8662,6 +8681,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -8893,6 +8913,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -9541,6 +9562,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -9772,6 +9794,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -10420,6 +10443,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -10651,6 +10675,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -11299,6 +11324,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -11530,6 +11556,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error (
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -12260,6 +12287,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -12990,6 +13018,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -13720,6 +13749,7 @@ exports[`MessageDetailsScreen should match the snapshot when there is an error a
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {

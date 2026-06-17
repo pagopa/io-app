@@ -382,6 +382,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -612,6 +613,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when service has no c
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -1120,6 +1122,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -1350,6 +1353,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -2253,6 +2257,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -2483,6 +2488,7 @@ exports[`ServiceDetailsScreenDefault should match snapshot when the service has 
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
