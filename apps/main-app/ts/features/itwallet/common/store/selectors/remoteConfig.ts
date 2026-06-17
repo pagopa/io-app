@@ -130,3 +130,44 @@ export const itwIpzsPrivacyUrlSelector = createSelector(
       O.toUndefined
     )
 );
+
+/**
+ * Return the credential types that are pinned at the top of the catalogue list.
+ * The order of the array determines the display order.
+ */
+export const itwPinnedCredentialsSelector = createSelector(
+  itwRemoteConfigSelector,
+  itwConfig =>
+    pipe(
+      itwConfig,
+      O.chainNullableK(itw => itw.pinned_credentials),
+      O.getOrElse(() => emptyArray)
+    )
+);
+
+/**
+ * Return the credential types that are marked as new in the catalogue list.
+ * New credentials are displayed first with a "NOVITÀ" badge.
+ */
+export const itwNewCredentialsSelector = createSelector(
+  itwRemoteConfigSelector,
+  itwConfig =>
+    pipe(
+      itwConfig,
+      O.chainNullableK(itw => itw.new_credentials),
+      O.getOrElse(() => emptyArray)
+    )
+);
+
+/**
+ * Return the credential types that are hidden from the catalogue list.
+ */
+export const itwHiddenCredentialsSelector = createSelector(
+  itwRemoteConfigSelector,
+  itwConfig =>
+    pipe(
+      itwConfig,
+      O.chainNullableK(itw => itw.hidden_credentials),
+      O.getOrElse(() => emptyArray)
+    )
+);
