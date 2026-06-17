@@ -1,6 +1,9 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as repository from "../repository";
 import { type StatusListPayload } from "../schemas";
+import { STORAGE_PREFIX } from "../consts";
+import { STORAGE_ENTRY_PREFIX } from "../repository";
+import { STORAGE_KEY_LAST_CHECK_TIME } from "../storage";
 
 jest.mock("@react-native-async-storage/async-storage", () =>
   require("@react-native-async-storage/async-storage/jest/async-storage-mock")
@@ -15,6 +18,9 @@ const makePayload = (id: number): StatusListPayload => ({
 });
 
 const RESOLVED_AT = 1700000000000;
+
+const makeEntryKey = (uri: string) =>
+  `${STORAGE_ENTRY_PREFIX}${encodeURIComponent(uri)}`;
 
 describe("repository", () => {
   beforeEach(async () => {
@@ -33,6 +39,24 @@ describe("repository", () => {
       });
     });
 
+    it("stores entries under the entry namespace", async () => {
+      await repository.upsert(makeUri(1), makePayload(1), RESOLVED_AT);
+
+      await expect(
+        AsyncStorage.getItem(makeEntryKey(makeUri(1)))
+      ).resolves.toBe(
+        JSON.stringify({
+          payload: makePayload(1),
+          meta: { resolvedAt: RESOLVED_AT }
+        })
+      );
+      await expect(
+        AsyncStorage.getItem(
+          `${STORAGE_PREFIX}:${encodeURIComponent(makeUri(1))}`
+        )
+      ).resolves.toBeNull();
+    });
+
     it("overwrites an existing entry for the same URI", async () => {
       const payload1 = makePayload(1);
       const payload2 = { ...makePayload(1), ttl: 7200 };
@@ -47,13 +71,26 @@ describe("repository", () => {
       });
     });
 
-    it("does not duplicate URI in index on re-upsert", async () => {
+    it("does not duplicate entries on re-upsert", async () => {
       const payload = makePayload(1);
       await repository.upsert(makeUri(1), payload, RESOLVED_AT);
       await repository.upsert(makeUri(1), payload, RESOLVED_AT + 1000);
 
       const entries = await repository.list();
       expect(entries).toHaveLength(1);
+    });
+
+    it("keeps concurrently inserted entries visible without index write races", async () => {
+      await Promise.all([
+        repository.upsert(makeUri(1), makePayload(1), RESOLVED_AT),
+        repository.upsert(makeUri(2), makePayload(2), RESOLVED_AT)
+      ]);
+
+      const entries = await repository.list();
+      expect(entries.map(entry => entry.payload.sub).sort()).toEqual([
+        makeUri(1),
+        makeUri(2)
+      ]);
     });
   });
 
@@ -64,8 +101,7 @@ describe("repository", () => {
     });
 
     it("returns undefined for malformed stored data", async () => {
-      const key = `@io.itwallet.statusList:entry:${encodeURIComponent(makeUri(1))}`;
-      await AsyncStorage.setItem(key, "not-valid-json{{");
+      await AsyncStorage.setItem(makeEntryKey(makeUri(1)), "not-valid-json{{");
 
       const result = await repository.get(makeUri(1));
       expect(result).toBeUndefined();
@@ -86,21 +122,25 @@ describe("repository", () => {
       expect(entries).toHaveLength(2);
     });
 
-    it("excludes malformed entries and self-heals the index", async () => {
+    it("ignores other storage keys with the same feature prefix", async () => {
       await repository.upsert(makeUri(1), makePayload(1), RESOLVED_AT);
-      await repository.upsert(makeUri(2), makePayload(2), RESOLVED_AT);
-
-      // Corrupt one entry
-      const key = `@io.itwallet.statusList:entry:${encodeURIComponent(makeUri(1))}`;
-      await AsyncStorage.setItem(key, "corrupt");
+      await AsyncStorage.setItem(STORAGE_KEY_LAST_CHECK_TIME, "1700000000000");
 
       const entries = await repository.list();
       expect(entries).toHaveLength(1);
-      expect(entries[0].payload.sub).toBe(makeUri(2));
+      expect(entries[0].payload.sub).toBe(makeUri(1));
+    });
 
-      // Verify index was self-healed: listing again should still return 1
-      const entries2 = await repository.list();
-      expect(entries2).toHaveLength(1);
+    it("does not mutate storage when an entry is malformed", async () => {
+      await repository.upsert(makeUri(1), makePayload(1), RESOLVED_AT);
+      await repository.upsert(makeUri(2), makePayload(2), RESOLVED_AT);
+
+      await AsyncStorage.setItem(makeEntryKey(makeUri(1)), "corrupt");
+
+      await expect(repository.list()).rejects.toThrow();
+      await expect(
+        AsyncStorage.getItem(makeEntryKey(makeUri(1)))
+      ).resolves.toBe("corrupt");
     });
   });
 
@@ -140,7 +180,7 @@ describe("repository", () => {
   });
 
   describe("clear", () => {
-    it("removes all entries and the index", async () => {
+    it("removes all entries", async () => {
       await repository.upsert(makeUri(1), makePayload(1), RESOLVED_AT);
       await repository.upsert(makeUri(2), makePayload(2), RESOLVED_AT);
 
@@ -148,6 +188,17 @@ describe("repository", () => {
 
       const entries = await repository.list();
       expect(entries).toEqual([]);
+    });
+
+    it("keeps non-entry keys with the same feature prefix", async () => {
+      await repository.upsert(makeUri(1), makePayload(1), RESOLVED_AT);
+      await AsyncStorage.setItem(STORAGE_KEY_LAST_CHECK_TIME, "1700000000000");
+
+      await repository.clear();
+
+      await expect(
+        AsyncStorage.getItem(STORAGE_KEY_LAST_CHECK_TIME)
+      ).resolves.toBe("1700000000000");
     });
   });
 });

@@ -1,8 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { STORAGE_PREFIX } from "./consts";
 
-// Storage keys for the ITW Status List feature.
-const STORAGE_PREFIX = "@io.itwallet.statusList";
-const STORAGE_KEY_LAST_CHECK_TIME = `${STORAGE_PREFIX}:lastCheckTime`;
+export const STORAGE_KEY_LAST_CHECK_TIME = `${STORAGE_PREFIX}:lastCheckTime`;
 
 /**
  * Stores the timestamp of the last check made of the Status List

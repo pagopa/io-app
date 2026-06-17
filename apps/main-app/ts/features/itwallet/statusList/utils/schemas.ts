@@ -6,8 +6,8 @@ import { z } from "zod";
  */
 const StatusListSchema = z.object({
   bits: z.number().int().positive(),
-  lst: z.string().min(1),
-  aggregation_uri: z.string().url().optional()
+  lst: z.string(),
+  aggregation_uri: z.url().optional()
 });
 
 /**
@@ -17,7 +17,7 @@ const StatusListSchema = z.object({
  * @see https://italia.github.io/eid-wallet-it-docs/releases/1.3.3/en/credential-revocation.html
  */
 export const StatusListPayloadSchema = z.object({
-  sub: z.string().min(1),
+  sub: z.url(),
   exp: z.number().int().positive().optional(),
   iat: z.number().int().positive().optional(),
   ttl: z.number().int().positive().optional(),
