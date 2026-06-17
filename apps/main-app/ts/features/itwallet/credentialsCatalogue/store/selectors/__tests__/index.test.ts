@@ -148,8 +148,8 @@ describe("itwAvailableCredentialsListSelector", () => {
     });
 
     expect(itwAvailableCredentialsListSelector(state)).toEqual([
-      { type: "cred1", name: "Credential 1" },
-      { type: "cred2", name: "Credential 2" }
+      { type: "cred1", name: "Credential 1", isNew: false },
+      { type: "cred2", name: "Credential 2", isNew: false }
     ]);
   });
 
@@ -162,8 +162,8 @@ describe("itwAvailableCredentialsListSelector", () => {
     });
 
     expect(itwAvailableCredentialsListSelector(state)).toEqual([
-      { type: "cred1", name: "Credential 1" },
-      { type: "cred2", name: "Credenziale 2" }
+      { type: "cred1", name: "Credential 1", isNew: false },
+      { type: "cred2", name: "Credenziale 2", isNew: false }
     ]);
   });
 
@@ -176,8 +176,8 @@ describe("itwAvailableCredentialsListSelector", () => {
     });
 
     expect(itwAvailableCredentialsListSelector(state)).toEqual([
-      { type: "cred1", name: "Credential 1" },
-      { type: "cred2", name: "Credential 2" }
+      { type: "cred1", name: "Credential 1", isNew: false },
+      { type: "cred2", name: "Credential 2", isNew: false }
     ]);
   });
 
