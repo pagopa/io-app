@@ -17,7 +17,7 @@ const itwRemoteConfigSelector = (state: GlobalState) =>
   );
 
 /**
- * Returns the remote config for IT-WALLET
+ * Returns the remote config for docIO
  */
 export const isItwEnabledSelector = createSelector(
   itwRemoteConfigSelector,
@@ -128,5 +128,43 @@ export const itwIpzsPrivacyUrlSelector = createSelector(
       itwConfig,
       O.map(itw => itw.ipzs_privacy_url),
       O.toUndefined
+    )
+);
+
+/**
+ * Returns whether the current app version meets the minimum required to use IT Wallet.
+ */
+export const isItwMinAppVersionSupportedSelector = createSelector(
+  itwRemoteConfigSelector,
+  (itwConfig): boolean =>
+    pipe(
+      itwConfig,
+      O.chainNullableK(itw => itw.itw_min_app_version),
+      O.map(version =>
+        isVersionSupported(
+          Platform.OS === "ios" ? version.ios : version.android,
+          getAppVersion()
+        )
+      ),
+      O.getOrElse(() => false)
+    )
+);
+
+/**
+ * Returns whether the current app version meets the minimum required to use Proximity presentation.
+ */
+export const isItwProximityMinAppVersionSupportedSelector = createSelector(
+  itwRemoteConfigSelector,
+  (itwConfig): boolean =>
+    pipe(
+      itwConfig,
+      O.chainNullableK(itw => itw.proximity_min_app_version),
+      O.map(version =>
+        isVersionSupported(
+          Platform.OS === "ios" ? version.ios : version.android,
+          getAppVersion()
+        )
+      ),
+      O.getOrElse(() => false)
     )
 );

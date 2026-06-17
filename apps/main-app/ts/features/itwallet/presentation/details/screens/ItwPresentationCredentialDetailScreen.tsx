@@ -42,6 +42,7 @@ import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsValidSelector
 } from "../../../lifecycle/store/selectors";
+import { isItwProximityMinAppVersionSupportedSelector } from "../../../common/store/selectors/remoteConfig";
 import { ItwParamsList } from "../../../navigation/ItwParamsList.ts";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 import { ItwCredentialTrustmark } from "../../../trustmark/components/ItwCredentialTrustmark.tsx";
@@ -192,6 +193,9 @@ export const ItwPresentationCredentialDetail = ({
 
   const itwFeaturesEnabled = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const isL3Credential = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const isProximityEnabled = useIOSelector(
+    isItwProximityMinAppVersionSupportedSelector
+  );
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
@@ -279,7 +283,8 @@ export const ItwPresentationCredentialDetail = ({
 
     if (
       credentialType === CredentialType.DRIVING_LICENSE &&
-      itwFeaturesEnabled
+      itwFeaturesEnabled &&
+      isProximityEnabled
     ) {
       return {
         label: I18n.t("features.itWallet.presentation.ctas.present"),
@@ -322,6 +327,7 @@ export const ItwPresentationCredentialDetail = ({
     shouldShowMdlUpdateCta,
     itwFeaturesEnabled,
     isL3Credential,
+    isProximityEnabled,
     contentClaim,
     navigation,
     mixPanelCredential,
