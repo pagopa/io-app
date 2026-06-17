@@ -1,16 +1,12 @@
 /* eslint-disable import/order */
 import {
-  isLoginUtilsError,
   LoginUtilsError,
   Error as LoginUtilsErrorType,
   openAuthenticationSession
 } from "@pagopa/io-react-native-login-utils";
 import { CommonActions, useFocusEffect } from "@react-navigation/native";
-import * as E from "fp-ts/lib/Either";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import * as T from "fp-ts/lib/Task";
-import * as TE from "fp-ts/lib/TaskEither";
 import { useCallback, useEffect, useMemo } from "react";
 import { AppState, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -56,7 +52,6 @@ import {
 import { selectedIdentityProviderSelector } from "../../../common/store/selectors";
 import {
   extractLoginResult,
-  getEitherLoginResult,
   getIdpLoginUri
 } from "../../../common/utils/login";
 import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
@@ -112,15 +107,8 @@ const isBackButtonEnabled = (requestInfo: RequestInfo): boolean =>
 const onBack = () =>
   NavigationService.dispatchNavigationAction(CommonActions.goBack());
 
-const idpAuthSession = (
-  loginUri: string
-): TE.TaskEither<LoginUtilsError, string> =>
-  pipe(loginUri, () =>
-    TE.tryCatch(
-      () => openAuthenticationSession(loginUri, "iologin"),
-      error => error as LoginUtilsError
-    )
-  );
+const idpAuthSession = (loginUri: string) =>
+  openAuthenticationSession(loginUri, "iologin");
 
 // This page is used in the native login process.
 export const AuthSessionPage = () => {
@@ -300,63 +288,57 @@ export const AuthSessionPage = () => {
     [dispatch, idp, requestInfo.nativeAttempts, setRequestInfo]
   );
 
-  // Memoized values/func --end--
-
-  if (loginUri && requestInfo.requestState === "LOADING") {
-    void pipe(
-      TE.tryCatch(
-        () =>
-          regenerateKeyGetRedirectsAndVerifySaml(
-            loginUri,
-            ephemeralKeyTag,
-            mixpanelEnabled,
-            isActiveSessionLogin ? isActiveSessionFastLogin : isFastLogin,
-            dispatch
-          ),
-        e => (isLoginUtilsError(e) ? e : E.toError(e))
-      ),
-      TE.fold(
-        () =>
-          T.of(
-            setRequestInfo({
-              requestState: "ERROR",
-              errorType: ErrorType.LOGIN_ERROR,
-              nativeAttempts: requestInfo.nativeAttempts
-            })
-          ),
-        url =>
-          pipe(
-            url,
-            () => idpAuthSession(url),
-            TE.fold(
-              error => T.of(handleLoadingError(error)),
-              response =>
-                T.of(
-                  pipe(
-                    extractLoginResult(response),
-                    O.fromNullable,
-                    O.fold(
-                      () => handleLoginFailure(),
-                      result =>
-                        pipe(
-                          result,
-                          getEitherLoginResult,
-                          E.fold(
-                            e =>
-                              handleLoginFailure(e.errorCode, e.errorMessage),
-                            success => handleLoginSuccess(success.token)
-                          )
-                        )
-                    )
-                  )
-                )
-            )
-          )
+  useEffect(() => {
+    // Memoized values/func --end--
+    if (loginUri && requestInfo.requestState === "LOADING") {
+      void regenerateKeyGetRedirectsAndVerifySaml(
+        loginUri,
+        ephemeralKeyTag,
+        mixpanelEnabled,
+        isActiveSessionLogin ? isActiveSessionFastLogin : isFastLogin,
+        dispatch
       )
-    )();
-  } else if (!loginUri) {
-    handleLoadingError();
-  }
+        .then(url => {
+          idpAuthSession(url)
+            .then(response => {
+              const loginResult = extractLoginResult(response);
+
+              if (!loginResult || !loginResult.success) {
+                handleLoginFailure(
+                  loginResult?.errorCode,
+                  loginResult?.errorMessage
+                );
+                return;
+              }
+              handleLoginSuccess(loginResult.token);
+            })
+            .catch(handleLoadingError);
+        })
+        .catch(() => {
+          setRequestInfo({
+            requestState: "ERROR",
+            errorType: ErrorType.LOGIN_ERROR,
+            nativeAttempts: requestInfo.nativeAttempts
+          });
+        });
+    } else if (!loginUri) {
+      handleLoadingError();
+    }
+  }, [
+    dispatch,
+    ephemeralKeyTag,
+    handleLoadingError,
+    handleLoginFailure,
+    handleLoginSuccess,
+    isActiveSessionFastLogin,
+    isActiveSessionLogin,
+    isFastLogin,
+    loginUri,
+    mixpanelEnabled,
+    requestInfo.nativeAttempts,
+    requestInfo.requestState,
+    setRequestInfo
+  ]);
 
   useHardwareBackButton(() => {
     if (isBackButtonEnabled(requestInfo)) {
