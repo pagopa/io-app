@@ -1,9 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {
-  StoredStatusListSchema,
-  type StoredStatusList,
-  type StatusListPayload
-} from "./schemas";
+import { StatusListPayloadSchema, type StatusListPayload } from "./schemas";
 import { STORAGE_PREFIX } from "./consts";
 
 export const STORAGE_ENTRY_PREFIX = `${STORAGE_PREFIX}:entry:`;
@@ -25,53 +21,44 @@ const readEntryKeys = async (): Promise<Array<string>> => {
 };
 
 /**
- * Lists all cached Status List Token entries.
+ * Lists all cached Status List Token payloads.
  */
-const list = async (): Promise<Array<StoredStatusList>> => {
+const list = async (): Promise<Array<StatusListPayload>> => {
   const keys = await readEntryKeys();
   if (keys.length === 0) {
     return [];
   }
   const pairs = await AsyncStorage.multiGet(keys);
   return pairs.flatMap(([, raw]) =>
-    raw ? [StoredStatusListSchema.parse(JSON.parse(raw))] : []
+    raw ? [StatusListPayloadSchema.parse(JSON.parse(raw))] : []
   );
 };
 
 /**
- * Retrieves a single cached Status List Token by its URI.
+ * Retrieves a single cached Status List Token payload by its URI.
  * Returns `undefined` if not found or if validation fails.
  */
-const get = async (uri: string): Promise<StoredStatusList | undefined> => {
+const get = async (uri: string): Promise<StatusListPayload | undefined> => {
   try {
     const raw = await AsyncStorage.getItem(entryKey(uri));
     if (!raw) {
       return undefined;
     }
-    return StoredStatusListSchema.parse(JSON.parse(raw));
+    return StatusListPayloadSchema.parse(JSON.parse(raw));
   } catch {
     return undefined;
   }
 };
 
 /**
- * Persists a Status List Token entry.
- * Accepts a decoded payload and resolution timestamp, builds the
- * persisted object internally after validation.
+ * Persists a Status List Token payload, validating it before writing.
  */
 const upsert = async (
   uri: string,
-  payload: StatusListPayload,
-  resolvedAt: number
+  payload: StatusListPayload
 ): Promise<void> => {
-  const entry: StoredStatusList = {
-    payload,
-    meta: { resolvedAt }
-  };
-  // Validate before persisting
-  StoredStatusListSchema.parse(entry);
-
-  await AsyncStorage.setItem(entryKey(uri), JSON.stringify(entry));
+  StatusListPayloadSchema.parse(payload);
+  await AsyncStorage.setItem(entryKey(uri), JSON.stringify(payload));
 };
 
 /**

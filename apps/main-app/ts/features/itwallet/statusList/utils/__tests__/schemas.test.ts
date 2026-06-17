@@ -1,15 +1,11 @@
-import {
-  StatusListPayloadSchema,
-  StoredStatusListSchema,
-  validatePayloadSub
-} from "../schemas";
+import { StatusListPayloadSchema, validatePayloadSub } from "../schemas";
 
 describe("StatusListPayloadSchema", () => {
   const validPayload = {
     sub: "https://issuer.example/status/1",
-    exp: 1700000000,
     iat: 1690000000,
-    ttl: 3600,
+    exp: 1700000000,
+    ttl: 43200,
     status_list: {
       bits: 2,
       lst: "eNrbuRgAAhcBXQ"
@@ -23,6 +19,7 @@ describe("StatusListPayloadSchema", () => {
   it("accepts a payload with only required fields", () => {
     const minimal = {
       sub: "https://issuer.example/status/1",
+      iat: 1690000000,
       status_list: { bits: 1, lst: "abc" }
     };
     expect(StatusListPayloadSchema.safeParse(minimal).success).toBe(true);
@@ -52,6 +49,11 @@ describe("StatusListPayloadSchema", () => {
     expect(StatusListPayloadSchema.safeParse(noSub).success).toBe(false);
   });
 
+  it("rejects a payload with missing iat", () => {
+    const { iat: _iat, ...noIat } = validPayload;
+    expect(StatusListPayloadSchema.safeParse(noIat).success).toBe(false);
+  });
+
   it("rejects a payload with missing status_list", () => {
     const { status_list: _sl, ...noStatusList } = validPayload;
     expect(StatusListPayloadSchema.safeParse(noStatusList).success).toBe(false);
@@ -65,56 +67,20 @@ describe("StatusListPayloadSchema", () => {
     expect(StatusListPayloadSchema.safeParse(emptyLst).success).toBe(false);
   });
 
-  it("rejects a payload with non-positive bits", () => {
-    const zeroBits = {
+  it("rejects a payload with bits outside the allowed set (1, 2, 4, 8)", () => {
+    const invalidBits = {
       ...validPayload,
-      status_list: { bits: 0, lst: "abc" }
+      status_list: { bits: 3, lst: "abc" }
     };
-    expect(StatusListPayloadSchema.safeParse(zeroBits).success).toBe(false);
-  });
-});
-
-describe("StoredStatusListSchema", () => {
-  const validEntry = {
-    payload: {
-      sub: "https://issuer.example/status/1",
-      status_list: { bits: 2, lst: "eNrbuRgAAhcBXQ" }
-    },
-    meta: { resolvedAt: 1700000000000 }
-  };
-
-  it("accepts a valid stored entry", () => {
-    expect(StoredStatusListSchema.safeParse(validEntry).success).toBe(true);
-  });
-
-  it("rejects a stored entry with missing meta", () => {
-    const { meta: _meta, ...noMeta } = validEntry;
-    expect(StoredStatusListSchema.safeParse(noMeta).success).toBe(false);
-  });
-
-  it("rejects a stored entry with missing resolvedAt", () => {
-    expect(
-      StoredStatusListSchema.safeParse({
-        ...validEntry,
-        meta: {}
-      }).success
-    ).toBe(false);
-  });
-
-  it("rejects a stored entry with non-positive resolvedAt", () => {
-    expect(
-      StoredStatusListSchema.safeParse({
-        ...validEntry,
-        meta: { resolvedAt: 0 }
-      }).success
-    ).toBe(false);
+    expect(StatusListPayloadSchema.safeParse(invalidBits).success).toBe(false);
   });
 });
 
 describe("validatePayloadSub", () => {
   const payload = {
     sub: "https://issuer.example/status/1",
-    status_list: { bits: 2, lst: "eNrbuRgAAhcBXQ" }
+    iat: 1690000000,
+    status_list: { bits: 2 as const, lst: "eNrbuRgAAhcBXQ" }
   };
 
   it("returns true when payload sub matches the expected URI", () => {

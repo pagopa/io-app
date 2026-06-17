@@ -1,4 +1,4 @@
-import { type StoredStatusList } from "./schemas";
+import { type StatusListPayload } from "./schemas";
 import { StatusListRepository } from "./repository";
 import { refreshStatusListToken } from "./refresh";
 import { isStale } from "./validity";
@@ -52,22 +52,22 @@ export const startupCoherence = async (
   if (referencedStatusListUris === undefined) {
     // Owner metadata not available: refresh stale only, no pruning
     const staleUris = cached
-      .filter(entry => isStale(entry, now))
-      .map(entry => entry.payload.sub);
+      .filter(payload => isStale(payload, now))
+      .map(payload => payload.sub);
 
     await refreshWithBoundedParallelism(staleUris);
     return;
   }
 
   const uniqueRefs = [...new Set(referencedStatusListUris)];
-  const cachedUris = new Set(cached.map(entry => entry.payload.sub));
-  const cachedByUri = new Map<string, StoredStatusList>(
-    cached.map(entry => [entry.payload.sub, entry])
+  const cachedUris = new Set(cached.map(payload => payload.sub));
+  const cachedByUri = new Map<string, StatusListPayload>(
+    cached.map(payload => [payload.sub, payload])
   );
 
   // Remove unreachable: cached but not referenced
   const unreachable = cached
-    .map(entry => entry.payload.sub)
+    .map(payload => payload.sub)
     .filter(uri => !uniqueRefs.includes(uri));
 
   if (unreachable.length > 0) {
@@ -79,8 +79,8 @@ export const startupCoherence = async (
     if (!cachedUris.has(uri)) {
       return true; // Missing
     }
-    const entry = cachedByUri.get(uri);
-    return entry !== undefined && isStale(entry, now);
+    const payload = cachedByUri.get(uri);
+    return payload !== undefined && isStale(payload, now);
   });
 
   await refreshWithBoundedParallelism(urisToRefresh);
@@ -102,8 +102,8 @@ export const backgroundRefresh = async (
   const cached = await StatusListRepository.list();
 
   const staleUris = cached
-    .filter(entry => isStale(entry, now))
-    .map(entry => entry.payload.sub);
+    .filter(payload => isStale(payload, now))
+    .map(payload => payload.sub);
 
   await refreshWithBoundedParallelism(staleUris);
 };

@@ -17,14 +17,15 @@ const makePayload = (
   overrides: Partial<StatusListPayload> = {}
 ): StatusListPayload => ({
   sub: makeSub(id),
+  iat: 1690000000,
   exp: 1700000000,
   status_list: { bits: 2, lst: "eNrbuRgAAhcBXQ" },
   ...overrides
 });
 
-const NOW = 1700000001000; // Just past exp (1700000000 * 1000)
-const FRESH_RESOLVED_AT = NOW; // Not stale (resolved right now)
-const STALE_RESOLVED_AT = 1000; // Very old
+const NOW = 1700000001000; // Just past the default exp (1700000000 * 1000)
+const STALE_EXP = 1000; // exp*1000 = 1000000, far in the past
+const FRESH_EXP = 9999999999; // exp*1000 far in the future
 
 describe("cache service", () => {
   beforeEach(async () => {
@@ -39,16 +40,14 @@ describe("cache service", () => {
   describe("startupCoherence", () => {
     describe("when referencedStatusListUris is undefined (owner metadata unavailable)", () => {
       it("refreshes stale entries without pruning", async () => {
-        // Cache has 2 entries: one stale (exp passed), one fresh (ttl not elapsed)
+        // Cache has 2 entries: one stale (exp passed), one fresh (exp not passed)
         await StatusListRepository.upsert(
           makeSub(1),
-          makePayload(1, { exp: 1000 }),
-          STALE_RESOLVED_AT
+          makePayload(1, { exp: STALE_EXP })
         );
         await StatusListRepository.upsert(
           makeSub(2),
-          makePayload(2, { ttl: 999999 }),
-          FRESH_RESOLVED_AT
+          makePayload(2, { exp: FRESH_EXP })
         );
 
         await startupCoherence(undefined, NOW);
@@ -66,13 +65,11 @@ describe("cache service", () => {
       it("removes unreachable cached entries", async () => {
         await StatusListRepository.upsert(
           makeSub(1),
-          makePayload(1, { ttl: 999999 }),
-          FRESH_RESOLVED_AT
+          makePayload(1, { exp: FRESH_EXP })
         );
         await StatusListRepository.upsert(
           makeSub(2),
-          makePayload(2, { ttl: 999999 }),
-          FRESH_RESOLVED_AT
+          makePayload(2, { exp: FRESH_EXP })
         );
 
         // Only sub 1 is referenced
@@ -93,8 +90,7 @@ describe("cache service", () => {
       it("refreshes stale referenced entries", async () => {
         await StatusListRepository.upsert(
           makeSub(1),
-          makePayload(1, { exp: 1000 }),
-          STALE_RESOLVED_AT
+          makePayload(1, { exp: STALE_EXP })
         );
 
         await startupCoherence([makeSub(1)], NOW);
@@ -105,8 +101,7 @@ describe("cache service", () => {
       it("does not refresh fresh referenced entries", async () => {
         await StatusListRepository.upsert(
           makeSub(1),
-          makePayload(1, { ttl: 999999 }),
-          FRESH_RESOLVED_AT
+          makePayload(1, { exp: FRESH_EXP })
         );
 
         await startupCoherence([makeSub(1)], NOW);
@@ -123,8 +118,7 @@ describe("cache service", () => {
       it("handles empty referenced subs (prunes everything)", async () => {
         await StatusListRepository.upsert(
           makeSub(1),
-          makePayload(1, { ttl: 999999 }),
-          FRESH_RESOLVED_AT
+          makePayload(1, { exp: FRESH_EXP })
         );
 
         await startupCoherence([], NOW);
@@ -138,13 +132,11 @@ describe("cache service", () => {
     it("refreshes stale cached entries", async () => {
       await StatusListRepository.upsert(
         makeSub(1),
-        makePayload(1, { exp: 1000 }),
-        STALE_RESOLVED_AT
+        makePayload(1, { exp: STALE_EXP })
       );
       await StatusListRepository.upsert(
         makeSub(2),
-        makePayload(2, { ttl: 999999 }),
-        FRESH_RESOLVED_AT
+        makePayload(2, { exp: FRESH_EXP })
       );
 
       await backgroundRefresh(NOW);
@@ -162,8 +154,7 @@ describe("cache service", () => {
     it("does nothing when all entries are fresh", async () => {
       await StatusListRepository.upsert(
         makeSub(1),
-        makePayload(1, { ttl: 999999 }),
-        FRESH_RESOLVED_AT
+        makePayload(1, { exp: FRESH_EXP })
       );
 
       await backgroundRefresh(NOW);
@@ -174,13 +165,11 @@ describe("cache service", () => {
     it("continues refreshing when one refresh fails", async () => {
       await StatusListRepository.upsert(
         makeSub(1),
-        makePayload(1, { exp: 1000 }),
-        STALE_RESOLVED_AT
+        makePayload(1, { exp: STALE_EXP })
       );
       await StatusListRepository.upsert(
         makeSub(2),
-        makePayload(2, { exp: 1000 }),
-        STALE_RESOLVED_AT
+        makePayload(2, { exp: STALE_EXP })
       );
 
       (refresh.refreshStatusListToken as jest.Mock)

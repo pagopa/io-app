@@ -43,7 +43,7 @@ export const refreshStatusListToken = async (uri: string): Promise<boolean> => {
       return false;
     }
 
-    await StatusListRepository.upsert(uri, payload, Date.now());
+    await StatusListRepository.upsert(uri, payload);
     return true;
   } catch {
     return false;

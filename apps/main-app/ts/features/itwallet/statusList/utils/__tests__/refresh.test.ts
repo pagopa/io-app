@@ -22,8 +22,9 @@ const URI = "https://issuer.example/status/1";
 
 const makeValidPayload = () => ({
   sub: URI,
+  iat: 1680000000,
   exp: 1700000000,
-  status_list: { bits: 2, lst: "eNrbuRgAAhcBXQ" }
+  status_list: { bits: 2 as const, lst: "eNrbuRgAAhcBXQ" }
 });
 
 /**
@@ -61,7 +62,7 @@ describe("refreshStatusListToken", () => {
 
     const cached = await StatusListRepository.get(URI);
     expect(cached).toBeDefined();
-    expect(cached?.payload.sub).toBe(URI);
+    expect(cached?.sub).toBe(URI);
   });
 
   it("returns false when fetch response is not ok", async () => {
@@ -105,7 +106,7 @@ describe("refreshStatusListToken", () => {
 
   it("does not evict existing cached entry on failure", async () => {
     const payload = makeValidPayload();
-    await StatusListRepository.upsert(URI, payload, Date.now());
+    await StatusListRepository.upsert(URI, payload);
 
     jest
       .spyOn(globalThis, "fetch")
@@ -119,16 +120,15 @@ describe("refreshStatusListToken", () => {
 
   it("overwrites existing entry on successful refresh", async () => {
     const oldPayload = makeValidPayload();
-    await StatusListRepository.upsert(URI, oldPayload, 1000);
+    await StatusListRepository.upsert(URI, oldPayload);
 
-    const newPayload = { ...makeValidPayload(), ttl: 7200 };
+    const newPayload = { ...makeValidPayload(), iat: 1690000000 };
     mockFetch(fakeJwt(newPayload));
 
     const result = await refreshStatusListToken(URI);
 
     expect(result).toBe(true);
     const cached = await StatusListRepository.get(URI);
-    expect(cached?.payload.ttl).toBe(7200);
-    expect(cached?.meta.resolvedAt).toBeGreaterThan(1000);
+    expect(cached?.iat).toBe(1690000000);
   });
 });
