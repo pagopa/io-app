@@ -360,6 +360,7 @@ exports[`FimsHistoryListItems should match snapshot for FailureListItem 1`] = `
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -476,6 +477,7 @@ exports[`FimsHistoryListItems should match snapshot for FailureListItem 1`] = `
                           meetOrSlice={0}
                           minX={0}
                           minY={0}
+                          pointerEvents="none"
                           style={
                             [
                               {
@@ -878,6 +880,7 @@ exports[`FimsHistoryListItems should match snapshot for SuccessListItem 1`] = `
                             meetOrSlice={0}
                             minX={0}
                             minY={0}
+                            pointerEvents="none"
                             style={
                               [
                                 {

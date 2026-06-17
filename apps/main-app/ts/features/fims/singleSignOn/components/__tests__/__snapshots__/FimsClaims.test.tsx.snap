@@ -57,6 +57,7 @@ exports[`FimsClaims component renders correctly with 2 claims and renders 1 Divi
       meetOrSlice={0}
       minX={0}
       minY={0}
+      pointerEvents="none"
       style={
         [
           {
@@ -144,6 +145,7 @@ exports[`FimsClaims component renders correctly with 2 claims and renders 1 Divi
       meetOrSlice={0}
       minX={0}
       minY={0}
+      pointerEvents="none"
       style={
         [
           {
@@ -248,6 +250,7 @@ exports[`FimsClaims component renders correctly with 3 claims and renders 2 Divi
       meetOrSlice={0}
       minX={0}
       minY={0}
+      pointerEvents="none"
       style={
         [
           {
@@ -335,6 +338,7 @@ exports[`FimsClaims component renders correctly with 3 claims and renders 2 Divi
       meetOrSlice={0}
       minX={0}
       minY={0}
+      pointerEvents="none"
       style={
         [
           {
@@ -422,6 +426,7 @@ exports[`FimsClaims component renders correctly with 3 claims and renders 2 Divi
       meetOrSlice={0}
       minX={0}
       minY={0}
+      pointerEvents="none"
       style={
         [
           {
@@ -526,6 +531,7 @@ exports[`FimsClaims component renders correctly with a single claim and does not
       meetOrSlice={0}
       minX={0}
       minY={0}
+      pointerEvents="none"
       style={
         [
           {

@@ -206,8 +206,8 @@ importers:
         specifier: ^5.2.8
         version: 5.2.8(patch_hash=9995dc509367cbc5391cc76916a68192588c5aec4321e7f54ff69a8a3662ee98)(@types/react@19.2.16)(react-native-gesture-handler@2.31.0(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0))(react-native-reanimated@4.3.1(react-native-worklets@0.8.3(@babel/core@7.29.0)(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0))(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0))(react-native@0.83.6(@babel/core@7.29.0)(@react-native-community/cli@20.0.0(typescript@5.9.3))(@react-native/metro-config@0.83.6(@babel/core@7.29.0))(@types/react@19.2.16)(react@19.2.0))(react@19.2.0)
       '@pagopa/io-app-design-system':
-        specifier: 8.0.0
-        version: 8.0.0(e102e6c4fbcb0b72c48ffe62b60508a6)
+        specifier: 8.0.1
+        version: 8.0.1(e102e6c4fbcb0b72c48ffe62b60508a6)
       '@pagopa/io-pagopa-commons':
         specifier: ^3.1.0
         version: 3.1.0
@@ -2381,8 +2381,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@pagopa/io-app-design-system@8.0.0':
-    resolution: {integrity: sha512-+1vBJ9JlfkQdZ/UjMY6mFo+TIr/52TAFzWxQxNWW61YvbET6IRCEg5t5CRIj4zeHT97i29WpkKPwZm04qN8Lhw==}
+  '@pagopa/io-app-design-system@8.0.1':
+    resolution: {integrity: sha512-FvaWiCSG/1ey0gs7xA5Z0LbTmzoCPgdCxT4o+sQAYj0VjsNzoen/Ups44kEaYngvp7beIC2aZektq+17V30Vng==}
     engines: {node: '>= 20'}
     peerDependencies:
       react: ^19.0.0
@@ -12289,7 +12289,7 @@ snapshots:
   '@oxc-resolver/binding-win32-x64-msvc@11.19.1':
     optional: true
 
-  '@pagopa/io-app-design-system@8.0.0(e102e6c4fbcb0b72c48ffe62b60508a6)':
+  '@pagopa/io-app-design-system@8.0.1(e102e6c4fbcb0b72c48ffe62b60508a6)':
     dependencies:
       auto-changelog: 2.4.0
       markdown-it: 14.1.1
