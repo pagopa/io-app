@@ -12,7 +12,7 @@ const emptyArray: ReadonlyArray<string> = []; // to avoid unnecessary rerenders
 
 const itwRemoteConfigSelector = (state: GlobalState) =>
   pipe(
-    state.remoteConfig,
+    state.remoteConfig ?? O.none,
     O.map(config => config.itw)
   );
 
