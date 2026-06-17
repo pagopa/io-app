@@ -10,8 +10,6 @@ import {
   registerItwStatusListFetchTask,
   unregisterItwStatusListFetchTask
 } from "../tasks";
-import { getLastStatusListCheckTimestamp } from "../utils/storage";
-import { trackItwStatusListLastCheckTime } from "../analytics";
 
 /**
  * Registers the ITW Status List fetch task with expo-background-task.
@@ -40,20 +38,6 @@ export function* registerStatusListFetchTaskSaga(): SagaIterator {
 export function* startupStatusListCoherenceSaga(): SagaIterator {
   const referencedUris = yield* select(itwStatusListReferencedUrisSelector);
   yield* call(startupCoherence, referencedUris);
-}
-
-/**
- * Tracks the last execution of the ITW Status List fetch task on app open,
- * to have a baseline for the background fetch frequency.
- */
-export function* trackLastStatusListFetchTaskSaga(): SagaIterator {
-  const timestamp = yield* call(getLastStatusListCheckTimestamp);
-  if (timestamp) {
-    yield* call(
-      trackItwStatusListLastCheckTime,
-      new Date(timestamp).toISOString()
-    );
-  }
 }
 
 export function* watchItwTasksSaga(): SagaIterator {
