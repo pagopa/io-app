@@ -1,0 +1,28 @@
+{
+  "extends": ["../../tsconfig.base.json"],
+  "compilerOptions": {
+    "composite": true,
+    "baseUrl": "./",
+    "paths": {
+      "@pagopa/io-app-design-system": [
+        "./src/index"
+      ]
+    },
+    "target": "esnext",
+    "module": "commonjs",
+    "lib": [
+      "es6",
+      "dom",
+      "es2019"
+    ],
+    "jsx": "react-jsx",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "isolatedModules": true,
+  },
+  "exclude": [
+    "node_modules",
+  ]
+}

@@ -5,9 +5,9 @@ import {
   IOAccordionRadius,
   IOColors,
   IOSpacingScale,
-  useIOThemeContext
+  useIOThemeContext,
+  useAccordionAnimation
 } from "@pagopa/io-app-design-system";
-import { useAccordionAnimation } from "@pagopa/io-app-design-system/src/hooks/useAccordionAnimation";
 import { Fragment } from "react";
 import { StyleSheet, View } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";

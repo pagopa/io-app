@@ -1,0 +1,164 @@
+{
+  "name": "@pagopa/io-app-design-system",
+  "version": "8.0.1",
+  "description": "The library defining the core components of the design system of @pagopa/io-app",
+  "main": "lib/commonjs/index",
+  "module": "lib/module/index",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native": "src/index",
+  "source": "src/index",
+  "files": [
+    "src",
+    "lib",
+    "android",
+    "ios",
+    "cpp",
+    "*.podspec",
+    "!lib/typescript/example",
+    "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "!**/.*"
+  ],
+  "scripts": {
+    "test": "jest --config='./jest.config.js'",
+    "tsc-noemit": "tsc --noEmit",
+    "lint": "eslint \"**/*.{js,ts,tsx}\"",
+    "prettify": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "prettier:check": "prettier --check \"src/**/*.{ts,tsx}\"",
+    "prepack": "bob build",
+    "release": "release-it",
+    "example": "yarn --cwd example",
+    "bootstrap": "yarn example",
+    "generate:icons": "node scripts/generateNewIcons.js",
+    "generate:pictograms": "node scripts/generateNewPictograms.js",
+    "generate": "npm-run-all generate:*"
+  },
+  "keywords": [
+    "react-native",
+    "ios",
+    "android"
+  ],
+  "repository": "https://github.com/pagopa/io-app-design-system.git",
+  "author": "PagoPa (https://github.com/pagopa)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/pagopa/io-app-design-system/issues"
+  },
+  "homepage": "https://pagopa.github.io/io-app-design-system",
+  "devDependencies": {
+    "@commitlint/config-conventional": "^17.0.2",
+    "@release-it/conventional-changelog": "^5.0.0",
+    "@stylistic/eslint-plugin": "^2.12.1",
+    "@svgr/core": "^8.1.0",
+    "@svgr/plugin-jsx": "^8.1.0",
+    "@svgr/plugin-svgo": "^8.1.0",
+    "@testing-library/react-native": "^13.2.0",
+    "@types/jest": "catalog:",
+    "@types/markdown-it": "^14.1.2",
+    "@types/react": "catalog:",
+    "auto-changelog": "^2.4.0",
+    "babel-jest": "^29.7.0",
+    "babel-plugin-module-resolver": "^5.0.2",
+    "commitlint": "^17.0.2",
+    "del-cli": "^5.0.0",
+    "eslint": "catalog:",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-functional": "^5.0.8",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-jest": "^28.11.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react-native-a11y": "^3.3.0",
+    "fs-extra": "^11.1.1",
+    "jest": "catalog:",
+    "react": "catalog:",
+    "react-native": "catalog:",
+    "react-native-builder-bob": "^0.38.0",
+    "react-test-renderer": "catalog:",
+    "release-it": "^15.0.0",
+    "svgo": "^3.0.2",
+    "typescript": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-native": "*",
+    "react-native-easing-gradient": "*",
+    "react-native-gesture-handler": "*",
+    "react-native-haptic-feedback": "*",
+    "react-native-linear-gradient": "*",
+    "react-native-reanimated": ">=4.0.0",
+    "react-native-safe-area-context": "*",
+    "react-native-svg": "*",
+    "react-native-worklets": "*"
+  },
+  "engines": {
+    "node": ">= 20"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release-it": {
+    "git": {
+      "commitMessage": "chore: release ${version}",
+      "tagName": "v${version}",
+      "changelog": "yarn auto-changelog --stdout --commit-limit false -u --template https://raw.githubusercontent.com/release-it/release-it/master/templates/changelog-compact.hbs"
+    },
+    "hooks": {
+      "after:bump": "yarn auto-changelog -p && git add ."
+    },
+    "npm": {
+      "publish": false
+    },
+    "github": {
+      "release": true
+    },
+    "plugins": {}
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/",
+    "example/webpack.config.js",
+    "example/metro.config.js",
+    "babel.config.js",
+    "scripts/",
+    ".eslintrc.js"
+  ],
+  "prettier": {
+    "trailingComma": "none",
+    "arrowParens": "avoid",
+    "parser": "typescript"
+  },
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      [
+        "typescript",
+        {
+          "project": "tsconfig.build.json"
+        }
+      ]
+    ]
+  },
+  "dependencies": {
+    "markdown-it": "^14.1.0",
+    "react-native-easing-gradient": "catalog:",
+    "react-native-gesture-handler": "catalog:",
+    "react-native-haptic-feedback": "catalog:",
+    "react-native-linear-gradient": "catalog:",
+    "react-native-reanimated": "catalog:",
+    "react-native-safe-area-context": "catalog:",
+    "react-native-svg": "catalog:",
+    "react-native-worklets": "catalog:"
+  }
+}
