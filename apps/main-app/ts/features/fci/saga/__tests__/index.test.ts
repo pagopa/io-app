@@ -58,7 +58,6 @@ const {
   standardFciFlowStartSaga,
   watchFciStartSaga,
   watchFciSignatureRequestRetrySaga,
-  resumeFciSigningFlowSaga,
   clearFciDownloadPreview,
   watchFciSigningRequestSaga,
   clearAllFciFiles,
@@ -188,43 +187,6 @@ describe("FCI Saga Tests", () => {
         .run());
   });
 
-  describe("resumeFciSigningFlowSaga", () => {
-    const signatureRequestId = "test-signature-id" as NonEmptyString;
-
-    it("should navigate to resume screen, then cancel preview and start flow on success", () =>
-      expectSaga(resumeFciSigningFlowSaga, signatureRequestId)
-        .call(
-          NavigationService.dispatchNavigationAction,
-          StackActions.replace(FCI_ROUTES.MAIN, {
-            screen: FCI_ROUTES.RESUME
-          })
-        )
-        .put(fciSignatureRequestFromId.request(signatureRequestId))
-        .dispatch(
-          fciSignatureRequestFromId.success({
-            ...mockSignatureRequestDetailView,
-            id: signatureRequestId
-          })
-        )
-        .put(fciDownloadPreview.cancel())
-        .put(fciStartRequest())
-        .run());
-
-    it("should navigate back to router when signature request fails", () =>
-      expectSaga(resumeFciSigningFlowSaga, signatureRequestId)
-        .put(fciSignatureRequestFromId.request(signatureRequestId))
-        .dispatch(fciSignatureRequestFromId.failure({ kind: "timeout" }))
-        .not.put(fciStartRequest())
-        .call(
-          NavigationService.dispatchNavigationAction,
-          StackActions.replace(FCI_ROUTES.MAIN, {
-            screen: FCI_ROUTES.ROUTER,
-            params: { signatureRequestId }
-          })
-        )
-        .run());
-  });
-
   describe("clearFciDownloadPreview", () => {
     const testPath = "/test/path/document.pdf";
 
@@ -321,21 +283,17 @@ describe("FCI Saga Tests", () => {
     it("should resume FCI signature flow when all conditions are met", () => {
       const mockSignatureRequestId = "test-signature-id" as NonEmptyString;
 
-      return expectSaga(
-        navigateAfterFinishedFciActiveSessionLoginFlowSaga,
-        true
-      )
-        .provide([
-          [
-            matchers.select(fciSignatureRequestIdSelector),
-            mockSignatureRequestId
-          ],
-          [matchers.select(activeSessionLoginFlowSelector), "FCI"],
-          [matchers.call.fn(resumeFciSigningFlowSaga), undefined]
-        ])
+      testSaga(navigateAfterFinishedFciActiveSessionLoginFlowSaga, true)
+        .next()
+        .select(fciSignatureRequestIdSelector)
+        .next(mockSignatureRequestId)
+        .select(activeSessionLoginFlowSelector)
+        .next("FCI")
         .put(setActiveSessionLoginFlow(undefined))
-        .call(resumeFciSigningFlowSaga, mockSignatureRequestId)
-        .run();
+        .next()
+        .put(fciSignatureRequestRetryFromId(mockSignatureRequestId))
+        .next()
+        .isDone();
     });
 
     it("should not resume FCI flow when isActiveLoginSuccess is false", () => {
@@ -353,7 +311,7 @@ describe("FCI Saga Tests", () => {
           [matchers.select(activeSessionLoginFlowSelector), "FCI"]
         ])
         .put(setActiveSessionLoginFlow(undefined))
-        .not.call.fn(resumeFciSigningFlowSaga)
+        .not.put(fciSignatureRequestRetryFromId(mockSignatureRequestId))
         .run();
     });
 
@@ -364,7 +322,7 @@ describe("FCI Saga Tests", () => {
           [matchers.select(activeSessionLoginFlowSelector), "FCI"]
         ])
         .put(setActiveSessionLoginFlow(undefined))
-        .not.call.fn(resumeFciSigningFlowSaga)
+        .not.put.actionType("FCI_SIGNATURE_REQUEST_RETRY_FROM_ID")
         .run());
 
     it("should not resume FCI flow when activeSessionLoginFlow is not FCI", () => {
@@ -382,7 +340,7 @@ describe("FCI Saga Tests", () => {
           [matchers.select(activeSessionLoginFlowSelector), undefined]
         ])
         .put(setActiveSessionLoginFlow(undefined))
-        .not.call.fn(resumeFciSigningFlowSaga)
+        .not.put(fciSignatureRequestRetryFromId(mockSignatureRequestId))
         .run();
     });
   });

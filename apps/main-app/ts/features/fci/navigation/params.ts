@@ -22,5 +22,4 @@ export type FciParamsList = {
   [FCI_ROUTES.FCI_LOGIN_L3]: undefined;
   [FCI_ROUTES.LOGIN_OPTIN]: undefined;
   [FCI_ROUTES.DOCUMENT_UNAVAILABLE]: FciDocumentUnavailableScreenNavigationParams;
-  [FCI_ROUTES.RESUME]: undefined;
 };

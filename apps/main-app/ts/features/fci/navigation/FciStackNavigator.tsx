@@ -14,7 +14,6 @@ import FciDocumentUnavailableScreen from "../screens/failure/FciDocumentUnavaila
 import { FciNfcNotAvailableScreen } from "../screens/loginL3/FciNfcNotAvailableScreen";
 import { FciLoginL3Screen } from "../screens/loginL3/FciLoginL3Screen";
 import { LoginOptInScreen } from "../screens/loginL3/LoginOptInScreen";
-import FciResumeScreen from "../screens/loginL3/FciResumeScreen.tsx";
 import { FCI_ROUTES } from "./routes";
 import { FciParamsList } from "./params";
 
@@ -81,10 +80,5 @@ export const FciStackNavigator = () => (
     />
     <Stack.Screen name={FCI_ROUTES.FCI_LOGIN_L3} component={FciLoginL3Screen} />
     <Stack.Screen name={FCI_ROUTES.LOGIN_OPTIN} component={LoginOptInScreen} />
-    <Stack.Screen
-      name={FCI_ROUTES.RESUME}
-      component={FciResumeScreen}
-      options={{ headerShown: false }}
-    />
   </Stack.Navigator>
 );
