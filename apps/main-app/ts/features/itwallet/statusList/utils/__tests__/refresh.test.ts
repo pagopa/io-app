@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as repository from "../repository";
+import { StatusListRepository } from "../repository";
 import { refreshStatusListToken } from "../refresh";
 
 jest.mock("@react-native-async-storage/async-storage", () =>
@@ -59,7 +59,7 @@ describe("refreshStatusListToken", () => {
 
     expect(result).toBe(true);
 
-    const cached = await repository.get(URI);
+    const cached = await StatusListRepository.get(URI);
     expect(cached).toBeDefined();
     expect(cached?.payload.sub).toBe(URI);
   });
@@ -70,7 +70,7 @@ describe("refreshStatusListToken", () => {
     const result = await refreshStatusListToken(URI);
 
     expect(result).toBe(false);
-    expect(await repository.get(URI)).toBeUndefined();
+    expect(await StatusListRepository.get(URI)).toBeUndefined();
   });
 
   it("returns false for malformed payload", async () => {
@@ -105,7 +105,7 @@ describe("refreshStatusListToken", () => {
 
   it("does not evict existing cached entry on failure", async () => {
     const payload = makeValidPayload();
-    await repository.upsert(URI, payload, Date.now());
+    await StatusListRepository.upsert(URI, payload, Date.now());
 
     jest
       .spyOn(globalThis, "fetch")
@@ -114,12 +114,12 @@ describe("refreshStatusListToken", () => {
     const result = await refreshStatusListToken(URI);
 
     expect(result).toBe(false);
-    expect(await repository.get(URI)).toBeDefined();
+    expect(await StatusListRepository.get(URI)).toBeDefined();
   });
 
   it("overwrites existing entry on successful refresh", async () => {
     const oldPayload = makeValidPayload();
-    await repository.upsert(URI, oldPayload, 1000);
+    await StatusListRepository.upsert(URI, oldPayload, 1000);
 
     const newPayload = { ...makeValidPayload(), ttl: 7200 };
     mockFetch(fakeJwt(newPayload));
@@ -127,7 +127,7 @@ describe("refreshStatusListToken", () => {
     const result = await refreshStatusListToken(URI);
 
     expect(result).toBe(true);
-    const cached = await repository.get(URI);
+    const cached = await StatusListRepository.get(URI);
     expect(cached?.payload.ttl).toBe(7200);
     expect(cached?.meta.resolvedAt).toBeGreaterThan(1000);
   });

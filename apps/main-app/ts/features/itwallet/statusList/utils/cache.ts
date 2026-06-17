@@ -1,5 +1,5 @@
 import { type StoredStatusList } from "./schemas";
-import * as repository from "./repository";
+import { StatusListRepository } from "./repository";
 import { refreshStatusListToken } from "./refresh";
 import { isStale } from "./validity";
 
@@ -47,7 +47,7 @@ export const startupCoherence = async (
   referencedStatusListUris: Array<string> | undefined,
   now: number = Date.now()
 ): Promise<void> => {
-  const cached = await repository.list();
+  const cached = await StatusListRepository.list();
 
   if (referencedStatusListUris === undefined) {
     // Owner metadata not available: refresh stale only, no pruning
@@ -71,7 +71,7 @@ export const startupCoherence = async (
     .filter(uri => !uniqueRefs.includes(uri));
 
   if (unreachable.length > 0) {
-    await repository.removeMany(unreachable);
+    await StatusListRepository.removeMany(unreachable);
   }
 
   // Collect URIs that need refresh: missing or stale
@@ -99,7 +99,7 @@ export const startupCoherence = async (
 export const backgroundRefresh = async (
   now: number = Date.now()
 ): Promise<void> => {
-  const cached = await repository.list();
+  const cached = await StatusListRepository.list();
 
   const staleUris = cached
     .filter(entry => isStale(entry, now))

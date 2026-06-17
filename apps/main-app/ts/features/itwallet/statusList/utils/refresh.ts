@@ -4,7 +4,7 @@ import {
   validatePayloadSub,
   type StatusListPayload
 } from "./schemas";
-import * as repository from "./repository";
+import { StatusListRepository } from "./repository";
 
 /** Timeout for individual Status List Token fetches (ms). */
 const FETCH_TIMEOUT_MS = 15_000;
@@ -43,7 +43,7 @@ export const refreshStatusListToken = async (uri: string): Promise<boolean> => {
       return false;
     }
 
-    await repository.upsert(uri, payload, Date.now());
+    await StatusListRepository.upsert(uri, payload, Date.now());
     return true;
   } catch {
     return false;

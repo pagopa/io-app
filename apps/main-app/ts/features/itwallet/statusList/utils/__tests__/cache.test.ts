@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as repository from "../repository";
+import { StatusListRepository } from "../repository";
 import * as refresh from "../refresh";
 import { startupCoherence, backgroundRefresh } from "../cache";
 import { type StatusListPayload } from "../schemas";
@@ -40,12 +40,12 @@ describe("cache service", () => {
     describe("when referencedStatusListUris is undefined (owner metadata unavailable)", () => {
       it("refreshes stale entries without pruning", async () => {
         // Cache has 2 entries: one stale (exp passed), one fresh (ttl not elapsed)
-        await repository.upsert(
+        await StatusListRepository.upsert(
           makeSub(1),
           makePayload(1, { exp: 1000 }),
           STALE_RESOLVED_AT
         );
-        await repository.upsert(
+        await StatusListRepository.upsert(
           makeSub(2),
           makePayload(2, { ttl: 999999 }),
           FRESH_RESOLVED_AT
@@ -57,19 +57,19 @@ describe("cache service", () => {
         expect(refresh.refreshStatusListToken).toHaveBeenCalledTimes(1);
 
         // Neither entry should be pruned
-        expect(await repository.get(makeSub(1))).toBeDefined();
-        expect(await repository.get(makeSub(2))).toBeDefined();
+        expect(await StatusListRepository.get(makeSub(1))).toBeDefined();
+        expect(await StatusListRepository.get(makeSub(2))).toBeDefined();
       });
     });
 
     describe("when referencedStatusListUris is provided", () => {
       it("removes unreachable cached entries", async () => {
-        await repository.upsert(
+        await StatusListRepository.upsert(
           makeSub(1),
           makePayload(1, { ttl: 999999 }),
           FRESH_RESOLVED_AT
         );
-        await repository.upsert(
+        await StatusListRepository.upsert(
           makeSub(2),
           makePayload(2, { ttl: 999999 }),
           FRESH_RESOLVED_AT
@@ -79,8 +79,8 @@ describe("cache service", () => {
         await startupCoherence([makeSub(1)], NOW);
 
         // Sub 2 should be removed
-        expect(await repository.get(makeSub(1))).toBeDefined();
-        expect(await repository.get(makeSub(2))).toBeUndefined();
+        expect(await StatusListRepository.get(makeSub(1))).toBeDefined();
+        expect(await StatusListRepository.get(makeSub(2))).toBeUndefined();
       });
 
       it("refreshes missing referenced entries", async () => {
@@ -91,7 +91,7 @@ describe("cache service", () => {
       });
 
       it("refreshes stale referenced entries", async () => {
-        await repository.upsert(
+        await StatusListRepository.upsert(
           makeSub(1),
           makePayload(1, { exp: 1000 }),
           STALE_RESOLVED_AT
@@ -103,7 +103,7 @@ describe("cache service", () => {
       });
 
       it("does not refresh fresh referenced entries", async () => {
-        await repository.upsert(
+        await StatusListRepository.upsert(
           makeSub(1),
           makePayload(1, { ttl: 999999 }),
           FRESH_RESOLVED_AT
@@ -121,7 +121,7 @@ describe("cache service", () => {
       });
 
       it("handles empty referenced subs (prunes everything)", async () => {
-        await repository.upsert(
+        await StatusListRepository.upsert(
           makeSub(1),
           makePayload(1, { ttl: 999999 }),
           FRESH_RESOLVED_AT
@@ -129,19 +129,19 @@ describe("cache service", () => {
 
         await startupCoherence([], NOW);
 
-        expect(await repository.get(makeSub(1))).toBeUndefined();
+        expect(await StatusListRepository.get(makeSub(1))).toBeUndefined();
       });
     });
   });
 
   describe("backgroundRefresh", () => {
     it("refreshes stale cached entries", async () => {
-      await repository.upsert(
+      await StatusListRepository.upsert(
         makeSub(1),
         makePayload(1, { exp: 1000 }),
         STALE_RESOLVED_AT
       );
-      await repository.upsert(
+      await StatusListRepository.upsert(
         makeSub(2),
         makePayload(2, { ttl: 999999 }),
         FRESH_RESOLVED_AT
@@ -160,7 +160,7 @@ describe("cache service", () => {
     });
 
     it("does nothing when all entries are fresh", async () => {
-      await repository.upsert(
+      await StatusListRepository.upsert(
         makeSub(1),
         makePayload(1, { ttl: 999999 }),
         FRESH_RESOLVED_AT
@@ -172,12 +172,12 @@ describe("cache service", () => {
     });
 
     it("continues refreshing when one refresh fails", async () => {
-      await repository.upsert(
+      await StatusListRepository.upsert(
         makeSub(1),
         makePayload(1, { exp: 1000 }),
         STALE_RESOLVED_AT
       );
-      await repository.upsert(
+      await StatusListRepository.upsert(
         makeSub(2),
         makePayload(2, { exp: 1000 }),
         STALE_RESOLVED_AT

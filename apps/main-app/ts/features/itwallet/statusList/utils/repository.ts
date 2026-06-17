@@ -27,7 +27,7 @@ const readEntryKeys = async (): Promise<Array<string>> => {
 /**
  * Lists all cached Status List Token entries.
  */
-export const list = async (): Promise<Array<StoredStatusList>> => {
+const list = async (): Promise<Array<StoredStatusList>> => {
   const keys = await readEntryKeys();
   if (keys.length === 0) {
     return [];
@@ -42,9 +42,7 @@ export const list = async (): Promise<Array<StoredStatusList>> => {
  * Retrieves a single cached Status List Token by its URI.
  * Returns `undefined` if not found or if validation fails.
  */
-export const get = async (
-  uri: string
-): Promise<StoredStatusList | undefined> => {
+const get = async (uri: string): Promise<StoredStatusList | undefined> => {
   try {
     const raw = await AsyncStorage.getItem(entryKey(uri));
     if (!raw) {
@@ -61,7 +59,7 @@ export const get = async (
  * Accepts a decoded payload and resolution timestamp, builds the
  * persisted object internally after validation.
  */
-export const upsert = async (
+const upsert = async (
   uri: string,
   payload: StatusListPayload,
   resolvedAt: number
@@ -79,14 +77,14 @@ export const upsert = async (
 /**
  * Removes a single cached Status List Token by its URI.
  */
-export const remove = async (uri: string): Promise<void> => {
+const remove = async (uri: string): Promise<void> => {
   await AsyncStorage.removeItem(entryKey(uri));
 };
 
 /**
  * Removes multiple cached Status List Tokens by their URIs.
  */
-export const removeMany = async (uris: Array<string>): Promise<void> => {
+const removeMany = async (uris: Array<string>): Promise<void> => {
   if (uris.length === 0) {
     return;
   }
@@ -98,9 +96,18 @@ export const removeMany = async (uris: Array<string>): Promise<void> => {
 /**
  * Removes all cached Status List Token entries.
  */
-export const clear = async (): Promise<void> => {
+const clear = async (): Promise<void> => {
   const keys = await readEntryKeys();
   if (keys.length > 0) {
     await AsyncStorage.multiRemove(keys);
   }
+};
+
+export const StatusListRepository = {
+  list,
+  get,
+  upsert,
+  remove,
+  removeMany,
+  clear
 };
