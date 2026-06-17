@@ -463,6 +463,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -1248,6 +1249,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -1843,6 +1845,7 @@ exports[`ItwProximityPresentmentScreen should render QR code when ready 1`] = `
                                         meetOrSlice={0}
                                         minX={0}
                                         minY={0}
+                                        pointerEvents="none"
                                         style={
                                           [
                                             {
@@ -2370,6 +2373,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -2873,6 +2877,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -3396,6 +3401,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -3991,6 +3997,7 @@ exports[`ItwProximityPresentmentScreen should render error state when QR code ge
                                         meetOrSlice={0}
                                         minX={0}
                                         minY={0}
+                                        pointerEvents="none"
                                         style={
                                           [
                                             {
@@ -4518,6 +4525,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -5332,6 +5340,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -5927,6 +5936,7 @@ exports[`ItwProximityPresentmentScreen should render loading skeleton when machi
                                         meetOrSlice={0}
                                         minX={0}
                                         minY={0}
+                                        pointerEvents="none"
                                         style={
                                           [
                                             {
@@ -6454,6 +6464,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -6685,6 +6696,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -7488,6 +7500,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -8083,6 +8096,7 @@ exports[`ItwProximityPresentmentScreen when credentials are expired should rende
                                         meetOrSlice={0}
                                         minX={0}
                                         minY={0}
+                                        pointerEvents="none"
                                         style={
                                           [
                                             {
