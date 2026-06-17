@@ -16,7 +16,7 @@ const main = async () => {
     "È disponibile la nuova versione `" +
       appVersion +
       "` dell’app :io-app: in test interno.\n" +
-      "<https://github.com/pagopa/io-app/blob/master/CHANGELOG.md|:memo: Changelog> - " +
+      "<https://github.com/pagopa/io-app/blob/master/apps/main-app/CHANGELOG.md|:memo: Changelog> - " +
       "<https://pagopa.atlassian.net/wiki/spaces/IOAPP/pages/345932988/Release+produzione+beta#Frequenza-rilasci|:calendar: Calendario rilasci> - " +
       "<https://pagopa.atlassian.net/wiki/spaces/IOAPP/pages/22020162/Beta+interna|:test_tube: Come partecipo alla beta interna?> - " +
       "<https://pagopa.atlassian.net/wiki/spaces/IOAPP/pages/22020162/Beta+interna#%F0%9F%90%9E-Come-segnalo-un-bug?|:ladybug: Come segnalo un bug?>\n" +
