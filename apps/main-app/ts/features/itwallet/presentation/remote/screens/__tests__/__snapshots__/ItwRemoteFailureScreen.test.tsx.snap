@@ -1449,6 +1449,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for EID_EXPIRED 1`]
                                         meetOrSlice={0}
                                         minX={0}
                                         minY={0}
+                                        pointerEvents="none"
                                         style={
                                           [
                                             {
@@ -2702,6 +2703,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                         meetOrSlice={0}
                                         minX={0}
                                         minY={0}
+                                        pointerEvents="none"
                                         style={
                                           [
                                             {
@@ -3996,6 +3998,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for INVALID_CREDENT
                                         meetOrSlice={0}
                                         minX={0}
                                         minY={0}
+                                        pointerEvents="none"
                                         style={
                                           [
                                             {
@@ -6589,6 +6592,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                         meetOrSlice={0}
                                         minX={0}
                                         minY={0}
+                                        pointerEvents="none"
                                         style={
                                           [
                                             {
@@ -8102,6 +8106,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for MISSING_CREDENT
                                         meetOrSlice={0}
                                         minX={0}
                                         minY={0}
+                                        pointerEvents="none"
                                         style={
                                           [
                                             {
@@ -10887,6 +10892,7 @@ exports[`ItwRemoteFailureScreen should render failure screen for RELYING_PARTY_I
                                         meetOrSlice={0}
                                         minX={0}
                                         minY={0}
+                                        pointerEvents="none"
                                         style={
                                           [
                                             {
@@ -13732,6 +13738,7 @@ continuare
                                         meetOrSlice={0}
                                         minX={0}
                                         minY={0}
+                                        pointerEvents="none"
                                         style={
                                           [
                                             {

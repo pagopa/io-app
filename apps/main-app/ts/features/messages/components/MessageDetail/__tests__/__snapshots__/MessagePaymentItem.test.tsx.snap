@@ -1071,6 +1071,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable it
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -1630,6 +1631,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a payable-wi
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -2237,6 +2239,7 @@ exports[`MessagePaymentItem component Should match the snapshot for a processed 
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {

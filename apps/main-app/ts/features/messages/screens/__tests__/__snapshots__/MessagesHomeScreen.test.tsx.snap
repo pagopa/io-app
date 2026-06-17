@@ -385,6 +385,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -541,6 +542,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -697,6 +699,7 @@ exports[`MessagesHomeScreen should match snapshot (with mocked components 1`] = 
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {

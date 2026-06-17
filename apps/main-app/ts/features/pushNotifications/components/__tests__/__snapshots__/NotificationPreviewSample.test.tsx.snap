@@ -344,6 +344,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                           meetOrSlice={0}
                           minX={0}
                           minY={0}
+                          pointerEvents="none"
                           style={
                             [
                               {
@@ -815,6 +816,7 @@ exports[`NotificationPreviewSample should match snapshot, preview off, reminder 
                           meetOrSlice={0}
                           minX={0}
                           minY={0}
+                          pointerEvents="none"
                           style={
                             [
                               {
@@ -1286,6 +1288,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                           meetOrSlice={0}
                           minX={0}
                           minY={0}
+                          pointerEvents="none"
                           style={
                             [
                               {
@@ -1757,6 +1760,7 @@ exports[`NotificationPreviewSample should match snapshot, preview on, reminder o
                           meetOrSlice={0}
                           minX={0}
                           minY={0}
+                          pointerEvents="none"
                           style={
                             [
                               {
