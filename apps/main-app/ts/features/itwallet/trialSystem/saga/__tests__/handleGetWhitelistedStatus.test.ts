@@ -1,8 +1,11 @@
 import { testSaga } from "redux-saga-test-plan";
 import { handleGetWhitelistedStatus } from "../handleGetWhitelistedStatus";
 import { itwSetFiscalCodeWhitelisted } from "../../../common/store/actions/preferences";
-import { mockItWalletClient } from "../../../api/__mocks__/client.ts";
-import { ItWalletClient } from "../../../api/client.ts";
+import { ItWalletClient } from "../../../api/client";
+
+const mockItWalletClient: Partial<ItWalletClient> = {
+  isFiscalCodeWhitelisted: jest.fn()
+};
 
 type MockResponse = Awaited<
   ReturnType<ItWalletClient["isFiscalCodeWhitelisted"]>
