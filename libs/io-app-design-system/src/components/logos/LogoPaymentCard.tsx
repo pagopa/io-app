@@ -1,5 +1,5 @@
 import { StyleSheet, View } from "react-native";
-import { WithTestID } from "src/utils/types";
+import { WithTestID } from "../../utils/types";
 import { IOColors, hexToRgba } from "../../core";
 
 /* Logos */

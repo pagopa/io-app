@@ -22,7 +22,7 @@ import Animated, {
   useSharedValue,
   withTiming
 } from "react-native-reanimated";
-import { WithTestID } from "src/utils/types";
+import { WithTestID } from "../../utils/types";
 import { useIONewTypeface, useIOTheme } from "../../context";
 import { IOColors, IOSpacingScale, IOVisualCostants } from "../../core";
 import {

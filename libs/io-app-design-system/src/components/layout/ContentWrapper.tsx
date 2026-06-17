@@ -1,8 +1,8 @@
 import { Ref, ReactNode } from "react";
 import { View, ViewProps, ViewStyle } from "react-native";
-import { WithTestID } from "src/utils/types";
 import type { IOAppMargin } from "../../core";
 import { IOVisualCostants } from "../../core/IOStyles";
+import { WithTestID } from "../../utils/types";
 
 type IOContentWrapperProps = WithTestID<
   Omit<ViewProps, "style"> & {
