@@ -2,9 +2,9 @@ import {
   Avatar,
   ContentWrapper,
   H3,
-  hexToRgba,
-  HSpacer,
+  HStack,
   IOColors,
+  IOVisualCostants,
   useIOThemeContext,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -28,6 +28,7 @@ type CgnAnimatedHeaderProps = {
 };
 
 const HEIGHT = Platform.select({ ios: 210, android: 185 });
+const CARD_BORDER_RADIUS = 24;
 
 const CgnAnimatedHeader = ({
   children,
@@ -51,7 +52,7 @@ const CgnAnimatedHeader = ({
     const progress = Math.max(effectivePull.value, effectiveRefreshing.value);
     return {
       opacity: progress,
-      transform: [{ scale: 0.6 + 0.4 * progress }]
+      transform: [{ scale: 0.8 + 0.2 * progress }]
     };
   });
 
@@ -61,38 +62,12 @@ const CgnAnimatedHeader = ({
       pointerEvents="box-none"
       ref={ref}
     >
-      {Platform.OS === "ios" && (
-        <View
-          pointerEvents="none"
-          style={{
-            position: "absolute",
-            height: 100,
-            top: -100,
-            right: 0,
-            left: 0
-          }}
-        />
-      )}
-      {Platform.OS === "ios" && (
-        <Animated.View
-          pointerEvents="none"
-          style={[
-            indicatorAnimStyle,
-            {
-              position: "absolute",
-              top: -44,
-              alignSelf: "center",
-              zIndex: 2
-            }
-          ]}
-        >
-          <ActivityIndicator color={indicatorColor} size="large" />
-        </Animated.View>
-      )}
       <View
         style={{
-          position: "relative",
           height: HEIGHT,
+          borderTopLeftRadius: CARD_BORDER_RADIUS,
+          borderTopRightRadius: CARD_BORDER_RADIUS,
+          overflow: "hidden",
           justifyContent: "flex-end"
         }}
         pointerEvents="box-none"
@@ -103,37 +78,33 @@ const CgnAnimatedHeader = ({
         >
           <CgnAnimatedBackground />
         </View>
+        {Platform.OS === "ios" && (
+          <Animated.View
+            pointerEvents="none"
+            style={[
+              indicatorAnimStyle,
+              {
+                position: "absolute",
+                bottom: HEIGHT! * 0.6,
+                alignSelf: "center",
+                zIndex: 2
+              }
+            ]}
+          >
+            <ActivityIndicator color={indicatorColor} size="large" />
+          </Animated.View>
+        )}
         <ContentWrapper
           style={{
-            paddingBottom: 24,
-            zIndex: 1,
-            position: "absolute",
-            left: 0,
-            right: 0,
-            top: 0,
-            height: HEIGHT,
-            justifyContent: "flex-end"
+            paddingBottom: IOVisualCostants.appMarginDefault
           }}
-          pointerEvents="box-none"
         >
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <View
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: hexToRgba(IOColors.white, 0.2),
-                height: 66,
-                width: 66,
-                borderRadius: 8
-              }}
-            >
-              <Avatar size="medium" logoUri={cgnLogo} />
-            </View>
-            <HSpacer size={16} />
+          <HStack space={16} style={{ alignItems: "center" }}>
+            <Avatar size="medium" logoUri={cgnLogo} />
             <View style={{ flex: 1 }}>
               <H3>{I18n.t("bonus.cgn.merchantsList.screenTitle")}</H3>
             </View>
-          </View>
+          </HStack>
         </ContentWrapper>
       </View>
       <VSpacer size={16} />
