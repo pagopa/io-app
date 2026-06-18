@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StatusListRepository } from "../repository";
 import * as refresh from "../refresh";
-import { startupCoherence, backgroundRefresh } from "../cache";
+import { startupCoherence, refreshStaleEntries } from "../cache";
 import { type StatusListPayload } from "../schemas";
 
 jest.mock("@react-native-async-storage/async-storage", () =>
@@ -38,97 +38,78 @@ describe("cache service", () => {
   });
 
   describe("startupCoherence", () => {
-    describe("when referencedStatusListUris is undefined (owner metadata unavailable)", () => {
-      it("refreshes stale entries without pruning", async () => {
-        // Cache has 2 entries: one stale (exp passed), one fresh (exp not passed)
-        await StatusListRepository.upsert(
-          makeSub(1),
-          makePayload(1, { exp: STALE_EXP })
-        );
-        await StatusListRepository.upsert(
-          makeSub(2),
-          makePayload(2, { exp: FRESH_EXP })
-        );
+    it("does nothing when referencedStatusListUris is undefined", async () => {
+      // Owner metadata unavailable: the cache must be left untouched
+      await StatusListRepository.upsert(
+        makeSub(1),
+        makePayload(1, { exp: STALE_EXP })
+      );
+      await StatusListRepository.upsert(
+        makeSub(2),
+        makePayload(2, { exp: FRESH_EXP })
+      );
 
-        await startupCoherence(undefined, NOW);
+      await startupCoherence(undefined);
 
-        expect(refresh.refreshStatusListToken).toHaveBeenCalledWith(makeSub(1));
-        expect(refresh.refreshStatusListToken).toHaveBeenCalledTimes(1);
-
-        // Neither entry should be pruned
-        expect(await StatusListRepository.get(makeSub(1))).toBeDefined();
-        expect(await StatusListRepository.get(makeSub(2))).toBeDefined();
-      });
+      // Neither entry should be pruned and no refresh is triggered
+      expect(await StatusListRepository.get(makeSub(1))).toBeDefined();
+      expect(await StatusListRepository.get(makeSub(2))).toBeDefined();
+      expect(refresh.refreshStatusListToken).not.toHaveBeenCalled();
     });
 
-    describe("when referencedStatusListUris is provided", () => {
-      it("removes unreachable cached entries", async () => {
-        await StatusListRepository.upsert(
-          makeSub(1),
-          makePayload(1, { exp: FRESH_EXP })
-        );
-        await StatusListRepository.upsert(
-          makeSub(2),
-          makePayload(2, { exp: FRESH_EXP })
-        );
+    it("removes unreferenced cached entries", async () => {
+      await StatusListRepository.upsert(
+        makeSub(1),
+        makePayload(1, { exp: FRESH_EXP })
+      );
+      await StatusListRepository.upsert(
+        makeSub(2),
+        makePayload(2, { exp: FRESH_EXP })
+      );
 
-        // Only sub 1 is referenced
-        await startupCoherence([makeSub(1)], NOW);
+      // Only sub 1 is referenced
+      await startupCoherence([makeSub(1)]);
 
-        // Sub 2 should be removed
-        expect(await StatusListRepository.get(makeSub(1))).toBeDefined();
-        expect(await StatusListRepository.get(makeSub(2))).toBeUndefined();
-      });
+      // Sub 2 should be removed
+      expect(await StatusListRepository.get(makeSub(1))).toBeDefined();
+      expect(await StatusListRepository.get(makeSub(2))).toBeUndefined();
+    });
 
-      it("refreshes missing referenced entries", async () => {
-        // Cache is empty, but sub 1 is referenced
-        await startupCoherence([makeSub(1)], NOW);
+    it("keeps referenced entries listed multiple times", async () => {
+      await StatusListRepository.upsert(
+        makeSub(1),
+        makePayload(1, { exp: FRESH_EXP })
+      );
 
-        expect(refresh.refreshStatusListToken).toHaveBeenCalledWith(makeSub(1));
-      });
+      await startupCoherence([makeSub(1), makeSub(1), makeSub(1)]);
 
-      it("refreshes stale referenced entries", async () => {
-        await StatusListRepository.upsert(
-          makeSub(1),
-          makePayload(1, { exp: STALE_EXP })
-        );
+      expect(await StatusListRepository.get(makeSub(1))).toBeDefined();
+    });
 
-        await startupCoherence([makeSub(1)], NOW);
+    it("prunes everything when referenced subs is empty", async () => {
+      await StatusListRepository.upsert(
+        makeSub(1),
+        makePayload(1, { exp: FRESH_EXP })
+      );
 
-        expect(refresh.refreshStatusListToken).toHaveBeenCalledWith(makeSub(1));
-      });
+      await startupCoherence([]);
 
-      it("does not refresh fresh referenced entries", async () => {
-        await StatusListRepository.upsert(
-          makeSub(1),
-          makePayload(1, { exp: FRESH_EXP })
-        );
+      expect(await StatusListRepository.get(makeSub(1))).toBeUndefined();
+    });
 
-        await startupCoherence([makeSub(1)], NOW);
+    it("never refreshes (refresh is delegated to refreshStaleEntries)", async () => {
+      await StatusListRepository.upsert(
+        makeSub(1),
+        makePayload(1, { exp: STALE_EXP })
+      );
 
-        expect(refresh.refreshStatusListToken).not.toHaveBeenCalled();
-      });
+      await startupCoherence([makeSub(1)]);
 
-      it("deduplicates referenced subs", async () => {
-        await startupCoherence([makeSub(1), makeSub(1), makeSub(1)], NOW);
-
-        expect(refresh.refreshStatusListToken).toHaveBeenCalledTimes(1);
-      });
-
-      it("handles empty referenced subs (prunes everything)", async () => {
-        await StatusListRepository.upsert(
-          makeSub(1),
-          makePayload(1, { exp: FRESH_EXP })
-        );
-
-        await startupCoherence([], NOW);
-
-        expect(await StatusListRepository.get(makeSub(1))).toBeUndefined();
-      });
+      expect(refresh.refreshStatusListToken).not.toHaveBeenCalled();
     });
   });
 
-  describe("backgroundRefresh", () => {
+  describe("refreshStaleEntries", () => {
     it("refreshes stale cached entries", async () => {
       await StatusListRepository.upsert(
         makeSub(1),
@@ -139,14 +120,14 @@ describe("cache service", () => {
         makePayload(2, { exp: FRESH_EXP })
       );
 
-      await backgroundRefresh(NOW);
+      await refreshStaleEntries(NOW);
 
       expect(refresh.refreshStatusListToken).toHaveBeenCalledWith(makeSub(1));
       expect(refresh.refreshStatusListToken).toHaveBeenCalledTimes(1);
     });
 
     it("does nothing when cache is empty", async () => {
-      await backgroundRefresh(NOW);
+      await refreshStaleEntries(NOW);
 
       expect(refresh.refreshStatusListToken).not.toHaveBeenCalled();
     });
@@ -157,7 +138,7 @@ describe("cache service", () => {
         makePayload(1, { exp: FRESH_EXP })
       );
 
-      await backgroundRefresh(NOW);
+      await refreshStaleEntries(NOW);
 
       expect(refresh.refreshStatusListToken).not.toHaveBeenCalled();
     });
@@ -176,7 +157,7 @@ describe("cache service", () => {
         .mockResolvedValueOnce(false)
         .mockResolvedValueOnce(true);
 
-      await backgroundRefresh(NOW);
+      await refreshStaleEntries(NOW);
 
       expect(refresh.refreshStatusListToken).toHaveBeenCalledTimes(2);
     });

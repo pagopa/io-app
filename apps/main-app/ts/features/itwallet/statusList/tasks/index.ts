@@ -4,7 +4,7 @@ import {
   trackItwStatusListFetchRegistered,
   trackItwStatusListFetchRegisterFailure
 } from "../analytics";
-import { backgroundRefresh } from "../utils/cache";
+import { refreshStaleEntries } from "../utils/cache";
 import { storeLastStatusListCheckTimestamp } from "../utils/storage";
 
 /**
@@ -75,7 +75,7 @@ export const unregisterItwStatusListFetchTask = async (): Promise<void> => {
 TaskManager.defineTask(ITW_STATUS_LIST_FETCH_TASK, async () => {
   try {
     const now = Date.now();
-    await backgroundRefresh(now);
+    await refreshStaleEntries(now);
     await storeLastStatusListCheckTimestamp(now);
     return BackgroundTask.BackgroundTaskResult.Success;
   } catch {

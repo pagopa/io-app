@@ -1,4 +1,3 @@
-import { type StatusListPayload } from "./schemas";
 import { StatusListRepository } from "./repository";
 import { refreshStatusListToken } from "./refresh";
 import { isStale } from "./validity";
@@ -27,76 +26,52 @@ const refreshWithBoundedParallelism = async (
 };
 
 /**
- * Startup coherence: owner-aware cache maintenance.
+ * Startup pruning: removes cached Status List entries no longer referenced by
+ * any owner (credentials, Wallet Instance/Unit Attestations).
  *
- * When `referencedStatusListUris` is provided:
- * 1. Deduplicates the referenced URIs
- * 2. Lists the cache once
- * 3. Removes cached entries no longer referenced by any owner
- * 4. Identifies missing entries (referenced but not cached)
- * 5. Identifies stale entries (referenced and cached but expired)
- * 6. Refreshes missing and stale entries with bounded parallelism
+ * When `referencedStatusListUris` is provided, deduplicates it and removes
+ * every cached entry whose URI is not referenced.
  *
- * When `referencedStatusListUris` is `undefined` (owner metadata not yet available),
- * skips pruning and only refreshes stale cached entries (same as background).
+ * When `referencedStatusListUris` is `undefined` (owner metadata not yet
+ * available), pruning is skipped to avoid wiping entries whose owners cannot
+ * yet be resolved.
+ *
+ * Refreshing referenced/stale entries is a separate concern handled by
+ * `refreshStaleEntries`.
  *
  * @param referencedStatusListUris - Status List URIs from Redux, or undefined if unavailable
- * @param now - Current time in ms since epoch (injected for testability)
  */
 export const startupCoherence = async (
-  referencedStatusListUris: ReadonlyArray<string>,
-  now: number = Date.now()
+  referencedStatusListUris: ReadonlyArray<string> | undefined
 ): Promise<void> => {
-  const cached = await StatusListRepository.list();
-
   if (referencedStatusListUris === undefined) {
-    // Owner metadata not available: refresh stale only, no pruning
-    const staleUris = cached
-      .filter(payload => isStale(payload, now))
-      .map(payload => payload.sub);
-
-    await refreshWithBoundedParallelism(staleUris);
     return;
   }
 
-  const uniqueRefs = [...new Set(referencedStatusListUris)];
-  const cachedUris = new Set(cached.map(payload => payload.sub));
-  const cachedByUri = new Map<string, StatusListPayload>(
-    cached.map(payload => [payload.sub, payload])
-  );
+  const cached = await StatusListRepository.list();
+  const uniqueRefs = new Set(referencedStatusListUris);
 
-  // Remove unreachable: cached but not referenced
-  const unreachable = cached
+  // Remove unreferenced: cached but not referenced by any owner
+  const unreferenced = cached
     .map(payload => payload.sub)
-    .filter(uri => !uniqueRefs.includes(uri));
+    .filter(uri => !uniqueRefs.has(uri));
 
-  if (unreachable.length > 0) {
-    await StatusListRepository.removeMany(unreachable);
+  if (unreferenced.length > 0) {
+    await StatusListRepository.removeMany(unreferenced);
   }
-
-  // Collect URIs that need refresh: missing or stale
-  const urisToRefresh = uniqueRefs.filter(uri => {
-    if (!cachedUris.has(uri)) {
-      return true; // Missing
-    }
-    const payload = cachedByUri.get(uri);
-    return payload !== undefined && isStale(payload, now);
-  });
-
-  await refreshWithBoundedParallelism(urisToRefresh);
 };
 
 /**
- * Background refresh: owner-blind cache maintenance.
+ * Owner-blind cache refresh, usable both at startup and from the background task.
  *
  * 1. Lists the cache once
  * 2. Refreshes only stale entries with bounded parallelism
  *
- * Does not prune unreachable entries (no owner metadata available).
+ * Does not prune unreferenced entries; pruning is handled by `startupCoherence`.
  *
  * @param now - Current time in ms since epoch (injected for testability)
  */
-export const backgroundRefresh = async (
+export const refreshStaleEntries = async (
   now: number = Date.now()
 ): Promise<void> => {
   const cached = await StatusListRepository.list();

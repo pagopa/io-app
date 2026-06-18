@@ -4,7 +4,7 @@ import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences
 import { itwCredentialsStore } from "../../credentials/store/actions";
 import { itwLifecycleStoresReset } from "../../lifecycle/store/actions";
 import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
-import { startupCoherence } from "../utils/cache";
+import { refreshStaleEntries, startupCoherence } from "../utils/cache";
 import { itwStatusListReferencedUrisSelector } from "../store/selectors";
 import {
   registerItwStatusListFetchTask,
@@ -32,12 +32,13 @@ export function* registerStatusListFetchTaskSaga(): SagaIterator {
 }
 /**
  * Runs startup coherence for the Status List Token cache.
- * Collects referenced Status List URIs from Redux (if available) and
- * delegates to the shared cache service for pruning and refresh.
+ * First prunes cached entries no longer referenced by any owner, then refreshes
+ * the stale remaining entries.
  */
 export function* startupStatusListCoherenceSaga(): SagaIterator {
   const referencedUris = yield* select(itwStatusListReferencedUrisSelector);
   yield* call(startupCoherence, referencedUris);
+  yield* call(refreshStaleEntries);
 }
 
 export function* watchItwTasksSaga(): SagaIterator {
