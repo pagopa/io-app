@@ -164,13 +164,24 @@ const decodeItwRemoteBarcode: IOBarcodeRuntimeDecoderFn = (
     }))
   );
 
+const itwCredentialOfferSupportedSpecsVersions: ReadonlyArray<
+  ReturnType<typeof selectItwSpecsVersion>
+> = ["1.3.3"];
+
+const isItwCredentialOfferSupportedSpecsVersion = (
+  itwSpecsVersion: ReturnType<typeof selectItwSpecsVersion>
+): boolean =>
+  itwCredentialOfferSupportedSpecsVersions.includes(itwSpecsVersion);
+
 const decodeItwCredentialOfferBarcode: IOBarcodeRuntimeDecoderFn = (
-  _state: GlobalState,
+  state: GlobalState,
   data: string
 ): O.Option<ItwCredentialOfferDecodedIOBarcode> => {
   const itwCredentialOfferUri = data.trim();
 
-  return isPotentialCredentialOfferInvocation(itwCredentialOfferUri)
+  return isItwCredentialOfferSupportedSpecsVersion(
+    selectItwSpecsVersion(state)
+  ) && isPotentialCredentialOfferInvocation(itwCredentialOfferUri)
     ? O.some({
         type: "ITW_CREDENTIAL_OFFER",
         itwCredentialOfferUri

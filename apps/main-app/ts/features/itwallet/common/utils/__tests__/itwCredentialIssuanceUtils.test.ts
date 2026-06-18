@@ -3,7 +3,7 @@ import {
   generateKeysWithWalletUnitAttestation,
   requestCredential
 } from "../itwCredentialIssuanceUtils";
-import { CredentialAccessToken } from "../itwTypesUtils";
+import { CredentialAccessToken, CredentialFormat } from "../itwTypesUtils";
 import { Env } from "../environment";
 import { getWalletUnitAttestation } from "../itwAttestationUtils";
 import { getIoWallet } from "../itwIoWallet";
@@ -181,5 +181,60 @@ describe("requestCredential", () => {
         walletInstanceAttestation: "wia"
       })
     );
+  });
+
+  it("rejects resolved credential offers without supported configuration IDs", async () => {
+    evaluateIssuerTrust.mockResolvedValue({
+      issuerConf: {
+        credential_issuer: offerCredentialIssuer,
+        credential_configurations_supported: {
+          AnotherCredential: {
+            scope: "another_credential",
+            format: CredentialFormat.SD_JWT
+          },
+          MdocCredential: {
+            scope: "education_degree",
+            format: CredentialFormat.MDOC
+          }
+        }
+      }
+    });
+
+    await expect(
+      requestCredential({
+        env,
+        itwVersion: "1.3.3",
+        credentialType: "education_degree",
+        walletInstanceAttestation: "wia",
+        skipMdocIssuance: true,
+        resolvedCredentialOffer: {
+          offer: {
+            credential_issuer: offerCredentialIssuer,
+            credential_configuration_ids: [
+              "UnknownCredential",
+              "AnotherCredential",
+              "MdocCredential"
+            ],
+            grants: {
+              authorization_code: {
+                scope: "education_degree",
+                authorization_server: offerCredentialIssuer,
+                issuer_state: "issuer-state"
+              }
+            }
+          },
+          grantDetails: {
+            grantType: "authorization_code",
+            authorizationCodeGrant: {
+              scope: "education_degree",
+              authorizationServer: offerCredentialIssuer,
+              issuerState: "issuer-state"
+            }
+          }
+        }
+      })
+    ).rejects.toThrow("No supported credential configuration IDs");
+
+    expect(startUserAuthorization).not.toHaveBeenCalled();
   });
 });

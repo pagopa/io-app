@@ -31,6 +31,8 @@ import { getWalletUnitAttestation } from "./itwAttestationUtils";
  * Currently only the mDL must be requested sequentially because of locking issues.
  */
 const SEQUENTIAL_ISSUANCE_CREDENTIALS = ["mDL"];
+const NO_SUPPORTED_CREDENTIAL_CONFIGURATION_IDS_ERROR =
+  "No supported credential configuration IDs found for the resolved credential offer";
 
 export type RequestCredential = (args: {
   env: Env;
@@ -75,7 +77,8 @@ export const requestCredential: RequestCredential = async ({
   const { issuerConf } =
     await ioWallet.CredentialIssuance.evaluateIssuerTrust(credentialIssuer);
 
-  const credentialIds = resolvedCredentialOffer?.offer.credential_configuration_ids
+  const credentialIds = resolvedCredentialOffer?.offer
+    .credential_configuration_ids
     ? resolvedCredentialOffer.offer.credential_configuration_ids.filter(id => {
         const config = issuerConf.credential_configurations_supported[id];
         return (
@@ -84,7 +87,15 @@ export const requestCredential: RequestCredential = async ({
           (!skipMdocIssuance || config.format !== CredentialFormat.MDOC)
         );
       })
-    : getCredentialConfigurationIds(issuerConf, credentialType, skipMdocIssuance);
+    : getCredentialConfigurationIds(
+        issuerConf,
+        credentialType,
+        skipMdocIssuance
+      );
+
+  if (resolvedCredentialOffer && credentialIds.length === 0) {
+    throw new Error(NO_SUPPORTED_CREDENTIAL_CONFIGURATION_IDS_ERROR);
+  }
 
   // Start user authorization
   const { issuerRequestUri, clientId, codeVerifier, responseMode } =
