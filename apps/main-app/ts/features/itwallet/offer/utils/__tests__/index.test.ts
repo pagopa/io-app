@@ -25,6 +25,17 @@ describe("isPotentialCredentialOfferInvocation", () => {
       expected: true
     },
     {
+      name: "spoofed IO universal link host with embedded offer",
+      value:
+        "https://continua.io.pagopa.it.evil.com/itw/credential-offer?credential_offer=abc123",
+      expected: false
+    },
+    {
+      name: "IO universal link on unexpected path with embedded offer",
+      value: "https://continua.io.pagopa.it/itw/other?credential_offer=abc123",
+      expected: false
+    },
+    {
       name: "accepted scheme without credential offer parameters",
       value: "haip-vci://?foo=bar",
       expected: false
