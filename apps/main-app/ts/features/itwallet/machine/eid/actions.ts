@@ -15,6 +15,7 @@ import {
   trackItwIdVerifiedDocument,
   trackSaveCredentialSuccess
 } from "../../analytics";
+import { toItwIdMethod } from "../../analytics/utils/types";
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
 import {
   itwSetAuthLevel,
@@ -363,7 +364,7 @@ export const createEidIssuanceActionsImplementation = (
       "identification mode can not be ciePin"
     );
 
-    trackItwIdAuthenticationCompleted(context.identification.mode);
+    trackItwIdAuthenticationCompleted(toItwIdMethod(context.identification));
   },
 
   // Track SPID+CIE final phase
@@ -376,6 +377,6 @@ export const createEidIssuanceActionsImplementation = (
       "identification mode can not be ciePin"
     );
 
-    trackItwIdVerifiedDocument(context.identification.mode);
+    trackItwIdVerifiedDocument(toItwIdMethod(context.identification));
   }
 });
