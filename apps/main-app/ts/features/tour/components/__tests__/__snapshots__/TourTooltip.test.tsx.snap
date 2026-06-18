@@ -310,6 +310,7 @@ exports[`TourTooltip snapshot matches snapshot for first step 1`] = `
                 meetOrSlice={0}
                 minX={0}
                 minY={0}
+                pointerEvents="none"
                 style={
                   [
                     {
@@ -864,6 +865,7 @@ exports[`TourTooltip snapshot matches snapshot for first step 1`] = `
             meetOrSlice={0}
             minX={0}
             minY={0}
+            pointerEvents="none"
             style={
               [
                 {
@@ -1219,6 +1221,7 @@ exports[`TourTooltip snapshot matches snapshot for last step 1`] = `
                 meetOrSlice={0}
                 minX={0}
                 minY={0}
+                pointerEvents="none"
                 style={
                   [
                     {
@@ -1773,6 +1776,7 @@ exports[`TourTooltip snapshot matches snapshot for last step 1`] = `
             meetOrSlice={0}
             minX={0}
             minY={0}
+            pointerEvents="none"
             style={
               [
                 {

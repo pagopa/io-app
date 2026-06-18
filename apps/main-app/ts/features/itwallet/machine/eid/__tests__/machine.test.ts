@@ -1,6 +1,7 @@
 import { waitFor } from "@testing-library/react-native";
 import _ from "lodash";
 import {
+  assign,
   createActor,
   fromCallback,
   fromPromise,
@@ -16,6 +17,7 @@ import {
 } from "../../../common/utils/itwTypesUtils";
 import { ItwTags } from "../../tags";
 import {
+  CreateWalletInstanceActorParams,
   GetWalletAttestationActorParams,
   InitMrtdPoPChallengeActorParams,
   RequestAccessTokenActorParams,
@@ -125,7 +127,7 @@ const isWalletValid = jest.fn();
 describe("itwEidIssuanceMachine", () => {
   const mockedMachine = itwEidIssuanceMachine.provide({
     actions: {
-      onInit,
+      onInit: assign(onInit),
       navigateToTosScreen,
       navigateToIpzsPrivacyScreen,
       navigateToIdpSelectionScreen,
@@ -166,7 +168,10 @@ describe("itwEidIssuanceMachine", () => {
     },
     actors: {
       verifyTrustFederation: fromPromise<void>(verifyTrustFederation),
-      createWalletInstance: fromPromise<string>(createWalletInstance),
+      createWalletInstance: fromPromise<
+        string,
+        CreateWalletInstanceActorParams
+      >(createWalletInstance),
       revokeWalletInstance: fromPromise<void>(revokeWalletInstance),
       getWalletAttestation: fromPromise<
         WalletInstanceAttestations,
@@ -317,7 +322,12 @@ describe("itwEidIssuanceMachine", () => {
     );
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
-    await waitFor(() => expect(createWalletInstance).toHaveBeenCalledTimes(1));
+    await waitFor(() =>
+      expect(createWalletInstance).toHaveBeenNthCalledWith(
+        1,
+        expect.objectContaining({ input: { isRenewal: false } })
+      )
+    );
     await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(1));
     await waitFor(() =>
       expect(storeIntegrityKeyTag).toHaveBeenCalledWith(
@@ -654,6 +664,86 @@ describe("itwEidIssuanceMachine", () => {
         mode: "cieId",
         level: "L2"
       }
+    });
+  });
+
+  describe("updateCieIdIdentificationLevel", () => {
+    const buildCieIdCompletingSnapshot = (level: "l2" | "l3") => {
+      const initialSnapshot: MachineSnapshot = createActor(
+        itwEidIssuanceMachine
+      ).getSnapshot();
+
+      return _.merge(undefined, initialSnapshot, {
+        value: { UserIdentification: { CieID: "CompletingCieIDAuthFlow" } },
+        context: {
+          level,
+          mode: "issuance",
+          integrityKeyTag: T_INTEGRITY_KEY,
+          walletInstanceAttestation: { jwt: T_WIA },
+          identification: { mode: "cieId", level: "L2" },
+          authenticationContext: {
+            authUrl: "https://auth.test.it",
+            clientId: "client",
+            codeVerifier: "verifier",
+            issuerConf: {},
+            credentialDefinition: {},
+            callbackUrl: "",
+            redirectUri: "https://wallet.test.it/cb"
+          }
+        }
+      } as MachineSnapshot);
+    };
+
+    it("Should update identification level to L3 when challenge_info is absent in L3 flow", () => {
+      const actor = createActor(mockedMachine, {
+        snapshot: buildCieIdCompletingSnapshot("l3")
+      });
+      actor.start();
+
+      actor.send({
+        type: "user-identification-completed",
+        authRedirectUrl: "https://wallet.test.it/cb?code=abc&state=xyz"
+      });
+
+      expect(actor.getSnapshot().context.identification).toMatchObject({
+        mode: "cieId",
+        level: "L3"
+      });
+    });
+
+    it("Should keep identification level at L2 when challenge_info is present in L3 flow", () => {
+      const actor = createActor(mockedMachine, {
+        snapshot: buildCieIdCompletingSnapshot("l3")
+      });
+      actor.start();
+
+      actor.send({
+        type: "user-identification-completed",
+        authRedirectUrl:
+          "https://wallet.test.it/cb?code=abc&challenge_info=mock_challenge"
+      });
+
+      expect(actor.getSnapshot().context.identification).toMatchObject({
+        mode: "cieId",
+        level: "L2"
+      });
+    });
+
+    it("Should keep identification level at L2 in L2 flow regardless of challenge_info", () => {
+      const actor = createActor(mockedMachine, {
+        snapshot: buildCieIdCompletingSnapshot("l2")
+      });
+      actor.start();
+
+      actor.send({
+        type: "user-identification-completed",
+        authRedirectUrl: "https://wallet.test.it/cb?code=abc&state=xyz"
+      });
+
+      expect(actor.getSnapshot().context.identification).toMatchObject({
+        mode: "cieId",
+        level: "L2"
+      });
     });
   });
 
@@ -1756,7 +1846,12 @@ describe("itwEidIssuanceMachine", () => {
 
     expect(actor.getSnapshot().tags).toStrictEqual(new Set([ItwTags.Loading]));
 
-    await waitFor(() => expect(createWalletInstance).toHaveBeenCalledTimes(1));
+    await waitFor(() =>
+      expect(createWalletInstance).toHaveBeenNthCalledWith(
+        1,
+        expect.objectContaining({ input: { isRenewal: false } })
+      )
+    );
     await waitFor(() => expect(getWalletAttestation).toHaveBeenCalledTimes(1));
 
     expect(actor.getSnapshot().context).toMatchObject<Partial<Context>>({
@@ -2616,5 +2711,41 @@ describe("itwEidIssuanceMachine", () => {
       eid: { credential: "", metadata: ItwStoredCredentialsMocks.eid },
       walletUnitAttestations: T_WUA
     });
+  });
+
+  it("Should re-create the Wallet Instance in the upgrade flow", async () => {
+    onInit.mockImplementation(() => ({
+      integrityKeyTag: T_INTEGRITY_KEY,
+      credentialsToUpgrade: {}
+    }));
+
+    const actor = createActor(mockedMachine);
+    actor.start();
+    actor.send({ type: "start", mode: "upgrade", level: "l3" });
+    actor.send({ type: "accept-tos" });
+
+    await waitForActor(actor, s => s.matches("WalletInstanceCreation"));
+    expect(createWalletInstance).toHaveBeenNthCalledWith(
+      1,
+      expect.objectContaining({ input: { isRenewal: true } })
+    );
+  });
+
+  it("Should NOT re-create the Wallet Instance in the regular flow (no upgrade)", async () => {
+    onInit.mockImplementation(() => ({
+      integrityKeyTag: T_INTEGRITY_KEY,
+      credentialsToUpgrade: {}
+    }));
+
+    const actor = createActor(mockedMachine);
+    actor.start();
+    actor.send({ type: "start", mode: "issuance", level: "l3" });
+    actor.send({ type: "accept-tos" });
+
+    // Wait for the state immediately after WalletInstanceCreation
+    await waitForActor(actor, s =>
+      s.matches("WalletInstanceAttestationObtainment")
+    );
+    expect(createWalletInstance).not.toHaveBeenCalled();
   });
 });

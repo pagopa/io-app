@@ -463,6 +463,7 @@ exports[`SendQRScanFlowScreen should match snapshot when an app update is requir
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {

@@ -26,4 +26,4 @@ export const selectProximityDetails = (snapshot: MachineSnapshot) =>
   snapshot.context.proximityDetails;
 
 export const hasGivenConsentSelector = (snapshot: MachineSnapshot) =>
-  snapshot.context.hasGrantedConsent;
+  snapshot.context.grantedConsentKey !== undefined;

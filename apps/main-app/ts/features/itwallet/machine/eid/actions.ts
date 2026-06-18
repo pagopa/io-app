@@ -15,6 +15,7 @@ import {
   trackItwIdVerifiedDocument,
   trackSaveCredentialSuccess
 } from "../../analytics";
+import { toItwIdMethod } from "../../analytics/utils/types";
 import { itwMixPanelCredentialDetailsSelector } from "../../analytics/store/selectors";
 import {
   itwClearSimplifiedActivationRequirements,
@@ -342,7 +343,9 @@ export const createEidIssuanceActionsImplementation = (
     context
   }: ActionArgs<Context, EidIssuanceEvents, EidIssuanceEvents>) => {
     const identificationMethod =
-      context.identification?.mode ??
+      (context.identification
+        ? toItwIdMethod(context.identification)
+        : undefined) ??
       // Simplified PID activation skips identification but still requires ITW_ID_method for analytics.
       (context.level === "l3" ? "ciePin" : undefined);
 
@@ -383,7 +386,7 @@ export const createEidIssuanceActionsImplementation = (
       "identification mode can not be ciePin"
     );
 
-    trackItwIdAuthenticationCompleted(context.identification.mode);
+    trackItwIdAuthenticationCompleted(toItwIdMethod(context.identification));
   },
 
   // Track SPID+CIE final phase
@@ -396,6 +399,6 @@ export const createEidIssuanceActionsImplementation = (
       "identification mode can not be ciePin"
     );
 
-    trackItwIdVerifiedDocument(context.identification.mode);
+    trackItwIdVerifiedDocument(toItwIdMethod(context.identification));
   }
 });
