@@ -78,7 +78,7 @@ export const useItwLinkingOptions = (): PathConfigMap<AppParamsList> => ({
        * Opens the remote request validation screen
        */
       [ITW_REMOTE_ROUTES.REQUEST_VALIDATION]: {
-        path: ""
+        path: "request-validation"
       }
     }
   }

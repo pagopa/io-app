@@ -37,17 +37,14 @@ import { useIODispatch, useIOSelector, useIOStore } from "../store/hooks";
 import { trackScreen } from "../store/middlewares/navigation";
 import { isCGNEnabledAfterLoadSelector } from "../store/reducers/backendStatus/remoteConfig";
 import { isMixpanelEnabled } from "../store/reducers/persistedPreferences";
-import { isStartupLoaded, StartupStatusEnum } from "../store/reducers/startup";
-import {
-  IONavigationDarkTheme,
-  IONavigationLightTheme
-} from "../theme/navigations";
+import { StartupStatusEnum, isStartupLoaded } from "../store/reducers/startup";
 import { isTestEnv } from "../utils/environment";
 import { useOnFirstRender } from "../utils/hooks/useOnFirstRender";
 import {
   IO_INTERNAL_LINK_PREFIX,
   IO_UNIVERSAL_LINK_PREFIX
 } from "../utils/navigation";
+import { IONavigationDarkTheme, IONavigationLightTheme } from "./theme";
 import AuthenticatedStackNavigator from "./AuthenticatedStackNavigator";
 import IngressStackNavigator from "./IngressStackNavigator";
 import NavigationService, {

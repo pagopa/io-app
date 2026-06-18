@@ -458,6 +458,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
               meetOrSlice={0}
               minX={0}
               minY={0}
+              pointerEvents="none"
               style={
                 [
                   {
@@ -634,6 +635,7 @@ exports[`ProfileMainScreenTopBanner should match snapshot for all possible resul
           meetOrSlice={0}
           minX={0}
           minY={0}
+          pointerEvents="none"
           style={
             [
               {

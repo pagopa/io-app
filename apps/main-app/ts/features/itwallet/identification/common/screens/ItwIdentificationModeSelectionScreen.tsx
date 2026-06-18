@@ -9,7 +9,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { StyleSheet, View } from "react-native";
-import LoadingScreenContent from "../../../../../components/screens/LoadingScreenContent";
+import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../../store/hooks";
@@ -139,58 +139,55 @@ export const ItwIdentificationModeSelectionScreen = ({
   }, [machineRef, routeName, credentialType, isL2Active]);
 
   const dismissalDialog = useItwDismissalDialog({
-    enabled: params.eidReissuing,
     customLabels: { body: "" },
     handleDismiss: () => {
       machineRef.send({ type: "close" });
     }
   });
 
-  if (isLoading) {
-    return <LoadingScreenContent title={I18n.t("global.genericWaiting")} />;
-  }
-
   return (
-    <IOScrollViewWithLargeHeader
-      title={{ section, label: title }}
-      description={description}
-      headerActionsProp={{ showHelp: true }}
-      goBack={params.eidReissuing ? dismissalDialog.show : undefined}
-    >
-      <ContentWrapper>
-        <VSpacer size={8} />
-        <VStack space={16}>
-          {isReissuanceMode && isL3 ? (
-            <GroupedMethodList
-              isCiePinDisabled={isCiePinDisabled}
-              isCieIdDisabled={isCieIdDisabled}
-              isSpidDisabled={isSpidDisabled}
-            />
-          ) : (
-            <DefaultMethodList
-              isCiePinDisabled={isCiePinDisabled}
-              isCieIdDisabled={isCieIdDisabled}
-              isSpidDisabled={isSpidDisabled}
-              isL3={isL3}
-              isReissuanceMode={isReissuanceMode}
-            />
-          )}
-          {!isReissuanceMode && isL3 && (
-            <View style={styles.noCieButtonContainer}>
-              <IOButton
-                variant="link"
-                textAlign="center"
-                label={I18n.t(
-                  "features.itWallet.identification.modeSelection.noCieCta"
-                )}
-                onPress={handleNoCiePress}
-                testID="noCieButtonTestID"
+    <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>
+      <IOScrollViewWithLargeHeader
+        title={{ section, label: title }}
+        description={description}
+        headerActionsProp={{ showHelp: true }}
+        goBack={dismissalDialog.show}
+      >
+        <ContentWrapper>
+          <VSpacer size={8} />
+          <VStack space={16}>
+            {isReissuanceMode && isL3 ? (
+              <GroupedMethodList
+                isCiePinDisabled={isCiePinDisabled}
+                isCieIdDisabled={isCieIdDisabled}
+                isSpidDisabled={isSpidDisabled}
               />
-            </View>
-          )}
-        </VStack>
-      </ContentWrapper>
-    </IOScrollViewWithLargeHeader>
+            ) : (
+              <DefaultMethodList
+                isCiePinDisabled={isCiePinDisabled}
+                isCieIdDisabled={isCieIdDisabled}
+                isSpidDisabled={isSpidDisabled}
+                isL3={isL3}
+                isReissuanceMode={isReissuanceMode}
+              />
+            )}
+            {!isReissuanceMode && isL3 && (
+              <View style={styles.noCieButtonContainer}>
+                <IOButton
+                  variant="link"
+                  textAlign="center"
+                  label={I18n.t(
+                    "features.itWallet.identification.modeSelection.noCieCta"
+                  )}
+                  onPress={handleNoCiePress}
+                  testID="noCieButtonTestID"
+                />
+              </View>
+            )}
+          </VStack>
+        </ContentWrapper>
+      </IOScrollViewWithLargeHeader>
+    </LoadingSpinnerOverlay>
   );
 };
 

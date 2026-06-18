@@ -1,10 +1,9 @@
 import {
   Alert,
   Body,
-  IOColors,
+  LoadingSpinner,
   TextInputPassword,
   TextInputValidation,
-  useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { FiscalCode } from "@pagopa/ts-commons/lib/strings";
@@ -18,7 +17,6 @@ import { useCallback, useState } from "react";
 import { View } from "react-native";
 import I18n from "i18next";
 import { PasswordLogin } from "../../../../../definitions/session_manager/PasswordLogin";
-import ActivityIndicator from "../../../../components/ui/ActivityIndicator";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -44,30 +42,20 @@ const VersionView = () => (
   </View>
 );
 
-const LoadingView = () => {
-  const theme = useIOTheme();
-
-  return (
-    <View style={{ flex: 1 }}>
-      <VSpacer size={40} />
-      <ActivityIndicator
-        animating={true}
-        size={"large"}
-        color={IOColors[theme["interactiveElem-default"]]}
-        accessible={true}
-        accessibilityHint={I18n.t(
-          "global.accessibility.activityIndicator.hint"
-        )}
-        accessibilityLabel={I18n.t(
-          "global.accessibility.activityIndicator.label"
-        )}
-        importantForAccessibility={"no-hide-descendants"}
-        testID={"activityIndicator"}
-      />
-      <VSpacer size={40} />
-    </View>
-  );
-};
+const LoadingView = () => (
+  <View style={{ flex: 1 }}>
+    <VSpacer size={40} />
+    <LoadingSpinner
+      size={48}
+      accessibilityHint={I18n.t("global.accessibility.activityIndicator.hint")}
+      accessibilityLabel={I18n.t(
+        "global.accessibility.activityIndicator.label"
+      )}
+      testID={"activityIndicator"}
+    />
+    <VSpacer size={40} />
+  </View>
+);
 
 const ErrorView = (content: string) => (
   <View style={{ flex: 1 }} testID="errorView">
