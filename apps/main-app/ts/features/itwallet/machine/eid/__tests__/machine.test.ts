@@ -665,6 +665,86 @@ describe("itwEidIssuanceMachine", () => {
     });
   });
 
+  describe("updateCieIdIdentificationLevel", () => {
+    const buildCieIdCompletingSnapshot = (level: "l2" | "l3") => {
+      const initialSnapshot: MachineSnapshot = createActor(
+        itwEidIssuanceMachine
+      ).getSnapshot();
+
+      return _.merge(undefined, initialSnapshot, {
+        value: { UserIdentification: { CieID: "CompletingCieIDAuthFlow" } },
+        context: {
+          level,
+          mode: "issuance",
+          integrityKeyTag: T_INTEGRITY_KEY,
+          walletInstanceAttestation: { jwt: T_WIA },
+          identification: { mode: "cieId", level: "L2" },
+          authenticationContext: {
+            authUrl: "https://auth.test.it",
+            clientId: "client",
+            codeVerifier: "verifier",
+            issuerConf: {},
+            credentialDefinition: {},
+            callbackUrl: "",
+            redirectUri: "https://wallet.test.it/cb"
+          }
+        }
+      } as MachineSnapshot);
+    };
+
+    it("Should update identification level to L3 when challenge_info is absent in L3 flow", () => {
+      const actor = createActor(mockedMachine, {
+        snapshot: buildCieIdCompletingSnapshot("l3")
+      });
+      actor.start();
+
+      actor.send({
+        type: "user-identification-completed",
+        authRedirectUrl: "https://wallet.test.it/cb?code=abc&state=xyz"
+      });
+
+      expect(actor.getSnapshot().context.identification).toMatchObject({
+        mode: "cieId",
+        level: "L3"
+      });
+    });
+
+    it("Should keep identification level at L2 when challenge_info is present in L3 flow", () => {
+      const actor = createActor(mockedMachine, {
+        snapshot: buildCieIdCompletingSnapshot("l3")
+      });
+      actor.start();
+
+      actor.send({
+        type: "user-identification-completed",
+        authRedirectUrl:
+          "https://wallet.test.it/cb?code=abc&challenge_info=mock_challenge"
+      });
+
+      expect(actor.getSnapshot().context.identification).toMatchObject({
+        mode: "cieId",
+        level: "L2"
+      });
+    });
+
+    it("Should keep identification level at L2 in L2 flow regardless of challenge_info", () => {
+      const actor = createActor(mockedMachine, {
+        snapshot: buildCieIdCompletingSnapshot("l2")
+      });
+      actor.start();
+
+      actor.send({
+        type: "user-identification-completed",
+        authRedirectUrl: "https://wallet.test.it/cb?code=abc&state=xyz"
+      });
+
+      expect(actor.getSnapshot().context.identification).toMatchObject({
+        mode: "cieId",
+        level: "L2"
+      });
+    });
+  });
+
   it("Should obtain an eID (Cie+PIN)", async () => {
     /** Initial part is the same as the previous test, we can start from the identification */
 

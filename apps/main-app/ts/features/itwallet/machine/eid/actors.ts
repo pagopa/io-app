@@ -7,6 +7,7 @@ import { assert } from "../../../../utils/assert";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import * as cieUtils from "../../../authentication/login/cie/utils/cie";
 import { trackItwRequest } from "../../analytics";
+import { toItwIdMethod } from "../../analytics/utils/types";
 import { Env } from "../../common/utils/environment";
 import {
   getWalletInstanceAttestation,
@@ -382,7 +383,7 @@ export const createEidIssuanceActorsImplementation = (
         });
 
       trackItwRequest(
-        input.identification.mode,
+        toItwIdMethod(input.identification),
         input.level === "l3" ? "L3" : "L2"
       );
 
