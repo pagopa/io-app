@@ -42,10 +42,10 @@ export function* watchItwSaga(): SagaIterator {
 
   yield* fork(warmUpIntegrityServiceSaga);
   yield* fork(watchItwLifecycleSaga);
-  // Check if the fiscal code is enabled, to enable the L3
-  yield* fork(checkFiscalCodeEnabledSaga);
   // Fetch and process the Digital Credentials Catalogue
   yield* fork(watchItwCredentialsCatalogueSaga);
+  // Check if the fiscal code is enabled, to enable the L3
+  yield* fork(checkFiscalCodeEnabledSaga);
   // Registers and watches background tasks
   yield* fork(watchItwTasksSaga);
   // Watch ITW analytics lifecycle (initial sync and reactive updates)

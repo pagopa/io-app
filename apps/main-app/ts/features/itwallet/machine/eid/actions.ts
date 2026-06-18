@@ -34,6 +34,7 @@ import { ITW_ROUTES } from "../../navigation/routes";
 import { itwWalletInstanceAttestationStore } from "../../walletInstance/store/actions";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { selectItwSpecsVersion } from "../../common/store/selectors/environment";
+import { itwFetchCredentialsCatalogue } from "../../credentialsCatalogue/store/actions";
 import { Context } from "./context";
 import { EidIssuanceEvents } from "./events";
 
@@ -380,5 +381,9 @@ export const createEidIssuanceActionsImplementation = (
     );
 
     trackItwIdVerifiedDocument(context.identification.mode);
+  },
+
+  refreshCredentialsCatalogue: () => {
+    store.dispatch(itwFetchCredentialsCatalogue.request());
   }
 });

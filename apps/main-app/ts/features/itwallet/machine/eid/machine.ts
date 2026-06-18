@@ -93,6 +93,7 @@ export const itwEidIssuanceMachine = setup({
     storeCredentialUpgradeFailures: notImplemented,
     handleSessionExpired: notImplemented,
     resetWalletInstance: notImplemented,
+    refreshCredentialsCatalogue: notImplemented,
 
     /**
      * Analytics
@@ -421,6 +422,7 @@ export const itwEidIssuanceMachine = setup({
           actions: [
             "trackWalletInstanceRevocation",
             "resetWalletInstance",
+            "refreshCredentialsCatalogue",
             "closeIssuance"
           ]
         },
@@ -1258,7 +1260,7 @@ export const itwEidIssuanceMachine = setup({
       }
     },
     Success: {
-      entry: "navigateToSuccessScreen",
+      entry: ["refreshCredentialsCatalogue", "navigateToSuccessScreen"],
       on: {
         "add-new-credential": {
           actions: "navigateToCredentialCatalog"
