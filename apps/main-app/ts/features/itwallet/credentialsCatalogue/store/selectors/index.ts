@@ -214,7 +214,10 @@ export const itwAvailableCredentialsListSelector = createSelector(
     hiddenCredentials
   ): ReadonlyArray<CredentialsListEntry> => {
     if (!isEnabled) {
-      return hardcodedCredentialsList;
+      return hardcodedCredentialsList.map(entry => ({
+        ...entry,
+        isNew: remoteNewCredentials.includes(entry.type)
+      }));
     }
 
     if (!catalogue) {

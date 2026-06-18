@@ -2,6 +2,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { Platform } from "react-native";
 import { createSelector } from "reselect";
+import { remoteConfigValueSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
   getAppVersion,
@@ -12,7 +13,7 @@ const emptyArray: ReadonlyArray<string> = []; // to avoid unnecessary rerenders
 
 const itwRemoteConfigSelector = (state: GlobalState) =>
   pipe(
-    state.remoteConfig ?? O.none,
+    state.remoteConfig,
     O.map(config => config.itw)
   );
 
@@ -136,13 +137,9 @@ export const itwIpzsPrivacyUrlSelector = createSelector(
  * The order of the array determines the display order.
  */
 export const itwPinnedCredentialsSelector = createSelector(
-  itwRemoteConfigSelector,
-  itwConfig =>
-    pipe(
-      itwConfig,
-      O.chainNullableK(itw => itw.pinned_credentials),
-      O.getOrElse(() => emptyArray)
-    )
+  remoteConfigValueSelector,
+  (config): ReadonlyArray<string> =>
+    config?.itw?.pinned_credentials ?? emptyArray
 );
 
 /**
@@ -150,24 +147,15 @@ export const itwPinnedCredentialsSelector = createSelector(
  * New credentials are displayed first with a "NOVITÀ" badge.
  */
 export const itwNewCredentialsSelector = createSelector(
-  itwRemoteConfigSelector,
-  itwConfig =>
-    pipe(
-      itwConfig,
-      O.chainNullableK(itw => itw.new_credentials),
-      O.getOrElse(() => emptyArray)
-    )
+  remoteConfigValueSelector,
+  (config): ReadonlyArray<string> => config?.itw?.new_credentials ?? emptyArray
 );
 
 /**
  * Return the credential types that are hidden from the catalogue list.
  */
 export const itwHiddenCredentialsSelector = createSelector(
-  itwRemoteConfigSelector,
-  itwConfig =>
-    pipe(
-      itwConfig,
-      O.chainNullableK(itw => itw.hidden_credentials),
-      O.getOrElse(() => emptyArray)
-    )
+  remoteConfigValueSelector,
+  (config): ReadonlyArray<string> =>
+    config?.itw?.hidden_credentials ?? emptyArray
 );

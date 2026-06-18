@@ -1,20 +1,14 @@
 import * as O from "fp-ts/lib/Option";
 import { constFalse, pipe } from "fp-ts/lib/function";
-import { useCallback, useMemo } from "react";
+import { useCallback } from "react";
 import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 import { itwDisabledCredentialsSelector } from "../../common/store/selectors/remoteConfig";
-import {
-  isNewCredential,
-  isUpcomingCredential
-} from "../../common/utils/itwCredentialUtils";
+import { isUpcomingCredential } from "../../common/utils/itwCredentialUtils";
 import { itwCredentialsTypesSelector } from "../../credentials/store/selectors";
-import {
-  itwIsCatalogueEnabledForCredentialsList,
-  type CredentialsListEntry
-} from "../../credentialsCatalogue/store/selectors";
+import { type CredentialsListEntry } from "../../credentialsCatalogue/store/selectors";
 import {
   itwLifecycleIsITWalletValidSelector,
   itwLifecycleIsValidSelector
@@ -39,9 +33,6 @@ export const ItwOnboardingModuleCredentialsList = ({
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const navigation = useIONavigation();
 
-  const isCatalogueEnabled = useIOSelector(
-    itwIsCatalogueEnabledForCredentialsList
-  );
   const remotelyDisabledCredentials = useIOSelector(
     itwDisabledCredentialsSelector
   );
@@ -118,20 +109,10 @@ export const ItwOnboardingModuleCredentialsList = ({
     )
   );
 
-  /**
-   * When the catalogue is enabled, `isNew` is driven exclusively by the remote config
-   * (`new_credentials` array in io-services-metadata). When the catalogue is disabled,
-   * it falls back to the hardcoded `isNewCredential` check.
-   */
-  const resolveIsNew = useMemo(
-    () =>
-      (type: string, isNewFromRemote: boolean | undefined): boolean => {
-        if (isCatalogueEnabled) {
-          return isNewFromRemote === true;
-        }
-        return isNewCredential(type);
-      },
-    [isCatalogueEnabled]
+  const resolveIsNew = useCallback(
+    (_type: string, isNewFromRemote: boolean | undefined): boolean =>
+      isNewFromRemote === true,
+    []
   );
 
   return credentialsToDisplay.map(({ type, name, isNew: isNewFromRemote }) => (
