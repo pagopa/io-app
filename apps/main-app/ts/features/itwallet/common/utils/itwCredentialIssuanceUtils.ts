@@ -40,7 +40,6 @@ export type RequestCredential = (args: {
   credentialType: string;
   walletInstanceAttestation: string;
   skipMdocIssuance: boolean;
-  authorizationServer?: string;
   credentialOffer?: CredentialOfferResolved;
 }) => Promise<{
   clientId: string;
@@ -64,36 +63,19 @@ export const requestCredential: RequestCredential = async ({
   credentialType,
   walletInstanceAttestation,
   skipMdocIssuance,
-  authorizationServer,
   credentialOffer
 }) => {
   const ioWallet = getIoWallet(itwVersion);
 
   // Get WIA crypto context
   const wiaCryptoContext = createCryptoContextFor(WIA_KEYTAG);
-  const authorizationCodeGrant =
-    credentialOffer?.grantDetails.authorizationCodeGrant;
   const credentialIssuerUrl =
     credentialOffer?.offer.credential_issuer ??
     env.WALLET_EAA_PROVIDER_BASE_URL.value(itwVersion);
 
   // Evaluate issuer trust
-  const { issuerConf } = await ioWallet.CredentialIssuance.evaluateIssuerTrust(
-    credentialIssuerUrl,
-    {
-      authorizationServer:
-        authorizationCodeGrant?.authorizationServer ?? authorizationServer
-    }
-  );
-
-  if (credentialOffer) {
-    await ioWallet.CredentialsOffer.validateCredentialOffer({
-      offer: credentialOffer.offer,
-      credentialIssuerMetadata: issuerConf.authorization_servers
-        ? { authorization_servers: issuerConf.authorization_servers }
-        : {}
-    });
-  }
+  const { issuerConf } =
+    await ioWallet.CredentialIssuance.evaluateIssuerTrust(credentialIssuerUrl);
 
   const credentialIds = credentialOffer
     ? getCredentialConfigurationIdsFromOffer(
@@ -116,9 +98,7 @@ export const requestCredential: RequestCredential = async ({
       {
         walletInstanceAttestation,
         redirectUri: env.ISSUANCE_REDIRECT_URI,
-        wiaCryptoContext,
-        scope: authorizationCodeGrant?.scope,
-        issuerState: authorizationCodeGrant?.issuerState
+        wiaCryptoContext
       }
     );
 

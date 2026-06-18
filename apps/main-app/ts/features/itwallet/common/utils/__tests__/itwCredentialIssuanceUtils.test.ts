@@ -119,7 +119,6 @@ describe("requestCredential", () => {
   const evaluateIssuerTrust = jest.fn();
   const startUserAuthorization = jest.fn();
   const getRequestedCredentialToBePresented = jest.fn();
-  const validateCredentialOffer = jest.fn();
 
   const env = {
     WALLET_EAA_PROVIDER_BASE_URL: {
@@ -130,7 +129,6 @@ describe("requestCredential", () => {
 
   const issuerConf = {
     credential_issuer: "https://issuer.example.com",
-    authorization_servers: ["https://auth.example.com"],
     pushed_authorization_request_endpoint: "https://auth.example.com/par",
     authorization_endpoint: "https://auth.example.com/authorize",
     token_endpoint: "https://auth.example.com/token",
@@ -180,20 +178,16 @@ describe("requestCredential", () => {
       responseMode: "query"
     });
     getRequestedCredentialToBePresented.mockResolvedValue(mockRequestObject);
-    validateCredentialOffer.mockResolvedValue(undefined);
     (getIoWallet as jest.Mock).mockReturnValue({
       CredentialIssuance: {
         evaluateIssuerTrust,
         startUserAuthorization,
         getRequestedCredentialToBePresented
-      },
-      CredentialsOffer: {
-        validateCredentialOffer
       }
     });
   });
 
-  it("uses credential offer issuer, validates the offer against issuer metadata and forwards scope and issuer state", async () => {
+  it("uses credential offer issuer and requests the supported credential configurations from the offer", async () => {
     await requestCredential({
       env,
       itwVersion: "1.3.3",
@@ -214,19 +208,9 @@ describe("requestCredential", () => {
     });
 
     expect(evaluateIssuerTrust).toHaveBeenCalledWith(
-      "https://issuer.example.com",
-      { authorizationServer: "https://auth.example.com" }
+      "https://issuer.example.com"
     );
-    expect(validateCredentialOffer).toHaveBeenCalledWith({
-      offer: credentialOffer,
-      credentialIssuerMetadata: {
-        authorization_servers: ["https://auth.example.com"]
-      }
-    });
     expect(evaluateIssuerTrust.mock.invocationCallOrder[0]).toBeLessThan(
-      validateCredentialOffer.mock.invocationCallOrder[0]
-    );
-    expect(validateCredentialOffer.mock.invocationCallOrder[0]).toBeLessThan(
       startUserAuthorization.mock.invocationCallOrder[0]
     );
     expect(startUserAuthorization).toHaveBeenCalledWith(
@@ -236,17 +220,16 @@ describe("requestCredential", () => {
       expect.objectContaining({
         walletInstanceAttestation: "wallet-instance-attestation",
         redirectUri: "ioit://issuance",
-        wiaCryptoContext: mockWiaCryptoContext,
-        scope: "offer-scope",
-        issuerState: "issuer-state"
+        wiaCryptoContext: mockWiaCryptoContext
       })
     );
+    expect(startUserAuthorization.mock.calls[0][3]).not.toHaveProperty("scope");
     expect(startUserAuthorization.mock.calls[0][3]).not.toHaveProperty(
-      "credentialOfferGrant"
+      "issuerState"
     );
   });
 
-  it("keeps catalogue issuance unchanged and does not validate a credential offer", async () => {
+  it("keeps catalogue issuance unchanged", async () => {
     await requestCredential({
       env,
       itwVersion: "1.3.3",
@@ -256,18 +239,15 @@ describe("requestCredential", () => {
     });
 
     expect(evaluateIssuerTrust).toHaveBeenCalledWith(
-      "https://catalogue-issuer.example.com",
-      { authorizationServer: undefined }
+      "https://catalogue-issuer.example.com"
     );
-    expect(validateCredentialOffer).not.toHaveBeenCalled();
     expect(startUserAuthorization).toHaveBeenCalledWith(
       issuerConf,
       ["dc-sd-jwt"],
       { proofType: "none" },
       expect.not.objectContaining({
         scope: expect.anything(),
-        issuerState: expect.anything(),
-        credentialOfferGrant: expect.anything()
+        issuerState: expect.anything()
       })
     );
   });
