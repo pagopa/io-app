@@ -29,25 +29,17 @@ const refreshWithBoundedParallelism = async (
  * Startup pruning: removes cached Status List entries no longer referenced by
  * any owner (credentials, Wallet Instance/Unit Attestations).
  *
- * When `referencedStatusListUris` is provided, deduplicates it and removes
- * every cached entry whose URI is not referenced.
- *
- * When `referencedStatusListUris` is `undefined` (owner metadata not yet
- * available), pruning is skipped to avoid wiping entries whose owners cannot
- * yet be resolved.
+ * Deduplicates `referencedStatusListUris` and removes every cached entry whose
+ * URI is not referenced. An empty array prunes the whole cache.
  *
  * Refreshing referenced/stale entries is a separate concern handled by
  * `refreshStaleEntries`.
  *
- * @param referencedStatusListUris - Status List URIs from Redux, or undefined if unavailable
+ * @param referencedStatusListUris - Status List URIs referenced by current owners
  */
 export const startupCoherence = async (
-  referencedStatusListUris: ReadonlyArray<string> | undefined
+  referencedStatusListUris: ReadonlyArray<string>
 ): Promise<void> => {
-  if (referencedStatusListUris === undefined) {
-    return;
-  }
-
   const cached = await StatusListRepository.list();
   const uniqueRefs = new Set(referencedStatusListUris);
 

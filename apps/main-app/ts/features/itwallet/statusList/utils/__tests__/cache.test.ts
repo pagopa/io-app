@@ -38,25 +38,6 @@ describe("cache service", () => {
   });
 
   describe("startupCoherence", () => {
-    it("does nothing when referencedStatusListUris is undefined", async () => {
-      // Owner metadata unavailable: the cache must be left untouched
-      await StatusListRepository.upsert(
-        makeSub(1),
-        makePayload(1, { exp: STALE_EXP })
-      );
-      await StatusListRepository.upsert(
-        makeSub(2),
-        makePayload(2, { exp: FRESH_EXP })
-      );
-
-      await startupCoherence(undefined);
-
-      // Neither entry should be pruned and no refresh is triggered
-      expect(await StatusListRepository.get(makeSub(1))).toBeDefined();
-      expect(await StatusListRepository.get(makeSub(2))).toBeDefined();
-      expect(refresh.refreshStatusListToken).not.toHaveBeenCalled();
-    });
-
     it("removes unreferenced cached entries", async () => {
       await StatusListRepository.upsert(
         makeSub(1),
