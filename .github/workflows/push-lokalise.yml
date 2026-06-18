@@ -5,7 +5,7 @@ on:
     branches:
       - master
     paths:
-      - 'locales/it/**'
+      - 'apps/main-app/locales/it/**'
 concurrency:
   group: lokalise-push-${{ github.head_ref || github.run_id }}
   cancel-in-progress: false
@@ -25,5 +25,5 @@ jobs:
         project_id: ${{ secrets.LOKALISE_PROJECT_ID }}
         base_lang: it
         translations_path: |
-          locales
+          apps/main-app/locales
         file_ext: json

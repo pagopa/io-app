@@ -20,7 +20,7 @@ jobs:
         api_token: ${{ secrets.LOKALISE_API_TOKEN }}
         project_id: ${{ secrets.LOKALISE_PROJECT_ID }}
         translations_path: |
-          locales
+          apps/main-app/locales
         base_lang: it
         file_format: json
         always_pull_base: true
