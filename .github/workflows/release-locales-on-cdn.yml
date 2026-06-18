@@ -5,7 +5,7 @@ on:
     branches:
       - master
     paths:
-      - 'locales/**'
+      - 'apps/main-app/locales/**'
 
   workflow_dispatch:
 
@@ -25,7 +25,7 @@ jobs:
       EXCLUDED_PATTERN: 'README.md;.gitignore;'
       EXCLUDED_PATH: ''
       FILES_TO_COPY: '*.json'
-      REPOSITORY_PATH: 'locales'
+      REPOSITORY_PATH: 'apps/main-app/locales'
       STORAGE_ACCOUNT_NAME: 'iopitnassetsst01'
       STORAGE_ACCOUNT_CONTAINER: '$web'
       STORAGE_ACCOUNT_PATH: 'locales'

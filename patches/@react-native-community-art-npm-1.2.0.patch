@@ -1,0 +1,30 @@
+diff --git a/android/build.gradle b/android/build.gradle
+index 949bc00bf01432889c2cd34c770ec92563974c4c..c4aa0fe4d0a167c4ddc8d8ec605a77966d837da2 100644
+--- a/android/build.gradle
++++ b/android/build.gradle
+@@ -1,7 +1,7 @@
+ buildscript {
+   repositories {
+     google()
+-    jcenter()
++    mavenCentral()
+   }
+ 
+   dependencies {
+@@ -31,7 +31,6 @@ android {
+ 
+ repositories {
+   google()
+-  jcenter()
+   mavenCentral()
+ }
+ 
+@@ -39,7 +38,7 @@ allprojects {
+     repositories {
+         mavenLocal()
+         google()
+-        jcenter()
++        mavenCentral()
+         maven {
+             url "$rootDir/../node_modules/react-native/android"
+         }
