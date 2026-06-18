@@ -101,9 +101,6 @@ export const enrichErrorWithMetadata =
  */
 export const isMrtdTaxIdCodeMismatchFailure = (
   e: unknown
-): e is Errors.IssuerResponseError | Error =>
-  (Errors.isIssuerResponseError(e) &&
-    mrtdTaxIdCodeMismatchFailure.safeParse(e).success) ||
-  (e instanceof Error &&
-    e.message.includes(MRTD_TAX_ID_CODE_MISMATCH_ERROR) &&
-    e.message.includes(`statusCode=${MRTD_TAX_ID_CODE_MISMATCH_STATUS_CODE}`));
+): e is Errors.IssuerResponseError =>
+  Errors.isIssuerResponseError(e) &&
+  mrtdTaxIdCodeMismatchFailure.safeParse(e).success;

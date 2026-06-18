@@ -78,14 +78,6 @@ describe("isMrtdTaxIdCodeMismatchFailure", () => {
     expect(isMrtdTaxIdCodeMismatchFailure(error)).toBe(true);
   });
 
-  it("returns true for serialized MRTD tax id code mismatch errors", () => {
-    const error = new Error(
-      'message=Http request failed. Expected 202, got 400, url: https://eid.wallet.ipzs.it/1-0/mrtd-pop-verification reason={"error":"tax_id_code_mismatch","error_description":"The tax id code obtained from the Electronic Document does not match the one obtained during authentication"} statusCode=400'
-    );
-
-    expect(isMrtdTaxIdCodeMismatchFailure(error)).toBe(true);
-  });
-
   it("returns false when the issuer error reason is not tax_id_code_mismatch", () => {
     const error = new Errors.IssuerResponseError({
       message: "MRTD PoP verification failed",

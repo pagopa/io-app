@@ -49,9 +49,7 @@ export type ReasonTypeByFailure = {
   [IssuanceFailureType.UNTRUSTED_ISS]: Trust.Errors.FederationError;
   [IssuanceFailureType.CIE_NOT_REGISTERED]: string;
   [IssuanceFailureType.MRTD_CHALLENGE_INIT_ERROR]: Errors.IssuerResponseError;
-  [IssuanceFailureType.CIE_NOT_MATCHING_AUTHENTICATION_IDENTITY]:
-    | Errors.IssuerResponseError
-    | Error;
+  [IssuanceFailureType.CIE_NOT_MATCHING_AUTHENTICATION_IDENTITY]: Errors.IssuerResponseError;
   [IssuanceFailureType.UNEXPECTED]: unknown;
 };
 

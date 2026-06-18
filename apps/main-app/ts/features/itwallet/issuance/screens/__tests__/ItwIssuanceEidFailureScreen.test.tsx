@@ -1,4 +1,5 @@
 import { createStore } from "redux";
+import { Errors } from "@pagopa/io-react-native-wallet";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import { createActor } from "xstate";
@@ -36,7 +37,11 @@ describe("ItwIssuanceEidFailureScreen", () => {
   it("renders the dedicated CIE mismatch copy and actions", () => {
     const { queryByText, getByText } = renderComponent({
       type: IssuanceFailureType.CIE_NOT_MATCHING_AUTHENTICATION_IDENTITY,
-      reason: new Error("tax_id_code_mismatch")
+      reason: new Errors.IssuerResponseError({
+        message: "MRTD PoP verification failed",
+        reason: { error: "tax_id_code_mismatch" },
+        statusCode: 400
+      })
     });
 
     expect(
