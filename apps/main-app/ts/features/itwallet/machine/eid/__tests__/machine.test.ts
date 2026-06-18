@@ -96,6 +96,7 @@ const navigateToCieCanScreen = jest.fn();
 const navigateToCieInternalAuthAndMrtdScreen = jest.fn();
 const trackItwIdAuthenticationCompleted = jest.fn();
 const trackItwIdVerifiedDocument = jest.fn();
+const refreshCredentialsCatalogue = jest.fn();
 
 /**
  * Actors
@@ -160,7 +161,8 @@ describe("itwEidIssuanceMachine", () => {
       trackIdentificationMethodSelected,
       storeAuthLevel,
       trackItwIdAuthenticationCompleted,
-      trackItwIdVerifiedDocument
+      trackItwIdVerifiedDocument,
+      refreshCredentialsCatalogue
     },
     actors: {
       verifyTrustFederation: fromPromise<void, WithItwVersion>(

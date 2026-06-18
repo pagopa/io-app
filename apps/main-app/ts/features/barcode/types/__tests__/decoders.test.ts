@@ -6,8 +6,11 @@ import { GlobalState } from "../../../../store/reducers/types";
 const fakeGlobalState = {
   features: {
     itWallet: {
-      environment: {
-        itWalletSpecsVersion: "1.0.0"
+      preferences: {
+        isFiscalCodeWhitelisted: false
+      },
+      credentials: {
+        credentials: {}
       }
     }
   },
