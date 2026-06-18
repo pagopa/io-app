@@ -4056,9 +4056,9 @@
             "secondaryAction": "Chiudi"
           },
           "eidExpiredScreen": {
-            "title": "Verifica la tua identità",
-            "subtitle": "È un passaggio di verifica necessario per continuare ad usare IT-Wallet e per autenticarti.",
-            "primaryAction": "Inizia",
+            "title": "È necessaria una conferma della tua identità",
+            "subtitle": "Dopo aver confermato l'identità associata al tuo IT-Wallet ID potrai ripetere l'operazione.",
+            "primaryAction": "Conferma identità",
             "secondaryAction": "Annulla"
           },
           "unexpectedErrorScreen": {
