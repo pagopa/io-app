@@ -461,6 +461,7 @@ exports[`ActiveSessionIdpLoginScreen should match snapshots 1`] = `
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -550,6 +551,7 @@ exports[`ActiveSessionIdpLoginScreen should match snapshots 1`] = `
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -639,6 +641,7 @@ exports[`ActiveSessionIdpLoginScreen should match snapshots 1`] = `
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {

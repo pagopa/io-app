@@ -24,6 +24,12 @@ export type Context = {
   readonly isPushNotificationsEnabled: boolean;
   readonly hasInbox: boolean;
   readonly currentStep: number;
+  /**
+   * Tracks whether the last navigation intent was forward or backward.
+   * Entry navigation actions use this to call goBack() instead of navigate()
+   * when the user is navigating back through the onboarding flow.
+   */
+  readonly navigationDirection: "forward" | "back";
 };
 
 export const InitialContext: Context = {
@@ -39,5 +45,6 @@ export const InitialContext: Context = {
   selfDeclarationsTextAnswers: {},
   isPushNotificationsEnabled: false,
   hasInbox: false,
-  currentStep: 0
+  currentStep: 0,
+  navigationDirection: "forward"
 };

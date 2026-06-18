@@ -446,6 +446,7 @@ exports[`ShowMoreListItem should match snapshot, no data 1`] = `
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -1022,6 +1023,7 @@ exports[`ShowMoreListItem should match snapshot, one section, no items 1`] = `
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -1652,6 +1654,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -1998,6 +2001,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, no icon 
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -2513,6 +2517,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -2859,6 +2864,7 @@ exports[`ShowMoreListItem should match snapshot, one section, one item, with ico
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -3374,6 +3380,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -3720,6 +3727,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -3959,6 +3967,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, no icon
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -4474,6 +4483,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -4820,6 +4830,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -5059,6 +5070,7 @@ exports[`ShowMoreListItem should match snapshot, one section, two items, with ic
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -5574,6 +5586,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -5920,6 +5933,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -6205,6 +6219,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -6444,6 +6459,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -6729,6 +6745,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -6968,6 +6985,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -7207,6 +7225,7 @@ exports[`ShowMoreListItem should match snapshot, three sections, different item 
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -7722,6 +7741,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -8068,6 +8088,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -8353,6 +8374,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -8592,6 +8614,7 @@ exports[`ShowMoreListItem should match snapshot, two sections, different item co
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {

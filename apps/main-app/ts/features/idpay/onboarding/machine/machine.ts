@@ -195,10 +195,12 @@ export const idPayOnboardingMachine = setup({
     },
 
     DisplayingInitiativeInfo: {
-      entry: "navigateToInitiativeDetailsScreen",
-      actions: assign(() => ({
-        currentStep: 1
-      })),
+      entry: [
+        "navigateToInitiativeDetailsScreen",
+        assign({
+          currentStep: 1
+        })
+      ],
       on: {
         next: [
           {
@@ -303,6 +305,7 @@ export const idPayOnboardingMachine = setup({
           }
         ],
         back: {
+          actions: assign(() => ({ navigationDirection: "back" })),
           target: "#idpay-onboarding.DisplayingInitiativeInfo"
         }
       }
@@ -335,14 +338,16 @@ export const idPayOnboardingMachine = setup({
             back: [
               {
                 actions: assign(({ context }) => ({
-                  currentStep: context.currentStep - 1
+                  currentStep: context.currentStep - 1,
+                  navigationDirection: "back"
                 })),
                 guard: "hasPdndCriteria",
                 target: "#idpay-onboarding.DisplayingPdndCriteria"
               },
               {
                 actions: assign(({ context }) => ({
-                  currentStep: context.currentStep - 1
+                  currentStep: context.currentStep - 1,
+                  navigationDirection: "back"
                 })),
                 target: "#idpay-onboarding.DisplayingInitiativeInfo"
               }
@@ -409,7 +414,8 @@ export const idPayOnboardingMachine = setup({
                         0,
                         +context.selfDeclarationsMultiPage - 1
                       ),
-                      currentStep: context.currentStep - 1
+                      currentStep: context.currentStep - 1,
+                      navigationDirection: "back"
                     }))
                   },
                   {
@@ -420,7 +426,8 @@ export const idPayOnboardingMachine = setup({
                         0,
                         +context.selfDeclarationsMultiPage - 1
                       ),
-                      currentStep: context.currentStep - 1
+                      currentStep: context.currentStep - 1,
+                      navigationDirection: "back"
                     }))
                   },
                   {
@@ -431,7 +438,8 @@ export const idPayOnboardingMachine = setup({
                         0,
                         +context.selfDeclarationsMultiPage - 1
                       ),
-                      currentStep: context.currentStep - 1
+                      currentStep: context.currentStep - 1,
+                      navigationDirection: "back"
                     }))
                   },
                   {
@@ -492,6 +500,7 @@ export const idPayOnboardingMachine = setup({
                       "isFirstMultiTextConsent",
                       "hasMultiSelfDeclarationList"
                     ]),
+                    actions: assign(() => ({ navigationDirection: "back" })),
                     target:
                       "#idpay-onboarding.DisplayingSelfDeclarationList.DisplayingMultiSelfDeclarationList"
                   },
@@ -500,15 +509,18 @@ export const idPayOnboardingMachine = setup({
                       "isFirstMultiTextConsent",
                       "hasBooleanSelfDeclarationList"
                     ]),
+                    actions: assign(() => ({ navigationDirection: "back" })),
                     target:
                       "#idpay-onboarding.DisplayingSelfDeclarationList.DisplayingBooleanSelfDeclarationList"
                   },
                   {
                     guard: and(["isFirstMultiConsentPage", "hasPdndCriteria"]),
+                    actions: assign(() => ({ navigationDirection: "back" })),
                     target: "#idpay-onboarding.DisplayingPdndCriteria"
                   },
                   {
                     guard: "isFirstMultiTextConsent",
+                    actions: assign(() => ({ navigationDirection: "back" })),
                     target: "#idpay-onboarding.DisplayingInitiativeInfo"
                   },
                   {

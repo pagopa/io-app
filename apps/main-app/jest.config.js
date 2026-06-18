@@ -21,7 +21,6 @@ module.exports = {
   coverageReporters: ["lcov", "text"],
   coveragePathIgnorePatterns: [
     "<rootDir>/ts/@types/",
-    "<rootDir>/ts/theme/",
     "<rootDir>/ts/features/design-system/",
     "<rootDir>/ts/features/.*/playgrounds/",
     "<rootDir>/ts/features/settings/devMode/"
