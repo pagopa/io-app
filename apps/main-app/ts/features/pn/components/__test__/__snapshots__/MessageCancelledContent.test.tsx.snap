@@ -356,6 +356,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                             meetOrSlice={0}
                             minX={0}
                             minY={0}
+                            pointerEvents="none"
                             style={
                               [
                                 {
@@ -810,6 +811,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                             meetOrSlice={0}
                             minX={0}
                             minY={0}
+                            pointerEvents="none"
                             style={
                               [
                                 {
@@ -1264,6 +1266,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, empty paid no
                             meetOrSlice={0}
                             minX={0}
                             minY={0}
+                            pointerEvents="none"
                             style={
                               [
                                 {
@@ -1718,6 +1721,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                             meetOrSlice={0}
                             minX={0}
                             minY={0}
+                            pointerEvents="none"
                             style={
                               [
                                 {
@@ -2172,6 +2176,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                             meetOrSlice={0}
                             minX={0}
                             minY={0}
+                            pointerEvents="none"
                             style={
                               [
                                 {
@@ -2626,6 +2631,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, non-empty pai
                             meetOrSlice={0}
                             minX={0}
                             minY={0}
+                            pointerEvents="none"
                             style={
                               [
                                 {
@@ -3080,6 +3086,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                             meetOrSlice={0}
                             minX={0}
                             minY={0}
+                            pointerEvents="none"
                             style={
                               [
                                 {
@@ -3534,6 +3541,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                             meetOrSlice={0}
                             minX={0}
                             minY={0}
+                            pointerEvents="none"
                             style={
                               [
                                 {
@@ -3988,6 +3996,7 @@ exports[`MessageCancelledContent Should match snapshot, cancelled, undefined pai
                             meetOrSlice={0}
                             minX={0}
                             minY={0}
+                            pointerEvents="none"
                             style={
                               [
                                 {

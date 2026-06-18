@@ -1,0 +1,5 @@
+# Generated analysis outputs
+word_frequency.csv
+phrase_frequency.csv
+inconsistencies.csv
+compound_candidates.csv

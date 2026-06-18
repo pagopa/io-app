@@ -162,7 +162,7 @@ describe("FCI Saga Tests", () => {
     const signatureRequestId = "test-signature-id" as NonEmptyString;
     const action = fciSignatureRequestRetryFromId(signatureRequestId);
 
-    it("should retry signature request and start new flow on success", () =>
+    it("should cancel download preview and dispatch fciStartRequest on success", () =>
       expectSaga(watchFciSignatureRequestRetrySaga, action)
         .put(fciSignatureRequestFromId.request(signatureRequestId))
         .dispatch(
@@ -171,6 +171,7 @@ describe("FCI Saga Tests", () => {
             id: signatureRequestId
           })
         )
+        .put(fciDownloadPreview.cancel())
         .put(fciStartRequest())
         .run());
 
@@ -282,20 +283,17 @@ describe("FCI Saga Tests", () => {
     it("should resume FCI signature flow when all conditions are met", () => {
       const mockSignatureRequestId = "test-signature-id" as NonEmptyString;
 
-      return expectSaga(
-        navigateAfterFinishedFciActiveSessionLoginFlowSaga,
-        true
-      )
-        .provide([
-          [
-            matchers.select(fciSignatureRequestIdSelector),
-            mockSignatureRequestId
-          ],
-          [matchers.select(activeSessionLoginFlowSelector), "FCI"]
-        ])
+      testSaga(navigateAfterFinishedFciActiveSessionLoginFlowSaga, true)
+        .next()
+        .select(fciSignatureRequestIdSelector)
+        .next(mockSignatureRequestId)
+        .select(activeSessionLoginFlowSelector)
+        .next("FCI")
         .put(setActiveSessionLoginFlow(undefined))
+        .next()
         .put(fciSignatureRequestRetryFromId(mockSignatureRequestId))
-        .run();
+        .next()
+        .isDone();
     });
 
     it("should not resume FCI flow when isActiveLoginSuccess is false", () => {

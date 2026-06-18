@@ -130,8 +130,9 @@ jobs:
       - id: upload-android-assets-release
         continue-on-error: true
         run: |
-          APP_VERSION=$(node -p -e "require('./apps/main-app/package.json').version")
-          gh release upload $APP_VERSION apps/main-app/android/app/build/outputs/bundle/canaryRelease/app-canary-release.aab#android-app-canary-release.aab apps/main-app/android/io-app-canary-universal.apk#io-app-canary-universal.apk
+          cd apps/main-app
+          APP_VERSION=$(node -p -e "require('./package.json').version")
+          gh release upload $APP_VERSION android/app/build/outputs/bundle/canaryRelease/app-canary-release.aab#android-app-canary-release.aab android/io-app-canary-universal.apk#io-app-canary-universal.apk
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   release-ios:

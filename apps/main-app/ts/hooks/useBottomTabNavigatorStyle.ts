@@ -1,12 +1,15 @@
 import { useMemo } from "react";
 import {
   IOColors,
+  IOStyles,
   useIOTheme,
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import { BottomTabNavigationOptions } from "@react-navigation/bottom-tabs";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import variables from "../theme/variables";
+
+const { shadowColor, shadowOffset, shadowOpacity, shadowRadius, elevation } =
+  IOStyles.footer;
 
 export const useBottomTabNavigatorStyle = () => {
   const theme = useIOTheme();
@@ -25,17 +28,14 @@ export const useBottomTabNavigatorStyle = () => {
         paddingRight: 3,
         borderTopWidth: 0,
         paddingTop: 8,
-        // iOS shadow
-        shadowColor: variables.footerShadowColor,
-        shadowOffset: {
-          width: variables.footerShadowOffsetWidth,
-          height: variables.footerShadowOffsetHeight
-        },
         zIndex: 1,
-        shadowOpacity: variables.footerShadowOpacity,
-        shadowRadius: variables.footerShadowRadius,
+        // iOS shadow
+        shadowColor,
+        shadowOffset,
+        shadowOpacity,
+        shadowRadius,
         // Android shadow
-        elevation: variables.footerElevation
+        elevation
       },
       { height: tabBarHeight + bottomInset },
       themeType === "dark" && {
