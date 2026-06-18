@@ -685,6 +685,7 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                                 meetOrSlice={0}
                                 minX={0}
                                 minY={0}
+                                pointerEvents="none"
                                 style={
                                   [
                                     {

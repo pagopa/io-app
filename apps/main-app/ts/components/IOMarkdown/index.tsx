@@ -10,7 +10,8 @@ import {
   convertReferenceLinksToInline,
   getRenderMarkdown,
   parse,
-  sanitizeMarkdownForImages
+  sanitizeMarkdownForImages,
+  sanitizeMarkdownFromFormFeed
 } from "./markdownRenderer";
 import { DEFAULT_RULES } from "./renderRules";
 
@@ -36,7 +37,10 @@ export type IOMarkdownProps = {
 const UnsafeIOMarkdown = ({ content, rules }: UnsafeProps) => {
   const screenReaderEnabled = useIOSelector(isScreenReaderEnabledSelector);
 
-  const inlineLinkMarkdown = convertReferenceLinksToInline(content);
+  const sanitizedFormFeedContent = sanitizeMarkdownFromFormFeed(content);
+  const inlineLinkMarkdown = convertReferenceLinksToInline(
+    sanitizedFormFeedContent
+  );
   const sanitizedMarkdown = sanitizeMarkdownForImages(inlineLinkMarkdown);
   const parsedContent = parse(sanitizedMarkdown);
   const renderMarkdown = getRenderMarkdown(

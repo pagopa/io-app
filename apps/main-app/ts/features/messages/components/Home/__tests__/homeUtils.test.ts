@@ -1,11 +1,38 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import * as O from "fp-ts/lib/Option";
 import { ActionType } from "typesafe-actions";
+import { StyleSheet } from "react-native";
+import { maximumItemsFromAPI, pageSize } from "../../../../../config";
+import { Action } from "../../../../../store/actions/types";
 import { GlobalState } from "../../../../../store/reducers/types";
+import {
+  isLoadingOrUpdating,
+  isSomeOrSomeError,
+  isStrictNone,
+  isStrictSome,
+  isStrictSomeError
+} from "../../../../../utils/pot";
+import { activeSessionLoginInitialState } from "../../../../authentication/activeSessionLogin/store/reducer";
+import {
+  loadNextPageMessages,
+  loadPreviousPageMessages,
+  reloadAllMessages
+} from "../../../store/actions";
+import {
+  MessageError,
+  MessagePage,
+  MessagePagePot
+} from "../../../store/reducers/allPaginated/types";
+import {
+  ArchivingStatus,
+  INITIAL_STATE
+} from "../../../store/reducers/archiving";
+import { UIMessage } from "../../../types";
 import { MessageListCategory } from "../../../types/messageListCategory";
-import * as allPaginated from "../../../store/reducers/allPaginated";
 import {
   accessibilityLabelForMessageItem,
+  archiveUnarchiveAccessibilityInstructions,
+  generateMessageListLayoutInfo,
   getInitialReloadAllMessagesActionIfNeeded,
   getLoadNextPageMessagesActionIfAllowed,
   getLoadPreviousPageMessagesActionIfAllowed,
@@ -14,33 +41,17 @@ import {
   messageListCategoryToViewPageIndex,
   messageViewPageIndexToListCategory,
   nextPageLoadingWaitMillisecondsGenerator,
-  refreshIntervalMillisecondsGenerator,
-  archiveUnarchiveAccessibilityInstructions
+  refreshIntervalMillisecondsGenerator
 } from "../homeUtils";
-import { maximumItemsFromAPI, pageSize } from "../../../../../config";
-import { Action } from "../../../../../store/actions/types";
 import {
-  loadNextPageMessages,
-  loadPreviousPageMessages,
-  reloadAllMessages
-} from "../../../store/actions";
-import { UIMessage } from "../../../types";
-import {
-  isLoadingOrUpdating,
-  isSomeOrSomeError,
-  isStrictNone,
-  isStrictSome,
-  isStrictSomeError
-} from "../../../../../utils/pot";
-import {
-  ArchivingStatus,
-  INITIAL_STATE
-} from "../../../store/reducers/archiving";
-import { activeSessionLoginInitialState } from "../../../../authentication/activeSessionLogin/store/reducer";
+  ListItemMessageEnhancedHeight,
+  ListItemMessageStandardHeight
+} from "../DS/ListItemMessage";
+import { SkeletonHeight } from "../DS/ListItemMessageSkeleton";
 
 const createGlobalState = (
-  archiveData: allPaginated.MessagePagePot,
-  inboxData: allPaginated.MessagePagePot,
+  archiveData: MessagePagePot,
+  inboxData: MessagePagePot,
   shownCategory: MessageListCategory,
   archivingStatus: ArchivingStatus = "disabled"
 ) =>
@@ -96,8 +107,8 @@ describe("getInitialReloadAllMessagesActionIfNeeded", () => {
     "enabled",
     "processing"
   ];
-  const messagePage = {} as allPaginated.MessagePage;
-  const anError = { reason: "", time: new Date() } as allPaginated.MessageError;
+  const messagePage = {} as MessagePage;
+  const anError = { reason: "", time: new Date() } as MessageError;
   const potValues = [
     pot.none,
     pot.noneLoading,
@@ -110,14 +121,8 @@ describe("getInitialReloadAllMessagesActionIfNeeded", () => {
   ];
   const outputActionShouldBeUndefined = (
     archivingStatus: ArchivingStatus,
-    currentCategoryPot: pot.Pot<
-      allPaginated.MessagePage,
-      allPaginated.MessageError
-    >,
-    oppositeCategoryPot: pot.Pot<
-      allPaginated.MessagePage,
-      allPaginated.MessageError
-    >
+    currentCategoryPot: pot.Pot<MessagePage, MessageError>,
+    oppositeCategoryPot: pot.Pot<MessagePage, MessageError>
   ) =>
     archivingStatus === "processing" ||
     isLoadingOrUpdating(oppositeCategoryPot) ||
@@ -448,12 +453,7 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
       { reason: "", time: errorTime }
     )
   ];
-  const lastRequestValues = [
-    O.none,
-    O.some("next"),
-    O.some("previous"),
-    O.some("all")
-  ];
+  const lastRequestValues = [undefined, "next", "previous", "all"];
   const categories: Array<MessageListCategory> = ["INBOX", "ARCHIVE"];
 
   const computeExpectedLoadNextPageMessagesValue = (
@@ -485,8 +485,7 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
         !!selectedCollectionNextValue) ||
         (isStrictSomeError(selectedCollection.data) &&
           !!selectedCollectionNextValue &&
-          (O.isNone(selectedCollection.lastRequest) ||
-            selectedCollection.lastRequest.value !== "next" ||
+          (selectedCollection.lastRequest !== "next" ||
             timeOfCheck.getTime() -
               selectedCollection.data.error.time.getTime() >
               nextPageLoadingWaitMillisecondsGenerator())));
@@ -524,7 +523,7 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
                           lastRequest:
                             selectedCategory === "INBOX"
                               ? selectedCategoryLastRequestValue
-                              : O.none
+                              : undefined
                         },
                         archive: {
                           data:
@@ -534,7 +533,7 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
                           lastRequest:
                             selectedCategory === "ARCHIVE"
                               ? selectedCategoryLastRequestValue
-                              : O.none
+                              : undefined
                         }
                       },
                       archiving: INITIAL_STATE,
@@ -554,9 +553,7 @@ describe("getLoadNextPageMessagesActionIfNeeded", () => {
                 }' for '${selectedCategory}' with state '${
                   selectedCategoryData.kind
                 }' where next page index is '${selectedCategoryNextValue}' and lastRequest value is '${
-                  O.isSome(selectedCategoryLastRequestValue)
-                    ? selectedCategoryLastRequestValue.value
-                    : "None"
+                  selectedCategoryLastRequestValue
                 }' (time from last error is ${
                   timeOfCheck.getTime() - errorTime.getTime()
                 } milliseconds), opposite category state '${
@@ -726,24 +723,24 @@ describe("getLoadNextPreviousPageMessagesActionIfAllowed", () => {
                             shownCategory === "ARCHIVE"
                               ? {
                                   data: shownCategoryMessagePot,
-                                  lastRequest: O.none,
+                                  lastRequest: undefined,
                                   lastUpdateTime
                                 }
                               : {
                                   data: otherCategoryMessagePot,
-                                  lastRequest: O.none,
+                                  lastRequest: undefined,
                                   lastUpdateTime: new Date(0)
                                 },
                           inbox:
                             shownCategory === "INBOX"
                               ? {
                                   data: shownCategoryMessagePot,
-                                  lastRequest: O.none,
+                                  lastRequest: undefined,
                                   lastUpdateTime
                                 }
                               : {
                                   data: otherCategoryMessagePot,
-                                  lastRequest: O.none,
+                                  lastRequest: undefined,
                                   lastUpdateTime: new Date(0)
                                 },
                           shownCategory
@@ -839,5 +836,154 @@ describe("archiveUnarchiveAccessibilityInstructions", () => {
     expect(result).toBe(
       "Tieni premuto per selezionare e in seguito disarchiviare"
     );
+  });
+});
+
+describe("generateMessageListLayoutInfo", () => {
+  const rptId = "01234567890012345678901234567890";
+
+  const makeMessage = (tag: string, extra?: Record<string, string>) =>
+    ({
+      id: "msg-01",
+      category: { tag, ...extra },
+      createdAt: new Date(2023, 5, 15),
+      isRead: false,
+      isArchived: false,
+      serviceId: "service-01",
+      serviceName: "Service A",
+      organizationName: "Org A",
+      organizationFiscalCode: "00000000000",
+      title: "Test",
+      hasPrecondition: false
+    }) as UIMessage;
+
+  // For non-PAYMENT tags, isPaymentMessageWithPaidNoticeSelector returns false
+  // before accessing state, so an empty state is sufficient.
+  const anyState = {} as GlobalState;
+
+  const stateWithUnpaidNotice = {
+    entities: { paymentByRptId: {} }
+  } as GlobalState;
+
+  const stateWithPaidNotice = {
+    entities: { paymentByRptId: { [rptId]: { kind: "DUPLICATED" } } }
+  } as unknown as GlobalState;
+
+  describe("when messageList is undefined (loading state)", () => {
+    it("returns an empty array for an empty loadingList", () => {
+      const result = generateMessageListLayoutInfo([], undefined, anyState);
+      expect(result).toEqual([]);
+    });
+
+    it("returns one skeleton item for a single-element loadingList", () => {
+      const result = generateMessageListLayoutInfo([0], undefined, anyState);
+      expect(result).toEqual([{ index: 0, length: SkeletonHeight, offset: 0 }]);
+    });
+
+    it("returns skeleton items with offsets proportional to SkeletonHeight", () => {
+      const result = generateMessageListLayoutInfo(
+        [0, 1, 2],
+        undefined,
+        anyState
+      );
+      expect(result).toEqual([
+        { index: 0, length: SkeletonHeight, offset: 0 },
+        { index: 1, length: SkeletonHeight, offset: SkeletonHeight },
+        { index: 2, length: SkeletonHeight, offset: 2 * SkeletonHeight }
+      ]);
+    });
+  });
+
+  describe("when messageList is defined", () => {
+    it("returns an empty array for an empty messageList", () => {
+      const result = generateMessageListLayoutInfo([], [], anyState);
+      expect(result).toEqual([]);
+    });
+
+    test.each([
+      ["GENERIC", undefined],
+      ["EU_COVID_CERT", undefined],
+      ["LEGAL_MESSAGE", undefined]
+    ])("uses ListItemMessageStandardHeight for a %s message", (tag, extra) => {
+      const message = makeMessage(
+        tag,
+        extra as unknown as Record<string, string>
+      );
+      const result = generateMessageListLayoutInfo([], [message], anyState);
+      expect(result).toEqual([
+        { index: 0, length: ListItemMessageStandardHeight, offset: 0 }
+      ]);
+    });
+
+    it("uses ListItemMessageEnhancedHeight for a PN message", () => {
+      const message = makeMessage("PN");
+      const result = generateMessageListLayoutInfo([], [message], anyState);
+      expect(result).toEqual([
+        { index: 0, length: ListItemMessageEnhancedHeight, offset: 0 }
+      ]);
+    });
+
+    it("uses ListItemMessageStandardHeight for a PAYMENT message without a paid notice", () => {
+      const message = makeMessage("PAYMENT", { rptId });
+      const result = generateMessageListLayoutInfo(
+        [],
+        [message],
+        stateWithUnpaidNotice
+      );
+      expect(result).toEqual([
+        { index: 0, length: ListItemMessageStandardHeight, offset: 0 }
+      ]);
+    });
+
+    it("uses ListItemMessageEnhancedHeight for a PAYMENT message with a paid notice", () => {
+      const message = makeMessage("PAYMENT", { rptId });
+      const result = generateMessageListLayoutInfo(
+        [],
+        [message],
+        stateWithPaidNotice
+      );
+      expect(result).toEqual([
+        { index: 0, length: ListItemMessageEnhancedHeight, offset: 0 }
+      ]);
+    });
+
+    it("accumulates offsets adding StyleSheet.hairlineWidth between adjacent items", () => {
+      const messages = [makeMessage("GENERIC"), makeMessage("GENERIC")];
+      const result = generateMessageListLayoutInfo([], messages, anyState);
+      expect(result).toEqual([
+        { index: 0, length: ListItemMessageStandardHeight, offset: 0 },
+        {
+          index: 1,
+          length: ListItemMessageStandardHeight,
+          offset: ListItemMessageStandardHeight + StyleSheet.hairlineWidth
+        }
+      ]);
+    });
+
+    it("accumulates offsets correctly for mixed-height messages", () => {
+      const messages = [
+        makeMessage("PN"),
+        makeMessage("GENERIC"),
+        makeMessage("PN")
+      ];
+      const result = generateMessageListLayoutInfo([], messages, anyState);
+      expect(result).toEqual([
+        { index: 0, length: ListItemMessageEnhancedHeight, offset: 0 },
+        {
+          index: 1,
+          length: ListItemMessageStandardHeight,
+          offset: ListItemMessageEnhancedHeight + StyleSheet.hairlineWidth
+        },
+        {
+          index: 2,
+          length: ListItemMessageEnhancedHeight,
+          offset:
+            ListItemMessageEnhancedHeight +
+            StyleSheet.hairlineWidth +
+            ListItemMessageStandardHeight +
+            StyleSheet.hairlineWidth
+        }
+      ]);
+    });
   });
 });

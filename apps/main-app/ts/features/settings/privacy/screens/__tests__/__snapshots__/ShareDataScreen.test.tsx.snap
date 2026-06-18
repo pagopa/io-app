@@ -382,6 +382,7 @@ exports[`ShareDataScreen should match snapshot 1`] = `
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -661,6 +662,7 @@ exports[`ShareDataScreen should match snapshot 1`] = `
                                 meetOrSlice={0}
                                 minX={0}
                                 minY={0}
+                                pointerEvents="none"
                                 style={
                                   [
                                     {
@@ -893,6 +895,7 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                 meetOrSlice={0}
                                 minX={0}
                                 minY={0}
+                                pointerEvents="none"
                                 style={
                                   [
                                     {
@@ -1041,6 +1044,7 @@ Usiamo strumenti che ci permettono di registrare dati relativi a come usi l’ap
                                 meetOrSlice={0}
                                 minX={0}
                                 minY={0}
+                                pointerEvents="none"
                                 style={
                                   [
                                     {

@@ -460,6 +460,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -1740,6 +1741,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -2462,6 +2464,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -4468,6 +4471,7 @@ exports[`ItwPresentationClaimsSection should match the snapshot when claims are 
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {

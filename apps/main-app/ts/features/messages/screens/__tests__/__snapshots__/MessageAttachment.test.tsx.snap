@@ -382,6 +382,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -612,6 +613,7 @@ exports[`MessageAttachment Should match the snapshot when everything went fine 1
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -1692,6 +1694,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -1922,6 +1925,7 @@ exports[`MessageAttachment Should match the snapshot when there is an error 1`] 
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {

@@ -25,6 +25,7 @@ import {
 } from "../../../../navigation/params/AppParamsList.ts";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { emptyContextualHelp } from "../../../../utils/contextualHelp.ts";
+import { openWebUrl } from "../../../../utils/url.ts";
 import { cgnActivationStart } from "../../../bonus/cgn/store/actions/activation.ts";
 import {
   isCgnDetailsLoading,
@@ -56,7 +57,6 @@ import { ItwParamsList } from "../../navigation/ItwParamsList.ts";
 import { ITW_ROUTES } from "../../navigation/routes.ts";
 import { AsyncCredentialsCatalogue } from "../components/AsyncCredentialsCatalogueWrapper.tsx";
 import { ItwOnboardingModuleCredentialsList } from "../components/ItwOnboardingModuleCredentialsList.tsx";
-import { openWebUrl } from "../../../../utils/url.ts";
 
 const MAX_INDEX = 1;
 
@@ -293,7 +293,8 @@ const OtherCardsOnboardingSection = () => {
 
 const styles = StyleSheet.create({
   tabs: {
-    paddingVertical: 16
+    paddingTop: 8,
+    paddingBottom: 16
   },
   header: {
     flex: 1,

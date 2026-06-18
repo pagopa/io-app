@@ -382,6 +382,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -614,6 +615,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -852,6 +854,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -1821,6 +1824,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -2053,6 +2057,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -2291,6 +2296,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -3260,6 +3266,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -3492,6 +3499,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -3730,6 +3738,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -4699,6 +4708,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -4931,6 +4941,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -5169,6 +5180,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -6138,6 +6150,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -6370,6 +6383,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -6608,6 +6622,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -7577,6 +7592,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -7809,6 +7825,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -8047,6 +8064,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, disabled  preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -9016,6 +9034,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -9248,6 +9267,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -9486,6 +9506,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -10455,6 +10476,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -10687,6 +10709,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -10925,6 +10948,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -11894,6 +11918,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -12126,6 +12151,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -12364,6 +12390,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -13333,6 +13360,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -13565,6 +13593,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -13803,6 +13832,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -14772,6 +14802,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -15004,6 +15035,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -15242,6 +15274,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -16211,6 +16244,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -16443,6 +16477,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -16681,6 +16716,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, enabled   preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -17650,6 +17686,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -17882,6 +17919,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -18120,6 +18158,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -19089,6 +19128,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -19321,6 +19361,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -19559,6 +19600,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -20528,6 +20570,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -20760,6 +20803,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -20998,6 +21042,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -21967,6 +22012,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -22199,6 +22245,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -22437,6 +22484,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -23406,6 +23454,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -23638,6 +23687,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -23876,6 +23926,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -24845,6 +24896,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -25077,6 +25129,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -25315,6 +25368,7 @@ exports[`NotificationsPreferencesScreen should match snapshot, undefined preview
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
