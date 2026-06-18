@@ -920,6 +920,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         meetOrSlice={0}
                                         minX={0}
                                         minY={0}
+                                        pointerEvents="none"
                                         style={
                                           [
                                             {
@@ -1205,6 +1206,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         meetOrSlice={0}
                                         minX={0}
                                         minY={0}
+                                        pointerEvents="none"
                                         style={
                                           [
                                             {
@@ -1490,6 +1492,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         meetOrSlice={0}
                                         minX={0}
                                         minY={0}
+                                        pointerEvents="none"
                                         style={
                                           [
                                             {
@@ -1775,6 +1778,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         meetOrSlice={0}
                                         minX={0}
                                         minY={0}
+                                        pointerEvents="none"
                                         style={
                                           [
                                             {
@@ -2060,6 +2064,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         meetOrSlice={0}
                                         minX={0}
                                         minY={0}
+                                        pointerEvents="none"
                                         style={
                                           [
                                             {
@@ -2345,6 +2350,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         meetOrSlice={0}
                                         minX={0}
                                         minY={0}
+                                        pointerEvents="none"
                                         style={
                                           [
                                             {
@@ -2630,6 +2636,7 @@ exports[`MessagePaymentBottomSheet should match snapshot, six payments 1`] = `
                                         meetOrSlice={0}
                                         minX={0}
                                         minY={0}
+                                        pointerEvents="none"
                                         style={
                                           [
                                             {
