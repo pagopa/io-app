@@ -671,6 +671,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                             meetOrSlice={0}
                             minX={0}
                             minY={0}
+                            pointerEvents="none"
                             style={
                               [
                                 {
@@ -1193,6 +1194,7 @@ exports[`MessageDetailsReminder should match snapshot when the reminder is visib
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
