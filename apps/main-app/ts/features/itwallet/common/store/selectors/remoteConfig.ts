@@ -2,6 +2,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { Platform } from "react-native";
 import { createSelector } from "reselect";
+import { remoteConfigValueSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
   getAppVersion,
@@ -12,7 +13,7 @@ const emptyArray: ReadonlyArray<string> = []; // to avoid unnecessary rerenders
 
 const itwRemoteConfigSelector = (state: GlobalState) =>
   pipe(
-    state.remoteConfig ?? O.none,
+    state.remoteConfig,
     O.map(config => config.itw)
   );
 
@@ -134,37 +135,32 @@ export const itwIpzsPrivacyUrlSelector = createSelector(
 /**
  * Returns whether the current app version meets the minimum required to use IT Wallet.
  */
-export const isItwMinAppVersionSupportedSelector = createSelector(
-  itwRemoteConfigSelector,
-  (itwConfig): boolean =>
-    pipe(
-      itwConfig,
-      O.chainNullableK(itw => itw.itw_min_app_version),
-      O.map(version =>
-        isVersionSupported(
-          Platform.OS === "ios" ? version.ios : version.android,
-          getAppVersion()
-        )
-      ),
-      O.getOrElse(() => false)
-    )
-);
+export const isItwMinAppVersionSupportedSelector = (
+  state: GlobalState
+): boolean => {
+  const version = remoteConfigValueSelector(state)?.itw?.itw_min_app_version;
+  if (!version) {
+    return false;
+  }
+  return isVersionSupported(
+    Platform.OS === "ios" ? version.ios : version.android,
+    getAppVersion()
+  );
+};
 
 /**
  * Returns whether the current app version meets the minimum required to use Proximity presentation.
  */
-export const isItwProximityMinAppVersionSupportedSelector = createSelector(
-  itwRemoteConfigSelector,
-  (itwConfig): boolean =>
-    pipe(
-      itwConfig,
-      O.chainNullableK(itw => itw.proximity_min_app_version),
-      O.map(version =>
-        isVersionSupported(
-          Platform.OS === "ios" ? version.ios : version.android,
-          getAppVersion()
-        )
-      ),
-      O.getOrElse(() => false)
-    )
-);
+export const isItwProximityMinAppVersionSupportedSelector = (
+  state: GlobalState
+): boolean => {
+  const version =
+    remoteConfigValueSelector(state)?.itw?.proximity_min_app_version;
+  if (!version) {
+    return false;
+  }
+  return isVersionSupported(
+    Platform.OS === "ios" ? version.ios : version.android,
+    getAppVersion()
+  );
+};

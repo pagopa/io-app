@@ -1,3 +1,4 @@
+import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { type GlobalState } from "../../../../../../store/reducers/types";
 import { type DigitalCredentialsCatalogue } from "../../../../common/utils/itwCredentialsCatalogueUtils";
@@ -59,7 +60,8 @@ const buildState = (
         overrides.preferredLanguage !== undefined
           ? overrides.preferredLanguage
           : "it"
-    }
+    },
+    remoteConfig: O.none
   }) as unknown as GlobalState;
 
 describe("itwCredentialsCatalogueSelector", () => {

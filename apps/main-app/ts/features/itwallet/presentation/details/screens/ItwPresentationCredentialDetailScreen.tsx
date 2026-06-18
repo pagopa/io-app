@@ -193,9 +193,11 @@ export const ItwPresentationCredentialDetail = ({
 
   const itwFeaturesEnabled = useIOSelector(itwLifecycleIsITWalletValidSelector);
   const isL3Credential = useIOSelector(itwLifecycleIsITWalletValidSelector);
-  const isProximityEnabled = useIOSelector(
+  const isProximityMinAppVersionSupported = useIOSelector(
     isItwProximityMinAppVersionSupportedSelector
   );
+  const isProximityEnabled =
+    itwFeaturesEnabled && isProximityMinAppVersionSupported;
   const { status = "valid" } = useIOSelector(state =>
     itwCredentialStatusSelector(state, credential.credentialType)
   );
@@ -283,7 +285,6 @@ export const ItwPresentationCredentialDetail = ({
 
     if (
       credentialType === CredentialType.DRIVING_LICENSE &&
-      itwFeaturesEnabled &&
       isProximityEnabled
     ) {
       return {
@@ -325,7 +326,6 @@ export const ItwPresentationCredentialDetail = ({
   }, [
     credential.credentialType,
     shouldShowMdlUpdateCta,
-    itwFeaturesEnabled,
     isL3Credential,
     isProximityEnabled,
     contentClaim,
