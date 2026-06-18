@@ -13,4 +13,4 @@ import { GlobalState } from "../../../../../store/reducers/types";
  */
 export const itwStatusListReferencedUrisSelector = (
   _state: GlobalState
-): Array<string> | undefined => undefined;
+): ReadonlyArray<string> => [];

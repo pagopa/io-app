@@ -44,7 +44,7 @@ const refreshWithBoundedParallelism = async (
  * @param now - Current time in ms since epoch (injected for testability)
  */
 export const startupCoherence = async (
-  referencedStatusListUris: Array<string> | undefined,
+  referencedStatusListUris: ReadonlyArray<string>,
   now: number = Date.now()
 ): Promise<void> => {
   const cached = await StatusListRepository.list();
