@@ -32,6 +32,7 @@ import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwSetWalletInstanceRenewalError } from "../../walletInstance/store/actions";
 import { itwWalletInstanceRenewalErrorSelector } from "../../walletInstance/store/selectors";
 import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../common/utils/itwStoreUtils";
+import { createCommonActorsImplementation } from "../utils/actors";
 import { Context } from "./context";
 
 export type GetWalletAttestationActorOutput = Awaited<
@@ -378,6 +379,7 @@ export const createCredentialIssuanceActorsImplementation = (
     requestCredential,
     obtainCredential,
     obtainStatusAssertion,
-    processCredentialOffer
+    processCredentialOffer,
+    ...createCommonActorsImplementation(store)
   };
 };

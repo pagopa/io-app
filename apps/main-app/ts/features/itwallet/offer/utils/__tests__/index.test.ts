@@ -26,6 +26,11 @@ describe("isPotentialCredentialOfferInvocation", () => {
       expected: true
     },
     {
+      name: "IO universal link on unrelated path with credential offer parameters",
+      value: "https://continua.io.pagopa.it/messages?credential_offer=abc123",
+      expected: false
+    },
+    {
       name: "accepted scheme without credential offer parameters",
       value: "haip-vci://?foo=bar",
       expected: false
@@ -67,6 +72,13 @@ describe("normalizeCredentialOfferDeepLink", () => {
 
   it("returns the original URL for non credential offer invocations", () => {
     const url = "https://continua.io.pagopa.it/messages";
+
+    expect(normalizeCredentialOfferDeepLink(url)).toBe(url);
+  });
+
+  it("returns the original URL for IO universal links on unrelated paths", () => {
+    const url =
+      "https://continua.io.pagopa.it/messages?credential_offer=abc123";
 
     expect(normalizeCredentialOfferDeepLink(url)).toBe(url);
   });

@@ -8,11 +8,6 @@ export const ITW_CREDENTIAL_OFFER_LINKING_PREFIXES = [
   "haip-vci://"
 ] as const;
 
-const CREDENTIAL_OFFER_URL_PREFIXES = [
-  ...ITW_CREDENTIAL_OFFER_LINKING_PREFIXES,
-  IO_UNIVERSAL_LINK_PREFIX
-] as const;
-
 const CREDENTIAL_OFFER_QUERY_PARAMS = [
   "credential_offer",
   "credential_offer_uri"
@@ -31,16 +26,19 @@ export const isPotentialCredentialOfferInvocation = (
 ): boolean => {
   const trimmedValue = value.trim();
 
-  if (
-    !CREDENTIAL_OFFER_URL_PREFIXES.some(scheme =>
-      trimmedValue.startsWith(scheme)
-    )
-  ) {
-    return false;
-  }
-
   try {
     const url = new URL(trimmedValue);
+    const isAcceptedCustomScheme = ITW_CREDENTIAL_OFFER_LINKING_PREFIXES.some(
+      scheme => trimmedValue.startsWith(scheme)
+    );
+    const isAcceptedUniversalLink =
+      url.origin === IO_UNIVERSAL_LINK_PREFIX &&
+      url.pathname.replace(/^\//, "") === ITW_CREDENTIAL_OFFER_INTERNAL_PATH;
+
+    if (!isAcceptedCustomScheme && !isAcceptedUniversalLink) {
+      return false;
+    }
+
     return CREDENTIAL_OFFER_QUERY_PARAMS.some(param =>
       url.searchParams.has(param)
     );

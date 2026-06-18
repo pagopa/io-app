@@ -396,6 +396,16 @@ describe("test decodeIOBarcode function", () => {
         expect(output).toStrictEqual(O.none);
       });
 
+      it("should return O.none on IO universal link outside the credential offer path", () => {
+        const value =
+          "https://continua.io.pagopa.it/messages?credential_offer=abc123";
+        const output = decodeIOBarcode(
+          fakeGlobalStateWithCredentialOfferSupport,
+          value
+        );
+        expect(output).toStrictEqual(O.none);
+      });
+
       it("should return O.none on http URI (not https)", () => {
         const value =
           "http://continua.io.pagopa.it/itw/credential-offer?credential_offer=abc123";
