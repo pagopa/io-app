@@ -75,9 +75,16 @@ export const requestCredential: RequestCredential = async ({
   const { issuerConf } =
     await ioWallet.CredentialIssuance.evaluateIssuerTrust(credentialIssuer);
 
-  const credentialIds =
-    resolvedCredentialOffer?.offer.credential_configuration_ids ??
-    getCredentialConfigurationIds(issuerConf, credentialType, skipMdocIssuance);
+  const credentialIds = resolvedCredentialOffer?.offer.credential_configuration_ids
+    ? resolvedCredentialOffer.offer.credential_configuration_ids.filter(id => {
+        const config = issuerConf.credential_configurations_supported[id];
+        return (
+          config !== undefined &&
+          config.scope === credentialType &&
+          (!skipMdocIssuance || config.format !== CredentialFormat.MDOC)
+        );
+      })
+    : getCredentialConfigurationIds(issuerConf, credentialType, skipMdocIssuance);
 
   // Start user authorization
   const { issuerRequestUri, clientId, codeVerifier, responseMode } =
