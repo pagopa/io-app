@@ -9,14 +9,14 @@ echo "$unstagedFiles"
 
 # Compile the project
 echo "🔨 compiling..."
-yarn tsc:noemit
+pnpm nx affected --target=tsc-noemit
 
 # Run lintier
-echo "🧹 runnning linter..."  
-yarn lint-autofix
+echo "🧹 running linter..."  
+pnpm nx affected --target=lint --fix --cache
 # Run prettifier
 echo "🧼 running formatter..."
-yarn prettify
+pnpm prettify
 
 # If we have any modified files don't push
 if [ -n "$(git status --porcelain)" ]; then
