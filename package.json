@@ -50,9 +50,7 @@
       "@react-native-cookies/cookies@^6.2.1": "patches/@react-native-cookies-cookies-npm-6.2.1.patch",
       "@react-native-community/art@^1.2.0": "patches/@react-native-community-art-npm-1.2.0.patch",
       "react-native-exception-handler@^2.10.8": "patches/react-native-exception-handler-npm-2.10.8.patch",
-      "expo-screen-capture@~55.0.9": "patches/expo-screen-capture-npm-55.0.9.patch",
-      "@react-navigation/stack@7.7.2": "patches/@react-navigation__stack@7.7.2.patch",
-      "react-native-screens": "patches/react-native-screens.patch"
+      "expo-screen-capture@~55.0.9": "patches/expo-screen-capture-npm-55.0.9.patch"
     },
     "onlyBuiltDependencies": [
       "unrs-resolver",
