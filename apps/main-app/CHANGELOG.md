@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.35.0-rc.4](https://github.com/pagopa/io-app/compare/3.35.0-rc.3...3.35.0-rc.4) (2026-06-19)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4151](https://pagopa.atlassian.net/browse/SIW-4151)] Add tracking for ITW activation with CieID L3 ([#8168](https://github.com/pagopa/io-app/issues/8168)) ([b71fcee](https://github.com/pagopa/io-app/commit/b71fceeff2a0fa1cbac0781e564845100cc33012))
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-3829](https://pagopa.atlassian.net/browse/SIW-3829)] Add accessibility announcements for accordion state changes in claims ([#8150](https://github.com/pagopa/io-app/issues/8150)) ([0b1283c](https://github.com/pagopa/io-app/commit/0b1283c9be5399f48bac3fedff4c51ae91b44f7b))
+* [[IOAPPX-000](https://pagopa.atlassian.net/browse/IOAPPX-000)] Update changelog path in new version message ([#8191](https://github.com/pagopa/io-app/issues/8191)) ([3aee8d8](https://github.com/pagopa/io-app/commit/3aee8d83f64eff094dd1d631f05d74e3c923e5be))
+
+## [3.35.0-rc.3](https://github.com/pagopa/io-app/compare/3.35.0-rc.2...3.35.0-rc.3) (2026-06-17)
+
+
+### Bug Fixes
+
+* [[IEL-000](https://pagopa.atlassian.net/browse/IEL-000)] IDPay navigation ([#8162](https://github.com/pagopa/io-app/issues/8162)) ([376a482](https://github.com/pagopa/io-app/commit/376a482b5d308e43c134296da28d82668d6f9e33))
+* [[IEL-604](https://pagopa.atlassian.net/browse/IEL-604)] Prevent double request for QTSP metadata ([#8186](https://github.com/pagopa/io-app/issues/8186)) ([1959eae](https://github.com/pagopa/io-app/commit/1959eae54a8eb982b9eec5acd8680f637bd64c00))
+
+
+### Chores
+
+* [[IOCOM-3211](https://pagopa.atlassian.net/browse/IOCOM-3211)] post AllPaginated fp-ts removal cleanup refactors ([#8176](https://github.com/pagopa/io-app/issues/8176)) ([85d996b](https://github.com/pagopa/io-app/commit/85d996b28726309fb0e104167ddc6289033ab669))
+
 ## [3.35.0-rc.2](https://github.com/pagopa/io-app/compare/3.35.0-rc.1...3.35.0-rc.2) (2026-06-16)
 
 

@@ -38,6 +38,7 @@ import {
   trackItwRequestSuccess,
   trackSaveCredentialToWallet
 } from "../analytics";
+import { toItwIdMethod } from "../../analytics/utils/types";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
 
 export const ItwIssuanceEidPreviewScreen = () => {
@@ -91,8 +92,8 @@ const ContentView = ({ eid }: ContentViewProps) => {
       });
       if (identification) {
         trackItwRequestSuccess(
-          identification?.mode,
-          identification?.level,
+          toItwIdMethod(identification),
+          identification.level,
           isL3 ? "L3" : "L2"
         );
       }
