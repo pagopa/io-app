@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.35.0-rc.5](https://github.com/pagopa/io-app/compare/3.35.0-rc.4...3.35.0-rc.5) (2026-06-19)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4362](https://pagopa.atlassian.net/browse/SIW-4362)] Align presentable credentials behavior with current specs ([#8187](https://github.com/pagopa/io-app/issues/8187)) ([d9bb14b](https://github.com/pagopa/io-app/commit/d9bb14ba3082b1806122ac6360c53d627485fac1))
+
+
+### Chores
+
+* [[IOPLT-1890](https://pagopa.atlassian.net/browse/IOPLT-1890)] Add the new `react-native-bottom-sheet` (SWM) and relative playground ([#8181](https://github.com/pagopa/io-app/issues/8181)) ([6c43d53](https://github.com/pagopa/io-app/commit/6c43d53dc6fe63ffcdf7268234ca438526d96b2a))
+
 ## [3.35.0-rc.4](https://github.com/pagopa/io-app/compare/3.35.0-rc.3...3.35.0-rc.4) (2026-06-19)
 
 
