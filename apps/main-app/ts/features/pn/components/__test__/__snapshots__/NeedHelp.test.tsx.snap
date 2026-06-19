@@ -446,6 +446,7 @@ exports[`NeedHelp NeedHelp Component Should match snapshot 1`] = `
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -771,6 +772,7 @@ Se hai bisogno di supporto su SEND, consulta le risorse di assistenza
                                       meetOrSlice={0}
                                       minX={0}
                                       minY={0}
+                                      pointerEvents="none"
                                       style={
                                         [
                                           {

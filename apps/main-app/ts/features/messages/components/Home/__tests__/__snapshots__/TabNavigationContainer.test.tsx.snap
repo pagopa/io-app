@@ -471,6 +471,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -681,6 +682,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is ARCH
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -1233,6 +1235,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -1456,6 +1459,7 @@ exports[`TabNavigationContainer should match snapshot when shownCategory is INBO
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {

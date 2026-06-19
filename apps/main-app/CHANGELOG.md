@@ -2,6 +2,44 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.35.0-rc.4](https://github.com/pagopa/io-app/compare/3.35.0-rc.3...3.35.0-rc.4) (2026-06-19)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4151](https://pagopa.atlassian.net/browse/SIW-4151)] Add tracking for ITW activation with CieID L3 ([#8168](https://github.com/pagopa/io-app/issues/8168)) ([b71fcee](https://github.com/pagopa/io-app/commit/b71fceeff2a0fa1cbac0781e564845100cc33012))
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-3829](https://pagopa.atlassian.net/browse/SIW-3829)] Add accessibility announcements for accordion state changes in claims ([#8150](https://github.com/pagopa/io-app/issues/8150)) ([0b1283c](https://github.com/pagopa/io-app/commit/0b1283c9be5399f48bac3fedff4c51ae91b44f7b))
+* [[IOAPPX-000](https://pagopa.atlassian.net/browse/IOAPPX-000)] Update changelog path in new version message ([#8191](https://github.com/pagopa/io-app/issues/8191)) ([3aee8d8](https://github.com/pagopa/io-app/commit/3aee8d83f64eff094dd1d631f05d74e3c923e5be))
+
+## [3.35.0-rc.3](https://github.com/pagopa/io-app/compare/3.35.0-rc.2...3.35.0-rc.3) (2026-06-17)
+
+
+### Bug Fixes
+
+* [[IEL-000](https://pagopa.atlassian.net/browse/IEL-000)] IDPay navigation ([#8162](https://github.com/pagopa/io-app/issues/8162)) ([376a482](https://github.com/pagopa/io-app/commit/376a482b5d308e43c134296da28d82668d6f9e33))
+* [[IEL-604](https://pagopa.atlassian.net/browse/IEL-604)] Prevent double request for QTSP metadata ([#8186](https://github.com/pagopa/io-app/issues/8186)) ([1959eae](https://github.com/pagopa/io-app/commit/1959eae54a8eb982b9eec5acd8680f637bd64c00))
+
+
+### Chores
+
+* [[IOCOM-3211](https://pagopa.atlassian.net/browse/IOCOM-3211)] post AllPaginated fp-ts removal cleanup refactors ([#8176](https://github.com/pagopa/io-app/issues/8176)) ([85d996b](https://github.com/pagopa/io-app/commit/85d996b28726309fb0e104167ddc6289033ab669))
+
+## [3.35.0-rc.2](https://github.com/pagopa/io-app/compare/3.35.0-rc.1...3.35.0-rc.2) (2026-06-16)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4084](https://pagopa.atlassian.net/browse/SIW-4084)] Implement `expo-background-task` for background wallet check ([#7973](https://github.com/pagopa/io-app/issues/7973)) ([8a86299](https://github.com/pagopa/io-app/commit/8a8629947879db339c6e291dfb5d6d4282133280)), closes [/#diff-7ae45ad102eab3b6d7e7896acd08c427a9b25b346470d7bc6507b6481575d519R96-R98](https://github.com/pagopa///issues/diff-7ae45ad102eab3b6d7e7896acd08c427a9b25b346470d7bc6507b6481575d519R96-R98) [/#diff-e70329c240cbde250c4cf9499d16af44da3323edee966f9c4c2c55385da47008R137-R143](https://github.com/pagopa///issues/diff-e70329c240cbde250c4cf9499d16af44da3323edee966f9c4c2c55385da47008R137-R143) [/#diff-6701f6e68eb818df064691dfe50a2070f5af1dd45c5299c8299782d934a668f3R525](https://github.com/pagopa///issues/diff-6701f6e68eb818df064691dfe50a2070f5af1dd45c5299c8299782d934a668f3R525) [/#diff-6701f6e68eb818df064691dfe50a2070f5af1dd45c5299c8299782d934a668f3R544](https://github.com/pagopa///issues/diff-6701f6e68eb818df064691dfe50a2070f5af1dd45c5299c8299782d934a668f3R544) [/#diff-10dd2581dc178023f71c4757443c768e5e1f61b3f83998c2ffacdb99740a375dR8](https://github.com/pagopa///issues/diff-10dd2581dc178023f71c4757443c768e5e1f61b3f83998c2ffacdb99740a375dR8) [/#diff-10dd2581dc178023f71c4757443c768e5e1f61b3f83998c2ffacdb99740a375dR21-R41](https://github.com/pagopa///issues/diff-10dd2581dc178023f71c4757443c768e5e1f61b3f83998c2ffacdb99740a375dR21-R41) [/#diff-1679e0f2fa3191277b8e23ec38dd7abbe0543d528050a026d1580c242239ee31L16-R39](https://github.com/pagopa///issues/diff-1679e0f2fa3191277b8e23ec38dd7abbe0543d528050a026d1580c242239ee31L16-R39) [/#diff-1679e0f2fa3191277b8e23ec38dd7abbe0543d528050a026d1580c242239ee31R100-R103](https://github.com/pagopa///issues/diff-1679e0f2fa3191277b8e23ec38dd7abbe0543d528050a026d1580c242239ee31R100-R103) [/#diff-0b5810437eae8d523f9eb8c78aa8cb99d0034002e508c44e577badeb12c64034R1-R52](https://github.com/pagopa///issues/diff-0b5810437eae8d523f9eb8c78aa8cb99d0034002e508c44e577badeb12c64034R1-R52) [/#diff-e151b993d63bb2047f84910631be5f4976d0649c92d3cbb51b57fa3b1d1150faL47-R51](https://github.com/pagopa///issues/diff-e151b993d63bb2047f84910631be5f4976d0649c92d3cbb51b57fa3b1d1150faL47-R51) [/#diff-f3ba0db1a86822542f174ba66345e5b92234c0b90117445fbc0be8c16985be35R1-R26](https://github.com/pagopa///issues/diff-f3ba0db1a86822542f174ba66345e5b92234c0b90117445fbc0be8c16985be35R1-R26) [/#diff-c03472a911a4d4c33a562ca97db11c2d14896c4627003956c1579f90c1d57d7dR1-R132](https://github.com/pagopa///issues/diff-c03472a911a4d4c33a562ca97db11c2d14896c4627003956c1579f90c1d57d7dR1-R132) [/#diff-99b8b26eca513046f01a9bc3ffb95e710cdfab222fc96582b4cee396f9f0bea6L8-R14](https://github.com/pagopa///issues/diff-99b8b26eca513046f01a9bc3ffb95e710cdfab222fc96582b4cee396f9f0bea6L8-R14) [/#diff-99b8b26eca513046f01a9bc3ffb95e710cdfab222fc96582b4cee396f9f0bea6R28-R39](https://github.com/pagopa///issues/diff-99b8b26eca513046f01a9bc3ffb95e710cdfab222fc96582b4cee396f9f0bea6R28-R39) [/#diff-99b8b26eca513046f01a9bc3ffb95e710cdfab222fc96582b4cee396f9f0bea6L45-R119](https://github.com/pagopa///issues/diff-99b8b26eca513046f01a9bc3ffb95e710cdfab222fc96582b4cee396f9f0bea6L45-R119)
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-3531](https://pagopa.atlassian.net/browse/SIW-3531)] Improve copy and assets on CIE reading steps ([#8182](https://github.com/pagopa/io-app/issues/8182)) ([2d5be7b](https://github.com/pagopa/io-app/commit/2d5be7b2062cef5e0882757607205d56da3b6cff))
+
 ## [3.35.0-rc.1](https://github.com/pagopa/io-app/compare/3.35.0-rc.0...3.35.0-rc.1) (2026-06-16)
 
 
