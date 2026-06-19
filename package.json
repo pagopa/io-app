@@ -56,7 +56,6 @@
     },
     "onlyBuiltDependencies": [
       "unrs-resolver",
-      "@shopify/react-native-skia",
       "core-js",
       "postinstall-postinstall"
     ]
