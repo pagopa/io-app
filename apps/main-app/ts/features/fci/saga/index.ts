@@ -360,7 +360,7 @@ function* watchFciEndSaga(): SagaIterator {
   yield* put(fciClearAllFiles({ path: FciDownloadPreviewDirectoryPath }));
   yield* call(
     NavigationService.dispatchNavigationAction,
-    CommonActions.navigate(ROUTES.MAIN)
+    CommonActions.navigate(ROUTES.MAIN, undefined, { pop: true })
   );
 }
 
