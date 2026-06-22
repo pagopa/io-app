@@ -379,8 +379,11 @@ export const itwProximityMachine = setup({
           description: "Verifier connected, waiting for the document request",
           tags: [ItwPresentationTags.Loading],
           on: {
-            // NFC session has ended (HCE modal closed)
-            "nfc-stopped": "Terminating"
+            // In case of connection timeout, allows the user to exit the flow
+            close: {
+              actions: "closeProximity",
+              target: "#itwProximityMachine.Idle"
+            }
           }
         },
         EvaluatingConsent: {
@@ -509,6 +512,16 @@ export const itwProximityMachine = setup({
     Failure: {
       description: "An error occurred, captured in context.failure",
       entry: "navigateToFailureScreen",
+      invoke: {
+        id: "terminateSession",
+        src: "terminateSession",
+        onDone: {
+          // Attemp termination ignoring result
+        },
+        onError: {
+          // Attemp termination ignoring any failure
+        }
+      },
       on: {
         close: {
           actions: "closeProximity",
