@@ -3,7 +3,6 @@ import { differenceInCalendarDays } from "date-fns";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import { getCredentialExpireDate } from "./itwClaimsUtils";
-import { CredentialType } from "./itwMocksUtils";
 import { ItwCredentialStatus, CredentialMetadata } from "./itwTypesUtils";
 
 const DEFAULT_EXPIRING_DAYS = 30;
@@ -29,13 +28,6 @@ export const getCredentialStatus = (
   credential: CredentialMetadata,
   options: GetCredentialStatusOptions = {}
 ): ItwCredentialStatus => {
-  // TODO: REMOVE ME — temporary skip. The proof_of_age credential is still bugged and its status
-  // cannot be evaluated reliably, so we force it to "valid" to avoid false expired/invalid states.
-  // Remove this once proof_of_age status handling is fixed.
-  if (credential.credentialType === CredentialType.PROOF_OF_AGE) {
-    return "valid";
-  }
-
   const { expiringDays = DEFAULT_EXPIRING_DAYS } = options;
   const {
     jwt,
