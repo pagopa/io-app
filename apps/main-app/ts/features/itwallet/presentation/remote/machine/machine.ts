@@ -60,7 +60,6 @@ export const itwRemoteMachine = setup({
   },
   guards: {
     isItWalletL3Active: notImplemented,
-    isEidExpired: notImplemented,
     isSessionExpired: notImplemented,
     hasValidWalletInstanceAttestation: notImplemented,
     isOpenIdFederationClient: notImplemented,
@@ -105,16 +104,6 @@ export const itwRemoteMachine = setup({
             failure: {
               type: RemoteFailureType.WALLET_INACTIVE,
               reason: "IT Wallet is inactive"
-            }
-          }),
-          target: "Failure"
-        },
-        {
-          guard: "isEidExpired",
-          actions: assign({
-            failure: {
-              type: RemoteFailureType.EID_EXPIRED,
-              reason: "EID is expired"
             }
           }),
           target: "Failure"

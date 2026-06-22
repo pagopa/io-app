@@ -42,6 +42,9 @@ PODS:
     - Yoga
   - ExpoAsset (55.0.17):
     - ExpoModulesCore
+  - ExpoBackgroundTask (55.0.18):
+    - ExpoModulesCore
+    - ExpoTaskManager
   - ExpoDevice (55.0.17):
     - ExpoModulesCore
   - ExpoDomWebView (55.0.6):
@@ -94,6 +97,9 @@ PODS:
     - ExpoModulesCore
   - ExpoScreenCapture (55.0.14):
     - ExpoModulesCore
+  - ExpoTaskManager (55.0.16):
+    - ExpoModulesCore
+    - UMAppLoader
   - fast_float (8.0.0)
   - FBLazyVector (0.83.6)
   - fmt (12.1.0)
@@ -159,7 +165,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - IoReactNativeIso18013 (0.8.3):
+  - IoReactNativeIso18013 (0.8.4):
     - boost
     - DoubleConversion
     - fast_float
@@ -167,7 +173,7 @@ PODS:
     - glog
     - hermes-engine
     - IOWalletCBOR (= 0.2.1)
-    - IOWalletProximity (= 1.4.2)
+    - IOWalletProximity (= 1.5.0)
     - RCT-Folly
     - RCT-Folly/Fabric
     - RCTRequired
@@ -190,7 +196,7 @@ PODS:
     - SocketRocket
     - Yoga
   - IOWalletCBOR (0.2.1)
-  - IOWalletProximity (1.4.2)
+  - IOWalletProximity (1.5.0)
   - jail-monkey (2.8.3):
     - React-Core
   - JOSESwift (3.0.0)
@@ -3330,6 +3336,34 @@ PODS:
     - React-perflogger (= 0.83.6)
     - React-utils (= 0.83.6)
     - SocketRocket
+  - ReactNativeBottomSheet (0.15.1):
+    - boost
+    - DoubleConversion
+    - fast_float
+    - fmt
+    - glog
+    - hermes-engine
+    - RCT-Folly
+    - RCT-Folly/Fabric
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - SocketRocket
+    - Yoga
   - ReactNativeExceptionHandler (2.10.8):
     - React
   - RNBluetoothStateManager (1.3.5):
@@ -3864,6 +3898,7 @@ PODS:
     - Yoga
   - SocketRocket (0.7.1)
   - SwiftCBOR (0.6.0)
+  - UMAppLoader (55.0.5)
   - VisionCamera (4.7.3):
     - VisionCamera/Core (= 4.7.3)
     - VisionCamera/FrameProcessors (= 4.7.3)
@@ -3911,6 +3946,7 @@ DEPENDENCIES:
   - EXConstants (from `../../../node_modules/expo-constants/ios`)
   - Expo (from `../../../node_modules/expo`)
   - ExpoAsset (from `../../../node_modules/expo-asset/ios`)
+  - ExpoBackgroundTask (from `../../../node_modules/expo-background-task/ios`)
   - ExpoDevice (from `../../../node_modules/expo-device/ios`)
   - "ExpoDomWebView (from `../../../node_modules/@expo/dom-webview/ios`)"
   - ExpoFileSystem (from `../../../node_modules/expo-file-system/ios`)
@@ -3921,6 +3957,7 @@ DEPENDENCIES:
   - ExpoModulesJSI (from `../../../node_modules/expo-modules-core`)
   - ExpoNotifications (from `../../../node_modules/expo-notifications/ios`)
   - ExpoScreenCapture (from `../../../node_modules/expo-screen-capture/ios`)
+  - ExpoTaskManager (from `../../../node_modules/expo-task-manager/ios`)
   - fast_float (from `../../../node_modules/react-native/third-party-podspecs/fast_float.podspec`)
   - FBLazyVector (from `../../../node_modules/react-native/Libraries/FBLazyVector`)
   - fmt (from `../../../node_modules/react-native/third-party-podspecs/fmt.podspec`)
@@ -4031,6 +4068,7 @@ DEPENDENCIES:
   - ReactAppDependencyProvider (from `build/generated/ios/ReactAppDependencyProvider`)
   - ReactCodegen (from `build/generated/ios/ReactCodegen`)
   - ReactCommon/turbomodule/core (from `../../../node_modules/react-native/ReactCommon`)
+  - "ReactNativeBottomSheet (from `../../../node_modules/@swmansion/react-native-bottom-sheet`)"
   - ReactNativeExceptionHandler (from `../../../node_modules/react-native-exception-handler`)
   - RNBluetoothStateManager (from `../../../node_modules/react-native-bluetooth-state-manager`)
   - RNCalendarEvents (from `../../../node_modules/react-native-calendar-events`)
@@ -4049,6 +4087,7 @@ DEPENDENCIES:
   - RNSVG (from `../../../node_modules/react-native-svg`)
   - RNWorklets (from `../../../node_modules/react-native-worklets`)
   - SocketRocket (~> 0.7.1)
+  - UMAppLoader (from `../../../node_modules/unimodules-app-loader/ios`)
   - VisionCamera (from `../../../node_modules/react-native-vision-camera`)
   - Yoga (from `../../../node_modules/react-native/ReactCommon/yoga`)
 
@@ -4092,6 +4131,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/expo"
   ExpoAsset:
     :path: "../../../node_modules/expo-asset/ios"
+  ExpoBackgroundTask:
+    :path: "../../../node_modules/expo-background-task/ios"
   ExpoDevice:
     :path: "../../../node_modules/expo-device/ios"
   ExpoDomWebView:
@@ -4112,6 +4153,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/expo-notifications/ios"
   ExpoScreenCapture:
     :path: "../../../node_modules/expo-screen-capture/ios"
+  ExpoTaskManager:
+    :path: "../../../node_modules/expo-task-manager/ios"
   fast_float:
     :podspec: "../../../node_modules/react-native/third-party-podspecs/fast_float.podspec"
   FBLazyVector:
@@ -4331,6 +4374,8 @@ EXTERNAL SOURCES:
     :path: build/generated/ios/ReactCodegen
   ReactCommon:
     :path: "../../../node_modules/react-native/ReactCommon"
+  ReactNativeBottomSheet:
+    :path: "../../../node_modules/@swmansion/react-native-bottom-sheet"
   ReactNativeExceptionHandler:
     :path: "../../../node_modules/react-native-exception-handler"
   RNBluetoothStateManager:
@@ -4365,6 +4410,8 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/react-native-svg"
   RNWorklets:
     :path: "../../../node_modules/react-native-worklets"
+  UMAppLoader:
+    :path: "../../../node_modules/unimodules-app-loader/ios"
   VisionCamera:
     :path: "../../../node_modules/react-native-vision-camera"
   Yoga:
@@ -4380,6 +4427,7 @@ SPEC CHECKSUMS:
   EXConstants: dadbeba983acc30f855a919658a2b34fbd86615d
   Expo: fb8cded217862a2c6fc046a6cc68aa83a2ed15f0
   ExpoAsset: 7721c5c4ae2a7c3c8147a046727ac6c020b05648
+  ExpoBackgroundTask: 2c988fa88705c72b07f0e60d5661d566df611980
   ExpoDevice: b8a65afe42c3c5934eb6983870672fe785b39dea
   ExpoDomWebView: b2e9d601f9cb77d3c97da73234e175b64be91928
   ExpoFileSystem: 61e663d0bbd1a973d324530d1d6ee559a5e5192c
@@ -4390,6 +4438,7 @@ SPEC CHECKSUMS:
   ExpoModulesJSI: 964334271fc77832736f66ee1785761cdc778dbe
   ExpoNotifications: 61c46aa5df088ff0ad41de0504a86a92333aec55
   ExpoScreenCapture: aefcd749919380ee0b4d59bb60c1a150aac201c6
+  ExpoTaskManager: a288a5a5eab33009b1fb7a413ba47ef7eac23fba
   fast_float: b32c788ed9c6a8c584d114d0047beda9664e7cc6
   FBLazyVector: 06b1c8278e6e1b31ef68e9e14c296b7872e79e48
   fmt: 530618a01105dae0fa3a2f27c81ae11fa8f67eac
@@ -4397,9 +4446,9 @@ SPEC CHECKSUMS:
   hermes-engine: 037eacbb56098bf69c62cf905ec96fb01eab8248
   IoReactNativeCie: d30d9055f74cfc1fd00c8583316c6321abdb7794
   IoReactNativeHttpClient: bc2f2838fe9f959375d4d7e0419b11ebf27af379
-  IoReactNativeIso18013: 0095a9b361a2229760992bd71861723a74248b2f
+  IoReactNativeIso18013: 730061a6443f611f163c38ec49b6dc5a4aae3f81
   IOWalletCBOR: 92742ef1cbd1b627ba153d0c7c11b81ad22f45cc
-  IOWalletProximity: 686e68830d7e624027829866325581f0ed2d8131
+  IOWalletProximity: c55c362307fcfd757044d930e49bc3a1cc562aa2
   jail-monkey: 9298d04aa09f8c9cdcf04e7bf597ea423b52b5bf
   JOSESwift: 7784b1b844194d0f534eb6ac4fba5af683bccc79
   Mixpanel-swift: de454db5987bf6f601106520a44663fc556e8cfa
@@ -4505,6 +4554,7 @@ SPEC CHECKSUMS:
   ReactAppDependencyProvider: 3ec8fc5d32ad422f5b805523a5a5ea5556d8b3a2
   ReactCodegen: b5e0bd4a5fbd1b5ce1ad51fa6f9a15239912022e
   ReactCommon: e788387a0b387a927a2a5d041fab09472fe8dedc
+  ReactNativeBottomSheet: 03b2317ce62b9f686e6caad94fe5124534791831
   ReactNativeExceptionHandler: 6a2aace92f300a745c8b04461b9a99edd1d26cd6
   RNBluetoothStateManager: 929f132d0dacf65cb4767a11e2803e47fdda9e73
   RNCalendarEvents: f90f73666b6bcbb3cc8a491ffbb5e48c0db3de37
@@ -4524,6 +4574,7 @@ SPEC CHECKSUMS:
   RNWorklets: b89b501d37972e6419d6f87effe41d6d76157648
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   SwiftCBOR: b873af28a9cc66003852fdc79a41852a7e54009a
+  UMAppLoader: 045699ef1cc6afda399a5c78bde728f23bcce213
   VisionCamera: 0044a94f7489f19e19d5938e97dfc36f4784af3c
   Yoga: cf2a67aa1c8a225f0cb98a5f531d6f305d3f12e5
   ZendeskAnswerBotProvidersSDK: 2f3d0e38acdbd4507862b4e4a7b28d3764072854

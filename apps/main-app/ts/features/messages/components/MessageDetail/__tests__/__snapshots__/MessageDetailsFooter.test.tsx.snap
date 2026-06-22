@@ -463,6 +463,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                 meetOrSlice={0}
                                 minX={0}
                                 minY={0}
+                                pointerEvents="none"
                                 style={
                                   [
                                     {
@@ -1014,6 +1015,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                 meetOrSlice={0}
                                 minX={0}
                                 minY={0}
+                                pointerEvents="none"
                                 style={
                                   [
                                     {
@@ -1565,6 +1567,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                 meetOrSlice={0}
                                 minX={0}
                                 minY={0}
+                                pointerEvents="none"
                                 style={
                                   [
                                     {
@@ -2116,6 +2119,7 @@ exports[`MessageDetailsFooter component should match the snapshot, no service's 
                                 meetOrSlice={0}
                                 minX={0}
                                 minY={0}
+                                pointerEvents="none"
                                 style={
                                   [
                                     {
@@ -2667,6 +2671,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                 meetOrSlice={0}
                                 minX={0}
                                 minY={0}
+                                pointerEvents="none"
                                 style={
                                   [
                                     {
@@ -2878,6 +2883,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                 meetOrSlice={0}
                                 minX={0}
                                 minY={0}
+                                pointerEvents="none"
                                 style={
                                   [
                                     {
@@ -3429,6 +3435,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                 meetOrSlice={0}
                                 minX={0}
                                 minY={0}
+                                pointerEvents="none"
                                 style={
                                   [
                                     {
@@ -3640,6 +3647,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                 meetOrSlice={0}
                                 minX={0}
                                 minY={0}
+                                pointerEvents="none"
                                 style={
                                   [
                                     {
@@ -4191,6 +4199,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                 meetOrSlice={0}
                                 minX={0}
                                 minY={0}
+                                pointerEvents="none"
                                 style={
                                   [
                                     {
@@ -4402,6 +4411,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                 meetOrSlice={0}
                                 minX={0}
                                 minY={0}
+                                pointerEvents="none"
                                 style={
                                   [
                                     {
@@ -4953,6 +4963,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                 meetOrSlice={0}
                                 minX={0}
                                 minY={0}
+                                pointerEvents="none"
                                 style={
                                   [
                                     {
@@ -5164,6 +5175,7 @@ exports[`MessageDetailsFooter component should match the snapshot, with service'
                                 meetOrSlice={0}
                                 minX={0}
                                 minY={0}
+                                pointerEvents="none"
                                 style={
                                   [
                                     {

@@ -1,5 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import ROUTES from "../../../../navigation/routes";
 import { useIODispatch } from "../../../../store/hooks";
 import { refreshSessionToken } from "../../../authentication/fastLogin/store/actions/tokenRefreshActions";
 import { SERVICES_ROUTES } from "../../../services/common/navigation/routes";
@@ -7,31 +8,51 @@ import { IDPayDetailsRoutes } from "../../details/navigation";
 import { IdPayOnboardingRoutes } from "../navigation/routes";
 import * as Context from "./context";
 
+type NavigationActionParams = { context: Context.Context };
+
 export const createActionsImplementation = (
   navigation: ReturnType<typeof useIONavigation>,
   dispatch: ReturnType<typeof useIODispatch>
 ) => {
-  const navigateToInitiativeDetailsScreen = () =>
+  const navigateToInitiativeDetailsScreen = ({
+    context
+  }: NavigationActionParams) => {
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
       screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_INITIATIVE_DETAILS,
-      params: {}
+      params: {},
+      pop: context.navigationDirection === "back"
     });
-  const navigateToPdndCriteriaScreen = () =>
+  };
+  const navigateToPdndCriteriaScreen = ({
+    context
+  }: NavigationActionParams) => {
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
-      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE
+      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_PDNDACCEPTANCE,
+      pop: context.navigationDirection === "back"
     });
-  const navigateToBoolSelfDeclarationListScreen = () =>
+  };
+  const navigateToBoolSelfDeclarationListScreen = ({
+    context
+  }: NavigationActionParams) => {
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
-      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS
+      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_BOOL_SELF_DECLARATIONS,
+      pop: context.navigationDirection === "back"
     });
-  const navigateToMultiSelfDeclarationListScreen = () =>
+  };
+  const navigateToMultiSelfDeclarationListScreen = ({
+    context
+  }: NavigationActionParams) => {
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
-      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS
+      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_MULTI_SELF_DECLARATIONS,
+      pop: context.navigationDirection === "back"
     });
-  const navigateToInputFormScreen = () =>
+  };
+  const navigateToInputFormScreen = ({ context }: NavigationActionParams) => {
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
-      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_INPUT_FORM
+      screen: IdPayOnboardingRoutes.IDPAY_ONBOARDING_INPUT_FORM,
+      pop: context.navigationDirection === "back"
     });
+  };
 
   const navigateToCompletionScreen = () =>
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
@@ -78,7 +99,9 @@ export const createActionsImplementation = (
   const closeOnboarding = () => navigation.popToTop();
 
   const closeOnboardingSuccess = () =>
-    navigation.navigate(SERVICES_ROUTES.SERVICES_HOME);
+    navigation.navigate(ROUTES.MAIN, {
+      screen: SERVICES_ROUTES.SERVICES_HOME
+    });
 
   const navigateToLoadingScreen = () =>
     navigation.navigate(IdPayOnboardingRoutes.IDPAY_ONBOARDING_MAIN, {
