@@ -3711,7 +3711,8 @@
         },
         "notMatchingIdentityError": {
           "title": "Identità non riconosciuta",
-          "body": "L’identità digitale che usi per attivare IT-Wallet deve corrispondere alla stessa persona che ha fatto accesso a IO.",
+          "l2Body": "L’identità digitale che usi per attivare Documenti su IO deve corrispondere alla stessa persona che ha fatto accesso a IO.",
+          "l3Body": "L’identità digitale che usi per attivare IT-Wallet deve corrispondere alla stessa persona che ha fatto accesso a IO.",
           "primaryAction": "Riprova",
           "secondaryAction": "Chiudi"
         },

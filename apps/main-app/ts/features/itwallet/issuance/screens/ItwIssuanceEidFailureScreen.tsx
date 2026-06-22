@@ -239,7 +239,9 @@ const ContentView = ({ failure }: ContentViewProps) => {
               "features.itWallet.issuance.notMatchingIdentityError.title"
             ),
             subtitle: I18n.t(
-              "features.itWallet.issuance.notMatchingIdentityError.body"
+              isL3Issuance
+                ? "features.itWallet.issuance.notMatchingIdentityError.l3Body"
+                : "features.itWallet.issuance.notMatchingIdentityError.l2Body"
             ),
             pictogram: "attention",
             action: {
