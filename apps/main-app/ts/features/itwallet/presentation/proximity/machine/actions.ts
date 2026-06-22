@@ -28,56 +28,56 @@ export const createProximityActionsImplementation = (
 
   navigateToBluetoothPermissionsScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.BLUETOOTH_PERMISSIONS,
+      screen: ITW_PROXIMITY_ROUTES.BLUETOOTH_PERMISSIONS
     });
   },
 
   navigateToBluetoothActivationScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.BLUETOOTH_ACTIVATION,
+      screen: ITW_PROXIMITY_ROUTES.BLUETOOTH_ACTIVATION
     });
   },
 
   navigateToNfcActivationScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.NFC_ACTIVATION,
+      screen: ITW_PROXIMITY_ROUTES.NFC_ACTIVATION
     });
   },
 
   navigateToNfcPresentmentScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.NFC_PRESENTMENT,
+      screen: ITW_PROXIMITY_ROUTES.NFC_PRESENTMENT
     });
   },
 
   navigateToPresentmentScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
       screen: ITW_PROXIMITY_ROUTES.PRESENTMENT,
-      params: {},
+      params: {}
     });
   },
 
   navigateToClaimsDisclosureScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.CLAIMS_DISCLOSURE,
+      screen: ITW_PROXIMITY_ROUTES.CLAIMS_DISCLOSURE
     });
   },
 
   navigateToStoreconsentScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.STORE_CONSENT,
+      screen: ITW_PROXIMITY_ROUTES.STORE_CONSENT
     });
   },
 
   navigateToSuccessScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.SUCCESS,
+      screen: ITW_PROXIMITY_ROUTES.SUCCESS
     });
   },
 
   navigateToFailureScreen: () => {
     navigation.navigate(ITW_PROXIMITY_ROUTES.MAIN, {
-      screen: ITW_PROXIMITY_ROUTES.FAILURE,
+      screen: ITW_PROXIMITY_ROUTES.FAILURE
     });
   },
 

@@ -262,7 +262,7 @@ export const createEidIssuanceActionsImplementation = (
           name: ROUTES.MAIN,
           params: {
             screen: ROUTES.WALLET_HOME,
-             params: { requiredEidFeedback: isReissuance && !isSurveyHidden }
+            params: { requiredEidFeedback: isReissuance && !isSurveyHidden }
           }
         }
       ]
