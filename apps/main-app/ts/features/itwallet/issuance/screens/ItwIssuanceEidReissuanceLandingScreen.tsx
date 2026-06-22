@@ -116,11 +116,11 @@ const NavigateToEidIssuanceMachine = ({ eidReissuing }: Props) => {
     if (eidReissuing) {
       return navigation.replace(ITW_ROUTES.IDENTIFICATION.MODE_SELECTION, {
         eidReissuing: true,
-        disableAnimation: true
+        animationEnabled: false
       });
     }
     navigation.replace(ITW_ROUTES.DISCOVERY.INFO, {
-      disableAnimation: true
+      animationEnabled: false
     });
   }, [navigation, eidReissuing]);
 
