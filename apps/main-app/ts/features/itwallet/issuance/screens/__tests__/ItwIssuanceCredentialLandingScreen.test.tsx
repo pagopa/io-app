@@ -109,11 +109,13 @@ describe("ItwIssuanceCredentialLandingScreen", () => {
       );
 
       expect(mockReset).toHaveBeenCalledWith({
-        index: 0,
+        index: 1,
         routes: [
           {
             name: ROUTES.MAIN,
-            params: { screen: ROUTES.WALLET_HOME, params: {} }
+            params: {
+              screen: ROUTES.WALLET_HOME
+            }
           }
         ]
       });
