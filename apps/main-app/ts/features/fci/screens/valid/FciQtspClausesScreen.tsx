@@ -16,26 +16,17 @@ import { emptyContextualHelp } from "../../../../utils/contextualHelp";
 import { loadServicePreference } from "../../../services/details/store/actions/preference";
 import { servicePreferencePotByIdSelector } from "../../../services/details/store/selectors";
 import { isServicePreferenceResponseSuccess } from "../../../services/details/types/ServicePreferenceResponse";
-import {
-  trackFciPollingFailureAction,
-  trackFciPollingFailureScreenView,
-  trackFciQtspTos,
-  trackFciUxConversion
-} from "../../analytics";
+import { trackFciQtspTos, trackFciUxConversion } from "../../analytics";
 import LinkedText from "../../components/LinkedText";
 import LoadingComponent from "../../components/LoadingComponent";
 import QtspClauseListItem from "../../components/QtspClauseListItem";
-import SignatureStatusComponent from "../../components/SignatureStatusComponent";
 import { useFciAbortSignatureFlow } from "../../hooks/useFciAbortSignatureFlow";
 import { useFciCheckService } from "../../hooks/useFciCheckService";
 import { FCI_ROUTES } from "../../navigation/routes";
-import { fciEndRequest, fciStartSigningRequest } from "../../store/actions";
+import { fciStartSigningRequest } from "../../store/actions";
 import { fciEnvironmentSelector } from "../../store/reducers/fciEnvironment";
 import { fciMetadataServiceIdSelector } from "../../store/reducers/fciMetadata";
-import {
-  fciPollFilledDocumentErrorSelector,
-  fciPollFilledDocumentReadySelector
-} from "../../store/reducers/fciPollFilledDocument";
+import { fciPollFilledDocumentReadySelector } from "../../store/reducers/fciPollFilledDocument";
 import {
   fciQtspClausesSelector,
   fciQtspPrivacyTextSelector,
@@ -57,9 +48,6 @@ const FciQtspClausesScreen = () => {
   const qtspPrivacyUrlSelector = useIOSelector(fciQtspPrivacyUrlSelector);
   const isPollFilledDocumentReady = useIOSelector(
     fciPollFilledDocumentReadySelector
-  );
-  const fciPollFilledDocumentError = useIOSelector(
-    fciPollFilledDocumentErrorSelector
   );
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
 
@@ -95,43 +83,14 @@ const FciQtspClausesScreen = () => {
     });
   };
 
-  useEffect(() => {
-    if (fciPollFilledDocumentError && !isPollFilledDocumentReady) {
-      trackFciPollingFailureScreenView();
-    }
-  }, [fciPollFilledDocumentError, isPollFilledDocumentReady]);
-
   useHeaderSecondLevel({
     title: "",
     supportRequest: true,
     contextualHelp: emptyContextualHelp,
-    headerShown: isPollFilledDocumentReady && !fciPollFilledDocumentError
+    headerShown: isPollFilledDocumentReady
   });
 
-  if (fciPollFilledDocumentError && !isPollFilledDocumentReady) {
-    return (
-      <SignatureStatusComponent
-        title={I18n.t("features.fci.errors.generic.default.title")}
-        subTitle={I18n.t("features.fci.errors.generic.default.subTitle")}
-        onPress={() => {
-          trackFciPollingFailureAction(
-            "custom_1",
-            I18n.t("features.fci.errors.buttons.back")
-          );
-          dispatch(fciEndRequest());
-        }}
-        pictogram={"umbrella"}
-        assistance={true}
-        testID="PollingErrorComponentTestID"
-        onPressAssistance={() =>
-          trackFciPollingFailureAction(
-            "custom_2",
-            I18n.t("features.fci.errors.buttons.assistance")
-          )
-        }
-      />
-    );
-  } else if (!isPollFilledDocumentReady) {
+  if (!isPollFilledDocumentReady) {
     return <LoadingComponent testID={"FciLoadingScreenTestID"} />;
   }
 

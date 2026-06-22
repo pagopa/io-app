@@ -37,7 +37,8 @@ import {
   fciClearAllFiles,
   fciMetadataRequest,
   fciSignaturesListRequest,
-  fciDocumentSignatureFields
+  fciDocumentSignatureFields,
+  fciPollFilledDocument
 } from "../store/actions";
 import {
   fciQtspClausesMetadataSelector,
@@ -145,6 +146,24 @@ export function* watchFciSaga(
   yield* takeLatest(fciDocumentSignatureFields.request, handleDrawSignatureBox);
 
   yield* takeLatest(identificationPinReset, watchIdentificationPinResetSaga);
+
+  yield* takeLatest(
+    fciLoadQtspClauses.failure,
+    watchFciQtspErrorSaga,
+    "qtsp_clauses"
+  );
+
+  yield* takeLatest(
+    fciLoadQtspFilledDocument.failure,
+    watchFciQtspErrorSaga,
+    "filled_document"
+  );
+
+  yield* takeLatest(
+    fciPollFilledDocument.failure,
+    watchFciQtspErrorSaga,
+    "poll_filled_document"
+  );
 }
 
 /**
@@ -379,6 +398,16 @@ export function* navigateAfterFinishedFciActiveSessionLoginFlowSaga(
     yield* put(fciSignatureRequestRetryFromId(signatureRequestId));
   }
   return;
+}
+
+function* watchFciQtspErrorSaga(
+  errorKind: "qtsp_clauses" | "filled_document" | "poll_filled_document"
+): SagaIterator {
+  yield* put(fciDownloadPreview.cancel());
+  yield* call(
+    NavigationService.dispatchNavigationAction,
+    StackActions.replace(FCI_ROUTES.QTSP_ERROR, { errorKind })
+  );
 }
 
 export const testable = isTestEnv

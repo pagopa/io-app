@@ -3,48 +3,51 @@ import { fireEvent } from "@testing-library/react-native";
 import { appReducer } from "../../../../store/reducers";
 import { applicationChangeState } from "../../../../store/actions/application";
 import { GlobalState } from "../../../../store/reducers/types";
-import FciDocumentUnavailableScreen from "../failure/FciDocumentUnavailableScreen";
+import FciQtspErrorScreen from "../failure/FciQtspErrorScreen";
 import { FCI_ROUTES } from "../../navigation/routes";
 import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
 import { fciSignatureRequestFromId } from "../../store/actions";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import { FciDocumentUnavailableScreenNavigationParams } from "../../navigation/params";
+import {
+  FciQtspErrorKind,
+  FciQtspErrorScreenNavigationParams
+} from "../../navigation/params";
 
 const createTestStore = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));
   return createStore(appReducer, globalState as any) as Store<GlobalState>;
 };
 
-describe("FciDocumentUnavailableScreen", () => {
+describe("FciQtspErrorScreen", () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
 
   it("should render the screen", () => {
     const store = createTestStore();
-    const component = renderComponent(store);
-    expect(component.getByTestId("FciDocUnavailableTestID")).not.toBeNull();
+    const component = renderComponent(store, { errorKind: "qtsp_clauses" });
+    expect(component.getByTestId("FciQtspErrorTestID")).not.toBeNull();
   });
 
   describe("without signatureRequestId", () => {
     it("should show only the close button", () => {
       const store = createTestStore();
-      const component = renderComponent(store);
+      const component = renderComponent(store, { errorKind: "qtsp_clauses" });
       expect(
-        component.queryByTestId("FciDocUnavailableTestIDCloseButton")
+        component.queryByTestId("FciQtspErrorTestIDCloseButton")
       ).not.toBeNull();
       expect(
-        component.queryByTestId("FciDocUnavailableTestIDRetryButton")
+        component.queryByTestId("FciQtspErrorTestIDRetryButton")
       ).toBeNull();
     });
 
     it("should dispatch fciEndRequest on close button press", () => {
       const store = createTestStore();
       const dispatchSpy = jest.spyOn(store, "dispatch");
-      const component = renderComponent(store);
-      fireEvent.press(
-        component.getByTestId("FciDocUnavailableTestIDCloseButton")
-      );
+      const component = renderComponent(store, {
+        errorKind: "filled_document"
+      });
+      fireEvent.press(component.getByTestId("FciQtspErrorTestIDCloseButton"));
       expect(dispatchSpy).toHaveBeenCalledWith(
         expect.objectContaining({ type: "FCI_END_REQUEST" })
       );
@@ -57,12 +60,14 @@ describe("FciDocumentUnavailableScreen", () => {
       store.dispatch(
         fciSignatureRequestFromId.success({ ...mockSignatureRequestDetailView })
       );
-      const component = renderComponent(store);
+      const component = renderComponent(store, {
+        errorKind: "poll_filled_document"
+      });
       expect(
-        component.queryByTestId("FciDocUnavailableTestIDRetryButton")
+        component.queryByTestId("FciQtspErrorTestIDRetryButton")
       ).not.toBeNull();
       expect(
-        component.queryByTestId("FciDocUnavailableTestIDCloseButton")
+        component.queryByTestId("FciQtspErrorTestIDCloseButton")
       ).not.toBeNull();
     });
 
@@ -72,10 +77,8 @@ describe("FciDocumentUnavailableScreen", () => {
         fciSignatureRequestFromId.success({ ...mockSignatureRequestDetailView })
       );
       const dispatchSpy = jest.spyOn(store, "dispatch");
-      const component = renderComponent(store);
-      fireEvent.press(
-        component.getByTestId("FciDocUnavailableTestIDRetryButton")
-      );
+      const component = renderComponent(store, { errorKind: "qtsp_clauses" });
+      fireEvent.press(component.getByTestId("FciQtspErrorTestIDRetryButton"));
       expect(dispatchSpy).toHaveBeenCalledWith(
         expect.objectContaining({ type: "FCI_SIGNATURE_DETAIL_RETRY_REQUEST" })
       );
@@ -85,20 +88,23 @@ describe("FciDocumentUnavailableScreen", () => {
   describe("errorKind param", () => {
     type ErrorKindScenario = {
       name: string;
-      params: FciDocumentUnavailableScreenNavigationParams;
+      params: FciQtspErrorScreenNavigationParams;
     };
 
-    const scenarios: ReadonlyArray<ErrorKindScenario> = [
-      { name: "expired", params: { errorKind: "expired" } },
-      { name: "generic", params: { errorKind: "generic" } }
-    ];
+    const scenarios: ReadonlyArray<ErrorKindScenario> = (
+      [
+        "qtsp_clauses",
+        "filled_document",
+        "poll_filled_document"
+      ] as ReadonlyArray<FciQtspErrorKind>
+    ).map(errorKind => ({ name: errorKind, params: { errorKind } }));
 
     test.each(scenarios)(
       "should render the screen with $name errorKind",
       ({ params }) => {
         const store = createTestStore();
         const component = renderComponent(store, params);
-        expect(component.getByTestId("FciDocUnavailableTestID")).not.toBeNull();
+        expect(component.getByTestId("FciQtspErrorTestID")).not.toBeNull();
       }
     );
   });
@@ -106,11 +112,11 @@ describe("FciDocumentUnavailableScreen", () => {
 
 const renderComponent = (
   store: Store,
-  params: FciDocumentUnavailableScreenNavigationParams = {}
+  params: FciQtspErrorScreenNavigationParams
 ) =>
   renderScreenWithNavigationStoreContext<GlobalState>(
-    () => <FciDocumentUnavailableScreen />,
-    FCI_ROUTES.DOCUMENT_UNAVAILABLE,
+    () => <FciQtspErrorScreen />,
+    FCI_ROUTES.QTSP_ERROR,
     params,
     store
   );

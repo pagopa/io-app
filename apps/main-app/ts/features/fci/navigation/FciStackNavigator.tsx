@@ -11,6 +11,7 @@ import { FciDocumentPreviewScreen } from "../screens/valid/FciDocumentPreviewScr
 import FciSignatureRequestsScreen from "../screens/valid/FciSignatureRequestsScreen";
 import { AppParamsList } from "../../../navigation/params/AppParamsList";
 import FciDocumentUnavailableScreen from "../screens/failure/FciDocumentUnavailableScreen.tsx";
+import FciQtspErrorScreen from "../screens/failure/FciQtspErrorScreen.tsx";
 import { FciNfcNotAvailableScreen } from "../screens/loginL3/FciNfcNotAvailableScreen";
 import { FciLoginL3Screen } from "../screens/loginL3/FciLoginL3Screen";
 import { LoginOptInScreen } from "../screens/loginL3/LoginOptInScreen";
@@ -72,6 +73,11 @@ export const FciStackNavigator = () => (
       options={{
         headerShown: false
       }}
+    />
+    <Stack.Screen
+      name={FCI_ROUTES.QTSP_ERROR}
+      component={FciQtspErrorScreen}
+      options={{ headerShown: false }}
     />
     <Stack.Screen
       name={FCI_ROUTES.NFC_NOT_AVAILABLE}

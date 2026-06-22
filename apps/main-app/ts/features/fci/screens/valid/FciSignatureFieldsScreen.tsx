@@ -38,6 +38,7 @@ import {
   trackFciSignatureFieldsView,
   trackFciStartSignature
 } from "../../analytics";
+import { fciHasDocumentPreparationErrorSelector } from "../../store/selectors/fciErrors";
 import DocumentWithSignature from "../../components/DocumentWithSignature";
 import SignatureFieldItem from "../../components/SignatureFieldItem";
 import SignatureStatusComponent from "../../components/SignatureStatusComponent";
@@ -81,10 +82,15 @@ const FciSignatureFieldsScreen = () => {
     fciDocumentSignaturesSelector
   );
   const fciEnvironment = useIOSelector(fciEnvironmentSelector);
+  const hasDocumentPreparationError = useIOSelector(
+    fciHasDocumentPreparationErrorSelector
+  );
   const dispatch = useIODispatch();
   const navigation = useIONavigation();
   const [isClausesChecked, setIsClausesChecked] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [isDocumentWithSignatureOpen, setIsDocumentWithSignatureOpen] =
+    useState(false);
   const { showModal, hideModal } = useContext(LightModalContext);
 
   const { footerActionsMeasurements, handleFooterActionsMeasurements } =
@@ -93,6 +99,13 @@ const FciSignatureFieldsScreen = () => {
   useOnFirstRender(() => {
     trackFciSignatureFieldsView();
   });
+
+  useEffect(() => {
+    if (hasDocumentPreparationError && isDocumentWithSignatureOpen) {
+      setIsDocumentWithSignatureOpen(false);
+      hideModal();
+    }
+  }, [hasDocumentPreparationError, isDocumentWithSignatureOpen, hideModal]);
 
   // get signatureFields for the current document
   const docSignatures = useMemo(
@@ -139,12 +152,16 @@ const FciSignatureFieldsScreen = () => {
     useFciSignatureFieldInfo();
 
   const onPressDetail = (signatureField: SignatureField) => {
+    setIsDocumentWithSignatureOpen(true);
     trackFciShowSignatureFields(fciEnvironment);
     showModal(
       <DocumentWithSignature
         attrs={signatureField.attrs}
         currentDoc={currentDoc}
-        onClose={hideModal}
+        onClose={() => {
+          setIsDocumentWithSignatureOpen(false);
+          hideModal();
+        }}
         onError={() => onError()}
         testID={"FciDocumentWithSignatureTestID"}
       />
@@ -155,6 +172,7 @@ const FciSignatureFieldsScreen = () => {
    * Callback which sets the isError state to true and hides the modal.
    */
   const onError = () => {
+    setIsDocumentWithSignatureOpen(false);
     setIsError(true);
     hideModal();
   };

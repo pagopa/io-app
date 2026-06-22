@@ -9,8 +9,6 @@ import FciQtspClausesScreen from "../valid/FciQtspClausesScreen";
 import { mockQtspClausesMetadata } from "../../types/__mocks__/QtspClausesMetadata.mock";
 import { getNetworkError } from "../../../../utils/errors";
 
-const networkError = getNetworkError(new Error("network error"));
-
 describe("Test FciQtspClauses screen", () => {
   beforeEach(() => {
     jest.useFakeTimers();
@@ -75,7 +73,8 @@ describe("Test FciQtspClauses screen", () => {
     expect(component).toBeTruthy();
     expect(component.queryByTestId("FciLoadingScreenTestID")).toBeTruthy();
   });
-  it("should render the SignatureStatusComponent when network error problem occurs or polling is stopped if time limit reached", () => {
+  it("should render the LoadingComponent when polling fails (navigation to error screen handled by saga)", () => {
+    const networkError = getNetworkError(new Error("network error"));
     const globalState = appReducer(undefined, applicationChangeState("active"));
     const store: Store<GlobalState> = createStore(
       appReducer,
@@ -85,8 +84,7 @@ describe("Test FciQtspClauses screen", () => {
     store.dispatch(fciPollFilledDocument.failure(networkError));
     const component = renderComponent(store);
     expect(component).toBeTruthy();
-    expect(component.queryByTestId("FciLoadingScreenTestID")).toBeFalsy();
-    expect(component.queryByTestId("PollingErrorComponentTestID")).toBeTruthy();
+    expect(component.queryByTestId("FciLoadingScreenTestID")).toBeTruthy();
   });
 });
 

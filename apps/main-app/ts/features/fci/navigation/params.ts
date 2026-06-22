@@ -9,6 +9,15 @@ export type FciDocumentUnavailableScreenNavigationParams = {
   errorKind?: FciNetworkError["kind"];
 };
 
+export type FciQtspErrorKind =
+  | "qtsp_clauses"
+  | "filled_document"
+  | "poll_filled_document";
+
+export type FciQtspErrorScreenNavigationParams = {
+  errorKind: FciQtspErrorKind;
+};
+
 export type FciParamsList = {
   [FCI_ROUTES.ROUTER]: FciRouterScreenNavigationParams;
   [FCI_ROUTES.DOCUMENTS]: FciDocumentsScreenNavigationParams;
@@ -22,4 +31,5 @@ export type FciParamsList = {
   [FCI_ROUTES.FCI_LOGIN_L3]: undefined;
   [FCI_ROUTES.LOGIN_OPTIN]: undefined;
   [FCI_ROUTES.DOCUMENT_UNAVAILABLE]: FciDocumentUnavailableScreenNavigationParams;
+  [FCI_ROUTES.QTSP_ERROR]: FciQtspErrorScreenNavigationParams;
 };
