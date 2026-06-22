@@ -754,6 +754,27 @@ describe("itwProximityMachine", () => {
     expect(navigateToFailureScreen).not.toHaveBeenCalled();
   });
 
+  it("device-error in ClaimsDisclosure with NFC retrieval is consumed without failure", () => {
+    const actor = createActor(mockedMachine, {
+      snapshot: makeSnapshot(
+        { Presentment: "ClaimsDisclosure" },
+        { retrievalMethod: "nfc" }
+      )
+    });
+
+    actor.start();
+    actor.send({
+      type: "device-error",
+      error: new Error("expected NFC teardown error")
+    });
+
+    expect(actor.getSnapshot().value).toStrictEqual({
+      Presentment: "ClaimsDisclosure"
+    });
+    expect(actor.getSnapshot().context.failure).toBeUndefined();
+    expect(navigateToFailureScreen).not.toHaveBeenCalled();
+  });
+
   it("NFC document request with prior consent sends documents without re-terminating", async () => {
     sendDocuments.mockReturnValue(new Promise(() => {}));
     const actor = createActor(mockedMachine, {
