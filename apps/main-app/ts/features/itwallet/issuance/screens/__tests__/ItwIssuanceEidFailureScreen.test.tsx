@@ -22,12 +22,12 @@ const identityMismatchScenarios = [
   {
     name: "Documenti su IO",
     level: "l2",
-    bodyKey: "features.itWallet.issuance.notMatchingIdentityError.l2Body"
+    bodyKey: "features.itWallet.issuance.notMatchingIdentityError.body.l2"
   },
   {
     name: "IT-Wallet",
     level: "l3",
-    bodyKey: "features.itWallet.issuance.notMatchingIdentityError.l3Body"
+    bodyKey: "features.itWallet.issuance.notMatchingIdentityError.body.l3"
   }
 ] as const;
 

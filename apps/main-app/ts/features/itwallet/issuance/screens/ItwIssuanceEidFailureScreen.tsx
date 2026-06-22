@@ -240,8 +240,8 @@ const ContentView = ({ failure }: ContentViewProps) => {
             ),
             subtitle: I18n.t(
               isL3Issuance
-                ? "features.itWallet.issuance.notMatchingIdentityError.l3Body"
-                : "features.itWallet.issuance.notMatchingIdentityError.l2Body"
+                ? "features.itWallet.issuance.notMatchingIdentityError.body.l3"
+                : "features.itWallet.issuance.notMatchingIdentityError.body.l2"
             ),
             pictogram: "attention",
             action: {
