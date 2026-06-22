@@ -1,21 +1,10 @@
-import { getType } from "typesafe-actions";
-import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import {
-  defaultRequestPayload,
-  defaultRequestError,
-  successLoadNextPageMessagesPayload,
-  successLoadPreviousPageMessagesPayload,
-  successReloadMessagesPayload
-} from "../../../../__mocks__/messages";
 import {
   loadNextPageMessages,
   loadPreviousPageMessages,
   reloadAllMessages,
-  requestAutomaticMessagesRefresh,
   setShownMessageCategoryAction,
-  upsertMessageStatusAttributes,
-  UpsertMessageStatusAttributesPayload
+  upsertMessageStatusAttributes
 } from "../../../actions";
 import { GlobalState } from "../../../../../../store/reducers/types";
 import reducer, {
@@ -24,13 +13,13 @@ import reducer, {
   messageListForCategorySelector,
   emptyListReasonSelector,
   shouldShowFooterListComponentSelector,
-  messagePagePotFromCategorySelector,
   shouldShowRefreshControllOnListSelector,
-  isPaymentMessageWithPaidNoticeSelector
+  isPaymentMessageWithPaidNoticeSelector,
+  messagePagePotFromCategorySelector
 } from "..";
 import {
   AllPaginated,
-  LastRequestType,
+  LastRequestValues,
   MessagePage,
   MessagePagePot
 } from "../types";
@@ -46,463 +35,9 @@ import { PaymentByRptIdState } from "../../../../../../store/reducers/entities/p
 import { MessageCategory } from "../../../../../../../definitions/communication/MessageCategory";
 import { nextPageLoadingWaitMillisecondsGenerator } from "../../../../components/Home/homeUtils";
 
+type LastRequestType = LastRequestValues | undefined;
+
 describe("allPaginated reducer", () => {
-  describe("given a `reloadAllMessages` action", () => {
-    describe(`when a ${getType(
-      reloadAllMessages.request
-    )} is sent with filter for Archive`, () => {
-      const filter = { getArchived: true };
-      const actionRequest = reloadAllMessages.request({
-        ...defaultRequestPayload,
-        filter,
-        fromUserAction: false
-      });
-      it("should reset only the Archive state to loading", () => {
-        expect(
-          pot.isLoading(reducer(undefined, actionRequest).inbox.data)
-        ).toBe(false);
-        expect(
-          pot.isLoading(reducer(undefined, actionRequest).archive.data)
-        ).toBe(true);
-      });
-      it("should set the Archive lastRequest to 'all'", () => {
-        expect(reducer(undefined, actionRequest).archive.lastRequest).toEqual(
-          O.some("all")
-        );
-      });
-
-      describe(`and then a ${getType(
-        reloadAllMessages.success
-      )} is sent`, () => {
-        const initialState = reducer(undefined, actionRequest);
-        const action = reloadAllMessages.success({
-          ...successReloadMessagesPayload,
-          filter
-        });
-
-        it("should reset only the Archive state to the payload's content", () => {
-          expect(reducer(initialState, action).inbox.data).toEqual(pot.none);
-          expect(reducer(initialState, action).archive.data).toEqual(
-            pot.some({
-              page: successReloadMessagesPayload.messages,
-              next: successReloadMessagesPayload.pagination.next,
-              previous: successReloadMessagesPayload.pagination.previous
-            })
-          );
-        });
-        it("should set the Archive lastRequest to 'none'", () => {
-          expect(reducer(initialState, action).archive.lastRequest).toEqual(
-            O.none
-          );
-        });
-      });
-    });
-
-    describe(`when a ${getType(
-      reloadAllMessages.request
-    )} is sent without a filter`, () => {
-      const filter = { getArchived: false };
-      const actionRequest = reloadAllMessages.request({
-        ...defaultRequestPayload,
-        filter,
-        fromUserAction: false
-      });
-      it("should reset only the Inbox state to loading", () => {
-        expect(
-          pot.isLoading(reducer(undefined, actionRequest).inbox.data)
-        ).toBe(true);
-        expect(
-          pot.isLoading(reducer(undefined, actionRequest).archive.data)
-        ).toBe(false);
-      });
-
-      it("should set the Inbox lastRequest to 'all'", () => {
-        expect(reducer(undefined, actionRequest).inbox.lastRequest).toEqual(
-          O.some("all")
-        );
-      });
-
-      describe(`and then a ${getType(
-        reloadAllMessages.success
-      )} is sent`, () => {
-        const initialState = reducer(undefined, actionRequest);
-        const action = reloadAllMessages.success({
-          ...successReloadMessagesPayload,
-          filter
-        });
-
-        it("should reset only the Inbox state to the payload's content", () => {
-          expect(reducer(initialState, action).inbox.data).toEqual(
-            pot.some({
-              page: successReloadMessagesPayload.messages,
-              next: successReloadMessagesPayload.pagination.next,
-              previous: successReloadMessagesPayload.pagination.previous
-            })
-          );
-          expect(reducer(initialState, action).archive.data).toEqual(pot.none);
-        });
-        it("should set the Inbox lastRequest to 'none'", () => {
-          expect(reducer(initialState, action).inbox.lastRequest).toEqual(
-            O.none
-          );
-        });
-      });
-    });
-  });
-
-  describe("given a `loadNextPageMessages` action", () => {
-    describe(`when a ${getType(
-      loadNextPageMessages.request
-    )} is sent with filter for Archive`, () => {
-      const filter = { getArchived: true };
-      const actionRequest = loadNextPageMessages.request({
-        ...defaultRequestPayload,
-        filter,
-        fromUserAction: false
-      });
-
-      it("should reset only the Archive state to loading", () => {
-        expect(
-          pot.isLoading(reducer(undefined, actionRequest).inbox.data)
-        ).toBe(false);
-        expect(
-          pot.isLoading(reducer(undefined, actionRequest).archive.data)
-        ).toBe(true);
-      });
-      it("should set the Archive lastRequest to `next'", () => {
-        expect(reducer(undefined, actionRequest).archive.lastRequest).toEqual(
-          O.some("next")
-        );
-      });
-
-      describe(`and then a ${getType(
-        loadNextPageMessages.success
-      )} is sent`, () => {
-        const initialState = reducer(undefined, actionRequest);
-        const action = loadNextPageMessages.success({
-          ...successLoadNextPageMessagesPayload,
-          filter
-        });
-
-        it("should append the payload's content to the existing Archive page", () => {
-          const intermediateState = reducer(initialState, action);
-          expect(intermediateState.archive.data).toEqual(
-            pot.some({
-              page: successLoadNextPageMessagesPayload.messages,
-              next: successLoadNextPageMessagesPayload.pagination.next
-            })
-          );
-          // testing for concatenation
-          const finalState = reducer(intermediateState, action);
-          expect(finalState.archive.data).toEqual(
-            pot.some({
-              page: successLoadNextPageMessagesPayload.messages.concat(
-                successLoadNextPageMessagesPayload.messages
-              ),
-              next: successLoadNextPageMessagesPayload.pagination.next
-            })
-          );
-          expect(reducer(initialState, action).inbox.data).toEqual(pot.none);
-        });
-
-        it("should set the Archive lastRequest to 'none'", () => {
-          expect(reducer(initialState, action).archive.lastRequest).toEqual(
-            O.none
-          );
-        });
-      });
-    });
-
-    describe(`when a ${getType(
-      loadNextPageMessages.request
-    )} is sent without a filter`, () => {
-      const filter = { getArchived: false };
-      const actionRequest = loadNextPageMessages.request({
-        ...defaultRequestPayload,
-        filter,
-        fromUserAction: false
-      });
-
-      it("should reset only the Inbox state to loading", () => {
-        expect(
-          pot.isLoading(reducer(undefined, actionRequest).inbox.data)
-        ).toBe(true);
-        expect(
-          pot.isLoading(reducer(undefined, actionRequest).archive.data)
-        ).toBe(false);
-      });
-
-      it("should set the Inbox lastRequest to `next'", () => {
-        expect(reducer(undefined, actionRequest).inbox.lastRequest).toEqual(
-          O.some("next")
-        );
-      });
-
-      describe(`and then a ${getType(
-        loadNextPageMessages.success
-      )} is sent`, () => {
-        const initialState = reducer(undefined, actionRequest);
-        const action = loadNextPageMessages.success({
-          ...successLoadNextPageMessagesPayload,
-          filter
-        });
-
-        it("should append the payload's content to the existing Inbox page", () => {
-          const intermediateState = reducer(initialState, action);
-          expect(intermediateState.inbox.data).toEqual(
-            pot.some({
-              page: successLoadNextPageMessagesPayload.messages,
-              next: successLoadNextPageMessagesPayload.pagination.next
-            })
-          );
-          // testing for concatenation
-          const finalState = reducer(intermediateState, action);
-          expect(finalState.inbox.data).toEqual(
-            pot.some({
-              page: successLoadNextPageMessagesPayload.messages.concat(
-                successLoadNextPageMessagesPayload.messages
-              ),
-              next: successLoadNextPageMessagesPayload.pagination.next
-            })
-          );
-          expect(reducer(initialState, action).archive.data).toEqual(pot.none);
-        });
-
-        it("should set the Inbox lastRequest to 'none'", () => {
-          expect(reducer(initialState, action).inbox.lastRequest).toEqual(
-            O.none
-          );
-        });
-      });
-    });
-  });
-
-  describe("given a `loadPreviousPageMessages` action", () => {
-    describe(`when a ${getType(
-      loadPreviousPageMessages.request
-    )} is sent with filter for Archive`, () => {
-      const filter = { getArchived: true };
-      const actionRequest = loadPreviousPageMessages.request({
-        ...defaultRequestPayload,
-        filter,
-        fromUserAction: false
-      });
-
-      it("should reset only the Archive state to loading", () => {
-        expect(
-          pot.isLoading(reducer(undefined, actionRequest).inbox.data)
-        ).toBe(false);
-        expect(
-          pot.isLoading(reducer(undefined, actionRequest).archive.data)
-        ).toBe(true);
-      });
-      it("should set the Archive lastRequest to `next'", () => {
-        expect(reducer(undefined, actionRequest).archive.lastRequest).toEqual(
-          O.some("previous")
-        );
-      });
-
-      describe(`and then a ${getType(
-        loadPreviousPageMessages.success
-      )} is sent`, () => {
-        const initialState = reducer(undefined, actionRequest);
-        const action = loadPreviousPageMessages.success({
-          ...successLoadPreviousPageMessagesPayload,
-          filter
-        });
-
-        it("should prepend the payload's content to the existing Archive page", () => {
-          const intermediateState = reducer(initialState, action);
-          expect(intermediateState.archive.data).toEqual(
-            pot.some({
-              page: successLoadPreviousPageMessagesPayload.messages,
-              previous:
-                successLoadPreviousPageMessagesPayload.pagination.previous
-            })
-          );
-          const finalState = reducer(intermediateState, action);
-          // testing for prepend
-          expect(finalState.archive.data).toEqual(
-            pot.some({
-              page: successLoadPreviousPageMessagesPayload.messages.concat(
-                successLoadPreviousPageMessagesPayload.messages
-              ),
-              previous:
-                successLoadPreviousPageMessagesPayload.pagination.previous
-            })
-          );
-          expect(finalState.inbox.data).toEqual(pot.none);
-        });
-
-        describe("with an empty response", () => {
-          // no messages, no cursor
-          const actionWithEmptyPagination = loadPreviousPageMessages.success({
-            messages: [],
-            pagination: {},
-            filter,
-            fromUserAction: false
-          });
-
-          it("should preserve the `previous` Archive cursor", () => {
-            const intermediateState = reducer(initialState, action);
-            const finalState = reducer(
-              intermediateState,
-              actionWithEmptyPagination
-            );
-            expect(finalState.inbox.data).toEqual(pot.none);
-            expect(finalState.archive.data).toEqual(
-              pot.some({
-                page: successLoadPreviousPageMessagesPayload.messages,
-                previous:
-                  successLoadPreviousPageMessagesPayload.pagination.previous
-              })
-            );
-          });
-        });
-
-        it("should set the Archive lastRequest to 'none'", () => {
-          expect(reducer(initialState, action).archive.lastRequest).toEqual(
-            O.none
-          );
-        });
-      });
-    });
-
-    describe(`when a ${getType(
-      loadPreviousPageMessages.request
-    )} is sent without filter`, () => {
-      const filter = { getArchived: false };
-      const actionRequest = loadPreviousPageMessages.request({
-        ...defaultRequestPayload,
-        filter,
-        fromUserAction: false
-      });
-
-      it("should reset only the Inbox state to loading", () => {
-        expect(
-          pot.isLoading(reducer(undefined, actionRequest).inbox.data)
-        ).toBe(true);
-        expect(
-          pot.isLoading(reducer(undefined, actionRequest).archive.data)
-        ).toBe(false);
-      });
-
-      it("should set the Inbox lastRequest to `next'", () => {
-        expect(reducer(undefined, actionRequest).inbox.lastRequest).toEqual(
-          O.some("previous")
-        );
-      });
-
-      describe(`and then a ${getType(
-        loadPreviousPageMessages.success
-      )} is sent`, () => {
-        const initialState = reducer(undefined, actionRequest);
-        const action = loadPreviousPageMessages.success({
-          ...successLoadPreviousPageMessagesPayload,
-          filter
-        });
-
-        it("should prepend the payload's content to the existing page Inbox", () => {
-          const intermediateState = reducer(initialState, action);
-          expect(intermediateState.inbox.data).toEqual(
-            pot.some({
-              page: successLoadPreviousPageMessagesPayload.messages,
-              previous:
-                successLoadPreviousPageMessagesPayload.pagination.previous
-            })
-          );
-          const finalState = reducer(intermediateState, action);
-          // testing for prepend
-          expect(finalState.inbox.data).toEqual(
-            pot.some({
-              page: successLoadPreviousPageMessagesPayload.messages.concat(
-                successLoadPreviousPageMessagesPayload.messages
-              ),
-              previous:
-                successLoadPreviousPageMessagesPayload.pagination.previous
-            })
-          );
-          expect(finalState.archive.data).toEqual(pot.none);
-        });
-
-        describe("with an empty response", () => {
-          // no messages, no cursor
-          const actionWithEmptyPagination = loadPreviousPageMessages.success({
-            messages: [],
-            pagination: {},
-            filter,
-            fromUserAction: false
-          });
-
-          it("should preserve the `previous` Inbox cursor", () => {
-            const intermediateState = reducer(initialState, action);
-            const finalState = reducer(
-              intermediateState,
-              actionWithEmptyPagination
-            );
-            expect(finalState.inbox.data).toEqual(
-              pot.some({
-                page: successLoadPreviousPageMessagesPayload.messages,
-                previous:
-                  successLoadPreviousPageMessagesPayload.pagination.previous
-              })
-            );
-            expect(finalState.archive.data).toEqual(pot.none);
-          });
-        });
-
-        it("should set the Inbox lastRequest to 'none'", () => {
-          expect(reducer(initialState, action).inbox.lastRequest).toEqual(
-            O.none
-          );
-        });
-      });
-    });
-  });
-
-  describe("when loadPreviousPageMessages and loadNextPageMessages success actions follow each other", () => {
-    const initialState: AllPaginated = {
-      ...defaultState,
-      inbox: {
-        data: pot.some({
-          page: [],
-          previous: "abcde",
-          next: "12345"
-        }),
-        lastRequest: O.none,
-        lastUpdateTime: new Date(0)
-      }
-    };
-
-    it("the loadNext should not affect the existing `previous` cursor", () => {
-      const action = loadNextPageMessages.success(
-        successLoadNextPageMessagesPayload
-      );
-
-      expect(reducer(initialState, action).inbox.data).toEqual(
-        pot.some({
-          page: successLoadNextPageMessagesPayload.messages,
-          previous: "abcde",
-          next: successLoadNextPageMessagesPayload.pagination.next
-        })
-      );
-    });
-
-    it("the loadPrevious should not affect the existing `next` cursor", () => {
-      const action = loadPreviousPageMessages.success(
-        successLoadPreviousPageMessagesPayload
-      );
-
-      expect(reducer(initialState, action).inbox.data).toEqual(
-        pot.some({
-          page: successLoadPreviousPageMessagesPayload.messages,
-          previous: successLoadPreviousPageMessagesPayload.pagination.previous,
-          next: "12345"
-        })
-      );
-    });
-  });
-
   describe("when `setShownMessageCategoryAction` is received", () => {
     it("should change from INBOX to ARCHIVE", () => {
       const allPaginatedInitialState = reducer(
@@ -707,42 +242,6 @@ describe("allPaginated reducer", () => {
     });
   });
 
-  [
-    [
-      reloadAllMessages.request(defaultRequestPayload),
-      reloadAllMessages.failure(defaultRequestError)
-    ],
-    [
-      loadNextPageMessages.request(defaultRequestPayload),
-      loadNextPageMessages.failure(defaultRequestError)
-    ],
-    [
-      loadPreviousPageMessages.request(defaultRequestPayload),
-      loadPreviousPageMessages.failure(defaultRequestError)
-    ]
-  ]
-    .map(([request, failure]) => ({
-      initialState: reducer(undefined, request),
-      action: failure
-    }))
-    .forEach(({ initialState, action }) => {
-      describe(`when a ${action.type} failure is sent`, () => {
-        it(`preserves the existing lastRequest: ${initialState.inbox.lastRequest}`, () => {
-          expect(reducer(initialState, action).inbox.lastRequest).toEqual(
-            initialState.inbox.lastRequest
-          );
-        });
-        it("returns the error", () => {
-          const output = reducer(initialState, action).inbox.data;
-          const errorReason = pot.isError(output)
-            ? output.error.reason
-            : undefined;
-          expect(pot.isError(output)).toBe(true);
-          expect(errorReason).toBe(defaultRequestError.error.message);
-        });
-      });
-    });
-
   it("'lastUpdateTime' should match expected values for initial state", () => {
     const allPaginatedState = reducer(
       undefined,
@@ -751,138 +250,19 @@ describe("allPaginated reducer", () => {
     expect(allPaginatedState.archive.lastUpdateTime).toStrictEqual(new Date(0));
     expect(allPaginatedState.inbox.lastUpdateTime).toStrictEqual(new Date(0));
   });
-  const expectedResultForIndex = (index: number, archived?: boolean) => {
-    const isChangingTimeIndex = index === 1 || index === 4;
-    return {
-      archiveShouldHaveOriginalValue: !archived || !isChangingTimeIndex,
-      inboxShoudlHaveOriginalValue: archived || !isChangingTimeIndex
-    };
-  };
-  [undefined, false, true].forEach(archived =>
-    [
-      reloadAllMessages.request({
-        pageSize,
-        filter: { getArchived: archived },
-        fromUserAction: false
-      }),
-      reloadAllMessages.success({
-        filter: { getArchived: archived },
-        messages: [],
-        pagination: {},
-        fromUserAction: false
-      }),
-      reloadAllMessages.failure({
-        error: new Error(""),
-        filter: { getArchived: archived }
-      }),
-      loadPreviousPageMessages.request({
-        filter: { getArchived: archived },
-        pageSize,
-        fromUserAction: false
-      }),
-      loadPreviousPageMessages.success({
-        filter: { getArchived: archived },
-        messages: [],
-        pagination: {},
-        fromUserAction: false
-      }),
-      loadPreviousPageMessages.failure({
-        error: new Error(""),
-        filter: { getArchived: archived }
-      }),
-      loadNextPageMessages.request({
-        filter: { getArchived: archived },
-        pageSize,
-        fromUserAction: false
-      }),
-      loadNextPageMessages.success({
-        filter: { getArchived: archived },
-        messages: [],
-        pagination: {},
-        fromUserAction: false
-      }),
-      loadNextPageMessages.failure({
-        error: new Error(""),
-        filter: { getArchived: archived }
-      })
-    ].forEach((dispatchedAction, index) => {
-      it(`'lastUpdateTime' should match expected value for action '${
-        dispatchedAction.type
-      }' with filter '${
-        archived ? "ARCHIVED" : archived === false ? "INBOX" : "undefined"
-      }'`, () => {
-        const reducerState = reducer(undefined, dispatchedAction);
-        const result = expectedResultForIndex(index, archived);
-        if (result.archiveShouldHaveOriginalValue) {
-          expect(reducerState.archive.lastUpdateTime).toStrictEqual(
-            new Date(0)
-          );
-        } else {
-          expect(reducerState.archive.lastUpdateTime).not.toStrictEqual(
-            new Date(0)
-          );
-        }
-        if (result.inboxShoudlHaveOriginalValue) {
-          expect(reducerState.inbox.lastUpdateTime).toStrictEqual(new Date(0));
-        } else {
-          expect(reducerState.inbox.lastUpdateTime).not.toStrictEqual(
-            new Date(0)
-          );
-        }
-      });
-    })
-  );
-  it("'inbox.lastUpdateTime' should be 'new Date(0)' after 'requestAutomaticMessagesRefresh('INBOX')' dispatch", () => {
-    const lastUpdateTime = new Date();
-    const initialState = {
-      archive: {
-        data: pot.none,
-        lastRequest: O.none,
-        lastUpdateTime
-      },
-      inbox: {
-        data: pot.none,
-        lastRequest: O.none,
-        lastUpdateTime
-      },
-      migration: O.none,
-      shownCategory: "INBOX"
-    } as AllPaginated;
-    const reducerState = reducer(
-      initialState,
-      requestAutomaticMessagesRefresh("INBOX")
-    );
-    expect(reducerState.archive.lastUpdateTime).toStrictEqual(lastUpdateTime);
-    expect(reducerState.inbox.lastUpdateTime).toStrictEqual(new Date(0));
-  });
-  it("'archive.lastUpdateTime' should be 'new Date(0)' after 'requestAutomaticMessagesRefresh('ARCHIVE')' dispatch", () => {
-    const lastUpdateTime = new Date();
-    const initialState = {
-      archive: {
-        data: pot.none,
-        lastRequest: O.none,
-        lastUpdateTime
-      },
-      inbox: {
-        data: pot.none,
-        lastRequest: O.none,
-        lastUpdateTime
-      },
-      migration: O.none,
-      shownCategory: "INBOX"
-    } as AllPaginated;
-    const reducerState = reducer(
-      initialState,
-      requestAutomaticMessagesRefresh("ARCHIVE")
-    );
-    expect(reducerState.archive.lastUpdateTime).toStrictEqual(new Date(0));
-    expect(reducerState.inbox.lastUpdateTime).toStrictEqual(lastUpdateTime);
-  });
 });
 
 const defaultState: AllPaginated = {
-  inbox: { data: pot.none, lastRequest: O.none, lastUpdateTime: new Date(0) },
-  archive: { data: pot.none, lastRequest: O.none, lastUpdateTime: new Date(0) },
+  inbox: {
+    data: pot.none,
+    lastRequest: undefined,
+    lastUpdateTime: new Date(0)
+  },
+  archive: {
+    data: pot.none,
+    lastRequest: undefined,
+    lastUpdateTime: new Date(0)
+  },
   shownCategory: "INBOX"
 };
 
@@ -953,324 +333,12 @@ describe("isLoadingOrUpdatingInbox selector", () => {
               ...defaultState,
               inbox: {
                 data: inbox,
-                lastRequest: O.none,
+                lastRequest: undefined,
                 lastUpdateTime: new Date(0)
               }
             })
           )
         ).toBe(expectedReturn);
-      });
-    });
-  });
-});
-
-describe("Message state upsert", () => {
-  const A = successReloadMessagesPayload.messages[0];
-  const B = successReloadMessagesPayload.messages[1];
-  const C = successReloadMessagesPayload.messages[2];
-
-  [
-    {
-      given: {
-        desc: "given a pot.none archive",
-        inbox: pot.some({
-          page: [A],
-          previous: A.id,
-          next: undefined
-        }),
-        archive: pot.none
-      },
-      when: {
-        desc: "when archiving a message",
-        message: A,
-        update: { tag: "archiving", isArchived: true }
-      },
-      then: {
-        desc: "then the message is deleted from inbox and archive remains unchanged",
-        expectedInbox: pot.some({
-          page: [],
-          previous: undefined,
-          next: undefined
-        }),
-        expectedArchive: pot.none
-      }
-    },
-
-    {
-      given: {
-        desc: "given an empty archive",
-        inbox: pot.some({
-          page: [A],
-          previous: A.id,
-          next: undefined
-        }),
-        archive: pot.some({
-          page: [],
-          previous: undefined,
-          next: undefined
-        })
-      },
-      when: {
-        desc: "when archiving a message",
-        message: A,
-        update: { tag: "archiving", isArchived: true }
-      },
-      then: {
-        desc: "then the message is moved from inbox to archive and cursors updated",
-        expectedInbox: pot.some({
-          page: [],
-          previous: undefined,
-          next: undefined
-        }),
-        expectedArchive: pot.some({
-          page: [{ ...A, isArchived: true }],
-          previous: A.id,
-          next: undefined
-        })
-      }
-    },
-
-    {
-      given: {
-        desc: "given a partially fetched archive",
-        inbox: pot.some({
-          page: [A],
-          previous: A.id,
-          next: undefined
-        }),
-        archive: pot.some({
-          page: [B, C],
-          previous: B.id,
-          next: C.id
-        })
-      },
-      when: {
-        desc: "when archiving a message newer than the archived ones",
-        message: A,
-        update: { tag: "archiving", isArchived: true }
-      },
-      then: {
-        desc: "then the message is moved from inbox to archive and cursors updated",
-        expectedInbox: pot.some({
-          page: [],
-          previous: undefined,
-          next: undefined
-        }),
-        expectedArchive: pot.some({
-          page: [{ ...A, isArchived: true }, B, C],
-          previous: A.id,
-          next: C.id
-        })
-      }
-    },
-
-    {
-      given: {
-        desc: "given a partially fetched archive",
-        inbox: pot.some({
-          page: [C],
-          previous: C.id,
-          next: undefined
-        }),
-        archive: pot.some({
-          page: [A, B],
-          previous: A.id,
-          next: B.id
-        })
-      },
-      when: {
-        desc: "when archiving a message older than the archived ones",
-        message: C,
-        update: { tag: "archiving", isArchived: true }
-      },
-      then: {
-        desc: "then the message is removed from inbox and archive remains unchanged",
-        expectedInbox: pot.some({
-          page: [],
-          previous: undefined,
-          next: undefined
-        }),
-        expectedArchive: pot.some({
-          page: [A, B],
-          previous: A.id,
-          next: B.id
-        })
-      }
-    },
-
-    {
-      given: {
-        desc: "given a partially fetched archive",
-        inbox: pot.some({
-          page: [B],
-          previous: B.id,
-          next: undefined
-        }),
-        archive: pot.some({
-          page: [A, C],
-          previous: A.id,
-          next: C.id
-        })
-      },
-      when: {
-        desc: "when archiving a message neither newer nor older than the archived ones",
-        message: B,
-        update: { tag: "archiving", isArchived: true }
-      },
-      then: {
-        desc: "then the message is moved from inbox to archive and archive cursors remain unchanged",
-        expectedInbox: pot.some({
-          page: [],
-          previous: undefined,
-          next: undefined
-        }),
-        expectedArchive: pot.some({
-          page: [A, { ...B, isArchived: true }, C],
-          previous: A.id,
-          next: C.id
-        })
-      }
-    },
-
-    {
-      given: {
-        desc: "given a fully fetched archive",
-        inbox: pot.some({
-          page: [C],
-          previous: C.id,
-          next: undefined
-        }),
-        archive: pot.some({
-          page: [A, B],
-          previous: A.id,
-          next: undefined
-        })
-      },
-      when: {
-        desc: "when archiving a message older than the archived ones",
-        message: C,
-        update: { tag: "archiving", isArchived: true }
-      },
-      then: {
-        desc: "then the message is moved from inbox to archive and next cursor remains undefined",
-        expectedInbox: pot.some({
-          page: [],
-          previous: undefined,
-          next: undefined
-        }),
-        expectedArchive: pot.some({
-          page: [A, B, { ...C, isArchived: true }],
-          previous: A.id,
-          next: undefined
-        })
-      }
-    },
-    {
-      given: {
-        desc: "given an unread message in inbox",
-        inbox: pot.some({
-          page: [{ ...A, isRead: false }],
-          previous: A.id,
-          next: undefined
-        }),
-        archive: pot.none
-      },
-      when: {
-        desc: "when reading the message",
-        message: { ...A, isRead: false },
-        update: { tag: "reading" }
-      },
-      then: {
-        desc: "then the message state is updated accordingly",
-        expectedInbox: pot.some({
-          page: [{ ...A, isRead: true }],
-          previous: A.id,
-          next: undefined
-        }),
-        expectedArchive: pot.none
-      }
-    },
-    {
-      given: {
-        desc: "given an unread message in inbox",
-        inbox: pot.some({
-          page: [{ ...A, isRead: false, isArchived: false }],
-          previous: A.id,
-          next: undefined
-        }),
-        archive: pot.some({
-          page: [],
-          previous: undefined,
-          next: undefined
-        })
-      },
-      when: {
-        desc: "when reading and archiving the message",
-        message: { ...A, isRead: false, isArchived: false },
-        update: { tag: "bulk", isArchived: true }
-      },
-      then: {
-        desc: "then the message state is updated accordingly",
-        expectedInbox: pot.some({
-          page: [],
-          previous: undefined,
-          next: undefined
-        }),
-        expectedArchive: pot.some({
-          page: [{ ...A, isRead: true, isArchived: true }],
-          previous: A.id,
-          next: undefined
-        })
-      }
-    }
-  ].forEach(({ given, when, then }) => {
-    describe(`${given.desc}`, () => {
-      const initialState = {
-        ...defaultState,
-        inbox: { ...defaultState.inbox, data: given.inbox },
-        archive: { ...defaultState.archive, data: given.archive }
-      };
-
-      describe(`${when.desc}`, () => {
-        const payload: UpsertMessageStatusAttributesPayload = {
-          message: when.message,
-          update: when.update as UpsertMessageStatusAttributesPayload["update"]
-        };
-
-        const requestState = reducer(
-          initialState,
-          upsertMessageStatusAttributes.request(payload)
-        );
-
-        it(`${then.desc}`, () => {
-          expect(requestState.archive.data).toEqual(then.expectedArchive);
-          expect(requestState.inbox.data).toEqual(then.expectedInbox);
-        });
-
-        describe(`and the request succeeds`, () => {
-          const successState = reducer(
-            requestState,
-            upsertMessageStatusAttributes.success(payload)
-          );
-          it(`archive and inbox keep their request state`, () => {
-            expect(successState.archive.data).toEqual(then.expectedArchive);
-            expect(successState.inbox.data).toEqual(then.expectedInbox);
-          });
-        });
-
-        describe(`and the request fails`, () => {
-          const failureState = reducer(
-            requestState,
-            upsertMessageStatusAttributes.failure({
-              error: new Error(),
-              payload
-            })
-          );
-          it(`archive and inbox are reverted to their original state`, () => {
-            expect(failureState.archive.data).toEqual(given.archive);
-            expect(failureState.inbox.data).toEqual(given.inbox);
-          });
-        });
       });
     });
   });
@@ -1572,22 +640,20 @@ describe("shouldShowFooterListComponentSelector", () => {
     pot.someError(nonEmptyMessagePage, { reason: "", time: new Date() })
   ];
   const lastRequests: Array<LastRequestType> = [
-    O.some("all"),
-    O.some("next"),
-    O.some("previous"),
-    O.none
+    "all",
+    "next",
+    "previous",
+    undefined
   ];
   categories.forEach(category =>
     lastRequests.forEach(lastRequest =>
       messagePagePots.forEach(messagePagePot => {
         const footerIsVisible =
-          O.isSome(lastRequest) &&
-          lastRequest.value === "next" &&
-          isSomeLoadingOrSomeUpdating(messagePagePot);
+          lastRequest === "next" && isSomeLoadingOrSomeUpdating(messagePagePot);
         it(`Footer should be ${
           footerIsVisible ? "visible" : "hidden"
         }, ${category}, '${
-          O.isSome(lastRequest) ? lastRequest.value : "none"
+          lastRequest
         }' lastRequest, ${messagePagePot.kind}`, () => {
           const state = generateAllPaginatedDataStateForCategory(
             category,
@@ -1611,8 +677,10 @@ describe("messagePagePotFromCategorySelector", () => {
       category,
       messagePagePot
     );
-    const outputMessagePagePot =
-      messagePagePotFromCategorySelector(category)(state);
+    const outputMessagePagePot = messagePagePotFromCategorySelector(
+      category,
+      state
+    );
     expect(outputMessagePagePot).toStrictEqual(messagePagePot);
   });
 });
@@ -1637,10 +705,10 @@ describe("shouldShowRefreshControllOnListSelector", () => {
     pot.someError(nonEmptyMessagePage, { reason: "", time: new Date() })
   ];
   const messageRequests: ReadonlyArray<LastRequestType> = [
-    O.some("next"),
-    O.some("previous"),
-    O.some("all"),
-    O.none
+    "next",
+    "previous",
+    "all",
+    undefined
   ];
 
   categories.forEach(category =>
@@ -1649,12 +717,11 @@ describe("shouldShowRefreshControllOnListSelector", () => {
         const expectedOutput =
           (messagePagePot.kind === "PotSomeLoading" ||
             messagePagePot.kind === "PotSomeUpdating") &&
-          O.isSome(messageRequest) &&
-          (messageRequest.value === "all" ||
-            messageRequest.value === "previous");
+          messageRequest !== undefined &&
+          (messageRequest === "all" || messageRequest === "previous");
 
         it(`should return ${expectedOutput}, ${category}, '${
-          O.isSome(messageRequest) ? messageRequest.value : "None"
+          messageRequest
         }' lastRequest, ${messagePagePot.kind}`, () => {
           const state = generateAllPaginatedDataStateForCategory(
             category,
@@ -1795,7 +862,7 @@ describe("isPaymentMessageWithPaidNoticeSelector", () => {
 const generateAllPaginatedDataStateForCategory = (
   category: MessageListCategory,
   data: MessagePagePot,
-  lastRequest: LastRequestType = O.none
+  lastRequest: LastRequestType = undefined
 ): GlobalState =>
   ({
     entities: {
@@ -1804,11 +871,11 @@ const generateAllPaginatedDataStateForCategory = (
           inbox:
             category === "INBOX"
               ? { data, lastRequest }
-              : { data: pot.none, lastRequest: O.none },
+              : { data: pot.none, lastRequest: undefined },
           archive:
             category === "ARCHIVE"
               ? { data, lastRequest }
-              : { data: pot.none, lastRequest: O.none }
+              : { data: pot.none, lastRequest: undefined }
         }
       }
     }

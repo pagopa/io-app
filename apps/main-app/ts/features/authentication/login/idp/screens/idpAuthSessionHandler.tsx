@@ -17,6 +17,7 @@ import {
   Body,
   H6,
   IOButton,
+  IOVisualCostants,
   Pictogram,
   VSpacer
 } from "@pagopa/io-app-design-system";
@@ -36,7 +37,6 @@ import {
 import { assistanceToolConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { idpContextualHelpDataFromIdSelector } from "../../../../../store/reducers/content";
 import { isMixpanelEnabled } from "../../../../../store/reducers/persistedPreferences";
-import themeVariables from "../../../../../theme/variables";
 import { emptyContextualHelp } from "../../../../../utils/contextualHelp";
 import {
   assistanceToolRemoteConfig,
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     justifyContent: "center",
     alignItems: "center",
-    padding: themeVariables.contentPadding
+    padding: IOVisualCostants.appMarginDefault
   },
   title: {
     textAlign: "center"

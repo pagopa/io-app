@@ -1,6 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
-import * as E from "fp-ts/lib/Either";
 import { MessageListCategory } from "../../../types/messageListCategory";
 import { UIMessage } from "../../../types";
 
@@ -18,19 +16,12 @@ export type MessageError = {
 export type MessagePagePot = pot.Pot<MessagePage, MessageError>;
 
 export type LastRequestValues = "previous" | "next" | "all";
-export type LastRequestType = O.Option<LastRequestValues>;
 
 export type Collection = {
   data: MessagePagePot;
   /** persist the last action type occurred */
-  lastRequest: LastRequestType;
+  lastRequest?: LastRequestValues;
   lastUpdateTime: Date;
-};
-
-export type MessageOperation = "archive" | "restore";
-export type MessageOperationFailure = {
-  error: Error;
-  operation: MessageOperation;
 };
 
 /**
@@ -39,6 +30,5 @@ export type MessageOperationFailure = {
 export type AllPaginated = {
   archive: Collection;
   inbox: Collection;
-  latestMessageOperation?: E.Either<MessageOperationFailure, MessageOperation>;
   shownCategory: MessageListCategory;
 };

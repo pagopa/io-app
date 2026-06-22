@@ -7,6 +7,7 @@ import { assert } from "../../../../utils/assert";
 import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import * as cieUtils from "../../../authentication/login/cie/utils/cie";
 import { trackItwRequest } from "../../analytics";
+import { toItwIdMethod } from "../../analytics/utils/types";
 import { Env } from "../../common/utils/environment";
 import {
   getWalletInstanceAttestation,
@@ -50,6 +51,8 @@ import type {
   IdentificationContext,
   MrtdPoPContext
 } from "./context";
+
+export type CreateWalletInstanceActorParams = { isRenewal: boolean };
 
 export type RequestAccessTokenActorParams = {
   walletInstanceAttestation: string | undefined;
@@ -144,21 +147,32 @@ export const createEidIssuanceActorsImplementation = (
     );
   }),
 
-  createWalletInstance: fromPromise<string>(async () => {
-    const sessionToken = sessionTokenSelector(store.getState());
-    assert(sessionToken, "sessionToken is undefined");
+  createWalletInstance: fromPromise<string, CreateWalletInstanceActorParams>(
+    async ({ input }) => {
+      const sessionToken = sessionTokenSelector(store.getState());
+      assert(sessionToken, "sessionToken is undefined");
 
-    // Reset the wallet store to prevent having dirty state before registering a new wallet instance
-    store.dispatch(itwLifecycleStoresReset());
+      // Reset the wallet store to prevent having dirty state before registering a new wallet instance.
+      // This is skipped for renewal otherwise the entire wallet is lost if the user abandons the flow.
+      if (!input.isRenewal) {
+        store.dispatch(itwLifecycleStoresReset());
+      }
 
-    // Await the integrity preparation before requesting the integrity key tag
-    await ensureIntegrityServiceIsStoreReadyOrThrow(store);
+      // Await the integrity preparation before requesting the integrity key tag
+      await ensureIntegrityServiceIsStoreReadyOrThrow(store);
 
-    const hardwareKeyTag = await getIntegrityHardwareKeyTag();
-    await registerWalletInstance(env, itwVersion, hardwareKeyTag, sessionToken);
+      const hardwareKeyTag = await getIntegrityHardwareKeyTag();
+      await registerWalletInstance(
+        env,
+        itwVersion,
+        hardwareKeyTag,
+        sessionToken,
+        { isRenewal: input.isRenewal }
+      );
 
-    return hardwareKeyTag;
-  }),
+      return hardwareKeyTag;
+    }
+  ),
 
   getWalletAttestation: fromPromise<
     WalletInstanceAttestations,
@@ -363,7 +377,7 @@ export const createEidIssuanceActorsImplementation = (
         });
 
       trackItwRequest(
-        input.identification.mode,
+        toItwIdMethod(input.identification),
         input.level === "l3" ? "L3" : "L2"
       );
 

@@ -1186,6 +1186,7 @@ Inizia"
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -2349,6 +2350,7 @@ Aggiungi un documento"
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -3512,6 +3514,7 @@ Inizia"
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -5699,6 +5702,7 @@ exports[`ItwDiscoveryBanner snapshots should match snapshot for reactivation ban
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
