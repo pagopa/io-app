@@ -274,7 +274,7 @@ describe("FCI Saga Tests", () => {
         .put(fciClearAllFiles({ path: FciDownloadPreviewDirectoryPath }))
         .call(
           NavigationService.dispatchNavigationAction,
-          CommonActions.navigate(ROUTES.MAIN)
+          CommonActions.navigate(ROUTES.MAIN, undefined, { pop: true })
         )
         .run());
   });
