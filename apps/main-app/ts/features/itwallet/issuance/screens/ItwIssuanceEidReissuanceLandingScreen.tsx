@@ -49,9 +49,14 @@ export const ItwIssuanceEidReissuanceLandingScreen = () => {
             "features.itWallet.reissuanceLandingScreen.notNecessary.primaryAction"
           ),
           onPress: () =>
-            navigation.popTo(ROUTES.MAIN, {
-              screen: ROUTES.WALLET_HOME,
-              params: { newMethodAdded: false }
+            navigation.reset({
+              index: 1,
+              routes: [
+                {
+                  name: ROUTES.MAIN,
+                  params: { screen: ROUTES.WALLET_HOME, newMethodAdded: false }
+                }
+              ]
             })
         }}
         secondaryAction={{

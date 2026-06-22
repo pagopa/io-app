@@ -1,15 +1,14 @@
 import { useIsFocused } from "@react-navigation/core";
 import I18n from "i18next";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Alert } from "react-native";
-import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton";
+import { useHardwareBackButtonWhenFocused } from "../../../../hooks/useHardwareBackButton";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import {
   trackItwDismissalAction,
   trackItwDismissalContext
 } from "../../analytics";
 import { ItwScreenFlowContext } from "../../analytics/utils/types";
-import { useItwDisableGestureNavigation } from "./useItwDisableGestureNavigation";
 
 type ItwDismissalDialogProps = {
   handleDismiss?: () => void;
@@ -39,8 +38,6 @@ export const useItwDismissalDialog = ({
   customLabels = {}
 }: ItwDismissalDialogProps = {}) => {
   const navigation = useIONavigation();
-  const [isDismissing, setIsDismissing] = useState(false);
-  const isFocused = useIsFocused();
 
   const title =
     customLabels.title ?? I18n.t("features.itWallet.generic.alert.title");
@@ -80,29 +77,19 @@ export const useItwDismissalDialog = ({
         style: "destructive",
         onPress: () => {
           trackUserAction(confirmLabel);
-          setIsDismissing(true);
+          (handleDismiss || navigation.goBack)();
         }
       }
     ]);
   };
 
-  // Gestures disabled when using dismissal dialogs.
-  // TODO: Add proper handling for gesture navigation
-  useItwDisableGestureNavigation(enabled);
-
-  useHardwareBackButton(() => {
-    if (enabled && isFocused) {
-      show();
-      return true;
+  useHardwareBackButtonWhenFocused(() => {
+    if (!enabled) {
+      return false;
     }
-    return false;
+    show();
+    return true;
   });
-
-  useEffect(() => {
-    if (isDismissing) {
-      (handleDismiss || navigation.popToTop)();
-    }
-  }, [isDismissing, handleDismiss, navigation]);
 
   return { show };
 };

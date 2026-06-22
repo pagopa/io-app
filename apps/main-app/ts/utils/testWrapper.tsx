@@ -41,7 +41,7 @@ export const renderScreenWithNavigationStoreContext = <S,>(
       <IOThemeContextProvider theme={"light"}>
         <TestInnerNavigationContainer>
           <Stack.Navigator
-            screenOptions={{ ...screenOptions, animation: "none" }}
+            screenOptions={{ ...screenOptions, animationEnabled: false }}
           >
             <Stack.Screen
               name={route}

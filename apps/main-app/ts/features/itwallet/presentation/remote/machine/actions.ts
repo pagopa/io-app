@@ -37,7 +37,6 @@ export const createRemoteActionsImplementation = (
   navigateToFailureScreen: () => {
     navigation.navigate(ITW_REMOTE_ROUTES.MAIN, {
       screen: ITW_REMOTE_ROUTES.FAILURE,
-      pop: true
     });
   },
 
@@ -45,27 +44,22 @@ export const createRemoteActionsImplementation = (
     navigation.navigate(ITW_ROUTES.MAIN, {
       screen: ITW_ROUTES.DISCOVERY.INFO,
       params: { level: "l3" }, // To continue with the presentation, IT-Wallet must be activated
-      pop: true
     });
   },
 
   navigateToClaimsDisclosureScreen: () => {
     navigation.navigate(ITW_REMOTE_ROUTES.MAIN, {
       screen: ITW_REMOTE_ROUTES.CLAIMS_DISCLOSURE,
-      pop: true
     });
   },
 
   navigateToBarcodeScanScreen: () => {
-    navigation.navigate(ROUTES.BARCODE_SCAN, undefined, {
-      pop: true
-    });
+    navigation.navigate(ROUTES.BARCODE_SCAN);
   },
 
   navigateToAuthResponseScreen: () => {
     navigation.navigate(ITW_REMOTE_ROUTES.MAIN, {
       screen: ITW_REMOTE_ROUTES.AUTH_RESPONSE,
-      pop: true
     });
   },
 
