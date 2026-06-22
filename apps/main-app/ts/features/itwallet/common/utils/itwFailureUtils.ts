@@ -56,13 +56,10 @@ const anprPid404Failure = z.object({
   })
 });
 
-const MRTD_TAX_ID_CODE_MISMATCH_ERROR = "tax_id_code_mismatch";
-const MRTD_TAX_ID_CODE_MISMATCH_STATUS_CODE = 400;
-
 const mrtdTaxIdCodeMismatchFailure = z.object({
-  statusCode: z.literal(MRTD_TAX_ID_CODE_MISMATCH_STATUS_CODE),
+  statusCode: z.literal(400),
   reason: z.object({
-    error: z.literal(MRTD_TAX_ID_CODE_MISMATCH_ERROR)
+    error: z.literal("tax_id_code_mismatch")
   })
 });
 
