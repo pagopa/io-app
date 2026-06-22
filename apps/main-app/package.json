@@ -41,7 +41,7 @@
     "dev-pod-install": "cd ios && NO_INTERNAL_MODULE=1 bundle exec pod install && cd ..",
     "dev-pod-update": "cd ios && NO_INTERNAL_MODULE=1 bundle exec pod update && cd .."
   },
-   "lint-staged": {
+  "lint-staged": {
     "*.{ts,tsx}": [
       "prettier --write",
       "eslint --fix"
