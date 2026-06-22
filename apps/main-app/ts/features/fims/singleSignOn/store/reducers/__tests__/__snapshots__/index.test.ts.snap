@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://jestjs.io/docs/snapshot-testing
+
+exports[`singleSignOn reducer Should match snapshot 1`] = `
+{
+  "ctaText": undefined,
+  "currentFlowState": "idle",
+  "ephemeralSessionOniOS": false,
+  "relyingPartyServiceId": undefined,
+  "relyingPartyUrl": undefined,
+  "ssoData": {
+    "kind": "PotNone",
+  },
+}
+`;
