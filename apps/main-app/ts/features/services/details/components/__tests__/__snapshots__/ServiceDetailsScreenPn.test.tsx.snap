@@ -382,6 +382,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is active 1`]
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -612,6 +613,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is active 1`]
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -1515,6 +1517,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not active
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -1745,6 +1748,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not active
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -2648,6 +2652,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not enable
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -2878,6 +2883,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not enable
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -3386,6 +3392,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -3616,6 +3623,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when service is not suppor
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {
@@ -4519,6 +4527,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when servicePreference cou
                                   meetOrSlice={0}
                                   minX={0}
                                   minY={0}
+                                  pointerEvents="none"
                                   style={
                                     [
                                       {
@@ -4749,6 +4758,7 @@ exports[`ServiceDetailsScreenPn should match snapshot when servicePreference cou
                                     meetOrSlice={0}
                                     minX={0}
                                     minY={0}
+                                    pointerEvents="none"
                                     style={
                                       [
                                         {

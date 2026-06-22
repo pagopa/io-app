@@ -10,6 +10,7 @@ import { StyleSheet, View } from "react-native";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { QrCodeImage } from "../../../../components/QrCodeImage";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
+import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import {
   PROXIMITY_STATUS,
@@ -68,6 +69,12 @@ export const ItwProximityPlaygroundScreen = () => {
     sendDocument,
     sendError
   } = useItwProximityFlow();
+
+  useDebugInfo({
+    status,
+    request,
+    isNfcEnabled
+  });
 
   useHeaderSecondLevel({
     title: "Proximity Playground"

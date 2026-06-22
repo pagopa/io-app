@@ -446,6 +446,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -1034,6 +1035,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -1622,6 +1624,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -2210,6 +2213,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -2798,6 +2802,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -3386,6 +3391,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, no 
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -3974,6 +3980,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -4762,6 +4769,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -5550,6 +5558,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -6338,6 +6347,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -7126,6 +7136,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -7914,6 +7925,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate disabled, wit
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -8702,6 +8714,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -9290,6 +9303,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -9878,6 +9892,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -10466,6 +10481,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -11054,6 +11070,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -11642,6 +11659,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, no h
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -12230,6 +12248,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -13018,6 +13037,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -13806,6 +13826,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -14594,6 +14615,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -15382,6 +15404,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {
@@ -16170,6 +16193,7 @@ exports[`TimelineListItem Should match snapshot (temporary mandate enabled, with
                               meetOrSlice={0}
                               minX={0}
                               minY={0}
+                              pointerEvents="none"
                               style={
                                 [
                                   {

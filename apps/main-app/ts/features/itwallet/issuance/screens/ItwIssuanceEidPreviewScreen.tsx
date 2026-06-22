@@ -3,7 +3,6 @@ import {
   ContentWrapper,
   ForceScrollDownView,
   H2,
-  HeaderSecondLevel,
   HStack,
   Icon,
   IOMarkdownLite,
@@ -14,11 +13,11 @@ import { useFocusEffect, useRoute } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
-import { useCallback, useLayoutEffect } from "react";
+import { useCallback } from "react";
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
-import { useIONavigation } from "../../../../navigation/params/AppParamsList";
+import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIODispatch } from "../../../../store/hooks";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
 import { identificationRequest } from "../../../identification/store/actions";
@@ -39,6 +38,7 @@ import {
   trackItwRequestSuccess,
   trackSaveCredentialToWallet
 } from "../analytics";
+import { toItwIdMethod } from "../../analytics/utils/types";
 import { ItwCredentialPreviewClaimsList } from "../components/ItwCredentialPreviewClaimsList";
 
 export const ItwIssuanceEidPreviewScreen = () => {
@@ -69,7 +69,6 @@ type ContentViewProps = {
  */
 const ContentView = ({ eid }: ContentViewProps) => {
   const dispatch = useIODispatch();
-  const navigation = useIONavigation();
   const route = useRoute();
 
   const machineRef = ItwEidIssuanceMachineContext.useActorRef();
@@ -93,8 +92,8 @@ const ContentView = ({ eid }: ContentViewProps) => {
       });
       if (identification) {
         trackItwRequestSuccess(
-          identification?.mode,
-          identification?.level,
+          toItwIdMethod(identification),
+          identification.level,
           isL3 ? "L3" : "L2"
         );
       }
@@ -132,22 +131,11 @@ const ContentView = ({ eid }: ContentViewProps) => {
     );
   };
 
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerShown: true,
-      header: () => (
-        <HeaderSecondLevel
-          title=""
-          type="singleAction"
-          firstAction={{
-            icon: "closeLarge",
-            onPress: dismissDialog.show,
-            accessibilityLabel: I18n.t("global.buttons.close")
-          }}
-        />
-      )
-    });
-  }, [navigation, dismissDialog]);
+  useHeaderSecondLevel({
+    title: "",
+    goBack: dismissDialog.show,
+    supportRequest: true
+  });
 
   return (
     <LoadingSpinnerOverlay isLoading={isLoading} loadingOpacity={1}>

@@ -10,9 +10,8 @@ import {
 } from "@pagopa/io-app-design-system";
 
 import { ReactNode, useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { ActivityIndicator, StyleSheet, View } from "react-native";
 import I18n from "i18next";
-import ActivityIndicator from "../../../components/ui/ActivityIndicator";
 import { CircularProgress } from "../../../components/ui/CircularProgress";
 import { LoadingIndicator } from "../../../components/ui/LoadingIndicator";
 import { DSComponentViewerBox } from "../components/DSComponentViewerBox";
