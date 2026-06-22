@@ -5,6 +5,7 @@ import {
 } from "@pagopa/io-react-native-wallet";
 import { isDefined } from "../../../../../utils/guards.ts";
 import { isFederationError } from "../../../common/utils/itwFailureUtils.ts";
+import { CredentialType } from "../../../common/utils/itwMocksUtils.ts";
 import { getCredentialTypeByVct } from "../utils/itwRemotePresentationUtils.ts";
 import { RemoteEvents } from "./events.ts";
 
@@ -132,6 +133,14 @@ export const mapEventToFailure = (event: RemoteEvents): RemoteFailure => {
     };
   }
   if (error instanceof InvalidCredentialsStatusError) {
+    // A non-valid PID cannot be presented remotely: route the user to the
+    // dedicated eID screen that invites them to renew the PID.
+    if (error.invalidCredentials.includes(CredentialType.PID)) {
+      return {
+        type: RemoteFailureType.EID_EXPIRED,
+        reason: error.message
+      };
+    }
     return {
       type: RemoteFailureType.INVALID_CREDENTIALS_STATUS,
       reason: { invalidCredentials: error.invalidCredentials }
