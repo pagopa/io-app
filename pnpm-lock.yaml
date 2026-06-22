@@ -107,9 +107,6 @@ patchedDependencies:
   react-native-screen-brightness@2.0.0-alpha:
     hash: 9a49a110389d9e8521cffe1b4ab4bca35ae5db913681970ca19d87f7aa53fa7c
     path: patches/react-native-screen-brightness@2.0.0-alpha.patch
-  react-native-screens:
-    hash: 75e576bb023262607b008d7069f0b4b07856bb8f352dbf52c3dfcb5fc90bdd09
-    path: patches/react-native-screens.patch
   react-native-webview@13.16.0:
     hash: f50190f7feff67b44970713f309dbb5962fdcbd2e85b7d4ae8d248d4f1c06b0e
     path: patches/react-native-webview@13.16.0.patch
