@@ -270,6 +270,11 @@ function* watchFciSignatureRequestRetrySaga(
          * FciDocumentsScreen will still get pot error if not reset
          */
         yield* put(fciDownloadPreview.cancel());
+        /**
+         * when restarting the flow after polling failure, this is needed to
+         * reset 'fciHasDocumentPreparationErrorSelector'
+         */
+        yield* put(fciPollFilledDocument.cancel());
         // start a new signing flow
         yield* put(fciStartRequest());
         return;

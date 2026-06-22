@@ -24,6 +24,7 @@ const reducer = (
       return pot.some(action.payload);
     case getType(fciPollFilledDocument.failure):
       return pot.toError(state, action.payload);
+    case getType(fciPollFilledDocument.cancel):
     case getType(fciClearStateRequest):
       return initialState;
   }
