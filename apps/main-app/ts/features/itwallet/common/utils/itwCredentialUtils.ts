@@ -19,7 +19,7 @@ import {
  */
 export const isBatchCredential = (
   credential: Pick<CredentialMetadata, "keyTags">
-): boolean => (credential.keyTags?.length ?? 0) > 0;
+): boolean => Boolean(credential.keyTags?.length);
 
 /**
  * Returns every cryptographic key tag owned by a credential: the whole batch for a batch
