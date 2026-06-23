@@ -18,12 +18,19 @@ const ITW_CREDENTIAL_OFFER_INTERNAL_PATH =
   `itw/${ITW_CREDENTIAL_OFFER_LINKING_PATH}` as const;
 export const ITW_CREDENTIAL_OFFER_URI_PARAM = "itwCredentialOfferUri" as const;
 
+export type CredentialOfferLink = {
+  credentialOfferUri: string;
+  internalRoute: string;
+};
+
 /**
- * Checks if the provided URL is a credential offer invocation accepted by IT Wallet.
+ * Parses a credential offer invocation and returns the route used internally by React Navigation.
+ * Raw custom schemes and universal links are preserved as the credential offer URI, while already
+ * normalized internal routes expose the original URI stored in the query parameter.
  */
-export const isPotentialCredentialOfferInvocation = (
+export const parseCredentialOfferLink = (
   value: string
-): boolean => {
+): CredentialOfferLink | undefined => {
   const trimmedValue = value.trim();
 
   try {
@@ -35,66 +42,42 @@ export const isPotentialCredentialOfferInvocation = (
       url.origin === IO_UNIVERSAL_LINK_PREFIX &&
       url.pathname.replace(/^\//, "") === ITW_CREDENTIAL_OFFER_INTERNAL_PATH;
 
-    if (!isAcceptedCustomScheme && !isAcceptedUniversalLink) {
-      return false;
+    const isInternalCredentialOfferRoute =
+      trimmedValue.startsWith(IO_INTERNAL_LINK_PREFIX) &&
+      url.hostname === "itw" &&
+      url.pathname.replace(/^\//, "") === ITW_CREDENTIAL_OFFER_LINKING_PATH;
+
+    if (isInternalCredentialOfferRoute || isAcceptedUniversalLink) {
+      const originalCredentialOfferUri = url.searchParams.get(
+        ITW_CREDENTIAL_OFFER_URI_PARAM
+      );
+
+      if (originalCredentialOfferUri) {
+        return {
+          credentialOfferUri: originalCredentialOfferUri,
+          internalRoute: trimmedValue
+        };
+      }
     }
 
-    return CREDENTIAL_OFFER_QUERY_PARAMS.some(param =>
-      url.searchParams.has(param)
+    const hasCredentialOfferPayload = CREDENTIAL_OFFER_QUERY_PARAMS.some(
+      param => url.searchParams.has(param)
     );
-  } catch {
-    return false;
-  }
-};
 
-/**
- * Builds the internal route used by React Navigation while preserving the original credential offer URI.
- */
-export const getCredentialOfferInternalRoute = (
-  credentialOfferUri: string
-): string =>
-  `${IO_INTERNAL_LINK_PREFIX}${ITW_CREDENTIAL_OFFER_INTERNAL_PATH}?${ITW_CREDENTIAL_OFFER_URI_PARAM}=${encodeURIComponent(
-    credentialOfferUri
-  )}`;
-
-/**
- * Converts external credential offer invocations into the internal route handled by React Navigation.
- */
-export const normalizeCredentialOfferDeepLink = (url: string): string =>
-  isPotentialCredentialOfferInvocation(url)
-    ? getCredentialOfferInternalRoute(url)
-    : url;
-
-/**
- * Extracts the original credential offer URI from either a raw invocation or the normalized internal route.
- */
-export const getCredentialOfferUriFromLinkingUrl = (
-  url: string
-): string | undefined => {
-  if (isPotentialCredentialOfferInvocation(url)) {
-    return url;
-  }
-
-  try {
-    const parsedUrl = new URL(url);
-    const isInternalCredentialOfferRoute =
-      url.startsWith(IO_INTERNAL_LINK_PREFIX) &&
-      parsedUrl.hostname === "itw" &&
-      parsedUrl.pathname.replace(/^\//, "") ===
-        ITW_CREDENTIAL_OFFER_LINKING_PATH;
-
-    const isUniversalCredentialOfferRoute =
-      url.startsWith(IO_UNIVERSAL_LINK_PREFIX) &&
-      parsedUrl.pathname.replace(/^\//, "") ===
-        ITW_CREDENTIAL_OFFER_INTERNAL_PATH;
-
-    if (!isInternalCredentialOfferRoute && !isUniversalCredentialOfferRoute) {
+    if (!hasCredentialOfferPayload) {
       return undefined;
     }
 
-    return (
-      parsedUrl.searchParams.get(ITW_CREDENTIAL_OFFER_URI_PARAM) ?? undefined
-    );
+    if (!isAcceptedCustomScheme && !isAcceptedUniversalLink) {
+      return undefined;
+    }
+
+    return {
+      credentialOfferUri: trimmedValue,
+      internalRoute: `${IO_INTERNAL_LINK_PREFIX}${ITW_CREDENTIAL_OFFER_INTERNAL_PATH}?${ITW_CREDENTIAL_OFFER_URI_PARAM}=${encodeURIComponent(
+        trimmedValue
+      )}`
+    };
   } catch {
     return undefined;
   }

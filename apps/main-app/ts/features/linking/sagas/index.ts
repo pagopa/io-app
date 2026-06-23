@@ -10,7 +10,7 @@ import {
 } from "../../../utils/deepLinkUtils";
 import { walletUpdate } from "../../wallet/store/actions";
 import { cgnEycaStatus } from "../../bonus/cgn/store/actions/eyca/details";
-import { getCredentialOfferUriFromLinkingUrl } from "../../itwallet/offer/utils";
+import { parseCredentialOfferLink } from "../../itwallet/offer/utils";
 import NavigationService from "../../../navigation/NavigationService";
 import { ITW_ROUTES } from "../../itwallet/navigation/routes";
 
@@ -25,16 +25,15 @@ export function* handleStoredLinkingUrlIfNeeded() {
       return true;
     }
 
-    const credentialOfferUri =
-      getCredentialOfferUriFromLinkingUrl(storedLinkingUrl);
-    if (credentialOfferUri !== undefined) {
+    const credentialOfferLink = parseCredentialOfferLink(storedLinkingUrl);
+    if (credentialOfferLink !== undefined) {
       yield* put(clearLinkingUrl());
       yield* call(
         NavigationService.dispatchNavigationAction,
         CommonActions.navigate(ITW_ROUTES.MAIN, {
           screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_OFFER_INTRO,
           params: {
-            itwCredentialOfferUri: credentialOfferUri
+            itwCredentialOfferUri: credentialOfferLink.credentialOfferUri
           }
         })
       );

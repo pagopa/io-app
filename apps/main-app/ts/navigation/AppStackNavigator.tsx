@@ -22,7 +22,7 @@ import { idPayLinkingOptions } from "../features/idpay/common/navigation/linking
 import { ITW_ROUTES } from "../features/itwallet/navigation/routes";
 import {
   ITW_CREDENTIAL_OFFER_LINKING_PREFIXES,
-  normalizeCredentialOfferDeepLink
+  parseCredentialOfferLink
 } from "../features/itwallet/offer/utils";
 import { useItwLinkingOptions } from "../features/itwallet/navigation/useItwLinkingOptions";
 import { storeLinkingUrl } from "../features/linking/actions";
@@ -184,7 +184,11 @@ const InnerNavigationContainer = (props: InnerNavigationContainerProps) => {
          *  this handler is called on app wake and thus there
          *  is no risk of overwriting any previously stored deep link
          */
-        dispatch(storeLinkingUrl(normalizeCredentialOfferDeepLink(initialUrl)));
+        dispatch(
+          storeLinkingUrl(
+            parseCredentialOfferLink(initialUrl)?.internalRoute ?? initialUrl
+          )
+        );
       }
     });
   });

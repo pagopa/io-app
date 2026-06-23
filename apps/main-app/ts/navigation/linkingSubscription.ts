@@ -13,10 +13,7 @@ import { initiateAarFlow } from "../features/pn/aar/store/actions";
 import { IO_LOGIN_CIE_URL_SCHEME } from "../features/authentication/login/cie/utils/cie";
 import { trackIOOpenedFromUniversalAppLink } from "../features/linking/analytics";
 import { isMixpanelEnabled } from "../store/reducers/persistedPreferences";
-import {
-  isPotentialCredentialOfferInvocation,
-  normalizeCredentialOfferDeepLink
-} from "../features/itwallet/offer/utils";
+import { parseCredentialOfferLink } from "../features/itwallet/offer/utils";
 
 // as of writing this, the only deep link that is dispatched after an app wake, but before the login's completion
 // is the CIEID login one.
@@ -73,8 +70,9 @@ export const linkingSubscription =
       // We don't enter this point if the app is opened from scratch with a deep link,
       // but we track it in the `useOnFirstRender` hook on the AppStackNavigator
       processUtmLink(url, dispatch);
-      if (isPotentialCredentialOfferInvocation(url)) {
-        listener(normalizeCredentialOfferDeepLink(url));
+      const credentialOfferLink = parseCredentialOfferLink(url);
+      if (credentialOfferLink !== undefined) {
+        listener(credentialOfferLink.internalRoute);
         return;
       }
       listener(url);

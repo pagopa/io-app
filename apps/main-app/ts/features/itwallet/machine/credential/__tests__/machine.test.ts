@@ -108,6 +108,7 @@ describe("itwCredentialIssuanceMachine", () => {
   const navigateToCredentialIntroductionScreen = jest.fn();
   const navigateToEidVerificationExpiredScreen = jest.fn();
   const navigateToCardOnboardingScreen = jest.fn();
+  const navigateToCredentialOfferDiscoveryScreen = jest.fn();
   const closeIssuance = jest.fn();
   const storeWalletInstanceAttestation = jest.fn();
   const storeCredential = jest.fn();
@@ -143,6 +144,7 @@ describe("itwCredentialIssuanceMachine", () => {
       navigateToWallet,
       navigateToEidVerificationExpiredScreen,
       navigateToCardOnboardingScreen,
+      navigateToCredentialOfferDiscoveryScreen,
       closeIssuance,
       storeWalletInstanceAttestation,
       storeCredential,
@@ -849,6 +851,56 @@ describe("itwCredentialIssuanceMachine", () => {
       expect(actor.getSnapshot().context.resolvedCredentialOffer).toBeDefined();
     });
 
+    it("Should navigate to discovery after resolving a credential offer when the wallet is not valid", async () => {
+      onInit.mockImplementation(() => ({
+        isWalletValid: false,
+        isItWalletValid: false,
+        walletInstanceAttestation: undefined
+      }));
+      processCredentialOffer.mockImplementation(() =>
+        Promise.resolve(T_RESOLVED_CREDENTIAL_OFFER)
+      );
+
+      const actor = createActor(mockedMachine);
+      actor.start();
+
+      actor.send({
+        type: "start-credential-offer",
+        itwCredentialOfferUri: T_OFFER_URI
+      });
+
+      await waitForActor(actor, snapshot =>
+        snapshot.matches("CredentialOfferResolved")
+      );
+
+      expect(navigateToCredentialOfferDiscoveryScreen).toHaveBeenCalledTimes(1);
+    });
+
+    it("Should not navigate to discovery after resolving a credential offer when the wallet is valid", async () => {
+      onInit.mockImplementation(() => ({
+        isWalletValid: true,
+        isItWalletValid: false,
+        walletInstanceAttestation: { jwt: T_WIA }
+      }));
+      processCredentialOffer.mockImplementation(() =>
+        Promise.resolve(T_RESOLVED_CREDENTIAL_OFFER)
+      );
+
+      const actor = createActor(mockedMachine);
+      actor.start();
+
+      actor.send({
+        type: "start-credential-offer",
+        itwCredentialOfferUri: T_OFFER_URI
+      });
+
+      await waitForActor(actor, snapshot =>
+        snapshot.matches("CredentialOfferResolved")
+      );
+
+      expect(navigateToCredentialOfferDiscoveryScreen).not.toHaveBeenCalled();
+    });
+
     it("Should pass the resolved credential offer to the credential request", async () => {
       processCredentialOffer.mockImplementation(() =>
         Promise.resolve(T_RESOLVED_CREDENTIAL_OFFER)
@@ -894,10 +946,12 @@ describe("itwCredentialIssuanceMachine", () => {
     it("Should resume the resolved credential offer after eID activation", async () => {
       onInit
         .mockImplementationOnce(() => ({
+          isWalletValid: false,
           isItWalletValid: false,
           walletInstanceAttestation: undefined
         }))
         .mockImplementationOnce(() => ({
+          isWalletValid: true,
           isItWalletValid: true,
           walletInstanceAttestation: { jwt: T_WIA }
         }));
@@ -928,11 +982,7 @@ describe("itwCredentialIssuanceMachine", () => {
         snapshot.matches("CredentialOfferResolved")
       );
 
-      actor.send({
-        type: "select-credential",
-        credentialType: T_CREDENTIAL_TYPE,
-        mode: "issuance"
-      });
+      actor.send({ type: "confirm-credential-offer" });
 
       await waitFor(() => expect(requestCredential).toHaveBeenCalledTimes(1));
       expect(onInit).toHaveBeenCalledTimes(2);

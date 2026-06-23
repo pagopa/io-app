@@ -51,6 +51,7 @@ export const itwCredentialIssuanceMachine = setup({
     navigateToEidVerificationExpiredScreen: notImplemented,
     closeIssuance: notImplemented,
     navigateToCardOnboardingScreen: notImplemented,
+    navigateToCredentialOfferDiscoveryScreen: notImplemented,
 
     /**
      * Store actions
@@ -143,17 +144,34 @@ export const itwCredentialIssuanceMachine = setup({
         input: ({ context }) => ({
           credentialOfferUri: context.credentialOfferUri!
         }),
-        onDone: {
-          target: "CredentialOfferResolved",
-          actions: assign(({ event }) => ({
-            resolvedCredentialOffer: {
-              offer: event.output.offer,
-              grantDetails: event.output.grantDetails
-            },
-            credentialType:
-              event.output.grantDetails.authorizationCodeGrant.scope
-          }))
-        },
+        onDone: [
+          {
+            guard: ({ context }) => !context.isWalletValid,
+            target: "CredentialOfferResolved",
+            actions: [
+              assign(({ event }) => ({
+                resolvedCredentialOffer: {
+                  offer: event.output.offer,
+                  grantDetails: event.output.grantDetails
+                },
+                credentialType:
+                  event.output.grantDetails.authorizationCodeGrant.scope
+              })),
+              "navigateToCredentialOfferDiscoveryScreen"
+            ]
+          },
+          {
+            target: "CredentialOfferResolved",
+            actions: assign(({ event }) => ({
+              resolvedCredentialOffer: {
+                offer: event.output.offer,
+                grantDetails: event.output.grantDetails
+              },
+              credentialType:
+                event.output.grantDetails.authorizationCodeGrant.scope
+            }))
+          }
+        ],
         onError: {
           target: "#itwCredentialIssuanceMachine.Failure",
           actions: "setFailure"
@@ -173,13 +191,6 @@ export const itwCredentialIssuanceMachine = setup({
     CredentialOfferResolved: {
       on: {
         "confirm-credential-offer": {
-          target: "EvaluateFlow",
-          actions: assign({ mode: "issuance" as const })
-        },
-        "select-credential": {
-          guard: ({ context, event }) =>
-            event.mode === "issuance" &&
-            event.credentialType === context.credentialType,
           target: "EvaluateFlow",
           actions: ["onInit", assign({ mode: "issuance" as const })]
         },

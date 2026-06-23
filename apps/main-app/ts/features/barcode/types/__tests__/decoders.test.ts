@@ -345,11 +345,16 @@ describe("test decodeIOBarcode function", () => {
     });
 
     describe("invalid cases", () => {
-      it("should return O.none when the selected ITW specs version does not support credential offers", () => {
+      it("should return O.some when the selected ITW specs version does not support credential offers", () => {
         const value =
           "openid-credential-offer://?credential_offer=%7B%22credential_issuer%22%3A%22https%3A%2F%2Fissuer.example.com%22%7D";
         const output = decodeIOBarcode(fakeGlobalState, value);
-        expect(output).toStrictEqual(O.none);
+        expect(output).toStrictEqual(
+          O.some({
+            type: "ITW_CREDENTIAL_OFFER",
+            itwCredentialOfferUri: value
+          })
+        );
       });
 
       it("should return O.none with valid content and ITW_CREDENTIAL_OFFER type not supported", () => {

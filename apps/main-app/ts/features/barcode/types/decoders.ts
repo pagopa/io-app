@@ -16,7 +16,7 @@ import { ItwRemoteRequestPayload } from "../../itwallet/presentation/remote/util
 import { validateItwPresentationQrCodeParams } from "../../itwallet/presentation/remote/utils/itwRemotePresentationUtils";
 import { selectItwSpecsVersion } from "../../itwallet/common/store/selectors/environment";
 import { pnAarQRCodeRegexSelector } from "../../../store/reducers/backendStatus/remoteConfig";
-import { isPotentialCredentialOfferInvocation } from "../../itwallet/offer/utils";
+import { parseCredentialOfferLink } from "../../itwallet/offer/utils";
 import { IOBarcodeType } from "./IOBarcode";
 
 // Discriminated barcode type
@@ -164,24 +164,13 @@ const decodeItwRemoteBarcode: IOBarcodeRuntimeDecoderFn = (
     }))
   );
 
-const itwCredentialOfferSupportedSpecsVersions: ReadonlyArray<
-  ReturnType<typeof selectItwSpecsVersion>
-> = ["1.3.3"];
-
-const isItwCredentialOfferSupportedSpecsVersion = (
-  itwSpecsVersion: ReturnType<typeof selectItwSpecsVersion>
-): boolean =>
-  itwCredentialOfferSupportedSpecsVersions.includes(itwSpecsVersion);
-
 const decodeItwCredentialOfferBarcode: IOBarcodeRuntimeDecoderFn = (
-  state: GlobalState,
+  _state: GlobalState,
   data: string
 ): O.Option<ItwCredentialOfferDecodedIOBarcode> => {
   const itwCredentialOfferUri = data.trim();
 
-  return isItwCredentialOfferSupportedSpecsVersion(
-    selectItwSpecsVersion(state)
-  ) && isPotentialCredentialOfferInvocation(itwCredentialOfferUri)
+  return parseCredentialOfferLink(itwCredentialOfferUri) !== undefined
     ? O.some({
         type: "ITW_CREDENTIAL_OFFER",
         itwCredentialOfferUri

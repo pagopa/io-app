@@ -2,7 +2,7 @@ import { Body, H2, VSpacer, VStack } from "@pagopa/io-app-design-system";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
@@ -16,9 +16,7 @@ import {
   StartupStatusEnum
 } from "../../../../store/reducers/startup";
 import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
-import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
 import { getCredentialNameFromType } from "../../common/utils/itwCredentialUtils";
-import { itwLifecycleIsValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
 import {
   selectCredentialIntroContentOption,
@@ -26,7 +24,6 @@ import {
   selectResolvedCredentialOfferOption
 } from "../../machine/credential/selectors";
 import { ItwParamsList } from "../../navigation/ItwParamsList";
-import { ITW_ROUTES } from "../../navigation/routes";
 import { ItwRemoteLoadingScreen } from "../../presentation/remote/components/ItwRemoteLoadingScreen";
 
 export type ItwIssuanceCredentialOfferScreenNavigationParams = {
@@ -58,8 +55,6 @@ type ContentViewProps = {
 
 const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
   const navigation = useNavigation<IOStackNavigationProp<ItwParamsList>>();
-  const isWalletValid = useIOSelector(itwLifecycleIsValidSelector);
-  const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
   const machineRef = ItwCredentialIssuanceMachineContext.useActorRef();
   const resolvedCredentialOfferOption =
     ItwCredentialIssuanceMachineContext.useSelector(
@@ -92,28 +87,6 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
     }, [machineRef, credentialOfferUri, resolvedCredentialOfferOption])
   );
 
-  const shouldRedirectToDiscovery =
-    O.isSome(resolvedCredentialOfferOption) &&
-    O.isSome(credentialTypeOption) &&
-    !isWalletValid;
-
-  useEffect(() => {
-    if (shouldRedirectToDiscovery) {
-      navigation.replace(ITW_ROUTES.DISCOVERY.INFO, {
-        credentialType: credentialTypeOption.value,
-        disableAnimation: true,
-        level: isL3Enabled ? "l3" : "l2"
-      });
-    }
-  }, [
-    credentialTypeOption,
-    isL3Enabled,
-    isWalletValid,
-    navigation,
-    resolvedCredentialOfferOption,
-    shouldRedirectToDiscovery
-  ]);
-
   const handleContinue = useCallback(() => {
     machineRef.send({ type: "confirm-credential-offer" });
   }, [machineRef]);
@@ -122,10 +95,6 @@ const ContentView = ({ credentialOfferUri }: ContentViewProps) => {
     O.isNone(resolvedCredentialOfferOption) ||
     O.isNone(credentialTypeOption)
   ) {
-    return <ItwRemoteLoadingScreen title={I18n.t("global.genericWaiting")} />;
-  }
-
-  if (shouldRedirectToDiscovery) {
     return <ItwRemoteLoadingScreen title={I18n.t("global.genericWaiting")} />;
   }
 

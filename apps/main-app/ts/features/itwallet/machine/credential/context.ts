@@ -31,6 +31,10 @@ export type Context = {
    */
   isItWalletValid: boolean;
   /**
+   * Flag to indicate if the wallet lifecycle is valid and can issue credentials.
+   */
+  isWalletValid: boolean;
+  /**
    * The type of the credential being issued.
    */
   credentialType: string | undefined;
@@ -80,6 +84,7 @@ export type Context = {
 export const InitialContext: Context = {
   mode: "issuance",
   isItWalletValid: false,
+  isWalletValid: false,
   credentialType: undefined,
   wiaCryptoContext: undefined,
   walletInstanceAttestation: undefined,

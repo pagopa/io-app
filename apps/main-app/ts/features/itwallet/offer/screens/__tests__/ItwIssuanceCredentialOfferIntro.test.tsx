@@ -1,4 +1,3 @@
-import { act, waitFor } from "@testing-library/react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { Action, createStore } from "redux";
 import { Text } from "react-native";
@@ -38,14 +37,6 @@ const noneOption = { _tag: "None" as const };
 
 describe("ItwIssuanceCredentialOfferIntroScreen", () => {
   const machineSend = jest.fn();
-
-  beforeAll(() => {
-    jest.useFakeTimers();
-  });
-
-  afterAll(() => {
-    jest.useRealTimers();
-  });
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -92,23 +83,13 @@ describe("ItwIssuanceCredentialOfferIntroScreen", () => {
       });
   });
 
-  it("preserves the resolved offer and redirects to discovery when the wallet is not valid", async () => {
+  it("preserves the resolved offer without navigating to discovery from the screen", () => {
     const onDiscoveryParams = jest.fn();
-    const { getByTestId } = renderComponent(onDiscoveryParams);
+    const { queryByTestId } = renderComponent(onDiscoveryParams);
 
-    await waitFor(() =>
-      expect(getByTestId("DiscoveryInfoScreenTestID")).toBeTruthy()
-    );
-    expect(onDiscoveryParams).toHaveBeenCalledWith({
-      credentialType: T_CREDENTIAL_TYPE,
-      disableAnimation: true,
-      level: "l3"
-    });
+    expect(queryByTestId("DiscoveryInfoScreenTestID")).toBeNull();
+    expect(onDiscoveryParams).not.toHaveBeenCalled();
     expect(machineSend).not.toHaveBeenCalledWith({ type: "close" });
-
-    act(() => {
-      jest.runOnlyPendingTimers();
-    });
   });
 });
 

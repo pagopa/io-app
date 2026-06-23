@@ -13,7 +13,7 @@ import { linkingSubscription } from "../linkingSubscription";
 import { initiateAarFlow } from "../../features/pn/aar/store/actions";
 import { IO_LOGIN_CIE_URL_SCHEME } from "../../features/authentication/login/cie/utils/cie";
 import * as LINKING_ANALYTICS from "../../features/linking/analytics";
-import { getCredentialOfferInternalRoute } from "../../features/itwallet/offer/utils";
+import { parseCredentialOfferLink } from "../../features/itwallet/offer/utils";
 
 describe("linkingSubscription", () => {
   beforeEach(() => {
@@ -208,7 +208,7 @@ describe("linkingSubscription", () => {
 
       expect(mockListener).toHaveBeenCalledTimes(1);
       expect(mockListener).toHaveBeenCalledWith(
-        getCredentialOfferInternalRoute(credentialOfferUrl)
+        parseCredentialOfferLink(credentialOfferUrl)?.internalRoute
       );
     });
 
