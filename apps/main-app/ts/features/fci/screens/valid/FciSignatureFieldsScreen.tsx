@@ -15,6 +15,7 @@ import { constFalse, increment, pipe } from "fp-ts/lib/function";
 import I18n from "i18next";
 import {
   ComponentProps,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -62,6 +63,7 @@ import {
   orderSignatureFields
 } from "../../utils/signatureFields";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { useHardwareBackButton } from "../../../../hooks/useHardwareBackButton.ts";
 
 export type FciSignatureFieldsScreenNavigationParams = Readonly<{
   documentId: DocumentDetailView["id"];
@@ -89,8 +91,7 @@ const FciSignatureFieldsScreen = () => {
   const navigation = useIONavigation();
   const [isClausesChecked, setIsClausesChecked] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [isDocumentWithSignatureOpen, setIsDocumentWithSignatureOpen] =
-    useState(false);
+  const [isPreviewModalVisible, setIsPreviewModalVisible] = useState(false);
   const { showModal, hideModal } = useContext(LightModalContext);
 
   const { footerActionsMeasurements, handleFooterActionsMeasurements } =
@@ -100,12 +101,23 @@ const FciSignatureFieldsScreen = () => {
     trackFciSignatureFieldsView();
   });
 
-  useEffect(() => {
-    if (hasDocumentPreparationError && isDocumentWithSignatureOpen) {
-      setIsDocumentWithSignatureOpen(false);
-      hideModal();
+  useHardwareBackButton(() => {
+    if (!isPreviewModalVisible) {
+      navigation.goBack();
     }
-  }, [hasDocumentPreparationError, isDocumentWithSignatureOpen, hideModal]);
+    return true;
+  });
+
+  const dismissModal = useCallback(() => {
+    setIsPreviewModalVisible(false);
+    hideModal();
+  }, [setIsPreviewModalVisible, hideModal]);
+
+  useEffect(() => {
+    if (hasDocumentPreparationError && isPreviewModalVisible) {
+      dismissModal();
+    }
+  }, [hasDocumentPreparationError, isPreviewModalVisible, dismissModal]);
 
   // get signatureFields for the current document
   const docSignatures = useMemo(
@@ -145,23 +157,28 @@ const FciSignatureFieldsScreen = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [docSignatures]);
 
-  const { present, bottomSheet: fciAbortSignature } =
-    useFciAbortSignatureFlow();
+  const { present, bottomSheet: fciAbortSignature } = useFciAbortSignatureFlow({
+    showDialogOnBack: false,
+    onBackPress: () => {
+      if (isPreviewModalVisible) {
+        dismissModal();
+      } else {
+        navigation.goBack();
+      }
+    }
+  });
 
   const { present: presentInfo, bottomSheet: fciSignaturefieldInfo } =
     useFciSignatureFieldInfo();
 
   const onPressDetail = (signatureField: SignatureField) => {
-    setIsDocumentWithSignatureOpen(true);
     trackFciShowSignatureFields(fciEnvironment);
+    setIsPreviewModalVisible(true);
     showModal(
       <DocumentWithSignature
         attrs={signatureField.attrs}
         currentDoc={currentDoc}
-        onClose={() => {
-          setIsDocumentWithSignatureOpen(false);
-          hideModal();
-        }}
+        onClose={dismissModal}
         onError={() => onError()}
         testID={"FciDocumentWithSignatureTestID"}
       />
@@ -172,9 +189,8 @@ const FciSignatureFieldsScreen = () => {
    * Callback which sets the isError state to true and hides the modal.
    */
   const onError = () => {
-    setIsDocumentWithSignatureOpen(false);
     setIsError(true);
-    hideModal();
+    dismissModal();
   };
 
   const updateDocumentSignatures = (fn: (doc: DocumentToSign) => void) =>

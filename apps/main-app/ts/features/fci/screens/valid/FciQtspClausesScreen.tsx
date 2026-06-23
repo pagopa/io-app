@@ -72,7 +72,9 @@ const FciQtspClausesScreen = () => {
     useFciCheckService();
 
   const { present: showAbort, bottomSheet: fciAbortSignature } =
-    useFciAbortSignatureFlow();
+    useFciAbortSignatureFlow({
+      showDialogOnBack: false
+    });
 
   const openUrl = (url: string) => {
     navigation.navigate(FCI_ROUTES.MAIN, {
