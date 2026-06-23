@@ -111,7 +111,7 @@ const FciSignatureFieldsScreen = () => {
   const dismissModal = useCallback(() => {
     setIsPreviewModalVisible(false);
     hideModal();
-  }, [setIsPreviewModalVisible, hideModal]);
+  }, [hideModal]);
 
   useEffect(() => {
     if (hasDocumentPreparationError && isPreviewModalVisible) {
