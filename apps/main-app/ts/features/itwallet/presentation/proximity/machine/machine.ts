@@ -516,10 +516,10 @@ export const itwProximityMachine = setup({
         id: "terminateSession",
         src: "terminateSession",
         onDone: {
-          // Attemp termination ignoring result
+          // Attempt termination ignoring result
         },
         onError: {
-          // Attemp termination ignoring any failure
+          // Attempt termination ignoring any failure
         }
       },
       on: {
