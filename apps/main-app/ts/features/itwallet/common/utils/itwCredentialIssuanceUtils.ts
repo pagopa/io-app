@@ -1,6 +1,7 @@
 import { generate } from "@pagopa/io-react-native-crypto";
 import {
   createCryptoContextFor,
+  type CredentialIssuance,
   type ItwVersion
 } from "@pagopa/io-react-native-wallet";
 import { v4 as uuidv4 } from "uuid";
@@ -16,6 +17,8 @@ import {
   CredentialAccessToken,
   CredentialBundle,
   CredentialFormat,
+  DcqlQuery,
+  EvaluatedDcqlQueryResult,
   IssuerConfiguration,
   RequestObject
 } from "./itwTypesUtils";
@@ -31,17 +34,40 @@ import { getWalletUnitAttestation } from "./itwAttestationUtils";
  */
 const SEQUENTIAL_ISSUANCE_CREDENTIALS = ["mDL"];
 
+type CompleteFormPostWithEvaluatedDcqlQuery = (
+  requestObject: RequestObject,
+  issuerConf: IssuerConfiguration,
+  evaluatedDcqlQuery: EvaluatedDcqlQueryResult,
+  context: { wiaCryptoContext: CryptoContext }
+) => ReturnType<
+  CredentialIssuance.IssuanceApi["completeUserAuthorizationWithFormPostJwtMode"]
+>;
+
+type CompleteEaaWithEvaluatedDcqlQuery = (
+  requestObject: RequestObject,
+  issuerConf: IssuerConfiguration,
+  evaluatedDcqlQuery: EvaluatedDcqlQueryResult,
+  redirectUri: string,
+  context?: {
+    fetchFinalRedirectUri?: (url: string) => Promise<string | undefined>;
+  }
+) => ReturnType<
+  CredentialIssuance.IssuanceApi["completeEaaUserAuthorizationWithQueryMode"]
+>;
+
 export type RequestCredential = (args: {
   env: Env;
   itwVersion: ItwVersion;
   credentialType: string;
   walletInstanceAttestation: string;
   skipMdocIssuance: boolean;
+  pid: CredentialBundle;
 }) => Promise<{
   clientId: string;
   codeVerifier: string;
   requestedCredential: RequestObject;
   issuerConf: IssuerConfiguration;
+  evaluatedDcqlQuery: EvaluatedDcqlQueryResult;
   responseMode?: string;
 }>;
 
@@ -51,6 +77,7 @@ export type RequestCredential = (args: {
  * @param itwVersion - IT-Wallet technical specs version
  * @param credentialType - The type of credential to request
  * @param walletInstanceAttestation - The wallet instance attestation
+ * @param pid - The PID credential to evaluate the issuer DCQL query before showing the trust issuer screen
  * @returns The credential request object
  */
 export const requestCredential: RequestCredential = async ({
@@ -58,7 +85,8 @@ export const requestCredential: RequestCredential = async ({
   itwVersion,
   credentialType,
   walletInstanceAttestation,
-  skipMdocIssuance
+  skipMdocIssuance,
+  pid
 }) => {
   const ioWallet = getIoWallet(itwVersion);
 
@@ -96,12 +124,18 @@ export const requestCredential: RequestCredential = async ({
       issuerConf
     );
 
+  const evaluatedDcqlQuery =
+    await ioWallet.RemotePresentation.evaluateDcqlQuery(
+      requestObject.dcql_query as DcqlQuery,
+      [[pid.metadata.keyTag, pid.credential]]
+    );
   return {
     clientId,
     codeVerifier,
     responseMode,
     requestedCredential: requestObject,
-    issuerConf
+    issuerConf,
+    evaluatedDcqlQuery
   };
 };
 
@@ -110,7 +144,7 @@ export type CompleteAuthFlow = (args: {
   itwVersion: ItwVersion;
   walletInstanceAttestation: string;
   requestedCredential: RequestObject;
-  pid: CredentialBundle;
+  evaluatedDcqlQuery: EvaluatedDcqlQueryResult;
   codeVerifier: string;
   issuerConf: IssuerConfiguration;
   responseMode?: string;
@@ -129,7 +163,7 @@ export const completeAuthFlow: CompleteAuthFlow = async ({
   itwVersion,
   requestedCredential: requestObject,
   issuerConf,
-  pid,
+  evaluatedDcqlQuery,
   codeVerifier,
   responseMode,
   walletInstanceAttestation
@@ -147,20 +181,28 @@ export const completeAuthFlow: CompleteAuthFlow = async ({
   // Two modes are supported for backward compatibility with IT-Wallet 1.0.
   const getAuthorizationCode = async (): Promise<string> => {
     if (responseMode === "form_post.jwt") {
+      const completeUserAuthorizationWithFormPostJwtMode = ioWallet
+        .CredentialIssuance
+        .completeUserAuthorizationWithFormPostJwtMode as unknown as CompleteFormPostWithEvaluatedDcqlQuery;
+
       return (
-        await ioWallet.CredentialIssuance.completeUserAuthorizationWithFormPostJwtMode(
+        await completeUserAuthorizationWithFormPostJwtMode(
           requestObject,
           issuerConf,
-          [pid.metadata.keyTag, pid.credential],
+          evaluatedDcqlQuery,
           { wiaCryptoContext }
         )
       ).code;
     }
+    const completeEaaUserAuthorizationWithQueryMode = ioWallet
+      .CredentialIssuance
+      .completeEaaUserAuthorizationWithQueryMode as unknown as CompleteEaaWithEvaluatedDcqlQuery;
+
     return (
-      await ioWallet.CredentialIssuance.completeEaaUserAuthorizationWithQueryMode(
+      await completeEaaUserAuthorizationWithQueryMode(
         requestObject,
         issuerConf,
-        [pid.metadata.keyTag, pid.credential],
+        evaluatedDcqlQuery,
         env.ISSUANCE_REDIRECT_URI, // The redirect uri must be a valid HTTP url that can be followed
         {
           // Workaround for a known bug affecting React Native 0.82-0.83 (https://github.com/facebook/react-native/issues/55248)

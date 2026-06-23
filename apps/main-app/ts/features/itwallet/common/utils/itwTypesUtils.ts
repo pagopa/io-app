@@ -13,6 +13,20 @@ import { CredentialType } from "./itwMocksUtils.ts";
 export type RequestObject = RemotePresentation.RequestObject;
 
 /**
+ * Alias for the result of evaluating a DCQL query against local credentials.
+ */
+export type EvaluatedDcqlQueryResult = Awaited<
+  ReturnType<RemotePresentation.RemotePresentationApi["evaluateDcqlQuery"]>
+>;
+
+/**
+ * Alias for a DCQL query accepted by the wallet SDK.
+ */
+export type DcqlQuery = Parameters<
+  RemotePresentation.RemotePresentationApi["evaluateDcqlQuery"]
+>[0];
+
+/**
  * Alias type for the relying party entity configuration.
  */
 export type RpEntityConfiguration = RemotePresentation.RelyingPartyConfig;

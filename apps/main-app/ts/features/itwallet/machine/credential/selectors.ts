@@ -22,6 +22,9 @@ export const selectIssuerConfigurationOption = (snapshot: MachineSnapshot) =>
 export const selectRequestedCredentialOption = (snapshot: MachineSnapshot) =>
   O.fromNullable(snapshot.context.requestedCredential);
 
+export const selectEvaluatedDcqlQueryOption = (snapshot: MachineSnapshot) =>
+  O.fromNullable(snapshot.context.evaluatedDcqlQuery);
+
 export const selectCredentialOption = (snapshot: MachineSnapshot) =>
   // At this stage, since the retrieval flow targets credentials under the same `scope` in multiple formats,
   // we continue using the SD-JWT format to display credential details.
