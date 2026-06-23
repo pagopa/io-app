@@ -42,7 +42,10 @@
     "dev-pod-update": "cd ios && NO_INTERNAL_MODULE=1 bundle exec pod update && cd .."
   },
   "lint-staged": {
-    "*.{ts,tsx}": ["prettier --write", "eslint --fix"]
+    "*.{ts,tsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ]
   },
   "dependencies": {
     "@babel/plugin-transform-class-properties": "^7.25.9",
