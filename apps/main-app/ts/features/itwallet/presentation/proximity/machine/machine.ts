@@ -285,10 +285,12 @@ export const itwProximityMachine = setup({
         "device-error": [
           {
             // Expected error during intentional session termination for NFC
-            // retrieval — consumed without failure, matching device-disconnected
-            // behavior for the same teardown window.
+            // retrieval — consumed without failure, matching device-disconnected.
             guard: and([
-              stateIn("Presentment.TerminatingForConsent"),
+              or([
+                stateIn("Presentment.TerminatingForConsent"),
+                stateIn("Presentment.ClaimsDisclosure")
+              ]),
               "isNfcRetrieval"
             ])
           },
@@ -367,11 +369,22 @@ export const itwProximityMachine = setup({
             // Pre-navigate to the (loading) claims screen for QR engagement only.
             guard: not("isNfcEngagement"),
             actions: "navigateToClaimsDisclosureScreen"
+          },
+          on: {
+            // NFC session has ended (HCE modal closed)
+            "nfc-stopped": "Terminating"
           }
         },
         Connected: {
           description: "Verifier connected, waiting for the document request",
-          tags: [ItwPresentationTags.Loading]
+          tags: [ItwPresentationTags.Loading],
+          on: {
+            // In case of connection timeout, allows the user to exit the flow
+            close: {
+              actions: "closeProximity",
+              target: "#itwProximityMachine.Idle"
+            }
+          }
         },
         EvaluatingConsent: {
           description:
@@ -466,6 +479,7 @@ export const itwProximityMachine = setup({
           }
         },
         Terminating: {
+          tags: [ItwPresentationTags.Loading],
           description: "Send the session-termination signal to the verifier",
           invoke: {
             id: "terminateSession",
@@ -498,6 +512,16 @@ export const itwProximityMachine = setup({
     Failure: {
       description: "An error occurred, captured in context.failure",
       entry: "navigateToFailureScreen",
+      invoke: {
+        id: "terminateSession",
+        src: "terminateSession",
+        onDone: {
+          // Attempt termination ignoring result
+        },
+        onError: {
+          // Attempt termination ignoring any failure
+        }
+      },
       on: {
         close: {
           actions: "closeProximity",
