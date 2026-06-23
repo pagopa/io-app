@@ -210,7 +210,8 @@ export const createRemoteActorsImplementation = (
       credentialsSdJwt
     );
 
-    // Check whether any of the requested credential is invalid
+    // Check whether any of the requested credentials cannot be presented remotely:
+    // revocation blocks any credential, while a non-valid PID cannot be sent remotely.
     const invalidCredentials = getInvalidCredentials(result, credentials);
 
     if (invalidCredentials.length > 0) {

@@ -2,6 +2,44 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.35.0-rc.6](https://github.com/pagopa/io-app/compare/3.35.0-rc.5...3.35.0-rc.6) (2026-06-22)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4270](https://pagopa.atlassian.net/browse/SIW-4270)] Error on CIE inconsistent with spid login data ([#8152](https://github.com/pagopa/io-app/issues/8152)) ([6028f29](https://github.com/pagopa/io-app/commit/6028f29aff7b1ce97704286a061250c8b7ccd96c))
+
+
+### Bug Fixes
+
+* [[IEL-559](https://pagopa.atlassian.net/browse/IEL-559)] Android back in FCI flow ([#8163](https://github.com/pagopa/io-app/issues/8163)) ([3cd9fb2](https://github.com/pagopa/io-app/commit/3cd9fb24327d87044443b8004240765164050fdf))
+* [[IOPLT-1900](https://pagopa.atlassian.net/browse/IOPLT-1900)] Restore limits in the `jest` config to avoid memory saturation ([#8196](https://github.com/pagopa/io-app/issues/8196)) ([5b79c33](https://github.com/pagopa/io-app/commit/5b79c339e401f47b96ed856e852a501ad623fe30))
+
+## [3.35.0-rc.5](https://github.com/pagopa/io-app/compare/3.35.0-rc.4...3.35.0-rc.5) (2026-06-19)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-4362](https://pagopa.atlassian.net/browse/SIW-4362)] Align presentable credentials behavior with current specs ([#8187](https://github.com/pagopa/io-app/issues/8187)) ([d9bb14b](https://github.com/pagopa/io-app/commit/d9bb14ba3082b1806122ac6360c53d627485fac1))
+
+
+### Chores
+
+* [[IOPLT-1890](https://pagopa.atlassian.net/browse/IOPLT-1890)] Add the new `react-native-bottom-sheet` (SWM) and relative playground ([#8181](https://github.com/pagopa/io-app/issues/8181)) ([6c43d53](https://github.com/pagopa/io-app/commit/6c43d53dc6fe63ffcdf7268234ca438526d96b2a))
+
+## [3.35.0-rc.4](https://github.com/pagopa/io-app/compare/3.35.0-rc.3...3.35.0-rc.4) (2026-06-19)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4151](https://pagopa.atlassian.net/browse/SIW-4151)] Add tracking for ITW activation with CieID L3 ([#8168](https://github.com/pagopa/io-app/issues/8168)) ([b71fcee](https://github.com/pagopa/io-app/commit/b71fceeff2a0fa1cbac0781e564845100cc33012))
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-3829](https://pagopa.atlassian.net/browse/SIW-3829)] Add accessibility announcements for accordion state changes in claims ([#8150](https://github.com/pagopa/io-app/issues/8150)) ([0b1283c](https://github.com/pagopa/io-app/commit/0b1283c9be5399f48bac3fedff4c51ae91b44f7b))
+* [[IOAPPX-000](https://pagopa.atlassian.net/browse/IOAPPX-000)] Update changelog path in new version message ([#8191](https://github.com/pagopa/io-app/issues/8191)) ([3aee8d8](https://github.com/pagopa/io-app/commit/3aee8d83f64eff094dd1d631f05d74e3c923e5be))
+
 ## [3.35.0-rc.3](https://github.com/pagopa/io-app/compare/3.35.0-rc.2...3.35.0-rc.3) (2026-06-17)
 
 

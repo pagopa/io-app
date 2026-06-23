@@ -3336,6 +3336,34 @@ PODS:
     - React-perflogger (= 0.83.6)
     - React-utils (= 0.83.6)
     - SocketRocket
+  - ReactNativeBottomSheet (0.15.1):
+    - boost
+    - DoubleConversion
+    - fast_float
+    - fmt
+    - glog
+    - hermes-engine
+    - RCT-Folly
+    - RCT-Folly/Fabric
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - SocketRocket
+    - Yoga
   - ReactNativeExceptionHandler (2.10.8):
     - React
   - RNBluetoothStateManager (1.3.5):
@@ -4040,6 +4068,7 @@ DEPENDENCIES:
   - ReactAppDependencyProvider (from `build/generated/ios/ReactAppDependencyProvider`)
   - ReactCodegen (from `build/generated/ios/ReactCodegen`)
   - ReactCommon/turbomodule/core (from `../../../node_modules/react-native/ReactCommon`)
+  - "ReactNativeBottomSheet (from `../../../node_modules/@swmansion/react-native-bottom-sheet`)"
   - ReactNativeExceptionHandler (from `../../../node_modules/react-native-exception-handler`)
   - RNBluetoothStateManager (from `../../../node_modules/react-native-bluetooth-state-manager`)
   - RNCalendarEvents (from `../../../node_modules/react-native-calendar-events`)
@@ -4345,6 +4374,8 @@ EXTERNAL SOURCES:
     :path: build/generated/ios/ReactCodegen
   ReactCommon:
     :path: "../../../node_modules/react-native/ReactCommon"
+  ReactNativeBottomSheet:
+    :path: "../../../node_modules/@swmansion/react-native-bottom-sheet"
   ReactNativeExceptionHandler:
     :path: "../../../node_modules/react-native-exception-handler"
   RNBluetoothStateManager:
@@ -4412,7 +4443,7 @@ SPEC CHECKSUMS:
   FBLazyVector: 06b1c8278e6e1b31ef68e9e14c296b7872e79e48
   fmt: 530618a01105dae0fa3a2f27c81ae11fa8f67eac
   glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
-  hermes-engine: 2ebbe5d269775d1d70ed41d7b17543cb1a52a3ab
+  hermes-engine: 037eacbb56098bf69c62cf905ec96fb01eab8248
   IoReactNativeCie: d30d9055f74cfc1fd00c8583316c6321abdb7794
   IoReactNativeHttpClient: bc2f2838fe9f959375d4d7e0419b11ebf27af379
   IoReactNativeIso18013: 730061a6443f611f163c38ec49b6dc5a4aae3f81
@@ -4523,6 +4554,7 @@ SPEC CHECKSUMS:
   ReactAppDependencyProvider: 3ec8fc5d32ad422f5b805523a5a5ea5556d8b3a2
   ReactCodegen: b5e0bd4a5fbd1b5ce1ad51fa6f9a15239912022e
   ReactCommon: e788387a0b387a927a2a5d041fab09472fe8dedc
+  ReactNativeBottomSheet: 03b2317ce62b9f686e6caad94fe5124534791831
   ReactNativeExceptionHandler: 6a2aace92f300a745c8b04461b9a99edd1d26cd6
   RNBluetoothStateManager: 929f132d0dacf65cb4767a11e2803e47fdda9e73
   RNCalendarEvents: f90f73666b6bcbb3cc8a491ffbb5e48c0db3de37
