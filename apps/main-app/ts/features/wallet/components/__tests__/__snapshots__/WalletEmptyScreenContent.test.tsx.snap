@@ -1153,7 +1153,7 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                           La tua Patente di guida, la tua Tessera Sanitaria e altri documenti digitali appariranno qui!
                         </Text>
                         <View
-                          accessibilityLabel="Aggiungi un documento"
+                          accessibilityLabel="Inizia"
                           accessibilityRole="button"
                           accessibilityState={
                             {
@@ -1364,7 +1364,7 @@ exports[`WalletEmptyScreenContent should render correctly when ITW whitelist sta
                                   ]
                                 }
                               >
-                                Aggiungi un documento
+                                Inizia
                               </Text>
                             </View>
                           </View>

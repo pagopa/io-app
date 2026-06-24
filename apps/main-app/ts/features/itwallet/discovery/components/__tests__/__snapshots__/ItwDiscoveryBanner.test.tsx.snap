@@ -1852,7 +1852,7 @@ exports[`ItwDiscoveryBanner snapshots should match snapshot for activation banne
                       <View
                         accessibilityLabel="Porta su IO i tuoi documenti digitali
 Con piena validità ufficiale, digitali e sempre a portata di mano!
-Aggiungi un documento"
+Inizia"
                         accessibilityRole="button"
                         accessible={true}
                         onAccessibilityTap={[Function]}
@@ -2472,7 +2472,7 @@ Aggiungi un documento"
                             }
                           />
                           <View
-                            accessibilityLabel="Aggiungi un documento"
+                            accessibilityLabel="Inizia"
                             accessibilityRole="button"
                             accessibilityState={
                               {
@@ -2684,7 +2684,7 @@ Aggiungi un documento"
                                     ]
                                   }
                                 >
-                                  Aggiungi un documento
+                                  Inizia
                                 </Text>
                               </View>
                             </View>
