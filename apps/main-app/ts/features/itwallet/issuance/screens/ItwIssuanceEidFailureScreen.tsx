@@ -265,6 +265,36 @@ const ContentView = ({ failure }: ContentViewProps) => {
                 })
             }
           };
+        case IssuanceFailureType.CIE_NOT_MATCHING_AUTHENTICATION_IDENTITY:
+          return {
+            title: I18n.t(
+              "features.itWallet.issuance.cieNotMatchingAuthenticationIdentityError.title"
+            ),
+            subtitle: I18n.t(
+              "features.itWallet.issuance.cieNotMatchingAuthenticationIdentityError.body"
+            ),
+            pictogram: "attention",
+            action: {
+              label: I18n.t("global.buttons.retry"),
+              onPress: () => {
+                trackItwKoStateAction({
+                  reason: failure.reason,
+                  cta_category: "custom_1",
+                  cta_id: I18n.t("global.buttons.retry")
+                });
+                machineRef.send({ type: "retry" });
+              }
+            },
+            secondaryAction: {
+              label: I18n.t("global.buttons.close"),
+              onPress: () =>
+                closeIssuance({
+                  reason: failure.reason,
+                  cta_category: "custom_2",
+                  cta_id: I18n.t("global.buttons.close")
+                })
+            }
+          };
         case IssuanceFailureType.WALLET_REVOCATION_ERROR:
           return {
             title: I18n.t(

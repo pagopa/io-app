@@ -3718,6 +3718,10 @@
           "primaryAction": "Riprova",
           "secondaryAction": "Chiudi"
         },
+        "cieNotMatchingAuthenticationIdentityError": {
+          "title": "La CIE non corrisponde",
+          "body": "La Carta di Identità Elettronica che hai usato non è quella della persona che sta attivando questo portafoglio IT-Wallet."
+        },
         "genericError": {
           "title": "Si è verificato un errore imprevisto",
           "body": "L’ente che emette le versioni digitali dei documenti sta riscontrando dei problemi ed è già al lavoro per risolverli: riprova più tardi.",

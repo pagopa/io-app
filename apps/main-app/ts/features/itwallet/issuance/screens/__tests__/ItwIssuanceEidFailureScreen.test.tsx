@@ -1,3 +1,4 @@
+import { Errors } from "@pagopa/io-react-native-wallet";
 import { fireEvent } from "@testing-library/react-native";
 import I18n from "i18next";
 import { createStore } from "redux";
@@ -75,6 +76,51 @@ describe("ItwIssuanceEidFailureScreen", () => {
       expect(mockSend).toHaveBeenCalledWith({ type: "retry" });
     }
   );
+
+  it("renders the dedicated CIE mismatch copy and actions", () => {
+    const { queryByText, getByText } = renderComponent({
+      type: IssuanceFailureType.CIE_NOT_MATCHING_AUTHENTICATION_IDENTITY,
+      reason: new Errors.IssuerResponseError({
+        message: "MRTD PoP verification failed",
+        reason: { error: "tax_id_code_mismatch" },
+        statusCode: 400
+      })
+    });
+
+    expect(
+      getByText(
+        I18n.t(
+          "features.itWallet.issuance.cieNotMatchingAuthenticationIdentityError.title"
+        )
+      )
+    ).toBeTruthy();
+    expect(
+      getByText(
+        I18n.t(
+          "features.itWallet.issuance.cieNotMatchingAuthenticationIdentityError.body"
+        )
+      )
+    ).toBeTruthy();
+    expect(getByText(I18n.t("global.buttons.retry"))).toBeTruthy();
+    expect(getByText(I18n.t("global.buttons.close"))).toBeTruthy();
+    expect(queryByText(I18n.t("features.itWallet.support.button"))).toBeNull();
+
+    fireEvent.press(getByText(I18n.t("global.buttons.retry")));
+
+    expect(mockSend).toHaveBeenCalledWith({ type: "retry" });
+  });
+
+  it("keeps rendering the generic unexpected failure branch", () => {
+    const { getByText } = renderComponent({
+      type: IssuanceFailureType.UNEXPECTED,
+      reason: new Error("Unexpected failure")
+    });
+
+    expect(
+      getByText(I18n.t("features.itWallet.generic.error.title"))
+    ).toBeTruthy();
+    expect(getByText(I18n.t("features.itWallet.support.button"))).toBeTruthy();
+  });
 });
 
 const renderComponent = (

@@ -28,7 +28,7 @@ const ENGAGEMENT_CONFIG: Record<
   }
 > = {
   qrcode: { engagementModes: ["qrcode"], retrievalMethods: ["ble"] },
-  nfc: { engagementModes: ["nfc"], retrievalMethods: ["nfc"] }
+  nfc: { engagementModes: ["nfc"], retrievalMethods: ["ble", "nfc"] }
 };
 
 export type StartEngagementActorInput = {
