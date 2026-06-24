@@ -812,7 +812,6 @@ export const itwEidIssuanceMachine = setup({
                 "Start the preliminary phase of the CIE identification flow.",
               tags: [ItwTags.Loading],
               entry: "navigateToCieAuthenticationScreen",
-              actions: "navigateToCieAuthenticationScreen",
               invoke: {
                 src: "startAuthFlow",
                 input: ({ context }) => ({
