@@ -907,7 +907,7 @@ exports[`LoginOptInScreen should match the snapshot 1`] = `
                                   }
                                   testID="FciLoginL3SubtitleText"
                                 >
-                                  Con l’accesso rapido chiederemo la tua l'identità digitale una sola volta all'anno invece che ogni 30 giorni. Poi ti basterà usare il volto, l’impronta o il codice.
+                                  Con l’accesso rapido chiederemo la tua identità digitale una sola volta all'anno invece che ogni 30 giorni. Poi ti basterà usare il volto, l’impronta o il codice.
                                 </Text>
                                 <View
                                   style={
