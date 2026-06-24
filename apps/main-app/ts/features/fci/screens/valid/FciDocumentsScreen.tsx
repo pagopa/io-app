@@ -164,8 +164,9 @@ const FciDocumentsScreen = () => {
     }
   }, [currentDoc, documents, isFocused, fciEnvironment]);
 
-  const { present, bottomSheet: fciAbortSignature } =
-    useFciAbortSignatureFlow();
+  const { present, bottomSheet: fciAbortSignature } = useFciAbortSignatureFlow({
+    showDialogOnBack: currentDoc <= 0
+  });
 
   const {
     present: showNoSignatureFieldsBs,

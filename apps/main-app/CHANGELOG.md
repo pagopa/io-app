@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.35.0-rc.7](https://github.com/pagopa/io-app/compare/3.35.0-rc.6...3.35.0-rc.7) (2026-06-23)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-0000](https://pagopa.atlassian.net/browse/SIW-0000)] Deduplicate IO Wallet SDK ([#8197](https://github.com/pagopa/io-app/issues/8197)) ([4e4888a](https://github.com/pagopa/io-app/commit/4e4888a7faa97351eb572ca5884b57769b22a598))
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-4476](https://pagopa.atlassian.net/browse/SIW-4476)] Enable BLE retrieval for NFC presentment flows ([#8185](https://github.com/pagopa/io-app/issues/8185)) ([dad786e](https://github.com/pagopa/io-app/commit/dad786e030b9655baf056284934021c56a604a1a))
+
+## [3.35.0-rc.6](https://github.com/pagopa/io-app/compare/3.35.0-rc.5...3.35.0-rc.6) (2026-06-22)
+
+
+### Features
+
+* **IT-Wallet:** [[SIW-4270](https://pagopa.atlassian.net/browse/SIW-4270)] Error on CIE inconsistent with spid login data ([#8152](https://github.com/pagopa/io-app/issues/8152)) ([6028f29](https://github.com/pagopa/io-app/commit/6028f29aff7b1ce97704286a061250c8b7ccd96c))
+
+
+### Bug Fixes
+
+* [[IEL-559](https://pagopa.atlassian.net/browse/IEL-559)] Android back in FCI flow ([#8163](https://github.com/pagopa/io-app/issues/8163)) ([3cd9fb2](https://github.com/pagopa/io-app/commit/3cd9fb24327d87044443b8004240765164050fdf))
+* [[IOPLT-1900](https://pagopa.atlassian.net/browse/IOPLT-1900)] Restore limits in the `jest` config to avoid memory saturation ([#8196](https://github.com/pagopa/io-app/issues/8196)) ([5b79c33](https://github.com/pagopa/io-app/commit/5b79c339e401f47b96ed856e852a501ad623fe30))
+
 ## [3.35.0-rc.5](https://github.com/pagopa/io-app/compare/3.35.0-rc.4...3.35.0-rc.5) (2026-06-19)
 
 
