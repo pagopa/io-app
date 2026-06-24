@@ -1454,6 +1454,65 @@ describe("itwEidIssuanceMachine", () => {
     });
   });
 
+  it("Should navigate to the eID preview loading screen when issuance takes longer than 4 seconds", async () => {
+    requestAccessToken.mockImplementation(() =>
+      Promise.resolve(T_ACCESS_TOKEN)
+    );
+    requestEid.mockImplementation(
+      () =>
+        new Promise<RequestEidActorOutput>(resolve => {
+          setTimeout(() => resolve(T_EID_REQUEST_OUTPUT), 5000);
+        })
+    );
+    issuedEidMatchesAuthenticatedUser.mockImplementation(() => true);
+
+    const initialSnapshot: MachineSnapshot = createActor(
+      itwEidIssuanceMachine
+    ).getSnapshot();
+
+    const snapshot: MachineSnapshot = _.merge(undefined, initialSnapshot, {
+      value: { UserIdentification: { CiePin: "ReadingCieCard" } },
+      context: {
+        level: "l3",
+        mode: "issuance",
+        integrityKeyTag: T_INTEGRITY_KEY,
+        walletInstanceAttestation: { jwt: T_WIA },
+        identification: {
+          level: "L3",
+          mode: "ciePin",
+          pin: "12345678"
+        },
+        authenticationContext: {}
+      }
+    } as MachineSnapshot);
+
+    const actor = createActor(mockedMachine, {
+      snapshot
+    });
+    actor.start();
+
+    actor.send({
+      type: "user-identification-completed",
+      authRedirectUrl: "http://test.it"
+    });
+
+    const requestingEidSnapshot = await waitForActor(actor, s =>
+      s.matches({ Issuance: "RequestingEid" })
+    );
+
+    expect(requestingEidSnapshot.tags).toStrictEqual(
+      new Set([ItwTags.Loading])
+    );
+    expect(navigateToEidPreviewScreen).not.toHaveBeenCalled();
+
+    jest.advanceTimersByTime(4000);
+
+    expect(navigateToEidPreviewScreen).toHaveBeenCalledTimes(1);
+    expect(actor.getSnapshot().value).toStrictEqual({
+      Issuance: "RequestingEid"
+    });
+  });
+
   it("Should handle 401 when creating wallet instance", async () => {
     const actor = createActor(mockedMachine);
     actor.start();
