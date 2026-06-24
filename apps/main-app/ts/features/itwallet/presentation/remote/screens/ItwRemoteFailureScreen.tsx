@@ -223,7 +223,7 @@ const ContentView = ({ failure }: ContentViewProps) => {
             subtitle: I18n.t(
               "features.itWallet.presentation.remote.eidExpiredScreen.subtitle"
             ),
-            pictogram: "identityRefresh",
+            pictogram: "identity",
             action: {
               label: I18n.t(
                 "features.itWallet.presentation.remote.eidExpiredScreen.primaryAction"
