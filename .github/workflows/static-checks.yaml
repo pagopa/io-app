@@ -24,7 +24,7 @@ jobs:
       - id: setup
         uses: ./.github/actions/setup-composite
       - name: Sets the base and head SHAs required for `nx affected` command
-        uses: nrwl/nx-set-shas@3e9ad7370203c1e93d109be57f3b72eb0eb511b1
+        uses: nrwl/nx-set-shas@38457b511e60ee4e1da09255b658e480748a1af4 # v5.0.1
       - id: run-validate
         run: pnpm validate
       - id: codecov-script
