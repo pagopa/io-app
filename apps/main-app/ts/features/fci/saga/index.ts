@@ -1,11 +1,13 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { SagaIterator } from "redux-saga";
+import { Action } from "redux";
 import { ActionType, isActionOf } from "typesafe-actions";
 import RNFS from "react-native-fs";
 import { call, takeLatest, put, select, take } from "typed-redux-saga/macro";
 import { CommonActions, StackActions } from "@react-navigation/native";
 import I18n from "i18next";
+import { FciQtspErrorKind } from "../types/FciQtspErrorKind";
 import NavigationService from "../../../navigation/NavigationService";
 import { FCI_ROUTES } from "../navigation/routes";
 import ROUTES from "../../../navigation/routes";
@@ -147,23 +149,7 @@ export function* watchFciSaga(
 
   yield* takeLatest(identificationPinReset, watchIdentificationPinResetSaga);
 
-  yield* takeLatest(
-    fciLoadQtspClauses.failure,
-    watchFciQtspErrorSaga,
-    "qtsp_clauses"
-  );
-
-  yield* takeLatest(
-    fciLoadQtspFilledDocument.failure,
-    watchFciQtspErrorSaga,
-    "filled_document"
-  );
-
-  yield* takeLatest(
-    fciPollFilledDocument.failure,
-    watchFciQtspErrorSaga,
-    "poll_filled_document"
-  );
+  yield* takeLatest(isQtspFailureAction, watchFciQtspErrorSaga);
 }
 
 /**
@@ -405,9 +391,36 @@ export function* navigateAfterFinishedFciActiveSessionLoginFlowSaga(
   return;
 }
 
-function* watchFciQtspErrorSaga(
-  errorKind: "qtsp_clauses" | "filled_document" | "poll_filled_document"
-): SagaIterator {
+type QtspFailureAction =
+  | ActionType<typeof fciLoadQtspClauses.failure>
+  | ActionType<typeof fciLoadQtspFilledDocument.failure>
+  | ActionType<typeof fciPollFilledDocument.failure>;
+
+const isQtspFailureAction = (action: Action): action is QtspFailureAction =>
+  isActionOf(
+    [
+      fciLoadQtspClauses.failure,
+      fciLoadQtspFilledDocument.failure,
+      fciPollFilledDocument.failure
+    ],
+    action
+  );
+
+const qtspErrorKindFromAction = (
+  action: QtspFailureAction
+): FciQtspErrorKind => {
+  switch (action.type) {
+    case "FCI_QTSP_CLAUSES_FAILURE":
+      return "qtsp_clauses";
+    case "FCI_QTSP_FILLED_DOC_FAILURE":
+      return "filled_document";
+    case "FCI_POLL_FILLED_DOCUMENT_FAILURE":
+      return "poll_filled_document";
+  }
+};
+
+function* watchFciQtspErrorSaga(action: QtspFailureAction): SagaIterator {
+  const errorKind = qtspErrorKindFromAction(action);
   yield* put(fciDownloadPreview.cancel());
   yield* call(
     NavigationService.dispatchNavigationAction,

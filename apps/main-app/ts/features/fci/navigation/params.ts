@@ -3,16 +3,12 @@ import { FciDocumentPreviewScreenNavigationParams } from "../screens/valid/FciDo
 import { FciDocumentsScreenNavigationParams } from "../screens/valid/FciDocumentsScreen";
 import { FciSignatureFieldsScreenNavigationParams } from "../screens/valid/FciSignatureFieldsScreen";
 import { FciNetworkError } from "../utils/errors";
+import { FciQtspErrorKind } from "../types/FciQtspErrorKind";
 import { FCI_ROUTES } from "./routes";
 
 export type FciDocumentUnavailableScreenNavigationParams = {
   errorKind?: FciNetworkError["kind"];
 };
-
-export type FciQtspErrorKind =
-  | "qtsp_clauses"
-  | "filled_document"
-  | "poll_filled_document";
 
 export type FciQtspErrorScreenNavigationParams = {
   errorKind: FciQtspErrorKind;

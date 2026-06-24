@@ -8,10 +8,8 @@ import { FCI_ROUTES } from "../../navigation/routes";
 import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
 import { fciSignatureRequestFromId } from "../../store/actions";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
-import {
-  FciQtspErrorKind,
-  FciQtspErrorScreenNavigationParams
-} from "../../navigation/params";
+import { FciQtspErrorScreenNavigationParams } from "../../navigation/params";
+import { FciQtspErrorKind } from "../../types/FciQtspErrorKind";
 
 const createTestStore = () => {
   const globalState = appReducer(undefined, applicationChangeState("active"));

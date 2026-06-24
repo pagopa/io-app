@@ -30,21 +30,15 @@ describe("FciDocumentUnavailableScreen", () => {
     it("should show only the close button", () => {
       const store = createTestStore();
       const component = renderComponent(store);
-      expect(
-        component.queryByTestId("FciDocUnavailableTestIDCloseButton")
-      ).not.toBeNull();
-      expect(
-        component.queryByTestId("FciDocUnavailableTestIDRetryButton")
-      ).toBeNull();
+      expect(component.queryByTestId("FciCloseButtonTestID")).not.toBeNull();
+      expect(component.queryByTestId("FciRetryButtonTestID")).toBeNull();
     });
 
     it("should dispatch fciEndRequest on close button press", () => {
       const store = createTestStore();
       const dispatchSpy = jest.spyOn(store, "dispatch");
       const component = renderComponent(store);
-      fireEvent.press(
-        component.getByTestId("FciDocUnavailableTestIDCloseButton")
-      );
+      fireEvent.press(component.getByTestId("FciCloseButtonTestID"));
       expect(dispatchSpy).toHaveBeenCalledWith(
         expect.objectContaining({ type: "FCI_END_REQUEST" })
       );
@@ -58,12 +52,8 @@ describe("FciDocumentUnavailableScreen", () => {
         fciSignatureRequestFromId.success({ ...mockSignatureRequestDetailView })
       );
       const component = renderComponent(store);
-      expect(
-        component.queryByTestId("FciDocUnavailableTestIDRetryButton")
-      ).not.toBeNull();
-      expect(
-        component.queryByTestId("FciDocUnavailableTestIDCloseButton")
-      ).not.toBeNull();
+      expect(component.queryByTestId("FciRetryButtonTestID")).not.toBeNull();
+      expect(component.queryByTestId("FciCloseButtonTestID")).not.toBeNull();
     });
 
     it("should dispatch fciSignatureRequestRetryFromId on retry button press", () => {
@@ -73,9 +63,7 @@ describe("FciDocumentUnavailableScreen", () => {
       );
       const dispatchSpy = jest.spyOn(store, "dispatch");
       const component = renderComponent(store);
-      fireEvent.press(
-        component.getByTestId("FciDocUnavailableTestIDRetryButton")
-      );
+      fireEvent.press(component.getByTestId("FciRetryButtonTestID"));
       expect(dispatchSpy).toHaveBeenCalledWith(
         expect.objectContaining({ type: "FCI_SIGNATURE_DETAIL_RETRY_REQUEST" })
       );
