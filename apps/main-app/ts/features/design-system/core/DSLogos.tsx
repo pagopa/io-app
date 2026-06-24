@@ -244,6 +244,7 @@ const renderPaymentLogosCard = () => (
           <LogoPaymentCard
             align="start"
             height={32}
+            accessibilityLabel={logoItemName}
             name={logoItemName as IOLogoPaymentCardType}
           />
         }
@@ -263,9 +264,27 @@ const renderPaymentLogosCard = () => (
         }}
       >
         <VStack space={8}>
-          <LogoPaymentCard debugMode height={32} name="payPal" align="start" />
-          <LogoPaymentCard debugMode height={32} name="payPal" align="center" />
-          <LogoPaymentCard debugMode height={32} name="payPal" align="end" />
+          <LogoPaymentCard
+            debugMode
+            height={32}
+            accessibilityLabel="payPal"
+            name="payPal"
+            align="start"
+          />
+          <LogoPaymentCard
+            debugMode
+            height={32}
+            accessibilityLabel="payPal"
+            name="payPal"
+            align="center"
+          />
+          <LogoPaymentCard
+            debugMode
+            height={32}
+            accessibilityLabel="payPal"
+            name="payPal"
+            align="end"
+          />
         </VStack>
       </View>
     </DSComponentViewerBox>

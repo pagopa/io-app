@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",
     "target": "esnext",
     "lib": ["es6", "dom", "es2019", "es2022"],
     "importHelpers": true,
@@ -14,9 +15,6 @@
     "useUnknownInCatchVariables": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "paths": {
-      "@pagopa/io-app-design-system": ["libs/io-app-design-system/src/index.ts"]
-    }
+    "skipLibCheck": true
   }
 }
