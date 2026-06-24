@@ -75,6 +75,11 @@ overrides:
   '@babel/plugin-transform-typescript': ^7.23.6
   '@babel/plugin-syntax-typescript': ^7.23.3
   '@babel/types': ^7.23.6
+  '@pagopa/io-wallet-oauth2': 1.4.2
+  '@pagopa/io-wallet-oid-federation': 1.4.2
+  '@pagopa/io-wallet-oid4vci': 1.4.2
+  '@pagopa/io-wallet-oid4vp': 1.4.2
+  '@pagopa/io-wallet-utils': 1.4.2
 
 patchedDependencies:
   '@gorhom/bottom-sheet@5.2.8':
@@ -2483,14 +2488,8 @@ packages:
   '@pagopa/io-wallet-oauth2@1.4.2':
     resolution: {integrity: sha512-V+OKHY6Eqo8Uz0NqUftKRlER+MOwsr1wW8q+tKd2XA6Ys3kPrXdvC/Jxy3g5UT3Lqm7dCFK0hx3Qc28qECLPCQ==}
 
-  '@pagopa/io-wallet-oauth2@1.5.0':
-    resolution: {integrity: sha512-FFFBhtf59/6P/TRMeKeuLZ3tZBcP0N0x49eXDgfSnqfPOS8ktaZFDnLefLtGRJoPm+qKNLBvNYmB2aw1VJTksA==}
-
   '@pagopa/io-wallet-oid-federation@1.4.2':
     resolution: {integrity: sha512-Xzm5vzOWRJoyyy5p12diktqXvyJx3EPlrPm32VcUYLXwJgPtlkFCnP6NF4GtFfkpgu3EXZplH/uzYc/itHgJwg==}
-
-  '@pagopa/io-wallet-oid-federation@1.5.0':
-    resolution: {integrity: sha512-rpsKJdQliMRpErHeWXCz9z87AoG5P2sSBf5AnD9z1FIUbK2Yh5QCLqJNDqwtYZuXv2urk5/gN1TFstSd1WUvhQ==}
 
   '@pagopa/io-wallet-oid4vci@1.4.2':
     resolution: {integrity: sha512-0YjwZGPh3XLZRn1J8iAXN28EHA0Vsv/bZWZIB19FkEXZKYsU4J4KqOaehARYVPgRto0k6BTYWAZWuHUaE75AQA==}
@@ -2500,9 +2499,6 @@ packages:
 
   '@pagopa/io-wallet-utils@1.4.2':
     resolution: {integrity: sha512-KMBc1nFXUyOOvWbQT1AJXgqOCNKh7W01o50lxuSQESUp2xPGvTpLXUcSTjG2TXo7AyumaryrCG+Mx2Dt9aBR5w==}
-
-  '@pagopa/io-wallet-utils@1.5.0':
-    resolution: {integrity: sha512-LleTZ1XVGx6cN09RiD5FxvWGpOM7lN0h4PSeuwzNRnRwJd9XA4yrhNoaaXceid/Ut8ft6LTFTZvqDdsixW8pNg==}
 
   '@pagopa/openapi-codegen-ts@14.2.0':
     resolution: {integrity: sha512-sop1+MxfLP2Od2sxDvHxJ7poVmZKBP0REVMQDPrCpNe9Wv1vvLJN8WqonUjkLfL3fLmKM0B6AS4B67Nigm1uKA==}
@@ -12707,24 +12703,9 @@ snapshots:
       js-base64: 3.7.8
       zod: 4.3.6
 
-  '@pagopa/io-wallet-oauth2@1.5.0':
-    dependencies:
-      '@openid4vc/oauth2': 0.4.3
-      '@openid4vc/utils': 0.4.3
-      '@pagopa/io-wallet-oid-federation': 1.5.0
-      '@pagopa/io-wallet-utils': 1.5.0
-      js-base64: 3.7.8
-      zod: 4.3.6
-
   '@pagopa/io-wallet-oid-federation@1.4.2':
     dependencies:
-      '@pagopa/io-wallet-utils': 1.5.0
-      buffer: 6.0.3
-      zod: 4.3.6
-
-  '@pagopa/io-wallet-oid-federation@1.5.0':
-    dependencies:
-      '@pagopa/io-wallet-utils': 1.5.0
+      '@pagopa/io-wallet-utils': 1.4.2
       buffer: 6.0.3
       zod: 4.3.6
 
@@ -12744,18 +12725,12 @@ snapshots:
       '@openid4vc/oauth2': 0.4.3
       '@openid4vc/openid4vp': 0.4.3
       '@openid4vc/utils': 0.4.3
-      '@pagopa/io-wallet-oauth2': 1.5.0
-      '@pagopa/io-wallet-oid-federation': 1.5.0
-      '@pagopa/io-wallet-utils': 1.5.0
+      '@pagopa/io-wallet-oauth2': 1.4.2
+      '@pagopa/io-wallet-oid-federation': 1.4.2
+      '@pagopa/io-wallet-utils': 1.4.2
       zod: 4.3.6
 
   '@pagopa/io-wallet-utils@1.4.2':
-    dependencies:
-      '@openid4vc/oauth2': 0.4.3
-      '@openid4vc/utils': 0.4.3
-      zod: 4.3.6
-
-  '@pagopa/io-wallet-utils@1.5.0':
     dependencies:
       '@openid4vc/oauth2': 0.4.3
       '@openid4vc/utils': 0.4.3
