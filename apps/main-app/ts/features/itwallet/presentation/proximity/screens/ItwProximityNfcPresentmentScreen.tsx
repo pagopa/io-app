@@ -52,17 +52,13 @@ const IOsContent = () => {
 
   return (
     <IOScrollView
-      actions={
-        isSuccess
-          ? {
-              type: "SingleButton",
-              primary: {
-                label: I18n.t("global.buttons.close"),
-                onPress: handleDismiss
-              }
-            }
-          : undefined
-      }
+      actions={{
+        type: "SingleButton",
+        primary: {
+          label: I18n.t("global.buttons.close"),
+          onPress: handleDismiss
+        }
+      }}
     >
       <View style={[styles.container, { marginTop: insets.top }]}>
         <HStack>

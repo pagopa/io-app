@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.35.0-rc.7](https://github.com/pagopa/io-app/compare/3.35.0-rc.6...3.35.0-rc.7) (2026-06-23)
+
+
+### Bug Fixes
+
+* **IT-Wallet:** [[SIW-0000](https://pagopa.atlassian.net/browse/SIW-0000)] Deduplicate IO Wallet SDK ([#8197](https://github.com/pagopa/io-app/issues/8197)) ([4e4888a](https://github.com/pagopa/io-app/commit/4e4888a7faa97351eb572ca5884b57769b22a598))
+
+
+### Chores
+
+* **IT-Wallet:** [[SIW-4476](https://pagopa.atlassian.net/browse/SIW-4476)] Enable BLE retrieval for NFC presentment flows ([#8185](https://github.com/pagopa/io-app/issues/8185)) ([dad786e](https://github.com/pagopa/io-app/commit/dad786e030b9655baf056284934021c56a604a1a))
+
 ## [3.35.0-rc.6](https://github.com/pagopa/io-app/compare/3.35.0-rc.5...3.35.0-rc.6) (2026-06-22)
 
 
