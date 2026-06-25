@@ -32,9 +32,6 @@ jest.mock("@react-navigation/native", () => {
           if (prop === "setOptions") {
             return mockSetOptions;
           }
-          if (prop === "addListener") {
-            return jest.fn(() => jest.fn());
-          }
           return mockShouldNeverCall;
         }
       })
