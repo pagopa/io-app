@@ -692,7 +692,7 @@ importers:
         specifier: ^3.5.1
         version: 3.5.1(eslint@9.39.4)
       eslint-plugin-sonarjs:
-        specifier: ^4.0.2
+        specifier: ^4.1.0
         version: 4.1.0(eslint@9.39.4)
       fs-extra:
         specifier: ^7.0.0

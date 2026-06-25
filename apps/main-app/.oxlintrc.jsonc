@@ -164,8 +164,8 @@
         // eslint-plugin-eslint-comments is replaced by oxlint's native reportUnusedDisableDirectives (see options above)
         // eslint-comments/no-aggregating-enable and no-unlimited-disable are not supported natively; the plugin crashes in oxlint's JS runner
         "oxlint-compat/one-var": ["error", "never"],
-        "oxlint-compat/object-shorthand": "error",
-        "oxlint-compat/no-underscore-dangle": [
+        "object-shorthand": "error",
+        "no-underscore-dangle": [
           "error",
           {
             "allow": [
