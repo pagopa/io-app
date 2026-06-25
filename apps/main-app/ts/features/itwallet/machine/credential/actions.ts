@@ -130,14 +130,22 @@ export const createCredentialIssuanceActionsImplementation = (
     const surveyCredential =
       event.type === "close" ? event.surveyCredential : undefined;
 
-    navigation.popTo(ROUTES.MAIN, {
-      screen: ROUTES.WALLET_HOME,
-      params: {
-        credentialExitSurvey:
-          surveyStep && surveyCredential
-            ? { step: surveyStep, credential: surveyCredential }
-            : undefined
-      }
+    navigation.reset({
+      index: 1,
+      routes: [
+        {
+          name: ROUTES.MAIN,
+          params: {
+            screen: ROUTES.WALLET_HOME,
+            params: {
+              credentialExitSurvey:
+                surveyStep && surveyCredential
+                  ? { step: surveyStep, credential: surveyCredential }
+                  : undefined
+            }
+          }
+        }
+      ]
     });
   },
 
