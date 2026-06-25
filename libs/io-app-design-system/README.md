@@ -15,13 +15,13 @@
 # Getting started
 
 ## Prerequisites
-To contribute to the library development, you will need to install `nodejs` and `yarn`. We recommend using [`nvm`](https://github.com/nvm-sh/nvm) to properly handle the supported nodejs version (see [`.nvmrc`](./.nvmrc)).
+To contribute to the library development, you will need to install `nodejs` and `pnpm`. We recommend using [`nodenv`](https://github.com/nvm-sh/nvm) to properly handle the supported nodejs version (see [`.node-version`](../../.node-version)).
 #### [Learn more about the `io-app` prerequisites →](https://github.com/pagopa/io-app#prerequisites)
 ## Installing the component library
 To add the component library to the main app run:
 
 ```bash
-yarn add @pagopa/io-app-design-system
+pnpm add @pagopa/io-app-design-system
 ```
 
 Remember to encapsulate the app container with the `SafeAreaProvider` from [`react-native-safe-area-context`](https://github.com/th3rdwave/react-native-safe-area-context?tab=readme-ov-file#safeareaprovider) in your `App.tsx` file. Also, remember to apply this wrapper in other relevant places such as the root components of modals and routes when utilizing [`react-native-screens`](https://github.com/software-mansion/react-native-screens):
@@ -34,28 +34,25 @@ function App() {
 ```
 
 ## Launch the example app
-For development purposes, a sample React Native application is included in the repository. To launch it:
+For development purposes, it is possible to test on main-app under DS Development Section. To launch it:
 
 ```bash
-# Move into `example` folder
-cd example
-
 # Install dependencies 
-yarn install
+pnpm install
 
 # Install podfiles when targeting iOS (ignore this step for Android)
 # Run this only during the first setup and when Pods dependencies change
-cd iOS && bundle exec pod install
+pnpm nx run main-app:dev-pod-install
 
 # Launch the app locally (simulator flag is optional)
-yarn ios --simulator='iPhone 15 Pro'
+pnpm nx run main-app:run-ios
 ```
 
 ### Playground
 Consider the example app your playground when developing and testing current or new components. If you need to build new components, ensure that you test them in the same environment as our users, without making any technical trade-offs (like testing them in a browser)
 
 > [!important]
-> The sample application consists of several pages with some components for testing purposes. To view the [continuously updated Design System section](https://github.com/pagopa/io-app/tree/master/ts/features/design-system), please refer to the [main app](https://github.com/pagopa/io-app).
+> The sample application consists of several pages with some components for testing purposes. To view the [continuously updated Design System section](https://github.com/pagopa/io-app/tree/master/apps/main-app/ts/features/design-system), please refer to the [main app](https://github.com/pagopa/io-app).
 
 
 # Usage
