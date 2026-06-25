@@ -1,9 +1,10 @@
+import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import { constFalse, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { ItwVersion } from "@pagopa/io-react-native-wallet";
+
+import { useIOStore } from "../../../../store/hooks";
 import { ItwSessionExpiredError } from "../../api/client";
 import { isWalletInstanceAttestationValid } from "../../common/utils/itwAttestationUtils";
-import { useIOStore } from "../../../../store/hooks";
 import { itwCredentialsEidStatusSelector } from "../../credentials/store/selectors";
 import { Context } from "./context";
 import { CredentialIssuanceEvents } from "./events";

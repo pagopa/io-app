@@ -1,27 +1,27 @@
-import { View, Text } from "react-native";
 import {
-  IOColors,
-  VSpacer,
   HSpacer,
+  IOColors,
   IOSpacer,
-  useIOTheme
+  useIOTheme,
+  VSpacer
 } from "@pagopa/io-app-design-system";
-
-type DSSpacerViewerBoxProps = {
-  size: IOSpacer;
-  orientation?: "horizontal" | "vertical";
-};
+import { Text, View } from "react-native";
 
 type DSSpacerLabelProps = {
   value: IOSpacer;
+};
+
+type DSSpacerViewerBoxProps = {
+  orientation?: "horizontal" | "vertical";
+  size: IOSpacer;
 };
 
 const DSSpacerLabel = ({ value }: DSSpacerLabelProps) => {
   const theme = useIOTheme();
   return (
     <Text
-      numberOfLines={1}
       ellipsizeMode="tail"
+      numberOfLines={1}
       style={{ fontSize: 9, color: IOColors[theme["textBody-tertiary"]] }}
     >
       {value}

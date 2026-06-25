@@ -1,5 +1,6 @@
 import { ListItemInfo } from "@pagopa/io-app-design-system";
 import { ComponentProps } from "react";
+
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 
 type Props = ComponentProps<typeof ListItemInfo> & {
@@ -23,8 +24,8 @@ export const PaymentListItemInfo = ({
 
   return (
     <ListItemInfo
-      value={value}
       onLongPress={copyable ? handleOnCopy : undefined}
+      value={value}
       {...rest}
     />
   );

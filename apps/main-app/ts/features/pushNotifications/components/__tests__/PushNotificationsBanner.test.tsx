@@ -1,24 +1,24 @@
-import { fireEvent } from "@testing-library/react-native";
-
-import { ComponentProps, ReactElement } from "react";
-import { createStore } from "redux";
-import { constUndefined } from "fp-ts/lib/function";
 import { FooterActions } from "@pagopa/io-app-design-system";
-import { GestureResponderEvent } from "react-native";
+import { fireEvent } from "@testing-library/react-native";
+import { constUndefined } from "fp-ts/lib/function";
 import I18n from "i18next";
+import { ComponentProps, ReactElement } from "react";
+import { GestureResponderEvent } from "react-native";
+import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../store/actions/application";
 import * as IOHOOKS from "../../../../store/hooks";
 import { appReducer } from "../../../../store/reducers";
 import * as BS from "../../../../utils/hooks/bottomSheet";
 import { renderScreenWithNavigationStoreContext } from "../../../../utils/testWrapper";
 import { MESSAGES_ROUTES } from "../../../messages/navigation/routes";
+import * as analytics from "../../analytics";
 import * as ACTIONS from "../../store/actions/userBehaviour";
+import { setPushNotificationBannerForceDismissed } from "../../store/actions/userBehaviour";
 import * as SELECTORS from "../../store/selectors";
 import * as NOTIFICATION_DISMISS_SELECTORS from "../../store/selectors/notificationsBannerDismissed";
 import * as UTILS from "../../utils";
 import { PushNotificationsBanner } from "../PushNotificationsBanner";
-import * as analytics from "../../analytics";
-import { setPushNotificationBannerForceDismissed } from "../../store/actions/userBehaviour";
 
 describe("PushNotificationsBanner", () => {
   afterEach(() => {

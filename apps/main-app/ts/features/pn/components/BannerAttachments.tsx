@@ -1,9 +1,10 @@
 import { Banner, Body, IOButton, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { View } from "react-native";
-import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
-import { sendEstimateTimelinesUrlSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+
 import { useIOSelector } from "../../../store/hooks";
+import { sendEstimateTimelinesUrlSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../utils/url";
 
 export const BannerAttachments = () => {
@@ -20,12 +21,12 @@ export const BannerAttachments = () => {
         <VSpacer size={16} />
         <IOButton
           icon="calendar"
-          variant="link"
           label={I18n.t(
             "features.pn.details.attachmentsSection.bottomSheet.action"
           )}
           onPress={openExternalUrl}
           testID="banner-attachment-bottomsheet-cta"
+          variant="link"
         />
         <VSpacer size={32} />
       </View>
@@ -35,13 +36,13 @@ export const BannerAttachments = () => {
   return (
     <>
       <Banner
+        action={I18n.t("features.pn.details.attachmentsSection.banner.action")}
         color="neutral"
-        pictogramName="attachment"
         content={I18n.t(
           "features.pn.details.attachmentsSection.banner.content"
         )}
-        action={I18n.t("features.pn.details.attachmentsSection.banner.action")}
         onPress={present}
+        pictogramName="attachment"
         testID="banner-attachment-banner"
       />
       <VSpacer size={16} />

@@ -2,6 +2,7 @@ import { IOToast } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback } from "react";
+
 import {
   OperationResultScreenContent,
   OperationResultScreenContentProps
@@ -70,12 +71,12 @@ export const ItwNfcNotSupportedComponent = () => {
 
   return (
     <OperationResultScreenContent
+      action={action}
+      pictogram="attention"
+      secondaryAction={secondaryAction}
+      subtitle={I18n.t("features.itWallet.discovery.nfcNotSupported.subtitle")}
       testID="itwnfcNotSupportedComponentTestID"
       title={I18n.t("features.itWallet.discovery.nfcNotSupported.title")}
-      subtitle={I18n.t("features.itWallet.discovery.nfcNotSupported.subtitle")}
-      pictogram="attention"
-      action={action}
-      secondaryAction={secondaryAction}
     />
   );
 };

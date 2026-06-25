@@ -4,6 +4,7 @@ import {
   ListItemInfo
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+
 import { Discount } from "../../../../../../../definitions/cgn/merchants/Discount";
 import { formatDateAsShortFormat } from "../../../../../../utils/dates";
 
@@ -18,8 +19,8 @@ export const CgnDiscountContent = ({
     {discountDetails.description && (
       <>
         <ListItemInfo
-          numberOfLines={0}
           label={I18n.t("bonus.cgn.merchantDetail.discount.description")}
+          numberOfLines={0}
           value={discountDetails.description}
         />
         <Divider />
@@ -28,8 +29,8 @@ export const CgnDiscountContent = ({
     {discountDetails.condition && (
       <>
         <ListItemInfo
-          numberOfLines={0}
           label={I18n.t("bonus.cgn.merchantDetail.discount.conditions")}
+          numberOfLines={0}
           value={discountDetails.condition}
         />
         <Divider />
@@ -37,11 +38,6 @@ export const CgnDiscountContent = ({
     )}
     {discountDetails.startDate && discountDetails.endDate && (
       <ListItemInfo
-        numberOfLines={0}
-        label={I18n.t("bonus.cgn.merchantDetail.discount.validity")}
-        value={`${formatDateAsShortFormat(
-          discountDetails.startDate
-        )} - ${formatDateAsShortFormat(discountDetails.endDate)}`}
         accessibilityLabel={`${I18n.t(
           "bonus.cgn.merchantDetail.discount.validity"
         )} 
@@ -49,6 +45,11 @@ export const CgnDiscountContent = ({
             from: formatDateAsShortFormat(discountDetails.startDate),
             to: formatDateAsShortFormat(discountDetails.endDate)
           })}`}
+        label={I18n.t("bonus.cgn.merchantDetail.discount.validity")}
+        numberOfLines={0}
+        value={`${formatDateAsShortFormat(
+          discountDetails.startDate
+        )} - ${formatDateAsShortFormat(discountDetails.endDate)}`}
       />
     )}
   </ContentWrapper>

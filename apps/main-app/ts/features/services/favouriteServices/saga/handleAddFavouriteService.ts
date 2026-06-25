@@ -1,14 +1,15 @@
+import { IOToast } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { call, put, select } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
-import { IOToast } from "@pagopa/io-app-design-system";
+
+import * as analytics from "../../common/analytics";
+import { favouriteServicesLimitSelector } from "../../common/store/selectors/remoteConfig";
 import {
   addFavouriteServiceRequest,
   addFavouriteServiceSuccess
 } from "../store/actions";
 import { favouriteServicesCountSelector } from "../store/selectors";
-import { favouriteServicesLimitSelector } from "../../common/store/selectors/remoteConfig";
-import * as analytics from "../../common/analytics";
 
 export function* handleAddFavouriteService(
   action: ActionType<typeof addFavouriteServiceRequest>

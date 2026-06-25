@@ -1,6 +1,7 @@
 import { IOColors, useIOTheme } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { Modal } from "react-native";
+
 import { OperationResultScreenContent } from "../../../components/screens/OperationResultScreenContent";
 import { useIOSelector } from "../../../store/hooks";
 import { generateDynamicUrlSelector } from "../../../store/reducers/backendStatus/remoteConfig";
@@ -34,12 +35,12 @@ const UnsupportedDeviceScreen = () => {
     <Modal backdropColor={IOColors[theme["appBackground-primary"]]}>
       <OperationResultScreenContent
         pictogram="umbrella"
-        title={title}
-        subtitle={subtitle}
         secondaryAction={{
           label,
           onPress: handleLearnMorePress
         }}
+        subtitle={subtitle}
+        title={title}
       />
     </Modal>
   );

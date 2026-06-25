@@ -7,15 +7,16 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
+
 import { IOScrollView, IOScrollViewActions } from "./IOScrollView";
 
 export type IOScrollViewWithListItems = {
-  title?: string;
-  subtitle?: string;
-  renderItems: Array<ListItemInfo>;
-  listItemHeaderLabel?: string;
   actions: IOScrollViewActions;
   isHeaderVisible?: boolean;
+  listItemHeaderLabel?: string;
+  renderItems: Array<ListItemInfo>;
+  subtitle?: string;
+  title?: string;
 };
 
 const ItemsList = ({ items }: { items: Array<ListItemInfo> }) =>

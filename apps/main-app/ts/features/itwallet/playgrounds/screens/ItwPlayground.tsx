@@ -7,6 +7,7 @@ import {
 import { useFocusEffect } from "@react-navigation/native";
 import { ReactNode, useCallback, useState } from "react";
 import { ScrollView } from "react-native";
+
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useScreenEndMargin } from "../../../../hooks/useScreenEndMargin";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
@@ -25,8 +26,8 @@ import { ItwSpecsVersionSection } from "../components/ItwSpecsVersionSection";
 import { ItwStatusListSection } from "../components/ItwStatusListSection";
 
 type PlaygroundTab = {
-  label: string;
   content: ReactNode;
+  label: string;
 };
 
 /**
@@ -102,12 +103,12 @@ const ItwPlayground = () => {
   return (
     <VStack space={16} style={{ paddingBottom: screenEndMargin }}>
       <TabNavigation
-        tabAlignment="start"
-        selectedIndex={page}
         onItemPress={setPage}
+        selectedIndex={page}
+        tabAlignment="start"
       >
         {tabs.map(({ label }) => (
-          <TabItem key={label} label={label} accessibilityLabel={label} />
+          <TabItem accessibilityLabel={label} key={label} label={label} />
         ))}
       </TabNavigation>
       <ScrollView contentContainerStyle={{ paddingBottom: screenEndSafeArea }}>

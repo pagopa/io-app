@@ -1,8 +1,9 @@
 import { generate } from "@pagopa/io-react-native-crypto";
-import { generateKeysWithWalletUnitAttestation } from "../itwCredentialIssuanceUtils";
-import { CredentialAccessToken } from "../itwTypesUtils";
+
 import { Env } from "../environment";
 import { getWalletUnitAttestation } from "../itwAttestationUtils";
+import { generateKeysWithWalletUnitAttestation } from "../itwCredentialIssuanceUtils";
+import { CredentialAccessToken } from "../itwTypesUtils";
 
 jest.mock("@pagopa/io-react-native-crypto", () => ({ generate: jest.fn() }));
 jest.mock("../itwAttestationUtils", () => ({

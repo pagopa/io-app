@@ -1,7 +1,8 @@
 import * as O from "fp-ts/lib/Option";
+
+import { GlobalState } from "../../../../store/reducers/types";
 import { decodeIOBarcode } from "../decoders";
 import { IO_BARCODE_ALL_TYPES } from "../IOBarcode";
-import { GlobalState } from "../../../../store/reducers/types";
 
 const fakeGlobalState = {
   features: {

@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import {
   IOColors,
   IOStyles,
@@ -6,6 +5,7 @@ import {
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import { BottomTabNavigationOptions } from "@react-navigation/bottom-tabs";
+import { useMemo } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const { shadowColor, shadowOffset, shadowOpacity, shadowRadius, elevation } =

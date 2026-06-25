@@ -1,10 +1,11 @@
 import { Body, IOToast, MdH1, MdH2, MdH3 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { Linking } from "react-native";
+
 import * as Analytics from "../../../../../utils/analytics";
+import { unknownToString } from "../../../../../utils/errors";
 import * as URL from "../../../../../utils/url";
 import { testable } from "../customRules";
-import { unknownToString } from "../../../../../utils/errors";
 
 describe("customRules", () => {
   afterEach(() => {

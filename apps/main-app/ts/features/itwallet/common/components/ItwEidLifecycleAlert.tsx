@@ -6,6 +6,7 @@ import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { ComponentProps, useMemo } from "react";
 import { View } from "react-native";
+
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { offlineAccessReasonSelector } from "../../../ingress/store/selectors";
@@ -29,15 +30,15 @@ const defaultLifecycleStatus: Array<ItwJwtCredentialStatus> = [
 
 type Props = {
   /**
-   * The eID statuses that will render the alert.
-   */
-  lifecycleStatus?: Array<ItwJwtCredentialStatus>;
-  navigation: ReturnType<typeof useIONavigation>;
-  /**
    * The name of the current screen, used for analytics tracking
    * and conditional rendering logic (e.g. PID detail screen).
    */
   currentScreenName?: string;
+  /**
+   * The eID statuses that will render the alert.
+   */
+  lifecycleStatus?: Array<ItwJwtCredentialStatus>;
+  navigation: ReturnType<typeof useIONavigation>;
   skipViewTracking?: boolean;
 };
 

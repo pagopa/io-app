@@ -7,10 +7,13 @@ import {
 } from "@pagopa/io-app-design-system";
 import { useState } from "react";
 import { View } from "react-native";
+
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
-import { itwCredentialsAllSelector } from "../../credentials/store/selectors";
-import { itwCredentialsStore } from "../../credentials/store/actions";
+import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
+import { selectItwEnv } from "../../common/store/selectors/environment";
 import { ItwCredentialStatus } from "../../common/utils/itwTypesUtils";
+import { itwCredentialsStore } from "../../credentials/store/actions";
+import { itwCredentialsAllSelector } from "../../credentials/store/selectors";
 import {
   itwDebugClearCredentialStatusOverride,
   itwDebugSaveOriginalCredentials,
@@ -24,18 +27,16 @@ import {
   applyStatusToCredential,
   getAvailableStatusOverrides
 } from "../utils/itwDebugCredentialUtils";
-import { selectItwEnv } from "../../common/store/selectors/environment";
-import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
 
 const NO_OVERRIDE = "no_override" as const;
-type StatusOption = ItwCredentialStatus | typeof NO_OVERRIDE;
-
 type CredentialStatusPickerProps = {
   credentialType: string;
   currentOverride: ItwCredentialStatus | undefined;
-  onSelect: (status: ItwCredentialStatus) => void;
   onReset: () => void;
+  onSelect: (status: ItwCredentialStatus) => void;
 };
+
+type StatusOption = ItwCredentialStatus | typeof NO_OVERRIDE;
 
 const CredentialStatusPicker = ({
   credentialType,
@@ -58,9 +59,7 @@ const CredentialStatusPicker = ({
   return (
     <View>
       <RadioGroup<StatusOption>
-        type="radioListItem"
         items={statusItems}
-        selectedItem={currentOverride ?? NO_OVERRIDE}
         onPress={status => {
           if (status === NO_OVERRIDE) {
             onReset();
@@ -68,6 +67,8 @@ const CredentialStatusPicker = ({
             onSelect(status);
           }
         }}
+        selectedItem={currentOverride ?? NO_OVERRIDE}
+        type="radioListItem"
       />
       <VSpacer size={16} />
     </View>
@@ -92,10 +93,10 @@ export const ItwCredentialStatusOverrideSection = () => {
       <CredentialStatusPicker
         credentialType={selectedCredentialType}
         currentOverride={credentialOverrides[selectedCredentialType]}
+        onReset={() => resetCredentialOverride(selectedCredentialType)}
         onSelect={status =>
           applyCredentialOverride(selectedCredentialType, status)
         }
-        onReset={() => resetCredentialOverride(selectedCredentialType)}
       />
     ) : (
       <View />
@@ -149,14 +150,14 @@ export const ItwCredentialStatusOverrideSection = () => {
         <ListItemHeader label="Status Override (PRE only)" />
         {Object.keys(allCredentials).map(credentialType => (
           <ListItemNav
-            key={credentialType}
-            value={credentialType}
             description={
               credentialOverrides[credentialType]
                 ? `Active override: ${credentialOverrides[credentialType]}`
                 : "No override"
             }
+            key={credentialType}
             onPress={() => handlePress(credentialType)}
+            value={credentialType}
           />
         ))}
       </View>

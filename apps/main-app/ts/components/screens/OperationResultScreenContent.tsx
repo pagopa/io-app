@@ -18,6 +18,7 @@ import {
 } from "react";
 import { Platform, ScrollView, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import {
   AnimatedPictogram,
   IOAnimatedPictograms,
@@ -26,27 +27,27 @@ import {
 
 type ButtonProps = Pick<
   IOButtonProps,
-  "label" | "accessibilityLabel" | "onPress" | "testID" | "icon"
+  "accessibilityLabel" | "icon" | "label" | "onPress" | "testID"
 >;
 
 type OperationResultScreenContentProps = WithTestID<{
-  ref?: Ref<View>;
-  pictogram: IOPictograms | IOAnimatedPictograms;
-  title: string;
-  subtitle?: string;
-  onSubtitleLinkPress?: (url: string) => void;
-  topElement?: ReactNode;
   action?: ButtonProps;
-  secondaryAction?: ButtonProps;
-  isHeaderVisible?: boolean;
   disableAnimatedPictogram?: boolean;
+  isHeaderVisible?: boolean;
+  onSubtitleLinkPress?: (url: string) => void;
+  pictogram: IOAnimatedPictograms | IOPictograms;
+  ref?: Ref<View>;
+  secondaryAction?: ButtonProps;
+  subtitle?: string;
+  title: string;
+  topElement?: ReactNode;
 }>;
 
 /**
  * Check if a pictogram has an animated version or not
  */
 const hasAnimatedVersion = (
-  pictogram: IOPictograms | IOAnimatedPictograms
+  pictogram: IOAnimatedPictograms | IOPictograms
 ): pictogram is IOAnimatedPictograms => pictogram in IOAnimatedPictogramsAssets;
 
 const OperationResultScreenContent = ({
@@ -69,9 +70,9 @@ const OperationResultScreenContent = ({
   return (
     <SafeAreaView
       edges={isHeaderVisible ? ["bottom"] : undefined}
+      ref={ref}
       style={{ flexGrow: 1 }}
       testID={testID}
-      ref={ref}
     >
       <ScrollView
         alwaysBounceVertical={false}
@@ -101,8 +102,8 @@ const OperationResultScreenContent = ({
             <VSpacer size={8} />
             <IOMarkdownLite
               content={subtitle}
-              textAlign="center"
               onLinkPress={onSubtitleLinkPress}
+              textAlign="center"
             />
           </>
         )}

@@ -1,21 +1,22 @@
+import { fireEvent } from "@testing-library/react-native";
 import { AccessibilityInfo } from "react-native";
 import { createStore } from "redux";
-import { fireEvent } from "@testing-library/react-native";
-import { appReducer } from "../../../../../store/reducers";
-import { applicationChangeState } from "../../../../../store/actions/application";
+
+import { MessageCategory } from "../../../../../../definitions/communication/MessageCategory";
 import { ServiceId } from "../../../../../../definitions/services/ServiceId";
-import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
-import { UIMessage } from "../../../types";
-import { MESSAGES_ROUTES } from "../../../navigation/routes";
-import { WrappedListItemMessage } from "../WrappedListItemMessage";
+import { applicationChangeState } from "../../../../../store/actions/application";
+import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
+import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
+import { MESSAGES_ROUTES } from "../../../navigation/routes";
+import { toggleScheduledMessageArchivingAction } from "../../../store/actions/archiving";
 import {
   scheduledPreconditionStatusAction,
   toScheduledPayload
 } from "../../../store/actions/preconditions";
-import { MessageCategory } from "../../../../../../definitions/communication/MessageCategory";
-import { toggleScheduledMessageArchivingAction } from "../../../store/actions/archiving";
+import { UIMessage } from "../../../types";
 import * as homeUtils from "../homeUtils";
+import { WrappedListItemMessage } from "../WrappedListItemMessage";
 
 const mockNavigate = jest.fn();
 jest.mock("@react-navigation/native", () => ({
@@ -249,7 +250,7 @@ const renderComponent = (
   index: number,
   message: UIMessage,
   isArchiving: boolean,
-  source: "INBOX" | "ARCHIVE" | "SEARCH",
+  source: "ARCHIVE" | "INBOX" | "SEARCH",
   screenReaderEnabled: boolean = false
 ) => {
   const paymentId: string = "00112233445566778899001122334";

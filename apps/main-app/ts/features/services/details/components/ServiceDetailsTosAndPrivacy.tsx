@@ -1,5 +1,3 @@
-import { useCallback } from "react";
-import { FlatList, ListRenderItemInfo } from "react-native";
 import {
   Divider,
   IOVisualCostants,
@@ -7,17 +5,20 @@ import {
   ListItemHeader
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { openWebUrl } from "../../../../utils/url";
-import { useIOSelector } from "../../../../store/hooks";
-import { serviceMetadataByIdSelector } from "../store/selectors";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
+import { useCallback } from "react";
+import { FlatList, ListRenderItemInfo } from "react-native";
 
-type TosAndPrivacyListItem = {
-  condition?: boolean;
-} & Omit<ListItemAction, "variant">;
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
+import { useIOSelector } from "../../../../store/hooks";
+import { openWebUrl } from "../../../../utils/url";
+import { serviceMetadataByIdSelector } from "../store/selectors";
 
 export type ServiceDetailsTosAndPrivacyProps = {
   serviceId: ServiceId;
+};
+
+type TosAndPrivacyListItem = Omit<ListItemAction, "variant"> & {
+  condition?: boolean;
 };
 
 export const ServiceDetailsTosAndPrivacy = ({
@@ -63,17 +64,17 @@ export const ServiceDetailsTosAndPrivacy = ({
 
   return (
     <FlatList
+      contentContainerStyle={{
+        paddingHorizontal: IOVisualCostants.appMarginDefault
+      }}
+      data={filteredTosAndPrivacyListItems}
+      ItemSeparatorComponent={() => <Divider />}
+      keyExtractor={item => item.label}
       ListHeaderComponent={
         <ListItemHeader
           label={I18n.t("services.details.tosAndPrivacy.title")}
         />
       }
-      ItemSeparatorComponent={() => <Divider />}
-      contentContainerStyle={{
-        paddingHorizontal: IOVisualCostants.appMarginDefault
-      }}
-      data={filteredTosAndPrivacyListItems}
-      keyExtractor={item => item.label}
       renderItem={renderItem}
       scrollEnabled={false}
     />

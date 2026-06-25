@@ -1,20 +1,24 @@
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { identity } from "lodash";
+
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import * as appVersion from "../../../../utils/appVersion";
 import { GlobalState } from "../../types";
 import {
   absolutePortalLinksSelector,
   barcodesScannerConfigSelector,
+  engagementCGNDiscoveryBannerSelector,
   fimsServiceConfiguration,
   fimsServiceIdInCookieDisabledListSelector,
   generateDynamicUrlSelector,
   isAarInAppDelegationRemoteEnabledSelector,
   isAarRemoteEnabled,
+  isCGNDiscoveryBannerEnabledSelector,
   isIOMarkdownEnabledForMessagesAndServicesSelector,
   isPnAppVersionSupportedSelector,
   isPremiumMessagesOptInOutEnabledSelector,
+  isSendLollipopPlaygroundEnabledSelector,
   landingScreenBannerOrderSelector,
   pnAarQRCodeRegexSelector,
   pnMessagingServiceIdSelector,
@@ -24,10 +28,7 @@ import {
   sendCustomServiceCenterUrlSelector,
   sendEstimateTimelinesUrlSelector,
   sendShowAbstractSelector,
-  sendVisitTheWebsiteUrlSelector,
-  isSendLollipopPlaygroundEnabledSelector,
-  isCGNDiscoveryBannerEnabledSelector,
-  engagementCGNDiscoveryBannerSelector
+  sendVisitTheWebsiteUrlSelector
 } from "../remoteConfig";
 
 describe("remoteConfig", () => {

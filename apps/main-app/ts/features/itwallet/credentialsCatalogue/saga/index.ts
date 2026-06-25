@@ -1,7 +1,8 @@
 import { put, takeLatest } from "typed-redux-saga/macro";
+
 import { itwFetchCredentialsCatalogue } from "../store/actions";
-import { fetchCredentialsCatalogueSaga } from "./fetchCredentialsCatalogue";
 import { fetchCatalogueTranslationsSaga } from "./fetchCatalogueTranslations";
+import { fetchCredentialsCatalogueSaga } from "./fetchCredentialsCatalogue";
 
 export function* watchItwCredentialsCatalogueSaga() {
   yield* takeLatest(

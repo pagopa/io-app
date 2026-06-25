@@ -1,15 +1,16 @@
 import * as ioCrypto from "@pagopa/io-react-native-crypto";
 import { DeepPartial } from "redux";
 import { expectSaga } from "redux-saga-test-plan";
+
 import { GlobalState } from "../../../../../store/reducers/types";
-import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
+import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import {
   trackItwVaultCoherenceCheckFailed,
   trackItwVaultOrphanedCredentialsFound
 } from "../../analytics";
-import { CredentialsVault } from "../../utils/vault";
 import { itwCredentialsRemove } from "../../store/actions";
+import { CredentialsVault } from "../../utils/vault";
 import { handleItwCredentialsVaultCoherenceSaga } from "../handleItwCredentialsVaultCoherenceSaga";
 
 jest.mock("../../utils/vault", () => ({

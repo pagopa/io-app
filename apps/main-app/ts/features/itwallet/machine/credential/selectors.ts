@@ -1,8 +1,9 @@
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { StateFrom } from "xstate";
-import { ItwTags } from "../tags";
+
 import { CredentialFormat } from "../../common/utils/itwTypesUtils";
+import { ItwTags } from "../tags";
 import { ItwCredentialIssuanceMachine } from "./machine";
 
 type MachineSnapshot = StateFrom<ItwCredentialIssuanceMachine>;

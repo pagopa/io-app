@@ -1,13 +1,14 @@
 import I18n from "i18next";
+
 import { getCredentialNameFromType } from "../itwCredentialUtils";
 import { CredentialType } from "../itwMocksUtils";
 
 describe("getCredentialNameFromType", () => {
   describe("with valid credential types", () => {
     const scenarios: ReadonlyArray<{
-      type: string;
-      isItwCredential: boolean;
       expectedTranslation: string;
+      isItwCredential: boolean;
+      type: string;
     }> = [
       {
         type: CredentialType.PID,

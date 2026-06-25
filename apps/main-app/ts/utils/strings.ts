@@ -7,21 +7,6 @@ import * as O from "fp-ts/lib/Option";
 import _ from "lodash";
 
 /**
- * Check if the source includes searchText.
- * To make a case-insensitive check both the source and the searchText are
- * converted to lower-case.
- *
- * @param source Source string where you want to search
- * @param searchText String you want search for
- */
-export function isTextIncludedCaseInsensitive(
-  source: string,
-  searchText: string
-) {
-  return source.toLocaleLowerCase().includes(searchText.toLocaleLowerCase());
-}
-
-/**
  * return the same text with each token has the first char in uppercase.
  * tokens are retrieved by splitting the text with the provided separator
  * ex capitalize("Hello World") -> "Hello Word"
@@ -43,11 +28,26 @@ export function capitalize(text: string, separator: string = " ") {
 }
 
 /**
+ * Check if the source includes searchText.
+ * To make a case-insensitive check both the source and the searchText are
+ * converted to lower-case.
+ *
+ * @param source Source string where you want to search
+ * @param searchText String you want search for
+ */
+export function isTextIncludedCaseInsensitive(
+  source: string,
+  searchText: string
+) {
+  return source.toLocaleLowerCase().includes(searchText.toLocaleLowerCase());
+}
+
+/**
  * determine if the text is undefined or empty (or composed only by blanks)
  * @param text
  */
 export const isStringNullyOrEmpty = (
-  text: string | null | undefined
+  text: null | string | undefined
 ): boolean =>
   pipe(
     text,
@@ -63,7 +63,7 @@ export const isStringNullyOrEmpty = (
  * @param text
  */
 export const maybeNotNullyString = (
-  text: string | null | undefined
+  text: null | string | undefined
 ): O.Option<string> =>
   pipe(
     O.fromPredicate((t: string) => t.trim().length > 0)(

@@ -1,4 +1,5 @@
 import * as SecureStorage from "@pagopa/io-react-native-secure-storage";
+
 import { CredentialsVault } from "../vault";
 
 jest.mock("@pagopa/io-react-native-secure-storage");

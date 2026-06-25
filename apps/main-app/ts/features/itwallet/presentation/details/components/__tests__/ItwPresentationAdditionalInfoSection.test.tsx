@@ -1,20 +1,21 @@
 import { fireEvent } from "@testing-library/react-native";
 import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import { appReducer } from "../../../../../../store/reducers";
+import { GlobalState } from "../../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import { openWebUrl } from "../../../../../../utils/url";
+import {
+  NewCredential,
+  newCredentials
+} from "../../../../common/utils/itwCredentialUtils";
 import {
   CredentialType,
   ItwStoredCredentialsMocks
 } from "../../../../common/utils/itwMocksUtils";
 import { ITW_ROUTES } from "../../../../navigation/routes";
 import { ItwPresentationAdditionalInfoSection } from "../ItwPresentationAdditionalInfoSection";
-import {
-  NewCredential,
-  newCredentials
-} from "../../../../common/utils/itwCredentialUtils";
-import { GlobalState } from "../../../../../../store/reducers/types";
 
 jest.mock("../../../../../../utils/url", () => ({
   openWebUrl: jest.fn()

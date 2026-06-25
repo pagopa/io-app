@@ -1,18 +1,19 @@
 import * as LINKING from "react-native";
 import configureMockStore from "redux-mock-store";
+
 import * as UTIL_GUARDS from "../../features/authentication/common/store/utils/guards";
+import { IO_LOGIN_CIE_URL_SCHEME } from "../../features/authentication/login/cie/utils/cie";
 import { storeLinkingUrl } from "../../features/linking/actions";
+import * as LINKING_ANALYTICS from "../../features/linking/analytics";
 import { resetMessageArchivingAction } from "../../features/messages/store/actions/archiving";
 import * as ARCHIVING_SELECTORS from "../../features/messages/store/reducers/archiving";
+import { initiateAarFlow } from "../../features/pn/aar/store/actions";
 import * as DEEP_LINKING from "../../features/pn/aar/utils/deepLinking";
 import * as UTM_LINK from "../../features/utmLink";
 import { applicationChangeState } from "../../store/actions/application";
 import { appReducer } from "../../store/reducers";
 import { GlobalState } from "../../store/reducers/types";
 import { linkingSubscription } from "../linkingSubscription";
-import { initiateAarFlow } from "../../features/pn/aar/store/actions";
-import { IO_LOGIN_CIE_URL_SCHEME } from "../../features/authentication/login/cie/utils/cie";
-import * as LINKING_ANALYTICS from "../../features/linking/analytics";
 
 describe("linkingSubscription", () => {
   beforeEach(() => {

@@ -1,6 +1,7 @@
 import { Body, H4 } from "@pagopa/io-app-design-system";
 import { Alert } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
+
 import { IOScrollView } from "../../../components/ui/IOScrollView";
 import { useHeaderFirstLevel } from "../../../hooks/useHeaderFirstLevel";
 import ROUTES from "../../../navigation/routes";
@@ -34,7 +35,6 @@ export const DSHeaderFirstLevel = () => {
 
   return (
     <IOScrollView
-      animatedRef={scrollViewContentRef}
       actions={{
         type: "SingleButton",
         primary: {
@@ -42,6 +42,7 @@ export const DSHeaderFirstLevel = () => {
           onPress: () => Alert.alert("Main action pressed")
         }
       }}
+      animatedRef={scrollViewContentRef}
     >
       <H4>Start</H4>
       {[...Array(50)].map((_el, i) => (

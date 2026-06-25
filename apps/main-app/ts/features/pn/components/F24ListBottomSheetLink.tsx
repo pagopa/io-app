@@ -1,23 +1,24 @@
 import { IOButton } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+
 import { ThirdPartyAttachment } from "../../../../definitions/communication/ThirdPartyAttachment";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
+import { useIODispatch } from "../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { MessageDetailsAttachmentItem } from "../../messages/components/MessageDetail/MessageDetailsAttachmentItem";
-import { trackPNShowF24 } from "../analytics";
-import { useIODispatch } from "../../../store/hooks";
 import { cancelPreviousAttachmentDownload } from "../../messages/store/actions";
-import { ServiceId } from "../../../../definitions/services/ServiceId";
 import {
   SendOpeningSource,
   SendUserType
 } from "../../pushNotifications/analytics";
+import { trackPNShowF24 } from "../analytics";
 
 export type F24ListBottomSheetLinkProps = {
   f24List: ReadonlyArray<ThirdPartyAttachment>;
   messageId: string;
-  serviceId: ServiceId;
   sendOpeningSource: SendOpeningSource;
   sendUserType: SendUserType;
+  serviceId: ServiceId;
 };
 
 export const F24ListBottomSheetLink = ({
@@ -38,13 +39,13 @@ export const F24ListBottomSheetLink = ({
           <MessageDetailsAttachmentItem
             attachment={f24Attachment}
             bottomSpacer={index + 1 < f24List.length}
-            sendOpeningSource={sendOpeningSource}
-            sendUserType={sendUserType}
             key={`MessageF24_${index}`}
             messageId={messageId}
             onPreNavigate={() => {
               dismiss();
             }}
+            sendOpeningSource={sendOpeningSource}
+            sendUserType={sendUserType}
             serviceId={serviceId}
           />
         ))}
@@ -56,13 +57,13 @@ export const F24ListBottomSheetLink = ({
   return (
     <>
       <IOButton
-        variant="link"
         label={I18n.t("features.pn.details.f24Section.showAll")}
         onPress={() => {
           trackPNShowF24(sendOpeningSource, sendUserType);
           present();
         }}
         testID="f24_list_bottomsheet_link_button"
+        variant="link"
       />
       {bottomSheet}
     </>

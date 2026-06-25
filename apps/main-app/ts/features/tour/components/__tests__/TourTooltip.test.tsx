@@ -2,6 +2,7 @@ import { IOThemeContextProvider } from "@pagopa/io-app-design-system";
 import { fireEvent, render } from "@testing-library/react-native";
 import I18n from "i18next";
 import { useSharedValue } from "react-native-reanimated";
+
 import { TourTooltip } from "../TourTooltip";
 
 jest.mock("react-native-safe-area-context", () => ({
@@ -10,13 +11,13 @@ jest.mock("react-native-safe-area-context", () => ({
 }));
 
 type Props = {
-  stepIndex?: number;
-  totalSteps?: number;
-  title?: string;
   description?: string;
-  onNext?: jest.Mock;
   onBack?: jest.Mock;
+  onNext?: jest.Mock;
   onSkip?: jest.Mock;
+  stepIndex?: number;
+  title?: string;
+  totalSteps?: number;
 };
 
 const TestWrapper = ({
@@ -37,18 +38,18 @@ const TestWrapper = ({
   return (
     <IOThemeContextProvider theme="light">
       <TourTooltip
+        cutoutH={cutoutH}
+        cutoutW={cutoutW}
         cutoutX={cutoutX}
         cutoutY={cutoutY}
-        cutoutW={cutoutW}
-        cutoutH={cutoutH}
-        title={title}
         description={description}
-        stepIndex={stepIndex}
-        totalSteps={totalSteps}
-        opacity={opacity}
-        onNext={onNext}
         onBack={onBack}
+        onNext={onNext}
         onSkip={onSkip}
+        opacity={opacity}
+        stepIndex={stepIndex}
+        title={title}
+        totalSteps={totalSteps}
       />
     </IOThemeContextProvider>
   );
@@ -63,7 +64,7 @@ const ancestorHasOpacityZero = (element: TestInstance, depth = 6): boolean => {
   if (depth === 0 || !element.parent) {
     return false;
   }
-  const style = element.parent.props?.style as { opacity?: number } | undefined;
+  const style = element.parent.props?.style as undefined | { opacity?: number };
   if (style && !Array.isArray(style) && style.opacity === 0) {
     return true;
   }

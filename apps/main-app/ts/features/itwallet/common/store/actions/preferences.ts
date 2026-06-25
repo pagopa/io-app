@@ -1,6 +1,7 @@
 import { ActionType, createStandardAction } from "typesafe-actions";
-import { ItwAuthLevel, CredentialMetadata } from "../../utils/itwTypesUtils.ts";
+
 import { IdentificationContext } from "../../../machine/eid/context.ts";
+import { CredentialMetadata, ItwAuthLevel } from "../../utils/itwTypesUtils.ts";
 
 export const itwSetReviewPending = createStandardAction(
   "ITW_SET_REVIEW_PENDING"
@@ -47,14 +48,14 @@ export const itwSetIdentificationMode = createStandardAction(
 )<IdentificationContext["mode"] | undefined>();
 
 export type ItwPreferencesActions =
-  | ActionType<typeof itwSetReviewPending>
+  | ActionType<typeof itwClearCredentialUpgradeFailed>
+  | ActionType<typeof itwClearSimplifiedActivationRequirements>
+  | ActionType<typeof itwDisableItwActivation>
+  | ActionType<typeof itwFreezeSimplifiedActivationRequirements>
   | ActionType<typeof itwSetAuthLevel>
   | ActionType<typeof itwSetClaimValuesHidden>
-  | ActionType<typeof itwSetFiscalCodeWhitelisted>
-  | ActionType<typeof itwFreezeSimplifiedActivationRequirements>
-  | ActionType<typeof itwClearSimplifiedActivationRequirements>
-  | ActionType<typeof itwSetPidReissuingSurveyHidden>
   | ActionType<typeof itwSetCredentialUpgradeFailed>
-  | ActionType<typeof itwClearCredentialUpgradeFailed>
-  | ActionType<typeof itwDisableItwActivation>
-  | ActionType<typeof itwSetIdentificationMode>;
+  | ActionType<typeof itwSetFiscalCodeWhitelisted>
+  | ActionType<typeof itwSetIdentificationMode>
+  | ActionType<typeof itwSetPidReissuingSurveyHidden>
+  | ActionType<typeof itwSetReviewPending>;

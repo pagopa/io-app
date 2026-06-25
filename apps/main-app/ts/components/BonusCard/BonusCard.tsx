@@ -6,7 +6,6 @@ import {
   IOSkeleton,
   VSpacer
 } from "@pagopa/io-app-design-system";
-
 import {
   createRef,
   Fragment,
@@ -16,11 +15,18 @@ import {
 } from "react";
 import { ImageURISource, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import { setAccessibilityFocus } from "../../utils/accessibility";
 import { BonusCardCounter } from "./BonusCardCounter";
 import { BonusCardColorSchemeValues } from "./BonusCardScreenComponent";
 import { BonusCardShape } from "./BonusCardShape";
 import { BonusCardStatus } from "./BonusCardStatus";
+
+export type BonusCard = BaseProps & LoadingStateProps;
+
+export type BonusCardWithColorSchemeValues = BonusCard & {
+  cardColorSchemeValues: BonusCardColorSchemeValues;
+};
 
 type BaseProps = {
   // For devices with small screens you may need to hide the logo to get more space
@@ -28,24 +34,18 @@ type BaseProps = {
 };
 
 type ContentProps = {
+  cardBackground?: ReactNode;
+  cardFooter?: ReactNode;
+  counters?: ReadonlyArray<BonusCardCounter>;
   logoUris?: Array<ImageURISource | number>;
   name: string;
   organizationName: string;
   status: ReactNode;
-  counters?: ReadonlyArray<BonusCardCounter>;
-  cardFooter?: ReactNode;
-  cardBackground?: ReactNode;
 };
 
 type LoadingStateProps =
-  | { isLoading: true }
-  | ({ isLoading?: never } & ContentProps);
-
-export type BonusCard = BaseProps & LoadingStateProps;
-
-export type BonusCardWithColorSchemeValues = BonusCard & {
-  cardColorSchemeValues: BonusCardColorSchemeValues;
-};
+  | (ContentProps & { isLoading?: never })
+  | { isLoading: true };
 
 const BonusCardContent = (props: BonusCardWithColorSchemeValues) => {
   const bonusNameHeadingRef = createRef<View>();
@@ -75,25 +75,25 @@ const BonusCardContent = (props: BonusCardWithColorSchemeValues) => {
         <>
           <View style={styles.logos}>
             {logoUris?.map((logoUri, index) => (
-              <Avatar key={index} size="medium" logoUri={logoUri} />
+              <Avatar key={index} logoUri={logoUri} size="medium" />
             ))}
           </View>
           <VSpacer size={16} />
         </>
       )}
       <H2
+        color={cardColorSchemeValues.text}
         ref={bonusNameHeadingRef}
         role="heading"
-        color={cardColorSchemeValues.text}
         style={{ textAlign: "center" }}
       >
         {name}
       </H2>
       <VSpacer size={4} />
       <BodySmall
-        weight="Regular"
         color={cardColorSchemeValues.text}
         style={{ textAlign: "center", marginHorizontal: 16 }}
+        weight="Regular"
       >
         {organizationName}
       </BodySmall>
@@ -144,16 +144,16 @@ export const BonusCard = (props: BonusCardWithColorSchemeValues) => {
             {props.cardBackground}
           </View>
           <BonusCardShape
+            backgroundColor={cardColorSchemeValues.background}
             key={shapeKey}
             mode="draw-on-top"
-            backgroundColor={cardColorSchemeValues.background}
           />
         </>
       ) : (
         <BonusCardShape
+          backgroundColor={cardColorSchemeValues.background}
           key={shapeKey}
           mode="mask"
-          backgroundColor={cardColorSchemeValues.background}
         />
       )}
       <BonusCardContent {...props} />
@@ -170,42 +170,42 @@ const BonusCardSkeleton = (props: BonusCardWithColorSchemeValues) => {
         <>
           <IOSkeleton
             color={foregroundColor}
+            radius={8}
             shape="square"
             size={66}
-            radius={8}
           />
           <VSpacer size={24} />
         </>
       )}
       <IOSkeleton
         color={foregroundColor}
-        shape="rectangle"
         height={28}
-        width={198}
         radius={28}
+        shape="rectangle"
+        width={198}
       />
       <VSpacer size={8} />
       <IOSkeleton
         color={foregroundColor}
-        shape="rectangle"
         height={28}
-        width={108}
         radius={28}
+        shape="rectangle"
+        width={108}
       />
       <VSpacer size={16} />
       <BonusCardStatus isLoading={true} skeletonColor={foregroundColor} />
       <VSpacer size={16} />
       <View style={styles.counters}>
         <BonusCardCounter
-          type="ValueWithProgress"
           isLoading={true}
           skeletonColor={foregroundColor}
+          type="ValueWithProgress"
         />
         <HSpacer size={16} />
         <BonusCardCounter
-          type="Value"
           isLoading={true}
           skeletonColor={foregroundColor}
+          type="Value"
         />
       </View>
     </View>

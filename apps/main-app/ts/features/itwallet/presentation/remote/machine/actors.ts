@@ -1,6 +1,7 @@
 import { ItwVersion, RemotePresentation } from "@pagopa/io-react-native-wallet";
 import * as O from "fp-ts/lib/Option";
 import { fromPromise } from "xstate";
+
 import { useIOStore } from "../../../../../store/hooks";
 import { assert } from "../../../../../utils/assert";
 import { IO_UNIVERSAL_LINK_PREFIX } from "../../../../../utils/navigation";
@@ -29,41 +30,41 @@ import {
 } from "../utils/itwRemoteTypeUtils";
 import { InvalidCredentialsStatusError } from "./failure";
 
-type CredentialsSdJwt = Array<RemotePresentation.Credential4Dcql>;
-
 export type EvaluateRelyingPartyTrustInput = Partial<{
   qrCodePayload: ItwRemoteRequestPayload;
 }>;
+
 export type EvaluateRelyingPartyTrustOutput = {
   rpConf: RelyingPartyConfiguration;
+};
+export type GetPresentationDetailsInput = Partial<{
+  credentials: Record<string, CredentialMetadata>;
+  qrCodePayload: ItwRemoteRequestPayload;
+  requestObjectEncodedJwt: string;
+  rpConf: RelyingPartyConfiguration;
+  walletInstanceAttestation: WalletInstanceAttestations;
+}>;
+export type GetPresentationDetailsOutput = {
+  presentationDetails: EnrichedPresentationDetails;
+  requestObject: RequestObject;
 };
 export type GetRequestObjectInput = Partial<{
   qrCodePayload: ItwRemoteRequestPayload;
 }>;
+
 export type GetRequestObjectOutput = string;
-
-export type GetPresentationDetailsInput = Partial<{
-  walletInstanceAttestation: WalletInstanceAttestations;
-  credentials: Record<string, CredentialMetadata>;
-  rpConf: RelyingPartyConfiguration;
-  qrCodePayload: ItwRemoteRequestPayload;
-  requestObjectEncodedJwt: string;
-}>;
-
-export type GetPresentationDetailsOutput = {
-  requestObject: RequestObject;
-  presentationDetails: EnrichedPresentationDetails;
-};
 
 export type SendAuthorizationResponseInput = {
   optionalCredentials: Set<string>;
-  requestObject?: RequestObject;
   presentationDetails?: EnrichedPresentationDetails;
+  requestObject?: RequestObject;
   rpConf?: RelyingPartyConfiguration;
 };
+
 export type SendAuthorizationResponseOutput = {
   redirectUri?: string; // Optional in cross-device presentation
 };
+type CredentialsSdJwt = Array<RemotePresentation.Credential4Dcql>;
 
 export const createRemoteActorsImplementation = (
   env: Env,
@@ -300,5 +301,5 @@ export const createRemoteActorsImplementation = (
 };
 
 const prepareCredentialsForDcqlEvaluation = (
-  credentials: Array<{ keyTag: string; credential: string }>
+  credentials: Array<{ credential: string; keyTag: string }>
 ): CredentialsSdJwt => credentials.map(c => [c.keyTag, c.credential]);

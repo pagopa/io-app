@@ -7,10 +7,11 @@ import {
 } from "@pagopa/io-app-design-system";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { useNavigation } from "@react-navigation/native";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { useState } from "react";
 import { ScrollView } from "react-native";
+
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import {
   AppParamsList,
@@ -51,27 +52,27 @@ export const IdPayCodePlayGround = () => {
     <ScrollView>
       <ContentWrapper>
         <TextInput
-          onChangeText={text => setInitiativeId(text)}
-          value={initiativeId ?? ""}
-          placeholder="Initiative ID (optional)"
           accessibilityHint="Insert the initiative ID"
           accessibilityLabel="Initiative ID"
+          onChangeText={text => setInitiativeId(text)}
+          placeholder="Initiative ID (optional)"
+          value={initiativeId ?? ""}
         />
         <VSpacer size={16} />
         <ListItemNav
-          value={"Code Onboarding"}
           accessibilityLabel="Code Onboarding Screen"
           description={
             "IdPay code generation and enrollment (if Initiative ID is configured)"
           }
           onPress={navigateToOnboarding}
+          value={"Code Onboarding"}
         />
         <Divider />
         <ListItemNav
-          value={"Code Renew"}
           accessibilityLabel="Code Renew Screen"
           description={"IdPay Code is generated again"}
           onPress={navigateToRenew}
+          value={"Code Renew"}
         />
       </ContentWrapper>
     </ScrollView>

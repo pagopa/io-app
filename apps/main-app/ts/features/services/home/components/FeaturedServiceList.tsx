@@ -1,7 +1,8 @@
-import { useCallback, useMemo } from "react";
 import { BannerErrorState, ListItemHeader } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+import { useCallback, useMemo } from "react";
 import { View } from "react-native";
+
 import { FeaturedService } from "../../../../../definitions/services/FeaturedService";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
@@ -79,10 +80,10 @@ export const FeaturedServiceList = () => {
     if (isError) {
       return (
         <BannerErrorState
-          label={I18n.t("services.home.featured.services.error.banner.label")}
           actionText={I18n.t(
             "services.home.featured.services.error.banner.cta"
           )}
+          label={I18n.t("services.home.featured.services.error.banner.label")}
           onPress={fetchFeaturedServices}
           testID="featured-service-list-error"
         />

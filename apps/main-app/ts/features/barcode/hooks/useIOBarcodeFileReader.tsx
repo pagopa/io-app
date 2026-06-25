@@ -1,17 +1,4 @@
 import { Divider, ListItemNav, VSpacer } from "@pagopa/io-app-design-system";
-import * as A from "fp-ts/lib/Array";
-import * as E from "fp-ts/lib/Either";
-import * as O from "fp-ts/lib/Option";
-import * as T from "fp-ts/lib/Task";
-import * as TE from "fp-ts/lib/TaskEither";
-import { pipe } from "fp-ts/lib/function";
-import { JSX, useState } from "react";
-import { Alert, Linking, View } from "react-native";
-import {
-  launchImageLibrary,
-  ImagePickerResponse,
-  ImageLibraryOptions
-} from "react-native-image-picker";
 import {
   DocumentPickerOptions,
   DocumentPickerResponse,
@@ -19,7 +6,22 @@ import {
   pick,
   types
 } from "@react-native-documents/picker";
+import * as A from "fp-ts/lib/Array";
+import * as E from "fp-ts/lib/Either";
+import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import * as T from "fp-ts/lib/Task";
+import * as TE from "fp-ts/lib/TaskEither";
 import I18n from "i18next";
+import { JSX, useState } from "react";
+import { Alert, Linking, View } from "react-native";
+import {
+  ImageLibraryOptions,
+  ImagePickerResponse,
+  launchImageLibrary
+} from "react-native-image-picker";
+
+import { useIOStore } from "../../../store/hooks";
 import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import {
   BarcodeAnalyticsFlow,
@@ -27,23 +29,30 @@ import {
   trackBarcodeImageUpload,
   trackBarcodeUploadPath
 } from "../analytics";
+import { BarcodeFailure } from "../types/failure";
 import {
   IOBarcode,
   IOBarcodeFormat,
   IOBarcodeOrigin,
   IOBarcodeType
 } from "../types/IOBarcode";
-import { BarcodeFailure } from "../types/failure";
 import { getUniqueBarcodes } from "../utils/getUniqueBarcodes";
 import { imageDecodingTask } from "../utils/imageDecodingTask";
 import { imageGenerationTask } from "../utils/imageGenerationTask";
-import { useIOStore } from "../../../store/hooks";
 
 type IOBarcodeFileReader = {
   /**
-   * Shows the image picker that lets the user select an image from the library
+   * Component which displays the bottom sheet to chosse which type of file tu upload (image or document)
    */
-  showImagePicker: () => void;
+  filePickerBottomSheet: JSX.Element;
+  /**
+   * Indicates whether file picker bottom sheet is currently being showed or not
+   */
+  isFilePickerVisible: boolean;
+  /**
+   * Indicates that the decoder is currently reading/decoding barcodes
+   */
+  isLoading: boolean;
   /**
    * Shows the document picker that lets the user select a PDF document from the library
    */
@@ -53,20 +62,16 @@ type IOBarcodeFileReader = {
    */
   showFilePicker: () => void;
   /**
-   * Component which displays the bottom sheet to chosse which type of file tu upload (image or document)
+   * Shows the image picker that lets the user select an image from the library
    */
-  filePickerBottomSheet: JSX.Element;
-  /**
-   * Indicates that the decoder is currently reading/decoding barcodes
-   */
-  isLoading: boolean;
-  /**
-   * Indicates whether file picker bottom sheet is currently being showed or not
-   */
-  isFilePickerVisible: boolean;
+  showImagePicker: () => void;
 };
 
 type IOBarcodeFileReaderConfiguration = {
+  /**
+   * Mixpanel analytics parameters
+   */
+  barcodeAnalyticsFlow: BarcodeAnalyticsFlow;
   /**
    * Accepted barcoded formats that can be detected. Leave empty to accept all formats.
    * If the format is not supported it will return an UNSUPPORTED_FORMAT error
@@ -78,20 +83,16 @@ type IOBarcodeFileReaderConfiguration = {
    */
   barcodeTypes?: Array<IOBarcodeType>;
   /**
+   * Callback called when a barcode is not successfully decoded
+   */
+  onBarcodeError: (failure: BarcodeFailure, origin: IOBarcodeOrigin) => void;
+  /**
    * Callback called when there is at least one barcode being successfully decoded
    */
   onBarcodeSuccess: (
     barcodes: Array<IOBarcode>,
     origin: IOBarcodeOrigin
   ) => void;
-  /**
-   * Callback called when a barcode is not successfully decoded
-   */
-  onBarcodeError: (failure: BarcodeFailure, origin: IOBarcodeOrigin) => void;
-  /**
-   * Mixpanel analytics parameters
-   */
-  barcodeAnalyticsFlow: BarcodeAnalyticsFlow;
 };
 
 const imageLibraryOptions: ImageLibraryOptions = {
@@ -261,17 +262,17 @@ const useIOBarcodeFileReader = ({
   const filePickerModalComponent = (
     <View>
       <ListItemNav
-        value={I18n.t("barcodeScan.upload.image")}
         accessibilityLabel={I18n.t("barcodeScan.upload.image")}
-        onPress={handleImageUploadPressed}
         icon="gallery"
+        onPress={handleImageUploadPressed}
+        value={I18n.t("barcodeScan.upload.image")}
       />
       <Divider />
       <ListItemNav
-        value={I18n.t("barcodeScan.upload.file")}
         accessibilityLabel={I18n.t("barcodeScan.upload.file")}
-        onPress={handleFileUploadPressed}
         icon="docAttach"
+        onPress={handleFileUploadPressed}
+        value={I18n.t("barcodeScan.upload.file")}
       />
       <VSpacer size={16} />
     </View>

@@ -1,16 +1,17 @@
 import * as O from "fp-ts/lib/Option";
+
 import { areSetEqual, areStringsEqual, maybeInnerProperty } from "../options";
 
 describe("areSetEqual", () => {
   it("should return true for equal set of strings", () => {
     const setA: O.Option<Set<string>> = O.some(new Set(["1", "2", "3"]));
-    const setB: O.Option<Set<string>> = O.some(new Set(["2", "3", "1"]));
+    const setB: O.Option<Set<string>> = O.some(new Set(["1", "2", "3"]));
     expect(areSetEqual(setA, setB)).toBeTruthy();
   });
 
   it("should return false for not equal set of strings", () => {
     const setA: O.Option<Set<string>> = O.some(new Set(["1", "2"]));
-    const setB: O.Option<Set<string>> = O.some(new Set(["2", "3", "1"]));
+    const setB: O.Option<Set<string>> = O.some(new Set(["1", "2", "3"]));
     expect(areSetEqual(setA, setB)).toBeFalsy();
   });
 

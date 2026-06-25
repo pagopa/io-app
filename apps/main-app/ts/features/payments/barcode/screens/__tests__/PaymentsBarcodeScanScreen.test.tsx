@@ -1,14 +1,15 @@
 import configureMockStore from "redux-mock-store";
+
+import * as mixpanel from "../../../../../mixpanel";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import { BarcodeScanBaseScreenComponent } from "../../../../barcode";
+import * as analytics from "../../../../barcode/analytics";
 import { PaymentsCheckoutRoutes } from "../../../checkout/navigation/routes";
 import { PaymentsBarcodeRoutes } from "../../navigation/routes";
 import { PaymentsBarcodeScanScreen } from "../PaymentsBarcodeScanScreen";
-import * as analytics from "../../../../barcode/analytics";
-import * as mixpanel from "../../../../../mixpanel";
 const mockNavigate = jest.fn();
 
 jest.mock("@react-navigation/native", () => {

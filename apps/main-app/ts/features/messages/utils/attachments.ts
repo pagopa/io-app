@@ -1,4 +1,5 @@
 import RNFS from "react-native-fs";
+
 import { ThirdPartyAttachment } from "../../../../definitions/communication/ThirdPartyAttachment";
 import { apiUrlPrefix } from "../../../config";
 

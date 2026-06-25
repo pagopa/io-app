@@ -4,13 +4,14 @@ import {
   useIOTheme,
   VSpacer
 } from "@pagopa/io-app-design-system";
-import { useMemo } from "react";
 import I18n from "i18next";
+import { useMemo } from "react";
+
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { useIOSelector } from "../../../../store/hooks";
+import { formatStringToSpacedString } from "../../../../utils/accessibility.ts";
 import { formatPaymentNoticeNumber } from "../../../payments/common/utils";
 import { serviceMetadataByIdSelector } from "../../../services/details/store/selectors";
-import { formatStringToSpacedString } from "../../../../utils/accessibility.ts";
 import { ContactsListItem } from "./ContactsListItem";
 import {
   ShowMoreItem,

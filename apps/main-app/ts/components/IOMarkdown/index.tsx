@@ -1,11 +1,11 @@
-import { memo } from "react";
-import { View } from "react-native";
 import { Body } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+import { memo } from "react";
+import { View } from "react-native";
+
 import { useIOSelector } from "../../store/hooks";
 import { isScreenReaderEnabledSelector } from "../../store/reducers/preferences";
 import ErrorBoundary from "../error/ErrorBoundary";
-import { IOMarkdownRenderRules } from "./types";
 import {
   convertReferenceLinksToInline,
   getRenderMarkdown,
@@ -14,8 +14,7 @@ import {
   sanitizeMarkdownFromFormFeed
 } from "./markdownRenderer";
 import { DEFAULT_RULES } from "./renderRules";
-
-type UnsafeProps = Omit<IOMarkdownProps, "onError">;
+import { IOMarkdownRenderRules } from "./types";
 
 export type IOMarkdownProps = {
   /**
@@ -28,6 +27,8 @@ export type IOMarkdownProps = {
    */
   rules?: Partial<IOMarkdownRenderRules>;
 };
+
+type UnsafeProps = Omit<IOMarkdownProps, "onError">;
 
 /**
  * This component parses a markdown string and render it using the `DS` components.

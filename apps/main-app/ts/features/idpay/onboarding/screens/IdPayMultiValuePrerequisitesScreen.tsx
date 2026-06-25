@@ -1,10 +1,11 @@
 import { IOToast, RadioGroup, VSpacer } from "@pagopa/io-app-design-system";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import { useEffect, useRef, useState } from "react";
 import { View } from "react-native";
 import PagerView from "react-native-pager-view";
+
 import {
   SelfCriteriaMultiDTO,
   _typeEnum as SelfCriteriaMultiTypeEnum
@@ -60,10 +61,10 @@ const IdPayMultiValuePrerequisitesScreen = () => {
 
   return (
     <PagerView
+      initialPage={0}
       ref={pagerRef}
       scrollEnabled={false}
       style={{ flex: 1 }}
-      initialPage={0}
     >
       {multiSelfDeclarations.map((selfDeclaration, index) => (
         <View
@@ -73,8 +74,8 @@ const IdPayMultiValuePrerequisitesScreen = () => {
           }}
         >
           <MultiValuePrerequisiteItemScreenContent
-            selfDeclaration={selfDeclaration}
             initiativeId={initiativeId}
+            selfDeclaration={selfDeclaration}
           />
         </View>
       ))}
@@ -83,8 +84,8 @@ const IdPayMultiValuePrerequisitesScreen = () => {
 };
 
 type MultiValuePrerequisiteItemScreenContentProps = {
-  selfDeclaration: SelfCriteriaMultiDTO | SelfCriteriaMultiTypeDTO;
   initiativeId?: string;
+  selfDeclaration: SelfCriteriaMultiDTO | SelfCriteriaMultiTypeDTO;
 };
 
 const MultiValuePrerequisiteItemScreenContent = ({
@@ -144,15 +145,6 @@ const MultiValuePrerequisiteItemScreenContent = ({
 
   return (
     <IOScrollViewWithLargeHeader
-      topElement={<IdPayOnboardingStepper />}
-      title={{
-        label: selfCriteriaMultiTitle,
-        section: I18n.t("idpay.onboarding.navigation.header")
-      }}
-      contextualHelp={emptyContextualHelp}
-      headerActionsProp={{ showHelp: true }}
-      goBack={handleGoBack}
-      includeContentMargins
       actions={{
         type: "SingleButton",
         primary: {
@@ -160,6 +152,15 @@ const MultiValuePrerequisiteItemScreenContent = ({
           label: I18n.t("global.buttons.continue")
         }
       }}
+      contextualHelp={emptyContextualHelp}
+      goBack={handleGoBack}
+      headerActionsProp={{ showHelp: true }}
+      includeContentMargins
+      title={{
+        label: selfCriteriaMultiTitle,
+        section: I18n.t("idpay.onboarding.navigation.header")
+      }}
+      topElement={<IdPayOnboardingStepper />}
     >
       {selfDeclaration.subDescription && (
         <>
@@ -168,7 +169,6 @@ const MultiValuePrerequisiteItemScreenContent = ({
         </>
       )}
       <RadioGroup<number>
-        type="radioListItem"
         items={
           selfDeclaration?.value?.map((answer, index) => ({
             id: index,
@@ -176,8 +176,9 @@ const MultiValuePrerequisiteItemScreenContent = ({
             description: answer.subDescription
           })) || []
         }
-        selectedItem={selectedValueIndex}
         onPress={value => setSelectedValueIndex(value)}
+        selectedItem={selectedValueIndex}
+        type="radioListItem"
       />
     </IOScrollViewWithLargeHeader>
   );

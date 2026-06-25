@@ -1,13 +1,14 @@
 import { deleteKey } from "@pagopa/io-react-native-crypto";
 import { all, call, put, select } from "typed-redux-saga/macro";
+
 import { isMixpanelEnabled as isMixpanelEnabledSelector } from "../../../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../../../store/reducers/types";
 import {
   trackItwVaultCoherenceCheckFailed,
   trackItwVaultOrphanedCredentialsFound
 } from "../analytics";
-import { CredentialsVault } from "../utils/vault";
 import { itwCredentialsRemove } from "../store/actions";
+import { CredentialsVault } from "../utils/vault";
 
 /**
  * Boot-time coherence check between Redux credentials and CredentialsVault.

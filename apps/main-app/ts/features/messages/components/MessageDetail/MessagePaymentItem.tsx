@@ -1,28 +1,24 @@
 import {
   ModulePaymentNotice,
   PaymentNoticeStatus,
-  VSpacer,
-  useIOToast
+  useIOToast,
+  VSpacer
 } from "@pagopa/io-app-design-system";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
+import I18n from "i18next";
 import { useCallback, useEffect } from "react";
 import { View } from "react-native";
-import I18n from "i18next";
+
 import { PaymentAmount } from "../../../../../definitions/communication/PaymentAmount";
+import { PaymentInfoResponse } from "../../../../../definitions/communication/PaymentInfoResponse";
+import { ServiceId } from "../../../../../definitions/services/ServiceId";
+import { fold, RemoteValue } from "../../../../common/model/RemoteValue";
 import {
   useIODispatch,
   useIOSelector,
   useIOStore
 } from "../../../../store/hooks";
-import { updatePaymentForMessage } from "../../store/actions";
-import {
-  canNavigateToPaymentFromMessageSelector,
-  paymentStatusForUISelector,
-  shouldRetrievePaymentDataSelector
-} from "../../store/reducers/payments";
-import { PaymentInfoResponse } from "../../../../../definitions/communication/PaymentInfoResponse";
-import { RemoteValue, fold } from "../../../../common/model/RemoteValue";
 import {
   cleanTransactionDescription,
   getV2ErrorMainType
@@ -31,20 +27,25 @@ import {
   centsToAmount,
   formatNumberAmount
 } from "../../../../utils/stringBuilder";
-import { initializeAndNavigateToWalletForPayment } from "../../utils";
-import { getBadgeTextByPaymentNoticeStatus } from "../../utils/strings";
-import { formatPaymentNoticeNumber } from "../../../payments/common/utils";
-import { ServiceId } from "../../../../../definitions/services/ServiceId";
-import { trackPNPaymentStart } from "../../../pn/analytics";
 import { formatAndValidateDueDate } from "../../../payments/checkout/utils";
-import {
-  isMessagePaymentSpecificError,
-  MessagePaymentError
-} from "../../types/paymentErrors";
+import { formatPaymentNoticeNumber } from "../../../payments/common/utils";
+import { trackPNPaymentStart } from "../../../pn/analytics";
 import {
   SendOpeningSource,
   SendUserType
 } from "../../../pushNotifications/analytics";
+import { updatePaymentForMessage } from "../../store/actions";
+import {
+  canNavigateToPaymentFromMessageSelector,
+  paymentStatusForUISelector,
+  shouldRetrievePaymentDataSelector
+} from "../../store/reducers/payments";
+import {
+  isMessagePaymentSpecificError,
+  MessagePaymentError
+} from "../../types/paymentErrors";
+import { initializeAndNavigateToWalletForPayment } from "../../utils";
+import { getBadgeTextByPaymentNoticeStatus } from "../../utils/strings";
 import {
   computeAndTrackPaymentStart,
   shouldUpdatePaymentUponReturning
@@ -66,8 +67,8 @@ type MessagePaymentItemProps = {
 };
 
 type ProcessedPaymentUIData = {
-  paymentNoticeStatus: Exclude<PaymentNoticeStatus, "default">;
   badgeText: string;
+  paymentNoticeStatus: Exclude<PaymentNoticeStatus, "default">;
 };
 
 const paymentNoticeStatusFromPaymentError = (
@@ -77,14 +78,14 @@ const paymentNoticeStatusFromPaymentError = (
     ? getV2ErrorMainType(reason.details)
     : reason.type;
   switch (errorType) {
-    case "REVOKED":
-      return "revoked";
+    case "DUPLICATED":
+      return "paid";
     case "EXPIRED":
       return "expired";
     case "ONGOING":
       return "in-progress";
-    case "DUPLICATED":
-      return "paid";
+    case "REVOKED":
+      return "revoked";
   }
   return "error";
 };
@@ -99,14 +100,14 @@ const processedUIPaymentFromPaymentError = (
 
 const modulePaymentNoticeForUndefinedOrLoadingPayment = () => (
   <ModulePaymentNotice
+    badgeText={""}
     isLoading={true}
-    title={""}
-    subtitle={""}
     onPress={_ => undefined}
     paymentNotice={{
       status: "error"
     }}
-    badgeText={""}
+    subtitle={""}
+    title={""}
   />
 );
 
@@ -143,14 +144,14 @@ const modulePaymentNoticeFromPaymentStatus = (
       );
       return (
         <ModulePaymentNotice
-          title={dueDateOrUndefined}
-          subtitle={description}
+          onPress={paymentCallback}
           paymentNotice={{
             status: "default",
             amount: formattedAmount,
             amountAccessibilityLabel: formattedAmount
           }}
-          onPress={paymentCallback}
+          subtitle={description}
+          title={dueDateOrUndefined}
         />
       );
     },
@@ -161,13 +162,13 @@ const modulePaymentNoticeFromPaymentStatus = (
         processedUIPaymentFromPaymentError(processedPaymentDetails);
       return (
         <ModulePaymentNotice
-          title={I18n.t("features.messages.payments.noticeCode")}
-          subtitle={formattedPaymentNoticeNumber}
+          badgeText={badgeText}
           onPress={paymentCallback}
           paymentNotice={{
             status: paymentNoticeStatus
           }}
-          badgeText={badgeText}
+          subtitle={formattedPaymentNoticeNumber}
+          title={I18n.t("features.messages.payments.noticeCode")}
         />
       );
     }

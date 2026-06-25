@@ -1,7 +1,8 @@
 import { Banner, IOToast } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { openWebUrl } from "../../../../../utils/url";
+
 import { useIODispatch, useIOSelector } from "../../../../../store/hooks";
+import { openWebUrl } from "../../../../../utils/url";
 import { itwCloseBanner } from "../../../common/store/actions/banners";
 import { itwShouldRenderAgeVerificationUsageDetailsBannerSelector } from "../../../common/store/selectors";
 
@@ -33,15 +34,15 @@ export const ItwPresentationAgeVerificationUsageBanner = () => {
 
   return (
     <Banner
-      testID="ageVerificationUsageBannerTestID"
-      title={title}
-      content={content}
       action={I18n.t("global.buttons.findOutMore")}
-      pictogramName="help"
       color="neutral"
-      onPress={handleOnPress}
+      content={content}
       labelClose={I18n.t("global.buttons.close")}
       onClose={() => dispatch(itwCloseBanner("ageVerificationUsageDetails"))}
+      onPress={handleOnPress}
+      pictogramName="help"
+      testID="ageVerificationUsageBannerTestID"
+      title={title}
     />
   );
 };

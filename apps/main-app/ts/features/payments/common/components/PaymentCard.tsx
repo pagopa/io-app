@@ -11,31 +11,32 @@ import {
   WithTestID
 } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
+import I18n from "i18next";
 import { capitalize } from "lodash";
 import { StyleSheet, View } from "react-native";
-import I18n from "i18next";
+
 import BPayLogo from "../../../../../img/wallet/payment-methods/bpay_logo_full.svg";
 import PayPalLogo from "../../../../../img/wallet/payment-methods/paypal/paypal_logo_ext.svg";
 import { LogoPaymentWithFallback } from "../../../../components/ui/utils/components/LogoPaymentWithFallback";
 
-export type PaymentCardProps = {
-  brand?: string;
-  hpan?: string;
-  expireDate?: Date;
-  holderName?: string;
-  holderPhone?: string;
-  holderEmail?: string;
-  isExpired?: boolean;
-};
-
 export type PaymentCardComponentProps = WithTestID<
-  | ({
+  | (PaymentCardProps & {
       isLoading?: false;
-    } & PaymentCardProps)
+    })
   | {
       isLoading: true;
     }
 >;
+
+export type PaymentCardProps = {
+  brand?: string;
+  expireDate?: Date;
+  holderEmail?: string;
+  holderName?: string;
+  holderPhone?: string;
+  hpan?: string;
+  isExpired?: boolean;
+};
 
 const usePaymentCardStyles = () => {
   const theme = useIOTheme();
@@ -75,18 +76,18 @@ const PaymentCard = (props: PaymentCardComponentProps) => {
 
   const holderNameText = props.holderName && (
     <BodySmall
-      color={textColor}
-      weight="Regular"
       accessibilityLabel={I18n.t("wallet.methodDetails.a11y.bpay.owner", {
         fullOwnerName: props.holderName
       })}
+      color={textColor}
+      weight="Regular"
     >
       {props.holderName}
     </BodySmall>
   );
 
   const expireDateText = props.expireDate && (
-    <BodySmall weight="Regular" color={textColor}>
+    <BodySmall color={textColor} weight="Regular">
       {I18n.t("wallet.creditCard.validUntil", {
         expDate: format(props.expireDate, "MM/YY")
       })}
@@ -95,11 +96,11 @@ const PaymentCard = (props: PaymentCardComponentProps) => {
 
   const maskedEmailText = props.holderEmail && (
     <BodySmall
-      color={textColor}
-      weight="Semibold"
       accessibilityLabel={I18n.t("wallet.methodDetails.a11y.paypal.owner", {
         email: props.holderEmail
       })}
+      color={textColor}
+      weight="Semibold"
     >
       {props.holderEmail}
     </BodySmall>
@@ -107,12 +108,12 @@ const PaymentCard = (props: PaymentCardComponentProps) => {
 
   const maskedPhoneText = props.holderPhone && (
     <BodySmall
-      color={textColor}
-      weight="Semibold"
       accessibilityLabel={I18n.t("wallet.methodDetails.a11y.bpay.phone", {
         // we do this to make the screen reader read the number digit by digit,
         phoneNumber: props.holderPhone.split("").join(" ")
       })}
+      color={textColor}
+      weight="Semibold"
     >
       {props.holderPhone}
     </BodySmall>
@@ -123,8 +124,8 @@ const PaymentCard = (props: PaymentCardComponentProps) => {
       return (
         <View accessibilityLabel={I18n.t("wallet.onboarding.paypal.name")}>
           <PayPalLogo
-            testID="paymentCardPayPalLogoTestId"
             height={48}
+            testID="paymentCardPayPalLogoTestId"
             width={113}
           />
         </View>
@@ -134,10 +135,10 @@ const PaymentCard = (props: PaymentCardComponentProps) => {
     if (props.holderPhone) {
       return (
         <BPayLogo
-          testID="paymentCardBPayLogoTestId"
-          accessible={true}
           accessibilityLabel={I18n.t("wallet.onboarding.bancomatPay.name")}
+          accessible={true}
           height={48}
+          testID="paymentCardBPayLogoTestId"
           width={136}
         />
       );
@@ -149,14 +150,14 @@ const PaymentCard = (props: PaymentCardComponentProps) => {
 
       return (
         <H6
-          color={textColor}
           accessibilityLabel={I18n.t("wallet.methodDetails.a11y.credit.hpan", {
             circuit: circuitName,
             // we space the hpan to make the screen reader read it digit by digit
             spacedHpan: props.hpan.split("").join(" ")
           })}
-          numberOfLines={1}
+          color={textColor}
           ellipsizeMode="middle"
+          numberOfLines={1}
           style={{ flexShrink: 1 }}
         >
           {capitalize(circuitName)} •••• {props.hpan}
@@ -171,8 +172,8 @@ const PaymentCard = (props: PaymentCardComponentProps) => {
     <View testID={`${props.testID}-expired`}>
       <Tag
         forceLightMode
-        variant="error"
         text={I18n.t("features.payments.methods.status.expired")}
+        variant="error"
       />
     </View>
   );
@@ -213,33 +214,33 @@ const PaymentCardSkeleton = () => {
         <View style={styles.paymentInfo}>
           <IOSkeleton
             color={skeletonColor}
-            shape="rectangle"
-            width={"60%"}
             height={24}
             radius={28}
+            shape="rectangle"
+            width={"60%"}
           />
           <IOSkeleton
             color={skeletonColor}
-            shape="rectangle"
-            width={"20%"}
             height={24}
             radius={28}
+            shape="rectangle"
+            width={"20%"}
           />
         </View>
         <VStack space={8}>
           <IOSkeleton
             color={skeletonColor}
-            shape="rectangle"
-            width={"55%"}
             height={16}
             radius={28}
+            shape="rectangle"
+            width={"55%"}
           />
           <IOSkeleton
             color={skeletonColor}
-            shape="rectangle"
-            width={"45%"}
             height={16}
             radius={28}
+            shape="rectangle"
+            width={"45%"}
           />
         </VStack>
       </View>

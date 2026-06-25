@@ -1,24 +1,25 @@
 import _ from "lodash";
 import { createStore } from "redux";
+
+import * as LOADING_SCREEN from "../../../../../components/screens/LoadingScreenContent";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
 import { GlobalState } from "../../../../../store/reducers/types";
 import { renderScreenWithNavigationStoreContext } from "../../../../../utils/testWrapper";
 import PN_ROUTES from "../../../navigation/routes";
+import * as ANALYTICS from "../../analytics";
 import * as ERROR_COMPONENT from "../../components/errors/SendAarErrorComponent";
+import * as NFC_NOT_SUPPORTED_COMPONENT from "../../components/errors/SendAarNfcNotSupportedComponent";
 import * as NOT_ADDRESSEE_COMPONENT from "../../components/errors/SendAarNotAddresseeKoComponent";
+import * as SELECTORS from "../../store/selectors";
+import * as ERROR_MAPPINGS from "../../utils/aarErrorMappings";
 import {
   AarFlowState,
   AarFlowStateName,
   sendAarFlowStates
 } from "../../utils/stateUtils";
-import { SendAarErrorScreen } from "../SendAarErrorScreen";
 import { sendAarMockStates } from "../../utils/testUtils";
-import * as SELECTORS from "../../store/selectors";
-import * as ANALYTICS from "../../analytics";
-import * as NFC_NOT_SUPPORTED_COMPONENT from "../../components/errors/SendAarNfcNotSupportedComponent";
-import * as ERROR_MAPPINGS from "../../utils/aarErrorMappings";
-import * as LOADING_SCREEN from "../../../../../components/screens/LoadingScreenContent";
+import { SendAarErrorScreen } from "../SendAarErrorScreen";
 
 const handledRetryStates: Array<AarFlowStateName> = [
   sendAarFlowStates.cieCanAdvisory
@@ -57,14 +58,14 @@ describe("SendAarErrorScreen", () => {
 
   const getSpecificErrorScreenSpy = (flowState: AarFlowState) => {
     switch (flowState.type) {
-      case sendAarFlowStates.notAddresseeFinal:
-        return notAddresseeComponentSpy;
-      case sendAarFlowStates.nfcNotSupportedFinal:
-        return nfcNotSupportedComponentSpy;
-      case sendAarFlowStates.ko:
-        return mockKoComponent;
       case sendAarFlowStates.cieCanAdvisory:
         return loadingScreenSpy;
+      case sendAarFlowStates.ko:
+        return mockKoComponent;
+      case sendAarFlowStates.nfcNotSupportedFinal:
+        return nfcNotSupportedComponentSpy;
+      case sendAarFlowStates.notAddresseeFinal:
+        return notAddresseeComponentSpy;
       default:
         return undefined;
     }

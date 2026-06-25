@@ -8,6 +8,7 @@ import {
 } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
+
 import { useHeaderSecondLevel } from "../../../hooks/useHeaderSecondLevel";
 
 const CUSTOM_SLOT_HEIGHT = 150;
@@ -24,10 +25,10 @@ export const DSForceScrollDownViewTitleTransition = () => {
   return (
     <ForceScrollDownView
       animatedRef={animatedScrollViewRef}
-      threshold={CUSTOM_SLOT_HEIGHT}
       contentContainerStyle={{
         paddingTop: IOVisualCostants.appMarginDefault
       }}
+      threshold={CUSTOM_SLOT_HEIGHT}
     >
       <VStack space={24}>
         <ContentWrapper>

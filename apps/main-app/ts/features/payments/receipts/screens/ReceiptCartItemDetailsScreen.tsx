@@ -1,15 +1,16 @@
 import { Divider, H6, ListItemInfoCopy } from "@pagopa/io-app-design-system";
 import { RouteProp, useRoute } from "@react-navigation/native";
 import I18n from "i18next";
+
 import { CartItem } from "../../../../../definitions/pagopa/biz-events/CartItem";
 import { UserDetail } from "../../../../../definitions/pagopa/biz-events/UserDetail";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { clipboardSetStringWithFeedback } from "../../../../utils/clipboard";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
+import { PaymentListItemInfo } from "../../common/components/PaymentListItemInfo";
 import * as analytics from "../analytics";
 import { PaymentsReceiptParamsList } from "../navigation/params";
 import { formatAmountText } from "../utils";
-import { PaymentListItemInfo } from "../../common/components/PaymentListItemInfo";
 
 export type ReceiptCartItemDetailsScreenParams = {
   cartItem: CartItem;
@@ -70,12 +71,12 @@ const ReceiptCartItemDetailsScreen = () => {
       {cartItem.debtor && (cartItem.debtor.name ?? cartItem.debtor.taxCode) && (
         <>
           <PaymentListItemInfo
-            label={I18n.t("transaction.details.operation.debtor")}
-            value={getDebtorText(cartItem.debtor)}
-            copyableValue={getDebtorTextString(cartItem.debtor)}
             accessibilityLabel={`${I18n.t(
               "transaction.details.operation.debtor"
             )}; ${getDebtorTextString(cartItem.debtor)}`}
+            copyableValue={getDebtorTextString(cartItem.debtor)}
+            label={I18n.t("transaction.details.operation.debtor")}
+            value={getDebtorText(cartItem.debtor)}
           />
           <Divider />
         </>
@@ -83,13 +84,13 @@ const ReceiptCartItemDetailsScreen = () => {
       {cartItem.refNumberValue && (
         <>
           <ListItemInfoCopy
-            onPress={() =>
-              clipboardSetStringWithFeedback(cartItem.refNumberValue)
-            }
-            label={I18n.t("transaction.details.operation.noticeCode")}
             accessibilityLabel={`${I18n.t(
               "transaction.details.operation.noticeCodeAccessible"
             )}; ${cartItem.refNumberValue}`}
+            label={I18n.t("transaction.details.operation.noticeCode")}
+            onPress={() =>
+              clipboardSetStringWithFeedback(cartItem.refNumberValue)
+            }
             value={cartItem.refNumberValue}
           />
           <Divider />
@@ -97,12 +98,12 @@ const ReceiptCartItemDetailsScreen = () => {
       )}
       {cartItem.payee && (
         <ListItemInfoCopy
+          label={I18n.t("transaction.details.operation.taxCode")}
+          numberOfLines={4}
           onPress={() =>
             clipboardSetStringWithFeedback(cartItem.payee?.taxCode ?? "")
           }
-          label={I18n.t("transaction.details.operation.taxCode")}
           value={cartItem.payee?.taxCode}
-          numberOfLines={4}
         />
       )}
     </IOScrollViewWithLargeHeader>

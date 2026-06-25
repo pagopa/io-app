@@ -1,16 +1,17 @@
+import { IOToast } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import MockDate from "mockdate";
 import { expectSaga } from "redux-saga-test-plan";
 import { select } from "redux-saga/effects";
-import { IOToast } from "@pagopa/io-app-design-system";
-import { handleAddFavouriteService } from "../handleAddFavouriteService";
+
+import { favouriteServicesLimitSelector } from "../../../common/store/selectors/remoteConfig";
+import { createMockService } from "../../__mocks__/favouriteServicesMocks";
 import {
   addFavouriteServiceRequest,
   addFavouriteServiceSuccess
 } from "../../store/actions";
 import { favouriteServicesCountSelector } from "../../store/selectors";
-import { createMockService } from "../../__mocks__/favouriteServicesMocks";
-import { favouriteServicesLimitSelector } from "../../../common/store/selectors/remoteConfig";
+import { handleAddFavouriteService } from "../handleAddFavouriteService";
 
 const mockedDate = Date.now();
 MockDate.set(mockedDate);

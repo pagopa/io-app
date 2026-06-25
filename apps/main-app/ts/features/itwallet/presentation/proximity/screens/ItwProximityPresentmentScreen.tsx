@@ -12,6 +12,7 @@ import I18n from "i18next";
 import { useEffect, useLayoutEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
+
 import { IOScrollView } from "../../../../../components/ui/IOScrollView.tsx";
 import { useDebugInfo } from "../../../../../hooks/useDebugInfo.ts";
 import {
@@ -82,13 +83,13 @@ export const ItwProximityPresentmentScreen = ({
     navigation.setOptions({
       header: () => (
         <HeaderSecondLevel
-          title={""}
-          type="singleAction"
           firstAction={{
             icon: "closeLarge",
             accessibilityLabel: I18n.t("global.buttons.close"),
             onPress: () => machineRef.send({ type: "close" })
           }}
+          title={""}
+          type="singleAction"
         />
       )
     });
@@ -119,23 +120,23 @@ export const ItwProximityPresentmentScreen = ({
           style={styles.expiredBanner}
         >
           <Alert
-            testID="itwExpiredBannerTestID"
-            variant="error"
-            content={I18n.t(
-              "features.itWallet.presentation.proximity.engagement.invalidBanner.content"
-            )}
             action={I18n.t(
               "features.itWallet.presentation.proximity.engagement.invalidBanner.action"
             )}
+            content={I18n.t(
+              "features.itWallet.presentation.proximity.engagement.invalidBanner.content"
+            )}
             onPress={handleReissuePress}
+            testID="itwExpiredBannerTestID"
+            variant="error"
           />
         </Animated.View>
       )}
 
       <View style={styles.boxShadow}>
         <ItwBrandedBox
-          variant={isFailure ? "error" : "default"}
           backgroundVariant={"gradient"}
+          variant={isFailure ? "error" : "default"}
         >
           <VStack space={16}>
             {!isFailure && (
@@ -165,13 +166,13 @@ export const ItwProximityPresentmentScreen = ({
           {I18n.t("features.itWallet.presentation.proximity.engagement.nfc.or")}
         </BodySmall>
         <IOButton
-          variant="link"
+          icon="contactless"
+          iconPosition="end"
           label={I18n.t(
             "features.itWallet.presentation.proximity.engagement.nfc.action"
           )}
           onPress={handleContactlessPress}
-          icon="contactless"
-          iconPosition="end"
+          variant="link"
         />
       </View>
 

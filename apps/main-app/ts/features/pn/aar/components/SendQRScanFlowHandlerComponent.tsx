@@ -2,6 +2,7 @@ import { HeaderSecondLevel } from "@pagopa/io-app-design-system";
 import { useNavigation } from "@react-navigation/native";
 import I18n from "i18next";
 import { useCallback, useEffect } from "react";
+
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { IOStackNavigationProp } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector, useIOStore } from "../../../../store/hooks";
@@ -49,14 +50,14 @@ const SendQrScanRedirect = ({ aarUrl }: SendQRScanHandlerScreenProps) => {
     navigation.setOptions({
       header: () => (
         <HeaderSecondLevel
-          title=""
-          type="singleAction"
           firstAction={{
             icon: "closeMedium",
             onPress: handleCloseScreen,
             accessibilityLabel: I18n.t("global.buttons.close"),
             testID: "header-close"
           }}
+          title=""
+          type="singleAction"
         />
       )
     });
@@ -102,14 +103,14 @@ const SendQrScanRedirect = ({ aarUrl }: SendQRScanHandlerScreenProps) => {
 
   return (
     <OperationResultScreenContent
-      isHeaderVisible
-      pictogram="sendAccess"
-      title={I18n.t("features.pn.qrCodeScan.success.openSendScreen.title")}
       action={{
         label: I18n.t("features.pn.qrCodeScan.success.openSendScreen.firstCta"),
         onPress: handleOpenSendScreen,
         testID: "primary-action"
       }}
+      isHeaderVisible
+      pictogram="sendAccess"
+      title={I18n.t("features.pn.qrCodeScan.success.openSendScreen.title")}
     />
   );
 };

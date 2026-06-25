@@ -17,6 +17,7 @@ import Animated, {
   useSharedValue
 } from "react-native-reanimated";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import CgnAnimatedHeader from "../../components/CgnAnimatedHeader";
@@ -36,8 +37,8 @@ type CgnMerchantsHomeTabParamsList = {
 };
 
 type TabOption = {
-  title: string;
   icon: IOIcons;
+  title: string;
 };
 
 const tabOptions: Record<keyof CgnMerchantsHomeTabParamsList, TabOption> = {
@@ -132,14 +133,14 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
     () => (
       <>
         <CgnAnimatedHeader
-          pullProgress={pullProgress}
           isRefreshingValue={isRefreshingSharedValue}
+          pullProgress={pullProgress}
         />
         <View style={{ flexGrow: 0, flexShrink: 0 }}>
           <TabNavigation
             includeContentMargins={true}
-            tabAlignment="start"
             selectedIndex={tabRoutesKeys.indexOf(selectedTab)}
+            tabAlignment="start"
           >
             {tabRoutesKeys.map((routeKey, index) => {
               const route = routeKey as keyof CgnMerchantsHomeTabParamsList;
@@ -156,12 +157,12 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
               );
               return (
                 <TabItem
-                  testID={`cgn-merchants-tab-${route}`}
-                  icon={tabOptions[route].icon}
-                  label={label}
                   accessibilityLabel={accessibilityLabel}
+                  icon={tabOptions[route].icon}
                   key={route}
+                  label={label}
                   onPress={onPress}
+                  testID={`cgn-merchants-tab-${route}`}
                 />
               );
             })}
@@ -176,35 +177,35 @@ const CgnMerchantsCategoriesSelectionScreen = () => {
 
   return (
     <Animated.FlatList
-      ref={animatedFlatListRef}
-      scrollEventThrottle={8}
-      onScroll={scrollHandler}
-      snapToEnd={false}
+      contentContainerStyle={{
+        flexGrow: 1,
+        paddingBottom: IOVisualCostants.appMarginDefault + bottom
+      }}
       data={[...data]}
+      ItemSeparatorComponent={() => <Divider />}
       keyExtractor={item => ("id" in item ? item.id : item.productCategory)}
-      renderItem={({ item, index }) => renderItem(item as any, index)}
+      ListEmptyComponent={ListEmptyComponent}
+      ListFooterComponent={ListFooterComponent}
+      ListHeaderComponent={ListHeaderComponent}
+      onScroll={scrollHandler}
+      ref={animatedFlatListRef}
       refreshControl={
         refreshControlProps && (
           <RefreshControl
             tintColor={Platform.OS === "ios" ? "transparent" : IOColors.black}
             {...refreshControlProps}
-            refreshing={isRefreshing}
             onRefresh={() => {
               refreshControlProps.onRefresh();
               setIsPullRefresh(true);
             }}
+            refreshing={isRefreshing}
           />
         )
       }
-      ListHeaderComponent={ListHeaderComponent}
-      ListFooterComponent={ListFooterComponent}
-      ListEmptyComponent={ListEmptyComponent}
-      ItemSeparatorComponent={() => <Divider />}
+      renderItem={({ item, index }) => renderItem(item as any, index)}
+      scrollEventThrottle={8}
+      snapToEnd={false}
       style={{ flex: 1 }}
-      contentContainerStyle={{
-        flexGrow: 1,
-        paddingBottom: IOVisualCostants.appMarginDefault + bottom
-      }}
     />
   );
 };

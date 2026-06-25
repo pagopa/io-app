@@ -1,4 +1,5 @@
 import { fireEvent, render } from "@testing-library/react-native";
+
 import { ClaimDisplayFormat } from "../../../../../common/utils/itwClaimsUtils";
 import { ItwClaimsSelector } from "../index";
 
@@ -22,12 +23,12 @@ jest.mock("react-native-gesture-handler", () => {
       accessibilityState,
       accessible
     }: {
-      children: React.ReactNode;
-      onPress: () => void;
       accessibilityLabel?: string;
       accessibilityRole?: string;
       accessibilityState?: object;
       accessible?: boolean;
+      children: React.ReactNode;
+      onPress: () => void;
     }) =>
       React.createElement(
         Pressable,
@@ -67,9 +68,9 @@ describe("ItwClaimsSelector", () => {
   it("renders credential claims", () => {
     const component = render(
       <ItwClaimsSelector
+        accessibilityLabel="claims-selector"
         credentialType="PersonIdentificationData"
         items={items}
-        accessibilityLabel="claims-selector"
       />
     );
 
@@ -82,9 +83,9 @@ describe("ItwClaimsSelector", () => {
     const onToggle = jest.fn();
     const component = render(
       <ItwClaimsSelector
+        accessibilityLabel="claims-selector"
         credentialType="PersonIdentificationData"
         items={items}
-        accessibilityLabel="claims-selector"
         onToggle={onToggle}
       />
     );

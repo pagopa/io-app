@@ -4,12 +4,13 @@ import {
   useIOTheme
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import * as O from "fp-ts/Option";
 import { constNull, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/Option";
 import I18n from "i18next";
 import { useCallback, useLayoutEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import { IOStackNavigationRouteProps } from "../../../../../navigation/params/AppParamsList.ts";
 import { useIOSelector } from "../../../../../store/hooks.ts";
 import { usePreventScreenCapture } from "../../../../../utils/hooks/usePreventScreenCapture.ts";
@@ -48,13 +49,13 @@ const ItwPresentationCredentialCardScreen = ({ route, navigation }: Props) => {
     navigation.setOptions({
       header: () => (
         <HeaderSecondLevel
-          title=""
-          type="singleAction"
           firstAction={{
             icon: "closeLarge",
             accessibilityLabel: I18n.t("global.buttons.close"),
             onPress: () => navigation.goBack()
           }}
+          title=""
+          type="singleAction"
         />
       )
     });

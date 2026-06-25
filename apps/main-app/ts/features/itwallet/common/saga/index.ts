@@ -3,6 +3,7 @@ import * as O from "fp-ts/Option";
 import { SagaIterator } from "redux-saga";
 import { call, fork, put, select, takeLatest } from "typed-redux-saga/macro";
 import { ActionType } from "typesafe-actions";
+
 import {
   syncItwAnalyticsProperties,
   updateNfcInfoTrackingProperties,
@@ -35,6 +36,35 @@ import { isItwCredential } from "../utils/itwCredentialUtils";
 import { watchItwEnvironment } from "./environment";
 import { watchItwOfflineAccess } from "./offlineAccess";
 
+/**
+ * Watcher for ITW sagas that do not require internet connection or a valid session
+ */
+export function* watchItwOfflineSaga(): SagaIterator {
+  // Watch for changes in the credentials store to keep the wallet in sync
+  yield* fork(watchItwCredentialsSaga);
+
+  // Migrate legacy credentials to vault
+  yield* call(handleItwCredentialsVaultMigrationSaga);
+
+  // Ensure Redux and CredentialsVault are coherent
+  yield* call(handleItwCredentialsVaultCoherenceSaga);
+
+  yield* fork(handleWalletCredentialsRehydration);
+  // Check if the device has the NFC Feature
+  yield* fork(checkHasNfcFeatureSaga);
+  // Handle environment changes
+  yield* fork(watchItwEnvironment);
+  // Handle offline access counter increment and reset
+  yield* fork(watchItwOfflineAccess);
+  // Sync ITW analytics properties
+  yield* fork(syncItwAnalyticsProperties);
+  // Clean up stale Wallet Unit Attestations
+  yield* fork(handleWalletUnitAttestationsCleanUp);
+
+  // TODO remove this fork when NFC antenna info tracking is not needed anymore
+  yield* fork(updateNfcInfoTrackingProperties);
+}
+
 export function* watchItwSaga(): SagaIterator {
   yield* takeLatest(
     itwSetFiscalCodeWhitelisted,
@@ -66,35 +96,6 @@ export function* watchItwSaga(): SagaIterator {
   yield* call(checkWalletInstanceStateSaga);
   yield* call(checkCurrentWalletInstanceStateSaga);
   yield* call(checkCredentialsStatusAssertion);
-}
-
-/**
- * Watcher for ITW sagas that do not require internet connection or a valid session
- */
-export function* watchItwOfflineSaga(): SagaIterator {
-  // Watch for changes in the credentials store to keep the wallet in sync
-  yield* fork(watchItwCredentialsSaga);
-
-  // Migrate legacy credentials to vault
-  yield* call(handleItwCredentialsVaultMigrationSaga);
-
-  // Ensure Redux and CredentialsVault are coherent
-  yield* call(handleItwCredentialsVaultCoherenceSaga);
-
-  yield* fork(handleWalletCredentialsRehydration);
-  // Check if the device has the NFC Feature
-  yield* fork(checkHasNfcFeatureSaga);
-  // Handle environment changes
-  yield* fork(watchItwEnvironment);
-  // Handle offline access counter increment and reset
-  yield* fork(watchItwOfflineAccess);
-  // Sync ITW analytics properties
-  yield* fork(syncItwAnalyticsProperties);
-  // Clean up stale Wallet Unit Attestations
-  yield* fork(handleWalletUnitAttestationsCleanUp);
-
-  // TODO remove this fork when NFC antenna info tracking is not needed anymore
-  yield* fork(updateNfcInfoTrackingProperties);
 }
 
 /**

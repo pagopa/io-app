@@ -10,6 +10,7 @@ import { Alert, View } from "react-native";
 import ReactNativeHapticFeedback, {
   HapticFeedbackTypes
 } from "react-native-haptic-feedback";
+
 import { useHardwareBackButtonWhenFocused } from "../../../hooks/useHardwareBackButton";
 import { useOpenDeepLink } from "../../../hooks/useOpenDeepLink";
 import { mixpanelTrack } from "../../../mixpanel";
@@ -38,16 +39,16 @@ import PN_ROUTES from "../../pn/navigation/routes.ts";
 import * as analytics from "../analytics";
 import { BarcodeScanBaseScreenComponent } from "../components/BarcodeScanBaseScreenComponent";
 import { useIOBarcodeFileReader } from "../hooks/useIOBarcodeFileReader";
+import { BarcodeFailure } from "../types/failure";
 import {
+  IO_BARCODE_ALL_FORMATS,
+  IO_BARCODE_ALL_TYPES,
   IOBarcode,
   IOBarcodeFormat,
   IOBarcodeOrigin,
   IOBarcodeType,
-  IO_BARCODE_ALL_FORMATS,
-  IO_BARCODE_ALL_TYPES,
   PagoPaBarcode
 } from "../types/IOBarcode";
-import { BarcodeFailure } from "../types/failure";
 import { getIOBarcodesByType } from "../utils/getBarcodesByType";
 
 const BarcodeScanScreen = () => {
@@ -145,22 +146,6 @@ const BarcodeScanScreen = () => {
     analytics.trackBarcodeScanSuccess("home", barcode, origin);
 
     switch (barcode.type) {
-      case "PAGOPA":
-        const isDataMatrix = barcode.format === "DATA_MATRIX";
-
-        if (isDataMatrix) {
-          void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
-        }
-
-        startPaymentFlowWithRptId(barcode.rptId, {
-          onSuccess: "showTransaction",
-          startOrigin: isDataMatrix ? "poste_datamatrix_scan" : "qrcode_scan"
-        });
-
-        break;
-      case "IDPAY":
-        openDeepLink(barcode.authUrl);
-        break;
       case "FCI":
         navigation.navigate(FCI_ROUTES.MAIN, {
           screen: FCI_ROUTES.ROUTER,
@@ -168,6 +153,9 @@ const BarcodeScanScreen = () => {
             signatureRequestId: barcode.signatureRequestId
           }
         });
+        break;
+      case "IDPAY":
+        openDeepLink(barcode.authUrl);
         break;
       case "ITW_REMOTE":
         /**
@@ -182,6 +170,19 @@ const BarcodeScanScreen = () => {
             flowType: "cross-device"
           }
         });
+        break;
+      case "PAGOPA":
+        const isDataMatrix = barcode.format === "DATA_MATRIX";
+
+        if (isDataMatrix) {
+          void mixpanelTrack("WALLET_SCAN_POSTE_DATAMATRIX_SUCCESS");
+        }
+
+        startPaymentFlowWithRptId(barcode.rptId, {
+          onSuccess: "showTransaction",
+          startOrigin: isDataMatrix ? "poste_datamatrix_scan" : "qrcode_scan"
+        });
+
         break;
       case "SEND":
         navigation.replace(MESSAGES_ROUTES.MESSAGES_NAVIGATOR, {
@@ -232,18 +233,18 @@ const BarcodeScanScreen = () => {
   const manualInputModalComponent = (
     <View>
       <ListItemNav
-        value={I18n.t("barcodeScan.manual.notice")}
         accessibilityLabel={I18n.t("barcodeScan.manual.notice")}
-        onPress={handlePagoPACodeInput}
         icon="productPagoPA"
         iconColor="blueItalia-500"
+        onPress={handlePagoPACodeInput}
+        value={I18n.t("barcodeScan.manual.notice")}
       />
       <Divider />
       <ListItemNav
-        value={I18n.t("barcodeScan.manual.authorize")}
         accessibilityLabel={I18n.t("barcodeScan.manual.authorize")}
-        onPress={handleIdPayPaymentCodeInput}
         icon="gallery"
+        onPress={handleIdPayPaymentCodeInput}
+        value={I18n.t("barcodeScan.manual.authorize")}
       />
       <VSpacer size={16} />
     </View>
@@ -280,22 +281,22 @@ const BarcodeScanScreen = () => {
   return (
     <>
       <View
-        style={{ flex: 1 }}
         importantForAccessibility={
           isFilePickerVisible ? "no-hide-descendants" : "auto"
         }
+        style={{ flex: 1 }}
       >
         <BarcodeScanBaseScreenComponent
+          barcodeAnalyticsFlow="home"
           barcodeFormats={barcodeFormats}
           barcodeTypes={barcodeTypes}
-          onBarcodeSuccess={handleBarcodeSuccess}
+          contextualHelp={emptyContextualHelp}
+          isDisabled={isFilePickerVisible || isFileReaderLoading}
+          isLoading={isFileReaderLoading}
           onBarcodeError={handleBarcodeError}
+          onBarcodeSuccess={handleBarcodeSuccess}
           onFileInputPressed={showFilePicker}
           onManualInputPressed={handleManualInputPressed}
-          contextualHelp={emptyContextualHelp}
-          barcodeAnalyticsFlow="home"
-          isLoading={isFileReaderLoading}
-          isDisabled={isFilePickerVisible || isFileReaderLoading}
         />
       </View>
       {filePickerBottomSheet}

@@ -3,8 +3,9 @@ import {
   IOVisualCostants,
   ListItemNav
 } from "@pagopa/io-app-design-system";
-import { FlatList, ListRenderItemInfo, Platform } from "react-native";
 import I18n from "i18next";
+import { FlatList, ListRenderItemInfo, Platform } from "react-native";
+
 import { ZendeskCategory } from "../../../../definitions/content/ZendeskCategory";
 import { isReady } from "../../../common/model/RemoteValue";
 import { IOScrollViewWithLargeHeader } from "../../../components/ui/IOScrollViewWithLargeHeader";
@@ -71,8 +72,6 @@ const ZendeskChooseCategory = (props: Props) => {
     item: category
   }: ListRenderItemInfo<ZendeskCategory>) => (
     <ListItemNav
-      testID={category.value}
-      value={category.description[locale]}
       onPress={() => {
         selectedCategory(category);
         // Set category as custom field
@@ -87,28 +86,30 @@ const ZendeskChooseCategory = (props: Props) => {
           });
         }
       }}
+      testID={category.value}
+      value={category.description[locale]}
     />
   );
 
   return (
     <IOScrollViewWithLargeHeader
+      description={I18n.t("support.chooseCategory.subTitle.category")}
+      ignoreSafeAreaMargin={Platform.OS === "ios" ? true : false}
+      testID={"ZendeskChooseCategory"}
       title={{
         label: I18n.t("support.chooseCategory.title.category"),
         section: I18n.t("support.chooseCategory.header")
       }}
-      description={I18n.t("support.chooseCategory.subTitle.category")}
-      ignoreSafeAreaMargin={Platform.OS === "ios" ? true : false}
-      testID={"ZendeskChooseCategory"}
     >
       <FlatList
-        scrollEnabled={false}
         contentContainerStyle={{
           paddingHorizontal: IOVisualCostants.appMarginDefault
         }}
         data={categories}
+        ItemSeparatorComponent={() => <Divider />}
         keyExtractor={c => c.value}
         renderItem={renderItem}
-        ItemSeparatorComponent={() => <Divider />}
+        scrollEnabled={false}
       />
     </IOScrollViewWithLargeHeader>
   );

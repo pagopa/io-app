@@ -1,5 +1,6 @@
-import * as O from "fp-ts/lib/Option";
 import * as pot from "@pagopa/ts-commons/lib/pot";
+import * as O from "fp-ts/lib/Option";
+
 import {
   fimsHistoryErrorSelector,
   fimsHistoryExportStateSelector,
@@ -9,13 +10,13 @@ import {
   isFimsHistoryExportingSelector,
   isFimsHistoryLoadingSelector
 } from "..";
-import { GlobalState } from "../../../../../../store/reducers/types";
 import {
   remoteError,
   remoteLoading,
   remoteReady,
   remoteUndefined
 } from "../../../../../../common/model/RemoteValue";
+import { GlobalState } from "../../../../../../store/reducers/types";
 
 describe("fimsHistoryPotSelector", () =>
   it("should return the 'features.fims.history.consentsList' instance", () => {

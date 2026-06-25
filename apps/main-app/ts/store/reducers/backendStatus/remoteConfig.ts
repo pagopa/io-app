@@ -5,7 +5,7 @@ import * as RA from "fp-ts/lib/ReadonlyArray";
 import { Platform } from "react-native";
 import { createSelector } from "reselect";
 import { getType } from "typesafe-actions";
-import { ServiceId } from "../../../../definitions/services/ServiceId";
+
 import { AppFeedbackConfig } from "../../../../definitions/content/AppFeedbackConfig";
 import { ToolEnum } from "../../../../definitions/content/AssistanceToolConfig";
 import { BackendStatus } from "../../../../definitions/content/BackendStatus";
@@ -13,6 +13,8 @@ import { BancomatPayConfig } from "../../../../definitions/content/BancomatPayCo
 import { Banner } from "../../../../definitions/content/Banner";
 import { BarcodesScannerConfig } from "../../../../definitions/content/BarcodesScannerConfig";
 import { FimsServiceConfiguration } from "../../../../definitions/content/FimsServiceConfiguration";
+import { OSPerPlatform } from "../../../../definitions/content/OSPerPlatform";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
 import {
   cdcEnabled,
   cgnMerchantsV2Enabled,
@@ -30,7 +32,6 @@ import {
 } from "../featureFlagWithMinAppVersionStatus";
 import { isIdPayLocallyEnabledSelector } from "../persistedPreferences";
 import { GlobalState } from "../types";
-import { OSPerPlatform } from "../../../../definitions/content/OSPerPlatform";
 
 export type RemoteConfigState = O.Option<BackendStatus["config"]>;
 

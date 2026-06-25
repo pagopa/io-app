@@ -1,5 +1,6 @@
 import { fireEvent } from "@testing-library/react-native";
 import configureMockStore from "redux-mock-store";
+
 import ROUTES from "../../../../../navigation/routes";
 import { applicationChangeState } from "../../../../../store/actions/application";
 import { appReducer } from "../../../../../store/reducers";
@@ -9,8 +10,8 @@ import { itwCloseBanner } from "../../../common/store/actions/banners";
 import * as credentialsSelectors from "../../../credentials/store/selectors";
 import * as lifecycleSelectors from "../../../lifecycle/store/selectors";
 import { ITW_ROUTES } from "../../../navigation/routes";
-import { ItwDiscoveryBanner } from "../ItwDiscoveryBanner";
 import * as itwWalletInstanceSelectors from "../../../walletInstance/store/selectors";
+import { ItwDiscoveryBanner } from "../ItwDiscoveryBanner";
 
 const mockNavigate = jest.fn();
 
@@ -25,12 +26,12 @@ jest.mock("@react-navigation/native", () => {
 });
 
 type BannerScenario = {
-  name: string;
-  isWalletActive: boolean;
   hasItwInstance: boolean;
-  isRemotelyActive?: boolean;
-  isWalletEmpty: boolean;
   hasMdl: boolean;
+  isRemotelyActive?: boolean;
+  isWalletActive: boolean;
+  isWalletEmpty: boolean;
+  name: string;
 };
 
 const allScenarios: Array<BannerScenario> = [

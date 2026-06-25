@@ -1,21 +1,22 @@
-import React from "react";
-import * as O from "fp-ts/lib/Option";
-import * as E from "fp-ts/lib/Either";
 import { fireEvent } from "@testing-library/react-native";
-import { createStore } from "redux";
+import * as E from "fp-ts/lib/Either";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
-import { appReducer } from "../../../../../../store/reducers";
+import React from "react";
+import { createStore } from "redux";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
-import { CieRequestAuthenticationOverlay } from "../CieRequestAuthenticationOverlay";
+import { useIOSelector } from "../../../../../../store/hooks";
+import { appReducer } from "../../../../../../store/reducers";
+import { isMixpanelEnabled } from "../../../../../../store/reducers/persistedPreferences";
+import * as AnalyticsUtils from "../../../../../../utils/analytics";
 import { renderScreenWithNavigationStoreContext } from "../../../../../../utils/testWrapper";
 import { lollipopKeyTagSelector } from "../../../../../lollipop/store/reducers/lollipop";
-import { isMixpanelEnabled } from "../../../../../../store/reducers/persistedPreferences";
+import * as LollipopLoginUtils from "../../../../../lollipop/utils/login";
+import { selectedIdentityProviderSelector } from "../../../../common/store/selectors";
 import { isFastLoginEnabledSelector } from "../../../../fastLogin/store/selectors";
 import { isCieLoginUatEnabledSelector } from "../../store/selectors";
-import { selectedIdentityProviderSelector } from "../../../../common/store/selectors";
-import * as LollipopLoginUtils from "../../../../../lollipop/utils/login";
-import { useIOSelector } from "../../../../../../store/hooks";
-import * as AnalyticsUtils from "../../../../../../utils/analytics";
+import { CieRequestAuthenticationOverlay } from "../CieRequestAuthenticationOverlay";
 
 jest
   .spyOn(AnalyticsUtils, "trackSpidLoginError")

@@ -1,10 +1,11 @@
 import { HeaderActionProps } from "@pagopa/io-app-design-system";
-import { useMemo } from "react";
 import I18n from "i18next";
+import { useMemo } from "react";
+
+import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import { SERVICES_ROUTES } from "../features/services/common/navigation/routes";
 import { MainTabParamsList } from "../navigation/params/MainTabParamsList";
 import ROUTES from "../navigation/routes";
-import { MESSAGES_ROUTES } from "../features/messages/navigation/routes";
 import {
   SupportRequestParams,
   useStartSupportRequest

@@ -1,20 +1,21 @@
 import { ContentWrapper, ListItemAction } from "@pagopa/io-app-design-system";
+import I18n from "i18next";
 import { Alert } from "react-native";
 import { useDispatch } from "react-redux";
-import I18n from "i18next";
+
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { paymentAnalyticsDataSelector } from "../../history/store/selectors";
+import { HideReceiptTrigger } from "../analytics";
 import {
   analyticsHideReceiptAction,
   analyticsHideReceiptConfirmAction
 } from "../analytics/utils";
 import { hidePaymentsReceiptAction } from "../store/actions";
-import { HideReceiptTrigger } from "../analytics";
 
 type Props = {
-  transactionId: string;
   isCart?: boolean;
+  transactionId: string;
   trigger?: HideReceiptTrigger;
 };
 
@@ -71,12 +72,12 @@ const HideReceiptButton = (props: Props) => {
   return (
     <ContentWrapper>
       <ListItemAction
-        label={I18n.t("features.payments.transactions.receipt.hideFromList")}
-        onPress={handleHideFromList}
         accessibilityLabel={I18n.t(
           "features.payments.transactions.receipt.hideFromList"
         )}
         icon="eyeHide"
+        label={I18n.t("features.payments.transactions.receipt.hideFromList")}
+        onPress={handleHideFromList}
         variant="danger"
       />
     </ContentWrapper>

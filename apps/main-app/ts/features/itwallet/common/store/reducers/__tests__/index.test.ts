@@ -1,6 +1,7 @@
+import * as pot from "@pagopa/ts-commons/lib/pot";
 import MockDate from "mockdate";
 import { createMigrate } from "redux-persist";
-import * as pot from "@pagopa/ts-commons/lib/pot";
+
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import itWalletReducer, { migrations } from "../index";
 

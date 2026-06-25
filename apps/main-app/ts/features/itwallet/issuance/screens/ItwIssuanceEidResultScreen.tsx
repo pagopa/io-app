@@ -1,19 +1,15 @@
 import { useRoute } from "@react-navigation/native";
 import I18n from "i18next";
 import { useEffect } from "react";
+
 import LoadingScreenContent from "../../../../components/screens/LoadingScreenContent";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIOSelector } from "../../../../store/hooks.ts";
 import { useAvoidHardwareBackButton } from "../../../../utils/useAvoidHardwareBackButton";
-import {
-  trackAddFirstCredential,
-  trackBackToWallet,
-  trackItwCredentialReissuingFailed
-} from "../analytics";
 import { getMixPanelCredential } from "../../analytics/utils";
 import { ItwReissuanceFeedbackBanner } from "../../common/components/ItwReissuanceFeedbackBanner.tsx";
-import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
+import { useItwDisableGestureNavigation } from "../../common/hooks/useItwDisableGestureNavigation";
 import { CredentialMetadata } from "../../common/utils/itwTypesUtils.ts";
 import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
@@ -24,6 +20,11 @@ import {
   selectIssuanceMode,
   selectUpgradeFailedCredentials
 } from "../../machine/eid/selectors";
+import {
+  trackAddFirstCredential,
+  trackBackToWallet,
+  trackItwCredentialReissuingFailed
+} from "../analytics";
 
 export const ItwIssuanceEidResultScreen = () => {
   const route = useRoute();
@@ -99,15 +100,13 @@ export const ItwIssuanceEidResultScreen = () => {
 
   return (
     <OperationResultScreenContent
-      pictogram="success"
-      title={I18n.t("features.itWallet.issuance.eidResult.success.title")}
-      subtitle={I18n.t("features.itWallet.issuance.eidResult.success.subtitle")}
       action={{
         label: I18n.t(
           "features.itWallet.issuance.eidResult.success.primaryAction"
         ),
         onPress: handleAddCredential
       }}
+      pictogram="success"
       secondaryAction={{
         label: I18n.t(
           "features.itWallet.issuance.eidResult.success.secondaryAction"
@@ -120,6 +119,8 @@ export const ItwIssuanceEidResultScreen = () => {
           });
         }
       }}
+      subtitle={I18n.t("features.itWallet.issuance.eidResult.success.subtitle")}
+      title={I18n.t("features.itWallet.issuance.eidResult.success.title")}
     />
   );
 };
@@ -140,8 +141,8 @@ const ItwIssuanceEidUpgradeResultContent = ({
   if (isLoading) {
     return (
       <LoadingScreenContent
-        title={I18n.t("features.itWallet.issuance.upgrade.loading.title")}
         subtitle={I18n.t("features.itWallet.issuance.upgrade.loading.subtitle")}
+        title={I18n.t("features.itWallet.issuance.upgrade.loading.title")}
       />
     );
   }
@@ -156,30 +157,30 @@ const ItwIssuanceEidUpgradeResultContent = ({
 
     return (
       <OperationResultScreenContent
-        pictogram="success"
-        title={title}
-        subtitle={I18n.t("features.itWallet.issuance.upgrade.failure.subtitle")}
         action={{
           label: I18n.t(
             "features.itWallet.issuance.upgrade.failure.primaryAction"
           ),
           onPress: handleBackToWallet
         }}
+        pictogram="success"
+        subtitle={I18n.t("features.itWallet.issuance.upgrade.failure.subtitle")}
+        title={title}
       />
     );
   }
 
   return (
     <OperationResultScreenContent
-      pictogram="success"
-      title={I18n.t("features.itWallet.issuance.upgrade.success.title")}
-      subtitle={I18n.t("features.itWallet.issuance.upgrade.success.subtitle")}
       action={{
         label: I18n.t(
           "features.itWallet.issuance.upgrade.success.primaryAction"
         ),
         onPress: handleBackToWallet
       }}
+      pictogram="success"
+      subtitle={I18n.t("features.itWallet.issuance.upgrade.success.subtitle")}
+      title={I18n.t("features.itWallet.issuance.upgrade.success.title")}
     />
   );
 };
@@ -195,13 +196,6 @@ const ItwIssuanceEidReissuanceResultContent = () => {
 
   return (
     <OperationResultScreenContent
-      pictogram="success"
-      title={I18n.t(
-        "features.itWallet.issuance.eidResult.success.reissuance.title"
-      )}
-      subtitle={I18n.t(
-        "features.itWallet.issuance.eidResult.success.reissuance.subtitle"
-      )}
       action={{
         label: I18n.t(
           "features.itWallet.issuance.eidResult.success.reissuance.primaryAction"
@@ -214,6 +208,13 @@ const ItwIssuanceEidReissuanceResultContent = () => {
           });
         }
       }}
+      pictogram="success"
+      subtitle={I18n.t(
+        "features.itWallet.issuance.eidResult.success.reissuance.subtitle"
+      )}
+      title={I18n.t(
+        "features.itWallet.issuance.eidResult.success.reissuance.title"
+      )}
     >
       <ItwReissuanceFeedbackBanner />
     </OperationResultScreenContent>

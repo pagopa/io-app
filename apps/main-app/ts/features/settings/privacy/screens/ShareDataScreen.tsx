@@ -2,6 +2,7 @@ import { ContentWrapper, useIOToast } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { AccessibilityInfo, View } from "react-native";
+
 import { IOScrollViewActions } from "../../../../components/ui/IOScrollView";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { setMixpanelEnabled } from "../../../../store/actions/mixpanel";
@@ -16,10 +17,10 @@ import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import { trackMixpanelScreen } from "../../common/analytics";
 import {
   TrackingInfo,
-  trackMixPanelTrackingInfo,
   trackMixpanelDeclined,
   trackMixpanelNotNowSelected,
-  trackMixpanelSetEnabled
+  trackMixpanelSetEnabled,
+  trackMixPanelTrackingInfo
 } from "../../common/analytics/mixpanel/mixpanelAnalytics";
 import { ShareDataComponent } from "../shared/components/ShareDataComponent";
 import { useConfirmOptOutBottomSheet } from "../shared/hooks/useConfirmOptOutBottomSheet";
@@ -127,12 +128,12 @@ const ShareDataScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
+      actions={buttonProps}
+      description={I18n.t("profile.main.privacy.shareData.screen.description")}
       title={{
         label: I18n.t("profile.main.privacy.shareData.screen.title"),
         testID: "share-data-component-title"
       }}
-      description={I18n.t("profile.main.privacy.shareData.screen.description")}
-      actions={buttonProps}
     >
       <ContentWrapper style={{ flexGrow: 1 }}>
         <ShareDataComponent trackAction={handleTrackingAction} />

@@ -1,10 +1,14 @@
 import { ItwVersion } from "@pagopa/io-react-native-wallet";
 import * as O from "fp-ts/Option";
 import { fromPromise } from "xstate";
+
 import { useIOStore } from "../../../../store/hooks";
 import { assert } from "../../../../utils/assert";
+import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { Env } from "../../common/utils/environment";
 import * as credentialIssuanceUtils from "../../common/utils/itwCredentialIssuanceUtils";
+import { getIoWallet } from "../../common/utils/itwIoWallet";
+import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../common/utils/itwStoreUtils";
 import {
   CredentialAccessToken,
   CredentialBundle,
@@ -14,42 +18,39 @@ import {
 } from "../../common/utils/itwTypesUtils";
 import { itwCredentialsEidSelector } from "../../credentials/store/selectors";
 import { CredentialsVault } from "../../credentials/utils/vault";
+import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 import { itwWalletInstanceAttestationSelector } from "../../walletInstance/store/selectors";
 import { EidIssuanceMode } from "../eid/context";
-import { sessionTokenSelector } from "../../../authentication/common/store/selectors";
 import { createCommonActorsImplementation } from "../utils/actors";
-import { ensureIntegrityServiceIsStoreReadyOrThrow } from "../../common/utils/itwStoreUtils";
-import { getIoWallet } from "../../common/utils/itwIoWallet";
-import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
 
-export type RequestAccessTokenParams = {
-  pid: CredentialBundle | undefined;
-  walletInstanceAttestation: string | undefined;
-  credential: CredentialMetadata;
-  issuanceMode: EidIssuanceMode;
+export type LoadContextOutput = {
+  integrityKeyTag: string;
+  pid: CredentialBundle;
+  walletInstanceAttestation: WalletInstanceAttestations;
 };
 
 export type RequestAccessTokenOutput = {
   accessToken: CredentialAccessToken;
-  issuerConf: IssuerConfiguration;
   clientId: string;
+  issuerConf: IssuerConfiguration;
 };
 
-export type UpgradeCredentialParams = {
+export type RequestAccessTokenParams = {
   credential: CredentialMetadata;
-  integrityKeyTag: string | undefined;
-} & Partial<RequestAccessTokenOutput>;
+  issuanceMode: EidIssuanceMode;
+  pid: CredentialBundle | undefined;
+  walletInstanceAttestation: string | undefined;
+};
 
 export type UpgradeCredentialOutput = {
+  credentials: ReadonlyArray<CredentialBundle>;
   credentialType: string;
   walletUnitAttestations: Record<string, string>;
-  credentials: ReadonlyArray<CredentialBundle>;
 };
 
-export type LoadContextOutput = {
-  pid: CredentialBundle;
-  walletInstanceAttestation: WalletInstanceAttestations;
-  integrityKeyTag: string;
+export type UpgradeCredentialParams = Partial<RequestAccessTokenOutput> & {
+  credential: CredentialMetadata;
+  integrityKeyTag: string | undefined;
 };
 
 export const createCredentialUpgradeActorsImplementation = (

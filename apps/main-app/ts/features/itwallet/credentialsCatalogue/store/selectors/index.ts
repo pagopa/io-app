@@ -1,8 +1,11 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as O from "fp-ts/lib/Option";
-import { constTrue, pipe } from "fp-ts/lib/function";
 import { isAfter } from "date-fns";
+import { constTrue, pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import { createSelector } from "reselect";
+
+import { Locales } from "../../../../../i18n";
+import { persistedPreferencesSelector } from "../../../../../store/reducers/persistedPreferences";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
   DigitalCredentialMetadata,
@@ -14,14 +17,12 @@ import {
   newCredentials,
   upcomingCredentials
 } from "../../../common/utils/itwCredentialUtils";
-import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 import { CredentialType } from "../../../common/utils/itwMocksUtils";
-import { Locales } from "../../../../../i18n";
-import { persistedPreferencesSelector } from "../../../../../store/reducers/persistedPreferences";
+import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/selectors";
 
 export type CredentialsListEntry = {
-  type: string;
   name: string;
+  type: string;
 };
 
 const EMPTY_ARRAY: ReadonlyArray<CredentialsListEntry> = [];

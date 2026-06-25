@@ -3,6 +3,7 @@ import i18n from "i18next";
 import { useCallback, useEffect, useMemo } from "react";
 import { Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import { useIODispatch } from "../../../../store/hooks";
 import { isDefined } from "../../../../utils/guards";
 import {
@@ -23,23 +24,23 @@ import {
   ReadStatus,
   useCieInternalAuthAndMrtdReading
 } from "../hooks/useCieInternalAuthAndMrtdReading";
+import { useIsNfcFeatureAvailable } from "../hooks/useIsNfcFeatureAvailable";
 import { useSendAarFlowManager } from "../hooks/useSendAarFlowManager";
 import { useTrackCieReadingEvents } from "../hooks/useTrackCieReadingEvents";
 import { setAarFlowState } from "../store/actions";
 import { RecipientInfo, sendAarFlowStates } from "../utils/stateUtils";
-import { useIsNfcFeatureAvailable } from "../hooks/useIsNfcFeatureAvailable";
 import { useAarGenericErrorBottomSheet } from "./errors/hooks/useAarGenericErrorBottomSheet";
 import { SendAarZendeskSecondLevelTag } from "./errors/hooks/useAarStartSendZendeskSupport";
 
-type ScreenContentProps = Omit<CieCardReadContentProps, "progress">;
-
 export type SendAarCieCardReadingComponentProps = {
+  can: string;
   iun: string;
   mandateId: string;
   recipientInfo: RecipientInfo;
-  can: string;
   verificationCode: string;
 };
+
+type ScreenContentProps = Omit<CieCardReadContentProps, "progress">;
 
 export const SendAarCieCardReadingComponent = ({
   can,
@@ -270,8 +271,8 @@ export const SendAarCieCardReadingComponent = ({
       ]}
     >
       <CieCardReadContent
-        progress={progress}
         hiddenProgressBar={isError}
+        progress={progress}
         {...contentMap[readState.status]}
       />
       {bottomSheet}

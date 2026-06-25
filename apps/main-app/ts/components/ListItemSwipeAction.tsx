@@ -8,7 +8,7 @@ import {
   useIOThemeContext
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import { ReactNode, RefObject, memo, useCallback, useMemo } from "react";
+import { memo, ReactNode, RefObject, useCallback, useMemo } from "react";
 import { StyleSheet, useWindowDimensions } from "react-native";
 import {
   Gesture,
@@ -51,11 +51,11 @@ const styles = StyleSheet.create({
 });
 
 // Props for the right action icon
-type RightActionsProps = {
-  onRightActionPressed: () => void;
+type RightActionsProps = Pick<IconButton, "color" | "icon"> & {
   accessibilityLabel: string;
+  onRightActionPressed: () => void;
   translateX: SharedValue<number>;
-} & Pick<IconButton, "color" | "icon">;
+};
 
 const RightActions = memo(
   ({
@@ -80,8 +80,8 @@ const RightActions = memo(
         <Animated.View style={animatedIconStyle}>
           <IconButton
             accessibilityLabel={accessibilityLabel}
-            icon={icon}
             color={color}
+            icon={icon}
             onPress={onRightActionPressed}
           />
         </Animated.View>
@@ -97,10 +97,10 @@ export type SwipeControls = {
 
 // Props for the swipeable list item
 type ListItemSwipeActionProps = {
-  children: ReactNode;
-  icon: IconButton["icon"];
-  color: IconButton["color"];
   accessibilityLabel?: string;
+  children: ReactNode;
+  color: IconButton["color"];
+  icon: IconButton["icon"];
   onRightActionPressed: (controls: SwipeControls) => void;
   openedItemRef?: RefObject<(() => void) | null>;
 };
@@ -246,11 +246,11 @@ const ListItemSwipeAction = ({
           style={[StyleSheet.absoluteFillObject, backgroundStyle]}
         />
         <RightActions
-          icon={icon}
-          color={color}
-          translateX={translateX}
-          onRightActionPressed={handleRightActionPressed}
           accessibilityLabel={accessibilityLabel}
+          color={color}
+          icon={icon}
+          onRightActionPressed={handleRightActionPressed}
+          translateX={translateX}
         />
         <GestureDetector gesture={panGesture}>
           <Animated.View style={[swipeableContentStyle, animatedStyle]}>

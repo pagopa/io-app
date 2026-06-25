@@ -1,14 +1,15 @@
+import { CheckboxLabel } from "@pagopa/io-app-design-system";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { CheckboxLabel } from "@pagopa/io-app-design-system";
+
 import { QtspClause } from "../../../../definitions/fci/QtspClause";
-import { fciQtspFilledDocumentUrlSelector } from "../store/reducers/fciQtspFilledDocument";
 import { useIOSelector } from "../../../store/hooks";
+import { fciQtspFilledDocumentUrlSelector } from "../store/reducers/fciQtspFilledDocument";
 import LinkedText from "./LinkedText";
 
 type Props = {
-  clause: QtspClause;
   checked?: boolean;
+  clause: QtspClause;
   onChange: (_: boolean) => void;
   onLinkPress: (url: string) => void;
 };
@@ -37,14 +38,14 @@ const QtspClauseListItem = (props: Props) => {
     <View style={styles.container} testID="QtspClauseListItemContainerTestID">
       <View style={{ flex: 1 }} testID="QtspClauseLinkedTextTestID">
         <LinkedText
-          text={props.clause.text}
-          replacementUrl={qtspFilledDocumentUrl}
           onPress={onPressLinkedText}
+          replacementUrl={qtspFilledDocumentUrl}
+          text={props.clause.text}
         />
       </View>
       <CheckboxLabel
-        label=""
         checked={checked}
+        label=""
         onValueChange={() => {
           onChange(!checked);
           setChecked(!checked);

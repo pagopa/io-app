@@ -1,5 +1,6 @@
 import * as O from "fp-ts/lib/Option";
 import DeviceInfo from "react-native-device-info";
+
 import { BackendStatus } from "../../../../definitions/content/BackendStatus";
 import { isPropertyWithMinAppVersionEnabled } from "../featureFlagWithMinAppVersionStatus";
 

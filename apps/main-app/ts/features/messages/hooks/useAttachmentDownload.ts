@@ -2,8 +2,9 @@ import { useIOToast } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
 import { useCallback, useEffect } from "react";
 import RNFS from "react-native-fs";
-import { ServiceId } from "../../../../definitions/services/ServiceId";
+
 import { ThirdPartyAttachment } from "../../../../definitions/communication/ThirdPartyAttachment";
+import { ServiceId } from "../../../../definitions/services/ServiceId";
 import NavigationService from "../../../navigation/NavigationService";
 import { useIODispatch, useIOSelector, useIOStore } from "../../../store/hooks";
 import { isAarAttachmentTtlError } from "../../pn/aar/utils/aarErrorMappings";

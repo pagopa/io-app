@@ -1,12 +1,13 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import { type GlobalState } from "../../../../../../store/reducers/types";
-import { type DigitalCredentialsCatalogue } from "../../../../common/utils/itwCredentialsCatalogueUtils";
+
 import {
   itwAvailableCredentialsListSelector,
   itwCatalogueTranslationsByLocaleSelector,
   itwCredentialsCatalogueByTypesSelector,
   itwCredentialsCatalogueSelector
 } from "..";
+import { type GlobalState } from "../../../../../../store/reducers/types";
+import { type DigitalCredentialsCatalogue } from "../../../../common/utils/itwCredentialsCatalogueUtils";
 
 const mockCatalogue = {
   taxonomy_uri: "",
@@ -29,10 +30,10 @@ const mockCatalogue = {
 
 const buildState = (
   overrides: Partial<{
-    isEnabledForCredentialsList: boolean;
     catalogue: pot.Pot<DigitalCredentialsCatalogue, unknown>;
-    translations: pot.Pot<Record<string, Record<string, string>>, unknown>;
+    isEnabledForCredentialsList: boolean;
     preferredLanguage: string;
+    translations: pot.Pot<Record<string, Record<string, string>>, unknown>;
   }> = {}
 ) =>
   ({

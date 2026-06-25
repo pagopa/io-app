@@ -14,7 +14,7 @@ import { TextInput } from "react-native";
  * @param canAutoFocus - Optional flag to enable or disable autofocus (default: true)
  */
 const useInputFocus = (
-  inputRef: RefObject<TextInput | TextInputValidationRefProps | null>,
+  inputRef: RefObject<null | TextInput | TextInputValidationRefProps>,
   delayMs: number = 500,
   canAutoFocus: boolean = true
 ) => {

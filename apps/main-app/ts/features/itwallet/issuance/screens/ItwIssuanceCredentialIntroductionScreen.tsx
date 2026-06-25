@@ -5,31 +5,32 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
-import I18n from "i18next";
+import { sequenceS } from "fp-ts/lib/Apply";
 import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
-import { sequenceS } from "fp-ts/lib/Apply";
+import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { Image, StyleSheet, View } from "react-native";
+
+import introHeroSource from "../../../../../img/features/itWallet/issuance/intro_hero.png";
+import IOMarkdown from "../../../../components/IOMarkdown";
+import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { useIOSelector } from "../../../../store/hooks";
+import { getMixPanelCredential } from "../../analytics/utils";
+import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
+import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
+import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
+import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
+import {
+  selectCredentialIntroContentOption,
+  selectCredentialTypeOption,
+  selectIsLoading
+} from "../../machine/credential/selectors";
 import {
   trackItwCredentialIntro,
   trackItwCredentialStartIssuing
 } from "../analytics";
-import { getMixPanelCredential } from "../../analytics/utils";
-import { itwLifecycleIsITWalletValidSelector } from "../../lifecycle/store/selectors";
-import { ItwCredentialIssuanceMachineContext } from "../../machine/credential/provider";
-import IOMarkdown from "../../../../components/IOMarkdown";
-import { IOScrollView } from "../../../../components/ui/IOScrollView";
-import {
-  selectCredentialTypeOption,
-  selectCredentialIntroContentOption,
-  selectIsLoading
-} from "../../machine/credential/selectors";
-import { ItwGenericErrorContent } from "../../common/components/ItwGenericErrorContent";
-import { useItwCredentialName } from "../../common/hooks/useItwCredentialName";
-import introHeroSource from "../../../../../img/features/itWallet/issuance/intro_hero.png";
 
 const introHeroUri = Image.resolveAssetSource(introHeroSource).uri;
 
@@ -92,7 +93,6 @@ export const ContentView = ({
 
   return (
     <IOScrollView
-      includeContentMargins={false}
       actions={{
         type: "SingleButton",
         primary: {
@@ -101,6 +101,7 @@ export const ContentView = ({
           loading: isLoading
         }
       }}
+      includeContentMargins={false}
     >
       <Image
         accessibilityIgnoresInvertColors

@@ -1,45 +1,46 @@
-import { testSaga, expectSaga } from "redux-saga-test-plan";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
-import * as matchers from "redux-saga-test-plan/matchers";
 import { CommonActions, StackActions } from "@react-navigation/native";
+import { expectSaga, testSaga } from "redux-saga-test-plan";
+import * as matchers from "redux-saga-test-plan/matchers";
+
 import NavigationService from "../../../../navigation/NavigationService";
-import { FCI_ROUTES } from "../../navigation/routes";
 import ROUTES from "../../../../navigation/routes";
+import { setActiveSessionLoginFlow } from "../../../authentication/activeSessionLogin/store/actions";
+import { activeSessionLoginFlowSelector } from "../../../authentication/activeSessionLogin/store/selectors";
+import { spidLevelFromSessionInfoSelector } from "../../../authentication/common/store/selectors";
 import { identificationSuccess } from "../../../identification/store/actions";
+import { FCI_ROUTES } from "../../navigation/routes";
 import {
+  fciClearAllFiles,
   fciClearStateRequest,
-  fciStartRequest,
-  fciLoadQtspClauses,
-  fciLoadQtspFilledDocument,
-  fciSignatureRequestFromId,
-  fciSignatureRequestRetryFromId,
   fciDownloadPreview,
   fciDownloadPreviewClear,
-  fciClearAllFiles,
-  fciMetadataRequest
+  fciLoadQtspClauses,
+  fciLoadQtspFilledDocument,
+  fciMetadataRequest,
+  fciSignatureRequestFromId,
+  fciSignatureRequestRetryFromId,
+  fciStartRequest
 } from "../../store/actions";
+import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
 import {
   fciQtspClausesMetadataSelector,
   fciQtspNonceSelector
 } from "../../store/reducers/fciQtspClauses";
-import {
-  fciSignatureRequestSelector,
-  fciSignatureRequestIdSelector
-} from "../../store/reducers/fciSignatureRequest";
 import { fciQtspFilledDocumentUrlSelector } from "../../store/reducers/fciQtspFilledDocument";
-import { fciDocumentSignaturesSelector } from "../../store/reducers/fciDocumentSignatures";
-import { spidLevelFromSessionInfoSelector } from "../../../authentication/common/store/selectors";
 import { isFciSecurityLevelCheckEnabledSelector } from "../../store/reducers/fciSecurityLevelReducer";
-import { FciDownloadPreviewDirectoryPath } from "../networking/handleDownloadDocument";
+import {
+  fciSignatureRequestIdSelector,
+  fciSignatureRequestSelector
+} from "../../store/reducers/fciSignatureRequest";
 import { mockQtspClausesMetadata } from "../../types/__mocks__/QtspClausesMetadata.mock";
 import { mockSignatureRequestDetailView } from "../../types/__mocks__/SignatureRequestDetailView.mock";
 import {
-  testable,
-  navigateAfterFinishedFciActiveSessionLoginFlowSaga
+  navigateAfterFinishedFciActiveSessionLoginFlowSaga,
+  testable
 } from "../index";
-import { activeSessionLoginFlowSelector } from "../../../authentication/activeSessionLogin/store/selectors";
-import { setActiveSessionLoginFlow } from "../../../authentication/activeSessionLogin/store/actions";
+import { FciDownloadPreviewDirectoryPath } from "../networking/handleDownloadDocument";
 
 // Mock react-native-fs
 jest.mock("react-native-fs", () => ({

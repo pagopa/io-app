@@ -5,6 +5,7 @@ import {
   VStack
 } from "@pagopa/io-app-design-system";
 import { StyleSheet, View } from "react-native";
+
 import { withWalletCardBaseComponent } from "./WalletCardBaseComponent";
 
 const WalletCardSkeleton = withWalletCardBaseComponent(() => {
@@ -22,33 +23,33 @@ const WalletCardSkeleton = withWalletCardBaseComponent(() => {
         <View style={styleSheet.paymentInfo}>
           <IOSkeleton
             color={skeletonColor}
-            shape="rectangle"
-            width={"60%"}
             height={24}
             radius={28}
+            shape="rectangle"
+            width={"60%"}
           />
           <IOSkeleton
             color={skeletonColor}
-            shape="rectangle"
-            width={"20%"}
             height={24}
             radius={28}
+            shape="rectangle"
+            width={"20%"}
           />
         </View>
         <VStack space={8}>
           <IOSkeleton
             color={skeletonColor}
-            shape="rectangle"
-            width={"55%"}
             height={18}
             radius={28}
+            shape="rectangle"
+            width={"55%"}
           />
           <IOSkeleton
             color={skeletonColor}
-            shape="rectangle"
-            width={"45%"}
             height={18}
             radius={28}
+            shape="rectangle"
+            width={"45%"}
           />
         </VStack>
       </View>

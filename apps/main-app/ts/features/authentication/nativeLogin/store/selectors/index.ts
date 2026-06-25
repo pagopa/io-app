@@ -1,6 +1,7 @@
 import { createSelector } from "reselect";
-import { remoteConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
+
 import { nativeLoginEnabled } from "../../../../../config";
+import { remoteConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { isPropertyWithMinAppVersionEnabled } from "../../../../../store/reducers/featureFlagWithMinAppVersionStatus";
 
 /**

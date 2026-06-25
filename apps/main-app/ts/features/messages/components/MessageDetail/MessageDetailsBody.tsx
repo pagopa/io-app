@@ -4,6 +4,7 @@ import I18n from "i18next";
 import { useMemo, useState } from "react";
 import { ScrollView } from "react-native";
 import Animated, { FadeInUp } from "react-native-reanimated";
+
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import IOMarkdown from "../../../../components/IOMarkdown";
 import { useIOSelector } from "../../../../store/hooks";
@@ -17,8 +18,8 @@ import { MessageMarkdown } from "./MessageMarkdown";
 
 export type MessageDetailsBodyProps = {
   messageMarkdown: string;
+  scrollViewRef: React.RefObject<null | ScrollView>;
   serviceId: ServiceId;
-  scrollViewRef: React.RefObject<ScrollView | null>;
 };
 
 export const MessageDetailsBody = ({
@@ -39,17 +40,17 @@ export const MessageDetailsBody = ({
     return (
       <>
         <Alert
-          variant="warning"
-          content={I18n.t("messageDetails.markdown.decodingErrorContent")}
           action={I18n.t(
             `messageDetails.markdown.${
               showRawContent ? "decodingErrorHide" : "decodingErrorShow"
             }`
           )}
+          content={I18n.t("messageDetails.markdown.decodingErrorContent")}
           onPress={() =>
             setShowRawContent(innerShowRawContent => !innerShowRawContent)
           }
           testID="markdown-decoding-error-alert"
+          variant="warning"
         />
         {showRawContent && (
           <Animated.View entering={FadeInUp}>
@@ -63,7 +64,6 @@ export const MessageDetailsBody = ({
   return useIOMarkdown ? (
     <IOMarkdown
       content={markdownWithNoCta}
-      rules={generateMessagesAndServicesRules(linkTo)}
       onError={(error, _stack) => {
         const errorString = unknownToString(error);
         trackAppCaughtError(
@@ -72,6 +72,7 @@ export const MessageDetailsBody = ({
           errorString
         );
       }}
+      rules={generateMessagesAndServicesRules(linkTo)}
     />
   ) : (
     <MessageMarkdown

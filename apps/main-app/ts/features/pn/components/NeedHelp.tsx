@@ -1,4 +1,3 @@
-import { View } from "react-native";
 import {
   Body,
   IOButton,
@@ -6,9 +5,11 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
-import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
+import { View } from "react-native";
+
 import { useIOSelector } from "../../../store/hooks";
 import { sendCustomServiceCenterUrlSelector } from "../../../store/reducers/backendStatus/remoteConfig";
+import { useIOBottomSheetModal } from "../../../utils/hooks/bottomSheet";
 import { openWebUrl } from "../../../utils/url";
 
 export const NeedHelp = () => {
@@ -27,8 +28,8 @@ export const NeedHelp = () => {
           icon="website"
           label={I18n.t("features.pn.details.help.bottomSheet.action")}
           onPress={openCustomerServiceCenterUrl}
-          variant="link"
           testID="needHelp-bottomsheet-action"
+          variant="link"
         />
         <VSpacer size={32} />
       </View>
@@ -42,8 +43,8 @@ export const NeedHelp = () => {
         icon="message"
         label={I18n.t("features.pn.details.help.needHelp")}
         onPress={present}
-        variant="primary"
         testID="needHelp-listitem"
+        variant="primary"
       />
       {bottomSheet}
     </>

@@ -1,4 +1,12 @@
 import {
+  Body,
+  H6,
+  IOButton,
+  IOVisualCostants,
+  Pictogram,
+  VSpacer
+} from "@pagopa/io-app-design-system";
+import {
   LoginUtilsError,
   Error as LoginUtilsErrorType,
   openAuthenticationSession
@@ -9,24 +17,16 @@ import { pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as T from "fp-ts/lib/Task";
 import * as TE from "fp-ts/lib/TaskEither";
+import I18n from "i18next";
 import { useCallback, useEffect, useMemo } from "react";
 import { AppState, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import I18n from "i18next";
-import {
-  Body,
-  H6,
-  IOButton,
-  IOVisualCostants,
-  Pictogram,
-  VSpacer
-} from "@pagopa/io-app-design-system";
-import { mixpanelTrack } from "../../../../../mixpanel";
 
 import { IdpData } from "../../../../../../definitions/content/IdpData";
 import LoadingSpinnerOverlay from "../../../../../components/LoadingSpinnerOverlay";
 import { useHardwareBackButton } from "../../../../../hooks/useHardwareBackButton";
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
+import { mixpanelTrack } from "../../../../../mixpanel";
 import NavigationService from "../../../../../navigation/NavigationService";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import {
@@ -44,6 +44,11 @@ import {
 } from "../../../../../utils/supportAssistance";
 import { ephemeralKeyTagSelector } from "../../../../lollipop/store/reducers/lollipop";
 import { regenerateKeyGetRedirectsAndVerifySaml } from "../../../../lollipop/utils/login";
+import {
+  isActiveSessionFastLoginEnabledSelector,
+  isActiveSessionLoginSelector,
+  remoteApiLoginUrlPrefixSelector
+} from "../../../activeSessionLogin/store/selectors";
 import { IdpSuccessfulAuthentication } from "../../../common/components/IdpSuccessfulAuthentication";
 import { AUTHENTICATION_ROUTES } from "../../../common/navigation/routes";
 import {
@@ -61,11 +66,6 @@ import { isFastLoginEnabledSelector } from "../../../fastLogin/store/selectors";
 import { setNativeLoginRequestInfo } from "../store/actions";
 import { nativeLoginRequestInfoSelector } from "../store/selectors";
 import { getSpidErrorCodeDescription } from "../utils/spidErrorCode";
-import {
-  isActiveSessionFastLoginEnabledSelector,
-  isActiveSessionLoginSelector,
-  remoteApiLoginUrlPrefixSelector
-} from "../../../activeSessionLogin/store/selectors";
 
 const styles = StyleSheet.create({
   errorContainer: {
@@ -89,19 +89,19 @@ export enum ErrorType {
   "LOGIN_ERROR" = "LOGIN_ERROR"
 }
 
-type RequestInfoPositiveStates = {
-  requestState: "LOADING" | "AUTHORIZED" | "AUTHORIZING";
-  nativeAttempts: number;
-};
+type RequestInfo = RequestInfoError | RequestInfoPositiveStates;
 
 type RequestInfoError = {
-  requestState: "ERROR";
-  errorType: ErrorType;
   errorCodeOrMessage?: string;
+  errorType: ErrorType;
   nativeAttempts: number;
+  requestState: "ERROR";
 };
 
-type RequestInfo = RequestInfoPositiveStates | RequestInfoError;
+type RequestInfoPositiveStates = {
+  nativeAttempts: number;
+  requestState: "AUTHORIZED" | "AUTHORIZING" | "LOADING";
+};
 
 const isBackButtonEnabled = (requestInfo: RequestInfo): boolean =>
   requestInfo.requestState === "AUTHORIZING" ||
@@ -406,11 +406,11 @@ export const AuthSessionPage = () => {
             </View>
             <View style={styles.buttonContainer}>
               <IOButton
-                fullWidth
-                variant="solid"
-                label={I18n.t("spid.pending_login.button")}
                 accessibilityLabel={I18n.t("spid.pending_login.button")}
+                fullWidth
+                label={I18n.t("spid.pending_login.button")}
                 onPress={onBack}
+                variant="solid"
               />
             </View>
           </SafeAreaView>

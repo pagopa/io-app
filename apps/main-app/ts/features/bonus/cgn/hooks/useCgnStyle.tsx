@@ -7,16 +7,6 @@ import {
 import { ColorValue } from "react-native";
 
 type CgnStyleProps = {
-  module: {
-    default: {
-      borderColor: ColorValue;
-      backgroundColor: ColorValue;
-    };
-    new: {
-      borderColor: ColorValue;
-      backgroundColor: ColorValue;
-    };
-  };
   header: {
     // It should be `ColorValue`, but we need to adapt the `useHeaderSecondLevel` hook first
     default: {
@@ -26,6 +16,16 @@ type CgnStyleProps = {
     new: {
       backgroundColor: string;
       foreground: IOColors;
+    };
+  };
+  module: {
+    default: {
+      backgroundColor: ColorValue;
+      borderColor: ColorValue;
+    };
+    new: {
+      backgroundColor: ColorValue;
+      borderColor: ColorValue;
     };
   };
 };

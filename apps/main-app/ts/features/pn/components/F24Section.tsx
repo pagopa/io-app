@@ -1,10 +1,11 @@
 import { Body, ListItemHeader, VSpacer } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
+
+import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { useIOSelector } from "../../../store/hooks";
+import { MessageDetailsAttachmentItem } from "../../messages/components/MessageDetail/MessageDetailsAttachmentItem";
 import { thirdPartyMessageAttachments } from "../../messages/store/reducers/thirdPartyById";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
-import { MessageDetailsAttachmentItem } from "../../messages/components/MessageDetail/MessageDetailsAttachmentItem";
-import { ServiceId } from "../../../../definitions/services/ServiceId";
 import {
   SendOpeningSource,
   SendUserType
@@ -14,9 +15,9 @@ import { F24ListBottomSheetLink } from "./F24ListBottomSheetLink";
 export type F24SectionProps = {
   isCancelled?: boolean;
   messageId: string;
-  serviceId: ServiceId;
   sendOpeningSource: SendOpeningSource;
   sendUserType: SendUserType;
+  serviceId: ServiceId;
 };
 
 export const F24Section = ({
@@ -40,8 +41,8 @@ export const F24Section = ({
   return (
     <>
       <ListItemHeader
-        label={I18n.t("features.pn.details.f24Section.title")}
         iconName={"folder"}
+        label={I18n.t("features.pn.details.f24Section.title")}
       />
       <Body>{I18n.t("features.pn.details.f24Section.description")}</Body>
       <VSpacer size={24} />
@@ -49,18 +50,18 @@ export const F24Section = ({
         <MessageDetailsAttachmentItem
           attachment={f24s[0]}
           messageId={messageId}
-          serviceId={serviceId}
           sendOpeningSource={sendOpeningSource}
           sendUserType={sendUserType}
+          serviceId={serviceId}
         />
       )}
       {f24Count > 1 && (
         <F24ListBottomSheetLink
           f24List={f24s}
           messageId={messageId}
-          serviceId={serviceId}
           sendOpeningSource={sendOpeningSource}
           sendUserType={sendUserType}
+          serviceId={serviceId}
         />
       )}
       <VSpacer size={16} />

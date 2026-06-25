@@ -39,8 +39,8 @@ const OutcomeCodes = {
 
 const OutcomeCodesCodec = t.type(OutcomeCodes);
 
-export type OutcomeStatus = t.TypeOf<typeof Status>;
 export type OutcomeCode = t.TypeOf<typeof OutcomeCode>;
 export type OutcomeCodes = t.TypeOf<typeof OutcomeCodesCodec>;
+export type OutcomeStatus = t.TypeOf<typeof Status>;
 export const OutcomeCodesKey = t.keyof(OutcomeCodes);
 export type OutcomeCodesKey = t.TypeOf<typeof OutcomeCodesKey>;

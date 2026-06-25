@@ -1,8 +1,9 @@
-import { getType } from "typesafe-actions";
 import { createSelector } from "reselect";
+import { getType } from "typesafe-actions";
+
 import { Action } from "../../../../store/actions/types";
-import { fciL3LocalFlag } from "../actions";
 import { GlobalState } from "../../../../store/reducers/types";
+import { fciL3LocalFlag } from "../actions";
 import { isFciSecurityLevelCheckRemoteFFEnabledSelector } from "../selectors/remoteConfig";
 
 export type FciSecurityLevelStateType = {

@@ -1,20 +1,21 @@
 import { deleteKey } from "@pagopa/io-react-native-crypto";
+import { identity, pipe } from "fp-ts/lib/function";
 import * as O from "fp-ts/lib/Option";
 import * as RA from "fp-ts/lib/ReadonlyArray";
-import { identity, pipe } from "fp-ts/lib/function";
 import { all, call, put, select } from "typed-redux-saga/macro";
+
 import { isIos } from "../../../../utils/platform";
 import { walletRemoveCardsByCategory } from "../../../wallet/store/actions/cards";
-import { itwSetWalletInstanceRemotelyActive } from "../../walletInstance/store/actions";
-import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
-import { CredentialsVault } from "../../credentials/utils/vault";
-import {
-  itwCredentialsSelector,
-  itwCredentialsEidSelector
-} from "../../credentials/store/selectors";
-import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
-import { itwLifecycleStoresReset } from "../store/actions";
 import { updatePropertiesWalletRevoked } from "../../analytics/properties/propertyUpdaters.ts";
+import { CredentialMetadata } from "../../common/utils/itwTypesUtils";
+import {
+  itwCredentialsEidSelector,
+  itwCredentialsSelector
+} from "../../credentials/store/selectors";
+import { CredentialsVault } from "../../credentials/utils/vault";
+import { itwIntegrityKeyTagSelector } from "../../issuance/store/selectors";
+import { itwSetWalletInstanceRemotelyActive } from "../../walletInstance/store/actions";
+import { itwLifecycleStoresReset } from "../store/actions";
 
 const getKeyTag = (credential: O.Option<CredentialMetadata>) =>
   pipe(

@@ -5,9 +5,10 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as B from "fp-ts/lib/boolean";
 import { pipe } from "fp-ts/lib/function";
+import I18n from "i18next";
 import { useCallback, useState } from "react";
 import ReactNativeBlobUtil from "react-native-blob-util";
-import I18n from "i18next";
+
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import { OperationResultScreenContent } from "../../../../components/screens/OperationResultScreenContent";
 import { useIOSelector } from "../../../../store/hooks";
@@ -64,17 +65,6 @@ const MessageAttachmentFooter = ({
     />
   ) : (
     <FooterActionsInline
-      startAction={{
-        color: "primary",
-        label: I18n.t("messagePDFPreview.share"),
-        accessibilityLabel: I18n.t("messagePDFPreview.shareAccessibility"),
-        onPress: () => {
-          onShare(isPN, attachmentCategory);
-          share(`file://${downloadPath}`, undefined, false)().catch(_ => {
-            IOToast.show(I18n.t("messagePDFPreview.errors.sharing"));
-          });
-        }
-      }}
       endAction={{
         color: "primary",
         label: I18n.t("messagePDFPreview.save"),
@@ -100,6 +90,17 @@ const MessageAttachmentFooter = ({
             .catch(_ => {
               IOToast.error(I18n.t("messagePDFPreview.errors.saving"));
             });
+        }
+      }}
+      startAction={{
+        color: "primary",
+        label: I18n.t("messagePDFPreview.share"),
+        accessibilityLabel: I18n.t("messagePDFPreview.shareAccessibility"),
+        onPress: () => {
+          onShare(isPN, attachmentCategory);
+          share(`file://${downloadPath}`, undefined, false)().catch(_ => {
+            IOToast.show(I18n.t("messagePDFPreview.errors.sharing"));
+          });
         }
       }}
     />
@@ -157,9 +158,9 @@ const onDownload = (isPN: boolean, attachmentCategory?: string) =>
   );
 
 export type MessageAttachmentProps = {
-  messageId: string;
   attachmentId: string;
   isPN: boolean;
+  messageId: string;
   serviceId?: ServiceId;
 };
 
@@ -187,8 +188,8 @@ export const MessageAttachment = ({
     return (
       <OperationResultScreenContent
         pictogram={"umbrella"}
-        title={I18n.t("global.genericError")}
         subtitle={I18n.t("messageDetails.submitBugText")}
+        title={I18n.t("global.genericError")}
       />
     );
   }
@@ -201,8 +202,8 @@ export const MessageAttachment = ({
       {isPDFRenderingError ? (
         <OperationResultScreenContent
           pictogram={"umbrella"}
-          title={I18n.t("messagePDFPreview.errors.previewing.title")}
           subtitle={I18n.t("messagePDFPreview.errors.previewing.body")}
+          title={I18n.t("messagePDFPreview.errors.previewing.title")}
         />
       ) : (
         <PdfViewer

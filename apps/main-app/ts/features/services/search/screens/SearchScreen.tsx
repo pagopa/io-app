@@ -1,12 +1,3 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Platform, ViewStyle } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
-import {
-  FlashList,
-  ListRenderItemInfo,
-  useRecyclingState
-} from "@shopify/flash-list";
 import {
   AvatarSearchProps,
   ContentWrapper,
@@ -18,28 +9,38 @@ import {
   SearchInput,
   SearchInputRef
 } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
+import {
+  FlashList,
+  ListRenderItemInfo,
+  useRecyclingState
+} from "@shopify/flash-list";
 import I18n from "i18next";
-import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Platform, ViewStyle } from "react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 import { Institution } from "../../../../../definitions/services/Institution";
-import { searchPaginatedInstitutionsGet } from "../store/actions";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch } from "../../../../store/hooks";
-import { getLogoForInstitution } from "../../common/utils";
-import { SERVICES_ROUTES } from "../../common/navigation/routes";
+import { getListItemAccessibilityLabelCount } from "../../../../utils/accessibility";
+import * as analytics from "../../common/analytics";
 import { EmptyState } from "../../common/components/EmptyState";
 import { ListItemSearchInstitution } from "../../common/components/ListItemSearchInstitution";
 import { ServiceListSkeleton } from "../../common/components/ServiceListSkeleton";
-import { getListItemAccessibilityLabelCount } from "../../../../utils/accessibility";
-import * as analytics from "../../common/analytics";
+import { SERVICES_ROUTES } from "../../common/navigation/routes";
+import { getLogoForInstitution } from "../../common/utils";
+import { useInstitutionsFetcher } from "../hooks/useInstitutionsFetcher";
+import { searchPaginatedInstitutionsGet } from "../store/actions";
 
 const INPUT_PADDING: IOSpacingScale = 16;
 const MIN_QUERY_LENGTH: number = 3;
 
 type InstitutionListItemComponentProps = {
-  item: Institution;
   index: number;
-  totalCount: number;
+  item: Institution;
   onPress: (institution: Institution) => void;
+  totalCount: number;
 };
 
 const InstitutionListItemComponent = ({
@@ -184,8 +185,8 @@ export const SearchScreen = () => {
       return (
         <EmptyState
           pictogram="umbrella"
-          title={I18n.t("services.search.emptyState.noResults.title")}
           subtitle={I18n.t("services.search.emptyState.noResults.subtitle")}
+          title={I18n.t("services.search.emptyState.noResults.title")}
         />
       );
     }
@@ -201,7 +202,6 @@ export const SearchScreen = () => {
     if ((data?.count ?? 0) > 0) {
       return (
         <ListItemHeader
-          label={I18n.t("services.search.list.header.title")}
           endElement={{
             type: "badge",
             componentProps: {
@@ -209,6 +209,7 @@ export const SearchScreen = () => {
               variant: "default"
             }
           }}
+          label={I18n.t("services.search.list.header.title")}
         />
       );
     }
@@ -233,22 +234,22 @@ export const SearchScreen = () => {
         />
       </ContentWrapper>
       <FlashList
-        ItemSeparatorComponent={Divider}
-        ListEmptyComponent={ListEmptyComponent}
-        ListFooterComponent={ListFooterComponent}
-        ListHeaderComponent={ListHeaderComponent}
         contentContainerStyle={{
           flexGrow: 1,
           paddingBottom: insets.bottom,
           paddingHorizontal: IOVisualCostants.appMarginDefault
         }}
         data={data?.institutions}
+        ItemSeparatorComponent={Divider}
         keyboardDismissMode={Platform.select({
           ios: "interactive",
           default: "on-drag"
         })}
         keyboardShouldPersistTaps="handled"
         keyExtractor={(item, index) => `institution-${item.id}-${index}`}
+        ListEmptyComponent={ListEmptyComponent}
+        ListFooterComponent={ListFooterComponent}
+        ListHeaderComponent={ListHeaderComponent}
         onEndReached={handleEndReached}
         onEndReachedThreshold={0.5}
         renderItem={renderItem}

@@ -1,68 +1,49 @@
-// watch for all actions regarding Zendesk
-import { takeLatest, select, call, put } from "typed-redux-saga/macro";
+import { readableReport } from "@pagopa/ts-commons/lib/reporters";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import * as E from "fp-ts/lib/Either";
 import * as O from "fp-ts/lib/Option";
-import { readableReport } from "@pagopa/ts-commons/lib/reporters";
+// watch for all actions regarding Zendesk
+import { call, put, select, takeLatest } from "typed-redux-saga/macro";
+
+import { ContentClient } from "../../../api/content";
+import { SessionManagerClient } from "../../../api/SessionManagerClientManager";
+import { checkSession } from "../../../features/authentication/common/saga/watchCheckSessionSaga";
+import { SagaCallReturnType } from "../../../types/utils";
+import { dismissSupport } from "../../../utils/supportAssistance";
+import { startTimer } from "../../../utils/timer";
+import { sessionInformationLoadSuccess } from "../../authentication/common/store/actions";
+import { sessionInfoSelector } from "../../authentication/common/store/selectors";
+import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
+import { isFastLoginEnabledSelector } from "../../authentication/fastLogin/store/selectors";
+import { identificationRequest } from "../../identification/store/actions";
 import {
   getZendeskConfig,
+  getZendeskPaymentConfig,
+  getZendeskToken,
   zendeskPollingIteration,
   zendeskRequestTicketNumber,
   zendeskStartPolling,
   zendeskSupportCompleted,
-  zendeskSupportStart,
-  getZendeskToken,
-  getZendeskPaymentConfig
+  zendeskSupportStart
 } from "../store/actions";
-import { ContentClient } from "../../../api/content";
-import { dismissSupport } from "../../../utils/supportAssistance";
-import { identificationRequest } from "../../identification/store/actions";
 import { zendeskGetSessionPollingRunningSelector } from "../store/reducers";
-import { startTimer } from "../../../utils/timer";
-import { checkSession } from "../../../features/authentication/common/saga/watchCheckSessionSaga";
-import { isFastLoginEnabledSelector } from "../../authentication/fastLogin/store/selectors";
-import { SessionManagerClient } from "../../../api/SessionManagerClientManager";
-import { SagaCallReturnType } from "../../../types/utils";
 import {
   formatRequestedTokenString,
   getOnlyNotAlreadyExistentValues
 } from "../utils";
-import { withRefreshApiCall } from "../../authentication/fastLogin/saga/utils";
-import { sessionInformationLoadSuccess } from "../../authentication/common/store/actions";
-import { sessionInfoSelector } from "../../authentication/common/store/selectors";
 import { isDevEnv } from "./../../../utils/environment";
-import { zendeskSupport } from "./orchestration";
 import { handleGetZendeskConfig } from "./networking/handleGetZendeskConfig";
-import { handleHasOpenedTickets } from "./networking/handleHasOpenedTickets";
 import { handleGetZendeskPaymentConfig } from "./networking/handleGetZendeskPaymentConfig";
+import { handleHasOpenedTickets } from "./networking/handleHasOpenedTickets";
+import { zendeskSupport } from "./orchestration";
 
 const ZENDESK_GET_SESSION_POLLING_INTERVAL = ((isDevEnv ? 10 : 60) *
   1000) as Millisecond;
 
-function* zendeskGetSessionPollingLoop(
+export function* watchGetZendeskTokenSaga(
   getSession: SessionManagerClient["getSessionState"]
 ) {
-  // eslint-disable-next-line functional/no-let
-  let zendeskPollingIsRunning = true;
-  yield* put(zendeskStartPolling());
-  while (zendeskPollingIsRunning) {
-    yield* put(zendeskPollingIteration());
-    // We start waiting to avoid action dispatching sync issues
-    yield* call(startTimer, ZENDESK_GET_SESSION_POLLING_INTERVAL);
-    // check if the current session is still valid
-    const checkSessionResponse = yield* call(
-      checkSession,
-      getSession,
-      formatRequestedTokenString(),
-      true
-    );
-    if (checkSessionResponse === 401) {
-      break;
-    }
-    zendeskPollingIsRunning = yield* select(
-      zendeskGetSessionPollingRunningSelector
-    );
-  }
+  yield* takeLatest(getZendeskToken.request, getZendeskTokenSaga, getSession);
 }
 
 export function* watchZendeskGetSessionSaga(
@@ -147,8 +128,28 @@ function* getZendeskTokenSaga(
   }
 }
 
-export function* watchGetZendeskTokenSaga(
+function* zendeskGetSessionPollingLoop(
   getSession: SessionManagerClient["getSessionState"]
 ) {
-  yield* takeLatest(getZendeskToken.request, getZendeskTokenSaga, getSession);
+  // eslint-disable-next-line functional/no-let
+  let zendeskPollingIsRunning = true;
+  yield* put(zendeskStartPolling());
+  while (zendeskPollingIsRunning) {
+    yield* put(zendeskPollingIteration());
+    // We start waiting to avoid action dispatching sync issues
+    yield* call(startTimer, ZENDESK_GET_SESSION_POLLING_INTERVAL);
+    // check if the current session is still valid
+    const checkSessionResponse = yield* call(
+      checkSession,
+      getSession,
+      formatRequestedTokenString(),
+      true
+    );
+    if (checkSessionResponse === 401) {
+      break;
+    }
+    zendeskPollingIsRunning = yield* select(
+      zendeskGetSessionPollingRunningSelector
+    );
+  }
 }

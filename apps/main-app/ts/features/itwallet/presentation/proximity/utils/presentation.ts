@@ -1,3 +1,10 @@
+import type {
+  AcceptedFields,
+  ProximityDetails,
+  RequestedDocument,
+  VerifierRequest
+} from "./types";
+
 import { assert } from "../../../../../utils/assert";
 import {
   parseClaims,
@@ -5,12 +12,6 @@ import {
 } from "../../../common/utils/itwClaimsUtils";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
 import { TimeoutError, UntrustedRpError } from "./errors";
-import type {
-  AcceptedFields,
-  ProximityDetails,
-  RequestedDocument,
-  VerifierRequest
-} from "./types";
 
 const WIA_DOC_TYPE = "org.iso.18013.5.1.IT.WalletAttestation";
 
@@ -28,8 +29,8 @@ export const promiseWithTimeout = <T>(
 };
 
 type GetProximityDetails = (params: {
-  request: VerifierRequest["request"];
   credentials: Record<string, CredentialMetadata>;
+  request: VerifierRequest["request"];
   requireAuthenticated?: boolean;
 }) => ProximityDetails;
 

@@ -6,9 +6,10 @@ import {
   IOSkeleton
 } from "@pagopa/io-app-design-system";
 import { format } from "date-fns";
+import I18n from "i18next";
 import { useMemo } from "react";
 import { View } from "react-native";
-import I18n from "i18next";
+
 import { useDebugInfo } from "../../../../hooks/useDebugInfo";
 import { ItwTrustmarkMachineContext } from "../machine/provider";
 import { selectExpirationSeconds, selectFailure } from "../machine/selectors";
@@ -31,7 +32,7 @@ const ItwTrustmarkExpirationTimer = () => {
 
     if (expirationSeconds === undefined) {
       return (
-        <IOSkeleton shape="rectangle" height={16} width={200} radius={4} />
+        <IOSkeleton height={16} radius={4} shape="rectangle" width={200} />
       );
     }
 
@@ -46,7 +47,7 @@ const ItwTrustmarkExpirationTimer = () => {
 
   return (
     <View style={{ flexDirection: "row", alignItems: "center" }}>
-      <Icon name="history" size={24} color="grey-300" />
+      <Icon color="grey-300" name="history" size={24} />
       <HSpacer size={24} />
       {content}
     </View>

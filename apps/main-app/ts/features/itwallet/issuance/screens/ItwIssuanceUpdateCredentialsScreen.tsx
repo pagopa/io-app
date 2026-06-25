@@ -1,4 +1,5 @@
 import I18n from "i18next";
+
 import { IOScrollViewCentredContent } from "../../../../components/ui/IOScrollViewCentredContent";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
@@ -13,11 +14,6 @@ export const ItwIssuanceUpgradeCredentialsScreen = () => {
 
   return (
     <IOScrollViewCentredContent
-      pictogram={"premiumCredentials"}
-      title={I18n.t(`features.itWallet.identification.updateCredential.title`)}
-      description={I18n.t(
-        `features.itWallet.identification.updateCredential.description`
-      )}
       actions={{
         type: "SingleButton",
         primary: {
@@ -28,6 +24,11 @@ export const ItwIssuanceUpgradeCredentialsScreen = () => {
           onPress: () => machineRef.send({ type: "next" })
         }
       }}
+      description={I18n.t(
+        `features.itWallet.identification.updateCredential.description`
+      )}
+      pictogram={"premiumCredentials"}
+      title={I18n.t(`features.itWallet.identification.updateCredential.title`)}
     />
   );
 };

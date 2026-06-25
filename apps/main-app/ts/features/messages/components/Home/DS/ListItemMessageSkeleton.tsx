@@ -4,6 +4,7 @@ import {
   WithTestID
 } from "@pagopa/io-app-design-system";
 import { StyleSheet, View } from "react-native";
+
 import { ListItemMessageStandardHeight } from "./ListItemMessage";
 
 export const SkeletonHeight =
@@ -39,44 +40,44 @@ export const ListItemMessageSkeleton = ({
   <View accessibilityLabel={accessibilityLabel} style={styles.container}>
     <View style={{ justifyContent: "center" }}>
       <IOSkeleton
+        radius={IOVisualCostants.avatarRadiusSizeSmall}
         shape="square"
         size={IOVisualCostants.avatarSizeSmall}
-        radius={IOVisualCostants.avatarRadiusSizeSmall}
       />
     </View>
     <View style={styles.textContainer}>
       <View style={{ flexDirection: "row" }}>
         <View style={{ flex: 1 }}>
           <IOSkeleton
-            shape="rectangle"
-            width="100%"
             height={16}
             radius={IOVisualCostants.avatarRadiusSizeSmall}
+            shape="rectangle"
+            width="100%"
           />
         </View>
         <View style={styles.timeContainer}>
           <IOSkeleton
-            shape="rectangle"
-            width="100%"
             height={16}
             radius={IOVisualCostants.avatarRadiusSizeSmall}
+            shape="rectangle"
+            width="100%"
           />
         </View>
       </View>
       <View style={styles.textRow1Container}>
         <IOSkeleton
-          shape="rectangle"
-          width="100%"
           height={8}
           radius={IOVisualCostants.avatarRadiusSizeSmall}
+          shape="rectangle"
+          width="100%"
         />
       </View>
       <View style={styles.textRow2Container}>
         <IOSkeleton
-          shape="rectangle"
-          width="100%"
           height={8}
           radius={IOVisualCostants.avatarRadiusSizeSmall}
+          shape="rectangle"
+          width="100%"
         />
       </View>
     </View>

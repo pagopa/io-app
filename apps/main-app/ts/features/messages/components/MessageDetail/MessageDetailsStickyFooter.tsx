@@ -1,7 +1,8 @@
 import { FooterActions, useIOToast } from "@pagopa/io-app-design-system";
 import { useLinkTo } from "@react-navigation/native";
-import { ComponentProps, useCallback } from "react";
 import I18n from "i18next";
+import { ComponentProps, useCallback } from "react";
+
 import { ServiceId } from "../../../../../definitions/services/ServiceId";
 import {
   useIODispatch,
@@ -27,6 +28,42 @@ import {
   computeAndTrackPaymentStart
 } from "./detailsUtils";
 
+type FooterCTA = {
+  cta1: CTA;
+  tag: "CTA";
+};
+
+type FooterData =
+  | FooterCTA
+  | FooterDoubleCTA
+  | FooterNone
+  | FooterPayment
+  | FooterPaymentWithCTA
+  | FooterPaymentWithDoubleCTA;
+
+type FooterDoubleCTA = {
+  cta1: CTA;
+  cta2: CTA;
+  tag: "DoubleCTA";
+};
+type FooterNone = {
+  tag: "None";
+};
+type FooterPayment = {
+  paymentData: PaymentData;
+  tag: "Payment";
+};
+type FooterPaymentWithCTA = {
+  cta1: CTA;
+  paymentData: PaymentData;
+  tag: "PaymentWithCTA";
+};
+type FooterPaymentWithDoubleCTA = {
+  cta1: CTA;
+  cta2: CTA;
+  paymentData: PaymentData;
+  tag: "PaymentWithDoubleCTA";
+};
 type MessageDetailsPaymentButtonProps = {
   ctas?: CTAS;
   firstCTAIsPNOptInMessage: boolean;
@@ -35,48 +72,12 @@ type MessageDetailsPaymentButtonProps = {
   serviceId: ServiceId;
 };
 
-type FooterPaymentWithDoubleCTA = {
-  tag: "PaymentWithDoubleCTA";
-  cta1: CTA;
-  cta2: CTA;
-  paymentData: PaymentData;
-};
-
-type FooterPaymentWithCTA = {
-  tag: "PaymentWithCTA";
-  cta1: CTA;
-  paymentData: PaymentData;
-};
-type FooterDoubleCTA = {
-  tag: "DoubleCTA";
-  cta1: CTA;
-  cta2: CTA;
-};
-type FooterPayment = {
-  tag: "Payment";
-  paymentData: PaymentData;
-};
-type FooterCTA = {
-  tag: "CTA";
-  cta1: CTA;
-};
-type FooterNone = {
-  tag: "None";
-};
-type FooterData =
-  | FooterPaymentWithDoubleCTA
-  | FooterPaymentWithCTA
-  | FooterDoubleCTA
-  | FooterPayment
-  | FooterCTA
-  | FooterNone;
-
 const isNone = (footerData: FooterData): footerData is FooterNone =>
   footerData.tag === "None";
 
 const computeFooterData = (
   paymentData: PaymentData | undefined,
-  paymentButtonStatus: "hidden" | "loading" | "enabled",
+  paymentButtonStatus: "enabled" | "hidden" | "loading",
   ctas: CTAS | undefined
 ): FooterData => {
   const isPaymentButtonVisible =
@@ -138,26 +139,10 @@ const mapFooterDataToActions = (
   };
 
   switch (footerData.tag) {
-    case "PaymentWithDoubleCTA":
+    case "CTA":
       return {
-        type: "ThreeButtons",
-        primary: paymentButtonConfig,
-        secondary: {
-          label: footerData.cta1.text,
-          onPress: () =>
-            onCTAPress(true, footerData.cta1, firstCTAIsPNOptInMessage)
-        },
-        tertiary: {
-          label: footerData.cta2.text,
-          onPress: () =>
-            onCTAPress(false, footerData.cta2, secondCTAIsPNOptInMessage)
-        }
-      };
-    case "PaymentWithCTA":
-      return {
-        type: "TwoButtons",
-        primary: paymentButtonConfig,
-        secondary: {
+        type: "SingleButton",
+        primary: {
           label: footerData.cta1.text,
           onPress: () =>
             onCTAPress(true, footerData.cta1, firstCTAIsPNOptInMessage)
@@ -177,22 +162,38 @@ const mapFooterDataToActions = (
             onCTAPress(false, footerData.cta2, secondCTAIsPNOptInMessage)
         }
       };
+    case "None":
+      return undefined;
     case "Payment":
       return {
         type: "SingleButton",
         primary: paymentButtonConfig
       };
-    case "CTA":
+    case "PaymentWithCTA":
       return {
-        type: "SingleButton",
-        primary: {
+        type: "TwoButtons",
+        primary: paymentButtonConfig,
+        secondary: {
           label: footerData.cta1.text,
           onPress: () =>
             onCTAPress(true, footerData.cta1, firstCTAIsPNOptInMessage)
         }
       };
-    case "None":
-      return undefined;
+    case "PaymentWithDoubleCTA":
+      return {
+        type: "ThreeButtons",
+        primary: paymentButtonConfig,
+        secondary: {
+          label: footerData.cta1.text,
+          onPress: () =>
+            onCTAPress(true, footerData.cta1, firstCTAIsPNOptInMessage)
+        },
+        tertiary: {
+          label: footerData.cta2.text,
+          onPress: () =>
+            onCTAPress(false, footerData.cta2, secondCTAIsPNOptInMessage)
+        }
+      };
   }
 };
 

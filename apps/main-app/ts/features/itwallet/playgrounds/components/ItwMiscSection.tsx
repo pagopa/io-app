@@ -6,12 +6,13 @@ import {
   ListItemSwitchProps
 } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
+
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { resetTourCompletedAction } from "../../../tour/store/actions";
 import { isTourCompletedSelector } from "../../../tour/store/selectors";
-import { ITW_TOUR_GROUP_ID } from "../../tour/utils/constants";
-import { itwIsCatalogueEnabledForCredentialsList } from "../../credentialsCatalogue/store/selectors";
 import { itwSetCatalogueEnabledForCredentialsList } from "../../credentialsCatalogue/store/actions";
+import { itwIsCatalogueEnabledForCredentialsList } from "../../credentialsCatalogue/store/selectors";
+import { ITW_TOUR_GROUP_ID } from "../../tour/utils/constants";
 
 export const ItwMiscSection = () => {
   const dispatch = useIODispatch();
@@ -46,11 +47,11 @@ export const ItwMiscSection = () => {
         value={isTourCompleted ? "COMPLETED" : "NOT COMPLETED"}
       />
       <IOButton
-        variant="solid"
         color="danger"
-        label="Reset tour guide status"
         disabled={!isTourCompleted}
+        label="Reset tour guide status"
         onPress={resetTourGuide}
+        variant="solid"
       />
       <ListItemHeader label="Feature flag" />
       {featureFlags.map(props => (

@@ -1,5 +1,6 @@
 import { type ItwVersion } from "@pagopa/io-react-native-wallet";
 import { ActionType, createStandardAction } from "typesafe-actions";
+
 import { EnvType } from "../../utils/environment.ts";
 
 export const itwSetEnv = createStandardAction("ITW_SET_ENV")<EnvType>();
@@ -9,6 +10,6 @@ export const itwSetSpecsVersion = createStandardAction(
 )<ItwVersion>();
 
 export type ItwEnvironmentActions =
-  | ActionType<typeof itwSetEnv>
   | ActionType<typeof itwResetEnv>
+  | ActionType<typeof itwSetEnv>
   | ActionType<typeof itwSetSpecsVersion>;

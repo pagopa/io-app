@@ -1,20 +1,21 @@
 import { HeaderActionProps } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
+import I18n from "i18next";
 import { useCallback, useMemo } from "react";
 import { View } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
-import I18n from "i18next";
-import { useFocusEffect } from "@react-navigation/native";
+
 import { Institution } from "../../../../../definitions/services/Institution";
 import SectionStatusComponent from "../../../../components/SectionStatus";
 import { useHeaderFirstLevel } from "../../../../hooks/useHeaderFirstLevel";
 import { useTabItemPressWhenScreenActive } from "../../../../hooks/useTabItemPressWhenScreenActive";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
-import { SERVICES_ROUTES } from "../../common/navigation/routes";
-import { useServicesHomeBottomSheet } from "../hooks/useServicesHomeBottomSheet";
-import { InstitutionList } from "../components/InstitutionList";
-import * as analytics from "../../common/analytics";
-import { isFavouriteServicesEnabledSelector } from "../../common/store/selectors/remoteConfig";
 import { useIOSelector } from "../../../../store/hooks";
+import * as analytics from "../../common/analytics";
+import { SERVICES_ROUTES } from "../../common/navigation/routes";
+import { isFavouriteServicesEnabledSelector } from "../../common/store/selectors/remoteConfig";
+import { InstitutionList } from "../components/InstitutionList";
+import { useServicesHomeBottomSheet } from "../hooks/useServicesHomeBottomSheet";
 
 export const ServicesHomeScreen = () => {
   const navigation = useIONavigation();

@@ -1,9 +1,10 @@
 import { createMigrate, PersistConfig, persistReducer } from "redux-persist";
 import { getType } from "typesafe-actions";
+
 import { Action } from "../../../../../store/actions/types";
+import createSecureStorage from "../../../../../store/storages/secureStorage";
 import { isDevEnv } from "../../../../../utils/environment";
 import { CredentialMetadata } from "../../../common/utils/itwTypesUtils";
-import createSecureStorage from "../../../../../store/storages/secureStorage";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import {
   itwCredentialsRemove,
@@ -15,8 +16,6 @@ import {
   itwCredentialsStateMigrations
 } from "./migrations";
 
-type CredentialsRecord = { [credentialKey: string]: CredentialMetadata };
-
 export type ItwCredentialsState = {
   credentials: CredentialsRecord;
   // Credentials object before migration 8. Needed to handle migration outside of Redux Persist.
@@ -25,6 +24,8 @@ export type ItwCredentialsState = {
     [credentialKey: string]: CredentialMetadata & { credential: string };
   };
 };
+
+type CredentialsRecord = { [credentialKey: string]: CredentialMetadata };
 
 export const itwCredentialsInitialState: ItwCredentialsState = {
   credentials: {},
@@ -36,21 +37,6 @@ const reducer = (
   action: Action
 ): ItwCredentialsState => {
   switch (action.type) {
-    case getType(itwCredentialsStore): {
-      const addedCredentials = action.payload.reduce(
-        (acc, c) => ({ ...acc, [c.credentialId]: c }),
-        {} as CredentialsRecord
-      );
-
-      return {
-        ...state,
-        credentials: {
-          ...state.credentials,
-          ...addedCredentials
-        }
-      };
-    }
-
     case getType(itwCredentialsRemove): {
       const idsToRemove = new Set(action.payload.map(c => c.credentialId));
 
@@ -64,6 +50,21 @@ const reducer = (
       return {
         ...state,
         credentials: otherCredentials
+      };
+    }
+
+    case getType(itwCredentialsStore): {
+      const addedCredentials = action.payload.reduce(
+        (acc, c) => ({ ...acc, [c.credentialId]: c }),
+        {} as CredentialsRecord
+      );
+
+      return {
+        ...state,
+        credentials: {
+          ...state.credentials,
+          ...addedCredentials
+        }
       };
     }
 

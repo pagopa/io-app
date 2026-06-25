@@ -11,25 +11,19 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { useFocusEffect } from "@react-navigation/native";
+import I18n from "i18next";
 import { useCallback, useLayoutEffect, useRef } from "react";
 import { View } from "react-native";
 import {
   SafeAreaView,
   useSafeAreaInsets
 } from "react-native-safe-area-context";
-import I18n from "i18next";
+
 import SectionStatusComponent from "../../../../components/SectionStatus";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import { setAccessibilityFocus } from "../../../../utils/accessibility";
 import { useIOBottomSheetModal } from "../../../../utils/hooks/bottomSheet";
-import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
-
-import { isCieLoginUatEnabledSelector } from "../../login/cie/store/selectors";
-import { SpidLevel } from "../../login/cie/utils";
-import useNavigateToLoginMethod from "../../login/hooks/useNavigateToLoginMethod";
-import { LandingSessionExpiredComponent } from "../../login/landing/components/LandingSessionExpiredComponent";
-import { setActiveSessionLoginBlockingScreenHasBeenVisualized } from "../store/actions";
 import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
   loginCieWizardSelected,
@@ -37,6 +31,12 @@ import {
   trackLoginCieIdSelected,
   trackLoginCiePinSelected
 } from "../../common/analytics";
+import { AUTHENTICATION_ROUTES } from "../../common/navigation/routes";
+import { isCieLoginUatEnabledSelector } from "../../login/cie/store/selectors";
+import { SpidLevel } from "../../login/cie/utils";
+import useNavigateToLoginMethod from "../../login/hooks/useNavigateToLoginMethod";
+import { LandingSessionExpiredComponent } from "../../login/landing/components/LandingSessionExpiredComponent";
+import { setActiveSessionLoginBlockingScreenHasBeenVisualized } from "../store/actions";
 import {
   trackLoginReauthEngagement,
   trackLoginReauthEngagementCieSelected,
@@ -84,50 +84,50 @@ export const ActiveSessionLandingScreen = () => {
     component: (
       <View>
         <ModuleNavigation
-          title={I18n.t(
-            "authentication.landing.cie_bottom_sheet.module_cie_pin.title"
-          )}
+          icon="fiscalCodeIndividual"
+          onPress={handleNavigateToCiePinScreen}
           subtitle={I18n.t(
             "authentication.landing.cie_bottom_sheet.module_cie_pin.subtitle"
           )}
-          icon="fiscalCodeIndividual"
           testID="bottom-sheet-login-with-cie-pin"
-          onPress={handleNavigateToCiePinScreen}
+          title={I18n.t(
+            "authentication.landing.cie_bottom_sheet.module_cie_pin.title"
+          )}
         />
         <VSpacer size={8} />
         <ModuleNavigation
-          title={I18n.t(
-            "authentication.landing.cie_bottom_sheet.module_cie_id.title"
-          )}
-          subtitle={I18n.t(
-            "authentication.landing.cie_bottom_sheet.module_cie_id.subtitle"
-          )}
-          icon="device"
-          testID="bottom-sheet-login-with-cie-id"
           badge={{
             variant: "highlight",
             text: I18n.t(
               "authentication.landing.cie_bottom_sheet.module_cie_id.badge"
             )
           }}
+          icon="device"
           onPress={handleNavigateToCieIdLoginScreen}
+          subtitle={I18n.t(
+            "authentication.landing.cie_bottom_sheet.module_cie_id.subtitle"
+          )}
+          testID="bottom-sheet-login-with-cie-id"
+          title={I18n.t(
+            "authentication.landing.cie_bottom_sheet.module_cie_id.title"
+          )}
         />
         <VSpacer size={24} />
         <Banner
+          action={I18n.t(
+            "authentication.landing.cie_bottom_sheet.help_banner.action"
+          )}
+          color="turquoise"
           onPress={() => {
             void loginCieWizardSelected("reauth");
             navigation.navigate(AUTHENTICATION_ROUTES.MAIN, {
               screen: AUTHENTICATION_ROUTES.CIE_ID_WIZARD
             });
           }}
-          testID="bottom-sheet-login-wizards"
           pictogramName="help"
-          color="turquoise"
+          testID="bottom-sheet-login-wizards"
           title={I18n.t(
             "authentication.landing.cie_bottom_sheet.help_banner.title"
-          )}
-          action={I18n.t(
-            "authentication.landing.cie_bottom_sheet.help_banner.action"
           )}
         />
         <VSpacer />
@@ -167,13 +167,13 @@ export const ActiveSessionLandingScreen = () => {
     navigation.setOptions({
       header: () => (
         <HeaderSecondLevel
-          title={""}
-          type="singleAction"
           firstAction={{
             icon: "closeLarge",
             accessibilityLabel: I18n.t("global.buttons.close"),
             onPress: handleClosePress
           }}
+          title={""}
+          type="singleAction"
         />
       )
     });
@@ -182,39 +182,39 @@ export const ActiveSessionLandingScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1 }} testID="LandingScreen">
       <LandingSessionExpiredComponent
-        ref={accessibilityFirstFocuseViewRef}
-        pictogramName={"identityCheck"}
-        title={I18n.t("authentication.landing.active_session_login.title")}
         content={I18n.t("authentication.landing.active_session_login.body")}
+        pictogramName={"identityCheck"}
+        ref={accessibilityFirstFocuseViewRef}
+        title={I18n.t("authentication.landing.active_session_login.title")}
       />
 
       <SectionStatusComponent sectionKey={"login"} />
       <ContentWrapper>
         <IOButton
-          fullWidth
-          variant="solid"
           color={isCieUatEnabled ? "danger" : "primary"}
-          label={I18n.t("authentication.landing.loginCie")}
+          fullWidth
           icon="cieLetter"
+          label={I18n.t("authentication.landing.loginCie")}
           onPress={navigateToCiePinScreen}
           testID="landing-button-login-cie"
+          variant="solid"
         />
         <VSpacer size={SPACE_BETWEEN_BUTTONS} />
 
         <IOButton
-          fullWidth
-          variant="solid"
           color="primary"
+          fullWidth
+          icon="spid"
           // if CIE is not supported, since the new DS has not a
           // "semi-enabled" state, we leave the button enabled
           // but we navigate to the CIE unsupported info screen.
           label={I18n.t("authentication.landing.loginSpid")}
-          icon="spid"
           onPress={() => {
             void trackLoginReauthEngagementSpidSelected();
             navigateToIdpSelection();
           }}
           testID="landing-button-login-spid"
+          variant="solid"
         />
         <VSpacer size={SPACE_AROUND_BUTTON_LINK} />
         {insets.bottom !== 0 && <VSpacer size={SPACE_AROUND_BUTTON_LINK} />}

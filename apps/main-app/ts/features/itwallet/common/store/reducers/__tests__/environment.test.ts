@@ -1,8 +1,8 @@
 import { applicationChangeState } from "../../../../../../store/actions/application";
 import {
-  itwSetSpecsVersion,
   itwResetEnv,
-  itwSetEnv
+  itwSetEnv,
+  itwSetSpecsVersion
 } from "../../actions/environment";
 import reducer from "../environment";
 

@@ -4,6 +4,7 @@ import {
   VSpacer
 } from "@pagopa/io-app-design-system";
 import { View } from "react-native";
+
 import { ReceiptFadeInOutAnimationView } from "./ReceiptFadeInOutAnimationView";
 
 type ReceiptLoadingListProps = {
@@ -17,7 +18,7 @@ export const ReceiptLoadingList = ({
     {showSectionTitleSkeleton && (
       <View testID="section-title-skeleton">
         <VSpacer size={16} />
-        <IOSkeleton shape="rectangle" radius={8} width={62} height={16} />
+        <IOSkeleton height={16} radius={8} shape="rectangle" width={62} />
         <VSpacer size={16} />
       </View>
     )}
@@ -26,12 +27,12 @@ export const ReceiptLoadingList = ({
       <ReceiptFadeInOutAnimationView key={index}>
         <ListItemTransaction
           isLoading={true}
+          subtitle=""
+          title=""
           transaction={{
             amount: "",
             amountAccessibilityLabel: ""
           }}
-          title=""
-          subtitle=""
         />
       </ReceiptFadeInOutAnimationView>
     ))}

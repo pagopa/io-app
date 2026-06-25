@@ -1,6 +1,5 @@
 import { IOColors, useIOTheme, VSpacer } from "@pagopa/io-app-design-system";
-
-import { ComponentProps, useCallback, useRef, Ref } from "react";
+import { ComponentProps, Ref, useCallback, useRef } from "react";
 import {
   Animated,
   GestureResponderEvent,
@@ -9,6 +8,7 @@ import {
   useWindowDimensions,
   View
 } from "react-native";
+
 import { LandingCardComponent } from "../../../../components/LandingCardComponent";
 import { trackCarousel } from "../analytics/carouselAnalytics";
 
@@ -26,9 +26,9 @@ const styles = StyleSheet.create({
 });
 
 export type CarouselProps = {
-  ref?: Ref<View>;
   carouselCards: ReadonlyArray<ComponentProps<typeof LandingCardComponent>>;
   dotEasterEggCallback?: () => void;
+  ref?: Ref<View>;
 };
 
 type CarouselDotsProps = CarouselProps & { scrollX: Animated.Value };
@@ -81,10 +81,8 @@ const CarouselDots = (props: CarouselDotsProps) => {
 
   return (
     <View
-      importantForAccessibility="yes"
       accessibilityElementsHidden={false}
-      testID="carousel-dots"
-      style={styles.indicatorContainer}
+      importantForAccessibility="yes"
       onTouchEnd={(_: GestureResponderEvent) => {
         // eslint-disable-next-line functional/immutable-data
         dotTouchCount.current++;
@@ -94,6 +92,8 @@ const CarouselDots = (props: CarouselDotsProps) => {
           dotEasterEggCallback?.();
         }
       }}
+      style={styles.indicatorContainer}
+      testID="carousel-dots"
     >
       {carouselCards.map((_, imageIndex) => (
         <Animated.View
@@ -118,8 +118,8 @@ export const Carousel = ({
     () =>
       carouselCards.map(p => (
         <LandingCardComponent
-          ref={p.id === 0 ? ref : null}
           key={`card-${p.id}`}
+          ref={p.id === 0 ? ref : null}
           {...p}
         />
       )),
@@ -132,18 +132,6 @@ export const Carousel = ({
     <>
       <ScrollView
         horizontal={true}
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-        onScrollEndDrag={event => {
-          const contentOffsetX = event.nativeEvent.contentOffset.x;
-          const currentPageIndex = Math.round(contentOffsetX / windowWidth);
-          if (
-            currentPageIndex >= 0 &&
-            cardComponents.length > currentPageIndex
-          ) {
-            trackCarousel(currentPageIndex, cardComponents);
-          }
-        }}
         onScroll={Animated.event(
           [
             {
@@ -156,13 +144,25 @@ export const Carousel = ({
           ],
           { useNativeDriver: false }
         )}
+        onScrollEndDrag={event => {
+          const contentOffsetX = event.nativeEvent.contentOffset.x;
+          const currentPageIndex = Math.round(contentOffsetX / windowWidth);
+          if (
+            currentPageIndex >= 0 &&
+            cardComponents.length > currentPageIndex
+          ) {
+            trackCarousel(currentPageIndex, cardComponents);
+          }
+        }}
+        pagingEnabled
         scrollEventThrottle={1}
+        showsHorizontalScrollIndicator={false}
       >
         {cardComponents}
       </ScrollView>
       <CarouselDots
-        dotEasterEggCallback={dotEasterEggCallback}
         carouselCards={carouselCards}
+        dotEasterEggCallback={dotEasterEggCallback}
         scrollX={scrollX}
       />
       <VSpacer size={24} />

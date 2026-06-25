@@ -1,33 +1,32 @@
 import { Banner, VSpacer } from "@pagopa/io-app-design-system";
 import { openAuthenticationSession } from "@pagopa/io-react-native-login-utils";
-import { useRef } from "react";
 import * as O from "fp-ts/lib/Option";
-
+import I18n from "i18next";
+import { useRef } from "react";
+import { View } from "react-native";
 import Animated, {
   FadeIn,
   FadeOut,
   LinearTransition
 } from "react-native-reanimated";
 
-import { View } from "react-native";
-import I18n from "i18next";
 import { mixpanelTrack } from "../../../../mixpanel";
 import { useIODispatch, useIOSelector } from "../../../../store/hooks";
 import {
   isPaymentsPspBannerEnabledSelector,
   paymentsPspBannerConfigSelector
 } from "../../../../store/reducers/backendStatus/remoteConfig";
+import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
 import {
   fallbackForLocalizedMessageKeys,
   getFullLocale
 } from "../../../../utils/locale";
+import * as analytics from "../analytics";
+import { paymentMethodPspBannerClose } from "../store/actions/orchestration";
 import {
   isPaymentsPspBannerClosedSelector,
   walletPaymentSelectedPaymentMethodOptionSelector
 } from "../store/selectors/paymentMethods";
-import { paymentMethodPspBannerClose } from "../store/actions/orchestration";
-import { useOnFirstRender } from "../../../../utils/hooks/useOnFirstRender";
-import * as analytics from "../analytics";
 
 const WalletPaymentPspBanner = () => {
   const dispatch = useIODispatch();
@@ -79,15 +78,15 @@ const WalletPaymentPspBanner = () => {
         layout={LinearTransition.duration(200)}
       >
         <Banner
+          action={bannerConfig.action?.label[localeFallback] ?? ""}
           color="neutral"
+          content={bannerConfig.description[localeFallback]}
+          labelClose={I18n.t("global.buttons.close")}
+          onClose={handleBannerClose}
+          onPress={handleBannerPress}
           pictogramName="help"
           ref={bannerViewRef}
           title={bannerConfig.title?.[localeFallback]}
-          content={bannerConfig.description[localeFallback]}
-          action={bannerConfig.action?.label[localeFallback] ?? ""}
-          onPress={handleBannerPress}
-          onClose={handleBannerClose}
-          labelClose={I18n.t("global.buttons.close")}
         />
       </Animated.View>
       <VSpacer size={16} />

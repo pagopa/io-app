@@ -15,6 +15,7 @@ import {
   View
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
 import { useHeaderSecondLevel } from "../../../../../../hooks/useHeaderSecondLevel";
 import { useScreenEndMargin } from "../../../../../../hooks/useScreenEndMargin";
 import { ReadStatusComponent } from "../components/ReadStatusComponent";
@@ -96,7 +97,7 @@ export const CieCertificateReadingScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container} edges={["bottom"]}>
+    <SafeAreaView edges={["bottom"]} style={styles.container}>
       <KeyboardAvoidingView
         behavior="padding"
         contentContainerStyle={{
@@ -116,16 +117,16 @@ export const CieCertificateReadingScreen = () => {
         <View>
           <ListItemHeader label="Insert card PIN" />
           <OTPInput
-            secret
-            value={code}
             length={CIE_PIN_LENGTH}
             onValueChange={onPinChanged}
+            secret
+            value={code}
           />
         </View>
         <VSpacer size={16} />
         <IOButton
-          label={status === "reading" ? "Stop reading" : "Start reading"}
           disabled={code.length !== 8}
+          label={status === "reading" ? "Stop reading" : "Start reading"}
           onPress={() =>
             status === "reading" ? handleStopReading() : handleStartReading()
           }

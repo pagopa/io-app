@@ -13,8 +13,8 @@ import {
 } from "@pagopa/io-app-design-system";
 import * as pot from "@pagopa/ts-commons/lib/pot";
 import { RouteProp, useNavigation, useRoute } from "@react-navigation/native";
-import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
+import * as O from "fp-ts/lib/Option";
 import I18n from "i18next";
 import _ from "lodash";
 import {
@@ -26,6 +26,7 @@ import {
 } from "react";
 import { FlatList, ListRenderItemInfo, Platform } from "react-native";
 import Animated, { useAnimatedRef } from "react-native-reanimated";
+
 import { InitializedProfile } from "../../../../definitions/identity/InitializedProfile";
 import IOMarkdown from "../../../components/IOMarkdown";
 import {
@@ -44,13 +45,13 @@ import {
   isCaCBannerEnabledSelector
 } from "../../../store/reducers/backendStatus/remoteConfig";
 import { getContextualHelpDataFromRouteSelector } from "../../../store/reducers/content";
-import { FAQType, getFAQsFromCategories } from "../../../utils/faq";
 import {
   ContextualHelpProps,
   getContextualHelpConfig,
   getContextualHelpData,
   reloadContextualHelpDataThreshold
 } from "../../../utils/contextualHelp";
+import { FAQType, getFAQsFromCategories } from "../../../utils/faq";
 import { useOnFirstRender } from "../../../utils/hooks/useOnFirstRender";
 import { usePrevious } from "../../../utils/hooks/usePrevious";
 import {
@@ -89,6 +90,19 @@ import {
 } from "../store/reducers";
 import { handleContactSupport } from "../utils";
 
+enum ButtonPressedEnum {
+  ON_GOING_REQUEST = "ON_GOING_REQUEST",
+  OPEN_NEW_REQUEST = "OPEN_NEW_REQUEST"
+}
+
+export type ContextualHelpData = {
+  content: string;
+  faqs?: ReadonlyArray<FAQType>;
+  title: string;
+};
+
+export type ZendeskSupportHelpCenterNavigationParams = ZendeskStartPayload;
+
 type FaqManagerProps = Pick<
   ZendeskStartPayload,
   "faqCategories" | "startingRoute"
@@ -96,19 +110,6 @@ type FaqManagerProps = Pick<
   contentLoaded?: boolean;
   contextualHelpConfig: ContextualHelpProps | undefined;
 };
-
-export type ContextualHelpData = {
-  title: string;
-  content: string;
-  faqs?: ReadonlyArray<FAQType>;
-};
-
-export type ZendeskSupportHelpCenterNavigationParams = ZendeskStartPayload;
-
-enum ButtonPressedEnum {
-  ON_GOING_REQUEST = "ON_GOING_REQUEST",
-  OPEN_NEW_REQUEST = "OPEN_NEW_REQUEST"
-}
 /**
  * This component must be used only here.
  * Make the {@link ZendeskSupportHelpCenter} compatible with {@link HeaderSecondLevel} and substitute the {@link ContextualHelp}
@@ -165,8 +166,8 @@ const FaqManager = (props: FaqManagerProps) => {
 
   const renderFaqItem = ({ item }: ListRenderItemInfo<FAQType>) => (
     <AccordionItem
-      title={item.title}
       body={<IOMarkdown content={item.content} />}
+      title={item.title}
     />
   );
 
@@ -196,7 +197,7 @@ const FaqManager = (props: FaqManagerProps) => {
   return (
     <>
       {!isStringNullyOrEmpty(contextualHelpData.title) && (
-        <H4 color={theme["textHeading-default"]} accessible={true}>
+        <H4 accessible={true} color={theme["textHeading-default"]}>
           {contextualHelpData.title}
         </H4>
       )}
@@ -209,24 +210,24 @@ const FaqManager = (props: FaqManagerProps) => {
       <VSpacer size={16} />
       {isCacBannerEnabled && (
         <Banner
-          pictogramName="help"
-          color="neutral"
-          title={bannerCaCConfig?.title?.[localeFallback]}
-          content={bannerCaCConfig?.description?.[localeFallback]}
           action={bannerCaCConfig?.action?.label?.[localeFallback] ?? ""}
+          color="neutral"
+          content={bannerCaCConfig?.description?.[localeFallback]}
           onPress={handleBannerPress}
+          pictogramName="help"
+          title={bannerCaCConfig?.title?.[localeFallback]}
         />
       )}
       <VSpacer size={16} />
       {contextualHelpData.faqs && (
         <FlatList
-          ListHeaderComponent={<VSpacer size={8} />}
-          scrollEnabled={false}
           data={contextualHelpData.faqs}
-          keyExtractor={c => c.title}
-          renderItem={renderFaqItem}
           ItemSeparatorComponent={() => <VSpacer size={8} />}
+          keyExtractor={c => c.title}
           ListFooterComponent={<VSpacer size={8} />}
+          ListHeaderComponent={<VSpacer size={8} />}
+          renderItem={renderFaqItem}
+          scrollEnabled={false}
         />
       )}
     </>
@@ -391,11 +392,8 @@ const ZendeskSupportHelpCenter = () => {
     navigation.setOptions({
       header: () => (
         <HeaderSecondLevel
-          /* Avoid status bar overlapping on Android */
-          ignoreSafeAreaMargin={Platform.OS === "ios" ? true : false}
-          title={I18n.t("support.helpCenter.header")}
-          transparent={false}
-          type="singleAction"
+          animatedRef={animatedScrollViewRef}
+          enableDiscreteTransition={true}
           firstAction={{
             icon: "closeLarge",
             accessibilityLabel: I18n.t(
@@ -403,8 +401,11 @@ const ZendeskSupportHelpCenter = () => {
             ),
             onPress: workUnitCancel
           }}
-          enableDiscreteTransition={true}
-          animatedRef={animatedScrollViewRef}
+          /* Avoid status bar overlapping on Android */
+          ignoreSafeAreaMargin={Platform.OS === "ios" ? true : false}
+          title={I18n.t("support.helpCenter.header")}
+          transparent={false}
+          type="singleAction"
         />
       )
     });
@@ -413,9 +414,9 @@ const ZendeskSupportHelpCenter = () => {
   return (
     <IOScrollView
       animatedRef={animatedScrollViewRef}
-      testID={"ZendeskSupportHelpCenterScreen"}
-      includeContentMargins={false}
       excludeEndContentMargin={showRequestSupportContacts}
+      includeContentMargins={false}
+      testID={"ZendeskSupportHelpCenterScreen"}
     >
       <ContentWrapper>
         <FaqManager
@@ -430,6 +431,7 @@ const ZendeskSupportHelpCenter = () => {
             <H4>{I18n.t("support.helpCenter.supportComponent.title")}</H4>
             <VSpacer size={8} />
             <ListItemInfo
+              icon="email"
               numberOfLines={5}
               value={
                 <IOMarkdownLite
@@ -438,9 +440,9 @@ const ZendeskSupportHelpCenter = () => {
                   )}
                 />
               }
-              icon="email"
             />
             <ListItemInfo
+              icon="chat"
               numberOfLines={3}
               value={
                 <IOMarkdownLite
@@ -449,9 +451,9 @@ const ZendeskSupportHelpCenter = () => {
                   )}
                 />
               }
-              icon="chat"
             />
             <ListItemInfo
+              icon="inbox"
               numberOfLines={2}
               value={
                 <IOMarkdownLite
@@ -460,14 +462,13 @@ const ZendeskSupportHelpCenter = () => {
                   )}
                 />
               }
-              icon="inbox"
             />
           </>
         )}
       </ContentWrapper>
       <FooterActions
-        fixed={false}
         actions={showRequestSupportContacts ? footerActions : undefined}
+        fixed={false}
       />
     </IOScrollView>
   );
