@@ -193,9 +193,6 @@ importers:
       nx:
         specifier: 'catalog:'
         version: 22.7.2(@swc-node/register@1.11.1(@emnapi/core@1.10.0)(@emnapi/runtime@1.10.0)(@swc/core@1.15.33(@swc/helpers@0.5.21))(@swc/types@0.1.26)(typescript@5.9.3))(@swc/core@1.15.33(@swc/helpers@0.5.21))
-      postinstall-postinstall:
-        specifier: ^1.0.0
-        version: 1.0.0
       prettier:
         specifier: 'catalog:'
         version: 3.8.2
@@ -9162,9 +9159,6 @@ packages:
   postcss@8.5.15:
     resolution: {integrity: sha512-FfR8sjd4em2T6fb3I2MwAJU7HWVMr9zba+enmQeeWFfCbm+UOC/0X4DS8XtpUTMwWMGbjKYP7xjfNekzyGmB3A==}
     engines: {node: ^10 || ^12 || >=14}
-
-  postinstall-postinstall@1.0.0:
-    resolution: {integrity: sha512-wy05IaZP73c7A/VQt5ChsZkzP+XUqs3bSJf45AP1PyHTf/FGy4qNwqG05h0t42v4KIUT93gKRRuj+bQYSlz9FA==}
 
   prelude-ls@1.1.2:
     resolution: {integrity: sha512-ESF23V4SKG6lVSGZgYNpbsiaAkdab6ZgOxe52p7+Kid3W3u3bxR4Vfd/o21dmN7jSt0IwgZ4v5MUd26FEtXE9w==}
@@ -22525,8 +22519,6 @@ snapshots:
       nanoid: 3.3.12
       picocolors: 1.1.1
       source-map-js: 1.2.1
-
-  postinstall-postinstall@1.0.0: {}
 
   prelude-ls@1.1.2: {}
 
