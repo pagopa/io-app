@@ -1,10 +1,13 @@
 import { decode as decodeJwt } from "@pagopa/io-react-native-jwt";
+import { assert } from "../../../../utils/assert";
+import { getIoWallet } from "../../common/utils/itwIoWallet";
+import { StatusListRepository } from "./repository";
 import {
   StatusListPayloadSchema,
   validatePayloadSub,
   type StatusListPayload
 } from "./schemas";
-import { StatusListRepository } from "./repository";
+import { StatusListContext } from "./types";
 
 /** Timeout for individual Status List Token fetches (ms). */
 const FETCH_TIMEOUT_MS = 15_000;
@@ -16,8 +19,17 @@ const FETCH_TIMEOUT_MS = 15_000;
  * Best-effort: returns `true` on success, `false` on any failure.
  * A failed refresh never evicts an existing cached entry.
  */
-export const refreshStatusListToken = async (uri: string): Promise<boolean> => {
+export const refreshStatusListToken = async (
+  context: StatusListContext,
+  uri: string
+): Promise<boolean> => {
   try {
+    const ioWallet = getIoWallet(context.itwVersion);
+    assert(
+      ioWallet.CredentialStatus.statusList.isSupported,
+      `Status List is not supported by IT-Wallet v${context.itwVersion}`
+    );
+
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
 

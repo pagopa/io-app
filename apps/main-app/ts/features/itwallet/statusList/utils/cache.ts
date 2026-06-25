@@ -1,6 +1,7 @@
 import { StatusListRepository } from "./repository";
 import { refreshStatusListToken } from "./refresh";
 import { isStale } from "./validity";
+import { StatusListContext } from "./types";
 
 /** Maximum number of concurrent refresh operations. */
 const MAX_CONCURRENT_REFRESHES = 3;
@@ -10,6 +11,7 @@ const MAX_CONCURRENT_REFRESHES = 3;
  * Each refresh is best-effort: individual failures do not affect others.
  */
 const refreshWithBoundedParallelism = async (
+  context: StatusListContext,
   uris: Array<string>
 ): Promise<void> => {
   const batches = Array.from(
@@ -21,7 +23,9 @@ const refreshWithBoundedParallelism = async (
       )
   );
   for (const batch of batches) {
-    await Promise.allSettled(batch.map(uri => refreshStatusListToken(uri)));
+    await Promise.allSettled(
+      batch.map(uri => refreshStatusListToken(context, uri))
+    );
   }
 };
 
@@ -64,6 +68,7 @@ export const startupCoherence = async (
  * @param now - Current time in ms since epoch (injected for testability)
  */
 export const refreshStaleEntries = async (
+  context: StatusListContext,
   now: number = Date.now()
 ): Promise<void> => {
   const cached = await StatusListRepository.list();
@@ -72,5 +77,5 @@ export const refreshStaleEntries = async (
     .filter(payload => isStale(payload, now))
     .map(payload => payload.sub);
 
-  await refreshWithBoundedParallelism(staleUris);
+  await refreshWithBoundedParallelism(context, staleUris);
 };

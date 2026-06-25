@@ -10,6 +10,7 @@ import {
   registerItwStatusListFetchTask,
   unregisterItwStatusListFetchTask
 } from "../tasks";
+import { selectItwSpecsVersion } from "../../common/store/selectors/environment";
 
 /**
  * Registers the ITW Status List fetch task with expo-background-task.
@@ -36,9 +37,11 @@ export function* registerStatusListFetchTaskSaga(): SagaIterator {
  * the stale remaining entries.
  */
 export function* startupStatusListCoherenceSaga(): SagaIterator {
+  const itwVersion = yield* select(selectItwSpecsVersion);
   const referencedUris = yield* select(itwStatusListReferencedUrisSelector);
+
   yield* call(startupCoherence, referencedUris);
-  yield* call(refreshStaleEntries);
+  yield* call(refreshStaleEntries, { itwVersion });
 }
 
 export function* watchItwTasksSaga(): SagaIterator {
