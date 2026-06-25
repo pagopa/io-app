@@ -1138,6 +1138,10 @@ export const itwEidIssuanceMachine = setup({
             onDone: {
               target: "RequestingEid",
               actions: assign(({ event }) => ({ accessToken: event.output }))
+            },
+            onError: {
+              actions: "setFailure",
+              target: "#itwEidIssuanceMachine.Failure"
             }
           }
         },
