@@ -241,7 +241,6 @@
     "mockttp": "2.4.0",
     "node-fetch": "^2.6.7",
     "plist": "^3.0.5",
-    "postinstall-postinstall": "^1.0.0",
     "react-native-get-random-values": "^1.11.0",
     "react-native-svg-transformer": "1.5.1",
     "react-test-renderer": "catalog:",

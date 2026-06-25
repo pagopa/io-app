@@ -193,6 +193,12 @@ export const SendAarCieCanInsertionScreen = ({
             secret
             length={CIE_CAN_LENGTH}
             onValueChange={handleCanChange}
+            accessibilityValueText={({ valueLength, length }) =>
+              i18n.t("global.accessibility.inputDigitCounter", {
+                valueLength,
+                length
+              })
+            }
             value={can}
             autoFocus={isFocused}
             accessibilityLabel={i18n.t(

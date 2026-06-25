@@ -1,3 +1,4 @@
+import i18n from "i18next";
 import { OTPInput } from "@pagopa/io-app-design-system";
 import { useEffect, useState } from "react";
 import { IOScrollViewWithLargeHeader } from "../../../../../components/ui/IOScrollViewWithLargeHeader";
@@ -12,6 +13,9 @@ type PinViewProps = {
 const PinView = (props: PinViewProps) => (
   <OTPInput
     secret
+    accessibilityValueText={({ valueLength, length }) =>
+      i18n.t("global.accessibility.inputDigitCounter", { valueLength, length })
+    }
     value={props.pin}
     length={PIN_LENGTH}
     onValueChange={props.setPin}

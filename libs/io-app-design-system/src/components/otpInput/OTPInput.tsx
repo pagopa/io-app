@@ -18,25 +18,37 @@ import { BoxedInput } from "./BoxedInput";
 
 const OTP_ITEMS_GAP = 8;
 
+export type OTPInputAccessibilityValueText = (params: {
+  valueLength: number;
+  length: number;
+}) => string;
+
 type Props = {
   ref?: Ref<View>;
   value: string;
   onValueChange: (value: string) => void;
   length: number;
-  secret?: boolean;
   autocomplete?: boolean;
   onValidate?: (value: string) => boolean;
   errorMessage?: string;
   accessibilityLabel?: string;
   deleteButtonAccessibilityLabel?: string;
   accessibilityHint?: string;
-  accessibilityValueText?: (params: {
-    valueLength: number;
-    length: number;
-  }) => string;
   inputAccessoryViewID?: string;
   autoFocus?: boolean;
 };
+
+export type OTPInputSecretProps =
+  | {
+      secret: true;
+      accessibilityValueText: OTPInputAccessibilityValueText;
+    }
+  | {
+      secret?: false;
+      accessibilityValueText?: OTPInputAccessibilityValueText;
+    };
+
+export type OTPInputProps = Props & OTPInputSecretProps;
 
 /**
  * `OTPInput` is a component that allows the user to enter a one-time password.
@@ -57,18 +69,18 @@ export const OTPInput = ({
   length,
   accessibilityLabel,
   accessibilityHint,
-  accessibilityValueText,
   onValidate,
   errorMessage = "",
-  secret = false,
   autocomplete = false,
   inputAccessoryViewID,
   autoFocus = false,
   deleteButtonAccessibilityLabel,
-  ref
-}: Props) => {
+  ref,
+  ...props
+}: OTPInputProps) => {
   const [hasFocus, setHasFocus] = useState(autoFocus);
   const [hasError, setHasError] = useState(false);
+  const isSecret = props.secret === true;
 
   const theme = useIOTheme();
 
@@ -126,10 +138,22 @@ export const OTPInput = ({
         }
         break;
       default:
-        AccessibilityInfo.announceForAccessibility(e.nativeEvent.key);
+        if (!isSecret) {
+          AccessibilityInfo.announceForAccessibility(e.nativeEvent.key);
+        }
         break;
     }
   };
+
+  const accessibilityValueTextParams = {
+    valueLength: value.length,
+    length
+  };
+
+  const accessibilityValueText = isSecret
+    ? props.accessibilityValueText(accessibilityValueTextParams)
+    : props.accessibilityValueText?.(accessibilityValueTextParams) ??
+      value.split("").join(", ");
 
   const cells = useMemo(() => Array.from({ length }), [length]);
 
@@ -150,10 +174,8 @@ export const OTPInput = ({
           caretHidden={Platform.OS === "ios"}
           style={[
             StyleSheet.absoluteFillObject,
-            Platform.select({
-              ios: { opacity: 0.01 },
-              android: { opacity: 0 }
-            })
+            // Keep the hidden TextInput minimally visible so native focus still works.
+            { opacity: 0.01 }
           ]}
           maxLength={length}
           ref={inputRef}
@@ -167,16 +189,10 @@ export const OTPInput = ({
           accessible={true}
           accessibilityLabel={accessibilityLabel}
           accessibilityHint={accessibilityHint}
-          // Ensure the screen reader pronounces the code digit by digit
-          accessibilityValue={{
-            text:
-              accessibilityValueText?.({
-                valueLength: value.length,
-                length
-              }) ?? value.split("").join(" ")
-          }}
+          // Keep secret values out of the screen reader output.
+          accessibilityValue={{ text: accessibilityValueText }}
           autoFocus={autoFocus}
-          secureTextEntry={secret}
+          secureTextEntry={isSecret}
         />
         <View
           style={{
@@ -199,7 +215,7 @@ export const OTPInput = ({
                   ? "focus"
                   : "default"
               }
-              secret={secret}
+              secret={isSecret}
               value={value[i]}
             />
           ))}
