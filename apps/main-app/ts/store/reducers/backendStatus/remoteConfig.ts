@@ -748,6 +748,24 @@ export const appFeedbackUriConfigSelector = (topic: TopicKeys = "general") =>
       )
   );
 
+export const messageSurveyBannerUriSelector = (
+  state: GlobalState
+): string | undefined => {
+  const remoteConfig = remoteConfigSelector(state);
+
+  const isEnabled = isPropertyWithMinAppVersionEnabled({
+    remoteConfig,
+    mainLocalFlag: true,
+    configPropertyName: "messages_feedback_banner"
+  });
+
+  if (O.isNone(remoteConfig) || !isEnabled) {
+    return undefined;
+  }
+
+  return remoteConfig.value.messages_feedback_banner?.feedback_uri;
+};
+
 export const appFeedbackEnabledSelector = (state: GlobalState) =>
   pipe(state, remoteConfigSelector, remoteConfig =>
     isPropertyWithMinAppVersionEnabled({

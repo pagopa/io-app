@@ -46,6 +46,13 @@ export const trackItWalletIntroScreen = (itw_flow: ItwFlow) => {
   );
 };
 
+export const trackItwPrivacyScreen = (itw_flow: ItwFlow) => {
+  void mixpanelTrack(
+    ITW_SCREENVIEW_EVENTS.ITW_PRIVACY,
+    buildEventProperties("UX", "screen_view", { itw_flow })
+  );
+};
+
 export const trackOpenWalletScreen = (
   credential_details: ItwCredentialDetails
 ) => {

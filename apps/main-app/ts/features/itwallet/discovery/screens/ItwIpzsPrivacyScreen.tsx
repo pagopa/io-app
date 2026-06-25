@@ -3,12 +3,15 @@ import {
   IOMarkdownLite,
   VSpacer
 } from "@pagopa/io-app-design-system";
+import { useFocusEffect } from "@react-navigation/native";
 import I18n from "i18next";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import LoadingSpinnerOverlay from "../../../../components/LoadingSpinnerOverlay";
 import { IOScrollViewWithLargeHeader } from "../../../../components/ui/IOScrollViewWithLargeHeader";
 import { useIOSelector } from "../../../../store/hooks";
+import { trackItwPrivacyScreen } from "../../analytics";
+import { ItwFlow } from "../../analytics/utils/types";
 import { itwIpzsPrivacyUrlSelector } from "../../common/store/selectors/remoteConfig";
 import { ItwEidIssuanceMachineContext } from "../../machine/eid/provider";
 import {
@@ -27,9 +30,16 @@ const ItwIpzsPrivacyScreen = () => {
     isL3FeaturesEnabledSelector
   );
   const privacyUrl = useIOSelector(itwIpzsPrivacyUrlSelector);
+  const itwFlow: ItwFlow = isL3 ? "L3" : "L2";
+
+  useFocusEffect(
+    useCallback(() => {
+      trackItwPrivacyScreen(itwFlow);
+    }, [itwFlow])
+  );
 
   const handleContinuePress = () => {
-    trackOpenItwTosAccepted(isL3 ? "L3" : "L2");
+    trackOpenItwTosAccepted(itwFlow);
     machineRef.send({ type: "accept-ipzs-privacy" });
   };
 

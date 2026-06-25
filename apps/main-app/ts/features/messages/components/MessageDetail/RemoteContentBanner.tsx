@@ -17,7 +17,7 @@ export const RemoteContentBanner = () => {
       <VSpacer size={16} />
       <Banner
         action={`${I18n.t("messageDetails.banner.action")}`}
-        color={"neutral"}
+        color="turquoise"
         content={I18n.t("messageDetails.banner.content")}
         onPress={() => {
           trackRemoteContentInfo();

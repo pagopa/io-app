@@ -19,6 +19,7 @@ import { NotificationPaymentInfo } from "../../../../definitions/pn/Notification
 import { ServiceId } from "../../../../definitions/services/ServiceId";
 import { MessageDetailsAttachments } from "../../messages/components/MessageDetail/MessageDetailsAttachments";
 import { MessageDetailsHeader } from "../../messages/components/MessageDetail/MessageDetailsHeader";
+import { SendMessageSurveyBanner } from "../../messages/components/MessageSurveyBanner";
 import { ATTACHMENT_CATEGORY } from "../../messages/types/attachmentCategory";
 import {
   SendOpeningSource,
@@ -149,6 +150,7 @@ export const MessageDetails = ({
             sendUserType={sendUserType}
             serviceId={serviceId}
           />
+          <SendMessageSurveyBanner message={message} serviceId={serviceId} />
           <VSpacer size={16} />
         </ContentWrapper>
         <MessageBottomMenu

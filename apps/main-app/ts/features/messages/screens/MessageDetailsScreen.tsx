@@ -26,6 +26,7 @@ import { MessageDetailsReminder } from "../components/MessageDetail/MessageDetai
 import { MessageDetailsScrollViewAdditionalSpace } from "../components/MessageDetail/MessageDetailsScrollViewAdditionalSpace";
 import { MessageDetailsStickyFooter } from "../components/MessageDetail/MessageDetailsStickyFooter";
 import { RemoteContentBanner } from "../components/MessageDetail/RemoteContentBanner";
+import { StandardMessageSurveyBanner } from "../components/MessageSurveyBanner";
 import { MessagesParamsList } from "../navigation/params";
 import {
   cancelPaymentStatusTracking,
@@ -205,6 +206,7 @@ export const MessageDetailsScreen = (props: MessageDetailsScreenProps) => {
               serviceId={serviceId}
             />
             {hasRemoteContent && <RemoteContentBanner />}
+            <StandardMessageSurveyBanner message={message} />
           </ContentWrapper>
         </View>
         <VSpacer size={24} />
