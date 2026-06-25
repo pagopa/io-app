@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.35.0-rc.9](https://github.com/pagopa/io-app/compare/3.35.0-rc.8...3.35.0-rc.9) (2026-06-25)
+
+
+### Chores
+
+* [[IOAPPX-000](https://pagopa.atlassian.net/browse/IOAPPX-000)] Downgrade React Navigation to version 6 ([#8198](https://github.com/pagopa/io-app/issues/8198)) ([c983253](https://github.com/pagopa/io-app/commit/c983253923eb606e6fd98ce77bea9f5c15fbd0f8))
+
 ## [3.35.0-rc.8](https://github.com/pagopa/io-app/compare/3.35.0-rc.7...3.35.0-rc.8) (2026-06-24)
 
 
