@@ -1,7 +1,6 @@
 import { generate } from "@pagopa/io-react-native-crypto";
 import {
   createCryptoContextFor,
-  type CredentialIssuance,
   type ItwVersion
 } from "@pagopa/io-react-native-wallet";
 import { v4 as uuidv4 } from "uuid";
@@ -33,27 +32,6 @@ import { getWalletUnitAttestation } from "./itwAttestationUtils";
  * Currently only the mDL must be requested sequentially because of locking issues.
  */
 const SEQUENTIAL_ISSUANCE_CREDENTIALS = ["mDL"];
-
-type CompleteFormPostWithEvaluatedDcqlQuery = (
-  requestObject: RequestObject,
-  issuerConf: IssuerConfiguration,
-  evaluatedDcqlQuery: EvaluatedDcqlQueryResult,
-  context: { wiaCryptoContext: CryptoContext }
-) => ReturnType<
-  CredentialIssuance.IssuanceApi["completeUserAuthorizationWithFormPostJwtMode"]
->;
-
-type CompleteEaaWithEvaluatedDcqlQuery = (
-  requestObject: RequestObject,
-  issuerConf: IssuerConfiguration,
-  evaluatedDcqlQuery: EvaluatedDcqlQueryResult,
-  redirectUri: string,
-  context?: {
-    fetchFinalRedirectUri?: (url: string) => Promise<string | undefined>;
-  }
-) => ReturnType<
-  CredentialIssuance.IssuanceApi["completeEaaUserAuthorizationWithQueryMode"]
->;
 
 export type RequestCredential = (args: {
   env: Env;
@@ -181,12 +159,8 @@ export const completeAuthFlow: CompleteAuthFlow = async ({
   // Two modes are supported for backward compatibility with IT-Wallet 1.0.
   const getAuthorizationCode = async (): Promise<string> => {
     if (responseMode === "form_post.jwt") {
-      const completeUserAuthorizationWithFormPostJwtMode = ioWallet
-        .CredentialIssuance
-        .completeUserAuthorizationWithFormPostJwtMode as unknown as CompleteFormPostWithEvaluatedDcqlQuery;
-
       return (
-        await completeUserAuthorizationWithFormPostJwtMode(
+        await ioWallet.CredentialIssuance.completeUserAuthorizationWithFormPostJwtMode(
           requestObject,
           issuerConf,
           evaluatedDcqlQuery,
@@ -194,12 +168,9 @@ export const completeAuthFlow: CompleteAuthFlow = async ({
         )
       ).code;
     }
-    const completeEaaUserAuthorizationWithQueryMode = ioWallet
-      .CredentialIssuance
-      .completeEaaUserAuthorizationWithQueryMode as unknown as CompleteEaaWithEvaluatedDcqlQuery;
 
     return (
-      await completeEaaUserAuthorizationWithQueryMode(
+      await ioWallet.CredentialIssuance.completeEaaUserAuthorizationWithQueryMode(
         requestObject,
         issuerConf,
         evaluatedDcqlQuery,
