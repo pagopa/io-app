@@ -49,10 +49,6 @@ export default function remoteConfigReducer(
 
 export const remoteConfigSelector = (state: GlobalState) => state.remoteConfig;
 
-export const remoteConfigValueSelector = (
-  state: GlobalState
-): BackendStatus["config"] | undefined => O.toUndefined(state.remoteConfig);
-
 export const isBackendStatusLoadedSelector = (state: GlobalState) =>
   O.isSome(remoteConfigSelector(state));
 

@@ -5,7 +5,10 @@ import { useOfflineToastGuard } from "../../../../hooks/useOfflineToastGuard";
 import { useIONavigation } from "../../../../navigation/params/AppParamsList";
 import { useIOSelector } from "../../../../store/hooks";
 import { itwIsL3EnabledSelector } from "../../common/store/selectors/preferences";
-import { itwDisabledCredentialsSelector } from "../../common/store/selectors/remoteConfig";
+import {
+  itwDisabledCredentialsSelector,
+  itwNewCredentialsSelector
+} from "../../common/store/selectors/remoteConfig";
 import { isUpcomingCredential } from "../../common/utils/itwCredentialUtils";
 import { itwCredentialsTypesSelector } from "../../credentials/store/selectors";
 import { type CredentialsListEntry } from "../../credentialsCatalogue/store/selectors";
@@ -36,6 +39,7 @@ export const ItwOnboardingModuleCredentialsList = ({
   const remotelyDisabledCredentials = useIOSelector(
     itwDisabledCredentialsSelector
   );
+  const newCredentials = useIOSelector(itwNewCredentialsSelector);
   const itwCredentialsTypes = useIOSelector(itwCredentialsTypesSelector);
   const isL3Enabled = useIOSelector(itwIsL3EnabledSelector);
   const isItWalletValid = useIOSelector(itwLifecycleIsITWalletValidSelector);
@@ -109,13 +113,7 @@ export const ItwOnboardingModuleCredentialsList = ({
     )
   );
 
-  const resolveIsNew = useCallback(
-    (_type: string, isNewFromRemote: boolean | undefined): boolean =>
-      isNewFromRemote === true,
-    []
-  );
-
-  return credentialsToDisplay.map(({ type, name, isNew: isNewFromRemote }) => (
+  return credentialsToDisplay.map(({ type, name }) => (
     <ItwOnboardingModuleCredential
       key={`itw_credential_${type}`}
       type={type}
@@ -123,7 +121,7 @@ export const ItwOnboardingModuleCredentialsList = ({
       isActive={itwCredentialsTypes.includes(type)}
       isDisabled={remotelyDisabledCredentials.includes(type)}
       isUpcoming={isUpcomingCredential(type)}
-      isNew={resolveIsNew(type, isNewFromRemote)}
+      isNew={newCredentials.includes(type)}
       isCredentialIssuancePending={isCredentialIssuancePending}
       isSelectedCredential={pipe(
         selectedCredentialOption,

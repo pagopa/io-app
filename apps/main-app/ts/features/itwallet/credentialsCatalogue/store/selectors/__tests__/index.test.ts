@@ -150,8 +150,8 @@ describe("itwAvailableCredentialsListSelector", () => {
     });
 
     expect(itwAvailableCredentialsListSelector(state)).toEqual([
-      { type: "cred1", name: "Credential 1", isNew: false },
-      { type: "cred2", name: "Credential 2", isNew: false }
+      { type: "cred1", name: "Credential 1" },
+      { type: "cred2", name: "Credential 2" }
     ]);
   });
 
@@ -164,8 +164,8 @@ describe("itwAvailableCredentialsListSelector", () => {
     });
 
     expect(itwAvailableCredentialsListSelector(state)).toEqual([
-      { type: "cred1", name: "Credential 1", isNew: false },
-      { type: "cred2", name: "Credenziale 2", isNew: false }
+      { type: "cred1", name: "Credential 1" },
+      { type: "cred2", name: "Credenziale 2" }
     ]);
   });
 
@@ -178,8 +178,8 @@ describe("itwAvailableCredentialsListSelector", () => {
     });
 
     expect(itwAvailableCredentialsListSelector(state)).toEqual([
-      { type: "cred1", name: "Credential 1", isNew: false },
-      { type: "cred2", name: "Credential 2", isNew: false }
+      { type: "cred1", name: "Credential 1" },
+      { type: "cred2", name: "Credential 2" }
     ]);
   });
 
@@ -190,7 +190,7 @@ describe("itwAvailableCredentialsListSelector", () => {
     });
 
     expect(itwAvailableCredentialsListSelector(state)).toEqual([
-      { name: "Patente di guida", type: "mDL", isNew: false },
+      { name: "Patente di guida", type: "mDL" },
       {
         name: "Carta Europea della Disabilità",
         type: "EuropeanDisabilityCard",
@@ -201,14 +201,14 @@ describe("itwAvailableCredentialsListSelector", () => {
         type: "EuropeanHealthInsuranceCard",
         isNew: false
       },
-      { name: "Titoli accademici", type: "education_degree", isNew: false },
+      { name: "Titoli accademici", type: "education_degree" },
       {
         name: "Iscrizioni accademiche",
         type: "education_enrollment",
         isNew: false
       },
-      { name: "Attestato di residenza", type: "residency", isNew: false },
-      { name: "Diplomi", type: "education_diploma", isNew: false },
+      { name: "Attestato di residenza", type: "residency" },
+      { name: "Diplomi", type: "education_diploma" },
       {
         name: "Frequenza scolastica",
         type: "education_attendance",

@@ -27,7 +27,6 @@ import {
 export type CredentialsListEntry = {
   type: string;
   name: string;
-  isNew?: boolean;
 };
 
 const EMPTY_ARRAY: ReadonlyArray<CredentialsListEntry> = [];
@@ -192,7 +191,7 @@ export const itwCredentialNameResolverSelector = createSelector(
  *
  * When the catalogue is enabled, credentials are ordered and filtered according to remote config:
  * - Credentials in `hidden_credentials` are excluded.
- * - Credentials in `new_credentials` appear first (in array order) with `isNew: true`.
+ * - Credentials in `new_credentials` appear first (in array order).
  * - Credentials in `pinned_credentials` (not already new) appear next (in array order).
  * - Remaining credentials follow default order.
  */
@@ -214,10 +213,7 @@ export const itwAvailableCredentialsListSelector = createSelector(
     hiddenCredentials
   ): ReadonlyArray<CredentialsListEntry> => {
     if (!isEnabled) {
-      return hardcodedCredentialsList.map(entry => ({
-        ...entry,
-        isNew: remoteNewCredentials.includes(entry.type)
-      }));
+      return hardcodedCredentialsList;
     }
 
     if (!catalogue) {
@@ -235,8 +231,7 @@ export const itwAvailableCredentialsListSelector = createSelector(
           credential.credential_type,
           credential.name ?? credential.credential_type
         ),
-        type: credential.credential_type,
-        isNew: remoteNewCredentials.includes(credential.credential_type)
+        type: credential.credential_type
       }));
 
     const newEntries = remoteNewCredentials

@@ -2,7 +2,6 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { Platform } from "react-native";
 import { createSelector } from "reselect";
-import { remoteConfigValueSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
   getAppVersion,
@@ -137,9 +136,9 @@ export const itwIpzsPrivacyUrlSelector = createSelector(
  * The order of the array determines the display order.
  */
 export const itwPinnedCredentialsSelector = createSelector(
-  remoteConfigValueSelector,
-  (config): ReadonlyArray<string> =>
-    config?.itw?.pinned_credentials ?? emptyArray
+  itwRemoteConfigSelector,
+  (itwConfig): ReadonlyArray<string> =>
+    O.toUndefined(itwConfig)?.pinned_credentials ?? emptyArray
 );
 
 /**
@@ -147,15 +146,16 @@ export const itwPinnedCredentialsSelector = createSelector(
  * New credentials are displayed first with a "NOVITÀ" badge.
  */
 export const itwNewCredentialsSelector = createSelector(
-  remoteConfigValueSelector,
-  (config): ReadonlyArray<string> => config?.itw?.new_credentials ?? emptyArray
+  itwRemoteConfigSelector,
+  (itwConfig): ReadonlyArray<string> =>
+    O.toUndefined(itwConfig)?.new_credentials ?? emptyArray
 );
 
 /**
  * Return the credential types that are hidden from the catalogue list.
  */
 export const itwHiddenCredentialsSelector = createSelector(
-  remoteConfigValueSelector,
-  (config): ReadonlyArray<string> =>
-    config?.itw?.hidden_credentials ?? emptyArray
+  itwRemoteConfigSelector,
+  (itwConfig): ReadonlyArray<string> =>
+    O.toUndefined(itwConfig)?.hidden_credentials ?? emptyArray
 );
