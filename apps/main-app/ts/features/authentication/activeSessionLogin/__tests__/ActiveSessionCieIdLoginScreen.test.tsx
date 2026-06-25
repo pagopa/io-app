@@ -30,8 +30,7 @@ jest.mock("@react-navigation/native", () => {
     ...actualNav,
     useNavigation: () => ({
       replace: mockReplace,
-      popToTop: mockPopToTop,
-      addListener: jest.fn(() => jest.fn())
+      popToTop: mockPopToTop
     }),
     useRoute: () => ({
       params: {
@@ -63,6 +62,10 @@ jest.mock("../../../../hooks/useHeaderSecondLevel", () => ({
 }));
 
 describe("ActiveSessionCieIdLoginScreen", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("should navigate to incorrect url screen on invalid URL format", () => {
     jest
       .spyOn(Linking, "addEventListener")
