@@ -44,8 +44,6 @@ const notImplemented = () => {
   throw new Error("Not implemented");
 };
 
-const ISSUANCE_PREVIEW_LOADING_DELAY_MS = 4000;
-
 export const itwEidIssuanceMachine = setup({
   types: {
     context: {} as Context,
@@ -1117,6 +1115,7 @@ export const itwEidIssuanceMachine = setup({
       }
     },
     Issuance: {
+      entry: "navigateToEidPreviewScreen",
       initial: "RequestingAccessToken",
       states: {
         WaitingForSessionRefresh: {
@@ -1197,7 +1196,6 @@ export const itwEidIssuanceMachine = setup({
           ]
         },
         DisplayingPreview: {
-          entry: "navigateToEidPreviewScreen",
           on: {
             "add-to-wallet": {
               target: "StoringCredential"
@@ -1232,11 +1230,6 @@ export const itwEidIssuanceMachine = setup({
         },
         Completed: {
           type: "final"
-        }
-      },
-      after: {
-        [ISSUANCE_PREVIEW_LOADING_DELAY_MS]: {
-          actions: "navigateToEidPreviewScreen"
         }
       },
       onDone: [

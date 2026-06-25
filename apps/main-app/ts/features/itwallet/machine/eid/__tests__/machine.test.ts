@@ -461,7 +461,7 @@ describe("itwEidIssuanceMachine", () => {
         callbackUrl: "http://test.it"
       }
     });
-    expect(navigateToEidPreviewScreen).not.toHaveBeenCalled();
+    expect(navigateToEidPreviewScreen).toHaveBeenCalledTimes(1);
 
     // EID obtained
     jest.advanceTimersByTime(10);
@@ -1446,7 +1446,7 @@ describe("itwEidIssuanceMachine", () => {
 
     await waitForActor(actor, s => s.matches("Failure"));
 
-    expect(navigateToEidPreviewScreen).not.toHaveBeenCalled();
+    expect(navigateToEidPreviewScreen).toHaveBeenCalledTimes(1);
     expect(navigateToFailureScreen).toHaveBeenCalledTimes(1);
     expect(actor.getSnapshot().context.failure).toStrictEqual({
       type: IssuanceFailureType.NOT_MATCHING_IDENTITY,
@@ -1454,7 +1454,7 @@ describe("itwEidIssuanceMachine", () => {
     });
   });
 
-  it("Should navigate to the eID preview loading screen when issuance takes longer than 4 seconds", async () => {
+  it("Should navigate to the eID preview loading screen when issuance starts", async () => {
     requestAccessToken.mockImplementation(() =>
       Promise.resolve(T_ACCESS_TOKEN)
     );
@@ -1503,10 +1503,6 @@ describe("itwEidIssuanceMachine", () => {
     expect(requestingEidSnapshot.tags).toStrictEqual(
       new Set([ItwTags.Loading])
     );
-    expect(navigateToEidPreviewScreen).not.toHaveBeenCalled();
-
-    jest.advanceTimersByTime(4000);
-
     expect(navigateToEidPreviewScreen).toHaveBeenCalledTimes(1);
     expect(actor.getSnapshot().value).toStrictEqual({
       Issuance: "RequestingEid"
