@@ -37,7 +37,10 @@ import { itwLifecycleIsITWalletValidSelector } from "../../../lifecycle/store/se
 import { offlineAccessReasonSelector } from "../../../../ingress/store/selectors";
 import { ItwEidLifecycleAlert } from "../../../common/components/ItwEidLifecycleAlert";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
-import { useItwIssuerDynamicErrorBottomSheet } from "../hooks/useItwIssuerDynamicErrorBottomSheet";
+import {
+  isMdlSuspendedIssuerError,
+  useItwIssuerDynamicErrorBottomSheet
+} from "../hooks/useItwIssuerDynamicErrorBottomSheet";
 import { ITW_ROUTES } from "../../../navigation/routes.ts";
 
 type Props = {
@@ -400,6 +403,7 @@ const IssuerDynamicErrorAlert = ({
   status
 }: IssuerDynamicErrorAlertProps) => {
   const localizedMessage = getLocalizedMessageOrFallback(message);
+  const isMdlSuspended = isMdlSuspendedIssuerError(credential);
   const bottomSheet = useItwIssuerDynamicErrorBottomSheet({
     credential,
     localizedMessage,
@@ -412,8 +416,18 @@ const IssuerDynamicErrorAlert = ({
     <>
       <Alert
         variant="error"
-        content={localizedMessage.title}
-        action={I18n.t("features.itWallet.presentation.alerts.statusAction")}
+        content={
+          isMdlSuspended
+            ? I18n.t(
+                "features.itWallet.presentation.alerts.mdl.suspended.title"
+              )
+            : localizedMessage.title
+        }
+        action={I18n.t(
+          isMdlSuspended
+            ? "features.itWallet.presentation.alerts.mdl.suspended.action"
+            : "features.itWallet.presentation.alerts.statusAction"
+        )}
         onPress={handleAlertPress}
       />
       {bottomSheet.bottomSheet}

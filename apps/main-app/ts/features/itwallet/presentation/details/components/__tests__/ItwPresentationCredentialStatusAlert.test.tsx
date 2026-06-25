@@ -193,6 +193,54 @@ describe("ItwPresentationCredentialStatusAlert", () => {
     expect(component.getByText("Rimuovi dal Portafoglio")).toBeTruthy();
   });
 
+  it("should render suspended mDL review copy with acknowledgement action", () => {
+    mockBottomSheetModal();
+
+    const selectorMock: ReturnType<
+      typeof selectors.itwCredentialStatusSelector
+    > = {
+      status: "invalid",
+      message: {
+        "it-IT": {
+          title: "__Issuer suspended title__",
+          description: "__Issuer suspended description__"
+        }
+      }
+    };
+
+    jest
+      .spyOn(selectors, "itwCredentialStatusSelector")
+      .mockImplementation(() => selectorMock);
+
+    const component = renderComponent({
+      storedStatusAssertion: {
+        credentialStatus: "invalid",
+        errorCode: "credential_suspended"
+      }
+    });
+
+    expect(
+      component.getByText("La tua Patente di guida risulta non valida.")
+    ).toBeTruthy();
+    expect(component.getByText("Scopri di più")).toBeTruthy();
+    expect(
+      component.getByText(
+        /Il tuo documento potrebbe ad esempio essere stato sospeso o ritirato/
+      )
+    ).toBeTruthy();
+    expect(component.getByText("Ho capito")).toBeTruthy();
+    expect(component.queryByText("__Issuer suspended title__")).toBeNull();
+    expect(
+      component.queryByText("__Issuer suspended description__")
+    ).toBeNull();
+    expect(component.queryByText("Aggiorna il documento digitale")).toBeNull();
+    expect(component.queryByText("Rimuovi dal Portafoglio")).toBeNull();
+
+    fireEvent.press(component.getByText("Ho capito"));
+
+    expect(mockBottomSheetDismiss).toHaveBeenCalledTimes(1);
+  });
+
   it("tracks banner tap and bottom sheet opening for the expiring status alert", () => {
     mockBottomSheetModal();
 
