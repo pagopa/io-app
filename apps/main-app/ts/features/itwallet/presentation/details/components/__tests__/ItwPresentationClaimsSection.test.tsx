@@ -19,7 +19,7 @@ describe("ItwPresentationClaimsSection", () => {
     const toggleButton = component.queryByTestId("toggle-claim-visibility");
 
     if (!toggleButton) {
-      fail("Toggle button not found");
+      throw new Error("Toggle button not found");
     }
 
     fireEvent(toggleButton, "onPress");
