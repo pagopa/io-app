@@ -13,8 +13,7 @@ export const IONavigationDarkTheme = {
     ...DarkTheme.colors,
     background: IOColors[IOThemeDark["appBackground-primary"]],
     card: IOColors[IOThemeDark["appBackground-primary"]]
-  },
-  fonts: DefaultTheme.fonts
+  }
 };
 
 export const IONavigationLightTheme = {
@@ -23,6 +22,5 @@ export const IONavigationLightTheme = {
     ...DefaultTheme.colors,
     background: IOColors[IOThemeLight["appBackground-primary"]],
     card: IOColors[IOThemeLight["appBackground-primary"]]
-  },
-  fonts: DefaultTheme.fonts
+  }
 };

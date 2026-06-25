@@ -786,7 +786,7 @@ export const itwEidIssuanceMachine = setup({
                   target: "CieWarning.PreparationCie"
                 },
                 back: {
-                  target: "InsertingCardPin"
+                  target: "PreparationPin"
                 },
                 close: {
                   actions: "closeIssuance"
@@ -1113,6 +1113,10 @@ export const itwEidIssuanceMachine = setup({
             onDone: {
               target: "RequestingEid",
               actions: assign(({ event }) => ({ accessToken: event.output }))
+            },
+            onError: {
+              actions: "setFailure",
+              target: "#itwEidIssuanceMachine.Failure"
             }
           }
         },

@@ -7,11 +7,10 @@ import {
 } from "@pagopa/io-app-design-system";
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { useHeaderHeight } from "@react-navigation/elements";
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useIsFocused } from "@react-navigation/native";
 import I18n from "i18next";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
-  InteractionManager,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
@@ -43,15 +42,14 @@ export const ItwCieCanScreen = () => {
   const canPadViewRef = useRef<View>(null);
 
   const headerHeight = useHeaderHeight();
+  const isFocused = useIsFocused();
 
-  useFocusEffect(
-    useCallback(() => {
+  useEffect(() => {
+    // Reset the pin when the user leaves the screen.
+    if (!isFocused) {
       setCan("");
-      return () => {
-        Keyboard.dismiss();
-      };
-    }, [])
-  );
+    }
+  }, [isFocused]);
 
   useFocusEffect(
     useCallback(() => {
@@ -70,25 +68,12 @@ export const ItwCieCanScreen = () => {
     supportRequest: true
   });
 
-  useFocusEffect(
-    useCallback(() => {
-      const task = InteractionManager.runAfterInteractions(() => {
-        setAccessibilityFocus(canPadViewRef, 300 as Millisecond);
-      });
-
-      return () => task.cancel();
-    }, [])
-  );
-
   const onCanChanged = (value: string) => {
     setCan(value);
 
     if (value.length === CIE_CAN_LENGTH) {
       Keyboard.dismiss();
-
-      requestAnimationFrame(() => {
-        machineRef.send({ type: "cie-can-entered", can: value });
-      });
+      machineRef.send({ type: "cie-can-entered", can: value });
     }
   };
 
@@ -126,7 +111,8 @@ export const ItwCieCanScreen = () => {
                 )}
                 onValueChange={onCanChanged}
                 length={CIE_CAN_LENGTH}
-                autoFocus={false}
+                autoFocus={isFocused}
+                key={isFocused ? "focused" : "unfocused"}
               />
             </View>
           </ContentWrapper>
