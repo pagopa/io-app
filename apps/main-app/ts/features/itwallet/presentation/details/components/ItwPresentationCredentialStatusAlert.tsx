@@ -26,6 +26,7 @@ import {
   itwCredentialsEidStatusSelector
 } from "../../../credentials/store/selectors";
 import { ItwCredentialIssuanceMachineContext } from "../../../machine/credential/provider";
+import { trackCredentialRenewStart } from "../../../analytics";
 import {
   trackItwCredentialBottomSheet,
   trackItwCredentialBottomSheetAction,
@@ -75,6 +76,7 @@ export enum CredentialAlertType {
   EID_LIFECYCLE = "EID_LIFECYCLE",
   JWT_VERIFICATION = "JWT_VERIFICATION",
   DOCUMENT_EXPIRING = "DOCUMENT_EXPIRING",
+  ATTRIBUTE_UPDATE = "ATTRIBUTE_UPDATE",
   ISSUER_DYNAMIC_ERROR = "ISSUER_DYNAMIC_ERROR",
   DOCUMENT_EXPIRED = "DOCUMENT_EXPIRED",
   INVALID_CREDENTIAL = "INVALID_CREDENTIAL"
@@ -86,6 +88,34 @@ type CredentialAlertProps = {
   message: Record<string, { title: string; description: string }> | undefined;
   isOffline: boolean;
   isItwL3: boolean;
+  hasCredentialAttributeUpdate?: boolean;
+};
+
+const CREDENTIAL_ATTRIBUTE_UPDATE_ERROR_CODES = [
+  "attribute_update",
+  "credential_attribute_update",
+  "credential_attributes_updated"
+] as const;
+
+/**
+ * Returns whether the status assertion describes updated physical-document
+ * attributes, a case that requires user consent before reissuing the digital
+ * credential.
+ */
+export const isCredentialAttributeUpdate = (
+  credential: CredentialMetadata
+): boolean => {
+  const { storedStatusAssertion } = credential;
+  const normalizedErrorCode =
+    storedStatusAssertion?.credentialStatus === "invalid"
+      ? storedStatusAssertion.errorCode?.trim().toLowerCase()
+      : undefined;
+
+  return normalizedErrorCode
+    ? CREDENTIAL_ATTRIBUTE_UPDATE_ERROR_CODES.includes(
+        normalizedErrorCode as (typeof CREDENTIAL_ATTRIBUTE_UPDATE_ERROR_CODES)[number]
+      )
+    : false;
 };
 
 const useAlertPressHandler =
@@ -100,7 +130,14 @@ const useAlertPressHandler =
 export const deriveCredentialAlertType = (
   props: CredentialAlertProps
 ): CredentialAlertType | undefined => {
-  const { eidStatus, credentialStatus, message, isOffline, isItwL3 } = props;
+  const {
+    eidStatus,
+    credentialStatus,
+    message,
+    isOffline,
+    isItwL3,
+    hasCredentialAttributeUpdate
+  } = props;
 
   const isEidExpired = eidStatus === "jwtExpired";
   const isEidExpiring = eidStatus === "jwtExpiring";
@@ -159,12 +196,18 @@ export const deriveCredentialAlertType = (
     return CredentialAlertType.DOCUMENT_EXPIRING;
   }
 
-  // 5. If there is a dynamic message provided by the issuer, show the Issuer Dynamic Error alert
+  // 5. Attribute updates have reviewed copy and consent actions, so they must not
+  // fall back to issuer-provided dynamic errors.
+  if (hasCredentialAttributeUpdate) {
+    return CredentialAlertType.ATTRIBUTE_UPDATE;
+  }
+
+  // 6. If there is a dynamic message provided by the issuer, show the Issuer Dynamic Error alert
   if (message) {
     return CredentialAlertType.ISSUER_DYNAMIC_ERROR;
   }
 
-  // 6. Fallback when the issuer does not provide a message for an expired credential
+  // 7. Fallback when the issuer does not provide a message for an expired credential
   if (credentialStatus === "expired") {
     return CredentialAlertType.DOCUMENT_EXPIRED;
   }
@@ -219,7 +262,8 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
     credentialStatus: status,
     message,
     isOffline: offlineAccessReason !== undefined,
-    isItwL3
+    isItwL3,
+    hasCredentialAttributeUpdate: isCredentialAttributeUpdate(credential)
   });
 
   if (!alertType) {
@@ -247,6 +291,14 @@ const ItwPresentationCredentialStatusAlert = ({ credential }: Props) => {
         <DocumentExpiringAlert
           credential={credential}
           onTrack={trackCredentialAlertEvent}
+        />
+      );
+    case CredentialAlertType.ATTRIBUTE_UPDATE:
+      return (
+        <AttributeUpdateAlert
+          credential={credential}
+          onTrack={trackCredentialAlertEvent}
+          status={status}
         />
       );
     case CredentialAlertType.ISSUER_DYNAMIC_ERROR:
@@ -381,6 +433,76 @@ const DocumentExpiringAlert = ({
           "features.itWallet.presentation.alerts.expiring.content",
           { days: expireDays }
         )}
+        action={I18n.t("features.itWallet.presentation.alerts.statusAction")}
+        onPress={handleAlertPress}
+      />
+      {bottomSheet.bottomSheet}
+    </>
+  );
+};
+
+const AttributeUpdateAlert = ({
+  credential,
+  onTrack,
+  status
+}: CredentialStatusAlertProps) => {
+  const navigation = useIONavigation();
+  const isItwL3 = useIOSelector(itwLifecycleIsITWalletValidSelector);
+  const mixPanelCredential = getMixPanelCredential(
+    credential.credentialType,
+    isItwL3
+  );
+  const i18nNs = "features.itWallet.presentation.bottomSheets.attributeUpdate";
+
+  const handleUpdateCredential = () => {
+    if (status) {
+      trackCredentialRenewStart(mixPanelCredential, {
+        credential_status: CREDENTIAL_STATUS_MAP[status],
+        position: "bottom_sheet"
+      });
+    }
+    bottomSheet.dismiss();
+    navigation.navigate(ITW_ROUTES.MAIN, {
+      screen: ITW_ROUTES.ISSUANCE.CREDENTIAL_TRUST_ISSUER,
+      params: {
+        credentialType: credential.credentialType,
+        mode: "reissuance"
+      }
+    });
+  };
+
+  const bottomSheet = useIOBottomSheetModal({
+    title: I18n.t(`${i18nNs}.title`),
+    component: (
+      <VStack space={24}>
+        <IOMarkdown content={I18n.t(`${i18nNs}.content`)} />
+        <VStack space={16}>
+          <IOButton
+            variant="solid"
+            fullWidth
+            label={I18n.t(`${i18nNs}.primaryAction`)}
+            onPress={handleUpdateCredential}
+          />
+          <View style={{ alignSelf: "center" }}>
+            <IOButton
+              variant="link"
+              textAlign="center"
+              label={I18n.t(`${i18nNs}.secondaryAction`)}
+              onPress={() => bottomSheet.dismiss()}
+            />
+          </View>
+        </VStack>
+      </VStack>
+    )
+  });
+
+  const handleAlertPress = useAlertPressHandler(onTrack, bottomSheet);
+
+  return (
+    <>
+      <Alert
+        variant="warning"
+        content={I18n.t(`${i18nNs}.title`)}
         action={I18n.t("features.itWallet.presentation.alerts.statusAction")}
         onPress={handleAlertPress}
       />

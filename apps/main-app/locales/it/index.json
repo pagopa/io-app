@@ -3896,6 +3896,12 @@
               }
             }
           },
+          "attributeUpdate": {
+            "title": "È disponibile una versione aggiornata di questo documento",
+            "content": "Aggiorna ora la versione digitale del documento per farla corrispondere a quella fisica.",
+            "primaryAction": "Aggiorna ora",
+            "secondaryAction": "Forse più tardi"
+          },
           "mDL": {
             "expired": {
               "content": "###### Quali documenti devo preparare?\n\nLa Patente di guida (in scadenza o scaduta), un documento di identità, il Codice Fiscale e una foto recente (formato tessera).\n\n###### Hai già rinnovato il documento?\n\nSe hai già rinnovato la Patente fisica, aggiorna il documento digitale per ottenerlo anche su IO."
