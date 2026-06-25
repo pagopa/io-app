@@ -1,0 +1,33 @@
+name: Publish the Design System to Github Package Registry
+on:
+  release:
+    types: [created]
+permissions:
+  packages: write
+jobs:
+  github-package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: ./.github/actions/setup-pnpm
+      - name: Install npm 11
+        run: npm install -g npm@11.7.0
+      - name: Cache Nx
+        uses: actions/cache@2c8a9bd7457de244a408f35966fab2fb45fda9c8 # v6.0.0
+        with:
+          path: .nx
+          key: ${{ runner.os }}-nx-cache-${{ github.head_ref || github.ref_name }}-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-nx-cache-${{ github.head_ref || github.ref_name }}-
+            ${{ runner.os }}-nx-cache-
+      - name: Build the library
+        run: pnpm nx prepack io-app-design-system
+      # - name: Setup tmate session
+      #   uses: mxschmitt/action-tmate@53a5c23a925969671a6bb98ea70a4f650928ef93 #v3.16
+      - name: Publish Package
+        run: |
+          cd libs/io-app-design-system
+          npm publish --access=public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -34,24 +34,22 @@
     "prettier:check": "prettier --check \"src/**/*.{ts,tsx}\"",
     "prepack": "bob build",
     "release": "release-it",
-    "example": "yarn --cwd example",
-    "bootstrap": "yarn example",
     "generate:icons": "node scripts/generateNewIcons.js",
     "generate:pictograms": "node scripts/generateNewPictograms.js",
-    "generate": "npm-run-all generate:*"
+    "generate": "pnpm generate:icons && pnpm generate:pictograms"
   },
   "keywords": [
     "react-native",
     "ios",
     "android"
   ],
-  "repository": "https://github.com/pagopa/io-app-design-system.git",
+  "repository": "https://github.com/pagopa/io-app.git",
   "author": "PagoPa (https://github.com/pagopa)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pagopa/io-app-design-system/issues"
+    "url": "https://github.com/pagopa/io-app/issues"
   },
-  "homepage": "https://pagopa.github.io/io-app-design-system",
+  "homepage": "https://github.com/pagopa/io-app/tree/master/libs/io-app-design-system#readme",
   "devDependencies": {
     "@commitlint/config-conventional": "^17.0.2",
     "@release-it/conventional-changelog": "^5.0.0",
@@ -108,11 +106,11 @@
   "release-it": {
     "git": {
       "commitMessage": "chore: release ${version}",
-      "tagName": "v${version}",
-      "changelog": "yarn auto-changelog --stdout --commit-limit false -u --template https://raw.githubusercontent.com/release-it/release-it/master/templates/changelog-compact.hbs"
+      "tagName": "Design System: v${version}",
+      "changelog": "pnpm auto-changelog --stdout --commit-limit false -u --template https://raw.githubusercontent.com/release-it/release-it/master/templates/changelog-compact.hbs"
     },
     "hooks": {
-      "after:bump": "yarn auto-changelog -p && git add ."
+      "after:bump": "pnpm auto-changelog -p && git add ."
     },
     "npm": {
       "publish": false
