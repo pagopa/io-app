@@ -42,8 +42,7 @@ jest.mock("@react-navigation/native", () => {
       setOptions: jest.fn(),
       dispatch: jest.fn(),
       canGoBack: jest.fn(),
-      getParent: jest.fn(),
-      addListener: jest.fn(() => jest.fn())
+      getParent: jest.fn()
     }),
     useRoute: () => ({
       name: "CIE_CARD_READER_SCREEN",
