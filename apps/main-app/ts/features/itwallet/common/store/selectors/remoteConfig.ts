@@ -2,7 +2,7 @@ import * as O from "fp-ts/lib/Option";
 import { pipe } from "fp-ts/lib/function";
 import { Platform } from "react-native";
 import { createSelector } from "reselect";
-import { remoteConfigValueSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
+import { remoteConfigSelector } from "../../../../../store/reducers/backendStatus/remoteConfig";
 import { GlobalState } from "../../../../../store/reducers/types";
 import {
   getAppVersion,
@@ -138,7 +138,8 @@ export const itwIpzsPrivacyUrlSelector = createSelector(
 export const isItwMinAppVersionSupportedSelector = (
   state: GlobalState
 ): boolean => {
-  const version = remoteConfigValueSelector(state)?.itw?.itw_min_app_version;
+  const version = O.toUndefined(remoteConfigSelector(state))?.itw
+    ?.itw_min_app_version;
   if (!version) {
     return false;
   }
@@ -154,8 +155,8 @@ export const isItwMinAppVersionSupportedSelector = (
 export const isItwProximityMinAppVersionSupportedSelector = (
   state: GlobalState
 ): boolean => {
-  const version =
-    remoteConfigValueSelector(state)?.itw?.proximity_min_app_version;
+  const version = O.toUndefined(remoteConfigSelector(state))?.itw
+    ?.proximity_min_app_version;
   if (!version) {
     return false;
   }
