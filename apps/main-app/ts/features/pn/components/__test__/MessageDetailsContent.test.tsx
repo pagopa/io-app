@@ -34,6 +34,10 @@ const mockSelectors = (denomination: string | undefined) => {
 };
 
 describe("MessageDetailsContent component", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   const sendUserTypes: ReadonlyArray<SendUserType> = [
     "mandatory",
     "not_set",

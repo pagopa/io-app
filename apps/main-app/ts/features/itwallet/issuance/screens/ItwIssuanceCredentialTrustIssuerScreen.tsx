@@ -56,10 +56,10 @@ import {
 import { ItwRequestedClaimsList } from "../components/ItwRequestedClaimsList";
 
 export type ItwIssuanceCredentialTrustIssuerNavigationParams = {
+  animationEnabled?: boolean;
   credentialType?: string;
   isUpgrade?: boolean;
   mode?: CredentialIssuanceMode;
-  disableAnimation?: boolean;
 };
 
 type ScreenProps =
