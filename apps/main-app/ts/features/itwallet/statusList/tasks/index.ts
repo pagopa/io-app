@@ -5,7 +5,10 @@ import {
   trackItwStatusListFetchRegisterFailure
 } from "../analytics";
 import { refreshStaleEntries } from "../utils/cache";
-import { storeLastStatusListCheckTimestamp } from "../utils/storage";
+import {
+  getPersistedItwVersion,
+  storeLastStatusListCheckTimestamp
+} from "../utils/storage";
 
 /**
  * Identifier for the ITW Status List background fetch task.
@@ -75,7 +78,8 @@ export const unregisterItwStatusListFetchTask = async (): Promise<void> => {
 TaskManager.defineTask(ITW_STATUS_LIST_FETCH_TASK, async () => {
   try {
     const now = Date.now();
-    await refreshStaleEntries({ itwVersion: "1.3.3" }, now);
+    const itwVersion = await getPersistedItwVersion();
+    await refreshStaleEntries({ itwVersion }, now);
     await storeLastStatusListCheckTimestamp(now);
     return BackgroundTask.BackgroundTaskResult.Success;
   } catch {

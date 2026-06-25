@@ -1,6 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StatusListRepository } from "../repository";
 import { refreshStatusListToken } from "../refresh";
+import { type StatusListContext } from "../types";
 
 jest.mock("@react-native-async-storage/async-storage", () =>
   require("@react-native-async-storage/async-storage/jest/async-storage-mock")
@@ -19,6 +20,8 @@ jest.mock("@pagopa/io-react-native-jwt", () => ({
 }));
 
 const URI = "https://issuer.example/status/1";
+
+const context: StatusListContext = { itwVersion: "1.3.3" };
 
 const makeValidPayload = () => ({
   sub: URI,
@@ -56,7 +59,7 @@ describe("refreshStatusListToken", () => {
     const payload = makeValidPayload();
     mockFetch(fakeJwt(payload));
 
-    const result = await refreshStatusListToken(URI);
+    const result = await refreshStatusListToken(context, URI);
 
     expect(result).toBe(true);
 
@@ -68,7 +71,7 @@ describe("refreshStatusListToken", () => {
   it("returns false when fetch response is not ok", async () => {
     mockFetch(fakeJwt(makeValidPayload()), false);
 
-    const result = await refreshStatusListToken(URI);
+    const result = await refreshStatusListToken(context, URI);
 
     expect(result).toBe(false);
     expect(await StatusListRepository.get(URI)).toBeUndefined();
@@ -77,7 +80,7 @@ describe("refreshStatusListToken", () => {
   it("returns false for malformed payload", async () => {
     mockFetch(fakeJwt({ sub: URI }));
 
-    const result = await refreshStatusListToken(URI);
+    const result = await refreshStatusListToken(context, URI);
 
     expect(result).toBe(false);
   });
@@ -89,7 +92,7 @@ describe("refreshStatusListToken", () => {
     };
     mockFetch(fakeJwt(wrongSub));
 
-    const result = await refreshStatusListToken(URI);
+    const result = await refreshStatusListToken(context, URI);
 
     expect(result).toBe(false);
   });
@@ -99,7 +102,7 @@ describe("refreshStatusListToken", () => {
       .spyOn(globalThis, "fetch")
       .mockRejectedValue(new Error("network error"));
 
-    const result = await refreshStatusListToken(URI);
+    const result = await refreshStatusListToken(context, URI);
 
     expect(result).toBe(false);
   });
@@ -112,7 +115,7 @@ describe("refreshStatusListToken", () => {
       .spyOn(globalThis, "fetch")
       .mockRejectedValue(new Error("network error"));
 
-    const result = await refreshStatusListToken(URI);
+    const result = await refreshStatusListToken(context, URI);
 
     expect(result).toBe(false);
     expect(await StatusListRepository.get(URI)).toBeDefined();
@@ -125,7 +128,7 @@ describe("refreshStatusListToken", () => {
     const newPayload = { ...makeValidPayload(), iat: 1690000000 };
     mockFetch(fakeJwt(newPayload));
 
-    const result = await refreshStatusListToken(URI);
+    const result = await refreshStatusListToken(context, URI);
 
     expect(result).toBe(true);
     const cached = await StatusListRepository.get(URI);

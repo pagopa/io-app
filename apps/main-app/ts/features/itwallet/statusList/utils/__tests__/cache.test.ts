@@ -3,12 +3,15 @@ import { StatusListRepository } from "../repository";
 import * as refresh from "../refresh";
 import { startupCoherence, refreshStaleEntries } from "../cache";
 import { type StatusListPayload } from "../schemas";
+import { type StatusListContext } from "../types";
 
 jest.mock("@react-native-async-storage/async-storage", () =>
   require("@react-native-async-storage/async-storage/jest/async-storage-mock")
 );
 
 jest.mock("../refresh");
+
+const context: StatusListContext = { itwVersion: "1.3.3" };
 
 const makeSub = (id: number) => `https://issuer.example/status/${id}`;
 
@@ -101,14 +104,17 @@ describe("cache service", () => {
         makePayload(2, { exp: FRESH_EXP })
       );
 
-      await refreshStaleEntries(NOW);
+      await refreshStaleEntries(context, NOW);
 
-      expect(refresh.refreshStatusListToken).toHaveBeenCalledWith(makeSub(1));
+      expect(refresh.refreshStatusListToken).toHaveBeenCalledWith(
+        context,
+        makeSub(1)
+      );
       expect(refresh.refreshStatusListToken).toHaveBeenCalledTimes(1);
     });
 
     it("does nothing when cache is empty", async () => {
-      await refreshStaleEntries(NOW);
+      await refreshStaleEntries(context, NOW);
 
       expect(refresh.refreshStatusListToken).not.toHaveBeenCalled();
     });
@@ -119,7 +125,7 @@ describe("cache service", () => {
         makePayload(1, { exp: FRESH_EXP })
       );
 
-      await refreshStaleEntries(NOW);
+      await refreshStaleEntries(context, NOW);
 
       expect(refresh.refreshStatusListToken).not.toHaveBeenCalled();
     });
@@ -138,7 +144,7 @@ describe("cache service", () => {
         .mockResolvedValueOnce(false)
         .mockResolvedValueOnce(true);
 
-      await refreshStaleEntries(NOW);
+      await refreshStaleEntries(context, NOW);
 
       expect(refresh.refreshStatusListToken).toHaveBeenCalledTimes(2);
     });

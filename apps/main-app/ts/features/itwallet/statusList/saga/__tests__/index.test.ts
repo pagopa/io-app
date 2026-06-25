@@ -2,6 +2,7 @@ import { testSaga } from "redux-saga-test-plan";
 import { itwCredentialsStore } from "../../../credentials/store/actions";
 import { itwLifecycleStoresReset } from "../../../lifecycle/store/actions";
 import { itwLifecycleIsValidSelector } from "../../../lifecycle/store/selectors";
+import { selectItwSpecsVersion } from "../../../common/store/selectors/environment";
 import {
   registerStatusListFetchTaskSaga,
   startupStatusListCoherenceSaga
@@ -51,15 +52,18 @@ describe("registerStatusListFetchTaskSaga", () => {
 
 describe("startupStatusListCoherenceSaga", () => {
   it("prunes unreferenced entries, then refreshes the stale ones", () => {
+    const itwVersion = "1.3.3";
     const referencedUris = ["https://issuer.example/status/1"];
 
     testSaga(startupStatusListCoherenceSaga)
       .next()
+      .select(selectItwSpecsVersion)
+      .next(itwVersion)
       .select(itwStatusListReferencedUrisSelector)
       .next(referencedUris)
       .call(startupCoherence, referencedUris)
       .next()
-      .call(refreshStaleEntries)
+      .call(refreshStaleEntries, { itwVersion })
       .next()
       .isDone();
   });
