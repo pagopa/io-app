@@ -52,9 +52,7 @@ export const itwEidIssuanceMachine = setup({
   actions: {
     onInit: notImplemented,
 
-    /**
-     * Navigation
-     */
+    /** Navigation */
 
     navigateToTosScreen: notImplemented,
     navigateToIpzsPrivacyScreen: notImplemented,
@@ -81,9 +79,7 @@ export const itwEidIssuanceMachine = setup({
     navigateToUpgradeCredentialsScreen: notImplemented,
     closeIssuance: notImplemented,
 
-    /**
-     * Store update
-     */
+    /** Store update */
 
     storeIntegrityKeyTag: notImplemented,
     cleanupIntegrityKeyTag: notImplemented,
@@ -95,18 +91,14 @@ export const itwEidIssuanceMachine = setup({
     freezeSimplifiedActivationRequirements: notImplemented,
     clearSimplifiedActivationRequirements: notImplemented,
 
-    /**
-     * Analytics
-     */
+    /** Analytics */
 
     trackWalletInstanceCreation: notImplemented,
     trackWalletInstanceRevocation: notImplemented,
     trackIdentificationMethodSelected: notImplemented,
     trackItwIdAuthenticationCompleted: notImplemented,
     trackItwIdVerifiedDocument: notImplemented,
-    /**
-     * Context manipulation
-     */
+    /** Context manipulation */
 
     setCieIdIdentificationL2: assign(() => ({
       identification: {
@@ -117,8 +109,9 @@ export const itwEidIssuanceMachine = setup({
 
     /**
      * Updates the CieID identification level to L3 when IPZS confirms native L3
-     * authentication (i.e. challenge_info is absent in the callback URL, meaning
-     * no MRTD PoP is required because the CieID app already authenticated at L3).
+     * authentication (i.e. challenge_info is absent in the callback URL,
+     * meaning no MRTD PoP is required because the CieID app already
+     * authenticated at L3).
      */
     updateCieIdIdentificationLevel: assign(({ context, event }) => {
       assertEvent(event, "user-identification-completed");
@@ -133,8 +126,8 @@ export const itwEidIssuanceMachine = setup({
     }),
     setFailure: assign(({ event }) => ({ failure: mapEventToFailure(event) })),
     /**
-     * Save the final redirect url in the machine context for later reuse.
-     * This action is the same for the three identification methods.
+     * Save the final redirect url in the machine context for later reuse. This
+     * action is the same for the three identification methods.
      */
     completeUserIdentification: assign(({ context, event }) => {
       assertEvent(event, "user-identification-completed");
@@ -170,9 +163,7 @@ export const itwEidIssuanceMachine = setup({
     getCieStatus: fromPromise<CieContext>(notImplemented),
     verifyTrustFederation: fromPromise<void>(notImplemented),
 
-    /**
-     * WI actors
-     */
+    /** WI actors */
 
     createWalletInstance: fromPromise<string, CreateWalletInstanceActorParams>(
       notImplemented
@@ -183,17 +174,13 @@ export const itwEidIssuanceMachine = setup({
       GetWalletAttestationActorParams
     >(notImplemented),
 
-    /**
-     * Primary authentication actors
-     */
+    /** Primary authentication actors */
 
     startAuthFlow: fromPromise<AuthenticationContext, StartAuthFlowActorParams>(
       notImplemented
     ),
 
-    /**
-     * MRTD PoP Challenge actors
-     */
+    /** MRTD PoP Challenge actors */
 
     initMrtdPoPChallenge: fromPromise<
       MrtdPoPContext,
@@ -204,9 +191,7 @@ export const itwEidIssuanceMachine = setup({
       ValidateMrtdPoPChallengeActorParams
     >(notImplemented),
 
-    /**
-     * PID issuance actors
-     */
+    /** PID issuance actors */
 
     requestAccessToken: fromPromise<
       CredentialAccessToken,
@@ -220,9 +205,7 @@ export const itwEidIssuanceMachine = setup({
     ),
     waitForSessionRefresh: fromCallback(notImplemented),
 
-    /**
-     * Credential upgrade actors
-     */
+    /** Credential upgrade actors */
 
     credentialUpgradeMachine: itwCredentialUpgradeMachine
   },

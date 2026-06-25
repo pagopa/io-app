@@ -49,11 +49,11 @@ describe("profileProperties", () => {
     jest.clearAllMocks();
   });
   describe("updateMixpanelProfileProperties", () => {
-    /** === === === === === === === === ===
-     * NOTIFICATION_CONFIGURATION
-     * NOTIFICATION_PERMISSION
-     * NOTIFICATION_TOKEN
-     * === === === === === === === === === */
+    /**
+     * === === === === === === === === === NOTIFICATION_CONFIGURATION
+     * NOTIFICATION_PERMISSION NOTIFICATION_TOKEN === === === === === === ===
+     * === ===
+     */
     [
       [undefined, undefined, "not set"],
       [undefined, ReminderStatusEnum.DISABLED, "not set"],
@@ -128,9 +128,10 @@ describe("profileProperties", () => {
         )
       )
     );
-    /** === === === === === === === === ===
-     * SEND_STATUS
-     * === === === === === === === === === */
+    /**
+     * === === === === === === === === === SEND_STATUS === === === === === ===
+     * === === ===
+     */
     const generatePNServicePreferences = (
       inbox: boolean
     ): ServicePreferenceResponse => ({

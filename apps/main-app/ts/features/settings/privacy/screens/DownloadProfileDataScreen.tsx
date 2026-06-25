@@ -19,8 +19,8 @@ import { SETTINGS_ROUTES } from "../../common/navigation/routes";
 import { isScreenReaderEnabledSelector } from "../../../../store/reducers/preferences";
 
 /**
- * A screen to explain how profile data export works.
- * Here user can ask to download his data
+ * A screen to explain how profile data export works. Here user can ask to
+ * download his data
  */
 const DownloadProfileDataScreen = () => {
   const dispatch = useIODispatch();
@@ -48,9 +48,9 @@ const DownloadProfileDataScreen = () => {
         return;
       }
       /**
-       * When the data submission request is successful and the user has
-       * the screen reader active he is notified that the operation was
-       * successful and then is sent back to the previous page.
+       * When the data submission request is successful and the user has the
+       * screen reader active he is notified that the operation was successful
+       * and then is sent back to the previous page.
        */
       if (screenReaderEnabled) {
         const message = I18n.t("profile.main.privacy.exportData.a11y");

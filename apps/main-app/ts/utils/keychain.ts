@@ -1,8 +1,9 @@
 /**
  * Helpers for setting a getting the PIN code.
  *
- * Note: setGenerigPassword and getGenericPassword will use the App bundle ID
- * as the service ID by default.
+ * Note: setGenerigPassword and getGenericPassword will use the App bundle ID as
+ * the service ID by default.
+ *
  * @see https://github.com/oblador/react-native-keychain#options
  */
 
@@ -36,9 +37,7 @@ export async function setGenericPasswordWithDefaultAccessibleOption(
   });
 }
 
-/**
- * Saves the provided unlock code in the Keychain
- */
+/** Saves the provided unlock code in the Keychain */
 export async function setPin(pin: PinString): Promise<boolean> {
   const result = await setGenericPasswordWithDefaultAccessibleOption(
     PIN_KEY,
@@ -47,9 +46,7 @@ export async function setPin(pin: PinString): Promise<boolean> {
   return typeof result !== "boolean";
 }
 
-/**
- * Removes the unlock code from the Keychain
- */
+/** Removes the unlock code from the Keychain */
 export async function deletePin(): Promise<boolean> {
   return await Keychain.resetGenericPassword();
 }

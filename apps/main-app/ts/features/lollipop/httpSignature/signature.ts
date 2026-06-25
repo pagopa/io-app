@@ -9,7 +9,7 @@ import { Signer } from "./types/Signer";
  * @param {string} headerParameter - The name of the header parameter.
  * @param {SignatureConfig} config - The config.
  * @returns {string} The string value of the header parameter.
- * @throws {Error} if an unknown header parameter is found.
+ * @throws {Error} If an unknown header parameter is found.
  */
 function getHttpSignatureHeaderParameterFromConfig(
   headerParameter: string,
@@ -52,8 +52,8 @@ export type SignatureBaseResult = {
  *
  * @param {ReadOnlyRecord<string, string>} headers - The HTTP request headers.
  * @param {SignatureConfig} config - The config.
- * @returns {SignatureBaseResult} signature base and input strings.
- * @throws {Error} if needed data is missing or unknown.
+ * @returns {SignatureBaseResult} Signature base and input strings.
+ * @throws {Error} If needed data is missing or unknown.
  */
 function generateSignatureBase(
   headers: Record<string, string>,
@@ -98,9 +98,10 @@ function generateSignatureBase(
     /**
      * https://www.ietf.org/archive/id/draft-ietf-httpbis-message-signatures-15.html#name-verifying-a-signature
      *
-     * The value of the @signature-params input is the value of the Signature-Input
-     * field for this signature serialized according to the rules described in Section 2.3.
-     * Note that this does not include the signature's label from the Signature-Input field.
+     * The value of the @signature-params input is the value of the
+     * Signature-Input field for this signature serialized according to the
+     * rules described in Section 2.3. Note that this does not include the
+     * signature's label from the Signature-Input field.
      */
     const signatureInput = generateSignatureInput(
       headers,
@@ -141,7 +142,7 @@ function contentRelatedHeaderParameterMissing(
  *
  * @param {Record<string, string>} headers - The HTTP headers.
  * @param {SignatureConfig} config - The input config.
- * @returns {string} - the 'Signature-Input' header value.
+ * @returns {string} - The 'Signature-Input' header value.
  */
 function generateSignatureInput(
   headers: Record<string, string>,
@@ -170,7 +171,7 @@ function generateSignatureInput(
  *
  * @param {string} payload
  * @param {number} signatureOrdinal
- * @returns the 'Signature-Input' header value.
+ * @returns The 'Signature-Input' header value.
  */
 function generateSignatureInputValue(
   payload: string,
@@ -192,7 +193,7 @@ function generateSignatureInputValue(
  *
  * @param {Record<string, string>} headers The HTTP headers.
  * @param {SignatureConfig} config The input config.
- * @returns {Promise<string>} a promise that resolve to signature header value.
+ * @returns {Promise<string>} A promise that resolve to signature header value.
  */
 async function generateSignature(
   headers: Record<string, string>,
@@ -213,6 +214,7 @@ async function generateSignature(
 
 /**
  * Generate the 'Signature' header value from provided `signature` signed data.
+ *
  * @param signature
  * @param signatureOrdinal
  * @returns
@@ -232,10 +234,11 @@ function toSignatureHeaderValue(
 /**
  * Generate the 'Signature' header value for a string payload.
  *
- * @param {string} payload - the string payload to sign.
- * @param {string} keyTag - the tag name of the private key to be used to sign the payload.
- * @param {number} signatureOrdinal - the signature ordinal.
- * @returns a Promise that resolves to the signature header value.
+ * @param {string} payload - The string payload to sign.
+ * @param {string} keyTag - The tag name of the private key to be used to sign
+ *   the payload.
+ * @param {number} signatureOrdinal - The signature ordinal.
+ * @returns A Promise that resolves to the signature header value.
  */
 async function generateSignatureValue(
   payload: string,

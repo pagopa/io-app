@@ -37,14 +37,13 @@ type ItwCieCardReadFailureContentProps = Extract<
   CieManagerState,
   { state: "failure" }
 > & {
-  /**
-   * Handles the retry action for some failure cases.
-   */
+  /** Handles the retry action for some failure cases. */
   onRetry: () => void;
 };
 
 /**
- * Renders the failure screen content based on the platforms and received failure
+ * Renders the failure screen content based on the platforms and received
+ * failure
  */
 export const ItwCieCardReadFailureContent = ({
   failure,
@@ -253,13 +252,13 @@ type TrackErrorParams = {
   origin?: string;
 };
 
+// oxlint-disable-next-line complexity
 const trackError = ({
   failure,
   isL3,
   readProgress,
   identification,
   origin
-  // eslint-disable-next-line complexity
 }: TrackErrorParams) => {
   const itw_flow: ItwFlow = isL3 ? "L3" : "L2";
   // readProgress is a number between 0 and 1, mixpanel needs a number between 0 and 100

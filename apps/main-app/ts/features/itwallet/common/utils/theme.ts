@@ -61,7 +61,8 @@ export const ItWalletThemes = {
 };
 
 /**
- * Returns IT-Wallet specific theme colors based on the current app theme (light/dark).
+ * Returns IT-Wallet specific theme colors based on the current app theme
+ * (light/dark).
  */
 export const useItWalletTheme = () => {
   const { themeType } = useIOThemeContext();

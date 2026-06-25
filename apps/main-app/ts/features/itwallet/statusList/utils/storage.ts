@@ -26,8 +26,9 @@ export const storeLastStatusListCheckTimestamp = async (
 
 /**
  * Retrieves the timestamp of the last check for the ITW Status List.
+ *
  * @returns A promise that resolves to the timestamp of the last check in
- * milliseconds since the Unix epoch
+ *   milliseconds since the Unix epoch
  */
 export const getLastStatusListCheckTimestamp = async (): Promise<
   number | undefined
@@ -42,7 +43,8 @@ export const getLastStatusListCheckTimestamp = async (): Promise<
 
 /**
  * Stores the timestamp of the last successfull fetch of the Status List, used
- * to compute the age of the Status List and decide whether a refresh is needed.
+ * to compute the age of the Status List and decide whether a refresh is
+ * needed.
  *
  * @param timestamp The timestamp to store, in milliseconds since the Unix epoch
  */
@@ -66,7 +68,7 @@ export const storeLastStatusListFetchTimestamp = async (
  * needed.
  *
  * @returns A promise that resolves to the timestamp of the last check in
- * milliseconds since the Unix epoch
+ *   milliseconds since the Unix epoch
  */
 export const getLastStatusListFetchTimestamp = async (): Promise<
   number | undefined

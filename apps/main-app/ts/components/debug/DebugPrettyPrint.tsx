@@ -37,9 +37,9 @@ type Props = Prettify<
 >;
 
 /**
- * This component allows to print the content of an object in an elegant and readable way.
- * and to copy its content to the clipboard by pressing on the title.
- * The component it is rendered only if debug mode is enabled
+ * This component allows to print the content of an object in an elegant and
+ * readable way. and to copy its content to the clipboard by pressing on the
+ * title. The component it is rendered only if debug mode is enabled
  */
 export const DebugPrettyPrint = withDebugEnabled(
   ({ title, data, expandable = true, isExpanded = false }: Props) => {

@@ -27,8 +27,8 @@ export const createEidIssuanceGuardsImplementation = (
   options?: GuardsImplementationOptions
 ) => ({
   /**
-   * Guard to check whether the user for whom the eID was issued
-   * is the same that is currently authenticated in app.
+   * Guard to check whether the user for whom the eID was issued is the same
+   * that is currently authenticated in app.
    */
   issuedEidMatchesAuthenticatedUser: ({ context }: { context: Context }) => {
     if (options?.bypassIdentityMatch) {
@@ -57,8 +57,9 @@ export const createEidIssuanceGuardsImplementation = (
     ),
 
   /**
-   * Check whether the user already has a valid L3 PID obtained from a previous issuance
-   * while not being whitelisted, to activate IT-Wallet without re-authenticating.
+   * Check whether the user already has a valid L3 PID obtained from a previous
+   * issuance while not being whitelisted, to activate IT-Wallet without
+   * re-authenticating.
    */
   isEligibleForItwSimplifiedActivation: () => {
     const state = store.getState();

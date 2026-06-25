@@ -47,6 +47,7 @@ import { handlePaymentUpdateRequests } from "./handlePaymentUpdateRequests";
 
 /**
  * Handle messages requests
+ *
  * @param backendClient
  * @param bearerToken
  */

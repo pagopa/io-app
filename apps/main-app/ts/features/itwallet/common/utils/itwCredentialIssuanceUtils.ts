@@ -27,7 +27,8 @@ import { getWalletUnitAttestation } from "./itwAttestationUtils";
 
 /**
  * List of credentials that cannot be issued in parallel, only sequentially.
- * Currently only the mDL must be requested sequentially because of locking issues.
+ * Currently only the mDL must be requested sequentially because of locking
+ * issues.
  */
 const SEQUENTIAL_ISSUANCE_CREDENTIALS = ["mDL"];
 
@@ -47,6 +48,7 @@ export type RequestCredential = (args: {
 
 /**
  * Requests a credential from the issuer.
+ *
  * @param env - The environment to use for the wallet provider base URL
  * @param itwVersion - IT-Wallet technical specs version
  * @param credentialType - The type of credential to request
@@ -117,11 +119,12 @@ export type CompleteAuthFlow = (args: {
 }) => Promise<{ accessToken: CredentialAccessToken }>;
 
 /**
- * Function to complete the authorization flow. It must be used to obtain the access token
- * for the requested credential(s).
- * This token is then used in {@link obtainCredential} to get the credential from the Issuer.
- * When no response mode is provided the flow expects the code in the query string;
- * the legacy `form_post.jwt` mode must be requested explicitly.
+ * Function to complete the authorization flow. It must be used to obtain the
+ * access token for the requested credential(s). This token is then used in
+ * {@link obtainCredential} to get the credential from the Issuer. When no
+ * response mode is provided the flow expects the code in the query string; the
+ * legacy `form_post.jwt` mode must be requested explicitly.
+ *
  * @returns The access token with the authorized credentials.
  */
 export const completeAuthFlow: CompleteAuthFlow = async ({
@@ -196,6 +199,7 @@ export type ObtainCredential = (args: {
 
 /**
  * Obtains a credential from the issuer.
+ *
  * @param env - The environment to use for the wallet provider base URL
  * @param itwVersion - IT-Wallet technical specs version
  * @param credentialType - The type of credential to request
@@ -286,9 +290,10 @@ type RequestAndParseCredential = (
 ) => Promise<CredentialBundle>;
 
 /**
- * Utility function that requests and parses an already authorized credential. For this reason,
- * the function requires the Issuer's access token with the authorization details. Key generation MUST
- * be handled outside the function by calling {@link generateKeysWithWalletUnitAttestation}.
+ * Utility function that requests and parses an already authorized credential.
+ * For this reason, the function requires the Issuer's access token with the
+ * authorization details. Key generation MUST be handled outside the function by
+ * calling {@link generateKeysWithWalletUnitAttestation}.
  *
  * @returns The credential bundle with the newly obtained credential
  */
@@ -386,20 +391,25 @@ type GenerateKeysWithWalletUnitAttestation = (
 ) => Promise<ReadonlyArray<AuthorizedCredentialMetadata>>;
 
 /**
- * Create the keys and the WUA for each credential to request. The exact credentials are taken from the authorization details
- * of the Issuer's access token, that contains the list of authorized credential identifiers. At present we always receive one
- * credential identifier, so we can generate one key/WUA per authorization detail.
+ * Create the keys and the WUA for each credential to request. The exact
+ * credentials are taken from the authorization details of the Issuer's access
+ * token, that contains the list of authorized credential identifiers. At
+ * present we always receive one credential identifier, so we can generate one
+ * key/WUA per authorization detail.
  *
  * If the WUA is not supported, only the keys are generated.
  *
- * This function MUST be called before {@link requestAndParseCredential} because key generation is a preliminary step.
+ * This function MUST be called before {@link requestAndParseCredential} because
+ * key generation is a preliminary step.
  *
  * @param accessToken The Issuer access token with the authorization details
  * @param params.env Environment variables
  * @param params.itwVersion IT-Wallet technical specs version
- * @param params.hardwareKeyTag The hardware key associated with the Wallet Instance
+ * @param params.hardwareKeyTag The hardware key associated with the Wallet
+ *   Instance
  * @param params.sessionToken The session token for the Wallet Provider API
- * @returns The authorization details enriched with the generated keys and WUA if supported
+ * @returns The authorization details enriched with the generated keys and WUA
+ *   if supported
  */
 export const generateKeysWithWalletUnitAttestation: GenerateKeysWithWalletUnitAttestation =
   async (accessToken, { env, itwVersion, hardwareKeyTag, sessionToken }) => {

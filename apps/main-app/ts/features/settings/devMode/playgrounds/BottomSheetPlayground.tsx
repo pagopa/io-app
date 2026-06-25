@@ -16,8 +16,8 @@ import { IOScrollView } from "../../../../components/ui/IOScrollView";
 import { useHeaderSecondLevel } from "../../../../hooks/useHeaderSecondLevel";
 
 /**
- * Index into a `[closed, ...]` detents array: `0` keeps the sheet closed,
- * `1` snaps it to the first open detent.
+ * Index into a `[closed, ...]` detents array: `0` keeps the sheet closed, `1`
+ * snaps it to the first open detent.
  */
 const CLOSED_INDEX = 0;
 const FIRST_OPEN_INDEX = 1;
@@ -30,8 +30,8 @@ const LONG_SHEET_PARAGRAPH_COUNT = 6;
 
 /**
  * Fixed-height detent for the "percentage" sheet, expressed as a fraction of
- * the available screen height. The library has no native percentage support,
- * so the value is computed from the safe-area frame.
+ * the available screen height. The library has no native percentage support, so
+ * the value is computed from the safe-area frame.
  */
 const PERCENT_DETENT_RATIO = 0.6;
 

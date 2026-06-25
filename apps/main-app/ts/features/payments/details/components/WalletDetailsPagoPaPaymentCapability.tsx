@@ -11,6 +11,7 @@ type Props = { paymentMethod: WalletInfo };
 
 /**
  * Represent the capability to pay in PagoPa of a payment method.
+ *
  * @param props
  */
 const WalletDetailsPagoPaPaymentCapability: FC<Props> = props => {

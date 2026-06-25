@@ -14,7 +14,9 @@ import {
 } from "../store/actions";
 
 /**
- * Handle the remote call to delete the IDPay initiative associated payment methods for initiatives
+ * Handle the remote call to delete the IDPay initiative associated payment
+ * methods for initiatives
+ *
  * @param deleteInitiativeInstrument BE API call
  * @param bpdToken Auth token
  * @param language Preferred language

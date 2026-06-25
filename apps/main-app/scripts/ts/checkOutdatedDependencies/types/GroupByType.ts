@@ -10,15 +10,15 @@ const keyOfGroupByType = [
 ] as const;
 type KeyGroupByType = (typeof keyOfGroupByType)[number];
 
-/**
- * Represents the grouping of outdated dependencies by type
- */
+/** Represents the grouping of outdated dependencies by type */
 export type GroupByType = {
   [k in KeyGroupByType]: GroupBySeverity;
 };
 
 /**
- * Iterate through groupByType and generate a total count {@link GroupBySeverity} foreach type
+ * Iterate through groupByType and generate a total count {@link GroupBySeverity}
+ * foreach type
+ *
  * @param groupByType
  */
 export const getTotalSeverity = (groupByType: GroupByType): GroupBySeverity =>
@@ -33,7 +33,9 @@ export const getTotalSeverity = (groupByType: GroupByType): GroupBySeverity =>
   );
 
 /**
- * Convert a string to {@link KeyGroupByType}, in order to be used in a typesafe way
+ * Convert a string to {@link KeyGroupByType}, in order to be used in a typesafe
+ * way
+ *
  * @param plain
  */
 export const getDependencyType = (plain: string): KeyGroupByType => {
@@ -46,6 +48,7 @@ export const getDependencyType = (plain: string): KeyGroupByType => {
 
 /**
  * Increase the severity amount by 1 for value, using type and severity as keys
+ *
  * @param value
  * @param type
  * @param severity

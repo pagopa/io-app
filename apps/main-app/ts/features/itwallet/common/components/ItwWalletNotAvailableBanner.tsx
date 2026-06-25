@@ -11,8 +11,8 @@ import { withWalletCategoryFilter } from "../../../wallet/utils";
 import { itwIsWalletInstanceStatusFailureSelector } from "../../walletInstance/store/selectors";
 
 /**
- * Component shown when it is not possible to retrieve the wallet instance status
- * from the backend, because of unexpected errors.
+ * Component shown when it is not possible to retrieve the wallet instance
+ * status from the backend, because of unexpected errors.
  */
 export const ItwWalletNotAvailableBanner = withWalletCategoryFilter(
   "itw",

@@ -38,9 +38,9 @@ interface AnimatedBlobProps {
 
 /**
  * Generate organic-looking deformation using overlapping sine/cosine waves.
- * Uses prime-number frequency ratios and unique phase offsets per point
- * to create pseudo-random movement that still loops seamlessly.
- * Returns value in range approximately [-1, 1].
+ * Uses prime-number frequency ratios and unique phase offsets per point to
+ * create pseudo-random movement that still loops seamlessly. Returns value in
+ * range approximately [-1, 1].
  */
 const organicWobble = (
   pointIndex: number,
@@ -65,8 +65,8 @@ const organicWobble = (
 };
 
 /**
- * Generate a smooth blob path using sine-based organic deformation.
- * Uses continuous time input for seamless looping animation.
+ * Generate a smooth blob path using sine-based organic deformation. Uses
+ * continuous time input for seamless looping animation.
  */
 const generateBlobPath = (
   seed: number,

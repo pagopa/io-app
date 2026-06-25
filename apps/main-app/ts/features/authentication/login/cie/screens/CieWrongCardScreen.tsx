@@ -1,6 +1,4 @@
-/**
- * A screen to alert the user about the number of attempts remains
- */
+/** A screen to alert the user about the number of attempts remains */
 import I18n from "i18next";
 import { useIONavigation } from "../../../../../navigation/params/AppParamsList";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";

@@ -42,16 +42,12 @@ export const getRequiredSignatureFields = (
     ClauseTypeEnum.UNFAIR
   ]);
 
-/**
- * Get the list of optional signature fields
- */
+/** Get the list of optional signature fields */
 export const getOptionalSignatureFields = (
   signatureFields: ReadonlyArray<SignatureField>
 ) => clausesByType(signatureFields, [ClauseTypeEnum.OPTIONAL]);
 
-/**
- * Get the list of clauses by type
- */
+/** Get the list of clauses by type */
 export const clausesByType = (
   signatureFields: ReadonlyArray<SignatureField>,
   clauseType: ReadonlyArray<string>
@@ -65,10 +61,7 @@ export const clausesByType = (
     )
   );
 
-/**
- * Get the list of all types for the signature fields
- * of the current document
- */
+/** Get the list of all types for the signature fields of the current document */
 export const getAllTypes = (signatureFields: ReadonlyArray<SignatureField>) =>
   pipe(
     signatureFields,
@@ -77,8 +70,8 @@ export const getAllTypes = (signatureFields: ReadonlyArray<SignatureField>) =>
   );
 
 /**
- * Giving a list of signature fields, it returns the DATA
- * to rendering the SectionList
+ * Giving a list of signature fields, it returns the DATA to rendering the
+ * SectionList
  */
 export const getSectionListData = (
   signatureFields: ReadonlyArray<SignatureField>
@@ -92,7 +85,8 @@ export const getSectionListData = (
   );
 
 /**
- * Defines a total ordering for the signature field type: UNFAIR -> REQURED -> EVERYTHING ELSE (OPTIONAL)
+ * Defines a total ordering for the signature field type: UNFAIR -> REQURED ->
+ * EVERYTHING ELSE (OPTIONAL)
  */
 const byClausesType = pipe(
   N.Ord,
@@ -110,25 +104,26 @@ const byClausesType = pipe(
   })
 );
 
-/**
- * Defines a read only array sorting by using the total ordering byClausesType
- */
+/** Defines a read only array sorting by using the total ordering byClausesType */
 const sortByType = RA.sortBy([byClausesType]);
 
 /**
- * Orders the signatureFields array with the given order: UNFAIR -> REQURED -> EVERYTHING ELSE (OPTIONAL)
- * @param signatureFields an array of signature fields
- * @returns the new ordered array
+ * Orders the signatureFields array with the given order: UNFAIR -> REQURED ->
+ * EVERYTHING ELSE (OPTIONAL)
+ *
+ * @param signatureFields An array of signature fields
+ * @returns The new ordered array
  */
 export const orderSignatureFields = (
   signatureFields: ReadonlyArray<SignatureField>
 ): ReadonlyArray<SignatureField> => pipe(signatureFields, sortByType);
 
 /**
- * Given a list of documents to sign and an array of Clauses types
- * it returns the number of clauses.
- * @param documentsToSign the list of documents to sign
- * @returns the number of OPTIONAL clauses
+ * Given a list of documents to sign and an array of Clauses types it returns
+ * the number of clauses.
+ *
+ * @param documentsToSign The list of documents to sign
+ * @returns The number of OPTIONAL clauses
  */
 export const getClausesCountByTypes = (
   documentsToSign: ReadonlyArray<DocumentToSign>,
@@ -145,8 +140,9 @@ export const getClausesCountByTypes = (
 
 /**
  * Get the number of signature fields.
- * @param doc the document detail view
- * @returns the number of signature fields
+ *
+ * @param doc The document detail view
+ * @returns The number of signature fields
  */
 export const getSignatureFieldsLength = (doc: DocumentDetailView) =>
   pipe(
@@ -159,15 +155,17 @@ export const getSignatureFieldsLength = (doc: DocumentDetailView) =>
 
 /**
  * Adds a base 64 PDF uri scheme to a base64 string representation of a PDF.
- * @param r the base64 string representation of a PDF
- * @returns r prexied by the uri scheme
+ *
+ * @param r The base64 string representation of a PDF
+ * @returns R prexied by the uri scheme
  */
 const addBase64PdfUriScheme = (r: string) => `data:application/pdf;base64,${r}`;
 
 /**
  * Parses a PDF from filesystem as a base64 string with the prefixed uri scheme.
- * @param uri the uri of the PDF
- * @returns a base64 string representation of the PDF at uri
+ *
+ * @param uri The uri of the PDF
+ * @returns A base64 string representation of the PDF at uri
  */
 export const parsePdfAsBase64 = async (uri: string) => {
   const parsed = await ReactNativeBlobUtil.fs.readFile(
@@ -178,9 +176,11 @@ export const parsePdfAsBase64 = async (uri: string) => {
 };
 
 /**
- * Converts a PDFDocument instance to a base64 string representation with the prefixed URI scheme.
- * @param parsedPdf the PDFDocument instance
- * @returns a base64 string repreesntation with the prefixed URI scheme
+ * Converts a PDFDocument instance to a base64 string representation with the
+ * prefixed URI scheme.
+ *
+ * @param parsedPdf The PDFDocument instance
+ * @returns A base64 string repreesntation with the prefixed URI scheme
  */
 const savePdfDocumentoAsBase64 = async (parsedPdf: PDFDocument) => {
   const res = await parsedPdf.saveAsBase64();
@@ -188,10 +188,13 @@ const savePdfDocumentoAsBase64 = async (parsedPdf: PDFDocument) => {
 };
 
 /**
- * Get the pdf url from documents, download it as base64 string and load the pdf as pdf-lib object to draw a rect over the signature field.
- * @param uniqueName the of the signature field
- * @param bytes the pdf representation
- * @returns a promise of an output document with the drawn box and the field page
+ * Get the pdf url from documents, download it as base64 string and load the pdf
+ * as pdf-lib object to draw a rect over the signature field.
+ *
+ * @param uniqueName The of the signature field
+ * @param bytes The pdf representation
+ * @returns A promise of an output document with the drawn box and the field
+ *   page
  */
 const drawRectangleOverSignatureFieldById = async (
   bytes: string,
@@ -231,14 +234,14 @@ const drawRectangleOverSignatureFieldById = async (
 };
 
 /**
- * Get the pdf url from documents,
- * download it as base64 string and
- * load the pdf as pdf-lib object
- * to draw a rect over the signature field
- * giving a set of coordinates
- * @param attrs the signature field attrs containing the coords
- * @param bytes the pdf representation
- * @returns a promise of an output document with the drawn box and the field page
+ * Get the pdf url from documents, download it as base64 string and load the pdf
+ * as pdf-lib object to draw a rect over the signature field giving a set of
+ * coordinates
+ *
+ * @param attrs The signature field attrs containing the coords
+ * @param bytes The pdf representation
+ * @returns A promise of an output document with the drawn box and the field
+ *   page
  */
 const drawRectangleOverSignatureFieldByCoordinates = async (
   bytes: string,
@@ -264,9 +267,11 @@ const drawRectangleOverSignatureFieldByCoordinates = async (
 
 /**
  * Draws a box on a signature field.
- * @param bytes the pdf bytes representation
- * @param attrs the signature field attributes
- * @returns a promise of an output document with the drawn box and the field page
+ *
+ * @param bytes The pdf bytes representation
+ * @param attrs The signature field attributes
+ * @returns A promise of an output document with the drawn box and the field
+ *   page
  */
 export const drawSignatureField = async (
   bytes: string,
@@ -281,8 +286,9 @@ export const drawSignatureField = async (
 
 /**
  * Checks if the signature field attribute has a unique name or not (coords)
- * @param f the signature field attributes
- * @returns true if the signature field has a unique name, false otherwise
+ *
+ * @param f The signature field attributes
+ * @returns True if the signature field has a unique name, false otherwise
  */
 export const hasUniqueName = (
   f: SignatureFieldAttrType

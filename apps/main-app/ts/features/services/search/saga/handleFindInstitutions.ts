@@ -12,7 +12,8 @@ import { searchPaginatedInstitutionsGet } from "../store/actions";
 const DEBOUNCE_SEARCH: Millisecond = 500 as Millisecond;
 
 /**
- * saga to handle the loading of institutions
+ * Saga to handle the loading of institutions
+ *
  * @param findInstitutions
  * @param action
  */

@@ -128,9 +128,7 @@ type ContentViewProps = {
   eid: CredentialMetadata;
 };
 
-/**
- * Renders the content of the screen
- */
+/** Renders the content of the screen */
 const ContentView = ({ credentialType, eid }: ContentViewProps) => {
   const route = useRoute();
   const hasScrolledToBottom = useRef(false);

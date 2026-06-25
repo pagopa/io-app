@@ -9,9 +9,7 @@ import {
   unregisterItwStatusListFetchTask
 } from "../tasks";
 
-/**
- * Registers the ITW Status List fetch task with expo-background-task.
- */
+/** Registers the ITW Status List fetch task with expo-background-task. */
 export function* registerStatusListFetchTaskSaga(): SagaIterator {
   const isWalletValid = yield* select(itwLifecycleIsValidSelector);
   if (!isWalletValid) {

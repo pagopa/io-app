@@ -1,6 +1,4 @@
-/**
- * A reducer to store the organization names by their fiscal codes
- */
+/** A reducer to store the organization names by their fiscal codes */
 
 import { NonEmptyString } from "@pagopa/ts-commons/lib/strings";
 import { getType } from "typesafe-actions";
@@ -14,9 +12,7 @@ import { updateOrganizations } from "../../../actions/organizations";
 import { Action } from "../../../actions/types";
 import { GlobalState } from "../../types";
 
-/**
- * Maps organization fiscal code to serviceId
- */
+/** Maps organization fiscal code to serviceId */
 export type OrganizationNamesByFiscalCodeState = Readonly<{
   [key: string]: NonEmptyString | undefined;
 }>;

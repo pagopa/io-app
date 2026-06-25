@@ -14,18 +14,26 @@ type TruncatableArray = Array<TruncatableValue>;
 type TruncatableSet = Set<TruncatableValue>;
 
 /**
- * Truncates all string values in an object or array structure to a specified maximum length.
- * This function creates a deep copy of the input, ensuring the original is not modified.
- *
- * @template T - The type of the input value, must extend TruncatableValue
- * @param {T} value - The value to process. Can be a string, number, boolean, null, undefined, array, or object
- * @param {number} [maxLength=250] - The maximum length for string values. Defaults to 250
- * @returns {T} A new value of the same type as the input, with all strings truncated to the specified length
+ * Truncates all string values in an object or array structure to a specified
+ * maximum length. This function creates a deep copy of the input, ensuring the
+ * original is not modified.
  *
  * @example
- * const obj = { name: "Very long name...", age: 30, details: { bio: "Long bio..." } };
- * const truncated = truncateObjectStrings(obj, 10);
- * // Result: { name: "Very long...", age: 30, details: { bio: "Long bio..." } }
+ *   const obj = {
+ *     name: "Very long name...",
+ *     age: 30,
+ *     details: { bio: "Long bio..." }
+ *   };
+ *   const truncated = truncateObjectStrings(obj, 10);
+ *   // Result: { name: "Very long...", age: 30, details: { bio: "Long bio..." } }
+ *
+ * @template T - The type of the input value, must extend TruncatableValue
+ * @param {T} value - The value to process. Can be a string, number, boolean,
+ *   null, undefined, array, or object
+ * @param {number} [maxLength=250] - The maximum length for string values.
+ *   Defaults to 250. Default is `250`
+ * @returns {T} A new value of the same type as the input, with all strings
+ *   truncated to the specified length
  */
 export const truncateObjectStrings = <T extends TruncatableValue>(
   value: T,
@@ -63,13 +71,17 @@ export const truncateObjectStrings = <T extends TruncatableValue>(
 };
 
 /**
- * Custom replacer function for JSON.stringify to handle Error objects and truncate strings.
- * If the value is an instance of Error, it returns an object with the error's name, message, and stack.
- * For all other values, it applies string truncation if the value is a string, or returns the value as is.
- * @param _key The key of the property being processed (not used in this function)
+ * Custom replacer function for JSON.stringify to handle Error objects and
+ * truncate strings. If the value is an instance of Error, it returns an object
+ * with the error's name, message, and stack. For all other values, it applies
+ * string truncation if the value is a string, or returns the value as is.
+ *
+ * @param _key The key of the property being processed (not used in this
+ *   function)
  * @param value The value of the property being processed. Can be of any type.
- * @returns An object with error details if the value is an Error, a truncated string if the value is a string,
- * or the original value for all other types.
+ * @returns An object with error details if the value is an Error, a truncated
+ *   string if the value is a string, or the original value for all other
+ *   types.
  */
 export const debugInfoReplacer =
   (options: { truncateStrings?: boolean } = {}) =>

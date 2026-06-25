@@ -11,14 +11,10 @@ export type Document = {
   signaturePage: number;
 };
 
-/**
- * The state of the fci document signature fields.
- */
+/** The state of the fci document signature fields. */
 export type FciSignatureFieldDrawingState = pot.Pot<Document, Error>;
 
-/**
- * The initial state of the fci document signature fields.
- */
+/** The initial state of the fci document signature fields. */
 const emptyState: FciSignatureFieldDrawingState = pot.none;
 
 const fciSignatureFieldDrawingReducer = (
@@ -43,8 +39,9 @@ export default fciSignatureFieldDrawingReducer;
 
 /**
  * Selector of the fci document signature fields state.
- * @param state the global state
- * @returns the fci document signature fields state
+ *
+ * @param state The global state
+ * @returns The fci document signature fields state
  */
 export const fciSignatureFieldDrawingSelector = (state: GlobalState) =>
   state.features.fci.signatureFieldDrawing;

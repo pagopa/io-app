@@ -82,11 +82,15 @@ export const createRemoteActionsImplementation = (
       const data_type = optional.length > 0 ? "optional" : "required";
 
       /**
-       * Returns the request type based on the "purpose" fields in the credentials:
+       * Returns the request type based on the "purpose" fields in the
+       * credentials:
+       *
        * - "no_purpose" if none are defined
-       * - "unique_purpose" if there's only one purpose, or all share the same purpose
-       * - "multiple_purpose" if there are multiple distinct valid purposes
-       * A purpose is considered valid only if it's a non-empty, non-whitespace string.
+       * - "unique_purpose" if there's only one purpose, or all share the same
+       *   purpose
+       * - "multiple_purpose" if there are multiple distinct valid purposes A
+       *   purpose is considered valid only if it's a non-empty, non-whitespace
+       *   string.
        */
       const request_type = pipe(
         requestedCredentials,

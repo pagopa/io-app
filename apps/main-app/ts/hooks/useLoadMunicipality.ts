@@ -8,7 +8,10 @@ import { contentMunicipalityLoad } from "../store/actions/content";
 
 /**
  * A custom hook use to load content municipality when needed,
- * @description This hook is part of old implementation of `ts/screens/profile/FiscalCodeScreen.tsx`. It's been extracted in a custom hook to keep the functionality available in case of need.
+ *
+ * This hook is part of old implementation of
+ * `ts/screens/profile/FiscalCodeScreen.tsx`. It's been extracted in a custom
+ * hook to keep the functionality available in case of need.
  */
 export const useLoadMunicipality = () => {
   const fiscalCode = useIOSelector(profileFiscalCodeSelector);

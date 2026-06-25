@@ -32,7 +32,8 @@ type ItwIridescentBorderProps = {
 /**
  * WARNING: this component must be placed inside a {@link Canvas} component.
  *
- * Renders an animated IT-Wallet branded border using Skia and device rotation sensor data.
+ * Renders an animated IT-Wallet branded border using Skia and device rotation
+ * sensor data.
  */
 export const ItwBrandedSkiaGradient = ({
   width,
@@ -68,17 +69,16 @@ export const ItwBrandedSkiaGradient = ({
   );
 
   /**
-   * Not all devices are in an initial flat position on a surface
-   * (e.g. a table) then we use a relative rotation value,
-   * not an absolute one
+   * Not all devices are in an initial flat position on a surface (e.g. a table)
+   * then we use a relative rotation value, not an absolute one
    */
   const relativeRoll = useDerivedValue(
     () => initialRoll.value - currentRoll.value
   );
 
   /**
-   * We don't need to look at the whole quaternion range,
-   * just a very small part of it.
+   * We don't need to look at the whole quaternion range, just a very small part
+   * of it.
    */
   const quaternionRange: number = 0.5;
 

@@ -44,6 +44,7 @@ export const createRemoteGuardsImplementation = (
 
   /**
    * Valid OpenID Federation clients:
+   *
    * - `openid_federation:https://rp.example`
    * - `https://rp.example` (no prefix)
    */

@@ -1,6 +1,4 @@
-/**
- * A reducer for the Search
- */
+/** A reducer for the Search */
 import { getType } from "typesafe-actions";
 
 import * as O from "fp-ts/lib/Option";

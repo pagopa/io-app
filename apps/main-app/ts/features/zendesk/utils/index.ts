@@ -45,16 +45,18 @@ type TokenType = keyof PublicSession;
 type DefaultTokenType = Exclude<TokenType, "zendeskToken">;
 
 /**
- *
- * @param needToRefreshZendeskToken a boolean value defining if it is necessary
- * to add the zendesk token or not (in case it is not contained in tokenType array)
- * @param tokenType an array containing the tokens that must be transformed into
- * a string to be passed as a parameter to the getSession(). The tokenType isn't mandatory
- * @returns a string. In the case where tokenType is passed, then the function returns
- * a string that contains the elements included in the tokenType array, in the case where
- * tokenType is not passed it returns a default string. In addition, if the prop
- * needToRefreshZendeskToken is true and the value ‘zendeskToken’ is not present in the
- * object, then it will be inserted.
+ * @param needToRefreshZendeskToken A boolean value defining if it is necessary
+ *   to add the zendesk token or not (in case it is not contained in tokenType
+ *   array)
+ * @param tokenType An array containing the tokens that must be transformed into
+ *   a string to be passed as a parameter to the getSession(). The tokenType
+ *   isn't mandatory
+ * @returns A string. In the case where tokenType is passed, then the function
+ *   returns a string that contains the elements included in the tokenType
+ *   array, in the case where tokenType is not passed it returns a default
+ *   string. In addition, if the prop needToRefreshZendeskToken is true and the
+ *   value ‘zendeskToken’ is not present in the object, then it will be
+ *   inserted.
  */
 export const formatRequestedTokenString = (
   needToRefreshZendeskToken: boolean = false,
@@ -88,12 +90,12 @@ export const formatRequestedTokenString = (
 };
 
 /**
- *
- * @param newValues are the new values that need to be merged with the existing ones
- * @param currentValues are the existing values
- * @returns  an object containing the merge between existing and new values.
- * If the value already exists, it is replaced with the new value.
- * If the value is not defined, a new key is added.
+ * @param newValues Are the new values that need to be merged with the existing
+ *   ones
+ * @param currentValues Are the existing values
+ * @returns An object containing the merge between existing and new values. If
+ *   the value already exists, it is replaced with the new value. If the value
+ *   is not defined, a new key is added.
  */
 export const getOnlyNotAlreadyExistentValues = (
   newValues: PublicSession,

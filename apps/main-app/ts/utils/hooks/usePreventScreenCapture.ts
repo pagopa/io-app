@@ -26,13 +26,17 @@ const allowScreenCapture = (tag: string) => {
 /**
  * Hook that disables screen capture for as long as the component is focused.
  *
- * In a stack navigator unfocused screens are not unmounted, so the `useEffect` cleanup function is not called.
+ * In a stack navigator unfocused screens are not unmounted, so the `useEffect`
+ * cleanup function is not called.
  *
  * The native library implementation is the following:
- * - On Android, it enables `FLAG_SECURE`
- * - On iOS, uses a hidden secure text field as the platform does not expose an API to disable screenshots
  *
- * @param key An optional key to prevent conflicts when using multiple instances of this hook at the same time.
+ * - On Android, it enables `FLAG_SECURE`
+ * - On iOS, uses a hidden secure text field as the platform does not expose an
+ *   API to disable screenshots
+ *
+ * @param key An optional key to prevent conflicts when using multiple instances
+ *   of this hook at the same time.
  */
 export function usePreventScreenCapture(key?: string) {
   const tag = useMemo(() => key || uuidv4().toString(), [key]);

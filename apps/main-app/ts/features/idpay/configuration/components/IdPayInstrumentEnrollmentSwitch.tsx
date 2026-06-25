@@ -14,9 +14,7 @@ import { instrumentStatusLabels } from "../../common/labels";
 import { IdPayConfigurationMachineContext } from "../machine/provider";
 import { instrumentStatusByIdWalletSelector } from "../machine/selectors";
 
-/**
- * See @ListItemSwitch
- */
+/** See @ListItemSwitch */
 type ListItemSwitchIconProps =
   | { icon?: never; paymentLogo: IOLogoPaymentType }
   | { icon: IOIcons; paymentLogo?: never }
@@ -28,9 +26,7 @@ type InstrumentEnrollmentSwitchProps = {
   onValueChange: (value: boolean) => void;
 };
 
-/**
- * A component to enable/disable the enrollment of an instrument
- */
+/** A component to enable/disable the enrollment of an instrument */
 const IdPayInstrumentEnrollmentSwitch = (
   props: InstrumentEnrollmentSwitchProps
 ) => {

@@ -12,8 +12,9 @@ const navigatorPollingTime = 125 as Millisecond;
 const warningWaitNavigatorTime = 2000 as Millisecond;
 
 /**
- * Wait until the {@link NavigationService} is initialized.
- * The NavigationService is initialized when is called {@link RootContainer} componentDidMount and the ref is set with setTopLevelNavigator
+ * Wait until the {@link NavigationService} is initialized. The NavigationService
+ * is initialized when is called {@link RootContainer} componentDidMount and the
+ * ref is set with setTopLevelNavigator
  */
 export function* waitForNavigatorServiceInitialization() {
   // eslint-disable-next-line functional/no-let

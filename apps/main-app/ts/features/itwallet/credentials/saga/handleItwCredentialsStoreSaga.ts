@@ -5,7 +5,8 @@ import { mapCredentialToWalletCard } from "../../wallet/utils";
 import { itwCredentialsStore } from "../store/actions";
 
 /**
- * This saga handles the credential store action and ensures the consistency between stored credentials and wallet state.
+ * This saga handles the credential store action and ensures the consistency
+ * between stored credentials and wallet state.
  */
 export function* handleItwCredentialsStoreSaga(
   action: ReturnType<typeof itwCredentialsStore>

@@ -25,7 +25,8 @@ export type LollipopConfig = {
 };
 
 /**
- * Utility function to forge the `SignatureComponents` based on the provided inputs.
+ * Utility function to forge the `SignatureComponents` based on the provided
+ * inputs.
  */
 export function toSignatureComponents(
   method: string,
@@ -42,8 +43,8 @@ export function toSignatureComponents(
 }
 
 /**
- * Returns the http-signature algorithm used to sign the signature base specified by
- * the signature-input header.
+ * Returns the http-signature algorithm used to sign the signature base
+ * specified by the signature-input header.
  */
 export function getSignAlgorithm(publicKey: PublicKey): SignatureAlgorithm {
   return publicKey.kty === "EC" ? "ecdsa-p256-sha256" : "rsa-pss-sha256";
@@ -58,9 +59,7 @@ export type SignPromiseResult = {
   signatureInput: string;
 };
 
-/**
- * Chains all custom sign promises passed as its input array.
- */
+/** Chains all custom sign promises passed as its input array. */
 export const chainSignPromises = (
   promises: Array<TE.TaskEither<Error, SignPromiseResult>>
 ) =>
@@ -71,8 +70,8 @@ export const chainSignPromises = (
   )();
 
 /**
- * Regenerate publicKey, it returns a Promise
- * with publicKey, if it was succesfully generated
+ * Regenerate publicKey, it returns a Promise with publicKey, if it was
+ * succesfully generated
  */
 export const handleRegenerateEphemeralKey = (
   keyTag: string,

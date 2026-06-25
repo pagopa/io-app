@@ -87,8 +87,8 @@ export const useLollipopLoginSource = (
     }
 
     /**
-     * We generate a new key pair for every new login/relogin/retry we
-     * need to garantee the public key uniqueness on every login request.
+     * We generate a new key pair for every new login/relogin/retry we need to
+     * garantee the public key uniqueness on every login request.
      * https://pagopa.atlassian.net/browse/LLK-37
      */
 

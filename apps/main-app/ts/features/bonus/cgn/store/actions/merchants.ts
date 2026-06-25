@@ -14,36 +14,28 @@ import { OnlineMerchantSearchRequest } from "../../../../../../definitions/cgn/m
 import { Discount } from "../../../../../../definitions/cgn/merchants/Discount";
 import { CountResult } from "../../../../../../definitions/cgn/merchants/CountResult";
 
-/**
- * count merchants conventioned with CGN
- */
+/** Count merchants conventioned with CGN */
 export const cgnMerchantsCount = createAsyncAction(
   "CGN_MERCHANTS_COUNT_REQUEST",
   "CGN_MERCHANTS_COUNT_SUCCESS",
   "CGN_MERCHANTS_COUNT_FAILURE"
 )<void, CountResult, NetworkError>();
 
-/**
- * search merchants conventioned with CGN
- */
+/** Search merchants conventioned with CGN */
 export const cgnSearchMerchants = createAsyncAction(
   "CGN_SEARCH_MERCHANTS_REQUEST",
   "CGN_SEARCH_MERCHANTS_SUCCESS",
   "CGN_SEARCH_MERCHANTS_FAILURE"
 )<SearchRequest, SearchResult["items"], NetworkError>();
 
-/**
- * get and handle list of online merchants conventioned with CGN
- */
+/** Get and handle list of online merchants conventioned with CGN */
 export const cgnOnlineMerchants = createAsyncAction(
   "CGN_ONLINE_MERCHANTS_REQUEST",
   "CGN_ONLINE_MERCHANTS_SUCCESS",
   "CGN_ONLINE_MERCHANTS_FAILURE"
 )<OnlineMerchantSearchRequest, OnlineMerchants["items"], NetworkError>();
 
-/**
- * get and handle list of online merchants conventioned with CGN
- */
+/** Get and handle list of online merchants conventioned with CGN */
 export const cgnOfflineMerchants = createAsyncAction(
   "CGN_OFFLINE_MERCHANTS_REQUEST",
   "CGN_OFFLINE_MERCHANTS_SUCCESS",

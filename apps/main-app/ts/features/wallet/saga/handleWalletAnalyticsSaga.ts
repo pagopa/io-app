@@ -9,8 +9,9 @@ import { idPayWalletGet } from "../../idpay/wallet/store/actions";
 import { getPaymentsWalletUserMethods } from "../../payments/wallet/store/actions";
 
 /**
- * Saga that handles the Mixpanel properties update based on the wallet screen content.
- * It waits for all wallet-related API calls to complete before updating analytics.
+ * Saga that handles the Mixpanel properties update based on the wallet screen
+ * content. It waits for all wallet-related API calls to complete before
+ * updating analytics.
  */
 export function* handleWalletAnalyticsSaga() {
   const isIdPayEnabled = yield* select(isIdPayEnabledSelector);
@@ -31,9 +32,7 @@ export function* handleWalletAnalyticsSaga() {
   void updateMixpanelSuperProperties(state);
 }
 
-/**
- * Wait for payment methods request to complete (success or failure)
- */
+/** Wait for payment methods request to complete (success or failure) */
 function* waitForPaymentMethods(): SagaIterator {
   yield* take([
     getPaymentsWalletUserMethods.success,
@@ -41,16 +40,12 @@ function* waitForPaymentMethods(): SagaIterator {
   ]);
 }
 
-/**
- * Wait for IDPay wallet request to complete (success or failure)
- */
+/** Wait for IDPay wallet request to complete (success or failure) */
 function* waitForIdPay(): SagaIterator {
   yield* take([idPayWalletGet.success, idPayWalletGet.failure]);
 }
 
-/**
- * Wait for CGN details request to complete (success or failure)
- */
+/** Wait for CGN details request to complete (success or failure) */
 function* waitForCgnDetails(): SagaIterator {
   yield* take([cgnDetails.success, cgnDetails.failure]);
 }

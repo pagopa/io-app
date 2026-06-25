@@ -9,6 +9,7 @@ import { withPaymentsSessionToken } from "../../common/utils/withPaymentsSession
 
 /**
  * Handle the remote call to start Wallet onboarding
+ *
  * @param startOnboarding
  * @param action
  */

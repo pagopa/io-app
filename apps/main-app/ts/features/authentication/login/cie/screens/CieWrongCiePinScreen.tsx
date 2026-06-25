@@ -1,6 +1,4 @@
-/**
- * A screen to alert the user about the number of attempts remains
- */
+/** A screen to alert the user about the number of attempts remains */
 import { useCallback, useMemo } from "react";
 import { Route, useRoute } from "@react-navigation/native";
 import { IOPictograms } from "@pagopa/io-app-design-system";

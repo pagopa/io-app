@@ -26,7 +26,8 @@ type DataComponentProps = {
 
 /**
  * Mapping of new claims to old claims for MDL. Some of them have been renamed
- * between specs 0.7 and 1.0, so this is necessary to ensure backward compatibility.
+ * between specs 0.7 and 1.0, so this is necessary to ensure backward
+ * compatibility.
  */
 const mdlClaimsFallback: Record<string, string> = {
   birth_place: "place_of_birth",

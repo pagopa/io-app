@@ -16,6 +16,7 @@ import { cgnActivationComplete } from "../actions/activation";
 export type CgnUnsubscribeState = RemoteValue<true, NetworkError>;
 /**
  * Keep the state of "unsubscribe" from bonus outcome
+ *
  * @param state
  * @param action
  */

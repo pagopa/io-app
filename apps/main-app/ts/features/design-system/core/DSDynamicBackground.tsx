@@ -65,7 +65,8 @@ const organizationsURIs = [
 
 /**
  * This Screen is used to test components in isolation while developing.
- * @returns a screen with a flexed view where you can test components
+ *
+ * @returns A screen with a flexed view where you can test components
  */
 export const DSDynamicBackground = () => {
   const insets = useSafeAreaInsets();

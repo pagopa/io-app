@@ -86,8 +86,8 @@ export const trackFciSignatureGenericFailure = (reason: string) =>
   );
 
 /**
- * Centralized analytics tracking for signature request status changes.
- * Handles all status-based tracking logic in one place.
+ * Centralized analytics tracking for signature request status changes. Handles
+ * all status-based tracking logic in one place.
  */
 export const trackFciSignatureRequestStatus = (
   params:

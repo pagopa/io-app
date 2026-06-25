@@ -14,7 +14,8 @@ import { getEnv } from "../../features/itwallet/common/utils/environment";
  * When IT Wallet is valid, this saga checks whether the stored eID was issued
  * to the same user that is authenticated by comparing fiscal codes.
  *
- * If they are different, the user is taken to a new screen where the active wallet instance must be reset before continuing.
+ * If they are different, the user is taken to a new screen where the active
+ * wallet instance must be reset before continuing.
  */
 export function* checkItWalletIdentitySaga() {
   const env = getEnv(yield* select(selectItwEnv));

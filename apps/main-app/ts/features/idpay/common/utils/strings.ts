@@ -35,15 +35,19 @@ export const formatNumberCurrencyCentsOrDefault = (
   );
 
 /**
- * Formats an absolute number amount or returns a default value if the input is undefined.
+ * Formats an absolute number amount or returns a default value if the input is
+ * undefined.
  *
- * This function takes a number and converts it into its absolute value, then formats it as a string
- * using the 'formatNumberAmount' function. If the input is undefined, it returns the specified default value.
+ * This function takes a number and converts it into its absolute value, then
+ * formats it as a string using the 'formatNumberAmount' function. If the input
+ * is undefined, it returns the specified default value.
  *
- * @param {number | undefined} amount - The number amount in cents to be formatted, or undefined if not available.
- * @param {string} [defaultValue='-'] - The default value to be returned when the input 'amount' is undefined.
- *
- * @returns {string} - The formatted absolute number as a string or the default value.
+ * @param {number | undefined} amount - The number amount in cents to be
+ *   formatted, or undefined if not available.
+ * @param {string} [defaultValue='-'] - The default value to be returned when
+ *   the input 'amount' is undefined. Default is `'-'`
+ * @returns {string} - The formatted absolute number as a string or the default
+ *   value.
  */
 export const formatAbsNumberAmountCentsOrDefault = (
   amount: number | undefined,
@@ -58,10 +62,11 @@ export const formatAbsNumberAmountCentsOrDefault = (
   );
 
 /**
- *   Takes a nullable date and formats it to a string.
- *   - Base default : '-'
- *   - Base format: 'D MMMM YYYY, HH:mm'
- *   - Uses date_fns as formatter
+ * Takes a nullable date and formats it to a string.
+ *
+ * - Base default : '-'
+ * - Base format: 'D MMMM YYYY, HH:mm'
+ * - Uses date_fns as formatter
  */
 export const formatDateOrDefault = (
   input?: Date,

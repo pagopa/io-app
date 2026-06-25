@@ -157,9 +157,7 @@ const getZendeskPaymentConfig: GetZendeskPaymentConfigT = {
   response_decoder: basicResponseDecoder(ZendeskSubcategoriesErrors)
 };
 
-/**
- * A client for the static content
- */
+/** A client for the static content */
 export function ContentClient(fetchApi: typeof fetch = defaultRetryingFetch()) {
   const options = {
     baseUrl: contentRepoUrl,

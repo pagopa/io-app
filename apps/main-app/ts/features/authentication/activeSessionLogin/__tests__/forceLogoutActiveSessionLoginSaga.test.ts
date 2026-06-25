@@ -41,8 +41,8 @@ jest.mock("../../../../api/SessionManagerClientManager", () => ({
 }));
 
 jest.mock("../../../lollipop/saga", () => ({
-  // eslint-disable-next-line object-shorthand, require-yield
-  deleteCurrentLollipopKeyAndGenerateNewKeyTag: function* () {
+  // oxlint-disable-next-line require-yield
+  *deleteCurrentLollipopKeyAndGenerateNewKeyTag() {
     return;
   }
 }));

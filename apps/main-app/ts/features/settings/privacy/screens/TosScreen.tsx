@@ -1,6 +1,6 @@
 /**
- * A screen to show the app Terms of Service.
- * This screen is used as Privacy screen From Profile section.
+ * A screen to show the app Terms of Service. This screen is used as Privacy
+ * screen From Profile section.
  */
 import { ContentWrapper, H2 } from "@pagopa/io-app-design-system";
 import I18n from "i18next";
@@ -20,9 +20,7 @@ const contextualHelpMarkdown: ContextualHelpPropsMarkdown = {
   body: "profile.main.privacy.privacyPolicy.contextualHelpContentPolicy"
 };
 
-/**
- * A screen to show the ToS to the user.
- */
+/** A screen to show the ToS to the user. */
 const TosScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
 

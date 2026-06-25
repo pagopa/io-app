@@ -8,9 +8,7 @@ import { CieCardReaderScreenNavigationParams } from "../../features/authenticati
 import { AUTHENTICATION_ROUTES } from "../../features/authentication/common/navigation/routes";
 import { SETTINGS_ROUTES } from "../../features/settings/common/navigation/routes";
 
-/**
- * @deprecated
- */
+/** @deprecated */
 export const resetToAuthenticationRoute = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.reset({
@@ -19,9 +17,7 @@ export const resetToAuthenticationRoute = () =>
     })
   );
 
-/**
- * @deprecated
- */
+/** @deprecated */
 export const navigateToMainNavigatorAction = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.reset({
@@ -30,19 +26,13 @@ export const navigateToMainNavigatorAction = () =>
     })
   );
 
-/**
- * @deprecated
- */
+/** @deprecated */
 export const navigateBack = () =>
   NavigationService.dispatchNavigationAction(CommonActions.goBack());
 
-/**
- * Authentication
- */
+/** Authentication */
 
-/**
- * @deprecated
- */
+/** @deprecated */
 export const navigateToIdpSelectionScreenAction = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(AUTHENTICATION_ROUTES.MAIN, {
@@ -50,9 +40,7 @@ export const navigateToIdpSelectionScreenAction = () =>
     })
   );
 
-/**
- * @deprecated
- */
+/** @deprecated */
 export const navigateToOnboardingPinScreenAction = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(ROUTES.ONBOARDING, {
@@ -60,9 +48,7 @@ export const navigateToOnboardingPinScreenAction = () =>
     })
   );
 
-/**
- * @deprecated
- */
+/** @deprecated */
 export const navigateToTosScreen = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(ROUTES.ONBOARDING, {
@@ -70,9 +56,7 @@ export const navigateToTosScreen = () =>
     })
   );
 
-/**
- * @deprecated
- */
+/** @deprecated */
 export const navigateToOnboardingServicePreferenceCompleteAction = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(ROUTES.ONBOARDING, {
@@ -80,9 +64,7 @@ export const navigateToOnboardingServicePreferenceCompleteAction = () =>
     })
   );
 
-/**
- * @deprecated
- */
+/** @deprecated */
 export const navigateToServicesPreferenceModeSelectionScreen = (
   params: OnboardingServicesPreferenceScreenNavigationParams
 ) =>
@@ -93,13 +75,9 @@ export const navigateToServicesPreferenceModeSelectionScreen = (
     })
   );
 
-/**
- * Service
- */
+/** Service */
 
-/**
- * @deprecated
- */
+/** @deprecated */
 export const navigateToServiceDetailsScreen = (
   params: ServiceDetailsScreenRouteParams
 ) =>
@@ -110,13 +88,9 @@ export const navigateToServiceDetailsScreen = (
     })
   );
 
-/**
- * Profile
- */
+/** Profile */
 
-/**
- * @deprecated
- */
+/** @deprecated */
 export const navigateToEmailForwardingPreferenceScreen = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
@@ -124,9 +98,7 @@ export const navigateToEmailForwardingPreferenceScreen = () =>
     })
   );
 
-/**
- * @deprecated
- */
+/** @deprecated */
 export const navigateToCalendarPreferenceScreen = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
@@ -134,9 +106,7 @@ export const navigateToCalendarPreferenceScreen = () =>
     })
   );
 
-/**
- * @deprecated
- */
+/** @deprecated */
 export const navigateToLanguagePreferenceScreen = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
@@ -144,9 +114,7 @@ export const navigateToLanguagePreferenceScreen = () =>
     })
   );
 
-/**
- * @deprecated
- */
+/** @deprecated */
 export const navigateToLogout = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
@@ -154,9 +122,7 @@ export const navigateToLogout = () =>
     })
   );
 
-/**
- * @deprecated
- */
+/** @deprecated */
 export const navigateToRemoveAccountSuccess = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
@@ -164,9 +130,7 @@ export const navigateToRemoveAccountSuccess = () =>
     })
   );
 
-/**
- * @deprecated
- */
+/** @deprecated */
 export const navigateToRemoveAccountDetailScreen = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
@@ -174,9 +138,7 @@ export const navigateToRemoveAccountDetailScreen = () =>
     })
   );
 
-/**
- * @deprecated
- */
+/** @deprecated */
 export const navigateToPrivacyScreen = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
@@ -187,9 +149,7 @@ export const navigateToPrivacyScreen = () =>
     })
   );
 
-/**
- * @deprecated
- */
+/** @deprecated */
 export const navigateToPrivacyShareData = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(SETTINGS_ROUTES.PROFILE_NAVIGATOR, {
@@ -197,13 +157,9 @@ export const navigateToPrivacyShareData = () =>
     })
   );
 
-/**
- * CIE
- */
+/** CIE */
 
-/**
- * @deprecated
- */
+/** @deprecated */
 export const navigateToCieInvalidScreen = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(AUTHENTICATION_ROUTES.MAIN, {
@@ -211,9 +167,7 @@ export const navigateToCieInvalidScreen = () =>
     })
   );
 
-/**
- * @deprecated
- */
+/** @deprecated */
 export const navigateToCiePinScreen = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(AUTHENTICATION_ROUTES.MAIN, {
@@ -221,9 +175,7 @@ export const navigateToCiePinScreen = () =>
     })
   );
 
-/**
- * @deprecated
- */
+/** @deprecated */
 export const navigateToCieCardReaderScreen = (
   params?: CieCardReaderScreenNavigationParams
 ) =>
@@ -234,20 +186,14 @@ export const navigateToCieCardReaderScreen = (
     })
   );
 
-/**
- * @deprecated
- */
+/** @deprecated */
 export const navigateToWorkunitGenericFailureScreen = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(ROUTES.WORKUNIT_GENERIC_FAILURE)
   );
 
-/**
- * SPID
- */
-/**
- * @deprecated
- */
+/** SPID */
+/** @deprecated */
 export const navigateToSPIDTestIDP = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(AUTHENTICATION_ROUTES.MAIN, {
@@ -255,9 +201,7 @@ export const navigateToSPIDTestIDP = () =>
     })
   );
 
-/**
- * @deprecated
- */
+/** @deprecated */
 export const navigateToSPIDLogin = () =>
   NavigationService.dispatchNavigationAction(
     CommonActions.navigate(AUTHENTICATION_ROUTES.MAIN, {

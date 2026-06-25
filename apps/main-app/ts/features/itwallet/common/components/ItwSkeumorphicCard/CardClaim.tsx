@@ -56,8 +56,11 @@ export type CardClaimProps = Prettify<
 >;
 
 /**
- * Default claim component, it decoded the provided value and renders the corresponding component
- * @returns The corresponding component if a value is correctly decoded, otherwise null
+ * Default claim component, it decoded the provided value and renders the
+ * corresponding component
+ *
+ * @returns The corresponding component if a value is correctly decoded,
+ *   otherwise null
  */
 const CardClaim = ({
   claim,
@@ -129,7 +132,9 @@ export type CardClaimRendererProps<T> = {
 
 /**
  * Allows to render a claim if it satisfies the provided `is` function
- * @returns The component from the props if value if correctly decoded, otherwise it returns null
+ *
+ * @returns The component from the props if value if correctly decoded,
+ *   otherwise it returns null
  */
 const CardClaimRenderer = <T,>({
   claim,
@@ -153,7 +158,8 @@ export type CardClaimContainerProps = WithTestID<{
 }>;
 
 /**
- * Component that allows to position a claim using "left" and "top" absolute values
+ * Component that allows to position a claim using "left" and "top" absolute
+ * values
  */
 const CardClaimContainer = ({
   position,

@@ -50,9 +50,7 @@ export const fimsTokenSelector = (state: GlobalState): string | undefined =>
     ? state.authentication.sessionInfo.fimsToken
     : undefined;
 
-/**
- * Return the authentication header required for IO Backend requests
- */
+/** Return the authentication header required for IO Backend requests */
 export const ioBackendAuthenticationHeaderSelector = createSelector(
   sessionTokenSelector,
   (token): { [key: string]: string } => ({ Authorization: `Bearer ${token}` })
@@ -88,9 +86,10 @@ export const spidLevelSelector = (state: GlobalState): SpidLevel | undefined =>
     : undefined;
 
 /**
- * This function extracts the SPID level (L1, L2, L3) from the full SPID level string
- * (e.g., "https://www.spid.gov.it/SpidL1") and returns it in a shorter format.
- * If the input is undefined or does not contain a valid SPID level, it returns undefined.
+ * This function extracts the SPID level (L1, L2, L3) from the full SPID level
+ * string (e.g., "https://www.spid.gov.it/SpidL1") and returns it in a shorter
+ * format. If the input is undefined or does not contain a valid SPID level, it
+ * returns undefined.
  */
 export const extractSpidLevel = (
   spidLevel?: SpidLevel
@@ -108,9 +107,7 @@ export const extractSpidLevel = (
   return undefined;
 };
 
-/**
- * Returns the SPID level (L1, L2, L3) from the session info
- */
+/** Returns the SPID level (L1, L2, L3) from the session info */
 
 export const spidLevelFromSessionInfoSelector = (
   state: GlobalState

@@ -53,9 +53,7 @@ const idPayCardColorPalette: Record<
   }
 };
 
-/**
- * Component that renders the ID PAy card in the wallet
- */
+/** Component that renders the ID PAy card in the wallet */
 export const IdPayCard = (props: IdPayCardProps) => {
   const initiativeListPot = useIOSelector(idPayWalletInitiativeListSelector);
   const initiativeCardDetails = pot.getOrElse(

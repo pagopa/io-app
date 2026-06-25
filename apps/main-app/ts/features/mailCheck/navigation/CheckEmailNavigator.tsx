@@ -5,9 +5,7 @@ import EmailAlreadyTakenScreen from "../screens/EmailAlreadyTakenScreen";
 import ROUTES from "../../../navigation/routes";
 
 const Stack = createStackNavigator();
-/**
- * The onboarding related stack of screens of the application.
- */
+/** The onboarding related stack of screens of the application. */
 const CheckEmailNavigator = () => (
   <Stack.Navigator
     initialRouteName={ROUTES.CHECK_EMAIL_NOT_VERIFIED}

@@ -10,20 +10,17 @@ import { Renderer } from "../../../../components/IOMarkdown/types";
 import { openWebUrl } from "../../../../utils/url";
 
 type Options = {
-  /**
-   * The callback to call when the link is pressed
-   */
+  /** The callback to call when the link is pressed */
   linkCallback: () => void;
-  /**
-   * The size of the paragraph nodes to render
-   */
+  /** The size of the paragraph nodes to render */
   paragraphSize?: ParagraphSize;
 };
 
 /**
  * Generate custom rules for the markdown component used in IT-Wallet screens
+ *
  * @param options {@link Options} to customize the markdown rules
- * @returns the rules for the markdown component
+ * @returns The rules for the markdown component
  */
 export const generateItwIOMarkdownRules = ({
   paragraphSize,

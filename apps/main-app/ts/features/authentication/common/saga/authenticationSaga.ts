@@ -24,8 +24,8 @@ import { isFastLoginEnabledSelector } from "../../fastLogin/store/selectors";
 import { watchTestLoginRequestSaga } from "./testLoginSaga";
 
 /**
- * A saga that makes the user go through the authentication process until
- * a session token gets produced.
+ * A saga that makes the user go through the authentication process until a
+ * session token gets produced.
  */
 export function* authenticationSaga(): Generator<ReduxSagaEffect, string> {
   yield* put(startupLoadSuccess(StartupStatusEnum.NOT_AUTHENTICATED));

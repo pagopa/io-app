@@ -76,9 +76,10 @@ const trackBottomSheetView = (
 
 /**
  * Hook to display a bottom sheet with information about the CIE
+ *
  * @param type - The type of info to display
- * @param showSecondaryAction - Whether to show the secondary action button. The bottomsheet has different actions based
- * on auth level or step in the flow.
+ * @param showSecondaryAction - Whether to show the secondary action button. The
+ *   bottomsheet has different actions based on auth level or step in the flow.
  * @returns The bottom sheet component
  */
 export const useCieInfoBottomSheet = ({

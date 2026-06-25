@@ -5,15 +5,15 @@ import { itwCredentialsEidStatusSelector } from "../../../credentials/store/sele
 import { getItwDisplayCredentialStatus } from "../utils";
 
 /**
- * Computes the display status of a credential for UI purposes
- * by combining store selectors (eID status and offline state)
- * with the pure logic from getItwDisplayCredentialStatus.
+ * Computes the display status of a credential for UI purposes by combining
+ * store selectors (eID status and offline state) with the pure logic from
+ * getItwDisplayCredentialStatus.
  *
- * This hook does not reflect the credential’s real status — it adapts
- * the status shown in the Wallet or credential details screen.
+ * This hook does not reflect the credential’s real status — it adapts the
+ * status shown in the Wallet or credential details screen.
  *
- * @param credentialStatus the actual status of the credential
- * @param credentialType optional credential type to skip override for PID
+ * @param credentialStatus The actual status of the credential
+ * @param credentialType Optional credential type to skip override for PID
  * @returns {ItwCredentialStatus} The status to display in the UI
  */
 export const useItwDisplayCredentialStatus = (

@@ -18,9 +18,7 @@ import LoadingScreenContent from "../../../../../components/screens/LoadingScree
 import { useHeaderSecondLevel } from "../../../../../hooks/useHeaderSecondLevel";
 import { OperationResultScreenContent } from "../../../../../components/screens/OperationResultScreenContent";
 
-/**
- * this is a dummy screen reachable only from a message CTA
- */
+/** This is a dummy screen reachable only from a message CTA */
 const CgnCTAStartOnboardingComponent: FC = () => {
   const dispatch = useIODispatch();
   const isFirstRender = useRef<boolean>(true);
@@ -73,9 +71,7 @@ const CgnCTAStartOnboardingComponent: FC = () => {
   return <LoadingScreenContent title={I18n.t("global.remoteStates.loading")} />;
 };
 
-/**
- * this is a dummy screen reachable only from a message CTA
- */
+/** This is a dummy screen reachable only from a message CTA */
 const CgnCTAStartOnboardingScreen = () => {
   const navigation = useNavigation();
   const isCgnEnabled = useIOSelector(isCGNEnabledSelector);

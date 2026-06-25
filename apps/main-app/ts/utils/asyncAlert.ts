@@ -2,22 +2,23 @@ import { Alert, AlertButton, AlertOptions } from "react-native";
 import I18n from "i18next";
 
 /**
- * The result of the Alert.
- * - onPress: one button was pressed
- * - onDismiss: The user tapped on empty space, dismissing the alert
+ * The result of the Alert. - onPress: one button was pressed - onDismiss: The
+ * user tapped on empty space, dismissing the alert
  */
 type AlertResult =
   | { kind: "onPress"; text: AlertButton["text"]; style: AlertButton["style"] }
   | { kind: "onDismiss" };
 
 /**
- * Wraps the {@link Alert.alert} using promises instead of callback.
- * If there are no buttons, the default button "OK" will be used, like the default implementation.
+ * Wraps the {@link Alert.alert} using promises instead of callback. If there are
+ * no buttons, the default button "OK" will be used, like the default
+ * implementation.
+ *
+ * @class
  * @param title
  * @param message
  * @param buttons
  * @param options
- * @constructor
  */
 export const AsyncAlert = (
   title: string,

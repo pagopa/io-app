@@ -21,15 +21,15 @@ type VaultMigrationResult =
     };
 
 /**
- * SIW-2178 introduced CredentialsVault to keep raw JWTs out of Redux.
- * Migration v9 populates `legacyCredentials` as a staging area: it copies the
+ * SIW-2178 introduced CredentialsVault to keep raw JWTs out of Redux. Migration
+ * v9 populates `legacyCredentials` as a staging area: it copies the
  * pre-migration `credentials` (with the `credential` JWT intact) and strips
  * `credential` from `credentials` so Redux is JWT-free right after upgrade.
  *
- * This saga reads from `legacyCredentials`, writes each JWT to CredentialsVault,
- * and dispatches `itwCredentialsVaultMigrationComplete` with the IDs of succeeded writes
- * so the reducer removes only those entries. Failed ones remain in `legacyCredentials`
- * and retry on the next boot.
+ * This saga reads from `legacyCredentials`, writes each JWT to
+ * CredentialsVault, and dispatches `itwCredentialsVaultMigrationComplete` with
+ * the IDs of succeeded writes so the reducer removes only those entries. Failed
+ * ones remain in `legacyCredentials` and retry on the next boot.
  */
 export function* handleItwCredentialsVaultMigrationSaga() {
   const legacyCredentials = yield* select(

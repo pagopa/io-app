@@ -35,7 +35,8 @@ type Props = IOStackNavigationRouteProps<
 >;
 
 /**
- * this screen shows the categories for which the user can ask support with the assistance
+ * This screen shows the categories for which the user can ask support with the
+ * assistance
  */
 const ZendeskChooseCategory = (props: Props) => {
   const dispatch = useIODispatch();

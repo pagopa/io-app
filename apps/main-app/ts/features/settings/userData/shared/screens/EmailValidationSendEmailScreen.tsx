@@ -1,6 +1,4 @@
-/**
- * A component to remind the user to validate his email
- */
+/** A component to remind the user to validate his email */
 import { Millisecond } from "@pagopa/ts-commons/lib/units";
 import { pipe } from "fp-ts/lib/function";
 import * as pot from "@pagopa/ts-commons/lib/pot";

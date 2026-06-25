@@ -18,9 +18,7 @@ const PinView = (props: PinViewProps) => (
   />
 );
 
-/**
- * @deprecated Use one of the `IOScrollView…` components instead.
- */
+/** @deprecated Use one of the `IOScrollView…` components instead. */
 const CieLoginConfigScreen = () => {
   const [locked, setLocked] = useState(true);
   const [pin, setPin] = useState("");
@@ -37,6 +35,7 @@ const CieLoginConfigScreen = () => {
 
   return (
     <IOScrollViewWithLargeHeader
+      // eslint-disable-next-line i18next/no-literal-string -- hidden developer-only screen, label not localized
       title={{ label: "CIE Login Settings" }}
       testID="CieLoginConfigScreen"
       includeContentMargins

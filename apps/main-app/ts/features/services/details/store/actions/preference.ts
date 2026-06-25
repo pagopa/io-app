@@ -7,9 +7,7 @@ import {
 import { NetworkError } from "../../../../../utils/errors";
 import { ServiceId } from "../../../../../../definitions/services/ServiceId";
 
-/**
- * Actions to load the specified preferences for a given ServiceID
- */
+/** Actions to load the specified preferences for a given ServiceID */
 export const loadServicePreference = createAsyncAction(
   "SERVICE_PREFERENCE_REQUEST",
   "SERVICE_PREFERENCE_SUCCESS",
@@ -17,7 +15,8 @@ export const loadServicePreference = createAsyncAction(
 )<ServiceId, ServicePreferenceResponse, WithServiceID<NetworkError>>();
 
 /**
- * Actions to request the update of the specified preferences for a given ServiceID
+ * Actions to request the update of the specified preferences for a given
+ * ServiceID
  */
 export const upsertServicePreference = createAsyncAction(
   "SERVICE_PREFERENCE_UPSERT_REQUEST",

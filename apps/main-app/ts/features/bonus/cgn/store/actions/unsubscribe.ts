@@ -1,9 +1,7 @@
 import { ActionType, createAsyncAction } from "typesafe-actions";
 import { NetworkError } from "../../../../../utils/errors";
 
-/**
- * handle CGN unsubscribe request
- */
+/** Handle CGN unsubscribe request */
 export const cgnUnsubscribe = createAsyncAction(
   "CGN_UNSUBSCRIBE_REQUEST",
   "CGN_UNSUBSCRIBE_SUCCESS",

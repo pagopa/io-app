@@ -18,9 +18,7 @@ const execAsync = util.promisify(exec);
 
 const majorVersionDeltaWarning = 3;
 
-/**
- * Execute the command "pnpm outdated --json" and return the results as string
- */
+/** Execute the command "pnpm outdated --json" and return the results as string */
 const readOutdatedJson = async (): Promise<string> => {
   try {
     const std = await execAsync("pnpm outdated --json");
@@ -43,7 +41,9 @@ const readOutdatedJson = async (): Promise<string> => {
 };
 
 /**
- * Try to extract the second section of the stdout. The first section describe the table header, the second section the content.
+ * Try to extract the second section of the stdout. The first section describe
+ * the table header, the second section the content.
+ *
  * @param stdout
  */
 const extractStdoutSection = (
@@ -57,7 +57,9 @@ const extractStdoutSection = (
 };
 
 /**
- * Transform the raw structure {@link DependenciesTable} representing the JSON to {@link OutdatedStats} aggregated stats
+ * Transform the raw structure {@link DependenciesTable} representing the JSON to
+ * {@link OutdatedStats} aggregated stats
+ *
  * @param deps
  */
 const extractGroupByType = (deps: DependenciesTable): OutdatedStats =>
@@ -100,11 +102,13 @@ const destinationChannel = "#io_dev_app_feed";
 
 /**
  * The main script workflow orchestrator:
+ *
  * - Execute pnpm outdated --json and extract the JSON results
  * - Decode the JSON as {@link DependenciesTable}
- * - Convert {@link DependenciesTable} in {@link OutdatedStats} (aggregate stats by type, severity)
- *   TODO: - Save the result
- * - Convert {@link OutdatedStats} to a human readable slack message, split in chunk (string)
+ * - Convert {@link DependenciesTable} in {@link OutdatedStats} (aggregate stats
+ *   by type, severity) TODO: - Save the result
+ * - Convert {@link OutdatedStats} to a human readable slack message, split in
+ *   chunk (string)
  * - Publish the report on slack channel #io_app_dev_feed
  */
 const main = async () => {
