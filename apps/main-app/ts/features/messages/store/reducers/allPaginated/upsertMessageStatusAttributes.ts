@@ -1,5 +1,4 @@
 import * as pot from "@pagopa/ts-commons/lib/pot";
-import * as E from "fp-ts/lib/Either";
 import { getType } from "typesafe-actions";
 import { upsertMessageStatusAttributes } from "../../actions";
 import { Action } from "../../../../../store/actions/types";
@@ -94,8 +93,7 @@ export const reduceUpsertMessageStatusAttributes = (
                 { ...message, isRead, isArchived: true },
                 state.archive
               ),
-              inbox: remove(message, state.inbox),
-              latestMessageOperation: undefined
+              inbox: remove(message, state.inbox)
             };
           } else {
             return {
@@ -104,13 +102,12 @@ export const reduceUpsertMessageStatusAttributes = (
               inbox: insert(
                 { ...message, isRead, isArchived: false },
                 state.inbox
-              ),
-              latestMessageOperation: undefined
+              )
             };
           }
         }
       }
-      return { ...state };
+      return state;
     }
 
     case getType(upsertMessageStatusAttributes.failure): {
@@ -131,37 +128,16 @@ export const reduceUpsertMessageStatusAttributes = (
             return {
               ...state,
               archive: remove(message, state.archive),
-              inbox: insert(message, state.inbox),
-              latestMessageOperation: E.left({
-                operation: "archive",
-                error: action.payload.error
-              })
+              inbox: insert(message, state.inbox)
             };
           } else {
             return {
               ...state,
               archive: insert(message, state.archive),
-              inbox: remove(message, state.inbox),
-              latestMessageOperation: E.left({
-                operation: "restore",
-                error: action.payload.error
-              })
+              inbox: remove(message, state.inbox)
             };
           }
         }
-      }
-      return { ...state };
-    }
-
-    case getType(upsertMessageStatusAttributes.success): {
-      const { update } = action.payload;
-      if (update.tag === "bulk" || update.tag === "archiving") {
-        return {
-          ...state,
-          latestMessageOperation: E.right(
-            update.isArchived ? "archive" : "restore"
-          )
-        };
       }
       return state;
     }
