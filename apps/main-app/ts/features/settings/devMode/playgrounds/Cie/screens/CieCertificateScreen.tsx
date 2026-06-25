@@ -1,3 +1,4 @@
+import I18n from "i18next";
 import {
   IOButton,
   ListItemHeader,
@@ -117,6 +118,12 @@ export const CieCertificateReadingScreen = () => {
           <ListItemHeader label="Insert card PIN" />
           <OTPInput
             secret
+            accessibilityValueText={({ valueLength, length }) =>
+              I18n.t("global.accessibility.inputDigitCounter", {
+                valueLength,
+                length
+              })
+            }
             value={code}
             length={CIE_PIN_LENGTH}
             onValueChange={onPinChanged}
