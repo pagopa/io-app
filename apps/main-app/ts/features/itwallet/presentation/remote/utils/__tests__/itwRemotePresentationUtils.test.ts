@@ -355,14 +355,14 @@ describe("getInvalidCredentials", () => {
 
   // Builds a presentation detail for the given vct (only format and vct are used)
   const detail = (vct: string): PresentationDetails[number] =>
-    ({ format: "dc+sd-jwt", vct } as unknown as PresentationDetails[number]);
+    ({ format: "dc+sd-jwt", vct }) as unknown as PresentationDetails[number];
 
   // Builds a stored credential whose status is resolved by the mocked getCredentialStatus
   const credential = (
     credentialType: string,
     status: ItwCredentialStatus
   ): CredentialMetadata =>
-    ({ credentialType, status } as unknown as CredentialMetadata);
+    ({ credentialType, status }) as unknown as CredentialMetadata;
 
   beforeEach(() => {
     mockGetCredentialStatus.mockImplementation(
