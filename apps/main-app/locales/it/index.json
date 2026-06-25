@@ -4583,7 +4583,7 @@
         },
         "addCredential": {
           "title": "Aggiungi un documento",
-          "description": "Premi “+” o “Aggiungi documento” per scegliere un documento digitale da aggiungere al Portafoglio."
+          "description": "Premi “+” per scegliere un documento digitale da aggiungere al Portafoglio."
         },
         "qrCode": {
           "title": "Mostra il codice QR a chi verifica",

@@ -19,6 +19,7 @@ import {
   unregisterTourItemAction
 } from "../store/actions";
 import { TourCutoutStyle, TourItemMeasurement } from "../types";
+import { getPaddedTourMeasurement } from "../utils/measurement";
 import { TourOverlay } from "./TourOverlay";
 
 type TourItemConfig = {
@@ -27,6 +28,7 @@ type TourItemConfig = {
   title: string;
   description: string;
   cutoutStyle?: TourCutoutStyle;
+  cutoutPadding?: number;
 };
 
 type ScrollRef = {
@@ -44,6 +46,7 @@ type TourContextValue = {
       title: string;
       description: string;
       cutoutStyle?: TourCutoutStyle;
+      cutoutPadding?: number;
     }
   ) => void;
   unregisterItem: (groupId: string, index: number) => void;
@@ -124,6 +127,7 @@ export const TourProvider = ({ children }: PropsWithChildren) => {
         title: string;
         description: string;
         cutoutStyle?: TourCutoutStyle;
+        cutoutPadding?: number;
       }
     ) => {
       dispatch(registerTourItemAction({ groupId, index }));
@@ -131,7 +135,8 @@ export const TourProvider = ({ children }: PropsWithChildren) => {
         ref: viewRef,
         title: config.title,
         description: config.description,
-        cutoutStyle: config.cutoutStyle
+        cutoutStyle: config.cutoutStyle,
+        cutoutPadding: config.cutoutPadding
       });
     },
     [dispatch]
@@ -197,7 +202,10 @@ export const TourProvider = ({ children }: PropsWithChildren) => {
       };
       (node as unknown as View).measureInWindow((x, y, width, height) => {
         if (width !== 0 || height !== 0) {
-          result.value = { x, y, width, height };
+          result.value = getPaddedTourMeasurement(
+            { x, y, width, height },
+            item.cutoutPadding
+          );
         }
       });
       return result.value;
