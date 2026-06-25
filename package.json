@@ -15,12 +15,12 @@
     "@babel/plugin-transform-regenerator": "^7.18.6",
     "@babel/preset-env": "^7.25.3",
     "@babel/runtime": "^7.25.0",
+    "@react-native/babel-preset": "0.83.6",
+    "@react-native/metro-config": "0.83.6",
     "@expo/metro-config": "55.0.23",
     "@nx/eslint": "catalog:",
     "@nx/jest": "catalog:",
     "@nx/js": "catalog:",
-    "@react-native/babel-preset": "0.83.6",
-    "@react-native/metro-config": "0.83.6",
     "@swc-node/register": "~1.11.1",
     "@swc/core": "~1.15.5",
     "@swc/helpers": "~0.5.18",
@@ -58,8 +58,7 @@
       "@react-native-community/art@^1.2.0": "patches/@react-native-community-art-npm-1.2.0.patch",
       "react-native-exception-handler@^2.10.8": "patches/react-native-exception-handler-npm-2.10.8.patch",
       "expo-screen-capture@~55.0.9": "patches/expo-screen-capture-npm-55.0.9.patch",
-      "@react-navigation/stack@7.7.2": "patches/@react-navigation__stack@7.7.2.patch",
-      "react-native-screens": "patches/react-native-screens.patch"
+      "@react-navigation/stack@6.4.1": "patches/@react-navigation__stack.patch"
     },
     "onlyBuiltDependencies": [
       "unrs-resolver",
